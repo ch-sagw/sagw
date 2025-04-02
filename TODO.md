@@ -15,6 +15,7 @@
 - as i remember, vercel does not support nvmrc files. make strategic decision -> as of now, building happens on github, not vercel. make sure to use nvmrc in github workflow
 - squash commits
 - run tests before build
+- nextjs build triggers API-Routes?
 
 - release-please:
   - https://github.com/googleapis/release-please
