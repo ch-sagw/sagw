@@ -8,7 +8,6 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript', 'plugin:storybook/recommended'),
   globalIgnores([
     'convenience/*',
     'node_modules/*',
@@ -24,6 +23,7 @@ const eslintConfig = [
       '**/*.ts',
       '**/*.tsx',
     ],
+    ...compat.extends('next/core-web-vitals', 'next/typescript', 'plugin:storybook/recommended'),
     rules: {
       ...esRules,
       ...tsRules,
