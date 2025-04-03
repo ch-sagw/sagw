@@ -33,9 +33,9 @@
     "restore:db": "tsx ./src/backup-restore/restores/db-restore"
   },
   "dependencies": {
-    "@payloadcms/db-mongodb": "latest",
-    "@payloadcms/next": "latest",
-    "@payloadcms/richtext-lexical": "latest",
+    "@payloadcms/db-mongodb": "^3.32.0",
+    "@payloadcms/next": "^3.32.0",
+    "@payloadcms/richtext-lexical": "^3.32.0",
     "@payloadcms/storage-vercel-blob": "^3.32.0",
     "@sentry/nextjs": "^9.10.1",
     "cross-env": "^7.0.3",
