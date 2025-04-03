@@ -87,5 +87,3 @@ const main = async (): Promise<void> => {
 };
 
 export default main;
-
-main();
