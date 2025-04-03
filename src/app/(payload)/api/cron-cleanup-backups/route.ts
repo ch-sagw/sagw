@@ -1,5 +1,6 @@
 import type { NextRequest } from 'next/server';
 import cleanupBackups from '@/backup-restore/cron-jobs/backups-cleanup';
+import { getErrorMessage } from '@/backup-restore/helpers/try-catch-error';
 
 export const GET = async (request: NextRequest): Promise<Response> => {
   const authHeader = request.headers.get('authorization');
@@ -10,7 +11,18 @@ export const GET = async (request: NextRequest): Promise<Response> => {
     });
   }
 
-  await cleanupBackups();
+  try {
+    await cleanupBackups();
 
-  return new Response('Cleanup backups done.');
+    return Response.json({
+      message: 'Cleanup backups done.',
+      success: true,
+    });
+  } catch (err) {
+    const errorMessage = `Cleanup backups error: ${getErrorMessage(err)}`;
+
+    return new Response(errorMessage, {
+      status: 501,
+    });
+  }
 };

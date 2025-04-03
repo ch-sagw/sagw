@@ -79,7 +79,7 @@ const main = async (): Promise<void> => {
       true,
     );
 
-    console.log(error);
+    throw new Error(getErrorMessage(error));
   } finally {
     dbHelper.getClient()
       ?.close();

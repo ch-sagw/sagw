@@ -1,5 +1,6 @@
 import type { NextRequest } from 'next/server';
 import dbBackup from '@/backup-restore/cron-jobs/blob-backup';
+import { getErrorMessage } from '@/backup-restore/helpers/try-catch-error';
 
 export const GET = async (request: NextRequest): Promise<Response> => {
   const authHeader = request.headers.get('authorization');
@@ -10,7 +11,18 @@ export const GET = async (request: NextRequest): Promise<Response> => {
     });
   }
 
-  await dbBackup();
+  try {
+    await dbBackup();
 
-  return new Response('DB backup done.');
+    return Response.json({
+      message: 'DB backup done.',
+      success: true,
+    });
+  } catch (err) {
+    const errorMessage = `DB backup error: ${getErrorMessage(err)}`;
+
+    return new Response(errorMessage, {
+      status: 501,
+    });
+  }
 };
