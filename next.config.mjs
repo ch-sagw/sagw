@@ -6,7 +6,10 @@ import { withPayload } from '@payloadcms/next/withPayload';
 const rootFileName = fileURLToPath(import.meta.url);
 const rootDirName = path.dirname(rootFileName);
 
-const NEXT_PUBLIC_SERVER_URL = process.env.URL || process.env.DEPLOY_URL || 'http://localhost:3000';
+// const NEXT_PUBLIC_SERVER_URL = process.env.URL
+// || process.env.DEPLOY_URL || 'http://localhost:3000';
+
+const NEXT_PUBLIC_SERVER_URL = 'http://localhost:3000';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

@@ -57,8 +57,6 @@ const main = async (): Promise<void> => {
       false,
     );
 
-    console.log(mailMessage);
-
   } catch (error) {
     await mail(
       '--> Backup failure: Vercel Blob data to OVH S3',
