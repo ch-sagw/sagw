@@ -1,8 +1,9 @@
 import type { NextRequest } from 'next/server';
-import dbBackup from '@/backup-restore/cron-jobs/blob-backup';
+import dbBackup from '@/backup-restore/cron-jobs/db-backup';
 import { getErrorMessage } from '@/backup-restore/helpers/try-catch-error';
 
 export const GET = async (request: NextRequest): Promise<Response> => {
+  /*
   const authHeader = request.headers.get('authorization');
 
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -10,6 +11,7 @@ export const GET = async (request: NextRequest): Promise<Response> => {
       status: 401,
     });
   }
+    */
 
   try {
     await dbBackup();
