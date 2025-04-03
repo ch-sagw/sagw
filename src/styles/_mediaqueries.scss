@@ -2,6 +2,7 @@
 
 @use "sass:meta";
 @use "sass:map";
+@use "sass:string";
 @use "variables" as vars;
 
 // breakpoint map
@@ -70,7 +71,7 @@ $mq-media-type: all !default;
     $media-type: "";
 
     /* stylelint-disable scss/no-global-function-names */
-    $media-query: str-slice($media-query, 6);
+    $media-query: string.slice($media-query, 6);
     /* stylelint-enable scss/no-global-function-names */
   }
 

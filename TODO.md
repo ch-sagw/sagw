@@ -10,9 +10,10 @@
 - add sentry
 - cron jobs: slack message instead of mail?
   -> https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks
-- fix scss warnings
 - fix sentry warnings
 - for backup-buckets: integrate env-variable to prefix test/staging/prod
+
+- WARN: No email adapter provided. Email will be written to console. More info at https://payloadcms.com/docs/email/overview.
 
 - as i remember, vercel does not support nvmrc files. make strategic decision -> as of now, building happens on github, not vercel. make sure to use nvmrc in github workflow
 - squash commits
