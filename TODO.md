@@ -10,6 +10,8 @@
 - add sentry
 - cron jobs: slack message instead of mail?
   -> https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks
+- fix scss warnings
+- fix sentry warnings
 
 - cron jobs invoke one method, which itself is wrapped in try/catch. Test to see if this is enough, or if the GET handler needs a try/catch as well.
 - as i remember, vercel does not support nvmrc files. make strategic decision -> as of now, building happens on github, not vercel. make sure to use nvmrc in github workflow
