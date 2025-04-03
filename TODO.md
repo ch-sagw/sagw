@@ -28,6 +28,8 @@
   - https://github.com/googleapis/release-please
   - then, make prod vercel build on tag creation: https://vercel.com/guides/can-you-deploy-based-on-tags-releases-on-vercel
 
+- properly time cron jobs
+
 - write all vercel config in vercel.json instead of using vercel ui
 - deploy storybook?
 - after deploy on vercel, run tests again against vercel preview url?
