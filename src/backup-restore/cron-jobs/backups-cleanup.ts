@@ -45,7 +45,7 @@ const main = async (): Promise<void> => {
     const deletedBlobBuckets = await cleanUpBucketsWithPrefix(config.blobBackupBucketPrefix, buckets, s3Helper);
     const deletedDbBuckets = await cleanUpBucketsWithPrefix(config.dbBackupBucketPrefix, buckets, s3Helper);
 
-    const mailMessage = `Deleted ${deletedBlobBuckets.length} blob buckets and ${deletedDbBuckets.length} db buckets.<br><br>Deleted blob buckets: ${deletedBlobBuckets.join('<br>')}<br><br>Deleted db buckets: ${deletedDbBuckets.join('<br>')}`;
+    const mailMessage = `Deleted ${deletedBlobBuckets.length} blob buckets and ${deletedDbBuckets.length} db buckets.\n\nDeleted blob buckets: \n- ${deletedBlobBuckets.join('\n-')}\n\nDeleted db buckets: \n-${deletedDbBuckets.join('\n-')}`;
 
     await mail(
       '--> Backups cleanup success',
@@ -56,7 +56,7 @@ const main = async (): Promise<void> => {
     await sendSlackMessage([
       ':large_green_circle: *Backups cleanup done*',
       'Successfully cleaned up DB & Blob Backups.',
-      `Deleted ${deletedBlobBuckets.length} blob buckets and ${deletedDbBuckets.length} db buckets.\n\nDeleted blob buckets: \n- ${deletedBlobBuckets.join('\n -')}\n\nDeleted db buckets: \n-${deletedDbBuckets.join('\n -')}`,
+      mailMessage,
     ], false);
 
     console.log('--> Backups cleanup done');
