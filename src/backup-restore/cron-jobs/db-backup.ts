@@ -17,6 +17,7 @@ import { dateString } from '../helpers/date';
 import config from '../config';
 import mail from '../helpers/mail';
 import { getErrorMessage } from '../helpers/try-catch-error';
+import sendSlackMessage from '../helpers/slack';
 
 dotenv.config();
 
@@ -70,14 +71,20 @@ const main = async (): Promise<void> => {
       false,
     );
 
-    console.log(mailMessage);
+    await sendSlackMessage([
+      ':large_green_circle: *DB Backup done*',
+      mailMessage,
+      `Backup name: ${bucketName}`,
+    ], false);
 
   } catch (error) {
     await mail(
-      '--> Backup failure: DB on OVH to OVH S3',
+      '--> Backup failure: MongoDB to OVH S3',
       getErrorMessage(error),
       true,
     );
+
+    await sendSlackMessage([':warning: *Backup failure!* MongoDB to OVH S3'], true);
 
     throw new Error(getErrorMessage(error));
   } finally {
