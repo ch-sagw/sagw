@@ -60,8 +60,8 @@ const main = async (): Promise<void> => {
 
     await sendSlackMessage([
       ':large_green_circle: *Blob Backup done*',
-      '5 Available Backups',
-      '- some\n- backups\n- listed',
+      `Successfully backed up ${blobs.length} items from Vercel Blob to OVH S3`,
+      `Backup name: ${bucketName}`,
     ], false);
 
   } catch (error) {
@@ -71,7 +71,7 @@ const main = async (): Promise<void> => {
       true,
     );
 
-    await sendSlackMessage([':warning: *Blob backups failed!*'], true);
+    await sendSlackMessage([':warning: *Backup failure!* Vercel Blob data to OVH S3'], true);
 
     throw new Error(getErrorMessage(error));
   }
