@@ -8,22 +8,34 @@
 - order npm scripts
 - staging and prod environment... release-please?
 - add sentry
-- cron jobs: slack message instead of mail?
-  -> https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks
 - fix sentry warnings
-- for backup-buckets: integrate env-variable to prefix test/staging/prod
+- -> install sentry integration in vercel
+- for backup-buckets: integrate env-variable to prefix test/staging/prod. also adapt config (send mail/slack) for different environments
 
 - WARN: No email adapter provided. Email will be written to console. More info at https://payloadcms.com/docs/email/overview.
 
 - as i remember, vercel does not support nvmrc files. make strategic decision -> as of now, building happens on github, not vercel. make sure to use nvmrc in github workflow
-- squash commits
+- force squash commits
 - run tests before build
 
-- release-please:
-  - https://github.com/googleapis/release-please
-  - then, make prod vercel build on tag creation: https://vercel.com/guides/can-you-deploy-based-on-tags-releases-on-vercel
-
-- properly time cron jobs
 
 - write all vercel config in vercel.json instead of using vercel ui
 - deploy storybook?
+
+- backup/restore: make it for staging and prod
+- backup/restore: add script to list all buckets
+- backup/restore: add script to select buckets to delete
+- backup/restore: add script to download backups buckets
+
+- use only one compose file
+
+- do not use cross-env anymore!
+
+- repo: add branch restrictions on main
+
+- document env variables and save them to 1password. which are used on vercel/github?
+
+- backup bucket names have wrong time
+
+- rename slack app to backups
+- disable posting in backup channel
