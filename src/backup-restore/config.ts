@@ -4,4 +4,6 @@ export default {
   keepAmountOfBackups: 4,
   sendMailOnFailure: false,
   sendMailOnSuccess: false,
+  sendSlackOnFailure: true,
+  sendSlackOnSuccess: true,
 };

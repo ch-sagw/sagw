@@ -16,6 +16,7 @@ import { dateString } from '../helpers/date';
 import config from '../config';
 import mail from '../helpers/mail';
 import { getErrorMessage } from '../helpers/try-catch-error';
+import sendSlackMessage from '../helpers/slack';
 
 const main = async (): Promise<void> => {
 
@@ -57,12 +58,20 @@ const main = async (): Promise<void> => {
       false,
     );
 
+    await sendSlackMessage([
+      ':large_green_circle: *Blob Backup done*',
+      '5 Available Backups',
+      '- some\n- backups\n- listed',
+    ], false);
+
   } catch (error) {
     await mail(
       '--> Backup failure: Vercel Blob data to OVH S3',
       getErrorMessage(error),
       true,
     );
+
+    await sendSlackMessage([':warning: *Blob backups failed!*'], true);
 
     throw new Error(getErrorMessage(error));
   }
