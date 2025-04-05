@@ -34,7 +34,7 @@ const cleanUpBucketsWithPrefix = async (prefix: string, allBuckets: [(Bucket | u
     return [];
   }
 
-  return [bucketsToDelete.map((bucket: Bucket) => bucket.Name)];
+  return bucketsToDelete.map((bucket: Bucket) => bucket.Name);
 };
 
 const main = async (): Promise<void> => {
@@ -45,7 +45,7 @@ const main = async (): Promise<void> => {
     const deletedBlobBuckets = await cleanUpBucketsWithPrefix(config.blobBackupBucketPrefix, buckets, s3Helper);
     const deletedDbBuckets = await cleanUpBucketsWithPrefix(config.dbBackupBucketPrefix, buckets, s3Helper);
 
-    const mailMessage = `Deleted ${deletedBlobBuckets.length} blob buckets and ${deletedDbBuckets.length} db buckets.\n\nDeleted blob buckets: \n- ${deletedBlobBuckets.join('\n-')}\n\nDeleted db buckets: \n-${deletedDbBuckets.join('\n-')}`;
+    const mailMessage = `Deleted ${deletedBlobBuckets.length} blob buckets and ${deletedDbBuckets.length} db buckets.\n\nDeleted blob buckets: \n- ${deletedBlobBuckets.join('\n- ')}\n\nDeleted db buckets: \n- ${deletedDbBuckets.join('\n- ')}`;
 
     await mail(
       '--> Backups cleanup success',
