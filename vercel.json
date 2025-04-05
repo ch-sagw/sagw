@@ -2,15 +2,15 @@
   "crons": [
     {
       "path": "/api/cron-blob-backup",
-      "schedule": "5 0 * * *"
+      "schedule": "0 3 * * *"
     },
     {
       "path": "/api/cron-db-backup",
-      "schedule": "5 0 * * *"
+      "schedule": "0 4 * * *"
     },
     {
       "path": "/api/cron-cleanup-backups",
-      "schedule": "5 0 * * *"
+      "schedule": "0 5 * * *"
     }
   ]
 }
