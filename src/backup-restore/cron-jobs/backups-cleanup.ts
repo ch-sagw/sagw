@@ -13,6 +13,7 @@ import { sortBucketsNewestFirst } from '../helpers/date';
 import mail from '../helpers/mail';
 import { getErrorMessage } from '../helpers/try-catch-error';
 import type { Bucket } from '@aws-sdk/client-s3';
+import sendSlackMessage from '../helpers/slack';
 
 const cleanUpBucketsWithPrefix = async (prefix: string, allBuckets: [(Bucket | undefined)?], s3Helper: S3Helper): Promise<[string?]> => {
 
@@ -52,6 +53,12 @@ const main = async (): Promise<void> => {
       false,
     );
 
+    await sendSlackMessage([
+      ':large_green_circle: *Backups cleanup done*',
+      'Successfully cleaned up DB & Blob Backups.',
+      `Deleted ${deletedBlobBuckets.length} blob buckets and ${deletedDbBuckets.length} db buckets.\n\nDeleted blob buckets: \n- ${deletedBlobBuckets.join('\n -')}\n\nDeleted db buckets: \n-${deletedDbBuckets.join('\n -')}`,
+    ], false);
+
     console.log('--> Backups cleanup done');
 
   } catch (error) {
@@ -60,6 +67,8 @@ const main = async (): Promise<void> => {
       getErrorMessage(error),
       true,
     );
+
+    await sendSlackMessage([':warning: *Backups cleanup failure!*'], true);
 
     throw new Error(getErrorMessage(error));
   }
