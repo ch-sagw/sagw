@@ -3,15 +3,15 @@
   "crons": [
     {
       "path": "/api/cron-blob-backup",
-      "schedule": "0 3 * * *"
+      "schedule": "0 1 * * *"
     },
     {
       "path": "/api/cron-db-backup",
-      "schedule": "0 4 * * *"
+      "schedule": "0 2 * * *"
     },
     {
       "path": "/api/cron-cleanup-backups",
-      "schedule": "0 5 * * *"
+      "schedule": "0 3 * * *"
     }
   ],
   "git": {
