@@ -34,7 +34,7 @@
 - tests run on 5 workers on github instead of 2
 - do not use cross-env anymore!
 - repo -> security -> setup code-scanning etc.
-- in deploy-branch.yml -> "!release-please--**" is not working (after merging feat-pr, release-pr is updating. there we don't want to run the tests)
+- in deploy-branch.yml -> branch-ignore is not working (after merging feat-pr, release-pr is updating. there we don't want to run the tests)
 - playwright report is not commented on pr
 - scss warnings on github staging build
 - repo: add branch restrictions on main

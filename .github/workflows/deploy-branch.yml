@@ -2,12 +2,10 @@ name: Branch Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-on:
-  pull_request:
-    branches-ignore:
-      - "release-please--branches--main"
+on: pull_request
 jobs:
   test:
+    if: github.head_ref != 'release-please--branches--main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
