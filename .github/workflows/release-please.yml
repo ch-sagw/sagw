@@ -1,5 +1,3 @@
-# runs on pushes to main branch
-
 on:
   push:
     branches:

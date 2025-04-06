@@ -1,5 +1,3 @@
-# runs when a github release is published
-
 on:
   release:
     types: [published]
