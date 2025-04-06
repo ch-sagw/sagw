@@ -25,7 +25,7 @@
 
 - write all vercel config in vercel.json instead of using vercel ui
 - deploy storybook?
-
+- document merging strategy / release workflow
 - backup/restore: make it for staging and prod
 - backup/restore: add script to list all buckets
 - backup/restore: add script to select buckets to delete
