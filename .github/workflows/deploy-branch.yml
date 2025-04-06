@@ -17,6 +17,7 @@ jobs:
       - name: Test
         run: npm run test
   deploy-branch:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
