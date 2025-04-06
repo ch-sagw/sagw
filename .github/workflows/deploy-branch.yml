@@ -24,6 +24,8 @@ jobs:
         run: npm run docker:test:build
       - name: Test
         run: npm run test
+      - name: Stop Test container
+        run: docker compose -f docker-compose.testing.yml down --remove-orphans
       - name: Build Project Artifacts
         run: vercel build --target=preview --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
