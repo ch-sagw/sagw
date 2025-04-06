@@ -14,7 +14,11 @@
 
 - WARN: No email adapter provided. Email will be written to console. More info at https://payloadcms.com/docs/email/overview.
 
-- as i remember, vercel does not support nvmrc files. make strategic decision -> as of now, building happens on github, not vercel. make sure to use nvmrc in github workflow
+- node version!
+  - Vercel does not support nvmrc files. You can set node version (major version only) in package.json. building happens on github for staging and production builds. But preview builds still run on vercel. is it an issue?
+  - The edge functions, cron jobs etc. run on vercel, there, they seem to use node 22.x
+  - most likely, we must regularly check which node version vercel is using and adapt our project node version to that of vercel
+- make sure to use nvmrc on all github workflows which build the projects
 - force squash commits
 - run tests before build
 
