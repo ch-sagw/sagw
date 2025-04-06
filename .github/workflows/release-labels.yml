@@ -1,0 +1,17 @@
+# runs when a github release is published
+
+on:
+  release:
+    types: [published]
+permissions:
+  issues: write
+  pull-requests: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: apexskier/github-release-commenter@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          comment-template: ""
+          label-template: "{release_tag}"

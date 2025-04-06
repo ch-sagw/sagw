@@ -1,4 +1,5 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "crons": [
     {
       "path": "/api/cron-blob-backup",
@@ -12,5 +13,11 @@
       "path": "/api/cron-cleanup-backups",
       "schedule": "0 5 * * *"
     }
-  ]
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "main": false,
+      "release-please--*": false
+    }
+  }
 }
