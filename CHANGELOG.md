@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/ch-sagw/sagw/compare/v0.1.2...v0.1.3) (2025-04-06)
+
+
+### Documentation
+
+* remove todo ([#16](https://github.com/ch-sagw/sagw/issues/16)) ([0425476](https://github.com/ch-sagw/sagw/commit/0425476c62f230b6ec2f6ca650f3284e434f649b))
+
 ## [0.1.2](https://github.com/ch-sagw/sagw/compare/v0.1.1...v0.1.2) (2025-04-06)
 
 
