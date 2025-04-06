@@ -22,21 +22,20 @@
 - force squash commits
 - run tests before build
 
-
 - write all vercel config in vercel.json instead of using vercel ui
 - deploy storybook?
-
+- document merging strategy / release workflow
 - backup/restore: make it for staging and prod
 - backup/restore: add script to list all buckets
 - backup/restore: add script to select buckets to delete
 - backup/restore: add script to download backups buckets
-
+- In staging-release workflow: Also make test-env deployment
+- add slack integration to vercel
 - use only one compose file
 
 - do not use cross-env anymore!
 
 - scss warnings on github staging build
-
 - repo: add branch restrictions on main
 
 - document env variables and save them to 1password. which are used on vercel/github?
