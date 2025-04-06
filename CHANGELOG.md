@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.1.1](https://github.com/ch-sagw/sagw/compare/v0.1.0...v0.1.1) (2025-04-06)
+
+
+### Chore
+
+* **deps-dev:** bump the development-dependencies group across 1 directory with 16 updates ([f94254c](https://github.com/ch-sagw/sagw/commit/f94254cfe4b5a79d3b136021b47c28a938de0abf))
+* **deps:** bump the production-dependencies group across 1 directory with 12 updates ([8da5a6c](https://github.com/ch-sagw/sagw/commit/8da5a6c76f038d26880f6f7e572265fa50d1b657))
+* **deps:** bump the production-dependencies group across 1 directory with 12 updates ([1dfec83](https://github.com/ch-sagw/sagw/commit/1dfec83e13cc29320d9d347c7add6641ef7c03c8))
+* make stylelint ignore node_modules ([4ba8fd8](https://github.com/ch-sagw/sagw/commit/4ba8fd86e39bf2ae2935b3241761c4e1d351ae21))
+* properly time corn-jobs / take time-shift into consideration ([3d23ea9](https://github.com/ch-sagw/sagw/commit/3d23ea9ad24df1dc2fbfd60ceb346d615f37c753))
+
+
+### Documentation
+
+* add todo ([#14](https://github.com/ch-sagw/sagw/issues/14)) ([23817be](https://github.com/ch-sagw/sagw/commit/23817becc654e4e9f3e61845c4f4ba50e03e8d6f))
+* manage todo's ([96dbd87](https://github.com/ch-sagw/sagw/commit/96dbd879becb83d46fc491e8116acbc271ee02a6))
+
 ## [0.1.0](https://github.com/ch-sagw/sagw/compare/v0.0.1...v0.1.0) (2025-04-06)
 
 
