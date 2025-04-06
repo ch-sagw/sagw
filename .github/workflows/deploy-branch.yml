@@ -3,16 +3,20 @@ env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 on:
-  workflow_run:
-    workflows: ["test"]
+  push:
     branches-ignore:
       - 'main'
       - 'release-please--branches--main'
-    types: 
-      - completed
-
 jobs:
-  Deploy-Branch:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build test container
+        run: npm run docker:test:build
+      - name: Test
+        run: npm run test
+  deploy-branch:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
