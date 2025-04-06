@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.1.2](https://github.com/ch-sagw/sagw/compare/v0.1.1...v0.1.2) (2025-04-06)
+
+
+### Chore
+
+* remove comment ([053ccb1](https://github.com/ch-sagw/sagw/commit/053ccb1fc248a67b1b88975f9fedc9ac95356978))
+
+
+### CI
+
+* add preview deploy on main ([ee485ef](https://github.com/ch-sagw/sagw/commit/ee485ef07c81c7890c5bab5ed458d3ef28df0b54))
+
+
+### Documentation
+
+* add todos ([4dc1981](https://github.com/ch-sagw/sagw/commit/4dc1981c357213c6e1bf7412b311c6a251b2d17a))
+
 ## [0.1.1](https://github.com/ch-sagw/sagw/compare/v0.1.0...v0.1.1) (2025-04-06)
 
 
