@@ -31,9 +31,10 @@
 - backup/restore: add script to download backups buckets
 - In staging-release workflow: Also make test-env deployment
 - use only one compose file
-
+- add playwright report to pr
+- tests run on 5 workers on github instead of 2
 - do not use cross-env anymore!
-
+- repo -> security -> setup code-scanning etc.
 - scss warnings on github staging build
 - repo: add branch restrictions on main
 
