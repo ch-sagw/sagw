@@ -21,7 +21,6 @@
 - make sure to use nvmrc on all github workflows which build the projects
 - force squash commits
 - run tests before build
-
 - write all vercel config in vercel.json instead of using vercel ui
 - deploy storybook?
 - document merging strategy / release workflow
@@ -35,6 +34,8 @@
 - tests run on 5 workers on github instead of 2
 - do not use cross-env anymore!
 - repo -> security -> setup code-scanning etc.
+- in deploy-branch.yml -> "!release-please--**" is not working (after merging feat-pr, release-pr is updating. there we don't want to run the tests)
+- playwright report is not commented on pr
 - scss warnings on github staging build
 - repo: add branch restrictions on main
 
