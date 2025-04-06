@@ -32,7 +32,7 @@
 - In staging-release workflow: Also make test-env deployment
 - use only one compose file
 
-
+- tests run on 5 workers on github instead of 2
 - do not use cross-env anymore!
 
 - scss warnings on github staging build

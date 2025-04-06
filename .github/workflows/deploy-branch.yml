@@ -18,6 +18,8 @@ jobs:
         run: npm run test
       - name: Stop Test container
         run: docker compose -f docker-compose.testing.yml down --remove-orphans
+      - name: Delete Node.js folder with sudo
+        run: sudo rm -rf /home/runner/work/sagw/sagw/node_modules
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
