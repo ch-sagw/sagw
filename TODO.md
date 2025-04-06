@@ -21,7 +21,6 @@
 - make sure to use nvmrc on all github workflows which build the projects
 - force squash commits
 - run tests before build
-
 - write all vercel config in vercel.json instead of using vercel ui
 - deploy storybook?
 - document merging strategy / release workflow
