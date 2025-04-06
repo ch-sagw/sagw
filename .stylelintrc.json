@@ -13,8 +13,7 @@
     "@stylistic/max-line-length": null
   },
   "ignoreFiles": [
-    "convenience/generate-component/boilerplate/styles/*.scss",
-    "node_modules/"
+    "convenience/generate-component/boilerplate/styles/*.scss"
   ],
   "plugins": [
     "@stylistic/stylelint-plugin"
