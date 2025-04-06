@@ -30,7 +30,6 @@
 - backup/restore: add script to select buckets to delete
 - backup/restore: add script to download backups buckets
 - In staging-release workflow: Also make test-env deployment
-- add slack integration to vercel
 - use only one compose file
 
 - do not use cross-env anymore!
