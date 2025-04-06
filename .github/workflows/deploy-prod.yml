@@ -7,7 +7,16 @@ on:
     tags:
       - '*'
 jobs:
-  Deploy-Production:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build test container
+        run: npm run docker:test:build
+      - name: Test
+        run: npm run test
+  deploy-production:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
