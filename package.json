@@ -24,10 +24,10 @@
     "build-storybook": "storybook build",
     "test:native": "playwright test",
     "test:native:watch": "playwright test --ui-port=8080 --ui-host=0.0.0.0",
-    "docker:test:build": "sudo docker compose -f docker-compose.testing.yml build",
-    "test": "docker compose -f docker-compose.testing.yml run --rm visual-test npm run test:native",
-    "test:watch": "docker compose -f docker-compose.testing.yml run --rm -p 8080:8080 visual-test npm run test:native:watch",
-    "start:db": "docker compose -f docker-compose.db.yml run --rm -p 27017:27017 mongodb --quiet --syslog",
+    "docker:test:build": "sudo docker compose -f docker-compose.yml build",
+    "test": "docker compose -f docker-compose.yml run --rm visual-test npm run test:native",
+    "test:watch": "docker compose -f docker-compose.yml run --rm -p 8080:8080 visual-test npm run test:native:watch",
+    "start:db": "docker compose -f docker-compose.yml run --rm -p 27017:27017 mongodb --quiet --syslog",
     "generate:component": "tsx convenience/generate-component/index",
     "restore:blob": "tsx ./src/backup-restore/restores/blob-restore",
     "restore:db": "tsx ./src/backup-restore/restores/db-restore"
@@ -85,5 +85,8 @@
     "tsx": "^4.19.3",
     "typescript": "5.8.3",
     "vercel": "^41.4.1"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }

@@ -56,20 +56,19 @@ const projects = [
     name: 'webkit',
     use: devices['Desktop Safari'],
   },
+
 ];
 
 export default defineConfig({
   expect: {
     toHaveScreenshot: {
 
-      /* eslint-disable @typescript-eslint/naming-convention */
-      // @ts-expect-error: name error
-      _comparator: 'ssim-cie94',
+      // _comparator: 'ssim-cie94',
 
       maxDiffPixelRatio: 0,
       maxDiffPixels: 0,
       pathTemplate: '{arg}{ext}',
-      scale: 'device',
+      // scale: 'device',
       threshold: 0,
     },
   },

@@ -5,8 +5,8 @@ import { componentsConfig } from '@/components/config';
 export const defaultDecorator = (Story: PartialStoryFn): ReactElement => (
   <div
     style={{
-      display: 'inline-block',
-      padding: '3em',
+      display: 'block',
+      padding: '3rem',
     }}
     data-testid={componentsConfig.testid}
   >
