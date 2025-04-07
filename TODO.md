@@ -18,9 +18,6 @@ Backup / Restore:
 - backup/restore: add script to download backups buckets
 - backup bucket names have wrong time
 
-- disable posting in backup channel
-- document docker setup (with playwright image) -> which node versions are used? how to keep them in sync? (with project node version, vercel node version)
-
 Build:
 ------
 - fix sentry warnings
@@ -43,6 +40,10 @@ Documentation:
 --------------
 - document merging strategy / release workflow
 - document env variables and save them to 1password. which are used on vercel/github?
+
+Vercel:
+-------
+- Remove deployment protection -> otherwise, we have to be logged in to see preview/staging
 
 Github:
 -------
