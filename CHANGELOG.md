@@ -1,5 +1,47 @@
 # Changelog
 
+## [0.1.5](https://github.com/ch-sagw/sagw/compare/v0.1.4...v0.1.5) (2025-04-07)
+
+
+### Chore
+
+* add node engine ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+* add note about docker node version ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+* remove permissions to see if fixes issue with vercel not commenting on pr ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+* set permission again ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+* use only one compose file ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+* wso ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+
+
+### CI
+
+* give it pr write permission to fix issue with playwright report comment ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+* remove preview build from workflow, let vercel do it ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+* rename workflow ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+* run correct test command ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+* set root ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+* use image directly in workflow ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+* use updated checkout, use official playwright docker image for prod ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+
+
+### Documentation
+
+* add documentation about node handling, move env-vars and backup docs ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+* organize todos ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+* remove finished todos ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+* update todos ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+
+
+### Bug Fixes
+
+* set test element to block to mitigate screenshot width dimension mismatch ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+
+
+### Test
+
+* add host config again ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+* try to use official playwright docker image ([c6ecb08](https://github.com/ch-sagw/sagw/commit/c6ecb081ebb859fca5d1e2fc02a213aebf111e4b))
+
 ## [0.1.4](https://github.com/ch-sagw/sagw/compare/v0.1.3...v0.1.4) (2025-04-06)
 
 
