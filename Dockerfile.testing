@@ -7,6 +7,9 @@
 # !! KEEP IN SYNC WITH playwright IN PACKAGE.JSON
 # RUN npx playwright@1.51.1 install --with-deps
 
+# ATTENTION: This docker file uses node 22.x. Regularly check if node version changed.
+
+# ATTENTION: If the docker image is changed here, it also needs to be changed in deploy-branch.yml and deploy-prod.yml
 
 FROM mcr.microsoft.com/playwright:v1.51.1-noble
 WORKDIR /src
