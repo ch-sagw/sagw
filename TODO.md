@@ -23,7 +23,6 @@
 - backup/restore: add script to list all buckets
 - backup/restore: add script to select buckets to delete
 - backup/restore: add script to download backups buckets
-- use only one compose file
 - tests run on 5 workers on github instead of 2
 - do not use cross-env anymore!
 - repo -> security -> setup code-scanning etc.

@@ -12,3 +12,12 @@ services:
       # architectures!
       - /src/node_modules
     # network_mode: host
+  mongodb:
+    image: mongodb/mongodb-community-server:7.0.16-ubi8
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=user
+      - MONGODB_INITDB_ROOT_PASSWORD=pass
+    volumes:
+      - type: bind
+        source: ./mongo-db-data
+        target: /data/db
