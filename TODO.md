@@ -1,12 +1,9 @@
 - containerize local db
   - seed function?
   - reproduction from prod to local dev?
-- vrt:
-  - when logging meta, then config.rootDir is '/src/src' ???
-  - publish docker to use it in github workflow?
+- vrt: when logging meta, then config.rootDir is '/src/src' ???
 - test integration of backup/restore
 - order npm scripts
-- add sentry
 - fix sentry warnings
 - -> install sentry integration in vercel
 - for backup-buckets: integrate env-variable to prefix test/staging/prod. also adapt config (send mail/slack) for different environments
@@ -18,9 +15,7 @@
   - The edge functions, cron jobs etc. run on vercel, there, they seem to use node 22.x
   - most likely, we must regularly check which node version vercel is using and adapt our project node version to that of vercel
 
-- make sure to use nvmrc on all github workflows which build the projects
 - force squash commits
-- run tests before build
 - write all vercel config in vercel.json instead of using vercel ui
 - deploy storybook?
 - document merging strategy / release workflow
@@ -28,20 +23,15 @@
 - backup/restore: add script to list all buckets
 - backup/restore: add script to select buckets to delete
 - backup/restore: add script to download backups buckets
-- In staging-release workflow: Also make test-env deployment
-- use only one compose file
-- add playwright report to pr
 - tests run on 5 workers on github instead of 2
 - do not use cross-env anymore!
 - repo -> security -> setup code-scanning etc.
-- in deploy-branch.yml -> branch-ignore is not working (after merging feat-pr, release-pr is updating. there we don't want to run the tests)
-- playwright report is not commented on pr
 - scss warnings on github staging build
 - repo: add branch restrictions on main
-
+- tests failing arbitary: it seems to be always 1 pixel diff in the width of the image
 - document env variables and save them to 1password. which are used on vercel/github?
 
 - backup bucket names have wrong time
 
-- rename slack app to backups
 - disable posting in backup channel
+- document docker setup (with playwright image) -> which node versions are used? how to keep them in sync? (with project node version, vercel node version)
