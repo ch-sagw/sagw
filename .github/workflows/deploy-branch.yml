@@ -9,6 +9,8 @@ jobs:
     env:
       HOME: /root
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     container:
       # redundant, but: if you change this, also change lint-and-test.yml in
       # /Dockerfile
