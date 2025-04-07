@@ -1,5 +1,55 @@
 # Changelog
 
+## [0.1.4](https://github.com/ch-sagw/sagw/compare/v0.1.3...v0.1.4) (2025-04-06)
+
+
+### Chore
+
+* exclude node_modules from stylelint ([2a9d083](https://github.com/ch-sagw/sagw/commit/2a9d083a0cd2558f02adb70c56229c86f2bab28d))
+* rename workflows ([c25040f](https://github.com/ch-sagw/sagw/commit/c25040f57fc6d30b1039beeb7d68dc9c22268329))
+* rename workflows ([b3a2be2](https://github.com/ch-sagw/sagw/commit/b3a2be27212f5e56e493fc38d9480a1f34cfc4c5))
+* use correct node version and reinstall node_modules ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* wso test to rebuild branch ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* wso to check if vercel automatic build is skipped ([c25040f](https://github.com/ch-sagw/sagw/commit/c25040f57fc6d30b1039beeb7d68dc9c22268329))
+
+
+### CI
+
+* add playwright report to pr ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* again try to skip release branch build after merge ([#22](https://github.com/ch-sagw/sagw/issues/22)) ([aea34ae](https://github.com/ch-sagw/sagw/commit/aea34ae6e19942e7081914732816803ae734efd3))
+* build test container manually ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* delete node_modules after testing ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* do manual branch builds ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* do manual branch builds ([#19](https://github.com/ch-sagw/sagw/issues/19)) ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* explicitly exclude release branch ([c25040f](https://github.com/ch-sagw/sagw/commit/c25040f57fc6d30b1039beeb7d68dc9c22268329))
+* explicitly exclude release branch ([b3a2be2](https://github.com/ch-sagw/sagw/commit/b3a2be27212f5e56e493fc38d9480a1f34cfc4c5))
+* ignore release branch on branch build ([c25040f](https://github.com/ch-sagw/sagw/commit/c25040f57fc6d30b1039beeb7d68dc9c22268329))
+* make deploy dependant from test ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* only run workflow un pull_request event ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* redo checkout ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* rename test workflow ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* reorder instructions ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* reorder instructions ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* run test ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* run test as separate job ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* run test in separate workflow ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* run tests before prod deployment ([c25040f](https://github.com/ch-sagw/sagw/commit/c25040f57fc6d30b1039beeb7d68dc9c22268329))
+* run tests before prod deployment ([b3a2be2](https://github.com/ch-sagw/sagw/commit/b3a2be27212f5e56e493fc38d9480a1f34cfc4c5))
+* run workflow on pull requests ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* skip test ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* stop container after test ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+* stop docker after test ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+
+
+### Documentation
+
+* add todo ([4c45f50](https://github.com/ch-sagw/sagw/commit/4c45f502700c58cb9bd4131f72124b593458c818))
+
+
+### Bug Fixes
+
+* only use ignore branches ([c25040f](https://github.com/ch-sagw/sagw/commit/c25040f57fc6d30b1039beeb7d68dc9c22268329))
+
 ## [0.1.3](https://github.com/ch-sagw/sagw/compare/v0.1.2...v0.1.3) (2025-04-06)
 
 
