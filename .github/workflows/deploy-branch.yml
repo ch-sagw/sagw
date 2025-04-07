@@ -12,8 +12,7 @@ jobs:
     permissions:
       pull-requests: write
     container:
-      # redundant, but: if you change this, also change lint-and-test.yml in
-      # /Dockerfile
+      # if the docker image is changed, also change it in deploy-prod.yml and in Dockerfile.testing
       image: mcr.microsoft.com/playwright:v1.51.1-noble
     steps:
       - uses: actions/checkout@v4

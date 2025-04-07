@@ -8,18 +8,28 @@ on:
       - '*'
 jobs:
   test:
+    if: github.head_ref != 'release-please--branches--main'
+    env:
+      HOME: /root
     runs-on: ubuntu-latest
+    container:
+      # if the docker image is changed, also change it in deploy-branch.yml and in Dockerfile.testing
+      image: mcr.microsoft.com/playwright:v1.51.1-noble
     steps:
-      - uses: actions/checkout@v3
-      - name: Build test container
-        run: npm run docker:test:build
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
       - name: Test
-        run: npm run test
+        run: npm run test:native
   deploy-production:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
