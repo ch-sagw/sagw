@@ -27,7 +27,6 @@
 - tests run on 5 workers on github instead of 2
 - do not use cross-env anymore!
 - repo -> security -> setup code-scanning etc.
-- playwright report is not commented on pr
 - scss warnings on github staging build
 - repo: add branch restrictions on main
 - tests failing arbitary: it seems to be always 1 pixel diff in the width of the image
@@ -36,3 +35,4 @@
 - backup bucket names have wrong time
 
 - disable posting in backup channel
+- document docker setup (with playwright image) -> which node versions are used? how to keep them in sync? (with project node version, vercel node version)
