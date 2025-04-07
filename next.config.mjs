@@ -28,6 +28,10 @@ const nextConfig = {
   reactStrictMode: true,
   sassOptions: {
     includePaths: [path.resolve(rootDirName, 'src/styles')],
+    silenceDeprecations: [
+      'import',
+      'legacy-js-api',
+    ],
   },
 };
 
