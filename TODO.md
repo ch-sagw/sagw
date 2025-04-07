@@ -41,18 +41,12 @@ Documentation:
 - document merging strategy / release workflow
 - document env variables and save them to 1password. which are used on vercel/github?
 
-Vercel:
--------
-- Remove deployment protection -> otherwise, we have to be logged in to see preview/staging
-
 Github:
 -------
 - force squash commits
-- security -> setup code-scanning etc.
 - add branch restrictions on main
 
 Slack:
 ------
-- disable posting in backup and other channels
 - get more fine-grained notifications from ovh and vercel
 - prod-deployment is ok. staging and preview post to the same channel: can we differentiate them somewhow?
