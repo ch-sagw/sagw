@@ -1,8 +1,14 @@
 # syntax=docker.io/docker/dockerfile:1.7-labs
-FROM node:22.14.0-bookworm
-WORKDIR /src
-COPY --exclude=node_modules --exclude=Dockerfile.testing --exclude=docker-compose.testing.yml . .
-RUN npm install
+# FROM node:22.14.0-bookworm
+# WORKDIR /src
+# COPY --exclude=node_modules --exclude=Dockerfile.testing --exclude=docker-compose.testing.yml . .
+# RUN npm install
 
 # !! KEEP IN SYNC WITH playwright IN PACKAGE.JSON
-RUN npx playwright@1.51.1 install --with-deps
+# RUN npx playwright@1.51.1 install --with-deps
+
+
+FROM mcr.microsoft.com/playwright:v1.51.1-noble
+WORKDIR /src
+COPY --exclude=node_modules . .
+RUN npm install
