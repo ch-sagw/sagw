@@ -9,8 +9,8 @@ jobs:
     env:
       HOME: /root
     runs-on: ubuntu-latest
-    # permissions:
-    #  pull-requests: write
+    permissions:
+      pull-requests: write
     container:
       # if the docker image is changed, also change it in deploy-prod.yml and in Dockerfile.testing
       image: mcr.microsoft.com/playwright:v1.51.1-noble
