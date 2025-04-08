@@ -1,10 +1,10 @@
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob';
-
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
-import path from 'path';
+import { resendAdapter } from '@payloadcms/email-resend';
 import { buildConfig } from 'payload';
+import path from 'path';
 import { fileURLToPath } from 'url';
 import sharp from 'sharp';
 
@@ -29,6 +29,11 @@ export default buildConfig({
     url: process.env.DATABASE_URI || '',
   }),
   editor: lexicalEditor(),
+  email: resendAdapter({
+    apiKey: process.env.RESEND_KEY || '',
+    defaultFromAddress: 'cms@sagw.ch',
+    defaultFromName: 'Payload CMS',
+  }),
   plugins: [
     vercelBlobStorage({
       collections: {

@@ -1,7 +1,6 @@
 DB:
 ---
 - containerize local db
-  - seed function?
   - reproduction from prod to local dev?
 
 VRT:
@@ -23,7 +22,6 @@ Build:
 - fix sentry warnings
 - -> install sentry integration in vercel
 - vercel: add env-dependant secrets (mongodb etc.)
-- WARN: No email adapter provided. Email will be written to console. More info at https://payloadcms.com/docs/email/overview.
 - write all vercel config in vercel.json instead of using vercel ui
 
 Setup:
@@ -48,3 +46,7 @@ Github:
 Slack:
 ------
 - prod-deployment is ok. staging and preview post to the same channel: can we differentiate them somewhow?
+
+Accounts:
+---------
+- Make Resend account for SAGW
