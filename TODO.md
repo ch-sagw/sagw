@@ -12,10 +12,8 @@ Backup / Restore:
 - test integration of backup/restore
 - for backup-buckets: integrate env-variable to prefix test/staging/prod. also adapt config (send mail/slack) for different environments
 - backup/restore: make it for staging and prod
-- backup/restore: add script to list all buckets
-- backup/restore: add script to select buckets to delete
-- backup/restore: add script to download backups buckets
 - backup bucket names have wrong time
+- restore blob: does not seem to work -> image in blob on vercel won't open
 
 Build:
 ------
@@ -26,7 +24,6 @@ Build:
 
 Setup:
 ------
-- order npm scripts
 - do not use cross-env anymore!
 
 Storybook:
@@ -40,7 +37,6 @@ Documentation:
 
 Github:
 -------
-- force squash commits
 - add branch restrictions on main
 
 Slack:

@@ -56,3 +56,6 @@ next-env.d.ts
 
 # mongo-db
 /mongo-db-data/
+
+# backup / restore
+download

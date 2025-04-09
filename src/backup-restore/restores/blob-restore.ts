@@ -10,7 +10,6 @@ import chalk from 'chalk';
 import * as blobHelpers from '../helpers/blob';
 import { S3Helper } from '../helpers/s3';
 import config from '../config';
-import { sortBucketsNewestFirst } from '../helpers/date';
 import {
   inquirerAskBucketToRestore,
   inquirerAskForProceed,
@@ -28,13 +27,12 @@ const main = async (): Promise<void> => {
 
     const s3Helper = new S3Helper();
     const buckets = await s3Helper.getAllBuckets();
-    const blobBuckets = buckets.filter((bucket) => bucket?.Name?.indexOf(config.blobBackupBucketPrefix) !== -1);
+    const sortedBlockBuckets = s3Helper.getBucketsWithPrefixSorted(config.blobBackupBucketPrefix, buckets);
 
-    if (!blobBuckets || blobBuckets.length < 1) {
+    if (!sortedBlockBuckets || sortedBlockBuckets.length < 1) {
       throw new Error('no backups found to restore');
     }
 
-    const sortedBlockBuckets = sortBucketsNewestFirst(blobBuckets);
     const selectedBucket = await inquirerAskBucketToRestore(sortedBlockBuckets);
     const allObjectsInBucket = await s3Helper.listObjectsOfBucket(selectedBucket);
     const allBlobs = await blobHelpers.getAllBlobs();
@@ -55,7 +53,7 @@ const main = async (): Promise<void> => {
         const objectData = await s3Helper.getObject(selectedBucket, object);
 
         if (!objectData) {
-          throw new Error(`Fatal: was not able to get object with the specified name: ${selectedBucket}`);
+          throw new Error(`Fatal: was not able to get object with the specified name: ${object}`);
         }
 
         await blobHelpers.addBlob(object, objectData);
@@ -75,7 +73,5 @@ const main = async (): Promise<void> => {
     console.log(chalk.bgRed(error));
   }
 };
-
-export default main;
 
 main();
