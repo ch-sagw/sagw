@@ -6,7 +6,6 @@
  */
 
 import dotenv from 'dotenv';
-// import { Readable } from 'node:stream';
 import {
   type Bucket,
   CreateBucketCommand,
