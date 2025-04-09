@@ -1,7 +1,6 @@
 DB:
 ---
-- containerize local db
-- reproduction from prod to local dev?
+- reproduction from prod to local dev? reproduction from prod to staging?
 
 VRT:
 ----
@@ -11,7 +10,6 @@ Backup / Restore:
 -----------------
 - for backup-buckets: integrate env-variable to prefix test/staging/prod. also adapt config (send mail/slack) for different environments
 - backup/restore: make it for staging and prod
-- backup bucket names have wrong time
 - mongo-db has a config db, which is mainly for cluster-meta. do we have to backup/restore it as well?
 
 Build:
@@ -19,11 +17,6 @@ Build:
 - fix sentry warnings
 - -> install sentry integration in vercel
 - vercel: add env-dependant secrets (mongodb etc.)
-- write all vercel config in vercel.json instead of using vercel ui
-
-Setup:
-------
-- do not use cross-env anymore!
 
 Storybook:
 ----------
