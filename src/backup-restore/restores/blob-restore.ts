@@ -26,8 +26,7 @@ const main = async (): Promise<void> => {
     }
 
     const s3Helper = new S3Helper();
-    const buckets = await s3Helper.getAllBuckets();
-    const sortedBlockBuckets = s3Helper.getBucketsWithPrefixSorted(config.blobBackupBucketPrefix, buckets);
+    const sortedBlockBuckets = await s3Helper.getBucketsWithPrefixSorted(config.blobBackupBucketPrefix);
 
     if (!sortedBlockBuckets || sortedBlockBuckets.length < 1) {
       throw new Error('no backups found to restore');

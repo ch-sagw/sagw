@@ -62,7 +62,7 @@ export class S3Helper {
     await this._client.send(command);
   };
 
-  public getAllBuckets = async (): Promise<[(Bucket | undefined)?]> => {
+  private _getAllBuckets = async (): Promise<[(Bucket | undefined)?]> => {
     const buckets: [Bucket?] = [];
 
     const paginator = paginateListBuckets(
@@ -81,7 +81,8 @@ export class S3Helper {
     return buckets;
   };
 
-  public getBucketsWithPrefixSorted = (prefix: string, buckets: [(Bucket | undefined)?]): (string | undefined)[] => {
+  public getBucketsWithPrefixSorted = async (prefix: string): Promise<(string | undefined)[]> => {
+    const buckets = await this._getAllBuckets();
     const filteredBuckets = buckets.filter((bucket) => bucket?.Name?.indexOf(prefix) !== -1);
     const bucketsSorted = sortBucketsNewestFirst(filteredBuckets);
     const bucketList = bucketsSorted

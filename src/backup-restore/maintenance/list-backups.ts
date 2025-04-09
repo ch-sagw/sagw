@@ -25,9 +25,8 @@ export const listAllBackups = async (): Promise<void> => {
   }
 
   const s3Helper = new S3Helper();
-  const buckets = await s3Helper.getAllBuckets();
 
-  const bucketsSorted = s3Helper.getBucketsWithPrefixSorted(prefix, buckets);
+  const bucketsSorted = await s3Helper.getBucketsWithPrefixSorted(prefix);
   const bucketList = bucketsSorted
     .join('\n');
 

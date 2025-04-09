@@ -14,9 +14,9 @@ import { getErrorMessage } from '../helpers/try-catch-error';
 import type { Bucket } from '@aws-sdk/client-s3';
 import sendSlackMessage from '../helpers/slack';
 
-const cleanUpBucketsWithPrefix = async (prefix: string, allBuckets: [(Bucket | undefined)?], s3Helper: S3Helper): Promise<[string?]> => {
+const cleanUpBucketsWithPrefix = async (prefix: string, s3Helper: S3Helper): Promise<[string?]> => {
 
-  const bucketsSorted = s3Helper.getBucketsWithPrefixSorted(prefix, allBuckets);
+  const bucketsSorted = await s3Helper.getBucketsWithPrefixSorted(prefix);
   const bucketsToDelete = JSON.parse(JSON.stringify(bucketsSorted))
     .splice(config.keepAmountOfBackups, bucketsSorted.length - config.keepAmountOfBackups);
 
@@ -38,10 +38,9 @@ const cleanUpBucketsWithPrefix = async (prefix: string, allBuckets: [(Bucket | u
 const main = async (): Promise<void> => {
   try {
     const s3Helper = new S3Helper();
-    const buckets = await s3Helper.getAllBuckets();
 
-    const deletedBlobBuckets = await cleanUpBucketsWithPrefix(config.blobBackupBucketPrefix, buckets, s3Helper);
-    const deletedDbBuckets = await cleanUpBucketsWithPrefix(config.dbBackupBucketPrefix, buckets, s3Helper);
+    const deletedBlobBuckets = await cleanUpBucketsWithPrefix(config.blobBackupBucketPrefix, s3Helper);
+    const deletedDbBuckets = await cleanUpBucketsWithPrefix(config.dbBackupBucketPrefix, s3Helper);
 
     const mailMessage = `Deleted ${deletedBlobBuckets.length} blob buckets and ${deletedDbBuckets.length} db buckets.\n\nDeleted blob buckets: \n- ${deletedBlobBuckets.join('\n- ')}\n\nDeleted db buckets: \n- ${deletedDbBuckets.join('\n- ')}`;
 
