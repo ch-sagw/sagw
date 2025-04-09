@@ -68,13 +68,13 @@ const main = async (): Promise<void> => {
 
         if (collectionNameSplit.length === 2) {
           const [collectionName] = collectionNameSplit;
-          const objectData = await s3Helper.getObject(selectedBucket, object);
-
-          await dbHelper.deleteCollection(process.env.DATABASE_NAME, collectionName);
+          const objectData = await s3Helper.getObject(selectedBucket, object, false);
 
           if (!objectData) {
             throw new Error(`Fatal: was not able to get object with the specified name: ${selectedBucket}`);
           }
+
+          await dbHelper.deleteCollection(process.env.DATABASE_NAME, collectionName);
 
           const parsed = EJSON.parse(objectData);
 

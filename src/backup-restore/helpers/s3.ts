@@ -106,13 +106,15 @@ export class S3Helper {
     await upload.done();
   };
 
-  public getObject = async (bucketName: string, fileName: string): Promise<string | undefined> => {
+  public getObject = async (bucketName: string, fileName: string, base64: boolean): Promise<string | undefined> => {
     const response = await this._client.send(new GetObjectCommand({
       Bucket: bucketName,
       Key: fileName,
     }));
 
-    const transformedResult = await response.Body?.transformToString('base64');
+    const transformedResult = await response.Body?.transformToString(base64
+      ? 'base64'
+      : undefined);
 
     return transformedResult;
   };

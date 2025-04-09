@@ -9,11 +9,10 @@ VRT:
 
 Backup / Restore:
 -----------------
-- test integration of backup/restore
 - for backup-buckets: integrate env-variable to prefix test/staging/prod. also adapt config (send mail/slack) for different environments
 - backup/restore: make it for staging and prod
 - backup bucket names have wrong time
-- Vercel has 4.5mb limit on Vercel Functions. Check to see if we are affacted by this in our corn-job functions
+- mongo-db has a config db, which is mainly for cluster-meta. do we have to backup/restore it as well?
 
 Build:
 ------

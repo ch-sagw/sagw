@@ -50,7 +50,7 @@ const main = async (): Promise<void> => {
 
     await Promise.all(allObjectsInBucket.map(async (object) => {
       if (object) {
-        const objectData = await s3Helper.getObject(selectedBucket, object);
+        const objectData = await s3Helper.getObject(selectedBucket, object, true);
 
         if (!objectData) {
           throw new Error(`Fatal: was not able to get object with the specified name: ${object}`);
