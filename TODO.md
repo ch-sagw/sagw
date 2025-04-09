@@ -1,7 +1,7 @@
 DB:
 ---
 - containerize local db
-  - reproduction from prod to local dev?
+- reproduction from prod to local dev?
 
 VRT:
 ----
@@ -13,7 +13,7 @@ Backup / Restore:
 - for backup-buckets: integrate env-variable to prefix test/staging/prod. also adapt config (send mail/slack) for different environments
 - backup/restore: make it for staging and prod
 - backup bucket names have wrong time
-- restore blob: does not seem to work -> image in blob on vercel won't open
+- Vercel has 4.5mb limit on Vercel Functions. Check to see if we are affacted by this in our corn-job functions
 
 Build:
 ------

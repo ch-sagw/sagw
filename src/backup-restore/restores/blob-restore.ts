@@ -56,7 +56,9 @@ const main = async (): Promise<void> => {
           throw new Error(`Fatal: was not able to get object with the specified name: ${object}`);
         }
 
-        await blobHelpers.addBlob(object, objectData);
+        const buf = Buffer.from(objectData, 'base64');
+
+        await blobHelpers.addBlob(object, buf);
       }
     }));
 
