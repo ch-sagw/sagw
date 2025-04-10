@@ -16,10 +16,10 @@ For convenience, env-vars are split between base and prod/test.
 |`RELEASE_PLEASE_TOKEN`|Used by release-please on Github to create Branches, PR's, Tags, GH-Releases and comments.|Github personal access token|Github (as repository sercret)|
 |`SLACK_WEBHOOK_URL`|Used to post Slack messages from CronJobs.|Slack|Vercel & Local Dev|
 |`SENTRY_AUTH_TOKEN`|Used to authenticate Sentry in NextJS.|Sentry|Vercel & Local Dev|
-|CRON_SECRET|Passed in Request-Header to authenticate Cronjob-Requests.|Vercel|Vercel|
-|NEXT_PUBLIC_SENTRY_DSN|DSN for Sentry.|Sentry|Vercel & Local Dev|
-|SENTRY_PROJECT|Sentry project name.|Sentry|Vercel & Local Dev|
-|SENTRY_ORG|Sentry organisation name.|Sentry|Vercel & Local Dev|
+|`CRON_SECRET`|Passed in Request-Header to authenticate Cronjob-Requests.|Vercel|Vercel|
+|`NEXT_PUBLIC_SENTRY_DSN`|DSN for Sentry.|Sentry|Vercel & Local Dev|
+|`SENTRY_PROJECT`|Sentry project name.|Sentry|Vercel & Local Dev|
+|`SENTRY_ORG`|Sentry organisation name.|Sentry|Vercel & Local Dev|
 
 ## Test/Prod
 |variable name|description|Creation|Usage|
