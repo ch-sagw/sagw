@@ -1,6 +1,7 @@
 DB:
 ---
-- reproduction from prod to local dev? reproduction from prod to staging?
+- reproduction from prod to local&test db
+- make 2nd db on OVH (prod) and set URI in env.prod
 
 VRT:
 ----

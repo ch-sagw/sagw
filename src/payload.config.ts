@@ -1,10 +1,4 @@
-import dotenv from 'dotenv';
-
-dotenv.config({
-  override: true,
-  path: `.env.${process.env.ENV}`,
-});
-
+import '../.env/index';
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
