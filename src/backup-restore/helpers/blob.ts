@@ -11,7 +11,7 @@ import {
   put,
 } from '@vercel/blob';
 
-export const addBlob = async (file: string, content: string): Promise<void> => {
+export const addBlob = async (file: string, content: Buffer<ArrayBuffer>): Promise<void> => {
   await put(
     file,
     content,

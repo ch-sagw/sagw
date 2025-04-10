@@ -14,7 +14,7 @@ Node is also used inside the dockerimage for the testing environment as well as 
 
 ### Environment Variables
 
-Copy `.env.example` and rename it to `.env`. Provide all the necessary values for the variables.
+Copy `.env.*.example` files in the `.env` folder and rename it to `.env.*`. e.g. copy `env.prod.example` to `env.prod`. Provide all the necessary values for the variables.
 
 For details, see [env-vars.md](/docs/env-vars.md).
 

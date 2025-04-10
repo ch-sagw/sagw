@@ -29,7 +29,10 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+/.env/.env*
+!/.env/.env.base.example
+!/.env/.env.prod.example
+!/.env/.env.test.example
 
 # vercel
 .vercel
@@ -37,9 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# env
-.env
 
 /media
 
@@ -56,3 +56,6 @@ next-env.d.ts
 
 # mongo-db
 /mongo-db-data/
+
+# backup / restore
+download

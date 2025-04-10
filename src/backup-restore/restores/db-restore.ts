@@ -13,7 +13,6 @@ import { EJSON } from 'bson';
 import { S3Helper } from '../helpers/s3';
 import { DbHelper } from '../helpers/db';
 import config from '../config';
-import { sortBucketsNewestFirst } from '../helpers/date';
 import {
   inquirerAskBucketToRestore,
   inquirerAskForProceed,
@@ -33,15 +32,13 @@ const main = async (): Promise<void> => {
     }
 
     const s3Helper = new S3Helper();
-    const buckets = await s3Helper.getAllBuckets();
-    const dbBuckets = buckets.filter((bucket) => bucket?.Name?.indexOf(config.dbBackupBucketPrefix) !== -1);
+    const sortedBuckets = await s3Helper.getBucketsWithPrefixSorted(config.dbBackupBucketPrefix);
 
-    if (!dbBuckets || dbBuckets.length < 1) {
+    if (!sortedBuckets || sortedBuckets.length < 1) {
       throw new Error('no backups found to restore');
     }
 
-    const sortedBlockBuckets = sortBucketsNewestFirst(dbBuckets);
-    const selectedBucket = await inquirerAskBucketToRestore(sortedBlockBuckets);
+    const selectedBucket = await inquirerAskBucketToRestore(sortedBuckets);
     const allObjectsInBucket = await s3Helper.listObjectsOfBucket(selectedBucket);
 
     const finalConfirmationMessage = `I am about to restore ${chalk.green(allObjectsInBucket.length)} collections from S3 Bucket named ${chalk.green(selectedBucket)} to MongoDB. Are you sure you want to continue?`;
@@ -70,13 +67,13 @@ const main = async (): Promise<void> => {
 
         if (collectionNameSplit.length === 2) {
           const [collectionName] = collectionNameSplit;
-          const objectData = await s3Helper.getObject(selectedBucket, object);
-
-          await dbHelper.deleteCollection(process.env.DATABASE_NAME, collectionName);
+          const objectData = await s3Helper.getObject(selectedBucket, object, false);
 
           if (!objectData) {
             throw new Error(`Fatal: was not able to get object with the specified name: ${selectedBucket}`);
           }
+
+          await dbHelper.deleteCollection(process.env.DATABASE_NAME, collectionName);
 
           const parsed = EJSON.parse(objectData);
 
@@ -97,7 +94,5 @@ const main = async (): Promise<void> => {
       ?.close();
   }
 };
-
-export default main;
 
 main();
