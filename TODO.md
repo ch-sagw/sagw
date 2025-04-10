@@ -15,7 +15,7 @@ Backup / Restore:
 
 Build:
 ------
-- -> install sentry integration in vercel
+- install sentry integration in vercel
 
 Sentry:
 -------

@@ -39,6 +39,8 @@ Storybook will the automatically open under the url http://localhost:6006/.
 
 ### Payload
 
+#### With local DB
+
 To start the payload backend, run the follwing command:
 ```bash
 npm run dev
@@ -49,6 +51,40 @@ This will spin up a docker container which runs a MongoDB instance inside, build
 The connection string to the MongoDB inside the docker container is as follows:
 
 `mongodb://user:pass@127.0.0.1:27017/`
+
+#### With remote DB
+
+To start the payload backend with a remote db, run the follwing command:
+```bash
+npm run dev:nodb
+```
+
+This will run payload with the test-db hosted on OVH.
+
+#### In Production mode
+
+To start the payload backend in production mode with a remote db, run the follwing command:
+```bash
+npm run dev:prod
+```
+
+**!WARNING!**
+This will start payload with all production environment variables. This means:
+- **You're connected to the production DB**
+- **You're connected to the production BLOB-Storage**
+
+### Build
+
+To build the project in dev mode, run the following command:
+```bash
+npm run build
+```
+
+To build the project for production, run the following command:
+```bash
+npm run build:prod
+```
+
 
 ### Test
 

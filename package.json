@@ -8,11 +8,10 @@
   "scripts": {
     "start:db": "docker compose -f docker-compose.yml run --rm -p 27017:27017 mongodb --quiet --syslog",
     "build": "cross-env NODE_OPTIONS=--no-deprecation ENV=test next build",
-    "build:prod": "cross-env NODE_OPTIONS=--no-deprecation ENV=prod next build",
     "dev:nodb": "cross-env NODE_OPTIONS=--no-deprecation ENV=test next dev",
-    "dev:nodb:prod": "cross-env NODE_OPTIONS=--no-deprecation ENV=prod next dev",
     "dev": "concurrently \"npm run start:db\" \"npm run dev:nodb\"",
-    "dev:prod": "concurrently \"npm run start:db\" \"npm run dev:nodb:prod\"",
+    "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation ENV=prod next dev",
+    "build:prod": "cross-env NODE_OPTIONS=--no-deprecation ENV=prod next build",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
