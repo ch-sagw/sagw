@@ -1,8 +1,7 @@
 // https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/
-import dotenv from 'dotenv';
-import config from '../config';
 
-dotenv.config();
+import '../../../.env/index';
+import config from '../config';
 
 const sendSlackMessage = async (texts: string[], failure: boolean): Promise<void> => {
   try {

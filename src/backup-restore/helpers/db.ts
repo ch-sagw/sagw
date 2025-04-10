@@ -3,7 +3,8 @@
  * - DATABASE_URI
  */
 
-import dotenv from 'dotenv';
+import '../../../.env/index';
+
 import {
   Collection,
   Db,
@@ -11,8 +12,6 @@ import {
   MongoClient,
   type WithId,
 } from 'mongodb';
-
-dotenv.config();
 
 export class DbHelper {
   private _client: MongoClient | undefined;

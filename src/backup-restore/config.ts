@@ -1,8 +1,10 @@
+import '../../.env';
+
 export default {
-  blobBackupBucketPrefix: 'blob-backup',
-  dbBackupBucketPrefix: 'db-backup',
-  keepAmountOfBackups: 30,
-  maintenanceDownloadFolder: 'download',
+  blobBackupBucketPrefix: `${process.env.BACKUP_RESTORE_PREFIX}-blob-backup`,
+  dbBackupBucketPrefix: `${process.env.BACKUP_RESTORE_PREFIX}-db-backup`,
+  keepAmountOfBackups: 3,
+  maintenanceDownloadFolder: `${process.env.BACKUP_RESTORE_PREFIX}-download`,
   sendMailOnFailure: false,
   sendMailOnSuccess: false,
   sendSlackOnFailure: true,
