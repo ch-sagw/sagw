@@ -1,6 +1,5 @@
 import inquirer from 'inquirer';
 import boxen from 'boxen';
-import type { Bucket } from '@aws-sdk/client-s3';
 
 export const inquirerAskForProceed = async (message: string): Promise<boolean> => {
   console.log(boxen(message, {
@@ -23,14 +22,11 @@ export const inquirerAskForProceed = async (message: string): Promise<boolean> =
   return answers.proceed !== answerNo;
 };
 
-export const inquirerAskBucketToRestore = async (buckets: (Bucket | undefined)[]): Promise<string> => {
+export const inquirerAskBucketToRestore = async (buckets: (string | undefined)[]): Promise<string> => {
 
   const answers = await inquirer.prompt([
     {
-      choices: buckets.map((bucket) => (bucket?.Name
-        ? bucket.Name
-        : ''
-      )),
+      choices: buckets.filter((bucket) => (bucket !== undefined)),
       message: 'Select the backup which should be restored.',
       name: 'bucket',
       type: 'list',
@@ -38,4 +34,39 @@ export const inquirerAskBucketToRestore = async (buckets: (Bucket | undefined)[]
   ]);
 
   return answers.bucket;
+};
+
+export const inquirerAskForOption = async (message: string, options: Record<string, string>): Promise<string | undefined> => {
+  const choices = Object.keys(options)
+    .map((choice: string) => options[choice]);
+
+  const answers = await inquirer.prompt([
+    {
+      choices,
+      message,
+      name: 'selectedOption',
+      type: 'list',
+    },
+  ]);
+
+  const selection = Object.keys(options)
+    .find((key) => options[key] === answers.selectedOption);
+
+  return selection;
+};
+
+export const inquirerAskMultipleChoice = async (message: string, choices: (string | undefined)[]): Promise<(string | undefined)[]> => {
+
+  const nonNullChoices = choices.filter((choice) => choice !== undefined);
+
+  const answers = await inquirer.prompt([
+    {
+      choices: nonNullChoices,
+      message,
+      name: 'selectedOption',
+      type: 'checkbox',
+    },
+  ]);
+
+  return answers.selectedOption;
 };

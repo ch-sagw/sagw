@@ -1,3 +1,6 @@
+# Branch Builds happen on Vercel. If we would do it via CLI here,
+# then we would not get the preview URL posted to the PR.
+
 name: Branch Deployment
 on: pull_request
 jobs:

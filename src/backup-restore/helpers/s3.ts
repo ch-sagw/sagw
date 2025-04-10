@@ -6,7 +6,6 @@
  */
 
 import dotenv from 'dotenv';
-// import { Readable } from 'node:stream';
 import {
   type Bucket,
   CreateBucketCommand,
@@ -21,6 +20,7 @@ import {
 } from '@aws-sdk/client-s3';
 
 import { Upload } from '@aws-sdk/lib-storage';
+import { sortBucketsNewestFirst } from './date';
 
 dotenv.config();
 
@@ -61,7 +61,7 @@ export class S3Helper {
     await this._client.send(command);
   };
 
-  public getAllBuckets = async (): Promise<[(Bucket | undefined)?]> => {
+  private _getAllBuckets = async (): Promise<[(Bucket | undefined)?]> => {
     const buckets: [Bucket?] = [];
 
     const paginator = paginateListBuckets(
@@ -80,9 +80,18 @@ export class S3Helper {
     return buckets;
   };
 
+  public getBucketsWithPrefixSorted = async (prefix: string): Promise<(string | undefined)[]> => {
+    const buckets = await this._getAllBuckets();
+    const filteredBuckets = buckets.filter((bucket) => bucket?.Name?.indexOf(prefix) !== -1);
+    const bucketsSorted = sortBucketsNewestFirst(filteredBuckets);
+    const bucketList = bucketsSorted
+      .map((bucket) => bucket?.Name);
+
+    return bucketList;
+  };
+
   // OBJECTS
 
-  // todo type fileContent
   public addObject = async (params: PutObjectCommandInput): Promise<void> => {
     const upload = new Upload({
       client: this._client,
@@ -97,13 +106,15 @@ export class S3Helper {
     await upload.done();
   };
 
-  public getObject = async (bucketName: string, fileName: string): Promise<string | undefined> => {
+  public getObject = async (bucketName: string, fileName: string, base64: boolean): Promise<string | undefined> => {
     const response = await this._client.send(new GetObjectCommand({
       Bucket: bucketName,
       Key: fileName,
     }));
 
-    const transformedResult = await response.Body?.transformToString();
+    const transformedResult = await response.Body?.transformToString(base64
+      ? 'base64'
+      : undefined);
 
     return transformedResult;
   };
