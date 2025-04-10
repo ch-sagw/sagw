@@ -1,4 +1,10 @@
-// storage-adapter-import-placeholder
+import dotenv from 'dotenv';
+
+dotenv.config({
+  override: true,
+  path: `.env.${process.env.ENV}`,
+});
+
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
