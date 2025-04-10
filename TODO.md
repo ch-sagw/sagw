@@ -43,3 +43,8 @@ Slack:
 Accounts:
 ---------
 - Make Resend account for SAGW
+
+Resend:
+-------
+- Create SAGW account
+- Add SAGW Resend token to env file
