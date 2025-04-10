@@ -4,11 +4,9 @@
  * - MAIL_TO
  */
 
-import { Resend } from 'resend';
-import dotenv from 'dotenv';
+import '../../../.env/index';
 import config from '../config';
-
-dotenv.config();
+import { Resend } from 'resend';
 
 export default async (subject: string, message: string, failure: boolean): Promise<void> => {
 

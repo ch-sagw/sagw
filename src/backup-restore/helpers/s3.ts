@@ -5,7 +5,7 @@
  * - OVH_OS_IMAGES_BACKUP_CONTAINER_ENDPOINT
  */
 
-import dotenv from 'dotenv';
+import '../../../.env/index';
 import {
   type Bucket,
   CreateBucketCommand,
@@ -21,8 +21,6 @@ import {
 
 import { Upload } from '@aws-sdk/lib-storage';
 import { sortBucketsNewestFirst } from './date';
-
-dotenv.config();
 
 export class S3Helper {
   private _client;

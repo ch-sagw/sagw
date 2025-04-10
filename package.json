@@ -30,9 +30,12 @@
     "lint:scss": "stylelint '**/*.scss'",
     "lint": "npm run lint:js && npm run lint:scss",
     "commitlint": "commitlint --edit",
-    "restore:blob": "tsx ./src/backup-restore/restores/blob-restore",
-    "restore:db": "tsx ./src/backup-restore/restores/db-restore",
-    "backup:maintenance": "tsx ./src/backup-restore/maintenance/index",
+    "restore:blob": "cross-env ENV=test tsx ./src/backup-restore/restores/blob-restore",
+    "restore:db": "cross-env ENV=test tsx ./src/backup-restore/restores/db-restore",
+    "restore:blob:prod": "cross-env ENV=prod tsx ./src/backup-restore/restores/blob-restore",
+    "restore:db:prod": "cross-env ENV=prod tsx ./src/backup-restore/restores/db-restore",
+    "backup:maintenance": "cross-env ENV=test tsx ./src/backup-restore/maintenance/index",
+    "backup:maintenance:prod": "cross-env ENV=prod tsx ./src/backup-restore/maintenance/index",
     "prepare": "husky"
   },
   "dependencies": {
