@@ -14,9 +14,13 @@ Backup / Restore:
 
 Build:
 ------
-- fix sentry warnings
 - -> install sentry integration in vercel
 - vercel: add env-dependant secrets (mongodb etc.)
+
+Sentry:
+-------
+- fix sentry build issues/warnings
+- config sentry for different environments
 
 Storybook:
 ----------
