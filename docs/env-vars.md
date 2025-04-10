@@ -28,3 +28,4 @@ For convenience, env-vars are split between base and prod/test.
 |`DATABASE_URI`|Connection string to the MongoDB.|OVH|Vercel & Local Dev|
 |`BLOB_READ_WRITE_TOKEN`|Read/write token (automatically provided by vercel).|Vercel|Vercel & Local Dev|
 |`PAYLOAD_SECRET`|Payload secret.|Custom|Vercel & Local Dev|
+|`BACKUP_RESTORE_PREFIX`|Environment-Dependant prefix to use for backup bucket names|-|Vercel & Local Dev|
