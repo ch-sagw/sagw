@@ -1,5 +1,46 @@
 # Changelog
 
+## [0.2.0](https://github.com/ch-sagw/sagw/compare/v0.1.5...v0.2.0) (2025-04-10)
+
+
+### Chore
+
+* add start scripts for all environments, customize vercel build for all envs ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+* don't use base64 encoding for db-restore ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+* get buckets in helper instead of in calling methods ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+* implement various backup maintenance helpers ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+* remove staging env, start documenting environments ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+* remove staging scripts ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+* reorder scripts, add script for backups maintenance ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+* silence scss deprecations warning, originating from node_modules ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+* split env variables between base and prod/test ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+* use correct vercel build command for test ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+* wso ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+
+
+### CI
+
+* rename workflow ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+
+
+### Documentation
+
+* add proper documentation for env vars ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+* add todo ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+* remove done todos ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+* remove finished todos ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+* remove todos ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+
+
+### Features
+
+* add resend email adapter ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+
+
+### Bug Fixes
+
+* send blob data as array buffer ([a003cb9](https://github.com/ch-sagw/sagw/commit/a003cb93cf57fc5a49d7443e03a56f60e5130602))
+
 ## [0.1.5](https://github.com/ch-sagw/sagw/compare/v0.1.4...v0.1.5) (2025-04-07)
 
 
