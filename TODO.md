@@ -16,7 +16,6 @@ Backup / Restore:
 Build:
 ------
 - -> install sentry integration in vercel
-- vercel: add env-dependant secrets (mongodb etc.)
 
 Sentry:
 -------
@@ -30,19 +29,10 @@ Storybook:
 Documentation:
 --------------
 - document merging strategy / release workflow
-- document env variables and save them to 1password. which are used on vercel/github?
-
-Vercel:
--------
-- Remove deployment protection -> otherwise, we have to be logged in to see preview/staging
 
 Github:
 -------
 - add branch restrictions on main
-
-Slack:
-------
-- prod-deployment is ok. staging and preview post to the same channel: can we differentiate them somewhow?
 
 Accounts:
 ---------
