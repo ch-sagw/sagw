@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.2.1](https://github.com/ch-sagw/sagw/compare/v0.2.0...v0.2.1) (2025-04-11)
+
+
+### Chore
+
+* enable route auth ([cbd9a91](https://github.com/ch-sagw/sagw/commit/cbd9a9112a87adaec2041a7694b06406f22384e4))
+* make backup/restore script environment dependant ([cbd9a91](https://github.com/ch-sagw/sagw/commit/cbd9a9112a87adaec2041a7694b06406f22384e4))
+* properly forat var names ([5248aca](https://github.com/ch-sagw/sagw/commit/5248aca7d5519168c4861208e0766b8a85821711))
+* remove unnecessary scripts, document dev scripts ([cbd9a91](https://github.com/ch-sagw/sagw/commit/cbd9a9112a87adaec2041a7694b06406f22384e4))
+
+
+### Documentation
+
+* add documentation for restore prefix ([cbd9a91](https://github.com/ch-sagw/sagw/commit/cbd9a9112a87adaec2041a7694b06406f22384e4))
+* remove todo's ([fa493c5](https://github.com/ch-sagw/sagw/commit/fa493c531c544a3443c40a876977b5013f411319))
+* remove todos ([1babbde](https://github.com/ch-sagw/sagw/commit/1babbded468785dd0c848fdeec4db0234df55330))
+
+
+### Bug Fixes
+
+* properly configure auth token for sentry ([1babbde](https://github.com/ch-sagw/sagw/commit/1babbded468785dd0c848fdeec4db0234df55330))
+
 ## [0.2.0](https://github.com/ch-sagw/sagw/compare/v0.1.5...v0.2.0) (2025-04-10)
 
 
