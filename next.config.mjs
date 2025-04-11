@@ -1,3 +1,4 @@
+import './.env/index.js';
 import { withSentryConfig } from '@sentry/nextjs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
@@ -40,6 +41,8 @@ const configWithPayload = withPayload(nextConfig);
 export default withSentryConfig(configWithPayload, {
   devBundleServerPackages: false,
 }, {
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+
   // For all available options, see:
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
   // Enables automatic instrumentation of Vercel Cron Monitors.
@@ -51,8 +54,8 @@ export default withSentryConfig(configWithPayload, {
 
   // Automatically tree-shake Sentry logger statements to reduce bundle size
   disableLogger: true,
-  org: 'sagw',
-  project: 'sagw',
+  org: process.env.SENTRY_PROJECT,
+  project: process.env.SENTRY_ORG,
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
@@ -71,5 +74,4 @@ export default withSentryConfig(configWithPayload, {
   // Upload a larger set of source maps for prettier stack traces
   // (increases build time)
   widenClientFileUpload: true,
-
 });
