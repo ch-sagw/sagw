@@ -14,10 +14,6 @@ Storybook:
 ----------
 - deploy storybook?
 
-Documentation:
---------------
-- document merging strategy / release workflow / what and when is published to vercel?
-
 Github:
 -------
 - add branch restrictions on main
