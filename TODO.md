@@ -9,8 +9,6 @@ VRT:
 
 Backup / Restore:
 -----------------
-- for backup-buckets: integrate env-variable to prefix test/staging/prod. also adapt config (send mail/slack) for different environments
-- backup/restore: make it for staging and prod
 - mongo-db has a config db, which is mainly for cluster-meta. do we have to backup/restore it as well?
 
 Build:
@@ -19,7 +17,6 @@ Build:
 
 Sentry:
 -------
-- fix sentry build issues/warnings
 - config sentry for different environments
 
 Storybook:
@@ -33,10 +30,6 @@ Documentation:
 Github:
 -------
 - add branch restrictions on main
-
-Accounts:
----------
-- Make Resend account for SAGW
 
 Resend:
 -------
