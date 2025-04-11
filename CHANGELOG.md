@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.2](https://github.com/ch-sagw/sagw/compare/v0.2.1...v0.2.2) (2025-04-11)
+
+
+### Documentation
+
+* add documentaiton for branching and releasing ([2ced819](https://github.com/ch-sagw/sagw/commit/2ced819c4eadcd1fe7deb5c57fb033e03bdc2bfd))
+* add documentation for deployments ([c5a0c37](https://github.com/ch-sagw/sagw/commit/c5a0c3782086fe2785fb861ace7bb18684528b06))
+* remove todo ([279027a](https://github.com/ch-sagw/sagw/commit/279027adda8537f47937370d62ef2b353b643bd6))
+* remove todos ([b539f2f](https://github.com/ch-sagw/sagw/commit/b539f2ffcaf779e9625b810db8075a82e623d98a))
+
 ## [0.2.1](https://github.com/ch-sagw/sagw/compare/v0.2.0...v0.2.1) (2025-04-11)
 
 
