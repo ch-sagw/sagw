@@ -1,7 +1,6 @@
 DB:
 ---
 - reproduction from prod to local&test db
-- make 2nd db on OVH (prod) and set URI in env.prod
 
 VRT:
 ----
@@ -17,7 +16,7 @@ Storybook:
 
 Documentation:
 --------------
-- document merging strategy / release workflow
+- document merging strategy / release workflow / what and when is published to vercel?
 
 Github:
 -------

@@ -149,3 +149,11 @@ npm run generate:component MyComponent
 ## Backup and Restore (Vercel Blob and DB)
 
 For details, see [backup-restore.md](docs/backup-restore.md).
+
+## Branching & Releasing
+
+For details, see [branching-releasing.md](docs/branching-releasing.md).
+
+## Vercel Deployments
+
+For details, see [deployments.md](docs/deployments.md).
