@@ -19,7 +19,7 @@ const replicateDb = async (replicateTo: string, dbHelperSource: DbHelper): Promi
 
   // const currentUrl = process.env.DATABASE_URI;
 
-  // Todo: enable after prod db is created.
+  // TODO: enable after prod db is created.
   /*
   if (prodUrl === currentUrl) {
     throw new Error('Env-Var mismatch for DATABASE_URI. Aborting.');
@@ -119,9 +119,69 @@ const replicateBlob = async (): Promise<void> => {
 };
 
 const replicateProd = async (): Promise<void> => {
-  const dbHelperSource = new DbHelper();
+  let dbHelperSource;
 
   try {
+    // Grab DATABASE_URI and BLOB_READ_WRITE_TOKEN from all environments
+    // to make some configuration checks upfront.
+    dotenv.config({
+      override: true,
+      path: '.env/.env.local',
+    });
+
+    const localDBUri = process.env.DATABASE_URI;
+    const localBlobToken = process.env.BLOB_READ_WRITE_TOKEN;
+
+    dotenv.config({
+      override: true,
+      path: '.env/.env.test',
+    });
+
+    const testDBUri = process.env.DATABASE_URI;
+    const testBlobToken = process.env.BLOB_READ_WRITE_TOKEN;
+
+    // IMPORTANT: config prod environment as last step.
+    // Following methods and initializers will use prod to get the data,
+    // then switch environment to replicate the data.
+    dotenv.config({
+      override: true,
+      path: '.env/.env.prod',
+    });
+
+    const prodDBUri = process.env.DATABASE_URI;
+    const prodBlobToken = process.env.BLOB_READ_WRITE_TOKEN;
+
+    // Security checks. Make sure that local, test and prod have
+    // different values for the env-vars.
+
+    if (!localDBUri || !testDBUri || !prodDBUri) {
+      throw new Error('Env-Var DATABASE_URI missing in one or more environments.');
+    }
+
+    if (!testBlobToken || !localBlobToken || !prodBlobToken) {
+      throw new Error('Env-Var BLOB_READ_WRITE_TOKEN missing in one or more environments.');
+    }
+
+    // TODO: enable after prod db is created.
+    /*
+    if (
+      localDBUri === testDBUri ||
+      testDBUri === prodDBUri ||
+      localDBUri === prodDBUri
+    ) {
+      throw new Error('Env-Var mismatch for for DATABASE_URI. Aborting.');
+    }
+    */
+
+    if (
+      testBlobToken === prodBlobToken ||
+      localBlobToken === prodBlobToken
+    ) {
+      throw new Error('Env-Var mismatch for for BLOB_READ_WRITE_TOKEN. Aborting.');
+    }
+
+    dbHelperSource = new DbHelper();
+
     const askForProceed = await inquirerAskForProceed('I will erase all collections in the local and test DB\'s, and replicate the collections from Prod to the Local and Test DB. Are you sure you want to continue?');
 
     if (!askForProceed) {
@@ -141,7 +201,7 @@ const replicateProd = async (): Promise<void> => {
   } catch (err) {
     console.log(chalk.bgRed(err));
   } finally {
-    dbHelperSource.getClient()
+    dbHelperSource?.getClient()
       ?.close();
   }
 };

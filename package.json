@@ -37,7 +37,7 @@
     "restore:db:prod": "cross-env ENV=prod tsx ./src/backup-restore/restores/db-restore",
     "backup:maintenance": "cross-env ENV=test tsx ./src/backup-restore/maintenance/index",
     "backup:maintenance:prod": "cross-env ENV=prod tsx ./src/backup-restore/maintenance/index",
-    "replicate:prod": "cross-env ENV=prod tsx ./src/backup-restore/restores/replicate-prod",
+    "replicate:prod": "tsx ./src/backup-restore/restores/replicate-prod",
     "prepare": "husky"
   },
   "dependencies": {
