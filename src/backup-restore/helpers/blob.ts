@@ -11,7 +11,7 @@ import {
   put,
 } from '@vercel/blob';
 
-export const addBlob = async (file: string, content: Buffer<ArrayBuffer>): Promise<void> => {
+export const addBlob = async (file: string, content: Buffer<ArrayBuffer> | ReadableStream<Uint8Array<ArrayBufferLike>>): Promise<void> => {
   await put(
     file,
     content,

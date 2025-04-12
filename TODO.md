@@ -1,7 +1,3 @@
-DB:
----
-- reproduction from prod to local&test db
-
 VRT:
 ----
 - when logging meta, then config.rootDir is '/src/src' ???
@@ -9,6 +5,8 @@ VRT:
 Backup / Restore:
 -----------------
 - mongo-db has a config db, which is mainly for cluster-meta. do we have to backup/restore it as well?
+- maintenance scripts / replications scripts -> try / catch
+- in replication: also replicate blob prod to test
 
 Storybook:
 ----------

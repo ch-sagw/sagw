@@ -7,10 +7,11 @@
   "type": "module",
   "scripts": {
     "start:db": "docker compose -f docker-compose.yml run --rm -p 27017:27017 mongodb --quiet --syslog",
-    "build": "cross-env NODE_OPTIONS=--no-deprecation ENV=test next build",
-    "dev:nodb": "cross-env NODE_OPTIONS=--no-deprecation ENV=test next dev",
-    "dev": "concurrently \"npm run start:db\" \"npm run dev:nodb\"",
+    "dev:local": "cross-env NODE_OPTIONS=--no-deprecation ENV=local next dev",
+    "dev:test": "cross-env NODE_OPTIONS=--no-deprecation ENV=test next dev",
     "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation ENV=prod next dev",
+    "dev": "concurrently \"npm run start:db\" \"npm run dev:local\"",
+    "build": "cross-env NODE_OPTIONS=--no-deprecation ENV=test next build",
     "build:prod": "cross-env NODE_OPTIONS=--no-deprecation ENV=prod next build",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
@@ -36,6 +37,7 @@
     "restore:db:prod": "cross-env ENV=prod tsx ./src/backup-restore/restores/db-restore",
     "backup:maintenance": "cross-env ENV=test tsx ./src/backup-restore/maintenance/index",
     "backup:maintenance:prod": "cross-env ENV=prod tsx ./src/backup-restore/maintenance/index",
+    "replicate:prod": "cross-env ENV=prod tsx ./src/backup-restore/restores/replicate-prod",
     "prepare": "husky"
   },
   "dependencies": {

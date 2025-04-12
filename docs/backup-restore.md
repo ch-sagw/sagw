@@ -51,3 +51,9 @@ Get blob data backup from s3 (ovh) and save to blob data (vercel).
 `npm run restore:db`
 
 Get db-backup from s3 (ovh) and save to mongoDb (ovh).
+
+## Prod replication
+
+To replicate DB and Blob-Storage from Prod to test and local environment, run the follwoing command:
+
+`npm run replicate:prod`
