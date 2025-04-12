@@ -10,10 +10,21 @@ import {
 } from '../helpers/blob';
 
 const replicateDb = async (replicateTo: string, dbHelperSource: DbHelper): Promise<void> => {
+  // const prodUrl = process.env.DATABASE_URI;
+
   dotenv.config({
     override: true,
     path: `.env/.env.${replicateTo}`,
   });
+
+  // const currentUrl = process.env.DATABASE_URI;
+
+  // Todo: enable after prod db is created.
+  /*
+  if (prodUrl === currentUrl) {
+    throw new Error('Env-Var mismatch for DATABASE_URI. Aborting.');
+  }
+  */
 
   const dbHelperTarget = new DbHelper();
 
@@ -67,12 +78,20 @@ const replicateBlob = async (): Promise<void> => {
       path: '.env/.env.prod',
     });
 
+    const prodToken = process.env.BLOB_READ_WRITE_TOKEN;
+
     const blobsProd = await getAllBlobs();
 
     dotenv.config({
       override: true,
       path: '.env/.env.test',
     });
+
+    const testToken = process.env.BLOB_READ_WRITE_TOKEN;
+
+    if (prodToken === testToken) {
+      throw new Error('Env-Var mismatch for BLOB_READ_WRITE_TOKEN. Aborting.');
+    }
 
     await deleteAllBlobs();
 
