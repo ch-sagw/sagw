@@ -56,8 +56,8 @@
     "sharp": "0.34.1"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.782.0",
-    "@aws-sdk/lib-storage": "^3.782.0",
+    "@aws-sdk/client-s3": "^3.787.0",
+    "@aws-sdk/lib-storage": "^3.787.0",
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
     "@eslint/eslintrc": "^3.2.0",
@@ -70,21 +70,21 @@
     "@storybook/types": "^8.6.12",
     "@stylistic/stylelint-config": "^2.0.0",
     "@stylistic/stylelint-plugin": "^3.1.2",
-    "@types/node": "^22.14.0",
-    "@types/react": "19.1.0",
-    "@types/react-dom": "19.1.1",
-    "@vercel/blob": "^0.27.3",
+    "@types/node": "^22.14.1",
+    "@types/react": "19.1.1",
+    "@types/react-dom": "19.1.2",
+    "@vercel/blob": "^1.0.0",
     "boxen": "^8.0.1",
     "bson": "^6.10.3",
     "chalk": "^5.4.1",
     "concurrently": "^9.1.2",
-    "dotenv": "^16.4.7",
+    "dotenv": "^16.5.0",
     "eslint": "^9.24.0",
-    "eslint-config-next": "15.2.4",
+    "eslint-config-next": "15.3.0",
     "eslint-plugin-storybook": "^0.12.0",
     "husky": "^9.1.7",
     "inquirer": "^12.5.2",
-    "lint-staged": "^15.5.0",
+    "lint-staged": "^15.5.1",
     "mongodb": "^6.15.0",
     "resend": "^4.2.0",
     "sass": "^1.86.3",
@@ -93,7 +93,7 @@
     "stylelint-config-standard-scss": "^14.0.0",
     "tsx": "^4.19.3",
     "typescript": "5.8.3",
-    "vercel": "^41.4.1"
+    "vercel": "^41.6.0"
   },
   "engines": {
     "node": "22.x"
