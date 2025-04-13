@@ -8,52 +8,57 @@ import { S3Helper } from '../helpers/s3';
 import chalk from 'chalk';
 
 export const selectBackupsToDelete = async (): Promise<void> => {
-  const options: Record<string, string> = {
-    blob: 'Blob Backups',
-    db: 'DB Backups',
-  };
+  try {
 
-  const question = 'Would you like to delete a selection of DB or Blob backups?';
+    const options: Record<string, string> = {
+      blob: 'Blob Backups',
+      db: 'DB Backups',
+    };
 
-  const selection = await inquirerAskForOption(question, options);
+    const question = 'Would you like to delete a selection of DB or Blob backups?';
 
-  let prefix;
+    const selection = await inquirerAskForOption(question, options);
 
-  if (selection === 'db') {
-    prefix = config.dbBackupBucketPrefix;
-  } else if (selection === 'blob') {
-    prefix = config.blobBackupBucketPrefix;
-  }
+    let prefix;
 
-  if (!prefix) {
-    return;
-  }
-
-  const s3Helper = new S3Helper();
-
-  const bucketsSorted = await s3Helper.getBucketsWithPrefixSorted(prefix);
-
-  const multipleChoiceQuestion = 'Which backups do you want to delete?';
-
-  const bucketsToDelete = await inquirerAskMultipleChoice(multipleChoiceQuestion, bucketsSorted);
-
-  const finalConfirmationMessage = `I am about to delete ${chalk.red(bucketsToDelete.length)} ${selection} buckets on S3. Are you sure you want to continue?`;
-  const finalConfirmation = await inquirerAskForProceed(finalConfirmationMessage);
-
-  if (!finalConfirmation) {
-    console.log('aborting');
-
-    return;
-  }
-
-  const promises = [];
-
-  for (const bucketToDelete of bucketsToDelete) {
-    if (bucketToDelete) {
-      promises.push(s3Helper.deleteBucket(bucketToDelete));
+    if (selection === 'db') {
+      prefix = config.dbBackupBucketPrefix;
+    } else if (selection === 'blob') {
+      prefix = config.blobBackupBucketPrefix;
     }
-  }
 
-  await Promise.all(promises);
+    if (!prefix) {
+      throw new Error('Missing Backup Bucket Prefix in config. Aborting.');
+    }
+
+    const s3Helper = new S3Helper();
+
+    const bucketsSorted = await s3Helper.getBucketsWithPrefixSorted(prefix);
+
+    const multipleChoiceQuestion = 'Which backups do you want to delete?';
+
+    const bucketsToDelete = await inquirerAskMultipleChoice(multipleChoiceQuestion, bucketsSorted);
+
+    const finalConfirmationMessage = `I am about to delete ${chalk.red(bucketsToDelete.length)} ${selection} buckets on S3. Are you sure you want to continue?`;
+    const finalConfirmation = await inquirerAskForProceed(finalConfirmationMessage);
+
+    if (!finalConfirmation) {
+      throw new Error('User aborted.');
+    }
+
+    const promises = [];
+
+    for (const bucketToDelete of bucketsToDelete) {
+      if (bucketToDelete) {
+        promises.push(s3Helper.deleteBucket(bucketToDelete));
+      }
+    }
+
+    await Promise.all(promises);
+
+    console.log(chalk.bgGreen('Successfully deleted Buckets.'));
+  } catch (err) {
+    console.log(chalk.bgRed(err));
+  }
 
 };

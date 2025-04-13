@@ -5,8 +5,6 @@ VRT:
 Backup / Restore:
 -----------------
 - mongo-db has a config db, which is mainly for cluster-meta. do we have to backup/restore it as well?
-- maintenance scripts / replications scripts -> try / catch
-- in replication: also replicate blob prod to test
 
 Storybook:
 ----------
