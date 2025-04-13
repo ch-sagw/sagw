@@ -1,7 +1,3 @@
-VRT:
-----
-- when logging meta, then config.rootDir is '/src/src' ???
-
 Backup / Restore:
 -----------------
 - mongo-db has a config db, which is mainly for cluster-meta. do we have to backup/restore it as well?
