@@ -1,3 +1,5 @@
+# syntax=docker.io/docker/dockerfile:1.7-labs
+
 # ATTENTION: This docker file uses node 22.x. Regularly check if node version changed.
 
 # ATTENTION: If the docker image is changed here, it also needs to be changed in deploy-branch.yml and deploy-prod.yml
