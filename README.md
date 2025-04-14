@@ -18,6 +18,12 @@ Copy `.env.*.example` files in the `.env` folder and rename it to `.env.*`. e.g.
 
 For details, see [env-vars.md](/docs/env-vars.md).
 
+### Environments
+
+The projects runs in two environments: Preview and Production.
+
+For details, see [environments.md](/environments).
+
 ## Development
 
 ### Install dependencies
