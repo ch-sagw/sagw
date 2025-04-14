@@ -94,7 +94,7 @@ npm run build:prod
 
 ### Test
 
-This setup is automatically creating visual regression tests for all Storybook stories. Only stories which include the tag `visual:check` will be included by this automatism. If you want to exclude a story from automatic visual regression tests, add the follwing to that story:
+This setup is automatically creating visual regression tests for all Storybook stories. Only stories which include the meta-tag `visual:check` will be included by this automatism. If you want to exclude a story from automatic visual regression tests (if the meta-tag `visual:check` is set), add the follwing tag description to that story:
 
 ```javascript
 tags: ['!visual:check']
