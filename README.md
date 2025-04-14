@@ -54,16 +54,16 @@ The connection string to the MongoDB inside the docker container is as follows:
 
 #### With remote DB
 
-To start the payload backend with a remote db, run the follwing command:
+To start the payload backend with a remote test db, run the follwing command:
 ```bash
-npm run dev:nodb
+npm run dev:test
 ```
 
 This will run payload with the test-db hosted on OVH.
 
 #### In Production mode
 
-To start the payload backend in production mode with a remote db, run the follwing command:
+To start the payload backend in production mode with a remote prod db, run the follwing command:
 ```bash
 npm run dev:prod
 ```
@@ -75,12 +75,12 @@ This will start payload with all production environment variables. This means:
 
 ### Build
 
-To build the project in dev mode, run the following command:
+To build the project in dev mode (with remote test db), run the following command:
 ```bash
 npm run build
 ```
 
-To build the project for production, run the following command:
+To build the project for production (with remote prod db), run the following command:
 ```bash
 npm run build:prod
 ```
