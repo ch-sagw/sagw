@@ -18,6 +18,12 @@ Copy `.env.*.example` files in the `.env` folder and rename it to `.env.*`. e.g.
 
 For details, see [env-vars.md](/docs/env-vars.md).
 
+### Environments
+
+The projects runs in two environments: Preview and Production.
+
+For details, see [environments.md](/environments).
+
 ## Development
 
 ### Install dependencies
@@ -54,16 +60,16 @@ The connection string to the MongoDB inside the docker container is as follows:
 
 #### With remote DB
 
-To start the payload backend with a remote db, run the following command:
+To start the payload backend with a remote test db, run the following command:
 ```bash
-npm run dev:nodb
+npm run dev:test
 ```
 
 This will run payload with the test-db hosted on OVH.
 
 #### In Production mode
 
-To start the payload backend in production mode with a remote db, run the following command:
+To start the payload backend in production mode with a remote prod db, run the following command:
 ```bash
 npm run dev:prod
 ```
@@ -75,12 +81,12 @@ This will start payload with all production environment variables. This means:
 
 ### Build
 
-To build the project in dev mode, run the following command:
+To build the project in dev mode (with remote test db), run the following command:
 ```bash
 npm run build
 ```
 
-To build the project for production, run the following command:
+To build the project for production (with remote prod db), run the following command:
 ```bash
 npm run build:prod
 ```
@@ -88,7 +94,7 @@ npm run build:prod
 
 ### Test
 
-This setup is automatically creating visual regression tests for all Storybook stories. Only stories which include the tag `visual:check` will be included by this automatism. If you want to exclude a story from automatic visual regression tests, add the following to that story:
+This setup is automatically creating visual regression tests for all Storybook stories. Only stories which include the meta-tag `visual:check` will be included by this automatism. If you want to exclude a story from automatic visual regression tests (if the meta-tag `visual:check` is set), add the following tag description to that story:
 
 ```javascript
 tags: ['!visual:check']
