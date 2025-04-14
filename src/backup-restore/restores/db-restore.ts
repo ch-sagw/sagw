@@ -1,5 +1,5 @@
 /**
- * Requires the follwoing env-variables:
+ * Requires the following env-variables:
  * - DATABASE_NAME
  * - DATABASE_URI
  * - OVH_OS_ACCESS_PUBLIC_KEY

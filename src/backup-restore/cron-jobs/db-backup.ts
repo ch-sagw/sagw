@@ -1,5 +1,5 @@
 /**
- * Requires the follwoing env-variables:
+ * Requires the following env-variables:
  * - DATABASE_NAME
  * - DATABASE_URI
  * - OVH_OS_ACCESS_PUBLIC_KEY
@@ -63,7 +63,7 @@ const main = async (): Promise<void> => {
       }
     }
 
-    const mailMessage = `Successfully backed up ${collectionBackupCount} colletions from MongoDb to OVH S3`;
+    const mailMessage = `Successfully backed up ${collectionBackupCount} collections from MongoDb to OVH S3`;
 
     await mail(
       '-->> Backup done: DB on OVH to OVH S3',

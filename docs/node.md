@@ -20,4 +20,4 @@ We can control the local version of node, which happens via `.nvmrc` file. Howev
 
 ## Risks
 
-We still run the risks that node accidently publishes a patch or minor version which includes breaking changes (like it happened in the past).
+We still run the risks that node accidentally publishes a patch or minor version which includes breaking changes (like it happened in the past).
