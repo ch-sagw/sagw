@@ -78,7 +78,7 @@ const main = async (): Promise<void> => {
           const parsed = EJSON.parse(objectData);
 
           if (parsed.length > 0) {
-            await dbHelper.addDocumentsToColletion(process.env.DATABASE_NAME, collectionName, parsed);
+            await dbHelper.addDocumentsToCollection(process.env.DATABASE_NAME, collectionName, parsed);
           }
 
         }
