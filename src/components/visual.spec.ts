@@ -8,7 +8,7 @@ import {
   navigate,
 } from '@/testing-helpers';
 
-import { componentsConfig } from './config';
+import { componentsConfig } from '@/components/config';
 
 const manifestResponse = await fetch(`${componentsConfig.vrtBaseUrl}/index.json`);
 const manifest = await manifestResponse.json();
