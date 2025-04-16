@@ -1,13 +1,13 @@
 import chalk from 'chalk';
 import dotenv from 'dotenv';
-import { DbHelper } from '../helpers/db';
-import { inquirerAskForProceed } from '../helpers/inquirer';
-import { getErrorMessage } from '../helpers/try-catch-error';
+import { DbHelper } from '@/backup-restore/helpers/db';
+import { inquirerAskForProceed } from '@/backup-restore/helpers/inquirer';
+import { getErrorMessage } from '@/backup-restore/helpers/try-catch-error';
 import {
   addBlob,
   deleteAllBlobs,
   getAllBlobs,
-} from '../helpers/blob';
+} from '@/backup-restore/helpers/blob';
 
 const replicateDb = async (replicateTo: string, dbHelperSource: DbHelper): Promise<void> => {
   // const prodUrl = process.env.DATABASE_URI;

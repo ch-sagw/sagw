@@ -10,13 +10,13 @@
 import chalk from 'chalk';
 import dotenv from 'dotenv';
 import { EJSON } from 'bson';
-import { S3Helper } from '../helpers/s3';
-import { DbHelper } from '../helpers/db';
-import config from '../config';
+import { S3Helper } from '@/backup-restore/helpers/s3';
+import { DbHelper } from '@/backup-restore/helpers/db';
+import config from '@/backup-restore/config';
 import {
   inquirerAskBucketToRestore,
   inquirerAskForProceed,
-} from '../helpers/inquirer';
+} from '@/backup-restore/helpers/inquirer';
 
 dotenv.config();
 
