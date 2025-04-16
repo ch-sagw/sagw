@@ -2,6 +2,8 @@ import '../.env/index';
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { resendAdapter } from '@payloadcms/email-resend';
+import { de } from '@payloadcms/translations/languages/de';
+import { en } from '@payloadcms/translations/languages/en';
 import { buildConfig } from 'payload';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -25,12 +27,38 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
+  defaultDepth: 0,
   editor: lexicalEditor(),
   email: resendAdapter({
     apiKey: process.env.RESEND_KEY || '',
     defaultFromAddress: 'cms@sagw.ch',
     defaultFromName: 'Payload CMS',
   }),
+  i18n: {
+    fallbackLanguage: 'de',
+    supportedLanguages: {
+      de,
+      en,
+    },
+  },
+  localization: {
+    defaultLocale: 'de',
+    fallback: true,
+    locales: [
+      {
+        code: 'de',
+        label: 'Deutsch',
+      },
+      {
+        code: 'fr',
+        label: 'Français',
+      },
+      {
+        code: 'en',
+        label: 'English',
+      },
+    ],
+  },
   plugins,
   secret: process.env.PAYLOAD_SECRET || '',
   sharp,

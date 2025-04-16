@@ -6,6 +6,7 @@ export const Media: CollectionConfig = {
   },
   fields: [
     {
+      localized: true,
       name: 'alt',
       required: true,
       type: 'text',
