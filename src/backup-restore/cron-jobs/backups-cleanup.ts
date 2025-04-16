@@ -1,5 +1,5 @@
 /**
- * Requires the follwoing env-variables:
+ * Requires the following env-variables:
  * - OVH_OS_ACCESS_PUBLIC_KEY
  * - OVH_OS_ACCESS_PRIVATE_KEY
  * - OVH_OS_IMAGES_BACKUP_CONTAINER_ENDPOINT
