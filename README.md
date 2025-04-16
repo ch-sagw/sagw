@@ -163,3 +163,7 @@ For details, see [branching-releasing.md](docs/branching-releasing.md).
 ## Vercel Deployments
 
 For details, see [deployments.md](docs/deployments.md).
+
+## Services
+
+To get an overview of all services involved, see [services.md](docs/services.md).
