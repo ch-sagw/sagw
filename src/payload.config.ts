@@ -8,8 +8,8 @@ import { fileURLToPath } from 'url';
 import sharp from 'sharp';
 
 import plugins from '@/plugins';
-import { Users } from './collections/Users';
-import { Media } from './collections/Media';
+import collections from '@/collections';
+import { Users } from '@/collections/Users';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -21,10 +21,7 @@ export default buildConfig({
     },
     user: Users.slug,
   },
-  collections: [
-    Users,
-    Media,
-  ],
+  collections,
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
