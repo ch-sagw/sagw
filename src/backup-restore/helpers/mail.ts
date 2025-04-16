@@ -1,5 +1,5 @@
 /**
- * Requires the following env-variables:
+ * Requires the follwoing env-variables:
  * - RESEND_KEY
  * - MAIL_TO
  */

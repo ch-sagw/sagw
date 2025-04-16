@@ -47,7 +47,7 @@ Storybook will the automatically open under the url http://localhost:6006/.
 
 #### With local DB
 
-To start the payload backend, run the following command:
+To start the payload backend, run the follwing command:
 ```bash
 npm run dev
 ```
@@ -60,7 +60,7 @@ The connection string to the MongoDB inside the docker container is as follows:
 
 #### With remote DB
 
-To start the payload backend with a remote test db, run the following command:
+To start the payload backend with a remote test db, run the follwing command:
 ```bash
 npm run dev:test
 ```
@@ -69,7 +69,7 @@ This will run payload with the test-db hosted on OVH.
 
 #### In Production mode
 
-To start the payload backend in production mode with a remote prod db, run the following command:
+To start the payload backend in production mode with a remote prod db, run the follwing command:
 ```bash
 npm run dev:prod
 ```
@@ -94,7 +94,7 @@ npm run build:prod
 
 ### Test
 
-This setup is automatically creating visual regression tests for all Storybook stories. Only stories which include the meta-tag `visual:check` will be included by this automatism. If you want to exclude a story from automatic visual regression tests (if the meta-tag `visual:check` is set), add the following tag description to that story:
+This setup is automatically creating visual regression tests for all Storybook stories. Only stories which include the meta-tag `visual:check` will be included by this automatism. If you want to exclude a story from automatic visual regression tests (if the meta-tag `visual:check` is set), add the follwing tag description to that story:
 
 ```javascript
 tags: ['!visual:check']
@@ -106,7 +106,7 @@ Tests run inside a docker container. You first need to build the docker containe
 npm run docker:test:build
 ```
 
-Once the docker container is built, you can run tests with the following command:
+Once the docker container is build, you can run tests with the following command:
 
 ```bash
 npm run test

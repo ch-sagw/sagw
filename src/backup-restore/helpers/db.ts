@@ -1,5 +1,5 @@
 /**
- * Requires the following env-variables:
+ * Requires the follwoing env-variables:
  * - DATABASE_URI
  */
 
@@ -75,7 +75,7 @@ export class DbHelper {
     await Promise.all(promises);
   };
 
-  public addDocumentsToCollection = async (dbName: string, collectionName: string, items: any): Promise<void> => {
+  public addDocumentsToColletion = async (dbName: string, collectionName: string, items: any): Promise<void> => {
     const db = this.getDb(dbName);
 
     await db?.collection(collectionName)
