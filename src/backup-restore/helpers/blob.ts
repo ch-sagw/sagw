@@ -1,5 +1,5 @@
 /**
- * Requires the follwoing env-variables:
+ * Requires the following env-variables:
  * - BLOB_READ_WRITE_TOKEN
  */
 
