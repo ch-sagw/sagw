@@ -13,5 +13,7 @@ export const Media: CollectionConfig = {
     },
   ],
   slug: 'media',
-  upload: true,
+  upload: {
+    focalPoint: true,
+  },
 };
