@@ -1,7 +1,7 @@
-import { inquirerAskForOption } from '../helpers/inquirer';
-import { selectBackupsToDelete } from './delete-selected-backups';
-import { downloadBackups } from './download-backups';
-import { listAllBackups } from './list-backups';
+import { inquirerAskForOption } from '@/backup-restore/helpers/inquirer';
+import { selectBackupsToDelete } from '@/backup-restore/maintenance/delete-selected-backups';
+import { downloadBackups } from '@/backup-restore/maintenance/download-backups';
+import { listAllBackups } from '@/backup-restore/maintenance/list-backups';
 
 const maintenanceEntry = async (): Promise<void> => {
   const options: Record<string, string> = {

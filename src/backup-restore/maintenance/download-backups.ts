@@ -1,11 +1,11 @@
 import chalk from 'chalk';
 import fs from 'node:fs';
-import config from '../config';
+import config from '@/backup-restore/config';
 import {
   inquirerAskForOption,
   inquirerAskMultipleChoice,
-} from '../helpers/inquirer';
-import { S3Helper } from '../helpers/s3';
+} from '@/backup-restore/helpers/inquirer';
+import { S3Helper } from '@/backup-restore/helpers/s3';
 
 export const downloadBackups = async (): Promise<void> => {
   try {

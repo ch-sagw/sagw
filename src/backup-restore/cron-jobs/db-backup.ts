@@ -11,13 +11,13 @@
 
 import dotenv from 'dotenv';
 import { EJSON } from 'bson';
-import { S3Helper } from '../helpers/s3';
-import { DbHelper } from '../helpers/db';
-import { dateString } from '../helpers/date';
-import config from '../config';
-import mail from '../helpers/mail';
-import { getErrorMessage } from '../helpers/try-catch-error';
-import sendSlackMessage from '../helpers/slack';
+import { S3Helper } from '@/backup-restore/helpers/s3';
+import { DbHelper } from '@/backup-restore/helpers/db';
+import { dateString } from '@/backup-restore/helpers/date';
+import config from '@/backup-restore/config';
+import mail from '@/backup-restore/helpers/mail';
+import { getErrorMessage } from '@/backup-restore/helpers/try-catch-error';
+import sendSlackMessage from '@/backup-restore/helpers/slack';
 
 dotenv.config();
 

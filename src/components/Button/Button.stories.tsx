@@ -3,7 +3,7 @@ import type {
   StoryObj,
 } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { Button } from './Button';
+import { Button } from '@/components/Button/Button';
 import { defaultDecorator } from '@/storybook-helpers';
 
 const meta: Meta<typeof Button> = {
@@ -17,7 +17,7 @@ const meta: Meta<typeof Button> = {
   },
   component: Button,
   decorators: [defaultDecorator],
-  parameters: {/* layout: 'centered', */},
+  parameters: {/* layout: 'centered', */ },
   tags: [
     'autodocs',
     'visual:check',

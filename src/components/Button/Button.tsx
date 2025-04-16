@@ -3,7 +3,7 @@
 import React from 'react';
 
 // import './button.scss';
-import styles from './Button.module.scss';
+import styles from '@/components/Button/Button.module.scss';
 
 export interface InterfaceButtonProps {
   primary?: boolean;
