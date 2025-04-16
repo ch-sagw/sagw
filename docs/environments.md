@@ -2,7 +2,7 @@
 
 ## Preliminary Remarks
 
-The Blob Storages are connected to the Vercel Environments in this way:
+The Blob Storages are connected to the Vercel Enironments in this way:
 - sagw-blob-test -> Development & Preview
 - sagw-blob-prod -> Production
 

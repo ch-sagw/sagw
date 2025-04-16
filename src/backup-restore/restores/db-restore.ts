@@ -1,5 +1,5 @@
 /**
- * Requires the following env-variables:
+ * Requires the follwoing env-variables:
  * - DATABASE_NAME
  * - DATABASE_URI
  * - OVH_OS_ACCESS_PUBLIC_KEY
@@ -78,7 +78,7 @@ const main = async (): Promise<void> => {
           const parsed = EJSON.parse(objectData);
 
           if (parsed.length > 0) {
-            await dbHelper.addDocumentsToCollection(process.env.DATABASE_NAME, collectionName, parsed);
+            await dbHelper.addDocumentsToColletion(process.env.DATABASE_NAME, collectionName, parsed);
           }
 
         }

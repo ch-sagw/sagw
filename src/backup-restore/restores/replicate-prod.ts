@@ -52,7 +52,7 @@ const replicateDb = async (replicateTo: string, dbHelperSource: DbHelper): Promi
 
         if (results.length > 0) {
           await dbHelperTarget.deleteCollection(process.env.DATABASE_NAME, collectionName);
-          await dbHelperTarget.addDocumentsToCollection(process.env.DATABASE_NAME, collectionName, results);
+          await dbHelperTarget.addDocumentsToColletion(process.env.DATABASE_NAME, collectionName, results);
 
           collectionsCounter++;
         }
