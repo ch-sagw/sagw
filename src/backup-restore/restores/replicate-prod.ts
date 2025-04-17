@@ -188,7 +188,7 @@ const replicateProd = async (): Promise<void> => {
       throw new Error('Aborting.');
     }
 
-    const askForProceed2 = await inquirerAskForProceed('I will delete all Blob data on Test and replicate all Blobs from Prod to test. Are you sure you want to continue?');
+    const askForProceed2 = await inquirerAskForProceed('I will delete all Blob data on Test/local and replicate all Blobs from Prod to test/local. Keep in mind to execute \'npm run dev\' first to ensure that the local mongo db is running. Otherwise the data in the local mongo db will not be replaced. Are you sure you want to continue?');
 
     if (!askForProceed2) {
       throw new Error('Aborting.');
