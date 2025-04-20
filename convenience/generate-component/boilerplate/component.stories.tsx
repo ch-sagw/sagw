@@ -12,7 +12,7 @@ const meta: Meta<typeof __name__> = {
   },
   component: __name__,
   decorators: [defaultDecorator],
-  parameters: {/* layout: 'centered', */},
+  parameters: {/* layout: 'centered', */ },
   tags: [
     'autodocs',
     'visual:check',
@@ -21,7 +21,7 @@ const meta: Meta<typeof __name__> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof __name__>;
 
 export const Primary: Story = {
   args: {
