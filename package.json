@@ -62,7 +62,7 @@
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
     "@eslint/eslintrc": "^3.2.0",
-    "@playwright/test": "^1.51.1",
+    "@playwright/test": "^1.52.0",
     "@storybook/addon-essentials": "^8.6.12",
     "@storybook/blocks": "^8.6.9",
     "@storybook/nextjs": "^8.6.12",
@@ -72,7 +72,7 @@
     "@stylistic/stylelint-config": "^2.0.0",
     "@stylistic/stylelint-plugin": "^3.1.2",
     "@types/node": "^22.14.1",
-    "@types/react": "19.1.1",
+    "@types/react": "19.1.2",
     "@types/react-dom": "19.1.2",
     "@vercel/blob": "^1.0.0",
     "boxen": "^8.0.1",
@@ -80,8 +80,8 @@
     "chalk": "^5.4.1",
     "concurrently": "^9.1.2",
     "dotenv": "^16.5.0",
-    "eslint": "^9.24.0",
-    "eslint-config-next": "15.3.0",
+    "eslint": "^9.25.0",
+    "eslint-config-next": "15.3.1",
     "eslint-plugin-storybook": "^0.12.0",
     "husky": "^9.1.7",
     "inquirer": "^12.5.2",
@@ -93,7 +93,7 @@
     "stylelint-config-standard-scss": "^14.0.0",
     "tsx": "^4.19.3",
     "typescript": "5.8.3",
-    "vercel": "^41.6.0"
+    "vercel": "^41.6.1"
   },
   "engines": {
     "node": "22.x"
