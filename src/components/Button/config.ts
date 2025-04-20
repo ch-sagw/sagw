@@ -3,6 +3,7 @@ import type { Field } from 'payload';
 export const ButtonConfig: Field[] = [
   {
     name: 'primary',
+    required: true,
     type: 'checkbox',
   },
   {

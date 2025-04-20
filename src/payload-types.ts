@@ -146,7 +146,7 @@ export interface ButtonGroup {
  * via the `definition` "InterfaceButton".
  */
 export interface InterfaceButton {
-  primary?: boolean | null;
+  primary: boolean;
   label: string;
   size?: ('small' | 'medium' | 'large') | null;
   backgroundColor?: ('white' | 'gray') | null;

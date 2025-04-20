@@ -2,6 +2,9 @@ import { CollectionConfig } from 'payload';
 import { ButtonGroup } from '@/blocks/ButtonGroup/config';
 
 export const Pages: CollectionConfig<'pages'> = {
+  access: {
+    read: () => true,
+  },
   fields: [
     {
       localized: true,

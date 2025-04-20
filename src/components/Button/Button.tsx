@@ -9,6 +9,7 @@ export type InterfaceButtonPropTypes = {
 } & InterfaceButton;
 
 export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
+
   const mode = props.primary
     ? styles['button--primary']
     : styles['button--secondary'];
@@ -16,18 +17,17 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
   return (
     <button
       type='button'
+      onClick={props.onClick}
       className={[
         styles['button'],
         styles[`button--${props.size}`],
         mode,
       ].join(' ')}
-      onClick={props.onClick}
-      {...props}
     >
       {props.label}
       <style jsx>{`
         button {
-          background-color: ${props.backgroundColor};
+          background-color: ${props.backgroundColor || 'white'};
         }
       `}</style>
     </button>
