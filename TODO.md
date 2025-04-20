@@ -18,7 +18,3 @@ Resend:
 Sentry:
 -------
 - Install https://payloadcms.com/docs/plugins/sentry 
-
-Payload:
---------
-- payload.find -> depth -> not working??? see app/(frontend)/page.tsx

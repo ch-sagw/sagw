@@ -31,8 +31,6 @@ export default async function HomePage({
 
   const pageData = await payload.find({
     collection: 'pages',
-
-    // TODO: depth not working properly???
     depth: 0,
     limit: 1,
     locale: lang,
