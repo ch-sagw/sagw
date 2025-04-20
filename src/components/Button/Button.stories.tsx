@@ -26,18 +26,20 @@ const meta: Meta<typeof Button> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Button>;
 
 export const Primary: Story = {
   args: {
     label: 'Button',
     primary: true,
+    size: 'medium',
   },
 };
 
 export const Secondary: Story = {
   args: {
     label: 'Button',
+    size: 'medium',
   },
 };
 

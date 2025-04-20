@@ -1,26 +1,15 @@
 'use client';
 
 import React from 'react';
-
-// import './button.scss';
+import { InterfaceButton } from '@/payload-types';
 import styles from '@/components/Button/Button.module.scss';
 
-export interface InterfaceButtonProps {
-  primary?: boolean;
-  backgroundColor?: string;
-  size?: 'small' | 'medium' | 'large';
-  label: string;
+export type InterfaceButtonPropTypes = {
   onClick?: () => void;
-}
+} & InterfaceButton;
 
-export const Button = ({
-  primary = false,
-  size = 'medium',
-  backgroundColor,
-  label,
-  ...props
-}: InterfaceButtonProps): React.JSX.Element => {
-  const mode = primary
+export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
+  const mode = props.primary
     ? styles['button--primary']
     : styles['button--secondary'];
 
@@ -29,15 +18,16 @@ export const Button = ({
       type='button'
       className={[
         styles['button'],
-        styles[`button--${size}`],
+        styles[`button--${props.size}`],
         mode,
       ].join(' ')}
+      onClick={props.onClick}
       {...props}
     >
-      {label}
+      {props.label}
       <style jsx>{`
         button {
-          background-color: ${backgroundColor};
+          background-color: ${props.backgroundColor};
         }
       `}</style>
     </button>
