@@ -52,7 +52,7 @@ export default buildConfig({
   upload: {
     debug: true,
     limits: {
-      // 50MB, written in bytes
+      // 50MB, written in bytes.
       fileSize: 50000000,
     },
     uploadTimeout: 0,
