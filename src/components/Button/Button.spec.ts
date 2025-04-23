@@ -4,13 +4,20 @@ import {
 } from '@playwright/test';
 import { navigate } from '@/visual-regression-testing/helpers';
 
-test('button should be visible', async ({
-  page,
-}) => {
-  await navigate(page, 'components-button--small');
+test.describe('Button', () => {
+  test('should be visible', async ({
+    page,
+  }) => {
 
-  const elem = await page.getByRole('button');
+    await navigate(page, 'components-button--small');
 
-  await expect(elem)
-    .toBeVisible();
+    const elem = await page.getByRole('button');
+
+    await expect(elem)
+      .toBeVisible();
+
+    await expect(page)
+      .toHaveScreenshot();
+  });
+
 });

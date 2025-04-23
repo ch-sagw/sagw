@@ -23,14 +23,9 @@ visualStories.forEach((story) => {
 
     const elem = await page.getByTestId(vrtConfig.testid);
     const clip = (await elem.boundingBox()) || undefined;
-    const fileName = [
-      vrtConfig.snapshotFolder,
-      meta.title,
-      `${meta.project.name}.png`,
-    ];
 
     await expect(page)
-      .toHaveScreenshot(fileName, {
+      .toHaveScreenshot({
         animations: 'disabled',
         caret: 'hide',
         clip,
