@@ -65,4 +65,9 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+  upload: {
+    debug: true,
+    uploadTimeout: 0,
+    useTempFiles: true,
+  },
 });
