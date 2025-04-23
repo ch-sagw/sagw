@@ -7,11 +7,6 @@ import { Button } from '@/components/Button/Button';
 import { defaultDecorator } from '@/storybook-helpers';
 
 const meta: Meta<typeof Button> = {
-  argTypes: {
-    backgroundColor: {
-      control: 'color',
-    },
-  },
   args: {
     onClick: fn(),
   },

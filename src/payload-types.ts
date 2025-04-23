@@ -149,7 +149,6 @@ export interface InterfaceButton {
   primary: boolean;
   label: string;
   size?: ('small' | 'medium' | 'large') | null;
-  backgroundColor?: ('white' | 'gray') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -284,7 +283,6 @@ export interface InterfaceButtonSelect<T extends boolean = true> {
   primary?: T;
   label?: T;
   size?: T;
-  backgroundColor?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

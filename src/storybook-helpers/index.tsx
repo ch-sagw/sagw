@@ -1,6 +1,6 @@
 import { PartialStoryFn } from '@storybook/types';
 import { ReactElement } from 'react';
-import { componentsConfig } from '@/components/config';
+import { vrtConfig } from '@/visual-regression-testing/config';
 
 export const defaultDecorator = (Story: PartialStoryFn): ReactElement => (
   <div
@@ -8,7 +8,7 @@ export const defaultDecorator = (Story: PartialStoryFn): ReactElement => (
       display: 'block',
       padding: '3rem',
     }}
-    data-testid={componentsConfig.testid}
+    data-testid={vrtConfig.testid}
   >
     <Story />
   </div>

@@ -30,19 +30,4 @@ export const ButtonConfig: Field[] = [
     ],
     type: 'select',
   },
-  {
-    defaultValue: 'white',
-    name: 'backgroundColor',
-    options: [
-      {
-        label: 'White',
-        value: 'white',
-      },
-      {
-        label: 'Gray',
-        value: 'gray',
-      },
-    ],
-    type: 'select',
-  },
 ];

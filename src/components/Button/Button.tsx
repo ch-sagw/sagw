@@ -25,11 +25,6 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
       ].join(' ')}
     >
       {props.label}
-      <style jsx>{`
-        button {
-          background-color: ${props.backgroundColor || 'white'};
-        }
-      `}</style>
     </button>
   );
 };

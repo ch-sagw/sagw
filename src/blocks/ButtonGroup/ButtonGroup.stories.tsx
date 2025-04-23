@@ -2,7 +2,7 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/react';
-import { ButtonGroup } from '@/blocks/ButtonGroup/Component';
+import { ButtonGroup } from '@/blocks/ButtonGroup/ButtonGroup';
 import { defaultDecorator } from '@/storybook-helpers';
 
 const meta: Meta<typeof ButtonGroup> = {
