@@ -4,6 +4,7 @@ import { Media } from '@/collections/Media';
 
 const plugins: Plugin[] = [
   vercelBlobStorage({
+    clientUploads: true,
     collections: {
       [Media.slug]: true,
     },

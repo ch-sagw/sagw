@@ -1,5 +1,48 @@
 # Changelog
 
+## [0.2.2](https://github.com/ch-sagw/sagw/compare/v0.2.1...v0.2.2) (2025-04-18)
+
+
+### Chore
+
+* add seurity check for potential env-var mismatch ([c644efa](https://github.com/ch-sagw/sagw/commit/c644efad65e3379c05eb817053d6a8ce72db7a24))
+* add some more secuirty checks for replication ([0259cb3](https://github.com/ch-sagw/sagw/commit/0259cb38bac7cb13669a6b1332b5ac0632442749))
+* adding explicit upload limit to config ([be39ce4](https://github.com/ch-sagw/sagw/commit/be39ce408f0b81c4e17ce9254813d2cb5aa767ef))
+* changing copyright owner in LICENCE file ([f344ac3](https://github.com/ch-sagw/sagw/commit/f344ac37ac6ae72da12308faaa0f5ee722b7833a))
+* changing upload config to use clientuploads to bypass vercel limit ([bbf671f](https://github.com/ch-sagw/sagw/commit/bbf671f05672431310c27b3bc84c5b7c2ee46952))
+* **deps-dev:** bump the development-dependencies group with 10 updates ([#34](https://github.com/ch-sagw/sagw/issues/34)) ([0887c11](https://github.com/ch-sagw/sagw/commit/0887c11aeddf12088ba82ce187b29386557feeaa))
+* **deps:** bump the production-dependencies group with 9 updates ([#33](https://github.com/ch-sagw/sagw/issues/33)) ([515c21c](https://github.com/ch-sagw/sagw/commit/515c21c0c133ac15bb5a1031de026efffda5270d))
+* fixing tiny typos in comments ([f344ac3](https://github.com/ch-sagw/sagw/commit/f344ac37ac6ae72da12308faaa0f5ee722b7833a))
+* fixing typo in addDocumentsToColletion ([f344ac3](https://github.com/ch-sagw/sagw/commit/f344ac37ac6ae72da12308faaa0f5ee722b7833a))
+* install resend as dep instead if dev-dep ([11f1f34](https://github.com/ch-sagw/sagw/commit/11f1f349eeba018a2926c9c3863e80acc32223b0))
+* properly catch errors in maintenance scripts ([2271d5a](https://github.com/ch-sagw/sagw/commit/2271d5ad3df1005ccce5ab436080020d4d2de07c))
+* remove comments ([8038e4d](https://github.com/ch-sagw/sagw/commit/8038e4d7f4b44d1ca1efd4dd137581903b162a5b))
+* remove todo ([c3d844b](https://github.com/ch-sagw/sagw/commit/c3d844bf0df98e8e2eb6db85c1671cd1cbc74055))
+
+
+### CI
+
+* add mechanism to replicate prod to test and local env ([83d5f43](https://github.com/ch-sagw/sagw/commit/83d5f43269217db791ba6078b540d2518582dcf1))
+
+
+### Documentation
+
+* add documentaiton for branching and releasing ([2ced819](https://github.com/ch-sagw/sagw/commit/2ced819c4eadcd1fe7deb5c57fb033e03bdc2bfd))
+* add documentation about used services ([11f1f34](https://github.com/ch-sagw/sagw/commit/11f1f349eeba018a2926c9c3863e80acc32223b0))
+* add documentation for deployments ([c5a0c37](https://github.com/ch-sagw/sagw/commit/c5a0c3782086fe2785fb861ace7bb18684528b06))
+* remove todo ([279027a](https://github.com/ch-sagw/sagw/commit/279027adda8537f47937370d62ef2b353b643bd6))
+* remove todos ([b539f2f](https://github.com/ch-sagw/sagw/commit/b539f2ffcaf779e9625b810db8075a82e623d98a))
+* update comment about visual:check tag ([0e9d638](https://github.com/ch-sagw/sagw/commit/0e9d638c25633f6c8df715c0c2c5194b44bbd45f))
+* update documentation about environments ([9d2b418](https://github.com/ch-sagw/sagw/commit/9d2b4182d1d35d472fc7dd446481950c7328dfb0))
+* update script commands documentation ([f0e810d](https://github.com/ch-sagw/sagw/commit/f0e810d14913384e350d11275e6fd22207f0c02f))
+
+
+### Bug Fixes
+
+* add correct syntax line to support --exclude copy flag ([167e2aa](https://github.com/ch-sagw/sagw/commit/167e2aa5a748ed8182de628896748e288dc45aa0))
+* make sentry transitions work ([7ddf13b](https://github.com/ch-sagw/sagw/commit/7ddf13bb4667125895b485ae203c2f6e8194223c))
+* set correct public server url for vercel env ([f970c23](https://github.com/ch-sagw/sagw/commit/f970c23d2a0fed94d62657588c78f05e0c685bcb))
+
 ## [0.2.1](https://github.com/ch-sagw/sagw/compare/v0.2.0...v0.2.1) (2025-04-11)
 
 
