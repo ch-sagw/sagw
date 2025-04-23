@@ -50,8 +50,13 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   upload: {
+    debug: true,
     limits: {
+      // 50MB, written in bytes
       fileSize: 50000000,
     },
+    uploadTimeout: 0,
+    useTempFiles: true,
   },
+
 });
