@@ -18,6 +18,14 @@ const dirname = path.dirname(filename);
 
 export default buildConfig({
   admin: {
+    autoLogin:
+      process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true'
+        ? {
+          email: 'foo@bar.com',
+          password: '1234',
+          prefillOnly: false,
+        }
+        : false,
     importMap: {
       baseDir: path.resolve(dirname),
     },
