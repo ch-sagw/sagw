@@ -18,3 +18,13 @@ Resend:
 Sentry:
 -------
 - Install https://payloadcms.com/docs/plugins/sentry 
+
+NextJs:
+-------
+- Install and use server-only
+
+Payload:
+--------
+- Generate types: when is it run? do we have to run in automatically, e.g. on ci, on postinstall etc?
+- add autologin: https://payloadcms.com/docs/authentication/overview
+- set hideAPIURL to true on prod: https://payloadcms.com/docs/configuration/collections#admin-options
