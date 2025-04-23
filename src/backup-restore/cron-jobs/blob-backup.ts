@@ -10,13 +10,13 @@
 
 import { Readable } from 'node:stream';
 import { ReadableStream } from 'node:stream/web';
-import * as blobHelpers from '../helpers/blob';
-import { S3Helper } from '../helpers/s3';
-import { dateString } from '../helpers/date';
-import config from '../config';
-import mail from '../helpers/mail';
-import { getErrorMessage } from '../helpers/try-catch-error';
-import sendSlackMessage from '../helpers/slack';
+import * as blobHelpers from '@/backup-restore/helpers/blob';
+import { S3Helper } from '@/backup-restore/helpers/s3';
+import { dateString } from '@/backup-restore/helpers/date';
+import config from '@/backup-restore/config';
+import mail from '@/backup-restore/helpers/mail';
+import { getErrorMessage } from '@/backup-restore/helpers/try-catch-error';
+import sendSlackMessage from '@/backup-restore/helpers/slack';
 
 const main = async (): Promise<void> => {
 

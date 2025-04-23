@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test';
 import { IndexEntry } from '@storybook/types';
-import { componentsConfig } from '@/components/config';
+import { vrtConfig } from '@/visual-regression-testing/config';
 
 export const getStoryUrl = (id: string): string => {
   const params = new URLSearchParams({
@@ -9,7 +9,7 @@ export const getStoryUrl = (id: string): string => {
     viewMode: 'story',
   });
 
-  return `${componentsConfig.vrtBaseUrl}/iframe.html?${params.toString()}`;
+  return `${vrtConfig.baseUrl}/iframe.html?${params.toString()}`;
 };
 
 export const filterStories = (stories: IndexEntry[]): IndexEntry[] => stories.filter((story) => {
@@ -27,7 +27,7 @@ export const navigate = async (
     const url = getStoryUrl(id);
 
     await page.goto(url);
-    await page.waitForSelector(`#${componentsConfig.storybookRootDivId}`);
+    await page.waitForSelector(`#${vrtConfig.storybookRootDivId}`);
   } catch (error) {
     console.log('error, navigating to storybook page:');
     console.log(error);

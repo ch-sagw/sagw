@@ -6,11 +6,11 @@ import { IndexEntry } from '@storybook/types';
 import {
   filterStories,
   navigate,
-} from '@/testing-helpers';
+} from '@/visual-regression-testing/helpers';
 
-import { componentsConfig } from './config';
+import { vrtConfig } from '@/visual-regression-testing/config';
 
-const manifestResponse = await fetch(`${componentsConfig.vrtBaseUrl}/index.json`);
+const manifestResponse = await fetch(`${vrtConfig.baseUrl}/index.json`);
 const manifest = await manifestResponse.json();
 
 const visualStories: IndexEntry[] = filterStories(Object.values(manifest.entries) as IndexEntry[]);
@@ -21,16 +21,11 @@ visualStories.forEach((story) => {
   }, meta) => {
     await navigate(page, meta.title);
 
-    const elem = await page.getByTestId(componentsConfig.testid);
+    const elem = await page.getByTestId(vrtConfig.testid);
     const clip = (await elem.boundingBox()) || undefined;
-    const fileName = [
-      componentsConfig.vrtSnapshotFolder,
-      meta.title,
-      `${meta.project.name}.png`,
-    ];
 
     await expect(page)
-      .toHaveScreenshot(fileName, {
+      .toHaveScreenshot({
         animations: 'disabled',
         caret: 'hide',
         clip,

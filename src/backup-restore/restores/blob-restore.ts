@@ -7,13 +7,13 @@
  */
 
 import chalk from 'chalk';
-import * as blobHelpers from '../helpers/blob';
-import { S3Helper } from '../helpers/s3';
-import config from '../config';
+import * as blobHelpers from '@/backup-restore/helpers/blob';
+import { S3Helper } from '@/backup-restore/helpers/s3';
+import config from '@/backup-restore/config';
 import {
   inquirerAskBucketToRestore,
   inquirerAskForProceed,
-} from '../helpers/inquirer';
+} from '@/backup-restore/helpers/inquirer';
 
 const main = async (): Promise<void> => {
   try {

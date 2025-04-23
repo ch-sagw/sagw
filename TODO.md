@@ -14,3 +14,16 @@ Resend:
 -------
 - Create SAGW account
 - Add SAGW Resend token to env file
+
+Sentry:
+-------
+- Install https://payloadcms.com/docs/plugins/sentry 
+
+NextJs:
+-------
+-
+
+Payload:
+--------
+- Generate types: when is it run? do we have to run in automatically, e.g. on ci, on postinstall etc?
+- set hideAPIURL to true on prod: https://payloadcms.com/docs/configuration/collections#admin-options

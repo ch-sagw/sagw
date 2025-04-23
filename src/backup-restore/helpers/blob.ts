@@ -3,6 +3,8 @@
  * - BLOB_READ_WRITE_TOKEN
  */
 
+import '../../../.env/index';
+
 import {
   del,
   list,

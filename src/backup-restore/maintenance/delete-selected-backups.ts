@@ -1,11 +1,11 @@
-import config from '../config';
+import chalk from 'chalk';
+import config from '@/backup-restore/config';
 import {
   inquirerAskForOption,
   inquirerAskForProceed,
   inquirerAskMultipleChoice,
-} from '../helpers/inquirer';
-import { S3Helper } from '../helpers/s3';
-import chalk from 'chalk';
+} from '@/backup-restore/helpers/inquirer';
+import { S3Helper } from '@/backup-restore/helpers/s3';
 
 export const selectBackupsToDelete = async (): Promise<void> => {
   try {

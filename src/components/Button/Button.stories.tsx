@@ -3,21 +3,16 @@ import type {
   StoryObj,
 } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { Button } from './Button';
+import { Button } from '@/components/Button/Button';
 import { defaultDecorator } from '@/storybook-helpers';
 
 const meta: Meta<typeof Button> = {
-  argTypes: {
-    backgroundColor: {
-      control: 'color',
-    },
-  },
   args: {
     onClick: fn(),
   },
   component: Button,
   decorators: [defaultDecorator],
-  parameters: {/* layout: 'centered', */},
+  parameters: {/* layout: 'centered', */ },
   tags: [
     'autodocs',
     'visual:check',
@@ -26,18 +21,20 @@ const meta: Meta<typeof Button> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Button>;
 
 export const Primary: Story = {
   args: {
     label: 'Button',
     primary: true,
+    size: 'medium',
   },
 };
 
 export const Secondary: Story = {
   args: {
     label: 'Button',
+    size: 'medium',
   },
 };
 

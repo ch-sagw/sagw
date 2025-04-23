@@ -67,6 +67,7 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    pages: Page;
     users: User;
     media: Media;
     'payload-locked-documents': PayloadLockedDocument;
@@ -75,6 +76,7 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    pages: PagesSelect<false> | PagesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -86,7 +88,7 @@ export interface Config {
   };
   globals: {};
   globalsSelect: {};
-  locale: null;
+  locale: 'de' | 'fr' | 'en';
   user: User & {
     collection: 'users';
   };
@@ -112,6 +114,41 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: string;
+  title: string;
+  elements?: ButtonGroup[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ButtonGroup".
+ */
+export interface ButtonGroup {
+  buttons?:
+    | {
+        button: InterfaceButton;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ButtonGroup';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceButton".
+ */
+export interface InterfaceButton {
+  primary: boolean;
+  label: string;
+  size?: ('small' | 'medium' | 'large') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -156,6 +193,10 @@ export interface Media {
 export interface PayloadLockedDocument {
   id: string;
   document?:
+    | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
     | ({
         relationTo: 'users';
         value: string | User;
@@ -205,6 +246,43 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  elements?:
+    | T
+    | {
+        ButtonGroup?: T | ButtonGroupSelect<T>;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ButtonGroup_select".
+ */
+export interface ButtonGroupSelect<T extends boolean = true> {
+  buttons?:
+    | T
+    | {
+        button?: T | InterfaceButtonSelect<T>;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceButton_select".
+ */
+export interface InterfaceButtonSelect<T extends boolean = true> {
+  primary?: T;
+  label?: T;
+  size?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

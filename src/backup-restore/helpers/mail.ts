@@ -5,8 +5,8 @@
  */
 
 import '../../../.env/index';
-import config from '../config';
 import { Resend } from 'resend';
+import config from '@/backup-restore/config';
 
 export default async (subject: string, message: string, failure: boolean): Promise<void> => {
 

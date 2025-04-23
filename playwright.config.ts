@@ -1,6 +1,7 @@
 import {
   defineConfig, devices,
 } from '@playwright/test';
+import { vrtConfig } from '@/visual-regression-testing/config';
 
 const projects = [
   // viewport micro
@@ -67,7 +68,7 @@ export default defineConfig({
 
       maxDiffPixelRatio: 0,
       maxDiffPixels: 0,
-      pathTemplate: '{arg}{ext}',
+      pathTemplate: `src/{testFileDir}/${vrtConfig.snapshotFolder}/{testName}/{projectName}{ext}`,
       // scale: 'device',
       threshold: 0,
     },

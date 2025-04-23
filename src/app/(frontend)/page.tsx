@@ -1,67 +1,53 @@
-import { headers as getHeaders } from 'next/headers.js';
-import Image from 'next/image';
 import { getPayload } from 'payload';
 import React from 'react';
-import { fileURLToPath } from 'url';
+import configPromise from '@/payload.config';
+import {
+  ButtonGroup as ButtonGroupType,
+  Config,
+} from '@/payload-types';
+import { ButtonGroup } from '@/blocks/ButtonGroup/ButtonGroup';
 
-import config from '@/payload.config';
-import { Button } from '@/components/Button/Button';
+const renderButtonGroup = (element: ButtonGroupType | null | undefined): React.JSX.Element => {
 
-export default async function HomePage(): Promise<React.JSX.Element> {
-  const headers = await getHeaders();
-  const payloadConfig = await config;
+  if (!element) {
+    return <p>no buttons</p>;
+  }
+
+  return (
+    <ButtonGroup key={element.id} {...element} />
+  );
+};
+
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ lang: string }>
+}): Promise<React.JSX.Element> {
+
+  const lang = (await params).lang as Config['locale'];
   const payload = await getPayload({
-    config: payloadConfig,
+    config: configPromise,
   });
 
-  const {
-    user,
-  } = await payload.auth({
-    headers,
+  const pageData = await payload.find({
+    collection: 'pages',
+    depth: 0,
+    limit: 1,
+    locale: lang,
+    overrideAccess: false,
   });
 
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`;
+  if (!pageData.docs || pageData.docs.length < 1) {
+    return <p>No data</p>;
+  }
 
   return (
     <div className='home'>
       <div className='content'>
-        <picture>
-          <source srcSet='https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg' />
-          <Image
-            alt='Payload Logo'
-            height={65}
-            src='https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg'
-            width={65}
-          />
-        </picture>
-        {!user && <h1>Welcome to your new project.</h1>}
-        {user && <h1>Welcome back, {user.email}</h1>}
-        <div className='links'>
-          <a
-            className='admin'
-            href={payloadConfig.routes.admin}
-            rel='noopener noreferrer'
-            target='_blank'
-          >
-            Go to admin panel
-          </a>
-          <a
-            className='docs'
-            href='https://payloadcms.com/docs'
-            rel='noopener noreferrer'
-            target='_blank'
-          >
-            Documentation
-          </a>
-        </div>
-      </div>
-      <div className='footer'>
-        <p>Update this page by editing</p>
-        <a className='codeLink' href={fileURL}>
-          <code>app/(frontend)/page.tsx</code>
-        </a>
+        {pageData.docs[0].elements?.map((element) => (
+          renderButtonGroup(element)
+        ))}
 
-        <Button label='Foobar' />
       </div>
     </div>
   );
