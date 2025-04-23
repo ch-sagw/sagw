@@ -5,7 +5,7 @@ import {
   ButtonGroup as ButtonGroupType,
   Config,
 } from '@/payload-types';
-import { ButtonGroup } from '@/blocks/ButtonGroup/Component';
+import { ButtonGroup } from '@/blocks/ButtonGroup/ButtonGroup';
 
 const renderButtonGroup = (element: ButtonGroupType | null | undefined): React.JSX.Element => {
 
