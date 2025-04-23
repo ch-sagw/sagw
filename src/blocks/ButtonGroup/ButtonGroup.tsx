@@ -1,3 +1,4 @@
+import 'server-only';
 import { JSX } from 'react';
 import { Button } from '@/components/Button/Button';
 import type { ButtonGroup as InterfaceButtonGroup } from '@/payload-types';

@@ -21,7 +21,7 @@ Sentry:
 
 NextJs:
 -------
-- Install and use server-only
+-
 
 Payload:
 --------

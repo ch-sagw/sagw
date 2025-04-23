@@ -1,5 +1,4 @@
-'use client';
-
+import 'server-only';
 import React from 'react';
 
 import styles from './__name__.module.scss';
