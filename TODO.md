@@ -1,6 +1,7 @@
 Backup / Restore:
 -----------------
 - mongo-db has a config db, which is mainly for cluster-meta. do we have to backup/restore it as well?
+- test blob backup/restore with lots of large image files
 
 Storybook:
 ----------
