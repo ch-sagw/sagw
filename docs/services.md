@@ -16,6 +16,7 @@ https://vercel.com
 - Deployments
 - Hosting
 - Blob Storage
+- Firewall / Bot Protection
 
 ## OVH
 
