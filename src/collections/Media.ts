@@ -8,7 +8,7 @@ export const Media: CollectionConfig = {
     {
       localized: true,
       name: 'alt',
-      required: true,
+      required: false,
       type: 'text',
     },
   ],
