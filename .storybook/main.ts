@@ -2,6 +2,9 @@ import type { StorybookConfig } from '@storybook/nextjs';
 
 const config: StorybookConfig = {
   addons: ['@storybook/addon-essentials'],
+  features: {
+    experimentalRSC: true,
+  },
   framework: {
     name: '@storybook/nextjs',
     options: {},
