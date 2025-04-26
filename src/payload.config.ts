@@ -7,7 +7,7 @@ import { en } from '@payloadcms/translations/languages/en';
 import { buildConfig } from 'payload';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import sharp from 'sharp';
+// import sharp from 'sharp';
 
 import plugins from '@/plugins';
 import collections from '@/collections';
@@ -35,7 +35,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  defaultDepth: 0,
+  // defaultDepth: 0,
   editor: lexicalEditor(),
   email: resendAdapter({
     apiKey: process.env.RESEND_KEY || '',
@@ -69,14 +69,18 @@ export default buildConfig({
   },
   plugins,
   secret: process.env.PAYLOAD_SECRET || '',
-  sharp,
+  // sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   upload: {
+    // abortOnLimit: true,
+    // debug: true,
     limits: {
       // 50MB, written in bytes
       fileSize: 50000000,
     },
+    // safeFileNames: true,
+    // useTempFiles: true,
   },
 });

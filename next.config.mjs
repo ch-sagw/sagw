@@ -1,5 +1,5 @@
 import './.env/index.js';
-import { withSentryConfig } from '@sentry/nextjs';
+// import { withSentryConfig } from '@sentry/nextjs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { withPayload } from '@payloadcms/next/withPayload';
@@ -7,22 +7,20 @@ import { withPayload } from '@payloadcms/next/withPayload';
 const rootFileName = fileURLToPath(import.meta.url);
 const rootDirName = path.dirname(rootFileName);
 
-const NEXT_PUBLIC_SERVER_URL = process.env.URL ||
-  process.env.DEPLOY_URL ||
-  'http://localhost:3000';
+// const NEXT_PUBLIC_SERVER_URL = process.env.URL ||
+//   process.env.DEPLOY_URL ||
+//   'http://localhost:3000';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
     remotePatterns: [
-      ...[NEXT_PUBLIC_SERVER_URL].map((item) => {
-        const url = new URL(item);
-
-        return {
-          hostname: url.hostname,
-          protocol: url.protocol.replace(':', ''),
-        };
-      }),
+      {
+        hostname: '**',
+        pathname: '**',
+        port: '',
+        protocol: 'https',
+      },
     ],
   },
   reactStrictMode: true,
@@ -37,6 +35,9 @@ const nextConfig = {
 
 const configWithPayload = withPayload(nextConfig);
 
+export default configWithPayload;
+
+/*
 export default withSentryConfig(configWithPayload, {
   devBundleServerPackages: false,
 }, {
@@ -49,3 +50,4 @@ export default withSentryConfig(configWithPayload, {
   tunnelRoute: '/monitoring',
   widenClientFileUpload: true,
 });
+*/
