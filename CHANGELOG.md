@@ -1,5 +1,56 @@
 # Changelog
 
+## [0.3.0](https://github.com/ch-sagw/sagw/compare/v0.2.2...v0.3.0) (2025-05-08)
+
+
+### Chore
+
+* add autologin for local dev env ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* config field localization, add admin-ui localization, add default request depth ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* **deps-dev:** bump the development-dependencies group across 1 directory with 15 updates ([#48](https://github.com/ch-sagw/sagw/issues/48)) ([258f4cf](https://github.com/ch-sagw/sagw/commit/258f4cfa9d1fafccf24af79fe6367db52fe807c5))
+* **deps:** bump the production-dependencies group across 1 directory with 9 updates ([#47](https://github.com/ch-sagw/sagw/issues/47)) ([5b6a4cb](https://github.com/ch-sagw/sagw/commit/5b6a4cb19cbd06a8ce84dbeaeebcfc2f69cdfa41))
+* **deps:** bump the production-dependencies group with 8 updates ([#40](https://github.com/ch-sagw/sagw/issues/40)) ([91b038d](https://github.com/ch-sagw/sagw/commit/91b038d3fd9fafddaebc618921490bd663d45a2a))
+* extending documentation ([#43](https://github.com/ch-sagw/sagw/issues/43)) ([470861c](https://github.com/ch-sagw/sagw/commit/470861cf906fac8fcb855d236eb0545c75997e35))
+* extending payload config with upload options config ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* extending storybook config to make server only component work ([#44](https://github.com/ch-sagw/sagw/issues/44)) ([3145fda](https://github.com/ch-sagw/sagw/commit/3145fda69b05b53e7e0e9d5741a1358b3d91964d))
+* install server-only ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* make alt text optional ([f156e9f](https://github.com/ch-sagw/sagw/commit/f156e9f2b49689229a8431a24a92cda1a3f703de))
+* move payload collections to separate file ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* move payload plugins to separate file ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* move snapshots folder ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* remove obsolete note about not working request depth ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* rename test component ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* use absolute imports for backup-restore scripts ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* use absolute imports inside sample component ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+
+
+### Documentation
+
+* add todo ([3792dd0](https://github.com/ch-sagw/sagw/commit/3792dd0a7796cd6454418de45e75baed3edf5fce))
+* add todo ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* add todo's ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* remove todo ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+
+
+### Features
+
+* add sample button-group block ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* enable focal point selection on media ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* render sample button group on sample page ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+
+
+### Bug Fixes
+
+* make sure to init env in blob helper ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* set correct story type ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+
+
+### Test
+
+* add screenshots for custom visual regression test ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* fix naming issues, make visual regression possible for components and blocks ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* refactor to enable vrt on components and blocks ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+
 ## [0.2.2](https://github.com/ch-sagw/sagw/compare/v0.2.1...v0.2.2) (2025-04-18)
 
 
