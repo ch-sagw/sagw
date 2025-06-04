@@ -2,7 +2,7 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/react';
-import { fn } from '@storybook/test';
+import { fn } from 'storybook/test';
 import { __name__ } from './__name__';
 import { defaultDecorator } from '@/storybook-helpers';
 

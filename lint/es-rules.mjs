@@ -164,6 +164,11 @@ export default {
   'no-restricted-modules': 'off',
 
   /**
+   * Storybook
+  */
+  'storybook/no-renderer-packages': 'off',
+
+  /**
    * Stylistic issues
    */
   'array-bracket-newline': [
@@ -308,7 +313,7 @@ export default {
   'object-curly-newline': [
     'error',
     {
-      /* eslint-disable @typescript-eslint/naming-convention */
+
       ObjectExpression: {
         minProperties: 1,
       },
@@ -319,7 +324,7 @@ export default {
       ExportDeclaration: {
         minProperties: 2,
       },
-      /* eslint-enable @typescript-eslint/naming-convention */
+
     },
   ],
   'object-curly-spacing': [

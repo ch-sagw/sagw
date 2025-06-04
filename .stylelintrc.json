@@ -5,6 +5,7 @@
   ],
   "rules": {
     "declaration-block-no-redundant-longhand-properties": null,
+    "declaration-property-value-keyword-no-deprecated": null,
     "no-descending-specificity": null,
     "scss/dollar-variable-pattern": null,
     "selector-class-pattern": null,

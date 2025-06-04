@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test';
-import { IndexEntry } from '@storybook/types';
+import { IndexEntry } from 'storybook/internal/types';
 import { vrtConfig } from '@/visual-regression-testing/config';
 
 export const getStoryUrl = (id: string): string => {

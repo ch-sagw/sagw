@@ -2,7 +2,7 @@ import {
   expect,
   test,
 } from '@playwright/test';
-import { IndexEntry } from '@storybook/types';
+import { IndexEntry } from 'storybook/internal/types';
 import {
   filterStories,
   navigate,
