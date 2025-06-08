@@ -41,21 +41,21 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@payloadcms/db-mongodb": "^3.37.0",
-    "@payloadcms/email-resend": "^3.37.0",
-    "@payloadcms/next": "^3.37.0",
-    "@payloadcms/richtext-lexical": "^3.37.0",
-    "@payloadcms/storage-vercel-blob": "^3.37.0",
-    "@sentry/nextjs": "^9.17.0",
+    "@payloadcms/db-mongodb": "^3.41.0",
+    "@payloadcms/email-resend": "^3.41.0",
+    "@payloadcms/next": "^3.41.0",
+    "@payloadcms/richtext-lexical": "^3.41.0",
+    "@payloadcms/storage-vercel-blob": "^3.41.0",
+    "@sentry/nextjs": "^9.27.0",
     "cross-env": "^7.0.3",
     "graphql": "^16.11.0",
-    "next": "15.3.2",
-    "payload": "^3.37.0",
+    "next": "15.3.3",
+    "payload": "^3.41.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "resend": "^4.5.1",
+    "resend": "^4.5.2",
     "server-only": "^0.0.1",
-    "sharp": "0.34.1"
+    "sharp": "0.34.2"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.802.0",
