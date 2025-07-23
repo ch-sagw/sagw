@@ -1,8 +1,8 @@
 import type {
   Meta,
   StoryObj,
-} from '@storybook/react';
-import { fn } from '@storybook/test';
+} from '@storybook/nextjs';
+import { fn } from 'storybook/test';
 import { Button } from '@/components/Button/Button';
 import { defaultDecorator } from '@/storybook-helpers';
 
