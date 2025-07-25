@@ -6,7 +6,8 @@ export interface I18nString {
   [lang: string]: string;
 }
 
-export type PageRef = string;
+// real type will come from payload later
+export type PageRef = any;
 
 // real type will come from payload later
 export type Rte = any;
