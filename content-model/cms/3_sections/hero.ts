@@ -4,6 +4,9 @@ import {
   Author, colorMode, I18nString, LinkInternal,
 } from '../0_base';
 
+/**
+ * @group Sections
+ */
 export interface HeroSection {
   sideTitle: I18nString;
   title: I18nString;
@@ -12,6 +15,9 @@ export interface HeroSection {
   colorMode: colorMode;
 }
 
+/**
+ * @group Sections
+ */
 export interface HeroArticleSection {
   title: I18nString;
   subtitle: I18nString;

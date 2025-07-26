@@ -15,6 +15,7 @@ const eslintConfig = [
     'src/app/(payload)/**/*',
     '!src/app/(payload)/**/*/',
     '!src/app/(payload)/api/cron-blob-backup/*',
+    'content-model/docs/**/*/',
   ]),
   {
     files: [

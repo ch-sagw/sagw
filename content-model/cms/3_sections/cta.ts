@@ -7,6 +7,10 @@ import { Input } from '../1_elements/input';
 import { Checkbox } from '../1_elements/checkbox';
 import { Message } from '../2_modules/message';
 
+/**
+ * @group Sections
+ */
+
 export interface CtaNewsletterSection {
   title: I18nString;
   text: I18nString;
@@ -20,6 +24,9 @@ export interface CtaNewsletterSection {
   recipientMailAddress: string;
 }
 
+/**
+ * @group Sections
+ */
 export interface CtaSubscribeSection {
   title: I18nString;
   text: I18nString;
@@ -32,12 +39,18 @@ export interface CtaSubscribeSection {
   recipientMailAddress: string;
 }
 
+/**
+ * @group Sections
+ */
 export interface CtaPromotionSection {
   title: I18nString;
   text: I18nString;
   link: LinkInternal;
 }
 
+/**
+ * @group Sections
+ */
 export interface CtaContactFormSection {
   title: I18nString;
   text: I18nString;
@@ -52,6 +65,9 @@ export interface CtaContactFormSection {
   recipientMailAddress: string;
 }
 
+/**
+ * @group Sections
+ */
 export interface CtaContactPerson {
   name: string;
   text: I18nString;
@@ -59,12 +75,18 @@ export interface CtaContactPerson {
   email: LinkMail;
 }
 
+/**
+ * @group Sections
+ */
 export interface CtaContactPersonSection {
   title: I18nString;
   text: I18nString;
   items: CtaContactPerson[];
 }
 
+/**
+ * @group Sections
+ */
 export interface CtaOrderFormSection {
   title: I18nString;
   text: I18nString;

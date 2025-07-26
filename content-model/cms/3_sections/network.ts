@@ -5,6 +5,9 @@ import {
 } from '../0_base';
 import { Filter } from '../2_modules/filter';
 
+/**
+ * @group Sections
+ */
 export interface NetworkBlock {
   title: I18nString;
   image: Logo;
@@ -12,6 +15,9 @@ export interface NetworkBlock {
   foundingYear: number;
 }
 
+/**
+ * @group Sections
+ */
 export interface NetworkSection {
   title: I18nString;
   filter: Filter;

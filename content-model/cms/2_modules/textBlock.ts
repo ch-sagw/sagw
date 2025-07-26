@@ -4,6 +4,10 @@ import {
   I18nString, Rte,
 } from '../0_base';
 
+/**
+ * @group Modules
+ */
+
 export interface TextBlock {
   title: I18nString;
   rte: Rte;

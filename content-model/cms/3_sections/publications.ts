@@ -5,6 +5,9 @@ import {
 } from '../0_base';
 import { CategoryPublication } from '../2_modules/teaser';
 
+/**
+ * @group Sections
+ */
 export interface Publication {
   category: CategoryPublication;
   title: I18nString;
@@ -13,6 +16,9 @@ export interface Publication {
   date: Date;
 }
 
+/**
+ * @group Sections
+ */
 export interface PublicationSection {
   title: I18nString;
   lead: I18nString;

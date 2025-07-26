@@ -4,10 +4,24 @@ import {
   I18nString, Image, LinkExternal, LinkInternal, Logo,
 } from '../0_base';
 
+/**
+ * @group Modules
+ */
 export interface CategoryPublication { title: I18nString; }
+
+/**
+ * @group Modules
+ */
 export interface CategoryEvent { title: I18nString; }
+
+/**
+ * @group Modules
+ */
 export interface CategoryNews { title: I18nString; }
 
+/**
+ * @group Modules
+ */
 export interface TeaserGeneric {
   title: I18nString;
   text: I18nString;
@@ -17,6 +31,9 @@ export interface TeaserGeneric {
   category?: CategoryPublication;
 }
 
+/**
+ * @group Modules
+ */
 export interface TeaserPerson {
   title: I18nString;
   description: I18nString;
@@ -25,6 +42,9 @@ export interface TeaserPerson {
   image: Image;
 }
 
+/**
+ * @group Modules
+ */
 export interface TeaserLogo {
   title: I18nString;
   foundingYear: number;
@@ -32,6 +52,9 @@ export interface TeaserLogo {
   linkExternal: LinkExternal;
 }
 
+/**
+ * @group Modules
+ */
 export interface TeaserPublication {
   title: I18nString;
   date: Date;
@@ -40,6 +63,9 @@ export interface TeaserPublication {
   image: Image;
 }
 
+/**
+ * @group Modules
+ */
 export interface TeaserEvent {
   title: I18nString;
   description: I18nString;
@@ -48,6 +74,9 @@ export interface TeaserEvent {
   category: CategoryEvent;
 }
 
+/**
+ * @group Modules
+ */
 export interface TeaserNews {
   title: I18nString;
   description: I18nString;
@@ -56,10 +85,16 @@ export interface TeaserNews {
   category: CategoryNews;
 }
 
+/**
+ * @group Modules
+ */
 export interface TeaserDownload {
   document: Document;
 }
 
+/**
+ * @group Modules
+ */
 export interface TeaserLink {
   title: I18nString;
   description: I18nString;

@@ -4,6 +4,10 @@ import {
   Contact, I18nString, MainNavItem, SocialLink, SubNavItem,
 } from '../0_base';
 
+/**
+ * @group Modules
+ */
+
 export interface Footer {
   title: I18nString;
   contact?: Contact;

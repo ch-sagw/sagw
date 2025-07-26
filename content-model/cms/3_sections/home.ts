@@ -4,6 +4,9 @@ import {
   DecorativeIcon, I18nString, LinkInternal,
 } from '../0_base';
 
+/**
+ * @group Sections
+ */
 export interface HomeSection {
   category: I18nString;
   title: I18nString;

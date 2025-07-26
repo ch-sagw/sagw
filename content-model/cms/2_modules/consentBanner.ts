@@ -4,6 +4,10 @@ import {
   I18nString, Rte,
 } from '../0_base';
 
+/**
+ * @group Modules
+ */
+
 export interface ConsentBanner {
   title: I18nString;
   text: Rte;

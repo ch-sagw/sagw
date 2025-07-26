@@ -4,6 +4,9 @@ import {
   I18nString, Image, LinkInternal,
 } from '../0_base';
 
+/**
+ * @group Sections
+ */
 export interface MagazineBlock {
   title: I18nString;
   text: I18nString;
@@ -11,6 +14,9 @@ export interface MagazineBlock {
   link: LinkInternal;
 }
 
+/**
+ * @group Sections
+ */
 export interface MagazineSection {
   title: I18nString;
   lead: I18nString;
