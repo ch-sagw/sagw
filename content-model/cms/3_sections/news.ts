@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
+  ColorModeReduced,
   I18nString, LinkInternal,
 } from '../0_base';
 
@@ -21,4 +22,5 @@ export interface NewsSection {
   title: I18nString;
   items: News[];
   allNewsLink: LinkInternal;
+  colorMode: ColorModeReduced;
 }

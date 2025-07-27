@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  Author, colorMode, I18nString, LinkInternal,
+  Author, ColorMode, I18nString, LinkInternal,
 } from '../0_base';
 
 /**
@@ -12,7 +12,7 @@ export interface HeroSection {
   title: I18nString;
   text: I18nString;
   link: LinkInternal;
-  colorMode: colorMode;
+  colorMode: ColorMode;
 }
 
 /**

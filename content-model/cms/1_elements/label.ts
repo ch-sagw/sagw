@@ -6,9 +6,10 @@ import { I18nString } from '../0_base';
  * @group Elements
  */
 
-export interface Checkbox {
+export interface Label {
   text: I18nString;
-  value: string;
+
+  // TODO: neccessary, or do we derivate this from the parent element?
 
   /**
    * Inverted is used on dark backgrounds.

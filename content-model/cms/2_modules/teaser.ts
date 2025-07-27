@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
+  ColorModeReduced,
   I18nString, Image, LinkExternal, LinkInternal, Logo,
 } from '../0_base';
 
@@ -28,6 +29,7 @@ export interface TeaserGeneric {
   date: Date;
   image: Image;
   linkInternal: LinkInternal;
+  colorMode: ColorModeReduced;
   category?: CategoryPublication;
 }
 

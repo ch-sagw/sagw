@@ -140,23 +140,6 @@ export interface Contact {
 /**
  * @group Base
  */
-export interface SubNavItem {
-  text: I18nString;
-  slug: PageRef;
-}
-
-/**
- * @group Base
- */
-export interface MainNavItem {
-  text: I18nString;
-  children?: SubNavItem[];
-  slug?: PageRef;
-}
-
-/**
- * @group Base
- */
 export interface SocialLink {
   type: 'linkedin' | 'facebook' | 'x';
   link: string;
@@ -172,4 +155,16 @@ export interface Author {
 /**
  * @group Base
  */
-export type colorMode = 'bright' | 'dark';
+export type ColorScheme = 'bright' | 'dark';
+
+/**
+ * @group Base
+ */
+export type ColorModeReduced = 'white' | 'color';
+
+/**
+ * @group Base
+ */
+export type ColorMode =
+  | { colorMode: 'white' }
+  | { colorMode: 'color'; colorScheme: ColorScheme };
