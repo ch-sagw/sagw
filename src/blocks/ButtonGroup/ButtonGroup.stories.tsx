@@ -1,7 +1,7 @@
 import type {
   Meta,
   StoryObj,
-} from '@storybook/react';
+} from '@storybook/nextjs';
 import { ButtonGroup } from '@/blocks/ButtonGroup/ButtonGroup';
 import { defaultDecorator } from '@/storybook-helpers';
 

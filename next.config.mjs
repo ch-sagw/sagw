@@ -28,10 +28,12 @@ const nextConfig = {
   reactStrictMode: true,
   sassOptions: {
     includePaths: [path.resolve(rootDirName, 'src/styles')],
-    silenceDeprecations: [
-      'import',
-      'legacy-js-api',
-    ],
+  },
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  webpack(config) {
+    config.resolve.alias['@styles'] = path.resolve(__dirname, 'src/styles');
+
+    return config;
   },
 };
 

@@ -1,6 +1,6 @@
-@use "functions" as fn;
-@use "mediaqueries" as mq;
-@use "utilities" as ut;
+@use "@styles/functions" as fn;
+@use "@styles/mediaqueries" as mq;
+@use "@styles/utilities" as ut;
 
 .button {
   display: inline-block;
