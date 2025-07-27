@@ -60,3 +60,6 @@ next-env.d.ts
 
 # backup / restore
 download
+
+# content-model
+/content-model/docs
