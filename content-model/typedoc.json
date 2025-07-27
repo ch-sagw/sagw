@@ -8,5 +8,6 @@
         "compactFolders": false,
         "excludeReferences": true
     },
-    "categorizeByGroup": true
+    "categorizeByGroup": true,
+    "visibilityFilters": {},
 }
