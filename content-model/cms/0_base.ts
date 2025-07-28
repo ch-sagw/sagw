@@ -168,7 +168,7 @@ export interface MainNavItem {
  */
 export interface SEO {
   tags: I18nString[];
-  description: I18nString[];
+  description: I18nString;
 
   // TODO:
   // Further meta info required? Open-Graph properties?
