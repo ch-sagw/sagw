@@ -19,8 +19,6 @@ export interface FaqSection {
  *
  * @group Sections
  */
-export interface FaqSectionColor {
-  title: I18nString;
-  items: Accordion[];
-  color: ColorMode;
+export interface FaqSectionColor extends FaqSection {
+  colorMode: ColorMode;
 }

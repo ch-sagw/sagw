@@ -109,22 +109,6 @@ export interface Document {
 /**
  * @group Base
  */
-export interface UIIcon {
-  // TODO: tbd
-  type: 'hamburger' | 'arrow'
-}
-
-/**
- * @group Base
- */
-export interface DecorativeIcon {
-  // TODO: tbd
-  type: 'promotion' | 'network' | 'activities' | 'broken-heart'
-}
-
-/**
- * @group Base
- */
 export interface Contact {
   title: I18nString;
   address1?: string;
@@ -143,13 +127,6 @@ export interface Contact {
 export interface SocialLink {
   type: 'linkedin' | 'facebook' | 'x';
   link: string;
-}
-
-/**
- * @group Base
- */
-export interface Author {
-  name: string;
 }
 
 /**
@@ -184,4 +161,15 @@ export interface MainNavItem {
   text: I18nString;
   children?: SubNavItem[];
   slug?: PageRef;
+}
+
+/**
+ * @group Base
+ */
+export interface SEO {
+  tags: I18nString[];
+  description: I18nString[];
+
+  // TODO:
+  // Further meta info required? Open-Graph properties?
 }

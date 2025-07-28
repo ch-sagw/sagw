@@ -1,22 +1,31 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  TeaserImageTitleLink,
-  TextBlockColor,
-} from '../../2_modules';
+  ColorMode, I18nString,
+  PageRef,
+  SEO,
+} from '../../0_base';
+import { TextBlockColor } from '../../2_modules';
 import {
   CtaContactPersonSection, CtaPromotionSection, DownloadSection,
   FaqSectionColor,
 } from '../../3_sections';
-import { HeroSectionReducedWhite } from '../../3_sections/hero';
 
 /**
  * @group Pages/Promotion
  */
 export interface EarlyCareerAwardPage {
-  hero: HeroSectionReducedWhite;
+  seo: SEO;
+  heroTitle: I18nString;
+  heroColorMode: ColorMode;
   textBlocksBeforeTeasers: TextBlockColor[];
-  teasers: TeaserImageTitleLink;
+
+  winnersTeasers: {
+    buttonText: I18nString;
+    colorMode: ColorMode;
+    items: PageRef[];
+  }
+
   textBlocksAfterTeasers: TextBlockColor[];
   downloads: DownloadSection;
   ctaPromotion: CtaPromotionSection;

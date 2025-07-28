@@ -1,2 +1,0 @@
-- "Alle News", "Alle Downloads" etc: currently we use the LinkInternal type for this. Strictly speaking, it should only be type String. (from authoring perspective)
-- Dates at e.g. News, Downloads: should we use the date when the news entry was saved in the CMS, or do authors want to set a date explicitiy. For downloads, should we take the date when a document was uploaded in the CMS or do authors want to set a date explicitly?

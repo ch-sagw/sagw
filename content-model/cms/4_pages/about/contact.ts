@@ -4,16 +4,15 @@ import {
   I18nString, SEO,
 } from '../../0_base';
 import {
-  CtaContactFormSection, FaqSection, SubpageSection,
+  CtaContactFormSection, FaqSection,
 } from '../../3_sections';
 
 /**
- * @group Pages/Promotion
+ * @group Pages/About
  */
-export interface PromotionPage {
+export interface AboutContactPage {
   seo: SEO;
   heroTitle: I18nString;
-  content: SubpageSection;
-  faq: FaqSection;
-  contact: CtaContactFormSection;
+  contactForm: CtaContactFormSection;
+  addresses: FaqSection;
 }

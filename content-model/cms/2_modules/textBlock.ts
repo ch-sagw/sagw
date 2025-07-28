@@ -21,9 +21,6 @@ export interface TextBlock {
  * @group Modules
  *
  */
-export interface TextBlockColor {
-  title: I18nString;
-  rte: Rte;
-  copyButtonText: I18nString;
-  colorMode: ColorMode
+export interface TextBlockColor extends TextBlock {
+  colorMode: ColorMode;
 }

@@ -1,19 +1,43 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  EventSection,
-  MagazineSection, NewsSection, PublicationSection, SubpageSection,
-} from 'content-model/cms/3_sections';
-import { HeroSectionReducedColorBright } from '../../3_sections/hero';
+  I18nString, LinkInternal,
+  SEO,
+} from '../../0_base';
+import {
+  CtaNewsletterSection, SubpageSection,
+} from '../../3_sections';
 
 /**
- * @group Pages
+ * Auto-generated. Shows:
+ * - 3 latest magazine articles teasers
+ * - 4 latest publications teasers
+ * - 3 latest events teasers
+ * - 3 latest news articles teasers
+ *
+ * @group Pages/Activities
  */
 export interface ActivitiesPage {
-  hero: HeroSectionReducedColorBright;
+  seo: SEO;
+  heroTitle: I18nString;
   sectionProjects: SubpageSection;
-  sectionMagazine: MagazineSection;
-  sectionPublications: PublicationSection;
-  sectionEvents: EventSection;
-  sectionNews: NewsSection;
+  sectionMagazine: {
+    title: I18nString;
+    lead: I18nString;
+    allArticlesLink: LinkInternal;
+  };
+  sectionPublications: {
+    title: I18nString;
+    lead: I18nString;
+    allPublicationsLink: LinkInternal;
+  };
+  sectionEvents: {
+    title: I18nString;
+    allEventsLink: LinkInternal;
+  };
+  sectionNews: {
+    title: I18nString;
+    allNewsLink: LinkInternal;
+  };
+  newsletter: CtaNewsletterSection;
 }

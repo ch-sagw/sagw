@@ -1,15 +1,24 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  CtaSubscribeSection, NewsSection,
-} from 'content-model/cms/3_sections';
-import { HeroSectionReducedColorBright } from '../../../3_sections/hero';
+  I18nString, SEO,
+} from '../../../0_base';
+import { CtaNewsletterSection } from '../../../3_sections';
 
 /**
- * @group Pages/News
+ * Auto-generated. Shows:
+ * - available news posts
+ *
+ * @group Pages/Activities
  */
 export interface NewsOverviewPage {
-  hero: HeroSectionReducedColorBright;
-  sectionNews: NewsSection;
-  subscribe: CtaSubscribeSection;
+  seo: SEO;
+  heroTitle: I18nString;
+  sectionTitle: I18nString;
+  subscribe: CtaNewsletterSection;
+  newsDetail: {
+    linksTitle: I18nString;
+    downloadsTitle: I18nString;
+    otherNewsTitle: I18nString;
+  }
 }

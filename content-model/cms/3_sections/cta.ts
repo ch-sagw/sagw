@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  ColorMode,
-  I18nString, LinkInternal, LinkMail,
+  ColorMode, I18nString, LinkInternal,
+  LinkMail,
 } from '../0_base';
 import { Input } from '../1_elements/input';
 import { Checkbox } from '../1_elements/checkbox';
@@ -19,16 +19,13 @@ export interface CtaNewsletterSection {
   email: Input;
   checkbox: Checkbox;
   buttonText: I18nString;
-  messageSuccess: Message;
-  messageError?: Message;
-  messageWarn?: Message;
-  recipientMailAddress: string;
+  stateMessage: Message;
 }
 
 /**
  * @group Sections
  */
-export interface CtaSubscribeSection {
+export interface CtaSubscribeMagazineSection {
   title: I18nString;
   text: I18nString;
   checkboxPdf: Checkbox;
@@ -37,7 +34,7 @@ export interface CtaSubscribeSection {
   email: Input;
   checkbox: Checkbox;
   buttonText: I18nString;
-  recipientMailAddress: string;
+  stateMessage: Message;
 }
 
 /**
@@ -59,12 +56,14 @@ export interface CtaContactFormSection {
   name: Input;
   email: Input;
 
+  // TODO
   // Design Flaw: this should be a textifeld
   message: Input;
 
   checkbox: Checkbox;
   buttonText: I18nString;
-  recipientMailAddress: string;
+  stateMessage: Message;
+  colorMode: ColorMode;
 }
 
 /**
@@ -81,7 +80,7 @@ export interface CtaContactPersonSection {
 /**
  * @group Sections
  */
-export interface CtaOrderFormSection {
+export interface CtaOrderPublicationFormSection {
   title: I18nString;
   text: I18nString;
   name: Input;
@@ -90,5 +89,5 @@ export interface CtaOrderFormSection {
   zipAndCity: I18nString;
   checkbox: Checkbox;
   buttonText: I18nString;
-  recipientMailAddress: string;
+  stateMessage: Message;
 }

@@ -1,20 +1,19 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { TextBlock } from 'content-model/cms/2_modules';
-import { HeroSectionReducedWhite } from '../../../3_sections/hero';
 import {
-  CtaOrderFormSection,
-  DownloadSection,
-  PublicationSection,
-} from 'content-model/cms/3_sections';
+  I18nString, SEO,
+} from '../../../0_base';
+import { TextBlock } from '../../../2_modules';
+import { DownloadItem } from '../../../3_sections';
 
 /**
- * @group Pages/Publications
+ * @group Pages/Activities
  */
 export interface PublicationsDetailPage {
-  hero: HeroSectionReducedWhite;
+  seo: SEO;
+  heroTitle: I18nString
   content: TextBlock[];
-  download: DownloadSection;
-  order: CtaOrderFormSection;
-  otherPublications: PublicationSection;
+  downloads: DownloadItem[];
+  publicationTopic: I18nString;
+  publicationType: I18nString;
 }

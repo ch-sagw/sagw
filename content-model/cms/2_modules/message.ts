@@ -9,8 +9,9 @@ import {
  */
 export interface Message {
   title: I18nString;
-  message: I18nString;
-  type: 'success' | 'warning' | 'error';
+  messageSuccess: Message;
   colorMode: ColorScheme;
+  messageError?: Message;
+  messageWarn?: Message;
   linkInternal?: LinkInternal;
 }

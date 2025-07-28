@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  I18nString, SEO,
+  I18nString, LinkInternal,
 } from '../0_base';
-import { NetworkSection } from '../3_sections';
 
 /**
  * @group Pages
  */
-export interface NetworkPage {
-  seo: SEO;
+export interface ErrorPage {
   heroTitle: I18nString;
-  section: NetworkSection;
+  errorCode: number;
+  text: I18nString;
+  link: LinkInternal;
 }

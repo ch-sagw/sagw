@@ -1,18 +1,30 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { TextBlock } from 'content-model/cms/2_modules';
-import { HeroSectionArticle } from '../../../3_sections/hero';
-import { Image } from 'content-model/cms/0_base';
 import {
-  CtaSubscribeSection, DownloadSection,
-} from 'content-model/cms/3_sections';
+  I18nString, Image,
+  SEO,
+  Video,
+} from '../../../0_base';
+import { TextBlock } from '../../../2_modules';
+import {
+  DownloadItem,
+  LinkItem,
+} from '../../../3_sections';
 
 /**
- * @group Pages/Magazine
+ * @group Pages/Activities
  */
 export interface MagazineDetailPage {
-  hero: HeroSectionArticle;
-  content: (Image | TextBlock)[];
-  download: DownloadSection;
-  subscribe: CtaSubscribeSection;
+  seo: SEO;
+  hero: {
+    title: I18nString;
+    lead: I18nString;
+    author: string;
+    date: Date;
+  };
+  teaserText: I18nString;
+  content: (Image | Video | TextBlock)[];
+  download?: DownloadItem[];
+  links?: LinkItem[];
+
 }

@@ -1,12 +1,30 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { PublicationSection } from 'content-model/cms/3_sections';
-import { HeroSectionReducedColorBright } from '../../../3_sections/hero';
+import {
+  I18nString, SEO,
+} from '../../../0_base';
+import { CtaOrderPublicationFormSection } from '../../../3_sections';
 
 /**
- * @group Pages/Publications
+ * Auto-generated. Shows:
+ * - all available publications as teaser
+ *
+ * @group Pages/Activities
  */
 export interface PublicationsOverviewPage {
-  hero: HeroSectionReducedColorBright;
-  section: PublicationSection;
+  seo: SEO;
+  heroTitle: I18nString;
+  filters: {
+    title: I18nString;
+    allCheckboxTopics: I18nString;
+    allCheckboxTypes: I18nString;
+  },
+  publicationDetail: {
+    downloadsTitle: I18nString,
+    order: CtaOrderPublicationFormSection;
+    otherPublications: {
+      title: I18nString;
+      allPublicationsButton: I18nString;
+    }
+  }
 }

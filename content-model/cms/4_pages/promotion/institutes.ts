@@ -1,11 +1,16 @@
 
+import {
+  ColorMode, I18nString,
+  SEO,
+} from '../../0_base';
 import { InstituteSection } from '../../3_sections';
-import { HeroSectionReducedColorBright } from '../../3_sections/hero';
 
 /**
  * @group Pages/Promotion
  */
 export interface InstitutesPage {
-  hero: HeroSectionReducedColorBright;
+  seo: SEO;
+  heroTitle: I18nString;
+  heroColorMode: ColorMode;
   section: InstituteSection;
 }

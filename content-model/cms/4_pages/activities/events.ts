@@ -1,12 +1,27 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { NewsSection } from 'content-model/cms/3_sections';
-import { HeroSectionReducedColorBright } from '../../3_sections/hero';
+import {
+  I18nString, LinkExternal,
+  SEO,
+} from '../../0_base';
+
+export interface Event {
+  category: I18nString;
+  title: I18nString;
+  text: I18nString;
+  link: LinkExternal;
+  date: Date;
+}
 
 /**
- * @group Pages
+ * Auto-generated. Shows:
+ * - all available events
+ *
+ * @group Pages/Activities
  */
 export interface EventsPage {
-  hero: HeroSectionReducedColorBright;
-  sectionNews: NewsSection;
+  seo: SEO;
+  heroTitle: I18nString;
+  eventsTitle: I18nString;
+  events: Event[];
 }

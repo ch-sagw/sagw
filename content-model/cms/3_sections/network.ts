@@ -3,7 +3,6 @@
 import {
   I18nString, LinkExternalTextless, Logo,
 } from '../0_base';
-import { Filter } from '../2_modules/filter';
 
 /**
  * @group Sections
@@ -13,14 +12,17 @@ export interface NetworkBlock {
   image: Logo;
   link: LinkExternalTextless;
   foundingYear: number;
+  category: I18nString;
 }
 
 /**
  * @group Sections
  */
 export interface NetworkSection {
-  title: I18nString;
-  filter: Filter;
+  filter: {
+    title: I18nString;
+    allCheckbox: I18nString;
+  },
   blocks: {
     items: NetworkBlock[];
     foundingYearText: I18nString;

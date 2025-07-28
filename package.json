@@ -39,7 +39,7 @@
     "backup:maintenance:prod": "cross-env ENV=prod tsx ./src/backup-restore/maintenance/index",
     "replicate:prod": "tsx ./src/backup-restore/restores/replicate-prod",
     "prepare": "husky",
-    "content-model:docs": "typedoc --entryPoints ./content-model/cms/index.ts --out content-model/docs",
+    "content-model:docs": "typedoc --options ./content-model/typedoc.json",
     "content-model:docs:watch": "typedoc --watch  --options ./content-model/typedoc.json"
   },
   "dependencies": {

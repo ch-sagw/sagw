@@ -1,12 +1,29 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { MagazineSection } from 'content-model/cms/3_sections';
-import { HeroSectionReducedColorBright } from '../../../3_sections/hero';
+import { CtaSubscribeMagazineSection } from '../../../3_sections';
+import {
+  I18nString, SEO,
+} from '../../../0_base';
 
 /**
- * @group Pages/Magazine
+ * Auto-generated. Shows:
+ * - all available magazine articles as teaser
+ * - the first image of the magazine article is taken as teaser image
+ *
+ * @group Pages/Activities
  */
 export interface MagazineOverviewPage {
-  hero: HeroSectionReducedColorBright;
-  sectionMagazine: MagazineSection;
+  seo: SEO;
+  heroTitle: I18nString;
+  articleDetail: {
+    hero: {
+      exportButtonTitle: I18nString;
+    },
+    downloads: {
+      title: I18nString;
+      text: I18nString;
+    },
+    linksTitle: I18nString,
+    subscribe: CtaSubscribeMagazineSection;
+  }
 }

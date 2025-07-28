@@ -1,20 +1,22 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { TextBlock } from 'content-model/cms/2_modules';
-import { HeroSectionReducedWhite } from '../../../3_sections/hero';
 import {
-  CtaSubscribeSection,
-  LinkSection,
-  NewsSection,
-} from 'content-model/cms/3_sections';
+  I18nString, Image, SEO, Video,
+} from '../../../0_base';
+import { TextBlock } from '../../../2_modules';
+import {
+  DownloadItem,
+  LinkItem,
+} from '../../../3_sections';
 
 /**
- * @group Pages/News
+ * @group Pages/Activities
  */
 export interface NewsDetailPage {
-  hero: HeroSectionReducedWhite;
-  content: TextBlock[];
-  links: LinkSection;
-  subscribe: CtaSubscribeSection;
-  otherNews: NewsSection;
+  seo: SEO;
+  heroTitle: I18nString;
+  teaserText: I18nString;
+  content: (Image | Video | TextBlock)[];
+  links: LinkItem[];
+  downloads: DownloadItem[];
 }

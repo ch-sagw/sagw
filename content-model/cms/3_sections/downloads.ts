@@ -7,7 +7,7 @@ import {
 /**
  * @group Sections
  */
-export interface Download {
+export interface DownloadItem {
   title: I18nString;
   text: I18nString;
   document: Document;
@@ -18,8 +18,8 @@ export interface Download {
  */
 export interface DownloadSection {
   title: I18nString;
-  text: I18nString;
-  items: Download[];
-  allDownloadsLink: LinkInternal;
+  text?: I18nString;
+  items: DownloadItem[];
+  allDownloadsLink?: LinkInternal;
   colorMode: ColorMode;
 }

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  I18nString, LinkInternal,
+  I18nString, LinkExternal, LinkInternal,
 } from '../0_base';
 
 /**
@@ -10,7 +10,7 @@ import {
 export interface SubpageSectionBlock {
   title: I18nString;
   text: I18nString;
-  link: LinkInternal;
+  link: LinkInternal | LinkExternal;
 }
 
 /**

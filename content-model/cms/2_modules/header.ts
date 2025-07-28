@@ -24,6 +24,6 @@ export interface Header {
   languageSwitch: LangSwitchItem[];
   metaNavigation: SubNavItem[];
 
-  // TODO: neccessary, or do we derivate this from the parent element?
+  // TODO: neccessary, or do we derivate this from the parent page?
   colorSettings?: ColorMode;
 }
