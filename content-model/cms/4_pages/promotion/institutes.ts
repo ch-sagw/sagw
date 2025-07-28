@@ -5,7 +5,7 @@ import { HeroSectionReducedColorBright } from '../../3_sections/hero';
 /**
  * @group Pages/Promotion
  */
-export interface Institutes {
+export interface InstitutesPage {
   hero: HeroSectionReducedColorBright;
   section: InstituteSection;
 }

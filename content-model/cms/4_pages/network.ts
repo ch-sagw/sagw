@@ -6,7 +6,7 @@ import { HeroSectionReducedColorBright } from '../3_sections/hero';
 /**
  * @group Pages
  */
-export interface Network {
+export interface NetworkPage {
   hero: HeroSectionReducedColorBright;
   section: NetworkSection;
 }

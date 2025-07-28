@@ -3,6 +3,7 @@
 import {
   I18nString, Image, LinkExternal, LinkInternal,
 } from '../0_base';
+import { Filter } from '../2_modules';
 import { CategoryPublication } from '../2_modules/teaser';
 
 /**
@@ -21,6 +22,7 @@ export interface Publication {
  */
 export interface PublicationSection {
   title: I18nString;
+  filter: Filter;
   lead: I18nString;
   items: Publication[];
   allPublicationsLink: LinkInternal;

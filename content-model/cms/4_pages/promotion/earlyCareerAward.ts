@@ -13,7 +13,7 @@ import { HeroSectionReducedWhite } from '../../3_sections/hero';
 /**
  * @group Pages/Promotion
  */
-export interface EarlyCareerAward {
+export interface EarlyCareerAwardPage {
   hero: HeroSectionReducedWhite;
   textBlocksBeforeTeasers: TextBlockColor[];
   teasers: TeaserImageTitleLink;

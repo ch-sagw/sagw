@@ -8,7 +8,7 @@ import { NewsSection } from '../3_sections/news';
 /**
  * @group Pages
  */
-export interface Home {
+export interface HomePage {
   hero: HeroSection;
   mainSections: HomeSection[];
   news: NewsSection[];
