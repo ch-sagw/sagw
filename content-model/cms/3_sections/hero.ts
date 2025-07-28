@@ -16,9 +16,29 @@ export interface HeroSection {
 }
 
 /**
+ * Example usage:
+ * - promotion landing page
+ *
  * @group Sections
  */
-export interface HeroArticleSection {
+export interface HeroSectionReducedColorBright {
+  title: I18nString;
+}
+
+/**
+ * Example usage:
+ * - early career award
+ *
+ * @group Sections
+ */
+export interface HeroSectionReducedWhite {
+  title: I18nString;
+}
+
+/**
+ * @group Sections
+ */
+export interface HeroSectionArticle {
   title: I18nString;
   subtitle: I18nString;
   author: Author;

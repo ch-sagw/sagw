@@ -7,7 +7,6 @@ import {
 /**
  * @group Modules
  */
-
 export interface ConsentBanner {
   title: I18nString;
   text: Rte;

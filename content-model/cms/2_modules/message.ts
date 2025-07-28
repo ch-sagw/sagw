@@ -7,7 +7,6 @@ import {
 /**
  * @group Modules
  */
-
 export interface Message {
   title: I18nString;
   message: I18nString;

@@ -5,7 +5,6 @@ import { I18nString } from '../0_base';
 /**
  * @group Modules
  */
-
 export interface FilterItem {
   text: I18nString;
   id: string;
@@ -14,7 +13,6 @@ export interface FilterItem {
 /**
  * @group Modules
  */
-
 export interface Filter {
   title: I18nString;
   items: FilterItem[];

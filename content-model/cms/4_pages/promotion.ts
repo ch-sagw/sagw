@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { CtaNewsletterSection } from '../3_sections/cta';
-import { HeroSection } from '../3_sections/hero';
-import { HomeSection } from '../3_sections/home';
-import { NewsSection } from '../3_sections/news';
+import {
+  CtaContactFormSection, FaqSection, SubpageSection,
+} from '../3_sections';
+import { HeroSectionReducedColorBright } from '../3_sections/hero';
 
 /**
  * @group Pages
  */
-export interface Home {
-  hero: HeroSection;
-  mainSections: HomeSection[];
-  news: NewsSection[];
-  newsletter: CtaNewsletterSection;
+export interface Promotion {
+  hero: HeroSectionReducedColorBright;
+  sections: SubpageSection[];
+  faq: FaqSection;
+  contact: CtaContactFormSection;
 }

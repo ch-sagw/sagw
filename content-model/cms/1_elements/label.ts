@@ -5,7 +5,6 @@ import { I18nString } from '../0_base';
 /**
  * @group Elements
  */
-
 export interface Label {
   text: I18nString;
 

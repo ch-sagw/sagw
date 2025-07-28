@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {
+  ColorMode,
   Document, I18nString, LinkInternal,
 } from '../0_base';
 
@@ -20,4 +21,5 @@ export interface DownloadSection {
   text: I18nString;
   items: Download[];
   allDownloadsLink: LinkInternal;
+  colorMode: ColorMode;
 }

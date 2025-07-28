@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
+  ColorMode,
   ColorModeReduced,
+  Document,
   I18nString, Image, LinkExternal, LinkInternal, Logo,
 } from '../0_base';
 
@@ -31,6 +33,18 @@ export interface TeaserGeneric {
   linkInternal: LinkInternal;
   colorMode: ColorModeReduced;
   category?: CategoryPublication;
+}
+
+/**
+ * @group Modules
+ * Example usage:
+ * - early career award
+ */
+export interface TeaserImageTitleLink {
+  title: I18nString;
+  image: Image;
+  linkInternal: LinkInternal;
+  colorMode: ColorMode;
 }
 
 /**

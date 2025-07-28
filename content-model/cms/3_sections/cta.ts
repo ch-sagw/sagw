@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
+  ColorMode,
   I18nString, LinkInternal, LinkMail,
 } from '../0_base';
 import { Input } from '../1_elements/input';
@@ -46,6 +47,7 @@ export interface CtaPromotionSection {
   title: I18nString;
   text: I18nString;
   link: LinkInternal;
+  color: ColorMode;
 }
 
 /**
@@ -68,20 +70,12 @@ export interface CtaContactFormSection {
 /**
  * @group Sections
  */
-export interface CtaContactPerson {
+export interface CtaContactPersonSection {
   name: string;
   text: I18nString;
   phone: string;
   email: LinkMail;
-}
-
-/**
- * @group Sections
- */
-export interface CtaContactPersonSection {
-  title: I18nString;
-  text: I18nString;
-  items: CtaContactPerson[];
+  color: ColorMode;
 }
 
 /**

@@ -2,27 +2,10 @@
 
 import {
   ColorMode,
-  I18nString,
   Logo,
-  PageRef,
+  MainNavItem,
+  SubNavItem,
 } from '../0_base';
-
-/**
- * @group Base
- */
-export interface SubNavItem {
-  text: I18nString;
-  slug: PageRef;
-}
-
-/**
- * @group Base
- */
-export interface MainNavItem {
-  text: I18nString;
-  children?: SubNavItem[];
-  slug?: PageRef;
-}
 
 /**
  * @group Modules

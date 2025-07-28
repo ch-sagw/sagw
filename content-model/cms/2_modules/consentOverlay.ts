@@ -6,7 +6,6 @@ import { Toggle } from '../1_elements/toggle';
 /**
  * @group Modules
  */
-
 export interface ConsentOverlaySection {
   title: I18nString;
   text: any;
@@ -16,7 +15,6 @@ export interface ConsentOverlaySection {
 /**
  * @group Modules
  */
-
 export interface ConsentOverlay {
   title: I18nString;
   text: any;

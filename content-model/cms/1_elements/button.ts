@@ -7,7 +7,6 @@ import {
 /**
  * @group Elements
  */
-
 export interface Button {
   text: I18nString;
   iconBefore?: UIIcon;

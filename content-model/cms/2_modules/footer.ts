@@ -7,7 +7,6 @@ import {
 /**
  * @group Modules
  */
-
 export interface Footer {
   title: I18nString;
   contact?: Contact;

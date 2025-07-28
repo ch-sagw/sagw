@@ -168,3 +168,20 @@ export type ColorModeReduced = 'white' | 'color';
 export type ColorMode =
   | { colorMode: 'white' }
   | { colorMode: 'color'; colorScheme: ColorScheme };
+
+/**
+ * @group Base
+ */
+export interface SubNavItem {
+  text: I18nString;
+  slug: PageRef;
+}
+
+/**
+ * @group Base
+ */
+export interface MainNavItem {
+  text: I18nString;
+  children?: SubNavItem[];
+  slug?: PageRef;
+}
