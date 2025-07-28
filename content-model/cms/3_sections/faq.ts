@@ -14,9 +14,10 @@ export interface FaqSection {
 }
 
 /**
- * @group Sections
  * Example usage:
  * - early career award
+ *
+ * @group Sections
  */
 export interface FaqSectionColor {
   title: I18nString;

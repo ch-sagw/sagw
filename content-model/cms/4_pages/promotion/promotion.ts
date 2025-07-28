@@ -2,11 +2,11 @@
 
 import {
   CtaContactFormSection, FaqSection, SubpageSection,
-} from '../3_sections';
-import { HeroSectionReducedColorBright } from '../3_sections/hero';
+} from '../../3_sections';
+import { HeroSectionReducedColorBright } from '../../3_sections/hero';
 
 /**
- * @group Pages
+ * @group Pages/Promotion
  */
 export interface Promotion {
   hero: HeroSectionReducedColorBright;

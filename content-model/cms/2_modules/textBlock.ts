@@ -15,9 +15,11 @@ export interface TextBlock {
 }
 
 /**
- * @group Modules
  * Example usage:
  * - early career award
+ *
+ * @group Modules
+ *
  */
 export interface TextBlockColor {
   title: I18nString;

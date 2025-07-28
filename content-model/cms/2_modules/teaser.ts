@@ -36,9 +36,11 @@ export interface TeaserGeneric {
 }
 
 /**
- * @group Modules
  * Example usage:
  * - early career award
+ *
+ * @group Modules
+ *
  */
 export interface TeaserImageTitleLink {
   title: I18nString;

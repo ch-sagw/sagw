@@ -18,6 +18,7 @@ export interface HeroSection {
 /**
  * Example usage:
  * - promotion landing page
+ * - network
  *
  * @group Sections
  */

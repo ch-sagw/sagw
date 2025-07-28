@@ -3,15 +3,15 @@
 import {
   TeaserImageTitleLink,
   TextBlockColor,
-} from '../2_modules';
+} from '../../2_modules';
 import {
   CtaContactPersonSection, CtaPromotionSection, DownloadSection,
   FaqSectionColor,
-} from '../3_sections';
-import { HeroSectionReducedWhite } from '../3_sections/hero';
+} from '../../3_sections';
+import { HeroSectionReducedWhite } from '../../3_sections/hero';
 
 /**
- * @group Pages
+ * @group Pages/Promotion
  */
 export interface EarlyCareerAward {
   hero: HeroSectionReducedWhite;
