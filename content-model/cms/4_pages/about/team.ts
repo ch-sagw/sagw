@@ -3,7 +3,7 @@
 import {
   I18nString, PageProperties, SEO,
 } from '../../0_base';
-import { TeaserPerson } from '../../6_plc';
+import { Person } from '../../6_plc';
 
 /**
  * @group Pages/About
@@ -15,5 +15,5 @@ export interface AboutTeamPage {
     title: I18nString;
     lead: I18nString;
   }
-  items: TeaserPerson[];
+  items: Person[];
 }

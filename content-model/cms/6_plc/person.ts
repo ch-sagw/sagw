@@ -5,14 +5,14 @@ import {
   LinkPhone,
 } from '../0_base';
 
-export type TeaserPersonMember = 'vorstand' | 'geschaeftsleitung' | 'team';
+export type PersonMemberType = 'vorstand' | 'geschaeftsleitung' | 'team';
 
 /**
  * Placeless content: managed in one place, can be used everywhere
  *
  * @group PLC
  */
-export interface TeaserPerson {
+export interface Person {
   namePrefix?: I18nString;
   firstname: string;
   lastname: string;
@@ -21,5 +21,5 @@ export interface TeaserPerson {
   phone: LinkPhone;
   mail: string;
   image: Image;
-  memberType: TeaserPersonMember;
+  memberType: PersonMemberType;
 }

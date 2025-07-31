@@ -71,6 +71,8 @@ export interface CtaContactFormSection {
  * @group Sections
  */
 export interface CtaContactPersonSection {
+  // TODO
+  // we could use Person interface here?
   name: string;
   text: I18nString;
   phone: LinkPhone;
