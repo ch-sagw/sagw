@@ -191,7 +191,11 @@ export interface SubNavItem {
   slug: PageRef;
 }
 
-export type MetaNavItem = SubNavItem;
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-empty-interface */
+export interface MetaNavItem extends SubNavItem { }
+/* eslint-enable @typescript-eslint/no-empty-object-type */
+/* eslint-enable @typescript-eslint/no-empty-interface */
 
 /**
  * @group Base
