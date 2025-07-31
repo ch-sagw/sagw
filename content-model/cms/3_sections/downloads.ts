@@ -11,9 +11,7 @@ export interface DownloadItem {
   title: I18nString;
   text: I18nString;
   document: Document;
-
-  // TODO: use GlobalProperties.projectTopic
-  project: any;
+  projectId: string;
 }
 
 /**

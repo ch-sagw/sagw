@@ -18,17 +18,21 @@ export interface I18nString {
 // real type will come from payload later
 export type PageRef = any;
 
-/**
- * @group Base
- */
 // real types will come from payload later
-
 // TODO: this will render `any` in docs page!!
 
-// Rte 1: Low: sub- and superscript
+/**
+ * Rte 1: Low: sub- and superscript
+ *
+ * @group Base
+ */
 export type RteConfig1 = any;
 
-// Rte 2: Rte1 + bold/italic/underline/strikethrough/uppercase + links
+/**
+ * Rte 2: Rte1 + bold/italic/underline/strikethrough/uppercase + links
+ *
+ * @group Base
+ */
 export type RteConfig2 = any;
 
 /**
@@ -211,9 +215,6 @@ export interface SEO {
     // Uploaded file reference
     image: any;
   }
-
-  // TODO:
-  // Further meta info required? Open-Graph properties?
 }
 
 /**

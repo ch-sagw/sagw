@@ -21,9 +21,6 @@ export interface ProjectDetailPage {
   heroTitle: I18nString;
   lead: I18nString;
   text: RteConfig2;
-
-  // TODO: use GlobalProperties.projectTopic
-  projectTopic: any;
-
+  projectId: string;
   contact: CtaContactFormSection;
 }

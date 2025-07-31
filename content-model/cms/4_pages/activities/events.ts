@@ -12,9 +12,7 @@ export interface Event {
   text: I18nString;
   link: LinkExternal;
   date: Date;
-
-  // TODO: use GlobalProperties.projectTopic
-  project: any;
+  projectId: string;
 }
 
 /**

@@ -17,7 +17,5 @@ export interface PublicationsDetailPage {
   downloads: DownloadItem[];
   publicationTopic: I18nString;
   publicationType: I18nString;
-
-  // TODO: use GlobalProperties.projectTopic
-  project: any;
+  projectId: string;
 }
