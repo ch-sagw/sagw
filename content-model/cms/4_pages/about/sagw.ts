@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  I18nString, Image, SEO, Video,
+  I18nString, Image, PageProperties, SEO, Video,
 } from '../../0_base';
 import { TextBlock } from '../../2_modules';
 import {
@@ -13,6 +13,7 @@ import {
  */
 export interface AboutSagwPage {
   seo: SEO;
+  pageProperties: PageProperties;
   hero: {
     title: I18nString;
     lead: I18nString;

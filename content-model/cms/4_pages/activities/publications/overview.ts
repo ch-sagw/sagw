@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  I18nString, SEO,
+  I18nString, PageProperties, SEO,
 } from '../../../0_base';
 import { CtaOrderPublicationFormSection } from '../../../3_sections';
 
@@ -13,6 +13,7 @@ import { CtaOrderPublicationFormSection } from '../../../3_sections';
  */
 export interface PublicationsOverviewPage {
   seo: SEO;
+  pageProperties: PageProperties;
   heroTitle: I18nString;
   filters: {
     title: I18nString;

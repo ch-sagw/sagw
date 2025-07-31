@@ -2,7 +2,7 @@
 
 import {
   ColorMode,
-  I18nString, Rte,
+  I18nString, RteConfig2,
 } from '../0_base';
 
 /**
@@ -10,7 +10,7 @@ import {
  */
 export interface TextBlock {
   title: I18nString;
-  rte: Rte;
+  rte: RteConfig2;
   copyButtonText: I18nString;
 }
 

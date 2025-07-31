@@ -2,6 +2,7 @@
 
 import {
   I18nString, LinkInternal,
+  PageProperties,
   SEO,
 } from '../0_base';
 
@@ -10,6 +11,8 @@ import {
  */
 export interface HomePage {
   seo: SEO;
+  pageProperties: PageProperties
+  ;
   hero: {
     sideTitle: I18nString;
     title: I18nString;

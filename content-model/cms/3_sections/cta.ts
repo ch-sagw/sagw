@@ -3,10 +3,11 @@
 import {
   ColorMode, I18nString, LinkInternal,
   LinkMail,
+  LinkPhone,
 } from '../0_base';
 import { Input } from '../1_elements/input';
 import { Checkbox } from '../1_elements/checkbox';
-import { Message } from '../2_modules/message';
+import { FormMessage } from '../2_modules/message';
 
 /**
  * @group Sections
@@ -19,7 +20,7 @@ export interface CtaNewsletterSection {
   email: Input;
   checkbox: Checkbox;
   buttonText: I18nString;
-  stateMessage: Message;
+  stateMessage: FormMessage;
 }
 
 /**
@@ -34,7 +35,7 @@ export interface CtaSubscribeMagazineSection {
   email: Input;
   checkbox: Checkbox;
   buttonText: I18nString;
-  stateMessage: Message;
+  stateMessage: FormMessage;
 }
 
 /**
@@ -62,7 +63,7 @@ export interface CtaContactFormSection {
 
   checkbox: Checkbox;
   buttonText: I18nString;
-  stateMessage: Message;
+  stateMessage: FormMessage;
   colorMode: ColorMode;
 }
 
@@ -72,7 +73,7 @@ export interface CtaContactFormSection {
 export interface CtaContactPersonSection {
   name: string;
   text: I18nString;
-  phone: string;
+  phone: LinkPhone;
   email: LinkMail;
   color: ColorMode;
 }
@@ -89,5 +90,5 @@ export interface CtaOrderPublicationFormSection {
   zipAndCity: I18nString;
   checkbox: Checkbox;
   buttonText: I18nString;
-  stateMessage: Message;
+  stateMessage: FormMessage;
 }

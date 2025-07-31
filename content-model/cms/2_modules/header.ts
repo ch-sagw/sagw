@@ -4,16 +4,8 @@ import {
   ColorMode,
   Logo,
   MainNavItem,
-  SubNavItem,
+  MetaNavItem,
 } from '../0_base';
-
-/**
- * @group Modules
- */
-export interface LangSwitchItem {
-  text: string;
-  languageCode: 'de | fr | it | en';
-}
 
 /**
  * @group Modules
@@ -21,8 +13,7 @@ export interface LangSwitchItem {
 export interface Header {
   logo: Logo;
   navigation: MainNavItem[];
-  languageSwitch: LangSwitchItem[];
-  metaNavigation: SubNavItem[];
+  metaNavigation: MetaNavItem[];
 
   // TODO: neccessary, or do we derivate this from the parent page?
   colorSettings?: ColorMode;

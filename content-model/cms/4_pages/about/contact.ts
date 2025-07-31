@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  I18nString, SEO,
+  I18nString, PageProperties, SEO,
 } from '../../0_base';
 import {
   CtaContactFormSection, FaqSection,
@@ -12,6 +12,7 @@ import {
  */
 export interface AboutContactPage {
   seo: SEO;
+  pageProperties: PageProperties;
   heroTitle: I18nString;
   contactForm: CtaContactFormSection;
   addresses: FaqSection;

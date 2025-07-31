@@ -11,6 +11,9 @@ export interface LinkItem {
   title: I18nString;
   text: I18nString;
   link: LinkExternalTextless;
+
+  // TODO: use GlobalProperties.projectTopic
+  project: any;
 }
 
 /**

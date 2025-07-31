@@ -2,6 +2,7 @@
 
 import {
   ColorMode, I18nString,
+  PageProperties,
   PageRef,
   SEO,
 } from '../../0_base';
@@ -16,6 +17,7 @@ import {
  */
 export interface EarlyCareerAwardPage {
   seo: SEO;
+  pageProperties: PageProperties;
   heroTitle: I18nString;
   heroColorMode: ColorMode;
   textBlocksBeforeTeasers: TextBlockColor[];

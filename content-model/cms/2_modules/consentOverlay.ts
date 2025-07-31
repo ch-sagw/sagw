@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { I18nString } from '../0_base';
+import {
+  I18nString, RteConfig1,
+} from '../0_base';
 import { Toggle } from '../1_elements/toggle';
 
 /**
@@ -8,7 +10,7 @@ import { Toggle } from '../1_elements/toggle';
  */
 export interface ConsentOverlaySection {
   title: I18nString;
-  text: any;
+  text: RteConfig1;
   toggle: Toggle | I18nString;
 }
 
@@ -17,7 +19,7 @@ export interface ConsentOverlaySection {
  */
 export interface ConsentOverlay {
   title: I18nString;
-  text: any;
+  text: RteConfig1;
   sectionNecessary: ConsentOverlaySection;
   sectionAnalyticsPerformance: ConsentOverlaySection;
   sectionExternalContent: ConsentOverlaySection;

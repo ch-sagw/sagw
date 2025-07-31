@@ -21,14 +21,21 @@ export type PageRef = any;
 /**
  * @group Base
  */
-// real type will come from payload later
-export type Rte = any;
+// real types will come from payload later
+
+// TODO: this will render `any` in docs page!!
+
+// Rte 1: Low: sub- and superscript
+export type RteConfig1 = any;
+
+// Rte 2: Rte1 + bold/italic/underline/strikethrough/uppercase + links
+export type RteConfig2 = any;
 
 /**
  * @group Base
  */
 export interface LinkInternal {
-  title: I18nString;
+  text: I18nString;
   target: Target;
   slug: PageRef;
 }
@@ -37,7 +44,7 @@ export interface LinkInternal {
  * @group Base
  */
 export interface LinkExternal {
-  title: I18nString;
+  text: I18nString;
   target: Target;
   href: string;
 }
@@ -61,13 +68,34 @@ export interface LinkExternalTextless {
 /**
  * @group Base
  */
+export interface LinkPhone {
+  phone: string;
+}
+
+/**
+ * @group Base
+ */
 export interface Image {
   // Uploaded file reference
   image: any;
 
-  alt: I18nString;
+  alt?: I18nString;
   description?: I18nString;
   credits?: I18nString;
+  focusPoint?: {
+    x: number;
+    y: number;
+  }
+}
+
+/**
+ * Example usage: News detail page.
+ *
+ * @group Base
+ */
+
+export interface ImageInline extends Image {
+  position: 'full' | 'left' | 'right';
 }
 
 /**
@@ -80,6 +108,11 @@ export interface Video {
   alt: I18nString;
   description?: I18nString;
   credits?: I18nString;
+
+  // Uploaded file reference
+  image: any;
+
+  title: I18nString;
 }
 
 /**
@@ -110,15 +143,15 @@ export interface Document {
  * @group Base
  */
 export interface Contact {
-  title: I18nString;
+  title?: I18nString;
   address1?: string;
-  address2: string;
+  address2?: string;
   poBox?: I18nString;
-  countryCode: string;
-  zipCode: number;
-  city: string;
-  phone: string;
-  mail: string;
+  countryCode?: string;
+  zipCode?: number;
+  city?: string;
+  phone?: string;
+  mail?: string;
 }
 
 /**
@@ -154,6 +187,8 @@ export interface SubNavItem {
   slug: PageRef;
 }
 
+export type MetaNavItem = SubNavItem;
+
 /**
  * @group Base
  */
@@ -167,9 +202,23 @@ export interface MainNavItem {
  * @group Base
  */
 export interface SEO {
-  tags: I18nString[];
   description: I18nString;
+  title: I18nString;
+  og: {
+    title: I18nString;
+    description: I18nString;
+
+    // Uploaded file reference
+    image: any;
+  }
 
   // TODO:
   // Further meta info required? Open-Graph properties?
+}
+
+/**
+ * @group Base
+ */
+export interface PageProperties {
+  index: boolean;
 }

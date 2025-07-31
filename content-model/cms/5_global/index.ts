@@ -3,8 +3,11 @@
 import {
   ConsentBanner,
   ConsentOverlay,
-  Footer, Header,
+  Footer, GlobalMessage, Header,
 } from '../2_modules';
+import {
+  I18nString, SEO,
+} from '../0_base';
 
 /**
  * @group Global
@@ -19,5 +22,24 @@ export interface GlobalProperties {
     newsletterForm: string;
     subscribeMagazineForm: string;
     orderPublicationForm: string;
+  };
+  languages: {
+    de: boolean;
+    it: boolean;
+    fr: boolean;
+    en: boolean;
+  };
+  message: GlobalMessage;
+  projectTopics: {
+    id: string;
+    text: I18nString[];
+  };
+  seo: SEO;
+  i18n: {
+    formValidation: {
+      errors: {
+        email: I18nString;
+      }
+    }
   }
 }

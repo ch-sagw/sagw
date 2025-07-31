@@ -2,7 +2,7 @@
 
 import {
   I18nString,
-  Rte,
+  RteConfig2,
 } from '../0_base';
 
 /**
@@ -11,7 +11,7 @@ import {
 
 export interface AccordionItem {
   title: I18nString;
-  text: Rte;
+  text: RteConfig2;
 }
 
 /**

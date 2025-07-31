@@ -2,6 +2,7 @@
 
 import {
   I18nString, LinkInternal,
+  PageProperties,
   SEO,
 } from '../../0_base';
 import {
@@ -19,6 +20,7 @@ import {
  */
 export interface ActivitiesPage {
   seo: SEO;
+  pageProperties: PageProperties;
   heroTitle: I18nString;
   sectionProjects: SubpageSection;
   sectionMagazine: {

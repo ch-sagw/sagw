@@ -2,7 +2,7 @@
 
 import { CtaSubscribeMagazineSection } from '../../../3_sections';
 import {
-  I18nString, SEO,
+  I18nString, PageProperties, SEO,
 } from '../../../0_base';
 
 /**
@@ -14,6 +14,7 @@ import {
  */
 export interface MagazineOverviewPage {
   seo: SEO;
+  pageProperties: PageProperties;
   heroTitle: I18nString;
   articleDetail: {
     hero: {

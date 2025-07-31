@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  I18nString, SEO,
+  I18nString, PageProperties, SEO,
 } from '../../../0_base';
 import { CtaNewsletterSection } from '../../../3_sections';
 
@@ -13,6 +13,7 @@ import { CtaNewsletterSection } from '../../../3_sections';
  */
 export interface NewsOverviewPage {
   seo: SEO;
+  pageProperties: PageProperties;
   heroTitle: I18nString;
   sectionTitle: I18nString;
   subscribe: CtaNewsletterSection;

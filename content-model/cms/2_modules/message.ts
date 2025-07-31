@@ -7,11 +7,32 @@ import {
 /**
  * @group Modules
  */
-export interface Message {
+export interface FormMessage {
   title: I18nString;
-  messageSuccess: Message;
+  messageSuccess: I18nString;
   colorMode: ColorScheme;
-  messageError?: Message;
-  messageWarn?: Message;
+  messageError: I18nString;
+  messageWarn?: I18nString;
   linkInternal?: LinkInternal;
+}
+
+/**
+ * @group Modules
+ */
+type GlobalMessageType = 'warn | error | success';
+
+/**
+ * @group Modules
+ */
+export interface GlobalMessage {
+  title: I18nString;
+  message: I18nString;
+  colorMode: ColorScheme;
+  linkInternal?: LinkInternal;
+  type: GlobalMessageType;
+  onHomeOnly: boolean;
+  validity?: {
+    from: Date;
+    to: Date;
+  };
 }

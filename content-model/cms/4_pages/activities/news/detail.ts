@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  I18nString, Image, SEO, Video,
+  I18nString, Image, PageProperties, SEO, Video,
 } from '../../../0_base';
 import { TextBlock } from '../../../2_modules';
 import {
@@ -14,6 +14,7 @@ import {
  */
 export interface NewsDetailPage {
   seo: SEO;
+  pageProperties: PageProperties;
   heroTitle: I18nString;
   teaserText: I18nString;
   content: (Image | Video | TextBlock)[];

@@ -2,6 +2,7 @@
 
 import {
   I18nString, Image,
+  PageProperties,
   SEO,
   Video,
 } from '../../../0_base';
@@ -16,6 +17,7 @@ import {
  */
 export interface MagazineDetailPage {
   seo: SEO;
+  pageProperties: PageProperties;
   hero: {
     title: I18nString;
     lead: I18nString;

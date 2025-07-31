@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  I18nString, Rte,
+  I18nString, RteConfig1,
 } from '../0_base';
 
 /**
@@ -9,7 +9,7 @@ import {
  */
 export interface ConsentBanner {
   title: I18nString;
-  text: Rte;
+  text: RteConfig1;
   buttonAcceptAll: I18nString;
   buttonDeclineAll: I18nString;
   buttonCustomizeSelection: I18nString;
