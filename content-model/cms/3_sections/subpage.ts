@@ -19,5 +19,6 @@ export interface SubpageSectionBlock {
 export interface SubpageSection {
   title: I18nString;
   lead: I18nString;
+  alignement: 'horizontal' | 'vertical';
   blocks: SubpageSectionBlock[];
 }
