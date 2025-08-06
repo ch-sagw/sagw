@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  ColorMode, I18nString, LinkInternal,
-  LinkMail,
-  LinkPhone,
+  ColorMode, I18nString, LinkExternal,
 } from '../0_base';
-import { Input } from '../1_elements/input';
-import { Checkbox } from '../1_elements/checkbox';
+import { Checkbox } from '../1_elements';
 import { FormMessage } from '../2_modules/message';
+import {
+  Person, PersonMemberType,
+} from '../6_plc';
 
 /**
  * @group Sections
@@ -16,9 +16,6 @@ import { FormMessage } from '../2_modules/message';
 export interface CtaNewsletterSection {
   title: I18nString;
   text: I18nString;
-  name: Input;
-  email: Input;
-  checkbox: Checkbox;
   buttonText: I18nString;
   stateMessage: FormMessage;
 }
@@ -31,9 +28,6 @@ export interface CtaSubscribeMagazineSection {
   text: I18nString;
   checkboxPdf: Checkbox;
   checkboxPrint: Checkbox;
-  name: Input;
-  email: Input;
-  checkbox: Checkbox;
   buttonText: I18nString;
   stateMessage: FormMessage;
 }
@@ -44,7 +38,7 @@ export interface CtaSubscribeMagazineSection {
 export interface CtaPromotionSection {
   title: I18nString;
   text: I18nString;
-  link: LinkInternal;
+  link: LinkExternal;
   color: ColorMode;
 }
 
@@ -54,14 +48,6 @@ export interface CtaPromotionSection {
 export interface CtaContactFormSection {
   title: I18nString;
   text: I18nString;
-  name: Input;
-  email: Input;
-
-  // TODO
-  // Design Flaw: this should be a textifeld
-  message: Input;
-
-  checkbox: Checkbox;
   buttonText: I18nString;
   stateMessage: FormMessage;
   colorMode: ColorMode;
@@ -69,15 +55,18 @@ export interface CtaContactFormSection {
 
 /**
  * @group Sections
+ * Person can either be Team or Geschäftsleitung
+ */
+export type AllowedCtaContactMemberType = Exclude<PersonMemberType, 'vorstand'>;
+
+/**
+ * Person can either be Team or Geschäftsleitung
+ *
+ * @group Sections
  */
 export interface CtaContactPersonSection {
-  // TODO
-  // we could use Person interface here?
-  name: string;
-  text: I18nString;
-  phone: LinkPhone;
-  email: LinkMail;
   color: ColorMode;
+  person: Omit<Person, 'memberType'> & { memberType: AllowedCtaContactMemberType }[];
 }
 
 /**
@@ -86,11 +75,9 @@ export interface CtaContactPersonSection {
 export interface CtaOrderPublicationFormSection {
   title: I18nString;
   text: I18nString;
-  name: Input;
   organisation: I18nString;
   street: I18nString;
   zipAndCity: I18nString;
-  checkbox: Checkbox;
   buttonText: I18nString;
   stateMessage: FormMessage;
 }

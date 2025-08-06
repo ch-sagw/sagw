@@ -13,7 +13,10 @@ import {
 export interface PromotionPage {
   seo: SEO;
   pageProperties: PageProperties;
-  heroTitle: I18nString;
+  hero: {
+    title: I18nString;
+    lead: I18nString;
+  };
   content: SubpageSection;
   faq: FaqSection;
   contact: CtaContactFormSection;

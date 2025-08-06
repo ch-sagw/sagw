@@ -11,7 +11,6 @@ Questions:
 - Will rich text block always have a white background?
 - Can we reuse PersonTeaser in CtaContactPersonSection? Can people be defined in the CtaContactPersonSection who are not part of the team?
 - OrderPublicationForm -> Do you ship the publications internationally? The old form https://www.sagw.ch/sagw/aktuell/publikationen/bestellen?publication=Bulletin%201%2F25%3A%20Intelligenz&cHash=3b2a562861a015a5f959d5e7f9882712 uses additional fields compared to the current design. Which ones are needed anymore?
-- Are there FAQs which are reused on various pages? Would it make sense to have the FAQ entries as PLC content?
 - Do you want to serve the FAQs as structured data? PRO: better machine readability, FAQs might show up in Google Search Results, eventually better visibility/accuracy in AI powered search. CONS: pretty much the PRO points -> decreased on page traffic
  - Publications are currently not part of the Project Details page. Is this on purpose or a mistake?
  - Can the Fachgesellschaften have anything else as footer logo than on of the three svgs: 'Institute of Swiss Academy...', 'Member of Swiss Academy' or 'Supported by Swiss Academy...'
@@ -19,3 +18,4 @@ Questions:
  - Video-Handling: Responsive videos manually optimized with multiple sources <-> Single source and automatically optimized video and delivery
  - Accordion content: do you expect anything else than RTE to be placed within an accordion?
  
+- Are there FAQs which are reused on various pages? Would it make sense to have the FAQ entries as PLC content? -> YES OPLC

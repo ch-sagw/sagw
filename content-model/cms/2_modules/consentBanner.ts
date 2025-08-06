@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  I18nString, RteConfig1,
+  I18nString,
+  RteConfig1,
 } from '../0_base';
 
 /**

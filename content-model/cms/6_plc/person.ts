@@ -6,6 +6,7 @@ import {
 } from '../0_base';
 
 export type PersonMemberType = 'vorstand' | 'geschaeftsleitung' | 'team';
+export type Department = 'admin' | 'science' | 'com';
 
 /**
  * Placeless content: managed in one place, can be used everywhere
@@ -22,4 +23,5 @@ export interface Person {
   mail: string;
   image: Image;
   memberType: PersonMemberType;
+  department: Department;
 }

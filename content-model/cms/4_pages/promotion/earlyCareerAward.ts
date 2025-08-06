@@ -6,7 +6,7 @@ import {
   PageRef,
   SEO,
 } from '../../0_base';
-import { TextBlockColor } from '../../2_modules';
+import { TextBlock } from '../../2_modules';
 import {
   CtaContactPersonSection, CtaPromotionSection, DownloadSection,
   FaqSectionColor,
@@ -20,15 +20,14 @@ export interface EarlyCareerAwardPage {
   pageProperties: PageProperties;
   heroTitle: I18nString;
   heroColorMode: ColorMode;
-  textBlocksBeforeTeasers: TextBlockColor[];
+  textBlocksBeforeTeasers: TextBlock[];
 
   winnersTeasers: {
     buttonText: I18nString;
-    colorMode: ColorMode;
     items: PageRef[];
   }
 
-  textBlocksAfterTeasers: TextBlockColor[];
+  textBlocksAfterTeasers: TextBlock[];
   downloads: DownloadSection;
   ctaPromotion: CtaPromotionSection;
   faq: FaqSectionColor;

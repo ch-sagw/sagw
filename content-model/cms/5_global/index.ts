@@ -6,7 +6,7 @@ import {
   Footer, GlobalMessage, Header,
 } from '../2_modules';
 import {
-  I18nString, SEO,
+  I18nString, RteConfig2, SEO,
 } from '../0_base';
 
 /**
@@ -36,9 +36,29 @@ export interface GlobalProperties {
   };
   seo: SEO;
   i18n: {
+    sectionTitles: {
+      download: I18nString;
+    },
     formValidation: {
       errors: {
         email: I18nString;
+      }
+    },
+    formFields: {
+      email: {
+        label: I18nString;
+        placeholder: I18nString;
+      },
+      name: {
+        label: I18nString;
+        placeholder: I18nString;
+      },
+      message: {
+        label: I18nString;
+        placeholder: I18nString;
+      },
+      dataPrivacyCheckbox: {
+        text: RteConfig2;
       }
     }
   }

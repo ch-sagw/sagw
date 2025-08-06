@@ -19,27 +19,29 @@ export interface I18nString {
 export type PageRef = any;
 
 // real types will come from payload later
-// TODO: this will render `any` in docs page!!
 
 /**
- * Rte 1: Low: sub- and superscript
+ * Rte 1:
+ * sub- and superscript
+ * &shy;
  *
  * @group Base
  */
-export type RteConfig1 = any;
+export type RteConfig1 = 'rteConfig1';
 
 /**
- * Rte 2: Rte1 + bold/italic/underline/strikethrough/uppercase + links
+ * Rte 2: Rte1
+ * + bold/italic/underline/strikethrough/uppercase
+ * + links
  *
  * @group Base
  */
-export type RteConfig2 = any;
+export type RteConfig2 = 'rteConfig2';
 
 /**
  * @group Base
  */
-export interface LinkInternal {
-  text: I18nString;
+export interface LinkInternalTextless {
   target: Target;
   slug: PageRef;
 }
@@ -47,18 +49,8 @@ export interface LinkInternal {
 /**
  * @group Base
  */
-export interface LinkExternal {
+export interface LinkInternal extends LinkInternalTextless {
   text: I18nString;
-  target: Target;
-  href: string;
-}
-
-/**
- * @group Base
- */
-export interface LinkMail {
-  title: I18nString;
-  address: string;
 }
 
 /**
@@ -67,6 +59,24 @@ export interface LinkMail {
 export interface LinkExternalTextless {
   target: Target;
   href: string;
+}
+
+/**
+ * @group Base
+ */
+export interface LinkExternal extends LinkExternalTextless {
+  text: I18nString;
+}
+
+// TOODO:
+// define title in global i18n
+
+/**
+ * @group Base
+ */
+export interface LinkMail {
+  // title: I18nString;
+  address: string;
 }
 
 /**

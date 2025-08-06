@@ -1,16 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  I18nString, Image,
+  I18nString,
+  ImageInline,
   PageProperties,
   SEO,
   Video,
 } from '../../../0_base';
 import { TextBlock } from '../../../2_modules';
-import {
-  DownloadItem,
-  LinkItem,
-} from '../../../3_sections';
+import { DownloadItem } from '../../../3_sections';
 
 /**
  * @group Pages/Activities
@@ -25,8 +23,6 @@ export interface MagazineDetailPage {
     date: Date;
   };
   teaserText: I18nString;
-  content: (Image | Video | TextBlock)[];
+  content: (ImageInline | Video | TextBlock)[];
   download?: DownloadItem[];
-  links?: LinkItem[];
-
 }

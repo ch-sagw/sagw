@@ -13,5 +13,6 @@ export * from './error';
 export * from './home';
 export * from './network';
 export * from './promotion/institutes';
+export * from './promotion/instituteDetail';
 export * from './promotion/promotion';
 export * from './promotion/earlyCareerAward';

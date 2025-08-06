@@ -18,7 +18,7 @@ export interface DownloadItem {
  * @group Sections
  */
 export interface DownloadSection {
-  title: I18nString;
+  // title: I18nString;
   text?: I18nString;
   items: DownloadItem[];
   allDownloadsLink?: LinkInternal;
