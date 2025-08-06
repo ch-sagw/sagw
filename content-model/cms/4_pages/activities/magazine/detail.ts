@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
+  Document,
   I18nString,
   ImageInline,
   PageProperties,
@@ -8,7 +9,6 @@ import {
   Video,
 } from '../../../0_base';
 import { TextBlock } from '../../../2_modules';
-import { DownloadItem } from '../../../3_sections';
 
 /**
  * @group Pages/Activities
@@ -24,5 +24,5 @@ export interface MagazineDetailPage {
   };
   teaserText: I18nString;
   content: (ImageInline | Video | TextBlock)[];
-  download?: DownloadItem[];
+  download?: Document[];
 }

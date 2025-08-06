@@ -148,9 +148,10 @@ export interface Document {
    * Uploaded file reference
    */
   document: any;
-
   title: I18nString;
   date: Date;
+  text?: I18nString;
+  projectId?: string;
 }
 
 /**

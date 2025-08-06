@@ -54,8 +54,9 @@ export interface CtaContactFormSection {
 }
 
 /**
- * @group Sections
  * Person can either be Team or Geschäftsleitung
+ *
+ * @group Sections
  */
 export type AllowedCtaContactMemberType = Exclude<PersonMemberType, 'vorstand'>;
 

@@ -1,13 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-  I18nString, Image, PageProperties, SEO, Video,
+  Document, I18nString, Image, PageProperties, SEO, Video,
 } from '../../../0_base';
 import { TextBlock } from '../../../2_modules';
-import {
-  DownloadItem,
-  LinkItem,
-} from '../../../3_sections';
+import { LinkItem } from '../../../3_sections';
 
 /**
  * @group Pages/Activities
@@ -19,5 +16,6 @@ export interface NewsDetailPage {
   teaserText: I18nString;
   content: (Image | Video | TextBlock)[];
   links: LinkItem[];
-  downloads: DownloadItem[];
+  downloads: Document[];
+  date: Date;
 }
