@@ -11,7 +11,7 @@ import {
 export interface TextBlock {
   title: I18nString;
   rte: RteConfig2;
-  copyButton?: boolean;
+  copyButtonText: I18nString;
 }
 
 /**
