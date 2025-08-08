@@ -5,6 +5,9 @@ export const Pages: CollectionConfig<'pages'> = {
   access: {
     read: () => true,
   },
+  admin: {
+    group: 'Pages',
+  },
   fields: [
     {
       localized: true,
