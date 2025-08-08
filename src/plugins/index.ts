@@ -5,7 +5,9 @@ import {
 } from '@payloadcms/plugin-seo/types';
 
 import { Plugin } from 'payload';
-import { Media } from '@/collections/Media';
+import { Images } from '@/collections/Images';
+import { Videos } from '@/collections/Videos';
+import { Documents } from '@/collections/Documents';
 import { getServerSideURL } from '@/utilities/getUrl';
 
 const generateTitle: GenerateTitle = ({
@@ -28,7 +30,9 @@ const plugins: Plugin[] = [
   vercelBlobStorage({
     clientUploads: true,
     collections: {
-      [Media.slug]: true,
+      [Images.slug]: true,
+      [Videos.slug]: true,
+      [Documents.slug]: true,
     },
     enabled: true,
     token: process.env.BLOB_READ_WRITE_TOKEN,

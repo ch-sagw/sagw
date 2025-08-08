@@ -71,7 +71,7 @@ export const People: CollectionConfig = {
 
     {
       name: 'image',
-      relationTo: 'media',
+      relationTo: 'images',
       required: true,
       type: 'relationship',
     },

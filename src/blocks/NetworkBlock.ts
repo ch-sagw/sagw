@@ -21,7 +21,7 @@ export const NetworkBlock: Block = {
     },
     {
       name: 'image',
-      relationTo: 'media',
+      relationTo: 'images',
       required: true,
       type: 'upload',
     },

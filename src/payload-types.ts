@@ -69,12 +69,15 @@ export interface Config {
   collections: {
     pages: Page;
     users: User;
-    media: Media;
+    images: Image;
     networkCategories: NetworkCategory;
     faqItems: FaqItem;
     documents: Document;
     projects: Project;
     people: Person;
+    instituteDetail: InstituteDetail;
+    magazineDetail: MagazineDetail;
+    videos: Video;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -83,12 +86,15 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
+    images: ImagesSelect<false> | ImagesSelect<true>;
     networkCategories: NetworkCategoriesSelect<false> | NetworkCategoriesSelect<true>;
     faqItems: FaqItemsSelect<false> | FaqItemsSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     people: PeopleSelect<false> | PeopleSelect<true>;
+    instituteDetail: InstituteDetailSelect<false> | InstituteDetailSelect<true>;
+    magazineDetail: MagazineDetailSelect<false> | MagazineDetailSelect<true>;
+    videos: VideosSelect<false> | VideosSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -101,18 +107,18 @@ export interface Config {
     network: Network;
     promotion: Promotion;
     institutes: Institute;
-    instituteDetail: InstituteDetail;
     earlyCareerAward: EarlyCareerAward;
     activities: Activity;
+    magazineOverview: MagazineOverview;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
     network: NetworkSelect<false> | NetworkSelect<true>;
     promotion: PromotionSelect<false> | PromotionSelect<true>;
     institutes: InstitutesSelect<false> | InstitutesSelect<true>;
-    instituteDetail: InstituteDetailSelect<false> | InstituteDetailSelect<true>;
     earlyCareerAward: EarlyCareerAwardSelect<false> | EarlyCareerAwardSelect<true>;
     activities: ActivitiesSelect<false> | ActivitiesSelect<true>;
+    magazineOverview: MagazineOverviewSelect<false> | MagazineOverviewSelect<true>;
   };
   locale: 'de' | 'fr' | 'en';
   user: User & {
@@ -202,9 +208,9 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
+ * via the `definition` "images".
  */
-export interface Media {
+export interface Image {
   id: string;
   alt?: string | null;
   updatedAt: string;
@@ -261,7 +267,6 @@ export interface FaqItem {
 export interface Document {
   id: string;
   title: string;
-  text?: string | null;
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
@@ -299,11 +304,169 @@ export interface Person {
   function: string;
   mail: string;
   phone: string;
-  image: string | Media;
+  image: string | Image;
   memberType: 'executiveBoard' | 'direction' | 'team';
   fullName?: string | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "instituteDetail".
+ */
+export interface InstituteDetail {
+  id: string;
+  hero: {
+    title: string;
+    colorMode: 'white' | 'color';
+    colorScheme?: ('bright' | 'dark') | null;
+  };
+  instituteDetails: {
+    title: string;
+    text: string;
+    logo: string | Image;
+    linkType: 'internal' | 'external';
+    linkInternal?: {
+      text: string;
+      slug: string | Page;
+      openInNewWindow?: boolean | null;
+    };
+    linkExternal?: {
+      text: string;
+      href: string;
+      openInNewWindow?: boolean | null;
+    };
+  };
+  meta: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+    openGraph: {
+      Title: string;
+      Description: string;
+      image: string | Image;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "magazineDetail".
+ */
+export interface MagazineDetail {
+  id: string;
+  overviewPageProps: {
+    teaserText: string;
+  };
+  hero: {
+    title: string;
+    lead: string;
+    author: string;
+    date: string;
+  };
+  contentBlocks?:
+    | (
+        | {
+            title?: string | null;
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textBlock';
+          }
+        | {
+            alignement?: ('left' | 'center' | 'right') | null;
+            image: string | Image;
+            title: string;
+            caption: string;
+            credits: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageBlock';
+          }
+        | {
+            video: string | Video;
+            title: string;
+            caption: string;
+            credits: string;
+            stillImage: string | Image;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoBlock';
+          }
+      )[]
+    | null;
+  downloads: {
+    downloads: (string | Document)[];
+  };
+  links?:
+    | {
+        text: string;
+        href: string;
+        openInNewWindow?: boolean | null;
+        description: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'linkExternal';
+      }[]
+    | null;
+  meta: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+    openGraph: {
+      Title: string;
+      Description: string;
+      image: string | Image;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos".
+ */
+export interface Video {
+  id: string;
+  alt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -321,8 +484,8 @@ export interface PayloadLockedDocument {
         value: string | User;
       } | null)
     | ({
-        relationTo: 'media';
-        value: string | Media;
+        relationTo: 'images';
+        value: string | Image;
       } | null)
     | ({
         relationTo: 'networkCategories';
@@ -343,6 +506,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'people';
         value: string | Person;
+      } | null)
+    | ({
+        relationTo: 'instituteDetail';
+        value: string | InstituteDetail;
+      } | null)
+    | ({
+        relationTo: 'magazineDetail';
+        value: string | MagazineDetail;
+      } | null)
+    | ({
+        relationTo: 'videos';
+        value: string | Video;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -447,9 +622,9 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
+ * via the `definition` "images_select".
  */
-export interface MediaSelect<T extends boolean = true> {
+export interface ImagesSelect<T extends boolean = true> {
   alt?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -488,7 +663,6 @@ export interface FaqItemsSelect<T extends boolean = true> {
  */
 export interface DocumentsSelect<T extends boolean = true> {
   title?: T;
-  text?: T;
   project?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -529,6 +703,173 @@ export interface PeopleSelect<T extends boolean = true> {
   fullName?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "instituteDetail_select".
+ */
+export interface InstituteDetailSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+        colorMode?: T;
+        colorScheme?: T;
+      };
+  instituteDetails?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        logo?: T;
+        linkType?: T;
+        linkInternal?:
+          | T
+          | {
+              text?: T;
+              slug?: T;
+              openInNewWindow?: T;
+            };
+        linkExternal?:
+          | T
+          | {
+              text?: T;
+              href?: T;
+              openInNewWindow?: T;
+            };
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+        openGraph?:
+          | T
+          | {
+              Title?: T;
+              Description?: T;
+              image?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "magazineDetail_select".
+ */
+export interface MagazineDetailSelect<T extends boolean = true> {
+  overviewPageProps?:
+    | T
+    | {
+        teaserText?: T;
+      };
+  hero?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+        author?: T;
+        date?: T;
+      };
+  contentBlocks?:
+    | T
+    | {
+        textBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              alignement?: T;
+              image?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              id?: T;
+              blockName?: T;
+            };
+        videoBlock?:
+          | T
+          | {
+              video?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              stillImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  downloads?:
+    | T
+    | {
+        downloads?: T;
+      };
+  links?:
+    | T
+    | {
+        linkExternal?:
+          | T
+          | {
+              text?: T;
+              href?: T;
+              openInNewWindow?: T;
+              description?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+        openGraph?:
+          | T
+          | {
+              Title?: T;
+              Description?: T;
+              image?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos_select".
+ */
+export interface VideosSelect<T extends boolean = true> {
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -587,13 +928,13 @@ export interface Home {
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
-      image?: (string | null) | Media;
+      image?: (string | null) | Image;
       description?: string | null;
     };
     openGraph: {
       Title: string;
       Description: string;
-      image: string | Media;
+      image: string | Image;
     };
   };
   updatedAt?: string | null;
@@ -619,7 +960,7 @@ export interface Network {
       title: string;
       category: string | NetworkCategory;
       foundingYear: number;
-      image: string | Media;
+      image: string | Image;
       link: string;
       id?: string | null;
       blockName?: string | null;
@@ -633,13 +974,13 @@ export interface Network {
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
-      image?: (string | null) | Media;
+      image?: (string | null) | Image;
       description?: string | null;
     };
     openGraph: {
       Title: string;
       Description: string;
-      image: string | Media;
+      image: string | Image;
     };
   };
   updatedAt?: string | null;
@@ -707,13 +1048,13 @@ export interface Promotion {
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
-      image?: (string | null) | Media;
+      image?: (string | null) | Image;
       description?: string | null;
     };
     openGraph: {
       Title: string;
       Description: string;
-      image: string | Media;
+      image: string | Image;
     };
   };
   updatedAt?: string | null;
@@ -740,59 +1081,13 @@ export interface Institute {
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
-      image?: (string | null) | Media;
+      image?: (string | null) | Image;
       description?: string | null;
     };
     openGraph: {
       Title: string;
       Description: string;
-      image: string | Media;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "instituteDetail".
- */
-export interface InstituteDetail {
-  id: string;
-  hero: {
-    title: string;
-    colorMode: 'white' | 'color';
-    colorScheme?: ('bright' | 'dark') | null;
-  };
-  instituteDetails: {
-    title: string;
-    text: string;
-    logo: string | Media;
-    linkType: 'internal' | 'external';
-    linkInternal?: {
-      text: string;
-      slug: string | Page;
-      openInNewWindow?: boolean | null;
-    };
-    linkExternal?: {
-      text: string;
-      href: string;
-      openInNewWindow?: boolean | null;
-    };
-  };
-  meta: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Media;
-      description?: string | null;
-    };
-    openGraph: {
-      Title: string;
-      Description: string;
-      image: string | Media;
+      image: string | Image;
     };
   };
   updatedAt?: string | null;
@@ -808,7 +1103,7 @@ export interface EarlyCareerAward {
     title: string;
   };
   textBlocksBefore: {
-    title: string;
+    title?: string | null;
     text: {
       root: {
         type: string;
@@ -832,7 +1127,7 @@ export interface EarlyCareerAward {
     buttonText: string;
   };
   textBlocksAfter: {
-    title: string;
+    title?: string | null;
     text: {
       root: {
         type: string;
@@ -878,13 +1173,13 @@ export interface EarlyCareerAward {
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
-      image?: (string | null) | Media;
+      image?: (string | null) | Image;
       description?: string | null;
     };
     openGraph: {
       Title: string;
       Description: string;
-      image: string | Media;
+      image: string | Image;
     };
   };
   updatedAt?: string | null;
@@ -966,13 +1261,48 @@ export interface Activity {
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
-      image?: (string | null) | Media;
+      image?: (string | null) | Image;
       description?: string | null;
     };
     openGraph: {
       Title: string;
       Description: string;
-      image: string | Media;
+      image: string | Image;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "magazineOverview".
+ */
+export interface MagazineOverview {
+  id: string;
+  hero: {
+    title: string;
+  };
+  magazineDetailPageProps: {
+    heroExportButtonText: string;
+    linksTitle: string;
+    subscribeButtonText: string;
+    downloadsTitle: string;
+    downloadsText: string;
+  };
+  meta: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+    openGraph: {
+      Title: string;
+      Description: string;
+      image: string | Image;
     };
   };
   updatedAt?: string | null;
@@ -1227,63 +1557,6 @@ export interface InstitutesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "instituteDetail_select".
- */
-export interface InstituteDetailSelect<T extends boolean = true> {
-  hero?:
-    | T
-    | {
-        title?: T;
-        colorMode?: T;
-        colorScheme?: T;
-      };
-  instituteDetails?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        logo?: T;
-        linkType?: T;
-        linkInternal?:
-          | T
-          | {
-              text?: T;
-              slug?: T;
-              openInNewWindow?: T;
-            };
-        linkExternal?:
-          | T
-          | {
-              text?: T;
-              href?: T;
-              openInNewWindow?: T;
-            };
-      };
-  meta?:
-    | T
-    | {
-        seo?:
-          | T
-          | {
-              index?: T;
-              title?: T;
-              image?: T;
-              description?: T;
-            };
-        openGraph?:
-          | T
-          | {
-              Title?: T;
-              Description?: T;
-              image?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "earlyCareerAward_select".
  */
 export interface EarlyCareerAwardSelect<T extends boolean = true> {
@@ -1470,6 +1743,48 @@ export interface ActivitiesSelect<T extends boolean = true> {
               slug?: T;
               openInNewWindow?: T;
             };
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+        openGraph?:
+          | T
+          | {
+              Title?: T;
+              Description?: T;
+              image?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "magazineOverview_select".
+ */
+export interface MagazineOverviewSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+      };
+  magazineDetailPageProps?:
+    | T
+    | {
+        heroExportButtonText?: T;
+        linksTitle?: T;
+        subscribeButtonText?: T;
+        downloadsTitle?: T;
+        downloadsText?: T;
       };
   meta?:
     | T

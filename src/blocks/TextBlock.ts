@@ -5,7 +5,7 @@ export const TextBlock: Block = {
     {
       localized: true,
       name: 'title',
-      required: true,
+      required: false,
       type: 'text',
     },
     {
@@ -15,9 +15,5 @@ export const TextBlock: Block = {
       type: 'richText',
     },
   ],
-  labels: {
-    plural: 'Network Blocks',
-    singular: 'Network Block',
-  },
   slug: 'textBlock',
 };

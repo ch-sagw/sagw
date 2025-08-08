@@ -1,14 +1,12 @@
 import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { fieldsColorMode } from '@/field-templates/colorMode';
-import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
 
-export const instituteDetailConfig: GlobalConfig = {
+export const magazineOverviewConfig: GlobalConfig = {
   access: {
     read: (): boolean => true,
   },
   admin: {
-    group: 'Promotion Pages',
+    group: 'Activities Pages',
   },
   fields: [
     {
@@ -27,38 +25,48 @@ export const instituteDetailConfig: GlobalConfig = {
                   required: true,
                   type: 'text',
                 },
-                ...fieldsColorMode,
               ],
               label: 'Hero',
               name: 'hero',
               type: 'group',
             },
 
-            // Institute Details
+            // Magazine Detail Page properties
             {
               fields: [
                 {
                   localized: true,
-                  name: 'title',
+                  name: 'heroExportButtonText',
                   required: true,
                   type: 'text',
                 },
                 {
                   localized: true,
-                  name: 'text',
+                  name: 'linksTitle',
                   required: true,
                   type: 'text',
                 },
                 {
-                  name: 'logo',
-                  relationTo: 'media',
+                  localized: true,
+                  name: 'subscribeButtonText',
                   required: true,
-                  type: 'relationship',
+                  type: 'text',
                 },
-                ...fieldsLinkInternalOrExternal('pages'),
+                {
+                  localized: true,
+                  name: 'downloadsTitle',
+                  required: true,
+                  type: 'text',
+                },
+                {
+                  localized: true,
+                  name: 'downloadsText',
+                  required: true,
+                  type: 'text',
+                },
               ],
-              label: 'Institute Details',
-              name: 'instituteDetails',
+              label: 'Magazine Detail Page properties',
+              name: 'magazineDetailPageProps',
               type: 'group',
             },
 
@@ -72,5 +80,5 @@ export const instituteDetailConfig: GlobalConfig = {
       type: 'tabs',
     },
   ],
-  slug: 'instituteDetail',
+  slug: 'magazineOverview',
 };

@@ -15,12 +15,6 @@ export const Documents: CollectionConfig = {
       type: 'text',
     },
     {
-      localized: true,
-      name: 'text',
-      required: false,
-      type: 'text',
-    },
-    {
       name: 'project',
       relationTo: 'projects',
       required: false,

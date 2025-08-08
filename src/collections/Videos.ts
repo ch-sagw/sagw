@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload';
 
-export const Media: CollectionConfig = {
+export const Videos: CollectionConfig = {
   access: {
     read: () => true,
   },
@@ -15,8 +15,6 @@ export const Media: CollectionConfig = {
       type: 'text',
     },
   ],
-  slug: 'media',
-  upload: {
-    focalPoint: true,
-  },
+  slug: 'videos',
+  upload: true,
 };

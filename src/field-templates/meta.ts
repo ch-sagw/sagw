@@ -16,7 +16,7 @@ const fieldsSeo: Field[] = [
     overrides: {
       localized: false,
     },
-    relationTo: 'media',
+    relationTo: 'images',
   }),
 
   MetaDescriptionField({}),
@@ -38,7 +38,7 @@ const fieldsOg: Field[] = [
   },
   {
     name: 'image',
-    relationTo: 'media',
+    relationTo: 'images',
     required: true,
     type: 'relationship',
   },
