@@ -2,7 +2,6 @@ import type { CollectionConfig } from 'payload';
 
 export const Users: CollectionConfig = {
   admin: {
-    group: 'Global Content',
     useAsTitle: 'email',
   },
   auth: true,

@@ -4,9 +4,6 @@ export const Media: CollectionConfig = {
   access: {
     read: () => true,
   },
-  admin: {
-    group: 'Global Content',
-  },
   fields: [
     {
       localized: true,
