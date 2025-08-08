@@ -28,9 +28,3 @@ Payload:
 --------
 - Generate types: when is it run? do we have to run in automatically, e.g. on ci, on postinstall etc?
 - set hideAPIURL to true on prod: https://payloadcms.com/docs/configuration/collections#admin-options
-
-Payload Config:
---------
-- fieldsLinkExternal -> relationTo should relate to all available pages.
-- earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
-- translations for custom admin ui labels
