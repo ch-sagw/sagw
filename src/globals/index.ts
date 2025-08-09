@@ -8,6 +8,9 @@ import { magazineOverviewConfig } from '@/globals/activities/magazineOverview';
 import { publicationsOverviewConfig } from '@/globals/activities/publicationsOverview';
 import { eventsOverviewConfig } from '@/globals/activities/eventsOverview';
 import { newsOverviewConfig } from '@/globals/activities/newsOverview';
+import { aboutContactConfig } from '@/globals/about/contact';
+import { aboutSagwConfig } from '@/globals/about/sagw';
+import { aboutTeamConfig } from '@/globals/about/team';
 
 const globals = [
   homeConfig,
@@ -20,6 +23,9 @@ const globals = [
   publicationsOverviewConfig,
   eventsOverviewConfig,
   newsOverviewConfig,
+  aboutContactConfig,
+  aboutSagwConfig,
+  aboutTeamConfig,
 ];
 
 export default globals;

@@ -125,6 +125,9 @@ export interface Config {
     publicationsOverview: PublicationsOverview;
     eventsOverview: EventsOverview;
     newsOverview: NewsOverview;
+    aboutContact: AboutContact;
+    aboutSagw: AboutSagw;
+    aboutTeam: AboutTeam;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
@@ -137,6 +140,9 @@ export interface Config {
     publicationsOverview: PublicationsOverviewSelect<false> | PublicationsOverviewSelect<true>;
     eventsOverview: EventsOverviewSelect<false> | EventsOverviewSelect<true>;
     newsOverview: NewsOverviewSelect<false> | NewsOverviewSelect<true>;
+    aboutContact: AboutContactSelect<false> | AboutContactSelect<true>;
+    aboutSagw: AboutSagwSelect<false> | AboutSagwSelect<true>;
+    aboutTeam: AboutTeamSelect<false> | AboutTeamSelect<true>;
   };
   locale: 'de' | 'fr' | 'en';
   user: User & {
@@ -1760,6 +1766,153 @@ export interface NewsOverview {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aboutContact".
+ */
+export interface AboutContact {
+  id: string;
+  hero: {
+    title: string;
+  };
+  addresses: {
+    title: string;
+    contacts?:
+      | {
+          title: string;
+          category: (string | Person)[];
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'contactAccordionItem';
+        }[]
+      | null;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aboutSagw".
+ */
+export interface AboutSagw {
+  id: string;
+  hero: {
+    title: string;
+    lead: string;
+  };
+  contentBlocks?:
+    | (
+        | {
+            title?: string | null;
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            showCopyTextButton?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textBlock';
+          }
+        | {
+            alignement?: ('left' | 'center' | 'right') | null;
+            image: string | Image;
+            title: string;
+            caption: string;
+            credits: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageBlock';
+          }
+        | {
+            video: string | Video;
+            title: string;
+            caption: string;
+            credits: string;
+            stillImage: string | Image;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoBlock';
+          }
+      )[]
+    | null;
+  linksGroup: {
+    linksTitle: string;
+    link?:
+      | {
+          linkText: string;
+          href: string;
+          openInNewWindow?: boolean | null;
+          description: string;
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'linkExternal';
+        }[]
+      | null;
+  };
+  downloadsGroup: {
+    downloadsTitle: string;
+    downloads: (string | Document)[];
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aboutTeam".
+ */
+export interface AboutTeam {
+  id: string;
+  hero: {
+    title: string;
+    lead: string;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
@@ -2304,6 +2457,163 @@ export interface NewsOverviewSelect<T extends boolean = true> {
     | T
     | {
         sectionTitle?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aboutContact_select".
+ */
+export interface AboutContactSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+      };
+  addresses?:
+    | T
+    | {
+        title?: T;
+        contacts?:
+          | T
+          | {
+              contactAccordionItem?:
+                | T
+                | {
+                    title?: T;
+                    category?: T;
+                    id?: T;
+                    blockName?: T;
+                  };
+            };
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aboutSagw_select".
+ */
+export interface AboutSagwSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+      };
+  contentBlocks?:
+    | T
+    | {
+        textBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              showCopyTextButton?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              alignement?: T;
+              image?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              id?: T;
+              blockName?: T;
+            };
+        videoBlock?:
+          | T
+          | {
+              video?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              stillImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  linksGroup?:
+    | T
+    | {
+        linksTitle?: T;
+        link?:
+          | T
+          | {
+              linkExternal?:
+                | T
+                | {
+                    linkText?: T;
+                    href?: T;
+                    openInNewWindow?: T;
+                    description?: T;
+                    id?: T;
+                    blockName?: T;
+                  };
+            };
+      };
+  downloadsGroup?:
+    | T
+    | {
+        downloadsTitle?: T;
+        downloads?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aboutTeam_select".
+ */
+export interface AboutTeamSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
       };
   meta?:
     | T
