@@ -5,7 +5,7 @@ import {
 export const fieldsLinkExternal: Field[] = [
   {
     localized: true,
-    name: 'text',
+    name: 'linkText',
     required: true,
     type: 'text',
   },
@@ -25,7 +25,7 @@ export const fieldsLinkExternal: Field[] = [
 export const fieldsLinkInternal = (relationTo: CollectionSlug): Field[] => [
   {
     localized: true,
-    name: 'text',
+    name: 'linkText',
     required: true,
     type: 'text',
   },

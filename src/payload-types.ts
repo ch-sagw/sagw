@@ -81,6 +81,8 @@ export interface Config {
     publicationDetail: PublicationDetail;
     publicationTopics: PublicationTopic;
     publicationTypes: PublicationType;
+    events: Event;
+    eventCategory: EventCategory;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -101,6 +103,8 @@ export interface Config {
     publicationDetail: PublicationDetailSelect<false> | PublicationDetailSelect<true>;
     publicationTopics: PublicationTopicsSelect<false> | PublicationTopicsSelect<true>;
     publicationTypes: PublicationTypesSelect<false> | PublicationTypesSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    eventCategory: EventCategorySelect<false> | EventCategorySelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -117,6 +121,7 @@ export interface Config {
     activities: Activity;
     magazineOverview: MagazineOverview;
     publicationsOverview: PublicationsOverview;
+    eventsOverview: EventsOverview;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
@@ -127,6 +132,7 @@ export interface Config {
     activities: ActivitiesSelect<false> | ActivitiesSelect<true>;
     magazineOverview: MagazineOverviewSelect<false> | MagazineOverviewSelect<true>;
     publicationsOverview: PublicationsOverviewSelect<false> | PublicationsOverviewSelect<true>;
+    eventsOverview: EventsOverviewSelect<false> | EventsOverviewSelect<true>;
   };
   locale: 'de' | 'fr' | 'en';
   user: User & {
@@ -335,12 +341,12 @@ export interface InstituteDetail {
     logo: string | Image;
     linkType: 'internal' | 'external';
     linkInternal?: {
-      text: string;
+      linkText: string;
       slug: string | Page;
       openInNewWindow?: boolean | null;
     };
     linkExternal?: {
-      text: string;
+      linkText: string;
       href: string;
       openInNewWindow?: boolean | null;
     };
@@ -425,7 +431,7 @@ export interface MagazineDetail {
   };
   links?:
     | {
-        text: string;
+        linkText: string;
         href: string;
         openInNewWindow?: boolean | null;
         description: string;
@@ -546,6 +552,33 @@ export interface PublicationType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: string;
+  title: string;
+  text: string;
+  category?: (string | null) | EventCategory;
+  project?: (string | null) | Project;
+  date: string;
+  linkText: string;
+  href: string;
+  openInNewWindow?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventCategory".
+ */
+export interface EventCategory {
+  id: string;
+  eventCategory: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -606,6 +639,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'publicationTypes';
         value: string | PublicationType;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: string | Event;
+      } | null)
+    | ({
+        relationTo: 'eventCategory';
+        value: string | EventCategory;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -814,14 +855,14 @@ export interface InstituteDetailSelect<T extends boolean = true> {
         linkInternal?:
           | T
           | {
-              text?: T;
+              linkText?: T;
               slug?: T;
               openInNewWindow?: T;
             };
         linkExternal?:
           | T
           | {
-              text?: T;
+              linkText?: T;
               href?: T;
               openInNewWindow?: T;
             };
@@ -905,7 +946,7 @@ export interface MagazineDetailSelect<T extends boolean = true> {
         linkExternal?:
           | T
           | {
-              text?: T;
+              linkText?: T;
               href?: T;
               openInNewWindow?: T;
               description?: T;
@@ -1020,6 +1061,31 @@ export interface PublicationTypesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  text?: T;
+  category?: T;
+  project?: T;
+  date?: T;
+  linkText?: T;
+  href?: T;
+  openInNewWindow?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventCategory_select".
+ */
+export interface EventCategorySelect<T extends boolean = true> {
+  eventCategory?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
@@ -1063,7 +1129,7 @@ export interface Home {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
-      text: string;
+      linkText: string;
       slug: string | Page;
       openInNewWindow?: boolean | null;
     };
@@ -1142,12 +1208,12 @@ export interface Promotion {
       text: string;
       linkType: 'internal' | 'external';
       linkInternal?: {
-        text: string;
+        linkText: string;
         slug: string | Page;
         openInNewWindow?: boolean | null;
       };
       linkExternal?: {
-        text: string;
+        linkText: string;
         href: string;
         openInNewWindow?: boolean | null;
       };
@@ -1170,7 +1236,7 @@ export interface Promotion {
       optionalLink?: {
         includeLink?: boolean | null;
         link?: {
-          text: string;
+          linkText: string;
           slug: string | Page;
           openInNewWindow?: boolean | null;
         };
@@ -1327,12 +1393,12 @@ export interface Activity {
       text: string;
       linkType: 'internal' | 'external';
       linkInternal?: {
-        text: string;
+        linkText: string;
         slug: string | Page;
         openInNewWindow?: boolean | null;
       };
       linkExternal?: {
-        text: string;
+        linkText: string;
         href: string;
         openInNewWindow?: boolean | null;
       };
@@ -1348,7 +1414,7 @@ export interface Activity {
     title: string;
     lead: string;
     link: {
-      text: string;
+      linkText: string;
       slug: string | Page;
       openInNewWindow?: boolean | null;
     };
@@ -1357,7 +1423,7 @@ export interface Activity {
     title: string;
     lead: string;
     link: {
-      text: string;
+      linkText: string;
       slug: string | Page;
       openInNewWindow?: boolean | null;
     };
@@ -1365,7 +1431,7 @@ export interface Activity {
   events: {
     title: string;
     link: {
-      text: string;
+      linkText: string;
       slug: string | Page;
       openInNewWindow?: boolean | null;
     };
@@ -1373,7 +1439,7 @@ export interface Activity {
   news: {
     title: string;
     link: {
-      text: string;
+      linkText: string;
       slug: string | Page;
       openInNewWindow?: boolean | null;
     };
@@ -1457,6 +1523,32 @@ export interface PublicationsOverview {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventsOverview".
+ */
+export interface EventsOverview {
+  id: string;
+  hero: {
+    title: string;
+  };
+  events: {
+    sectionTitle: string;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
@@ -1471,7 +1563,7 @@ export interface HomeSelect<T extends boolean = true> {
         link?:
           | T
           | {
-              text?: T;
+              linkText?: T;
               slug?: T;
               openInNewWindow?: T;
             };
@@ -1577,14 +1669,14 @@ export interface PromotionSelect<T extends boolean = true> {
                           linkInternal?:
                             | T
                             | {
-                                text?: T;
+                                linkText?: T;
                                 slug?: T;
                                 openInNewWindow?: T;
                               };
                           linkExternal?:
                             | T
                             | {
-                                text?: T;
+                                linkText?: T;
                                 href?: T;
                                 openInNewWindow?: T;
                               };
@@ -1617,7 +1709,7 @@ export interface PromotionSelect<T extends boolean = true> {
                     link?:
                       | T
                       | {
-                          text?: T;
+                          linkText?: T;
                           slug?: T;
                           openInNewWindow?: T;
                         };
@@ -1789,14 +1881,14 @@ export interface ActivitiesSelect<T extends boolean = true> {
                           linkInternal?:
                             | T
                             | {
-                                text?: T;
+                                linkText?: T;
                                 slug?: T;
                                 openInNewWindow?: T;
                               };
                           linkExternal?:
                             | T
                             | {
-                                text?: T;
+                                linkText?: T;
                                 href?: T;
                                 openInNewWindow?: T;
                               };
@@ -1816,7 +1908,7 @@ export interface ActivitiesSelect<T extends boolean = true> {
         link?:
           | T
           | {
-              text?: T;
+              linkText?: T;
               slug?: T;
               openInNewWindow?: T;
             };
@@ -1829,7 +1921,7 @@ export interface ActivitiesSelect<T extends boolean = true> {
         link?:
           | T
           | {
-              text?: T;
+              linkText?: T;
               slug?: T;
               openInNewWindow?: T;
             };
@@ -1841,7 +1933,7 @@ export interface ActivitiesSelect<T extends boolean = true> {
         link?:
           | T
           | {
-              text?: T;
+              linkText?: T;
               slug?: T;
               openInNewWindow?: T;
             };
@@ -1853,7 +1945,7 @@ export interface ActivitiesSelect<T extends boolean = true> {
         link?:
           | T
           | {
-              text?: T;
+              linkText?: T;
               slug?: T;
               openInNewWindow?: T;
             };
@@ -1932,6 +2024,37 @@ export interface PublicationsOverviewSelect<T extends boolean = true> {
         downloadsTitle?: T;
         otherPublicationsTitle?: T;
         otherPublicationsAllButton?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventsOverview_select".
+ */
+export interface EventsOverviewSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+      };
+  events?:
+    | T
+    | {
+        sectionTitle?: T;
       };
   meta?:
     | T

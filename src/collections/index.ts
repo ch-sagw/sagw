@@ -12,6 +12,8 @@ import { magazineDetailConfig } from '@/collections/MagazineDetail';
 import { PublicationDetailConfig } from '@/collections/PublicationDetail';
 import { PublicationTopics } from '@/collections/PublicationTopics';
 import { PublicationTypes } from '@/collections/PublicationTypes';
+import { EventCategories } from '@/collections/EventCategories';
+import { Events } from '@/collections/Events';
 
 const collections = [
   Pages,
@@ -28,6 +30,8 @@ const collections = [
   PublicationDetailConfig,
   PublicationTopics,
   PublicationTypes,
+  Events,
+  EventCategories,
 ];
 
 export default collections;

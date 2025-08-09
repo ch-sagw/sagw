@@ -6,6 +6,7 @@ import { earlyCareerAwardConfig } from '@/globals/promotion/earlyCareerAward';
 import { activitiesConfig } from '@/globals/activities/activities';
 import { magazineOverviewConfig } from '@/globals/activities/magazineOverview';
 import { publicationsOverviewConfig } from '@/globals/activities/publicationsOverview';
+import { eventsOverviewConfig } from '@/globals/activities/eventsOverview';
 
 const globals = [
   homeConfig,
@@ -16,6 +17,7 @@ const globals = [
   activitiesConfig,
   magazineOverviewConfig,
   publicationsOverviewConfig,
+  eventsOverviewConfig,
 ];
 
 export default globals;
