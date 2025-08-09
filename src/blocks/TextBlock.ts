@@ -14,6 +14,11 @@ export const TextBlock: Block = {
       required: true,
       type: 'richText',
     },
+    {
+      defaultValue: false,
+      name: 'showCopyTextButton',
+      type: 'checkbox',
+    },
   ],
   slug: 'textBlock',
 };

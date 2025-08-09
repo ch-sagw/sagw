@@ -78,6 +78,9 @@ export interface Config {
     instituteDetail: InstituteDetail;
     magazineDetail: MagazineDetail;
     videos: Video;
+    publicationDetail: PublicationDetail;
+    publicationTopics: PublicationTopic;
+    publicationTypes: PublicationType;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -95,6 +98,9 @@ export interface Config {
     instituteDetail: InstituteDetailSelect<false> | InstituteDetailSelect<true>;
     magazineDetail: MagazineDetailSelect<false> | MagazineDetailSelect<true>;
     videos: VideosSelect<false> | VideosSelect<true>;
+    publicationDetail: PublicationDetailSelect<false> | PublicationDetailSelect<true>;
+    publicationTopics: PublicationTopicsSelect<false> | PublicationTopicsSelect<true>;
+    publicationTypes: PublicationTypesSelect<false> | PublicationTypesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -110,6 +116,7 @@ export interface Config {
     earlyCareerAward: EarlyCareerAward;
     activities: Activity;
     magazineOverview: MagazineOverview;
+    publicationsOverview: PublicationsOverview;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
@@ -119,6 +126,7 @@ export interface Config {
     earlyCareerAward: EarlyCareerAwardSelect<false> | EarlyCareerAwardSelect<true>;
     activities: ActivitiesSelect<false> | ActivitiesSelect<true>;
     magazineOverview: MagazineOverviewSelect<false> | MagazineOverviewSelect<true>;
+    publicationsOverview: PublicationsOverviewSelect<false> | PublicationsOverviewSelect<true>;
   };
   locale: 'de' | 'fr' | 'en';
   user: User & {
@@ -337,7 +345,7 @@ export interface InstituteDetail {
       openInNewWindow?: boolean | null;
     };
   };
-  meta: {
+  meta?: {
     seo?: {
       index?: boolean | null;
       title?: string | null;
@@ -346,11 +354,6 @@ export interface InstituteDetail {
        */
       image?: (string | null) | Image;
       description?: string | null;
-    };
-    openGraph: {
-      Title: string;
-      Description: string;
-      image: string | Image;
     };
   };
   updatedAt: string;
@@ -390,6 +393,7 @@ export interface MagazineDetail {
               };
               [k: string]: unknown;
             };
+            showCopyTextButton?: boolean | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'textBlock';
@@ -430,7 +434,7 @@ export interface MagazineDetail {
         blockType: 'linkExternal';
       }[]
     | null;
-  meta: {
+  meta?: {
     seo?: {
       index?: boolean | null;
       title?: string | null;
@@ -439,11 +443,6 @@ export interface MagazineDetail {
        */
       image?: (string | null) | Image;
       description?: string | null;
-    };
-    openGraph: {
-      Title: string;
-      Description: string;
-      image: string | Image;
     };
   };
   updatedAt: string;
@@ -467,6 +466,83 @@ export interface Video {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationDetail".
+ */
+export interface PublicationDetail {
+  id: string;
+  overviewPageProps: {
+    image: string | Image;
+  };
+  categorization: {
+    topic: string | PublicationTopic;
+    type: string | PublicationType;
+  };
+  hero: {
+    title: string;
+  };
+  contentBlocks?:
+    | {
+        title?: string | null;
+        text: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        showCopyTextButton?: boolean | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'textBlock';
+      }[]
+    | null;
+  downloads: {
+    downloads: (string | Document)[];
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationTopics".
+ */
+export interface PublicationTopic {
+  id: string;
+  publicationTopic: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationTypes".
+ */
+export interface PublicationType {
+  id: string;
+  publicationType: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -518,6 +594,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'videos';
         value: string | Video;
+      } | null)
+    | ({
+        relationTo: 'publicationDetail';
+        value: string | PublicationDetail;
+      } | null)
+    | ({
+        relationTo: 'publicationTopics';
+        value: string | PublicationTopic;
+      } | null)
+    | ({
+        relationTo: 'publicationTypes';
+        value: string | PublicationType;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -749,13 +837,6 @@ export interface InstituteDetailSelect<T extends boolean = true> {
               image?: T;
               description?: T;
             };
-        openGraph?:
-          | T
-          | {
-              Title?: T;
-              Description?: T;
-              image?: T;
-            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -786,6 +867,7 @@ export interface MagazineDetailSelect<T extends boolean = true> {
           | {
               title?: T;
               text?: T;
+              showCopyTextButton?: T;
               id?: T;
               blockName?: T;
             };
@@ -842,13 +924,6 @@ export interface MagazineDetailSelect<T extends boolean = true> {
               image?: T;
               description?: T;
             };
-        openGraph?:
-          | T
-          | {
-              Title?: T;
-              Description?: T;
-              image?: T;
-            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -870,6 +945,78 @@ export interface VideosSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationDetail_select".
+ */
+export interface PublicationDetailSelect<T extends boolean = true> {
+  overviewPageProps?:
+    | T
+    | {
+        image?: T;
+      };
+  categorization?:
+    | T
+    | {
+        topic?: T;
+        type?: T;
+      };
+  hero?:
+    | T
+    | {
+        title?: T;
+      };
+  contentBlocks?:
+    | T
+    | {
+        textBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              showCopyTextButton?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  downloads?:
+    | T
+    | {
+        downloads?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationTopics_select".
+ */
+export interface PublicationTopicsSelect<T extends boolean = true> {
+  publicationTopic?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationTypes_select".
+ */
+export interface PublicationTypesSelect<T extends boolean = true> {
+  publicationType?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -921,7 +1068,7 @@ export interface Home {
       openInNewWindow?: boolean | null;
     };
   };
-  meta: {
+  meta?: {
     seo?: {
       index?: boolean | null;
       title?: string | null;
@@ -930,11 +1077,6 @@ export interface Home {
        */
       image?: (string | null) | Image;
       description?: string | null;
-    };
-    openGraph: {
-      Title: string;
-      Description: string;
-      image: string | Image;
     };
   };
   updatedAt?: string | null;
@@ -967,7 +1109,7 @@ export interface Network {
       blockType: 'networkBlock';
     }[];
   };
-  meta: {
+  meta?: {
     seo?: {
       index?: boolean | null;
       title?: string | null;
@@ -976,11 +1118,6 @@ export interface Network {
        */
       image?: (string | null) | Image;
       description?: string | null;
-    };
-    openGraph: {
-      Title: string;
-      Description: string;
-      image: string | Image;
     };
   };
   updatedAt?: string | null;
@@ -1041,7 +1178,7 @@ export interface Promotion {
       colorScheme: 'bright' | 'dark';
     };
   };
-  meta: {
+  meta?: {
     seo?: {
       index?: boolean | null;
       title?: string | null;
@@ -1050,11 +1187,6 @@ export interface Promotion {
        */
       image?: (string | null) | Image;
       description?: string | null;
-    };
-    openGraph: {
-      Title: string;
-      Description: string;
-      image: string | Image;
     };
   };
   updatedAt?: string | null;
@@ -1074,7 +1206,7 @@ export interface Institute {
   teasers: {
     teaserLinkText: string;
   };
-  meta: {
+  meta?: {
     seo?: {
       index?: boolean | null;
       title?: string | null;
@@ -1083,11 +1215,6 @@ export interface Institute {
        */
       image?: (string | null) | Image;
       description?: string | null;
-    };
-    openGraph: {
-      Title: string;
-      Description: string;
-      image: string | Image;
     };
   };
   updatedAt?: string | null;
@@ -1119,6 +1246,7 @@ export interface EarlyCareerAward {
       };
       [k: string]: unknown;
     };
+    showCopyTextButton?: boolean | null;
     id?: string | null;
     blockName?: string | null;
     blockType: 'textBlock';
@@ -1143,6 +1271,7 @@ export interface EarlyCareerAward {
       };
       [k: string]: unknown;
     };
+    showCopyTextButton?: boolean | null;
     id?: string | null;
     blockName?: string | null;
     blockType: 'textBlock';
@@ -1166,7 +1295,7 @@ export interface EarlyCareerAward {
     colorScheme?: ('bright' | 'dark') | null;
     contactPerson: string | Person;
   };
-  meta: {
+  meta?: {
     seo?: {
       index?: boolean | null;
       title?: string | null;
@@ -1175,11 +1304,6 @@ export interface EarlyCareerAward {
        */
       image?: (string | null) | Image;
       description?: string | null;
-    };
-    openGraph: {
-      Title: string;
-      Description: string;
-      image: string | Image;
     };
   };
   updatedAt?: string | null;
@@ -1254,7 +1378,7 @@ export interface Activity {
       openInNewWindow?: boolean | null;
     };
   };
-  meta: {
+  meta?: {
     seo?: {
       index?: boolean | null;
       title?: string | null;
@@ -1263,11 +1387,6 @@ export interface Activity {
        */
       image?: (string | null) | Image;
       description?: string | null;
-    };
-    openGraph: {
-      Title: string;
-      Description: string;
-      image: string | Image;
     };
   };
   updatedAt?: string | null;
@@ -1289,7 +1408,7 @@ export interface MagazineOverview {
     downloadsTitle: string;
     downloadsText: string;
   };
-  meta: {
+  meta?: {
     seo?: {
       index?: boolean | null;
       title?: string | null;
@@ -1299,10 +1418,38 @@ export interface MagazineOverview {
       image?: (string | null) | Image;
       description?: string | null;
     };
-    openGraph: {
-      Title: string;
-      Description: string;
-      image: string | Image;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationsOverview".
+ */
+export interface PublicationsOverview {
+  id: string;
+  hero: {
+    title: string;
+  };
+  filters: {
+    allCheckboxTopics: string;
+    allCheckboxTypes: string;
+    title: string;
+  };
+  publicationDetail: {
+    downloadsTitle: string;
+    otherPublicationsTitle: string;
+    otherPublicationsAllButton: string;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
     };
   };
   updatedAt?: string | null;
@@ -1339,13 +1486,6 @@ export interface HomeSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
-            };
-        openGraph?:
-          | T
-          | {
-              Title?: T;
-              Description?: T;
-              image?: T;
             };
       };
   updatedAt?: T;
@@ -1399,13 +1539,6 @@ export interface NetworkSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
-            };
-        openGraph?:
-          | T
-          | {
-              Title?: T;
-              Description?: T;
-              image?: T;
             };
       };
   updatedAt?: T;
@@ -1503,13 +1636,6 @@ export interface PromotionSelect<T extends boolean = true> {
               image?: T;
               description?: T;
             };
-        openGraph?:
-          | T
-          | {
-              Title?: T;
-              Description?: T;
-              image?: T;
-            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1543,13 +1669,6 @@ export interface InstitutesSelect<T extends boolean = true> {
               image?: T;
               description?: T;
             };
-        openGraph?:
-          | T
-          | {
-              Title?: T;
-              Description?: T;
-              image?: T;
-            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1573,6 +1692,7 @@ export interface EarlyCareerAwardSelect<T extends boolean = true> {
           | {
               title?: T;
               text?: T;
+              showCopyTextButton?: T;
               id?: T;
               blockName?: T;
             };
@@ -1590,6 +1710,7 @@ export interface EarlyCareerAwardSelect<T extends boolean = true> {
           | {
               title?: T;
               text?: T;
+              showCopyTextButton?: T;
               id?: T;
               blockName?: T;
             };
@@ -1631,13 +1752,6 @@ export interface EarlyCareerAwardSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
-            };
-        openGraph?:
-          | T
-          | {
-              Title?: T;
-              Description?: T;
-              image?: T;
             };
       };
   updatedAt?: T;
@@ -1755,13 +1869,6 @@ export interface ActivitiesSelect<T extends boolean = true> {
               image?: T;
               description?: T;
             };
-        openGraph?:
-          | T
-          | {
-              Title?: T;
-              Description?: T;
-              image?: T;
-            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1797,12 +1904,45 @@ export interface MagazineOverviewSelect<T extends boolean = true> {
               image?: T;
               description?: T;
             };
-        openGraph?:
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationsOverview_select".
+ */
+export interface PublicationsOverviewSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+      };
+  filters?:
+    | T
+    | {
+        allCheckboxTopics?: T;
+        allCheckboxTypes?: T;
+        title?: T;
+      };
+  publicationDetail?:
+    | T
+    | {
+        downloadsTitle?: T;
+        otherPublicationsTitle?: T;
+        otherPublicationsAllButton?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
           | T
           | {
-              Title?: T;
-              Description?: T;
+              index?: T;
+              title?: T;
               image?: T;
+              description?: T;
             };
       };
   updatedAt?: T;

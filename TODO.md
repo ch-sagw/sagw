@@ -34,3 +34,5 @@ Payload Config:
 - fieldsLinkExternal -> relationTo should relate to all available pages.
 - earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
 - translations for custom admin ui labels
+- limit upload in images, video, documents to corresponding type
+- add global i18n (e.g. form errors, form labels, etc)

@@ -9,6 +9,9 @@ import { Projects } from '@/collections/Projects';
 import { People } from '@/collections/People';
 import { instituteDetailConfig } from '@/collections/InstituteDetail';
 import { magazineDetailConfig } from '@/collections/MagazineDetail';
+import { PublicationDetailConfig } from '@/collections/PublicationDetail';
+import { PublicationTopics } from '@/collections/PublicationTopics';
+import { PublicationTypes } from '@/collections/PublicationTypes';
 
 const collections = [
   Pages,
@@ -22,6 +25,9 @@ const collections = [
   instituteDetailConfig,
   magazineDetailConfig,
   Videos,
+  PublicationDetailConfig,
+  PublicationTopics,
+  PublicationTypes,
 ];
 
 export default collections;
