@@ -5,7 +5,7 @@ import { TextBlock } from '@/blocks/TextBlock';
 import { ImageBlock } from '@/blocks/ImageBlock';
 import { VideoBlock } from '@/blocks/VideoBlock';
 
-export const magazineDetailConfig: CollectionConfig = {
+export const MagazineDetailConfig: CollectionConfig = {
   access: {
     read: (): boolean => true,
   },
@@ -68,6 +68,7 @@ export const magazineDetailConfig: CollectionConfig = {
               type: 'group',
             },
 
+            // Content
             {
               blocks: [
                 TextBlock,
@@ -113,5 +114,9 @@ export const magazineDetailConfig: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  labels: {
+    plural: 'Magazine Detail Pages',
+    singular: 'Magazine Detail',
+  },
   slug: 'magazineDetail',
 };

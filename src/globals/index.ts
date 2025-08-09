@@ -7,6 +7,7 @@ import { activitiesConfig } from '@/globals/activities/activities';
 import { magazineOverviewConfig } from '@/globals/activities/magazineOverview';
 import { publicationsOverviewConfig } from '@/globals/activities/publicationsOverview';
 import { eventsOverviewConfig } from '@/globals/activities/eventsOverview';
+import { newsOverviewConfig } from '@/globals/activities/newsOverview';
 
 const globals = [
   homeConfig,
@@ -18,6 +19,7 @@ const globals = [
   magazineOverviewConfig,
   publicationsOverviewConfig,
   eventsOverviewConfig,
+  newsOverviewConfig,
 ];
 
 export default globals;

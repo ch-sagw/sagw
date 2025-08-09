@@ -83,6 +83,7 @@ export interface Config {
     publicationTypes: PublicationType;
     events: Event;
     eventCategory: EventCategory;
+    newsDetail: NewsDetail;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -105,6 +106,7 @@ export interface Config {
     publicationTypes: PublicationTypesSelect<false> | PublicationTypesSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     eventCategory: EventCategorySelect<false> | EventCategorySelect<true>;
+    newsDetail: NewsDetailSelect<false> | NewsDetailSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -122,6 +124,7 @@ export interface Config {
     magazineOverview: MagazineOverview;
     publicationsOverview: PublicationsOverview;
     eventsOverview: EventsOverview;
+    newsOverview: NewsOverview;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
@@ -133,6 +136,7 @@ export interface Config {
     magazineOverview: MagazineOverviewSelect<false> | MagazineOverviewSelect<true>;
     publicationsOverview: PublicationsOverviewSelect<false> | PublicationsOverviewSelect<true>;
     eventsOverview: EventsOverviewSelect<false> | EventsOverviewSelect<true>;
+    newsOverview: NewsOverviewSelect<false> | NewsOverviewSelect<true>;
   };
   locale: 'de' | 'fr' | 'en';
   user: User & {
@@ -579,6 +583,93 @@ export interface EventCategory {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsDetail".
+ */
+export interface NewsDetail {
+  id: string;
+  overviewPageProps: {
+    teaserText: string;
+  };
+  hero: {
+    title: string;
+    date: string;
+  };
+  contentBlocks?:
+    | (
+        | {
+            title?: string | null;
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            showCopyTextButton?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textBlock';
+          }
+        | {
+            alignement?: ('left' | 'center' | 'right') | null;
+            image: string | Image;
+            title: string;
+            caption: string;
+            credits: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageBlock';
+          }
+        | {
+            video: string | Video;
+            title: string;
+            caption: string;
+            credits: string;
+            stillImage: string | Image;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoBlock';
+          }
+      )[]
+    | null;
+  downloads: {
+    downloads: (string | Document)[];
+  };
+  links?:
+    | {
+        linkText: string;
+        href: string;
+        openInNewWindow?: boolean | null;
+        description: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'linkExternal';
+      }[]
+    | null;
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -647,6 +738,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'eventCategory';
         value: string | EventCategory;
+      } | null)
+    | ({
+        relationTo: 'newsDetail';
+        value: string | NewsDetail;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1081,6 +1176,91 @@ export interface EventsSelect<T extends boolean = true> {
  */
 export interface EventCategorySelect<T extends boolean = true> {
   eventCategory?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsDetail_select".
+ */
+export interface NewsDetailSelect<T extends boolean = true> {
+  overviewPageProps?:
+    | T
+    | {
+        teaserText?: T;
+      };
+  hero?:
+    | T
+    | {
+        title?: T;
+        date?: T;
+      };
+  contentBlocks?:
+    | T
+    | {
+        textBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              showCopyTextButton?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              alignement?: T;
+              image?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              id?: T;
+              blockName?: T;
+            };
+        videoBlock?:
+          | T
+          | {
+              video?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              stillImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  downloads?:
+    | T
+    | {
+        downloads?: T;
+      };
+  links?:
+    | T
+    | {
+        linkExternal?:
+          | T
+          | {
+              linkText?: T;
+              href?: T;
+              openInNewWindow?: T;
+              description?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1531,6 +1711,37 @@ export interface EventsOverview {
     title: string;
   };
   events: {
+    sectionTitle: string;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsOverview".
+ */
+export interface NewsOverview {
+  id: string;
+  hero: {
+    title: string;
+  };
+  detailPageProps: {
+    downloadsTitle: string;
+    linksTitle: string;
+    otherNewsTitle: string;
+  };
+  content: {
     sectionTitle: string;
   };
   meta?: {
@@ -2052,6 +2263,44 @@ export interface EventsOverviewSelect<T extends boolean = true> {
         title?: T;
       };
   events?:
+    | T
+    | {
+        sectionTitle?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsOverview_select".
+ */
+export interface NewsOverviewSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+      };
+  detailPageProps?:
+    | T
+    | {
+        downloadsTitle?: T;
+        linksTitle?: T;
+        otherNewsTitle?: T;
+      };
+  content?:
     | T
     | {
         sectionTitle?: T;

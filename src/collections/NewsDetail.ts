@@ -1,8 +1,11 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
+import { LinkExternal } from '@/blocks/LinkExternal';
 import { TextBlock } from '@/blocks/TextBlock';
+import { ImageBlock } from '@/blocks/ImageBlock';
+import { VideoBlock } from '@/blocks/VideoBlock';
 
-export const PublicationDetailConfig: CollectionConfig = {
+export const NewsDetailConfig: CollectionConfig = {
   access: {
     read: (): boolean => true,
   },
@@ -21,35 +24,14 @@ export const PublicationDetailConfig: CollectionConfig = {
             {
               fields: [
                 {
-                  name: 'image',
-                  relationTo: 'images',
+                  localized: true,
+                  name: 'teaserText',
                   required: true,
-                  type: 'relationship',
+                  type: 'text',
                 },
               ],
               label: 'Overview Page properties',
               name: 'overviewPageProps',
-              type: 'group',
-            },
-
-            // Categorization
-            {
-              fields: [
-                {
-                  name: 'topic',
-                  relationTo: 'publicationTopics',
-                  required: true,
-                  type: 'relationship',
-                },
-                {
-                  name: 'type',
-                  relationTo: 'publicationTypes',
-                  required: true,
-                  type: 'relationship',
-                },
-              ],
-              label: 'Categorization',
-              name: 'categorization',
               type: 'group',
             },
 
@@ -62,15 +44,24 @@ export const PublicationDetailConfig: CollectionConfig = {
                   required: true,
                   type: 'text',
                 },
+                {
+                  name: 'date',
+                  required: true,
+                  type: 'date',
+                },
               ],
               label: 'Hero',
               name: 'hero',
               type: 'group',
             },
 
-            // Text blocks
+            // Content
             {
-              blocks: [TextBlock],
+              blocks: [
+                TextBlock,
+                ImageBlock,
+                VideoBlock,
+              ],
               label: 'Content Blocks',
               name: 'contentBlocks',
               type: 'blocks',
@@ -91,6 +82,15 @@ export const PublicationDetailConfig: CollectionConfig = {
               name: 'downloads',
               type: 'group',
             },
+
+            // Links
+            {
+              blocks: [LinkExternal],
+              minRows: 0,
+              name: 'links',
+              type: 'blocks',
+            },
+
           ],
           label: 'Content',
         },
@@ -102,8 +102,8 @@ export const PublicationDetailConfig: CollectionConfig = {
     },
   ],
   labels: {
-    plural: 'Publication Detail Pages',
-    singular: 'Publication Detail',
+    plural: 'News Detail Pages',
+    singular: 'News Detail',
   },
-  slug: 'publicationDetail',
+  slug: 'newsDetail',
 };

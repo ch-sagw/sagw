@@ -1,14 +1,12 @@
-import { CollectionConfig } from 'payload';
+import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { fieldsColorMode } from '@/field-templates/colorMode';
-import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
 
-export const InstituteDetailConfig: CollectionConfig = {
+export const newsOverviewConfig: GlobalConfig = {
   access: {
     read: (): boolean => true,
   },
   admin: {
-    group: 'Pages',
+    group: 'Activities Pages',
   },
   fields: [
     {
@@ -27,38 +25,51 @@ export const InstituteDetailConfig: CollectionConfig = {
                   required: true,
                   type: 'text',
                 },
-                ...fieldsColorMode,
               ],
               label: 'Hero',
               name: 'hero',
               type: 'group',
             },
 
-            // Institute Details
+            // Detail Page Properties
             {
               fields: [
                 {
                   localized: true,
-                  name: 'title',
+                  name: 'downloadsTitle',
                   required: true,
                   type: 'text',
                 },
                 {
                   localized: true,
-                  name: 'text',
+                  name: 'linksTitle',
                   required: true,
                   type: 'text',
                 },
                 {
-                  name: 'logo',
-                  relationTo: 'images',
+                  localized: true,
+                  name: 'otherNewsTitle',
                   required: true,
-                  type: 'relationship',
+                  type: 'text',
                 },
-                ...fieldsLinkInternalOrExternal('pages'),
               ],
-              label: 'Institute Details',
-              name: 'instituteDetails',
+              label: 'Detail Page Properties',
+              name: 'detailPageProps',
+              type: 'group',
+            },
+
+            // Content
+            {
+              fields: [
+                {
+                  localized: true,
+                  name: 'sectionTitle',
+                  required: true,
+                  type: 'text',
+                },
+              ],
+              label: 'Content',
+              name: 'content',
               type: 'group',
             },
 
@@ -72,9 +83,5 @@ export const InstituteDetailConfig: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  labels: {
-    plural: 'Institute Detail Pages',
-    singular: 'Institute Detail',
-  },
-  slug: 'instituteDetail',
+  slug: 'newsOverview',
 };
