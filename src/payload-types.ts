@@ -128,6 +128,7 @@ export interface Config {
     aboutContact: AboutContact;
     aboutSagw: AboutSagw;
     aboutTeam: AboutTeam;
+    errorPage: ErrorPage;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
@@ -143,6 +144,7 @@ export interface Config {
     aboutContact: AboutContactSelect<false> | AboutContactSelect<true>;
     aboutSagw: AboutSagwSelect<false> | AboutSagwSelect<true>;
     aboutTeam: AboutTeamSelect<false> | AboutTeamSelect<true>;
+    errorPage: ErrorPageSelect<false> | ErrorPageSelect<true>;
   };
   locale: 'de' | 'fr' | 'en';
   user: User & {
@@ -1913,6 +1915,31 @@ export interface AboutTeam {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "errorPage".
+ */
+export interface ErrorPage {
+  id: string;
+  homeButtonText: string;
+  notFound: {
+    title: string;
+    description: string;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
@@ -2614,6 +2641,34 @@ export interface AboutTeamSelect<T extends boolean = true> {
     | {
         title?: T;
         lead?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "errorPage_select".
+ */
+export interface ErrorPageSelect<T extends boolean = true> {
+  homeButtonText?: T;
+  notFound?:
+    | T
+    | {
+        title?: T;
+        description?: T;
       };
   meta?:
     | T
