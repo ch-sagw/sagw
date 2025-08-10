@@ -1,14 +1,12 @@
 // src/config/availablePages.ts
-import type {
-  CollectionSlug, GlobalSlug,
-} from 'payload';
+import type { GlobalSlug } from 'payload';
 
-export const collectionPages: CollectionSlug[] = [
+export const collectionPages = [
   'instituteDetail',
   'magazineDetail',
   'newsDetail',
   'publicationDetail',
-];
+] as const;
 
 export const globalPages: GlobalSlug[] = [
   'aboutContact',

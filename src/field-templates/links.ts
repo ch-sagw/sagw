@@ -1,38 +1,30 @@
-import {
-  Field,
-  Option,
-} from 'payload';
+import { Field } from 'payload';
 
-import {
-  collectionPages, globalPages,
-} from '@/config/availablePages';
-
-const pages: Option[] = [];
-
-collectionPages.forEach((page) => {
-  pages.push({
-    label: page,
-    value: page,
-  });
-});
-
-globalPages.forEach((page) => {
-  pages.push(page);
-});
-
-const relationshipFields: Field[] = [];
-
-collectionPages.forEach((page) => {
-  relationshipFields.push({
-    admin: {
-      condition: (_, siblingData) => siblingData?.type === page,
-    },
-    name: `${page}Reference`,
-    relationTo: page,
+const fieldsLinkInternal: Field[] = [
+  {
+    localized: true,
+    name: 'linkText',
     required: true,
-    type: 'relationship',
-  });
-});
+    type: 'text',
+  },
+  {
+    admin: {
+      components: {
+        Field: {
+          path: 'src/components/admin/InternalLinkChooser',
+        },
+      },
+    },
+    name: 'showCase',
+    type: 'ui',
+  },
+  {
+    defaultValue: false,
+    label: 'In neuem Fenster öffnen',
+    name: 'openInNewWindow',
+    type: 'checkbox',
+  },
+];
 
 export const fieldsLinkExternal: Field[] = [
   {
@@ -48,28 +40,6 @@ export const fieldsLinkExternal: Field[] = [
   },
   {
     defaultValue: true,
-    label: 'In neuem Fenster öffnen',
-    name: 'openInNewWindow',
-    type: 'checkbox',
-  },
-];
-
-const fieldsLinkInternal: Field[] = [
-  {
-    localized: true,
-    name: 'linkText',
-    required: true,
-    type: 'text',
-  },
-  {
-    name: 'type',
-    options: pages,
-    required: true,
-    type: 'select',
-  },
-  ...relationshipFields,
-  {
-    defaultValue: false,
     label: 'In neuem Fenster öffnen',
     name: 'openInNewWindow',
     type: 'checkbox',
