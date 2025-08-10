@@ -1,7 +1,6 @@
 import { Users } from '@/collections/Users';
 import { Images } from '@/collections/Images';
 import { Videos } from '@/collections/Videos';
-import { Pages } from '@/collections/Pages';
 import { NetworkCategories } from '@/collections/NetworkCategories';
 import { FaqItems } from '@/collections/FaqItems';
 import { Documents } from '@/collections/Documents';
@@ -17,7 +16,6 @@ import { Events } from '@/collections/Events';
 import { NewsDetailConfig } from '@/collections/NewsDetail';
 
 const collections = [
-  Pages,
   Users,
   Images,
   NetworkCategories,
