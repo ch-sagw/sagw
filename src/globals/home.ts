@@ -40,7 +40,7 @@ export const homeConfig: GlobalConfig = {
               required: false,
               type: 'text',
             },
-            fieldsLinkInternalWithToggle('pages'),
+            fieldsLinkInternalWithToggle,
           ],
           label: 'Content',
         },

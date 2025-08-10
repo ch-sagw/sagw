@@ -6,7 +6,7 @@ import { fieldsColorScheme } from './colorMode';
 
 const fieldsFormResponse: GroupField = {
   fields: [
-    fieldsLinkInternalWithToggle('pages'),
+    fieldsLinkInternalWithToggle,
     fieldsColorScheme,
   ],
   label: 'Form Response',

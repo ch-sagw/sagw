@@ -1,6 +1,38 @@
 import {
-  CollectionSlug, Field,
+  Field,
+  Option,
 } from 'payload';
+
+import {
+  collectionPages, globalPages,
+} from '@/config/availablePages';
+
+const pages: Option[] = [];
+
+collectionPages.forEach((page) => {
+  pages.push({
+    label: page,
+    value: page,
+  });
+});
+
+globalPages.forEach((page) => {
+  pages.push(page);
+});
+
+const relationshipFields: Field[] = [];
+
+collectionPages.forEach((page) => {
+  relationshipFields.push({
+    admin: {
+      condition: (_, siblingData) => siblingData?.type === page,
+    },
+    name: `${page}Reference`,
+    relationTo: page,
+    required: true,
+    type: 'relationship',
+  });
+});
 
 export const fieldsLinkExternal: Field[] = [
   {
@@ -22,7 +54,7 @@ export const fieldsLinkExternal: Field[] = [
   },
 ];
 
-export const fieldsLinkInternal = (relationTo: CollectionSlug): Field[] => [
+const fieldsLinkInternal: Field[] = [
   {
     localized: true,
     name: 'linkText',
@@ -30,11 +62,12 @@ export const fieldsLinkInternal = (relationTo: CollectionSlug): Field[] => [
     type: 'text',
   },
   {
-    name: 'slug',
-    relationTo,
+    name: 'type',
+    options: pages,
     required: true,
-    type: 'relationship',
+    type: 'select',
   },
+  ...relationshipFields,
   {
     defaultValue: false,
     label: 'In neuem Fenster öffnen',
@@ -43,7 +76,7 @@ export const fieldsLinkInternal = (relationTo: CollectionSlug): Field[] => [
   },
 ];
 
-export const fieldsLinkInternalWithToggle = (relationTo: CollectionSlug): Field => ({
+export const fieldsLinkInternalWithToggle: Field = {
   fields: [
     {
       defaultValue: false,
@@ -55,16 +88,16 @@ export const fieldsLinkInternalWithToggle = (relationTo: CollectionSlug): Field 
       admin: {
         condition: (_, siblingData) => siblingData?.includeLink === true,
       },
-      fields: fieldsLinkInternal(relationTo),
+      fields: fieldsLinkInternal,
       name: 'link',
       type: 'group',
     },
   ],
   name: 'optionalLink',
   type: 'group',
-});
+};
 
-export const fieldsLinkInternalOrExternal = (relationTo: CollectionSlug): Field[] => [
+export const fieldsLinkInternalOrExternal: Field[] = [
   {
     admin: {
       layout: 'horizontal',
@@ -88,7 +121,7 @@ export const fieldsLinkInternalOrExternal = (relationTo: CollectionSlug): Field[
     admin: {
       condition: (data, siblingData) => siblingData.linkType === 'internal',
     },
-    fields: fieldsLinkInternal(relationTo),
+    fields: fieldsLinkInternal,
     name: 'linkInternal',
     type: 'group',
   },

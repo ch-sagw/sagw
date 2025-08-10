@@ -1,9 +1,21 @@
-import { CollectionConfig } from 'payload';
+import {
+  CollectionBeforeValidateHook, CollectionConfig,
+} from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { LinkExternal } from '@/blocks/LinkExternal';
 import { TextBlock } from '@/blocks/TextBlock';
 import { ImageBlock } from '@/blocks/ImageBlock';
 import { VideoBlock } from '@/blocks/VideoBlock';
+
+const syncHeroTitleToTopLevel: CollectionBeforeValidateHook = ({
+  data,
+}) => {
+  if (data?.hero?.title) {
+    data.title = data.hero.title;
+  }
+
+  return data;
+};
 
 export const NewsDetailConfig: CollectionConfig = {
   access: {
@@ -11,8 +23,16 @@ export const NewsDetailConfig: CollectionConfig = {
   },
   admin: {
     group: 'Pages',
+    useAsTitle: 'title',
   },
   fields: [
+    {
+      admin: {
+        hidden: true,
+      },
+      name: 'title',
+      type: 'text',
+    },
     {
       tabs: [
 
@@ -74,7 +94,7 @@ export const NewsDetailConfig: CollectionConfig = {
                   hasMany: true,
                   name: 'downloads',
                   relationTo: 'documents',
-                  required: true,
+                  required: false,
                   type: 'relationship',
                 },
               ],
@@ -101,6 +121,9 @@ export const NewsDetailConfig: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    beforeChange: [syncHeroTitleToTopLevel],
+  },
   labels: {
     plural: 'News Detail Pages',
     singular: 'News Detail',

@@ -15,7 +15,7 @@ export const SubpageSectionBlock: Block = {
       required: true,
       type: 'textarea',
     },
-    ...fieldsLinkInternalOrExternal('pages'),
+    ...fieldsLinkInternalOrExternal,
   ],
   slug: 'subpageSectionBlock',
 };

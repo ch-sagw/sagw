@@ -1,6 +1,5 @@
 import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { fieldsLinkInternal } from '@/field-templates/links';
 import { SubpageSection } from '@/blocks/SubpageSection';
 
 export const activitiesConfig: GlobalConfig = {
@@ -59,10 +58,10 @@ export const activitiesConfig: GlobalConfig = {
                   type: 'text',
                 },
                 {
-                  fields: fieldsLinkInternal('pages'),
-                  label: 'Link',
-                  name: 'link',
-                  type: 'group',
+                  localized: true,
+                  name: 'linkText',
+                  required: true,
+                  type: 'text',
                 },
               ],
               label: 'Magazine section',
@@ -86,10 +85,10 @@ export const activitiesConfig: GlobalConfig = {
                   type: 'text',
                 },
                 {
-                  fields: fieldsLinkInternal('pages'),
-                  label: 'Link',
-                  name: 'link',
-                  type: 'group',
+                  localized: true,
+                  name: 'linkText',
+                  required: true,
+                  type: 'text',
                 },
               ],
               label: 'Publications section',
@@ -107,10 +106,10 @@ export const activitiesConfig: GlobalConfig = {
                   type: 'text',
                 },
                 {
-                  fields: fieldsLinkInternal('pages'),
-                  label: 'Link',
-                  name: 'link',
-                  type: 'group',
+                  localized: true,
+                  name: 'linkText',
+                  required: true,
+                  type: 'text',
                 },
               ],
               label: 'Events section',
@@ -128,10 +127,10 @@ export const activitiesConfig: GlobalConfig = {
                   type: 'text',
                 },
                 {
-                  fields: fieldsLinkInternal('pages'),
-                  label: 'Link',
-                  name: 'link',
-                  type: 'group',
+                  localized: true,
+                  name: 'linkText',
+                  required: true,
+                  type: 'text',
                 },
               ],
               label: 'News section',
