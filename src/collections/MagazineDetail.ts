@@ -1,21 +1,9 @@
-import {
-  CollectionBeforeValidateHook, CollectionConfig,
-} from 'payload';
+import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { LinkExternal } from '@/blocks/LinkExternal';
 import { TextBlock } from '@/blocks/TextBlock';
 import { ImageBlock } from '@/blocks/ImageBlock';
 import { VideoBlock } from '@/blocks/VideoBlock';
-
-const syncHeroTitleToTopLevel: CollectionBeforeValidateHook = ({
-  data,
-}) => {
-  if (data?.hero?.title) {
-    data.title = data.hero.title;
-  }
-
-  return data;
-};
 
 export const MagazineDetailConfig: CollectionConfig = {
   access: {
@@ -23,16 +11,8 @@ export const MagazineDetailConfig: CollectionConfig = {
   },
   admin: {
     group: 'Pages',
-    useAsTitle: 'title',
   },
   fields: [
-    {
-      admin: {
-        hidden: true,
-      },
-      name: 'title',
-      type: 'text',
-    },
     {
       admin: {
         hidden: true,
@@ -142,9 +122,6 @@ export const MagazineDetailConfig: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: {
-    beforeChange: [syncHeroTitleToTopLevel],
-  },
   labels: {
     plural: 'Magazine Detail Pages',
     singular: 'Magazine Detail',

@@ -1,18 +1,6 @@
-import {
-  CollectionBeforeValidateHook, CollectionConfig,
-} from 'payload';
+import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { TextBlock } from '@/blocks/TextBlock';
-
-const syncHeroTitleToTopLevel: CollectionBeforeValidateHook = ({
-  data,
-}) => {
-  if (data?.hero?.title) {
-    data.title = data.hero.title;
-  }
-
-  return data;
-};
 
 export const PublicationDetailConfig: CollectionConfig = {
   access: {
@@ -20,16 +8,8 @@ export const PublicationDetailConfig: CollectionConfig = {
   },
   admin: {
     group: 'Pages',
-    useAsTitle: 'title',
   },
   fields: [
-    {
-      admin: {
-        hidden: true,
-      },
-      name: 'title',
-      type: 'text',
-    },
     {
       admin: {
         hidden: true,
@@ -129,9 +109,6 @@ export const PublicationDetailConfig: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: {
-    beforeChange: [syncHeroTitleToTopLevel],
-  },
   labels: {
     plural: 'Publication Detail Pages',
     singular: 'Publication Detail',

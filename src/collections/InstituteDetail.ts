@@ -1,19 +1,7 @@
-import {
-  CollectionBeforeValidateHook, CollectionConfig,
-} from 'payload';
+import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
-
-const syncHeroTitleToTopLevel: CollectionBeforeValidateHook = ({
-  data,
-}) => {
-  if (data?.hero?.title) {
-    data.title = data.hero.title;
-  }
-
-  return data;
-};
 
 export const InstituteDetailConfig: CollectionConfig = {
   access: {
@@ -21,16 +9,8 @@ export const InstituteDetailConfig: CollectionConfig = {
   },
   admin: {
     group: 'Pages',
-    useAsTitle: 'title',
   },
   fields: [
-    {
-      admin: {
-        hidden: true,
-      },
-      name: 'title',
-      type: 'text',
-    },
     {
       admin: {
         hidden: true,
@@ -100,9 +80,6 @@ export const InstituteDetailConfig: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: {
-    beforeChange: [syncHeroTitleToTopLevel],
-  },
   labels: {
     plural: 'Institute Detail Pages',
     singular: 'Institute Detail',

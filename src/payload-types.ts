@@ -305,7 +305,6 @@ export interface Person {
  */
 export interface InstituteDetail {
   id: string;
-  title?: string | null;
   isLinkable?: boolean | null;
   hero: {
     title: string;
@@ -348,7 +347,6 @@ export interface InstituteDetail {
  */
 export interface MagazineDetail {
   id: string;
-  title?: string | null;
   isLinkable?: boolean | null;
   overviewPageProps: {
     teaserText: string;
@@ -458,7 +456,6 @@ export interface Video {
  */
 export interface PublicationDetail {
   id: string;
-  title?: string | null;
   isLinkable?: boolean | null;
   overviewPageProps: {
     image: string | Image;
@@ -564,7 +561,6 @@ export interface EventCategory {
  */
 export interface NewsDetail {
   id: string;
-  title?: string | null;
   isLinkable?: boolean | null;
   overviewPageProps: {
     teaserText: string;
@@ -871,7 +867,6 @@ export interface PeopleSelect<T extends boolean = true> {
  * via the `definition` "instituteDetail_select".
  */
 export interface InstituteDetailSelect<T extends boolean = true> {
-  title?: T;
   isLinkable?: T;
   hero?:
     | T
@@ -922,7 +917,6 @@ export interface InstituteDetailSelect<T extends boolean = true> {
  * via the `definition` "magazineDetail_select".
  */
 export interface MagazineDetailSelect<T extends boolean = true> {
-  title?: T;
   isLinkable?: T;
   overviewPageProps?:
     | T
@@ -1029,7 +1023,6 @@ export interface VideosSelect<T extends boolean = true> {
  * via the `definition` "publicationDetail_select".
  */
 export interface PublicationDetailSelect<T extends boolean = true> {
-  title?: T;
   isLinkable?: T;
   overviewPageProps?:
     | T
@@ -1128,7 +1121,6 @@ export interface EventCategorySelect<T extends boolean = true> {
  * via the `definition` "newsDetail_select".
  */
 export interface NewsDetailSelect<T extends boolean = true> {
-  title?: T;
   isLinkable?: T;
   overviewPageProps?:
     | T
