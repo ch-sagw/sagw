@@ -6,10 +6,17 @@ import {
 import { JSX } from 'react';
 import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
 
-interface InterfaceInternalLinkChooserClientProps {
-  path: string;
+interface InterfaceInternalLinkChooserClientPropsGroupedOptions {
+  label: string;
   options: Option[];
 }
+
+interface InterfaceInternalLinkChooserClientProps {
+  path: string;
+  options: InterfaceInternalLinkChooserClientPropsGroupedOptions[];
+}
+
+const isGroupedOptions = (arr: Option[] | InterfaceInternalLinkChooserClientPropsGroupedOptions[]): arr is InterfaceInternalLinkChooserClientPropsGroupedOptions[] => arr.length > 0 && 'options' in arr[0];
 
 const InternalLinkChooserClient = ({
   options, path,
@@ -20,7 +27,11 @@ const InternalLinkChooserClient = ({
     path,
   });
 
-  const selectedOption = options.find((opt) => opt.value === value) ?? undefined;
+  const flatOptions = isGroupedOptions(options)
+    ? options.flatMap((group) => group.options)
+    : options;
+
+  const selectedOption = flatOptions.find((opt) => opt.value === value) ?? undefined;
 
   return (
     <Select
