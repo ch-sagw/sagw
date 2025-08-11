@@ -15,6 +15,8 @@ import { errorPageConfig } from '@/globals/error';
 import { i18nFormsConfig } from '@/globals/i18n/forms';
 import { i18nGlobalsConfig } from '@/globals/i18n/globals';
 import { consentConfig } from '@/globals/consent';
+import { headerConfig } from '@/globals//header';
+import { footerConfig } from '@/globals//footer';
 
 const globals = [
   homeConfig,
@@ -34,6 +36,8 @@ const globals = [
   i18nFormsConfig,
   i18nGlobalsConfig,
   consentConfig,
+  headerConfig,
+  footerConfig,
 ];
 
 export default globals;

@@ -130,6 +130,8 @@ export interface Config {
     i18nForms: I18NForm;
     i18nGlobals: I18NGlobal;
     consent: Consent;
+    header: Header;
+    footer: Footer;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
@@ -149,6 +151,8 @@ export interface Config {
     i18nForms: I18NFormsSelect<false> | I18NFormsSelect<true>;
     i18nGlobals: I18NGlobalsSelect<false> | I18NGlobalsSelect<true>;
     consent: ConsentSelect<false> | ConsentSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: 'de' | 'fr' | 'en';
   user: User & {
@@ -2020,6 +2024,68 @@ export interface Consent {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: string;
+  isLinkable?: boolean | null;
+  logo: string | Image;
+  metaLinks?:
+    | {
+        linkText: string;
+        href: string;
+        openInNewWindow?: boolean | null;
+        description: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'linkExternal';
+      }[]
+    | null;
+  navigation: {
+    home: string;
+    promotion: {
+      description: string;
+      overview: string;
+      institutes: string;
+      editions: string;
+      travelReports: string;
+      earlyCareerAward: string;
+    };
+    network: {
+      description: string;
+      network: string;
+    };
+    activities: {
+      description: string;
+      overview: string;
+      magazine: string;
+      publications: string;
+      events: string;
+    };
+    about: {
+      description: string;
+      sagw: string;
+      team: string;
+      contact: string;
+      openJobs: string;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: string;
+  isLinkable?: boolean | null;
+  title: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
@@ -2848,6 +2914,81 @@ export interface ConsentSelect<T extends boolean = true> {
               toggleDefault?: T;
             };
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  isLinkable?: T;
+  logo?: T;
+  metaLinks?:
+    | T
+    | {
+        linkExternal?:
+          | T
+          | {
+              linkText?: T;
+              href?: T;
+              openInNewWindow?: T;
+              description?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  navigation?:
+    | T
+    | {
+        home?: T;
+        promotion?:
+          | T
+          | {
+              description?: T;
+              overview?: T;
+              institutes?: T;
+              editions?: T;
+              travelReports?: T;
+              earlyCareerAward?: T;
+            };
+        network?:
+          | T
+          | {
+              description?: T;
+              network?: T;
+            };
+        activities?:
+          | T
+          | {
+              description?: T;
+              overview?: T;
+              magazine?: T;
+              publications?: T;
+              events?: T;
+            };
+        about?:
+          | T
+          | {
+              description?: T;
+              sagw?: T;
+              team?: T;
+              contact?: T;
+              openJobs?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  isLinkable?: T;
+  title?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
