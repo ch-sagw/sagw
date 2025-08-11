@@ -1,32 +1,34 @@
 'use server';
 
-import React, { JSX } from 'react';
-import type { UIFieldServerProps } from 'payload';
+import { Select } from '@payloadcms/ui';
+import { UIFieldServerProps } from 'payload';
+import { JSX } from 'react';
 import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
-import InternalLinkChooserClient from '@/components/admin/InternalLinkChooserClient';
+import { SelectFromCollectionSlug } from 'node_modules/payload/dist/collections/config/types';
 import {
-  collectionPages,
-  globalPages,
+  collectionPages, globalPages,
 } from '@/config/availablePages';
 
-// Create global page options (sync)
+// Create select options for Global Pages
 const getGlobalPageOptions = (): Option[] => globalPages.map((page) => ({
   label: page,
   value: `global:${page}`,
 }));
 
-// Async get collection page options from Payload API
+// Create select options for Collection Pages
 const getCollectionPageOptions = async (props: UIFieldServerProps): Promise<Option[]> => {
   const options: Option[] = [];
 
   for await (const page of collectionPages) {
-    const pageResults = await props.payload.find<typeof page, any>({
+
+    const pageResults = await props.payload.find<typeof page, SelectFromCollectionSlug<typeof page>>({
       collection: page,
       depth: 2,
     });
 
     pageResults.docs.forEach((doc) => {
       options.push({
+        // WE CAN REMOVE doc.title in detail pages
         label: doc.hero.title,
         value: `${page}/${doc.id}`,
       });
@@ -36,20 +38,24 @@ const getCollectionPageOptions = async (props: UIFieldServerProps): Promise<Opti
   return options;
 };
 
+// Select component
 const InternalLinkChooser = async (props: UIFieldServerProps): Promise<JSX.Element> => {
   const globalPageOptions = getGlobalPageOptions();
   const collectionPageOptions = await getCollectionPageOptions(props);
+
   const options = [
     ...globalPageOptions,
     ...collectionPageOptions,
   ];
 
   return (
-    <InternalLinkChooserClient
-      options={options}
-      value={props.value as Option | Option[] | undefined}
-    // onChange={props.onChange}
-    />
+    <div>
+      <Select
+        options={options}
+        value={options[1]}
+        isClearable
+      />
+    </div>
   );
 };
 
