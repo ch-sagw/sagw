@@ -2,6 +2,12 @@ import { Field } from 'payload';
 
 const fieldsLinkInternal: Field[] = [
   {
+    defaultValue: false,
+    label: 'In neuem Fenster öffnen',
+    name: 'openInNewWindow',
+    type: 'checkbox',
+  },
+  {
     localized: true,
     name: 'linkText',
     required: true,
@@ -17,12 +23,6 @@ const fieldsLinkInternal: Field[] = [
     },
     name: 'internalLink',
     type: 'text',
-  },
-  {
-    defaultValue: false,
-    label: 'In neuem Fenster öffnen',
-    name: 'openInNewWindow',
-    type: 'checkbox',
   },
 ];
 

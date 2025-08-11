@@ -306,6 +306,7 @@ export interface Person {
 export interface InstituteDetail {
   id: string;
   title?: string | null;
+  isLinkable?: boolean | null;
   hero: {
     title: string;
     colorMode: 'white' | 'color';
@@ -317,9 +318,9 @@ export interface InstituteDetail {
     logo: string | Image;
     linkType: 'internal' | 'external';
     linkInternal?: {
+      openInNewWindow?: boolean | null;
       linkText: string;
       internalLink?: string | null;
-      openInNewWindow?: boolean | null;
     };
     linkExternal?: {
       linkText: string;
@@ -348,6 +349,7 @@ export interface InstituteDetail {
 export interface MagazineDetail {
   id: string;
   title?: string | null;
+  isLinkable?: boolean | null;
   overviewPageProps: {
     teaserText: string;
   };
@@ -457,6 +459,7 @@ export interface Video {
 export interface PublicationDetail {
   id: string;
   title?: string | null;
+  isLinkable?: boolean | null;
   overviewPageProps: {
     image: string | Image;
   };
@@ -562,6 +565,7 @@ export interface EventCategory {
 export interface NewsDetail {
   id: string;
   title?: string | null;
+  isLinkable?: boolean | null;
   overviewPageProps: {
     teaserText: string;
   };
@@ -868,6 +872,7 @@ export interface PeopleSelect<T extends boolean = true> {
  */
 export interface InstituteDetailSelect<T extends boolean = true> {
   title?: T;
+  isLinkable?: T;
   hero?:
     | T
     | {
@@ -885,9 +890,9 @@ export interface InstituteDetailSelect<T extends boolean = true> {
         linkInternal?:
           | T
           | {
+              openInNewWindow?: T;
               linkText?: T;
               internalLink?: T;
-              openInNewWindow?: T;
             };
         linkExternal?:
           | T
@@ -918,6 +923,7 @@ export interface InstituteDetailSelect<T extends boolean = true> {
  */
 export interface MagazineDetailSelect<T extends boolean = true> {
   title?: T;
+  isLinkable?: T;
   overviewPageProps?:
     | T
     | {
@@ -1024,6 +1030,7 @@ export interface VideosSelect<T extends boolean = true> {
  */
 export interface PublicationDetailSelect<T extends boolean = true> {
   title?: T;
+  isLinkable?: T;
   overviewPageProps?:
     | T
     | {
@@ -1122,6 +1129,7 @@ export interface EventCategorySelect<T extends boolean = true> {
  */
 export interface NewsDetailSelect<T extends boolean = true> {
   title?: T;
+  isLinkable?: T;
   overviewPageProps?:
     | T
     | {
@@ -1240,6 +1248,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Home {
   id: string;
+  isLinkable?: boolean | null;
   title: string;
   text: string;
   sideTitle: string;
@@ -1247,9 +1256,9 @@ export interface Home {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      openInNewWindow?: boolean | null;
       linkText: string;
       internalLink?: string | null;
-      openInNewWindow?: boolean | null;
     };
   };
   meta?: {
@@ -1272,6 +1281,7 @@ export interface Home {
  */
 export interface Network {
   id: string;
+  isLinkable?: boolean | null;
   hero: {
     title: string;
   };
@@ -1313,6 +1323,7 @@ export interface Network {
  */
 export interface Promotion {
   id: string;
+  isLinkable?: boolean | null;
   hero: {
     title: string;
     lead: string;
@@ -1326,9 +1337,9 @@ export interface Promotion {
       text: string;
       linkType: 'internal' | 'external';
       linkInternal?: {
+        openInNewWindow?: boolean | null;
         linkText: string;
         internalLink?: string | null;
-        openInNewWindow?: boolean | null;
       };
       linkExternal?: {
         linkText: string;
@@ -1354,9 +1365,9 @@ export interface Promotion {
       optionalLink?: {
         includeLink?: boolean | null;
         link?: {
+          openInNewWindow?: boolean | null;
           linkText: string;
           internalLink?: string | null;
-          openInNewWindow?: boolean | null;
         };
       };
       colorScheme: 'bright' | 'dark';
@@ -1382,6 +1393,7 @@ export interface Promotion {
  */
 export interface Institute {
   id: string;
+  isLinkable?: boolean | null;
   hero: {
     title: string;
     colorMode: 'white' | 'color';
@@ -1410,6 +1422,7 @@ export interface Institute {
  */
 export interface EarlyCareerAward {
   id: string;
+  isLinkable?: boolean | null;
   hero: {
     title: string;
   };
@@ -1499,6 +1512,7 @@ export interface EarlyCareerAward {
  */
 export interface Activity {
   id: string;
+  isLinkable?: boolean | null;
   hero: {
     title: string;
   };
@@ -1511,9 +1525,9 @@ export interface Activity {
       text: string;
       linkType: 'internal' | 'external';
       linkInternal?: {
+        openInNewWindow?: boolean | null;
         linkText: string;
         internalLink?: string | null;
-        openInNewWindow?: boolean | null;
       };
       linkExternal?: {
         linkText: string;
@@ -1566,6 +1580,7 @@ export interface Activity {
  */
 export interface MagazineOverview {
   id: string;
+  isLinkable?: boolean | null;
   hero: {
     title: string;
   };
@@ -1596,6 +1611,7 @@ export interface MagazineOverview {
  */
 export interface PublicationsOverview {
   id: string;
+  isLinkable?: boolean | null;
   hero: {
     title: string;
   };
@@ -1629,6 +1645,7 @@ export interface PublicationsOverview {
  */
 export interface EventsOverview {
   id: string;
+  isLinkable?: boolean | null;
   hero: {
     title: string;
   };
@@ -1655,6 +1672,7 @@ export interface EventsOverview {
  */
 export interface NewsOverview {
   id: string;
+  isLinkable?: boolean | null;
   hero: {
     title: string;
   };
@@ -1686,6 +1704,7 @@ export interface NewsOverview {
  */
 export interface AboutContact {
   id: string;
+  isLinkable?: boolean | null;
   hero: {
     title: string;
   };
@@ -1721,6 +1740,7 @@ export interface AboutContact {
  */
 export interface AboutSagw {
   id: string;
+  isLinkable?: boolean | null;
   hero: {
     title: string;
     lead: string;
@@ -1809,6 +1829,7 @@ export interface AboutSagw {
  */
 export interface AboutTeam {
   id: string;
+  isLinkable?: boolean | null;
   hero: {
     title: string;
     lead: string;
@@ -1857,6 +1878,7 @@ export interface ErrorPage {
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
+  isLinkable?: T;
   title?: T;
   text?: T;
   sideTitle?: T;
@@ -1868,9 +1890,9 @@ export interface HomeSelect<T extends boolean = true> {
         link?:
           | T
           | {
+              openInNewWindow?: T;
               linkText?: T;
               internalLink?: T;
-              openInNewWindow?: T;
             };
       };
   meta?:
@@ -1894,6 +1916,7 @@ export interface HomeSelect<T extends boolean = true> {
  * via the `definition` "network_select".
  */
 export interface NetworkSelect<T extends boolean = true> {
+  isLinkable?: T;
   hero?:
     | T
     | {
@@ -1947,6 +1970,7 @@ export interface NetworkSelect<T extends boolean = true> {
  * via the `definition` "promotion_select".
  */
 export interface PromotionSelect<T extends boolean = true> {
+  isLinkable?: T;
   hero?:
     | T
     | {
@@ -1974,9 +1998,9 @@ export interface PromotionSelect<T extends boolean = true> {
                           linkInternal?:
                             | T
                             | {
+                                openInNewWindow?: T;
                                 linkText?: T;
                                 internalLink?: T;
-                                openInNewWindow?: T;
                               };
                           linkExternal?:
                             | T
@@ -2014,9 +2038,9 @@ export interface PromotionSelect<T extends boolean = true> {
                     link?:
                       | T
                       | {
+                          openInNewWindow?: T;
                           linkText?: T;
                           internalLink?: T;
-                          openInNewWindow?: T;
                         };
                   };
               colorScheme?: T;
@@ -2043,6 +2067,7 @@ export interface PromotionSelect<T extends boolean = true> {
  * via the `definition` "institutes_select".
  */
 export interface InstitutesSelect<T extends boolean = true> {
+  isLinkable?: T;
   hero?:
     | T
     | {
@@ -2076,6 +2101,7 @@ export interface InstitutesSelect<T extends boolean = true> {
  * via the `definition` "earlyCareerAward_select".
  */
 export interface EarlyCareerAwardSelect<T extends boolean = true> {
+  isLinkable?: T;
   hero?:
     | T
     | {
@@ -2160,6 +2186,7 @@ export interface EarlyCareerAwardSelect<T extends boolean = true> {
  * via the `definition` "activities_select".
  */
 export interface ActivitiesSelect<T extends boolean = true> {
+  isLinkable?: T;
   hero?:
     | T
     | {
@@ -2186,9 +2213,9 @@ export interface ActivitiesSelect<T extends boolean = true> {
                           linkInternal?:
                             | T
                             | {
+                                openInNewWindow?: T;
                                 linkText?: T;
                                 internalLink?: T;
-                                openInNewWindow?: T;
                               };
                           linkExternal?:
                             | T
@@ -2252,6 +2279,7 @@ export interface ActivitiesSelect<T extends boolean = true> {
  * via the `definition` "magazineOverview_select".
  */
 export interface MagazineOverviewSelect<T extends boolean = true> {
+  isLinkable?: T;
   hero?:
     | T
     | {
@@ -2287,6 +2315,7 @@ export interface MagazineOverviewSelect<T extends boolean = true> {
  * via the `definition` "publicationsOverview_select".
  */
 export interface PublicationsOverviewSelect<T extends boolean = true> {
+  isLinkable?: T;
   hero?:
     | T
     | {
@@ -2327,6 +2356,7 @@ export interface PublicationsOverviewSelect<T extends boolean = true> {
  * via the `definition` "eventsOverview_select".
  */
 export interface EventsOverviewSelect<T extends boolean = true> {
+  isLinkable?: T;
   hero?:
     | T
     | {
@@ -2358,6 +2388,7 @@ export interface EventsOverviewSelect<T extends boolean = true> {
  * via the `definition` "newsOverview_select".
  */
 export interface NewsOverviewSelect<T extends boolean = true> {
+  isLinkable?: T;
   hero?:
     | T
     | {
@@ -2396,6 +2427,7 @@ export interface NewsOverviewSelect<T extends boolean = true> {
  * via the `definition` "aboutContact_select".
  */
 export interface AboutContactSelect<T extends boolean = true> {
+  isLinkable?: T;
   hero?:
     | T
     | {
@@ -2439,6 +2471,7 @@ export interface AboutContactSelect<T extends boolean = true> {
  * via the `definition` "aboutSagw_select".
  */
 export interface AboutSagwSelect<T extends boolean = true> {
+  isLinkable?: T;
   hero?:
     | T
     | {
@@ -2526,6 +2559,7 @@ export interface AboutSagwSelect<T extends boolean = true> {
  * via the `definition` "aboutTeam_select".
  */
 export interface AboutTeamSelect<T extends boolean = true> {
+  isLinkable?: T;
   hero?:
     | T
     | {

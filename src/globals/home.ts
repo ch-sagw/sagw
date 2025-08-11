@@ -11,6 +11,14 @@ export const homeConfig: GlobalConfig = {
   },
   fields: [
     {
+      admin: {
+        hidden: true,
+      },
+      defaultValue: true,
+      name: 'isLinkable',
+      type: 'checkbox',
+    },
+    {
       tabs: [
 
         // Content Tab

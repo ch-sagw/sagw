@@ -34,6 +34,14 @@ export const MagazineDetailConfig: CollectionConfig = {
       type: 'text',
     },
     {
+      admin: {
+        hidden: true,
+      },
+      defaultValue: true,
+      name: 'isLinkable',
+      type: 'checkbox',
+    },
+    {
       tabs: [
 
         // Content Tab

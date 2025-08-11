@@ -1,7 +1,7 @@
 'use client';
 
 import {
-  Select, useField,
+  FieldLabel, Select, useField,
 } from '@payloadcms/ui';
 import { JSX } from 'react';
 import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
@@ -34,7 +34,7 @@ const InternalLinkChooserClient = ({
   const selectedOption = flatOptions.find((opt) => opt.value === value) ?? undefined;
 
   return (
-    <Select
+    <div><FieldLabel label='Link Target' /><Select
       options={options}
       value={selectedOption}
       onChange={(newValue) => {
@@ -45,7 +45,7 @@ const InternalLinkChooserClient = ({
         }
       }}
       isClearable
-    />);
+    /></div>);
 };
 
 export default InternalLinkChooserClient;

@@ -40,5 +40,4 @@ Payload Config:
 
 
 - internal link
-  -> group collections and globals
   -> define a property "isLinkable" in all collections. in server component, we get all collections and can filter by that property. That way, we don't need to hard code the available collections

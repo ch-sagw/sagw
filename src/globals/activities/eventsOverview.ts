@@ -10,6 +10,14 @@ export const eventsOverviewConfig: GlobalConfig = {
   },
   fields: [
     {
+      admin: {
+        hidden: true,
+      },
+      defaultValue: true,
+      name: 'isLinkable',
+      type: 'checkbox',
+    },
+    {
       tabs: [
 
         // Content Tab

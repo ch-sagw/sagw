@@ -14,6 +14,14 @@ export const aboutSagwConfig: GlobalConfig = {
   },
   fields: [
     {
+      admin: {
+        hidden: true,
+      },
+      defaultValue: true,
+      name: 'isLinkable',
+      type: 'checkbox',
+    },
+    {
       tabs: [
 
         // Content Tab
