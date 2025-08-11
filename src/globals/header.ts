@@ -10,15 +10,6 @@ export const headerConfig: GlobalConfig = {
   },
   fields: [
     {
-      admin: {
-        hidden: true,
-      },
-      defaultValue: true,
-      name: 'isLinkable',
-      type: 'checkbox',
-    },
-
-    {
       name: 'logo',
       relationTo: 'images',
       required: true,

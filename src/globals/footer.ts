@@ -10,14 +10,6 @@ export const footerConfig: GlobalConfig = {
   },
   fields: [
     {
-      admin: {
-        hidden: true,
-      },
-      defaultValue: true,
-      name: 'isLinkable',
-      type: 'checkbox',
-    },
-    {
       label: 'Datenschutz',
       localized: true,
       name: 'legal',
