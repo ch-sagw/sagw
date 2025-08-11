@@ -127,6 +127,9 @@ export interface Config {
     aboutSagw: AboutSagw;
     aboutTeam: AboutTeam;
     errorPage: ErrorPage;
+    i18nForms: I18NForm;
+    i18nGlobals: I18NGlobal;
+    consent: Consent;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
@@ -143,6 +146,9 @@ export interface Config {
     aboutSagw: AboutSagwSelect<false> | AboutSagwSelect<true>;
     aboutTeam: AboutTeamSelect<false> | AboutTeamSelect<true>;
     errorPage: ErrorPageSelect<false> | ErrorPageSelect<true>;
+    i18nForms: I18NFormsSelect<false> | I18NFormsSelect<true>;
+    i18nGlobals: I18NGlobalsSelect<false> | I18NGlobalsSelect<true>;
+    consent: ConsentSelect<false> | ConsentSelect<true>;
   };
   locale: 'de' | 'fr' | 'en';
   user: User & {
@@ -1867,6 +1873,153 @@ export interface ErrorPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "i18nForms".
+ */
+export interface I18NForm {
+  id: string;
+  inputFields: {
+    email: {
+      label: string;
+      placeholder: string;
+      error: string;
+    };
+    message: {
+      label: string;
+      placeholder: string;
+      error: string;
+    };
+    name: {
+      label: string;
+      placeholder: string;
+      error: string;
+    };
+  };
+  checkboxes: {
+    dataPrivacyCheckboxText: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "i18nGlobals".
+ */
+export interface I18NGlobal {
+  id: string;
+  sectionTitles: {
+    download: string;
+    links: string;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "consent".
+ */
+export interface Consent {
+  id: string;
+  isLinkable?: boolean | null;
+  banner: {
+    title: string;
+    text: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    buttonAcceptAll: string;
+    buttonAcceptSelection: string;
+    necessaryCookies: {
+      title: string;
+      text: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      toggleLabel: string;
+    };
+    analyticsPerformance: {
+      title: string;
+      text: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      toggleLabelOff: string;
+      toggleLabelOn: string;
+      toggleDefault?: ('on' | 'off') | null;
+    };
+    externalContent: {
+      title: string;
+      text: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      toggleLabelOff: string;
+      toggleLabelOn: string;
+      toggleDefault?: ('on' | 'off') | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
@@ -2596,6 +2749,103 @@ export interface ErrorPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "i18nForms_select".
+ */
+export interface I18NFormsSelect<T extends boolean = true> {
+  inputFields?:
+    | T
+    | {
+        email?:
+          | T
+          | {
+              label?: T;
+              placeholder?: T;
+              error?: T;
+            };
+        message?:
+          | T
+          | {
+              label?: T;
+              placeholder?: T;
+              error?: T;
+            };
+        name?:
+          | T
+          | {
+              label?: T;
+              placeholder?: T;
+              error?: T;
+            };
+      };
+  checkboxes?:
+    | T
+    | {
+        dataPrivacyCheckboxText?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "i18nGlobals_select".
+ */
+export interface I18NGlobalsSelect<T extends boolean = true> {
+  sectionTitles?:
+    | T
+    | {
+        download?: T;
+        links?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "consent_select".
+ */
+export interface ConsentSelect<T extends boolean = true> {
+  isLinkable?: T;
+  banner?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        buttonAcceptAll?: T;
+        buttonAcceptSelection?: T;
+        necessaryCookies?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              toggleLabel?: T;
+            };
+        analyticsPerformance?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              toggleLabelOff?: T;
+              toggleLabelOn?: T;
+              toggleDefault?: T;
+            };
+        externalContent?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              toggleLabelOff?: T;
+              toggleLabelOn?: T;
+              toggleDefault?: T;
             };
       };
   updatedAt?: T;

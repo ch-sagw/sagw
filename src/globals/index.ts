@@ -12,6 +12,9 @@ import { aboutContactConfig } from '@/globals/about/contact';
 import { aboutSagwConfig } from '@/globals/about/sagw';
 import { aboutTeamConfig } from '@/globals/about/team';
 import { errorPageConfig } from '@/globals/error';
+import { i18nFormsConfig } from '@/globals/i18n/forms';
+import { i18nGlobalsConfig } from '@/globals/i18n/globals';
+import { consentConfig } from '@/globals/consent';
 
 const globals = [
   homeConfig,
@@ -28,6 +31,9 @@ const globals = [
   aboutSagwConfig,
   aboutTeamConfig,
   errorPageConfig,
+  i18nFormsConfig,
+  i18nGlobalsConfig,
+  consentConfig,
 ];
 
 export default globals;
