@@ -36,3 +36,5 @@ Payload Config:
 - translations for custom admin ui labels
 - limit upload in images, video, documents to corresponding type
 - add global i18n (e.g. form errors, form labels, etc)
+- prepopulate seo on collections
+- internal link -> group collections and globals
