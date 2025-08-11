@@ -44,15 +44,25 @@ const InternalLinkChooser = async (props: UIFieldServerProps): Promise<JSX.Eleme
   const globalPageOptions = getGlobalPageOptions();
   const collectionPageOptions = await getCollectionPageOptions(props);
 
+  let pageToExclude: string;
+
+  if (props.data.globalType) {
+    pageToExclude = `global:${props.data.globalType}`;
+  } else if (props.collectionSlug) {
+    pageToExclude = `${props.collectionSlug}/${props.data.id}`;
+  }
+
   const options = [
     ...globalPageOptions,
     ...collectionPageOptions,
   ];
 
+  const filteredOptions = options.filter((option) => option.value !== pageToExclude);
+
   return (
     <div>
       <InternalLinkChooserClient
-        options={options}
+        options={filteredOptions}
         path={props.path}
       />
     </div>
