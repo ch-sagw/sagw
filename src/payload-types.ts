@@ -318,28 +318,6 @@ export interface InstituteDetail {
     linkType: 'internal' | 'external';
     linkInternal?: {
       linkText: string;
-      type:
-        | 'instituteDetail'
-        | 'magazineDetail'
-        | 'newsDetail'
-        | 'publicationDetail'
-        | 'aboutContact'
-        | 'aboutSagw'
-        | 'aboutTeam'
-        | 'activities'
-        | 'earlyCareerAward'
-        | 'eventsOverview'
-        | 'home'
-        | 'institutes'
-        | 'magazineOverview'
-        | 'network'
-        | 'newsOverview'
-        | 'promotion'
-        | 'publicationsOverview';
-      instituteDetailReference?: (string | null) | InstituteDetail;
-      magazineDetailReference?: (string | null) | MagazineDetail;
-      newsDetailReference?: (string | null) | NewsDetail;
-      publicationDetailReference?: (string | null) | PublicationDetail;
       openInNewWindow?: boolean | null;
     };
     linkExternal?: {
@@ -473,94 +451,6 @@ export interface Video {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "newsDetail".
- */
-export interface NewsDetail {
-  id: string;
-  title?: string | null;
-  overviewPageProps: {
-    teaserText: string;
-  };
-  hero: {
-    title: string;
-    date: string;
-  };
-  contentBlocks?:
-    | (
-        | {
-            title?: string | null;
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
-            showCopyTextButton?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            alignement?: ('left' | 'center' | 'right') | null;
-            image: string | Image;
-            title: string;
-            caption: string;
-            credits: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
-          }
-      )[]
-    | null;
-  downloads?: {
-    downloads?: (string | Document)[] | null;
-  };
-  links?:
-    | {
-        linkText: string;
-        href: string;
-        openInNewWindow?: boolean | null;
-        description: string;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'linkExternal';
-      }[]
-    | null;
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "publicationDetail".
  */
 export interface PublicationDetail {
@@ -661,6 +551,94 @@ export interface Event {
 export interface EventCategory {
   id: string;
   eventCategory: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsDetail".
+ */
+export interface NewsDetail {
+  id: string;
+  title?: string | null;
+  overviewPageProps: {
+    teaserText: string;
+  };
+  hero: {
+    title: string;
+    date: string;
+  };
+  contentBlocks?:
+    | (
+        | {
+            title?: string | null;
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            showCopyTextButton?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textBlock';
+          }
+        | {
+            alignement?: ('left' | 'center' | 'right') | null;
+            image: string | Image;
+            title: string;
+            caption: string;
+            credits: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageBlock';
+          }
+        | {
+            video: string | Video;
+            title: string;
+            caption: string;
+            credits: string;
+            stillImage: string | Image;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoBlock';
+          }
+      )[]
+    | null;
+  downloads?: {
+    downloads?: (string | Document)[] | null;
+  };
+  links?:
+    | {
+        linkText: string;
+        href: string;
+        openInNewWindow?: boolean | null;
+        description: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'linkExternal';
+      }[]
+    | null;
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -907,11 +885,6 @@ export interface InstituteDetailSelect<T extends boolean = true> {
           | T
           | {
               linkText?: T;
-              type?: T;
-              instituteDetailReference?: T;
-              magazineDetailReference?: T;
-              newsDetailReference?: T;
-              publicationDetailReference?: T;
               openInNewWindow?: T;
             };
         linkExternal?:
@@ -1273,28 +1246,6 @@ export interface Home {
     includeLink?: boolean | null;
     link?: {
       linkText: string;
-      type:
-        | 'instituteDetail'
-        | 'magazineDetail'
-        | 'newsDetail'
-        | 'publicationDetail'
-        | 'aboutContact'
-        | 'aboutSagw'
-        | 'aboutTeam'
-        | 'activities'
-        | 'earlyCareerAward'
-        | 'eventsOverview'
-        | 'home'
-        | 'institutes'
-        | 'magazineOverview'
-        | 'network'
-        | 'newsOverview'
-        | 'promotion'
-        | 'publicationsOverview';
-      instituteDetailReference?: (string | null) | InstituteDetail;
-      magazineDetailReference?: (string | null) | MagazineDetail;
-      newsDetailReference?: (string | null) | NewsDetail;
-      publicationDetailReference?: (string | null) | PublicationDetail;
       openInNewWindow?: boolean | null;
     };
   };
@@ -1373,28 +1324,6 @@ export interface Promotion {
       linkType: 'internal' | 'external';
       linkInternal?: {
         linkText: string;
-        type:
-          | 'instituteDetail'
-          | 'magazineDetail'
-          | 'newsDetail'
-          | 'publicationDetail'
-          | 'aboutContact'
-          | 'aboutSagw'
-          | 'aboutTeam'
-          | 'activities'
-          | 'earlyCareerAward'
-          | 'eventsOverview'
-          | 'home'
-          | 'institutes'
-          | 'magazineOverview'
-          | 'network'
-          | 'newsOverview'
-          | 'promotion'
-          | 'publicationsOverview';
-        instituteDetailReference?: (string | null) | InstituteDetail;
-        magazineDetailReference?: (string | null) | MagazineDetail;
-        newsDetailReference?: (string | null) | NewsDetail;
-        publicationDetailReference?: (string | null) | PublicationDetail;
         openInNewWindow?: boolean | null;
       };
       linkExternal?: {
@@ -1422,28 +1351,6 @@ export interface Promotion {
         includeLink?: boolean | null;
         link?: {
           linkText: string;
-          type:
-            | 'instituteDetail'
-            | 'magazineDetail'
-            | 'newsDetail'
-            | 'publicationDetail'
-            | 'aboutContact'
-            | 'aboutSagw'
-            | 'aboutTeam'
-            | 'activities'
-            | 'earlyCareerAward'
-            | 'eventsOverview'
-            | 'home'
-            | 'institutes'
-            | 'magazineOverview'
-            | 'network'
-            | 'newsOverview'
-            | 'promotion'
-            | 'publicationsOverview';
-          instituteDetailReference?: (string | null) | InstituteDetail;
-          magazineDetailReference?: (string | null) | MagazineDetail;
-          newsDetailReference?: (string | null) | NewsDetail;
-          publicationDetailReference?: (string | null) | PublicationDetail;
           openInNewWindow?: boolean | null;
         };
       };
@@ -1600,28 +1507,6 @@ export interface Activity {
       linkType: 'internal' | 'external';
       linkInternal?: {
         linkText: string;
-        type:
-          | 'instituteDetail'
-          | 'magazineDetail'
-          | 'newsDetail'
-          | 'publicationDetail'
-          | 'aboutContact'
-          | 'aboutSagw'
-          | 'aboutTeam'
-          | 'activities'
-          | 'earlyCareerAward'
-          | 'eventsOverview'
-          | 'home'
-          | 'institutes'
-          | 'magazineOverview'
-          | 'network'
-          | 'newsOverview'
-          | 'promotion'
-          | 'publicationsOverview';
-        instituteDetailReference?: (string | null) | InstituteDetail;
-        magazineDetailReference?: (string | null) | MagazineDetail;
-        newsDetailReference?: (string | null) | NewsDetail;
-        publicationDetailReference?: (string | null) | PublicationDetail;
         openInNewWindow?: boolean | null;
       };
       linkExternal?: {
@@ -1978,11 +1863,6 @@ export interface HomeSelect<T extends boolean = true> {
           | T
           | {
               linkText?: T;
-              type?: T;
-              instituteDetailReference?: T;
-              magazineDetailReference?: T;
-              newsDetailReference?: T;
-              publicationDetailReference?: T;
               openInNewWindow?: T;
             };
       };
@@ -2088,11 +1968,6 @@ export interface PromotionSelect<T extends boolean = true> {
                             | T
                             | {
                                 linkText?: T;
-                                type?: T;
-                                instituteDetailReference?: T;
-                                magazineDetailReference?: T;
-                                newsDetailReference?: T;
-                                publicationDetailReference?: T;
                                 openInNewWindow?: T;
                               };
                           linkExternal?:
@@ -2132,11 +2007,6 @@ export interface PromotionSelect<T extends boolean = true> {
                       | T
                       | {
                           linkText?: T;
-                          type?: T;
-                          instituteDetailReference?: T;
-                          magazineDetailReference?: T;
-                          newsDetailReference?: T;
-                          publicationDetailReference?: T;
                           openInNewWindow?: T;
                         };
                   };
@@ -2308,11 +2178,6 @@ export interface ActivitiesSelect<T extends boolean = true> {
                             | T
                             | {
                                 linkText?: T;
-                                type?: T;
-                                instituteDetailReference?: T;
-                                magazineDetailReference?: T;
-                                newsDetailReference?: T;
-                                publicationDetailReference?: T;
                                 openInNewWindow?: T;
                               };
                           linkExternal?:
