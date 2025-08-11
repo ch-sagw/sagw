@@ -15,7 +15,7 @@ const fieldsLinkInternal: Field[] = [
         },
       },
     },
-    name: 'showCase',
+    name: 'internalLink',
     type: 'ui',
   },
   {

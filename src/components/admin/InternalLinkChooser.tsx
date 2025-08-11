@@ -1,6 +1,6 @@
 'use server';
 
-import { Select } from '@payloadcms/ui';
+// import { Select } from '@payloadcms/ui';
 import { UIFieldServerProps } from 'payload';
 import { JSX } from 'react';
 import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
@@ -8,6 +8,7 @@ import { SelectFromCollectionSlug } from 'node_modules/payload/dist/collections/
 import {
   collectionPages, globalPages,
 } from '@/config/availablePages';
+import InternalLinkChooserClient from './InternalLinkChooserClient';
 
 // Create select options for Global Pages
 const getGlobalPageOptions = (): Option[] => globalPages.map((page) => ({
@@ -48,12 +49,13 @@ const InternalLinkChooser = async (props: UIFieldServerProps): Promise<JSX.Eleme
     ...collectionPageOptions,
   ];
 
+  console.log(props.payload);
+
   return (
     <div>
-      <Select
+      <InternalLinkChooserClient
         options={options}
-        value={options[1]}
-        isClearable
+        path={props.path}
       />
     </div>
   );
