@@ -11,24 +11,27 @@ interface InterfaceInternalLinkChooserClientProps {
   options: Option[];
 }
 
-// Select component
 const InternalLinkChooserClient = ({
   options, path,
 }: InterfaceInternalLinkChooserClientProps): JSX.Element => {
   const {
     value, setValue,
-  } = useField<Option | undefined>({
+  } = useField<string | null>({
     path,
   });
+
+  const selectedOption = options.find((opt) => opt.value === value) ?? undefined;
 
   return (
     <Select
       options={options}
-      value={value}
+      value={selectedOption}
       onChange={(newValue) => {
-        setValue(Array.isArray(newValue)
-          ? null
-          : newValue);
+        if (!newValue || Array.isArray(newValue)) {
+          setValue(null);
+        } else {
+          setValue(newValue.value as string);
+        }
       }}
       isClearable
     />);

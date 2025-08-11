@@ -16,7 +16,7 @@ const fieldsLinkInternal: Field[] = [
       },
     },
     name: 'internalLink',
-    type: 'ui',
+    type: 'text',
   },
   {
     defaultValue: false,

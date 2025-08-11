@@ -49,8 +49,6 @@ const InternalLinkChooser = async (props: UIFieldServerProps): Promise<JSX.Eleme
     ...collectionPageOptions,
   ];
 
-  console.log(props.payload);
-
   return (
     <div>
       <InternalLinkChooserClient

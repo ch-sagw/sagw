@@ -318,6 +318,7 @@ export interface InstituteDetail {
     linkType: 'internal' | 'external';
     linkInternal?: {
       linkText: string;
+      internalLink?: string | null;
       openInNewWindow?: boolean | null;
     };
     linkExternal?: {
@@ -885,6 +886,7 @@ export interface InstituteDetailSelect<T extends boolean = true> {
           | T
           | {
               linkText?: T;
+              internalLink?: T;
               openInNewWindow?: T;
             };
         linkExternal?:
@@ -1246,6 +1248,7 @@ export interface Home {
     includeLink?: boolean | null;
     link?: {
       linkText: string;
+      internalLink?: string | null;
       openInNewWindow?: boolean | null;
     };
   };
@@ -1324,6 +1327,7 @@ export interface Promotion {
       linkType: 'internal' | 'external';
       linkInternal?: {
         linkText: string;
+        internalLink?: string | null;
         openInNewWindow?: boolean | null;
       };
       linkExternal?: {
@@ -1351,6 +1355,7 @@ export interface Promotion {
         includeLink?: boolean | null;
         link?: {
           linkText: string;
+          internalLink?: string | null;
           openInNewWindow?: boolean | null;
         };
       };
@@ -1507,6 +1512,7 @@ export interface Activity {
       linkType: 'internal' | 'external';
       linkInternal?: {
         linkText: string;
+        internalLink?: string | null;
         openInNewWindow?: boolean | null;
       };
       linkExternal?: {
@@ -1863,6 +1869,7 @@ export interface HomeSelect<T extends boolean = true> {
           | T
           | {
               linkText?: T;
+              internalLink?: T;
               openInNewWindow?: T;
             };
       };
@@ -1968,6 +1975,7 @@ export interface PromotionSelect<T extends boolean = true> {
                             | T
                             | {
                                 linkText?: T;
+                                internalLink?: T;
                                 openInNewWindow?: T;
                               };
                           linkExternal?:
@@ -2007,6 +2015,7 @@ export interface PromotionSelect<T extends boolean = true> {
                       | T
                       | {
                           linkText?: T;
+                          internalLink?: T;
                           openInNewWindow?: T;
                         };
                   };
@@ -2178,6 +2187,7 @@ export interface ActivitiesSelect<T extends boolean = true> {
                             | T
                             | {
                                 linkText?: T;
+                                internalLink?: T;
                                 openInNewWindow?: T;
                               };
                           linkExternal?:
