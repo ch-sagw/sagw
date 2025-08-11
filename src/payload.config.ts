@@ -64,6 +64,10 @@ export default buildConfig({
         label: 'Français',
       },
       {
+        code: 'it',
+        label: 'Italiano',
+      },
+      {
         code: 'en',
         label: 'English',
       },

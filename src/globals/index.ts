@@ -17,6 +17,7 @@ import { i18nGlobalsConfig } from '@/globals/i18n/globals';
 import { consentConfig } from '@/globals/consent';
 import { headerConfig } from '@/globals//header';
 import { footerConfig } from '@/globals//footer';
+import { statusMessageConfig } from '@/globals/statusMessage';
 
 const globals = [
   homeConfig,
@@ -38,6 +39,7 @@ const globals = [
   consentConfig,
   headerConfig,
   footerConfig,
+  statusMessageConfig,
 ];
 
 export default globals;

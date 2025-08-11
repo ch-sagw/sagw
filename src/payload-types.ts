@@ -132,6 +132,7 @@ export interface Config {
     consent: Consent;
     header: Header;
     footer: Footer;
+    statusMessage: StatusMessage;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
@@ -153,8 +154,9 @@ export interface Config {
     consent: ConsentSelect<false> | ConsentSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    statusMessage: StatusMessageSelect<false> | StatusMessageSelect<true>;
   };
-  locale: 'de' | 'fr' | 'en';
+  locale: 'de' | 'fr' | 'it' | 'en';
   user: User & {
     collection: 'users';
   };
@@ -1283,7 +1285,6 @@ export interface Home {
  */
 export interface Network {
   id: string;
-  isLinkable?: boolean | null;
   hero: {
     title: string;
   };
@@ -1915,6 +1916,42 @@ export interface I18NForm {
       [k: string]: unknown;
     };
   };
+  submitSuccess: {
+    title: string;
+    text: string;
+    optionalLink?: {
+      includeLink?: boolean | null;
+      link?: {
+        openInNewWindow?: boolean | null;
+        linkText: string;
+        internalLink?: string | null;
+      };
+    };
+  };
+  submitError: {
+    title: string;
+    text: string;
+    optionalLink?: {
+      includeLink?: boolean | null;
+      link?: {
+        openInNewWindow?: boolean | null;
+        linkText: string;
+        internalLink?: string | null;
+      };
+    };
+  };
+  submitWarn: {
+    title: string;
+    text: string;
+    optionalLink?: {
+      includeLink?: boolean | null;
+      link?: {
+        openInNewWindow?: boolean | null;
+        linkText: string;
+        internalLink?: string | null;
+      };
+    };
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1937,7 +1974,6 @@ export interface I18NGlobal {
  */
 export interface Consent {
   id: string;
-  isLinkable?: boolean | null;
   banner: {
     title: string;
     text: {
@@ -2028,7 +2064,6 @@ export interface Consent {
  */
 export interface Header {
   id: string;
-  isLinkable?: boolean | null;
   logo: string | Image;
   metaLinks?:
     | {
@@ -2079,7 +2114,6 @@ export interface Header {
  */
 export interface Footer {
   id: string;
-  isLinkable?: boolean | null;
   legal: string;
   impressum: string;
   copyright: string;
@@ -2105,6 +2139,38 @@ export interface Footer {
         blockType: 'socialLink';
       }[]
     | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "statusMessage".
+ */
+export interface StatusMessage {
+  id: string;
+  show: {
+    /**
+     * Show, hide or define date range when to show the message.
+     */
+    display: 'show' | 'hide' | 'date';
+    from?: string | null;
+    to?: string | null;
+  };
+  title: string;
+  message: string;
+  optionalLink?: {
+    includeLink?: boolean | null;
+    link?: {
+      openInNewWindow?: boolean | null;
+      linkText: string;
+      internalLink?: string | null;
+    };
+  };
+  /**
+   * Should the message be displayed on home only or everywhere?
+   */
+  showOnHomeOnly?: boolean | null;
+  type: 'warn' | 'error' | 'success';
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2151,7 +2217,6 @@ export interface HomeSelect<T extends boolean = true> {
  * via the `definition` "network_select".
  */
 export interface NetworkSelect<T extends boolean = true> {
-  isLinkable?: T;
   hero?:
     | T
     | {
@@ -2880,6 +2945,60 @@ export interface I18NFormsSelect<T extends boolean = true> {
     | {
         dataPrivacyCheckboxText?: T;
       };
+  submitSuccess?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        optionalLink?:
+          | T
+          | {
+              includeLink?: T;
+              link?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+            };
+      };
+  submitError?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        optionalLink?:
+          | T
+          | {
+              includeLink?: T;
+              link?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+            };
+      };
+  submitWarn?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        optionalLink?:
+          | T
+          | {
+              includeLink?: T;
+              link?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -2904,7 +3023,6 @@ export interface I18NGlobalsSelect<T extends boolean = true> {
  * via the `definition` "consent_select".
  */
 export interface ConsentSelect<T extends boolean = true> {
-  isLinkable?: T;
   banner?:
     | T
     | {
@@ -2947,7 +3065,6 @@ export interface ConsentSelect<T extends boolean = true> {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
-  isLinkable?: T;
   logo?: T;
   metaLinks?:
     | T
@@ -3011,7 +3128,6 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  isLinkable?: T;
   legal?: T;
   impressum?: T;
   copyright?: T;
@@ -3042,6 +3158,38 @@ export interface FooterSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "statusMessage_select".
+ */
+export interface StatusMessageSelect<T extends boolean = true> {
+  show?:
+    | T
+    | {
+        display?: T;
+        from?: T;
+        to?: T;
+      };
+  title?: T;
+  message?: T;
+  optionalLink?:
+    | T
+    | {
+        includeLink?: T;
+        link?:
+          | T
+          | {
+              openInNewWindow?: T;
+              linkText?: T;
+              internalLink?: T;
+            };
+      };
+  showOnHomeOnly?: T;
+  type?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
