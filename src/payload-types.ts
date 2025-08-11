@@ -2080,7 +2080,31 @@ export interface Header {
 export interface Footer {
   id: string;
   isLinkable?: boolean | null;
-  title: string;
+  legal: string;
+  impressum: string;
+  copyright: string;
+  contact: {
+    title: string;
+    address1: string;
+    address2: string;
+    poBox: string;
+    countryCode: string;
+    zipCode: string;
+    city: string;
+    phone: string;
+    mail: string;
+  };
+  socialLinks?:
+    | {
+        linkText: string;
+        href: string;
+        openInNewWindow?: boolean | null;
+        icon?: ('linkedIn' | 'twitter' | 'facebook') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'socialLink';
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2988,7 +3012,36 @@ export interface HeaderSelect<T extends boolean = true> {
  */
 export interface FooterSelect<T extends boolean = true> {
   isLinkable?: T;
-  title?: T;
+  legal?: T;
+  impressum?: T;
+  copyright?: T;
+  contact?:
+    | T
+    | {
+        title?: T;
+        address1?: T;
+        address2?: T;
+        poBox?: T;
+        countryCode?: T;
+        zipCode?: T;
+        city?: T;
+        phone?: T;
+        mail?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        socialLink?:
+          | T
+          | {
+              linkText?: T;
+              href?: T;
+              openInNewWindow?: T;
+              icon?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
