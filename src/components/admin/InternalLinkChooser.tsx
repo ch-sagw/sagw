@@ -6,16 +6,7 @@ import {
 } from 'payload';
 import { JSX } from 'react';
 import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
-import { globalPages } from '@/config/availablePages';
 import InternalLinkChooserClient from './InternalLinkChooserClient';
-
-// Create select options for Global Pages
-const getGlobalPageOptions = (props: UIFieldServerProps): Option[] => globalPages
-  .map((page) => ({
-    label: page,
-    value: `global:${page}`,
-  }))
-  .filter((option) => option.value !== `global:${props.data.globalType}`);
 
 const isLinkablePage = (page: any): page is { isLinkable: boolean; hero: { title: string } } => 'isLinkable' in page && page.hero !== undefined && typeof page.hero.title === 'string';
 
@@ -39,19 +30,40 @@ const getCollectionPageOptions = async (props: UIFieldServerProps): Promise<Opti
         });
       }
     });
-
   }
 
   return options
     .filter((option) => option.value !== `${props.collectionSlug}/${props.data.id}`);
 };
 
+// Create select options for Global Pages
+const getGlobalPagesOption = async (props: UIFieldServerProps): Promise<Option[]> => {
+  const options: Option[] = [];
+
+  for await (const globalPage of props.payload.globals.config) {
+    const pageResult = await props.payload.findGlobal({
+      slug: globalPage.slug,
+    });
+
+    if (Object.keys(pageResult)
+      .includes('isLinkable')) {
+
+      if (globalPage.slug !== props.data.globalType) {
+        options.push({
+          label: globalPage.slug,
+          value: `global:${globalPage.slug}`,
+        });
+      }
+    }
+  }
+
+  return options;
+};
+
 // Select component
 const InternalLinkChooser = async (props: UIFieldServerProps): Promise<JSX.Element> => {
-  const globalPageOptions = getGlobalPageOptions(props);
+  const globalPageOptions = await getGlobalPagesOption(props);
   const collectionPageOptions = await getCollectionPageOptions(props);
-
-  // console.log(props.payload.globals);
 
   const options = [
     {

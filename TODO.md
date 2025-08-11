@@ -37,7 +37,3 @@ Payload Config:
 - limit upload in images, video, documents to corresponding type
 - add global i18n (e.g. form errors, form labels, etc)
 - prepopulate seo on collections
-
-
-- internal link
-  -> define a property "isLinkable" in all collections. in server component, we get all collections and can filter by that property. That way, we don't need to hard code the available collections
