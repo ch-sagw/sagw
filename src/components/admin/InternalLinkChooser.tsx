@@ -42,6 +42,7 @@ const getGlobalPagesOption = async (props: UIFieldServerProps): Promise<Option[]
 
   for await (const globalPage of props.payload.globals.config) {
     const pageResult = await props.payload.findGlobal({
+      depth: 1,
       slug: globalPage.slug,
     });
 
