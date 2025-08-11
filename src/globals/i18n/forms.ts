@@ -1,3 +1,4 @@
+import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
 import {
   Field, GlobalConfig,
 } from 'payload';
@@ -68,6 +69,69 @@ export const i18nFormsConfig: GlobalConfig = {
       ],
       label: 'Checkboxes',
       name: 'checkboxes',
+      type: 'group',
+    },
+
+    {
+      fields: [
+        {
+          localized: true,
+          name: 'title',
+          required: true,
+          type: 'text',
+        },
+        {
+          localized: true,
+          name: 'text',
+          required: true,
+          type: 'text',
+        },
+        fieldsLinkInternalWithToggle,
+      ],
+      label: 'Submit Success',
+      name: 'submitSuccess',
+      type: 'group',
+    },
+
+    {
+      fields: [
+        {
+          localized: true,
+          name: 'title',
+          required: true,
+          type: 'text',
+        },
+        {
+          localized: true,
+          name: 'text',
+          required: true,
+          type: 'text',
+        },
+        fieldsLinkInternalWithToggle,
+      ],
+      label: 'Submit Error',
+      name: 'submitError',
+      type: 'group',
+    },
+
+    {
+      fields: [
+        {
+          localized: true,
+          name: 'title',
+          required: true,
+          type: 'text',
+        },
+        {
+          localized: true,
+          name: 'text',
+          required: true,
+          type: 'text',
+        },
+        fieldsLinkInternalWithToggle,
+      ],
+      label: 'Submit Warn',
+      name: 'submitWarn',
       type: 'group',
     },
   ],
