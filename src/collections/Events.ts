@@ -13,6 +13,12 @@ export const Events: CollectionConfig = {
       required: true,
       type: 'text',
     },
+
+    // todo:
+    // - remove text
+    // - location (optinal)
+    // - lang (optinal)
+    // - time (optinal)
     {
       localized: true,
       name: 'text',
@@ -29,11 +35,15 @@ export const Events: CollectionConfig = {
       relationTo: 'projects',
       type: 'relationship',
     },
+
+    // todo: add "to" date optional
     {
       name: 'date',
       required: true,
       type: 'date',
     },
+
+    // remove target prop
     ...fieldsLinkExternal,
   ],
   slug: 'events',

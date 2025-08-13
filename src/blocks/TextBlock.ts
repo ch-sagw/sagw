@@ -14,6 +14,8 @@ export const TextBlock: Block = {
       required: true,
       type: 'richText',
     },
+
+    // TODO: only show on publication detail, not configurable
     {
       defaultValue: false,
       name: 'showCopyTextButton',

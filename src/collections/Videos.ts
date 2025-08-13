@@ -1,5 +1,8 @@
 import type { CollectionConfig } from 'payload';
 
+// TODO:
+// - discuss: subtitles
+
 export const Videos: CollectionConfig = {
   access: {
     read: () => true,

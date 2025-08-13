@@ -1,5 +1,10 @@
 import type { CollectionConfig } from 'payload';
 
+// TODO:
+// MemberType: remove Geschäftsleitung
+// Department: Add Geschäftsleitung
+// Add Field: Mitglied der Geschläftsleitung (i18n).
+
 export const People: CollectionConfig = {
   access: {
     read: () => true,
@@ -28,6 +33,8 @@ export const People: CollectionConfig = {
       required: true,
       type: 'select',
     },
+
+    // TODO : optional
     {
       name: 'prefix',
       required: false,
@@ -51,6 +58,7 @@ export const People: CollectionConfig = {
       type: 'text',
     },
 
+    // TODO: i18n
     {
       name: 'function',
       required: true,
