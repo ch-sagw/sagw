@@ -1,5 +1,6 @@
 import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
+import { fieldsHero } from '@/field-templates/hero';
 
 export const publicationsOverviewConfig: GlobalConfig = {
   access: {
@@ -25,19 +26,7 @@ export const publicationsOverviewConfig: GlobalConfig = {
           fields: [
 
             // Hero
-            {
-              fields: [
-                {
-                  localized: true,
-                  name: 'title',
-                  required: true,
-                  type: 'text',
-                },
-              ],
-              label: 'Hero',
-              name: 'hero',
-              type: 'group',
-            },
+            fieldsHero(),
 
             // Filters
             {
@@ -68,6 +57,12 @@ export const publicationsOverviewConfig: GlobalConfig = {
 
             // Publication Detail
             {
+              // TODO: Publikation bestellen, CTA & Description hinzufügen
+
+              // TODO: Zenodo overview box
+
+              // TODO: Publikation herunterladen,
+              // overwrite from global downloads
               fields: [
                 {
                   localized: true,

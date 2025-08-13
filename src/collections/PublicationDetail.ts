@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { TextBlock } from '@/blocks/TextBlock';
+import { fieldsHero } from '@/field-templates/hero';
 
 export const PublicationDetailConfig: CollectionConfig = {
   access: {
@@ -62,19 +63,7 @@ export const PublicationDetailConfig: CollectionConfig = {
             },
 
             // Hero
-            {
-              fields: [
-                {
-                  localized: true,
-                  name: 'title',
-                  required: true,
-                  type: 'text',
-                },
-              ],
-              label: 'Hero',
-              name: 'hero',
-              type: 'group',
-            },
+            fieldsHero(),
 
             // Text blocks
             {
@@ -84,7 +73,13 @@ export const PublicationDetailConfig: CollectionConfig = {
               type: 'blocks',
             },
 
+            // TODO: add blocks for authors
+
             // Downloads
+
+            // Remove downloads
+            //  -> textfield for Zenodo id
+            //  ->
             {
               fields: [
                 {

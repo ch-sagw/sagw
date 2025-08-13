@@ -1,6 +1,7 @@
 import { GlobalConfig } from 'payload';
 import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
 import { fieldsTabMeta } from '@/field-templates/meta';
+import { fieldsHero } from '@/field-templates/hero';
 
 export const homeConfig: GlobalConfig = {
   access: {
@@ -24,31 +25,15 @@ export const homeConfig: GlobalConfig = {
         // Content Tab
         {
           fields: [
-            {
-              localized: true,
-              name: 'title',
-              required: true,
-              type: 'text',
-            },
-            {
-              localized: true,
-              name: 'text',
-              required: true,
-              type: 'text',
-            },
-            {
-              localized: true,
-              name: 'sideTitle',
-              required: true,
-              type: 'text',
-            },
-            {
-              localized: true,
-              name: 'lead',
-              required: false,
-              type: 'text',
-            },
-            fieldsLinkInternalWithToggle,
+            fieldsHero([
+              {
+                localized: true,
+                name: 'sideTitle',
+                required: true,
+                type: 'text',
+              },
+              fieldsLinkInternalWithToggle,
+            ]),
           ],
           label: 'Content',
         },

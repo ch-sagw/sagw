@@ -2,6 +2,7 @@ import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { TextBlock } from '@/blocks/TextBlock';
 import { fieldsColorMode } from '@/field-templates/colorMode';
+import { fieldsHero } from '@/field-templates/hero';
 
 export const earlyCareerAwardConfig: GlobalConfig = {
   access: {
@@ -27,19 +28,7 @@ export const earlyCareerAwardConfig: GlobalConfig = {
           fields: [
 
             // Hero
-            {
-              fields: [
-                {
-                  localized: true,
-                  name: 'title',
-                  required: true,
-                  type: 'text',
-                },
-              ],
-              label: 'Hero',
-              name: 'hero',
-              type: 'group',
-            },
+            fieldsHero(),
 
             // Text Blocks Before
             {

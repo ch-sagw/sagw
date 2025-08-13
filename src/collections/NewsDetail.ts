@@ -4,6 +4,7 @@ import { LinkExternal } from '@/blocks/LinkExternal';
 import { TextBlock } from '@/blocks/TextBlock';
 import { ImageBlock } from '@/blocks/ImageBlock';
 import { VideoBlock } from '@/blocks/VideoBlock';
+import { fieldsHero } from '@/field-templates/hero';
 
 export const NewsDetailConfig: CollectionConfig = {
   access: {
@@ -44,24 +45,7 @@ export const NewsDetailConfig: CollectionConfig = {
             },
 
             // Hero
-            {
-              fields: [
-                {
-                  localized: true,
-                  name: 'title',
-                  required: true,
-                  type: 'text',
-                },
-                {
-                  name: 'date',
-                  required: true,
-                  type: 'date',
-                },
-              ],
-              label: 'Hero',
-              name: 'hero',
-              type: 'group',
-            },
+            fieldsHero(),
 
             // Content
             {
@@ -76,6 +60,8 @@ export const NewsDetailConfig: CollectionConfig = {
             },
 
             // Downloads
+
+            // TODO: add Zenodo (both optional)
             {
               fields: [
                 {
@@ -92,6 +78,8 @@ export const NewsDetailConfig: CollectionConfig = {
             },
 
             // Links
+
+            // Todo: Internal & External
             {
               blocks: [LinkExternal],
               minRows: 0,

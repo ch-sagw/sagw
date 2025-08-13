@@ -1,5 +1,6 @@
 import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
+import { fieldsHero } from '@/field-templates/hero';
 
 export const newsOverviewConfig: GlobalConfig = {
   access: {
@@ -25,19 +26,7 @@ export const newsOverviewConfig: GlobalConfig = {
           fields: [
 
             // Hero
-            {
-              fields: [
-                {
-                  localized: true,
-                  name: 'title',
-                  required: true,
-                  type: 'text',
-                },
-              ],
-              label: 'Hero',
-              name: 'hero',
-              type: 'group',
-            },
+            fieldsHero(),
 
             // Detail Page Properties
             {

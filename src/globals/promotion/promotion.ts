@@ -2,6 +2,7 @@ import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { SubpageSection } from '@/blocks/SubpageSection';
 import { fieldsContactForm } from '@/field-templates/forms';
+import { fieldsHero } from '@/field-templates/hero';
 
 export const promotionConfig: GlobalConfig = {
   access: {
@@ -27,25 +28,7 @@ export const promotionConfig: GlobalConfig = {
           fields: [
 
             // Hero
-            {
-              fields: [
-                {
-                  localized: true,
-                  name: 'title',
-                  required: true,
-                  type: 'text',
-                },
-                {
-                  localized: true,
-                  name: 'lead',
-                  required: true,
-                  type: 'text',
-                },
-              ],
-              label: 'Hero',
-              name: 'hero',
-              type: 'group',
-            },
+            fieldsHero(),
 
             // Subpage Sections
             {

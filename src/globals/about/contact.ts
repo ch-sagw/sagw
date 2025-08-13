@@ -1,6 +1,7 @@
 import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { ContactAccordionItemBlock } from '@/blocks/ContactAccordionItem';
+import { fieldsHero } from '@/field-templates/hero';
 
 export const aboutContactConfig: GlobalConfig = {
   access: {
@@ -26,19 +27,7 @@ export const aboutContactConfig: GlobalConfig = {
           fields: [
 
             // Hero
-            {
-              fields: [
-                {
-                  localized: true,
-                  name: 'title',
-                  required: true,
-                  type: 'text',
-                },
-              ],
-              label: 'Hero',
-              name: 'hero',
-              type: 'group',
-            },
+            fieldsHero(),
 
             // Addresses
             {

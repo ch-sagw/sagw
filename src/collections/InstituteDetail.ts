@@ -2,6 +2,7 @@ import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
+import { fieldsHero } from '@/field-templates/hero';
 
 export const InstituteDetailConfig: CollectionConfig = {
   access: {
@@ -27,20 +28,7 @@ export const InstituteDetailConfig: CollectionConfig = {
           fields: [
 
             // Hero
-            {
-              fields: [
-                {
-                  localized: true,
-                  name: 'title',
-                  required: true,
-                  type: 'text',
-                },
-                ...fieldsColorMode,
-              ],
-              label: 'Hero',
-              name: 'hero',
-              type: 'group',
-            },
+            fieldsHero([...fieldsColorMode]),
 
             // Institute Details
             {

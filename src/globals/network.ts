@@ -1,6 +1,7 @@
 import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { NetworkBlock } from '@/blocks/NetworkBlock';
+import { fieldsHero } from '@/field-templates/hero';
 
 export const networkConfig: GlobalConfig = {
   access: {
@@ -18,19 +19,7 @@ export const networkConfig: GlobalConfig = {
           fields: [
 
             // Hero
-            {
-              fields: [
-                {
-                  localized: true,
-                  name: 'title',
-                  required: true,
-                  type: 'text',
-                },
-              ],
-              label: 'Hero',
-              name: 'hero',
-              type: 'group',
-            },
+            fieldsHero(),
 
             // Filter
             {

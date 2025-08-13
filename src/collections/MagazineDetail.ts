@@ -4,6 +4,7 @@ import { LinkExternal } from '@/blocks/LinkExternal';
 import { TextBlock } from '@/blocks/TextBlock';
 import { ImageBlock } from '@/blocks/ImageBlock';
 import { VideoBlock } from '@/blocks/VideoBlock';
+import { fieldsHero } from '@/field-templates/hero';
 
 export const MagazineDetailConfig: CollectionConfig = {
   access: {
@@ -44,37 +45,20 @@ export const MagazineDetailConfig: CollectionConfig = {
             },
 
             // Hero
-            {
-              fields: [
-                {
-                  localized: true,
-                  name: 'title',
-                  required: true,
-                  type: 'text',
-                },
-                {
-                  localized: true,
-                  name: 'lead',
-                  required: true,
-                  type: 'text',
-                },
-                {
-                  localized: true,
-                  name: 'author',
-                  required: true,
-                  type: 'text',
-                },
-                {
-                  localized: true,
-                  name: 'date',
-                  required: true,
-                  type: 'date',
-                },
-              ],
-              label: 'Hero',
-              name: 'hero',
-              type: 'group',
-            },
+            fieldsHero([
+              {
+                localized: true,
+                name: 'author',
+                required: true,
+                type: 'text',
+              },
+              {
+                localized: true,
+                name: 'date',
+                required: true,
+                type: 'date',
+              },
+            ]),
 
             // Content
             {
