@@ -1,5 +1,7 @@
 import { Field } from 'payload';
 
+export const fieldAdminTitleFieldName = 'adminTitle';
+
 export const fieldAdminTitle: Field = {
   access: {
     // visible in API
@@ -12,6 +14,6 @@ export const fieldAdminTitle: Field = {
     hidden: true,
     readOnly: true,
   },
-  name: 'adminTitle',
+  name: fieldAdminTitleFieldName,
   type: 'text',
 };

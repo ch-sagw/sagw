@@ -1,4 +1,5 @@
 import { CollectionBeforeValidateHook } from 'payload';
+import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 
 const lexicalToPlainText = (lexical: any): string => {
   const root = lexical?.root;
@@ -53,7 +54,7 @@ export const hookAdminTitle: CollectionBeforeValidateHook = ({
   if (lexical) {
     const plain = lexicalToPlainText(lexical);
 
-    data.adminTitle = plain.length > 140
+    data[fieldAdminTitleFieldName] = plain.length > 140
       ? `${plain.slice(0, 137)}…`
       : plain;
   }

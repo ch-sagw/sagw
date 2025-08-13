@@ -4,7 +4,9 @@ import { TextBlock } from '@/blocks/TextBlock';
 import { fieldsHero } from '@/field-templates/hero';
 import { hookAdminTitle } from '@/hooks/adminTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
-import { fieldAdminTitle } from '@/field-templates/adminTitle';
+import {
+  fieldAdminTitle, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
 
 export const PublicationDetailConfig: CollectionConfig = {
   access: {
@@ -12,7 +14,7 @@ export const PublicationDetailConfig: CollectionConfig = {
   },
   admin: {
     group: 'Pages',
-    useAsTitle: 'adminTitle',
+    useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,

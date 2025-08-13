@@ -7,7 +7,9 @@ import { VideoBlock } from '@/blocks/VideoBlock';
 import { fieldsHero } from '@/field-templates/hero';
 import { hookAdminTitle } from '@/hooks/adminTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
-import { fieldAdminTitle } from '@/field-templates/adminTitle';
+import {
+  fieldAdminTitle, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
 
 export const NewsDetailConfig: CollectionConfig = {
   access: {
@@ -15,7 +17,7 @@ export const NewsDetailConfig: CollectionConfig = {
   },
   admin: {
     group: 'Pages',
-    useAsTitle: 'adminTitle',
+    useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,

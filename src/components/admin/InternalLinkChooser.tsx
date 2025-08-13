@@ -7,8 +7,10 @@ import {
 import { JSX } from 'react';
 import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
 import InternalLinkChooserClient from './InternalLinkChooserClient';
+import { fieldLinkablePageFieldName } from '@/field-templates/linkablePage';
+import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 
-const isLinkablePage = (page: any): page is { isLinkable: boolean; adminTitle: string } => 'isLinkable' in page && typeof page.adminTitle === 'string';
+const isLinkablePage = (page: any): page is { isLinkable: boolean; adminTitle: string } => fieldLinkablePageFieldName in page && typeof page[fieldAdminTitleFieldName] === 'string';
 
 // Create select options for Collection Pages
 const getCollectionPageOptions = async (props: UIFieldServerProps): Promise<Option[]> => {
@@ -25,7 +27,7 @@ const getCollectionPageOptions = async (props: UIFieldServerProps): Promise<Opti
       if (isLinkablePage(pageResult)) {
 
         options.push({
-          label: pageResult.adminTitle,
+          label: pageResult[fieldAdminTitleFieldName],
           value: `${collection}/${pageResult.id}`,
         });
       }
@@ -47,7 +49,7 @@ const getGlobalPagesOption = async (props: UIFieldServerProps): Promise<Option[]
     });
 
     if (Object.keys(pageResult)
-      .includes('isLinkable')) {
+      .includes(fieldLinkablePageFieldName)) {
 
       if (globalPage.slug !== props.data.globalType) {
         options.push({
