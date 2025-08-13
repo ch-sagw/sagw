@@ -12,6 +12,17 @@ import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 
 const isLinkablePage = (page: any): page is { isLinkable: boolean; adminTitle: string } => fieldLinkablePageFieldName in page && typeof page[fieldAdminTitleFieldName] === 'string';
 
+// convert camelCase/PascalCase to human readable string
+const humanizeSlug = (slug: string): string => {
+  const withSpaces = slug.replace(/(?:[A-Z])/gu, (match) => ` ${match}`);
+
+  return withSpaces
+    .split(' ')
+    .map((word) => word.charAt(0)
+      .toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
 // Create select options for Collection Pages
 const getCollectionPageOptions = async (props: UIFieldServerProps): Promise<Option[]> => {
   const collectionKeys = Object.keys(props.payload.collections) as CollectionSlug[];
@@ -53,7 +64,7 @@ const getGlobalPagesOption = async (props: UIFieldServerProps): Promise<Option[]
 
       if (globalPage.slug !== props.data.globalType) {
         options.push({
-          label: globalPage.slug,
+          label: humanizeSlug(globalPage.slug),
           value: `global:${globalPage.slug}`,
         });
       }
