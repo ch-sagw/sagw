@@ -319,8 +319,24 @@ export interface Person {
 export interface InstituteDetail {
   id: string;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   hero: {
-    title: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
     colorMode: 'white' | 'color';
     colorScheme?: ('bright' | 'dark') | null;
   };
@@ -361,12 +377,27 @@ export interface InstituteDetail {
 export interface MagazineDetail {
   id: string;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   overviewPageProps: {
     teaserText: string;
   };
   hero: {
-    title: string;
-    lead: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
     author: string;
     date: string;
   };
@@ -470,6 +501,7 @@ export interface Video {
 export interface PublicationDetail {
   id: string;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   overviewPageProps: {
     image: string | Image;
   };
@@ -478,7 +510,22 @@ export interface PublicationDetail {
     type: string | PublicationType;
   };
   hero: {
-    title: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
   };
   contentBlocks?:
     | {
@@ -575,12 +622,27 @@ export interface EventCategory {
 export interface NewsDetail {
   id: string;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   overviewPageProps: {
     teaserText: string;
   };
   hero: {
-    title: string;
-    date: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
   };
   contentBlocks?:
     | (
@@ -882,10 +944,12 @@ export interface PeopleSelect<T extends boolean = true> {
  */
 export interface InstituteDetailSelect<T extends boolean = true> {
   isLinkable?: T;
+  adminTitle?: T;
   hero?:
     | T
     | {
         title?: T;
+        lead?: T;
         colorMode?: T;
         colorScheme?: T;
       };
@@ -932,6 +996,7 @@ export interface InstituteDetailSelect<T extends boolean = true> {
  */
 export interface MagazineDetailSelect<T extends boolean = true> {
   isLinkable?: T;
+  adminTitle?: T;
   overviewPageProps?:
     | T
     | {
@@ -1038,6 +1103,7 @@ export interface VideosSelect<T extends boolean = true> {
  */
 export interface PublicationDetailSelect<T extends boolean = true> {
   isLinkable?: T;
+  adminTitle?: T;
   overviewPageProps?:
     | T
     | {
@@ -1053,6 +1119,7 @@ export interface PublicationDetailSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        lead?: T;
       };
   contentBlocks?:
     | T
@@ -1136,6 +1203,7 @@ export interface EventCategorySelect<T extends boolean = true> {
  */
 export interface NewsDetailSelect<T extends boolean = true> {
   isLinkable?: T;
+  adminTitle?: T;
   overviewPageProps?:
     | T
     | {
@@ -1145,7 +1213,7 @@ export interface NewsDetailSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
-        date?: T;
+        lead?: T;
       };
   contentBlocks?:
     | T
@@ -1255,16 +1323,31 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Home {
   id: string;
   isLinkable?: boolean | null;
-  title: string;
-  text: string;
-  sideTitle: string;
-  lead?: string | null;
-  optionalLink?: {
-    includeLink?: boolean | null;
-    link?: {
-      openInNewWindow?: boolean | null;
-      linkText: string;
-      internalLink?: string | null;
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+    sideTitle: string;
+    optionalLink?: {
+      includeLink?: boolean | null;
+      link?: {
+        openInNewWindow?: boolean | null;
+        linkText: string;
+        internalLink?: string | null;
+      };
     };
   };
   meta?: {
@@ -1287,8 +1370,24 @@ export interface Home {
  */
 export interface Network {
   id: string;
+  isLinkable?: boolean | null;
   hero: {
-    title: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
   };
   filter: {
     allCheckboxText: string;
@@ -1330,8 +1429,22 @@ export interface Promotion {
   id: string;
   isLinkable?: boolean | null;
   hero: {
-    title: string;
-    lead: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
   };
   subpageSections: {
     title: string;
@@ -1400,7 +1513,22 @@ export interface Institute {
   id: string;
   isLinkable?: boolean | null;
   hero: {
-    title: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
     colorMode: 'white' | 'color';
     colorScheme?: ('bright' | 'dark') | null;
   };
@@ -1429,7 +1557,22 @@ export interface EarlyCareerAward {
   id: string;
   isLinkable?: boolean | null;
   hero: {
-    title: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
   };
   textBlocksBefore: {
     title?: string | null;
@@ -1519,7 +1662,22 @@ export interface Activity {
   id: string;
   isLinkable?: boolean | null;
   hero: {
-    title: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
   };
   subpageSections: {
     title: string;
@@ -1587,7 +1745,22 @@ export interface MagazineOverview {
   id: string;
   isLinkable?: boolean | null;
   hero: {
-    title: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
   };
   magazineDetailPageProps: {
     heroExportButtonText: string;
@@ -1618,7 +1791,22 @@ export interface PublicationsOverview {
   id: string;
   isLinkable?: boolean | null;
   hero: {
-    title: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
   };
   filters: {
     allCheckboxTopics: string;
@@ -1652,7 +1840,22 @@ export interface EventsOverview {
   id: string;
   isLinkable?: boolean | null;
   hero: {
-    title: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
   };
   events: {
     sectionTitle: string;
@@ -1679,7 +1882,22 @@ export interface NewsOverview {
   id: string;
   isLinkable?: boolean | null;
   hero: {
-    title: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
   };
   detailPageProps: {
     downloadsTitle: string;
@@ -1711,7 +1929,22 @@ export interface AboutContact {
   id: string;
   isLinkable?: boolean | null;
   hero: {
-    title: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
   };
   addresses: {
     title: string;
@@ -1747,8 +1980,22 @@ export interface AboutSagw {
   id: string;
   isLinkable?: boolean | null;
   hero: {
-    title: string;
-    lead: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
   };
   contentBlocks?:
     | (
@@ -1836,8 +2083,22 @@ export interface AboutTeam {
   id: string;
   isLinkable?: boolean | null;
   hero: {
-    title: string;
-    lead: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
   };
   meta?: {
     seo?: {
@@ -2182,20 +2443,23 @@ export interface StatusMessage {
  */
 export interface HomeSelect<T extends boolean = true> {
   isLinkable?: T;
-  title?: T;
-  text?: T;
-  sideTitle?: T;
-  lead?: T;
-  optionalLink?:
+  hero?:
     | T
     | {
-        includeLink?: T;
-        link?:
+        title?: T;
+        lead?: T;
+        sideTitle?: T;
+        optionalLink?:
           | T
           | {
-              openInNewWindow?: T;
-              linkText?: T;
-              internalLink?: T;
+              includeLink?: T;
+              link?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
             };
       };
   meta?:
@@ -2219,10 +2483,12 @@ export interface HomeSelect<T extends boolean = true> {
  * via the `definition` "network_select".
  */
 export interface NetworkSelect<T extends boolean = true> {
+  isLinkable?: T;
   hero?:
     | T
     | {
         title?: T;
+        lead?: T;
       };
   filter?:
     | T
@@ -2374,6 +2640,7 @@ export interface InstitutesSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        lead?: T;
         colorMode?: T;
         colorScheme?: T;
       };
@@ -2408,6 +2675,7 @@ export interface EarlyCareerAwardSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        lead?: T;
       };
   textBlocksBefore?:
     | T
@@ -2493,6 +2761,7 @@ export interface ActivitiesSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        lead?: T;
       };
   subpageSections?:
     | T
@@ -2586,6 +2855,7 @@ export interface MagazineOverviewSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        lead?: T;
       };
   magazineDetailPageProps?:
     | T
@@ -2622,6 +2892,7 @@ export interface PublicationsOverviewSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        lead?: T;
       };
   filters?:
     | T
@@ -2663,6 +2934,7 @@ export interface EventsOverviewSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        lead?: T;
       };
   events?:
     | T
@@ -2695,6 +2967,7 @@ export interface NewsOverviewSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        lead?: T;
       };
   detailPageProps?:
     | T
@@ -2734,6 +3007,7 @@ export interface AboutContactSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        lead?: T;
       };
   addresses?:
     | T
