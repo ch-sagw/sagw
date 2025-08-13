@@ -8,7 +8,7 @@ import { JSX } from 'react';
 import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
 import InternalLinkChooserClient from './InternalLinkChooserClient';
 
-const isLinkablePage = (page: any): page is { isLinkable: boolean; hero: { title: string } } => 'isLinkable' in page && page.hero !== undefined && typeof page.hero.title === 'string';
+const isLinkablePage = (page: any): page is { isLinkable: boolean; adminTitle: string } => 'isLinkable' in page && typeof page.adminTitle === 'string';
 
 // Create select options for Collection Pages
 const getCollectionPageOptions = async (props: UIFieldServerProps): Promise<Option[]> => {
@@ -25,7 +25,7 @@ const getCollectionPageOptions = async (props: UIFieldServerProps): Promise<Opti
       if (isLinkablePage(pageResult)) {
 
         options.push({
-          label: pageResult.hero.title,
+          label: pageResult.adminTitle,
           value: `${collection}/${pageResult.id}`,
         });
       }
