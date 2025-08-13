@@ -6,7 +6,7 @@ export const TextBlock: Block = {
     {
       editor: rte2,
       localized: true,
-      name: 'title',
+      name: 'text',
       required: false,
       type: 'richText',
     },

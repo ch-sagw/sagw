@@ -39,3 +39,5 @@ Payload Config:
 - allow hyphen in rte1 & rte2
 - configure rte2 properly
 - add validation for external link href
+- add custom rte component for internal links, remove default link button in rte
+- use array fieldType instead of blocks where appropriate (see Content Blocks and Authors on Publication Detail page)

@@ -67,13 +67,26 @@ export const PublicationDetailConfig: CollectionConfig = {
 
             // Text blocks
             {
-              blocks: [TextBlock],
+              fields: [...TextBlock.fields],
               label: 'Content Blocks',
               name: 'contentBlocks',
-              type: 'blocks',
+              required: true,
+              type: 'array',
             },
-
-            // TODO: add blocks for authors
+            {
+              fields: [
+                {
+                  localized: false,
+                  name: 'author',
+                  required: false,
+                  type: 'text',
+                },
+              ],
+              label: 'Authors',
+              minRows: 0,
+              name: 'authors',
+              type: 'array',
+            },
 
             // Downloads
 

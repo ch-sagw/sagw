@@ -2,6 +2,7 @@ import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import { rte2 } from '@/field-templates/rte';
 
 export const publicationsOverviewConfig: GlobalConfig = {
   access: {
@@ -21,6 +22,15 @@ export const publicationsOverviewConfig: GlobalConfig = {
 
             // Hero
             fieldsHero(),
+
+            // Zenodo Overview box
+            {
+              editor: rte2,
+              localized: true,
+              name: 'zenodoInfo',
+              required: true,
+              type: 'richText',
+            },
 
             // Filters
             {
@@ -51,12 +61,6 @@ export const publicationsOverviewConfig: GlobalConfig = {
 
             // Publication Detail
             {
-              // TODO: Publikation bestellen, CTA & Description hinzufügen
-
-              // TODO: Zenodo overview box
-
-              // TODO: Publikation herunterladen,
-              // overwrite from global downloads
               fields: [
                 {
                   localized: true,
@@ -64,9 +68,30 @@ export const publicationsOverviewConfig: GlobalConfig = {
                   required: true,
                   type: 'text',
                 },
+
+                // overwritten from global Downloads. Should be explicitly
+                // different than "Downloads"
                 {
                   localized: true,
                   name: 'downloadsTitle',
+                  required: true,
+                  type: 'text',
+                },
+                {
+                  localized: true,
+                  name: 'orderTitle',
+                  required: true,
+                  type: 'text',
+                },
+                {
+                  localized: true,
+                  name: 'orderDescription',
+                  required: true,
+                  type: 'text',
+                },
+                {
+                  localized: true,
+                  name: 'orderButton',
                   required: true,
                   type: 'text',
                 },

@@ -403,7 +403,7 @@ export interface MagazineDetail {
   contentBlocks?:
     | (
         | {
-            title?: {
+            text?: {
               root: {
                 type: string;
                 children: {
@@ -523,26 +523,28 @@ export interface PublicationDetail {
     };
     lead?: string | null;
   };
-  contentBlocks?:
-    | {
-        title?: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
+  contentBlocks: {
+    text?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
           [k: string]: unknown;
-        } | null;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    id?: string | null;
+  }[];
+  authors?:
+    | {
+        author?: string | null;
         id?: string | null;
-        blockName?: string | null;
-        blockType: 'textBlock';
       }[]
     | null;
   downloads?: {
@@ -644,7 +646,7 @@ export interface NewsDetail {
   contentBlocks?:
     | (
         | {
-            title?: {
+            text?: {
               root: {
                 type: string;
                 children: {
@@ -1019,7 +1021,7 @@ export interface MagazineDetailSelect<T extends boolean = true> {
         textBlock?:
           | T
           | {
-              title?: T;
+              text?: T;
               id?: T;
               blockName?: T;
             };
@@ -1124,13 +1126,14 @@ export interface PublicationDetailSelect<T extends boolean = true> {
   contentBlocks?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              title?: T;
-              id?: T;
-              blockName?: T;
-            };
+        text?: T;
+        id?: T;
+      };
+  authors?:
+    | T
+    | {
+        author?: T;
+        id?: T;
       };
   downloads?:
     | T
@@ -1222,7 +1225,7 @@ export interface NewsDetailSelect<T extends boolean = true> {
         textBlock?:
           | T
           | {
-              title?: T;
+              text?: T;
               id?: T;
               blockName?: T;
             };
@@ -1581,7 +1584,7 @@ export interface EarlyCareerAward {
     lead?: string | null;
   };
   textBlocksBefore: {
-    title?: {
+    text?: {
       root: {
         type: string;
         children: {
@@ -1604,7 +1607,7 @@ export interface EarlyCareerAward {
     buttonText: string;
   };
   textBlocksAfter: {
-    title?: {
+    text?: {
       root: {
         type: string;
         children: {
@@ -1809,6 +1812,21 @@ export interface PublicationsOverview {
     };
     lead?: string | null;
   };
+  zenodoInfo: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   filters: {
     allCheckboxTopics: string;
     allCheckboxTypes: string;
@@ -1817,6 +1835,9 @@ export interface PublicationsOverview {
   publicationDetail: {
     copyButtonText: string;
     downloadsTitle: string;
+    orderTitle: string;
+    orderDescription: string;
+    orderButton: string;
     otherPublicationsTitle: string;
     otherPublicationsAllButton: string;
   };
@@ -2002,7 +2023,7 @@ export interface AboutSagw {
   contentBlocks?:
     | (
         | {
-            title?: {
+            text?: {
               root: {
                 type: string;
                 children: {
@@ -2679,7 +2700,7 @@ export interface EarlyCareerAwardSelect<T extends boolean = true> {
         textBlock?:
           | T
           | {
-              title?: T;
+              text?: T;
               id?: T;
               blockName?: T;
             };
@@ -2695,7 +2716,7 @@ export interface EarlyCareerAwardSelect<T extends boolean = true> {
         textBlock?:
           | T
           | {
-              title?: T;
+              text?: T;
               id?: T;
               blockName?: T;
             };
@@ -2885,6 +2906,7 @@ export interface PublicationsOverviewSelect<T extends boolean = true> {
         title?: T;
         lead?: T;
       };
+  zenodoInfo?: T;
   filters?:
     | T
     | {
@@ -2897,6 +2919,9 @@ export interface PublicationsOverviewSelect<T extends boolean = true> {
     | {
         copyButtonText?: T;
         downloadsTitle?: T;
+        orderTitle?: T;
+        orderDescription?: T;
+        orderButton?: T;
         otherPublicationsTitle?: T;
         otherPublicationsAllButton?: T;
       };
@@ -3052,7 +3077,7 @@ export interface AboutSagwSelect<T extends boolean = true> {
         textBlock?:
           | T
           | {
-              title?: T;
+              text?: T;
               id?: T;
               blockName?: T;
             };
