@@ -3,6 +3,9 @@ import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
 import { fieldsHero } from '@/field-templates/hero';
+import { hookAdminTitle } from '@/hooks/adminTitle';
+import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import { fieldAdminTitle } from '@/field-templates/adminTitle';
 
 export const InstituteDetailConfig: CollectionConfig = {
   access: {
@@ -10,16 +13,11 @@ export const InstituteDetailConfig: CollectionConfig = {
   },
   admin: {
     group: 'Pages',
+    useAsTitle: 'adminTitle',
   },
   fields: [
-    {
-      admin: {
-        hidden: true,
-      },
-      defaultValue: true,
-      name: 'isLinkable',
-      type: 'checkbox',
-    },
+    fieldLinkablePage,
+    fieldAdminTitle,
     {
       tabs: [
 
@@ -68,6 +66,9 @@ export const InstituteDetailConfig: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    beforeValidate: [hookAdminTitle],
+  },
   labels: {
     plural: 'Institute Detail Pages',
     singular: 'Institute Detail',

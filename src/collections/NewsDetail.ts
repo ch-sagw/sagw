@@ -5,6 +5,9 @@ import { TextBlock } from '@/blocks/TextBlock';
 import { ImageBlock } from '@/blocks/ImageBlock';
 import { VideoBlock } from '@/blocks/VideoBlock';
 import { fieldsHero } from '@/field-templates/hero';
+import { hookAdminTitle } from '@/hooks/adminTitle';
+import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import { fieldAdminTitle } from '@/field-templates/adminTitle';
 
 export const NewsDetailConfig: CollectionConfig = {
   access: {
@@ -12,16 +15,11 @@ export const NewsDetailConfig: CollectionConfig = {
   },
   admin: {
     group: 'Pages',
+    useAsTitle: 'adminTitle',
   },
   fields: [
-    {
-      admin: {
-        hidden: true,
-      },
-      defaultValue: true,
-      name: 'isLinkable',
-      type: 'checkbox',
-    },
+    fieldLinkablePage,
+    fieldAdminTitle,
     {
       tabs: [
 
@@ -97,6 +95,9 @@ export const NewsDetailConfig: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    beforeValidate: [hookAdminTitle],
+  },
   labels: {
     plural: 'News Detail Pages',
     singular: 'News Detail',

@@ -2,6 +2,9 @@ import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { TextBlock } from '@/blocks/TextBlock';
 import { fieldsHero } from '@/field-templates/hero';
+import { hookAdminTitle } from '@/hooks/adminTitle';
+import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import { fieldAdminTitle } from '@/field-templates/adminTitle';
 
 export const PublicationDetailConfig: CollectionConfig = {
   access: {
@@ -9,16 +12,11 @@ export const PublicationDetailConfig: CollectionConfig = {
   },
   admin: {
     group: 'Pages',
+    useAsTitle: 'adminTitle',
   },
   fields: [
-    {
-      admin: {
-        hidden: true,
-      },
-      defaultValue: true,
-      name: 'isLinkable',
-      type: 'checkbox',
-    },
+    fieldLinkablePage,
+    fieldAdminTitle,
     {
       tabs: [
 
@@ -104,6 +102,9 @@ export const PublicationDetailConfig: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    beforeValidate: [hookAdminTitle],
+  },
   labels: {
     plural: 'Publication Detail Pages',
     singular: 'Publication Detail',
