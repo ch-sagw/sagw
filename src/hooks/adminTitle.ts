@@ -28,7 +28,7 @@ const lexicalToPlainText = (lexical: any): string => {
       return;
     }
 
-    // Container nodes (paragraph, heading, etc.)
+    // Container nodes
     if (Array.isArray(node.children)) {
       for (const child of node.children) {
         walk(child);
@@ -52,9 +52,6 @@ export const hookAdminTitle: CollectionBeforeValidateHook = ({
 
   if (lexical) {
     const plain = lexicalToPlainText(lexical);
-
-    console.log('--> plain');
-    console.log(plain);
 
     data.adminTitle = plain.length > 140
       ? `${plain.slice(0, 137)}…`
