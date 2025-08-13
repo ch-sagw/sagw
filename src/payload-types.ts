@@ -258,6 +258,7 @@ export interface FaqItem {
     };
     [k: string]: unknown;
   };
+  readableId?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -824,6 +825,7 @@ export interface NetworkCategoriesSelect<T extends boolean = true> {
 export interface FaqItemsSelect<T extends boolean = true> {
   question?: T;
   answer?: T;
+  readableId?: T;
   updatedAt?: T;
   createdAt?: T;
 }
