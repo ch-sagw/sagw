@@ -13,16 +13,22 @@ export const Events: CollectionConfig = {
       required: true,
       type: 'text',
     },
-
-    // todo:
-    // - remove text
-    // - location (optinal)
-    // - lang (optinal)
-    // - time (optinal)
     {
       localized: true,
-      name: 'text',
-      required: true,
+      name: 'location',
+      required: false,
+      type: 'text',
+    },
+    {
+      localized: true,
+      name: 'language',
+      required: false,
+      type: 'text',
+    },
+    {
+      localized: true,
+      name: 'time',
+      required: false,
       type: 'text',
     },
     {
@@ -35,15 +41,25 @@ export const Events: CollectionConfig = {
       relationTo: 'projects',
       type: 'relationship',
     },
-
-    // todo: add "to" date optional
     {
       name: 'date',
       required: true,
       type: 'date',
     },
+    {
+      defaultValue: false,
+      name: 'multipleDays',
+      type: 'checkbox',
+    },
+    {
+      admin: {
+        condition: (data, siblingData) => siblingData.multipleDays,
+      },
+      name: 'dateEnd',
+      required: true,
+      type: 'date',
+    },
 
-    // remove target prop
     ...fieldsLinkExternal,
   ],
   slug: 'events',

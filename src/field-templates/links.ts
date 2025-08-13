@@ -1,6 +1,6 @@
 import { Field } from 'payload';
 
-const fieldsLinkInternal: Field[] = [
+export const fieldsLinkInternal: Field[] = [
   {
     defaultValue: false,
     label: 'In neuem Fenster öffnen',
@@ -29,20 +29,14 @@ const fieldsLinkInternal: Field[] = [
 export const fieldsLinkExternal: Field[] = [
   {
     localized: true,
-    name: 'linkText',
+    name: 'externalLinkText',
     required: true,
     type: 'text',
   },
   {
-    name: 'href',
+    name: 'externalLink',
     required: true,
     type: 'text',
-  },
-  {
-    defaultValue: true,
-    label: 'In neuem Fenster öffnen',
-    name: 'openInNewWindow',
-    type: 'checkbox',
   },
 ];
 

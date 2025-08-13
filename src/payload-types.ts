@@ -298,7 +298,8 @@ export interface Project {
  */
 export interface Person {
   id: string;
-  department: 'admin' | 'science' | 'com';
+  department: 'admin' | 'science' | 'com' | 'direction';
+  memberType: 'executiveBoard' | 'team';
   prefix?: string | null;
   firstname: string;
   middleName?: string | null;
@@ -307,7 +308,6 @@ export interface Person {
   mail: string;
   phone: string;
   image: string | Image;
-  memberType: 'executiveBoard' | 'direction' | 'team';
   fullName?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -351,9 +351,8 @@ export interface InstituteDetail {
       internalLink?: string | null;
     };
     linkExternal?: {
-      linkText: string;
-      href: string;
-      openInNewWindow?: boolean | null;
+      externalLinkText: string;
+      externalLink: string;
     };
   };
   meta?: {
@@ -419,7 +418,6 @@ export interface MagazineDetail {
               };
               [k: string]: unknown;
             } | null;
-            showCopyTextButton?: boolean | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'textBlock';
@@ -451,9 +449,8 @@ export interface MagazineDetail {
   };
   links?:
     | {
-        linkText: string;
-        href: string;
-        openInNewWindow?: boolean | null;
+        externalLinkText: string;
+        externalLink: string;
         description: string;
         id?: string | null;
         blockName?: string | null;
@@ -543,7 +540,6 @@ export interface PublicationDetail {
           };
           [k: string]: unknown;
         } | null;
-        showCopyTextButton?: boolean | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'textBlock';
@@ -593,13 +589,16 @@ export interface PublicationType {
 export interface Event {
   id: string;
   title: string;
-  text: string;
+  location?: string | null;
+  language?: string | null;
+  time?: string | null;
   category?: (string | null) | EventCategory;
   project?: (string | null) | Project;
   date: string;
-  linkText: string;
-  href: string;
-  openInNewWindow?: boolean | null;
+  multipleDays?: boolean | null;
+  dateEnd?: string | null;
+  externalLinkText: string;
+  externalLink: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -660,7 +659,6 @@ export interface NewsDetail {
               };
               [k: string]: unknown;
             } | null;
-            showCopyTextButton?: boolean | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'textBlock';
@@ -691,15 +689,24 @@ export interface NewsDetail {
     downloads?: (string | Document)[] | null;
   };
   links?:
-    | {
-        linkText: string;
-        href: string;
-        openInNewWindow?: boolean | null;
-        description: string;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'linkExternal';
-      }[]
+    | (
+        | {
+            externalLinkText: string;
+            externalLink: string;
+            description: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'linkExternal';
+          }
+        | {
+            openInNewWindow?: boolean | null;
+            linkText: string;
+            internalLink?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'linkInternal';
+          }
+      )[]
     | null;
   meta?: {
     seo?: {
@@ -922,6 +929,7 @@ export interface ProjectsSelect<T extends boolean = true> {
  */
 export interface PeopleSelect<T extends boolean = true> {
   department?: T;
+  memberType?: T;
   prefix?: T;
   firstname?: T;
   middleName?: T;
@@ -930,7 +938,6 @@ export interface PeopleSelect<T extends boolean = true> {
   mail?: T;
   phone?: T;
   image?: T;
-  memberType?: T;
   fullName?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -967,9 +974,8 @@ export interface InstituteDetailSelect<T extends boolean = true> {
         linkExternal?:
           | T
           | {
-              linkText?: T;
-              href?: T;
-              openInNewWindow?: T;
+              externalLinkText?: T;
+              externalLink?: T;
             };
       };
   meta?:
@@ -1014,7 +1020,6 @@ export interface MagazineDetailSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              showCopyTextButton?: T;
               id?: T;
               blockName?: T;
             };
@@ -1052,9 +1057,8 @@ export interface MagazineDetailSelect<T extends boolean = true> {
         linkExternal?:
           | T
           | {
-              linkText?: T;
-              href?: T;
-              openInNewWindow?: T;
+              externalLinkText?: T;
+              externalLink?: T;
               description?: T;
               id?: T;
               blockName?: T;
@@ -1124,7 +1128,6 @@ export interface PublicationDetailSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              showCopyTextButton?: T;
               id?: T;
               blockName?: T;
             };
@@ -1173,13 +1176,16 @@ export interface PublicationTypesSelect<T extends boolean = true> {
  */
 export interface EventsSelect<T extends boolean = true> {
   title?: T;
-  text?: T;
+  location?: T;
+  language?: T;
+  time?: T;
   category?: T;
   project?: T;
   date?: T;
-  linkText?: T;
-  href?: T;
-  openInNewWindow?: T;
+  multipleDays?: T;
+  dateEnd?: T;
+  externalLinkText?: T;
+  externalLink?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1217,7 +1223,6 @@ export interface NewsDetailSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              showCopyTextButton?: T;
               id?: T;
               blockName?: T;
             };
@@ -1255,10 +1260,18 @@ export interface NewsDetailSelect<T extends boolean = true> {
         linkExternal?:
           | T
           | {
-              linkText?: T;
-              href?: T;
-              openInNewWindow?: T;
+              externalLinkText?: T;
+              externalLink?: T;
               description?: T;
+              id?: T;
+              blockName?: T;
+            };
+        linkInternal?:
+          | T
+          | {
+              openInNewWindow?: T;
+              linkText?: T;
+              internalLink?: T;
               id?: T;
               blockName?: T;
             };
@@ -1454,9 +1467,8 @@ export interface Promotion {
         internalLink?: string | null;
       };
       linkExternal?: {
-        linkText: string;
-        href: string;
-        openInNewWindow?: boolean | null;
+        externalLinkText: string;
+        externalLink: string;
       };
       id?: string | null;
       blockName?: string | null;
@@ -1584,7 +1596,6 @@ export interface EarlyCareerAward {
       };
       [k: string]: unknown;
     } | null;
-    showCopyTextButton?: boolean | null;
     id?: string | null;
     blockName?: string | null;
     blockType: 'textBlock';
@@ -1608,7 +1619,6 @@ export interface EarlyCareerAward {
       };
       [k: string]: unknown;
     } | null;
-    showCopyTextButton?: boolean | null;
     id?: string | null;
     blockName?: string | null;
     blockType: 'textBlock';
@@ -1685,9 +1695,8 @@ export interface Activity {
         internalLink?: string | null;
       };
       linkExternal?: {
-        linkText: string;
-        href: string;
-        openInNewWindow?: boolean | null;
+        externalLinkText: string;
+        externalLink: string;
       };
       id?: string | null;
       blockName?: string | null;
@@ -1806,6 +1815,7 @@ export interface PublicationsOverview {
     title: string;
   };
   publicationDetail: {
+    copyButtonText: string;
     downloadsTitle: string;
     otherPublicationsTitle: string;
     otherPublicationsAllButton: string;
@@ -2007,7 +2017,6 @@ export interface AboutSagw {
               };
               [k: string]: unknown;
             } | null;
-            showCopyTextButton?: boolean | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'textBlock';
@@ -2038,9 +2047,8 @@ export interface AboutSagw {
     linksTitle: string;
     link?:
       | {
-          linkText: string;
-          href: string;
-          openInNewWindow?: boolean | null;
+          externalLinkText: string;
+          externalLink: string;
           description: string;
           id?: string | null;
           blockName?: string | null;
@@ -2321,9 +2329,8 @@ export interface Header {
   logo: string | Image;
   metaLinks?:
     | {
-        linkText: string;
-        href: string;
-        openInNewWindow?: boolean | null;
+        externalLinkText: string;
+        externalLink: string;
         description: string;
         id?: string | null;
         blockName?: string | null;
@@ -2384,9 +2391,8 @@ export interface Footer {
   };
   socialLinks?:
     | {
-        linkText: string;
-        href: string;
-        openInNewWindow?: boolean | null;
+        externalLinkText: string;
+        externalLink: string;
         icon?: ('linkedIn' | 'twitter' | 'facebook') | null;
         id?: string | null;
         blockName?: string | null;
@@ -2564,9 +2570,8 @@ export interface PromotionSelect<T extends boolean = true> {
                           linkExternal?:
                             | T
                             | {
-                                linkText?: T;
-                                href?: T;
-                                openInNewWindow?: T;
+                                externalLinkText?: T;
+                                externalLink?: T;
                               };
                           id?: T;
                           blockName?: T;
@@ -2675,7 +2680,6 @@ export interface EarlyCareerAwardSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              showCopyTextButton?: T;
               id?: T;
               blockName?: T;
             };
@@ -2692,7 +2696,6 @@ export interface EarlyCareerAwardSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              showCopyTextButton?: T;
               id?: T;
               blockName?: T;
             };
@@ -2780,9 +2783,8 @@ export interface ActivitiesSelect<T extends boolean = true> {
                           linkExternal?:
                             | T
                             | {
-                                linkText?: T;
-                                href?: T;
-                                openInNewWindow?: T;
+                                externalLinkText?: T;
+                                externalLink?: T;
                               };
                           id?: T;
                           blockName?: T;
@@ -2893,6 +2895,7 @@ export interface PublicationsOverviewSelect<T extends boolean = true> {
   publicationDetail?:
     | T
     | {
+        copyButtonText?: T;
         downloadsTitle?: T;
         otherPublicationsTitle?: T;
         otherPublicationsAllButton?: T;
@@ -3050,7 +3053,6 @@ export interface AboutSagwSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              showCopyTextButton?: T;
               id?: T;
               blockName?: T;
             };
@@ -3087,9 +3089,8 @@ export interface AboutSagwSelect<T extends boolean = true> {
               linkExternal?:
                 | T
                 | {
-                    linkText?: T;
-                    href?: T;
-                    openInNewWindow?: T;
+                    externalLinkText?: T;
+                    externalLink?: T;
                     description?: T;
                     id?: T;
                     blockName?: T;
@@ -3336,9 +3337,8 @@ export interface HeaderSelect<T extends boolean = true> {
         linkExternal?:
           | T
           | {
-              linkText?: T;
-              href?: T;
-              openInNewWindow?: T;
+              externalLinkText?: T;
+              externalLink?: T;
               description?: T;
               id?: T;
               blockName?: T;
@@ -3414,9 +3414,8 @@ export interface FooterSelect<T extends boolean = true> {
         socialLink?:
           | T
           | {
-              linkText?: T;
-              href?: T;
-              openInNewWindow?: T;
+              externalLinkText?: T;
+              externalLink?: T;
               icon?: T;
               id?: T;
               blockName?: T;

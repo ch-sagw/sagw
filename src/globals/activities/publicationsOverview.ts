@@ -60,6 +60,12 @@ export const publicationsOverviewConfig: GlobalConfig = {
               fields: [
                 {
                   localized: true,
+                  name: 'copyButtonText',
+                  required: true,
+                  type: 'text',
+                },
+                {
+                  localized: true,
                   name: 'downloadsTitle',
                   required: true,
                   type: 'text',

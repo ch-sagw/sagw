@@ -77,7 +77,7 @@ export const PublicationDetailConfig: CollectionConfig = {
 
             // Downloads
 
-            // Remove downloads
+            // Todo: Remove downloads
             //  -> textfield for Zenodo id
             //  ->
             {

@@ -38,3 +38,4 @@ Payload Config:
 - change all richText fields to rte1 or rte2
 - allow hyphen in rte1 & rte2
 - configure rte2 properly
+- add validation for external link href

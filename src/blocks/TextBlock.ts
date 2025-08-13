@@ -10,13 +10,6 @@ export const TextBlock: Block = {
       required: false,
       type: 'richText',
     },
-
-    // TODO: only show on publication detail, not configurable
-    {
-      defaultValue: false,
-      name: 'showCopyTextButton',
-      type: 'checkbox',
-    },
   ],
   slug: 'textBlock',
 };

@@ -1,10 +1,5 @@
 import type { CollectionConfig } from 'payload';
 
-// TODO:
-// MemberType: remove Geschäftsleitung
-// Department: Add Geschäftsleitung
-// Add Field: Mitglied der Geschläftsleitung (i18n).
-
 export const People: CollectionConfig = {
   access: {
     read: () => true,
@@ -29,12 +24,29 @@ export const People: CollectionConfig = {
           label: 'Kommunikation',
           value: 'com',
         },
+        {
+          label: 'Geschäftsleitung',
+          value: 'direction',
+        },
       ],
       required: true,
       type: 'select',
     },
-
-    // TODO : optional
+    {
+      name: 'memberType',
+      options: [
+        {
+          label: 'Vorstand',
+          value: 'executiveBoard',
+        },
+        {
+          label: 'Team',
+          value: 'team',
+        },
+      ],
+      required: true,
+      type: 'select',
+    },
     {
       name: 'prefix',
       required: false,
@@ -45,65 +57,38 @@ export const People: CollectionConfig = {
       required: true,
       type: 'text',
     },
-
     {
       name: 'middleName',
       required: false,
       type: 'text',
     },
-
     {
       name: 'lastname',
       required: true,
       type: 'text',
     },
-
-    // TODO: i18n
     {
+      localized: true,
       name: 'function',
       required: true,
       type: 'text',
     },
-
     {
       name: 'mail',
       required: true,
       type: 'email',
     },
-
     {
       name: 'phone',
       required: true,
       type: 'text',
     },
-
     {
       name: 'image',
       relationTo: 'images',
       required: true,
       type: 'relationship',
     },
-
-    {
-      name: 'memberType',
-      options: [
-        {
-          label: 'Vorstand',
-          value: 'executiveBoard',
-        },
-        {
-          label: 'Geschäftsleitung',
-          value: 'direction',
-        },
-        {
-          label: 'Team',
-          value: 'team',
-        },
-      ],
-      required: true,
-      type: 'select',
-    },
-
     {
       admin: {
         hidden: true,

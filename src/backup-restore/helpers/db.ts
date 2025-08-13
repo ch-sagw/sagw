@@ -33,7 +33,6 @@ export class DbHelper {
     return undefined;
   };
 
-  // todo: add return type
   public getCollections = async (dbName: string): Promise<Collection<Document>[] | undefined> => {
     const db = this.getDb(dbName);
     const collections = await db?.collections();
@@ -41,7 +40,6 @@ export class DbHelper {
     return collections;
   };
 
-  // todo: add return type
   public getAllDocumentsOfCollection = async (collection: Collection): Promise<WithId<Document>[] | undefined> => {
     const results = await collection.find({})
       .toArray();

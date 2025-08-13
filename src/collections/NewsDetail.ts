@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { LinkExternal } from '@/blocks/LinkExternal';
+import { LinkInternal } from '@/blocks/LinkInternal';
 import { TextBlock } from '@/blocks/TextBlock';
 import { ImageBlock } from '@/blocks/ImageBlock';
 import { VideoBlock } from '@/blocks/VideoBlock';
@@ -78,10 +79,11 @@ export const NewsDetailConfig: CollectionConfig = {
             },
 
             // Links
-
-            // Todo: Internal & External
             {
-              blocks: [LinkExternal],
+              blocks: [
+                LinkExternal,
+                LinkInternal,
+              ],
               minRows: 0,
               name: 'links',
               type: 'blocks',
