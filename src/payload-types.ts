@@ -404,8 +404,7 @@ export interface MagazineDetail {
   contentBlocks?:
     | (
         | {
-            title?: string | null;
-            text: {
+            title?: {
               root: {
                 type: string;
                 children: {
@@ -419,7 +418,7 @@ export interface MagazineDetail {
                 version: number;
               };
               [k: string]: unknown;
-            };
+            } | null;
             showCopyTextButton?: boolean | null;
             id?: string | null;
             blockName?: string | null;
@@ -529,8 +528,7 @@ export interface PublicationDetail {
   };
   contentBlocks?:
     | {
-        title?: string | null;
-        text: {
+        title?: {
           root: {
             type: string;
             children: {
@@ -544,7 +542,7 @@ export interface PublicationDetail {
             version: number;
           };
           [k: string]: unknown;
-        };
+        } | null;
         showCopyTextButton?: boolean | null;
         id?: string | null;
         blockName?: string | null;
@@ -647,8 +645,7 @@ export interface NewsDetail {
   contentBlocks?:
     | (
         | {
-            title?: string | null;
-            text: {
+            title?: {
               root: {
                 type: string;
                 children: {
@@ -662,7 +659,7 @@ export interface NewsDetail {
                 version: number;
               };
               [k: string]: unknown;
-            };
+            } | null;
             showCopyTextButton?: boolean | null;
             id?: string | null;
             blockName?: string | null;
@@ -1017,7 +1014,6 @@ export interface MagazineDetailSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              text?: T;
               showCopyTextButton?: T;
               id?: T;
               blockName?: T;
@@ -1128,7 +1124,6 @@ export interface PublicationDetailSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              text?: T;
               showCopyTextButton?: T;
               id?: T;
               blockName?: T;
@@ -1222,7 +1217,6 @@ export interface NewsDetailSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              text?: T;
               showCopyTextButton?: T;
               id?: T;
               blockName?: T;
@@ -1575,8 +1569,7 @@ export interface EarlyCareerAward {
     lead?: string | null;
   };
   textBlocksBefore: {
-    title?: string | null;
-    text: {
+    title?: {
       root: {
         type: string;
         children: {
@@ -1590,7 +1583,7 @@ export interface EarlyCareerAward {
         version: number;
       };
       [k: string]: unknown;
-    };
+    } | null;
     showCopyTextButton?: boolean | null;
     id?: string | null;
     blockName?: string | null;
@@ -1600,8 +1593,7 @@ export interface EarlyCareerAward {
     buttonText: string;
   };
   textBlocksAfter: {
-    title?: string | null;
-    text: {
+    title?: {
       root: {
         type: string;
         children: {
@@ -1615,7 +1607,7 @@ export interface EarlyCareerAward {
         version: number;
       };
       [k: string]: unknown;
-    };
+    } | null;
     showCopyTextButton?: boolean | null;
     id?: string | null;
     blockName?: string | null;
@@ -2000,8 +1992,7 @@ export interface AboutSagw {
   contentBlocks?:
     | (
         | {
-            title?: string | null;
-            text: {
+            title?: {
               root: {
                 type: string;
                 children: {
@@ -2015,7 +2006,7 @@ export interface AboutSagw {
                 version: number;
               };
               [k: string]: unknown;
-            };
+            } | null;
             showCopyTextButton?: boolean | null;
             id?: string | null;
             blockName?: string | null;
@@ -2684,7 +2675,6 @@ export interface EarlyCareerAwardSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              text?: T;
               showCopyTextButton?: T;
               id?: T;
               blockName?: T;
@@ -2702,7 +2692,6 @@ export interface EarlyCareerAwardSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              text?: T;
               showCopyTextButton?: T;
               id?: T;
               blockName?: T;
@@ -3061,7 +3050,6 @@ export interface AboutSagwSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              text?: T;
               showCopyTextButton?: T;
               id?: T;
               blockName?: T;
