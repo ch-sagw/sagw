@@ -1,6 +1,7 @@
 import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
+import { fieldLinkablePage } from '@/field-templates/linkablePage';
 
 export const newsOverviewConfig: GlobalConfig = {
   access: {
@@ -10,14 +11,7 @@ export const newsOverviewConfig: GlobalConfig = {
     group: 'Activities Pages',
   },
   fields: [
-    {
-      admin: {
-        hidden: true,
-      },
-      defaultValue: true,
-      name: 'isLinkable',
-      type: 'checkbox',
-    },
+    fieldLinkablePage,
     {
       tabs: [
 

@@ -3,6 +3,7 @@ import { fieldsTabMeta } from '@/field-templates/meta';
 import { TextBlock } from '@/blocks/TextBlock';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { fieldsHero } from '@/field-templates/hero';
+import { fieldLinkablePage } from '@/field-templates/linkablePage';
 
 export const earlyCareerAwardConfig: GlobalConfig = {
   access: {
@@ -12,14 +13,7 @@ export const earlyCareerAwardConfig: GlobalConfig = {
     group: 'Promotion Pages',
   },
   fields: [
-    {
-      admin: {
-        hidden: true,
-      },
-      defaultValue: true,
-      name: 'isLinkable',
-      type: 'checkbox',
-    },
+    fieldLinkablePage,
     {
       tabs: [
 

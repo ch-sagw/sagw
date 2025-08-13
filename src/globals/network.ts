@@ -2,6 +2,7 @@ import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { NetworkBlock } from '@/blocks/NetworkBlock';
 import { fieldsHero } from '@/field-templates/hero';
+import { fieldLinkablePage } from '@/field-templates/linkablePage';
 
 export const networkConfig: GlobalConfig = {
   access: {
@@ -11,6 +12,7 @@ export const networkConfig: GlobalConfig = {
     group: 'Global Pages',
   },
   fields: [
+    fieldLinkablePage,
     {
       tabs: [
 

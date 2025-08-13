@@ -5,6 +5,7 @@ import { ImageBlock } from '@/blocks/ImageBlock';
 import { VideoBlock } from '@/blocks/VideoBlock';
 import { LinkExternal } from '@/blocks/LinkExternal';
 import { fieldsHero } from '@/field-templates/hero';
+import { fieldLinkablePage } from '@/field-templates/linkablePage';
 
 export const aboutSagwConfig: GlobalConfig = {
   access: {
@@ -14,14 +15,7 @@ export const aboutSagwConfig: GlobalConfig = {
     group: 'About Pages',
   },
   fields: [
-    {
-      admin: {
-        hidden: true,
-      },
-      defaultValue: true,
-      name: 'isLinkable',
-      type: 'checkbox',
-    },
+    fieldLinkablePage,
     {
       tabs: [
 

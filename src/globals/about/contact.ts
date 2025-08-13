@@ -2,6 +2,7 @@ import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { ContactAccordionItemBlock } from '@/blocks/ContactAccordionItem';
 import { fieldsHero } from '@/field-templates/hero';
+import { fieldLinkablePage } from '@/field-templates/linkablePage';
 
 export const aboutContactConfig: GlobalConfig = {
   access: {
@@ -11,14 +12,7 @@ export const aboutContactConfig: GlobalConfig = {
     group: 'About Pages',
   },
   fields: [
-    {
-      admin: {
-        hidden: true,
-      },
-      defaultValue: true,
-      name: 'isLinkable',
-      type: 'checkbox',
-    },
+    fieldLinkablePage,
     {
       tabs: [
 

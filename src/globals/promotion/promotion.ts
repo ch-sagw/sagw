@@ -3,6 +3,7 @@ import { fieldsTabMeta } from '@/field-templates/meta';
 import { SubpageSection } from '@/blocks/SubpageSection';
 import { fieldsContactForm } from '@/field-templates/forms';
 import { fieldsHero } from '@/field-templates/hero';
+import { fieldLinkablePage } from '@/field-templates/linkablePage';
 
 export const promotionConfig: GlobalConfig = {
   access: {
@@ -12,14 +13,7 @@ export const promotionConfig: GlobalConfig = {
     group: 'Promotion Pages',
   },
   fields: [
-    {
-      admin: {
-        hidden: true,
-      },
-      defaultValue: true,
-      name: 'isLinkable',
-      type: 'checkbox',
-    },
+    fieldLinkablePage,
     {
       tabs: [
 
