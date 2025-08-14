@@ -1,6 +1,6 @@
 import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { fieldsSubpageSection } from '@/field-templates/SubpageSection';
+import { fieldsSubpageSection } from '@/field-templates/subpageSection';
 import { fieldsContactForm } from '@/field-templates/forms';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
