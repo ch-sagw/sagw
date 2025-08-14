@@ -1,6 +1,6 @@
 import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { SubpageSection } from '@/blocks/SubpageSection';
+import { fieldsSubpageSection } from '@/field-templates/SubpageSection';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
 
@@ -25,7 +25,7 @@ export const activitiesConfig: GlobalConfig = {
 
             // Projects section
             {
-              fields: SubpageSection.fields,
+              fields: fieldsSubpageSection,
               label: 'Subpage Sections',
               name: 'subpageSections',
               required: true,

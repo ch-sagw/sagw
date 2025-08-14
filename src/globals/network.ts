@@ -1,6 +1,6 @@
 import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { NetworkBlock } from '@/blocks/NetworkBlock';
+import { fieldsNetworkItem } from '@/field-templates/networkItem';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
 
@@ -60,7 +60,7 @@ export const networkConfig: GlobalConfig = {
                   type: 'text',
                 },
                 {
-                  fields: NetworkBlock.fields,
+                  fields: fieldsNetworkItem,
                   label: 'Network items',
                   name: 'items',
                   required: true,

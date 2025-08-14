@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { TextBlock } from '@/blocks/TextBlock';
+import { fieldsTextBlock } from '@/field-templates/textBlock';
 import { fieldsHero } from '@/field-templates/hero';
 import { hookAdminTitle } from '@/hooks/adminTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
@@ -67,7 +67,7 @@ export const PublicationDetailConfig: CollectionConfig = {
 
             // Text blocks
             {
-              fields: [...TextBlock.fields],
+              fields: fieldsTextBlock,
               label: 'Content Blocks',
               name: 'contentBlocks',
               required: true,

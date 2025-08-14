@@ -1,6 +1,6 @@
 import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { TextBlock } from '@/blocks/TextBlock';
+import { fieldsTextBlock } from '@/field-templates/textBlock';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
@@ -26,7 +26,7 @@ export const earlyCareerAwardConfig: GlobalConfig = {
 
             // Text Blocks Before
             {
-              fields: TextBlock.fields,
+              fields: fieldsTextBlock,
               label: 'Text Blocks before Teasers',
               name: 'textBlocksBefore',
               required: true,
@@ -50,7 +50,7 @@ export const earlyCareerAwardConfig: GlobalConfig = {
 
             // Text Blocks After
             {
-              fields: TextBlock.fields,
+              fields: fieldsTextBlock,
               label: 'Text Blocks after Teasers',
               name: 'textBlocksAfter',
               required: true,

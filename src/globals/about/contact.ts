@@ -1,6 +1,6 @@
 import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { ContactAccordionItemBlock } from '@/blocks/ContactAccordionItem';
+import { fieldsContactAccordionItem } from '@/field-templates/ContactAccordionItem';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
 
@@ -33,7 +33,7 @@ export const aboutContactConfig: GlobalConfig = {
                   type: 'text',
                 },
                 {
-                  fields: ContactAccordionItemBlock.fields,
+                  fields: fieldsContactAccordionItem,
                   name: 'contacts',
                   required: true,
                   type: 'array',

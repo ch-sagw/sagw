@@ -1,6 +1,6 @@
 import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { SubpageSection } from '@/blocks/SubpageSection';
+import { fieldsSubpageSection } from '@/field-templates/SubpageSection';
 import { fieldsContactForm } from '@/field-templates/forms';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
@@ -26,7 +26,7 @@ export const promotionConfig: GlobalConfig = {
 
             // Subpage Sections
             {
-              fields: SubpageSection.fields,
+              fields: fieldsSubpageSection,
               label: 'Subpage Sections',
               minRows: 1,
               name: 'subpageSections',

@@ -1,4 +1,4 @@
-import { SocialLink } from '@/blocks/SocialLinkBlock';
+import { fieldsSocialLink } from '@/field-templates/socialLink';
 import { GlobalConfig } from 'payload';
 
 export const footerConfig: GlobalConfig = {
@@ -84,7 +84,7 @@ export const footerConfig: GlobalConfig = {
       type: 'group',
     },
     {
-      fields: SocialLink.fields,
+      fields: fieldsSocialLink,
       name: 'socialLinks',
       required: true,
       type: 'array',
