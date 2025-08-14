@@ -28,3 +28,15 @@ Payload:
 --------
 - Generate types: when is it run? do we have to run in automatically, e.g. on ci, on postinstall etc?
 - set hideAPIURL to true on prod: https://payloadcms.com/docs/configuration/collections#admin-options
+
+Payload Config:
+--------
+- earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
+- limit upload in images, video, documents to corresponding type
+- finish global i18n (cta forms)
+- prepopulate seo on collections
+- change all richText fields to rte1 or rte2
+- allow hyphen in rte1 & rte2
+- configure rte2 properly
+- add validation for external link href
+- add custom rte component for internal links, remove default link button in rte

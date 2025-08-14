@@ -11,6 +11,7 @@ import sharp from 'sharp';
 
 import plugins from '@/plugins';
 import collections from '@/collections';
+import globals from '@/globals';
 import { Users } from '@/collections/Users';
 
 const filename = fileURLToPath(import.meta.url);
@@ -42,6 +43,7 @@ export default buildConfig({
     defaultFromAddress: 'cms@sagw.ch',
     defaultFromName: 'Payload CMS',
   }),
+  globals,
   i18n: {
     fallbackLanguage: 'de',
     supportedLanguages: {
@@ -60,6 +62,10 @@ export default buildConfig({
       {
         code: 'fr',
         label: 'Français',
+      },
+      {
+        code: 'it',
+        label: 'Italiano',
       },
       {
         code: 'en',

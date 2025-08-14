@@ -20,4 +20,7 @@ export interface PromotionPage {
   content: SubpageSection;
   faq: FaqSection;
   contact: CtaContactFormSection;
+
+  // TODO: add for other overview pages
+  teaserText: I18nString;
 }

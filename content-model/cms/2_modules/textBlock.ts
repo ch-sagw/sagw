@@ -9,9 +9,9 @@ import {
  * @group Modules
  */
 export interface TextBlock {
-  title: I18nString;
+  title?: I18nString;
   rte: RteConfig2;
-  copyButtonText: I18nString;
+  copyButton?: boolean;
 }
 
 /**

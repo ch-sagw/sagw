@@ -16,7 +16,6 @@ export interface HomePage {
   hero: {
     sideTitle: I18nString;
     title: I18nString;
-    text: I18nString;
     lead?: I18nString;
     link: LinkInternal;
   }
