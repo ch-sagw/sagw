@@ -1,5 +1,5 @@
 import { Field } from 'payload';
-import { rte2 } from './rte';
+import { rte2 } from '@/field-templates/rte';
 
 export const fieldsTextBlock: Field[] = [
   {

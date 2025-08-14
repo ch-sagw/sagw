@@ -2,7 +2,7 @@ import {
   Field, GroupField,
 } from 'payload';
 import { fieldsLinkInternalWithToggle } from './links';
-import { fieldsColorScheme } from './colorMode';
+import { fieldsColorScheme } from '@/field-templates/colorMode';
 
 const fieldsFormResponse: GroupField = {
   fields: [
