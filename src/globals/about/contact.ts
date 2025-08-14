@@ -33,10 +33,10 @@ export const aboutContactConfig: GlobalConfig = {
                   type: 'text',
                 },
                 {
-                  blocks: [ContactAccordionItemBlock],
-                  minRows: 1,
+                  fields: ContactAccordionItemBlock.fields,
                   name: 'contacts',
-                  type: 'blocks',
+                  required: true,
+                  type: 'array',
                 },
               ],
               label: 'Addresses',

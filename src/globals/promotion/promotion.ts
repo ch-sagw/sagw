@@ -26,12 +26,12 @@ export const promotionConfig: GlobalConfig = {
 
             // Subpage Sections
             {
-              blocks: [SubpageSection],
+              fields: SubpageSection.fields,
               label: 'Subpage Sections',
               minRows: 1,
               name: 'subpageSections',
               required: true,
-              type: 'blocks',
+              type: 'array',
             },
 
             // Faq

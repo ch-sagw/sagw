@@ -17,11 +17,11 @@ export const headerConfig: GlobalConfig = {
     },
 
     {
-      blocks: [LinkExternal],
+      fields: LinkExternal.fields,
       maxRows: 3,
-      minRows: 0,
       name: 'metaLinks',
-      type: 'blocks',
+      required: true,
+      type: 'array',
     },
 
     {

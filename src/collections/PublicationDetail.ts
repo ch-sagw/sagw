@@ -73,6 +73,8 @@ export const PublicationDetailConfig: CollectionConfig = {
               required: true,
               type: 'array',
             },
+
+            // authors
             {
               fields: [
                 {

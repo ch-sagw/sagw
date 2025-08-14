@@ -31,11 +31,10 @@ export const SubpageSection: Block = {
       type: 'select',
     },
     {
-      blocks: [SubpageSectionBlock],
-      minRows: 1,
+      fields: SubpageSectionBlock.fields,
       name: 'blocks',
       required: true,
-      type: 'blocks',
+      type: 'array',
     },
   ],
   slug: 'subpageSection',

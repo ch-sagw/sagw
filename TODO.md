@@ -41,3 +41,4 @@ Payload Config:
 - add validation for external link href
 - add custom rte component for internal links, remove default link button in rte
 - use array fieldType instead of blocks where appropriate (see Content Blocks and Authors on Publication Detail page)
+- check if all blocks are used

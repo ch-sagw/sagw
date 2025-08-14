@@ -48,10 +48,10 @@ export const aboutSagwConfig: GlobalConfig = {
                   type: 'text',
                 },
                 {
-                  blocks: [LinkExternal],
-                  minRows: 0,
+                  fields: LinkExternal.fields,
                   name: 'link',
-                  type: 'blocks',
+                  required: true,
+                  type: 'array',
                 },
               ],
               label: 'Links',

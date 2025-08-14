@@ -451,10 +451,7 @@ export interface MagazineDetail {
     | {
         externalLinkText: string;
         externalLink: string;
-        description: string;
         id?: string | null;
-        blockName?: string | null;
-        blockType: 'linkExternal';
       }[]
     | null;
   meta?: {
@@ -1056,15 +1053,9 @@ export interface MagazineDetailSelect<T extends boolean = true> {
   links?:
     | T
     | {
-        linkExternal?:
-          | T
-          | {
-              externalLinkText?: T;
-              externalLink?: T;
-              description?: T;
-              id?: T;
-              blockName?: T;
-            };
+        externalLinkText?: T;
+        externalLink?: T;
+        id?: T;
       };
   meta?:
     | T
@@ -1413,8 +1404,6 @@ export interface Network {
       image: string | Image;
       link: string;
       id?: string | null;
-      blockName?: string | null;
-      blockType: 'networkBlock';
     }[];
   };
   meta?: {
@@ -1472,14 +1461,11 @@ export interface Promotion {
       linkExternal?: {
         externalLinkText: string;
         externalLink: string;
+        id?: string | null;
       };
       id?: string | null;
-      blockName?: string | null;
-      blockType: 'subpageSectionBlock';
     }[];
     id?: string | null;
-    blockName?: string | null;
-    blockType: 'subpageSection';
   }[];
   faq: {
     faq: (string | FaqItem)[];
@@ -1600,8 +1586,6 @@ export interface EarlyCareerAward {
       [k: string]: unknown;
     } | null;
     id?: string | null;
-    blockName?: string | null;
-    blockType: 'textBlock';
   }[];
   winnersTeasers: {
     buttonText: string;
@@ -1623,8 +1607,6 @@ export interface EarlyCareerAward {
       [k: string]: unknown;
     } | null;
     id?: string | null;
-    blockName?: string | null;
-    blockType: 'textBlock';
   }[];
   downloads: {
     title: string;
@@ -1700,14 +1682,11 @@ export interface Activity {
       linkExternal?: {
         externalLinkText: string;
         externalLink: string;
+        id?: string | null;
       };
       id?: string | null;
-      blockName?: string | null;
-      blockType: 'subpageSectionBlock';
     }[];
     id?: string | null;
-    blockName?: string | null;
-    blockType: 'subpageSection';
   }[];
   magazine: {
     title: string;
@@ -1971,15 +1950,11 @@ export interface AboutContact {
   };
   addresses: {
     title: string;
-    contacts?:
-      | {
-          title: string;
-          category: (string | Person)[];
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'contactAccordionItem';
-        }[]
-      | null;
+    contacts: {
+      title: string;
+      category: (string | Person)[];
+      id?: string | null;
+    }[];
   };
   meta?: {
     seo?: {
@@ -2066,16 +2041,12 @@ export interface AboutSagw {
     | null;
   linksGroup: {
     linksTitle: string;
-    link?:
-      | {
-          externalLinkText: string;
-          externalLink: string;
-          description: string;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'linkExternal';
-        }[]
-      | null;
+    link: {
+      externalLinkText: string;
+      externalLink: string;
+      description: string;
+      id?: string | null;
+    }[];
   };
   downloadsGroup: {
     downloadsTitle: string;
@@ -2348,16 +2319,12 @@ export interface Consent {
 export interface Header {
   id: string;
   logo: string | Image;
-  metaLinks?:
-    | {
-        externalLinkText: string;
-        externalLink: string;
-        description: string;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'linkExternal';
-      }[]
-    | null;
+  metaLinks: {
+    externalLinkText: string;
+    externalLink: string;
+    description: string;
+    id?: string | null;
+  }[];
   navigation: {
     home: string;
     promotion: {
@@ -2410,16 +2377,12 @@ export interface Footer {
     phone: string;
     mail: string;
   };
-  socialLinks?:
-    | {
-        externalLinkText: string;
-        externalLink: string;
-        icon?: ('linkedIn' | 'twitter' | 'facebook') | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'socialLink';
-      }[]
-    | null;
+  socialLinks: {
+    externalLinkText: string;
+    externalLink: string;
+    icon?: ('linkedIn' | 'twitter' | 'facebook') | null;
+    id?: string | null;
+  }[];
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2522,17 +2485,12 @@ export interface NetworkSelect<T extends boolean = true> {
         items?:
           | T
           | {
-              networkBlock?:
-                | T
-                | {
-                    title?: T;
-                    category?: T;
-                    foundingYear?: T;
-                    image?: T;
-                    link?: T;
-                    id?: T;
-                    blockName?: T;
-                  };
+              title?: T;
+              category?: T;
+              foundingYear?: T;
+              image?: T;
+              link?: T;
+              id?: T;
             };
       };
   meta?:
@@ -2566,41 +2524,32 @@ export interface PromotionSelect<T extends boolean = true> {
   subpageSections?:
     | T
     | {
-        subpageSection?:
+        title?: T;
+        lead?: T;
+        alignement?: T;
+        blocks?:
           | T
           | {
               title?: T;
-              lead?: T;
-              alignement?: T;
-              blocks?:
+              text?: T;
+              linkType?: T;
+              linkInternal?:
                 | T
                 | {
-                    subpageSectionBlock?:
-                      | T
-                      | {
-                          title?: T;
-                          text?: T;
-                          linkType?: T;
-                          linkInternal?:
-                            | T
-                            | {
-                                openInNewWindow?: T;
-                                linkText?: T;
-                                internalLink?: T;
-                              };
-                          linkExternal?:
-                            | T
-                            | {
-                                externalLinkText?: T;
-                                externalLink?: T;
-                              };
-                          id?: T;
-                          blockName?: T;
-                        };
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+              linkExternal?:
+                | T
+                | {
+                    externalLinkText?: T;
+                    externalLink?: T;
+                    id?: T;
                   };
               id?: T;
-              blockName?: T;
             };
+        id?: T;
       };
   faq?:
     | T
@@ -2697,13 +2646,8 @@ export interface EarlyCareerAwardSelect<T extends boolean = true> {
   textBlocksBefore?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
+        text?: T;
+        id?: T;
       };
   winnersTeasers?:
     | T
@@ -2713,13 +2657,8 @@ export interface EarlyCareerAwardSelect<T extends boolean = true> {
   textBlocksAfter?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
+        text?: T;
+        id?: T;
       };
   downloads?:
     | T
@@ -2779,41 +2718,32 @@ export interface ActivitiesSelect<T extends boolean = true> {
   subpageSections?:
     | T
     | {
-        subpageSection?:
+        title?: T;
+        lead?: T;
+        alignement?: T;
+        blocks?:
           | T
           | {
               title?: T;
-              lead?: T;
-              alignement?: T;
-              blocks?:
+              text?: T;
+              linkType?: T;
+              linkInternal?:
                 | T
                 | {
-                    subpageSectionBlock?:
-                      | T
-                      | {
-                          title?: T;
-                          text?: T;
-                          linkType?: T;
-                          linkInternal?:
-                            | T
-                            | {
-                                openInNewWindow?: T;
-                                linkText?: T;
-                                internalLink?: T;
-                              };
-                          linkExternal?:
-                            | T
-                            | {
-                                externalLinkText?: T;
-                                externalLink?: T;
-                              };
-                          id?: T;
-                          blockName?: T;
-                        };
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+              linkExternal?:
+                | T
+                | {
+                    externalLinkText?: T;
+                    externalLink?: T;
+                    id?: T;
                   };
               id?: T;
-              blockName?: T;
             };
+        id?: T;
       };
   magazine?:
     | T
@@ -3033,14 +2963,9 @@ export interface AboutContactSelect<T extends boolean = true> {
         contacts?:
           | T
           | {
-              contactAccordionItem?:
-                | T
-                | {
-                    title?: T;
-                    category?: T;
-                    id?: T;
-                    blockName?: T;
-                  };
+              title?: T;
+              category?: T;
+              id?: T;
             };
       };
   meta?:
@@ -3111,15 +3036,10 @@ export interface AboutSagwSelect<T extends boolean = true> {
         link?:
           | T
           | {
-              linkExternal?:
-                | T
-                | {
-                    externalLinkText?: T;
-                    externalLink?: T;
-                    description?: T;
-                    id?: T;
-                    blockName?: T;
-                  };
+              externalLinkText?: T;
+              externalLink?: T;
+              description?: T;
+              id?: T;
             };
       };
   downloadsGroup?:
@@ -3359,15 +3279,10 @@ export interface HeaderSelect<T extends boolean = true> {
   metaLinks?:
     | T
     | {
-        linkExternal?:
-          | T
-          | {
-              externalLinkText?: T;
-              externalLink?: T;
-              description?: T;
-              id?: T;
-              blockName?: T;
-            };
+        externalLinkText?: T;
+        externalLink?: T;
+        description?: T;
+        id?: T;
       };
   navigation?:
     | T
@@ -3436,15 +3351,10 @@ export interface FooterSelect<T extends boolean = true> {
   socialLinks?:
     | T
     | {
-        socialLink?:
-          | T
-          | {
-              externalLinkText?: T;
-              externalLink?: T;
-              icon?: T;
-              id?: T;
-              blockName?: T;
-            };
+        externalLinkText?: T;
+        externalLink?: T;
+        icon?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;

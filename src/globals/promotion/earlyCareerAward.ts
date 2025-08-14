@@ -26,12 +26,11 @@ export const earlyCareerAwardConfig: GlobalConfig = {
 
             // Text Blocks Before
             {
-              blocks: [TextBlock],
+              fields: TextBlock.fields,
               label: 'Text Blocks before Teasers',
-              minRows: 1,
               name: 'textBlocksBefore',
               required: true,
-              type: 'blocks',
+              type: 'array',
             },
 
             // Winners teasers
@@ -51,12 +50,11 @@ export const earlyCareerAwardConfig: GlobalConfig = {
 
             // Text Blocks After
             {
-              blocks: [TextBlock],
+              fields: TextBlock.fields,
               label: 'Text Blocks after Teasers',
-              minRows: 1,
               name: 'textBlocksAfter',
               required: true,
-              type: 'blocks',
+              type: 'array',
             },
 
             // Downloads

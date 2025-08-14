@@ -1,6 +1,5 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { LinkExternal } from '@/blocks/LinkExternal';
 import { TextBlock } from '@/blocks/TextBlock';
 import { ImageBlock } from '@/blocks/ImageBlock';
 import { VideoBlock } from '@/blocks/VideoBlock';
@@ -10,6 +9,7 @@ import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
+import { fieldsLinkExternal } from '@/field-templates/links';
 
 export const MagazineDetailConfig: CollectionConfig = {
   access: {
@@ -90,10 +90,9 @@ export const MagazineDetailConfig: CollectionConfig = {
 
             // Links
             {
-              blocks: [LinkExternal],
-              minRows: 0,
+              fields: fieldsLinkExternal,
               name: 'links',
-              type: 'blocks',
+              type: 'array',
             },
 
           ],

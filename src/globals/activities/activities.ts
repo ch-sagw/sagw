@@ -25,12 +25,11 @@ export const activitiesConfig: GlobalConfig = {
 
             // Projects section
             {
-              blocks: [SubpageSection],
+              fields: SubpageSection.fields,
               label: 'Subpage Sections',
-              minRows: 1,
               name: 'subpageSections',
               required: true,
-              type: 'blocks',
+              type: 'array',
             },
 
             // Magazine section
