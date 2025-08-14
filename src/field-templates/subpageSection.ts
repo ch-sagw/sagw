@@ -1,5 +1,5 @@
 import { Field } from 'payload';
-import { fieldsSubpageSectionBlock } from './SubpageSectionBlock';
+import { fieldsSubpageSectionBlock } from '@/field-templates/subpageSectionBlock';
 
 export const fieldsSubpageSection: Field[] = [
   {
