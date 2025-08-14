@@ -1,6 +1,6 @@
 import { GlobalConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { fieldsContactAccordionItem } from '@/field-templates/ContactAccordionItem';
+import { fieldsContactAccordionItem } from '@/field-templates/contactAccordionItem';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
 
