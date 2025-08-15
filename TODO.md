@@ -42,6 +42,5 @@ Payload Config:
 - add validation for external link href
 - add custom rte component for internal links, remove default link button in rte
 - multiTenantPlugin config: find smart way to add all collections
-- multiTenantPlugin add proper roles
 - multiTenantPlugin use isGlobal and migrate global pages to collections
 - multiTenantPlugin Tenants index.ts -> allowPublicRead, needed?
