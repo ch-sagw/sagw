@@ -13,6 +13,7 @@ import { getServerSideURL } from '@/utilities/getUrl';
 import type { Config } from '@/payload-types';
 import { isGlobalAdmin } from '@/access/isGlobalAdmin';
 import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
+import { tenantsCollections } from '@/collections';
 
 const generateTitle: GenerateTitle = ({
   doc,
@@ -47,15 +48,7 @@ const plugins: Plugin[] = [
   }),
 
   multiTenantPlugin<Config>({
-    collections: {
-      instituteDetail: {},
-      magazineOverview: {
-        isGlobal: true,
-      },
-      network: {
-        isGlobal: true,
-      },
-    },
+    collections: tenantsCollections,
     tenantField: {
       access: {
         read: () => true,

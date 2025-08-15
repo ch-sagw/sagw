@@ -1,3 +1,4 @@
+// plc
 import { Users } from '@/collections/Users';
 import { Images } from '@/collections/Images';
 import { Videos } from '@/collections/Videos';
@@ -13,12 +14,12 @@ import { Events } from '@/collections/Events';
 import { Departments } from '@/collections/Departments';
 
 // Globals
-import { I18nForms } from './Globals/i18n/forms';
-import { I18nGlobal } from './Globals/i18n/globals';
-import { Consent } from './Globals/consent';
-import { Footer } from './Globals/footer';
-import { Header } from './Globals/header';
-import { StatusMessage } from './Globals/statusMessage';
+import { I18nForms } from './Globals/i18n/Forms';
+import { I18nGlobal } from './Globals/i18n/Globals';
+import { Consent } from './Globals/Consent';
+import { Footer } from './Globals/Footer';
+import { Header } from './Globals/Header';
+import { StatusMessage } from './Globals/StatusMessage';
 
 // Pages -> Sets
 import { InstituteDetailPage } from '@/collections/Pages/Sets/InstituteDetail';
@@ -42,7 +43,7 @@ import { ErrorPage } from '@/collections/Pages/Singletons/ErrorPage';
 import { HomePage } from '@/collections/Pages/Singletons/HomePage';
 import { NetworkPage } from '@/collections/Pages/Singletons/NetworkPage';
 
-const collections = [
+export const plcCollections = [
   Departments,
   Users,
   Images,
@@ -56,22 +57,9 @@ const collections = [
   PublicationTypes,
   Events,
   EventCategories,
+];
 
-  // Globals
-  I18nForms,
-  I18nGlobal,
-  Consent,
-  Footer,
-  Header,
-  StatusMessage,
-
-  // Pages -> Sets
-  InstituteDetailPage,
-  MagazineDetailPage,
-  PublicationDetailPage,
-  NewsDetailPage,
-
-  // Pages -> Singletons
+export const singletonPageCollections = [
   AboutContactPage,
   AboutSagwPage,
   AboutTeamPage,
@@ -88,4 +76,58 @@ const collections = [
   NetworkPage,
 ];
 
-export default collections;
+export const setsPageCollections = [
+  InstituteDetailPage,
+  MagazineDetailPage,
+  PublicationDetailPage,
+  NewsDetailPage,
+];
+
+export const globalCollections = [
+  I18nForms,
+  I18nGlobal,
+  Consent,
+  Footer,
+  Header,
+  StatusMessage,
+];
+
+// payload collections config
+export const collections = [
+
+  // plc
+  ...plcCollections,
+
+  // Pages -> Singletons
+  ...singletonPageCollections,
+
+  // Pages -> Sets
+  ...setsPageCollections,
+
+  // Globals
+  ...globalCollections,
+
+];
+
+// multitenant plugin collections config
+
+// TODO: can we get this interface from somewhere?
+interface InterfaceTenantCollectionObject {
+  isGlobal?: boolean;
+}
+
+const tenantsCollectionsObject: Record<string, InterfaceTenantCollectionObject> = {};
+
+collections.forEach((item) => {
+  if (item.slug !== Departments.slug) {
+    if (singletonPageCollections.includes(item)) {
+      tenantsCollectionsObject[item.slug] = {
+        isGlobal: true,
+      };
+    } else {
+      tenantsCollectionsObject[item.slug] = {};
+    }
+  }
+});
+
+export const tenantsCollections = tenantsCollectionsObject;

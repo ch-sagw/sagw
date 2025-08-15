@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
 import sharp from 'sharp';
 
 import plugins from '@/plugins';
-import collections from '@/collections';
+import { collections } from '@/collections';
 import { Users } from '@/collections/Users';
 
 const filename = fileURLToPath(import.meta.url);

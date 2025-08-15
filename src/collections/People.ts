@@ -10,7 +10,7 @@ export const People: CollectionConfig = {
   },
   fields: [
     {
-      name: 'department',
+      name: 'person-department',
       options: [
         {
           label: 'Adminstration',
