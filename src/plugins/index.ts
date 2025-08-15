@@ -3,12 +3,16 @@ import { seoPlugin } from '@payloadcms/plugin-seo';
 import {
   GenerateTitle, GenerateURL,
 } from '@payloadcms/plugin-seo/types';
+import { multiTenantPlugin } from '@payloadcms/plugin-multi-tenant';
 
 import { Plugin } from 'payload';
 import { Images } from '@/collections/Images';
 import { Videos } from '@/collections/Videos';
 import { Documents } from '@/collections/Documents';
 import { getServerSideURL } from '@/utilities/getUrl';
+import type { Config } from '@/payload-types';
+import { isSuperAdmin } from '@/access/isSuperAdmin';
+import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
 
 const generateTitle: GenerateTitle = ({
   doc,
@@ -40,6 +44,30 @@ const plugins: Plugin[] = [
   seoPlugin({
     generateTitle,
     generateURL,
+  }),
+
+  multiTenantPlugin<Config>({
+    collections: {
+      instituteDetail: {},
+    },
+    tenantField: {
+      access: {
+        read: () => true,
+        update: ({
+          req,
+        }) => {
+          if (isSuperAdmin(req.user)) {
+            return true;
+          }
+
+          return getUserTenantIDs(req.user).length > 0;
+        },
+      },
+    },
+    tenantsArrayField: {
+      includeDefaultField: false,
+    },
+    userHasAccessToAllTenants: (user) => isSuperAdmin(user),
   }),
 ];
 
