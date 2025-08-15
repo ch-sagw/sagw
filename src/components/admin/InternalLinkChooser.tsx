@@ -31,8 +31,12 @@ const getCollectionPageOptions = async (props: UIFieldServerProps): Promise<Opti
   for await (const collection of collectionKeys) {
     const pageResults = await props.payload.find({
       collection,
-      depth: 1,
+      depth: 3,
     });
+
+    if (collection === 'network') {
+      console.log(pageResults);
+    }
 
     pageResults.docs.forEach((pageResult): void => {
       if (isLinkablePage(pageResult)) {

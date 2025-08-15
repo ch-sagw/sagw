@@ -75,15 +75,35 @@ export interface Config {
     documents: Document;
     projects: Project;
     people: Person;
-    instituteDetail: InstituteDetail;
-    magazineDetail: MagazineDetail;
     videos: Video;
-    publicationDetail: PublicationDetail;
     publicationTopics: PublicationTopic;
     publicationTypes: PublicationType;
     events: Event;
     eventCategory: EventCategory;
+    i18nForms: I18NForm;
+    i18nGlobals: I18NGlobal;
+    consent: Consent;
+    footer: Footer;
+    header: Header;
+    statusMessage: StatusMessage;
+    instituteDetail: InstituteDetail;
+    magazineDetail: MagazineDetail;
+    publicationDetail: PublicationDetail;
     newsDetail: NewsDetail;
+    aboutContact: AboutContact;
+    aboutSagw: AboutSagw;
+    aboutTeam: AboutTeam;
+    activities: Activity;
+    eventsOverview: EventsOverview;
+    magazineOverview: MagazineOverview;
+    newsOverview: NewsOverview;
+    publicationsOverview: PublicationsOverview;
+    earlyCareerAward: EarlyCareerAward;
+    institutes: Institute;
+    promotion: Promotion;
+    errorPage: ErrorPage;
+    home: Home;
+    network: Network;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -98,15 +118,35 @@ export interface Config {
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     people: PeopleSelect<false> | PeopleSelect<true>;
-    instituteDetail: InstituteDetailSelect<false> | InstituteDetailSelect<true>;
-    magazineDetail: MagazineDetailSelect<false> | MagazineDetailSelect<true>;
     videos: VideosSelect<false> | VideosSelect<true>;
-    publicationDetail: PublicationDetailSelect<false> | PublicationDetailSelect<true>;
     publicationTopics: PublicationTopicsSelect<false> | PublicationTopicsSelect<true>;
     publicationTypes: PublicationTypesSelect<false> | PublicationTypesSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     eventCategory: EventCategorySelect<false> | EventCategorySelect<true>;
+    i18nForms: I18NFormsSelect<false> | I18NFormsSelect<true>;
+    i18nGlobals: I18NGlobalsSelect<false> | I18NGlobalsSelect<true>;
+    consent: ConsentSelect<false> | ConsentSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    statusMessage: StatusMessageSelect<false> | StatusMessageSelect<true>;
+    instituteDetail: InstituteDetailSelect<false> | InstituteDetailSelect<true>;
+    magazineDetail: MagazineDetailSelect<false> | MagazineDetailSelect<true>;
+    publicationDetail: PublicationDetailSelect<false> | PublicationDetailSelect<true>;
     newsDetail: NewsDetailSelect<false> | NewsDetailSelect<true>;
+    aboutContact: AboutContactSelect<false> | AboutContactSelect<true>;
+    aboutSagw: AboutSagwSelect<false> | AboutSagwSelect<true>;
+    aboutTeam: AboutTeamSelect<false> | AboutTeamSelect<true>;
+    activities: ActivitiesSelect<false> | ActivitiesSelect<true>;
+    eventsOverview: EventsOverviewSelect<false> | EventsOverviewSelect<true>;
+    magazineOverview: MagazineOverviewSelect<false> | MagazineOverviewSelect<true>;
+    newsOverview: NewsOverviewSelect<false> | NewsOverviewSelect<true>;
+    publicationsOverview: PublicationsOverviewSelect<false> | PublicationsOverviewSelect<true>;
+    earlyCareerAward: EarlyCareerAwardSelect<false> | EarlyCareerAwardSelect<true>;
+    institutes: InstitutesSelect<false> | InstitutesSelect<true>;
+    promotion: PromotionSelect<false> | PromotionSelect<true>;
+    errorPage: ErrorPageSelect<false> | ErrorPageSelect<true>;
+    home: HomeSelect<false> | HomeSelect<true>;
+    network: NetworkSelect<false> | NetworkSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -114,50 +154,8 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  globals: {
-    home: Home;
-    network: Network;
-    promotion: Promotion;
-    institutes: Institute;
-    earlyCareerAward: EarlyCareerAward;
-    activities: Activity;
-    magazineOverview: MagazineOverview;
-    publicationsOverview: PublicationsOverview;
-    eventsOverview: EventsOverview;
-    newsOverview: NewsOverview;
-    aboutContact: AboutContact;
-    aboutSagw: AboutSagw;
-    aboutTeam: AboutTeam;
-    errorPage: ErrorPage;
-    i18nForms: I18NForm;
-    i18nGlobals: I18NGlobal;
-    consent: Consent;
-    header: Header;
-    footer: Footer;
-    statusMessage: StatusMessage;
-  };
-  globalsSelect: {
-    home: HomeSelect<false> | HomeSelect<true>;
-    network: NetworkSelect<false> | NetworkSelect<true>;
-    promotion: PromotionSelect<false> | PromotionSelect<true>;
-    institutes: InstitutesSelect<false> | InstitutesSelect<true>;
-    earlyCareerAward: EarlyCareerAwardSelect<false> | EarlyCareerAwardSelect<true>;
-    activities: ActivitiesSelect<false> | ActivitiesSelect<true>;
-    magazineOverview: MagazineOverviewSelect<false> | MagazineOverviewSelect<true>;
-    publicationsOverview: PublicationsOverviewSelect<false> | PublicationsOverviewSelect<true>;
-    eventsOverview: EventsOverviewSelect<false> | EventsOverviewSelect<true>;
-    newsOverview: NewsOverviewSelect<false> | NewsOverviewSelect<true>;
-    aboutContact: AboutContactSelect<false> | AboutContactSelect<true>;
-    aboutSagw: AboutSagwSelect<false> | AboutSagwSelect<true>;
-    aboutTeam: AboutTeamSelect<false> | AboutTeamSelect<true>;
-    errorPage: ErrorPageSelect<false> | ErrorPageSelect<true>;
-    i18nForms: I18NFormsSelect<false> | I18NFormsSelect<true>;
-    i18nGlobals: I18NGlobalsSelect<false> | I18NGlobalsSelect<true>;
-    consent: ConsentSelect<false> | ConsentSelect<true>;
-    header: HeaderSelect<false> | HeaderSelect<true>;
-    footer: FooterSelect<false> | FooterSelect<true>;
-    statusMessage: StatusMessageSelect<false> | StatusMessageSelect<true>;
-  };
+  globals: {};
+  globalsSelect: {};
   locale: 'de' | 'fr' | 'it' | 'en';
   user: User & {
     collection: 'users';
@@ -347,6 +345,363 @@ export interface Person {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos".
+ */
+export interface Video {
+  id: string;
+  alt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationTopics".
+ */
+export interface PublicationTopic {
+  id: string;
+  publicationTopic: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationTypes".
+ */
+export interface PublicationType {
+  id: string;
+  publicationType: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: string;
+  title: string;
+  location?: string | null;
+  language?: string | null;
+  time?: string | null;
+  category?: (string | null) | EventCategory;
+  project?: (string | null) | Project;
+  date: string;
+  multipleDays?: boolean | null;
+  dateEnd?: string | null;
+  externalLinkText: string;
+  externalLink: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventCategory".
+ */
+export interface EventCategory {
+  id: string;
+  eventCategory: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "i18nForms".
+ */
+export interface I18NForm {
+  id: string;
+  inputFields: {
+    email: {
+      label: string;
+      placeholder: string;
+      error: string;
+    };
+    message: {
+      label: string;
+      placeholder: string;
+      error: string;
+    };
+    name: {
+      label: string;
+      placeholder: string;
+      error: string;
+    };
+  };
+  checkboxes: {
+    dataPrivacyCheckboxText: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+  };
+  submitSuccess: {
+    title: string;
+    text: string;
+    optionalLink?: {
+      includeLink?: boolean | null;
+      link?: {
+        openInNewWindow?: boolean | null;
+        linkText: string;
+        internalLink?: string | null;
+      };
+    };
+  };
+  submitError: {
+    title: string;
+    text: string;
+    optionalLink?: {
+      includeLink?: boolean | null;
+      link?: {
+        openInNewWindow?: boolean | null;
+        linkText: string;
+        internalLink?: string | null;
+      };
+    };
+  };
+  submitWarn: {
+    title: string;
+    text: string;
+    optionalLink?: {
+      includeLink?: boolean | null;
+      link?: {
+        openInNewWindow?: boolean | null;
+        linkText: string;
+        internalLink?: string | null;
+      };
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "i18nGlobals".
+ */
+export interface I18NGlobal {
+  id: string;
+  sectionTitles: {
+    download: string;
+    links: string;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "consent".
+ */
+export interface Consent {
+  id: string;
+  banner: {
+    title: string;
+    text: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    buttonAcceptAll: string;
+    buttonAcceptSelection: string;
+    necessaryCookies: {
+      title: string;
+      text: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      toggleLabel: string;
+    };
+    analyticsPerformance: {
+      title: string;
+      text: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      toggleLabelOff: string;
+      toggleLabelOn: string;
+      toggleDefault?: ('on' | 'off') | null;
+    };
+    externalContent: {
+      title: string;
+      text: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      toggleLabelOff: string;
+      toggleLabelOn: string;
+      toggleDefault?: ('on' | 'off') | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: string;
+  legal: string;
+  impressum: string;
+  copyright: string;
+  contact: {
+    title: string;
+    address1: string;
+    address2: string;
+    poBox: string;
+    countryCode: string;
+    zipCode: string;
+    city: string;
+    phone: string;
+    mail: string;
+  };
+  socialLinks: {
+    externalLinkText: string;
+    externalLink: string;
+    icon?: ('linkedIn' | 'twitter' | 'facebook') | null;
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: string;
+  logo: string | Image;
+  metaLinks: {
+    externalLinkText: string;
+    externalLink: string;
+    description: string;
+    id?: string | null;
+  }[];
+  navigation: {
+    home: string;
+    promotion: {
+      description: string;
+      overview: string;
+      institutes: string;
+      editions: string;
+      travelReports: string;
+      earlyCareerAward: string;
+    };
+    network: {
+      description: string;
+      network: string;
+    };
+    activities: {
+      description: string;
+      overview: string;
+      magazine: string;
+      publications: string;
+      events: string;
+    };
+    about: {
+      description: string;
+      sagw: string;
+      team: string;
+      contact: string;
+      openJobs: string;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "statusMessage".
+ */
+export interface StatusMessage {
+  id: string;
+  show: {
+    /**
+     * Show, hide or define date range when to show the message.
+     */
+    display: 'show' | 'hide' | 'date';
+    from?: string | null;
+    to?: string | null;
+  };
+  title: string;
+  message: string;
+  optionalLink?: {
+    includeLink?: boolean | null;
+    link?: {
+      openInNewWindow?: boolean | null;
+      linkText: string;
+      internalLink?: string | null;
+    };
+  };
+  /**
+   * Should the message be displayed on home only or everywhere?
+   */
+  showOnHomeOnly?: boolean | null;
+  type: 'warn' | 'error' | 'success';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "instituteDetail".
  */
 export interface InstituteDetail {
@@ -504,25 +859,6 @@ export interface MagazineDetail {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "videos".
- */
-export interface Video {
-  id: string;
-  alt?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "publicationDetail".
  */
 export interface PublicationDetail {
@@ -592,56 +928,6 @@ export interface PublicationDetail {
       description?: string | null;
     };
   };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publicationTopics".
- */
-export interface PublicationTopic {
-  id: string;
-  publicationTopic: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publicationTypes".
- */
-export interface PublicationType {
-  id: string;
-  publicationType: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "events".
- */
-export interface Event {
-  id: string;
-  title: string;
-  location?: string | null;
-  language?: string | null;
-  time?: string | null;
-  category?: (string | null) | EventCategory;
-  project?: (string | null) | Project;
-  date: string;
-  multipleDays?: boolean | null;
-  dateEnd?: string | null;
-  externalLinkText: string;
-  externalLink: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "eventCategory".
- */
-export interface EventCategory {
-  id: string;
-  eventCategory: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -757,6 +1043,821 @@ export interface NewsDetail {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aboutContact".
+ */
+export interface AboutContact {
+  id: string;
+  isLinkable?: boolean | null;
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+  };
+  addresses: {
+    title: string;
+    contacts: {
+      title: string;
+      category: (string | Person)[];
+      id?: string | null;
+    }[];
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aboutSagw".
+ */
+export interface AboutSagw {
+  id: string;
+  isLinkable?: boolean | null;
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+  };
+  contentBlocks?:
+    | (
+        | {
+            text?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textBlock';
+          }
+        | {
+            alignement?: ('left' | 'center' | 'right') | null;
+            image: string | Image;
+            title: string;
+            caption: string;
+            credits: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageBlock';
+          }
+        | {
+            video: string | Video;
+            title: string;
+            caption: string;
+            credits: string;
+            stillImage: string | Image;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoBlock';
+          }
+      )[]
+    | null;
+  linksGroup: {
+    linksTitle: string;
+    link: {
+      externalLinkText: string;
+      externalLink: string;
+      description: string;
+      id?: string | null;
+    }[];
+  };
+  downloadsGroup: {
+    downloadsTitle: string;
+    downloads: (string | Document)[];
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aboutTeam".
+ */
+export interface AboutTeam {
+  id: string;
+  isLinkable?: boolean | null;
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "activities".
+ */
+export interface Activity {
+  id: string;
+  isLinkable?: boolean | null;
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+  };
+  subpageSections: {
+    title: string;
+    lead: string;
+    alignement?: ('vertical' | 'horizontal') | null;
+    blocks: {
+      title: string;
+      text: string;
+      linkType: 'internal' | 'external';
+      linkInternal?: {
+        openInNewWindow?: boolean | null;
+        linkText: string;
+        internalLink?: string | null;
+      };
+      linkExternal?: {
+        externalLinkText: string;
+        externalLink: string;
+        id?: string | null;
+      };
+      id?: string | null;
+    }[];
+    id?: string | null;
+  }[];
+  magazine: {
+    title: string;
+    lead: string;
+    linkText: string;
+  };
+  publications: {
+    title: string;
+    lead: string;
+    linkText: string;
+  };
+  events: {
+    title: string;
+    linkText: string;
+  };
+  news: {
+    title: string;
+    linkText: string;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventsOverview".
+ */
+export interface EventsOverview {
+  id: string;
+  isLinkable?: boolean | null;
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+  };
+  events: {
+    sectionTitle: string;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "magazineOverview".
+ */
+export interface MagazineOverview {
+  id: string;
+  department?: (string | null) | Department;
+  isLinkable?: boolean | null;
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+  };
+  magazineDetailPageProps: {
+    heroExportButtonText: string;
+    linksTitle: string;
+    subscribeButtonText: string;
+    downloadsTitle: string;
+    downloadsText: string;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsOverview".
+ */
+export interface NewsOverview {
+  id: string;
+  isLinkable?: boolean | null;
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+  };
+  detailPageProps: {
+    downloadsTitle: string;
+    linksTitle: string;
+    otherNewsTitle: string;
+  };
+  content: {
+    sectionTitle: string;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationsOverview".
+ */
+export interface PublicationsOverview {
+  id: string;
+  isLinkable?: boolean | null;
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+  };
+  zenodoInfo: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  filters: {
+    allCheckboxTopics: string;
+    allCheckboxTypes: string;
+    title: string;
+  };
+  publicationDetail: {
+    copyButtonText: string;
+    downloadsTitle: string;
+    orderTitle: string;
+    orderDescription: string;
+    orderButton: string;
+    otherPublicationsTitle: string;
+    otherPublicationsAllButton: string;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "earlyCareerAward".
+ */
+export interface EarlyCareerAward {
+  id: string;
+  isLinkable?: boolean | null;
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+  };
+  textBlocksBefore: {
+    text?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    id?: string | null;
+  }[];
+  winnersTeasers: {
+    buttonText: string;
+  };
+  textBlocksAfter: {
+    text?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    id?: string | null;
+  }[];
+  downloads: {
+    title: string;
+    downloads: (string | Document)[];
+  };
+  cta: {
+    title: string;
+    text: string;
+    buttonText: string;
+  };
+  faq: {
+    colorMode: 'white' | 'color';
+    colorScheme?: ('bright' | 'dark') | null;
+    faq: (string | FaqItem)[];
+  };
+  contact: {
+    colorMode: 'white' | 'color';
+    colorScheme?: ('bright' | 'dark') | null;
+    contactPerson: string | Person;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "institutes".
+ */
+export interface Institute {
+  id: string;
+  isLinkable?: boolean | null;
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+    colorMode: 'white' | 'color';
+    colorScheme?: ('bright' | 'dark') | null;
+  };
+  teasers: {
+    teaserLinkText: string;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "promotion".
+ */
+export interface Promotion {
+  id: string;
+  isLinkable?: boolean | null;
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+  };
+  subpageSections: {
+    title: string;
+    lead: string;
+    alignement?: ('vertical' | 'horizontal') | null;
+    blocks: {
+      title: string;
+      text: string;
+      linkType: 'internal' | 'external';
+      linkInternal?: {
+        openInNewWindow?: boolean | null;
+        linkText: string;
+        internalLink?: string | null;
+      };
+      linkExternal?: {
+        externalLinkText: string;
+        externalLink: string;
+        id?: string | null;
+      };
+      id?: string | null;
+    }[];
+    id?: string | null;
+  }[];
+  faq: {
+    faq: (string | FaqItem)[];
+  };
+  contact: {
+    buttonText: string;
+    text: string;
+    title: string;
+    formResponse: {
+      optionalLink?: {
+        includeLink?: boolean | null;
+        link?: {
+          openInNewWindow?: boolean | null;
+          linkText: string;
+          internalLink?: string | null;
+        };
+      };
+      colorScheme: 'bright' | 'dark';
+    };
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "errorPage".
+ */
+export interface ErrorPage {
+  id: string;
+  homeButtonText: string;
+  notFound: {
+    title: string;
+    description: string;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home".
+ */
+export interface Home {
+  id: string;
+  isLinkable?: boolean | null;
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+    sideTitle: string;
+    optionalLink?: {
+      includeLink?: boolean | null;
+      link?: {
+        openInNewWindow?: boolean | null;
+        linkText: string;
+        internalLink?: string | null;
+      };
+    };
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "network".
+ */
+export interface Network {
+  id: string;
+  department?: (string | null) | Department;
+  isLinkable?: boolean | null;
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+  };
+  filter: {
+    allCheckboxText: string;
+    title: string;
+  };
+  items: {
+    foundingYearText: string;
+    linkText: string;
+    items: {
+      title: string;
+      category: string | NetworkCategory;
+      foundingYear: number;
+      image: string | Image;
+      link: string;
+      id?: string | null;
+    }[];
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -795,20 +1896,8 @@ export interface PayloadLockedDocument {
         value: string | Person;
       } | null)
     | ({
-        relationTo: 'instituteDetail';
-        value: string | InstituteDetail;
-      } | null)
-    | ({
-        relationTo: 'magazineDetail';
-        value: string | MagazineDetail;
-      } | null)
-    | ({
         relationTo: 'videos';
         value: string | Video;
-      } | null)
-    | ({
-        relationTo: 'publicationDetail';
-        value: string | PublicationDetail;
       } | null)
     | ({
         relationTo: 'publicationTopics';
@@ -827,8 +1916,100 @@ export interface PayloadLockedDocument {
         value: string | EventCategory;
       } | null)
     | ({
+        relationTo: 'i18nForms';
+        value: string | I18NForm;
+      } | null)
+    | ({
+        relationTo: 'i18nGlobals';
+        value: string | I18NGlobal;
+      } | null)
+    | ({
+        relationTo: 'consent';
+        value: string | Consent;
+      } | null)
+    | ({
+        relationTo: 'footer';
+        value: string | Footer;
+      } | null)
+    | ({
+        relationTo: 'header';
+        value: string | Header;
+      } | null)
+    | ({
+        relationTo: 'statusMessage';
+        value: string | StatusMessage;
+      } | null)
+    | ({
+        relationTo: 'instituteDetail';
+        value: string | InstituteDetail;
+      } | null)
+    | ({
+        relationTo: 'magazineDetail';
+        value: string | MagazineDetail;
+      } | null)
+    | ({
+        relationTo: 'publicationDetail';
+        value: string | PublicationDetail;
+      } | null)
+    | ({
         relationTo: 'newsDetail';
         value: string | NewsDetail;
+      } | null)
+    | ({
+        relationTo: 'aboutContact';
+        value: string | AboutContact;
+      } | null)
+    | ({
+        relationTo: 'aboutSagw';
+        value: string | AboutSagw;
+      } | null)
+    | ({
+        relationTo: 'aboutTeam';
+        value: string | AboutTeam;
+      } | null)
+    | ({
+        relationTo: 'activities';
+        value: string | Activity;
+      } | null)
+    | ({
+        relationTo: 'eventsOverview';
+        value: string | EventsOverview;
+      } | null)
+    | ({
+        relationTo: 'magazineOverview';
+        value: string | MagazineOverview;
+      } | null)
+    | ({
+        relationTo: 'newsOverview';
+        value: string | NewsOverview;
+      } | null)
+    | ({
+        relationTo: 'publicationsOverview';
+        value: string | PublicationsOverview;
+      } | null)
+    | ({
+        relationTo: 'earlyCareerAward';
+        value: string | EarlyCareerAward;
+      } | null)
+    | ({
+        relationTo: 'institutes';
+        value: string | Institute;
+      } | null)
+    | ({
+        relationTo: 'promotion';
+        value: string | Promotion;
+      } | null)
+    | ({
+        relationTo: 'errorPage';
+        value: string | ErrorPage;
+      } | null)
+    | ({
+        relationTo: 'home';
+        value: string | Home;
+      } | null)
+    | ({
+        relationTo: 'network';
+        value: string | Network;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1002,6 +2183,336 @@ export interface PeopleSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos_select".
+ */
+export interface VideosSelect<T extends boolean = true> {
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationTopics_select".
+ */
+export interface PublicationTopicsSelect<T extends boolean = true> {
+  publicationTopic?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationTypes_select".
+ */
+export interface PublicationTypesSelect<T extends boolean = true> {
+  publicationType?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  location?: T;
+  language?: T;
+  time?: T;
+  category?: T;
+  project?: T;
+  date?: T;
+  multipleDays?: T;
+  dateEnd?: T;
+  externalLinkText?: T;
+  externalLink?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventCategory_select".
+ */
+export interface EventCategorySelect<T extends boolean = true> {
+  eventCategory?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "i18nForms_select".
+ */
+export interface I18NFormsSelect<T extends boolean = true> {
+  inputFields?:
+    | T
+    | {
+        email?:
+          | T
+          | {
+              label?: T;
+              placeholder?: T;
+              error?: T;
+            };
+        message?:
+          | T
+          | {
+              label?: T;
+              placeholder?: T;
+              error?: T;
+            };
+        name?:
+          | T
+          | {
+              label?: T;
+              placeholder?: T;
+              error?: T;
+            };
+      };
+  checkboxes?:
+    | T
+    | {
+        dataPrivacyCheckboxText?: T;
+      };
+  submitSuccess?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        optionalLink?:
+          | T
+          | {
+              includeLink?: T;
+              link?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+            };
+      };
+  submitError?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        optionalLink?:
+          | T
+          | {
+              includeLink?: T;
+              link?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+            };
+      };
+  submitWarn?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        optionalLink?:
+          | T
+          | {
+              includeLink?: T;
+              link?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "i18nGlobals_select".
+ */
+export interface I18NGlobalsSelect<T extends boolean = true> {
+  sectionTitles?:
+    | T
+    | {
+        download?: T;
+        links?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "consent_select".
+ */
+export interface ConsentSelect<T extends boolean = true> {
+  banner?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        buttonAcceptAll?: T;
+        buttonAcceptSelection?: T;
+        necessaryCookies?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              toggleLabel?: T;
+            };
+        analyticsPerformance?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              toggleLabelOff?: T;
+              toggleLabelOn?: T;
+              toggleDefault?: T;
+            };
+        externalContent?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              toggleLabelOff?: T;
+              toggleLabelOn?: T;
+              toggleDefault?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  legal?: T;
+  impressum?: T;
+  copyright?: T;
+  contact?:
+    | T
+    | {
+        title?: T;
+        address1?: T;
+        address2?: T;
+        poBox?: T;
+        countryCode?: T;
+        zipCode?: T;
+        city?: T;
+        phone?: T;
+        mail?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        externalLinkText?: T;
+        externalLink?: T;
+        icon?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
+  metaLinks?:
+    | T
+    | {
+        externalLinkText?: T;
+        externalLink?: T;
+        description?: T;
+        id?: T;
+      };
+  navigation?:
+    | T
+    | {
+        home?: T;
+        promotion?:
+          | T
+          | {
+              description?: T;
+              overview?: T;
+              institutes?: T;
+              editions?: T;
+              travelReports?: T;
+              earlyCareerAward?: T;
+            };
+        network?:
+          | T
+          | {
+              description?: T;
+              network?: T;
+            };
+        activities?:
+          | T
+          | {
+              description?: T;
+              overview?: T;
+              magazine?: T;
+              publications?: T;
+              events?: T;
+            };
+        about?:
+          | T
+          | {
+              description?: T;
+              sagw?: T;
+              team?: T;
+              contact?: T;
+              openJobs?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "statusMessage_select".
+ */
+export interface StatusMessageSelect<T extends boolean = true> {
+  show?:
+    | T
+    | {
+        display?: T;
+        from?: T;
+        to?: T;
+      };
+  title?: T;
+  message?: T;
+  optionalLink?:
+    | T
+    | {
+        includeLink?: T;
+        link?:
+          | T
+          | {
+              openInNewWindow?: T;
+              linkText?: T;
+              internalLink?: T;
+            };
+      };
+  showOnHomeOnly?: T;
+  type?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "instituteDetail_select".
  */
 export interface InstituteDetailSelect<T extends boolean = true> {
@@ -1134,24 +2645,6 @@ export interface MagazineDetailSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "videos_select".
- */
-export interface VideosSelect<T extends boolean = true> {
-  alt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "publicationDetail_select".
  */
 export interface PublicationDetailSelect<T extends boolean = true> {
@@ -1203,52 +2696,6 @@ export interface PublicationDetailSelect<T extends boolean = true> {
               description?: T;
             };
       };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publicationTopics_select".
- */
-export interface PublicationTopicsSelect<T extends boolean = true> {
-  publicationTopic?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publicationTypes_select".
- */
-export interface PublicationTypesSelect<T extends boolean = true> {
-  publicationType?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "events_select".
- */
-export interface EventsSelect<T extends boolean = true> {
-  title?: T;
-  location?: T;
-  language?: T;
-  time?: T;
-  category?: T;
-  project?: T;
-  date?: T;
-  multipleDays?: T;
-  dateEnd?: T;
-  externalLinkText?: T;
-  externalLink?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "eventCategory_select".
- */
-export interface EventCategorySelect<T extends boolean = true> {
-  eventCategory?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1347,1183 +2794,9 @@ export interface NewsDetailSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-locked-documents_select".
+ * via the `definition` "aboutContact_select".
  */
-export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
-  document?: T;
-  globalSlug?: T;
-  user?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-preferences_select".
- */
-export interface PayloadPreferencesSelect<T extends boolean = true> {
-  user?: T;
-  key?: T;
-  value?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-migrations_select".
- */
-export interface PayloadMigrationsSelect<T extends boolean = true> {
-  name?: T;
-  batch?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "home".
- */
-export interface Home {
-  id: string;
-  isLinkable?: boolean | null;
-  hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    lead?: string | null;
-    sideTitle: string;
-    optionalLink?: {
-      includeLink?: boolean | null;
-      link?: {
-        openInNewWindow?: boolean | null;
-        linkText: string;
-        internalLink?: string | null;
-      };
-    };
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "network".
- */
-export interface Network {
-  id: string;
-  isLinkable?: boolean | null;
-  hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    lead?: string | null;
-  };
-  filter: {
-    allCheckboxText: string;
-    title: string;
-  };
-  items: {
-    foundingYearText: string;
-    linkText: string;
-    items: {
-      title: string;
-      category: string | NetworkCategory;
-      foundingYear: number;
-      image: string | Image;
-      link: string;
-      id?: string | null;
-    }[];
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "promotion".
- */
-export interface Promotion {
-  id: string;
-  isLinkable?: boolean | null;
-  hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    lead?: string | null;
-  };
-  subpageSections: {
-    title: string;
-    lead: string;
-    alignement?: ('vertical' | 'horizontal') | null;
-    blocks: {
-      title: string;
-      text: string;
-      linkType: 'internal' | 'external';
-      linkInternal?: {
-        openInNewWindow?: boolean | null;
-        linkText: string;
-        internalLink?: string | null;
-      };
-      linkExternal?: {
-        externalLinkText: string;
-        externalLink: string;
-        id?: string | null;
-      };
-      id?: string | null;
-    }[];
-    id?: string | null;
-  }[];
-  faq: {
-    faq: (string | FaqItem)[];
-  };
-  contact: {
-    buttonText: string;
-    text: string;
-    title: string;
-    formResponse: {
-      optionalLink?: {
-        includeLink?: boolean | null;
-        link?: {
-          openInNewWindow?: boolean | null;
-          linkText: string;
-          internalLink?: string | null;
-        };
-      };
-      colorScheme: 'bright' | 'dark';
-    };
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "institutes".
- */
-export interface Institute {
-  id: string;
-  isLinkable?: boolean | null;
-  hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    lead?: string | null;
-    colorMode: 'white' | 'color';
-    colorScheme?: ('bright' | 'dark') | null;
-  };
-  teasers: {
-    teaserLinkText: string;
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "earlyCareerAward".
- */
-export interface EarlyCareerAward {
-  id: string;
-  isLinkable?: boolean | null;
-  hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    lead?: string | null;
-  };
-  textBlocksBefore: {
-    text?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    id?: string | null;
-  }[];
-  winnersTeasers: {
-    buttonText: string;
-  };
-  textBlocksAfter: {
-    text?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    id?: string | null;
-  }[];
-  downloads: {
-    title: string;
-    downloads: (string | Document)[];
-  };
-  cta: {
-    title: string;
-    text: string;
-    buttonText: string;
-  };
-  faq: {
-    colorMode: 'white' | 'color';
-    colorScheme?: ('bright' | 'dark') | null;
-    faq: (string | FaqItem)[];
-  };
-  contact: {
-    colorMode: 'white' | 'color';
-    colorScheme?: ('bright' | 'dark') | null;
-    contactPerson: string | Person;
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "activities".
- */
-export interface Activity {
-  id: string;
-  isLinkable?: boolean | null;
-  hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    lead?: string | null;
-  };
-  subpageSections: {
-    title: string;
-    lead: string;
-    alignement?: ('vertical' | 'horizontal') | null;
-    blocks: {
-      title: string;
-      text: string;
-      linkType: 'internal' | 'external';
-      linkInternal?: {
-        openInNewWindow?: boolean | null;
-        linkText: string;
-        internalLink?: string | null;
-      };
-      linkExternal?: {
-        externalLinkText: string;
-        externalLink: string;
-        id?: string | null;
-      };
-      id?: string | null;
-    }[];
-    id?: string | null;
-  }[];
-  magazine: {
-    title: string;
-    lead: string;
-    linkText: string;
-  };
-  publications: {
-    title: string;
-    lead: string;
-    linkText: string;
-  };
-  events: {
-    title: string;
-    linkText: string;
-  };
-  news: {
-    title: string;
-    linkText: string;
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "magazineOverview".
- */
-export interface MagazineOverview {
-  id: string;
-  isLinkable?: boolean | null;
-  hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    lead?: string | null;
-  };
-  magazineDetailPageProps: {
-    heroExportButtonText: string;
-    linksTitle: string;
-    subscribeButtonText: string;
-    downloadsTitle: string;
-    downloadsText: string;
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publicationsOverview".
- */
-export interface PublicationsOverview {
-  id: string;
-  isLinkable?: boolean | null;
-  hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    lead?: string | null;
-  };
-  zenodoInfo: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  filters: {
-    allCheckboxTopics: string;
-    allCheckboxTypes: string;
-    title: string;
-  };
-  publicationDetail: {
-    copyButtonText: string;
-    downloadsTitle: string;
-    orderTitle: string;
-    orderDescription: string;
-    orderButton: string;
-    otherPublicationsTitle: string;
-    otherPublicationsAllButton: string;
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "eventsOverview".
- */
-export interface EventsOverview {
-  id: string;
-  isLinkable?: boolean | null;
-  hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    lead?: string | null;
-  };
-  events: {
-    sectionTitle: string;
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "newsOverview".
- */
-export interface NewsOverview {
-  id: string;
-  isLinkable?: boolean | null;
-  hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    lead?: string | null;
-  };
-  detailPageProps: {
-    downloadsTitle: string;
-    linksTitle: string;
-    otherNewsTitle: string;
-  };
-  content: {
-    sectionTitle: string;
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "aboutContact".
- */
-export interface AboutContact {
-  id: string;
-  isLinkable?: boolean | null;
-  hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    lead?: string | null;
-  };
-  addresses: {
-    title: string;
-    contacts: {
-      title: string;
-      category: (string | Person)[];
-      id?: string | null;
-    }[];
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "aboutSagw".
- */
-export interface AboutSagw {
-  id: string;
-  isLinkable?: boolean | null;
-  hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    lead?: string | null;
-  };
-  contentBlocks?:
-    | (
-        | {
-            text?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            alignement?: ('left' | 'center' | 'right') | null;
-            image: string | Image;
-            title: string;
-            caption: string;
-            credits: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
-          }
-      )[]
-    | null;
-  linksGroup: {
-    linksTitle: string;
-    link: {
-      externalLinkText: string;
-      externalLink: string;
-      description: string;
-      id?: string | null;
-    }[];
-  };
-  downloadsGroup: {
-    downloadsTitle: string;
-    downloads: (string | Document)[];
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "aboutTeam".
- */
-export interface AboutTeam {
-  id: string;
-  isLinkable?: boolean | null;
-  hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    lead?: string | null;
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "errorPage".
- */
-export interface ErrorPage {
-  id: string;
-  homeButtonText: string;
-  notFound: {
-    title: string;
-    description: string;
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "i18nForms".
- */
-export interface I18NForm {
-  id: string;
-  inputFields: {
-    email: {
-      label: string;
-      placeholder: string;
-      error: string;
-    };
-    message: {
-      label: string;
-      placeholder: string;
-      error: string;
-    };
-    name: {
-      label: string;
-      placeholder: string;
-      error: string;
-    };
-  };
-  checkboxes: {
-    dataPrivacyCheckboxText: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-  };
-  submitSuccess: {
-    title: string;
-    text: string;
-    optionalLink?: {
-      includeLink?: boolean | null;
-      link?: {
-        openInNewWindow?: boolean | null;
-        linkText: string;
-        internalLink?: string | null;
-      };
-    };
-  };
-  submitError: {
-    title: string;
-    text: string;
-    optionalLink?: {
-      includeLink?: boolean | null;
-      link?: {
-        openInNewWindow?: boolean | null;
-        linkText: string;
-        internalLink?: string | null;
-      };
-    };
-  };
-  submitWarn: {
-    title: string;
-    text: string;
-    optionalLink?: {
-      includeLink?: boolean | null;
-      link?: {
-        openInNewWindow?: boolean | null;
-        linkText: string;
-        internalLink?: string | null;
-      };
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "i18nGlobals".
- */
-export interface I18NGlobal {
-  id: string;
-  sectionTitles: {
-    download: string;
-    links: string;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "consent".
- */
-export interface Consent {
-  id: string;
-  banner: {
-    title: string;
-    text: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    buttonAcceptAll: string;
-    buttonAcceptSelection: string;
-    necessaryCookies: {
-      title: string;
-      text: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
-      toggleLabel: string;
-    };
-    analyticsPerformance: {
-      title: string;
-      text: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
-      toggleLabelOff: string;
-      toggleLabelOn: string;
-      toggleDefault?: ('on' | 'off') | null;
-    };
-    externalContent: {
-      title: string;
-      text: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
-      toggleLabelOff: string;
-      toggleLabelOn: string;
-      toggleDefault?: ('on' | 'off') | null;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header".
- */
-export interface Header {
-  id: string;
-  logo: string | Image;
-  metaLinks: {
-    externalLinkText: string;
-    externalLink: string;
-    description: string;
-    id?: string | null;
-  }[];
-  navigation: {
-    home: string;
-    promotion: {
-      description: string;
-      overview: string;
-      institutes: string;
-      editions: string;
-      travelReports: string;
-      earlyCareerAward: string;
-    };
-    network: {
-      description: string;
-      network: string;
-    };
-    activities: {
-      description: string;
-      overview: string;
-      magazine: string;
-      publications: string;
-      events: string;
-    };
-    about: {
-      description: string;
-      sagw: string;
-      team: string;
-      contact: string;
-      openJobs: string;
-    };
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer".
- */
-export interface Footer {
-  id: string;
-  legal: string;
-  impressum: string;
-  copyright: string;
-  contact: {
-    title: string;
-    address1: string;
-    address2: string;
-    poBox: string;
-    countryCode: string;
-    zipCode: string;
-    city: string;
-    phone: string;
-    mail: string;
-  };
-  socialLinks: {
-    externalLinkText: string;
-    externalLink: string;
-    icon?: ('linkedIn' | 'twitter' | 'facebook') | null;
-    id?: string | null;
-  }[];
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "statusMessage".
- */
-export interface StatusMessage {
-  id: string;
-  show: {
-    /**
-     * Show, hide or define date range when to show the message.
-     */
-    display: 'show' | 'hide' | 'date';
-    from?: string | null;
-    to?: string | null;
-  };
-  title: string;
-  message: string;
-  optionalLink?: {
-    includeLink?: boolean | null;
-    link?: {
-      openInNewWindow?: boolean | null;
-      linkText: string;
-      internalLink?: string | null;
-    };
-  };
-  /**
-   * Should the message be displayed on home only or everywhere?
-   */
-  showOnHomeOnly?: boolean | null;
-  type: 'warn' | 'error' | 'success';
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "home_select".
- */
-export interface HomeSelect<T extends boolean = true> {
-  isLinkable?: T;
-  hero?:
-    | T
-    | {
-        title?: T;
-        lead?: T;
-        sideTitle?: T;
-        optionalLink?:
-          | T
-          | {
-              includeLink?: T;
-              link?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-            };
-      };
-  meta?:
-    | T
-    | {
-        seo?:
-          | T
-          | {
-              index?: T;
-              title?: T;
-              image?: T;
-              description?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "network_select".
- */
-export interface NetworkSelect<T extends boolean = true> {
+export interface AboutContactSelect<T extends boolean = true> {
   isLinkable?: T;
   hero?:
     | T
@@ -2531,25 +2804,15 @@ export interface NetworkSelect<T extends boolean = true> {
         title?: T;
         lead?: T;
       };
-  filter?:
+  addresses?:
     | T
     | {
-        allCheckboxText?: T;
         title?: T;
-      };
-  items?:
-    | T
-    | {
-        foundingYearText?: T;
-        linkText?: T;
-        items?:
+        contacts?:
           | T
           | {
               title?: T;
               category?: T;
-              foundingYear?: T;
-              image?: T;
-              link?: T;
               id?: T;
             };
       };
@@ -2567,7 +2830,454 @@ export interface NetworkSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aboutSagw_select".
+ */
+export interface AboutSagwSelect<T extends boolean = true> {
+  isLinkable?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+      };
+  contentBlocks?:
+    | T
+    | {
+        textBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              alignement?: T;
+              image?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              id?: T;
+              blockName?: T;
+            };
+        videoBlock?:
+          | T
+          | {
+              video?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              stillImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  linksGroup?:
+    | T
+    | {
+        linksTitle?: T;
+        link?:
+          | T
+          | {
+              externalLinkText?: T;
+              externalLink?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  downloadsGroup?:
+    | T
+    | {
+        downloadsTitle?: T;
+        downloads?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aboutTeam_select".
+ */
+export interface AboutTeamSelect<T extends boolean = true> {
+  isLinkable?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "activities_select".
+ */
+export interface ActivitiesSelect<T extends boolean = true> {
+  isLinkable?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+      };
+  subpageSections?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+        alignement?: T;
+        blocks?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              linkType?: T;
+              linkInternal?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+              linkExternal?:
+                | T
+                | {
+                    externalLinkText?: T;
+                    externalLink?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        id?: T;
+      };
+  magazine?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+        linkText?: T;
+      };
+  publications?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+        linkText?: T;
+      };
+  events?:
+    | T
+    | {
+        title?: T;
+        linkText?: T;
+      };
+  news?:
+    | T
+    | {
+        title?: T;
+        linkText?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventsOverview_select".
+ */
+export interface EventsOverviewSelect<T extends boolean = true> {
+  isLinkable?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+      };
+  events?:
+    | T
+    | {
+        sectionTitle?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "magazineOverview_select".
+ */
+export interface MagazineOverviewSelect<T extends boolean = true> {
+  department?: T;
+  isLinkable?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+      };
+  magazineDetailPageProps?:
+    | T
+    | {
+        heroExportButtonText?: T;
+        linksTitle?: T;
+        subscribeButtonText?: T;
+        downloadsTitle?: T;
+        downloadsText?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsOverview_select".
+ */
+export interface NewsOverviewSelect<T extends boolean = true> {
+  isLinkable?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+      };
+  detailPageProps?:
+    | T
+    | {
+        downloadsTitle?: T;
+        linksTitle?: T;
+        otherNewsTitle?: T;
+      };
+  content?:
+    | T
+    | {
+        sectionTitle?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationsOverview_select".
+ */
+export interface PublicationsOverviewSelect<T extends boolean = true> {
+  isLinkable?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+      };
+  zenodoInfo?: T;
+  filters?:
+    | T
+    | {
+        allCheckboxTopics?: T;
+        allCheckboxTypes?: T;
+        title?: T;
+      };
+  publicationDetail?:
+    | T
+    | {
+        copyButtonText?: T;
+        downloadsTitle?: T;
+        orderTitle?: T;
+        orderDescription?: T;
+        orderButton?: T;
+        otherPublicationsTitle?: T;
+        otherPublicationsAllButton?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "earlyCareerAward_select".
+ */
+export interface EarlyCareerAwardSelect<T extends boolean = true> {
+  isLinkable?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+      };
+  textBlocksBefore?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  winnersTeasers?:
+    | T
+    | {
+        buttonText?: T;
+      };
+  textBlocksAfter?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  downloads?:
+    | T
+    | {
+        title?: T;
+        downloads?: T;
+      };
+  cta?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        buttonText?: T;
+      };
+  faq?:
+    | T
+    | {
+        colorMode?: T;
+        colorScheme?: T;
+        faq?: T;
+      };
+  contact?:
+    | T
+    | {
+        colorMode?: T;
+        colorScheme?: T;
+        contactPerson?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "institutes_select".
+ */
+export interface InstitutesSelect<T extends boolean = true> {
+  isLinkable?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+        colorMode?: T;
+        colorScheme?: T;
+      };
+  teasers?:
+    | T
+    | {
+        teaserLinkText?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2654,503 +3364,6 @@ export interface PromotionSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "institutes_select".
- */
-export interface InstitutesSelect<T extends boolean = true> {
-  isLinkable?: T;
-  hero?:
-    | T
-    | {
-        title?: T;
-        lead?: T;
-        colorMode?: T;
-        colorScheme?: T;
-      };
-  teasers?:
-    | T
-    | {
-        teaserLinkText?: T;
-      };
-  meta?:
-    | T
-    | {
-        seo?:
-          | T
-          | {
-              index?: T;
-              title?: T;
-              image?: T;
-              description?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "earlyCareerAward_select".
- */
-export interface EarlyCareerAwardSelect<T extends boolean = true> {
-  isLinkable?: T;
-  hero?:
-    | T
-    | {
-        title?: T;
-        lead?: T;
-      };
-  textBlocksBefore?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
-  winnersTeasers?:
-    | T
-    | {
-        buttonText?: T;
-      };
-  textBlocksAfter?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
-  downloads?:
-    | T
-    | {
-        title?: T;
-        downloads?: T;
-      };
-  cta?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        buttonText?: T;
-      };
-  faq?:
-    | T
-    | {
-        colorMode?: T;
-        colorScheme?: T;
-        faq?: T;
-      };
-  contact?:
-    | T
-    | {
-        colorMode?: T;
-        colorScheme?: T;
-        contactPerson?: T;
-      };
-  meta?:
-    | T
-    | {
-        seo?:
-          | T
-          | {
-              index?: T;
-              title?: T;
-              image?: T;
-              description?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "activities_select".
- */
-export interface ActivitiesSelect<T extends boolean = true> {
-  isLinkable?: T;
-  hero?:
-    | T
-    | {
-        title?: T;
-        lead?: T;
-      };
-  subpageSections?:
-    | T
-    | {
-        title?: T;
-        lead?: T;
-        alignement?: T;
-        blocks?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              linkType?: T;
-              linkInternal?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-              linkExternal?:
-                | T
-                | {
-                    externalLinkText?: T;
-                    externalLink?: T;
-                    id?: T;
-                  };
-              id?: T;
-            };
-        id?: T;
-      };
-  magazine?:
-    | T
-    | {
-        title?: T;
-        lead?: T;
-        linkText?: T;
-      };
-  publications?:
-    | T
-    | {
-        title?: T;
-        lead?: T;
-        linkText?: T;
-      };
-  events?:
-    | T
-    | {
-        title?: T;
-        linkText?: T;
-      };
-  news?:
-    | T
-    | {
-        title?: T;
-        linkText?: T;
-      };
-  meta?:
-    | T
-    | {
-        seo?:
-          | T
-          | {
-              index?: T;
-              title?: T;
-              image?: T;
-              description?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "magazineOverview_select".
- */
-export interface MagazineOverviewSelect<T extends boolean = true> {
-  isLinkable?: T;
-  hero?:
-    | T
-    | {
-        title?: T;
-        lead?: T;
-      };
-  magazineDetailPageProps?:
-    | T
-    | {
-        heroExportButtonText?: T;
-        linksTitle?: T;
-        subscribeButtonText?: T;
-        downloadsTitle?: T;
-        downloadsText?: T;
-      };
-  meta?:
-    | T
-    | {
-        seo?:
-          | T
-          | {
-              index?: T;
-              title?: T;
-              image?: T;
-              description?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publicationsOverview_select".
- */
-export interface PublicationsOverviewSelect<T extends boolean = true> {
-  isLinkable?: T;
-  hero?:
-    | T
-    | {
-        title?: T;
-        lead?: T;
-      };
-  zenodoInfo?: T;
-  filters?:
-    | T
-    | {
-        allCheckboxTopics?: T;
-        allCheckboxTypes?: T;
-        title?: T;
-      };
-  publicationDetail?:
-    | T
-    | {
-        copyButtonText?: T;
-        downloadsTitle?: T;
-        orderTitle?: T;
-        orderDescription?: T;
-        orderButton?: T;
-        otherPublicationsTitle?: T;
-        otherPublicationsAllButton?: T;
-      };
-  meta?:
-    | T
-    | {
-        seo?:
-          | T
-          | {
-              index?: T;
-              title?: T;
-              image?: T;
-              description?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "eventsOverview_select".
- */
-export interface EventsOverviewSelect<T extends boolean = true> {
-  isLinkable?: T;
-  hero?:
-    | T
-    | {
-        title?: T;
-        lead?: T;
-      };
-  events?:
-    | T
-    | {
-        sectionTitle?: T;
-      };
-  meta?:
-    | T
-    | {
-        seo?:
-          | T
-          | {
-              index?: T;
-              title?: T;
-              image?: T;
-              description?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "newsOverview_select".
- */
-export interface NewsOverviewSelect<T extends boolean = true> {
-  isLinkable?: T;
-  hero?:
-    | T
-    | {
-        title?: T;
-        lead?: T;
-      };
-  detailPageProps?:
-    | T
-    | {
-        downloadsTitle?: T;
-        linksTitle?: T;
-        otherNewsTitle?: T;
-      };
-  content?:
-    | T
-    | {
-        sectionTitle?: T;
-      };
-  meta?:
-    | T
-    | {
-        seo?:
-          | T
-          | {
-              index?: T;
-              title?: T;
-              image?: T;
-              description?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "aboutContact_select".
- */
-export interface AboutContactSelect<T extends boolean = true> {
-  isLinkable?: T;
-  hero?:
-    | T
-    | {
-        title?: T;
-        lead?: T;
-      };
-  addresses?:
-    | T
-    | {
-        title?: T;
-        contacts?:
-          | T
-          | {
-              title?: T;
-              category?: T;
-              id?: T;
-            };
-      };
-  meta?:
-    | T
-    | {
-        seo?:
-          | T
-          | {
-              index?: T;
-              title?: T;
-              image?: T;
-              description?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "aboutSagw_select".
- */
-export interface AboutSagwSelect<T extends boolean = true> {
-  isLinkable?: T;
-  hero?:
-    | T
-    | {
-        title?: T;
-        lead?: T;
-      };
-  contentBlocks?:
-    | T
-    | {
-        textBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-      };
-  linksGroup?:
-    | T
-    | {
-        linksTitle?: T;
-        link?:
-          | T
-          | {
-              externalLinkText?: T;
-              externalLink?: T;
-              description?: T;
-              id?: T;
-            };
-      };
-  downloadsGroup?:
-    | T
-    | {
-        downloadsTitle?: T;
-        downloads?: T;
-      };
-  meta?:
-    | T
-    | {
-        seo?:
-          | T
-          | {
-              index?: T;
-              title?: T;
-              image?: T;
-              description?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "aboutTeam_select".
- */
-export interface AboutTeamSelect<T extends boolean = true> {
-  isLinkable?: T;
-  hero?:
-    | T
-    | {
-        title?: T;
-        lead?: T;
-      };
-  meta?:
-    | T
-    | {
-        seo?:
-          | T
-          | {
-              index?: T;
-              title?: T;
-              image?: T;
-              description?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3178,48 +3391,19 @@ export interface ErrorPageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "i18nForms_select".
+ * via the `definition` "home_select".
  */
-export interface I18NFormsSelect<T extends boolean = true> {
-  inputFields?:
-    | T
-    | {
-        email?:
-          | T
-          | {
-              label?: T;
-              placeholder?: T;
-              error?: T;
-            };
-        message?:
-          | T
-          | {
-              label?: T;
-              placeholder?: T;
-              error?: T;
-            };
-        name?:
-          | T
-          | {
-              label?: T;
-              placeholder?: T;
-              error?: T;
-            };
-      };
-  checkboxes?:
-    | T
-    | {
-        dataPrivacyCheckboxText?: T;
-      };
-  submitSuccess?:
+export interface HomeSelect<T extends boolean = true> {
+  isLinkable?: T;
+  hero?:
     | T
     | {
         title?: T;
-        text?: T;
+        lead?: T;
+        sideTitle?: T;
         optionalLink?:
           | T
           | {
@@ -3233,224 +3417,102 @@ export interface I18NFormsSelect<T extends boolean = true> {
                   };
             };
       };
-  submitError?:
+  meta?:
     | T
     | {
-        title?: T;
-        text?: T;
-        optionalLink?:
+        seo?:
           | T
           | {
-              includeLink?: T;
-              link?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-            };
-      };
-  submitWarn?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        optionalLink?:
-          | T
-          | {
-              includeLink?: T;
-              link?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
             };
       };
   updatedAt?: T;
   createdAt?: T;
-  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "i18nGlobals_select".
+ * via the `definition` "network_select".
  */
-export interface I18NGlobalsSelect<T extends boolean = true> {
-  sectionTitles?:
-    | T
-    | {
-        download?: T;
-        links?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "consent_select".
- */
-export interface ConsentSelect<T extends boolean = true> {
-  banner?:
+export interface NetworkSelect<T extends boolean = true> {
+  department?: T;
+  isLinkable?: T;
+  hero?:
     | T
     | {
         title?: T;
-        text?: T;
-        buttonAcceptAll?: T;
-        buttonAcceptSelection?: T;
-        necessaryCookies?:
+        lead?: T;
+      };
+  filter?:
+    | T
+    | {
+        allCheckboxText?: T;
+        title?: T;
+      };
+  items?:
+    | T
+    | {
+        foundingYearText?: T;
+        linkText?: T;
+        items?:
           | T
           | {
               title?: T;
-              text?: T;
-              toggleLabel?: T;
+              category?: T;
+              foundingYear?: T;
+              image?: T;
+              link?: T;
+              id?: T;
             };
-        analyticsPerformance?:
+      };
+  meta?:
+    | T
+    | {
+        seo?:
           | T
           | {
+              index?: T;
               title?: T;
-              text?: T;
-              toggleLabelOff?: T;
-              toggleLabelOn?: T;
-              toggleDefault?: T;
-            };
-        externalContent?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              toggleLabelOff?: T;
-              toggleLabelOn?: T;
-              toggleDefault?: T;
+              image?: T;
+              description?: T;
             };
       };
   updatedAt?: T;
   createdAt?: T;
-  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header_select".
+ * via the `definition` "payload-locked-documents_select".
  */
-export interface HeaderSelect<T extends boolean = true> {
-  logo?: T;
-  metaLinks?:
-    | T
-    | {
-        externalLinkText?: T;
-        externalLink?: T;
-        description?: T;
-        id?: T;
-      };
-  navigation?:
-    | T
-    | {
-        home?: T;
-        promotion?:
-          | T
-          | {
-              description?: T;
-              overview?: T;
-              institutes?: T;
-              editions?: T;
-              travelReports?: T;
-              earlyCareerAward?: T;
-            };
-        network?:
-          | T
-          | {
-              description?: T;
-              network?: T;
-            };
-        activities?:
-          | T
-          | {
-              description?: T;
-              overview?: T;
-              magazine?: T;
-              publications?: T;
-              events?: T;
-            };
-        about?:
-          | T
-          | {
-              description?: T;
-              sagw?: T;
-              team?: T;
-              contact?: T;
-              openJobs?: T;
-            };
-      };
+export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
+  document?: T;
+  globalSlug?: T;
+  user?: T;
   updatedAt?: T;
   createdAt?: T;
-  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer_select".
+ * via the `definition` "payload-preferences_select".
  */
-export interface FooterSelect<T extends boolean = true> {
-  legal?: T;
-  impressum?: T;
-  copyright?: T;
-  contact?:
-    | T
-    | {
-        title?: T;
-        address1?: T;
-        address2?: T;
-        poBox?: T;
-        countryCode?: T;
-        zipCode?: T;
-        city?: T;
-        phone?: T;
-        mail?: T;
-      };
-  socialLinks?:
-    | T
-    | {
-        externalLinkText?: T;
-        externalLink?: T;
-        icon?: T;
-        id?: T;
-      };
+export interface PayloadPreferencesSelect<T extends boolean = true> {
+  user?: T;
+  key?: T;
+  value?: T;
   updatedAt?: T;
   createdAt?: T;
-  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "statusMessage_select".
+ * via the `definition` "payload-migrations_select".
  */
-export interface StatusMessageSelect<T extends boolean = true> {
-  show?:
-    | T
-    | {
-        display?: T;
-        from?: T;
-        to?: T;
-      };
-  title?: T;
-  message?: T;
-  optionalLink?:
-    | T
-    | {
-        includeLink?: T;
-        link?:
-          | T
-          | {
-              openInNewWindow?: T;
-              linkText?: T;
-              internalLink?: T;
-            };
-      };
-  showOnHomeOnly?: T;
-  type?: T;
+export interface PayloadMigrationsSelect<T extends boolean = true> {
+  name?: T;
+  batch?: T;
   updatedAt?: T;
   createdAt?: T;
-  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

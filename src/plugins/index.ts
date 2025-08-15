@@ -49,6 +49,12 @@ const plugins: Plugin[] = [
   multiTenantPlugin<Config>({
     collections: {
       instituteDetail: {},
+      magazineOverview: {
+        isGlobal: true,
+      },
+      network: {
+        isGlobal: true,
+      },
     },
     tenantField: {
       access: {
