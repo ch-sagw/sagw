@@ -110,5 +110,9 @@ export const People: CollectionConfig = {
       type: 'text',
     },
   ],
+  labels: {
+    plural: 'People',
+    singular: 'People',
+  },
   slug: 'people',
 };

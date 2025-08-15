@@ -97,5 +97,9 @@ export const StatusMessage: CollectionConfig = {
       type: 'select',
     },
   ],
+  labels: {
+    plural: 'Status Message',
+    singular: 'Status Message',
+  },
   slug: 'statusMessage',
 };

@@ -164,5 +164,9 @@ export const Consent: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  labels: {
+    plural: 'Consent',
+    singular: 'Consent',
+  },
   slug: 'consent',
 };

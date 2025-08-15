@@ -90,5 +90,9 @@ export const Footer: CollectionConfig = {
       type: 'array',
     },
   ],
+  labels: {
+    plural: 'Footer',
+    singular: 'Footer',
+  },
   slug: 'footer',
 };

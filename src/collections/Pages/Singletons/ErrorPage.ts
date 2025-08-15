@@ -53,5 +53,9 @@ export const ErrorPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  labels: {
+    plural: 'Error Page',
+    singular: 'Error Page',
+  },
   slug: 'errorPage',
 };

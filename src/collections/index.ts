@@ -120,7 +120,7 @@ const tenantsCollectionsObject: Record<string, InterfaceTenantCollectionObject> 
 
 collections.forEach((item) => {
   if (item.slug !== Departments.slug) {
-    if (singletonPageCollections.includes(item)) {
+    if (singletonPageCollections.includes(item) || globalCollections.includes(item)) {
       tenantsCollectionsObject[item.slug] = {
         isGlobal: true,
       };

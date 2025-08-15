@@ -193,5 +193,9 @@ export const Header: CollectionConfig = {
       type: 'group',
     },
   ],
+  labels: {
+    plural: 'Header',
+    singular: 'Header',
+  },
   slug: 'header',
 };
