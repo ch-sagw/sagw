@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload';
 
 import { isGlobalAdminAccess } from '@/access/isGlobalAdmin';
-import { updateAndDeleteAccess } from '@/collections/Departments/access/updateAndDelete';
+import { updateAndDeleteAccess } from '@/collections/Plc/Departments/access/updateAndDelete';
 
 export const Departments: CollectionConfig = {
   access: {

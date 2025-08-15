@@ -11,7 +11,7 @@ import sharp from 'sharp';
 
 import plugins from '@/plugins';
 import { collections } from '@/collections';
-import { Users } from '@/collections/Users';
+import { Users } from '@/collections/Plc/Users';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);

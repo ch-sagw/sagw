@@ -6,9 +6,9 @@ import {
 import { multiTenantPlugin } from '@payloadcms/plugin-multi-tenant';
 
 import { Plugin } from 'payload';
-import { Images } from '@/collections/Images';
-import { Videos } from '@/collections/Videos';
-import { Documents } from '@/collections/Documents';
+import { Images } from '@/collections/Plc/Images';
+import { Videos } from '@/collections/Plc/Videos';
+import { Documents } from '@/collections/Plc/Documents';
 import { getServerSideURL } from '@/utilities/getUrl';
 import type { Config } from '@/payload-types';
 import { isGlobalAdmin } from '@/access/isGlobalAdmin';

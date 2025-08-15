@@ -1,15 +1,15 @@
 import type { CollectionConfig } from 'payload';
 import { tenantsArrayField } from '@payloadcms/plugin-multi-tenant/fields';
 
-import { createAccess } from '@/collections/Users/access/create';
-import { readAccess } from '@/collections/Users/access/read';
-import { updateAndDeleteAccess } from '@/collections/Users/access/updateAndDelete';
-import { ensureUniqueUsername } from '@/collections/Users/hooks/ensureUniqueUsername';
-import { setCookieBasedOnDomain } from '@/collections/Users/hooks/setCookieBasedOnDomain';
+import { createAccess } from '@/collections/Plc/Users/access/create';
+import { readAccess } from '@/collections/Plc/Users/access/read';
+import { updateAndDeleteAccess } from '@/collections/Plc/Users/access/updateAndDelete';
+import { ensureUniqueUsername } from '@/collections/Plc/Users/hooks/ensureUniqueUsername';
+import { setCookieBasedOnDomain } from '@/collections/Plc/Users/hooks/setCookieBasedOnDomain';
 import { isGlobalAdmin } from '@/access/isGlobalAdmin';
 import {
   departmentRoles, userRoles,
-} from '@/collections/Users/roles';
+} from '@/collections/Plc/Users/roles';
 
 const defaultDepartmentArrayField = tenantsArrayField({
   arrayFieldAccess: {},

@@ -1,17 +1,17 @@
 // plc
-import { Users } from '@/collections/Users';
-import { Images } from '@/collections/Images';
-import { Videos } from '@/collections/Videos';
-import { NetworkCategories } from '@/collections/NetworkCategories';
-import { FaqItems } from '@/collections/FaqItems';
-import { Documents } from '@/collections/Documents';
-import { Projects } from '@/collections/Projects';
-import { People } from '@/collections/People';
-import { PublicationTopics } from '@/collections/PublicationTopics';
-import { PublicationTypes } from '@/collections/PublicationTypes';
-import { EventCategories } from '@/collections/EventCategories';
-import { Events } from '@/collections/Events';
-import { Departments } from '@/collections/Departments';
+import { Users } from '@/collections/Plc/Users';
+import { Images } from '@/collections/Plc/Images';
+import { Videos } from '@/collections/Plc/Videos';
+import { NetworkCategories } from '@/collections/Plc/NetworkCategories';
+import { FaqItems } from '@/collections/Plc/FaqItems';
+import { Documents } from '@/collections/Plc/Documents';
+import { Projects } from '@/collections/Plc/Projects';
+import { People } from '@/collections/Plc/People';
+import { PublicationTopics } from '@/collections/Plc/PublicationTopics';
+import { PublicationTypes } from '@/collections/Plc/PublicationTypes';
+import { EventCategories } from '@/collections/Plc/EventCategories';
+import { Events } from '@/collections/Plc/Events';
+import { Departments } from '@/collections/Plc/Departments';
 
 // Globals
 import { I18nForms } from './Globals/i18n/Forms';

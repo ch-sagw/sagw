@@ -2,8 +2,8 @@ import type { Access } from 'payload';
 
 import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
 import { isGlobalAdmin } from '@/access/isGlobalAdmin';
-import { isAccessingSelf } from '@/collections/Users/access/isAccessingSelf';
-import { departmentRoles } from '@/collections/Users/roles';
+import { isAccessingSelf } from '@/collections//Plc/Users/access/isAccessingSelf';
+import { departmentRoles } from '@/collections/Plc/Users/roles';
 
 export const updateAndDeleteAccess: Access = ({
   req, id,

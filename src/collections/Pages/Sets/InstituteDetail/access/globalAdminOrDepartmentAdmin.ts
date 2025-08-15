@@ -1,7 +1,7 @@
 import { Access } from 'payload';
 import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
 import { isGlobalAdmin } from '@/access/isGlobalAdmin';
-import { departmentRoles } from '@/collections/Users/roles';
+import { departmentRoles } from '@/collections/Plc/Users/roles';
 
 /**
  * Department admins and global admins will be allowed access

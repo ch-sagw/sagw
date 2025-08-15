@@ -6,9 +6,9 @@ import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
 
 import { isGlobalAdmin } from '@/access/isGlobalAdmin';
 import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
-import { isAccessingSelf } from '@/collections/Users/access/isAccessingSelf';
+import { isAccessingSelf } from '@/collections/Plc/Users/access/isAccessingSelf';
 import { getCollectionIDType } from '@/utilities/getCollectionIdType';
-import { departmentRoles } from '@/collections/Users/roles';
+import { departmentRoles } from '@/collections/Plc/Users/roles';
 
 export const readAccess: Access<User> = ({
   req, id,

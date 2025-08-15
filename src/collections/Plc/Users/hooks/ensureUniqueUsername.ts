@@ -5,7 +5,7 @@ import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
 
 import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
 import { getCollectionIDType } from '@/utilities/getCollectionIdType';
-import { userRoles } from '@/collections/Users/roles';
+import { userRoles } from '@/collections/Plc/Users/roles';
 
 export const ensureUniqueUsername: FieldHook = async ({
   originalDoc, req, value,

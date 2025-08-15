@@ -8,7 +8,7 @@ import { isGlobalAdmin } from '@/access/isGlobalAdmin';
 import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
 import {
   departmentRoles, userRoles,
-} from '@/collections/Users/roles';
+} from '@/collections/Plc/Users/roles';
 
 export const createAccess: Access<User> = ({
   req,
