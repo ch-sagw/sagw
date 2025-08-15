@@ -5,7 +5,7 @@ import type {
 import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
 
 import { isGlobalAdmin } from '@/access/isGlobalAdmin';
-import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
+import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
 import { isAccessingSelf } from '@/collections/Users/access/isAccessingSelf';
 import { getCollectionIDType } from '@/utilities/getCollectionIdType';
 import { departmentRoles } from '@/collections/Users/roles';
@@ -25,23 +25,24 @@ export const readAccess: Access<User> = ({
   }
 
   const superAdmin = isGlobalAdmin(req.user);
-  const selectedTenant = getTenantFromCookie(
+  const selectedDepartment = getTenantFromCookie(
     req.headers,
     getCollectionIDType({
-      collectionSlug: 'tenants',
+      collectionSlug: 'departments',
       payload: req.payload,
     }),
   );
-  const adminTenantAccessIDs = getUserTenantIDs(req.user, departmentRoles.admin);
+  const adminDeartmentAccessIDs = getUserDepartmentIDs(req.user, departmentRoles.admin);
 
-  if (selectedTenant) {
-    // If it's a super admin, or they have access to the tenant ID set in cookie
-    const hasTenantAccess = adminTenantAccessIDs.some((accessId) => accessId === selectedTenant);
+  if (selectedDepartment) {
+    // If it's a super admin, or they have access to the department ID
+    // set in cookie
+    const hasDepartmentAccess = adminDeartmentAccessIDs.some((accessId) => accessId === selectedDepartment);
 
-    if (superAdmin || hasTenantAccess) {
+    if (superAdmin || hasDepartmentAccess) {
       return {
-        'tenants.tenant': {
-          equals: selectedTenant,
+        'departments.department': {
+          equals: selectedDepartment,
         },
       };
     }
@@ -59,8 +60,8 @@ export const readAccess: Access<User> = ({
         },
       },
       {
-        'tenants.tenant': {
-          in: adminTenantAccessIDs,
+        'departments.department': {
+          in: adminDeartmentAccessIDs,
         },
       },
     ],

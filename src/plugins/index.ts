@@ -12,7 +12,7 @@ import { Documents } from '@/collections/Documents';
 import { getServerSideURL } from '@/utilities/getUrl';
 import type { Config } from '@/payload-types';
 import { isGlobalAdmin } from '@/access/isGlobalAdmin';
-import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
+import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
 
 const generateTitle: GenerateTitle = ({
   doc,
@@ -60,13 +60,17 @@ const plugins: Plugin[] = [
             return true;
           }
 
-          return getUserTenantIDs(req.user).length > 0;
+          return getUserDepartmentIDs(req.user).length > 0;
         },
       },
+      name: 'department',
     },
     tenantsArrayField: {
+      arrayFieldName: 'departments',
+      arrayTenantFieldName: 'department',
       includeDefaultField: false,
     },
+    tenantsSlug: 'departments',
     userHasAccessToAllTenants: (user) => isGlobalAdmin(user),
   }),
 ];

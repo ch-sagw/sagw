@@ -1,9 +1,9 @@
 import type { CollectionConfig } from 'payload';
 
 import { isGlobalAdminAccess } from '@/access/isGlobalAdmin';
-import { updateAndDeleteAccess } from '@/collections/Tenants/access/updateAndDelete';
+import { updateAndDeleteAccess } from '@/collections/Departments/access/updateAndDelete';
 
-export const Tenants: CollectionConfig = {
+export const Departments: CollectionConfig = {
   access: {
     create: isGlobalAdminAccess,
     delete: updateAndDeleteAccess,
@@ -23,14 +23,14 @@ export const Tenants: CollectionConfig = {
     },
     {
       admin: {
-        description: 'Used for domain-based tenant handling',
+        description: 'Used for domain-based department handling',
       },
       name: 'domain',
       type: 'text',
     },
     {
       admin: {
-        description: 'Used for url paths, example: /tenant-slug/page-slug',
+        description: 'Used for url paths, example: /department-slug/page-slug',
       },
       index: true,
       name: 'slug',
@@ -49,5 +49,5 @@ export const Tenants: CollectionConfig = {
       type: 'checkbox',
     },
   ],
-  slug: 'tenants',
+  slug: 'departments',
 };

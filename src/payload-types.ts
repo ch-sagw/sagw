@@ -67,7 +67,7 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    tenants: Tenant;
+    departments: Department;
     users: User;
     images: Image;
     networkCategories: NetworkCategory;
@@ -90,7 +90,7 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    tenants: TenantsSelect<false> | TenantsSelect<true>;
+    departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     images: ImagesSelect<false> | ImagesSelect<true>;
     networkCategories: NetworkCategoriesSelect<false> | NetworkCategoriesSelect<true>;
@@ -187,17 +187,17 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tenants".
+ * via the `definition` "departments".
  */
-export interface Tenant {
+export interface Department {
   id: string;
   name: string;
   /**
-   * Used for domain-based tenant handling
+   * Used for domain-based department handling
    */
   domain?: string | null;
   /**
-   * Used for url paths, example: /tenant-slug/page-slug
+   * Used for url paths, example: /department-slug/page-slug
    */
   slug: string;
   /**
@@ -215,9 +215,9 @@ export interface User {
   id: string;
   roles?: ('global-admin' | 'global-user')[] | null;
   username?: string | null;
-  tenants?:
+  departments?:
     | {
-        tenant: string | Tenant;
+        department: string | Department;
         roles: ('admin' | 'editor' | 'editor-magazine' | 'translator')[];
         id?: string | null;
       }[]
@@ -351,7 +351,7 @@ export interface Person {
  */
 export interface InstituteDetail {
   id: string;
-  tenant?: (string | null) | Tenant;
+  department?: (string | null) | Department;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   hero: {
@@ -763,8 +763,8 @@ export interface PayloadLockedDocument {
   id: string;
   document?:
     | ({
-        relationTo: 'tenants';
-        value: string | Tenant;
+        relationTo: 'departments';
+        value: string | Department;
       } | null)
     | ({
         relationTo: 'users';
@@ -874,9 +874,9 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tenants_select".
+ * via the `definition` "departments_select".
  */
-export interface TenantsSelect<T extends boolean = true> {
+export interface DepartmentsSelect<T extends boolean = true> {
   name?: T;
   domain?: T;
   slug?: T;
@@ -891,10 +891,10 @@ export interface TenantsSelect<T extends boolean = true> {
 export interface UsersSelect<T extends boolean = true> {
   roles?: T;
   username?: T;
-  tenants?:
+  departments?:
     | T
     | {
-        tenant?: T;
+        department?: T;
         roles?: T;
         id?: T;
       };
@@ -1005,7 +1005,7 @@ export interface PeopleSelect<T extends boolean = true> {
  * via the `definition` "instituteDetail_select".
  */
 export interface InstituteDetailSelect<T extends boolean = true> {
-  tenant?: T;
+  department?: T;
   isLinkable?: T;
   adminTitle?: T;
   hero?:

@@ -6,7 +6,7 @@ export const setCookieBasedOnDomain: CollectionAfterLoginHook = async ({
   req, user,
 }) => {
   const relatedOrg = await req.payload.find({
-    collection: 'tenants',
+    collection: 'departments',
     depth: 0,
     limit: 1,
     where: {
@@ -16,13 +16,13 @@ export const setCookieBasedOnDomain: CollectionAfterLoginHook = async ({
     },
   });
 
-  // If a matching tenant is found, set the 'payload-tenant' cookie
+  // If a matching department is found, set the 'payload-department' cookie
   if (relatedOrg && relatedOrg.docs.length > 0) {
-    const tenantCookie = generateCookie({
+    const departmentCookie = generateCookie({
       expires: getCookieExpiration({
         seconds: 7200,
       }),
-      name: 'payload-tenant',
+      name: 'payload-department',
       path: '/',
       returnCookieAsObject: false,
       value: String(relatedOrg.docs[0].id),
@@ -30,7 +30,7 @@ export const setCookieBasedOnDomain: CollectionAfterLoginHook = async ({
 
     // Merge existing responseHeaders with the new Set-Cookie header
     const newHeaders = new Headers({
-      'Set-Cookie': tenantCookie as string,
+      'Set-Cookie': departmentCookie as string,
     });
 
     // Ensure you merge existing response headers if they already exist

@@ -1,6 +1,6 @@
 import { Access } from 'payload';
 import { isGlobalAdmin } from '@/access/isGlobalAdmin';
-import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
+import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
 import { departmentRoles } from '@/collections/Users/roles';
 
 export const updateAndDeleteAccess: Access = ({
@@ -16,7 +16,7 @@ export const updateAndDeleteAccess: Access = ({
 
   return {
     id: {
-      in: getUserTenantIDs(req.user, departmentRoles.admin),
+      in: getUserDepartmentIDs(req.user, departmentRoles.admin),
     },
   };
 };

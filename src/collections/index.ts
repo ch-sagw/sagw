@@ -14,10 +14,10 @@ import { PublicationTypes } from '@/collections/PublicationTypes';
 import { EventCategories } from '@/collections/EventCategories';
 import { Events } from '@/collections/Events';
 import { NewsDetailConfig } from '@/collections/NewsDetail';
-import { Tenants } from '@/collections/Tenants';
+import { Departments } from '@/collections/Departments';
 
 const collections = [
-  Tenants,
+  Departments,
   Users,
   Images,
   NetworkCategories,

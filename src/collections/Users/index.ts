@@ -11,7 +11,7 @@ import {
   departmentRoles, userRoles,
 } from '@/collections/Users/roles';
 
-const defaultTenantArrayField = tenantsArrayField({
+const defaultDepartmentArrayField = tenantsArrayField({
   arrayFieldAccess: {},
   rowFields: [
     {
@@ -29,9 +29,9 @@ const defaultTenantArrayField = tenantsArrayField({
     },
   ],
   tenantFieldAccess: {},
-  tenantsArrayFieldName: 'tenants',
-  tenantsArrayTenantFieldName: 'tenant',
-  tenantsCollectionSlug: 'tenants',
+  tenantsArrayFieldName: 'departments',
+  tenantsArrayTenantFieldName: 'department',
+  tenantsCollectionSlug: 'departments',
 });
 
 export const Users: CollectionConfig = {
@@ -73,17 +73,17 @@ export const Users: CollectionConfig = {
       type: 'text',
     },
     {
-      ...defaultTenantArrayField,
+      ...defaultDepartmentArrayField,
       admin: {
-        ...(defaultTenantArrayField?.admin || {}),
+        ...(defaultDepartmentArrayField?.admin || {}),
         position: 'sidebar',
       },
     },
   ],
 
   // The following hook sets a cookie based on the domain a user logs in from.
-  // It checks the domain and matches it to a tenant in the system, then sets
-  // a 'payload-tenant' cookie for that tenant.
+  // It checks the domain and matches it to a department in the system,
+  // then sets a 'payload-department' cookie for that department.
   hooks: {
     afterLogin: [setCookieBasedOnDomain],
   },

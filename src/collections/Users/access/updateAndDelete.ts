@@ -1,6 +1,6 @@
 import type { Access } from 'payload';
 
-import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
+import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
 import { isGlobalAdmin } from '@/access/isGlobalAdmin';
 import { isAccessingSelf } from '@/collections/Users/access/isAccessingSelf';
 import { departmentRoles } from '@/collections/Users/roles';
@@ -25,15 +25,11 @@ export const updateAndDeleteAccess: Access = ({
 
   /**
    * Constrains update and delete access to users that belong
-   * to the same tenant as the department-admin making the request
-   *
-   * You may want to take this a step further with a beforeChange
-   * hook to ensure that the a department-admin can only remove users
-   * from their own tenant in the tenants array.
+   * to the same department as the department-admin making the request
    */
   return {
-    'tenants.tenant': {
-      in: getUserTenantIDs(user, departmentRoles.admin),
+    'departments.department': {
+      in: getUserDepartmentIDs(user, departmentRoles.admin),
     },
   };
 };

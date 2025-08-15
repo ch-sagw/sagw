@@ -1,11 +1,11 @@
 import type { Access } from 'payload';
 
 import type {
-  Tenant, User,
+  Department, User,
 } from '@/payload-types';
 
 import { isGlobalAdmin } from '@/access/isGlobalAdmin';
-import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
+import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
 import {
   departmentRoles, userRoles,
 } from '@/collections/Users/roles';
@@ -25,14 +25,14 @@ export const createAccess: Access<User> = ({
     return false;
   }
 
-  const adminTenantAccessIDs = getUserTenantIDs(req.user, departmentRoles.admin);
+  const adminDepartmentAccessIDs = getUserDepartmentIDs(req.user, departmentRoles.admin);
 
-  const requestedTenants: Tenant['id'][] =
-    req.data?.tenants?.map((t: { tenant: Tenant['id'] }) => t.tenant) ?? [];
+  const requestedDepartments: Department['id'][] =
+    req.data?.departments?.map((t: { department: Department['id'] }) => t.department) ?? [];
 
-  const hasAccessToAllRequestedTenants = requestedTenants.every((tenantID) => adminTenantAccessIDs.includes(tenantID));
+  const hasAccessToAllRequestedDepartments = requestedDepartments.every((departmentId) => adminDepartmentAccessIDs.includes(departmentId));
 
-  if (hasAccessToAllRequestedTenants) {
+  if (hasAccessToAllRequestedDepartments) {
     return true;
   }
 

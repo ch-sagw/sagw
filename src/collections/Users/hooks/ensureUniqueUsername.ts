@@ -3,7 +3,7 @@ import {
 } from 'payload';
 import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
 
-import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
+import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
 import { getCollectionIDType } from '@/utilities/getCollectionIdType';
 import { userRoles } from '@/collections/Users/roles';
 
@@ -23,18 +23,18 @@ export const ensureUniqueUsername: FieldHook = async ({
     },
   ];
 
-  const selectedTenant = getTenantFromCookie(
+  const selectedDepartment = getTenantFromCookie(
     req.headers,
     getCollectionIDType({
-      collectionSlug: 'tenants',
+      collectionSlug: 'departments',
       payload: req.payload,
     }),
   );
 
-  if (selectedTenant) {
+  if (selectedDepartment) {
     constraints.push({
-      'tenants.tenant': {
-        equals: selectedTenant,
+      'departments.department': {
+        equals: selectedDepartment,
       },
     });
   }
@@ -47,21 +47,21 @@ export const ensureUniqueUsername: FieldHook = async ({
   });
 
   if (findDuplicateUsers.docs.length > 0 && req.user) {
-    const tenantIDs = getUserTenantIDs(req.user);
+    const departmentIDs = getUserDepartmentIDs(req.user);
 
-    // if the user is an admin or has access to more than 1 tenant
+    // if the user is an admin or has access to more than 1 department
     // provide a more specific error message
-    if (req.user.roles?.includes(userRoles.admin) || tenantIDs.length > 1) {
-      if (typeof selectedTenant === 'string' || typeof selectedTenant === 'number') {
-        const attemptedTenantChange = await req.payload.findByID({
-          collection: 'tenants',
-          id: selectedTenant,
+    if (req.user.roles?.includes(userRoles.admin) || departmentIDs.length > 1) {
+      if (typeof selectedDepartment === 'string' || typeof selectedDepartment === 'number') {
+        const attemptedDepartmentChange = await req.payload.findByID({
+          collection: 'departments',
+          id: selectedDepartment,
         });
 
         throw new ValidationError({
           errors: [
             {
-              message: `The "${attemptedTenantChange.name}" tenant already has a user with the username "${value}". Usernames must be unique per tenant.`,
+              message: `The "${attemptedDepartmentChange.name}" department already has a user with the username "${value}". Usernames must be unique per department.`,
               path: 'username',
             },
           ],
@@ -72,7 +72,7 @@ export const ensureUniqueUsername: FieldHook = async ({
     throw new ValidationError({
       errors: [
         {
-          message: `A user with the username ${value} already exists. Usernames must be unique per tenant.`,
+          message: `A user with the username ${value} already exists. Usernames must be unique per department.`,
           path: 'username',
         },
       ],
