@@ -1,11 +1,11 @@
 import type { CollectionConfig } from 'payload';
 
-import { isSuperAdminAccess } from '@/access/isSuperAdmin';
-import { updateAndDeleteAccess } from './access/updateAndDelete';
+import { isGlobalAdminAccess } from '@/access/isGlobalAdmin';
+import { updateAndDeleteAccess } from '@/collections/Tenants/access/updateAndDelete';
 
 export const Tenants: CollectionConfig = {
   access: {
-    create: isSuperAdminAccess,
+    create: isGlobalAdminAccess,
     delete: updateAndDeleteAccess,
     read: ({
       req,

@@ -6,18 +6,23 @@ import { readAccess } from '@/collections/Users/access/read';
 import { updateAndDeleteAccess } from '@/collections/Users/access/updateAndDelete';
 import { ensureUniqueUsername } from '@/collections/Users/hooks/ensureUniqueUsername';
 import { setCookieBasedOnDomain } from '@/collections/Users/hooks/setCookieBasedOnDomain';
-import { isSuperAdmin } from '@/access/isSuperAdmin';
+import { isGlobalAdmin } from '@/access/isGlobalAdmin';
+import {
+  departmentRoles, userRoles,
+} from '@/collections/Users/roles';
 
 const defaultTenantArrayField = tenantsArrayField({
   arrayFieldAccess: {},
   rowFields: [
     {
-      defaultValue: ['tenant-viewer'],
+      defaultValue: [departmentRoles.editor],
       hasMany: true,
       name: 'roles',
       options: [
-        'tenant-admin',
-        'tenant-viewer',
+        departmentRoles.admin,
+        departmentRoles.editor,
+        departmentRoles.editorMagazine,
+        departmentRoles.translator,
       ],
       required: true,
       type: 'select',
@@ -45,17 +50,17 @@ export const Users: CollectionConfig = {
       access: {
         update: ({
           req,
-        }) => isSuperAdmin(req.user),
+        }) => isGlobalAdmin(req.user),
       },
       admin: {
         position: 'sidebar',
       },
-      defaultValue: ['user'],
+      defaultValue: [userRoles.user],
       hasMany: true,
       name: 'roles',
       options: [
-        'super-admin',
-        'user',
+        userRoles.admin,
+        userRoles.user,
       ],
       type: 'select',
     },

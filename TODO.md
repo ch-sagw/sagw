@@ -44,3 +44,5 @@ Payload Config:
 - multiTenantPlugin config: find smart way to add all collections
 - multiTenantPlugin add proper roles
 - multiTenantPlugin use isGlobal and migrate global pages to collections
+- multiTenantPlugin rename tenants to departments
+- multiTenantPlugin Tenants index.ts -> allowPublicRead, needed?

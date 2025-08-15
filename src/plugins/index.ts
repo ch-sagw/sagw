@@ -11,7 +11,7 @@ import { Videos } from '@/collections/Videos';
 import { Documents } from '@/collections/Documents';
 import { getServerSideURL } from '@/utilities/getUrl';
 import type { Config } from '@/payload-types';
-import { isSuperAdmin } from '@/access/isSuperAdmin';
+import { isGlobalAdmin } from '@/access/isGlobalAdmin';
 import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
 
 const generateTitle: GenerateTitle = ({
@@ -56,7 +56,7 @@ const plugins: Plugin[] = [
         update: ({
           req,
         }) => {
-          if (isSuperAdmin(req.user)) {
+          if (isGlobalAdmin(req.user)) {
             return true;
           }
 
@@ -67,7 +67,7 @@ const plugins: Plugin[] = [
     tenantsArrayField: {
       includeDefaultField: false,
     },
-    userHasAccessToAllTenants: (user) => isSuperAdmin(user),
+    userHasAccessToAllTenants: (user) => isGlobalAdmin(user),
   }),
 ];
 

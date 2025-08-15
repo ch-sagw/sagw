@@ -213,12 +213,12 @@ export interface Tenant {
  */
 export interface User {
   id: string;
-  roles?: ('super-admin' | 'user')[] | null;
+  roles?: ('global-admin' | 'global-user')[] | null;
   username?: string | null;
   tenants?:
     | {
         tenant: string | Tenant;
-        roles: ('tenant-admin' | 'tenant-viewer')[];
+        roles: ('admin' | 'editor' | 'editor-magazine' | 'translator')[];
         id?: string | null;
       }[]
     | null;

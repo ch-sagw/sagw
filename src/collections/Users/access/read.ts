@@ -4,10 +4,11 @@ import type {
 } from 'payload';
 import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
 
-import { isSuperAdmin } from '@/access/isSuperAdmin';
+import { isGlobalAdmin } from '@/access/isGlobalAdmin';
 import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
 import { isAccessingSelf } from '@/collections/Users/access/isAccessingSelf';
 import { getCollectionIDType } from '@/utilities/getCollectionIdType';
+import { departmentRoles } from '@/collections/Users/roles';
 
 export const readAccess: Access<User> = ({
   req, id,
@@ -23,7 +24,7 @@ export const readAccess: Access<User> = ({
     return true;
   }
 
-  const superAdmin = isSuperAdmin(req.user);
+  const superAdmin = isGlobalAdmin(req.user);
   const selectedTenant = getTenantFromCookie(
     req.headers,
     getCollectionIDType({
@@ -31,7 +32,7 @@ export const readAccess: Access<User> = ({
       payload: req.payload,
     }),
   );
-  const adminTenantAccessIDs = getUserTenantIDs(req.user, 'tenant-admin');
+  const adminTenantAccessIDs = getUserTenantIDs(req.user, departmentRoles.admin);
 
   if (selectedTenant) {
     // If it's a super admin, or they have access to the tenant ID set in cookie

@@ -1,6 +1,7 @@
 import { Access } from 'payload';
-import { isSuperAdmin } from '@/access/isSuperAdmin';
+import { isGlobalAdmin } from '@/access/isGlobalAdmin';
 import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
+import { departmentRoles } from '@/collections/Users/roles';
 
 export const updateAndDeleteAccess: Access = ({
   req,
@@ -9,13 +10,13 @@ export const updateAndDeleteAccess: Access = ({
     return false;
   }
 
-  if (isSuperAdmin(req.user)) {
+  if (isGlobalAdmin(req.user)) {
     return true;
   }
 
   return {
     id: {
-      in: getUserTenantIDs(req.user, 'tenant-admin'),
+      in: getUserTenantIDs(req.user, departmentRoles.admin),
     },
   };
 };

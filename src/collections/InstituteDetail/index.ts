@@ -8,14 +8,14 @@ import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
-import { superAdminOrTenantAdminAccess } from '@/collections/InstituteDetail/access/superAdminOrTenantAdmin';
+import { globalAdminOrTenantAdminAccess } from '@/collections/InstituteDetail/access/globalAdminOrTenantAdmin';
 
 export const InstituteDetailConfig: CollectionConfig = {
   access: {
-    create: superAdminOrTenantAdminAccess,
-    delete: superAdminOrTenantAdminAccess,
+    create: globalAdminOrTenantAdminAccess,
+    delete: globalAdminOrTenantAdminAccess,
     read: () => true,
-    update: superAdminOrTenantAdminAccess,
+    update: globalAdminOrTenantAdminAccess,
   },
   admin: {
     group: 'Pages',

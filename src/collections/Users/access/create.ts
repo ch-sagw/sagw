@@ -4,8 +4,11 @@ import type {
   Tenant, User,
 } from '@/payload-types';
 
-import { isSuperAdmin } from '@/access/isSuperAdmin';
+import { isGlobalAdmin } from '@/access/isGlobalAdmin';
 import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
+import {
+  departmentRoles, userRoles,
+} from '@/collections/Users/roles';
 
 export const createAccess: Access<User> = ({
   req,
@@ -14,15 +17,15 @@ export const createAccess: Access<User> = ({
     return false;
   }
 
-  if (isSuperAdmin(req.user)) {
+  if (isGlobalAdmin(req.user)) {
     return true;
   }
 
-  if (!isSuperAdmin(req.user) && req.data?.roles?.includes('super-admin')) {
+  if (!isGlobalAdmin(req.user) && req.data?.roles?.includes(userRoles.admin)) {
     return false;
   }
 
-  const adminTenantAccessIDs = getUserTenantIDs(req.user, 'tenant-admin');
+  const adminTenantAccessIDs = getUserTenantIDs(req.user, departmentRoles.admin);
 
   const requestedTenants: Tenant['id'][] =
     req.data?.tenants?.map((t: { tenant: Tenant['id'] }) => t.tenant) ?? [];
