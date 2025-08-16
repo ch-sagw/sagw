@@ -9,40 +9,38 @@ import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
 import InternalLinkChooserClient from './InternalLinkChooserClient';
 import { fieldLinkablePageFieldName } from '@/field-templates/linkablePage';
 import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
+import { tenantsCollections } from '@/collections';
 
-const isLinkablePage = (page: any): page is { isLinkable: boolean; adminTitle: string } => fieldLinkablePageFieldName in page && typeof page[fieldAdminTitleFieldName] === 'string';
+const collectionIsLinkablePage = (page: any): page is { isLinkable: boolean; adminTitle: string } => fieldLinkablePageFieldName in page && typeof page[fieldAdminTitleFieldName] === 'string';
+const globalIsLinkablePage = (page: any): page is { isLinkable: boolean; adminTitle: string } => fieldLinkablePageFieldName in page &&
+  typeof page[fieldAdminTitleFieldName] === 'string';
 
-// convert camelCase/PascalCase to human readable string
-const humanizeSlug = (slug: string): string => {
-  const withSpaces = slug.replace(/(?:[A-Z])/gu, (match) => ` ${match}`);
-
-  return withSpaces
-    .split(' ')
-    .map((word) => word.charAt(0)
-      .toUpperCase() + word.slice(1))
-    .join(' ');
-};
+// TODO: only pages of same tenant should be linkable
+// TODO: global, page.slug seams not available
 
 // Create select options for Collection Pages
 const getCollectionPageOptions = async (props: UIFieldServerProps): Promise<Option[]> => {
-  const collectionKeys = Object.keys(props.payload.collections) as CollectionSlug[];
+  const collectionKeys = Object.keys(tenantsCollections) as CollectionSlug[];
   const options: Option[] = [];
 
   for await (const collection of collectionKeys) {
-    const pageResults = await props.payload.find({
-      collection,
-      depth: 1,
-    });
+    const collectionConfigObject = tenantsCollections[collection];
 
-    pageResults.docs.forEach((pageResult): void => {
-      if (isLinkablePage(pageResult)) {
+    if (!collectionConfigObject.isGlobal) {
+      const pageResults = await props.payload.find({
+        collection,
+        depth: 1,
+      });
 
-        options.push({
-          label: pageResult[fieldAdminTitleFieldName],
-          value: `${collection}/${pageResult.id}`,
-        });
-      }
-    });
+      pageResults.docs.forEach((pageResult): void => {
+        if (collectionIsLinkablePage(pageResult)) {
+          options.push({
+            label: pageResult[fieldAdminTitleFieldName],
+            value: `${collection}/${pageResult.id}`,
+          });
+        }
+      });
+    }
   }
 
   return options
@@ -51,27 +49,34 @@ const getCollectionPageOptions = async (props: UIFieldServerProps): Promise<Opti
 
 // Create select options for Global Pages
 const getGlobalPagesOption = async (props: UIFieldServerProps): Promise<Option[]> => {
+  const collectionKeys = Object.keys(tenantsCollections) as CollectionSlug[];
   const options: Option[] = [];
 
-  for await (const globalPage of props.payload.globals.config) {
-    const pageResult = await props.payload.findGlobal({
-      depth: 1,
-      slug: globalPage.slug,
-    });
+  for await (const collection of collectionKeys) {
+    const collectionConfigObject = tenantsCollections[collection];
 
-    if (Object.keys(pageResult)
-      .includes(fieldLinkablePageFieldName)) {
+    if (collectionConfigObject.isGlobal) {
+      const pageResults = await props.payload.find({
+        collection,
+        depth: 1,
+      });
 
-      if (globalPage.slug !== props.data.globalType) {
-        options.push({
-          label: humanizeSlug(globalPage.slug),
-          value: `global:${globalPage.slug}`,
-        });
-      }
+      pageResults.docs.forEach((pageResult): void => {
+        if (globalIsLinkablePage(pageResult)) {
+          if (pageResult.id && pageResult[fieldAdminTitleFieldName]) {
+            options.push({
+              label: pageResult[fieldAdminTitleFieldName],
+              value: `${collection}/${pageResult.id}`,
+            });
+          }
+        }
+      });
     }
   }
 
-  return options;
+  return options
+    .filter((option) => option.value !== `${props.collectionSlug}/${props.data.id}`);
+
 };
 
 // Select component
