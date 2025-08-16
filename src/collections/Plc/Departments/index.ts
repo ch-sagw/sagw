@@ -13,6 +13,7 @@ export const Departments: CollectionConfig = {
     update: updateAndDeleteAccess,
   },
   admin: {
+    group: 'Org',
     useAsTitle: 'name',
   },
   fields: [

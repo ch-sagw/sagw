@@ -5,7 +5,7 @@ export const Images: CollectionConfig = {
     read: () => true,
   },
   admin: {
-    group: 'Global Content',
+    group: 'Assets',
   },
   fields: [
     {

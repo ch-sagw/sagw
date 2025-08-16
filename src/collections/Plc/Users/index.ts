@@ -42,6 +42,7 @@ export const Users: CollectionConfig = {
     update: updateAndDeleteAccess,
   },
   admin: {
+    group: 'Org',
     useAsTitle: 'email',
   },
   auth: true,
