@@ -433,18 +433,15 @@ export interface EventCategory {
 export interface ZenodoDocument {
   id: string;
   department?: (string | null) | Department;
-  zenodoDocumentChooser: {
-    id?: string | null;
-    title?: string | null;
-    files?:
-      | {
-          link?: string | null;
-          format?: string | null;
-          size?: number | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
+  zenodoDocumentChooser:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -2362,20 +2359,7 @@ export interface EventCategorySelect<T extends boolean = true> {
  */
 export interface ZenodoDocumentsSelect<T extends boolean = true> {
   department?: T;
-  zenodoDocumentChooser?:
-    | T
-    | {
-        id?: T;
-        title?: T;
-        files?:
-          | T
-          | {
-              link?: T;
-              format?: T;
-              size?: T;
-              id?: T;
-            };
-      };
+  zenodoDocumentChooser?: T;
   updatedAt?: T;
   createdAt?: T;
 }
