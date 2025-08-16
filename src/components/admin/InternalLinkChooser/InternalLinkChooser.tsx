@@ -82,23 +82,10 @@ const getGlobalPagesOption = async (props: UIFieldServerProps): Promise<Option[]
 
 };
 
-const zenodoTest = async (): Promise<void> => {
-
-  const results = await fetch(`https://zenodo.org/api/records/14366030?access_token=${process.env.ZENODO_TOKEN}`);
-
-  const resultJson = await results.json();
-
-  console.log(resultJson);
-
-};
-
 // Select component
 const InternalLinkChooser = async (props: UIFieldServerProps): Promise<JSX.Element> => {
   const globalPageOptions = await getGlobalPagesOption(props);
   const collectionPageOptions = await getCollectionPageOptions(props);
-
-  await zenodoTest();
-
   const options = [
     {
       label: 'Global Pages',
