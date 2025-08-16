@@ -3,6 +3,9 @@ import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsNetworkItem } from '@/field-templates/networkItem';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import {
+  fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
 
 export const NetworkPage: CollectionConfig = {
   access: {
@@ -10,9 +13,11 @@ export const NetworkPage: CollectionConfig = {
   },
   admin: {
     group: 'Global Pages',
+    useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,
+    fieldAdminTitleDefaultValue('Network Page'),
     {
       tabs: [
 

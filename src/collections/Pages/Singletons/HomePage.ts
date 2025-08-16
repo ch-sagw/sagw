@@ -3,6 +3,9 @@ import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import {
+  fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
 
 export const HomePage: CollectionConfig = {
   access: {
@@ -10,9 +13,11 @@ export const HomePage: CollectionConfig = {
   },
   admin: {
     group: 'Global Pages',
+    useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,
+    fieldAdminTitleDefaultValue('Home Page'),
     {
       tabs: [
 

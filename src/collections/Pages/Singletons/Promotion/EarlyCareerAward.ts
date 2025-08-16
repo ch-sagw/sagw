@@ -4,6 +4,9 @@ import { fieldsTextBlock } from '@/field-templates/textBlock';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import {
+  fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
 
 export const EarlyCareerAwardPage: CollectionConfig = {
   access: {
@@ -11,9 +14,11 @@ export const EarlyCareerAwardPage: CollectionConfig = {
   },
   admin: {
     group: 'Promotion Pages',
+    useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,
+    fieldAdminTitleDefaultValue('Early Career Award Page'),
     {
       tabs: [
 

@@ -3,6 +3,9 @@ import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsContactAccordionItem } from '@/field-templates/contactAccordionItem';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import {
+  fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
 
 export const AboutContactPage: CollectionConfig = {
   access: {
@@ -10,9 +13,11 @@ export const AboutContactPage: CollectionConfig = {
   },
   admin: {
     group: 'About Pages',
+    useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,
+    fieldAdminTitleDefaultValue('Contact Page'),
     {
       tabs: [
 

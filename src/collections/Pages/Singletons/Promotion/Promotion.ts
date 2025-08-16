@@ -4,6 +4,9 @@ import { fieldsSubpageSection } from '@/field-templates/subpageSection';
 import { fieldsContactForm } from '@/field-templates/forms';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import {
+  fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
 
 export const PromotionPage: CollectionConfig = {
   access: {
@@ -11,9 +14,11 @@ export const PromotionPage: CollectionConfig = {
   },
   admin: {
     group: 'Promotion Pages',
+    useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,
+    fieldAdminTitleDefaultValue('Promotion Page'),
     {
       tabs: [
 

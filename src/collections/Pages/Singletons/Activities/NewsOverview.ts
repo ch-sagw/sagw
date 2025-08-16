@@ -2,6 +2,9 @@ import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import {
+  fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
 
 export const NewsOverviewPage: CollectionConfig = {
   access: {
@@ -9,9 +12,11 @@ export const NewsOverviewPage: CollectionConfig = {
   },
   admin: {
     group: 'Activities Pages',
+    useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,
+    fieldAdminTitleDefaultValue('News Page'),
     {
       tabs: [
 

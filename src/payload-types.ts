@@ -432,6 +432,7 @@ export interface AboutContact {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   hero: {
     title: {
       root: {
@@ -480,6 +481,7 @@ export interface AboutSagw {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   hero: {
     title: {
       root: {
@@ -577,6 +579,7 @@ export interface AboutTeam {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   hero: {
     title: {
       root: {
@@ -617,6 +620,7 @@ export interface Activity {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   hero: {
     title: {
       root: {
@@ -696,6 +700,7 @@ export interface EventsOverview {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   hero: {
     title: {
       root: {
@@ -739,6 +744,7 @@ export interface MagazineOverview {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   hero: {
     title: {
       root: {
@@ -786,6 +792,7 @@ export interface NewsOverview {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   hero: {
     title: {
       root: {
@@ -834,6 +841,7 @@ export interface PublicationsOverview {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   hero: {
     title: {
       root: {
@@ -903,6 +911,7 @@ export interface EarlyCareerAward {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   hero: {
     title: {
       root: {
@@ -1001,6 +1010,7 @@ export interface Institute {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   hero: {
     title: {
       root: {
@@ -1046,6 +1056,7 @@ export interface Promotion {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   hero: {
     title: {
       root: {
@@ -1152,6 +1163,7 @@ export interface Home {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   hero: {
     title: {
       root: {
@@ -1201,6 +1213,7 @@ export interface Network {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
+  adminTitle?: string | null;
   hero: {
     title: {
       root: {
@@ -2295,6 +2308,7 @@ export interface EventCategorySelect<T extends boolean = true> {
 export interface AboutContactSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
+  adminTitle?: T;
   hero?:
     | T
     | {
@@ -2335,6 +2349,7 @@ export interface AboutContactSelect<T extends boolean = true> {
 export interface AboutSagwSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
+  adminTitle?: T;
   hero?:
     | T
     | {
@@ -2415,6 +2430,7 @@ export interface AboutSagwSelect<T extends boolean = true> {
 export interface AboutTeamSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
+  adminTitle?: T;
   hero?:
     | T
     | {
@@ -2443,6 +2459,7 @@ export interface AboutTeamSelect<T extends boolean = true> {
 export interface ActivitiesSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
+  adminTitle?: T;
   hero?:
     | T
     | {
@@ -2526,6 +2543,7 @@ export interface ActivitiesSelect<T extends boolean = true> {
 export interface EventsOverviewSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
+  adminTitle?: T;
   hero?:
     | T
     | {
@@ -2559,6 +2577,7 @@ export interface EventsOverviewSelect<T extends boolean = true> {
 export interface MagazineOverviewSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
+  adminTitle?: T;
   hero?:
     | T
     | {
@@ -2596,6 +2615,7 @@ export interface MagazineOverviewSelect<T extends boolean = true> {
 export interface NewsOverviewSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
+  adminTitle?: T;
   hero?:
     | T
     | {
@@ -2636,6 +2656,7 @@ export interface NewsOverviewSelect<T extends boolean = true> {
 export interface PublicationsOverviewSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
+  adminTitle?: T;
   hero?:
     | T
     | {
@@ -2683,6 +2704,7 @@ export interface PublicationsOverviewSelect<T extends boolean = true> {
 export interface EarlyCareerAwardSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
+  adminTitle?: T;
   hero?:
     | T
     | {
@@ -2755,6 +2777,7 @@ export interface EarlyCareerAwardSelect<T extends boolean = true> {
 export interface InstitutesSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
+  adminTitle?: T;
   hero?:
     | T
     | {
@@ -2790,6 +2813,7 @@ export interface InstitutesSelect<T extends boolean = true> {
 export interface PromotionSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
+  adminTitle?: T;
   hero?:
     | T
     | {
@@ -2904,6 +2928,7 @@ export interface ErrorPageSelect<T extends boolean = true> {
 export interface HomeSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
+  adminTitle?: T;
   hero?:
     | T
     | {
@@ -2945,6 +2970,7 @@ export interface HomeSelect<T extends boolean = true> {
 export interface NetworkSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
+  adminTitle?: T;
   hero?:
     | T
     | {

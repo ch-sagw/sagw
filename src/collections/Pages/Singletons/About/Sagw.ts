@@ -6,6 +6,9 @@ import { VideoBlock } from '@/blocks/VideoBlock';
 import { LinkExternal } from '@/blocks/LinkExternal';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import {
+  fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
 
 export const AboutSagwPage: CollectionConfig = {
   access: {
@@ -13,9 +16,11 @@ export const AboutSagwPage: CollectionConfig = {
   },
   admin: {
     group: 'About Pages',
+    useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,
+    fieldAdminTitleDefaultValue('About SAGW Page'),
     {
       tabs: [
 

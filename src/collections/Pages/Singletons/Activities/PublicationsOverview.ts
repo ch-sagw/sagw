@@ -3,6 +3,9 @@ import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import { rte2 } from '@/field-templates/rte';
+import {
+  fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
 
 export const PublicationsOverviewPage: CollectionConfig = {
   access: {
@@ -10,9 +13,11 @@ export const PublicationsOverviewPage: CollectionConfig = {
   },
   admin: {
     group: 'Activities Pages',
+    useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,
+    fieldAdminTitleDefaultValue('Publications Page'),
     {
       tabs: [
 
