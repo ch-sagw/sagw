@@ -119,7 +119,7 @@ const ZenodoDocumentChooserClient = ({
               {result.files.map((f: any, i: number) => (
                 <li key={i}>
                   <a href={f.link} target='_blank' rel='noreferrer'>{f.link}</a>{' '}
-                  ({f.format}, {f.size} bytes)
+                  ({f.format}, {f.size} MB)
                 </li>
               ))}
             </ul>
