@@ -2,7 +2,7 @@
 
 // import { Select } from '@payloadcms/ui';
 import {
-  CollectionSlug, UIFieldServerProps,
+  CollectionSlug, PaginatedDocs, UIFieldServerProps,
 } from 'payload';
 import { JSX } from 'react';
 import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
@@ -11,12 +11,19 @@ import { fieldLinkablePageFieldName } from '@/field-templates/linkablePage';
 import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import { tenantsCollections } from '@/collections';
 
-const collectionIsLinkablePage = (page: any): page is { isLinkable: boolean; adminTitle: string } => fieldLinkablePageFieldName in page && typeof page[fieldAdminTitleFieldName] === 'string';
-const globalIsLinkablePage = (page: any): page is { isLinkable: boolean; adminTitle: string } => fieldLinkablePageFieldName in page &&
+const collectionIsLinkablePage = (page: any): page is { isLinkable: boolean; adminTitle: string, id: string } => fieldLinkablePageFieldName in page && typeof page[fieldAdminTitleFieldName] === 'string';
+const globalIsLinkablePage = (page: any): page is { isLinkable: boolean; adminTitle: string, id: string } => fieldLinkablePageFieldName in page &&
   typeof page[fieldAdminTitleFieldName] === 'string';
 
-// TODO: only pages of same tenant should be linkable
-// TODO: global, page.slug seams not available
+const findPage = (collection: CollectionSlug, props: UIFieldServerProps): Promise<PaginatedDocs<any>> => props.payload.find({
+  collection,
+  depth: 1,
+  where: {
+    department: {
+      equals: props.data.department,
+    },
+  },
+});
 
 // Create select options for Collection Pages
 const getCollectionPageOptions = async (props: UIFieldServerProps): Promise<Option[]> => {
@@ -27,10 +34,7 @@ const getCollectionPageOptions = async (props: UIFieldServerProps): Promise<Opti
     const collectionConfigObject = tenantsCollections[collection];
 
     if (!collectionConfigObject.isGlobal) {
-      const pageResults = await props.payload.find({
-        collection,
-        depth: 1,
-      });
+      const pageResults = await findPage(collection, props);
 
       pageResults.docs.forEach((pageResult): void => {
         if (collectionIsLinkablePage(pageResult)) {
@@ -52,14 +56,13 @@ const getGlobalPagesOption = async (props: UIFieldServerProps): Promise<Option[]
   const collectionKeys = Object.keys(tenantsCollections) as CollectionSlug[];
   const options: Option[] = [];
 
+  console.log(props.data.department);
+
   for await (const collection of collectionKeys) {
     const collectionConfigObject = tenantsCollections[collection];
 
     if (collectionConfigObject.isGlobal) {
-      const pageResults = await props.payload.find({
-        collection,
-        depth: 1,
-      });
+      const pageResults = await findPage(collection, props);
 
       pageResults.docs.forEach((pageResult): void => {
         if (globalIsLinkablePage(pageResult)) {
