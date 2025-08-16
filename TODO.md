@@ -40,11 +40,5 @@ Payload Config:
 - allow hyphen in rte1 & rte2
 - configure rte2 properly
 - add validation for external link href
-- add custom rte component for internal links, remove default link button in rte
-- multiTenantPlugin config: find smart way to add all collections
-- multiTenantPlugin use isGlobal and migrate global pages to collections
+- add custom rte component for internal/external links, remove default link button in rte
 - multiTenantPlugin Tenants index.ts -> allowPublicRead, needed?
-- probably, internal link component is no longer used
-- e.g. Network, which is a singleton, is still shown as "Networks" in sidebar
-- structure collections in folders: 'singleton', 'multi', 'others'
-- make sure, singletons are linkable with slug relationship
