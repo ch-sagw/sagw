@@ -80,6 +80,7 @@ export interface Config {
     publicationTypes: PublicationType;
     events: Event;
     eventCategory: EventCategory;
+    zenodoDocuments: ZenodoDocument;
     aboutContact: AboutContact;
     aboutSagw: AboutSagw;
     aboutTeam: AboutTeam;
@@ -123,6 +124,7 @@ export interface Config {
     publicationTypes: PublicationTypesSelect<false> | PublicationTypesSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     eventCategory: EventCategorySelect<false> | EventCategorySelect<true>;
+    zenodoDocuments: ZenodoDocumentsSelect<false> | ZenodoDocumentsSelect<true>;
     aboutContact: AboutContactSelect<false> | AboutContactSelect<true>;
     aboutSagw: AboutSagwSelect<false> | AboutSagwSelect<true>;
     aboutTeam: AboutTeamSelect<false> | AboutTeamSelect<true>;
@@ -421,6 +423,17 @@ export interface EventCategory {
   id: string;
   department?: (string | null) | Department;
   eventCategory: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "zenodoDocuments".
+ */
+export interface ZenodoDocument {
+  id: string;
+  department?: (string | null) | Department;
+  'zenodo id': string;
   updatedAt: string;
   createdAt: string;
 }
@@ -1987,6 +2000,10 @@ export interface PayloadLockedDocument {
         value: string | EventCategory;
       } | null)
     | ({
+        relationTo: 'zenodoDocuments';
+        value: string | ZenodoDocument;
+      } | null)
+    | ({
         relationTo: 'aboutContact';
         value: string | AboutContact;
       } | null)
@@ -2325,6 +2342,16 @@ export interface EventsSelect<T extends boolean = true> {
 export interface EventCategorySelect<T extends boolean = true> {
   department?: T;
   eventCategory?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "zenodoDocuments_select".
+ */
+export interface ZenodoDocumentsSelect<T extends boolean = true> {
+  department?: T;
+  'zenodo id'?: T;
   updatedAt?: T;
   createdAt?: T;
 }

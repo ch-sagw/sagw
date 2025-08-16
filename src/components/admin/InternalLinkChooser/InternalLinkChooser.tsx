@@ -6,7 +6,7 @@ import {
 } from 'payload';
 import { JSX } from 'react';
 import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
-import InternalLinkChooserClient from './InternalLinkChooserClient';
+import InternalLinkChooserClient from '@/components/admin/InternalLinkChooser/InternalLinkChooserClient';
 import { fieldLinkablePageFieldName } from '@/field-templates/linkablePage';
 import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import { tenantsCollections } from '@/collections';
@@ -82,10 +82,22 @@ const getGlobalPagesOption = async (props: UIFieldServerProps): Promise<Option[]
 
 };
 
+const zenodoTest = async (): Promise<void> => {
+
+  const results = await fetch(`https://zenodo.org/api/records/14366030?access_token=${process.env.ZENODO_TOKEN}`);
+
+  const resultJson = await results.json();
+
+  console.log(resultJson);
+
+};
+
 // Select component
 const InternalLinkChooser = async (props: UIFieldServerProps): Promise<JSX.Element> => {
   const globalPageOptions = await getGlobalPagesOption(props);
   const collectionPageOptions = await getCollectionPageOptions(props);
+
+  await zenodoTest();
 
   const options = [
     {
