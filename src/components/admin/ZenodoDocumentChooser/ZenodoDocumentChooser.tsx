@@ -1,88 +1,135 @@
-'use server';
+'use client';
 
-import { JSX } from 'react';
-import ZenodoDocumentChooserClient from './ZenodoDocumentChooserClient';
+import {
+  JSX, useEffect, useState,
+} from 'react';
+import {
+  InterfaceZenodoData, InterfaceZenodoResponse,
+} from '@/app/api/zenodo/verify/route';
+import { useField } from '@payloadcms/ui';
 
-interface InterfaceZenodoResponse {
-  data?: {
-    id: string;
-    title: string;
-    files: {
-      format: string;
-      link: string;
-      size: number | null;
+const ZenodoDocumentChooserClient = (): JSX.Element => {
+
+  // hooks
+
+  const useFieldHook = useField<InterfaceZenodoData | undefined>({
+    path: 'zenodoDocumentChooser',
+  });
+
+  const apiResponse = useFieldHook.value;
+  const setApiResponse = useFieldHook.setValue;
+
+  // state
+
+  const [
+    id,
+    setId,
+  ] = useState('');
+
+  const [
+    valueFromPayload,
+    setValueFromPayload,
+  ] = useState<InterfaceZenodoData | null>(null);
+
+  const [
+    loading,
+    setLoading,
+  ] = useState(false);
+
+  const [
+    error,
+    setError,
+  ] = useState<string | null>(null);
+
+  // effects
+
+  useEffect(() => {
+    if (apiResponse) {
+      setValueFromPayload(apiResponse);
     }
-  }
-  error?: any
-  ok: boolean
-}
+  }, [apiResponse]);
 
-export const verifyZenodoId = async (id: string): Promise<InterfaceZenodoResponse> => {
-  try {
-    const res = await fetch(
-      `https://zenodo.org/api/records/${id}?access_token=${process.env.ZENODO_TOKEN}`,
-      {
-        cache: 'no-store',
-      },
-    );
+  // methods
 
-    if (!res.ok) {
-      throw new Error(`Zenodo API returned ${res.status}`);
+  const onVerify = async (): Promise<void> => {
+    if (!id) {
+      return;
     }
 
-    const data = await res.json();
+    setLoading(true);
+    setError(null);
 
-    if (!Array.isArray(data.files) || data.files.length === 0) {
-      return {
-        error: 'Record has no files',
-        ok: false,
-      };
+    try {
+      const res = await fetch(`/api/zenodo/verify?id=${id}`);
+      const data: InterfaceZenodoResponse = await res.json();
+
+      if (data.ok && data.data) {
+        setApiResponse(data.data);
+      } else {
+        setError(data.error ?? 'Unknown error');
+        setApiResponse(undefined);
+      }
+
+    } catch (err: unknown) {
+      const message = err instanceof Error
+        ? err.message
+        : 'Unknown error';
+
+      setError(message);
+      setValueFromPayload(null);
+
+    } finally {
+      setLoading(false);
     }
+  };
 
-    const files = Array.isArray(data.files) && data.files.length > 0
-      ? data.files.map((file: any) => {
+  const onChangeInput = (val: string): void => {
+    setId(val);
+    setError(null);
+    setValueFromPayload(null);
+  };
 
-        const format = file.key?.split('.')
-          .pop()
-          ?.toLowerCase() ?? 'unknown';
+  return (
+    <div>
+      <div>
+        <input
+          type='text'
+          value={id}
+          onChange={(e) => onChangeInput(e.target.value)}
+          placeholder='Enter Zenodo ID'
+        />
+        <button
+          type='button'
+          onClick={onVerify}
+          disabled={loading}
+        >
+          {loading
+            ? 'Verifying...'
+            : 'Verify'}
+        </button>
+      </div>
 
-        // Convert size to MB, rounded to 2 decimals
-        const size = file.size
-          ? Number((file.size / (1024 * 1024)).toFixed(2))
-          : null;
+      {error && <div>Error: {error}</div>}
 
-        return {
-          format,
-          link: file?.links?.self ?? file?.links?.download,
-          size,
-        };
-      })
-      : [];
-
-    const returnData = {
-      files,
-      id,
-      title: data.metadata?.title ?? null,
-    };
-
-    console.log(returnData);
-
-    return {
-      data: returnData,
-      ok: true,
-    };
-  } catch (err: any) {
-    return {
-      error: err.message,
-      ok: false,
-    };
-  }
+      {!error && valueFromPayload && valueFromPayload.files?.length > 0 &&
+        <div>
+          <p><strong>Title:</strong> {valueFromPayload.title}</p>
+          <p><strong>ID:</strong> {valueFromPayload.id}</p>
+          <div>
+            <strong>Files:</strong>
+            <ul>
+              {valueFromPayload.files.map((f, i) => (
+                <li key={i}>
+                  <a href={f.link} target='_blank' rel='noreferrer'>{f.link}</a>{' '}
+                  ({f.format}, {f.size ?? 'N/A'} MB)
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+  );
 };
 
-const ZenodoDocumentChooser = (): JSX.Element => (
-  <div>
-    <ZenodoDocumentChooserClient verifyAction={verifyZenodoId} />
-  </div>
-);
-
-export default ZenodoDocumentChooser;
+export default ZenodoDocumentChooserClient;
