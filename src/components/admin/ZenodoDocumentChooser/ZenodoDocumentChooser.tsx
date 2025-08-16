@@ -10,7 +10,7 @@ interface InterfaceZenodoResponse {
     files: {
       format: string;
       link: string;
-      size: number;
+      size: number | null;
     }
   }
   error?: any
@@ -40,19 +40,35 @@ export const verifyZenodoId = async (id: string): Promise<InterfaceZenodoRespons
     }
 
     const files = Array.isArray(data.files) && data.files.length > 0
-      ? data.files.map((file: any) => ({
-        format: file?.type ?? file?.mimetype ?? 'unknown',
-        link: file?.links?.self ?? file?.links?.download,
-        size: file?.size,
-      }))
+      ? data.files.map((file: any) => {
+
+        const format = file.key?.split('.')
+          .pop()
+          ?.toLowerCase() ?? 'unknown';
+
+        // Convert size to MB, rounded to 2 decimals
+        const size = file.size
+          ? Number((file.size / (1024 * 1024)).toFixed(2))
+          : null;
+
+        return {
+          format,
+          link: file?.links?.self ?? file?.links?.download,
+          size,
+        };
+      })
       : [];
 
+    const returnData = {
+      files,
+      id,
+      title: data.metadata?.title ?? null,
+    };
+
+    console.log(returnData);
+
     return {
-      data: {
-        files,
-        id,
-        title: data.metadata?.title ?? null,
-      },
+      data: returnData,
       ok: true,
     };
   } catch (err: any) {
