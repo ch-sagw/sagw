@@ -14,6 +14,10 @@ interface InterfaceZenodoFileRaw {
 interface InterfaceZenodoApiRawResponse {
   metadata?: {
     title?: string;
+
+    /* eslint-disable @typescript-eslint/naming-convention */
+    publication_date: string;
+    /* eslint-enable @typescript-eslint/naming-convention */
   };
   files?: InterfaceZenodoFileRaw[];
 }
@@ -28,6 +32,7 @@ export interface InterfaceZenodoData {
   id: string;
   title: string | null;
   files: InterfaceZenodoFile[];
+  date: string | null;
 }
 
 export interface InterfaceZenodoResponse {
@@ -105,6 +110,7 @@ export const GET = async (req: NextRequest): Promise<NextResponse<InterfaceZenod
     }));
 
     const result: InterfaceZenodoData = {
+      date: data.metadata?.publication_date ?? null,
       files,
       id,
       title: data.metadata?.title ?? null,

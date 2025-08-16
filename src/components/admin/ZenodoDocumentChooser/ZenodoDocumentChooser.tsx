@@ -8,12 +8,12 @@ import {
 } from '@/app/api/zenodo/verify/route';
 import { useField } from '@payloadcms/ui';
 
-const ZenodoDocumentChooserClient = (): JSX.Element => {
+const ZenodoDocumentChooser = (): JSX.Element => {
 
   // hooks
 
   const useFieldHook = useField<InterfaceZenodoData | undefined>({
-    path: 'zenodoDocumentChooser',
+    path: 'data',
   });
 
   const apiResponse = useFieldHook.value;
@@ -115,6 +115,7 @@ const ZenodoDocumentChooserClient = (): JSX.Element => {
         <div>
           <p><strong>Title:</strong> {valueFromPayload.title}</p>
           <p><strong>ID:</strong> {valueFromPayload.id}</p>
+          <p><strong>Publication Date:</strong> {valueFromPayload.date || 'N/A'}</p>
           <div>
             <strong>Files:</strong>
             <ul>
@@ -132,4 +133,4 @@ const ZenodoDocumentChooserClient = (): JSX.Element => {
   );
 };
 
-export default ZenodoDocumentChooserClient;
+export default ZenodoDocumentChooser;

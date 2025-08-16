@@ -433,7 +433,7 @@ export interface EventCategory {
 export interface ZenodoDocument {
   id: string;
   department?: (string | null) | Department;
-  zenodoDocumentChooser:
+  data:
     | {
         [k: string]: unknown;
       }
@@ -2359,7 +2359,7 @@ export interface EventCategorySelect<T extends boolean = true> {
  */
 export interface ZenodoDocumentsSelect<T extends boolean = true> {
   department?: T;
-  zenodoDocumentChooser?: T;
+  data?: T;
   updatedAt?: T;
   createdAt?: T;
 }
