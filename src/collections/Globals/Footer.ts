@@ -1,14 +1,20 @@
 import { fieldsSocialLink } from '@/field-templates/socialLink';
 import { CollectionConfig } from 'payload';
 
+import {
+  fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
+
 export const Footer: CollectionConfig = {
   access: {
     read: (): boolean => true,
   },
   admin: {
     group: 'Global Content',
+    useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
+    fieldAdminTitleDefaultValue('Footer'),
     {
       label: 'Datenschutz',
       localized: true,
@@ -86,7 +92,7 @@ export const Footer: CollectionConfig = {
     {
       fields: fieldsSocialLink,
       name: 'socialLinks',
-      required: true,
+      required: false,
       type: 'array',
     },
   ],

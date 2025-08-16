@@ -1,14 +1,20 @@
 import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
 import { CollectionConfig } from 'payload';
 
+import {
+  fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
+
 export const StatusMessage: CollectionConfig = {
   access: {
     read: (): boolean => true,
   },
   admin: {
     group: 'Global Content',
+    useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
+    fieldAdminTitleDefaultValue('Status Message'),
     {
       fields: [
         {

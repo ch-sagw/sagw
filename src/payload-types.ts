@@ -1707,7 +1707,29 @@ export interface I18NGlobal {
 export interface Consent {
   id: string;
   department?: (string | null) | Department;
+  adminTitle?: string | null;
   banner: {
+    title: string;
+    text: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    buttonAcceptAll: string;
+    buttonCustomizeSelection: string;
+    buttonDeclineAll: string;
+  };
+  overlay: {
     title: string;
     text: {
       root: {
@@ -1798,6 +1820,7 @@ export interface Consent {
 export interface Footer {
   id: string;
   department?: (string | null) | Department;
+  adminTitle?: string | null;
   legal: string;
   impressum: string;
   copyright: string;
@@ -1812,12 +1835,14 @@ export interface Footer {
     phone: string;
     mail: string;
   };
-  socialLinks: {
-    externalLinkText: string;
-    externalLink: string;
-    icon?: ('linkedIn' | 'twitter' | 'facebook') | null;
-    id?: string | null;
-  }[];
+  socialLinks?:
+    | {
+        externalLinkText: string;
+        externalLink: string;
+        icon?: ('linkedIn' | 'twitter' | 'facebook') | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1828,6 +1853,7 @@ export interface Footer {
 export interface Header {
   id: string;
   department?: (string | null) | Department;
+  adminTitle?: string | null;
   logo: string | Image;
   metaLinks: {
     externalLinkText: string;
@@ -1874,6 +1900,7 @@ export interface Header {
 export interface StatusMessage {
   id: string;
   department?: (string | null) | Department;
+  adminTitle?: string | null;
   show: {
     /**
      * Show, hide or define date range when to show the message.
@@ -3412,7 +3439,17 @@ export interface I18NGlobalsSelect<T extends boolean = true> {
  */
 export interface ConsentSelect<T extends boolean = true> {
   department?: T;
+  adminTitle?: T;
   banner?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        buttonAcceptAll?: T;
+        buttonCustomizeSelection?: T;
+        buttonDeclineAll?: T;
+      };
+  overlay?:
     | T
     | {
         title?: T;
@@ -3454,6 +3491,7 @@ export interface ConsentSelect<T extends boolean = true> {
  */
 export interface FooterSelect<T extends boolean = true> {
   department?: T;
+  adminTitle?: T;
   legal?: T;
   impressum?: T;
   copyright?: T;
@@ -3487,6 +3525,7 @@ export interface FooterSelect<T extends boolean = true> {
  */
 export interface HeaderSelect<T extends boolean = true> {
   department?: T;
+  adminTitle?: T;
   logo?: T;
   metaLinks?:
     | T
@@ -3544,6 +3583,7 @@ export interface HeaderSelect<T extends boolean = true> {
  */
 export interface StatusMessageSelect<T extends boolean = true> {
   department?: T;
+  adminTitle?: T;
   show?:
     | T
     | {

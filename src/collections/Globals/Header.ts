@@ -1,14 +1,20 @@
 import { LinkExternal } from '@/blocks/LinkExternal';
 import { CollectionConfig } from 'payload';
 
+import {
+  fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
+
 export const Header: CollectionConfig = {
   access: {
     read: (): boolean => true,
   },
   admin: {
     group: 'Global Content',
+    useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
+    fieldAdminTitleDefaultValue('Header'),
     {
       name: 'logo',
       relationTo: 'images',

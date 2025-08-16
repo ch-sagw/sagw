@@ -2,6 +2,10 @@ import {
   CollectionConfig, Field,
 } from 'payload';
 
+import {
+  fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
+
 const overlaySection: Field[] = [
   {
     localized: true,
@@ -64,8 +68,10 @@ export const Consent: CollectionConfig = {
   },
   admin: {
     group: 'Global Content',
+    useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
+    fieldAdminTitleDefaultValue('Consent'),
     {
       tabs: [
 
@@ -158,7 +164,7 @@ export const Consent: CollectionConfig = {
 
           ],
           label: 'Consent Overlay',
-          name: 'banner',
+          name: 'overlay',
         },
       ],
       type: 'tabs',
