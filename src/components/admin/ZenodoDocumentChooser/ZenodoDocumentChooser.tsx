@@ -5,8 +5,13 @@ import ZenodoDocumentChooserClient from './ZenodoDocumentChooserClient';
 
 interface InterfaceZenodoResponse {
   data?: {
-    size: string;
+    id: string;
     title: string;
+    files: {
+      format: string;
+      link: string;
+      size: number;
+    }
   }
   error?: any
   ok: boolean
@@ -27,10 +32,26 @@ export const verifyZenodoId = async (id: string): Promise<InterfaceZenodoRespons
 
     const data = await res.json();
 
+    if (!Array.isArray(data.files) || data.files.length === 0) {
+      return {
+        error: 'Record has no files',
+        ok: false,
+      };
+    }
+
+    const files = Array.isArray(data.files) && data.files.length > 0
+      ? data.files.map((file: any) => ({
+        format: file?.type ?? file?.mimetype ?? 'unknown',
+        link: file?.links?.self ?? file?.links?.download,
+        size: file?.size,
+      }))
+      : [];
+
     return {
       data: {
-        size: data.files?.[0]?.size,
-        title: data.metadata?.title,
+        files,
+        id,
+        title: data.metadata?.title ?? null,
       },
       ok: true,
     };

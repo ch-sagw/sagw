@@ -63,13 +63,11 @@ const ZenodoDocumentChooserClient = ({
       setVerified(true);
       setResult(res.data);
 
-      // store verified ID in Payload field
-      setValue(id);
+      // store all metadata in Payload field
+      setValue(res.data);
     } else {
       setError(res.error ?? 'Unknown error');
       setResult(null);
-
-      // ensures Save button stays disabled
       setValue(undefined);
     }
 
@@ -85,6 +83,8 @@ const ZenodoDocumentChooserClient = ({
     // clear Payload field until verified again
     setValue(undefined);
   };
+
+  console.log(result);
 
   return (
     <div className='flex flex-col gap-2'>
@@ -111,10 +111,21 @@ const ZenodoDocumentChooserClient = ({
 
       {error && <div className='text-red-600'>{error}</div>}
 
-      {verified && result && (
+      {verified && result && Array.isArray(result.files) && result.files.length > 0 && (
         <div className='p-2 border rounded bg-gray-50'>
           <p><strong>Title:</strong> {result.title}</p>
-          <p><strong>Size:</strong> {result.size}</p>
+          <p><strong>ID:</strong> {result.id}</p>
+          <div className='mt-2'>
+            <strong>Files:</strong>
+            <ul className='list-disc ml-6'>
+              {result.files.map((f: any, i: number) => (
+                <li key={i}>
+                  <a href={f.link} target='_blank' rel='noreferrer'>{f.link}</a>{' '}
+                  ({f.format}, {f.size} bytes)
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
     </div>
