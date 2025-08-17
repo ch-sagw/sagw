@@ -1,6 +1,5 @@
 // TODO:
 // - the id 15126918 returns multiple files. how to display it?
-// - if a saved value is edited, the files list won't update.
 
 import type { CollectionConfig } from 'payload';
 

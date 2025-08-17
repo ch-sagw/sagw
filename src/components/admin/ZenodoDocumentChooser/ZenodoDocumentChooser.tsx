@@ -4,7 +4,9 @@ import {
   JSX, useState,
 } from 'react';
 import { InterfaceZenodoResponse } from '@/app/api/zenodo/verify/route';
-import { useAllFormFields } from '@payloadcms/ui';
+import {
+  useAllFormFields, useForm,
+} from '@payloadcms/ui';
 import { reduceFieldsToValues } from 'payload/shared';
 
 const ZenodoDocumentChooser = (): JSX.Element => {
@@ -17,6 +19,7 @@ const ZenodoDocumentChooser = (): JSX.Element => {
   ] = useAllFormFields();
 
   const formData = reduceFieldsToValues(formFields, true);
+  const formHook = useForm();
 
   // state
 
@@ -101,6 +104,10 @@ const ZenodoDocumentChooser = (): JSX.Element => {
           type: 'UPDATE',
           value: data.data.files,
         });
+
+        formHook.setIsValid(true);
+        formHook.setDisabled(false);
+        formHook.setModified(true);
 
       } else {
         setError(data.error ?? 'Unknown error');
