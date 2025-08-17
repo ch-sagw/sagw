@@ -574,10 +574,9 @@ export interface AboutSagw {
       id?: string | null;
     }[];
   };
-  downloadsGroup: {
-    downloadsTitle: string;
-    downloads: (string | Document)[];
-  };
+  downloadsTitle: string;
+  downloads?: (string | Document)[] | null;
+  zenodoDownloads?: (string | ZenodoDocument)[] | null;
   meta?: {
     seo?: {
       index?: boolean | null;
@@ -1499,9 +1498,7 @@ export interface PublicationDetail {
         id?: string | null;
       }[]
     | null;
-  downloads?: {
-    downloads?: (string | Document)[] | null;
-  };
+  downloads?: (string | ZenodoDocument)[] | null;
   meta?: {
     seo?: {
       index?: boolean | null;
@@ -1590,9 +1587,8 @@ export interface NewsDetail {
           }
       )[]
     | null;
-  downloads?: {
-    downloads?: (string | Document)[] | null;
-  };
+  downloads?: (string | Document)[] | null;
+  zenodoDownloads?: (string | ZenodoDocument)[] | null;
   links?:
     | (
         | {
@@ -2474,12 +2470,9 @@ export interface AboutSagwSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  downloadsGroup?:
-    | T
-    | {
-        downloadsTitle?: T;
-        downloads?: T;
-      };
+  downloadsTitle?: T;
+  downloads?: T;
+  zenodoDownloads?: T;
   meta?:
     | T
     | {
@@ -3256,11 +3249,7 @@ export interface PublicationDetailSelect<T extends boolean = true> {
         author?: T;
         id?: T;
       };
-  downloads?:
-    | T
-    | {
-        downloads?: T;
-      };
+  downloads?: T;
   meta?:
     | T
     | {
@@ -3328,11 +3317,8 @@ export interface NewsDetailSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
-  downloads?:
-    | T
-    | {
-        downloads?: T;
-      };
+  downloads?: T;
+  zenodoDownloads?: T;
   links?:
     | T
     | {

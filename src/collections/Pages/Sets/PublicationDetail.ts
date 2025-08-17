@@ -92,21 +92,16 @@ export const PublicationDetailPage: CollectionConfig = {
 
             // Downloads
 
-            // Todo: Remove downloads
-            //  -> textfield for Zenodo id
-            //  ->
             {
               fields: [
                 {
                   hasMany: true,
                   name: 'downloads',
-                  relationTo: 'documents',
+                  relationTo: 'zenodoDocuments',
                   required: false,
                   type: 'relationship',
                 },
               ],
-              label: 'Downloads',
-              name: 'downloads',
               type: 'group',
             },
           ],

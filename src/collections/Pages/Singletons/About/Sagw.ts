@@ -77,15 +77,18 @@ export const AboutSagwPage: CollectionConfig = {
                   hasMany: true,
                   name: 'downloads',
                   relationTo: 'documents',
-                  required: true,
+                  required: false,
+                  type: 'relationship',
+                },
+                {
+                  hasMany: true,
+                  name: 'zenodoDownloads',
+                  relationTo: 'zenodoDocuments',
+                  required: false,
                   type: 'relationship',
                 },
               ],
 
-              // TODO:
-              // enable Zenodo (both optional)
-              label: 'Downloads',
-              name: 'downloadsGroup',
               type: 'group',
             },
           ],

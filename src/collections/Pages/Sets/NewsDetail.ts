@@ -62,7 +62,6 @@ export const NewsDetailPage: CollectionConfig = {
 
             // Downloads
 
-            // TODO: add Zenodo (both optional)
             {
               fields: [
                 {
@@ -72,9 +71,14 @@ export const NewsDetailPage: CollectionConfig = {
                   required: false,
                   type: 'relationship',
                 },
+                {
+                  hasMany: true,
+                  name: 'zenodoDownloads',
+                  relationTo: 'zenodoDocuments',
+                  required: false,
+                  type: 'relationship',
+                },
               ],
-              label: 'Downloads',
-              name: 'downloads',
               type: 'group',
             },
 
