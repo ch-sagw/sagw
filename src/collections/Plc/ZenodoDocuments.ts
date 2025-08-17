@@ -1,5 +1,7 @@
 // TODO:
 // - the id 15126918 returns multiple files. how to display it?
+// - if a saved value is edited, the files list won't update.
+
 import type { CollectionConfig } from 'payload';
 
 export const ZenodoDocuments: CollectionConfig = {
@@ -31,6 +33,7 @@ export const ZenodoDocuments: CollectionConfig = {
         hidden: true,
       },
       name: 'title',
+      required: true,
       type: 'text',
     },
     {
@@ -38,7 +41,8 @@ export const ZenodoDocuments: CollectionConfig = {
         hidden: true,
       },
       name: 'publicationDate',
-      type: 'date',
+      required: true,
+      type: 'text',
     },
     {
       admin: {
@@ -59,6 +63,7 @@ export const ZenodoDocuments: CollectionConfig = {
         },
       ],
       name: 'files',
+      required: true,
       type: 'array',
     },
     {

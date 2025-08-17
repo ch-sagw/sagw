@@ -1,41 +1,21 @@
 'use client';
 
-/**
- * useField hook for array fields only returns length of the array, but not
- * the array itself.
- * As workaround, we use useForm().getDataByPath()
- */
-
 import {
   JSX, useState,
 } from 'react';
 import { InterfaceZenodoResponse } from '@/app/api/zenodo/verify/route';
-import {
-  useField, useForm,
-} from '@payloadcms/ui';
+import { useAllFormFields } from '@payloadcms/ui';
 import { reduceFieldsToValues } from 'payload/shared';
 
 const ZenodoDocumentChooser = (): JSX.Element => {
 
   // hooks
 
-  const zenodoIdHook = useField<string>({
-    path: 'zenodoId',
-  });
+  const [
+    formFields,
+    dispatchFormFields,
+  ] = useAllFormFields();
 
-  const titleHook = useField<string>({
-    path: 'title',
-  });
-
-  const publicationDateHook = useField<string>({
-    path: 'publicationDate',
-  });
-
-  const filesHook = useField<any[]>({
-    path: 'files',
-  });
-
-  const formFields = useForm().fields;
   const formData = reduceFieldsToValues(formFields, true);
 
   // state
@@ -57,6 +37,33 @@ const ZenodoDocumentChooser = (): JSX.Element => {
 
   // methods
 
+  const dispatchEmptyFields = (): void => {
+    dispatchFormFields({
+      path: 'zenodoId',
+      type: 'REMOVE',
+    });
+
+    dispatchFormFields({
+      path: 'publicationDate',
+      type: 'REMOVE',
+    });
+
+    dispatchFormFields({
+      path: 'title',
+      type: 'REMOVE',
+    });
+
+    if (formData.files && Array.isArray(formData.files)) {
+      formData.files.forEach(() => {
+        dispatchFormFields({
+          path: 'files',
+          rowIndex: 0,
+          type: 'REMOVE_ROW',
+        });
+      });
+    }
+  };
+
   const onVerify = async (): Promise<void> => {
     if (!id) {
       return;
@@ -70,16 +77,35 @@ const ZenodoDocumentChooser = (): JSX.Element => {
       const data: InterfaceZenodoResponse = await res.json();
 
       if (data.ok && data.data) {
-        zenodoIdHook.setValue(data.data.id);
-        publicationDateHook.setValue(data.data.date);
-        titleHook.setValue(data.data.title);
-        filesHook.setValue(data.data.files);
+
+        dispatchFormFields({
+          path: 'zenodoId',
+          type: 'UPDATE',
+          value: data.data.id,
+        });
+
+        dispatchFormFields({
+          path: 'publicationDate',
+          type: 'UPDATE',
+          value: data.data.date,
+        });
+
+        dispatchFormFields({
+          path: 'title',
+          type: 'UPDATE',
+          value: data.data.title,
+        });
+
+        dispatchFormFields({
+          path: 'files',
+          type: 'UPDATE',
+          value: data.data.files,
+        });
+
       } else {
         setError(data.error ?? 'Unknown error');
-        zenodoIdHook.setValue(undefined);
-        publicationDateHook.setValue(undefined);
-        titleHook.setValue(undefined);
-        filesHook.setValue(undefined);
+
+        dispatchEmptyFields();
       }
 
     } catch (err: unknown) {
@@ -96,10 +122,8 @@ const ZenodoDocumentChooser = (): JSX.Element => {
   const onChangeInput = (val: string): void => {
     setId(val);
     setError(null);
-    zenodoIdHook.setValue(undefined);
-    publicationDateHook.setValue(undefined);
-    titleHook.setValue(undefined);
-    filesHook.setValue(undefined);
+
+    dispatchEmptyFields();
   };
 
   // render
@@ -126,11 +150,11 @@ const ZenodoDocumentChooser = (): JSX.Element => {
 
       {error && <div>Error: {error}</div>}
 
-      {!error && titleHook.value && zenodoIdHook.value && publicationDateHook.value &&
+      {!error && formData.title && formData.zenodoId && formData.publicationDate &&
         <div>
-          <p><strong>Title:</strong> {titleHook.value}</p>
-          <p><strong>ID:</strong> {zenodoIdHook.value}</p>
-          <p><strong>Publication Date:</strong> {publicationDateHook.value}</p>
+          <p><strong>Title:</strong> {formData.title}</p>
+          <p><strong>ID:</strong> {formData.zenodoId}</p>
+          <p><strong>Publication Date:</strong> {formData.publicationDate}</p>
           <div>
             <strong>Files:</strong>
             {formData.files && Array.isArray(formData.files) &&

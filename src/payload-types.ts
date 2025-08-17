@@ -434,16 +434,14 @@ export interface ZenodoDocument {
   id: string;
   department?: (string | null) | Department;
   zenodoId: string;
-  title?: string | null;
-  publicationDate?: string | null;
-  files?:
-    | {
-        link?: string | null;
-        format?: string | null;
-        size?: number | null;
-        id?: string | null;
-      }[]
-    | null;
+  title: string;
+  publicationDate: string;
+  files: {
+    link?: string | null;
+    format?: string | null;
+    size?: number | null;
+    id?: string | null;
+  }[];
   updatedAt: string;
   createdAt: string;
 }
