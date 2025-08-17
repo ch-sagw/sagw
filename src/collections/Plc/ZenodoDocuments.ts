@@ -1,3 +1,5 @@
+// TODO:
+// - the id 15126918 returns multiple files. how to display it?
 import type { CollectionConfig } from 'payload';
 
 export const ZenodoDocuments: CollectionConfig = {
@@ -9,6 +11,7 @@ export const ZenodoDocuments: CollectionConfig = {
       'title',
       'zenodoId',
       'publicationDate',
+      'files',
     ],
     group: 'Assets',
     useAsTitle: 'title',
