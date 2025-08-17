@@ -7,20 +7,17 @@
  */
 
 import {
-  JSX, useEffect, useState,
+  JSX, useState,
 } from 'react';
-import {
-  InterfaceZenodoData, InterfaceZenodoResponse,
-} from '@/app/api/zenodo/verify/route';
+import { InterfaceZenodoResponse } from '@/app/api/zenodo/verify/route';
 import {
   useField, useForm,
 } from '@payloadcms/ui';
+import { reduceFieldsToValues } from 'payload/shared';
 
 const ZenodoDocumentChooser = (): JSX.Element => {
 
   // hooks
-
-  const formHook = useForm();
 
   const zenodoIdHook = useField<string>({
     path: 'zenodoId',
@@ -29,12 +26,17 @@ const ZenodoDocumentChooser = (): JSX.Element => {
   const titleHook = useField<string>({
     path: 'title',
   });
+
   const publicationDateHook = useField<string>({
     path: 'publicationDate',
   });
+
   const filesHook = useField<any[]>({
     path: 'files',
   });
+
+  const formFields = useForm().fields;
+  const formData = reduceFieldsToValues(formFields, true);
 
   // state
 
@@ -42,11 +44,6 @@ const ZenodoDocumentChooser = (): JSX.Element => {
     id,
     setId,
   ] = useState('');
-
-  const [
-    valueFromPayload,
-    setValueFromPayload,
-  ] = useState<InterfaceZenodoData | null>(null);
 
   const [
     loading,
@@ -57,26 +54,6 @@ const ZenodoDocumentChooser = (): JSX.Element => {
     error,
     setError,
   ] = useState<string | null>(null);
-
-  // effects
-
-  useEffect(() => {
-
-    if (zenodoIdHook.value && publicationDateHook.value && titleHook.value && filesHook.value) {
-      setValueFromPayload({
-        date: publicationDateHook.value,
-        files: formHook.getDataByPath('files'),
-        id: zenodoIdHook.value,
-        title: titleHook.value,
-      });
-    }
-  }, [
-    zenodoIdHook.value,
-    publicationDateHook.value,
-    titleHook.value,
-    filesHook.value,
-    formHook,
-  ]);
 
   // methods
 
@@ -111,8 +88,6 @@ const ZenodoDocumentChooser = (): JSX.Element => {
         : 'Unknown error';
 
       setError(message);
-      setValueFromPayload(null);
-
     } finally {
       setLoading(false);
     }
@@ -121,12 +96,13 @@ const ZenodoDocumentChooser = (): JSX.Element => {
   const onChangeInput = (val: string): void => {
     setId(val);
     setError(null);
-    setValueFromPayload(null);
     zenodoIdHook.setValue(undefined);
     publicationDateHook.setValue(undefined);
     titleHook.setValue(undefined);
     filesHook.setValue(undefined);
   };
+
+  // render
 
   return (
     <div>
@@ -150,16 +126,16 @@ const ZenodoDocumentChooser = (): JSX.Element => {
 
       {error && <div>Error: {error}</div>}
 
-      {!error && valueFromPayload &&
+      {!error && titleHook.value && zenodoIdHook.value && publicationDateHook.value &&
         <div>
-          <p><strong>Title:</strong> {valueFromPayload.title}</p>
-          <p><strong>ID:</strong> {valueFromPayload.id}</p>
-          <p><strong>Publication Date:</strong> {valueFromPayload.date || 'N/A'}</p>
+          <p><strong>Title:</strong> {titleHook.value}</p>
+          <p><strong>ID:</strong> {zenodoIdHook.value}</p>
+          <p><strong>Publication Date:</strong> {publicationDateHook.value}</p>
           <div>
             <strong>Files:</strong>
-            {valueFromPayload.files &&
+            {formData.files && Array.isArray(formData.files) &&
               <ul>
-                {valueFromPayload.files.map((f, i) => (
+                {formData.files.map((f, i) => (
                   <li key={i}>
                     <a href={f.link} target='_blank'
                       rel='noreferrer'>{f.link}</a>{' '}
@@ -171,7 +147,7 @@ const ZenodoDocumentChooser = (): JSX.Element => {
           </div>
         </div>
       }
-    </div>
+    </div >
   );
 };
 
