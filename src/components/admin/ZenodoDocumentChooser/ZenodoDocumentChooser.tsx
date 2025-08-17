@@ -61,6 +61,7 @@ const ZenodoDocumentChooser = (): JSX.Element => {
   // effects
 
   useEffect(() => {
+
     if (zenodoIdHook.value && publicationDateHook.value && titleHook.value && filesHook.value) {
       setValueFromPayload({
         date: publicationDateHook.value,
@@ -121,6 +122,10 @@ const ZenodoDocumentChooser = (): JSX.Element => {
     setId(val);
     setError(null);
     setValueFromPayload(null);
+    zenodoIdHook.setValue(undefined);
+    publicationDateHook.setValue(undefined);
+    titleHook.setValue(undefined);
+    filesHook.setValue(undefined);
   };
 
   return (
