@@ -433,14 +433,16 @@ export interface EventCategory {
 export interface ZenodoDocument {
   id: string;
   department?: (string | null) | Department;
-  data:
+  zenodoId: string;
+  title?: string | null;
+  publicationDate?: string | null;
+  files?:
     | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
+        link?: string | null;
+        format?: string | null;
+        size?: number | null;
+        id?: string | null;
+      }[]
     | null;
   updatedAt: string;
   createdAt: string;
@@ -2359,7 +2361,17 @@ export interface EventCategorySelect<T extends boolean = true> {
  */
 export interface ZenodoDocumentsSelect<T extends boolean = true> {
   department?: T;
-  data?: T;
+  zenodoId?: T;
+  title?: T;
+  publicationDate?: T;
+  files?:
+    | T
+    | {
+        link?: T;
+        format?: T;
+        size?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
