@@ -87,11 +87,11 @@ export default buildConfig({
           collection: 'departments',
           data: {
             name: 'SAGW',
-            slug: 'sagaw',
+            slug: 'sagw',
           },
         });
 
-        // 3. Create the first admin user and link them to the tenant
+        // 3. Create the first admin user and link it to the tenant
         if (process.env.PAYLOAD_INITIAL_USER_MAIL && process.env.PAYLOAD_INITIAL_PASSWORD) {
           await cms.create({
             collection: 'users',
