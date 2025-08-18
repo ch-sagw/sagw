@@ -71,6 +71,55 @@ export default buildConfig({
       },
     ],
   },
+  onInit: async (cms) => {
+    try {
+    // Check if any users exist
+      const users = await cms.find({
+        collection: 'users',
+        limit: 1,
+      });
+
+      if (users.docs.length === 0) {
+        console.log('No users found. Seeding first tenant and admin user...');
+
+        // Create a default tenant
+        const tenant = await cms.create({
+          collection: 'departments',
+          data: {
+            name: 'SAGW',
+            slug: 'sagaw',
+          },
+        });
+
+        // 3. Create the first admin user and link them to the tenant
+        if (process.env.PAYLOAD_INITIAL_USER_MAIL && process.env.PAYLOAD_INITIAL_PASSWORD) {
+          await cms.create({
+            collection: 'users',
+            data: {
+              department: tenant.id,
+              departments: [
+                {
+                  department: tenant.id,
+                  roles: ['admin'],
+                },
+              ],
+              email: process.env.PAYLOAD_INITIAL_USER_MAIL,
+              password: process.env.PAYLOAD_INITIAL_PASSWORD,
+              roles: ['global-admin'],
+              username: 'init-user',
+            },
+          });
+
+          console.log('Created first user.');
+        } else {
+          console.log('Payload init error: PAYLOAD_INITIAL_USER_MAIL & PAYLOAD_INITIAL_PASSWORD env vars must be defined');
+        }
+      }
+    } catch (e) {
+      console.log('payload init: something went wrong creating initial user and tenant.');
+      console.log(e);
+    }
+  },
   plugins,
   secret: process.env.PAYLOAD_SECRET || '',
   sharp,
