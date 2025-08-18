@@ -476,7 +476,7 @@ export interface AboutContact {
     title: string;
     contacts: {
       title: string;
-      category: (string | Person)[];
+      'contact person': (string | Person)[];
       id?: string | null;
     }[];
   };
@@ -2391,7 +2391,7 @@ export interface AboutContactSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              category?: T;
+              'contact person'?: T;
               id?: T;
             };
       };
