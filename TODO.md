@@ -19,6 +19,7 @@ Resend:
 Sentry:
 -------
 - Install https://payloadcms.com/docs/plugins/sentry 
+- Properly configure sentry. we don't want sentry complaining on localhost
 
 NextJs:
 -------
@@ -39,4 +40,5 @@ Payload Config:
 - allow hyphen in rte1 & rte2
 - configure rte2 properly
 - add validation for external link href
-- add custom rte component for internal links, remove default link button in rte
+- add custom rte component for internal/external links, remove default link button in rte
+- multiTenantPlugin Tenants index.ts -> allowPublicRead, needed?

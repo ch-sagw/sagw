@@ -3,12 +3,17 @@ import { seoPlugin } from '@payloadcms/plugin-seo';
 import {
   GenerateTitle, GenerateURL,
 } from '@payloadcms/plugin-seo/types';
+import { multiTenantPlugin } from '@payloadcms/plugin-multi-tenant';
 
 import { Plugin } from 'payload';
-import { Images } from '@/collections/Images';
-import { Videos } from '@/collections/Videos';
-import { Documents } from '@/collections/Documents';
+import { Images } from '@/collections/Plc/Images';
+import { Videos } from '@/collections/Plc/Videos';
+import { Documents } from '@/collections/Plc/Documents';
 import { getServerSideURL } from '@/utilities/getUrl';
+import type { Config } from '@/payload-types';
+import { isGlobalAdmin } from '@/access/isGlobalAdmin';
+import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
+import { tenantsCollections } from '@/collections';
 
 const generateTitle: GenerateTitle = ({
   doc,
@@ -40,6 +45,32 @@ const plugins: Plugin[] = [
   seoPlugin({
     generateTitle,
     generateURL,
+  }),
+
+  multiTenantPlugin<Config>({
+    collections: tenantsCollections,
+    tenantField: {
+      access: {
+        read: () => true,
+        update: ({
+          req,
+        }) => {
+          if (isGlobalAdmin(req.user)) {
+            return true;
+          }
+
+          return getUserDepartmentIDs(req.user).length > 0;
+        },
+      },
+      name: 'department',
+    },
+    tenantsArrayField: {
+      arrayFieldName: 'departments',
+      arrayTenantFieldName: 'department',
+      includeDefaultField: false,
+    },
+    tenantsSlug: 'departments',
+    userHasAccessToAllTenants: (user) => isGlobalAdmin(user),
   }),
 ];
 

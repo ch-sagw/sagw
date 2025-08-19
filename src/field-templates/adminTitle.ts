@@ -17,3 +17,13 @@ export const fieldAdminTitle: Field = {
   name: fieldAdminTitleFieldName,
   type: 'text',
 };
+
+export const fieldAdminTitleDefaultValue = (defaultValue: string): Field => ({
+  admin: {
+    hidden: true,
+    readOnly: true,
+  },
+  defaultValue,
+  name: fieldAdminTitleFieldName,
+  type: 'text',
+});

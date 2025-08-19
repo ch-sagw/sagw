@@ -1,0 +1,111 @@
+import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
+import { CollectionConfig } from 'payload';
+
+import {
+  fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
+
+export const StatusMessage: CollectionConfig = {
+  access: {
+    read: (): boolean => true,
+  },
+  admin: {
+    group: 'Global Content',
+    useAsTitle: fieldAdminTitleFieldName,
+  },
+  fields: [
+    fieldAdminTitleDefaultValue('Status Message'),
+    {
+      fields: [
+        {
+          admin: {
+            description: 'Show, hide or define date range when to show the message.',
+          },
+          defaultValue: 'hide',
+          name: 'display',
+          options: [
+            {
+              label: 'Show',
+              value: 'show',
+            },
+            {
+              label: 'Hide',
+              value: 'hide',
+            },
+            {
+              label: 'Date',
+              value: 'date',
+            },
+          ],
+          required: true,
+          type: 'select',
+        },
+        {
+          admin: {
+            condition: (_, siblingData) => siblingData.display === 'date',
+          },
+          name: 'from',
+          required: true,
+          type: 'date',
+        },
+        {
+          admin: {
+            condition: (_, siblingData) => siblingData.display === 'date',
+          },
+          name: 'to',
+          required: true,
+          type: 'date',
+        },
+      ],
+      name: 'show',
+      type: 'group',
+    },
+    {
+      localized: true,
+      name: 'title',
+      required: true,
+      type: 'text',
+    },
+    {
+      localized: true,
+      name: 'message',
+      required: true,
+      type: 'text',
+    },
+    fieldsLinkInternalWithToggle,
+    {
+      admin: {
+        description: 'Should the message be displayed on home only or everywhere?',
+      },
+      defaultValue: false,
+      label: 'On Home only',
+      name: 'showOnHomeOnly',
+      type: 'checkbox',
+    },
+    {
+      defaultValue: 'warn',
+      name: 'type',
+      options: [
+        {
+          label: 'Warn',
+          value: 'warn',
+        },
+        {
+          label: 'Error',
+          value: 'error',
+        },
+        {
+          label: 'Success',
+          value: 'success',
+        },
+      ],
+      required: true,
+      type: 'select',
+    },
+  ],
+  labels: {
+    plural: 'Status Message',
+    singular: 'Status Message',
+  },
+  slug: 'statusMessage',
+};
