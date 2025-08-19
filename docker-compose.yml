@@ -28,8 +28,6 @@ services:
     environment:
       ENV: playwright
       DOTENV_CONFIG_PATH: /app/.env
-    # env_file:
-    #   - .env/.env.playwright
 
     # payload will be started by playwright-be.config.ts
     command: npm run test:be:native
