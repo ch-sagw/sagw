@@ -9,7 +9,7 @@ export const fieldsContactAccordionItem: Field[] = [
   },
   {
     hasMany: true,
-    name: 'category',
+    name: 'contact person',
     relationTo: 'people',
     required: true,
     type: 'relationship',
