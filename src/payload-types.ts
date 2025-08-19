@@ -347,7 +347,7 @@ export interface Person {
   function: string;
   mail: string;
   phone: string;
-  image: string | Image;
+  image?: (string | null) | Image;
   fullName?: string | null;
   updatedAt: string;
   createdAt: string;

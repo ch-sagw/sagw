@@ -23,12 +23,16 @@ Sentry:
 
 NextJs:
 -------
--
+- make sure that zenodo endpoint is only available from localhost
 
 Payload:
 --------
 - Generate types: when is it run? do we have to run in automatically, e.g. on ci, on postinstall etc?
 - set hideAPIURL to true on prod: https://payloadcms.com/docs/configuration/collections#admin-options
+- live-preview
+- versions
+- trash
+- hide api for non-admin roles
 
 Payload Config:
 --------
@@ -42,3 +46,6 @@ Payload Config:
 - add validation for external link href
 - add custom rte component for internal/external links, remove default link button in rte
 - multiTenantPlugin Tenants index.ts -> allowPublicRead, needed?
+
+Testing:
+-------

@@ -1,11 +1,13 @@
 import dotenv from 'dotenv';
 
-dotenv.config({
-  override: true,
-  path: '.env/.env.base',
-});
+if (process.env.CI !== 'true') {
+  dotenv.config({
+    override: true,
+    path: '.env/.env.base',
+  });
 
-dotenv.config({
-  override: true,
-  path: `.env/.env.${process.env.ENV}`,
-});
+  dotenv.config({
+    override: true,
+    path: `.env/.env.${process.env.ENV}`,
+  });
+}

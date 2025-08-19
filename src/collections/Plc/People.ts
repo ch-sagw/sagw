@@ -86,7 +86,7 @@ export const People: CollectionConfig = {
     {
       name: 'image',
       relationTo: 'images',
-      required: true,
+      required: false,
       type: 'relationship',
     },
     {

@@ -1,24 +1,47 @@
 services:
-  visual-test:
+  fe:
     build:
       context: .
-      dockerfile: Dockerfile.testing
+      dockerfile: Dockerfile.fe
+    container_name: sagw-fe
     volumes:
       - .:/src
-
-      # if we omit this, then the containers node_modules will be
-      # linked to the hosts node_modules, due to the above
-      # volume definition. We don't want that, since different
-      # architectures!
       - /src/node_modules
-    # network_mode: host
+
+  be:
+    build:
+      context: .
+      dockerfile: Dockerfile.be
+    container_name: sagw-be
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+
+      # we need to mount .env files into docker container. If we don't, and just
+      # pass the env_file in compose, docker will interpret the env file contents.
+      # since the vars may contain $ signs, this might break things since docker
+      # is interpreting $ as command input.
+      - ./.env:/app/.env:ro
+    depends_on:
+      - mongo
+    environment:
+      ENV: playwright
+      DOTENV_CONFIG_PATH: /app/.env
+
+    # payload will be started by playwright-be.config.ts
+    command: npm run test:be:native
+
   mongo:
     image: mongodb/mongodb-community-server:7.0.16-ubi8
+    container_name: sagw-mongo
     environment:
       - MONGODB_INITDB_ROOT_USERNAME=user
       - MONGODB_INITDB_ROOT_PASSWORD=pass
     volumes:
-      - type: bind
-        source: ./mongo-db-data
-        target: /data/db
+      - ./mongo-db-data:/data/db
+      - ./mongo.conf:/etc/mongo.conf:ro
+    ports:
+      - "27017:27017"
+    command: ["mongod", "--config", "/etc/mongo.conf"]
 
