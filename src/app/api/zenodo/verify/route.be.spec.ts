@@ -9,7 +9,19 @@ test('zenodo api responds with proper values', async ({
   const id = '15126918';
   const zenodoResponse = await request.get(`http://127.0.0.1:3000/api/zenodo/verify?id=${id}`);
 
-  const zenodoResponseData = (await zenodoResponse.json()).data;
+  console.log('-- 1 --');
+
+  console.log(zenodoResponse);
+
+  const zenodoResponseObject = await zenodoResponse.json();
+
+  console.log('-- 2 --');
+  console.log(zenodoResponseObject);
+
+  const zenodoResponseData = zenodoResponseObject.data;
+
+  console.log('-- 3 --');
+  console.log(zenodoResponseData);
 
   await expect(zenodoResponseData.date)
     .toEqual('2025-04-02');
