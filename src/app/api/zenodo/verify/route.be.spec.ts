@@ -2,20 +2,37 @@ import {
   expect,
   test,
 } from '@playwright/test';
-import os from 'os';
 
 test('zenodo api responds', async ({
   request,
 }) => {
   const id = '15126918';
-  const newIssue = await request.get(`http://127.0.0.1:3000/api/zenodo/verify?id=${id}`);
+  const zenodoResponse = await request.get(`http://127.0.0.1:3000/api/zenodo/verify?id=${id}`);
 
-  console.log(newIssue);
+  const zenodoResponseData = (await zenodoResponse.json()).data;
 
-  console.log('Hostname:', os.hostname());
+  console.log(zenodoResponseData);
 
-  await expect(newIssue)
-    .toBeTruthy();
+  await expect(zenodoResponseData.date)
+    .toEqual('2025-04-02');
+
+  await expect(zenodoResponseData.id)
+    .toEqual('15126918');
+
+  await expect(zenodoResponseData.title)
+    .toEqual('Imaging spatial transcriptomics in a transgenic mouse model of α-synucleinopathy');
+
+  await expect(zenodoResponseData.files.length)
+    .toEqual(6);
+
+  await expect(zenodoResponseData.files[0].format)
+    .toEqual('zip');
+
+  await expect(zenodoResponseData.files[0].link)
+    .toEqual('https://zenodo.org/api/records/15126918/files/Images:transformation.zip/content');
+
+  await expect(zenodoResponseData.files[0].size)
+    .toEqual(5384.09);
 
 });
 
