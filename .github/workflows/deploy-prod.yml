@@ -15,6 +15,17 @@ jobs:
     container:
       # if the docker image is changed, also change it in deploy-branch.yml and in Dockerfile.testing
       image: mcr.microsoft.com/playwright:v1.52.0-noble
+
+    services:
+      mongo:
+        image: mongo:7
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: user
+          MONGO_INITDB_ROOT_PASSWORD: pass
+          MONGO_INITDB_DATABASE: sagw-test
+
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -23,8 +34,16 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
-      - name: Test
+      - name: Test FE
         run: npm run test:fe:native
+      - name: Test BE
+        run: npm run test:be:native
+        env:
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+          DATABASE_NAME: sagw-test
+          DATABASE_URI: mongodb://user:pass@mongo:27017/sagw-test?authSource=admin
+          PAYLOAD_INITIAL_USER_MAIL: foo@bar.com
+          PAYLOAD_INITIAL_PASSWORD: 1234
   deploy-production:
     needs: test
     runs-on: ubuntu-latest
