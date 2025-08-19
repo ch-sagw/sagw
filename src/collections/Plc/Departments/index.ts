@@ -18,6 +18,7 @@ export const Departments: CollectionConfig = {
   },
   fields: [
     {
+      localized: true,
       name: 'name',
       required: true,
       type: 'text',
@@ -34,6 +35,7 @@ export const Departments: CollectionConfig = {
         description: 'Used for url paths, example: /department-slug/page-slug',
       },
       index: true,
+      localized: true,
       name: 'slug',
       required: true,
       type: 'text',

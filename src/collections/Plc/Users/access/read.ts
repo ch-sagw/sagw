@@ -32,12 +32,12 @@ export const readAccess: Access<User> = ({
       payload: req.payload,
     }),
   );
-  const adminDeartmentAccessIDs = getUserDepartmentIDs(req.user, departmentRoles.admin);
+  const adminDepartmentAccessIDs = getUserDepartmentIDs(req.user, departmentRoles.admin);
 
   if (selectedDepartment) {
     // If it's a super admin, or they have access to the department ID
     // set in cookie
-    const hasDepartmentAccess = adminDeartmentAccessIDs.some((accessId) => accessId === selectedDepartment);
+    const hasDepartmentAccess = adminDepartmentAccessIDs.some((accessId) => accessId === selectedDepartment);
 
     if (superAdmin || hasDepartmentAccess) {
       return {
@@ -61,7 +61,7 @@ export const readAccess: Access<User> = ({
       },
       {
         'departments.department': {
-          in: adminDeartmentAccessIDs,
+          in: adminDepartmentAccessIDs,
         },
       },
     ],
