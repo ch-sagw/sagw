@@ -36,6 +36,8 @@ jobs:
         run: npm run test:be:native
         env:
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          DATABASE_URI: ${{ secrets.DATABASE_URI }}
       - uses: daun/playwright-report-summary@v3
         if: always()
         with:
