@@ -49,6 +49,3 @@ Payload Config:
 
 Testing:
 -------
-- Split tests FE/BE
-- Save reports (github actions) for fe and be
-- make tests work on ci
