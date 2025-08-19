@@ -24,8 +24,10 @@ jobs:
         run: npm ci
       - name: Lint
         run: npm run lint
-      - name: Test
+      - name: Test FE
         run: npm run test:fe:native
+      - name: Test BE
+        run: npm run test:be:native
       - uses: daun/playwright-report-summary@v3
         if: always()
         with:
