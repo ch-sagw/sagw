@@ -33,7 +33,9 @@ jobs:
           mongodb-port: 27017
           mongodb-container-name: mongo
       - name: Test BE
-        run: npm run test:be:native --PAYLOAD_SECRET=${{ secrets.PAYLOAD_SECRET }}
+        run: npm run test:be:native
+        env:
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
       - uses: daun/playwright-report-summary@v3
         if: always()
         with:
