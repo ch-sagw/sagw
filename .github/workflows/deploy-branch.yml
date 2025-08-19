@@ -40,7 +40,7 @@ jobs:
         env:
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
           DATABASE_NAME: sagw-test
-          DATABASE_URI: mongodb://<credentials>@127.0.0.1:27017/sagw-test?authSource=admin
+          DATABASE_URI: mongodb://user:pass@127.0.0.1/sagw-test?authSource=admin
           
       - uses: daun/playwright-report-summary@v3
         if: always()
