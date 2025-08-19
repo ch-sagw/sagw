@@ -11,8 +11,6 @@ test('zenodo api responds', async ({
 
   const zenodoResponseData = (await zenodoResponse.json()).data;
 
-  console.log(zenodoResponseData);
-
   await expect(zenodoResponseData.date)
     .toEqual('2025-04-02');
 
