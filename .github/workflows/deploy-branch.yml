@@ -32,12 +32,15 @@ jobs:
           mongodb-version: '7.0'
           mongodb-port: 27017
           mongodb-container-name: mongo
+          mongodb-username: user
+          mongodb-password: pass
+          mongodb-db: sagw-test
       - name: Test BE
         run: npm run test:be:native
         env:
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
-          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-          DATABASE_URI: ${{ secrets.DATABASE_URI }}
+          DATABASE_NAME: sagw-test
+          DATABASE_URI: mongodb://user:pass@127.0.0.1:27017/sagw-test?authSource=admin
       - uses: daun/playwright-report-summary@v3
         if: always()
         with:
