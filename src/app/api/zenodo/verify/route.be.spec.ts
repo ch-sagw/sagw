@@ -3,7 +3,7 @@ import {
   test,
 } from '@playwright/test';
 
-test('zenodo api responds', async ({
+test('zenodo api responds with proper values', async ({
   request,
 }) => {
   const id = '15126918';
