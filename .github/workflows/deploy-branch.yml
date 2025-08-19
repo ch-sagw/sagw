@@ -26,6 +26,7 @@ jobs:
           MONGO_INITDB_DATABASE: sagw-test
         options: >-
           --quiet
+          --logpath /dev/null
 
     steps:
       - uses: actions/checkout@v4
@@ -39,21 +40,14 @@ jobs:
       #   run: npm run lint
       # - name: Test FE
       #   run: npm run test:fe:native
-      # - name: Start MongoDB
-      #   uses: supercharge/mongodb-github-action@1.12.0
-      #   with:
-      #     mongodb-version: '7.0'
-      #     mongodb-port: 27017
-      #     mongodb-container-name: mongo
-      #     mongodb-username: user
-      #     mongodb-password: pass
-      #     mongodb-db: sagw-test
       - name: Test BE
         run: npm run test:be:native
         env:
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
           DATABASE_NAME: sagw-test
           DATABASE_URI: mongodb://user:pass@mongo:27017/sagw-test?authSource=admin
+          PAYLOAD_INITIAL_USER_MAIL: foo@bar.com
+          PAYLOAD_INITIAL_PASSWORD: 1234
           
       - uses: daun/playwright-report-summary@v3
         if: always()
