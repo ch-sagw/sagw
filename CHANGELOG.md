@@ -1,5 +1,96 @@
 # Changelog
 
+## [0.4.0](https://github.com/ch-sagw/sagw/compare/v0.3.0...v0.4.0) (2025-08-19)
+
+
+### Chore
+
+* add .env.playwright.example ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* fix typos ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* improve grouping ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* move internalLink component in separate folder ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* move plc collections in own folder ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* proper test name ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove commen ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove log ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove logs ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove obsolete folder ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove todo ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove todos ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* rename tenant to departments to be more specific ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* update after build ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+
+
+### CI
+
+* add logs to debug ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* enable lint and test-fe again ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* fix and use zenodo token ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* pass db name and uri secrets ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* run correct test script ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* start mongo before be test ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* temp disable lint and fe-test ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* try to pass payload secret ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* try to run be tests ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* try to use payload secret ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+
+
+### Documentation
+
+* add link to todo ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove todo ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+
+
+### Features
+
+* add base implementation for multi-tenancy ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* add date to zenodo documents, minor adjustments ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* add title to remaining globals, fix consent tab grouping ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* add title to singleton pages ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* add zenodo download block to pages where appropriate ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* automatically generate collections for multitenant config ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* base implementation for zenodo document chooser ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* create api route to safely access zenodo api ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* enable save after editing entry ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* fix link server component to use singleton pages ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* implement all necessary user and department roles ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* improve collections naming labels (plural/singular) ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* improve zenodo verification process ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* make link chooser propose only links to pages of same tenant ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* migrate globals to collections ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* save size in MB, make sure format is received correctly ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* save zenodo data to dedicated fields instead of json ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* seed initial user to overcome multitenant user creation ghetto ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* show files in overview ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* use useAllFormFields and dispatch state to fix weird files array issue onreissuing search ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip smaller zenodo improvments ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+
+
+### Bug Fixes
+
+* disable dotenv on ci ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* fix pr review comments ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* make sure env files get mounted and not interpreted by docker ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove obsolete effects handling ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* reset no input change ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* show MB ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* use absolute import path ([55d0394](https://github.com/ch-sagw/sagw/commit/55d03948c4e7ce077c598b103fb58f8ea3f17562))
+* use correct zenodo token ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+
+
+### Test
+
+* add be tests to prod deployment action ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* make be-tests possible, split into fe and be tests ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* write proper test for zenodo api ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+
 ## [0.3.0](https://github.com/ch-sagw/sagw/compare/v0.2.2...v0.3.0) (2025-08-14)
 
 
