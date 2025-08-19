@@ -33,6 +33,12 @@ Payload:
 - versions
 - trash
 - hide api for non-admin roles
+- collection "consent" is saved to db-collections "consents"
+
+OVH / DB:
+--------
+- currently, ovh db instance only has admin user. make 2 more users (one for usage in app, the other as backup). Save store these logins at vorhall
+- currently, the app uses admin db. use sagw db.
 
 Payload Config:
 --------
