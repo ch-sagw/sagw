@@ -17,12 +17,19 @@ services:
       - "3000:3000"
     volumes:
       - ./src:/app/src
+
+      # we need to mount .env files into docker container. If we don't, and just
+      # pass the env_file in compose, docker will interpret the env file contents.
+      # since the vars may contain $ signs, this might break things since docker
+      # is interpreting $ as command input.
+      - ./.env:/app/.env:ro
     depends_on:
       - mongo
     environment:
-      ENV: sample
-    env_file:
-      - .env/.env.playwright
+      ENV: playwright
+      DOTENV_CONFIG_PATH: /app/.env
+    # env_file:
+    #   - .env/.env.playwright
 
     # payload will be started by playwright-be.config.ts
     command: npm run test:be:native
