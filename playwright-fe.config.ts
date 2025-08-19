@@ -93,6 +93,7 @@ export default defineConfig({
   ],
   retries: 0,
   testDir: './src/',
+  testMatch: '**/*.fe.spec.ts?(x)',
   use: {
     trace: 'on-first-retry',
   },
