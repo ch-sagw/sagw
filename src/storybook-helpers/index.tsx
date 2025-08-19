@@ -1,4 +1,4 @@
-import { PartialStoryFn } from '@storybook/types';
+import { PartialStoryFn } from 'storybook/internal/types';
 import { ReactElement } from 'react';
 import { vrtConfig } from '@/visual-regression-testing/config';
 

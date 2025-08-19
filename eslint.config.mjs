@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
+
 import { FlatCompat } from '@eslint/eslintrc';
 import tsRules from './lint/ts-rules.mjs';
 import esRules from './lint/es-rules.mjs';
@@ -7,8 +10,10 @@ const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
 });
 
+// TODO: .storybook/* seems not to be linted.
+
 const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript', 'plugin:storybook/recommended'),
+  ...compat.extends('next/core-web-vitals', 'next/typescript'),
   globalIgnores([
     'convenience/*',
     'node_modules/*',
@@ -30,6 +35,12 @@ const eslintConfig = [
       ...tsRules,
     },
   },
+  ...storybook.configs["flat/recommended"],
+  {
+    ignores: [
+      '!.storybook'
+    ]
+  }
 ];
 
 export default eslintConfig;
