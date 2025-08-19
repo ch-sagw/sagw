@@ -27,13 +27,16 @@ NextJs:
 
 Payload:
 --------
-- Generate types: when is it run? do we have to run in automatically, e.g. on ci, on postinstall etc?
-- set hideAPIURL to true on prod: https://payloadcms.com/docs/configuration/collections#admin-options
-- live-preview
-- versions
-- trash
-- hide api for non-admin roles
-- collection "consent" is saved to db-collections "consents"
+- set hideAPIURL to true on prod for non admins: https://payloadcms.com/docs/configuration/collections#admin-options
+- implement live-preview
+- implement versions
+- implement trash
+- collection "consent" is saved to db-collections "consents". Mongo Config: autoPluralization
+- correctly set SERVER_URL based on ENV
+- implement draft preview: https://payloadcms.com/docs/admin/preview#draft-preview
+- implement document locking: https://payloadcms.com/docs/admin/locked-documents
+- implement resend
+
 
 OVH / DB:
 --------
