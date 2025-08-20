@@ -1,4 +1,4 @@
-// foo
+/* eslint-disable sort-keys */
 
 export default {
 
@@ -449,4 +449,4 @@ export default {
   'template-curly-spacing': 'error',
   'yield-star-spacing': 'error',
 };
-
+/* eslint-enable sort-keys */
