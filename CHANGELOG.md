@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/ch-sagw/sagw/compare/v0.5.0...v0.5.1) (2025-08-20)
+
+
+### Chore
+
+* move cron jobs to api folder outside of payload group ([#347](https://github.com/ch-sagw/sagw/issues/347)) ([d9a9e4f](https://github.com/ch-sagw/sagw/commit/d9a9e4fe8139c4afd97c4124ad0247d8217140e0))
+
 ## [0.5.0](https://github.com/ch-sagw/sagw/compare/v0.4.1...v0.5.0) (2025-08-20)
 
 
