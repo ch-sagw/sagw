@@ -2,6 +2,7 @@ Backup / Restore:
 -----------------
 - mongo-db has a config db, which is mainly for cluster-meta. do we have to backup/restore it as well?
 - test blob backup/restore with lots of large image files
+- we have databases sagwtest and sagwprod. but auth happens via admin. in backup/restore, we should also backup and restore admin.
 
 Storybook:
 ----------
