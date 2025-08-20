@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.4.1](https://github.com/ch-sagw/sagw/compare/v0.4.0...v0.4.1) (2025-08-20)
+
+
+### Chore
+
+* **deps-dev:** bump pbkdf2 from 3.1.2 to 3.1.3 in the npm_and_yarn group ([#62](https://github.com/ch-sagw/sagw/issues/62)) ([f0caad1](https://github.com/ch-sagw/sagw/commit/f0caad152989e0981c2cc8cbae913b00883252af))
+* **deps-dev:** bump pbkdf2 in the npm_and_yarn group ([f0caad1](https://github.com/ch-sagw/sagw/commit/f0caad152989e0981c2cc8cbae913b00883252af))
+* **deps-dev:** bump the development-dependencies group across 1 directory with 9 updates ([dd33774](https://github.com/ch-sagw/sagw/commit/dd33774869895fc289ec1e784db13dc62c45f046))
+* **deps-dev:** bump the development-dependencies group across 1 directory with 9 updates ([#340](https://github.com/ch-sagw/sagw/issues/340)) ([dd33774](https://github.com/ch-sagw/sagw/commit/dd33774869895fc289ec1e784db13dc62c45f046))
+* manually update and migrate storybook ([9c40cd8](https://github.com/ch-sagw/sagw/commit/9c40cd8f3bb792654e6b2d8a1331438152d705f0))
+* manually update prod deps ([4182f60](https://github.com/ch-sagw/sagw/commit/4182f60991ead7386405a586dcbbb0a6ede01d9f))
+* resolve merge conflicts ([f0caad1](https://github.com/ch-sagw/sagw/commit/f0caad152989e0981c2cc8cbae913b00883252af))
+
+
+### Documentation
+
+* add todos ([4182f60](https://github.com/ch-sagw/sagw/commit/4182f60991ead7386405a586dcbbb0a6ede01d9f))
+* add todos ([1c4ba5e](https://github.com/ch-sagw/sagw/commit/1c4ba5e86eecc4bd939356de60d24b404fe694b2))
+* add todos ([5fb2c3a](https://github.com/ch-sagw/sagw/commit/5fb2c3ac89b5f1393e2c82f704a57d1c89a89779))
+
+
+### Bug Fixes
+
+* make sure env exists before setting vars ([dd33774](https://github.com/ch-sagw/sagw/commit/dd33774869895fc289ec1e784db13dc62c45f046))
+* set button appeareance to auto ([dd33774](https://github.com/ch-sagw/sagw/commit/dd33774869895fc289ec1e784db13dc62c45f046))
+
 ## [0.4.0](https://github.com/ch-sagw/sagw/compare/v0.3.0...v0.4.0) (2025-08-19)
 
 
