@@ -33,6 +33,7 @@ export class S3Helper {
 
       },
       endpoint: process.env.OVH_OS_IMAGES_BACKUP_CONTAINER_ENDPOINT,
+      region: 'gra',
     });
   }
 
