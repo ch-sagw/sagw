@@ -1,5 +1,177 @@
 # Changelog
 
+## [0.4.0](https://github.com/ch-sagw/sagw/compare/v0.3.0...v0.4.0) (2025-08-19)
+
+
+### Chore
+
+* add .env.playwright.example ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* fix typos ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* improve grouping ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* move internalLink component in separate folder ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* move plc collections in own folder ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* proper test name ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove commen ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove log ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove logs ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove obsolete folder ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove todo ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove todos ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* rename tenant to departments to be more specific ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* update after build ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+
+
+### CI
+
+* add logs to debug ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* enable lint and test-fe again ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* fix and use zenodo token ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* pass db name and uri secrets ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* run correct test script ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* start mongo before be test ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* temp disable lint and fe-test ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* try to pass payload secret ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* try to run be tests ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* try to use payload secret ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+
+
+### Documentation
+
+* add link to todo ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove todo ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+
+
+### Features
+
+* add base implementation for multi-tenancy ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* add date to zenodo documents, minor adjustments ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* add title to remaining globals, fix consent tab grouping ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* add title to singleton pages ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* add zenodo download block to pages where appropriate ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* automatically generate collections for multitenant config ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* base implementation for zenodo document chooser ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* create api route to safely access zenodo api ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* enable save after editing entry ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* fix link server component to use singleton pages ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* implement all necessary user and department roles ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* improve collections naming labels (plural/singular) ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* improve zenodo verification process ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* make link chooser propose only links to pages of same tenant ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* migrate globals to collections ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* save size in MB, make sure format is received correctly ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* save zenodo data to dedicated fields instead of json ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* seed initial user to overcome multitenant user creation ghetto ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* show files in overview ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* use useAllFormFields and dispatch state to fix weird files array issue onreissuing search ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* wip smaller zenodo improvments ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+
+
+### Bug Fixes
+
+* disable dotenv on ci ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* fix pr review comments ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* make sure env files get mounted and not interpreted by docker ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* remove obsolete effects handling ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* reset no input change ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* show MB ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* use absolute import path ([55d0394](https://github.com/ch-sagw/sagw/commit/55d03948c4e7ce077c598b103fb58f8ea3f17562))
+* use correct zenodo token ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+
+
+### Test
+
+* add be tests to prod deployment action ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* make be-tests possible, split into fe and be tests ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+* write proper test for zenodo api ([90d49e9](https://github.com/ch-sagw/sagw/commit/90d49e91eddef344084ef06c0ecfa18d628f1663))
+
+## [0.3.0](https://github.com/ch-sagw/sagw/compare/v0.2.2...v0.3.0) (2025-08-14)
+
+
+### Chore
+
+* add autologin for local dev env ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* add content models for elements, modules, sections, and homepage ([4273dd8](https://github.com/ch-sagw/sagw/commit/4273dd877e9c6ee7b9c5c6e7d3588b7e0ec668a2))
+* config field localization, add admin-ui localization, add default request depth ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* correctly extend subnavItem ([4219651](https://github.com/ch-sagw/sagw/commit/4219651e479331be6fd295e7577446e3d8d0f4f5))
+* **deps-dev:** bump the development-dependencies group across 1 directory with 15 updates ([#48](https://github.com/ch-sagw/sagw/issues/48)) ([258f4cf](https://github.com/ch-sagw/sagw/commit/258f4cfa9d1fafccf24af79fe6367db52fe807c5))
+* **deps:** bump the production-dependencies group across 1 directory with 10 updates ([#59](https://github.com/ch-sagw/sagw/issues/59)) ([befac7e](https://github.com/ch-sagw/sagw/commit/befac7e922b6d1ca1e91f01902803f5c5afbab4a))
+* **deps:** bump the production-dependencies group across 1 directory with 9 updates ([#47](https://github.com/ch-sagw/sagw/issues/47)) ([5b6a4cb](https://github.com/ch-sagw/sagw/commit/5b6a4cb19cbd06a8ce84dbeaeebcfc2f69cdfa41))
+* **deps:** bump the production-dependencies group with 8 updates ([#40](https://github.com/ch-sagw/sagw/issues/40)) ([91b038d](https://github.com/ch-sagw/sagw/commit/91b038d3fd9fafddaebc618921490bd663d45a2a))
+* **deps:** bump the production-dependencies group with 9 updates ([#49](https://github.com/ch-sagw/sagw/issues/49)) ([a923dd8](https://github.com/ch-sagw/sagw/commit/a923dd865fba057058cbc83435baf040fe5469b4))
+* extending documentation ([#43](https://github.com/ch-sagw/sagw/issues/43)) ([470861c](https://github.com/ch-sagw/sagw/commit/470861cf906fac8fcb855d236eb0545c75997e35))
+* extending payload config with upload options config ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* extending storybook config to make server only component work ([#44](https://github.com/ch-sagw/sagw/issues/44)) ([3145fda](https://github.com/ch-sagw/sagw/commit/3145fda69b05b53e7e0e9d5741a1358b3d91964d))
+* fix pageRef type ([67bc120](https://github.com/ch-sagw/sagw/commit/67bc1208b51fc6af12f81845323e4b852ab79043))
+* install server-only ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* make alt text optional ([f156e9f](https://github.com/ch-sagw/sagw/commit/f156e9f2b49689229a8431a24a92cda1a3f703de))
+* move payload collections to separate file ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* move payload plugins to separate file ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* move snapshots folder ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* remove obsolete note about not working request depth ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* rename personTeaser to person ([a23b695](https://github.com/ch-sagw/sagw/commit/a23b6954261e4229080f5178d868379580859031))
+* rename test component ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* update after build ([d1df7e0](https://github.com/ch-sagw/sagw/commit/d1df7e07a47812c3acba02b68ada8a903cde3ad1))
+* update payload, improve local db start ([7485659](https://github.com/ch-sagw/sagw/commit/7485659b6cce8a5b71c4c8176c6b14f418bda6a0))
+* use absolute imports for backup-restore scripts ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* use absolute imports inside sample component ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+
+
+### Documentation
+
+* add alignement to subpage section ([5445028](https://github.com/ch-sagw/sagw/commit/5445028744524c01601959fff68c68109f1b733b))
+* add content model for activities pages ([887543d](https://github.com/ch-sagw/sagw/commit/887543dc8028fa228cbcb089c7dc4ec138d72b7f))
+* add interfaces for more pages, various other adjustments ([1448d93](https://github.com/ch-sagw/sagw/commit/1448d93abc3ef36294013994dcaf11dafcef5bdc))
+* add interfaces for network and promotion pages ([2961c85](https://github.com/ch-sagw/sagw/commit/2961c85a8dfa4801771e4382a1e8c45e2b3912d0))
+* add todo ([3792dd0](https://github.com/ch-sagw/sagw/commit/3792dd0a7796cd6454418de45e75baed3edf5fce))
+* add todo ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* add todo's ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* adding open questions to content model todo file ([0f18225](https://github.com/ch-sagw/sagw/commit/0f182257a44b17a9e07a9a36c81482f97657da22))
+* fix seo description ([28e4b89](https://github.com/ch-sagw/sagw/commit/28e4b8972b3e63edff9012686a53129dbd745f2d))
+* ignore content-model output from git ([473ab60](https://github.com/ch-sagw/sagw/commit/473ab6002bcb552bc9465a9106074eeffcbe2b48))
+* make copyButton boolean choose ([2bedab7](https://github.com/ch-sagw/sagw/commit/2bedab7d5ec0b5b372276182d4f3facc71414d34))
+* optimize colorMode handling ([f6bb538](https://github.com/ch-sagw/sagw/commit/f6bb5388111d102362b9d05e6cbd589936f37f67))
+* refactor document type ([269d916](https://github.com/ch-sagw/sagw/commit/269d91626f15092b643d11b9c8dba8c6712cffe7))
+* remove filters ([ba45b3d](https://github.com/ch-sagw/sagw/commit/ba45b3d31e0093b4d37574761e484bf366d1b935))
+* remove todo ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* rework the whole content model ([568d8d0](https://github.com/ch-sagw/sagw/commit/568d8d002543899a50feb7c9d1428739600f6854))
+* update content-model after first refinement ([f73c0c6](https://github.com/ch-sagw/sagw/commit/f73c0c6c8737ac35ede451871e0cafb96574a46f))
+* use project id ([8fe5c69](https://github.com/ch-sagw/sagw/commit/8fe5c697cbe5cfadcc4bc995d81b3fbad1698e4c))
+* use typedoc to render human readable documenation ([79e076e](https://github.com/ch-sagw/sagw/commit/79e076e46dcd32ec77e4d3933d54a9ab3cd5f2b4))
+* various content model adoption ([39ce4fa](https://github.com/ch-sagw/sagw/commit/39ce4fa80607aa7e9e263b4fd0e5312d5adc5ed2))
+
+
+### Features
+
+* add helper to generate url ([bd0d64c](https://github.com/ch-sagw/sagw/commit/bd0d64c4da2f9c6372aa26681a836a0448ec0064))
+* add sample button-group block ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* add various blocks ([686d98a](https://github.com/ch-sagw/sagw/commit/686d98a25ea429adfd58bc9c1f561d374da7b6da))
+* add various collections ([7c4d6d9](https://github.com/ch-sagw/sagw/commit/7c4d6d9efdee38ac79fb32f9356369d36f06f96f))
+* add various field-templates ([0091358](https://github.com/ch-sagw/sagw/commit/00913585efe3ada6bc1691cac1389a5143791809))
+* add various global pages ([fd6796c](https://github.com/ch-sagw/sagw/commit/fd6796cf78f215d1b91c35443c67e666d9d19ce3))
+* enable focal point selection on media ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* render sample button group on sample page ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* use globals ([ab44b0e](https://github.com/ch-sagw/sagw/commit/ab44b0eefe3374936516056e37beefe262980ce2))
+
+
+### Bug Fixes
+
+* make sure to init env in blob helper ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* set correct story type ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+
+
+### Test
+
+* add screenshots for custom visual regression test ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* fix naming issues, make visual regression possible for components and blocks ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+* refactor to enable vrt on components and blocks ([9c04d9c](https://github.com/ch-sagw/sagw/commit/9c04d9c9ed8b1e8b33a5edf1c02faa5d6da95054))
+
 ## [0.2.2](https://github.com/ch-sagw/sagw/compare/v0.2.1...v0.2.2) (2025-04-18)
 
 

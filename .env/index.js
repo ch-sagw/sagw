@@ -1,11 +1,22 @@
 import dotenv from 'dotenv';
 
-dotenv.config({
-  override: true,
-  path: '.env/.env.base',
-});
+const envs = [
+  'local',
+  'playwright',
+  'prod',
+  'test',
+];
 
-dotenv.config({
-  override: true,
-  path: `.env/.env.${process.env.ENV}`,
-});
+if (process.env.CI !== 'true') {
+  dotenv.config({
+    override: true,
+    path: '.env/.env.base',
+  });
+
+  if (envs.includes(process.env.ENV)) {
+    dotenv.config({
+      override: true,
+      path: `.env/.env.${process.env.ENV}`,
+    });
+  }
+}

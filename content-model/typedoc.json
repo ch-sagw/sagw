@@ -1,0 +1,13 @@
+{
+    "entryPoints": ["./cms/index.ts"],
+    "out": "./docs",
+    "navigation": {
+        "includeCategories": true,
+        "includeGroups": true,
+        "includeFolders": true,
+        "compactFolders": false,
+        "excludeReferences": true
+    },
+    "categorizeByGroup": true,
+    "visibilityFilters": {},
+}

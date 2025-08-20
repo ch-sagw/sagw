@@ -34,6 +34,7 @@ yarn-error.log*
 !/.env/.env.prod.example
 !/.env/.env.test.example
 !/.env/.env.local.example
+!/.env/.env.playwright.example
 
 # vercel
 .vercel
@@ -60,3 +61,6 @@ next-env.d.ts
 
 # backup / restore
 download
+
+# content-model
+/content-model/docs
