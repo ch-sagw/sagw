@@ -1,8 +1,8 @@
 import path from 'path';
 
-const buildEslintCommand = (filenames) => `next lint --file ${filenames
+const buildEslintCommand = (filenames) => `eslint ${filenames
   .map((f) => path.relative(process.cwd(), f))
-  .join(' --file ')}`;
+  .join(' ')}`;
 
 const config = {
   '*.scss': 'stylelint',
