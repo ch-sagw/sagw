@@ -10,21 +10,19 @@ import {
 } from '@/backup-restore/helpers/blob';
 
 const replicateDb = async (replicateTo: string, dbHelperSource: DbHelper): Promise<void> => {
-  // const prodUrl = process.env.DATABASE_URI;
+  const prodUrl = process.env.DATABASE_URI;
 
   dotenv.config({
     override: true,
     path: `.env/.env.${replicateTo}`,
+    quiet: true,
   });
 
-  // const currentUrl = process.env.DATABASE_URI;
+  const currentUrl = process.env.DATABASE_URI;
 
-  // TODO: enable after prod db is created.
-  /*
   if (prodUrl === currentUrl) {
     throw new Error('Env-Var mismatch for DATABASE_URI. Aborting.');
   }
-  */
 
   const dbHelperTarget = new DbHelper();
 
@@ -76,6 +74,7 @@ const replicateBlob = async (): Promise<void> => {
     dotenv.config({
       override: true,
       path: '.env/.env.prod',
+      quiet: true,
     });
 
     const prodToken = process.env.BLOB_READ_WRITE_TOKEN;
@@ -85,6 +84,7 @@ const replicateBlob = async (): Promise<void> => {
     dotenv.config({
       override: true,
       path: '.env/.env.test',
+      quiet: true,
     });
 
     const testToken = process.env.BLOB_READ_WRITE_TOKEN;
@@ -127,6 +127,7 @@ const replicateProd = async (): Promise<void> => {
     dotenv.config({
       override: true,
       path: '.env/.env.local',
+      quiet: true,
     });
 
     const localDBUri = process.env.DATABASE_URI;
@@ -135,6 +136,7 @@ const replicateProd = async (): Promise<void> => {
     dotenv.config({
       override: true,
       path: '.env/.env.test',
+      quiet: true,
     });
 
     const testDBUri = process.env.DATABASE_URI;
@@ -146,6 +148,7 @@ const replicateProd = async (): Promise<void> => {
     dotenv.config({
       override: true,
       path: '.env/.env.prod',
+      quiet: true,
     });
 
     const prodDBUri = process.env.DATABASE_URI;
