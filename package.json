@@ -42,9 +42,7 @@
     "backup:maintenance": "cross-env ENV=test tsx ./src/backup-restore/maintenance/index",
     "backup:maintenance:prod": "cross-env ENV=prod tsx ./src/backup-restore/maintenance/index",
     "replicate:prod": "tsx ./src/backup-restore/restores/replicate-prod",
-    "prepare": "husky",
-    "content-model:docs": "typedoc --options ./content-model/typedoc.json",
-    "content-model:docs:watch": "typedoc --watch  --options ./content-model/typedoc.json"
+    "prepare": "husky"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "^3.52.0",
@@ -100,7 +98,6 @@
     "stylelint-config-standard-scss": "^15.0.1",
     "ts-morph": "^26.0.0",
     "tsx": "^4.19.4",
-    "typedoc": "^0.28.7",
     "typescript": "5.9.2",
     "vercel": "^46.0.2",
     "vite": "^7.1.3"

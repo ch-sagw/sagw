@@ -1,6 +1,4 @@
-// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from "eslint-plugin-storybook";
-
+import storybook from 'eslint-plugin-storybook';
 import { FlatCompat } from '@eslint/eslintrc';
 import tsRules from './lint/ts-rules.mjs';
 import esRules from './lint/es-rules.mjs';
@@ -20,7 +18,6 @@ const eslintConfig = [
     'src/app/(payload)/**/*',
     '!src/app/(payload)/**/*/',
     '!src/app/(payload)/api/cron-blob-backup/*',
-    'content-model/docs/**/*/',
   ]),
   {
     files: [
@@ -35,12 +32,10 @@ const eslintConfig = [
       ...tsRules,
     },
   },
-  ...storybook.configs["flat/recommended"],
+  ...storybook.configs['flat/recommended'],
   {
-    ignores: [
-      '!.storybook'
-    ]
-  }
+    ignores: ['!.storybook'],
+  },
 ];
 
 export default eslintConfig;
