@@ -40,6 +40,7 @@ Payload:
 - implement document locking: https://payloadcms.com/docs/admin/locked-documents
 - implement resend
 - add indication on payload ui if author is on test or prod
+- move zenodo api to payload->api
 
 Vercel:
 --------
