@@ -33,7 +33,7 @@ services:
     command: npm run test:be:native
 
   mongo:
-    image: mongodb/mongodb-community-server:7.0.16-ubi8
+    image: mongodb/mongodb-community-server:8.0.12-ubi8
     container_name: sagw-mongo
     environment:
       - MONGODB_INITDB_ROOT_USERNAME=user
