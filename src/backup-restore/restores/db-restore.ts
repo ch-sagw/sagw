@@ -18,7 +18,9 @@ import {
   inquirerAskForProceed,
 } from '@/backup-restore/helpers/inquirer';
 
-dotenv.config();
+dotenv.config({
+  quiet: true,
+});
 
 const main = async (): Promise<void> => {
   const dbHelper = new DbHelper();

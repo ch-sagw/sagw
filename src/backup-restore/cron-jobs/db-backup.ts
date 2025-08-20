@@ -19,7 +19,9 @@ import mail from '@/backup-restore/helpers/mail';
 import { getErrorMessage } from '@/backup-restore/helpers/try-catch-error';
 import sendSlackMessage from '@/backup-restore/helpers/slack';
 
-dotenv.config();
+dotenv.config({
+  quiet: true,
+});
 
 const main = async (): Promise<void> => {
   const dbHelper = new DbHelper();
