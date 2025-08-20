@@ -4,6 +4,7 @@ Backup / Restore:
 - test blob backup/restore with lots of large image files
 - we have databases sagwtest and sagwprod. but auth happens via admin. in backup/restore, we should also backup and restore admin.
 - after creating db-prod instance, make sure vercel cron jobs still run as expected
+- check ovh backup/restore mechanism on ovh
 
 Storybook:
 ----------
@@ -38,7 +39,11 @@ Payload:
 - implement draft preview: https://payloadcms.com/docs/admin/preview#draft-preview
 - implement document locking: https://payloadcms.com/docs/admin/locked-documents
 - implement resend
+- add indication on payload ui if author is on test or prod
 
+Vercel:
+--------
+- Disable branch protection for test? https://vercel.com/dev-0f45b8a0/sagw/settings/deployment-protection
 
 OVH / DB:
 --------
