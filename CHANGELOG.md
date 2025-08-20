@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.5.0](https://github.com/ch-sagw/sagw/compare/v0.4.1...v0.5.0) (2025-08-20)
+
+
+### Chore
+
+* fix type ([1326548](https://github.com/ch-sagw/sagw/commit/132654873774836c99a1167f7c2666f97c73f3f6))
+* set dotenv quiet ([b73d7ba](https://github.com/ch-sagw/sagw/commit/b73d7ba40fa7f14358a8857f5a7e1f9780599262))
+
+
+### Documentation
+
+* add todo's ([c039827](https://github.com/ch-sagw/sagw/commit/c039827c08b44a9ca67091016b2b081ab4e35d33))
+
+
+### Features
+
+* enable prod replication ([89f85de](https://github.com/ch-sagw/sagw/commit/89f85ded0d9eb8022133e410309f5ae23d9fd4db))
+
+
+### Bug Fixes
+
+* set s3 region explicitly ([19983cc](https://github.com/ch-sagw/sagw/commit/19983cc4efd5e255cc482d58cbb4b3e5a5b44f0f))
+
 ## [0.4.1](https://github.com/ch-sagw/sagw/compare/v0.4.0...v0.4.1) (2025-08-20)
 
 
