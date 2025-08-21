@@ -1,5 +1,37 @@
 # Changelog
 
+## [0.6.2](https://github.com/ch-sagw/sagw/compare/v0.6.1...v0.6.2) (2025-08-21)
+
+
+### Chore
+
+* add comments about the exact goal/purpose of each workflow ([a532d63](https://github.com/ch-sagw/sagw/commit/a532d63c5685423db50deea0b2fda7863ede7283))
+* document VERCEL_PROJECT_ID_STORYBOOK ([9b8984e](https://github.com/ch-sagw/sagw/commit/9b8984e0b5072bc5dc0f7e8984fcb4bb48224005))
+
+
+### CI
+
+* add storybook deployment ([24286bf](https://github.com/ch-sagw/sagw/commit/24286bf6ea090311fddd2817a1270b6b3d219a4b))
+* fake commit to trigger storybook deploy ([ea02ea7](https://github.com/ch-sagw/sagw/commit/ea02ea7c4933e43b53b73c4ac832872ec1fb7afa))
+* pass target to decide which build command to run ([0c7ef06](https://github.com/ch-sagw/sagw/commit/0c7ef062bff0f4cc0e8dd73e2e9d815eafe14d9c))
+* run build only if project id matches ([63acd3e](https://github.com/ch-sagw/sagw/commit/63acd3e2e82a060e6fb00614f60156498e444e07))
+* try to fix build ([7f92103](https://github.com/ch-sagw/sagw/commit/7f921039e0c29dd5559aca4d90052d232711bae7))
+* try to fix build ([3e70ca2](https://github.com/ch-sagw/sagw/commit/3e70ca2955529b50706cc11359c57195836f8218))
+* try to fix build ([c1f2fe9](https://github.com/ch-sagw/sagw/commit/c1f2fe9063da19241b0824fa28083bd5474047c3))
+* try to fix build ([ecc40ed](https://github.com/ch-sagw/sagw/commit/ecc40ed10a35fd2668518644f1d590b67da689f7))
+* try to fix build ([73487fc](https://github.com/ch-sagw/sagw/commit/73487fc6ddf05d9862e23f35a0720458a68ef879))
+* wip ([334c58a](https://github.com/ch-sagw/sagw/commit/334c58a62c63c9fda6550073193e486af0dbe3e9))
+
+
+### Documentation
+
+* add coments on workflows ([4fd72ce](https://github.com/ch-sagw/sagw/commit/4fd72ce78cc21968fe92d8be2dc7af62aa28f194))
+
+
+### Bug Fixes
+
+* rename workflow ([c166ad8](https://github.com/ch-sagw/sagw/commit/c166ad8e67d77f267349d1e09d75262be699e719))
+
 ## [0.6.1](https://github.com/ch-sagw/sagw/compare/v0.6.0...v0.6.1) (2025-08-21)
 
 
