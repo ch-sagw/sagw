@@ -3,7 +3,7 @@
 # Runs on: commits/merges to main
 # Build: via Vercel CLI
 
-name: Test Deployment
+name: Storybook Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_STORYBOOK }}
