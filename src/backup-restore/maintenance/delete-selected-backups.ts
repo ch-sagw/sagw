@@ -39,7 +39,7 @@ export const selectBackupsToDelete = async (): Promise<void> => {
 
     const bucketsToDelete = await inquirerAskMultipleChoice(multipleChoiceQuestion, bucketsSorted);
 
-    const finalConfirmationMessage = `I am about to delete ${chalk.red(bucketsToDelete.length)} ${selection} buckets on S3. Are you sure you want to continue?`;
+    const finalConfirmationMessage = `I am about to delete ${chalk.red(bucketsToDelete.length)} ${selection} buckets on ${chalk.red(process.env.ENV)} S3. Are you sure you want to continue?`;
     const finalConfirmation = await inquirerAskForProceed(finalConfirmationMessage);
 
     if (!finalConfirmation) {
