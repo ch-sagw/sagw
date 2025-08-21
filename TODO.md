@@ -8,7 +8,7 @@ Backup / Restore:
 
 Storybook:
 ----------
-- deploy storybook?
+- deploy storybook!
 
 Github:
 -------
@@ -26,7 +26,7 @@ Sentry:
 
 NextJs:
 -------
-- make sure that zenodo endpoint is only available from localhost
+- make sure that zenodo endpoint is only available from localhost. if not feasible, move the zenodo request to a server component instead of using an api.
 
 Payload:
 --------
@@ -47,15 +47,12 @@ Vercel:
 
 OVH / DB:
 --------
-- currently, ovh db instance only has admin user. make 2 more users (one for usage in app, the other as backup). Save store these logins at vorhall
-- currently, the app uses admin db. use sagw db.
 - connect ovh object storage to cyberduck
 
 Payload Config:
 --------
 - earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
 - limit upload in images, video, documents to corresponding type
-- finish global i18n (cta forms)
 - prepopulate seo on collections
 - change all richText fields to rte1 or rte2
 - allow hyphen in rte1 & rte2
@@ -63,6 +60,7 @@ Payload Config:
 - add validation for external link href
 - add custom rte component for internal/external links, remove default link button in rte
 - multiTenantPlugin Tenants index.ts -> allowPublicRead, needed?
+- implement hidden texts global config (for a11y)
 
 Testing:
 -------
