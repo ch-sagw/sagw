@@ -1,3 +1,8 @@
+# Goal: Create / update the release branch
+# Vercel Env: n/a
+# Runs on: commits/merges to main
+# Build: n/a
+
 on:
   push:
     branches:
