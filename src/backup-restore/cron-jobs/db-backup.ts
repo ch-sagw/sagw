@@ -44,24 +44,25 @@ const main = async (): Promise<void> => {
       throw new Error('Aborting. No collections found in db.');
     }
 
-    for (const collection of collections) {
+    for await (const collection of collections) {
       const {
         collectionName,
       } = collection;
 
       if (!collectionName.startsWith('system.')) {
         collectionBackupCount++;
-        /* eslint-disable no-await-in-loop */
+
         const results = await dbHelper.getContentOfCollection(collection);
 
-        const params = {
-          Body: EJSON.stringify(results),
-          Bucket: bucketName,
-          Key: `${collectionName}.json`,
-        };
+        if (results.length > 0) {
+          const params = {
+            Body: EJSON.stringify(results),
+            Bucket: bucketName,
+            Key: `${collectionName}.json`,
+          };
 
-        await s3Helper.addObject(params);
-        /* eslint-enable no-await-in-loop */
+          await s3Helper.addObject(params);
+        }
       }
     }
 
@@ -78,6 +79,8 @@ const main = async (): Promise<void> => {
       mailMessage,
       `Backup name: ${bucketName}`,
     ], false);
+
+    console.log(`db-backup: ${mailMessage}`);
 
   } catch (error) {
     await mail(
