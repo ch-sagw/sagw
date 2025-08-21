@@ -64,6 +64,8 @@ const main = async (): Promise<void> => {
       `Backup name: ${bucketName}`,
     ], false);
 
+    console.log(`blob-backup: ${mailMessage}`);
+
   } catch (error) {
     await mail(
       '--> Backup failure: Vercel Blob data to OVH S3',
