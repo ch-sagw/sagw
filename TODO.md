@@ -49,6 +49,7 @@ OVH / DB:
 --------
 - currently, ovh db instance only has admin user. make 2 more users (one for usage in app, the other as backup). Save store these logins at vorhall
 - currently, the app uses admin db. use sagw db.
+- connect ovh object storage to cyberduck
 
 Payload Config:
 --------
