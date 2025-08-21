@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "sh vercel.sh",
+  "buildCommand": "bash vercel.sh",
   "crons": [
     {
       "path": "/api/cron-blob-backup",
