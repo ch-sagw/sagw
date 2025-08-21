@@ -1,3 +1,8 @@
+# Goal: Create a production deployment from the main branch
+# Vercel Env: production
+# Runs on: tag creation (tag is created by release please)
+# Build: via Vercel CLI
+
 name: Production Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
