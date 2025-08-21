@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.6.0](https://github.com/ch-sagw/sagw/compare/v0.5.1...v0.6.0) (2025-08-21)
+
+
+### Chore
+
+* add todo ([fc2338b](https://github.com/ch-sagw/sagw/commit/fc2338bb54246b2e343d05b0eeae1fbbd185126b))
+* log success ([2f1b91a](https://github.com/ch-sagw/sagw/commit/2f1b91acbc67c55ffb827b50b17dac5991d9c959))
+
+
+### Features
+
+* add maxDuration ([c60b678](https://github.com/ch-sagw/sagw/commit/c60b678a110577f26a5d13454614b9450b213081))
+
+
+### Bug Fixes
+
+* await in for loop ([842aa95](https://github.com/ch-sagw/sagw/commit/842aa95706eab5285e9216ae034fd277f0cf8f47))
+* reset maxduration to 300 ([a457b0f](https://github.com/ch-sagw/sagw/commit/a457b0fef218695ed04b5be32a3ae398a69cadb3))
+
 ## [0.5.1](https://github.com/ch-sagw/sagw/compare/v0.5.0...v0.5.1) (2025-08-20)
 
 
