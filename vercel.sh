@@ -1,11 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-# since we run 2 vercel projects (1 for payload / nextjs and 
-# one for storybook), we want `npm run build` only for payload,
-# and `npm run build-storybook` for storybook.
+TARGET="${BUILD_TARGET:-payload}"  # default to payload
 
-if [[ $VERCEL_PROJECT_ID == "prj_kpN8C9D0xuT3v4qY561mmroJ6MSG"  ]] ; then
-  npm run build:prod
-else 
-  npm run build-storybook
-fi
+case "$TARGET" in
+  payload)   npm run build ;;
+  storybook) npm run build-storybook ;;
+  *)
+    echo "Unknown BUILD_TARGET: $TARGET" >&2
+    exit 1
+    ;;
+esac
