@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.6.1](https://github.com/ch-sagw/sagw/compare/v0.6.0...v0.6.1) (2025-08-21)
+
+
+### Documentation
+
+* manage todos ([5bcec55](https://github.com/ch-sagw/sagw/commit/5bcec55c9621f46c48b251b97ca6201f4a8ab885))
+
+
+### Bug Fixes
+
+* correctly imcrement counter ([d8ee6ed](https://github.com/ch-sagw/sagw/commit/d8ee6ed84c2c38eb618db5c5dc5f0a9cc0e4ddb4))
+* make sure restore and maintenace scripts exist in all envs ([882e093](https://github.com/ch-sagw/sagw/commit/882e093f8bcf70b0726ea1fc660346cb2b9ca23d))
+* output ENV in info box before delete buckets ([8fd885c](https://github.com/ch-sagw/sagw/commit/8fd885c936d3afccf55cbd2370f376ef3e496867))
+
 ## [0.6.0](https://github.com/ch-sagw/sagw/compare/v0.5.1...v0.6.0) (2025-08-21)
 
 
