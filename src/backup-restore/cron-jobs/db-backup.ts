@@ -50,11 +50,11 @@ const main = async (): Promise<void> => {
       } = collection;
 
       if (!collectionName.startsWith('system.')) {
-        collectionBackupCount++;
-
         const results = await dbHelper.getContentOfCollection(collection);
 
         if (results.length > 0) {
+          collectionBackupCount++;
+
           const params = {
             Body: EJSON.stringify(results),
             Bucket: bucketName,
