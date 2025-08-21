@@ -2,6 +2,10 @@ import type { NextRequest } from 'next/server';
 import dbBackup from '@/backup-restore/cron-jobs/db-backup';
 import { getErrorMessage } from '@/backup-restore/helpers/try-catch-error';
 
+// defaults to 300. set it to max
+// https://vercel.com/docs/functions/limitations#max-duration
+export const maxDuration = 800;
+
 export const GET = async (request: NextRequest): Promise<Response> => {
   const authHeader = request.headers.get('authorization');
 
