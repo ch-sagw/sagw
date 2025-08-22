@@ -27,7 +27,6 @@ Sentry:
 
 NextJs:
 -------
-- make sure that zenodo endpoint is only available from localhost. if not feasible, move the zenodo request to a server component instead of using an api.
 
 Payload:
 --------

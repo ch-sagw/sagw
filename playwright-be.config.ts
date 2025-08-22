@@ -2,6 +2,20 @@ import {
   defineConfig, devices,
 } from '@playwright/test';
 
+import dotenv from 'dotenv';
+
+dotenv.config({
+  override: true,
+  path: './.env/.env.base',
+  quiet: true,
+});
+
+dotenv.config({
+  override: true,
+  path: '.env/.env.playwright',
+  quiet: true,
+});
+
 export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
   fullyParallel: true,
