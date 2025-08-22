@@ -41,6 +41,7 @@ Payload:
 - implement document locking: https://payloadcms.com/docs/admin/locked-documents
 - implement resend
 - add indication on payload ui if author is on test or prod
+- richt-text sanitize: should we search for "  " and replace by " "? other optimizations?
 
 Vercel:
 --------
@@ -54,10 +55,7 @@ Payload Config:
 --------
 - earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
 - prepopulate seo on collections
-- change all richText fields to rte1 or rte2
-- configure rte2 properly
 - add validation for external link href
-- add custom rte component for internal/external links, remove default link button in rte
 - multiTenantPlugin Tenants index.ts -> allowPublicRead, needed?
 - implement hidden texts global config (for a11y)
 
