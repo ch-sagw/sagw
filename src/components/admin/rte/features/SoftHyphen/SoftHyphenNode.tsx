@@ -6,7 +6,7 @@ import {
 import React, { JSX } from 'react';
 
 export type SerializedSoftHyphenNode = SerializedLexicalNode & {
-  type: 'soft-hyphen';
+  type: 'unicode-char';
   version: 1;
   text: string;
 };
@@ -17,7 +17,7 @@ export class SoftHyphenNode extends DecoratorNode<JSX.Element> {
   }
 
   public static getType(): string {
-    return 'soft-hyphen';
+    return 'unicode-char';
   }
 
   public static clone(node: SoftHyphenNode): SoftHyphenNode {
@@ -39,7 +39,7 @@ export class SoftHyphenNode extends DecoratorNode<JSX.Element> {
   public exportJSON(): SerializedSoftHyphenNode {
     return {
       text: '\u00AD',
-      type: 'soft-hyphen',
+      type: 'unicode-char',
       version: 1,
     };
   }
@@ -56,16 +56,16 @@ export class SoftHyphenNode extends DecoratorNode<JSX.Element> {
           borderRadius: '2px',
           color: '#fff',
           display: 'inline-block',
-          fontSize: '0.8em',
+          fontSize: '1em',
           fontWeight: 'bold',
           height: '1em',
           lineHeight: '1em',
+          margin: '0 2px',
           textAlign: 'center',
-          width: '1em',
         }}
         title='Soft hyphen'
       >
-        -
+        (-)
       </span>
     );
   }
