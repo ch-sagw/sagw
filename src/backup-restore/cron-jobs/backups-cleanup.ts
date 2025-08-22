@@ -56,7 +56,7 @@ const main = async (): Promise<void> => {
       mailMessage,
     ], false);
 
-    console.log('--> Backups cleanup done');
+    console.log(`backups-cleanup: ${mailMessage}`);
 
   } catch (error) {
     await mail(

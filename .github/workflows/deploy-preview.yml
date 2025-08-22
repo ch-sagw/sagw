@@ -1,3 +1,8 @@
+# Goal: Create a test deployment from the main branch
+# Vercel Env: test
+# Runs on: commits/merges to main
+# Build: via Vercel CLI
+
 name: Test Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}

@@ -6,6 +6,8 @@ import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 
+import { rte2 } from '@/field-templates/rte';
+
 const overlaySection: Field[] = [
   {
     localized: true,
@@ -14,6 +16,7 @@ const overlaySection: Field[] = [
     type: 'text',
   },
   {
+    editor: rte2,
     localized: true,
     name: 'text',
     required: true,
@@ -85,6 +88,7 @@ export const Consent: CollectionConfig = {
               type: 'text',
             },
             {
+              editor: rte2,
               localized: true,
               name: 'text',
               required: true,
@@ -123,6 +127,7 @@ export const Consent: CollectionConfig = {
               type: 'text',
             },
             {
+              editor: rte2,
               localized: true,
               name: 'text',
               required: true,

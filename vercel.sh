@@ -1,7 +1,13 @@
-#!/bin/bash
- 
-if [[ $VERCEL_TARGET_ENV == "production"  ]] ; then 
-  npm run build:prod
-else 
-  npm run build
-fi
+#!/usr/bin/env bash
+set -euo pipefail
+
+TARGET="${BUILD_TARGET:-payload}"  # default to payload
+
+case "$TARGET" in
+  payload)   npm run build ;;
+  storybook) npm run build-storybook ;;
+  *)
+    echo "Unknown BUILD_TARGET: $TARGET" >&2
+    exit 1
+    ;;
+esac

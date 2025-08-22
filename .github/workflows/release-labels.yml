@@ -1,3 +1,8 @@
+# Goal: label all related tickets with the release_tag
+# Vercel Env: n/a
+# Runs on: github published release
+# Build: n/a
+
 on:
   release:
     types: [published]

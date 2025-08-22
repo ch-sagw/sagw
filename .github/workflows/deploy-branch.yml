@@ -1,5 +1,7 @@
-# Branch Builds happen on Vercel. If we would do it via CLI here,
-# then we would not get the preview URL posted to the PR.
+# Goal: create a preview deployment of a branch
+# Vercel Env: preview
+# Runs on: pull request creation and updates
+# Build: happens on Vercel (If we would do it via CLI here then we would not get the preview URL posted to the PR)
 
 name: Branch Deployment
 on: pull_request
