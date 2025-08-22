@@ -55,7 +55,6 @@ Payload Config:
 - earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
 - prepopulate seo on collections
 - change all richText fields to rte1 or rte2
-- allow hyphen in rte1 & rte2
 - configure rte2 properly
 - add validation for external link href
 - add custom rte component for internal/external links, remove default link button in rte
