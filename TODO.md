@@ -53,7 +53,6 @@ OVH / DB:
 Payload Config:
 --------
 - earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
-- limit upload in images, video, documents to corresponding type
 - prepopulate seo on collections
 - change all richText fields to rte1 or rte2
 - allow hyphen in rte1 & rte2
