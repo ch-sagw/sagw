@@ -58,8 +58,14 @@ export const verifyZenodo = async (id: string): Promise<InterfaceZenodoResponse>
   }
 
   try {
+    const parsedId = Number(id);
+
+    if (!Number.isInteger(parsedId) || parsedId <= 0) {
+      throw new Error('Invalid Zenodo record ID');
+    }
+
     const response = await fetch(
-      `https://zenodo.org/api/records/${id}?access_token=${token}`,
+      `https://zenodo.org/api/records/${parsedId}?access_token=${token}`,
       {
         cache: 'no-store',
       },
