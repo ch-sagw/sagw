@@ -6,10 +6,9 @@ import {
 import {
   $getSelection, $isRangeSelection, LexicalEditor,
 } from 'lexical';
-import { SoftHyphenNode } from './SoftHyphenNode';
+import { SoftHyphenNode } from '@/components/admin/rte/features/SoftHyphen/SoftHyphenNode';
 import { JSX } from 'react';
 
-// Inserts a SoftHyphenNode inline
 const insertSoftHyphen = (editor: LexicalEditor): void => {
   editor.update(() => {
     const selection = $getSelection();
