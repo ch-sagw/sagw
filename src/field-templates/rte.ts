@@ -3,12 +3,14 @@ import {
   FixedToolbarFeature,
   lexicalEditor, SubscriptFeature, SuperscriptFeature,
 } from '@payloadcms/richtext-lexical';
+import { EmDashFeature } from '@/components/admin/rte/features/emDash/emDash.server';
 
 export const rte1 = lexicalEditor({
-  features: () => [
+  features: [
     FixedToolbarFeature(),
     SubscriptFeature(),
     SuperscriptFeature(),
+    EmDashFeature(),
   ],
 });
 
