@@ -1,13 +1,15 @@
 'use client';
 
 import {
-  JSX, useState,
+  JSX, useState, useTransition,
 } from 'react';
-import { InterfaceZenodoResponse } from '@/app/api/zenodo/verify/route';
 import {
   useAllFormFields, useForm,
 } from '@payloadcms/ui';
 import { reduceFieldsToValues } from 'payload/shared';
+import {
+  InterfaceZenodoResponse, verifyZenodo,
+} from '@/app/actions/zenodo';
 
 const ZenodoDocumentChooser = (): JSX.Element => {
 
@@ -30,8 +32,8 @@ const ZenodoDocumentChooser = (): JSX.Element => {
 
   const [
     loading,
-    setLoading,
-  ] = useState(false);
+    startTransition,
+  ] = useTransition();
 
   const [
     error,
@@ -67,63 +69,64 @@ const ZenodoDocumentChooser = (): JSX.Element => {
     }
   };
 
-  const onVerify = async (): Promise<void> => {
+  const onVerify = (): void => {
     if (!id) {
       return;
     }
 
-    setLoading(true);
+    // setLoading(true);
     setError(null);
 
-    try {
-      const res = await fetch(`/api/zenodo/verify?id=${id}`);
-      const data: InterfaceZenodoResponse = await res.json();
+    startTransition(async () => {
+      try {
+        const data: InterfaceZenodoResponse = await verifyZenodo(id);
 
-      if (data.ok && data.data) {
+        if (data.ok && data.data) {
 
-        dispatchFormFields({
-          path: 'zenodoId',
-          type: 'UPDATE',
-          value: data.data.id,
-        });
+          dispatchFormFields({
+            path: 'zenodoId',
+            type: 'UPDATE',
+            value: data.data.id,
+          });
 
-        dispatchFormFields({
-          path: 'publicationDate',
-          type: 'UPDATE',
-          value: data.data.date,
-        });
+          dispatchFormFields({
+            path: 'publicationDate',
+            type: 'UPDATE',
+            value: data.data.date,
+          });
 
-        dispatchFormFields({
-          path: 'title',
-          type: 'UPDATE',
-          value: data.data.title,
-        });
+          dispatchFormFields({
+            path: 'title',
+            type: 'UPDATE',
+            value: data.data.title,
+          });
 
-        dispatchFormFields({
-          path: 'files',
-          type: 'UPDATE',
-          value: data.data.files,
-        });
+          dispatchFormFields({
+            path: 'files',
+            type: 'UPDATE',
+            value: data.data.files,
+          });
 
-        formHook.setIsValid(true);
-        formHook.setDisabled(false);
-        formHook.setModified(true);
+          formHook.setIsValid(true);
+          formHook.setDisabled(false);
+          formHook.setModified(true);
 
-      } else {
-        setError(data.error ?? 'Unknown error');
+        } else {
+          setError(data.error ?? 'Unknown error');
 
-        dispatchEmptyFields();
+          dispatchEmptyFields();
+        }
+
+      } catch (err: unknown) {
+        const message = err instanceof Error
+          ? err.message
+          : 'Unknown error';
+
+        setError(message);
+      } finally {
+        // setLoading(false);
       }
-
-    } catch (err: unknown) {
-      const message = err instanceof Error
-        ? err.message
-        : 'Unknown error';
-
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
+    });
   };
 
   const onChangeInput = (val: string): void => {
