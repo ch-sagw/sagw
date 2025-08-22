@@ -3,6 +3,8 @@ import {
   CollectionConfig, Field,
 } from 'payload';
 
+import { rte2 } from '@/field-templates/rte';
+
 const inputFields: Field[] = [
   {
     localized: true,
@@ -61,6 +63,7 @@ export const I18nForms: CollectionConfig = {
     {
       fields: [
         {
+          editor: rte2,
           localized: true,
           name: 'dataPrivacyCheckboxText',
           required: true,

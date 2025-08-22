@@ -2,6 +2,7 @@ import {
   CollectionAfterChangeHook, CollectionConfig,
 } from 'payload';
 import slugify from 'slugify';
+import { rte2 } from '@/field-templates/rte';
 
 const generateReadableId: CollectionAfterChangeHook = async ({
   doc, operation, req,
@@ -40,6 +41,7 @@ export const FaqItems: CollectionConfig = {
       type: 'text',
     },
     {
+      editor: rte2,
       localized: true,
       name: 'answer',
       required: true,
