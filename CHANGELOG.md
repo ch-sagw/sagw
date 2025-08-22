@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.7.0](https://github.com/ch-sagw/sagw/compare/v0.6.2...v0.7.0) (2025-08-22)
+
+
+### Chore
+
+* add todo ([9321fa2](https://github.com/ch-sagw/sagw/commit/9321fa259688c9698817977ff74fabc0da0cbed5))
+
+
+### Documentation
+
+* add comment ([ce397ae](https://github.com/ch-sagw/sagw/commit/ce397aecc61674196c26d9e3cac5512330d2774c))
+
+
+### Features
+
+* move zenodo api to server action ([#354](https://github.com/ch-sagw/sagw/issues/354)) ([8d8fffe](https://github.com/ch-sagw/sagw/commit/8d8fffee1be8887a6a358520a10c556d71777fe3))
+
 ## [0.6.2](https://github.com/ch-sagw/sagw/compare/v0.6.1...v0.6.2) (2025-08-21)
 
 
