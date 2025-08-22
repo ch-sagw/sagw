@@ -1,42 +1,38 @@
 'use client';
 
 import {
-  createClientFeature,
-  toolbarFeatureButtonsGroupWithItems,
+  createClientFeature, toolbarFeatureButtonsGroupWithItems,
 } from '@payloadcms/richtext-lexical/client';
 import {
-  $getSelection, $isRangeSelection, type LexicalEditor,
+  $getSelection, $isRangeSelection, LexicalEditor,
 } from 'lexical';
-import { SoftHyphenPlugin } from '@/components/admin/rte/features/emDash/SoftHyphenPlugin';
-
+import { SoftHyphenNode } from './SoftHyphenNode';
 import { JSX } from 'react';
 
-const insertEmDash = (editor: LexicalEditor): void => {
+// Inserts a SoftHyphenNode inline
+const insertSoftHyphen = (editor: LexicalEditor): void => {
   editor.update(() => {
     const selection = $getSelection();
 
     if ($isRangeSelection(selection)) {
-      selection.insertText('\u00AD');
+      const node = new SoftHyphenNode();
+
+      selection.insertNodes([node]);
     }
   });
 };
 
 export default createClientFeature({
-  plugins: [
-    {
-      Component: SoftHyphenPlugin,
-      position: 'normal',
-    },
-  ],
+  nodes: [SoftHyphenNode],
   toolbarFixed: {
     groups: [
       toolbarFeatureButtonsGroupWithItems([
         {
           ChildComponent: (): JSX.Element => <p>-</p>,
-          key: 'emDashBtn',
+          key: 'softHyphenButton',
           onSelect: ({
             editor,
-          }): void => insertEmDash(editor),
+          }): void => insertSoftHyphen(editor),
           order: 100,
         },
       ]),

@@ -24,7 +24,7 @@ import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997e
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { default as default_6ad32069e199331994ebe51d1c093f83 } from 'src/components/admin/ZenodoDocumentChooser'
-import { default as default_0bd01eb44846cb1fd8516080b133647b } from '@/components/admin/rte/features/emDash/emDash.client'
+import { default as default_58016844bb0ee5b4b0c909c5f0fc57a4 } from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.client'
 import { FixedToolbarFeatureClient as FixedToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
@@ -62,7 +62,7 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "src/components/admin/ZenodoDocumentChooser#default": default_6ad32069e199331994ebe51d1c093f83,
-  "@/components/admin/rte/features/emDash/emDash.client#default": default_0bd01eb44846cb1fd8516080b133647b,
+  "@/components/admin/rte/features/SoftHyphen/SoftHyphen.client#default": default_58016844bb0ee5b4b0c909c5f0fc57a4,
   "@payloadcms/richtext-lexical/client#FixedToolbarFeatureClient": FixedToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/plugin-seo/client#MetaTitleComponent": MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,

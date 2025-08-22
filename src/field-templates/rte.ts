@@ -3,14 +3,14 @@ import {
   FixedToolbarFeature,
   lexicalEditor, SubscriptFeature, SuperscriptFeature,
 } from '@payloadcms/richtext-lexical';
-import { EmDashFeature } from '@/components/admin/rte/features/emDash/emDash.server';
+import { SoftHyphenFeature } from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.server';
 
 export const rte1 = lexicalEditor({
   features: [
     FixedToolbarFeature(),
     SubscriptFeature(),
     SuperscriptFeature(),
-    EmDashFeature(),
+    SoftHyphenFeature(),
   ],
 });
 
