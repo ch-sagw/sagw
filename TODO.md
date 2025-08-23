@@ -2,8 +2,7 @@ Backup / Restore:
 -----------------
 - mongo-db has a config db, which is mainly for cluster-meta. do we have to backup/restore it as well?
 - test blob backup/restore with lots of large image files
-- we have databases sagwtest and sagwprod. but auth happens via admin. in backup/restore, we should also backup and restore admin.
-- after creating db-prod instance, make sure vercel cron jobs still run as expected
+- we have databases sagwtest and sagwprod. but auth happens via admin. in backup/restore, should we also backup and restore admin.
 - check ovh backup/restore mechanism on ovh
 
 Storybook:
@@ -46,10 +45,6 @@ Vercel:
 --------
 - Disable branch protection for test? https://vercel.com/dev-0f45b8a0/sagw/settings/deployment-protection
 
-OVH / DB:
---------
-- connect ovh object storage to cyberduck
-
 Payload Config:
 --------
 - earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
@@ -57,6 +52,3 @@ Payload Config:
 - add validation for external link href
 - multiTenantPlugin Tenants index.ts -> allowPublicRead, needed?
 - implement hidden texts global config (for a11y)
-
-Testing:
--------
