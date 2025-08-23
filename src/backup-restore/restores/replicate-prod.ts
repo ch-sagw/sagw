@@ -8,10 +8,23 @@ import {
   deleteAllBlobs,
   getAllBlobs,
 } from '@/backup-restore/helpers/blob';
+import {
+  Collection, Document,
+} from 'mongodb';
 
-const replicateDb = async (replicateTo: string, dbHelperSource: DbHelper): Promise<void> => {
+const replicateDb = async (replicateTo: string, dbHelperSource: DbHelper, prodDbCollections: (Collection<Document>[] | undefined)): Promise<void> => {
+
+  // ensure we start with prod env
+  dotenv.config({
+    override: true,
+    path: '.env/.env.prod',
+    quiet: true,
+  });
+
   const prodUrl = process.env.DATABASE_URI;
+  const prodDbName = process.env.DATABASE_NAME;
 
+  // switch to other env
   dotenv.config({
     override: true,
     path: `.env/.env.${replicateTo}`,
@@ -19,6 +32,7 @@ const replicateDb = async (replicateTo: string, dbHelperSource: DbHelper): Promi
   });
 
   const currentUrl = process.env.DATABASE_URI;
+  const currentDbName = process.env.DATABASE_NAME;
 
   if (prodUrl === currentUrl) {
     throw new Error('Env-Var mismatch for DATABASE_URI. Aborting.');
@@ -27,30 +41,28 @@ const replicateDb = async (replicateTo: string, dbHelperSource: DbHelper): Promi
   const dbHelperTarget = new DbHelper();
 
   try {
-    if (!process.env.DATABASE_NAME) {
+    if (!currentDbName || !prodDbName) {
       throw new Error('Aborting. DATABASE_NAME is not defined in env.');
     }
 
-    const collections = await dbHelperSource.getCollections(process.env.DATABASE_NAME);
-
-    if (!collections) {
+    if (!prodDbCollections) {
       throw new Error('Aborting. No collections found in db.');
     }
 
     let collectionsCounter = 0;
 
-    for (const collection of collections) {
+    for await (const collection of prodDbCollections) {
       const {
         collectionName,
       } = collection;
 
       if (!collectionName.startsWith('system.')) {
-        /* eslint-disable no-await-in-loop */
+
         const results = await dbHelperSource.getContentOfCollection(collection);
 
         if (results.length > 0) {
-          await dbHelperTarget.deleteCollection(process.env.DATABASE_NAME, collectionName);
-          await dbHelperTarget.addDocumentsToCollection(process.env.DATABASE_NAME, collectionName, results);
+          await dbHelperTarget.deleteCollection(currentDbName, collectionName);
+          await dbHelperTarget.addDocumentsToCollection(currentDbName, collectionName, results);
 
           collectionsCounter++;
         }
@@ -71,6 +83,7 @@ const replicateDb = async (replicateTo: string, dbHelperSource: DbHelper): Promi
 const replicateBlob = async (): Promise<void> => {
   try {
 
+    // ensure we start with prod env
     dotenv.config({
       override: true,
       path: '.env/.env.prod',
@@ -81,6 +94,7 @@ const replicateBlob = async (): Promise<void> => {
 
     const blobsProd = await getAllBlobs();
 
+    // switch to other env
     dotenv.config({
       override: true,
       path: '.env/.env.test',
@@ -142,9 +156,6 @@ const replicateProd = async (): Promise<void> => {
     const testDBUri = process.env.DATABASE_URI;
     const testBlobToken = process.env.BLOB_READ_WRITE_TOKEN;
 
-    // IMPORTANT: config prod environment as last step.
-    // Following methods and initializers will use prod to get the data,
-    // then switch environment to replicate the data.
     dotenv.config({
       override: true,
       path: '.env/.env.prod',
@@ -153,9 +164,14 @@ const replicateProd = async (): Promise<void> => {
 
     const prodDBUri = process.env.DATABASE_URI;
     const prodBlobToken = process.env.BLOB_READ_WRITE_TOKEN;
+    const prodDbName = process.env.DATABASE_NAME;
 
     // Security checks. Make sure that local, test and prod have
     // different values for the env-vars.
+
+    if (!prodDbName) {
+      throw new Error('Env-Var DATABASE_NAME missing in prod environment.');
+    }
 
     if (!localDBUri || !testDBUri || !prodDBUri) {
       throw new Error('Env-Var DATABASE_URI missing in one or more environments.');
@@ -165,8 +181,6 @@ const replicateProd = async (): Promise<void> => {
       throw new Error('Env-Var BLOB_READ_WRITE_TOKEN missing in one or more environments.');
     }
 
-    // TODO: enable after prod db is created.
-    /*
     if (
       localDBUri === testDBUri ||
       testDBUri === prodDBUri ||
@@ -174,7 +188,6 @@ const replicateProd = async (): Promise<void> => {
     ) {
       throw new Error('Env-Var mismatch for for DATABASE_URI. Aborting.');
     }
-    */
 
     if (
       testBlobToken === prodBlobToken ||
@@ -197,8 +210,12 @@ const replicateProd = async (): Promise<void> => {
       throw new Error('Aborting.');
     }
 
-    await replicateDb('test', dbHelperSource);
-    await replicateDb('local', dbHelperSource);
+    // get prod db data
+    const prodCollections = await dbHelperSource.getCollections(prodDbName);
+
+    // replicate
+    await replicateDb('test', dbHelperSource, prodCollections);
+    await replicateDb('local', dbHelperSource, prodCollections);
     await replicateBlob();
 
   } catch (err) {
