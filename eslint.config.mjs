@@ -2,28 +2,38 @@ import storybook from 'eslint-plugin-storybook';
 import { FlatCompat } from '@eslint/eslintrc';
 import tsRules from './lint/ts-rules.mjs';
 import esRules from './lint/es-rules.mjs';
-import { globalIgnores } from 'eslint/config';
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
 });
 
-// TODO: .storybook/* seems not to be linted.
-
 const eslintConfig = [
+  {
+    ignores: [
+      'node_modules/**',
+      '.next/**',
+      'out/**',
+      'build/**',
+      'next-env.d.ts',
+      'src/app/(payload)/**/*',
+      'convenience/*',
+      '!src/app/(payload)/**/*/',
+      '!src/app/(payload)/api/cron-blob-backup/*',
+    ],
+  },
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
-  globalIgnores([
-    'convenience/*',
-    'node_modules/*',
-    'src/app/(payload)/**/*',
-    '!src/app/(payload)/**/*/',
-    '!src/app/(payload)/api/cron-blob-backup/*',
-  ]),
   {
     files: [
       '**/*.mjs',
       '**/*.js',
       '**/*.jsx',
+    ],
+    rules: {
+      ...esRules,
+    },
+  },
+  {
+    files: [
       '**/*.ts',
       '**/*.tsx',
     ],
