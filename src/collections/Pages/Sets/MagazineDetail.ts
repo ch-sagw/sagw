@@ -10,6 +10,7 @@ import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 import { fieldsLinkExternal } from '@/field-templates/links';
+import { hookSeoFallback } from '@/hooks/seoFallback';
 
 export const MagazineDetailPage: CollectionConfig = {
   access: {
@@ -106,6 +107,7 @@ export const MagazineDetailPage: CollectionConfig = {
     },
   ],
   hooks: {
+    beforeChange: [hookSeoFallback],
     beforeValidate: [hookAdminTitle],
   },
   labels: {

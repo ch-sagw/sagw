@@ -1260,7 +1260,8 @@ export interface Network {
       category: string | NetworkCategory;
       foundingYear: number;
       image: string | Image;
-      link: string;
+      externalLinkText: string;
+      externalLink: string;
       id?: string | null;
     }[];
   };
@@ -3055,7 +3056,8 @@ export interface NetworkSelect<T extends boolean = true> {
               category?: T;
               foundingYear?: T;
               image?: T;
-              link?: T;
+              externalLinkText?: T;
+              externalLink?: T;
               id?: T;
             };
       };

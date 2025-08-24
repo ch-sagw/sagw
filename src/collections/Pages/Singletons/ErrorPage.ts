@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
+import { hookSeoFallback } from '@/hooks/seoFallback';
 
 export const ErrorPage: CollectionConfig = {
   access: {
@@ -53,6 +54,9 @@ export const ErrorPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    beforeChange: [hookSeoFallback],
+  },
   labels: {
     plural: 'Error Page',
     singular: 'Error Page',
