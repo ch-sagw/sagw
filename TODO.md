@@ -44,5 +44,4 @@ Payload Config:
 --------
 - earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
 - prepopulate seo on collections
-- multiTenantPlugin Tenants index.ts -> allowPublicRead, needed?
 - implement hidden texts global config (for a11y)
