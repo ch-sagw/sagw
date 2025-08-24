@@ -33,7 +33,6 @@ Payload:
 - implement live-preview
 - implement versions
 - implement trash
-- collection "consent" is saved to db-collections "consents". Mongo Config: autoPluralization
 - correctly set SERVER_URL based on ENV
 - implement draft preview: https://payloadcms.com/docs/admin/preview#draft-preview
 - implement document locking: https://payloadcms.com/docs/admin/locked-documents
