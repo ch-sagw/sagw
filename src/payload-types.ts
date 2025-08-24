@@ -670,7 +670,7 @@ export interface Activity {
       linkInternal?: {
         openInNewWindow?: boolean | null;
         linkText: string;
-        internalLink?: string | null;
+        internalLink: string;
       };
       linkExternal?: {
         externalLinkText: string;
@@ -1106,7 +1106,7 @@ export interface Promotion {
       linkInternal?: {
         openInNewWindow?: boolean | null;
         linkText: string;
-        internalLink?: string | null;
+        internalLink: string;
       };
       linkExternal?: {
         externalLinkText: string;
@@ -1129,7 +1129,7 @@ export interface Promotion {
         link?: {
           openInNewWindow?: boolean | null;
           linkText: string;
-          internalLink?: string | null;
+          internalLink: string;
         };
       };
       colorScheme: 'bright' | 'dark';
@@ -1207,7 +1207,7 @@ export interface Home {
       link?: {
         openInNewWindow?: boolean | null;
         linkText: string;
-        internalLink?: string | null;
+        internalLink: string;
       };
     };
   };
@@ -1319,7 +1319,7 @@ export interface InstituteDetail {
     linkInternal?: {
       openInNewWindow?: boolean | null;
       linkText: string;
-      internalLink?: string | null;
+      internalLink: string;
     };
     linkExternal?: {
       externalLinkText: string;
@@ -1602,7 +1602,7 @@ export interface NewsDetail {
         | {
             openInNewWindow?: boolean | null;
             linkText: string;
-            internalLink?: string | null;
+            internalLink: string;
             id?: string | null;
             blockName?: string | null;
             blockType: 'linkInternal';
@@ -1672,7 +1672,7 @@ export interface I18NForm {
       link?: {
         openInNewWindow?: boolean | null;
         linkText: string;
-        internalLink?: string | null;
+        internalLink: string;
       };
     };
   };
@@ -1684,7 +1684,7 @@ export interface I18NForm {
       link?: {
         openInNewWindow?: boolean | null;
         linkText: string;
-        internalLink?: string | null;
+        internalLink: string;
       };
     };
   };
@@ -1696,7 +1696,7 @@ export interface I18NForm {
       link?: {
         openInNewWindow?: boolean | null;
         linkText: string;
-        internalLink?: string | null;
+        internalLink: string;
       };
     };
   };
@@ -1933,7 +1933,7 @@ export interface StatusMessage {
     link?: {
       openInNewWindow?: boolean | null;
       linkText: string;
-      internalLink?: string | null;
+      internalLink: string;
     };
   };
   /**
