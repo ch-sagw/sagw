@@ -1,5 +1,20 @@
 'use client';
 
+/*
+TODO: issue on revalidation
+
+Steps to reproduce:
+- in rte2 field, mark a word, and click the link button
+- in the overlay, choose internal link
+- without filling in any value, click save
+
+-->> the internalLinkChooser component seems to disappear, a regular
+text field is rendered.
+
+Similar issue? https://github.com/payloadcms/payload/issues/12138
+
+*/
+
 import React, {
   JSX, useEffect, useState,
 } from 'react';
