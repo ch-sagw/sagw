@@ -4,6 +4,10 @@
 # Build: via Vercel CLI
 
 name: Storybook Deployment
+permissions:
+  checks: write
+  pull-requests: write
+  statuses: write
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_STORYBOOK }}

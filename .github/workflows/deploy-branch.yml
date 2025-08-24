@@ -4,6 +4,14 @@
 # Build: happens on Vercel (If we would do it via CLI here then we would not get the preview URL posted to the PR)
 
 name: Branch Deployment
+permissions:
+  actions: write
+  attestations: write
+  checks: write
+  contents: write
+  pull-requests: write
+  security-events: write
+  statuses: write
 on: pull_request
 jobs:
   test:
