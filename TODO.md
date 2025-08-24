@@ -12,7 +12,6 @@ Storybook:
 Github:
 -------
 - add branch restrictions on main
-- github -> security -> code scan -> complaints about missing workflow permissions
 
 Resend:
 -------
