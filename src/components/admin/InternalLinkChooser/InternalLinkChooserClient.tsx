@@ -11,6 +11,9 @@ Steps to reproduce:
 -->> the internalLinkChooser component seems to disappear, a regular
 text field is rendered.
 
+-->> this does not happen if the link chooser is not in a payload overlay.
+for example on promotion page in a block of a subsection
+
 Similar issue? https://github.com/payloadcms/payload/issues/12138
 
 */
