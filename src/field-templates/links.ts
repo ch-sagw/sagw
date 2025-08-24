@@ -22,6 +22,7 @@ export const fieldsLinkInternal: Field[] = [
       },
     },
     name: 'internalLink',
+    required: true,
     type: 'text',
   },
 ];

@@ -114,7 +114,7 @@ export const collections = [
 // multitenant plugin collections config
 
 // TODO: can we get this interface from somewhere?
-interface InterfaceTenantCollectionObject {
+export interface InterfaceTenantCollectionObject {
   isGlobal?: boolean;
 }
 
