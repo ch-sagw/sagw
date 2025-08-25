@@ -44,3 +44,8 @@ Payload Config:
 --------
 - earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
 - implement hidden texts global config (for a11y)
+
+Misc:
+--------
+- update docs on env-vars
+- update docs on deployments
