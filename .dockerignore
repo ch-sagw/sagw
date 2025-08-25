@@ -1,2 +1,9 @@
 node_modules
 src
+storybook-static
+test-results
+.git
+.vercel
+.next
+playwright-report
+mongo-db-data

@@ -19,3 +19,5 @@ If you merge a pull-request into main, a custom deployment will happen via Githu
 `deploy-preview`: builds the project and deploys it the the Preview environment on Vercel.
 
 `deploy-prod`: is running tests. Only if tests succeed, it will build the project and deploy it to the Production environment on Vercel.
+
+`deploy-storybook`: is deploying storybook to separate vercel project.

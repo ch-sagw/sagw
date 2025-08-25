@@ -1,13 +1,16 @@
 # syntax=docker.io/docker/dockerfile:1.7-labs
 
-# Use Node 22 to match package engines
-FROM node:22-alpine
+# ATTENTION: This docker file uses node 22.x. Regularly check if node version changed.
+
+# ATTENTION: If the docker image is changed here, it also needs to be changed in deploy-branch.yml and deploy-prod.yml
+
+FROM mcr.microsoft.com/playwright:v1.54.2-noble
 
 # Set working directory
 WORKDIR /app
 
 # Install git (needed by husky / some npm packages)
-RUN apk add --no-cache git bash
+# RUN apk add --no-cache git bash
 
 # Copy everything
 COPY --exclude=node_modules . .

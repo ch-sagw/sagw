@@ -60,8 +60,6 @@ export const hookSeoFallback: CollectionBeforeChangeHook<WithSeo> = async ({
       : pageSeoTitle,
   };
 
-  console.log(pageSeo);
-
   if (data.meta) {
     data.meta.seo = pageSeo;
   } else {
