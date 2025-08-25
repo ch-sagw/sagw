@@ -18,14 +18,6 @@ import { seedTestData } from '@/seed/test-data';
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-// const supportedLanguages = {
-//   de,
-// };
-
-// if (!process.env.IS_RUNNING_IN_PLAYWRIGHT_TEST_ENV) {
-//   supportedLanguages['en'] = en;
-// }
-
 export default buildConfig({
   admin: {
     autoLogin:
@@ -83,7 +75,7 @@ export default buildConfig({
     ],
   },
   onInit: async (payload) => {
-    if (process.env.IS_RUNNING_IN_PLAYWRIGHT_TEST_ENV) {
+    if (process.env.IS_RUNNING_IN_PLAYWRIGHT_TEST_ENV === 'true') {
       await seedTestData(payload);
     } else {
       await seedInitialUserAndTenant(payload);
