@@ -12,7 +12,7 @@ test.describe('Add Zenodo document', () => {
   test.beforeEach(async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/admin/collections/zenodoDocuments/create');
+    await page.goto('http://0.0.0.0:3000/admin/collections/zenodoDocuments/create');
     await page.waitForLoadState('load');
 
     const createNewButton = await page.getByText('Neu erstellen', {
@@ -122,7 +122,7 @@ test.describe('Add Zenodo document', () => {
       .toBeVisible();
 
     // test the return value of the payload api
-    const res = await fetch('http://localhost:3000/api/zenodoDocuments?where[zenodoId][equals]=15126911');
+    const res = await fetch('http://0.0.0.0:3000/api/zenodoDocuments?where[zenodoId][equals]=15126911');
     const json = await res.json();
 
     await expect(json.docs.length)
