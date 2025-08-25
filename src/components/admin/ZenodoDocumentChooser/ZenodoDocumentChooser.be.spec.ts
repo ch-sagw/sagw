@@ -3,7 +3,7 @@ import {
   Locator, test,
 } from '@playwright/test';
 
-test.describe('Add Zenodo document', () => {
+test.describe.serial('Add Zenodo document', () => {
   let zenodoInput: Locator;
   let zenodoButton: Locator;
   let saveButton: Locator;
@@ -43,6 +43,8 @@ test.describe('Add Zenodo document', () => {
     const lastItem = zenodoList.getByRole('listitem')
       .nth(5);
 
+    await expect(zenodoList)
+      .toBeVisible();
     await expect(lastItem)
       .toBeVisible();
     await expect(lastItem)
