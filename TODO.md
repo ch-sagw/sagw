@@ -36,6 +36,8 @@ Payload:
 - implement resend
 - add indication on payload ui if author is on test or prod
 - richt-text sanitize: should we search for "  " and replace by " "? other optimizations?
+- in departments overview, there is a column "_watch Tenant" ... ?
+- for departments, make name, url and slug unique
 
 Vercel:
 --------
