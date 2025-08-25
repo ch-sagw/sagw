@@ -36,19 +36,13 @@ test.describe('Add Zenodo document', () => {
       .toEqual('bar');
   });
 
-  test('search and validate list items', async ({
-    page,
-  }) => {
+  test('search and validate list items', async () => {
     await zenodoInput.fill('15126918');
     await zenodoButton.click();
-
-    zenodoList = page.getByTestId('zenodo-list');
 
     const lastItem = zenodoList.getByRole('listitem')
       .nth(5);
 
-    await expect(zenodoList)
-      .toBeVisible();
     await expect(lastItem)
       .toBeVisible();
     await expect(lastItem)
