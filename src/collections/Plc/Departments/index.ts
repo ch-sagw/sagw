@@ -40,17 +40,6 @@ export const Departments: CollectionConfig = {
       required: true,
       type: 'text',
     },
-    {
-      admin: {
-        description:
-          'If checked, logging in is not required to read. Useful for building public pages.',
-        position: 'sidebar',
-      },
-      defaultValue: false,
-      index: true,
-      name: 'allowPublicRead',
-      type: 'checkbox',
-    },
   ],
   slug: 'departments',
 };

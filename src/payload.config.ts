@@ -33,6 +33,7 @@ export default buildConfig({
   },
   collections,
   db: mongooseAdapter({
+    autoPluralization: false,
     url: process.env.DATABASE_URI || '',
   }),
   defaultDepth: 0,

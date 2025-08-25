@@ -7,6 +7,7 @@ import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
+import { hookSeoFallback } from '@/hooks/seoFallback';
 
 export const EarlyCareerAwardPage: CollectionConfig = {
   access: {
@@ -161,6 +162,9 @@ export const EarlyCareerAwardPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    beforeChange: [hookSeoFallback],
+  },
   labels: {
     plural: 'Early Career Award',
     singular: 'Early Career Award',

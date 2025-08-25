@@ -5,6 +5,7 @@ import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
+import { hookSeoFallback } from '@/hooks/seoFallback';
 
 export const NewsOverviewPage: CollectionConfig = {
   access: {
@@ -79,6 +80,9 @@ export const NewsOverviewPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    beforeChange: [hookSeoFallback],
+  },
   labels: {
     plural: 'News Overview',
     singular: 'News Overview',

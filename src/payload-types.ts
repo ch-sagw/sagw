@@ -200,10 +200,6 @@ export interface Department {
    * Used for url paths, example: /department-slug/page-slug
    */
   slug: string;
-  /**
-   * If checked, logging in is not required to read. Useful for building public pages.
-   */
-  allowPublicRead?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -670,7 +666,7 @@ export interface Activity {
       linkInternal?: {
         openInNewWindow?: boolean | null;
         linkText: string;
-        internalLink?: string | null;
+        internalLink: string;
       };
       linkExternal?: {
         externalLinkText: string;
@@ -1106,7 +1102,7 @@ export interface Promotion {
       linkInternal?: {
         openInNewWindow?: boolean | null;
         linkText: string;
-        internalLink?: string | null;
+        internalLink: string;
       };
       linkExternal?: {
         externalLinkText: string;
@@ -1129,7 +1125,7 @@ export interface Promotion {
         link?: {
           openInNewWindow?: boolean | null;
           linkText: string;
-          internalLink?: string | null;
+          internalLink: string;
         };
       };
       colorScheme: 'bright' | 'dark';
@@ -1207,7 +1203,7 @@ export interface Home {
       link?: {
         openInNewWindow?: boolean | null;
         linkText: string;
-        internalLink?: string | null;
+        internalLink: string;
       };
     };
   };
@@ -1264,7 +1260,8 @@ export interface Network {
       category: string | NetworkCategory;
       foundingYear: number;
       image: string | Image;
-      link: string;
+      externalLinkText: string;
+      externalLink: string;
       id?: string | null;
     }[];
   };
@@ -1319,7 +1316,7 @@ export interface InstituteDetail {
     linkInternal?: {
       openInNewWindow?: boolean | null;
       linkText: string;
-      internalLink?: string | null;
+      internalLink: string;
     };
     linkExternal?: {
       externalLinkText: string;
@@ -1602,7 +1599,7 @@ export interface NewsDetail {
         | {
             openInNewWindow?: boolean | null;
             linkText: string;
-            internalLink?: string | null;
+            internalLink: string;
             id?: string | null;
             blockName?: string | null;
             blockType: 'linkInternal';
@@ -1672,7 +1669,7 @@ export interface I18NForm {
       link?: {
         openInNewWindow?: boolean | null;
         linkText: string;
-        internalLink?: string | null;
+        internalLink: string;
       };
     };
   };
@@ -1684,7 +1681,7 @@ export interface I18NForm {
       link?: {
         openInNewWindow?: boolean | null;
         linkText: string;
-        internalLink?: string | null;
+        internalLink: string;
       };
     };
   };
@@ -1696,7 +1693,7 @@ export interface I18NForm {
       link?: {
         openInNewWindow?: boolean | null;
         linkText: string;
-        internalLink?: string | null;
+        internalLink: string;
       };
     };
   };
@@ -1933,7 +1930,7 @@ export interface StatusMessage {
     link?: {
       openInNewWindow?: boolean | null;
       linkText: string;
-      internalLink?: string | null;
+      internalLink: string;
     };
   };
   /**
@@ -2153,7 +2150,6 @@ export interface DepartmentsSelect<T extends boolean = true> {
   name?: T;
   domain?: T;
   slug?: T;
-  allowPublicRead?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -3060,7 +3056,8 @@ export interface NetworkSelect<T extends boolean = true> {
               category?: T;
               foundingYear?: T;
               image?: T;
-              link?: T;
+              externalLinkText?: T;
+              externalLink?: T;
               id?: T;
             };
       };

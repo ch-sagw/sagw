@@ -9,6 +9,7 @@ import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
+import { hookSeoFallback } from '@/hooks/seoFallback';
 
 export const AboutSagwPage: CollectionConfig = {
   access: {
@@ -101,6 +102,9 @@ export const AboutSagwPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    beforeChange: [hookSeoFallback],
+  },
   labels: {
     plural: 'About SAGW',
     singular: 'About SAGW',

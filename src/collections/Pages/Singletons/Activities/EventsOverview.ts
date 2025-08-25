@@ -5,6 +5,7 @@ import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
+import { hookSeoFallback } from '@/hooks/seoFallback';
 
 export const EventsOverviewPage: CollectionConfig = {
   access: {
@@ -52,6 +53,9 @@ export const EventsOverviewPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    beforeChange: [hookSeoFallback],
+  },
   labels: {
     plural: 'Events Overview',
     singular: 'Events Overview',

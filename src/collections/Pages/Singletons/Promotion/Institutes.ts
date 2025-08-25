@@ -6,6 +6,7 @@ import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
+import { hookSeoFallback } from '@/hooks/seoFallback';
 
 export const InstitutesPage: CollectionConfig = {
   access: {
@@ -53,6 +54,9 @@ export const InstitutesPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    beforeChange: [hookSeoFallback],
+  },
   labels: {
     plural: 'Institutes',
     singular: 'Institutes',

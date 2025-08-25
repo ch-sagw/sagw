@@ -9,6 +9,7 @@ import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 import { globalAdminOrDepartmentAdminAccess } from '@/collections/Pages/Sets/InstituteDetail/access/globalAdminOrDepartmentAdmin';
+import { hookSeoFallback } from '@/hooks/seoFallback';
 
 export const InstituteDetailPage: CollectionConfig = {
   access: {
@@ -73,6 +74,7 @@ export const InstituteDetailPage: CollectionConfig = {
     },
   ],
   hooks: {
+    beforeChange: [hookSeoFallback],
     beforeValidate: [hookAdminTitle],
   },
   labels: {

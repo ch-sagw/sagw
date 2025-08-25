@@ -1,4 +1,5 @@
 import { Field } from 'payload';
+import { fieldsLinkExternal } from './links';
 
 export const fieldsNetworkItem: Field[] = [
   {
@@ -24,9 +25,5 @@ export const fieldsNetworkItem: Field[] = [
     required: true,
     type: 'upload',
   },
-  {
-    name: 'link',
-    required: true,
-    type: 'text',
-  },
+  ...fieldsLinkExternal,
 ];

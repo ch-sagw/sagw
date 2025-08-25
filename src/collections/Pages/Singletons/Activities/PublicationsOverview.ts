@@ -6,6 +6,7 @@ import { rte2 } from '@/field-templates/rte';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
+import { hookSeoFallback } from '@/hooks/seoFallback';
 
 export const PublicationsOverviewPage: CollectionConfig = {
   access: {
@@ -128,6 +129,9 @@ export const PublicationsOverviewPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    beforeChange: [hookSeoFallback],
+  },
   labels: {
     plural: 'Publications Overview',
     singular: 'Publications Overview',

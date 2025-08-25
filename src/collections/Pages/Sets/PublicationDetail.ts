@@ -7,6 +7,7 @@ import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
+import { hookSeoFallback } from '@/hooks/seoFallback';
 
 export const PublicationDetailPage: CollectionConfig = {
   access: {
@@ -115,6 +116,7 @@ export const PublicationDetailPage: CollectionConfig = {
     },
   ],
   hooks: {
+    beforeChange: [hookSeoFallback],
     beforeValidate: [hookAdminTitle],
   },
   labels: {

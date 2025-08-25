@@ -11,6 +11,7 @@ import { hookAdminTitle } from '@/hooks/adminTitle';
 import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
+import { hookSeoFallback } from '@/hooks/seoFallback';
 
 export const NewsDetailPage: CollectionConfig = {
   access: {
@@ -104,6 +105,7 @@ export const NewsDetailPage: CollectionConfig = {
     },
   ],
   hooks: {
+    beforeChange: [hookSeoFallback],
     beforeValidate: [hookAdminTitle],
   },
   labels: {

@@ -14,6 +14,7 @@ import {
   UnorderedListFeature,
 } from '@payloadcms/richtext-lexical';
 import { SoftHyphenFeature } from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.server';
+import { fieldsLinkInternalOrExternal } from './links';
 
 export const rte1 = lexicalEditor({
   features: [
@@ -36,7 +37,9 @@ export const rte2 = lexicalEditor({
     HeadingFeature(),
     UnorderedListFeature(),
     OrderedListFeature(),
-    LinkFeature(),
+    LinkFeature({
+      fields: () => fieldsLinkInternalOrExternal,
+    }),
   ],
 });
 
