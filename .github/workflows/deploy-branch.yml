@@ -43,6 +43,8 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
       - name: Lint
         run: npm run lint
       - name: Test FE
