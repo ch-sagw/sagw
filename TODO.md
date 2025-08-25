@@ -43,5 +43,4 @@ Vercel:
 Payload Config:
 --------
 - earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
-- prepopulate seo on collections
 - implement hidden texts global config (for a11y)
