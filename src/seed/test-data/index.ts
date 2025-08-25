@@ -13,18 +13,11 @@ export const seedTestData = async (payload: Payload): Promise<void> => {
   // security check: we need to be absolutely sure that we don't run this
   // on prod. it should be only run in playwright tests. we already have
   // a check in payload.config. double security.
-  // TODO: enable check again
-  // TODO: adapt github workflows to use sagwplaywright, also set
-  // env var for IS_RUNNING_IN_PLAYWRIGHT_TEST_ENV
-  /*
   if (
-    process.env.DATABASE_NAME !== 'sagwplaywright'
-    && !process.env.DATABASE_URI?.includes('sagwplaywright')) {
-    console.log('will return');
+    process.env.DATABASE_NAME !== 'sagwplaywright' && !process.env.DATABASE_URI?.includes('sagwplaywright')) {
 
     return;
   }
-  */
 
   try {
     // delete all collections
