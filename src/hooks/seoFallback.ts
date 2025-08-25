@@ -51,14 +51,16 @@ export const hookSeoFallback: CollectionBeforeChangeHook<WithSeo> = async ({
   const homeSeoDescription = homePage.meta?.seo?.description;
 
   const pageSeo = {
-    description: (pageSeoDescription?.trim().length === 0)
+    description: (!pageSeoDescription || pageSeoDescription?.trim().length === 0)
       ? homeSeoDescription
       : pageSeoDescription,
     image: pageSeoImage || homeSeoImage,
-    title: (pageSeoTitle?.trim().length === 0)
+    title: (!pageSeoTitle || pageSeoTitle?.trim().length === 0)
       ? homeSeoTitle
       : pageSeoTitle,
   };
+
+  console.log(pageSeo);
 
   if (data.meta) {
     data.meta.seo = pageSeo;
