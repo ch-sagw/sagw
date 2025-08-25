@@ -1,5 +1,47 @@
 # Changelog
 
+## [0.8.0](https://github.com/ch-sagw/sagw/compare/v0.7.0...v0.8.0) (2025-08-25)
+
+
+### Chore
+
+* add note about revalidation issue ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* remove allowPublicRead property from tenants ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* update after build ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+
+
+### CI
+
+* set explicit permissions on workflows ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+
+
+### Documentation
+
+* add note about potential issue ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* remove tod ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* remove todo ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* remove todo ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* remove todo ([ffee5d1](https://github.com/ch-sagw/sagw/commit/ffee5d1d976e167042576291e6b295d323c4fb7c))
+* remove todos ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* remove todos ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+
+
+### Features
+
+* add validation for url ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* create hook for seo fallback from home to all other pages ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* make internalLink chooser ready to use for lexical editor, and use it in rte2 ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* use seo hook ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+
+
+### Bug Fixes
+
+* disable mongoDb autoPluralization ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* fix issue with undefined seo title and description ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* fix restore db tasks ([#356](https://github.com/ch-sagw/sagw/issues/356)) ([a1206a2](https://github.com/ch-sagw/sagw/commit/a1206a2b2b6bfe55337761b0e9042fb4c2b22219))
+* properly name job ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* use external link field template ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+
 ## [0.7.0](https://github.com/ch-sagw/sagw/compare/v0.6.2...v0.7.0) (2025-08-22)
 
 
