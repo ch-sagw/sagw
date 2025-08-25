@@ -1,6 +1,7 @@
 Backup / Restore:
 -----------------
 - test blob backup/restore with lots of large image files
+- adapt replicate task to also replicate blob to local
 
 Storybook:
 ----------
