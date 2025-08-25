@@ -146,11 +146,13 @@ const ZenodoDocumentChooser = (): JSX.Element => {
           value={id}
           onChange={(e) => onChangeInput(e.target.value)}
           placeholder='Enter Zenodo ID'
+          data-testid='zenodo-input'
         />
         <button
           type='button'
           onClick={onVerify}
           disabled={loading}
+          data-testid='zenodo-button'
         >
           {loading
             ? 'Verifying...'
@@ -168,7 +170,7 @@ const ZenodoDocumentChooser = (): JSX.Element => {
           <div>
             <strong>Files:</strong>
             {formData.files && Array.isArray(formData.files) &&
-              <ul>
+              <ul data-testid='zenodo-list'>
                 {formData.files.map((f, i) => (
                   <li key={i}>
                     <a href={f.link} target='_blank'
