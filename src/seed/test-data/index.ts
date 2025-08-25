@@ -103,8 +103,7 @@ export const seedTestData = async (payload: Payload): Promise<void> => {
     });
 
     // create faq item
-    /*
-    const faqItem = await payload.create({
+    await payload.create({
       collection: 'faqItems',
       data: {
         answer: simpleRteConfig('Answer 1'),
@@ -112,7 +111,6 @@ export const seedTestData = async (payload: Payload): Promise<void> => {
         question: 'Question 1',
       },
     });
-    */
 
     // create home
     const home = await payload.create({
