@@ -233,6 +233,7 @@ const InternalLinkChooserClient = ({
         options={options}
         value={selectedOption}
         isLoading={loading}
+        inputId={`field-${path}`}
         onChange={(newValue) => {
           if (!newValue || Array.isArray(newValue)) {
             setValue(null);
