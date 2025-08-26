@@ -200,6 +200,10 @@ export interface Department {
    * Used for url paths, example: /department-slug/page-slug
    */
   slug: string;
+  /**
+   * If checked, logging in is not required to read. Useful for building public pages.
+   */
+  allowPublicRead?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -2150,6 +2154,7 @@ export interface DepartmentsSelect<T extends boolean = true> {
   name?: T;
   domain?: T;
   slug?: T;
+  allowPublicRead?: T;
   updatedAt?: T;
   createdAt?: T;
 }
