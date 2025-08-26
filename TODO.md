@@ -38,6 +38,7 @@ Payload:
 - richt-text sanitize: should we search for "  " and replace by " "? other optimizations?
 - in departments overview, there is a column "_watch Tenant" ... ?
 - for departments, make name, url and slug unique
+- on instituteDetailPage -> createNew -> internalLink chooser is initially visible. it's endlessly loading
 
 Vercel:
 --------
@@ -52,3 +53,8 @@ Misc:
 --------
 - update docs on env-vars
 - update docs on deployments
+
+Testing:
+-------
+- test seo inheritance
+- test link chooser
