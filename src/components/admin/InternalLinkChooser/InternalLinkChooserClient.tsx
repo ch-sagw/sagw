@@ -26,6 +26,7 @@ import {
   Select,
   useField,
 } from '@payloadcms/ui';
+import { Data } from 'payload';
 import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
 import { fieldLinkablePageFieldName } from '@/field-templates/linkablePage';
 import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
@@ -39,7 +40,7 @@ interface InterfaceGroupedOptions {
 interface InternalLinkChooserClientProps {
   currentId: string | number | undefined;
   path: string;
-  data: any;
+  data: Data;
   collectionSlug: string;
   tenantsCollections: Record<string, InterfaceTenantCollectionObject>;
   required: boolean;
