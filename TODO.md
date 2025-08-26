@@ -48,6 +48,8 @@ Payload Config:
 --------
 - earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
 - implement hidden texts global config (for a11y)
+- slug: should we add a slug-field to all pages? currently, we don't have slugs, but just id's. If we go for slugs -> make validation hook to ensure unique slugs per tenant
+- zenodo -> checks if validated id is already in connection. make this check per tenant. currently, if one tenant adds an id, another tenant can't add the same id.
 
 Misc:
 --------
@@ -56,5 +58,7 @@ Misc:
 
 Testing:
 -------
-- test seo inheritance
+- test seo inheritance -> also test it tenant specific
 - test link chooser
+- test softhyphen
+- test link chooser tenant specific -> add separate tenant in test data with pages. collections from this tenant should not appear in other tenant
