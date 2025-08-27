@@ -52,6 +52,7 @@
     "@payloadcms/email-resend": "^3.52.0",
     "@payloadcms/next": "^3.52.0",
     "@payloadcms/plugin-multi-tenant": "^3.52.0",
+    "@payloadcms/plugin-sentry": "^3.53.0",
     "@payloadcms/plugin-seo": "^3.52.0",
     "@payloadcms/richtext-lexical": "^3.52.0",
     "@payloadcms/storage-vercel-blob": "^3.52.0",

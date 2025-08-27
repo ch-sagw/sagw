@@ -4,6 +4,7 @@ import {
   GenerateTitle, GenerateURL,
 } from '@payloadcms/plugin-seo/types';
 import { multiTenantPlugin } from '@payloadcms/plugin-multi-tenant';
+import { sentryPlugin } from '@payloadcms/plugin-sentry';
 
 import { Plugin } from 'payload';
 import { Images } from '@/collections/Plc/Images';
@@ -14,6 +15,8 @@ import type { Config } from '@/payload-types';
 import { isGlobalAdmin } from '@/access/isGlobalAdmin';
 import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
 import { tenantsCollections } from '@/collections';
+
+import * as Sentry from '@sentry/nextjs';
 
 const generateTitle: GenerateTitle = ({
   doc,
@@ -41,6 +44,25 @@ const plugins: Plugin[] = [
     },
     enabled: true,
     token: process.env.BLOB_READ_WRITE_TOKEN,
+  }),
+  sentryPlugin({
+    Sentry,
+    options: {
+      captureErrors: [
+        400,
+        403,
+      ],
+      context: ({
+        defaultContext,
+        req,
+      }) => ({
+        ...defaultContext,
+        tags: {
+          locale: req.locale,
+        },
+      }),
+      debug: true,
+    },
   }),
   seoPlugin({
     generateTitle,
