@@ -18,8 +18,7 @@ Resend:
 
 Sentry:
 -------
-- Install https://payloadcms.com/docs/plugins/sentry 
-- Properly configure sentry. we don't want sentry complaining on localhost
+- Install https://payloadcms.com/docs/plugins/sentry
 
 NextJs:
 -------
