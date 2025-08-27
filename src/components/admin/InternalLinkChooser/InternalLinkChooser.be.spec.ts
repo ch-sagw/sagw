@@ -3,7 +3,7 @@ import {
   test,
 } from '@playwright/test';
 
-test.describe.serial('Internal Link Choosers', () => {
+test.describe('Internal Link Choosers', () => {
   test('shows available links', async ({
     page,
   }) => {
@@ -43,7 +43,7 @@ test.describe.serial('Internal Link Choosers', () => {
     await rteField.fill('foo');
     await rteField.selectText();
 
-    const linkButton = await page.locator('.toolbar-popup__button-link');
+    const linkButton = await page.locator('#field-contentBlocks .toolbar-popup__button-link');
 
     await linkButton.click();
 
