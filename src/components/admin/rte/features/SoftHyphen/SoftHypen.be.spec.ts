@@ -41,10 +41,8 @@ test.describe('Softhypen', () => {
       name: 'Institutes Page',
     });
 
-    await expect(page)
-      .toHaveScreenshot({
-        fullPage: true,
-      });
+    await expect(leadField)
+      .toHaveScreenshot();
   });
 
   test('has correct api payload', async () => {
