@@ -41,11 +41,6 @@ test.describe('Softhypen', () => {
       name: 'Institutes Page',
     });
 
-    // hide nextjs button
-    await page.addStyleTag({
-      content: '[data-nextjs-toast="true"] { visibility: hidden !important; }',
-    });
-
     await expect(page)
       .toHaveScreenshot({
         fullPage: true,
