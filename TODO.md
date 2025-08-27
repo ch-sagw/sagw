@@ -59,4 +59,3 @@ Misc:
 Testing:
 -------
 - test link chooser tenant specific -> add separate tenant in test data with pages. collections from this tenant should not appear in other tenant
-- tset adminTitle hook
