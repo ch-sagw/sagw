@@ -3,7 +3,7 @@ import {
   Locator, test,
 } from '@playwright/test';
 
-test.describe.serial('Add Zenodo document', () => {
+test.describe('Add Zenodo document', () => {
   let zenodoInput: Locator;
   let zenodoButton: Locator;
   let saveButton: Locator;
@@ -27,13 +27,6 @@ test.describe.serial('Add Zenodo document', () => {
       name: 'Speichern',
     });
     zenodoList = page.getByTestId('zenodo-list');
-  });
-
-  test('api returns proper data', async () => {
-    const foo = 'bar';
-
-    await expect(foo)
-      .toEqual('bar');
   });
 
   test('search and validate list items', async () => {
@@ -105,7 +98,7 @@ test.describe.serial('Add Zenodo document', () => {
       .toBeVisible();
   });
 
-  test('returns proper api structure', async ({
+  test('returns proper api response', async ({
     page,
   }) => {
 
