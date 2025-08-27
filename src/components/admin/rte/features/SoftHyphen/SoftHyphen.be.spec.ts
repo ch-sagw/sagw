@@ -3,7 +3,7 @@ import {
   test,
 } from '@playwright/test';
 
-test.describe('Softhypen', () => {
+test.describe('Softhyphen', () => {
   test('correctly displays in rte field', async ({
     page,
   }) => {
