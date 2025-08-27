@@ -4,7 +4,7 @@ import { isGlobalAdmin } from '@/access/isGlobalAdmin';
 import { departmentRoles } from '@/collections/Plc/Users/roles';
 
 /**
- * Department admins and global admins will be allowed access
+ * Department admins and global admins are allowed access to update and delete
  */
 export const globalAdminOrDepartmentAdminAccess: Access = ({
   req,
@@ -25,4 +25,21 @@ export const globalAdminOrDepartmentAdminAccess: Access = ({
   }
 
   return false;
+};
+
+/**
+ * Authenticated users are allowed to create
+ */
+
+// TODO: only allow create if selected tenant is in user's departments array
+// problem: req.data.department is empty, since i assume it's only pouplated
+// on update or deletion.
+export const createAccess: Access = ({
+  req,
+}) => {
+  if (!req.user) {
+    return false;
+  }
+
+  return true;
 };

@@ -8,12 +8,14 @@ import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
-import { globalAdminOrDepartmentAdminAccess } from '@/collections/Pages/Sets/InstituteDetail/access/globalAdminOrDepartmentAdmin';
+import {
+  createAccess, globalAdminOrDepartmentAdminAccess,
+} from '@/collections/Pages/Sets/InstituteDetail/access/globalAdminOrDepartmentAdmin';
 import { hookSeoFallback } from '@/hooks/seoFallback';
 
 export const InstituteDetailPage: CollectionConfig = {
   access: {
-    create: globalAdminOrDepartmentAdminAccess,
+    create: createAccess,
     delete: globalAdminOrDepartmentAdminAccess,
     read: () => true,
     update: globalAdminOrDepartmentAdminAccess,
