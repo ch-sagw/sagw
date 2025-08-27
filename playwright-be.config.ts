@@ -17,6 +17,13 @@ dotenv.config({
 });
 
 export default defineConfig({
+  expect: {
+    toHaveScreenshot: {
+      maxDiffPixelRatio: 0,
+      maxDiffPixels: 0,
+      threshold: 0,
+    },
+  },
   forbidOnly: Boolean(process.env.CI),
   fullyParallel: true,
   projects: [
@@ -54,7 +61,7 @@ export default defineConfig({
     url: 'http://localhost:3000',
   },
 
-  workers: process.env.CI
-    ? 2
-    : 5,
+  // We can not run BE tests in parallel. We might get into race conditions
+  // where one test is deleting data which another test tries to access or edit.
+  workers: 1,
 });
