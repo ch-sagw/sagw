@@ -3,11 +3,10 @@ import {
   test,
 } from '@playwright/test';
 
-test.describe('Deparments', () => {
-  test('only show content from users department', async ({
+test.describe('Deparments only show content from users department', () => {
+  test('images', async ({
     page,
   }) => {
-    // test images
     await page.goto('http://localhost:3000/admin/collections/images');
     await page.waitForLoadState('load');
 
@@ -22,8 +21,11 @@ test.describe('Deparments', () => {
       .toBeVisible();
     await expect(notExpectedImage)
       .not.toBeVisible();
+  });
 
-    // test publication topic
+  test('publication topic', async ({
+    page,
+  }) => {
     await page.goto('http://localhost:3000/admin/collections/publicationTopics');
     await page.waitForLoadState('load');
 
@@ -38,8 +40,11 @@ test.describe('Deparments', () => {
       .toBeVisible();
     await expect(notExpectedTopic)
       .not.toBeVisible();
+  });
 
-    // test publication type
+  test('publication type', async ({
+    page,
+  }) => {
     await page.goto('http://localhost:3000/admin/collections/publicationTypes');
     await page.waitForLoadState('load');
 
@@ -54,8 +59,11 @@ test.describe('Deparments', () => {
       .toBeVisible();
     await expect(notExpectedType)
       .not.toBeVisible();
+  });
 
-    // test zenodo document
+  test('zenodo document', async ({
+    page,
+  }) => {
     await page.goto('http://localhost:3000/admin/collections/zenodoDocuments');
     await page.waitForLoadState('load');
 
@@ -70,8 +78,11 @@ test.describe('Deparments', () => {
       .toBeVisible();
     await expect(notExpectedDocument)
       .not.toBeVisible();
+  });
 
-    // test faq item
+  test('faq item', async ({
+    page,
+  }) => {
     await page.goto('http://localhost:3000/admin/collections/faqItems');
     await page.waitForLoadState('load');
 
@@ -86,8 +97,9 @@ test.describe('Deparments', () => {
       .toBeVisible();
     await expect(notExpectedFaq)
       .not.toBeVisible();
+  });
 
-    // test home
+  test('home', async () => {
     const homesRes = await fetch('http://localhost:3000/api/home');
     const homes = await homesRes.json();
 
@@ -101,8 +113,11 @@ test.describe('Deparments', () => {
       await expect(heroTitle.text)
         .toBe('Home Title SAGW');
     }
+  });
 
-    // test news detail page
+  test('news detail page', async ({
+    page,
+  }) => {
     await page.goto('http://localhost:3000/admin/collections/newsDetail');
     await page.waitForLoadState('domcontentloaded');
 
@@ -117,8 +132,11 @@ test.describe('Deparments', () => {
       .toBeVisible();
     await expect(notExpectedNews)
       .not.toBeVisible();
+  });
 
-    // test publication detail page
+  test('publication detail page', async ({
+    page,
+  }) => {
     await page.goto('http://localhost:3000/admin/collections/publicationDetail');
     await page.waitForLoadState('load');
 
@@ -133,6 +151,6 @@ test.describe('Deparments', () => {
       .toBeVisible();
     await expect(notExpectedPublication)
       .not.toBeVisible();
-
   });
+
 });
