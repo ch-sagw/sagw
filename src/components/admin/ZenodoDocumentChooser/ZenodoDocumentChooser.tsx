@@ -184,7 +184,7 @@ const ZenodoDocumentChooser = (): JSX.Element => {
         </button>
       </div>
 
-      {idAlreadyExists && <div>ID already exists in your collection.</div>}
+      {idAlreadyExists && <div data-testid='id-already-there'>ID already exists in your collection.</div>}
 
       {error && <div>Error: {error}</div>}
 

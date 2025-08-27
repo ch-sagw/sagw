@@ -73,13 +73,10 @@ test.describe('Add Zenodo document', () => {
   }) => {
     await zenodoInput.fill('1512691');
     await zenodoButton.click();
-    await expect(zenodoList)
-      .toBeVisible();
-    await saveButton.click();
 
-    const errorToast2 = await page.getByText('Das folgende Feld ist nicht korrekt:zenodoId');
+    const errorMessage = await page.getByTestId('id-already-there');
 
-    await expect(errorToast2)
+    await expect(errorMessage)
       .toBeVisible();
   });
 
