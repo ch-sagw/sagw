@@ -100,12 +100,10 @@ test.describe('Deparments', () => {
 
       await expect(heroTitle.text)
         .toBe('Home Title SAGW');
-
     }
 
     // test news detail page
     await page.goto('http://localhost:3000/admin/collections/newsDetail');
-    await page.waitForLoadState('load');
     await page.waitForLoadState('domcontentloaded');
 
     const expectedNews = await page.getByText('News 1 Title SAGW', {
