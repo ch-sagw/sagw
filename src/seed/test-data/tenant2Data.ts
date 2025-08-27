@@ -26,10 +26,10 @@ export const addTenant2Data = async (payload: Payload): Promise<void> => {
           roles: ['admin'],
         },
       ],
-      email: 'NOTSAGW@bar.com',
+      email: 'NOTSAGW@foo.com',
       password: process.env.PAYLOAD_INITIAL_PASSWORD,
-      roles: ['global-admin'],
-      username: 'init-user',
+      roles: ['global-user'],
+      username: 'notsagw',
     },
   });
 
@@ -105,7 +105,7 @@ export const addTenant2Data = async (payload: Payload): Promise<void> => {
       },
       meta: {
         seo: {
-          description: 'SEO Description',
+          description: 'SEO Description NOTSAGW',
           image: image.id,
           index: true,
           title: 'SEO Title NOTSAGW',

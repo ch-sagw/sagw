@@ -1,14 +1,37 @@
 import { Payload } from 'payload';
 
-import { seedInitialUserAndTenant } from '@/seed/init';
 import {
   fetchFileByURL, simpleRteConfig,
 } from '@/seed/test-data/helpers';
 
 export const addTenant1Data = async (payload: Payload): Promise<void> => {
 
-  // create init user & tenant
-  const tenantId = await seedInitialUserAndTenant(payload);
+  // create tenant
+  const tenantId = await payload.create({
+    collection: 'departments',
+    data: {
+      name: 'SAGW',
+      slug: 'sagw',
+    },
+  });
+
+  // create user
+  await payload.create({
+    collection: 'users',
+    data: {
+      department: tenantId,
+      departments: [
+        {
+          department: tenantId,
+          roles: ['admin'],
+        },
+      ],
+      email: process.env.PAYLOAD_INITIAL_USER_MAIL || 'sagw@foo.com',
+      password: process.env.PAYLOAD_INITIAL_PASSWORD,
+      roles: ['global-user'],
+      username: 'sagw',
+    },
+  });
 
   // fetch local images into buffer
   const sagwImageBuffer = await fetchFileByURL('http://localhost:3000/test-images/sagw.png');
@@ -82,7 +105,7 @@ export const addTenant1Data = async (payload: Payload): Promise<void> => {
       },
       meta: {
         seo: {
-          description: 'SEO Description',
+          description: 'SEO Description SAGW',
           image: image.id,
           index: true,
           title: 'SEO Title SAGW',
