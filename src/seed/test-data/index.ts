@@ -9,7 +9,6 @@ export const seedTestData = async (payload: Payload): Promise<void> => {
   // on prod. it should be only run in playwright tests. we already have
   // a check in payload.config. double security.
   if (!(process.env.DATABASE_NAME === 'sagwplaywright' && process.env.DATABASE_URI?.includes('sagwplaywright'))) {
-
     return;
   }
 
