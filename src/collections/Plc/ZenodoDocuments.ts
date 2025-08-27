@@ -25,7 +25,6 @@ export const ZenodoDocuments: CollectionConfig = {
       name: 'zenodoId',
       required: true,
       type: 'text',
-      unique: true,
     },
     {
       admin: {
