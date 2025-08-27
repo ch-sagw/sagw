@@ -88,20 +88,20 @@ test.describe('Deparments', () => {
       .not.toBeVisible();
 
     // test home
-    await page.goto('http://localhost:3000/admin/collections/home');
-    await page.waitForLoadState('load');
+    const homesRes = await fetch('http://localhost:3000/api/home');
+    const homes = await homesRes.json();
 
-    const expectedHome = await page.getByText('Home Title SAGW', {
-      exact: true,
-    });
-    const notExpectedHome = await page.getByText('Home Title NOTSAGW', {
-      exact: true,
-    });
+    await expect(homes.docs)
+      .toHaveLength(1);
 
-    await expect(expectedHome)
-      .toBeVisible();
-    await expect(notExpectedHome)
-      .not.toBeVisible();
+    if (homes.docs.length === 1) {
+      const [home]: any = homes.docs;
+      const [heroTitle] = home.hero.title.root.children[0].children;
+
+      await expect(heroTitle.text)
+        .toBe('Home Title SAGW');
+
+    }
 
     // test news detail page
     await page.goto('http://localhost:3000/admin/collections/newsDetail');
