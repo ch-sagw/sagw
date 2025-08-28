@@ -1,4 +1,4 @@
-import { LinkExternal } from '@/blocks/LinkExternal';
+import { LinkExternalBlock } from '@/blocks/LinkExternal';
 import { CollectionConfig } from 'payload';
 
 import {
@@ -23,7 +23,7 @@ export const Header: CollectionConfig = {
     },
 
     {
-      fields: LinkExternal.fields,
+      fields: LinkExternalBlock.fields,
       maxRows: 3,
       name: 'metaLinks',
       required: true,
