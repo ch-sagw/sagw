@@ -1,8 +1,8 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { TextBlock } from '@/blocks/TextBlock';
-import { ImageBlock } from '@/blocks/ImageBlock';
-import { VideoBlock } from '@/blocks/VideoBlock';
+import { TextBlock } from '@/blocks/Text';
+import { ImageBlock } from '@/blocks/Image';
+import { VideoBlock } from '@/blocks/Video';
 import { fieldsHero } from '@/field-templates/hero';
 import { hookAdminTitle } from '@/hooks/adminTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
@@ -14,7 +14,7 @@ import {
   createAccess, globalAdminOrDepartmentAdminAccess,
 } from '@/collections/Pages/access/globalAdminOrDepartmentAdmin';
 
-export const OverviewPage: CollectionConfig = {
+export const DetailPage: CollectionConfig = {
   access: {
     create: createAccess,
     delete: globalAdminOrDepartmentAdminAccess,
@@ -64,8 +64,8 @@ export const OverviewPage: CollectionConfig = {
     beforeValidate: [hookAdminTitle],
   },
   labels: {
-    plural: 'Overview Pages',
-    singular: 'Overview Page',
+    plural: 'Detail Pages',
+    singular: 'Detail Page',
   },
-  slug: 'overview',
+  slug: 'detailPage',
 };

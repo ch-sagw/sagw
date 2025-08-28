@@ -2,6 +2,7 @@
 import { Users } from '@/collections/Plc/Users';
 import { Images } from '@/collections/Plc/Images';
 import { Videos } from '@/collections/Plc/Videos';
+import { Svgs } from '@/collections/Plc/Svgs';
 import { NetworkCategories } from '@/collections/Plc/NetworkCategories';
 import { FaqItems } from '@/collections/Plc/FaqItems';
 import { Documents } from '@/collections/Plc/Documents';
@@ -23,19 +24,23 @@ import { Header } from './Globals/Header';
 import { StatusMessage } from './Globals/StatusMessage';
 
 // Pages -> Sets
-import { MagazineDetailPage } from '@/collections/Pages/Sets/MagazineDetailPage';
-import { OverviewPage } from '@/collections/Pages/Sets/OverviewPage';
-import { DetailPage } from '@/collections/Pages/Sets/DetailPage';
+import { MagazineDetailPage } from '@/collections/Pages/Sets/MagazineDetail';
+import { OverviewPage } from '@/collections/Pages/Sets/Overview';
+import { DetailPage } from '@/collections/Pages/Sets/Detail';
+import { EventDetailPage } from './Pages/Sets/EventDetail';
+import { NewsDetailPage } from './Pages/Sets/NewsDetail';
+import { PublicationDetailPage } from './Pages/Sets/PublicationDetail';
 
 // Pages -> Singletons
-import { ErrorPage } from '@/collections/Pages/Singletons/ErrorPage';
-import { HomePage } from '@/collections/Pages/Singletons/HomePage';
+import { ErrorPage } from '@/collections/Pages/Singletons/Error';
+import { HomePage } from '@/collections/Pages/Singletons/Home';
 
 export const plcCollections = [
   Departments,
   Users,
   Images,
   Videos,
+  Svgs,
   NetworkCategories,
   FaqItems,
   Documents,
@@ -57,6 +62,9 @@ export const setsPageCollections = [
   OverviewPage,
   DetailPage,
   MagazineDetailPage,
+  EventDetailPage,
+  NewsDetailPage,
+  PublicationDetailPage,
 ];
 
 export const globalCollections = [

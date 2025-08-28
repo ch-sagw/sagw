@@ -6,6 +6,10 @@ import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
+import { HomeTeasersBlock } from '@/blocks/HomeTeasers';
+import { NewsTeasersBlock } from '@/blocks/NewsTeasers';
+import { DownloadsBlock } from '@/blocks/Downloads';
+import { LinksBlock } from '@/blocks/Links';
 
 export const HomePage: CollectionConfig = {
   access: {
@@ -26,6 +30,12 @@ export const HomePage: CollectionConfig = {
           fields: [
             fieldsHero([
               {
+                // TODO: enable for SAGW only
+                defaultValue: true,
+                name: 'animated',
+                type: 'checkbox',
+              },
+              {
                 localized: true,
                 name: 'sideTitle',
                 required: true,
@@ -33,6 +43,17 @@ export const HomePage: CollectionConfig = {
               },
               fieldsLinkInternalWithToggle,
             ]),
+            {
+              blocks: [
+                HomeTeasersBlock,
+                NewsTeasersBlock,
+                DownloadsBlock,
+                LinksBlock,
+              ],
+              label: 'Content',
+              name: 'contentBlocks',
+              type: 'blocks',
+            },
           ],
           label: 'Content',
         },
@@ -47,5 +68,5 @@ export const HomePage: CollectionConfig = {
     plural: 'Home',
     singular: 'Home',
   },
-  slug: 'home',
+  slug: 'homePage',
 };

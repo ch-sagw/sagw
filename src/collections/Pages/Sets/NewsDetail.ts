@@ -1,26 +1,21 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { TextBlock } from '@/blocks/TextBlock';
-import { ImageBlock } from '@/blocks/ImageBlock';
-import { VideoBlock } from '@/blocks/VideoBlock';
+import { LinkExternalBlock } from '@/blocks/LinkExternal';
+import { LinkInternalBlock } from '@/blocks/LinkInternal';
+import { TextBlock } from '@/blocks/Text';
+import { ImageBlock } from '@/blocks/Image';
+import { VideoBlock } from '@/blocks/Video';
 import { fieldsHero } from '@/field-templates/hero';
-import { hookAdminTitle } from '@/hooks/adminTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import { hookAdminTitle } from '@/hooks/adminTitle';
 import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
-import { fieldsLinkExternal } from '@/field-templates/links';
 import { hookSeoFallback } from '@/hooks/seoFallback';
-import {
-  createAccess, globalAdminOrDepartmentAdminAccess,
-} from '@/collections/Pages/access/globalAdminOrDepartmentAdmin';
 
-export const MagazineDetailPage: CollectionConfig = {
+export const NewsDetailPage: CollectionConfig = {
   access: {
-    create: createAccess,
-    delete: globalAdminOrDepartmentAdminAccess,
-    read: () => true,
-    update: globalAdminOrDepartmentAdminAccess,
+    read: (): boolean => true,
   },
   admin: {
     group: 'Pages',
@@ -52,20 +47,7 @@ export const MagazineDetailPage: CollectionConfig = {
             },
 
             // Hero
-            fieldsHero([
-              {
-                localized: true,
-                name: 'author',
-                required: true,
-                type: 'text',
-              },
-              {
-                localized: true,
-                name: 'date',
-                required: true,
-                type: 'date',
-              },
-            ]),
+            fieldsHero(),
 
             // Content
             {
@@ -80,26 +62,36 @@ export const MagazineDetailPage: CollectionConfig = {
             },
 
             // Downloads
+
             {
               fields: [
                 {
                   hasMany: true,
                   name: 'downloads',
                   relationTo: 'documents',
-                  required: true,
+                  required: false,
+                  type: 'relationship',
+                },
+                {
+                  hasMany: true,
+                  name: 'zenodoDownloads',
+                  relationTo: 'zenodoDocuments',
+                  required: false,
                   type: 'relationship',
                 },
               ],
-              label: 'Downloads',
-              name: 'downloads',
               type: 'group',
             },
 
             // Links
             {
-              fields: fieldsLinkExternal,
+              blocks: [
+                LinkExternalBlock,
+                LinkInternalBlock,
+              ],
+              minRows: 0,
               name: 'links',
-              type: 'array',
+              type: 'blocks',
             },
 
           ],
@@ -117,8 +109,8 @@ export const MagazineDetailPage: CollectionConfig = {
     beforeValidate: [hookAdminTitle],
   },
   labels: {
-    plural: 'Magazine Detail Pages',
-    singular: 'Magazine Detail',
+    plural: 'News Detail Pages',
+    singular: 'News Detail',
   },
-  slug: 'magazineDetail',
+  slug: 'newsDetailPage',
 };
