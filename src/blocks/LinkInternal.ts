@@ -1,7 +1,7 @@
 import { fieldsLinkInternal } from '@/field-templates/links';
 import { Block } from 'payload';
 
-export const LinkInternal: Block = {
+export const LinkInternalBlock: Block = {
   fields: [...fieldsLinkInternal],
-  slug: 'linkInternal',
+  slug: 'linkInternalBlock',
 };

@@ -1,7 +1,7 @@
 import { fieldsLinkExternal } from '@/field-templates/links';
 import { Block } from 'payload';
 
-export const LinkExternal: Block = {
+export const LinkExternalBlock: Block = {
   fields: [
     ...fieldsLinkExternal,
     {
@@ -11,5 +11,5 @@ export const LinkExternal: Block = {
       type: 'text',
     },
   ],
-  slug: 'linkExternal',
+  slug: 'linkExternalBlock',
 };
