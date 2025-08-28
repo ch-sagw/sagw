@@ -56,3 +56,11 @@ Misc:
 
 Testing:
 -------
+
+
+REFACTOR:
+-------
+- check field templates: check for unused. check for templates which are only used in 1 place
+- form block
+- in admin -> components -> Field: 'src/components/admin/Zenodo...' -> use absolute path
+- internal link chooser still needed?
