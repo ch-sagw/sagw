@@ -1,6 +1,7 @@
 Backup / Restore:
 -----------------
 - test blob backup/restore with lots of large image files
+- adapt replicate task to also replicate blob to local
 
 Storybook:
 ----------
@@ -34,6 +35,8 @@ Payload:
 - implement resend
 - add indication on payload ui if author is on test or prod
 - richt-text sanitize: should we search for "  " and replace by " "? other optimizations?
+- in departments overview, there is a column "_watch Tenant" ... ?
+- for departments, make name, url and slug unique
 
 Vercel:
 --------
@@ -43,3 +46,13 @@ Payload Config:
 --------
 - earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
 - implement hidden texts global config (for a11y)
+- slug: should we add a slug-field to all pages? currently, we don't have slugs, but just id's. If we go for slugs -> make validation hook to ensure unique slugs per tenant
+- zenodo -> checks if validated id is already in connection. make this check per tenant. currently, if one tenant adds an id, another tenant can't add the same id.
+
+Misc:
+--------
+- update docs on env-vars
+- update docs on deployments
+
+Testing:
+-------

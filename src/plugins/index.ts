@@ -48,6 +48,7 @@ const plugins: Plugin[] = [
   }),
 
   multiTenantPlugin<Config>({
+    cleanupAfterTenantDelete: false,
     collections: tenantsCollections,
     tenantField: {
       access: {

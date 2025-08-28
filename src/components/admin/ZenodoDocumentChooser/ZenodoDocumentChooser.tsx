@@ -10,6 +10,7 @@ import { reduceFieldsToValues } from 'payload/shared';
 import {
   InterfaceZenodoResponse, verifyZenodo,
 } from '@/app/actions/zenodo';
+import { useTenantSelection } from '@payloadcms/plugin-multi-tenant/client';
 
 const ZenodoDocumentChooser = (): JSX.Element => {
 
@@ -39,6 +40,13 @@ const ZenodoDocumentChooser = (): JSX.Element => {
     error,
     setError,
   ] = useState<string | null>(null);
+
+  const [
+    idAlreadyExists,
+    setIdAlreadyExists,
+  ] = useState(false);
+
+  const tenant = useTenantSelection().selectedTenantID;
 
   // methods
 
@@ -74,11 +82,27 @@ const ZenodoDocumentChooser = (): JSX.Element => {
       return;
     }
 
-    // setLoading(true);
+    if (!tenant) {
+      return;
+    }
+
     setError(null);
 
     startTransition(async () => {
       try {
+        // check for existing id
+        const zenodoResponse = await fetch(`/api/zenodoDocuments?where[department][equals]=${tenant}&where[zenodoId][equals]=${id}`);
+        const responseJson = await zenodoResponse.json();
+
+        if (responseJson.docs?.length > 0) {
+          setIdAlreadyExists(true);
+
+          return;
+        }
+
+        setIdAlreadyExists(false);
+
+        // get zenodo data
         const data: InterfaceZenodoResponse = await verifyZenodo(id);
 
         if (data.ok && data.data) {
@@ -146,17 +170,21 @@ const ZenodoDocumentChooser = (): JSX.Element => {
           value={id}
           onChange={(e) => onChangeInput(e.target.value)}
           placeholder='Enter Zenodo ID'
+          data-testid='zenodo-input'
         />
         <button
           type='button'
           onClick={onVerify}
           disabled={loading}
+          data-testid='zenodo-button'
         >
           {loading
             ? 'Verifying...'
             : 'Verify'}
         </button>
       </div>
+
+      {idAlreadyExists && <div data-testid='id-already-there'>ID already exists in your collection.</div>}
 
       {error && <div>Error: {error}</div>}
 
@@ -168,7 +196,7 @@ const ZenodoDocumentChooser = (): JSX.Element => {
           <div>
             <strong>Files:</strong>
             {formData.files && Array.isArray(formData.files) &&
-              <ul>
+              <ul data-testid='zenodo-list'>
                 {formData.files.map((f, i) => (
                   <li key={i}>
                     <a href={f.link} target='_blank'

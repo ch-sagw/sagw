@@ -30,6 +30,7 @@ import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
 import { fieldLinkablePageFieldName } from '@/field-templates/linkablePage';
 import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import { InterfaceTenantCollectionObject } from '@/collections';
+import { useTenantSelection } from '@payloadcms/plugin-multi-tenant/client';
 
 interface InterfaceGroupedOptions {
   label: string;
@@ -39,7 +40,6 @@ interface InterfaceGroupedOptions {
 interface InternalLinkChooserClientProps {
   currentId: string | number | undefined;
   path: string;
-  data: any;
   collectionSlug: string;
   tenantsCollections: Record<string, InterfaceTenantCollectionObject>;
   required: boolean;
@@ -144,7 +144,6 @@ const fetchGlobalPages = async ({
 const InternalLinkChooserClient = ({
   currentId,
   path,
-  data,
   collectionSlug,
   tenantsCollections,
   required,
@@ -172,9 +171,11 @@ const InternalLinkChooserClient = ({
   ] = useState(true);
 
   // effects
+  const tenantContext = useTenantSelection();
 
   useEffect(() => {
-    const loadOptions = async (): Promise<void> => {
+
+    const loadOptions = async (tenant: string): Promise<void> => {
       setLoading(true);
       const [
         globalOpts,
@@ -183,13 +184,13 @@ const InternalLinkChooserClient = ({
         fetchGlobalPages({
           collectionSlug,
           currentId,
-          department: data?.department,
+          department: tenant,
           tenantsCollections,
         }),
         fetchCollectionPages({
           collectionSlug,
           currentId,
-          department: data?.department,
+          department: tenant,
           tenantsCollections,
         }),
       ]);
@@ -208,14 +209,14 @@ const InternalLinkChooserClient = ({
       setLoading(false);
     };
 
-    if (data?.department && collectionSlug) {
-      loadOptions();
+    if (tenantContext.selectedTenantID && collectionSlug) {
+      loadOptions(tenantContext.selectedTenantID as string);
     }
   }, [
-    data?.department,
     collectionSlug,
     currentId,
     tenantsCollections,
+    tenantContext.selectedTenantID,
   ]);
 
   const flatOptions = options.flatMap((group) => group.options);
@@ -232,6 +233,7 @@ const InternalLinkChooserClient = ({
         options={options}
         value={selectedOption}
         isLoading={loading}
+        inputId={`field-${path}`}
         onChange={(newValue) => {
           if (!newValue || Array.isArray(newValue)) {
             setValue(null);

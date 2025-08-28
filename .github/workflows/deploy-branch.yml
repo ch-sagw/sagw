@@ -43,6 +43,8 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
       - name: Lint
         run: npm run lint
       - name: Test FE
@@ -51,11 +53,13 @@ jobs:
         run: npm run test:be:native
         env:
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
-          DATABASE_NAME: sagw-test
-          DATABASE_URI: mongodb://user:pass@mongo:27017/sagw-test?authSource=admin
-          PAYLOAD_INITIAL_USER_MAIL: foo@bar.com
-          PAYLOAD_INITIAL_PASSWORD: 1234
+          DATABASE_NAME: sagwplaywright
+          DATABASE_URI: mongodb://user:pass@mongo:27017/sagwplaywright?authSource=admin
+          PAYLOAD_INITIAL_USER_MAIL: ${{ secrets.PAYLOAD_INITIAL_USER_MAIL }}
+          PAYLOAD_INITIAL_PASSWORD: ${{ secrets.PAYLOAD_INITIAL_PASSWORD }}
           ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+          IS_RUNNING_IN_PLAYWRIGHT_TEST_ENV: true
+          NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           
       - uses: daun/playwright-report-summary@v3
         if: always()

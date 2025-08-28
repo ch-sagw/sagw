@@ -25,7 +25,6 @@ export const ZenodoDocuments: CollectionConfig = {
       name: 'zenodoId',
       required: true,
       type: 'text',
-      unique: true,
     },
     {
       admin: {
@@ -69,7 +68,7 @@ export const ZenodoDocuments: CollectionConfig = {
       admin: {
         components: {
           Field: {
-            path: 'src/components/admin/ZenodoDocumentChooser',
+            path: 'src/components/admin/ZenodoDocumentChooser/ZenodoDocumentChooser',
           },
         },
       },

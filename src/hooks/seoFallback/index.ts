@@ -9,6 +9,7 @@ type WithSeo = {
   meta?: {
     seo?: Seo;
   };
+  department: string;
 };
 
 export const hookSeoFallback: CollectionBeforeChangeHook<WithSeo> = async ({
@@ -31,6 +32,11 @@ export const hookSeoFallback: CollectionBeforeChangeHook<WithSeo> = async ({
   const homePages = await req.payload.find({
     collection: 'home',
     limit: 1,
+    where: {
+      department: {
+        equals: data.department,
+      },
+    },
   });
 
   if (!homePages.docs) {
@@ -59,8 +65,6 @@ export const hookSeoFallback: CollectionBeforeChangeHook<WithSeo> = async ({
       ? homeSeoTitle
       : pageSeoTitle,
   };
-
-  console.log(pageSeo);
 
   if (data.meta) {
     data.meta.seo = pageSeo;
