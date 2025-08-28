@@ -1,5 +1,60 @@
 # Changelog
 
+## [0.9.0](https://github.com/ch-sagw/sagw/compare/v0.8.0...v0.9.0) (2025-08-28)
+
+
+### Chore
+
+* disable dev indicator ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* docker ignore non-relevant folders ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* remove allowPublicRead property from tenants ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* update playwright/test ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+
+
+### CI
+
+* install playwright ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* set explicit permissions on workflows ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+
+
+### Documentation
+
+* add note about vercel environments ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* add storybook deployment ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+
+
+### Features
+
+* add validation for url ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* create hook for seo fallback from home to all other pages ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* make internalLink chooser ready to use for lexical editor, and use it in rte2 ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* seed data for a second tenant ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+
+
+### Bug Fixes
+
+* disable mongoDb autoPluralization ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* enable autologin for playwright ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* make sure no collections are deleted after tenant deletion ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* use custom check to ensure zenodo id is unique (didn't work with tenants) ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* use hooke instead of passed data to get selectedTenant ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+
+
+### Test
+
+* add api test, better structure tests ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* add sample images for test setup ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* add seed function to populate db for playwright ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* add tenant specific tests ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* add test for adminTitle hook ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* add tests for internal link chooser ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* add tests for soft-hypen ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* config screenshots ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* create global-users instead of admins ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* simple link chooser test ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* use current playwright image in fe&be docker ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* write test for seoFallback hook ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+
 ## [0.8.0](https://github.com/ch-sagw/sagw/compare/v0.7.0...v0.8.0) (2025-08-26)
 
 
