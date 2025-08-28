@@ -67,15 +67,19 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    home: Home;
+    homePage: HomePage;
     errorPage: ErrorPage;
-    overview: Overview;
-    detail: Detail;
-    magazineDetail: MagazineDetail;
+    overviewPage: OverviewPage;
+    detailPage: DetailPage;
+    magazineDetailPage: MagazineDetailPage;
+    eventDetailPage: EventDetailPage;
+    newsDetailPage: NewsDetailPage;
+    publicationDetailPage: PublicationDetailPage;
     departments: Department;
     users: User;
     images: Image;
     videos: Video;
+    svgs: Svg;
     networkCategories: NetworkCategory;
     faqItems: FaqItem;
     documents: Document;
@@ -98,15 +102,19 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    home: HomeSelect<false> | HomeSelect<true>;
+    homePage: HomePageSelect<false> | HomePageSelect<true>;
     errorPage: ErrorPageSelect<false> | ErrorPageSelect<true>;
-    overview: OverviewSelect<false> | OverviewSelect<true>;
-    detail: DetailSelect<false> | DetailSelect<true>;
-    magazineDetail: MagazineDetailSelect<false> | MagazineDetailSelect<true>;
+    overviewPage: OverviewPageSelect<false> | OverviewPageSelect<true>;
+    detailPage: DetailPageSelect<false> | DetailPageSelect<true>;
+    magazineDetailPage: MagazineDetailPageSelect<false> | MagazineDetailPageSelect<true>;
+    eventDetailPage: EventDetailPageSelect<false> | EventDetailPageSelect<true>;
+    newsDetailPage: NewsDetailPageSelect<false> | NewsDetailPageSelect<true>;
+    publicationDetailPage: PublicationDetailPageSelect<false> | PublicationDetailPageSelect<true>;
     departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     images: ImagesSelect<false> | ImagesSelect<true>;
     videos: VideosSelect<false> | VideosSelect<true>;
+    svgs: SvgsSelect<false> | SvgsSelect<true>;
     networkCategories: NetworkCategoriesSelect<false> | NetworkCategoriesSelect<true>;
     faqItems: FaqItemsSelect<false> | FaqItemsSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
@@ -161,9 +169,9 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "home".
+ * via the `definition` "homePage".
  */
-export interface Home {
+export interface HomePage {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
@@ -185,6 +193,7 @@ export interface Home {
       [k: string]: unknown;
     };
     lead?: string | null;
+    animated?: boolean | null;
     sideTitle: string;
     optionalLink?: {
       includeLink?: boolean | null;
@@ -195,6 +204,62 @@ export interface Home {
       };
     };
   };
+  contentBlocks?:
+    | (
+        | {
+            homeTeasers?:
+              | {
+                  category: string;
+                  title: string;
+                  text: string;
+                  icon: string | Svg;
+                  openInNewWindow?: boolean | null;
+                  linkText: string;
+                  internalLink: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeTeasersBlock';
+          }
+        | {
+            title: string;
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'newsTeasersBlock';
+          }
+        | {
+            title: string;
+            downloads?: (string | Document)[] | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'downloadsBlock';
+          }
+        | {
+            title: string;
+            links?:
+              | {
+                  linkType: 'internal' | 'external';
+                  linkInternal?: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  linkExternal?: {
+                    externalLinkText: string;
+                    externalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'linksBlock';
+          }
+      )[]
+    | null;
   meta?: {
     seo?: {
       index?: boolean | null;
@@ -224,6 +289,58 @@ export interface Department {
    * Used for url paths, example: /department-slug/page-slug
    */
   slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "svgs".
+ */
+export interface Svg {
+  id: string;
+  department?: (string | null) | Department;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: string;
+  department?: (string | null) | Department;
+  title: string;
+  project?: (string | null) | Project;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: string;
+  department?: (string | null) | Department;
+  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -275,9 +392,9 @@ export interface ErrorPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "overview".
+ * via the `definition` "overviewPage".
  */
-export interface Overview {
+export interface OverviewPage {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
@@ -380,9 +497,9 @@ export interface Video {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "detail".
+ * via the `definition` "detailPage".
  */
-export interface Detail {
+export interface DetailPage {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
@@ -465,9 +582,9 @@ export interface Detail {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "magazineDetail".
+ * via the `definition` "magazineDetailPage".
  */
-export interface MagazineDetail {
+export interface MagazineDetailPage {
   id: string;
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
@@ -537,17 +654,35 @@ export interface MagazineDetail {
             blockName?: string | null;
             blockType: 'videoBlock';
           }
+        | {
+            title: string;
+            downloads?: (string | Document)[] | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'downloadsBlock';
+          }
+        | {
+            title: string;
+            links?:
+              | {
+                  linkType: 'internal' | 'external';
+                  linkInternal?: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  linkExternal?: {
+                    externalLinkText: string;
+                    externalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'linksBlock';
+          }
       )[]
-    | null;
-  downloads: {
-    downloads: (string | Document)[];
-  };
-  links?:
-    | {
-        externalLinkText: string;
-        externalLink: string;
-        id?: string | null;
-      }[]
     | null;
   meta?: {
     seo?: {
@@ -565,33 +700,284 @@ export interface MagazineDetail {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "documents".
+ * via the `definition` "eventDetailPage".
  */
-export interface Document {
+export interface EventDetailPage {
   id: string;
   department?: (string | null) | Department;
-  title: string;
-  project?: (string | null) | Project;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+  };
+  contentBlocks: {
+    text?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    id?: string | null;
+  }[];
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
   updatedAt: string;
   createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projects".
+ * via the `definition` "newsDetailPage".
  */
-export interface Project {
+export interface NewsDetailPage {
   id: string;
   department?: (string | null) | Department;
-  name: string;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  overviewPageProps: {
+    teaserText: string;
+  };
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+  };
+  contentBlocks?:
+    | (
+        | {
+            text?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textBlock';
+          }
+        | {
+            alignement?: ('left' | 'center' | 'right') | null;
+            image: string | Image;
+            title: string;
+            caption: string;
+            credits: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageBlock';
+          }
+        | {
+            video: string | Video;
+            title: string;
+            caption: string;
+            credits: string;
+            stillImage: string | Image;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoBlock';
+          }
+      )[]
+    | null;
+  downloads?: (string | Document)[] | null;
+  zenodoDownloads?: (string | ZenodoDocument)[] | null;
+  links?:
+    | (
+        | {
+            externalLinkText: string;
+            externalLink: string;
+            description: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'linkExternalBlock';
+          }
+        | {
+            openInNewWindow?: boolean | null;
+            linkText: string;
+            internalLink: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'linkInternalBlock';
+          }
+      )[]
+    | null;
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "zenodoDocuments".
+ */
+export interface ZenodoDocument {
+  id: string;
+  department?: (string | null) | Department;
+  zenodoId: string;
+  title: string;
+  publicationDate: string;
+  files: {
+    link?: string | null;
+    format?: string | null;
+    size?: number | null;
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationDetailPage".
+ */
+export interface PublicationDetailPage {
+  id: string;
+  department?: (string | null) | Department;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  overviewPageProps: {
+    image: string | Image;
+  };
+  categorization: {
+    topic: string | PublicationTopic;
+    type: string | PublicationType;
+  };
+  hero: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    lead?: string | null;
+  };
+  contentBlocks: {
+    text?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    id?: string | null;
+  }[];
+  authors?:
+    | {
+        author?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  downloads?: (string | ZenodoDocument)[] | null;
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationTopics".
+ */
+export interface PublicationTopic {
+  id: string;
+  department?: (string | null) | Department;
+  publicationTopic: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationTypes".
+ */
+export interface PublicationType {
+  id: string;
+  department?: (string | null) | Department;
+  publicationType: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -669,25 +1055,6 @@ export interface FaqItem {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "zenodoDocuments".
- */
-export interface ZenodoDocument {
-  id: string;
-  department?: (string | null) | Department;
-  zenodoId: string;
-  title: string;
-  publicationDate: string;
-  files: {
-    link?: string | null;
-    format?: string | null;
-    size?: number | null;
-    id?: string | null;
-  }[];
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "people".
  */
 export interface Person {
@@ -704,28 +1071,6 @@ export interface Person {
   phone: string;
   image?: (string | null) | Image;
   fullName?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publicationTopics".
- */
-export interface PublicationTopic {
-  id: string;
-  department?: (string | null) | Department;
-  publicationTopic: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publicationTypes".
- */
-export interface PublicationType {
-  id: string;
-  department?: (string | null) | Department;
-  publicationType: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -1090,24 +1435,36 @@ export interface PayloadLockedDocument {
   id: string;
   document?:
     | ({
-        relationTo: 'home';
-        value: string | Home;
+        relationTo: 'homePage';
+        value: string | HomePage;
       } | null)
     | ({
         relationTo: 'errorPage';
         value: string | ErrorPage;
       } | null)
     | ({
-        relationTo: 'overview';
-        value: string | Overview;
+        relationTo: 'overviewPage';
+        value: string | OverviewPage;
       } | null)
     | ({
-        relationTo: 'detail';
-        value: string | Detail;
+        relationTo: 'detailPage';
+        value: string | DetailPage;
       } | null)
     | ({
-        relationTo: 'magazineDetail';
-        value: string | MagazineDetail;
+        relationTo: 'magazineDetailPage';
+        value: string | MagazineDetailPage;
+      } | null)
+    | ({
+        relationTo: 'eventDetailPage';
+        value: string | EventDetailPage;
+      } | null)
+    | ({
+        relationTo: 'newsDetailPage';
+        value: string | NewsDetailPage;
+      } | null)
+    | ({
+        relationTo: 'publicationDetailPage';
+        value: string | PublicationDetailPage;
       } | null)
     | ({
         relationTo: 'departments';
@@ -1124,6 +1481,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'videos';
         value: string | Video;
+      } | null)
+    | ({
+        relationTo: 'svgs';
+        value: string | Svg;
       } | null)
     | ({
         relationTo: 'networkCategories';
@@ -1233,9 +1594,9 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "home_select".
+ * via the `definition` "homePage_select".
  */
-export interface HomeSelect<T extends boolean = true> {
+export interface HomePageSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
   adminTitle?: T;
@@ -1244,6 +1605,7 @@ export interface HomeSelect<T extends boolean = true> {
     | {
         title?: T;
         lead?: T;
+        animated?: T;
         sideTitle?: T;
         optionalLink?:
           | T
@@ -1256,6 +1618,70 @@ export interface HomeSelect<T extends boolean = true> {
                     linkText?: T;
                     internalLink?: T;
                   };
+            };
+      };
+  contentBlocks?:
+    | T
+    | {
+        homeTeasersBlock?:
+          | T
+          | {
+              homeTeasers?:
+                | T
+                | {
+                    category?: T;
+                    title?: T;
+                    text?: T;
+                    icon?: T;
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        newsTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        downloadsBlock?:
+          | T
+          | {
+              title?: T;
+              downloads?: T;
+              id?: T;
+              blockName?: T;
+            };
+        linksBlock?:
+          | T
+          | {
+              title?: T;
+              links?:
+                | T
+                | {
+                    linkType?: T;
+                    linkInternal?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    linkExternal?:
+                      | T
+                      | {
+                          externalLinkText?: T;
+                          externalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
             };
       };
   meta?:
@@ -1303,9 +1729,9 @@ export interface ErrorPageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "overview_select".
+ * via the `definition` "overviewPage_select".
  */
-export interface OverviewSelect<T extends boolean = true> {
+export interface OverviewPageSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
   adminTitle?: T;
@@ -1365,9 +1791,9 @@ export interface OverviewSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "detail_select".
+ * via the `definition` "detailPage_select".
  */
-export interface DetailSelect<T extends boolean = true> {
+export interface DetailPageSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
   adminTitle?: T;
@@ -1427,9 +1853,9 @@ export interface DetailSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "magazineDetail_select".
+ * via the `definition` "magazineDetailPage_select".
  */
-export interface MagazineDetailSelect<T extends boolean = true> {
+export interface MagazineDetailPageSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
   adminTitle?: T;
@@ -1478,19 +1904,220 @@ export interface MagazineDetailSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        downloadsBlock?:
+          | T
+          | {
+              title?: T;
+              downloads?: T;
+              id?: T;
+              blockName?: T;
+            };
+        linksBlock?:
+          | T
+          | {
+              title?: T;
+              links?:
+                | T
+                | {
+                    linkType?: T;
+                    linkInternal?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    linkExternal?:
+                      | T
+                      | {
+                          externalLinkText?: T;
+                          externalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
-  downloads?:
+  meta?:
     | T
     | {
-        downloads?: T;
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventDetailPage_select".
+ */
+export interface EventDetailPageSelect<T extends boolean = true> {
+  department?: T;
+  isLinkable?: T;
+  adminTitle?: T;
+  hero?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+      };
+  contentBlocks?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsDetailPage_select".
+ */
+export interface NewsDetailPageSelect<T extends boolean = true> {
+  department?: T;
+  isLinkable?: T;
+  adminTitle?: T;
+  overviewPageProps?:
+    | T
+    | {
+        teaserText?: T;
+      };
+  hero?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+      };
+  contentBlocks?:
+    | T
+    | {
+        textBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              alignement?: T;
+              image?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              id?: T;
+              blockName?: T;
+            };
+        videoBlock?:
+          | T
+          | {
+              video?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              stillImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  downloads?: T;
+  zenodoDownloads?: T;
   links?:
     | T
     | {
-        externalLinkText?: T;
-        externalLink?: T;
+        linkExternalBlock?:
+          | T
+          | {
+              externalLinkText?: T;
+              externalLink?: T;
+              description?: T;
+              id?: T;
+              blockName?: T;
+            };
+        linkInternalBlock?:
+          | T
+          | {
+              openInNewWindow?: T;
+              linkText?: T;
+              internalLink?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationDetailPage_select".
+ */
+export interface PublicationDetailPageSelect<T extends boolean = true> {
+  department?: T;
+  isLinkable?: T;
+  adminTitle?: T;
+  overviewPageProps?:
+    | T
+    | {
+        image?: T;
+      };
+  categorization?:
+    | T
+    | {
+        topic?: T;
+        type?: T;
+      };
+  hero?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+      };
+  contentBlocks?:
+    | T
+    | {
+        text?: T;
         id?: T;
       };
+  authors?:
+    | T
+    | {
+        author?: T;
+        id?: T;
+      };
+  downloads?: T;
   meta?:
     | T
     | {
@@ -1575,6 +2202,25 @@ export interface ImagesSelect<T extends boolean = true> {
 export interface VideosSelect<T extends boolean = true> {
   department?: T;
   alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "svgs_select".
+ */
+export interface SvgsSelect<T extends boolean = true> {
+  department?: T;
+  name?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
