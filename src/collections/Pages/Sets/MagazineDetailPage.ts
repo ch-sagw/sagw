@@ -1,17 +1,26 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { fieldsTextBlock } from '@/field-templates/textBlock';
+import { TextBlock } from '@/blocks/TextBlock';
+import { ImageBlock } from '@/blocks/ImageBlock';
+import { VideoBlock } from '@/blocks/VideoBlock';
 import { fieldsHero } from '@/field-templates/hero';
 import { hookAdminTitle } from '@/hooks/adminTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
+import { fieldsLinkExternal } from '@/field-templates/links';
 import { hookSeoFallback } from '@/hooks/seoFallback';
+import {
+  createAccess, globalAdminOrDepartmentAdminAccess,
+} from '@/collections/Pages/access/globalAdminOrDepartmentAdmin';
 
-export const PublicationDetailPage: CollectionConfig = {
+export const MagazineDetailPage: CollectionConfig = {
   access: {
-    read: (): boolean => true,
+    create: createAccess,
+    delete: globalAdminOrDepartmentAdminAccess,
+    read: () => true,
+    update: globalAdminOrDepartmentAdminAccess,
   },
   admin: {
     group: 'Pages',
@@ -31,10 +40,10 @@ export const PublicationDetailPage: CollectionConfig = {
             {
               fields: [
                 {
-                  name: 'image',
-                  relationTo: 'images',
+                  localized: true,
+                  name: 'teaserText',
                   required: true,
-                  type: 'relationship',
+                  type: 'text',
                 },
               ],
               label: 'Overview Page properties',
@@ -42,69 +51,57 @@ export const PublicationDetailPage: CollectionConfig = {
               type: 'group',
             },
 
-            // Categorization
-            {
-              fields: [
-                {
-                  name: 'topic',
-                  relationTo: 'publicationTopics',
-                  required: true,
-                  type: 'relationship',
-                },
-                {
-                  name: 'type',
-                  relationTo: 'publicationTypes',
-                  required: true,
-                  type: 'relationship',
-                },
-              ],
-              label: 'Categorization',
-              name: 'categorization',
-              type: 'group',
-            },
-
             // Hero
-            fieldsHero(),
+            fieldsHero([
+              {
+                localized: true,
+                name: 'author',
+                required: true,
+                type: 'text',
+              },
+              {
+                localized: true,
+                name: 'date',
+                required: true,
+                type: 'date',
+              },
+            ]),
 
-            // Text blocks
+            // Content
             {
-              fields: fieldsTextBlock,
+              blocks: [
+                TextBlock,
+                ImageBlock,
+                VideoBlock,
+              ],
               label: 'Content Blocks',
               name: 'contentBlocks',
-              required: true,
-              type: 'array',
-            },
-
-            // authors
-            {
-              fields: [
-                {
-                  localized: false,
-                  name: 'author',
-                  required: false,
-                  type: 'text',
-                },
-              ],
-              label: 'Authors',
-              minRows: 0,
-              name: 'authors',
-              type: 'array',
+              type: 'blocks',
             },
 
             // Downloads
-
             {
               fields: [
                 {
                   hasMany: true,
                   name: 'downloads',
-                  relationTo: 'zenodoDocuments',
-                  required: false,
+                  relationTo: 'documents',
+                  required: true,
                   type: 'relationship',
                 },
               ],
+              label: 'Downloads',
+              name: 'downloads',
               type: 'group',
             },
+
+            // Links
+            {
+              fields: fieldsLinkExternal,
+              name: 'links',
+              type: 'array',
+            },
+
           ],
           label: 'Content',
         },
@@ -120,8 +117,8 @@ export const PublicationDetailPage: CollectionConfig = {
     beforeValidate: [hookAdminTitle],
   },
   labels: {
-    plural: 'Publication Detail Pages',
-    singular: 'Publication Detail',
+    plural: 'Magazine Detail Pages',
+    singular: 'Magazine Detail',
   },
-  slug: 'publicationDetail',
+  slug: 'magazineDetail',
 };

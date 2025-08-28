@@ -23,66 +23,40 @@ import { Header } from './Globals/Header';
 import { StatusMessage } from './Globals/StatusMessage';
 
 // Pages -> Sets
-import { InstituteDetailPage } from '@/collections/Pages/Sets/InstituteDetail';
-import { MagazineDetailPage } from '@/collections/Pages/Sets/MagazineDetail';
-import { PublicationDetailPage } from '@/collections/Pages/Sets/PublicationDetail';
-import { NewsDetailPage } from '@/collections/Pages/Sets/NewsDetail';
+import { MagazineDetailPage } from '@/collections/Pages/Sets/MagazineDetailPage';
+import { OverviewPage } from '@/collections/Pages/Sets/OverviewPage';
+import { DetailPage } from '@/collections/Pages/Sets/DetailPage';
 
 // Pages -> Singletons
-import { AboutContactPage } from '@/collections/Pages/Singletons/About/Contact';
-import { AboutSagwPage } from '@/collections/Pages/Singletons/About/Sagw';
-import { AboutTeamPage } from '@/collections/Pages/Singletons/About/Team';
-import { ActivitiesPage } from '@/collections/Pages/Singletons/Activities/Activities';
-import { EventsOverviewPage } from '@/collections/Pages/Singletons/Activities/EventsOverview';
-import { MagazineOverviewPage } from '@/collections/Pages/Singletons/Activities/MagazineOverview';
-import { NewsOverviewPage } from '@/collections/Pages/Singletons/Activities/NewsOverview';
-import { PublicationsOverviewPage } from '@/collections/Pages/Singletons/Activities/PublicationsOverview';
-import { EarlyCareerAwardPage } from '@/collections/Pages/Singletons/Promotion/EarlyCareerAward';
-import { InstitutesPage } from '@/collections/Pages/Singletons/Promotion/Institutes';
-import { PromotionPage } from '@/collections/Pages/Singletons/Promotion/Promotion';
 import { ErrorPage } from '@/collections/Pages/Singletons/ErrorPage';
 import { HomePage } from '@/collections/Pages/Singletons/HomePage';
-import { NetworkPage } from '@/collections/Pages/Singletons/NetworkPage';
 
 export const plcCollections = [
   Departments,
   Users,
   Images,
+  Videos,
   NetworkCategories,
   FaqItems,
   Documents,
+  ZenodoDocuments,
   Projects,
   People,
-  Videos,
   PublicationTopics,
   PublicationTypes,
   Events,
   EventCategories,
-  ZenodoDocuments,
 ];
 
 export const singletonPageCollections = [
-  AboutContactPage,
-  AboutSagwPage,
-  AboutTeamPage,
-  ActivitiesPage,
-  EventsOverviewPage,
-  MagazineOverviewPage,
-  NewsOverviewPage,
-  PublicationsOverviewPage,
-  EarlyCareerAwardPage,
-  InstitutesPage,
-  PromotionPage,
-  ErrorPage,
   HomePage,
-  NetworkPage,
+  ErrorPage,
 ];
 
 export const setsPageCollections = [
-  InstituteDetailPage,
+  OverviewPage,
+  DetailPage,
   MagazineDetailPage,
-  PublicationDetailPage,
-  NewsDetailPage,
 ];
 
 export const globalCollections = [
@@ -97,14 +71,14 @@ export const globalCollections = [
 // payload collections config
 export const collections = [
 
-  // plc
-  ...plcCollections,
-
   // Pages -> Singletons
   ...singletonPageCollections,
 
   // Pages -> Sets
   ...setsPageCollections,
+
+  // plc
+  ...plcCollections,
 
   // Globals
   ...globalCollections,
