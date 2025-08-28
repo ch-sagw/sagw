@@ -6,10 +6,7 @@ import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
-import { HomeTeasersBlock } from '@/blocks/HomeTeasers';
-import { NewsTeasersBlock } from '@/blocks/NewsTeasers';
-import { DownloadsBlock } from '@/blocks/Downloads';
-import { LinksBlock } from '@/blocks/Links';
+import { blocks } from '@/blocks';
 
 export const HomePage: CollectionConfig = {
   access: {
@@ -43,22 +40,19 @@ export const HomePage: CollectionConfig = {
               },
               fieldsLinkInternalWithToggle,
             ]),
+
+            // Content Blocks
             {
-              blocks: [
-                HomeTeasersBlock,
-                NewsTeasersBlock,
-                DownloadsBlock,
-                LinksBlock,
-              ],
+              blocks: blocks(),
               label: 'Content',
-              name: 'contentBlocks',
+              name: 'content',
               type: 'blocks',
             },
           ],
           label: 'Content',
         },
 
-        // Meta Tabs
+        // Meta Tab
         fieldsTabMeta,
       ],
       type: 'tabs',

@@ -11,7 +11,10 @@ export const DownloadsBlock: Block = {
     {
       hasMany: true,
       name: 'downloads',
-      relationTo: 'documents',
+      relationTo: [
+        'documents',
+        'zenodoDocuments',
+      ],
       type: 'relationship',
     },
   ],

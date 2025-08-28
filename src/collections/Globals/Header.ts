@@ -1,5 +1,5 @@
-import { LinkExternalBlock } from '@/blocks/LinkExternal';
 import { CollectionConfig } from 'payload';
+import { fieldsLinkExternal } from '@/field-templates/links';
 
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
@@ -23,7 +23,7 @@ export const Header: CollectionConfig = {
     },
 
     {
-      fields: LinkExternalBlock.fields,
+      fields: fieldsLinkExternal,
       maxRows: 3,
       name: 'metaLinks',
       required: true,

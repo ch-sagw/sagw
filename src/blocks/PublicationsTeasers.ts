@@ -1,6 +1,6 @@
 import { Block } from 'payload';
 
-export const NewsTeasersBlock: Block = {
+export const PublicationsTeasersBlock: Block = {
   fields: [
     {
       localized: true,
@@ -18,7 +18,7 @@ export const NewsTeasersBlock: Block = {
       admin: {
         hidden: true,
       },
-      defaultValue: 'Note: the newest news teasers will be displayed here.',
+      defaultValue: 'Note: the latest publications teasers will be displayed here.',
       name: 'message',
       type: 'text',
     },
@@ -33,8 +33,8 @@ export const NewsTeasersBlock: Block = {
     },
   ],
   labels: {
-    plural: 'News Teasers',
-    singular: 'News Teasers',
+    plural: 'Publications Teasers',
+    singular: 'Publications Teasers',
   },
-  slug: 'newsTeasersBlock',
+  slug: 'publicationsTeasersBlock',
 };

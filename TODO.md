@@ -64,3 +64,4 @@ REFACTOR:
 - form block
 - in admin -> components -> Field: 'src/components/admin/Zenodo...' -> use absolute path
 - internal link chooser still needed?
+- for publication detail, we had authors array: add authors like foo, bar and baz, so that we can render: "Von: foo, bar, baz."

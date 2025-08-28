@@ -1,6 +1,6 @@
 import { Block } from 'payload';
 
-export const NewsTeasersBlock: Block = {
+export const MagazineTeasersBlock: Block = {
   fields: [
     {
       localized: true,
@@ -15,10 +15,16 @@ export const NewsTeasersBlock: Block = {
       type: 'text',
     },
     {
+      localized: true,
+      name: 'lead',
+      required: false,
+      type: 'text',
+    },
+    {
       admin: {
         hidden: true,
       },
-      defaultValue: 'Note: the newest news teasers will be displayed here.',
+      defaultValue: 'Note: the latest magazine entries will be displayed here.',
       name: 'message',
       type: 'text',
     },
@@ -33,8 +39,8 @@ export const NewsTeasersBlock: Block = {
     },
   ],
   labels: {
-    plural: 'News Teasers',
-    singular: 'News Teasers',
+    plural: 'Magazine Teasers',
+    singular: 'Magazine Teasers',
   },
-  slug: 'newsTeasersBlock',
+  slug: 'magazineTeasersBlock',
 };

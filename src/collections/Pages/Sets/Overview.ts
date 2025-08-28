@@ -1,8 +1,5 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { TextBlock } from '@/blocks/Text';
-import { ImageBlock } from '@/blocks/Image';
-import { VideoBlock } from '@/blocks/Video';
 import { fieldsHero } from '@/field-templates/hero';
 import { hookAdminTitle } from '@/hooks/adminTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
@@ -13,6 +10,7 @@ import { hookSeoFallback } from '@/hooks/seoFallback';
 import {
   createAccess, globalAdminOrDepartmentAdminAccess,
 } from '@/collections/Pages/access/globalAdminOrDepartmentAdmin';
+import { blocks } from '@/blocks';
 
 export const OverviewPage: CollectionConfig = {
   access: {
@@ -38,22 +36,18 @@ export const OverviewPage: CollectionConfig = {
             // Hero
             fieldsHero(),
 
-            // Content
+            // Content Blocks
             {
-              blocks: [
-                TextBlock,
-                ImageBlock,
-                VideoBlock,
-              ],
-              label: 'Content Blocks',
-              name: 'contentBlocks',
+              blocks: blocks(),
+              label: 'Content',
+              name: 'content',
               type: 'blocks',
             },
           ],
           label: 'Content',
         },
 
-        // Meta Tabs
+        // Meta Tab
         fieldsTabMeta,
       ],
       type: 'tabs',

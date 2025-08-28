@@ -1,6 +1,5 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { fieldsTextBlock } from '@/field-templates/textBlock';
 import { fieldsHero } from '@/field-templates/hero';
 import { hookAdminTitle } from '@/hooks/adminTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
@@ -8,6 +7,7 @@ import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 import { hookSeoFallback } from '@/hooks/seoFallback';
+import { blocks } from '@/blocks';
 
 export const EventDetailPage: CollectionConfig = {
   access: {
@@ -30,19 +30,18 @@ export const EventDetailPage: CollectionConfig = {
             // Hero
             fieldsHero(),
 
-            // Text blocks
+            // Content Blocks
             {
-              fields: fieldsTextBlock,
-              label: 'Content Blocks',
-              name: 'contentBlocks',
-              required: true,
-              type: 'array',
+              blocks: blocks(),
+              label: 'Content',
+              name: 'content',
+              type: 'blocks',
             },
           ],
           label: 'Content',
         },
 
-        // Meta Tabs
+        // Meta Tab
         fieldsTabMeta,
       ],
       type: 'tabs',
