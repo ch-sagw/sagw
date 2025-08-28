@@ -4,7 +4,10 @@ import {
   GenerateTitle, GenerateURL,
 } from '@payloadcms/plugin-seo/types';
 import { multiTenantPlugin } from '@payloadcms/plugin-multi-tenant';
-import { sentryPlugin } from '@payloadcms/plugin-sentry';
+import {
+  sentryPlugin,
+  PluginOptions as sentryPluginOptions,
+} from '@payloadcms/plugin-sentry';
 
 import { Plugin } from 'payload';
 import { Images } from '@/collections/Plc/Images';
@@ -34,6 +37,11 @@ const generateURL: GenerateURL = ({
     : url;
 };
 
+type ExtendedPluginOptions = sentryPluginOptions & {
+  debug?: boolean
+  enabled?: boolean
+}
+
 const plugins: Plugin[] = [
   vercelBlobStorage({
     clientUploads: true,
@@ -47,14 +55,19 @@ const plugins: Plugin[] = [
   }),
   sentryPlugin({
     Sentry,
-    options: {
+    options: <ExtendedPluginOptions> {
       captureErrors: [
         400,
         403,
+        404,
+        500,
       ],
       context: ({
         defaultContext,
         req,
+      }: {
+        defaultContext: any;
+        req: any
       }) => ({
         ...defaultContext,
         tags: {
@@ -62,13 +75,13 @@ const plugins: Plugin[] = [
         },
       }),
       debug: true,
+      enabled: true,
     },
   }),
   seoPlugin({
     generateTitle,
     generateURL,
   }),
-
   multiTenantPlugin<Config>({
     collections: tenantsCollections,
     tenantField: {
