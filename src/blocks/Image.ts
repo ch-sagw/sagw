@@ -50,8 +50,8 @@ export const ImageBlock: Block = {
     },
   ],
   labels: {
-    plural: 'Image',
-    singular: 'Images',
+    plural: 'Images',
+    singular: 'Image',
   },
   slug: 'imageBlock',
 };

@@ -376,6 +376,10 @@ export interface HomePage {
         | {
             title: string;
             lead: string;
+            /**
+             * Align Title & text horizontally or vertically
+             */
+            alignement?: ('vertical' | 'horizontal') | null;
             textTeasers?:
               | {
                   title: string;
@@ -966,6 +970,10 @@ export interface OverviewPage {
         | {
             title: string;
             lead: string;
+            /**
+             * Align Title & text horizontally or vertically
+             */
+            alignement?: ('vertical' | 'horizontal') | null;
             textTeasers?:
               | {
                   title: string;
@@ -1307,6 +1315,10 @@ export interface DetailPage {
         | {
             title: string;
             lead: string;
+            /**
+             * Align Title & text horizontally or vertically
+             */
+            alignement?: ('vertical' | 'horizontal') | null;
             textTeasers?:
               | {
                   title: string;
@@ -1656,6 +1668,10 @@ export interface MagazineDetailPage {
         | {
             title: string;
             lead: string;
+            /**
+             * Align Title & text horizontally or vertically
+             */
+            alignement?: ('vertical' | 'horizontal') | null;
             textTeasers?:
               | {
                   title: string;
@@ -1997,6 +2013,10 @@ export interface EventDetailPage {
         | {
             title: string;
             lead: string;
+            /**
+             * Align Title & text horizontally or vertically
+             */
+            alignement?: ('vertical' | 'horizontal') | null;
             textTeasers?:
               | {
                   title: string;
@@ -2345,6 +2365,10 @@ export interface NewsDetailPage {
         | {
             title: string;
             lead: string;
+            /**
+             * Align Title & text horizontally or vertically
+             */
+            alignement?: ('vertical' | 'horizontal') | null;
             textTeasers?:
               | {
                   title: string;
@@ -2696,6 +2720,10 @@ export interface PublicationDetailPage {
         | {
             title: string;
             lead: string;
+            /**
+             * Align Title & text horizontally or vertically
+             */
+            alignement?: ('vertical' | 'horizontal') | null;
             textTeasers?:
               | {
                   title: string;
@@ -3650,6 +3678,7 @@ export interface HomePageSelect<T extends boolean = true> {
           | {
               title?: T;
               lead?: T;
+              alignement?: T;
               textTeasers?:
                 | T
                 | {
@@ -4009,6 +4038,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
           | {
               title?: T;
               lead?: T;
+              alignement?: T;
               textTeasers?:
                 | T
                 | {
@@ -4340,6 +4370,7 @@ export interface DetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               lead?: T;
+              alignement?: T;
               textTeasers?:
                 | T
                 | {
@@ -4678,6 +4709,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               lead?: T;
+              alignement?: T;
               textTeasers?:
                 | T
                 | {
@@ -5009,6 +5041,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               lead?: T;
+              alignement?: T;
               textTeasers?:
                 | T
                 | {
@@ -5346,6 +5379,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               lead?: T;
+              alignement?: T;
               textTeasers?:
                 | T
                 | {
@@ -5688,6 +5722,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               lead?: T;
+              alignement?: T;
               textTeasers?:
                 | T
                 | {

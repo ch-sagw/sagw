@@ -3,6 +3,8 @@ import {
 } from 'payload';
 import { fieldsLinkInternal } from '@/field-templates/links';
 
+// Example: Promotion page
+
 const textTeaserItem: Field[] = [
   {
     localized: true,
@@ -39,6 +41,24 @@ export const TextTeasersBlock: Block = {
       name: 'lead',
       required: true,
       type: 'textarea',
+    },
+    {
+      admin: {
+        description: 'Align Title & text horizontally or vertically',
+      },
+      defaultValue: 'vertical',
+      name: 'alignement',
+      options: [
+        {
+          label: 'vertical',
+          value: 'vertical',
+        },
+        {
+          label: 'horizontal',
+          value: 'horizontal',
+        },
+      ],
+      type: 'select',
     },
     {
       fields: textTeaserItem,

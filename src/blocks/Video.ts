@@ -37,5 +37,9 @@ export const VideoBlock: Block = {
     },
 
   ],
+  labels: {
+    plural: 'Videos',
+    singular: 'Video',
+  },
   slug: 'videoBlock',
 };
