@@ -1,5 +1,7 @@
 import { Block } from 'payload';
 
+// Example: Activities
+
 export const FormBlock: Block = {
   admin: {
     disableBlockName: true,

@@ -1,5 +1,7 @@
 import { Block } from 'payload';
 
+// Example: Publication Detail
+
 export const DownloadsBlock: Block = {
   admin: {
     disableBlockName: true,

@@ -1,5 +1,7 @@
 import { Block } from 'payload';
 
+// Example: Magazine Detail
+
 export const ImageBlock: Block = {
   admin: {
     disableBlockName: true,

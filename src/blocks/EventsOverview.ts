@@ -1,5 +1,7 @@
 import { Block } from 'payload';
 
+// Example: Events Overview
+
 export const EventsOverviewBlock: Block = {
   admin: {
     disableBlockName: true,

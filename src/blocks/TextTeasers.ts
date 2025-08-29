@@ -3,7 +3,7 @@ import {
 } from 'payload';
 import { fieldsLinkInternal } from '@/field-templates/links';
 
-// Example: Promotion page
+// Example: Promotion, Activities
 
 const textTeaserItem: Field[] = [
   {

@@ -1,5 +1,7 @@
 import { Block } from 'payload';
 
+// Example: About SAGW -> Team
+
 export const PeopleOverviewBlock: Block = {
   admin: {
     disableBlockName: true,

@@ -3,6 +3,8 @@ import {
 } from 'payload';
 import { fieldsLinkInternal } from '@/field-templates/links';
 
+// Example: SAGW home only
+
 const homeTeaserItem: Field[] = [
   {
     localized: true,

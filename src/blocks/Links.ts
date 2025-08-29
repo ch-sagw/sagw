@@ -1,6 +1,8 @@
 import { Block } from 'payload';
 import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
 
+// Example: Magazine Detail
+
 export const LinksBlock: Block = {
   admin: {
     disableBlockName: true,

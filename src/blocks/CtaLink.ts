@@ -1,6 +1,8 @@
 import { Block } from 'payload';
 import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
 
+// Example: Early Career Award
+
 export const CtaLinkBlock: Block = {
   admin: {
     disableBlockName: true,

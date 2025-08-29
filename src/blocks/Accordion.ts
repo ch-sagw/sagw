@@ -3,6 +3,8 @@ import {
 } from 'payload';
 import { rte2 } from '@/field-templates/rte';
 
+// Example: Promotion page
+
 const AccordionItem: Field[] = [
   {
     localized: true,

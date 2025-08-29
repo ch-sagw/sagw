@@ -82,6 +82,9 @@ export const formPluginConfig = (): FormBuilderPluginConfig => ({
     textarea: true,
   },
   formOverrides: {
+    admin: {
+      group: 'Global Content',
+    },
     fields: ({
       defaultFields,
     }): Field[] => {

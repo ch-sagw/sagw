@@ -1,5 +1,7 @@
 import { Block } from 'payload';
 
+// Example: Early Career Award
+
 export const TitleSubtitleTextBlock: Block = {
   admin: {
     disableBlockName: true,

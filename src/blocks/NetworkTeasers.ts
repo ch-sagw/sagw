@@ -3,6 +3,8 @@ import {
 } from 'payload';
 import { fieldsLinkExternal } from '@/field-templates/links';
 
+// Example: Network
+
 const fieldsNetworkItem: Field[] = [
   {
     localized: true,

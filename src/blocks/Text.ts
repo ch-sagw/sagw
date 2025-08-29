@@ -1,6 +1,8 @@
 import { Block } from 'payload';
 import { rte2 } from '@/field-templates/rte';
 
+// Example: Magazine Detail
+
 export const TextBlock: Block = {
   admin: {
     disableBlockName: true,

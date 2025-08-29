@@ -1,5 +1,7 @@
 import { Block } from 'payload';
 
+// Example: Early Career Award
+
 export const CtaContactBlock: Block = {
   admin: {
     disableBlockName: true,

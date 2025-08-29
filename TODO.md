@@ -61,11 +61,10 @@ Testing:
 
 REFACTOR:
 -------
-- check field templates: check for unused. check for templates which are only used in 1 place
-- in admin -> components -> Field: 'src/components/admin/Zenodo...' -> use absolute path
 - internal link chooser still needed?
 - for publication detail, we had authors array: add authors like foo, bar and baz, so that we can render: "Von: foo, bar, baz."
 - refine globals, especially i18n
 - introduce collection "Reusable Text": author can define "Publikation herunterladen" in 4 languages. Then, he can choose this as title in the PublicationsTeasersBlock
 - add color-scheme property to blocks
 - in blocks overlay -> make custom component to better structure it
+- create global nav structure

@@ -3,6 +3,8 @@ import {
 } from 'payload';
 import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
 
+// Example: Early Career Award, Institutes Overview
+
 const ImageTeaserItem: Field[] = [
   {
     name: 'image',
