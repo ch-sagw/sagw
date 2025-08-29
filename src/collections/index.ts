@@ -4,14 +4,12 @@ import { Images } from '@/collections/Plc/Images';
 import { Videos } from '@/collections/Plc/Videos';
 import { Svgs } from '@/collections/Plc/Svgs';
 import { NetworkCategories } from '@/collections/Plc/NetworkCategories';
-import { FaqItems } from '@/collections/Plc/FaqItems';
 import { Documents } from '@/collections/Plc/Documents';
 import { Projects } from '@/collections/Plc/Projects';
 import { People } from '@/collections/Plc/People';
 import { PublicationTopics } from '@/collections/Plc/PublicationTopics';
 import { PublicationTypes } from '@/collections/Plc/PublicationTypes';
 import { EventCategories } from '@/collections/Plc/EventCategories';
-import { Events } from '@/collections/Plc/Events';
 import { Departments } from '@/collections/Plc/Departments';
 import { ZenodoDocuments } from '@/collections/Plc/ZenodoDocuments';
 
@@ -40,14 +38,12 @@ export const plcCollections = [
   Videos,
   Svgs,
   NetworkCategories,
-  FaqItems,
   Documents,
   ZenodoDocuments,
   Projects,
   People,
   PublicationTopics,
   PublicationTypes,
-  Events,
   EventCategories,
   Departments,
   Users,

@@ -79,14 +79,12 @@ export interface Config {
     videos: Video;
     svgs: Svg;
     networkCategories: NetworkCategory;
-    faqItems: FaqItem;
     documents: Document;
     zenodoDocuments: ZenodoDocument;
     projects: Project;
     people: Person;
     publicationTopics: PublicationTopic;
     publicationTypes: PublicationType;
-    events: Event;
     eventCategory: EventCategory;
     departments: Department;
     users: User;
@@ -116,14 +114,12 @@ export interface Config {
     videos: VideosSelect<false> | VideosSelect<true>;
     svgs: SvgsSelect<false> | SvgsSelect<true>;
     networkCategories: NetworkCategoriesSelect<false> | NetworkCategoriesSelect<true>;
-    faqItems: FaqItemsSelect<false> | FaqItemsSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     zenodoDocuments: ZenodoDocumentsSelect<false> | ZenodoDocumentsSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     people: PeopleSelect<false> | PeopleSelect<true>;
     publicationTopics: PublicationTopicsSelect<false> | PublicationTopicsSelect<true>;
     publicationTypes: PublicationTypesSelect<false> | PublicationTypesSelect<true>;
-    events: EventsSelect<false> | EventsSelect<true>;
     eventCategory: EventCategorySelect<false> | EventCategorySelect<true>;
     departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -2992,54 +2988,6 @@ export interface PublicationType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faqItems".
- */
-export interface FaqItem {
-  id: string;
-  department?: (string | null) | Department;
-  question: string;
-  answer: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  readableId?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "events".
- */
-export interface Event {
-  id: string;
-  department?: (string | null) | Department;
-  title: string;
-  location?: string | null;
-  language?: string | null;
-  time?: string | null;
-  category?: (string | null) | EventCategory;
-  project?: (string | null) | Project;
-  date: string;
-  multipleDays?: boolean | null;
-  dateEnd?: string | null;
-  externalLinkText: string;
-  externalLink: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -3465,10 +3413,6 @@ export interface PayloadLockedDocument {
         value: string | NetworkCategory;
       } | null)
     | ({
-        relationTo: 'faqItems';
-        value: string | FaqItem;
-      } | null)
-    | ({
         relationTo: 'documents';
         value: string | Document;
       } | null)
@@ -3491,10 +3435,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'publicationTypes';
         value: string | PublicationType;
-      } | null)
-    | ({
-        relationTo: 'events';
-        value: string | Event;
       } | null)
     | ({
         relationTo: 'eventCategory';
@@ -6130,18 +6070,6 @@ export interface NetworkCategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faqItems_select".
- */
-export interface FaqItemsSelect<T extends boolean = true> {
-  department?: T;
-  question?: T;
-  answer?: T;
-  readableId?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "documents_select".
  */
 export interface DocumentsSelect<T extends boolean = true> {
@@ -6227,26 +6155,6 @@ export interface PublicationTopicsSelect<T extends boolean = true> {
 export interface PublicationTypesSelect<T extends boolean = true> {
   department?: T;
   publicationType?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "events_select".
- */
-export interface EventsSelect<T extends boolean = true> {
-  department?: T;
-  title?: T;
-  location?: T;
-  language?: T;
-  time?: T;
-  category?: T;
-  project?: T;
-  date?: T;
-  multipleDays?: T;
-  dateEnd?: T;
-  externalLinkText?: T;
-  externalLink?: T;
   updatedAt?: T;
   createdAt?: T;
 }
