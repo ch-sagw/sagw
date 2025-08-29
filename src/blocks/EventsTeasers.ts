@@ -20,6 +20,14 @@ export const EventsTeasersBlock: Block = {
       type: 'text',
     },
     {
+      hasMany: false,
+      label: 'Only show events from a specific project',
+      name: 'project',
+      relationTo: 'projects',
+      required: false,
+      type: 'relationship',
+    },
+    {
       admin: {
         hidden: true,
       },
