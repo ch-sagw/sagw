@@ -14,12 +14,43 @@ export const DownloadsBlock: Block = {
       type: 'text',
     },
     {
+      defaultValue: 'custom',
+      name: 'customOrAuto',
+      options: [
+        {
+          label: 'I want to add custom documents',
+          value: 'custom',
+        },
+        {
+          label: 'I want to add documents from a specific project automatically',
+          value: 'auto',
+        },
+      ],
+      type: 'radio',
+    },
+    {
+      admin: {
+        condition: (_, siblingData) => siblingData.customOrAuto === 'custom',
+      },
       hasMany: true,
+      label: 'Select documents to add',
       name: 'downloads',
       relationTo: [
         'documents',
         'zenodoDocuments',
       ],
+      required: true,
+      type: 'relationship',
+    },
+    {
+      admin: {
+        condition: (_, siblingData) => siblingData.customOrAuto === 'auto',
+      },
+      hasMany: false,
+      label: 'Select the project from which you want to show the downloads',
+      name: 'project',
+      relationTo: 'projects',
+      required: true,
       type: 'relationship',
     },
   ],

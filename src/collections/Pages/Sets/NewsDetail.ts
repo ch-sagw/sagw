@@ -56,6 +56,13 @@ export const NewsDetailPage: CollectionConfig = {
               ...fieldsColorMode,
             ]),
 
+            {
+              name: 'project',
+              relationTo: 'projects',
+              required: false,
+              type: 'relationship',
+            },
+
             // Content Blocks
             {
               blocks: blocks(),

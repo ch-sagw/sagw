@@ -264,6 +264,7 @@ export interface HomePage {
           }
         | {
             title: string;
+            customOrAuto?: ('custom' | 'auto') | null;
             downloads?:
               | (
                   | {
@@ -276,6 +277,7 @@ export interface HomePage {
                     }
                 )[]
               | null;
+            project?: (string | null) | Project;
             id?: string | null;
             blockName?: string | null;
             blockType: 'downloadsBlock';
@@ -484,6 +486,7 @@ export interface HomePage {
         | {
             title: string;
             linkText: string;
+            project?: (string | null) | Project;
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -501,6 +504,7 @@ export interface HomePage {
         | {
             title: string;
             linkText: string;
+            project?: (string | null) | Project;
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -570,6 +574,8 @@ export interface Document {
   focalY?: number | null;
 }
 /**
+ * You can assign NewsDetail Pages, Event Detail Pages and Documents to a project. Then you could add a Downloads block to a page an tell it to list all downloads related to a project.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "projects".
  */
@@ -864,6 +870,7 @@ export interface OverviewPage {
           }
         | {
             title: string;
+            customOrAuto?: ('custom' | 'auto') | null;
             downloads?:
               | (
                   | {
@@ -876,6 +883,7 @@ export interface OverviewPage {
                     }
                 )[]
               | null;
+            project?: (string | null) | Project;
             id?: string | null;
             blockName?: string | null;
             blockType: 'downloadsBlock';
@@ -1084,6 +1092,7 @@ export interface OverviewPage {
         | {
             title: string;
             linkText: string;
+            project?: (string | null) | Project;
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -1101,6 +1110,7 @@ export interface OverviewPage {
         | {
             title: string;
             linkText: string;
+            project?: (string | null) | Project;
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -1215,6 +1225,7 @@ export interface DetailPage {
           }
         | {
             title: string;
+            customOrAuto?: ('custom' | 'auto') | null;
             downloads?:
               | (
                   | {
@@ -1227,6 +1238,7 @@ export interface DetailPage {
                     }
                 )[]
               | null;
+            project?: (string | null) | Project;
             id?: string | null;
             blockName?: string | null;
             blockType: 'downloadsBlock';
@@ -1435,6 +1447,7 @@ export interface DetailPage {
         | {
             title: string;
             linkText: string;
+            project?: (string | null) | Project;
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -1452,6 +1465,7 @@ export interface DetailPage {
         | {
             title: string;
             linkText: string;
+            project?: (string | null) | Project;
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -1574,6 +1588,7 @@ export interface MagazineDetailPage {
           }
         | {
             title: string;
+            customOrAuto?: ('custom' | 'auto') | null;
             downloads?:
               | (
                   | {
@@ -1586,6 +1601,7 @@ export interface MagazineDetailPage {
                     }
                 )[]
               | null;
+            project?: (string | null) | Project;
             id?: string | null;
             blockName?: string | null;
             blockType: 'downloadsBlock';
@@ -1794,6 +1810,7 @@ export interface MagazineDetailPage {
         | {
             title: string;
             linkText: string;
+            project?: (string | null) | Project;
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -1811,6 +1828,7 @@ export interface MagazineDetailPage {
         | {
             title: string;
             linkText: string;
+            project?: (string | null) | Project;
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -1849,6 +1867,18 @@ export interface EventDetailPage {
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
+  eventDetails: {
+    title: string;
+    location?: string | null;
+    language?: string | null;
+    time?: string | null;
+    category?: (string | null) | EventCategory;
+    project?: (string | null) | Project;
+    date: string;
+    multipleDays?: boolean | null;
+    dateEnd?: string | null;
+  };
+  showDetailPage?: ('true' | 'false') | null;
   hero: {
     title: {
       root: {
@@ -1925,6 +1955,7 @@ export interface EventDetailPage {
           }
         | {
             title: string;
+            customOrAuto?: ('custom' | 'auto') | null;
             downloads?:
               | (
                   | {
@@ -1937,6 +1968,7 @@ export interface EventDetailPage {
                     }
                 )[]
               | null;
+            project?: (string | null) | Project;
             id?: string | null;
             blockName?: string | null;
             blockType: 'downloadsBlock';
@@ -2145,6 +2177,7 @@ export interface EventDetailPage {
         | {
             title: string;
             linkText: string;
+            project?: (string | null) | Project;
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -2162,6 +2195,7 @@ export interface EventDetailPage {
         | {
             title: string;
             linkText: string;
+            project?: (string | null) | Project;
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -2177,6 +2211,10 @@ export interface EventDetailPage {
           }
       )[]
     | null;
+  link?: {
+    externalLinkText: string;
+    externalLink: string;
+  };
   meta?: {
     seo?: {
       index?: boolean | null;
@@ -2188,6 +2226,17 @@ export interface EventDetailPage {
       description?: string | null;
     };
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventCategory".
+ */
+export interface EventCategory {
+  id: string;
+  department?: (string | null) | Department;
+  eventCategory: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -2227,6 +2276,7 @@ export interface NewsDetailPage {
     colorMode: 'white' | 'color';
     colorScheme?: ('bright' | 'dark') | null;
   };
+  project?: (string | null) | Project;
   content?:
     | (
         | {
@@ -2283,6 +2333,7 @@ export interface NewsDetailPage {
           }
         | {
             title: string;
+            customOrAuto?: ('custom' | 'auto') | null;
             downloads?:
               | (
                   | {
@@ -2295,6 +2346,7 @@ export interface NewsDetailPage {
                     }
                 )[]
               | null;
+            project?: (string | null) | Project;
             id?: string | null;
             blockName?: string | null;
             blockType: 'downloadsBlock';
@@ -2503,6 +2555,7 @@ export interface NewsDetailPage {
         | {
             title: string;
             linkText: string;
+            project?: (string | null) | Project;
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -2520,6 +2573,7 @@ export interface NewsDetailPage {
         | {
             title: string;
             linkText: string;
+            project?: (string | null) | Project;
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -2644,6 +2698,7 @@ export interface PublicationDetailPage {
           }
         | {
             title: string;
+            customOrAuto?: ('custom' | 'auto') | null;
             downloads?:
               | (
                   | {
@@ -2656,6 +2711,7 @@ export interface PublicationDetailPage {
                     }
                 )[]
               | null;
+            project?: (string | null) | Project;
             id?: string | null;
             blockName?: string | null;
             blockType: 'downloadsBlock';
@@ -2864,6 +2920,7 @@ export interface PublicationDetailPage {
         | {
             title: string;
             linkText: string;
+            project?: (string | null) | Project;
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -2881,6 +2938,7 @@ export interface PublicationDetailPage {
         | {
             title: string;
             linkText: string;
+            project?: (string | null) | Project;
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -2977,17 +3035,6 @@ export interface Event {
   dateEnd?: string | null;
   externalLinkText: string;
   externalLink: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "eventCategory".
- */
-export interface EventCategory {
-  id: string;
-  department?: (string | null) | Department;
-  eventCategory: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -3617,7 +3664,9 @@ export interface HomePageSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              customOrAuto?: T;
               downloads?: T;
+              project?: T;
               id?: T;
               blockName?: T;
             };
@@ -3837,6 +3886,7 @@ export interface HomePageSelect<T extends boolean = true> {
           | {
               title?: T;
               linkText?: T;
+              project?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -3856,6 +3906,7 @@ export interface HomePageSelect<T extends boolean = true> {
           | {
               title?: T;
               linkText?: T;
+              project?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -3983,7 +4034,9 @@ export interface OverviewPageSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              customOrAuto?: T;
               downloads?: T;
+              project?: T;
               id?: T;
               blockName?: T;
             };
@@ -4203,6 +4256,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
           | {
               title?: T;
               linkText?: T;
+              project?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -4222,6 +4276,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
           | {
               title?: T;
               linkText?: T;
+              project?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -4321,7 +4376,9 @@ export interface DetailPageSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              customOrAuto?: T;
               downloads?: T;
+              project?: T;
               id?: T;
               blockName?: T;
             };
@@ -4541,6 +4598,7 @@ export interface DetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               linkText?: T;
+              project?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -4560,6 +4618,7 @@ export interface DetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               linkText?: T;
+              project?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -4666,7 +4725,9 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              customOrAuto?: T;
               downloads?: T;
+              project?: T;
               id?: T;
               blockName?: T;
             };
@@ -4886,6 +4947,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               linkText?: T;
+              project?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -4905,6 +4967,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               linkText?: T;
+              project?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -4942,6 +5005,20 @@ export interface EventDetailPageSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
   adminTitle?: T;
+  eventDetails?:
+    | T
+    | {
+        title?: T;
+        location?: T;
+        language?: T;
+        time?: T;
+        category?: T;
+        project?: T;
+        date?: T;
+        multipleDays?: T;
+        dateEnd?: T;
+      };
+  showDetailPage?: T;
   hero?:
     | T
     | {
@@ -5004,7 +5081,9 @@ export interface EventDetailPageSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              customOrAuto?: T;
               downloads?: T;
+              project?: T;
               id?: T;
               blockName?: T;
             };
@@ -5224,6 +5303,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               linkText?: T;
+              project?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -5243,6 +5323,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               linkText?: T;
+              project?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -5256,6 +5337,12 @@ export interface EventDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+      };
+  link?:
+    | T
+    | {
+        externalLinkText?: T;
+        externalLink?: T;
       };
   meta?:
     | T
@@ -5294,6 +5381,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
         colorMode?: T;
         colorScheme?: T;
       };
+  project?: T;
   content?:
     | T
     | {
@@ -5348,7 +5436,9 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              customOrAuto?: T;
               downloads?: T;
+              project?: T;
               id?: T;
               blockName?: T;
             };
@@ -5568,6 +5658,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               linkText?: T;
+              project?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -5587,6 +5678,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               linkText?: T;
+              project?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -5697,7 +5789,9 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              customOrAuto?: T;
               downloads?: T;
+              project?: T;
               id?: T;
               blockName?: T;
             };
@@ -5917,6 +6011,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               linkText?: T;
+              project?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -5936,6 +6031,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               linkText?: T;
+              project?: T;
               message?: T;
               id?: T;
               blockName?: T;

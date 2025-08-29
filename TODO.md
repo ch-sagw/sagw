@@ -65,5 +65,7 @@ REFACTOR:
 - for publication detail, we had authors array: add authors like foo, bar and baz, so that we can render: "Von: foo, bar, baz."
 - refine globals, especially i18n
 - introduce collection "Reusable Text": author can define "Publikation herunterladen" in 4 languages. Then, he can choose this as title in the PublicationsTeasersBlock
-- add color-scheme property to blocks
 - create global nav structure
+- fix test / create new seed data
+- faqItems no longer needed
+- add descriptions to collections: what is this collection for?

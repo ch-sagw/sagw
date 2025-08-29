@@ -20,6 +20,14 @@ export const NewsTeasersBlock: Block = {
       type: 'text',
     },
     {
+      hasMany: false,
+      label: 'Only show news from a specific project',
+      name: 'project',
+      relationTo: 'projects',
+      required: false,
+      type: 'relationship',
+    },
+    {
       admin: {
         hidden: true,
       },
