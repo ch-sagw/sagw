@@ -2,6 +2,7 @@ import {
   Block, Field,
 } from 'payload';
 import { rte2 } from '@/field-templates/rte';
+import { fieldsColorMode } from '@/field-templates/colorMode';
 
 // Example: Promotion page
 
@@ -32,6 +33,7 @@ export const AccordionBlock: Block = {
       required: true,
       type: 'text',
     },
+    ...fieldsColorMode,
     {
       fields: AccordionItem,
       name: 'acccordions',

@@ -8,6 +8,7 @@ import {
 } from '@/field-templates/adminTitle';
 import { hookSeoFallback } from '@/hooks/seoFallback';
 import { blocks } from '@/blocks';
+import { fieldsColorMode } from '@/field-templates/colorMode';
 
 export const EventDetailPage: CollectionConfig = {
   access: {
@@ -28,7 +29,7 @@ export const EventDetailPage: CollectionConfig = {
           fields: [
 
             // Hero
-            fieldsHero(),
+            fieldsHero([...fieldsColorMode]),
 
             // Content Blocks
             {

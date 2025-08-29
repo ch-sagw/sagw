@@ -1,3 +1,4 @@
+import { fieldsColorMode } from '@/field-templates/colorMode';
 import { Block } from 'payload';
 
 // Example: Early Career Award
@@ -19,6 +20,7 @@ export const CtaContactBlock: Block = {
       required: true,
       type: 'text',
     },
+    ...fieldsColorMode,
     {
       hasMany: false,
       name: 'contact',

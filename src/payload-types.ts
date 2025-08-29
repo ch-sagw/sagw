@@ -302,6 +302,8 @@ export interface HomePage {
           }
         | {
             title: string;
+            colorMode: 'white' | 'color';
+            colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
               accordionContent: {
@@ -334,6 +336,8 @@ export interface HomePage {
         | {
             title: string;
             text: string;
+            colorMode: 'white' | 'color';
+            colorScheme?: ('bright' | 'dark') | null;
             contact: string | Person;
             id?: string | null;
             blockName?: string | null;
@@ -801,6 +805,8 @@ export interface OverviewPage {
       [k: string]: unknown;
     };
     lead?: string | null;
+    colorMode: 'white' | 'color';
+    colorScheme?: ('bright' | 'dark') | null;
   };
   content?:
     | (
@@ -896,6 +902,8 @@ export interface OverviewPage {
           }
         | {
             title: string;
+            colorMode: 'white' | 'color';
+            colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
               accordionContent: {
@@ -928,6 +936,8 @@ export interface OverviewPage {
         | {
             title: string;
             text: string;
+            colorMode: 'white' | 'color';
+            colorScheme?: ('bright' | 'dark') | null;
             contact: string | Person;
             id?: string | null;
             blockName?: string | null;
@@ -1146,6 +1156,8 @@ export interface DetailPage {
       [k: string]: unknown;
     };
     lead?: string | null;
+    colorMode: 'white' | 'color';
+    colorScheme?: ('bright' | 'dark') | null;
   };
   content?:
     | (
@@ -1241,6 +1253,8 @@ export interface DetailPage {
           }
         | {
             title: string;
+            colorMode: 'white' | 'color';
+            colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
               accordionContent: {
@@ -1273,6 +1287,8 @@ export interface DetailPage {
         | {
             title: string;
             text: string;
+            colorMode: 'white' | 'color';
+            colorScheme?: ('bright' | 'dark') | null;
             contact: string | Person;
             id?: string | null;
             blockName?: string | null;
@@ -1499,6 +1515,8 @@ export interface MagazineDetailPage {
     lead?: string | null;
     author: string;
     date: string;
+    colorMode: 'white' | 'color';
+    colorScheme?: ('bright' | 'dark') | null;
   };
   content?:
     | (
@@ -1594,6 +1612,8 @@ export interface MagazineDetailPage {
           }
         | {
             title: string;
+            colorMode: 'white' | 'color';
+            colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
               accordionContent: {
@@ -1626,6 +1646,8 @@ export interface MagazineDetailPage {
         | {
             title: string;
             text: string;
+            colorMode: 'white' | 'color';
+            colorScheme?: ('bright' | 'dark') | null;
             contact: string | Person;
             id?: string | null;
             blockName?: string | null;
@@ -1844,6 +1866,8 @@ export interface EventDetailPage {
       [k: string]: unknown;
     };
     lead?: string | null;
+    colorMode: 'white' | 'color';
+    colorScheme?: ('bright' | 'dark') | null;
   };
   content?:
     | (
@@ -1939,6 +1963,8 @@ export interface EventDetailPage {
           }
         | {
             title: string;
+            colorMode: 'white' | 'color';
+            colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
               accordionContent: {
@@ -1971,6 +1997,8 @@ export interface EventDetailPage {
         | {
             title: string;
             text: string;
+            colorMode: 'white' | 'color';
+            colorScheme?: ('bright' | 'dark') | null;
             contact: string | Person;
             id?: string | null;
             blockName?: string | null;
@@ -2196,6 +2224,8 @@ export interface NewsDetailPage {
     };
     lead?: string | null;
     date: string;
+    colorMode: 'white' | 'color';
+    colorScheme?: ('bright' | 'dark') | null;
   };
   content?:
     | (
@@ -2291,6 +2321,8 @@ export interface NewsDetailPage {
           }
         | {
             title: string;
+            colorMode: 'white' | 'color';
+            colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
               accordionContent: {
@@ -2323,6 +2355,8 @@ export interface NewsDetailPage {
         | {
             title: string;
             text: string;
+            colorMode: 'white' | 'color';
+            colorScheme?: ('bright' | 'dark') | null;
             contact: string | Person;
             id?: string | null;
             blockName?: string | null;
@@ -2551,6 +2585,8 @@ export interface PublicationDetailPage {
       [k: string]: unknown;
     };
     lead?: string | null;
+    colorMode: 'white' | 'color';
+    colorScheme?: ('bright' | 'dark') | null;
   };
   content?:
     | (
@@ -2646,6 +2682,8 @@ export interface PublicationDetailPage {
           }
         | {
             title: string;
+            colorMode: 'white' | 'color';
+            colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
               accordionContent: {
@@ -2678,6 +2716,8 @@ export interface PublicationDetailPage {
         | {
             title: string;
             text: string;
+            colorMode: 'white' | 'color';
+            colorScheme?: ('bright' | 'dark') | null;
             contact: string | Person;
             id?: string | null;
             blockName?: string | null;
@@ -3607,6 +3647,8 @@ export interface HomePageSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              colorMode?: T;
+              colorScheme?: T;
               acccordions?:
                 | T
                 | {
@@ -3629,6 +3671,8 @@ export interface HomePageSelect<T extends boolean = true> {
           | {
               title?: T;
               text?: T;
+              colorMode?: T;
+              colorScheme?: T;
               contact?: T;
               id?: T;
               blockName?: T;
@@ -3882,6 +3926,8 @@ export interface OverviewPageSelect<T extends boolean = true> {
     | {
         title?: T;
         lead?: T;
+        colorMode?: T;
+        colorScheme?: T;
       };
   content?:
     | T
@@ -3967,6 +4013,8 @@ export interface OverviewPageSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              colorMode?: T;
+              colorScheme?: T;
               acccordions?:
                 | T
                 | {
@@ -3989,6 +4037,8 @@ export interface OverviewPageSelect<T extends boolean = true> {
           | {
               title?: T;
               text?: T;
+              colorMode?: T;
+              colorScheme?: T;
               contact?: T;
               id?: T;
               blockName?: T;
@@ -4214,6 +4264,8 @@ export interface DetailPageSelect<T extends boolean = true> {
     | {
         title?: T;
         lead?: T;
+        colorMode?: T;
+        colorScheme?: T;
       };
   content?:
     | T
@@ -4299,6 +4351,8 @@ export interface DetailPageSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              colorMode?: T;
+              colorScheme?: T;
               acccordions?:
                 | T
                 | {
@@ -4321,6 +4375,8 @@ export interface DetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               text?: T;
+              colorMode?: T;
+              colorScheme?: T;
               contact?: T;
               id?: T;
               blockName?: T;
@@ -4553,6 +4609,8 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
         lead?: T;
         author?: T;
         date?: T;
+        colorMode?: T;
+        colorScheme?: T;
       };
   content?:
     | T
@@ -4638,6 +4696,8 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              colorMode?: T;
+              colorScheme?: T;
               acccordions?:
                 | T
                 | {
@@ -4660,6 +4720,8 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               text?: T;
+              colorMode?: T;
+              colorScheme?: T;
               contact?: T;
               id?: T;
               blockName?: T;
@@ -4885,6 +4947,8 @@ export interface EventDetailPageSelect<T extends boolean = true> {
     | {
         title?: T;
         lead?: T;
+        colorMode?: T;
+        colorScheme?: T;
       };
   content?:
     | T
@@ -4970,6 +5034,8 @@ export interface EventDetailPageSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              colorMode?: T;
+              colorScheme?: T;
               acccordions?:
                 | T
                 | {
@@ -4992,6 +5058,8 @@ export interface EventDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               text?: T;
+              colorMode?: T;
+              colorScheme?: T;
               contact?: T;
               id?: T;
               blockName?: T;
@@ -5223,6 +5291,8 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
         title?: T;
         lead?: T;
         date?: T;
+        colorMode?: T;
+        colorScheme?: T;
       };
   content?:
     | T
@@ -5308,6 +5378,8 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              colorMode?: T;
+              colorScheme?: T;
               acccordions?:
                 | T
                 | {
@@ -5330,6 +5402,8 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               text?: T;
+              colorMode?: T;
+              colorScheme?: T;
               contact?: T;
               id?: T;
               blockName?: T;
@@ -5566,6 +5640,8 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
     | {
         title?: T;
         lead?: T;
+        colorMode?: T;
+        colorScheme?: T;
       };
   content?:
     | T
@@ -5651,6 +5727,8 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              colorMode?: T;
+              colorScheme?: T;
               acccordions?:
                 | T
                 | {
@@ -5673,6 +5751,8 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
           | {
               title?: T;
               text?: T;
+              colorMode?: T;
+              colorScheme?: T;
               contact?: T;
               id?: T;
               blockName?: T;

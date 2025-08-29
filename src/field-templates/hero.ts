@@ -4,7 +4,6 @@ import {
 import { rte1 } from '@/field-templates/rte';
 
 export const fieldsHero = (additionalFields?: Field[]): GroupField => ({
-
   fields: [
     {
       editor: rte1,

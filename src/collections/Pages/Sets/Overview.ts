@@ -11,6 +11,7 @@ import {
   createAccess, globalAdminOrDepartmentAdminAccess,
 } from '@/collections/Pages/access/globalAdminOrDepartmentAdmin';
 import { blocks } from '@/blocks';
+import { fieldsColorMode } from '@/field-templates/colorMode';
 
 export const OverviewPage: CollectionConfig = {
   access: {
@@ -34,7 +35,7 @@ export const OverviewPage: CollectionConfig = {
           fields: [
 
             // Hero
-            fieldsHero(),
+            fieldsHero([...fieldsColorMode]),
 
             // Content Blocks
             {

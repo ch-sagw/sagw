@@ -11,6 +11,7 @@ import {
   createAccess, globalAdminOrDepartmentAdminAccess,
 } from '@/collections/Pages/access/globalAdminOrDepartmentAdmin';
 import { blocks } from '@/blocks';
+import { fieldsColorMode } from '@/field-templates/colorMode';
 
 export const MagazineDetailPage: CollectionConfig = {
   access: {
@@ -65,6 +66,7 @@ export const MagazineDetailPage: CollectionConfig = {
                 required: true,
                 type: 'date',
               },
+              ...fieldsColorMode,
             ]),
 
             // Content Blocks

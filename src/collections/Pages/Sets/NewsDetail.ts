@@ -8,6 +8,7 @@ import {
 } from '@/field-templates/adminTitle';
 import { hookSeoFallback } from '@/hooks/seoFallback';
 import { blocks } from '@/blocks';
+import { fieldsColorMode } from '@/field-templates/colorMode';
 
 export const NewsDetailPage: CollectionConfig = {
   access: {
@@ -52,6 +53,7 @@ export const NewsDetailPage: CollectionConfig = {
                 required: true,
                 type: 'date',
               },
+              ...fieldsColorMode,
             ]),
 
             // Content Blocks
