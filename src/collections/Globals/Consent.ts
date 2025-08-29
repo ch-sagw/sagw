@@ -7,7 +7,6 @@ import {
 } from '@/field-templates/adminTitle';
 
 import { rte2 } from '@/field-templates/rte';
-import { versions } from '@/field-templates/versions';
 
 const overlaySection: Field[] = [
   {
@@ -181,5 +180,4 @@ export const Consent: CollectionConfig = {
     singular: 'Consent',
   },
   slug: 'consent',
-  versions,
 };

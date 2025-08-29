@@ -26,6 +26,7 @@ export const DownloadsBlock: Block = {
           value: 'auto',
         },
       ],
+      required: true,
       type: 'radio',
     },
     {

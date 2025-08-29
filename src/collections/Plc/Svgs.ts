@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload';
-import { versions } from '@/field-templates/versions';
 
 export const Svgs: CollectionConfig = {
   access: {
@@ -20,5 +19,4 @@ export const Svgs: CollectionConfig = {
     focalPoint: true,
     mimeTypes: ['image/svg+xml'],
   },
-  versions,
 };

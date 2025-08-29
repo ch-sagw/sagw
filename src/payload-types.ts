@@ -97,7 +97,6 @@ export interface Config {
     statusMessage: StatusMessage;
     forms: Form;
     'form-submissions': FormSubmission;
-    'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -134,7 +133,6 @@ export interface Config {
     statusMessage: StatusMessageSelect<false> | StatusMessageSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
-    'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -149,13 +147,7 @@ export interface Config {
     collection: 'users';
   };
   jobs: {
-    tasks: {
-      schedulePublish: TaskSchedulePublish;
-      inline: {
-        input: unknown;
-        output: unknown;
-      };
-    };
+    tasks: unknown;
     workflows: unknown;
   };
 }
@@ -270,7 +262,7 @@ export interface HomePage {
           }
         | {
             title: string;
-            customOrAuto?: ('custom' | 'auto') | null;
+            customOrAuto: 'custom' | 'auto';
             downloads?:
               | (
                   | {
@@ -539,7 +531,6 @@ export interface HomePage {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -570,7 +561,6 @@ export interface Document {
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -593,7 +583,6 @@ export interface Project {
   name: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -613,7 +602,6 @@ export interface ZenodoDocument {
   }[];
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -625,7 +613,6 @@ export interface Image {
   alt?: string | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -646,7 +633,6 @@ export interface Video {
   alt?: string | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -739,7 +725,6 @@ export interface Person {
   fullName?: string | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -751,7 +736,6 @@ export interface Svg {
   name: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -772,7 +756,6 @@ export interface NetworkCategory {
   name: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -799,7 +782,6 @@ export interface ErrorPage {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -886,7 +868,7 @@ export interface OverviewPage {
           }
         | {
             title: string;
-            customOrAuto?: ('custom' | 'auto') | null;
+            customOrAuto: 'custom' | 'auto';
             downloads?:
               | (
                   | {
@@ -1155,7 +1137,6 @@ export interface OverviewPage {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1242,7 +1223,7 @@ export interface DetailPage {
           }
         | {
             title: string;
-            customOrAuto?: ('custom' | 'auto') | null;
+            customOrAuto: 'custom' | 'auto';
             downloads?:
               | (
                   | {
@@ -1511,7 +1492,6 @@ export interface DetailPage {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1606,7 +1586,7 @@ export interface MagazineDetailPage {
           }
         | {
             title: string;
-            customOrAuto?: ('custom' | 'auto') | null;
+            customOrAuto: 'custom' | 'auto';
             downloads?:
               | (
                   | {
@@ -1875,7 +1855,6 @@ export interface MagazineDetailPage {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1974,7 +1953,7 @@ export interface EventDetailPage {
           }
         | {
             title: string;
-            customOrAuto?: ('custom' | 'auto') | null;
+            customOrAuto: 'custom' | 'auto';
             downloads?:
               | (
                   | {
@@ -2247,7 +2226,6 @@ export interface EventDetailPage {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2259,7 +2237,6 @@ export interface EventCategory {
   eventCategory: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2354,7 +2331,7 @@ export interface NewsDetailPage {
           }
         | {
             title: string;
-            customOrAuto?: ('custom' | 'auto') | null;
+            customOrAuto: 'custom' | 'auto';
             downloads?:
               | (
                   | {
@@ -2623,7 +2600,6 @@ export interface NewsDetailPage {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2720,7 +2696,7 @@ export interface PublicationDetailPage {
           }
         | {
             title: string;
-            customOrAuto?: ('custom' | 'auto') | null;
+            customOrAuto: 'custom' | 'auto';
             downloads?:
               | (
                   | {
@@ -2989,7 +2965,6 @@ export interface PublicationDetailPage {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3001,7 +2976,6 @@ export interface PublicationTopic {
   publicationTopic: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3013,7 +2987,6 @@ export interface PublicationType {
   publicationType: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3025,7 +2998,6 @@ export interface ReusableText {
   text: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3140,7 +3112,6 @@ export interface I18NForm {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3155,7 +3126,6 @@ export interface I18NGlobal {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3269,7 +3239,6 @@ export interface Consent {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3303,7 +3272,6 @@ export interface Footer {
     | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3350,7 +3318,6 @@ export interface Header {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3385,7 +3352,6 @@ export interface StatusMessage {
   type: 'warn' | 'error' | 'success';
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3401,98 +3367,6 @@ export interface FormSubmission {
         id?: string | null;
       }[]
     | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-jobs".
- */
-export interface PayloadJob {
-  id: string;
-  /**
-   * Input data provided to the job
-   */
-  input?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  taskStatus?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  completedAt?: string | null;
-  totalTried?: number | null;
-  /**
-   * If hasError is true this job will not be retried
-   */
-  hasError?: boolean | null;
-  /**
-   * If hasError is true, this is the error that caused it
-   */
-  error?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  /**
-   * Task execution log
-   */
-  log?:
-    | {
-        executedAt: string;
-        completedAt: string;
-        taskSlug: 'inline' | 'schedulePublish';
-        taskID: string;
-        input?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        output?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        state: 'failed' | 'succeeded';
-        error?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  taskSlug?: ('inline' | 'schedulePublish') | null;
-  queue?: string | null;
-  waitUntil?: string | null;
-  processing?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -3622,10 +3496,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'form-submissions';
         value: string | FormSubmission;
-      } | null)
-    | ({
-        relationTo: 'payload-jobs';
-        value: string | PayloadJob;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -4022,7 +3892,6 @@ export interface HomePageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4051,7 +3920,6 @@ export interface ErrorPageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4394,7 +4262,6 @@ export interface OverviewPageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4737,7 +4604,6 @@ export interface DetailPageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5087,7 +4953,6 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5450,7 +5315,6 @@ export interface EventDetailPageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5800,7 +5664,6 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6154,7 +6017,6 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6165,7 +6027,6 @@ export interface ImagesSelect<T extends boolean = true> {
   alt?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
   url?: T;
   thumbnailURL?: T;
   filename?: T;
@@ -6185,7 +6046,6 @@ export interface VideosSelect<T extends boolean = true> {
   alt?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
   url?: T;
   thumbnailURL?: T;
   filename?: T;
@@ -6205,7 +6065,6 @@ export interface SvgsSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
   url?: T;
   thumbnailURL?: T;
   filename?: T;
@@ -6225,7 +6084,6 @@ export interface NetworkCategoriesSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6237,7 +6095,6 @@ export interface DocumentsSelect<T extends boolean = true> {
   project?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
   url?: T;
   thumbnailURL?: T;
   filename?: T;
@@ -6267,7 +6124,6 @@ export interface ZenodoDocumentsSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6278,7 +6134,6 @@ export interface ProjectsSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6299,7 +6154,6 @@ export interface PeopleSelect<T extends boolean = true> {
   fullName?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6310,7 +6164,6 @@ export interface PublicationTopicsSelect<T extends boolean = true> {
   publicationTopic?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6321,7 +6174,6 @@ export interface PublicationTypesSelect<T extends boolean = true> {
   publicationType?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6332,7 +6184,6 @@ export interface EventCategorySelect<T extends boolean = true> {
   eventCategory?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6343,7 +6194,6 @@ export interface ReusableTextSelect<T extends boolean = true> {
   text?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6480,7 +6330,6 @@ export interface I18NFormsSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6496,7 +6345,6 @@ export interface I18NGlobalsSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6549,7 +6397,6 @@ export interface ConsentSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6584,7 +6431,6 @@ export interface FooterSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6642,7 +6488,6 @@ export interface HeaderSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6676,7 +6521,6 @@ export interface StatusMessageSelect<T extends boolean = true> {
   type?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6761,37 +6605,6 @@ export interface FormSubmissionsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-jobs_select".
- */
-export interface PayloadJobsSelect<T extends boolean = true> {
-  input?: T;
-  taskStatus?: T;
-  completedAt?: T;
-  totalTried?: T;
-  hasError?: T;
-  error?: T;
-  log?:
-    | T
-    | {
-        executedAt?: T;
-        completedAt?: T;
-        taskSlug?: T;
-        taskID?: T;
-        input?: T;
-        output?: T;
-        state?: T;
-        error?: T;
-        id?: T;
-      };
-  taskSlug?: T;
-  queue?: T;
-  waitUntil?: T;
-  processing?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
@@ -6821,124 +6634,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TaskSchedulePublish".
- */
-export interface TaskSchedulePublish {
-  input: {
-    type?: ('publish' | 'unpublish') | null;
-    locale?: string | null;
-    doc?:
-      | ({
-          relationTo: 'homePage';
-          value: string | HomePage;
-        } | null)
-      | ({
-          relationTo: 'errorPage';
-          value: string | ErrorPage;
-        } | null)
-      | ({
-          relationTo: 'overviewPage';
-          value: string | OverviewPage;
-        } | null)
-      | ({
-          relationTo: 'detailPage';
-          value: string | DetailPage;
-        } | null)
-      | ({
-          relationTo: 'magazineDetailPage';
-          value: string | MagazineDetailPage;
-        } | null)
-      | ({
-          relationTo: 'eventDetailPage';
-          value: string | EventDetailPage;
-        } | null)
-      | ({
-          relationTo: 'newsDetailPage';
-          value: string | NewsDetailPage;
-        } | null)
-      | ({
-          relationTo: 'publicationDetailPage';
-          value: string | PublicationDetailPage;
-        } | null)
-      | ({
-          relationTo: 'images';
-          value: string | Image;
-        } | null)
-      | ({
-          relationTo: 'videos';
-          value: string | Video;
-        } | null)
-      | ({
-          relationTo: 'svgs';
-          value: string | Svg;
-        } | null)
-      | ({
-          relationTo: 'networkCategories';
-          value: string | NetworkCategory;
-        } | null)
-      | ({
-          relationTo: 'documents';
-          value: string | Document;
-        } | null)
-      | ({
-          relationTo: 'zenodoDocuments';
-          value: string | ZenodoDocument;
-        } | null)
-      | ({
-          relationTo: 'projects';
-          value: string | Project;
-        } | null)
-      | ({
-          relationTo: 'people';
-          value: string | Person;
-        } | null)
-      | ({
-          relationTo: 'publicationTopics';
-          value: string | PublicationTopic;
-        } | null)
-      | ({
-          relationTo: 'publicationTypes';
-          value: string | PublicationType;
-        } | null)
-      | ({
-          relationTo: 'eventCategory';
-          value: string | EventCategory;
-        } | null)
-      | ({
-          relationTo: 'reusableText';
-          value: string | ReusableText;
-        } | null)
-      | ({
-          relationTo: 'i18nForms';
-          value: string | I18NForm;
-        } | null)
-      | ({
-          relationTo: 'i18nGlobals';
-          value: string | I18NGlobal;
-        } | null)
-      | ({
-          relationTo: 'consent';
-          value: string | Consent;
-        } | null)
-      | ({
-          relationTo: 'footer';
-          value: string | Footer;
-        } | null)
-      | ({
-          relationTo: 'header';
-          value: string | Header;
-        } | null)
-      | ({
-          relationTo: 'statusMessage';
-          value: string | StatusMessage;
-        } | null);
-    global?: string | null;
-    user?: (string | null) | User;
-  };
-  output?: unknown;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -12,7 +12,6 @@ import { hookSeoFallback } from '@/hooks/seoFallback';
 import { blocks } from '@/blocks';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { fieldsLinkExternal } from '@/field-templates/links';
-import { versions } from '@/field-templates/versions';
 
 const fieldsForDetailPage: Field[] = [
 
@@ -161,5 +160,4 @@ export const EventDetailPage: CollectionConfig = {
     singular: 'Event Detail Detail',
   },
   slug: 'eventDetailPage',
-  versions,
 };

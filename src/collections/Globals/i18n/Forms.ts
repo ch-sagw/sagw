@@ -4,7 +4,6 @@ import {
 } from 'payload';
 
 import { rte2 } from '@/field-templates/rte';
-import { versions } from '@/field-templates/versions';
 
 const inputFields: Field[] = [
   {
@@ -140,5 +139,4 @@ export const I18nForms: CollectionConfig = {
     },
   ],
   slug: 'i18nForms',
-  versions,
 };

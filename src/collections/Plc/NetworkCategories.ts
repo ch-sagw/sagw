@@ -1,5 +1,4 @@
 import { CollectionConfig } from 'payload';
-import { versions } from '@/field-templates/versions';
 
 export const NetworkCategories: CollectionConfig = {
   admin: {
@@ -15,5 +14,4 @@ export const NetworkCategories: CollectionConfig = {
     },
   ],
   slug: 'networkCategories',
-  versions,
 };

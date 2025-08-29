@@ -1,5 +1,4 @@
 import { CollectionConfig } from 'payload';
-import { versions } from '@/field-templates/versions';
 
 export const I18nGlobal: CollectionConfig = {
   access: {
@@ -30,5 +29,4 @@ export const I18nGlobal: CollectionConfig = {
     },
   ],
   slug: 'i18nGlobals',
-  versions,
 };

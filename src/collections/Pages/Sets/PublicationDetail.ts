@@ -9,7 +9,6 @@ import {
 import { hookSeoFallback } from '@/hooks/seoFallback';
 import { blocks } from '@/blocks';
 import { fieldsColorMode } from '@/field-templates/colorMode';
-import { versions } from '@/field-templates/versions';
 
 export const PublicationDetailPage: CollectionConfig = {
   access: {
@@ -109,5 +108,4 @@ export const PublicationDetailPage: CollectionConfig = {
     singular: 'Publication Detail',
   },
   slug: 'publicationDetailPage',
-  versions,
 };

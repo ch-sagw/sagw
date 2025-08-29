@@ -9,7 +9,6 @@ import {
 import { hookSeoFallback } from '@/hooks/seoFallback';
 import { blocks } from '@/blocks';
 import { fieldsColorMode } from '@/field-templates/colorMode';
-import { versions } from '@/field-templates/versions';
 
 export const NewsDetailPage: CollectionConfig = {
   access: {
@@ -91,5 +90,4 @@ export const NewsDetailPage: CollectionConfig = {
     singular: 'News Detail',
   },
   slug: 'newsDetailPage',
-  versions,
 };

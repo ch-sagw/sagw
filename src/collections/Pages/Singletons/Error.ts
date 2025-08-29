@@ -1,7 +1,6 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { hookSeoFallback } from '@/hooks/seoFallback';
-import { versions } from '@/field-templates/versions';
 
 export const ErrorPage: CollectionConfig = {
   access: {
@@ -63,5 +62,4 @@ export const ErrorPage: CollectionConfig = {
     singular: 'Error Page',
   },
   slug: 'errorPage',
-  versions,
 };

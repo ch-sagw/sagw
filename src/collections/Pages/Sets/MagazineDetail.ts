@@ -12,7 +12,6 @@ import {
 } from '@/collections/Pages/access/globalAdminOrDepartmentAdmin';
 import { blocks } from '@/blocks';
 import { fieldsColorMode } from '@/field-templates/colorMode';
-import { versions } from '@/field-templates/versions';
 
 export const MagazineDetailPage: CollectionConfig = {
   access: {
@@ -96,5 +95,4 @@ export const MagazineDetailPage: CollectionConfig = {
     singular: 'Magazine Detail',
   },
   slug: 'magazineDetailPage',
-  versions,
 };

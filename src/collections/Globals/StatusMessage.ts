@@ -4,7 +4,6 @@ import { CollectionConfig } from 'payload';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
-import { versions } from '@/field-templates/versions';
 
 export const StatusMessage: CollectionConfig = {
   access: {
@@ -109,5 +108,4 @@ export const StatusMessage: CollectionConfig = {
     singular: 'Status Message',
   },
   slug: 'statusMessage',
-  versions,
 };

@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload';
-import { versions } from '@/field-templates/versions';
 
 export const Images: CollectionConfig = {
   access: {
@@ -21,5 +20,4 @@ export const Images: CollectionConfig = {
     focalPoint: true,
     mimeTypes: ['image/*'],
   },
-  versions,
 };
