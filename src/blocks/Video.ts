@@ -1,6 +1,9 @@
 import { Block } from 'payload';
 
 export const VideoBlock: Block = {
+  admin: {
+    disableBlockName: true,
+  },
   fields: [
     {
       name: 'video',

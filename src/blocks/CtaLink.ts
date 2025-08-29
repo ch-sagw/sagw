@@ -1,7 +1,7 @@
 import { Block } from 'payload';
 import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
 
-export const LinksBlock: Block = {
+export const CtaLinkBlock: Block = {
   admin: {
     disableBlockName: true,
   },
@@ -13,14 +13,16 @@ export const LinksBlock: Block = {
       type: 'text',
     },
     {
-      fields: fieldsLinkInternalOrExternal,
-      name: 'links',
-      type: 'array',
+      localized: true,
+      name: 'text',
+      required: true,
+      type: 'text',
     },
+    ...fieldsLinkInternalOrExternal,
   ],
   labels: {
-    plural: 'Links',
-    singular: 'Links',
+    plural: 'CTAs Link',
+    singular: 'CTA Link',
   },
-  slug: 'linksBlock',
+  slug: 'ctaLinkBlock',
 };

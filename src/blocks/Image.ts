@@ -1,6 +1,9 @@
 import { Block } from 'payload';
 
 export const ImageBlock: Block = {
+  admin: {
+    disableBlockName: true,
+  },
   fields: [
     {
       defaultValue: 'center',
@@ -46,5 +49,9 @@ export const ImageBlock: Block = {
       type: 'text',
     },
   ],
+  labels: {
+    plural: 'Image',
+    singular: 'Images',
+  },
   slug: 'imageBlock',
 };

@@ -1,6 +1,9 @@
 import { Block } from 'payload';
 
 export const EventsTeasersBlock: Block = {
+  admin: {
+    disableBlockName: true,
+  },
   fields: [
     {
       localized: true,
@@ -33,8 +36,8 @@ export const EventsTeasersBlock: Block = {
     },
   ],
   labels: {
-    plural: 'Events Teasers',
-    singular: 'Events Teasers',
+    plural: 'Events Teasers (automatic)',
+    singular: 'Events Teasers (automatic)',
   },
   slug: 'eventsTeasersBlock',
 };

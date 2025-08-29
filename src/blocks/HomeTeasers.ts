@@ -32,6 +32,9 @@ const homeTeaserItem: Field[] = [
 ];
 
 export const HomeTeasersBlock: Block = {
+  admin: {
+    disableBlockName: true,
+  },
   fields: [
     {
       fields: homeTeaserItem,

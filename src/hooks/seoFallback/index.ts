@@ -1,8 +1,8 @@
 import { CollectionBeforeChangeHook } from 'payload';
 
-import { Home } from '@/payload-types';
+import { HomePage } from '@/payload-types';
 
-type Seo = NonNullable<Home['meta']>['seo'];
+type Seo = NonNullable<HomePage['meta']>['seo'];
 
 type WithSeo = {
   id: string | number;
@@ -30,7 +30,7 @@ export const hookSeoFallback: CollectionBeforeChangeHook<WithSeo> = async ({
   }
 
   const homePages = await req.payload.find({
-    collection: 'home',
+    collection: 'homePage',
     limit: 1,
     where: {
       department: {

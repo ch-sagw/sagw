@@ -1,6 +1,9 @@
 import { Block } from 'payload';
 
 export const DownloadsBlock: Block = {
+  admin: {
+    disableBlockName: true,
+  },
   fields: [
     {
       localized: true,
@@ -19,8 +22,8 @@ export const DownloadsBlock: Block = {
     },
   ],
   labels: {
-    plural: 'Downloads Blocks',
-    singular: 'Downloads Block',
+    plural: 'Downloads',
+    singular: 'Downloads',
   },
   slug: 'downloadsBlock',
 };

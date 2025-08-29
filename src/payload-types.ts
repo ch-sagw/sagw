@@ -96,6 +96,8 @@ export interface Config {
     footer: Footer;
     header: Header;
     statusMessage: StatusMessage;
+    forms: Form;
+    'form-submissions': FormSubmission;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -131,6 +133,8 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     statusMessage: StatusMessageSelect<false> | StatusMessageSelect<true>;
+    forms: FormsSelect<false> | FormsSelect<true>;
+    'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -207,6 +211,37 @@ export interface HomePage {
   content?:
     | (
         | {
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textBlock';
+          }
+        | {
+            title: string;
+            subtitle: string;
+            textBlocks: {
+              text: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'titleSubtitleTextBlock';
+          }
+        | {
             title: string;
             downloads?:
               | (
@@ -223,31 +258,6 @@ export interface HomePage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'downloadsBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
           }
         | {
             alignement?: ('left' | 'center' | 'right') | null;
@@ -281,19 +291,204 @@ export interface HomePage {
             blockType: 'linksBlock';
           }
         | {
+            video: string | Video;
             title: string;
-            linkText: string;
-            lead?: string | null;
+            caption: string;
+            credits: string;
+            stillImage: string | Image;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoBlock';
+          }
+        | {
+            title: string;
+            acccordions: {
+              accordionTitle: string;
+              accordionContent: {
+                root: {
+                  type: string;
+                  children: {
+                    type: string;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'accordionBlock';
+          }
+        | {
+            form?: (string | null) | Form;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'formBlock';
+          }
+        | {
+            title: string;
+            text: string;
+            contact: string | Person;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaContactBlock';
+          }
+        | {
+            title: string;
+            text: string;
+            linkType: 'internal' | 'external';
+            linkInternal?: {
+              openInNewWindow?: boolean | null;
+              linkText: string;
+              internalLink: string;
+            };
+            linkExternal?: {
+              externalLinkText: string;
+              externalLink: string;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaLinkBlock';
+          }
+        | {
+            homeTeasers?:
+              | {
+                  category: string;
+                  title: string;
+                  text: string;
+                  icon: string | Svg;
+                  openInNewWindow?: boolean | null;
+                  linkText: string;
+                  internalLink: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeTeasersBlock';
+          }
+        | {
+            title: string;
+            lead: string;
+            textTeasers?:
+              | {
+                  title: string;
+                  text: string;
+                  link: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textTeasersBlock';
+          }
+        | {
+            filter: {
+              allCheckboxText: string;
+              title: string;
+            };
+            items: {
+              foundingYearText: string;
+              linkText: string;
+              items: {
+                title: string;
+                category: string | NetworkCategory;
+                foundingYear: number;
+                image: string | Image;
+                externalLink: string;
+                id?: string | null;
+              }[];
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'networkTeasersBlock';
+          }
+        | {
+            title?: string | null;
+            teasers: {
+              image:
+                | {
+                    relationTo: 'images';
+                    value: string | Image;
+                  }
+                | {
+                    relationTo: 'svgs';
+                    value: string | Svg;
+                  };
+              title: string;
+              text?: string | null;
+              linkType: 'internal' | 'external';
+              linkInternal?: {
+                openInNewWindow?: boolean | null;
+                linkText: string;
+                internalLink: string;
+              };
+              linkExternal?: {
+                externalLinkText: string;
+                externalLink: string;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageTeasersBlock';
+          }
+        | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
+            blockType: 'magazineOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'publicationsOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'peopleOverviewBlock';
           }
         | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'newsOverviewBlock';
+          }
+        | {
+            title: string;
+            linkText: string;
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsTeasersBlock';
+          }
+        | {
+            title: string;
+            lead?: string | null;
+            linkText: string;
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'magazineTeasersBlock';
           }
         | {
             title: string;
@@ -310,36 +505,6 @@ export interface HomePage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            text?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
           }
       )[]
     | null;
@@ -428,26 +593,6 @@ export interface ZenodoDocument {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "svgs".
- */
-export interface Svg {
-  id: string;
-  department?: (string | null) | Department;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "images".
  */
 export interface Image {
@@ -485,6 +630,120 @@ export interface Video {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "forms".
+ */
+export interface Form {
+  id: string;
+  title: string;
+  fields?:
+    | (
+        | {
+            name: string;
+            label?: string | null;
+            width?: number | null;
+            required?: boolean | null;
+            placeholder: string;
+            fieldError?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'checkbox';
+          }
+        | {
+            name: string;
+            label?: string | null;
+            width?: number | null;
+            required?: boolean | null;
+            placeholder: string;
+            fieldError?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'email';
+          }
+        | {
+            name: string;
+            label?: string | null;
+            width?: number | null;
+            required?: boolean | null;
+            placeholder: string;
+            fieldError?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'text';
+          }
+        | {
+            name: string;
+            label?: string | null;
+            width?: number | null;
+            required?: boolean | null;
+            placeholder: string;
+            fieldError?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textarea';
+          }
+      )[]
+    | null;
+  submitButtonLabel: string;
+  recipientEMail: string;
+  successMessage: string;
+  errorMessage: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "people".
+ */
+export interface Person {
+  id: string;
+  department?: (string | null) | Department;
+  'person-department': 'admin' | 'science' | 'com' | 'direction';
+  memberType: 'executiveBoard' | 'team';
+  prefix?: string | null;
+  firstname: string;
+  middleName?: string | null;
+  lastname: string;
+  function: string;
+  mail: string;
+  phone: string;
+  image?: (string | null) | Image;
+  fullName?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "svgs".
+ */
+export interface Svg {
+  id: string;
+  department?: (string | null) | Department;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "networkCategories".
+ */
+export interface NetworkCategory {
+  id: string;
+  department?: (string | null) | Department;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -542,6 +801,37 @@ export interface OverviewPage {
   content?:
     | (
         | {
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textBlock';
+          }
+        | {
+            title: string;
+            subtitle: string;
+            textBlocks: {
+              text: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'titleSubtitleTextBlock';
+          }
+        | {
             title: string;
             downloads?:
               | (
@@ -558,31 +848,6 @@ export interface OverviewPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'downloadsBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
           }
         | {
             alignement?: ('left' | 'center' | 'right') | null;
@@ -616,19 +881,204 @@ export interface OverviewPage {
             blockType: 'linksBlock';
           }
         | {
+            video: string | Video;
             title: string;
-            linkText: string;
-            lead?: string | null;
+            caption: string;
+            credits: string;
+            stillImage: string | Image;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoBlock';
+          }
+        | {
+            title: string;
+            acccordions: {
+              accordionTitle: string;
+              accordionContent: {
+                root: {
+                  type: string;
+                  children: {
+                    type: string;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'accordionBlock';
+          }
+        | {
+            form?: (string | null) | Form;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'formBlock';
+          }
+        | {
+            title: string;
+            text: string;
+            contact: string | Person;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaContactBlock';
+          }
+        | {
+            title: string;
+            text: string;
+            linkType: 'internal' | 'external';
+            linkInternal?: {
+              openInNewWindow?: boolean | null;
+              linkText: string;
+              internalLink: string;
+            };
+            linkExternal?: {
+              externalLinkText: string;
+              externalLink: string;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaLinkBlock';
+          }
+        | {
+            homeTeasers?:
+              | {
+                  category: string;
+                  title: string;
+                  text: string;
+                  icon: string | Svg;
+                  openInNewWindow?: boolean | null;
+                  linkText: string;
+                  internalLink: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeTeasersBlock';
+          }
+        | {
+            title: string;
+            lead: string;
+            textTeasers?:
+              | {
+                  title: string;
+                  text: string;
+                  link: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textTeasersBlock';
+          }
+        | {
+            filter: {
+              allCheckboxText: string;
+              title: string;
+            };
+            items: {
+              foundingYearText: string;
+              linkText: string;
+              items: {
+                title: string;
+                category: string | NetworkCategory;
+                foundingYear: number;
+                image: string | Image;
+                externalLink: string;
+                id?: string | null;
+              }[];
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'networkTeasersBlock';
+          }
+        | {
+            title?: string | null;
+            teasers: {
+              image:
+                | {
+                    relationTo: 'images';
+                    value: string | Image;
+                  }
+                | {
+                    relationTo: 'svgs';
+                    value: string | Svg;
+                  };
+              title: string;
+              text?: string | null;
+              linkType: 'internal' | 'external';
+              linkInternal?: {
+                openInNewWindow?: boolean | null;
+                linkText: string;
+                internalLink: string;
+              };
+              linkExternal?: {
+                externalLinkText: string;
+                externalLink: string;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageTeasersBlock';
+          }
+        | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
+            blockType: 'magazineOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'publicationsOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'peopleOverviewBlock';
           }
         | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'newsOverviewBlock';
+          }
+        | {
+            title: string;
+            linkText: string;
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsTeasersBlock';
+          }
+        | {
+            title: string;
+            lead?: string | null;
+            linkText: string;
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'magazineTeasersBlock';
           }
         | {
             title: string;
@@ -645,36 +1095,6 @@ export interface OverviewPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            text?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
           }
       )[]
     | null;
@@ -722,6 +1142,37 @@ export interface DetailPage {
   content?:
     | (
         | {
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textBlock';
+          }
+        | {
+            title: string;
+            subtitle: string;
+            textBlocks: {
+              text: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'titleSubtitleTextBlock';
+          }
+        | {
             title: string;
             downloads?:
               | (
@@ -738,31 +1189,6 @@ export interface DetailPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'downloadsBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
           }
         | {
             alignement?: ('left' | 'center' | 'right') | null;
@@ -796,19 +1222,204 @@ export interface DetailPage {
             blockType: 'linksBlock';
           }
         | {
+            video: string | Video;
             title: string;
-            linkText: string;
-            lead?: string | null;
+            caption: string;
+            credits: string;
+            stillImage: string | Image;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoBlock';
+          }
+        | {
+            title: string;
+            acccordions: {
+              accordionTitle: string;
+              accordionContent: {
+                root: {
+                  type: string;
+                  children: {
+                    type: string;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'accordionBlock';
+          }
+        | {
+            form?: (string | null) | Form;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'formBlock';
+          }
+        | {
+            title: string;
+            text: string;
+            contact: string | Person;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaContactBlock';
+          }
+        | {
+            title: string;
+            text: string;
+            linkType: 'internal' | 'external';
+            linkInternal?: {
+              openInNewWindow?: boolean | null;
+              linkText: string;
+              internalLink: string;
+            };
+            linkExternal?: {
+              externalLinkText: string;
+              externalLink: string;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaLinkBlock';
+          }
+        | {
+            homeTeasers?:
+              | {
+                  category: string;
+                  title: string;
+                  text: string;
+                  icon: string | Svg;
+                  openInNewWindow?: boolean | null;
+                  linkText: string;
+                  internalLink: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeTeasersBlock';
+          }
+        | {
+            title: string;
+            lead: string;
+            textTeasers?:
+              | {
+                  title: string;
+                  text: string;
+                  link: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textTeasersBlock';
+          }
+        | {
+            filter: {
+              allCheckboxText: string;
+              title: string;
+            };
+            items: {
+              foundingYearText: string;
+              linkText: string;
+              items: {
+                title: string;
+                category: string | NetworkCategory;
+                foundingYear: number;
+                image: string | Image;
+                externalLink: string;
+                id?: string | null;
+              }[];
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'networkTeasersBlock';
+          }
+        | {
+            title?: string | null;
+            teasers: {
+              image:
+                | {
+                    relationTo: 'images';
+                    value: string | Image;
+                  }
+                | {
+                    relationTo: 'svgs';
+                    value: string | Svg;
+                  };
+              title: string;
+              text?: string | null;
+              linkType: 'internal' | 'external';
+              linkInternal?: {
+                openInNewWindow?: boolean | null;
+                linkText: string;
+                internalLink: string;
+              };
+              linkExternal?: {
+                externalLinkText: string;
+                externalLink: string;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageTeasersBlock';
+          }
+        | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
+            blockType: 'magazineOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'publicationsOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'peopleOverviewBlock';
           }
         | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'newsOverviewBlock';
+          }
+        | {
+            title: string;
+            linkText: string;
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsTeasersBlock';
+          }
+        | {
+            title: string;
+            lead?: string | null;
+            linkText: string;
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'magazineTeasersBlock';
           }
         | {
             title: string;
@@ -825,36 +1436,6 @@ export interface DetailPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            text?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
           }
       )[]
     | null;
@@ -910,6 +1491,37 @@ export interface MagazineDetailPage {
   content?:
     | (
         | {
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textBlock';
+          }
+        | {
+            title: string;
+            subtitle: string;
+            textBlocks: {
+              text: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'titleSubtitleTextBlock';
+          }
+        | {
             title: string;
             downloads?:
               | (
@@ -926,31 +1538,6 @@ export interface MagazineDetailPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'downloadsBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
           }
         | {
             alignement?: ('left' | 'center' | 'right') | null;
@@ -984,19 +1571,204 @@ export interface MagazineDetailPage {
             blockType: 'linksBlock';
           }
         | {
+            video: string | Video;
             title: string;
-            linkText: string;
-            lead?: string | null;
+            caption: string;
+            credits: string;
+            stillImage: string | Image;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoBlock';
+          }
+        | {
+            title: string;
+            acccordions: {
+              accordionTitle: string;
+              accordionContent: {
+                root: {
+                  type: string;
+                  children: {
+                    type: string;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'accordionBlock';
+          }
+        | {
+            form?: (string | null) | Form;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'formBlock';
+          }
+        | {
+            title: string;
+            text: string;
+            contact: string | Person;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaContactBlock';
+          }
+        | {
+            title: string;
+            text: string;
+            linkType: 'internal' | 'external';
+            linkInternal?: {
+              openInNewWindow?: boolean | null;
+              linkText: string;
+              internalLink: string;
+            };
+            linkExternal?: {
+              externalLinkText: string;
+              externalLink: string;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaLinkBlock';
+          }
+        | {
+            homeTeasers?:
+              | {
+                  category: string;
+                  title: string;
+                  text: string;
+                  icon: string | Svg;
+                  openInNewWindow?: boolean | null;
+                  linkText: string;
+                  internalLink: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeTeasersBlock';
+          }
+        | {
+            title: string;
+            lead: string;
+            textTeasers?:
+              | {
+                  title: string;
+                  text: string;
+                  link: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textTeasersBlock';
+          }
+        | {
+            filter: {
+              allCheckboxText: string;
+              title: string;
+            };
+            items: {
+              foundingYearText: string;
+              linkText: string;
+              items: {
+                title: string;
+                category: string | NetworkCategory;
+                foundingYear: number;
+                image: string | Image;
+                externalLink: string;
+                id?: string | null;
+              }[];
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'networkTeasersBlock';
+          }
+        | {
+            title?: string | null;
+            teasers: {
+              image:
+                | {
+                    relationTo: 'images';
+                    value: string | Image;
+                  }
+                | {
+                    relationTo: 'svgs';
+                    value: string | Svg;
+                  };
+              title: string;
+              text?: string | null;
+              linkType: 'internal' | 'external';
+              linkInternal?: {
+                openInNewWindow?: boolean | null;
+                linkText: string;
+                internalLink: string;
+              };
+              linkExternal?: {
+                externalLinkText: string;
+                externalLink: string;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageTeasersBlock';
+          }
+        | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
+            blockType: 'magazineOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'publicationsOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'peopleOverviewBlock';
           }
         | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'newsOverviewBlock';
+          }
+        | {
+            title: string;
+            linkText: string;
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsTeasersBlock';
+          }
+        | {
+            title: string;
+            lead?: string | null;
+            linkText: string;
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'magazineTeasersBlock';
           }
         | {
             title: string;
@@ -1013,36 +1785,6 @@ export interface MagazineDetailPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            text?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
           }
       )[]
     | null;
@@ -1090,6 +1832,37 @@ export interface EventDetailPage {
   content?:
     | (
         | {
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textBlock';
+          }
+        | {
+            title: string;
+            subtitle: string;
+            textBlocks: {
+              text: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'titleSubtitleTextBlock';
+          }
+        | {
             title: string;
             downloads?:
               | (
@@ -1106,31 +1879,6 @@ export interface EventDetailPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'downloadsBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
           }
         | {
             alignement?: ('left' | 'center' | 'right') | null;
@@ -1164,19 +1912,204 @@ export interface EventDetailPage {
             blockType: 'linksBlock';
           }
         | {
+            video: string | Video;
             title: string;
-            linkText: string;
-            lead?: string | null;
+            caption: string;
+            credits: string;
+            stillImage: string | Image;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoBlock';
+          }
+        | {
+            title: string;
+            acccordions: {
+              accordionTitle: string;
+              accordionContent: {
+                root: {
+                  type: string;
+                  children: {
+                    type: string;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'accordionBlock';
+          }
+        | {
+            form?: (string | null) | Form;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'formBlock';
+          }
+        | {
+            title: string;
+            text: string;
+            contact: string | Person;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaContactBlock';
+          }
+        | {
+            title: string;
+            text: string;
+            linkType: 'internal' | 'external';
+            linkInternal?: {
+              openInNewWindow?: boolean | null;
+              linkText: string;
+              internalLink: string;
+            };
+            linkExternal?: {
+              externalLinkText: string;
+              externalLink: string;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaLinkBlock';
+          }
+        | {
+            homeTeasers?:
+              | {
+                  category: string;
+                  title: string;
+                  text: string;
+                  icon: string | Svg;
+                  openInNewWindow?: boolean | null;
+                  linkText: string;
+                  internalLink: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeTeasersBlock';
+          }
+        | {
+            title: string;
+            lead: string;
+            textTeasers?:
+              | {
+                  title: string;
+                  text: string;
+                  link: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textTeasersBlock';
+          }
+        | {
+            filter: {
+              allCheckboxText: string;
+              title: string;
+            };
+            items: {
+              foundingYearText: string;
+              linkText: string;
+              items: {
+                title: string;
+                category: string | NetworkCategory;
+                foundingYear: number;
+                image: string | Image;
+                externalLink: string;
+                id?: string | null;
+              }[];
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'networkTeasersBlock';
+          }
+        | {
+            title?: string | null;
+            teasers: {
+              image:
+                | {
+                    relationTo: 'images';
+                    value: string | Image;
+                  }
+                | {
+                    relationTo: 'svgs';
+                    value: string | Svg;
+                  };
+              title: string;
+              text?: string | null;
+              linkType: 'internal' | 'external';
+              linkInternal?: {
+                openInNewWindow?: boolean | null;
+                linkText: string;
+                internalLink: string;
+              };
+              linkExternal?: {
+                externalLinkText: string;
+                externalLink: string;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageTeasersBlock';
+          }
+        | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
+            blockType: 'magazineOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'publicationsOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'peopleOverviewBlock';
           }
         | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'newsOverviewBlock';
+          }
+        | {
+            title: string;
+            linkText: string;
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsTeasersBlock';
+          }
+        | {
+            title: string;
+            lead?: string | null;
+            linkText: string;
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'magazineTeasersBlock';
           }
         | {
             title: string;
@@ -1193,36 +2126,6 @@ export interface EventDetailPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            text?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
           }
       )[]
     | null;
@@ -1277,6 +2180,37 @@ export interface NewsDetailPage {
   content?:
     | (
         | {
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textBlock';
+          }
+        | {
+            title: string;
+            subtitle: string;
+            textBlocks: {
+              text: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'titleSubtitleTextBlock';
+          }
+        | {
             title: string;
             downloads?:
               | (
@@ -1293,31 +2227,6 @@ export interface NewsDetailPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'downloadsBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
           }
         | {
             alignement?: ('left' | 'center' | 'right') | null;
@@ -1351,19 +2260,204 @@ export interface NewsDetailPage {
             blockType: 'linksBlock';
           }
         | {
+            video: string | Video;
             title: string;
-            linkText: string;
-            lead?: string | null;
+            caption: string;
+            credits: string;
+            stillImage: string | Image;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoBlock';
+          }
+        | {
+            title: string;
+            acccordions: {
+              accordionTitle: string;
+              accordionContent: {
+                root: {
+                  type: string;
+                  children: {
+                    type: string;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'accordionBlock';
+          }
+        | {
+            form?: (string | null) | Form;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'formBlock';
+          }
+        | {
+            title: string;
+            text: string;
+            contact: string | Person;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaContactBlock';
+          }
+        | {
+            title: string;
+            text: string;
+            linkType: 'internal' | 'external';
+            linkInternal?: {
+              openInNewWindow?: boolean | null;
+              linkText: string;
+              internalLink: string;
+            };
+            linkExternal?: {
+              externalLinkText: string;
+              externalLink: string;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaLinkBlock';
+          }
+        | {
+            homeTeasers?:
+              | {
+                  category: string;
+                  title: string;
+                  text: string;
+                  icon: string | Svg;
+                  openInNewWindow?: boolean | null;
+                  linkText: string;
+                  internalLink: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeTeasersBlock';
+          }
+        | {
+            title: string;
+            lead: string;
+            textTeasers?:
+              | {
+                  title: string;
+                  text: string;
+                  link: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textTeasersBlock';
+          }
+        | {
+            filter: {
+              allCheckboxText: string;
+              title: string;
+            };
+            items: {
+              foundingYearText: string;
+              linkText: string;
+              items: {
+                title: string;
+                category: string | NetworkCategory;
+                foundingYear: number;
+                image: string | Image;
+                externalLink: string;
+                id?: string | null;
+              }[];
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'networkTeasersBlock';
+          }
+        | {
+            title?: string | null;
+            teasers: {
+              image:
+                | {
+                    relationTo: 'images';
+                    value: string | Image;
+                  }
+                | {
+                    relationTo: 'svgs';
+                    value: string | Svg;
+                  };
+              title: string;
+              text?: string | null;
+              linkType: 'internal' | 'external';
+              linkInternal?: {
+                openInNewWindow?: boolean | null;
+                linkText: string;
+                internalLink: string;
+              };
+              linkExternal?: {
+                externalLinkText: string;
+                externalLink: string;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageTeasersBlock';
+          }
+        | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
+            blockType: 'magazineOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'publicationsOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'peopleOverviewBlock';
           }
         | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'newsOverviewBlock';
+          }
+        | {
+            title: string;
+            linkText: string;
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsTeasersBlock';
+          }
+        | {
+            title: string;
+            lead?: string | null;
+            linkText: string;
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'magazineTeasersBlock';
           }
         | {
             title: string;
@@ -1380,36 +2474,6 @@ export interface NewsDetailPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            text?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
           }
       )[]
     | null;
@@ -1467,6 +2531,37 @@ export interface PublicationDetailPage {
   content?:
     | (
         | {
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textBlock';
+          }
+        | {
+            title: string;
+            subtitle: string;
+            textBlocks: {
+              text: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'titleSubtitleTextBlock';
+          }
+        | {
             title: string;
             downloads?:
               | (
@@ -1483,31 +2578,6 @@ export interface PublicationDetailPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'downloadsBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
           }
         | {
             alignement?: ('left' | 'center' | 'right') | null;
@@ -1541,19 +2611,204 @@ export interface PublicationDetailPage {
             blockType: 'linksBlock';
           }
         | {
+            video: string | Video;
             title: string;
-            linkText: string;
-            lead?: string | null;
+            caption: string;
+            credits: string;
+            stillImage: string | Image;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'videoBlock';
+          }
+        | {
+            title: string;
+            acccordions: {
+              accordionTitle: string;
+              accordionContent: {
+                root: {
+                  type: string;
+                  children: {
+                    type: string;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'accordionBlock';
+          }
+        | {
+            form?: (string | null) | Form;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'formBlock';
+          }
+        | {
+            title: string;
+            text: string;
+            contact: string | Person;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaContactBlock';
+          }
+        | {
+            title: string;
+            text: string;
+            linkType: 'internal' | 'external';
+            linkInternal?: {
+              openInNewWindow?: boolean | null;
+              linkText: string;
+              internalLink: string;
+            };
+            linkExternal?: {
+              externalLinkText: string;
+              externalLink: string;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaLinkBlock';
+          }
+        | {
+            homeTeasers?:
+              | {
+                  category: string;
+                  title: string;
+                  text: string;
+                  icon: string | Svg;
+                  openInNewWindow?: boolean | null;
+                  linkText: string;
+                  internalLink: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeTeasersBlock';
+          }
+        | {
+            title: string;
+            lead: string;
+            textTeasers?:
+              | {
+                  title: string;
+                  text: string;
+                  link: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textTeasersBlock';
+          }
+        | {
+            filter: {
+              allCheckboxText: string;
+              title: string;
+            };
+            items: {
+              foundingYearText: string;
+              linkText: string;
+              items: {
+                title: string;
+                category: string | NetworkCategory;
+                foundingYear: number;
+                image: string | Image;
+                externalLink: string;
+                id?: string | null;
+              }[];
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'networkTeasersBlock';
+          }
+        | {
+            title?: string | null;
+            teasers: {
+              image:
+                | {
+                    relationTo: 'images';
+                    value: string | Image;
+                  }
+                | {
+                    relationTo: 'svgs';
+                    value: string | Svg;
+                  };
+              title: string;
+              text?: string | null;
+              linkType: 'internal' | 'external';
+              linkInternal?: {
+                openInNewWindow?: boolean | null;
+                linkText: string;
+                internalLink: string;
+              };
+              linkExternal?: {
+                externalLinkText: string;
+                externalLink: string;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageTeasersBlock';
+          }
+        | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
+            blockType: 'magazineOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'publicationsOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsOverviewBlock';
+          }
+        | {
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'peopleOverviewBlock';
           }
         | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'newsOverviewBlock';
+          }
+        | {
+            title: string;
+            linkText: string;
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsTeasersBlock';
+          }
+        | {
+            title: string;
+            lead?: string | null;
+            linkText: string;
+            message?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'magazineTeasersBlock';
           }
         | {
             title: string;
@@ -1570,36 +2825,6 @@ export interface PublicationDetailPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            text?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
           }
       )[]
     | null;
@@ -1675,17 +2900,6 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "networkCategories".
- */
-export interface NetworkCategory {
-  id: string;
-  department?: (string | null) | Department;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "faqItems".
  */
 export interface FaqItem {
@@ -1708,27 +2922,6 @@ export interface FaqItem {
     [k: string]: unknown;
   };
   readableId?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "people".
- */
-export interface Person {
-  id: string;
-  department?: (string | null) | Department;
-  'person-department': 'admin' | 'science' | 'com' | 'direction';
-  memberType: 'executiveBoard' | 'team';
-  prefix?: string | null;
-  firstname: string;
-  middleName?: string | null;
-  lastname: string;
-  function: string;
-  mail: string;
-  phone: string;
-  image?: (string | null) | Image;
-  fullName?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -2086,6 +3279,23 @@ export interface StatusMessage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "form-submissions".
+ */
+export interface FormSubmission {
+  id: string;
+  form: string | Form;
+  submissionData?:
+    | {
+        field: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -2206,6 +3416,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'statusMessage';
         value: string | StatusMessage;
+      } | null)
+    | ({
+        relationTo: 'forms';
+        value: string | Form;
+      } | null)
+    | ({
+        relationTo: 'form-submissions';
+        value: string | FormSubmission;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -2280,38 +3498,32 @@ export interface HomePageSelect<T extends boolean = true> {
   content?:
     | T
     | {
+        textBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        titleSubtitleTextBlock?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              textBlocks?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         downloadsBlock?:
           | T
           | {
               title?: T;
               downloads?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
               id?: T;
               blockName?: T;
             };
@@ -2352,12 +3564,190 @@ export interface HomePageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        magazineTeasersBlock?:
+        videoBlock?:
+          | T
+          | {
+              video?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              stillImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        accordionBlock?:
           | T
           | {
               title?: T;
-              linkText?: T;
+              acccordions?:
+                | T
+                | {
+                    accordionTitle?: T;
+                    accordionContent?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        formBlock?:
+          | T
+          | {
+              form?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaContactBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              contact?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaLinkBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              linkType?: T;
+              linkInternal?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+              linkExternal?:
+                | T
+                | {
+                    externalLinkText?: T;
+                    externalLink?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        homeTeasersBlock?:
+          | T
+          | {
+              homeTeasers?:
+                | T
+                | {
+                    category?: T;
+                    title?: T;
+                    text?: T;
+                    icon?: T;
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        textTeasersBlock?:
+          | T
+          | {
+              title?: T;
               lead?: T;
+              textTeasers?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    link?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        networkTeasersBlock?:
+          | T
+          | {
+              filter?:
+                | T
+                | {
+                    allCheckboxText?: T;
+                    title?: T;
+                  };
+              items?:
+                | T
+                | {
+                    foundingYearText?: T;
+                    linkText?: T;
+                    items?:
+                      | T
+                      | {
+                          title?: T;
+                          category?: T;
+                          foundingYear?: T;
+                          image?: T;
+                          externalLink?: T;
+                          id?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        imageTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              teasers?:
+                | T
+                | {
+                    image?: T;
+                    title?: T;
+                    text?: T;
+                    linkType?: T;
+                    linkInternal?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    linkExternal?:
+                      | T
+                      | {
+                          externalLinkText?: T;
+                          externalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        magazineOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        publicationsOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        eventsOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        peopleOverviewBlock?:
+          | T
+          | {
               message?: T;
               id?: T;
               blockName?: T;
@@ -2365,6 +3755,25 @@ export interface HomePageSelect<T extends boolean = true> {
         newsOverviewBlock?:
           | T
           | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        eventsTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              linkText?: T;
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        magazineTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              lead?: T;
+              linkText?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -2384,24 +3793,6 @@ export interface HomePageSelect<T extends boolean = true> {
               title?: T;
               linkText?: T;
               message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        textBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
               id?: T;
               blockName?: T;
             };
@@ -2466,38 +3857,32 @@ export interface OverviewPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
+        textBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        titleSubtitleTextBlock?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              textBlocks?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         downloadsBlock?:
           | T
           | {
               title?: T;
               downloads?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
               id?: T;
               blockName?: T;
             };
@@ -2538,12 +3923,190 @@ export interface OverviewPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        magazineTeasersBlock?:
+        videoBlock?:
+          | T
+          | {
+              video?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              stillImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        accordionBlock?:
           | T
           | {
               title?: T;
-              linkText?: T;
+              acccordions?:
+                | T
+                | {
+                    accordionTitle?: T;
+                    accordionContent?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        formBlock?:
+          | T
+          | {
+              form?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaContactBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              contact?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaLinkBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              linkType?: T;
+              linkInternal?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+              linkExternal?:
+                | T
+                | {
+                    externalLinkText?: T;
+                    externalLink?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        homeTeasersBlock?:
+          | T
+          | {
+              homeTeasers?:
+                | T
+                | {
+                    category?: T;
+                    title?: T;
+                    text?: T;
+                    icon?: T;
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        textTeasersBlock?:
+          | T
+          | {
+              title?: T;
               lead?: T;
+              textTeasers?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    link?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        networkTeasersBlock?:
+          | T
+          | {
+              filter?:
+                | T
+                | {
+                    allCheckboxText?: T;
+                    title?: T;
+                  };
+              items?:
+                | T
+                | {
+                    foundingYearText?: T;
+                    linkText?: T;
+                    items?:
+                      | T
+                      | {
+                          title?: T;
+                          category?: T;
+                          foundingYear?: T;
+                          image?: T;
+                          externalLink?: T;
+                          id?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        imageTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              teasers?:
+                | T
+                | {
+                    image?: T;
+                    title?: T;
+                    text?: T;
+                    linkType?: T;
+                    linkInternal?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    linkExternal?:
+                      | T
+                      | {
+                          externalLinkText?: T;
+                          externalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        magazineOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        publicationsOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        eventsOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        peopleOverviewBlock?:
+          | T
+          | {
               message?: T;
               id?: T;
               blockName?: T;
@@ -2551,6 +4114,25 @@ export interface OverviewPageSelect<T extends boolean = true> {
         newsOverviewBlock?:
           | T
           | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        eventsTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              linkText?: T;
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        magazineTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              lead?: T;
+              linkText?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -2570,24 +4152,6 @@ export interface OverviewPageSelect<T extends boolean = true> {
               title?: T;
               linkText?: T;
               message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        textBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
               id?: T;
               blockName?: T;
             };
@@ -2624,38 +4188,32 @@ export interface DetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
+        textBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        titleSubtitleTextBlock?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              textBlocks?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         downloadsBlock?:
           | T
           | {
               title?: T;
               downloads?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
               id?: T;
               blockName?: T;
             };
@@ -2696,12 +4254,190 @@ export interface DetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        magazineTeasersBlock?:
+        videoBlock?:
+          | T
+          | {
+              video?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              stillImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        accordionBlock?:
           | T
           | {
               title?: T;
-              linkText?: T;
+              acccordions?:
+                | T
+                | {
+                    accordionTitle?: T;
+                    accordionContent?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        formBlock?:
+          | T
+          | {
+              form?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaContactBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              contact?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaLinkBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              linkType?: T;
+              linkInternal?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+              linkExternal?:
+                | T
+                | {
+                    externalLinkText?: T;
+                    externalLink?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        homeTeasersBlock?:
+          | T
+          | {
+              homeTeasers?:
+                | T
+                | {
+                    category?: T;
+                    title?: T;
+                    text?: T;
+                    icon?: T;
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        textTeasersBlock?:
+          | T
+          | {
+              title?: T;
               lead?: T;
+              textTeasers?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    link?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        networkTeasersBlock?:
+          | T
+          | {
+              filter?:
+                | T
+                | {
+                    allCheckboxText?: T;
+                    title?: T;
+                  };
+              items?:
+                | T
+                | {
+                    foundingYearText?: T;
+                    linkText?: T;
+                    items?:
+                      | T
+                      | {
+                          title?: T;
+                          category?: T;
+                          foundingYear?: T;
+                          image?: T;
+                          externalLink?: T;
+                          id?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        imageTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              teasers?:
+                | T
+                | {
+                    image?: T;
+                    title?: T;
+                    text?: T;
+                    linkType?: T;
+                    linkInternal?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    linkExternal?:
+                      | T
+                      | {
+                          externalLinkText?: T;
+                          externalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        magazineOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        publicationsOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        eventsOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        peopleOverviewBlock?:
+          | T
+          | {
               message?: T;
               id?: T;
               blockName?: T;
@@ -2709,6 +4445,25 @@ export interface DetailPageSelect<T extends boolean = true> {
         newsOverviewBlock?:
           | T
           | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        eventsTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              linkText?: T;
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        magazineTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              lead?: T;
+              linkText?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -2728,24 +4483,6 @@ export interface DetailPageSelect<T extends boolean = true> {
               title?: T;
               linkText?: T;
               message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        textBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
               id?: T;
               blockName?: T;
             };
@@ -2789,38 +4526,32 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
+        textBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        titleSubtitleTextBlock?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              textBlocks?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         downloadsBlock?:
           | T
           | {
               title?: T;
               downloads?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
               id?: T;
               blockName?: T;
             };
@@ -2861,12 +4592,190 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        magazineTeasersBlock?:
+        videoBlock?:
+          | T
+          | {
+              video?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              stillImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        accordionBlock?:
           | T
           | {
               title?: T;
-              linkText?: T;
+              acccordions?:
+                | T
+                | {
+                    accordionTitle?: T;
+                    accordionContent?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        formBlock?:
+          | T
+          | {
+              form?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaContactBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              contact?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaLinkBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              linkType?: T;
+              linkInternal?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+              linkExternal?:
+                | T
+                | {
+                    externalLinkText?: T;
+                    externalLink?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        homeTeasersBlock?:
+          | T
+          | {
+              homeTeasers?:
+                | T
+                | {
+                    category?: T;
+                    title?: T;
+                    text?: T;
+                    icon?: T;
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        textTeasersBlock?:
+          | T
+          | {
+              title?: T;
               lead?: T;
+              textTeasers?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    link?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        networkTeasersBlock?:
+          | T
+          | {
+              filter?:
+                | T
+                | {
+                    allCheckboxText?: T;
+                    title?: T;
+                  };
+              items?:
+                | T
+                | {
+                    foundingYearText?: T;
+                    linkText?: T;
+                    items?:
+                      | T
+                      | {
+                          title?: T;
+                          category?: T;
+                          foundingYear?: T;
+                          image?: T;
+                          externalLink?: T;
+                          id?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        imageTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              teasers?:
+                | T
+                | {
+                    image?: T;
+                    title?: T;
+                    text?: T;
+                    linkType?: T;
+                    linkInternal?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    linkExternal?:
+                      | T
+                      | {
+                          externalLinkText?: T;
+                          externalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        magazineOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        publicationsOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        eventsOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        peopleOverviewBlock?:
+          | T
+          | {
               message?: T;
               id?: T;
               blockName?: T;
@@ -2874,6 +4783,25 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
         newsOverviewBlock?:
           | T
           | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        eventsTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              linkText?: T;
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        magazineTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              lead?: T;
+              linkText?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -2893,24 +4821,6 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
               title?: T;
               linkText?: T;
               message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        textBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
               id?: T;
               blockName?: T;
             };
@@ -2947,38 +4857,32 @@ export interface EventDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
+        textBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        titleSubtitleTextBlock?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              textBlocks?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         downloadsBlock?:
           | T
           | {
               title?: T;
               downloads?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
               id?: T;
               blockName?: T;
             };
@@ -3019,12 +4923,190 @@ export interface EventDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        magazineTeasersBlock?:
+        videoBlock?:
+          | T
+          | {
+              video?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              stillImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        accordionBlock?:
           | T
           | {
               title?: T;
-              linkText?: T;
+              acccordions?:
+                | T
+                | {
+                    accordionTitle?: T;
+                    accordionContent?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        formBlock?:
+          | T
+          | {
+              form?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaContactBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              contact?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaLinkBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              linkType?: T;
+              linkInternal?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+              linkExternal?:
+                | T
+                | {
+                    externalLinkText?: T;
+                    externalLink?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        homeTeasersBlock?:
+          | T
+          | {
+              homeTeasers?:
+                | T
+                | {
+                    category?: T;
+                    title?: T;
+                    text?: T;
+                    icon?: T;
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        textTeasersBlock?:
+          | T
+          | {
+              title?: T;
               lead?: T;
+              textTeasers?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    link?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        networkTeasersBlock?:
+          | T
+          | {
+              filter?:
+                | T
+                | {
+                    allCheckboxText?: T;
+                    title?: T;
+                  };
+              items?:
+                | T
+                | {
+                    foundingYearText?: T;
+                    linkText?: T;
+                    items?:
+                      | T
+                      | {
+                          title?: T;
+                          category?: T;
+                          foundingYear?: T;
+                          image?: T;
+                          externalLink?: T;
+                          id?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        imageTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              teasers?:
+                | T
+                | {
+                    image?: T;
+                    title?: T;
+                    text?: T;
+                    linkType?: T;
+                    linkInternal?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    linkExternal?:
+                      | T
+                      | {
+                          externalLinkText?: T;
+                          externalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        magazineOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        publicationsOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        eventsOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        peopleOverviewBlock?:
+          | T
+          | {
               message?: T;
               id?: T;
               blockName?: T;
@@ -3032,6 +5114,25 @@ export interface EventDetailPageSelect<T extends boolean = true> {
         newsOverviewBlock?:
           | T
           | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        eventsTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              linkText?: T;
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        magazineTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              lead?: T;
+              linkText?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -3051,24 +5152,6 @@ export interface EventDetailPageSelect<T extends boolean = true> {
               title?: T;
               linkText?: T;
               message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        textBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
               id?: T;
               blockName?: T;
             };
@@ -3111,38 +5194,32 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
+        textBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        titleSubtitleTextBlock?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              textBlocks?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         downloadsBlock?:
           | T
           | {
               title?: T;
               downloads?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
               id?: T;
               blockName?: T;
             };
@@ -3183,12 +5260,190 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        magazineTeasersBlock?:
+        videoBlock?:
+          | T
+          | {
+              video?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              stillImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        accordionBlock?:
           | T
           | {
               title?: T;
-              linkText?: T;
+              acccordions?:
+                | T
+                | {
+                    accordionTitle?: T;
+                    accordionContent?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        formBlock?:
+          | T
+          | {
+              form?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaContactBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              contact?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaLinkBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              linkType?: T;
+              linkInternal?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+              linkExternal?:
+                | T
+                | {
+                    externalLinkText?: T;
+                    externalLink?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        homeTeasersBlock?:
+          | T
+          | {
+              homeTeasers?:
+                | T
+                | {
+                    category?: T;
+                    title?: T;
+                    text?: T;
+                    icon?: T;
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        textTeasersBlock?:
+          | T
+          | {
+              title?: T;
               lead?: T;
+              textTeasers?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    link?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        networkTeasersBlock?:
+          | T
+          | {
+              filter?:
+                | T
+                | {
+                    allCheckboxText?: T;
+                    title?: T;
+                  };
+              items?:
+                | T
+                | {
+                    foundingYearText?: T;
+                    linkText?: T;
+                    items?:
+                      | T
+                      | {
+                          title?: T;
+                          category?: T;
+                          foundingYear?: T;
+                          image?: T;
+                          externalLink?: T;
+                          id?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        imageTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              teasers?:
+                | T
+                | {
+                    image?: T;
+                    title?: T;
+                    text?: T;
+                    linkType?: T;
+                    linkInternal?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    linkExternal?:
+                      | T
+                      | {
+                          externalLinkText?: T;
+                          externalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        magazineOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        publicationsOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        eventsOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        peopleOverviewBlock?:
+          | T
+          | {
               message?: T;
               id?: T;
               blockName?: T;
@@ -3196,6 +5451,25 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
         newsOverviewBlock?:
           | T
           | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        eventsTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              linkText?: T;
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        magazineTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              lead?: T;
+              linkText?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -3215,24 +5489,6 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
               title?: T;
               linkText?: T;
               message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        textBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
               id?: T;
               blockName?: T;
             };
@@ -3280,38 +5536,32 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
+        textBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        titleSubtitleTextBlock?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              textBlocks?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         downloadsBlock?:
           | T
           | {
               title?: T;
               downloads?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
               id?: T;
               blockName?: T;
             };
@@ -3352,12 +5602,190 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        magazineTeasersBlock?:
+        videoBlock?:
+          | T
+          | {
+              video?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
+              stillImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        accordionBlock?:
           | T
           | {
               title?: T;
-              linkText?: T;
+              acccordions?:
+                | T
+                | {
+                    accordionTitle?: T;
+                    accordionContent?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        formBlock?:
+          | T
+          | {
+              form?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaContactBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              contact?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaLinkBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              linkType?: T;
+              linkInternal?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+              linkExternal?:
+                | T
+                | {
+                    externalLinkText?: T;
+                    externalLink?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        homeTeasersBlock?:
+          | T
+          | {
+              homeTeasers?:
+                | T
+                | {
+                    category?: T;
+                    title?: T;
+                    text?: T;
+                    icon?: T;
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        textTeasersBlock?:
+          | T
+          | {
+              title?: T;
               lead?: T;
+              textTeasers?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    link?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        networkTeasersBlock?:
+          | T
+          | {
+              filter?:
+                | T
+                | {
+                    allCheckboxText?: T;
+                    title?: T;
+                  };
+              items?:
+                | T
+                | {
+                    foundingYearText?: T;
+                    linkText?: T;
+                    items?:
+                      | T
+                      | {
+                          title?: T;
+                          category?: T;
+                          foundingYear?: T;
+                          image?: T;
+                          externalLink?: T;
+                          id?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        imageTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              teasers?:
+                | T
+                | {
+                    image?: T;
+                    title?: T;
+                    text?: T;
+                    linkType?: T;
+                    linkInternal?:
+                      | T
+                      | {
+                          openInNewWindow?: T;
+                          linkText?: T;
+                          internalLink?: T;
+                        };
+                    linkExternal?:
+                      | T
+                      | {
+                          externalLinkText?: T;
+                          externalLink?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        magazineOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        publicationsOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        eventsOverviewBlock?:
+          | T
+          | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        peopleOverviewBlock?:
+          | T
+          | {
               message?: T;
               id?: T;
               blockName?: T;
@@ -3365,6 +5793,25 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
         newsOverviewBlock?:
           | T
           | {
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        eventsTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              linkText?: T;
+              message?: T;
+              id?: T;
+              blockName?: T;
+            };
+        magazineTeasersBlock?:
+          | T
+          | {
+              title?: T;
+              lead?: T;
+              linkText?: T;
               message?: T;
               id?: T;
               blockName?: T;
@@ -3384,24 +5831,6 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
               title?: T;
               linkText?: T;
               message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        textBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
               id?: T;
               blockName?: T;
             };
@@ -3944,6 +6373,87 @@ export interface StatusMessageSelect<T extends boolean = true> {
       };
   showOnHomeOnly?: T;
   type?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "forms_select".
+ */
+export interface FormsSelect<T extends boolean = true> {
+  title?: T;
+  fields?:
+    | T
+    | {
+        checkbox?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              width?: T;
+              required?: T;
+              placeholder?: T;
+              fieldError?: T;
+              id?: T;
+              blockName?: T;
+            };
+        email?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              width?: T;
+              required?: T;
+              placeholder?: T;
+              fieldError?: T;
+              id?: T;
+              blockName?: T;
+            };
+        text?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              width?: T;
+              required?: T;
+              placeholder?: T;
+              fieldError?: T;
+              id?: T;
+              blockName?: T;
+            };
+        textarea?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              width?: T;
+              required?: T;
+              placeholder?: T;
+              fieldError?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  submitButtonLabel?: T;
+  recipientEMail?: T;
+  successMessage?: T;
+  errorMessage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "form-submissions_select".
+ */
+export interface FormSubmissionsSelect<T extends boolean = true> {
+  form?: T;
+  submissionData?:
+    | T
+    | {
+        field?: T;
+        value?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

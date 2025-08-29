@@ -48,6 +48,7 @@ Payload Config:
 - implement hidden texts global config (for a11y)
 - slug: should we add a slug-field to all pages? currently, we don't have slugs, but just id's. If we go for slugs -> make validation hook to ensure unique slugs per tenant
 - zenodo -> checks if validated id is already in connection. make this check per tenant. currently, if one tenant adds an id, another tenant can't add the same id.
+- in general, grant api read access to collections only, if collection is published
 
 Misc:
 --------
@@ -61,7 +62,10 @@ Testing:
 REFACTOR:
 -------
 - check field templates: check for unused. check for templates which are only used in 1 place
-- form block
 - in admin -> components -> Field: 'src/components/admin/Zenodo...' -> use absolute path
 - internal link chooser still needed?
 - for publication detail, we had authors array: add authors like foo, bar and baz, so that we can render: "Von: foo, bar, baz."
+- refine globals, especially i18n
+- introduce collection "Reusable Text": author can define "Publikation herunterladen" in 4 languages. Then, he can choose this as title in the PublicationsTeasersBlock
+- add color-scheme property to blocks
+- in blocks overlay -> make custom component to better structure it

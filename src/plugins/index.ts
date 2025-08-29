@@ -14,6 +14,8 @@ import type { Config } from '@/payload-types';
 import { isGlobalAdmin } from '@/access/isGlobalAdmin';
 import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
 import { tenantsCollections } from '@/collections';
+import { formBuilderPlugin } from '@payloadcms/plugin-form-builder';
+import { formPluginConfig } from '@/plugins/formPluginConfig';
 
 const generateTitle: GenerateTitle = ({
   doc,
@@ -73,6 +75,8 @@ const plugins: Plugin[] = [
     tenantsSlug: 'departments',
     userHasAccessToAllTenants: (user) => isGlobalAdmin(user),
   }),
+
+  formBuilderPlugin(formPluginConfig()),
 ];
 
 export default plugins;

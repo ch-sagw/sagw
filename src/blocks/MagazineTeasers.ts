@@ -1,6 +1,9 @@
 import { Block } from 'payload';
 
 export const MagazineTeasersBlock: Block = {
+  admin: {
+    disableBlockName: true,
+  },
   fields: [
     {
       localized: true,
@@ -10,14 +13,14 @@ export const MagazineTeasersBlock: Block = {
     },
     {
       localized: true,
-      name: 'linkText',
-      required: true,
+      name: 'lead',
+      required: false,
       type: 'text',
     },
     {
       localized: true,
-      name: 'lead',
-      required: false,
+      name: 'linkText',
+      required: true,
       type: 'text',
     },
     {
@@ -39,8 +42,8 @@ export const MagazineTeasersBlock: Block = {
     },
   ],
   labels: {
-    plural: 'Magazine Teasers',
-    singular: 'Magazine Teasers',
+    plural: 'Magazine Teasers (automatic)',
+    singular: 'Magazine Teasers (automatic)',
   },
   slug: 'magazineTeasersBlock',
 };

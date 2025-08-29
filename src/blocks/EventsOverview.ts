@@ -1,6 +1,6 @@
 import { Block } from 'payload';
 
-export const NewsOverviewBlock: Block = {
+export const EventsOverviewBlock: Block = {
   admin: {
     disableBlockName: true,
   },
@@ -9,7 +9,7 @@ export const NewsOverviewBlock: Block = {
       admin: {
         hidden: true,
       },
-      defaultValue: 'Placeholder: all news entries will be displayed as overview here.',
+      defaultValue: 'Placeholder: all events entries will be displayed as overview here.',
       name: 'message',
       type: 'text',
     },
@@ -24,8 +24,8 @@ export const NewsOverviewBlock: Block = {
     },
   ],
   labels: {
-    plural: 'News Overview (automatic)',
-    singular: 'News Overview (automatic)',
+    plural: 'Events Overview (automatic)',
+    singular: 'Events Overview (automatic)',
   },
-  slug: 'newsOverviewBlock',
+  slug: 'eventsOverviewBlock',
 };

@@ -13,7 +13,7 @@ import { PublicationTypes } from '@/collections/Plc/PublicationTypes';
 import { EventCategories } from '@/collections/Plc/EventCategories';
 import { Events } from '@/collections/Plc/Events';
 import { Departments } from '@/collections/Plc/Departments';
-import { ZenodoDocuments } from './Plc/ZenodoDocuments';
+import { ZenodoDocuments } from '@/collections/Plc/ZenodoDocuments';
 
 // Globals
 import { I18nForms } from './Globals/i18n/Forms';

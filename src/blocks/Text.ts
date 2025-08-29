@@ -1,7 +1,22 @@
 import { Block } from 'payload';
-import { fieldsTextBlock } from '@/field-templates/textBlock';
+import { rte2 } from '@/field-templates/rte';
 
 export const TextBlock: Block = {
-  fields: fieldsTextBlock,
+  admin: {
+    disableBlockName: true,
+  },
+  fields: [
+    {
+      editor: rte2,
+      localized: true,
+      name: 'text',
+      required: true,
+      type: 'richText',
+    },
+  ],
+  labels: {
+    plural: 'Richtext',
+    singular: 'Richtext',
+  },
   slug: 'textBlock',
 };
