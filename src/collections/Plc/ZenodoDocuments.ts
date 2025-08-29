@@ -68,7 +68,7 @@ export const ZenodoDocuments: CollectionConfig = {
       admin: {
         components: {
           Field: {
-            path: 'src/components/admin/ZenodoDocumentChooser/ZenodoDocumentChooser',
+            path: '@/components/admin/ZenodoDocumentChooser/ZenodoDocumentChooser',
           },
         },
       },
