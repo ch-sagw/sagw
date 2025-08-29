@@ -7,6 +7,7 @@ import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 import { blocks } from '@/blocks';
+import { versions } from '@/field-templates/versions';
 
 export const HomePage: CollectionConfig = {
   access: {
@@ -63,4 +64,5 @@ export const HomePage: CollectionConfig = {
     singular: 'Home',
   },
   slug: 'homePage',
+  versions,
 };

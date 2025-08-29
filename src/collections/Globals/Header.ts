@@ -4,6 +4,7 @@ import { fieldsLinkExternal } from '@/field-templates/links';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
+import { versions } from '@/field-templates/versions';
 
 export const Header: CollectionConfig = {
   access: {
@@ -204,4 +205,5 @@ export const Header: CollectionConfig = {
     singular: 'Header',
   },
   slug: 'header',
+  versions,
 };

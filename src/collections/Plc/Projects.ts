@@ -1,4 +1,5 @@
 import { CollectionConfig } from 'payload';
+import { versions } from '@/field-templates/versions';
 
 export const Projects: CollectionConfig = {
   admin: {
@@ -15,4 +16,5 @@ export const Projects: CollectionConfig = {
     },
   ],
   slug: 'projects',
+  versions,
 };

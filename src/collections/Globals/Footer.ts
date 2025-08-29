@@ -6,6 +6,7 @@ import { fieldsLinkExternal } from '@/field-templates/links';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
+import { versions } from '@/field-templates/versions';
 
 const fieldsSocialLink: Field[] = [
   ...fieldsLinkExternal,
@@ -125,4 +126,5 @@ export const Footer: CollectionConfig = {
     singular: 'Footer',
   },
   slug: 'footer',
+  versions,
 };

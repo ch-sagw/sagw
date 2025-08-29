@@ -12,6 +12,7 @@ import {
 } from '@/collections/Pages/access/globalAdminOrDepartmentAdmin';
 import { blocks } from '@/blocks';
 import { fieldsColorMode } from '@/field-templates/colorMode';
+import { versions } from '@/field-templates/versions';
 
 export const DetailPage: CollectionConfig = {
   access: {
@@ -63,4 +64,5 @@ export const DetailPage: CollectionConfig = {
     singular: 'Detail Page',
   },
   slug: 'detailPage',
+  versions,
 };
