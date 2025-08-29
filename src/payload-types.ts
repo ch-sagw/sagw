@@ -75,8 +75,6 @@ export interface Config {
     eventDetailPage: EventDetailPage;
     newsDetailPage: NewsDetailPage;
     publicationDetailPage: PublicationDetailPage;
-    departments: Department;
-    users: User;
     images: Image;
     videos: Video;
     svgs: Svg;
@@ -90,6 +88,8 @@ export interface Config {
     publicationTypes: PublicationType;
     events: Event;
     eventCategory: EventCategory;
+    departments: Department;
+    users: User;
     i18nForms: I18NForm;
     i18nGlobals: I18NGlobal;
     consent: Consent;
@@ -112,8 +112,6 @@ export interface Config {
     eventDetailPage: EventDetailPageSelect<false> | EventDetailPageSelect<true>;
     newsDetailPage: NewsDetailPageSelect<false> | NewsDetailPageSelect<true>;
     publicationDetailPage: PublicationDetailPageSelect<false> | PublicationDetailPageSelect<true>;
-    departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
-    users: UsersSelect<false> | UsersSelect<true>;
     images: ImagesSelect<false> | ImagesSelect<true>;
     videos: VideosSelect<false> | VideosSelect<true>;
     svgs: SvgsSelect<false> | SvgsSelect<true>;
@@ -127,6 +125,8 @@ export interface Config {
     publicationTypes: PublicationTypesSelect<false> | PublicationTypesSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     eventCategory: EventCategorySelect<false> | EventCategorySelect<true>;
+    departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     i18nForms: I18NFormsSelect<false> | I18NFormsSelect<true>;
     i18nGlobals: I18NGlobalsSelect<false> | I18NGlobalsSelect<true>;
     consent: ConsentSelect<false> | ConsentSelect<true>;
@@ -243,6 +243,27 @@ export interface HomePage {
           }
         | {
             title: string;
+            links?:
+              | {
+                  linkType: 'internal' | 'external';
+                  linkInternal?: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  linkExternal?: {
+                    externalLinkText: string;
+                    externalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'linksBlock';
+          }
+        | {
+            title: string;
             downloads?:
               | (
                   | {
@@ -268,27 +289,6 @@ export interface HomePage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'imageBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
           }
         | {
             video: string | Video;
@@ -837,6 +837,27 @@ export interface OverviewPage {
           }
         | {
             title: string;
+            links?:
+              | {
+                  linkType: 'internal' | 'external';
+                  linkInternal?: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  linkExternal?: {
+                    externalLinkText: string;
+                    externalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'linksBlock';
+          }
+        | {
+            title: string;
             downloads?:
               | (
                   | {
@@ -862,27 +883,6 @@ export interface OverviewPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'imageBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
           }
         | {
             video: string | Video;
@@ -1182,6 +1182,27 @@ export interface DetailPage {
           }
         | {
             title: string;
+            links?:
+              | {
+                  linkType: 'internal' | 'external';
+                  linkInternal?: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  linkExternal?: {
+                    externalLinkText: string;
+                    externalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'linksBlock';
+          }
+        | {
+            title: string;
             downloads?:
               | (
                   | {
@@ -1207,27 +1228,6 @@ export interface DetailPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'imageBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
           }
         | {
             video: string | Video;
@@ -1535,6 +1535,27 @@ export interface MagazineDetailPage {
           }
         | {
             title: string;
+            links?:
+              | {
+                  linkType: 'internal' | 'external';
+                  linkInternal?: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  linkExternal?: {
+                    externalLinkText: string;
+                    externalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'linksBlock';
+          }
+        | {
+            title: string;
             downloads?:
               | (
                   | {
@@ -1560,27 +1581,6 @@ export interface MagazineDetailPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'imageBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
           }
         | {
             video: string | Video;
@@ -1880,6 +1880,27 @@ export interface EventDetailPage {
           }
         | {
             title: string;
+            links?:
+              | {
+                  linkType: 'internal' | 'external';
+                  linkInternal?: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  linkExternal?: {
+                    externalLinkText: string;
+                    externalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'linksBlock';
+          }
+        | {
+            title: string;
             downloads?:
               | (
                   | {
@@ -1905,27 +1926,6 @@ export interface EventDetailPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'imageBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
           }
         | {
             video: string | Video;
@@ -2232,6 +2232,27 @@ export interface NewsDetailPage {
           }
         | {
             title: string;
+            links?:
+              | {
+                  linkType: 'internal' | 'external';
+                  linkInternal?: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  linkExternal?: {
+                    externalLinkText: string;
+                    externalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'linksBlock';
+          }
+        | {
+            title: string;
             downloads?:
               | (
                   | {
@@ -2257,27 +2278,6 @@ export interface NewsDetailPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'imageBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
           }
         | {
             video: string | Video;
@@ -2587,6 +2587,27 @@ export interface PublicationDetailPage {
           }
         | {
             title: string;
+            links?:
+              | {
+                  linkType: 'internal' | 'external';
+                  linkInternal?: {
+                    openInNewWindow?: boolean | null;
+                    linkText: string;
+                    internalLink: string;
+                  };
+                  linkExternal?: {
+                    externalLinkText: string;
+                    externalLink: string;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'linksBlock';
+          }
+        | {
+            title: string;
             downloads?:
               | (
                   | {
@@ -2612,27 +2633,6 @@ export interface PublicationDetailPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'imageBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
           }
         | {
             video: string | Video;
@@ -2894,40 +2894,6 @@ export interface PublicationType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: string;
-  department?: (string | null) | Department;
-  roles?: ('global-admin' | 'global-user')[] | null;
-  username?: string | null;
-  departments?:
-    | {
-        department: string | Department;
-        roles: ('admin' | 'editor' | 'editor-magazine' | 'translator')[];
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "faqItems".
  */
 export interface FaqItem {
@@ -2984,6 +2950,40 @@ export interface EventCategory {
   eventCategory: string;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  department?: (string | null) | Department;
+  roles?: ('global-admin' | 'global-user')[] | null;
+  username?: string | null;
+  departments?:
+    | {
+        department: string | Department;
+        roles: ('admin' | 'editor' | 'editor-magazine' | 'translator')[];
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3362,14 +3362,6 @@ export interface PayloadLockedDocument {
         value: string | PublicationDetailPage;
       } | null)
     | ({
-        relationTo: 'departments';
-        value: string | Department;
-      } | null)
-    | ({
-        relationTo: 'users';
-        value: string | User;
-      } | null)
-    | ({
         relationTo: 'images';
         value: string | Image;
       } | null)
@@ -3420,6 +3412,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'eventCategory';
         value: string | EventCategory;
+      } | null)
+    | ({
+        relationTo: 'departments';
+        value: string | Department;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: string | User;
       } | null)
     | ({
         relationTo: 'i18nForms';
@@ -3547,25 +3547,6 @@ export interface HomePageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              downloads?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
         linksBlock?:
           | T
           | {
@@ -3589,6 +3570,25 @@ export interface HomePageSelect<T extends boolean = true> {
                         };
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        downloadsBlock?:
+          | T
+          | {
+              title?: T;
+              downloads?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              alignement?: T;
+              image?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
               id?: T;
               blockName?: T;
             };
@@ -3907,25 +3907,6 @@ export interface OverviewPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              downloads?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
         linksBlock?:
           | T
           | {
@@ -3949,6 +3930,25 @@ export interface OverviewPageSelect<T extends boolean = true> {
                         };
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        downloadsBlock?:
+          | T
+          | {
+              title?: T;
+              downloads?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              alignement?: T;
+              image?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
               id?: T;
               blockName?: T;
             };
@@ -4239,25 +4239,6 @@ export interface DetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              downloads?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
         linksBlock?:
           | T
           | {
@@ -4281,6 +4262,25 @@ export interface DetailPageSelect<T extends boolean = true> {
                         };
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        downloadsBlock?:
+          | T
+          | {
+              title?: T;
+              downloads?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              alignement?: T;
+              image?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
               id?: T;
               blockName?: T;
             };
@@ -4578,25 +4578,6 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              downloads?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
         linksBlock?:
           | T
           | {
@@ -4620,6 +4601,25 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
                         };
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        downloadsBlock?:
+          | T
+          | {
+              title?: T;
+              downloads?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              alignement?: T;
+              image?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
               id?: T;
               blockName?: T;
             };
@@ -4910,25 +4910,6 @@ export interface EventDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              downloads?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
         linksBlock?:
           | T
           | {
@@ -4952,6 +4933,25 @@ export interface EventDetailPageSelect<T extends boolean = true> {
                         };
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        downloadsBlock?:
+          | T
+          | {
+              title?: T;
+              downloads?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              alignement?: T;
+              image?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
               id?: T;
               blockName?: T;
             };
@@ -5248,25 +5248,6 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              downloads?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
         linksBlock?:
           | T
           | {
@@ -5290,6 +5271,25 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
                         };
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        downloadsBlock?:
+          | T
+          | {
+              title?: T;
+              downloads?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              alignement?: T;
+              image?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
               id?: T;
               blockName?: T;
             };
@@ -5591,25 +5591,6 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              downloads?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
         linksBlock?:
           | T
           | {
@@ -5633,6 +5614,25 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
                         };
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        downloadsBlock?:
+          | T
+          | {
+              title?: T;
+              downloads?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              alignement?: T;
+              image?: T;
+              title?: T;
+              caption?: T;
+              credits?: T;
               id?: T;
               blockName?: T;
             };
@@ -5887,49 +5887,6 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "departments_select".
- */
-export interface DepartmentsSelect<T extends boolean = true> {
-  name?: T;
-  domain?: T;
-  slug?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
- */
-export interface UsersSelect<T extends boolean = true> {
-  department?: T;
-  roles?: T;
-  username?: T;
-  departments?:
-    | T
-    | {
-        department?: T;
-        roles?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "images_select".
  */
 export interface ImagesSelect<T extends boolean = true> {
@@ -6126,6 +6083,49 @@ export interface EventCategorySelect<T extends boolean = true> {
   eventCategory?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "departments_select".
+ */
+export interface DepartmentsSelect<T extends boolean = true> {
+  name?: T;
+  domain?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  department?: T;
+  roles?: T;
+  username?: T;
+  departments?:
+    | T
+    | {
+        department?: T;
+        roles?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

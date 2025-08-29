@@ -20,6 +20,7 @@ export const LinksBlock: Block = {
       type: 'array',
     },
   ],
+  imageURL: '/admin-ui-images/links.svg',
   labels: {
     plural: 'Links',
     singular: 'Links',

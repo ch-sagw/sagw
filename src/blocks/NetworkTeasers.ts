@@ -92,6 +92,7 @@ export const NetworkTeasersBlock: Block = {
       type: 'group',
     },
   ],
+  imageURL: '/admin-ui-images/network-teasers.svg',
   labels: {
     plural: 'Network Teasers',
     singular: 'Network Teasers',

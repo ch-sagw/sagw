@@ -39,6 +39,7 @@ export const VideoBlock: Block = {
     },
 
   ],
+  imageURL: '/admin-ui-images/video.svg',
   labels: {
     plural: 'Videos',
     singular: 'Video',

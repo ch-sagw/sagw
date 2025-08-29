@@ -23,6 +23,7 @@ export const DownloadsBlock: Block = {
       type: 'relationship',
     },
   ],
+  imageURL: '/admin-ui-images/downloads.svg',
   labels: {
     plural: 'Downloads',
     singular: 'Downloads',

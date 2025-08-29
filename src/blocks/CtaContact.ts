@@ -27,6 +27,7 @@ export const CtaContactBlock: Block = {
       type: 'relationship',
     },
   ],
+  imageURL: '/admin-ui-images/cta-contact.svg',
   labels: {
     plural: 'CTAs Contact',
     singular: 'CTA Contact',

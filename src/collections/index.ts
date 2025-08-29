@@ -36,8 +36,6 @@ import { ErrorPage } from '@/collections/Pages/Singletons/Error';
 import { HomePage } from '@/collections/Pages/Singletons/Home';
 
 export const plcCollections = [
-  Departments,
-  Users,
   Images,
   Videos,
   Svgs,
@@ -51,6 +49,8 @@ export const plcCollections = [
   PublicationTypes,
   Events,
   EventCategories,
+  Departments,
+  Users,
 ];
 
 export const singletonPageCollections = [

@@ -28,9 +28,9 @@ export const blocks = (exclude?: string[]): Block[] => {
   const availableBlocks = [
     TextBlock,
     TitleSubtitleTextBlock,
+    LinksBlock,
     DownloadsBlock,
     ImageBlock,
-    LinksBlock,
     VideoBlock,
     AccordionBlock,
     FormBlock,

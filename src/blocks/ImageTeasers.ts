@@ -49,6 +49,7 @@ export const ImageTeasersBlock: Block = {
     },
 
   ],
+  imageURL: '/admin-ui-images/image-teasers.svg',
   labels: {
     plural: 'Image Teasers',
     singular: 'Image Teasers',

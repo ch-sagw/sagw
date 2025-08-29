@@ -13,7 +13,7 @@ export const HomePage: CollectionConfig = {
     read: (): boolean => true,
   },
   admin: {
-    group: 'Global Pages',
+    group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [

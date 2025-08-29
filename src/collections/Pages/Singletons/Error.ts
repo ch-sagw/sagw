@@ -7,7 +7,7 @@ export const ErrorPage: CollectionConfig = {
     read: (): boolean => true,
   },
   admin: {
-    group: 'Global Pages',
+    group: 'Pages',
   },
   fields: [
     {

@@ -14,6 +14,7 @@ export const FormBlock: Block = {
       type: 'relationship',
     },
   ],
+  imageURL: '/admin-ui-images/form.svg',
   labels: {
     plural: 'Forms',
     singular: 'Form',

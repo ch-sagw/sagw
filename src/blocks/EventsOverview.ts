@@ -25,6 +25,7 @@ export const EventsOverviewBlock: Block = {
       type: 'ui',
     },
   ],
+  imageURL: '/admin-ui-images/overview.svg',
   labels: {
     plural: 'Events Overview (automatic)',
     singular: 'Events Overview (automatic)',

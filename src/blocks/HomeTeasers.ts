@@ -44,6 +44,7 @@ export const HomeTeasersBlock: Block = {
       type: 'array',
     },
   ],
+  imageURL: '/admin-ui-images/home-teasers.svg',
   labels: {
     plural: 'Home Teasers',
     singular: 'Home Teasers',

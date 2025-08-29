@@ -51,6 +51,7 @@ export const ImageBlock: Block = {
       type: 'text',
     },
   ],
+  imageURL: '/admin-ui-images/image.svg',
   labels: {
     plural: 'Images',
     singular: 'Image',

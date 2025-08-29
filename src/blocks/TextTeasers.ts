@@ -66,6 +66,7 @@ export const TextTeasersBlock: Block = {
       type: 'array',
     },
   ],
+  imageURL: '/admin-ui-images/text-teasers.svg',
   labels: {
     plural: 'Text Teasers',
     singular: 'Text Teasers',

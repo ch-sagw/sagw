@@ -34,6 +34,7 @@ export const TitleSubtitleTextBlock: Block = {
       type: 'array',
     },
   ],
+  imageURL: '/admin-ui-images/title-subtitle-text.svg',
   labels: {
     plural: 'Title & Subtitle & Text',
     singular: 'Title & Subtitle & Text',

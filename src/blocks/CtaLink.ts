@@ -22,6 +22,7 @@ export const CtaLinkBlock: Block = {
     },
     ...fieldsLinkInternalOrExternal,
   ],
+  imageURL: '/admin-ui-images/cta-link.svg',
   labels: {
     plural: 'CTAs Link',
     singular: 'CTA Link',
