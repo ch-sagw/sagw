@@ -12,7 +12,6 @@ import { PublicationTypes } from '@/collections/Plc/PublicationTypes';
 import { EventCategories } from '@/collections/Plc/EventCategories';
 import { Departments } from '@/collections/Plc/Departments';
 import { ZenodoDocuments } from '@/collections/Plc/ZenodoDocuments';
-import { ReusableText } from './Plc/ReusableText';
 
 // Globals
 import { I18nForms } from './Globals/i18n/Forms';
@@ -46,7 +45,6 @@ export const plcCollections = [
   PublicationTopics,
   PublicationTypes,
   EventCategories,
-  ReusableText,
   Departments,
   Users,
 ];

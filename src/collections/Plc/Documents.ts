@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload';
+import { versions } from '@/field-templates/versions';
 
 export const Documents: CollectionConfig = {
   access: {
@@ -25,4 +26,5 @@ export const Documents: CollectionConfig = {
   upload: {
     mimeTypes: ['application/pdf'],
   },
+  versions,
 };

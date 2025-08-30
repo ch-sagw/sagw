@@ -86,7 +86,6 @@ export interface Config {
     publicationTopics: PublicationTopic;
     publicationTypes: PublicationType;
     eventCategory: EventCategory;
-    reusableText: ReusableText;
     departments: Department;
     users: User;
     i18nForms: I18NForm;
@@ -122,7 +121,6 @@ export interface Config {
     publicationTopics: PublicationTopicsSelect<false> | PublicationTopicsSelect<true>;
     publicationTypes: PublicationTypesSelect<false> | PublicationTypesSelect<true>;
     eventCategory: EventCategorySelect<false> | EventCategorySelect<true>;
-    reusableText: ReusableTextSelect<false> | ReusableTextSelect<true>;
     departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     i18nForms: I18NFormsSelect<false> | I18NFormsSelect<true>;
@@ -531,6 +529,7 @@ export interface HomePage {
   };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -561,6 +560,7 @@ export interface Document {
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -583,6 +583,7 @@ export interface Project {
   name: string;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -602,6 +603,7 @@ export interface ZenodoDocument {
   }[];
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -613,6 +615,7 @@ export interface Image {
   alt?: string | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -633,6 +636,7 @@ export interface Video {
   alt?: string | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -725,6 +729,7 @@ export interface Person {
   fullName?: string | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -736,6 +741,7 @@ export interface Svg {
   name: string;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -756,6 +762,7 @@ export interface NetworkCategory {
   name: string;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -782,6 +789,7 @@ export interface ErrorPage {
   };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1137,6 +1145,7 @@ export interface OverviewPage {
   };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1492,6 +1501,7 @@ export interface DetailPage {
   };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1855,6 +1865,7 @@ export interface MagazineDetailPage {
   };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2226,6 +2237,7 @@ export interface EventDetailPage {
   };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2237,6 +2249,7 @@ export interface EventCategory {
   eventCategory: string;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2600,6 +2613,7 @@ export interface NewsDetailPage {
   };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2965,6 +2979,7 @@ export interface PublicationDetailPage {
   };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2976,6 +2991,7 @@ export interface PublicationTopic {
   publicationTopic: string;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2987,17 +3003,7 @@ export interface PublicationType {
   publicationType: string;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "reusableText".
- */
-export interface ReusableText {
-  id: string;
-  department?: (string | null) | Department;
-  text: string;
-  updatedAt: string;
-  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3112,6 +3118,7 @@ export interface I18NForm {
   };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3126,6 +3133,7 @@ export interface I18NGlobal {
   };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3239,6 +3247,7 @@ export interface Consent {
   };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3272,6 +3281,7 @@ export interface Footer {
     | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3318,6 +3328,7 @@ export interface Header {
   };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3352,6 +3363,7 @@ export interface StatusMessage {
   type: 'warn' | 'error' | 'success';
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3452,10 +3464,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'eventCategory';
         value: string | EventCategory;
-      } | null)
-    | ({
-        relationTo: 'reusableText';
-        value: string | ReusableText;
       } | null)
     | ({
         relationTo: 'departments';
@@ -3892,6 +3900,7 @@ export interface HomePageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3920,6 +3929,7 @@ export interface ErrorPageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4262,6 +4272,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4604,6 +4615,7 @@ export interface DetailPageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4953,6 +4965,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5315,6 +5328,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5664,6 +5678,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6017,6 +6032,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6027,6 +6043,7 @@ export interface ImagesSelect<T extends boolean = true> {
   alt?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
   url?: T;
   thumbnailURL?: T;
   filename?: T;
@@ -6046,6 +6063,7 @@ export interface VideosSelect<T extends boolean = true> {
   alt?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
   url?: T;
   thumbnailURL?: T;
   filename?: T;
@@ -6065,6 +6083,7 @@ export interface SvgsSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
   url?: T;
   thumbnailURL?: T;
   filename?: T;
@@ -6084,6 +6103,7 @@ export interface NetworkCategoriesSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6095,6 +6115,7 @@ export interface DocumentsSelect<T extends boolean = true> {
   project?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
   url?: T;
   thumbnailURL?: T;
   filename?: T;
@@ -6124,6 +6145,7 @@ export interface ZenodoDocumentsSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6134,6 +6156,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6154,6 +6177,7 @@ export interface PeopleSelect<T extends boolean = true> {
   fullName?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6164,6 +6188,7 @@ export interface PublicationTopicsSelect<T extends boolean = true> {
   publicationTopic?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6174,6 +6199,7 @@ export interface PublicationTypesSelect<T extends boolean = true> {
   publicationType?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6184,16 +6210,7 @@ export interface EventCategorySelect<T extends boolean = true> {
   eventCategory?: T;
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "reusableText_select".
- */
-export interface ReusableTextSelect<T extends boolean = true> {
-  department?: T;
-  text?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6330,6 +6347,7 @@ export interface I18NFormsSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6345,6 +6363,7 @@ export interface I18NGlobalsSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6397,6 +6416,7 @@ export interface ConsentSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6431,6 +6451,7 @@ export interface FooterSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6488,6 +6509,7 @@ export interface HeaderSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6521,6 +6543,7 @@ export interface StatusMessageSelect<T extends boolean = true> {
   type?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

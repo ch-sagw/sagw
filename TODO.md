@@ -51,18 +51,6 @@ Payload Config:
 - for departments, make name, url and slug unique
 - set access control on all blocks/collections
 - in tenant config, add field for available languages: https://payloadcms.com/docs/configuration/localization#filter-available-options
-- strange behavior with autosave: e.g. in collection "documents"
-  - enable draft versions and autosave in documents collection (removed for now in all collections due to errors)
-  - go to detailPage, add a new one
-  - in content section, add downloads block
-  - click on the + sign to add a new "Document"
-  - in the overlay -> choose a new document to upload
-  - hit save -> error
-- other strange behaviour with autosave:
-  - go to detail page and add a new one (enable autosave. commented out in detail page code)
-  - a block downloads block or a link block to a page with autosave enabled (just examples, we might have issues in other places as well)
-  - thinks like admin: { condition: ...} are not working.
-  - additonally, e.g. for radio fields, the defaultValue is not working
 
 
 Misc:

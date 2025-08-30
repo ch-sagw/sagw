@@ -2,6 +2,7 @@
 // - the id 15126918 returns multiple files. how to display it?
 
 import type { CollectionConfig } from 'payload';
+import { versions } from '@/field-templates/versions';
 
 export const ZenodoDocuments: CollectionConfig = {
   access: {
@@ -77,4 +78,5 @@ export const ZenodoDocuments: CollectionConfig = {
     },
   ],
   slug: 'zenodoDocuments',
+  versions,
 };
