@@ -11,7 +11,7 @@ export const People: CollectionConfig = {
   },
   fields: [
     {
-      name: 'person-department',
+      name: 'personDepartment',
       options: [
         {
           label: 'Adminstration',
