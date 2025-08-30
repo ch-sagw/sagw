@@ -51,7 +51,7 @@ Payload Config:
 - for departments, make name, url and slug unique
 - set access control on all blocks/collections
 - in tenant config, add field for available languages: https://payloadcms.com/docs/configuration/localization#filter-available-options
-
+- layout fields in rows where appropriate. e.g. with link internal: the 3 fields can be in 1 row
 
 Misc:
 --------
@@ -66,6 +66,5 @@ REFACTOR:
 -------
 - refine globals, especially i18n
 - introduce collection "Reusable Text": author can define "Publikation herunterladen" in 4 languages. Then, he can choose this as title in the PublicationsTeasersBlock
-- create global nav structure
 - fix test / create new seed data
 - add descriptions to collections: what is this collection for?

@@ -3291,41 +3291,34 @@ export interface Header {
   id: string;
   department?: (string | null) | Department;
   adminTitle?: string | null;
-  logo: string | Image;
-  metaLinks: {
-    externalLinkText: string;
-    externalLink: string;
+  navItems: {
+    navItemText: string;
+    navItemLink?: string | null;
+    navItems?:
+      | {
+          navItemText: string;
+          navItemLink?: string | null;
+          id?: string | null;
+        }[]
+      | null;
     id?: string | null;
   }[];
-  navigation: {
-    home: string;
-    promotion: {
-      description: string;
-      overview: string;
-      institutes: string;
-      editions: string;
-      travelReports: string;
-      earlyCareerAward: string;
-    };
-    network: {
-      description: string;
-      network: string;
-    };
-    activities: {
-      description: string;
-      overview: string;
-      magazine: string;
-      publications: string;
-      events: string;
-    };
-    about: {
-      description: string;
-      sagw: string;
-      team: string;
-      contact: string;
-      openJobs: string;
-    };
-  };
+  metaLinks?:
+    | {
+        linkType: 'internal' | 'external';
+        linkInternal?: {
+          openInNewWindow?: boolean | null;
+          linkText: string;
+          internalLink: string;
+        };
+        linkExternal?: {
+          externalLinkText: string;
+          externalLink: string;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  logo: string | Svg;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -6460,53 +6453,40 @@ export interface FooterSelect<T extends boolean = true> {
 export interface HeaderSelect<T extends boolean = true> {
   department?: T;
   adminTitle?: T;
-  logo?: T;
+  navItems?:
+    | T
+    | {
+        navItemText?: T;
+        navItemLink?: T;
+        navItems?:
+          | T
+          | {
+              navItemText?: T;
+              navItemLink?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   metaLinks?:
     | T
     | {
-        externalLinkText?: T;
-        externalLink?: T;
+        linkType?: T;
+        linkInternal?:
+          | T
+          | {
+              openInNewWindow?: T;
+              linkText?: T;
+              internalLink?: T;
+            };
+        linkExternal?:
+          | T
+          | {
+              externalLinkText?: T;
+              externalLink?: T;
+            };
         id?: T;
       };
-  navigation?:
-    | T
-    | {
-        home?: T;
-        promotion?:
-          | T
-          | {
-              description?: T;
-              overview?: T;
-              institutes?: T;
-              editions?: T;
-              travelReports?: T;
-              earlyCareerAward?: T;
-            };
-        network?:
-          | T
-          | {
-              description?: T;
-              network?: T;
-            };
-        activities?:
-          | T
-          | {
-              description?: T;
-              overview?: T;
-              magazine?: T;
-              publications?: T;
-              events?: T;
-            };
-        about?:
-          | T
-          | {
-              description?: T;
-              sagw?: T;
-              team?: T;
-              contact?: T;
-              openJobs?: T;
-            };
-      };
+  logo?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
