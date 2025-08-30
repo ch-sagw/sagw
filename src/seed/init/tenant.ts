@@ -17,7 +17,7 @@ export const seedTenant = async (payload: Payload, tenantName: string, tenantSlu
         },
       });
 
-      payload.logger.info('seed: tenant created');
+      payload.logger.info('seed: created initial tenant');
 
       return tenant.id;
     }
