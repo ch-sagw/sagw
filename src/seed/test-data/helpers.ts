@@ -1,27 +1,3 @@
-import { File } from 'payload';
-
-export const fetchFileByURL = async (url: string): Promise<File> => {
-  const res = await fetch(url, {
-    credentials: 'include',
-    method: 'GET',
-  });
-
-  if (!res.ok) {
-    throw new Error(`Failed to fetch file from ${url}, status: ${res.status}`);
-  }
-
-  const data = await res.arrayBuffer();
-
-  return {
-    data: Buffer.from(data),
-    mimetype: `image/${url.split('.')
-      .pop()}`,
-    name: url.split('/')
-      .pop() || `file-${Date.now()}`,
-    size: data.byteLength,
-  };
-};
-
 interface InterfaceRteNode {
   [k: string]: unknown;
   root: {
