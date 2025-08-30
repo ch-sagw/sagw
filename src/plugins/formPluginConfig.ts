@@ -106,17 +106,13 @@ export const formPluginConfig = (): FormBuilderPluginConfig => ({
       });
 
       renderFields.push({
-        localized: true,
-        name: 'successMessage',
-        required: true,
-        type: 'text',
-      });
-
-      renderFields.push({
-        localized: true,
-        name: 'errorMessage',
-        required: true,
-        type: 'text',
+        admin: {
+          description: 'If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".',
+        },
+        defaultValue: true,
+        label: 'Show Data-Privacy Checkbox',
+        name: 'showPrivacyCheckbox',
+        type: 'checkbox',
       });
 
       return renderFields;

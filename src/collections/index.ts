@@ -15,7 +15,6 @@ import { ZenodoDocuments } from '@/collections/Plc/ZenodoDocuments';
 
 // Globals
 import { I18nForms } from './Globals/i18n/Forms';
-import { I18nGlobal } from './Globals/i18n/Globals';
 import { Consent } from './Globals/Consent';
 import { Footer } from './Globals/Footer';
 import { Header } from './Globals/Header';
@@ -65,7 +64,6 @@ export const setsPageCollections = [
 
 export const globalCollections = [
   I18nForms,
-  I18nGlobal,
   Consent,
   Footer,
   Header,

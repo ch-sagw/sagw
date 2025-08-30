@@ -89,7 +89,6 @@ export interface Config {
     departments: Department;
     users: User;
     i18nForms: I18NForm;
-    i18nGlobals: I18NGlobal;
     consent: Consent;
     footer: Footer;
     header: Header;
@@ -124,7 +123,6 @@ export interface Config {
     departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     i18nForms: I18NFormsSelect<false> | I18NFormsSelect<true>;
-    i18nGlobals: I18NGlobalsSelect<false> | I18NGlobalsSelect<true>;
     consent: ConsentSelect<false> | ConsentSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -704,8 +702,10 @@ export interface Form {
     | null;
   submitButtonLabel: string;
   recipientEMail: string;
-  successMessage: string;
-  errorMessage: string;
+  /**
+   * If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".
+   */
+  showPrivacyCheckbox?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -3046,23 +3046,9 @@ export interface User {
 export interface I18NForm {
   id: string;
   department?: (string | null) | Department;
-  inputFields: {
-    email: {
-      label: string;
-      placeholder: string;
-      error: string;
-    };
-    message: {
-      label: string;
-      placeholder: string;
-      error: string;
-    };
-    name: {
-      label: string;
-      placeholder: string;
-      error: string;
-    };
-  };
+  /**
+   * You may show this text in a checkbox on forms.
+   */
   checkboxes: {
     dataPrivacyCheckboxText: {
       root: {
@@ -3080,6 +3066,9 @@ export interface I18NForm {
       [k: string]: unknown;
     };
   };
+  /**
+   * This is the text which is shown if a form was successfully submitted.
+   */
   submitSuccess: {
     title: string;
     text: string;
@@ -3092,6 +3081,9 @@ export interface I18NForm {
       };
     };
   };
+  /**
+   * This is the text which is shown if there was an error submitting a form.
+   */
   submitError: {
     title: string;
     text: string;
@@ -3104,6 +3096,9 @@ export interface I18NForm {
       };
     };
   };
+  /**
+   * This is the text which is shown if there was an warning submitting a form.
+   */
   submitWarn: {
     title: string;
     text: string;
@@ -3115,21 +3110,6 @@ export interface I18NForm {
         internalLink: string;
       };
     };
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "i18nGlobals".
- */
-export interface I18NGlobal {
-  id: string;
-  department?: (string | null) | Department;
-  sectionTitles: {
-    download: string;
-    links: string;
   };
   updatedAt: string;
   createdAt: string;
@@ -3469,10 +3449,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'i18nForms';
         value: string | I18NForm;
-      } | null)
-    | ({
-        relationTo: 'i18nGlobals';
-        value: string | I18NGlobal;
       } | null)
     | ({
         relationTo: 'consent';
@@ -6254,31 +6230,6 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface I18NFormsSelect<T extends boolean = true> {
   department?: T;
-  inputFields?:
-    | T
-    | {
-        email?:
-          | T
-          | {
-              label?: T;
-              placeholder?: T;
-              error?: T;
-            };
-        message?:
-          | T
-          | {
-              label?: T;
-              placeholder?: T;
-              error?: T;
-            };
-        name?:
-          | T
-          | {
-              label?: T;
-              placeholder?: T;
-              error?: T;
-            };
-      };
   checkboxes?:
     | T
     | {
@@ -6337,22 +6288,6 @@ export interface I18NFormsSelect<T extends boolean = true> {
                     internalLink?: T;
                   };
             };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "i18nGlobals_select".
- */
-export interface I18NGlobalsSelect<T extends boolean = true> {
-  department?: T;
-  sectionTitles?:
-    | T
-    | {
-        download?: T;
-        links?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -6585,8 +6520,7 @@ export interface FormsSelect<T extends boolean = true> {
       };
   submitButtonLabel?: T;
   recipientEMail?: T;
-  successMessage?: T;
-  errorMessage?: T;
+  showPrivacyCheckbox?: T;
   updatedAt?: T;
   createdAt?: T;
 }

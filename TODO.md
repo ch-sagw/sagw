@@ -64,7 +64,6 @@ Testing:
 
 REFACTOR:
 -------
-- refine globals, especially i18n
 - introduce collection "Reusable Text": author can define "Publikation herunterladen" in 4 languages. Then, he can choose this as title in the PublicationsTeasersBlock
 - fix test / create new seed data
 - add descriptions to collections: what is this collection for?
