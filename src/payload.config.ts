@@ -75,10 +75,9 @@ export default buildConfig({
     ],
   },
   onInit: async (payload) => {
-
     // on ENV seed, we seed test data. otherwise we seed initial user
     // and tenant (if user and tenant collections are empty)
-    if (process.env.ENV === 'seed') {
+    if (process.env.ENV === 'seed' || process.env.ENV === 'playwright') {
       await seedTestData(payload);
     } else {
       await seedInitialUserAndTenant(payload);
