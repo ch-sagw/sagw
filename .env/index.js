@@ -21,4 +21,13 @@ if (process.env.CI !== 'true') {
       quiet: true,
     });
   }
+
+  if (process.env.ENV === 'seed') {
+    dotenv.config({
+      override: true,
+      path: '.env/.env.local',
+      quiet: true,
+    });
+  }
+
 }
