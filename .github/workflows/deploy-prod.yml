@@ -60,8 +60,8 @@ jobs:
           PAYLOAD_INITIAL_USER_MAIL: ${{ secrets.PAYLOAD_INITIAL_USER_MAIL }}
           PAYLOAD_INITIAL_PASSWORD: ${{ secrets.PAYLOAD_INITIAL_PASSWORD }}
           ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
-          IS_RUNNING_IN_PLAYWRIGHT_TEST_ENV: true
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
+          ENV: playwright
   deploy-production:
     needs: test
     runs-on: ubuntu-latest
