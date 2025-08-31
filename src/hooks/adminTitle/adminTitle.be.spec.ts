@@ -8,7 +8,6 @@ test.describe('adminTitle', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/');
-    await page.waitForLoadState('networkidle');
 
     const loginButton = await page.getByRole('button', {
       name: 'Anmelden',
