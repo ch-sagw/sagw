@@ -13,6 +13,7 @@ test.describe('Add Zenodo document', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/');
+    await page.waitForLoadState('networkidle');
 
     const loginButton = await page.getByRole('button', {
       name: 'Anmelden',
@@ -22,7 +23,7 @@ test.describe('Add Zenodo document', () => {
     await page.waitForLoadState('networkidle');
 
     await page.goto('http://localhost:3000/admin/collections/zenodoDocuments/create');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     zenodoInput = page.getByTestId('zenodo-input');
     zenodoButton = page.getByTestId('zenodo-button');

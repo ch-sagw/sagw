@@ -8,6 +8,7 @@ test.describe('seoFallback', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/');
+    await page.waitForLoadState('networkidle');
 
     const loginButton = await page.getByRole('button', {
       name: 'Anmelden',
@@ -18,7 +19,7 @@ test.describe('seoFallback', () => {
 
     // create a news detail page
     await page.goto('http://localhost:3000/admin/collections/newsDetailPage/create');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const teaserInput = await page.getByRole('textbox', {
       name: 'Teaser Text',

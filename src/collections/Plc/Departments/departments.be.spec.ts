@@ -8,6 +8,7 @@ test.describe('Deparments only show content from users department', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/');
+    await page.waitForLoadState('networkidle');
 
     const loginButton = await page.getByRole('button', {
       name: 'Anmelden',
@@ -21,7 +22,7 @@ test.describe('Deparments only show content from users department', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/images');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const expectedImage = await page.getByText('sagw.png', {
       exact: true,
@@ -40,7 +41,7 @@ test.describe('Deparments only show content from users department', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/publicationTopics');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const expectedTopic = await page.getByText('Publication Topic 1 SAGW', {
       exact: true,
@@ -59,7 +60,7 @@ test.describe('Deparments only show content from users department', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/publicationTypes');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const expectedType = await page.getByText('Publication Type 1 SAGW', {
       exact: true,
@@ -78,7 +79,7 @@ test.describe('Deparments only show content from users department', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/zenodoDocuments');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const expectedDocument = await page.getByText('Sample Zenodo Document SAGW', {
       exact: true,
@@ -97,7 +98,7 @@ test.describe('Deparments only show content from users department', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/homePage');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const expectedDocument = await page.getByText('Home Title SAGW', {
       exact: true,
@@ -116,7 +117,7 @@ test.describe('Deparments only show content from users department', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/newsDetailPage');
-    await page.waitForLoadState('domcontentloaded');
+    await page.waitForLoadState('networkidle');
 
     const expectedNews = await page.getByText('News detail page title SAGW', {
       exact: true,
@@ -135,7 +136,7 @@ test.describe('Deparments only show content from users department', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/publicationDetailPage');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const expectedPublication = await page.getByText('Publication detail page title SAGW', {
       exact: true,

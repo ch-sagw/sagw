@@ -8,6 +8,7 @@ test.describe('Softhyphen', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/');
+    await page.waitForLoadState('networkidle');
 
     const loginButton = await page.getByRole('button', {
       name: 'Anmelden',
@@ -21,7 +22,7 @@ test.describe('Softhyphen', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const rteField = await page.locator('#field-hero .ContentEditable__root');
     const hyphenButton = await page.locator('#field-hero .toolbar-popup__button-softHyphenButton');

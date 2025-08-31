@@ -8,6 +8,7 @@ test.describe('Internal Link Choosers', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/');
+    await page.waitForLoadState('networkidle');
 
     const loginButton = await page.getByRole('button', {
       name: 'Anmelden',
@@ -21,7 +22,7 @@ test.describe('Internal Link Choosers', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const addContentButton = await page.getByRole('button', {
       name: 'Content hinzufügen',
@@ -41,9 +42,13 @@ test.describe('Internal Link Choosers', () => {
 
     await addLinkButton.click();
 
-    const internalType = await page.locator('#field-content__0__links__0__linkType li:first-of-type');
+    const internalType = await page.getByLabel('Internal', {
+      exact: true,
+    });
 
-    await internalType.click();
+    await internalType.click({
+      force: true,
+    });
 
     const linkTargetInput = await page.getByLabel('Link Target');
 
@@ -102,7 +107,7 @@ test.describe('Internal Link Choosers', () => {
   }) => {
 
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const addContentButton = await page.getByRole('button', {
       name: 'Content hinzufügen',
@@ -126,9 +131,13 @@ test.describe('Internal Link Choosers', () => {
     await linkButton.click();
     await page.waitForLoadState('networkidle');
 
-    const internalType = await page.locator('#field-linkType li:first-of-type');
+    const internalType = await page.getByLabel('Internal', {
+      exact: true,
+    });
 
-    await internalType.click();
+    await internalType.click({
+      force: true,
+    });
 
     const linkTargetInput = await page.getByLabel('Link Target');
 
@@ -187,7 +196,7 @@ test.describe('Internal Link Choosers', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const addContentButton = await page.getByRole('button', {
       name: 'Content hinzufügen',
@@ -207,9 +216,13 @@ test.describe('Internal Link Choosers', () => {
 
     await addLinkButton.click();
 
-    const internalType = await page.locator('#field-content__0__links__0__linkType li:first-of-type');
+    const internalType = await page.getByLabel('Internal', {
+      exact: true,
+    });
 
-    await internalType.click();
+    await internalType.click({
+      force: true,
+    });
 
     const linkTargetInput = await page.getByLabel('Link Target');
 
