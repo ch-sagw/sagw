@@ -1,5 +1,5 @@
 import { deleteData } from '@/seed/test-data/deleteData';
-import { addDataForTenant } from '@/seed/test-data/tenant1Data';
+import { addDataForTenant } from '@/seed/test-data/tenantData';
 import { Payload } from 'payload';
 
 export const seedTestData = async (payload: Payload): Promise<void> => {

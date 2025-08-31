@@ -716,7 +716,7 @@ export interface Form {
 export interface Person {
   id: string;
   department?: (string | null) | Department;
-  'person-department': 'admin' | 'science' | 'com' | 'direction';
+  personDepartment: 'admin' | 'science' | 'com' | 'direction';
   memberType: 'executiveBoard' | 'team';
   prefix?: string | null;
   firstname: string;
@@ -6133,7 +6133,7 @@ export interface ProjectsSelect<T extends boolean = true> {
  */
 export interface PeopleSelect<T extends boolean = true> {
   department?: T;
-  'person-department'?: T;
+  personDepartment?: T;
   memberType?: T;
   prefix?: T;
   firstname?: T;
