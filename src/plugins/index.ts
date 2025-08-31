@@ -51,6 +51,8 @@ const plugins: Plugin[] = [
     generateURL,
   }),
 
+  formBuilderPlugin(formPluginConfig()),
+
   multiTenantPlugin<Config>({
     cleanupAfterTenantDelete: false,
     collections: tenantsCollections,
@@ -78,7 +80,6 @@ const plugins: Plugin[] = [
     userHasAccessToAllTenants: (user) => isGlobalAdmin(user),
   }),
 
-  formBuilderPlugin(formPluginConfig()),
 ];
 
 export default plugins;
