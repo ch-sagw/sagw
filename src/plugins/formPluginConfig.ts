@@ -1,5 +1,6 @@
 import { FormBuilderPluginConfig } from 'node_modules/@payloadcms/plugin-form-builder/dist/types';
 import { Field } from 'payload';
+import { versions } from '@/field-templates/versions';
 
 const makeButtonFieldRequired = (field: Field): void => {
   if ('name' in field && field.name === 'submitButtonLabel') {
@@ -119,6 +120,7 @@ export const formPluginConfig = (): FormBuilderPluginConfig => ({
 
     },
     slug: 'forms',
+    versions,
   },
 
   // TODO

@@ -284,7 +284,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'forms',
     data: {
-      // _status: 'published',
+      _status: 'published',
       // department: tenantId,
       fields: [
         {
@@ -380,7 +380,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         colorMode: 'color',
         colorScheme: 'bright',
         lead: 'Detail Page Lead',
-        title: simpleRteConfig(`Detail Page title ${tenant.toUpperCase()}`),
+        title: simpleRteConfig(`Detail page title ${tenant.toUpperCase()}`),
       },
     },
   });
@@ -436,7 +436,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         colorMode: 'color',
         colorScheme: 'bright',
         lead: 'Event Detail Page Lead',
-        title: simpleRteConfig(`Event details page title ${tenant.toUpperCase()} (render detail page)`),
+        title: simpleRteConfig(`Event detail page title ${tenant.toUpperCase()} (render detail page)`),
       },
       showDetailPage: 'true',
     },
