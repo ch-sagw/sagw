@@ -3,7 +3,7 @@ import {
   test,
 } from '@playwright/test';
 
-test.describe('Internal Link Choosers', () => {
+test.describe('Internal Link Chooser', () => {
   test.beforeEach(async ({
     page,
   }) => {
@@ -40,6 +40,7 @@ test.describe('Internal Link Choosers', () => {
     });
 
     await addLinkButton.click();
+    await page.waitForLoadState('networkidle');
 
     const internalType = await page.getByLabel('Internal', {
       exact: true,
@@ -214,6 +215,7 @@ test.describe('Internal Link Choosers', () => {
     });
 
     await addLinkButton.click();
+    await page.waitForLoadState('networkidle');
 
     const internalType = await page.getByLabel('Internal', {
       exact: true,
