@@ -8,6 +8,7 @@ test.describe('Deparments only show content from users department', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/');
+    await page.waitForLoadState('load');
 
     const loginButton = await page.getByRole('button', {
       name: 'Anmelden',

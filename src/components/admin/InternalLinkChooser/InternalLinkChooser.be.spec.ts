@@ -8,6 +8,7 @@ test.describe('Internal Link Chooser', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/');
+    await page.waitForLoadState('load');
 
     const loginButton = await page.getByRole('button', {
       name: 'Anmelden',
@@ -41,14 +42,6 @@ test.describe('Internal Link Chooser', () => {
 
     await addLinkButton.click();
     await page.waitForLoadState('networkidle');
-
-    const internalType = await page.getByLabel('Internal', {
-      exact: true,
-    });
-
-    await internalType.click({
-      force: true,
-    });
 
     const linkTargetInput = await page.getByLabel('Link Target');
 
@@ -131,14 +124,6 @@ test.describe('Internal Link Chooser', () => {
     await linkButton.click();
     await page.waitForLoadState('networkidle');
 
-    const internalType = await page.getByLabel('Internal', {
-      exact: true,
-    });
-
-    await internalType.click({
-      force: true,
-    });
-
     const linkTargetInput = await page.getByLabel('Link Target');
 
     await linkTargetInput.click();
@@ -216,14 +201,6 @@ test.describe('Internal Link Chooser', () => {
 
     await addLinkButton.click();
     await page.waitForLoadState('networkidle');
-
-    const internalType = await page.getByLabel('Internal', {
-      exact: true,
-    });
-
-    await internalType.click({
-      force: true,
-    });
 
     const linkTargetInput = await page.getByLabel('Link Target');
 
