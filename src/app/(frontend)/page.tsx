@@ -15,7 +15,7 @@ export default async function HomePage({
   });
 
   const pageData = await payload.find({
-    collection: 'instituteDetail',
+    collection: 'homePage',
     depth: 0,
     limit: 1,
     locale: lang,
