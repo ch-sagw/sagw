@@ -58,7 +58,7 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     stderr: 'pipe',
     stdout: 'pipe',
-    url: 'http://localhost:3000',
+    url: 'http://localhost:3000/admin',
   },
 
   // We can not run BE tests in parallel. We might get into race conditions
