@@ -108,6 +108,30 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
+  if (tenant !== 'sagw') {
+    // this way, we can test if sagw tenant can add a document with
+    // zenodo id 15126918. uniqueness should only be applied inside same
+    // tenant...
+    await payload.create({
+      collection: 'zenodoDocuments',
+      data: {
+        _status: 'published',
+        department: tenantId,
+        files: [
+          {
+            format: 'pdf',
+            id: 'someid',
+            link: 'https://foo.bar',
+            size: 0.26,
+          },
+        ],
+        publicationDate: '1919-05-01',
+        title: `Sample Zenodo Document ${tenant.toUpperCase()}`,
+        zenodoId: '15126918',
+      },
+    });
+  }
+
   // ############
   // Global Content
   // ############

@@ -43,15 +43,21 @@ Payload Config:
 - earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
 - implement hidden texts global config (for a11y)
 - slug: add a slug-field to all pages! currently, we don't have slugs, but just id's. If we go for slugs -> make validation hook to ensure unique slugs per tenant
-- zenodo -> checks if validated id is already in connection. make this check per tenant. currently, if one tenant adds an id, another tenant can't add the same id.
-- in general, grant api read access to collections only, if collection is published
+- in general, grant api read access to collections only if collection is published
 - add indication on payload ui if author is on test or prod
 - richt-text sanitize: should we search for "  " and replace by " "? other optimizations?
 - in departments overview, there is a column "_watch Tenant" ... ?
 - for departments, make name, url and slug unique
 - set access control on all blocks/collections
-- in tenant config, add field for available languages: https://payloadcms.com/docs/configuration/localization#filter-available-options
 - layout fields in rows where appropriate. e.g. with link internal: the 3 fields can be in 1 row
+- for images: svg's are also selectable
+- show "published" column in collection overview
+
+Multitenant: (working with seed data)
+--------
+- in seed data for form: department is undefined... do we have an issue with form collection and tenant? possible open issues: https://github.com/payloadcms/payload/issues/13517 -> should be fixed in v3.52.0
+- in tenant config, add field for available languages: https://payloadcms.com/docs/configuration/localization#filter-available-options
+- issue: on autologin, tenant-cookie is not set after login -> create github issue
 
 Misc:
 --------
@@ -65,5 +71,5 @@ Testing:
 REFACTOR:
 -------
 - introduce collection "Reusable Text": author can define "Publikation herunterladen" in 4 languages. Then, he can choose this as title in the PublicationsTeasersBlock
-- fix test / create new seed data
 - add descriptions to collections: what is this collection for?
+- nav concept issue for tenants: how to link nav items to events / magazine / news / publications overview?

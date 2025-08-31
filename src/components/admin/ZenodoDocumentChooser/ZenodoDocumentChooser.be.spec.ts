@@ -12,19 +12,22 @@ test.describe('Add Zenodo document', () => {
   test.beforeEach(async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/admin/collections/zenodoDocuments/create');
-    await page.waitForLoadState('load');
+    await page.goto('http://localhost:3000/admin/');
 
-    const createNewButton = await page.getByText('Neu erstellen', {
-      exact: true,
+    const loginButton = await page.getByRole('button', {
+      name: 'Anmelden',
     });
 
-    await createNewButton.click();
+    await loginButton.click();
+    await page.waitForLoadState('networkidle');
+
+    await page.goto('http://localhost:3000/admin/collections/zenodoDocuments/create');
+    await page.waitForLoadState('load');
 
     zenodoInput = page.getByTestId('zenodo-input');
     zenodoButton = page.getByTestId('zenodo-button');
     saveButton = page.getByRole('button', {
-      name: 'Speichern',
+      name: 'Änderungen veröffentlichen',
     });
     zenodoList = page.getByTestId('zenodo-list');
   });
@@ -89,7 +92,7 @@ test.describe('Add Zenodo document', () => {
       .toBeVisible();
     await saveButton.click();
 
-    const successToast = await page.getByText('Zenodo Document erfolgreich erstellt.');
+    const successToast = await page.getByText('Erfolgreich aktualisiert.');
 
     await expect(successToast)
       .toBeVisible();
@@ -100,19 +103,19 @@ test.describe('Add Zenodo document', () => {
   }) => {
 
     // add a new document
-    await zenodoInput.fill('15126911');
+    await zenodoInput.fill('8888');
     await zenodoButton.click();
     await expect(zenodoList)
       .toBeVisible();
     await saveButton.click();
 
-    const successToast = await page.getByText('Zenodo Document erfolgreich erstellt.');
+    const successToast = await page.getByText('Erfolgreich aktualisiert.');
 
     await expect(successToast)
       .toBeVisible();
 
     // test the return value of the payload api
-    const res = await fetch('http://localhost:3000/api/zenodoDocuments?where[zenodoId][equals]=15126911');
+    const res = await fetch('http://localhost:3000/api/zenodoDocuments?where[zenodoId][equals]=8888');
     const json = await res.json();
 
     await expect(json.docs.length)
@@ -121,24 +124,24 @@ test.describe('Add Zenodo document', () => {
     const [doc] = json.docs;
 
     await expect(doc.zenodoId)
-      .toEqual('15126911');
+      .toEqual('8888');
 
     await expect(doc.title)
-      .toEqual('Initial Reports of the Deep Sea Drilling Project - Volume 6');
+      .toEqual('CALCULATING THE SMARANOACHE FUNCTION WITHOUT FACTORISING');
 
     await expect(doc.publicationDate)
-      .toEqual('1971');
+      .toEqual('2000-04-30');
 
     await expect(doc.files.length)
-      .toEqual(2);
+      .toEqual(1);
 
     await expect(doc.files[0].link)
-      .toEqual('https://zenodo.org/api/records/15126912/files/Leg 6 Volume.zip/content');
+      .toEqual('https://zenodo.org/api/records/8888/files/CalcSFFactorising.pdf/content');
 
     await expect(doc.files[0].format)
-      .toEqual('zip');
+      .toEqual('pdf');
 
     await expect(doc.files[0].size)
-      .toEqual(205.03);
+      .toEqual(0.15);
   });
 });
