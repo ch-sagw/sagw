@@ -27,6 +27,7 @@ export const Departments: CollectionConfig = {
       name: 'name',
       required: true,
       type: 'text',
+      unique: true,
     },
     {
       admin: {
@@ -34,6 +35,7 @@ export const Departments: CollectionConfig = {
       },
       name: 'domain',
       type: 'text',
+      unique: true,
     },
     {
       admin: {
@@ -44,6 +46,7 @@ export const Departments: CollectionConfig = {
       name: 'slug',
       required: true,
       type: 'text',
+      unique: true,
     },
   ],
   slug: 'departments',
