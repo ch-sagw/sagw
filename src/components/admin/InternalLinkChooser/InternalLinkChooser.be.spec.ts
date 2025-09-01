@@ -17,6 +17,8 @@ test.describe('Internal Link Chooser', () => {
 
     const linkTargetInput = await navItem1.getByLabel('Link Target');
 
+    await (await linkTargetInput.elementHandle())?.waitForElementState('stable');
+
     await linkTargetInput.click();
 
     const link1 = await page.getByText('Home Page', {
@@ -78,6 +80,8 @@ test.describe('Internal Link Chooser', () => {
 
     const linkTargetInput = await navItem1.getByLabel('Link Target');
 
+    await (await linkTargetInput.elementHandle())?.waitForElementState('stable');
+
     await linkTargetInput.click();
 
     const link1 = await page.getByText('Home Page', {
@@ -138,6 +142,8 @@ test.describe('Internal Link Chooser', () => {
     const navItem1 = await page.locator('#navItems-row-0');
 
     const linkTargetInput = await navItem1.getByLabel('Link Target');
+
+    await (await linkTargetInput.elementHandle())?.waitForElementState('stable');
 
     await linkTargetInput.click();
 
