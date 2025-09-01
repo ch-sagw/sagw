@@ -15,6 +15,11 @@ test.describe('Add Zenodo document', () => {
     await page.goto('http://localhost:3000/admin/');
     await page.waitForLoadState('load');
 
+    const emailInput = await page.getByLabel('E-Mail');
+
+    await expect(emailInput)
+      .not.toBeEmpty();
+
     const loginButton = await page.getByRole('button', {
       name: 'Anmelden',
     });
