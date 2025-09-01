@@ -13,6 +13,11 @@ export const beforeEachPayloadLogin = (): void => {
       name: 'Anmelden',
     });
 
+    await page.goto('http://localhost:3000/admin/');
+    // await page.waitForResponse('http://localhost:3000/api/users/me');
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForLoadState('load');
+
     await loginButton.click();
     await page.waitForLoadState('networkidle');
   });
