@@ -80,6 +80,25 @@ test.describe('Deparments only show content from users department', () => {
       .not.toBeVisible();
   });
 
+  test('forms', async ({
+    page,
+  }) => {
+    await page.goto('http://localhost:3000/admin/collections/forms');
+    await page.waitForLoadState('networkidle');
+
+    const expectedForm = await page.getByText('Form SAGW', {
+      exact: true,
+    });
+    const notExpectedForm = await page.getByText('Form NOT-SAGW', {
+      exact: true,
+    });
+
+    await expect(expectedForm)
+      .toBeVisible();
+    await expect(notExpectedForm)
+      .not.toBeVisible();
+  });
+
   test('zenodo document', async ({
     page,
   }) => {
