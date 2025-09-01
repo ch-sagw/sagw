@@ -19,7 +19,15 @@ export const Images: CollectionConfig = {
   slug: 'images',
   upload: {
     focalPoint: true,
-    mimeTypes: ['image/*'],
+    mimeTypes: [
+      'image/png',
+      'image/jpg',
+      'image/jpeg',
+      'image/gif',
+      'image/webp',
+      'image/avif',
+      'image/tiff',
+    ],
   },
   versions,
 };
