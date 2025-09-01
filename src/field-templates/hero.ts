@@ -3,18 +3,15 @@ import {
 } from 'payload';
 import { rte1 } from '@/field-templates/rte';
 
-const FieldHeroTitle: Field = {
-  editor: rte1,
-  localized: true,
-  name: 'title',
-  required: true,
-  type: 'richText',
-};
-
 export const fieldsHero = (additionalFields?: Field[]): GroupField => ({
-
   fields: [
-    FieldHeroTitle,
+    {
+      editor: rte1,
+      localized: true,
+      name: 'title',
+      required: true,
+      type: 'richText',
+    },
     {
       localized: true,
       name: 'lead',

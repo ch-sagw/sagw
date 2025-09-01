@@ -4,29 +4,41 @@ import {
 } from '@playwright/test';
 
 test.describe('Softhyphen', () => {
+  test.beforeEach(async ({
+    page,
+  }) => {
+    await page.goto('http://localhost:3000/admin/');
+    await page.waitForLoadState('load');
+
+    const emailInput = await page.getByLabel('E-Mail');
+
+    await expect(emailInput)
+      .not.toBeEmpty();
+
+    const loginButton = await page.getByRole('button', {
+      name: 'Anmelden',
+    });
+
+    await loginButton.click();
+    await page.waitForLoadState('networkidle');
+  });
+
   test('correctly displays in rte field', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/admin/collections/institutes/create');
-    await page.waitForLoadState('load');
+    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
+    await page.waitForLoadState('networkidle');
 
-    const leadField = await page.locator('#field-hero .ContentEditable__root');
+    const rteField = await page.locator('#field-hero .ContentEditable__root');
     const hyphenButton = await page.locator('#field-hero .toolbar-popup__button-softHyphenButton');
 
-    await leadField.fill('foo');
+    await rteField.fill('detailpagetitle');
     await hyphenButton.click();
-    await leadField.fill('bar');
-
-    // fill other fields
-    const teaserIinput = await page.getByRole('textbox', {
-      name: 'Teaser Link Text',
-    });
-
-    await teaserIinput.fill('foo');
+    await rteField.pressSequentially('bar');
 
     // save
     const saveButton = await page.getByRole('button', {
-      name: 'Speichern',
+      name: 'Änderungen veröffentlichen',
     });
 
     await saveButton.click();
@@ -37,31 +49,32 @@ test.describe('Softhyphen', () => {
     await closeToast.click();
 
     // wait for refresh
-    await page.getByRole('heading', {
-      name: 'Institutes Page',
+    const title = await page.getByRole('heading', {
+      name: 'detailpagetitlebar',
     });
 
-    await expect(leadField)
+    await expect(title)
+      .toBeVisible();
+
+    await expect(rteField)
       .toHaveScreenshot();
   });
 
   test('has correct api payload', async () => {
-    const res = await fetch('http://localhost:3000/api/institutes');
-    const institutes = await res.json();
+    const detailPagesRes = await fetch('http://localhost:3000/api/detailPage?where[adminTitle][equals]=detailpagetitlebar');
+    const detailPagesData = await detailPagesRes.json();
 
-    if (institutes.docs.length === 1) {
-      const [institute]: any = institutes.docs;
+    await expect(detailPagesData.docs.length)
+      .toBeGreaterThanOrEqual(1);
 
-      const instituteRes = await fetch(`http://localhost:3000/api/institutes/${institute.id}`);
-      const instituteData = await instituteRes.json();
-      const [, heroTitle] = instituteData.hero.title.root.children[0].children;
+    const [detailPageData] = detailPagesData.docs;
+    const [, heroTitle] = detailPageData.hero.title.root.children[0].children;
 
-      await expect(heroTitle.text)
-        .toBe('\u00AD');
+    await expect(heroTitle.text)
+      .toBe('\u00AD');
 
-      await expect(heroTitle.type)
-        .toBe('unicode-char');
-    }
+    await expect(heroTitle.type)
+      .toBe('unicode-char');
 
   });
 });

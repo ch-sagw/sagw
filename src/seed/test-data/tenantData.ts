@@ -1,0 +1,536 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
+import { Payload } from 'payload';
+
+import { simpleRteConfig } from '@/seed/test-data/helpers';
+
+export const addDataForTenant = async (payload: Payload, tenant: string): Promise<void> => {
+
+  // ############
+  // Tenant & User
+  // ############
+
+  // create tenant
+  const tenantId = await payload.create({
+    collection: 'departments',
+    data: {
+      name: tenant.toLocaleUpperCase(),
+      slug: tenant,
+    },
+  });
+
+  // create user
+  if (process.env.PAYLOAD_INITIAL_USER_MAIL) {
+    await payload.create({
+      collection: 'users',
+      data: {
+        department: tenantId,
+        departments: [
+          {
+            department: tenantId,
+            roles: ['editor'],
+          },
+        ],
+        email: tenant === 'sagw'
+          ? process.env.PAYLOAD_INITIAL_USER_MAIL
+          : `${tenant}@foo.bar`,
+        password: process.env.PAYLOAD_INITIAL_PASSWORD,
+        roles: ['global-user'],
+        username: tenant,
+      },
+    });
+  }
+
+  // ############
+  // Assets
+  // ############
+
+  // add image
+  const image = await payload.create({
+    collection: 'images',
+    data: {
+      _status: 'published',
+      alt: `${tenant.toUpperCase} image`,
+      department: tenantId,
+    },
+    filePath: `src/seed/test-data/assets/${tenant}.png`,
+  });
+
+  // add svg
+  const svg = await payload.create({
+    collection: 'svgs',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      name: `${tenant.toUpperCase()} SVG`,
+    },
+    filePath: `src/seed/test-data/assets/${tenant}.svg`,
+  });
+
+  // add video
+  await payload.create({
+    collection: 'videos',
+    data: {
+      _status: 'published',
+      department: tenantId,
+    },
+    filePath: `src/seed/test-data/assets/${tenant}.mp4`,
+  });
+
+  // add document
+  await payload.create({
+    collection: 'documents',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      title: `${tenant.toUpperCase()} Document`,
+    },
+    filePath: `src/seed/test-data/assets/${tenant}.pdf`,
+  });
+
+  // add zenodo document
+  await payload.create({
+    collection: 'zenodoDocuments',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      files: [
+        {
+          format: 'pdf',
+          id: 'someid',
+          link: 'https://foo.bar',
+          size: 0.26,
+        },
+      ],
+      publicationDate: '1919-05-01',
+      title: `Sample Zenodo Document ${tenant.toUpperCase()}`,
+      zenodoId: '1512691',
+    },
+  });
+
+  if (tenant !== 'sagw') {
+    // this way, we can test if sagw tenant can add a document with
+    // zenodo id 15126918. uniqueness should only be applied inside same
+    // tenant...
+    await payload.create({
+      collection: 'zenodoDocuments',
+      data: {
+        _status: 'published',
+        department: tenantId,
+        files: [
+          {
+            format: 'pdf',
+            id: 'someid',
+            link: 'https://foo.bar',
+            size: 0.26,
+          },
+        ],
+        publicationDate: '1919-05-01',
+        title: `Sample Zenodo Document ${tenant.toUpperCase()}`,
+        zenodoId: '15126918',
+      },
+    });
+  }
+
+  // ############
+  // Global Content
+  // ############
+
+  // create publication topic
+  const publicationTopic = await payload.create({
+    collection: 'publicationTopics',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      publicationTopic: `Publication Topic 1 ${tenant.toUpperCase()}`,
+    },
+  });
+
+  // create publication type
+  const publicationType = await payload.create({
+    collection: 'publicationTypes',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      publicationType: `Publication Type 1 ${tenant.toUpperCase()}`,
+    },
+  });
+
+  // create network category
+  await payload.create({
+    collection: 'networkCategories',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      name: `Network Category 1 ${tenant.toUpperCase()}`,
+    },
+  });
+
+  // create project
+  const project = await payload.create({
+    collection: 'projects',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      name: `Project 1 ${tenant.toUpperCase()}`,
+    },
+  });
+
+  // create person in people
+  await payload.create({
+    collection: 'people',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      firstname: `Firstname ${tenant.toUpperCase()}`,
+      function: 'Some function',
+      lastname: `Lastname ${tenant.toUpperCase()}`,
+      mail: 'foo@bar.com',
+      memberType: 'executiveBoard',
+      personDepartment: 'admin',
+      phone: '031 123 45 67',
+    },
+  });
+
+  // create event category
+  const eventCategory = await payload.create({
+    collection: 'eventCategory',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      eventCategory: `Event Category 1 ${tenant.toUpperCase()}`,
+    },
+  });
+
+  // add consent data
+  await payload.create({
+    collection: 'consent',
+    data: {
+      _status: 'published',
+      banner: {
+        buttonAcceptAll: `Accept all ${tenant.toUpperCase()}`,
+        buttonCustomizeSelection: `Customize ${tenant.toUpperCase()}`,
+        buttonDeclineAll: `Decline ${tenant.toUpperCase()}`,
+        text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
+        title: `Title ${tenant.toUpperCase()}`,
+      },
+      department: tenantId,
+      overlay: {
+        analyticsPerformance: {
+          text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
+          title: `Title ${tenant.toUpperCase()}`,
+          toggleLabelOff: `Toggle Off ${tenant.toUpperCase()}`,
+          toggleLabelOn: `Toggle On ${tenant.toUpperCase()}`,
+        },
+        buttonAcceptAll: `Accept all ${tenant.toUpperCase()}`,
+        buttonAcceptSelection: `Accept selection ${tenant.toUpperCase()}`,
+        externalContent: {
+          text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
+          title: `Title ${tenant.toUpperCase()}`,
+          toggleLabelOff: `Toggle off ${tenant.toUpperCase()}`,
+          toggleLabelOn: `Toggle on ${tenant.toUpperCase()}`,
+        },
+        necessaryCookies: {
+          text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
+          title: `Title ${tenant.toUpperCase()}`,
+          toggleLabel: `Toggle label ${tenant.toUpperCase()}`,
+        },
+        text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
+        title: `Title ${tenant.toUpperCase()}`,
+
+      },
+    },
+  });
+
+  // add footer data
+  await payload.create({
+    collection: 'footer',
+    data: {
+      _status: 'published',
+      contact: {
+        address1: `Address 1 ${tenant.toUpperCase()}`,
+        address2: `Address 2 ${tenant.toUpperCase()}`,
+        city: `City ${tenant.toUpperCase()}`,
+        countryCode: `Country Code ${tenant.toUpperCase()}`,
+        mail: 'foo@bar.baz',
+        phone: '031 123 45 67',
+        poBox: `PoBox ${tenant.toUpperCase()}`,
+        title: `Title ${tenant.toUpperCase()}`,
+        zipCode: `Zip ${tenant.toUpperCase()}`,
+      },
+      copyright: `Copyright ${tenant.toUpperCase()}`,
+      department: tenantId,
+      impressum: `Impressum ${tenant.toUpperCase()}`,
+      legal: `Legal ${tenant.toUpperCase()}`,
+    },
+  });
+
+  // add header data
+  await payload.create({
+    collection: 'header',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      logo: svg,
+      metaLinks: [
+        {
+          linkExternal: {
+            externalLink: 'https://www.foo.bar',
+            externalLinkText: `Metalink ${tenant.toUpperCase()}`,
+          },
+          linkType: 'external',
+        },
+      ],
+      navItems: [
+        {
+          navItemText: 'Home',
+        },
+      ],
+    },
+  });
+
+  // add status message
+  await payload.create({
+    collection: 'statusMessage',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      message: `Status Message ${tenant.toUpperCase()}`,
+      show: {
+        display: 'hide',
+      },
+      title: `Status Title ${tenant.toUpperCase()}`,
+      type: 'error',
+    },
+  });
+
+  // add form item
+  await payload.create({
+    collection: 'forms',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      fields: [
+        {
+          blockName: `Some form Block ${tenant.toUpperCase()}`,
+          blockType: 'text',
+          fieldError: `Field error ${tenant.toUpperCase()}`,
+          label: `Text field label ${tenant.toUpperCase()}`,
+          name: `Text field name ${tenant.toUpperCase()}`,
+          placeholder: `Text field placeholder ${tenant.toUpperCase()}`,
+          required: true,
+          width: 50,
+        },
+      ],
+      recipientEMail: 'foo@bar.baz',
+      submitButtonLabel: `Submit button ${tenant.toUpperCase()}`,
+      title: `Form ${tenant.toUpperCase()}`,
+    },
+  });
+
+  // add i18n for forms
+  await payload.create({
+    collection: 'i18nForms',
+    data: {
+      _status: 'published',
+      checkboxes: {
+        dataPrivacyCheckboxText: simpleRteConfig(`Data privacy checkbox ${tenant.toUpperCase()}`),
+      },
+      department: tenantId,
+      submitError: {
+        text: `Submit text error ${tenant.toUpperCase()}`,
+        title: `Submit title error ${tenant.toUpperCase()}`,
+      },
+      submitSuccess: {
+        text: `Submit text success ${tenant.toUpperCase()}`,
+        title: `Submit title success ${tenant.toUpperCase()}`,
+      },
+      submitWarn: {
+        text: `Submit text warn ${tenant.toUpperCase()}`,
+        title: `Submit title warn ${tenant.toUpperCase()}`,
+      },
+
+    },
+  });
+
+  // ############
+  // Pages
+  // ############
+
+  // create home
+  await payload.create({
+    collection: 'homePage',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      hero: {
+        animated: true,
+        lead: 'Home Lead',
+        sideTitle: 'Home Side-Title',
+        title: simpleRteConfig(`Home Title ${tenant.toUpperCase()}`),
+      },
+      meta: {
+        seo: {
+          description: `SEO Description ${tenant.toUpperCase()}`,
+          image: image.id,
+          index: true,
+          title: `SEO Title ${tenant.toUpperCase()}`,
+        },
+      },
+    },
+  });
+
+  // create error page
+  await payload.create({
+    collection: 'errorPage',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      homeButtonText: 'Home Button Text',
+      notFound: {
+        description: 'Error description',
+        title: `Not found title ${tenant.toUpperCase()}`,
+      },
+    },
+  });
+
+  // create detail page
+  await payload.create({
+    collection: 'detailPage',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      hero: {
+        colorMode: 'color',
+        colorScheme: 'bright',
+        lead: 'Detail Page Lead',
+        title: simpleRteConfig(`Detail page title ${tenant.toUpperCase()}`),
+      },
+    },
+  });
+
+  // create overview page
+  await payload.create({
+    collection: 'overviewPage',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      hero: {
+        colorMode: 'color',
+        colorScheme: 'bright',
+        lead: 'Overview Page Lead',
+        title: simpleRteConfig(`Overview page title ${tenant.toUpperCase()}`),
+      },
+    },
+  });
+
+  // create magazine detail page
+  await payload.create({
+    collection: 'magazineDetailPage',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      hero: {
+        author: 'Author',
+        colorMode: 'color',
+        colorScheme: 'bright',
+        date: '2025-08-31T12:00:00.000Z',
+        lead: 'Magazine Detail Page Lead',
+        title: simpleRteConfig(`Magazine detail page title ${tenant.toUpperCase()}`),
+      },
+      overviewPageProps: {
+        teaserText: 'Magazine Detail Teaser Text',
+      },
+    },
+  });
+
+  // event detail page (render detail Page)
+  await payload.create({
+    collection: 'eventDetailPage',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      eventDetails: {
+        category: eventCategory.id,
+        date: '2025-08-31T12:00:00.000Z',
+        project: project.id,
+        title: `Event details title ${tenant.toUpperCase()} (render detail page)`,
+      },
+      hero: {
+        colorMode: 'color',
+        colorScheme: 'bright',
+        lead: 'Event Detail Page Lead',
+        title: simpleRteConfig(`Event detail page title ${tenant.toUpperCase()} (render detail page)`),
+      },
+      showDetailPage: 'true',
+    },
+  });
+
+  // event detail page (render detail Page)
+  await payload.create({
+    collection: 'eventDetailPage',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      eventDetails: {
+        category: eventCategory.id,
+        date: '2025-08-31T12:00:00.000Z',
+        project: project.id,
+        title: `Event detail title ${tenant.toUpperCase()} (render link)`,
+      },
+      hero: {
+        colorMode: 'color',
+        colorScheme: 'bright',
+        title: simpleRteConfig(`Event detail page title ${tenant.toUpperCase()} (render link)`),
+      },
+      link: {
+        externalLink: 'https://www.foo.bar',
+        externalLinkText: 'External Link',
+      },
+      showDetailPage: 'false',
+    },
+  });
+
+  // news detail page
+  await payload.create({
+    collection: 'newsDetailPage',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      hero: {
+        colorMode: 'color',
+        colorScheme: 'bright',
+        date: '2025-08-31T12:00:00.000Z',
+        lead: 'News Detail Page Lead',
+        title: simpleRteConfig(`News detail page title ${tenant.toUpperCase()}`),
+      },
+      overviewPageProps: {
+        teaserText: 'Overview Teaser Text',
+      },
+      project: project.id,
+    },
+  });
+
+  // publication detail page
+  await payload.create({
+    collection: 'publicationDetailPage',
+    data: {
+      _status: 'published',
+      categorization: {
+        topic: publicationTopic.id,
+        type: publicationType.id,
+      },
+      department: tenantId,
+      hero: {
+        colorMode: 'color',
+        colorScheme: 'bright',
+        lead: 'Publication Detail Page Lead',
+        title: simpleRteConfig(`Publication detail page title ${tenant.toUpperCase()}`),
+      },
+      overviewPageProps: {
+        image,
+      },
+    },
+  });
+
+};

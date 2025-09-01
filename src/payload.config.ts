@@ -25,7 +25,7 @@ export default buildConfig({
         ? {
           email: process.env.PAYLOAD_INITIAL_USER_MAIL,
           password: process.env.PAYLOAD_INITIAL_PASSWORD,
-          prefillOnly: false,
+          prefillOnly: true,
         }
         : false,
     importMap: {
@@ -75,7 +75,9 @@ export default buildConfig({
     ],
   },
   onInit: async (payload) => {
-    if (process.env.IS_RUNNING_IN_PLAYWRIGHT_TEST_ENV === 'true') {
+    // on ENV seed, we seed test data. otherwise we seed initial user
+    // and tenant (if user and tenant collections are empty)
+    if (process.env.ENV === 'seed' || process.env.ENV === 'playwright') {
       await seedTestData(payload);
     } else {
       await seedInitialUserAndTenant(payload);

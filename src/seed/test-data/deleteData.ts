@@ -1,16 +1,30 @@
 import {
   CollectionSlug, Payload,
 } from 'payload';
-import { collections } from '@/collections';
 
 export const deleteData = async (payload: Payload): Promise<void> => {
   try {
-    await Promise.all(collections.map((collection) => payload.db.deleteMany({
-      collection: collection.slug as CollectionSlug,
-      where: {},
-    })));
+
+    for await (const collection of Object.keys(payload.db.collections)) {
+
+      // delete versions of collection
+      if (Object.keys(payload.db.versions)
+        .includes(collection)) {
+        await payload.db.deleteVersions({
+          collection: (collection as CollectionSlug),
+          where: {},
+        });
+      }
+
+      // delete collection
+      await payload.db.deleteMany({
+        collection: (collection as CollectionSlug),
+        where: {},
+      });
+    }
+
   } catch (e) {
-    payload.logger.error('seed test data: error');
+    payload.logger.error('seed test data: deletion error');
     payload.logger.error(e);
   }
 };

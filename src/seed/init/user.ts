@@ -32,7 +32,7 @@ export const seedInitialUser = async (payload: Payload, tenantId: string): Promi
           },
         });
 
-        payload.logger.info('seed: created first user.');
+        payload.logger.info('seed: created initial user');
       } else {
         payload.logger.error('seed: PAYLOAD_INITIAL_USER_MAIL & PAYLOAD_INITIAL_PASSWORD env vars must be defined');
       }

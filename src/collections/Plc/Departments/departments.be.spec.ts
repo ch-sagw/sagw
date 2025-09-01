@@ -4,11 +4,30 @@ import {
 } from '@playwright/test';
 
 test.describe('Deparments only show content from users department', () => {
+  test.beforeEach(async ({
+    page,
+  }) => {
+    await page.goto('http://localhost:3000/admin/');
+    await page.waitForLoadState('load');
+
+    const emailInput = await page.getByLabel('E-Mail');
+
+    await expect(emailInput)
+      .not.toBeEmpty();
+
+    const loginButton = await page.getByRole('button', {
+      name: 'Anmelden',
+    });
+
+    await loginButton.click();
+    await page.waitForLoadState('networkidle');
+  });
+
   test('images', async ({
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/images');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const expectedImage = await page.getByText('sagw.png', {
       exact: true,
@@ -27,7 +46,7 @@ test.describe('Deparments only show content from users department', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/publicationTopics');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const expectedTopic = await page.getByText('Publication Topic 1 SAGW', {
       exact: true,
@@ -46,7 +65,7 @@ test.describe('Deparments only show content from users department', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/publicationTypes');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const expectedType = await page.getByText('Publication Type 1 SAGW', {
       exact: true,
@@ -61,11 +80,30 @@ test.describe('Deparments only show content from users department', () => {
       .not.toBeVisible();
   });
 
+  test('forms', async ({
+    page,
+  }) => {
+    await page.goto('http://localhost:3000/admin/collections/forms');
+    await page.waitForLoadState('networkidle');
+
+    const expectedForm = await page.getByText('Form SAGW', {
+      exact: true,
+    });
+    const notExpectedForm = await page.getByText('Form NOT-SAGW', {
+      exact: true,
+    });
+
+    await expect(expectedForm)
+      .toBeVisible();
+    await expect(notExpectedForm)
+      .not.toBeVisible();
+  });
+
   test('zenodo document', async ({
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/zenodoDocuments');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const expectedDocument = await page.getByText('Sample Zenodo Document SAGW', {
       exact: true,
@@ -80,51 +118,35 @@ test.describe('Deparments only show content from users department', () => {
       .not.toBeVisible();
   });
 
-  test('faq item', async ({
+  test('home', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/admin/collections/faqItems');
-    await page.waitForLoadState('load');
+    await page.goto('http://localhost:3000/admin/collections/homePage');
+    await page.waitForLoadState('networkidle');
 
-    const expectedFaq = await page.getByText('Question 1 SAGW', {
+    const expectedDocument = await page.getByText('Home Title SAGW', {
       exact: true,
     });
-    const notExpectedFaq = await page.getByText('Question 1 NOTSAGW', {
+    const notExpectedDocument = await page.getByText('Home Title NOT-SAGW', {
       exact: true,
     });
 
-    await expect(expectedFaq)
+    await expect(expectedDocument)
       .toBeVisible();
-    await expect(notExpectedFaq)
+    await expect(notExpectedDocument)
       .not.toBeVisible();
-  });
-
-  test('home', async () => {
-    const homesRes = await fetch('http://localhost:3000/api/home');
-    const homes = await homesRes.json();
-
-    await expect(homes.docs)
-      .toHaveLength(1);
-
-    if (homes.docs.length === 1) {
-      const [home]: any = homes.docs;
-      const [heroTitle] = home.hero.title.root.children[0].children;
-
-      await expect(heroTitle.text)
-        .toBe('Home Title SAGW');
-    }
   });
 
   test('news detail page', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/admin/collections/newsDetail');
-    await page.waitForLoadState('domcontentloaded');
+    await page.goto('http://localhost:3000/admin/collections/newsDetailPage');
+    await page.waitForLoadState('networkidle');
 
-    const expectedNews = await page.getByText('News 1 Title SAGW', {
+    const expectedNews = await page.getByText('News detail page title SAGW', {
       exact: true,
     });
-    const notExpectedNews = await page.getByText('News 1 Title NOTSAGW', {
+    const notExpectedNews = await page.getByText('News detail page title NOTSAGW', {
       exact: true,
     });
 
@@ -137,13 +159,13 @@ test.describe('Deparments only show content from users department', () => {
   test('publication detail page', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/admin/collections/publicationDetail');
-    await page.waitForLoadState('load');
+    await page.goto('http://localhost:3000/admin/collections/publicationDetailPage');
+    await page.waitForLoadState('networkidle');
 
-    const expectedPublication = await page.getByText('Publication 1 Title SAGW', {
+    const expectedPublication = await page.getByText('Publication detail page title SAGW', {
       exact: true,
     });
-    const notExpectedPublication = await page.getByText('Publication 1 Title NOTSAGW', {
+    const notExpectedPublication = await page.getByText('Publication detail page title NOTSAGW', {
       exact: true,
     });
 

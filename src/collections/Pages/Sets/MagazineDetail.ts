@@ -1,20 +1,25 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { TextBlock } from '@/blocks/TextBlock';
-import { ImageBlock } from '@/blocks/ImageBlock';
-import { VideoBlock } from '@/blocks/VideoBlock';
 import { fieldsHero } from '@/field-templates/hero';
 import { hookAdminTitle } from '@/hooks/adminTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
-import { fieldsLinkExternal } from '@/field-templates/links';
 import { hookSeoFallback } from '@/hooks/seoFallback';
+import {
+  createAccess, globalAdminOrDepartmentAdminAccess,
+} from '@/collections/Pages/access/globalAdminOrDepartmentAdmin';
+import { blocks } from '@/blocks';
+import { fieldsColorMode } from '@/field-templates/colorMode';
+import { versions } from '@/field-templates/versions';
 
 export const MagazineDetailPage: CollectionConfig = {
   access: {
-    read: (): boolean => true,
+    create: createAccess,
+    delete: globalAdminOrDepartmentAdminAccess,
+    read: () => true,
+    update: globalAdminOrDepartmentAdminAccess,
   },
   admin: {
     group: 'Pages',
@@ -34,6 +39,9 @@ export const MagazineDetailPage: CollectionConfig = {
             {
               fields: [
                 {
+                  admin: {
+                    description: 'This text will be used as text for the teasers on the overview page.',
+                  },
                   localized: true,
                   name: 'teaserText',
                   required: true,
@@ -59,48 +67,21 @@ export const MagazineDetailPage: CollectionConfig = {
                 required: true,
                 type: 'date',
               },
+              ...fieldsColorMode,
             ]),
 
-            // Content
+            // Content Blocks
             {
-              blocks: [
-                TextBlock,
-                ImageBlock,
-                VideoBlock,
-              ],
-              label: 'Content Blocks',
-              name: 'contentBlocks',
+              blocks: blocks(),
+              label: 'Content',
+              name: 'content',
               type: 'blocks',
             },
-
-            // Downloads
-            {
-              fields: [
-                {
-                  hasMany: true,
-                  name: 'downloads',
-                  relationTo: 'documents',
-                  required: true,
-                  type: 'relationship',
-                },
-              ],
-              label: 'Downloads',
-              name: 'downloads',
-              type: 'group',
-            },
-
-            // Links
-            {
-              fields: fieldsLinkExternal,
-              name: 'links',
-              type: 'array',
-            },
-
           ],
           label: 'Content',
         },
 
-        // Meta Tabs
+        // Meta Tab
         fieldsTabMeta,
       ],
       type: 'tabs',
@@ -114,5 +95,6 @@ export const MagazineDetailPage: CollectionConfig = {
     plural: 'Magazine Detail Pages',
     singular: 'Magazine Detail',
   },
-  slug: 'magazineDetail',
+  slug: 'magazineDetailPage',
+  versions,
 };
