@@ -4,8 +4,7 @@ export const beforeEachPayloadLogin = (): void => {
   test.beforeEach(async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/admin/');
-    // await page.waitForResponse('http://localhost:3000/api/users/me');
+    await page.goto('http://localhost:3000/admin/login');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForLoadState('load');
 
@@ -13,12 +12,14 @@ export const beforeEachPayloadLogin = (): void => {
       name: 'Anmelden',
     });
 
-    await page.goto('http://localhost:3000/admin/');
-    // await page.waitForResponse('http://localhost:3000/api/users/me');
+    // glitch in payload login.
+    await page.goto('http://localhost:3000/admin/login');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForLoadState('load');
 
     await loginButton.click();
     await page.waitForLoadState('networkidle');
+
+    await page.waitForURL('http://localhost:3000/admin');
   });
 };
