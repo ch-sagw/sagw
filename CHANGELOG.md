@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.1](https://github.com/ch-sagw/sagw/compare/v0.10.0...v0.10.1) (2025-09-01)
+
+
+### Bug Fixes
+
+* revert payload to 3.52.0 and next to 15.4.7 and fix tests ([#369](https://github.com/ch-sagw/sagw/issues/369)) ([912502c](https://github.com/ch-sagw/sagw/commit/912502c5f1c770b73b69761ed1f5a2365c4c0058))
+
 ## [0.10.0](https://github.com/ch-sagw/sagw/compare/v0.9.0...v0.10.0) (2025-09-01)
 
 
