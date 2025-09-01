@@ -54,7 +54,7 @@ export const Header: CollectionConfig = {
                   fields: navLink,
                   label: 'Sub-Navigation Item',
                   maxRows: 5,
-                  name: 'navItems',
+                  name: 'subNavItems',
                   type: 'array',
                 },
               ],
