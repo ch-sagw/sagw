@@ -3,12 +3,12 @@ import {
   test,
 } from '@playwright/test';
 
-test.describe('Deparments only show content from users department', () => {
+test.describe('Departments only show content from users department', () => {
   test.beforeEach(async ({
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/');
-    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
 
     const emailInput = await page.getByLabel('E-Mail');
 
