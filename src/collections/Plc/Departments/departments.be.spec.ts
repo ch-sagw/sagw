@@ -2,26 +2,10 @@ import {
   expect,
   test,
 } from '@playwright/test';
+import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 
-test.describe('Deparments only show content from users department', () => {
-  test.beforeEach(async ({
-    page,
-  }) => {
-    await page.goto('http://localhost:3000/admin/');
-    await page.waitForLoadState('load');
-
-    const emailInput = await page.getByLabel('E-Mail');
-
-    await expect(emailInput)
-      .not.toBeEmpty();
-
-    const loginButton = await page.getByRole('button', {
-      name: 'Anmelden',
-    });
-
-    await loginButton.click();
-    await page.waitForLoadState('networkidle');
-  });
+test.describe('Departments only show content from users department', () => {
+  beforeEachPayloadLogin();
 
   test('images', async ({
     page,

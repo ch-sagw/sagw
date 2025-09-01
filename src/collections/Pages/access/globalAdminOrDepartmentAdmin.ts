@@ -18,6 +18,9 @@ export const globalAdminOrDepartmentAdminAccess: Access = ({
   }
 
   // TODO: req.data.department is empty. find workaround or other solution
+  // update v3.54.0: it seems now defined. it had to do with the cookie which
+  // was not set by the multitenant plugin, which is now solved by
+  // disabling autologin.
   return true;
 
   /*

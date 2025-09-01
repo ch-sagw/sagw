@@ -2,25 +2,14 @@ import {
   expect,
   test,
 } from '@playwright/test';
+import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 
 test.describe('seoFallback', () => {
+  beforeEachPayloadLogin();
+
   test('page inherits seo from home', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/admin/');
-    await page.waitForLoadState('load');
-
-    const emailInput = await page.getByLabel('E-Mail');
-
-    await expect(emailInput)
-      .not.toBeEmpty();
-
-    const loginButton = await page.getByRole('button', {
-      name: 'Anmelden',
-    });
-
-    await loginButton.click();
-    await page.waitForLoadState('networkidle');
 
     // create a news detail page
     await page.goto('http://localhost:3000/admin/collections/newsDetailPage/create');

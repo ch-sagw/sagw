@@ -2,53 +2,22 @@ import {
   expect,
   test,
 } from '@playwright/test';
+import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 
 test.describe('Internal Link Chooser', () => {
-  test.beforeEach(async ({
-    page,
-  }) => {
-    await page.goto('http://localhost:3000/admin/');
-    await page.waitForLoadState('load');
-
-    const emailInput = await page.getByLabel('E-Mail');
-
-    await expect(emailInput)
-      .not.toBeEmpty();
-
-    const loginButton = await page.getByRole('button', {
-      name: 'Anmelden',
-    });
-
-    await loginButton.click();
-    await page.waitForLoadState('networkidle');
-  });
+  beforeEachPayloadLogin();
 
   test('shows available links', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
+    await page.goto('http://localhost:3000/admin/collections/header');
     await page.waitForLoadState('networkidle');
 
-    const addContentButton = await page.getByRole('button', {
-      name: 'Content hinzufügen',
-    });
+    const navItem1 = await page.locator('#navItems-row-0');
 
-    await addContentButton.click();
+    const linkTargetInput = await navItem1.getByLabel('Link Target');
 
-    const linksButton = await page.getByRole('button', {
-      name: 'Links',
-    });
-
-    await linksButton.click();
-
-    const addLinkButton = await page.getByRole('button', {
-      name: 'Link hinzufügen',
-    });
-
-    await addLinkButton.click();
-    await page.waitForLoadState('networkidle');
-
-    const linkTargetInput = await page.getByLabel('Link Target');
+    await (await linkTargetInput.elementHandle())?.waitForElementState('stable');
 
     await linkTargetInput.click();
 
@@ -104,32 +73,14 @@ test.describe('Internal Link Chooser', () => {
     page,
   }) => {
 
-    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
+    await page.goto('http://localhost:3000/admin/collections/header');
     await page.waitForLoadState('networkidle');
 
-    const addContentButton = await page.getByRole('button', {
-      name: 'Content hinzufügen',
-    });
+    const navItem1 = await page.locator('#navItems-row-0');
 
-    await addContentButton.click();
+    const linkTargetInput = await navItem1.getByLabel('Link Target');
 
-    const rteButton = await page.getByRole('button', {
-      name: 'Richtext',
-    });
-
-    await rteButton.click();
-
-    const rteField = await page.locator('#field-content .ContentEditable__root');
-
-    await rteField.fill('foo');
-    await rteField.selectText();
-
-    const linkButton = await page.locator('#field-content .toolbar-popup__button-link');
-
-    await linkButton.click();
-    await page.waitForLoadState('networkidle');
-
-    const linkTargetInput = await page.getByLabel('Link Target');
+    await (await linkTargetInput.elementHandle())?.waitForElementState('stable');
 
     await linkTargetInput.click();
 
@@ -185,29 +136,14 @@ test.describe('Internal Link Chooser', () => {
   test('only shows link of current tenant', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
+    await page.goto('http://localhost:3000/admin/collections/header');
     await page.waitForLoadState('networkidle');
 
-    const addContentButton = await page.getByRole('button', {
-      name: 'Content hinzufügen',
-    });
+    const navItem1 = await page.locator('#navItems-row-0');
 
-    await addContentButton.click();
+    const linkTargetInput = await navItem1.getByLabel('Link Target');
 
-    const linksButton = await page.getByRole('button', {
-      name: 'Links',
-    });
-
-    await linksButton.click();
-
-    const addLinkButton = await page.getByRole('button', {
-      name: 'Link hinzufügen',
-    });
-
-    await addLinkButton.click();
-    await page.waitForLoadState('networkidle');
-
-    const linkTargetInput = await page.getByLabel('Link Target');
+    await (await linkTargetInput.elementHandle())?.waitForElementState('stable');
 
     await linkTargetInput.click();
 

@@ -58,6 +58,7 @@ Multitenant: (working with seed data)
 - in seed data for form: department is undefined... do we have an issue with form collection and tenant? possible open issues: https://github.com/payloadcms/payload/issues/13517 -> should be fixed in v3.52.0
 - in tenant config, add field for available languages: https://payloadcms.com/docs/configuration/localization#filter-available-options
 - issue: on autologin, tenant-cookie is not set after login -> create github issue
+- issue v3.54.0, ok in v3.52.0: multi-tenant & versions and global collection: can't be created if db empty: "Error creating autosave global multi tenant document for homePage"... department seems undefined
 
 Misc:
 --------
