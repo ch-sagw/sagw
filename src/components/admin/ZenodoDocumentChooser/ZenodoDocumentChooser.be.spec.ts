@@ -2,6 +2,7 @@ import {
   expect,
   Locator, test,
 } from '@playwright/test';
+import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 
 test.describe('Add Zenodo document', () => {
   let zenodoInput: Locator;
@@ -9,19 +10,11 @@ test.describe('Add Zenodo document', () => {
   let saveButton: Locator;
   let zenodoList: Locator;
 
+  beforeEachPayloadLogin();
+
   test.beforeEach(async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/admin/');
-    await page.waitForResponse('http://localhost:3000/api/users/me');
-
-    const loginButton = await page.getByRole('button', {
-      name: 'Anmelden',
-    });
-
-    await loginButton.click();
-    await page.waitForLoadState('networkidle');
-
     await page.goto('http://localhost:3000/admin/collections/zenodoDocuments/create');
     await page.waitForLoadState('networkidle');
 
