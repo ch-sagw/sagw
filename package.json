@@ -31,7 +31,7 @@
     "generate:component": "tsx convenience/generate-component/index",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
-    "lint:js": "cross-env NODE_OPTIONS=--no-deprecation next lint",
+    "lint:js": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
     "lint:scss": "stylelint '**/*.scss'",
     "lint": "npm run lint:js && npm run lint:scss",
     "commitlint": "commitlint --edit",
