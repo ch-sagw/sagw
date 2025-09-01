@@ -13,6 +13,11 @@ export const Departments: CollectionConfig = {
     update: updateAndDeleteAccess,
   },
   admin: {
+    defaultColumns: [
+      'name',
+      'domain',
+      'slug',
+    ],
     group: 'Org',
     useAsTitle: 'name',
   },
