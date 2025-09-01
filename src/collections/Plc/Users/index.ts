@@ -5,11 +5,12 @@ import { createAccess } from '@/collections/Plc/Users/access/create';
 import { readAccess } from '@/collections/Plc/Users/access/read';
 import { updateAndDeleteAccess } from '@/collections/Plc/Users/access/updateAndDelete';
 import { ensureUniqueUsername } from '@/collections/Plc/Users/hooks/ensureUniqueUsername';
-import { setCookieBasedOnDomain } from '@/collections/Plc/Users/hooks/setCookieBasedOnDomain';
 import { isGlobalAdmin } from '@/access/isGlobalAdmin';
 import {
   departmentRoles, userRoles,
 } from '@/collections/Plc/Users/roles';
+// import { setTenantAfterLogin }
+// from '@/collections/Plc/Users/hooks/afterMeHook';
 
 const defaultDepartmentArrayField = tenantsArrayField({
   arrayFieldAccess: {},
@@ -82,12 +83,15 @@ export const Users: CollectionConfig = {
     },
   ],
 
-  // The following hook sets a cookie based on the domain a user logs in from.
-  // It checks the domain and matches it to a department in the system,
-  // then sets a 'payload-department' cookie for that department.
+  /*
+    There is the issue that multitenant-plugin is not setting the tenant
+    cookie after autologin. we might do it manually.
+  */
+  /*
   hooks: {
-    afterLogin: [setCookieBasedOnDomain],
+    afterMe: [setTenantAfterLogin],
   },
+  */
 
   slug: 'users',
 };
