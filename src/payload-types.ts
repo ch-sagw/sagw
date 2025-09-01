@@ -3276,7 +3276,7 @@ export interface Header {
   navItems: {
     navItemText: string;
     navItemLink?: string | null;
-    navItems?:
+    subNavItems?:
       | {
           navItemText: string;
           navItemLink?: string | null;
@@ -6395,7 +6395,7 @@ export interface HeaderSelect<T extends boolean = true> {
     | {
         navItemText?: T;
         navItemLink?: T;
-        navItems?:
+        subNavItems?:
           | T
           | {
               navItemText?: T;
