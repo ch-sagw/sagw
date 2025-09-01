@@ -8,12 +8,7 @@ test.describe('seoFallback', () => {
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/');
-    await page.waitForLoadState('load');
-    await page.waitForLoadState('domcontentloaded');
-
-    const emailInput = await page.getByLabel('E-Mail');
-
-    await (await emailInput.elementHandle())?.waitForElementState('stable');
+    await page.waitForResponse('http://localhost:3000/api/users/me');
 
     const loginButton = await page.getByRole('button', {
       name: 'Anmelden',
