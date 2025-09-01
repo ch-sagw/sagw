@@ -14,6 +14,12 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const tenantId = await payload.create({
     collection: 'departments',
     data: {
+      languages: {
+        de: true,
+        en: true,
+        fr: true,
+        it: true,
+      },
       name: tenant.toLocaleUpperCase(),
       slug: tenant,
     },
