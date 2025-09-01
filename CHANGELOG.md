@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.10.0](https://github.com/ch-sagw/sagw/compare/v0.9.0...v0.10.0) (2025-09-01)
+
+
+### Features
+
+* refactor collections to resemble new architecture ([e7c9b83](https://github.com/ch-sagw/sagw/commit/e7c9b833b9de8253a28e705bfc8b6eb56788df00))
+
+
+### Bug Fixes
+
+* various fixes and improvements ([e7c9b83](https://github.com/ch-sagw/sagw/commit/e7c9b833b9de8253a28e705bfc8b6eb56788df00))
+
+
+### Test
+
+* refactor tests to adopt new collections architecture ([e7c9b83](https://github.com/ch-sagw/sagw/commit/e7c9b833b9de8253a28e705bfc8b6eb56788df00))
+
 ## [0.9.0](https://github.com/ch-sagw/sagw/compare/v0.8.0...v0.9.0) (2025-08-28)
 
 
