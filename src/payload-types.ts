@@ -651,6 +651,7 @@ export interface Video {
  */
 export interface Form {
   id: string;
+  department?: (string | null) | Department;
   title: string;
   fields?:
     | (
@@ -6466,6 +6467,7 @@ export interface StatusMessageSelect<T extends boolean = true> {
  * via the `definition` "forms_select".
  */
 export interface FormsSelect<T extends boolean = true> {
+  department?: T;
   title?: T;
   fields?:
     | T

@@ -309,7 +309,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'forms',
     data: {
       _status: 'published',
-      // department: tenantId,
+      department: tenantId,
       fields: [
         {
           blockName: `Some form Block ${tenant.toUpperCase()}`,
