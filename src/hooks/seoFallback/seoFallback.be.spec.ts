@@ -9,11 +9,11 @@ test.describe('seoFallback', () => {
   }) => {
     await page.goto('http://localhost:3000/admin/');
     await page.waitForLoadState('load');
+    await page.waitForLoadState('domcontentloaded');
 
     const emailInput = await page.getByLabel('E-Mail');
 
-    await expect(emailInput)
-      .not.toBeEmpty();
+    await (await emailInput.elementHandle())?.waitForElementState('stable');
 
     const loginButton = await page.getByRole('button', {
       name: 'Anmelden',
