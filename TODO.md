@@ -46,12 +46,12 @@ Payload Config:
 - in general, grant api read access to collections only if collection is published
 - add indication on payload ui if author is on test or prod
 - richt-text sanitize: should we search for "  " and replace by " "? other optimizations?
-- in departments overview, there is a column "_watch Tenant" ... ?
-- for departments, make name, url and slug unique
 - set access control on all blocks/collections
 - layout fields in rows where appropriate. e.g. with link internal: the 3 fields can be in 1 row
-- for images: svg's are also selectable
 - show "published" column in collection overview
+- i don't see too much added value for our use-case for the formbuilder plugin. -> implement own solution
+- do we need OverviewPage and DetailPage? One should be enough?
+- add descriptions to collections: what is this collection for?
 
 Multitenant: (working with seed data)
 --------
@@ -67,9 +67,6 @@ Misc:
 Testing:
 -------
 
-
-REFACTOR:
+ASK STELLA:
 -------
-- introduce collection "Reusable Text": author can define "Publikation herunterladen" in 4 languages. Then, he can choose this as title in the PublicationsTeasersBlock
-- add descriptions to collections: what is this collection for?
-- nav concept issue for tenants: how to link nav items to events / magazine / news / publications overview?
+- introduce collection "Reusable Text"? author can define "Publikation herunterladen" in 4 languages. Then, he can choose this as title in the PublicationsTeasersBlock
