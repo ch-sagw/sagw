@@ -1,10 +1,11 @@
 # syntax=docker.io/docker/dockerfile:1.7-labs
 
-# ATTENTION: This docker file uses node 22.x. Regularly check if node version changed.
+# ATTENTION: This docker file uses node 22.x. Regularly check if node version changed:
+# https://github.com/microsoft/playwright/blob/main/utils/docker/Dockerfile.noble
 
 # ATTENTION: If the docker image is changed here, it also needs to be changed in deploy-branch.yml and deploy-prod.yml
 
-FROM mcr.microsoft.com/playwright:v1.54.2-noble
+FROM mcr.microsoft.com/playwright:v1.55.0-noble
 WORKDIR /src
 COPY --exclude=node_modules . .
 RUN npm install
