@@ -23,6 +23,8 @@ import { TitleSubtitleTextBlock } from '@/blocks/TitleSubtitleText';
 import { NetworkTeasersBlock } from '@/blocks/NetworkTeasers';
 import { PeopleOverviewBlock } from '@/blocks/PeopleOverview';
 import { ImageTeasersBlock } from './ImageTeasers';
+import { NotificationBlock } from './Notification';
+import { BibliographicReferenceBlock } from './BibliographicReference';
 
 export const blocks = (exclude?: string[]): Block[] => {
   const availableBlocks = [
@@ -40,6 +42,8 @@ export const blocks = (exclude?: string[]): Block[] => {
     TextTeasersBlock,
     NetworkTeasersBlock,
     ImageTeasersBlock,
+    NotificationBlock,
+    BibliographicReferenceBlock,
 
     // automatic overviews
     MagazineOverviewBlock,
