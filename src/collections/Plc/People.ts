@@ -1,6 +1,17 @@
 import type { CollectionConfig } from 'payload';
 import { versions } from '@/field-templates/versions';
 
+export const memberTypeConfig = {
+  executiveBoard: {
+    label: 'Vorstand',
+    value: 'executiveBoard',
+  },
+  team: {
+    label: 'Team',
+    value: 'team',
+  },
+};
+
 export const People: CollectionConfig = {
   access: {
     read: () => true,
@@ -36,14 +47,8 @@ export const People: CollectionConfig = {
     {
       name: 'memberType',
       options: [
-        {
-          label: 'Vorstand',
-          value: 'executiveBoard',
-        },
-        {
-          label: 'Team',
-          value: 'team',
-        },
+        memberTypeConfig.executiveBoard,
+        memberTypeConfig.team,
       ],
       required: true,
       type: 'select',
@@ -81,7 +86,7 @@ export const People: CollectionConfig = {
     },
     {
       name: 'phone',
-      required: true,
+      required: false,
       type: 'text',
     },
     {
