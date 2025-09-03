@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.2](https://github.com/ch-sagw/sagw/compare/v0.10.1...v0.10.2) (2025-09-03)
+
+
+### Bug Fixes
+
+* bump the development-dependencies group across 1 directory with 19 updates ([#372](https://github.com/ch-sagw/sagw/issues/372)) ([a38cd55](https://github.com/ch-sagw/sagw/commit/a38cd55e43895e96ca16feba848e28b0746cade5))
+* update dependencies ([a38cd55](https://github.com/ch-sagw/sagw/commit/a38cd55e43895e96ca16feba848e28b0746cade5))
+
 ## [0.10.1](https://github.com/ch-sagw/sagw/compare/v0.10.0...v0.10.1) (2025-09-01)
 
 
