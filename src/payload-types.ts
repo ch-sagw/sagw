@@ -448,6 +448,48 @@ export interface HomePage {
             blockType: 'imageTeasersBlock';
           }
         | {
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'notificationBlock';
+          }
+        | {
+            title: string;
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            copyButtonText: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'bibliographicReferenceBlock';
+          }
+        | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -467,6 +509,10 @@ export interface HomePage {
           }
         | {
             message?: string | null;
+            memberType?: {
+              executiveBoard?: boolean | null;
+              team?: boolean | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'peopleOverviewBlock';
@@ -732,7 +778,7 @@ export interface Person {
   lastname: string;
   function: string;
   mail: string;
-  phone: string;
+  phone?: string | null;
   image?: (string | null) | Image;
   fullName?: string | null;
   updatedAt: string;
@@ -1074,6 +1120,48 @@ export interface OverviewPage {
             blockType: 'imageTeasersBlock';
           }
         | {
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'notificationBlock';
+          }
+        | {
+            title: string;
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            copyButtonText: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'bibliographicReferenceBlock';
+          }
+        | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -1093,6 +1181,10 @@ export interface OverviewPage {
           }
         | {
             message?: string | null;
+            memberType?: {
+              executiveBoard?: boolean | null;
+              team?: boolean | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'peopleOverviewBlock';
@@ -1430,6 +1522,48 @@ export interface DetailPage {
             blockType: 'imageTeasersBlock';
           }
         | {
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'notificationBlock';
+          }
+        | {
+            title: string;
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            copyButtonText: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'bibliographicReferenceBlock';
+          }
+        | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -1449,6 +1583,10 @@ export interface DetailPage {
           }
         | {
             message?: string | null;
+            memberType?: {
+              executiveBoard?: boolean | null;
+              team?: boolean | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'peopleOverviewBlock';
@@ -1794,6 +1932,48 @@ export interface MagazineDetailPage {
             blockType: 'imageTeasersBlock';
           }
         | {
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'notificationBlock';
+          }
+        | {
+            title: string;
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            copyButtonText: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'bibliographicReferenceBlock';
+          }
+        | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -1813,6 +1993,10 @@ export interface MagazineDetailPage {
           }
         | {
             message?: string | null;
+            memberType?: {
+              executiveBoard?: boolean | null;
+              team?: boolean | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'peopleOverviewBlock';
@@ -2162,6 +2346,48 @@ export interface EventDetailPage {
             blockType: 'imageTeasersBlock';
           }
         | {
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'notificationBlock';
+          }
+        | {
+            title: string;
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            copyButtonText: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'bibliographicReferenceBlock';
+          }
+        | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -2181,6 +2407,10 @@ export interface EventDetailPage {
           }
         | {
             message?: string | null;
+            memberType?: {
+              executiveBoard?: boolean | null;
+              team?: boolean | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'peopleOverviewBlock';
@@ -2542,6 +2772,48 @@ export interface NewsDetailPage {
             blockType: 'imageTeasersBlock';
           }
         | {
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'notificationBlock';
+          }
+        | {
+            title: string;
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            copyButtonText: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'bibliographicReferenceBlock';
+          }
+        | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -2561,6 +2833,10 @@ export interface NewsDetailPage {
           }
         | {
             message?: string | null;
+            memberType?: {
+              executiveBoard?: boolean | null;
+              team?: boolean | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'peopleOverviewBlock';
@@ -2641,6 +2917,7 @@ export interface PublicationDetailPage {
   categorization: {
     topic: string | PublicationTopic;
     type: string | PublicationType;
+    project?: (string | null) | Project;
   };
   hero: {
     title: {
@@ -2908,6 +3185,48 @@ export interface PublicationDetailPage {
             blockType: 'imageTeasersBlock';
           }
         | {
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'notificationBlock';
+          }
+        | {
+            title: string;
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            copyButtonText: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'bibliographicReferenceBlock';
+          }
+        | {
             message?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -2927,6 +3246,10 @@ export interface PublicationDetailPage {
           }
         | {
             message?: string | null;
+            memberType?: {
+              executiveBoard?: boolean | null;
+              team?: boolean | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'peopleOverviewBlock';
@@ -3788,6 +4111,22 @@ export interface HomePageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        notificationBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        bibliographicReferenceBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              copyButtonText?: T;
+              id?: T;
+              blockName?: T;
+            };
         magazineOverviewBlock?:
           | T
           | {
@@ -3813,6 +4152,12 @@ export interface HomePageSelect<T extends boolean = true> {
           | T
           | {
               message?: T;
+              memberType?:
+                | T
+                | {
+                    executiveBoard?: T;
+                    team?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -4160,6 +4505,22 @@ export interface OverviewPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        notificationBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        bibliographicReferenceBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              copyButtonText?: T;
+              id?: T;
+              blockName?: T;
+            };
         magazineOverviewBlock?:
           | T
           | {
@@ -4185,6 +4546,12 @@ export interface OverviewPageSelect<T extends boolean = true> {
           | T
           | {
               message?: T;
+              memberType?:
+                | T
+                | {
+                    executiveBoard?: T;
+                    team?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -4503,6 +4870,22 @@ export interface DetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        notificationBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        bibliographicReferenceBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              copyButtonText?: T;
+              id?: T;
+              blockName?: T;
+            };
         magazineOverviewBlock?:
           | T
           | {
@@ -4528,6 +4911,12 @@ export interface DetailPageSelect<T extends boolean = true> {
           | T
           | {
               message?: T;
+              memberType?:
+                | T
+                | {
+                    executiveBoard?: T;
+                    team?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -4853,6 +5242,22 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        notificationBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        bibliographicReferenceBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              copyButtonText?: T;
+              id?: T;
+              blockName?: T;
+            };
         magazineOverviewBlock?:
           | T
           | {
@@ -4878,6 +5283,12 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
           | T
           | {
               message?: T;
+              memberType?:
+                | T
+                | {
+                    executiveBoard?: T;
+                    team?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -5210,6 +5621,22 @@ export interface EventDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        notificationBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        bibliographicReferenceBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              copyButtonText?: T;
+              id?: T;
+              blockName?: T;
+            };
         magazineOverviewBlock?:
           | T
           | {
@@ -5235,6 +5662,12 @@ export interface EventDetailPageSelect<T extends boolean = true> {
           | T
           | {
               message?: T;
+              memberType?:
+                | T
+                | {
+                    executiveBoard?: T;
+                    team?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -5566,6 +5999,22 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        notificationBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        bibliographicReferenceBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              copyButtonText?: T;
+              id?: T;
+              blockName?: T;
+            };
         magazineOverviewBlock?:
           | T
           | {
@@ -5591,6 +6040,12 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
           | T
           | {
               message?: T;
+              memberType?:
+                | T
+                | {
+                    executiveBoard?: T;
+                    team?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -5675,6 +6130,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
     | {
         topic?: T;
         type?: T;
+        project?: T;
       };
   hero?:
     | T
@@ -5920,6 +6376,22 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        notificationBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        bibliographicReferenceBlock?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              copyButtonText?: T;
+              id?: T;
+              blockName?: T;
+            };
         magazineOverviewBlock?:
           | T
           | {
@@ -5945,6 +6417,12 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
           | T
           | {
               message?: T;
+              memberType?:
+                | T
+                | {
+                    executiveBoard?: T;
+                    team?: T;
+                  };
               id?: T;
               blockName?: T;
             };
