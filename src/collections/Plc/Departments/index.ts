@@ -48,6 +48,32 @@ export const Departments: CollectionConfig = {
       type: 'text',
       unique: true,
     },
+    {
+      fields: [
+        {
+          defaultValue: true,
+          name: 'de',
+          type: 'checkbox',
+        },
+        {
+          defaultValue: true,
+          name: 'fr',
+          type: 'checkbox',
+        },
+        {
+          defaultValue: true,
+          name: 'it',
+          type: 'checkbox',
+        },
+        {
+          defaultValue: true,
+          name: 'en',
+          type: 'checkbox',
+        },
+      ],
+      name: 'languages',
+      type: 'group',
+    },
   ],
   slug: 'departments',
 };
