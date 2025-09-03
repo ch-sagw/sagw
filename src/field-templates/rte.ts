@@ -20,7 +20,7 @@ import {
 } from 'payload';
 import { JSDOM } from 'jsdom';
 import domPurify from 'dompurify';
-import { whitelist } from 'validator';
+import validator from 'validator';
 
 const {
   window,
@@ -32,7 +32,7 @@ const sanitizeNode = (node: any): void => {
 
     // clean up.
     // allow: letters, numbers, punctuation, space, tabs, newlines
-    node.text = whitelist(node.text, '\\x09\\x0A\\x0D\\x20-\\x7E');
+    node.text = validator.whitelist(node.text, '\\x09\\x0A\\x0D\\x20-\\x7E');
 
     // sanitize
     node.text = purify.sanitize(node.text, {
