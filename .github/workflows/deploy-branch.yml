@@ -23,7 +23,7 @@ jobs:
       pull-requests: write
     container:
       # if the docker image is changed, also change it in deploy-prod.yml and in Dockerfile.testing
-      image: mcr.microsoft.com/playwright:v1.52.0-noble
+      image: mcr.microsoft.com/playwright:v1.55.0-noble
 
     services:
       mongo:
