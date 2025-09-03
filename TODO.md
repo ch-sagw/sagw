@@ -46,6 +46,7 @@ Payload Config:
 - do we need OverviewPage and DetailPage? One should be enough?
 - add descriptions to collections: what is this collection for?
 - care about redirects: check redirects-plugin and decide if we use it or create our own
+- About SAGW -> Link block below RTE is missing. How do we do it? Add a "LinkBlock"? Or do we extend the RTE element with a linkBlock?
 
 Multitenant: (working with seed data)
 --------
