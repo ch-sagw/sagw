@@ -13,13 +13,10 @@ const AccordionItem: Field[] = [
     required: true,
     type: 'text',
   },
-  {
-    editor: rte2,
-    localized: true,
+  rte2({
     name: 'accordionContent',
     required: true,
-    type: 'richText',
-  },
+  }),
 ];
 
 export const AccordionBlock: Block = {

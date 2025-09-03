@@ -8,13 +8,10 @@ export const NotificationBlock: Block = {
     disableBlockName: true,
   },
   fields: [
-    {
-      editor: rte2,
-      localized: true,
+    rte2({
       name: 'text',
       required: true,
-      type: 'richText',
-    },
+    }),
   ],
   imageURL: '/admin-ui-images/notification.svg',
   labels: {

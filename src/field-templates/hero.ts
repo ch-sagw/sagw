@@ -5,13 +5,10 @@ import { rte1 } from '@/field-templates/rte';
 
 export const fieldsHero = (additionalFields?: Field[]): GroupField => ({
   fields: [
-    {
-      editor: rte1,
-      localized: true,
+    rte1({
       name: 'title',
       required: true,
-      type: 'richText',
-    },
+    }),
     {
       localized: true,
       name: 'lead',

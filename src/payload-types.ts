@@ -449,20 +449,8 @@ export interface HomePage {
           }
         | {
             text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
               [k: string]: unknown;
-            };
+            }[];
             id?: string | null;
             blockName?: string | null;
             blockType: 'notificationBlock';
@@ -1121,20 +1109,8 @@ export interface OverviewPage {
           }
         | {
             text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
               [k: string]: unknown;
-            };
+            }[];
             id?: string | null;
             blockName?: string | null;
             blockType: 'notificationBlock';
@@ -1523,20 +1499,8 @@ export interface DetailPage {
           }
         | {
             text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
               [k: string]: unknown;
-            };
+            }[];
             id?: string | null;
             blockName?: string | null;
             blockType: 'notificationBlock';
@@ -1933,20 +1897,8 @@ export interface MagazineDetailPage {
           }
         | {
             text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
               [k: string]: unknown;
-            };
+            }[];
             id?: string | null;
             blockName?: string | null;
             blockType: 'notificationBlock';
@@ -2347,20 +2299,8 @@ export interface EventDetailPage {
           }
         | {
             text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
               [k: string]: unknown;
-            };
+            }[];
             id?: string | null;
             blockName?: string | null;
             blockType: 'notificationBlock';
@@ -2773,20 +2713,8 @@ export interface NewsDetailPage {
           }
         | {
             text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
               [k: string]: unknown;
-            };
+            }[];
             id?: string | null;
             blockName?: string | null;
             blockType: 'notificationBlock';
@@ -3186,20 +3114,8 @@ export interface PublicationDetailPage {
           }
         | {
             text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
               [k: string]: unknown;
-            };
+            }[];
             id?: string | null;
             blockName?: string | null;
             blockType: 'notificationBlock';
@@ -3457,20 +3373,8 @@ export interface Consent {
   banner: {
     title: string;
     text: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
       [k: string]: unknown;
-    };
+    }[];
     buttonAcceptAll: string;
     buttonCustomizeSelection: string;
     buttonDeclineAll: string;
@@ -3478,20 +3382,8 @@ export interface Consent {
   overlay: {
     title: string;
     text: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
       [k: string]: unknown;
-    };
+    }[];
     buttonAcceptAll: string;
     buttonAcceptSelection: string;
     necessaryCookies: {

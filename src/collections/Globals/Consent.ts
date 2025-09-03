@@ -16,13 +16,10 @@ const overlaySection: Field[] = [
     required: true,
     type: 'text',
   },
-  {
-    editor: rte2,
-    localized: true,
+  rte2({
     name: 'text',
     required: true,
-    type: 'richText',
-  },
+  }),
 ];
 
 const overlaySectionWithoutToggle: Field[] = [
