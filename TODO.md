@@ -26,7 +26,6 @@ Payload:
 --------
 - set hideAPIURL to true on prod for non admins: https://payloadcms.com/docs/configuration/collections#admin-options
 - implement live-preview
-- implement versions
 - implement trash
 - correctly set SERVER_URL based on ENV
 - implement draft preview: https://payloadcms.com/docs/admin/preview#draft-preview
@@ -39,7 +38,6 @@ Vercel:
 
 Payload Config:
 --------
-- earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
 - implement hidden texts global config (for a11y)
 - slug: add a slug-field to all pages! currently, we don't have slugs, but just id's. If we go for slugs -> make validation hook to ensure unique slugs per tenant
 - in general, grant api read access to collections only if collection is published
@@ -56,7 +54,7 @@ Payload Config:
 Multitenant: (working with seed data)
 --------
 - issue: on autologin, tenant-cookie is not set after login -> create github issue
-- issue v3.54.0, ok in v3.52.0: multi-tenant & versions and global collection: can't be created if db empty: "Error creating autosave global multi tenant document for homePage"... department seems undefined
+- issue v3.54.0, ok in v3.52.0: multi-tenant & versions and global collection: can't be created if db empty: "Error creating autosave global multi tenant document for homePage"... department seems undefined -> create github issue
 
 Misc:
 --------
