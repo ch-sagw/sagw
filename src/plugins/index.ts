@@ -4,6 +4,10 @@ import {
   GenerateTitle, GenerateURL,
 } from '@payloadcms/plugin-seo/types';
 import { multiTenantPlugin } from '@payloadcms/plugin-multi-tenant';
+import {
+  sentryPlugin,
+  PluginOptions as sentryPluginOptions,
+} from '@payloadcms/plugin-sentry';
 
 import { Plugin } from 'payload';
 import { Images } from '@/collections/Plc/Images';
@@ -17,6 +21,8 @@ import { tenantsCollections } from '@/collections';
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder';
 import { formPluginConfig } from '@/plugins/formPluginConfig';
 import { Svgs } from '@/collections/Plc/Svgs';
+
+import * as Sentry from '@sentry/nextjs';
 
 const generateTitle: GenerateTitle = ({
   doc,
@@ -34,6 +40,11 @@ const generateURL: GenerateURL = ({
     : url;
 };
 
+type ExtendedPluginOptions = sentryPluginOptions & {
+  debug?: boolean
+  enabled?: boolean
+}
+
 const plugins: Plugin[] = [
   vercelBlobStorage({
     clientUploads: true,
@@ -46,13 +57,36 @@ const plugins: Plugin[] = [
     enabled: true,
     token: process.env.BLOB_READ_WRITE_TOKEN,
   }),
+  sentryPlugin({
+    Sentry,
+    options: <ExtendedPluginOptions> {
+      captureErrors: [
+        400,
+        403,
+        404,
+        500,
+      ],
+      context: ({
+        defaultContext,
+        req,
+      }: {
+        defaultContext: any;
+        req: any
+      }) => ({
+        ...defaultContext,
+        tags: {
+          locale: req.locale,
+        },
+      }),
+      debug: true,
+      enabled: true,
+    },
+  }),
   seoPlugin({
     generateTitle,
     generateURL,
   }),
-
   formBuilderPlugin(formPluginConfig()),
-
   multiTenantPlugin<Config>({
     cleanupAfterTenantDelete: false,
     collections: tenantsCollections,

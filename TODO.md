@@ -15,10 +15,6 @@ Resend:
 - Create SAGW account
 - Add SAGW Resend token to env file
 
-Sentry:
--------
-- Install https://payloadcms.com/docs/plugins/sentry
-
 NextJs:
 -------
 
