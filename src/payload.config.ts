@@ -29,6 +29,12 @@ export default buildConfig({
           prefillOnly: true,
         }
         : false,
+    components: {
+      graphics: {
+        Icon: '@/components/admin/graphics/Icon',
+        Logo: '@/components/admin/graphics/Logo',
+      },
+    },
     importMap: {
       baseDir: path.resolve(dirname),
     },
