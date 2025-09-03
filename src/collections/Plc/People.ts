@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload';
+import { versions } from '@/field-templates/versions';
 
 export const People: CollectionConfig = {
   access: {
@@ -10,7 +11,7 @@ export const People: CollectionConfig = {
   },
   fields: [
     {
-      name: 'person-department',
+      name: 'personDepartment',
       options: [
         {
           label: 'Adminstration',
@@ -115,4 +116,5 @@ export const People: CollectionConfig = {
     singular: 'People',
   },
   slug: 'people',
+  versions,
 };

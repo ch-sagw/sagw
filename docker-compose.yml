@@ -30,7 +30,7 @@ services:
       DOTENV_CONFIG_PATH: /app/.env
 
     # payload will be started by playwright-be.config.ts
-    command: npm run test:be:native
+    # command: npm run test:be:native
 
   mongo:
     image: mongodb/mongodb-community-server:8.0.12-ubi8

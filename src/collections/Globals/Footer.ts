@@ -1,9 +1,34 @@
-import { fieldsSocialLink } from '@/field-templates/socialLink';
-import { CollectionConfig } from 'payload';
+import {
+  CollectionConfig, Field,
+} from 'payload';
+import { fieldsLinkExternal } from '@/field-templates/links';
 
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
+import { versions } from '@/field-templates/versions';
+
+const fieldsSocialLink: Field[] = [
+  ...fieldsLinkExternal,
+  {
+    name: 'icon',
+    options: [
+      {
+        label: 'LinkedIn',
+        value: 'linkedIn',
+      },
+      {
+        label: 'X (Twitter)',
+        value: 'twitter',
+      },
+      {
+        label: 'Facebook',
+        value: 'facebook',
+      },
+    ],
+    type: 'select',
+  },
+];
 
 export const Footer: CollectionConfig = {
   access: {
@@ -101,4 +126,5 @@ export const Footer: CollectionConfig = {
     singular: 'Footer',
   },
   slug: 'footer',
+  versions,
 };

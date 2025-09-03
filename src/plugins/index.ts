@@ -18,6 +18,9 @@ import type { Config } from '@/payload-types';
 import { isGlobalAdmin } from '@/access/isGlobalAdmin';
 import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
 import { tenantsCollections } from '@/collections';
+import { formBuilderPlugin } from '@payloadcms/plugin-form-builder';
+import { formPluginConfig } from '@/plugins/formPluginConfig';
+import { Svgs } from '@/collections/Plc/Svgs';
 
 import * as Sentry from '@sentry/nextjs';
 
@@ -49,6 +52,7 @@ const plugins: Plugin[] = [
       [Images.slug]: true,
       [Videos.slug]: true,
       [Documents.slug]: true,
+      [Svgs.slug]: true,
     },
     enabled: true,
     token: process.env.BLOB_READ_WRITE_TOKEN,
@@ -82,7 +86,9 @@ const plugins: Plugin[] = [
     generateTitle,
     generateURL,
   }),
+  formBuilderPlugin(formPluginConfig()),
   multiTenantPlugin<Config>({
+    cleanupAfterTenantDelete: false,
     collections: tenantsCollections,
     tenantField: {
       access: {
@@ -107,6 +113,7 @@ const plugins: Plugin[] = [
     tenantsSlug: 'departments',
     userHasAccessToAllTenants: (user) => isGlobalAdmin(user),
   }),
+
 ];
 
 export default plugins;

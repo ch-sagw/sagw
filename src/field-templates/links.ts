@@ -17,7 +17,7 @@ export const fieldsLinkInternal: Field[] = [
     admin: {
       components: {
         Field: {
-          path: 'src/components/admin/InternalLinkChooser/InternalLinkChooser',
+          path: '@/components/admin/InternalLinkChooser/InternalLinkChooser',
         },
       },
     },

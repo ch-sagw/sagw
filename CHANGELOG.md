@@ -1,5 +1,129 @@
 # Changelog
 
+## [0.10.1](https://github.com/ch-sagw/sagw/compare/v0.10.0...v0.10.1) (2025-09-01)
+
+
+### Bug Fixes
+
+* revert payload to 3.52.0 and next to 15.4.7 and fix tests ([#369](https://github.com/ch-sagw/sagw/issues/369)) ([912502c](https://github.com/ch-sagw/sagw/commit/912502c5f1c770b73b69761ed1f5a2365c4c0058))
+
+## [0.10.0](https://github.com/ch-sagw/sagw/compare/v0.9.0...v0.10.0) (2025-09-01)
+
+
+### Features
+
+* refactor collections to resemble new architecture ([e7c9b83](https://github.com/ch-sagw/sagw/commit/e7c9b833b9de8253a28e705bfc8b6eb56788df00))
+
+
+### Bug Fixes
+
+* various fixes and improvements ([e7c9b83](https://github.com/ch-sagw/sagw/commit/e7c9b833b9de8253a28e705bfc8b6eb56788df00))
+
+
+### Test
+
+* refactor tests to adopt new collections architecture ([e7c9b83](https://github.com/ch-sagw/sagw/commit/e7c9b833b9de8253a28e705bfc8b6eb56788df00))
+
+## [0.9.0](https://github.com/ch-sagw/sagw/compare/v0.8.0...v0.9.0) (2025-08-28)
+
+
+### Chore
+
+* disable dev indicator ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* docker ignore non-relevant folders ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* remove allowPublicRead property from tenants ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* update playwright/test ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+
+
+### CI
+
+* install playwright ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* set explicit permissions on workflows ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+
+
+### Documentation
+
+* add note about vercel environments ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* add storybook deployment ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+
+
+### Features
+
+* add validation for url ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* create hook for seo fallback from home to all other pages ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* make internalLink chooser ready to use for lexical editor, and use it in rte2 ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* seed data for a second tenant ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+
+
+### Bug Fixes
+
+* disable mongoDb autoPluralization ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* enable autologin for playwright ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* make sure no collections are deleted after tenant deletion ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* use custom check to ensure zenodo id is unique (didn't work with tenants) ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* use hooke instead of passed data to get selectedTenant ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+
+
+### Test
+
+* add api test, better structure tests ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* add sample images for test setup ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* add seed function to populate db for playwright ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* add tenant specific tests ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* add test for adminTitle hook ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* add tests for internal link chooser ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* add tests for soft-hypen ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* config screenshots ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* create global-users instead of admins ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* simple link chooser test ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* use current playwright image in fe&be docker ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+* write test for seoFallback hook ([3c57d16](https://github.com/ch-sagw/sagw/commit/3c57d1630021aad0959bf6af2b00a6e9e3da9f64))
+
+## [0.8.0](https://github.com/ch-sagw/sagw/compare/v0.7.0...v0.8.0) (2025-08-26)
+
+
+### Chore
+
+* add note about revalidation issue ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* fixing env variable in sentry.server.config ([38cb4b9](https://github.com/ch-sagw/sagw/commit/38cb4b9009067e6486a7bbf9a7fdb09ece72694e))
+* remove allowPublicRead property from tenants ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* removing todo ([38cb4b9](https://github.com/ch-sagw/sagw/commit/38cb4b9009067e6486a7bbf9a7fdb09ece72694e))
+* update after build ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+
+
+### CI
+
+* set explicit permissions on workflows ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+
+
+### Documentation
+
+* add note about potential issue ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* remove tod ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* remove todo ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* remove todo ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* remove todo ([ffee5d1](https://github.com/ch-sagw/sagw/commit/ffee5d1d976e167042576291e6b295d323c4fb7c))
+* remove todos ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* remove todos ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+
+
+### Features
+
+* add validation for url ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* allow and init sentry only on production ([38cb4b9](https://github.com/ch-sagw/sagw/commit/38cb4b9009067e6486a7bbf9a7fdb09ece72694e))
+* create hook for seo fallback from home to all other pages ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* make internalLink chooser ready to use for lexical editor, and use it in rte2 ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* use seo hook ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+
+
+### Bug Fixes
+
+* disable mongoDb autoPluralization ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* fix issue with undefined seo title and description ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* fix restore db tasks ([#356](https://github.com/ch-sagw/sagw/issues/356)) ([a1206a2](https://github.com/ch-sagw/sagw/commit/a1206a2b2b6bfe55337761b0e9042fb4c2b22219))
+* properly name job ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+* use external link field template ([afc50c1](https://github.com/ch-sagw/sagw/commit/afc50c1b7e2c27b1e308c0deadacaed081a86c73))
+
 ## [0.7.0](https://github.com/ch-sagw/sagw/compare/v0.6.2...v0.7.0) (2025-08-22)
 
 

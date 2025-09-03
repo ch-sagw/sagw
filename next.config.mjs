@@ -13,6 +13,7 @@ const NEXT_PUBLIC_SERVER_URL = process.env.URL ||
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  devIndicators: false,
   images: {
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL].map((item) => {

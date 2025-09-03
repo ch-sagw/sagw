@@ -12,6 +12,9 @@ import sharp from 'sharp';
 import plugins from '@/plugins';
 import { collections } from '@/collections';
 import { Users } from '@/collections/Plc/Users';
+import { seedInitialUserAndTenant } from '@/seed/init';
+import { seedTestData } from '@/seed/test-data';
+import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -21,11 +24,17 @@ export default buildConfig({
     autoLogin:
       process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true'
         ? {
-          email: 'foo@bar.com',
-          password: '1234',
-          prefillOnly: false,
+          email: process.env.PAYLOAD_INITIAL_USER_MAIL,
+          password: process.env.PAYLOAD_INITIAL_PASSWORD,
+          prefillOnly: true,
         }
         : false,
+    components: {
+      graphics: {
+        Icon: '@/components/admin/graphics/Icon',
+        Logo: '@/components/admin/graphics/Logo',
+      },
+    },
     importMap: {
       baseDir: path.resolve(dirname),
     },
@@ -53,6 +62,38 @@ export default buildConfig({
   localization: {
     defaultLocale: 'de',
     fallback: true,
+    filterAvailableLocales: async ({
+      req, locales,
+    }) => {
+
+      // filter available languages based on the chosen languages
+      // in the specific tenant config
+
+      const tenant = getTenantFromCookie(req.headers, 'text');
+
+      if (!tenant) {
+        return locales;
+      }
+
+      try {
+        const fullTenant = await req.payload.findByID({
+          collection: 'departments',
+          id: tenant,
+          req,
+        });
+
+        const tenantLanguages = fullTenant.languages;
+
+        if (tenantLanguages === undefined) {
+          return locales;
+        }
+
+        return locales.filter((locale) => tenantLanguages[locale.code as keyof typeof tenantLanguages]);
+
+      } catch {
+        return locales;
+      }
+    },
     locales: [
       {
         code: 'de',
@@ -72,53 +113,13 @@ export default buildConfig({
       },
     ],
   },
-  onInit: async (cms) => {
-    try {
-    // Check if any users exist
-      const users = await cms.find({
-        collection: 'users',
-        limit: 1,
-      });
-
-      if (users.docs.length === 0) {
-        console.log('No users found. Seeding first tenant and admin user...');
-
-        // Create a default tenant
-        const tenant = await cms.create({
-          collection: 'departments',
-          data: {
-            name: 'SAGW',
-            slug: 'sagw',
-          },
-        });
-
-        // 3. Create the first admin user and link it to the tenant
-        if (process.env.PAYLOAD_INITIAL_USER_MAIL && process.env.PAYLOAD_INITIAL_PASSWORD) {
-          await cms.create({
-            collection: 'users',
-            data: {
-              department: tenant.id,
-              departments: [
-                {
-                  department: tenant.id,
-                  roles: ['admin'],
-                },
-              ],
-              email: process.env.PAYLOAD_INITIAL_USER_MAIL,
-              password: process.env.PAYLOAD_INITIAL_PASSWORD,
-              roles: ['global-admin'],
-              username: 'init-user',
-            },
-          });
-
-          console.log('Created first user.');
-        } else {
-          console.log('Payload init error: PAYLOAD_INITIAL_USER_MAIL & PAYLOAD_INITIAL_PASSWORD env vars must be defined');
-        }
-      }
-    } catch (e) {
-      console.log('payload init: something went wrong creating initial user and tenant.');
-      console.log(e);
+  onInit: async (payload) => {
+    // on ENV seed, we seed test data. otherwise we seed initial user
+    // and tenant (if user and tenant collections are empty)
+    if (process.env.ENV === 'seed' || process.env.ENV === 'playwright') {
+      await seedTestData(payload);
+    } else {
+      await seedInitialUserAndTenant(payload);
     }
   },
   plugins,

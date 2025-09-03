@@ -14,7 +14,6 @@ const hasRequired = (field: unknown): field is FieldWithRequired => typeof field
 const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
   const {
     collectionSlug,
-    data,
     id,
     path,
     field,
@@ -23,7 +22,6 @@ const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
   return (
     <InternalLinkChooserClient
       collectionSlug={collectionSlug}
-      data={data}
       currentId={id}
       path={path}
       tenantsCollections={tenantsCollections}

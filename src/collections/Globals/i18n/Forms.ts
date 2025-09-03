@@ -1,30 +1,8 @@
 import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
-import {
-  CollectionConfig, Field,
-} from 'payload';
+import { CollectionConfig } from 'payload';
 
 import { rte2 } from '@/field-templates/rte';
-
-const inputFields: Field[] = [
-  {
-    localized: true,
-    name: 'label',
-    required: true,
-    type: 'text',
-  },
-  {
-    localized: true,
-    name: 'placeholder',
-    required: true,
-    type: 'text',
-  },
-  {
-    localized: true,
-    name: 'error',
-    required: true,
-    type: 'text',
-  },
-];
+import { versions } from '@/field-templates/versions';
 
 export const I18nForms: CollectionConfig = {
   access: {
@@ -35,32 +13,9 @@ export const I18nForms: CollectionConfig = {
   },
   fields: [
     {
-      fields: [
-        {
-          fields: inputFields,
-          label: 'E-Mail',
-          name: 'email',
-          type: 'group',
-        },
-        {
-          fields: inputFields,
-          label: 'Message',
-          name: 'message',
-          type: 'group',
-        },
-        {
-          fields: inputFields,
-          label: 'Name',
-          name: 'name',
-          type: 'group',
-        },
-      ],
-      label: 'Input Fields',
-      name: 'inputFields',
-      type: 'group',
-    },
-
-    {
+      admin: {
+        description: 'You may show this text in a checkbox on forms.',
+      },
       fields: [
         {
           editor: rte2,
@@ -76,6 +31,9 @@ export const I18nForms: CollectionConfig = {
     },
 
     {
+      admin: {
+        description: 'This is the text which is shown if a form was successfully submitted.',
+      },
       fields: [
         {
           localized: true,
@@ -97,6 +55,9 @@ export const I18nForms: CollectionConfig = {
     },
 
     {
+      admin: {
+        description: 'This is the text which is shown if there was an error submitting a form.',
+      },
       fields: [
         {
           localized: true,
@@ -118,6 +79,9 @@ export const I18nForms: CollectionConfig = {
     },
 
     {
+      admin: {
+        description: 'This is the text which is shown if there was an warning submitting a form.',
+      },
       fields: [
         {
           localized: true,
@@ -139,4 +103,5 @@ export const I18nForms: CollectionConfig = {
     },
   ],
   slug: 'i18nForms',
+  versions,
 };

@@ -1,10 +1,10 @@
 Backup / Restore:
 -----------------
 - test blob backup/restore with lots of large image files
+- adapt replicate task to also replicate blob to local
 
 Storybook:
 ----------
-- deploy storybook!
 
 Github:
 -------
@@ -22,14 +22,11 @@ Payload:
 --------
 - set hideAPIURL to true on prod for non admins: https://payloadcms.com/docs/configuration/collections#admin-options
 - implement live-preview
-- implement versions
 - implement trash
 - correctly set SERVER_URL based on ENV
 - implement draft preview: https://payloadcms.com/docs/admin/preview#draft-preview
 - implement document locking: https://payloadcms.com/docs/admin/locked-documents
 - implement resend
-- add indication on payload ui if author is on test or prod
-- richt-text sanitize: should we search for "  " and replace by " "? other optimizations?
 
 Vercel:
 --------
@@ -37,5 +34,32 @@ Vercel:
 
 Payload Config:
 --------
-- earlyCareerAward -> winnersTeasers -> make select with with winners detail pages
 - implement hidden texts global config (for a11y)
+- slug: add a slug-field to all pages! currently, we don't have slugs, but just id's. If we go for slugs -> make validation hook to ensure unique slugs per tenant
+- in general, grant api read access to collections only if collection is published
+- add indication on payload ui if author is on test or prod
+- richt-text sanitize: should we search for "  " and replace by " "? other optimizations?
+- set access control on all blocks/collections
+- layout fields in rows where appropriate. e.g. with link internal: the 3 fields can be in 1 row
+- show "published" column in collection overview
+- i don't see too much added value for our use-case for the formbuilder plugin. -> implement own solution
+- do we need OverviewPage and DetailPage? One should be enough?
+- add descriptions to collections: what is this collection for?
+- care about redirects: check redirects-plugin and decide if we use it or create our own
+
+Multitenant: (working with seed data)
+--------
+- issue: on autologin, tenant-cookie is not set after login -> create github issue
+- issue v3.54.0, ok in v3.52.0: multi-tenant & versions and global collection: can't be created if db empty: "Error creating autosave global multi tenant document for homePage"... department seems undefined -> create github issue
+
+Misc:
+--------
+- update docs on env-vars
+- update docs on deployments
+
+Testing:
+-------
+
+ASK STELLA:
+-------
+- introduce collection "Reusable Text"? author can define "Publikation herunterladen" in 4 languages. Then, he can choose this as title in the PublicationsTeasersBlock
