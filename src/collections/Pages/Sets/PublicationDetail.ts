@@ -54,7 +54,7 @@ export const PublicationDetailPage: CollectionConfig = {
                   fields: [
                     {
                       admin: {
-                        width: '50%',
+                        width: '33.33%',
                       },
                       name: 'topic',
                       relationTo: 'publicationTopics',
@@ -63,11 +63,20 @@ export const PublicationDetailPage: CollectionConfig = {
                     },
                     {
                       admin: {
-                        width: '50%',
+                        width: '33.33%',
                       },
                       name: 'type',
                       relationTo: 'publicationTypes',
                       required: true,
+                      type: 'relationship',
+                    },
+                    {
+                      admin: {
+                        width: '33.33%',
+                      },
+                      name: 'project',
+                      relationTo: 'projects',
+                      required: false,
                       type: 'relationship',
                     },
                   ],
