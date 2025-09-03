@@ -544,6 +544,12 @@ export interface Department {
    * Used for url paths, example: /department-slug/page-slug
    */
   slug: string;
+  languages?: {
+    de?: boolean | null;
+    fr?: boolean | null;
+    it?: boolean | null;
+    en?: boolean | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -6191,6 +6197,14 @@ export interface DepartmentsSelect<T extends boolean = true> {
   name?: T;
   domain?: T;
   slug?: T;
+  languages?:
+    | T
+    | {
+        de?: T;
+        fr?: T;
+        it?: T;
+        en?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

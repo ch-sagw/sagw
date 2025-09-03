@@ -159,4 +159,57 @@ test.describe('Departments only show content from users department', () => {
       .not.toBeVisible();
   });
 
+  test('correctly filters available languages', async ({
+    page,
+  }) => {
+    // disable french in tenant config, go to detail page and check
+    // if french is no longer choosable in lang dropdown
+
+    await page.goto('http://localhost:3000/admin/collections/departments');
+    await page.waitForLoadState('networkidle');
+
+    const sagw = await page.locator('.cell-name a');
+
+    await sagw.click();
+    await page.waitForLoadState('networkidle');
+
+    const fr = await page.getByRole('checkbox', {
+      name: 'fr',
+    });
+
+    await fr.click({
+      force: true,
+    });
+
+    const save = await page.getByRole('button', {
+      name: 'Speichern',
+    });
+
+    await save.click();
+    await page.waitForLoadState('networkidle');
+
+    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
+    await page.waitForLoadState('networkidle');
+
+    const langSwitch = await page.getByLabel('Sprache');
+
+    await langSwitch.click({
+      force: true,
+    });
+
+    const enButton = await page.getByRole('button', {
+      name: 'English',
+    });
+
+    const frButton = await page.getByRole('button', {
+      name: 'Français',
+    });
+
+    await expect(enButton)
+      .toBeVisible();
+
+    await expect(frButton)
+      .not.toBeVisible();
+  });
+
 });
