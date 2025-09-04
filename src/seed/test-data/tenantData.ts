@@ -34,7 +34,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         departments: [
           {
             department: tenantId,
-            roles: ['admin'],
+            roles: ['editor'],
           },
         ],
         email: tenant === 'sagw'

@@ -24,6 +24,10 @@ export const DetailPage: CollectionConfig = {
     update: globalAdminOrDepartmentAdminAccess,
   },
   admin: {
+    defaultColumns: [
+      'adminTitle',
+      'slug',
+    ],
     group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,
   },
