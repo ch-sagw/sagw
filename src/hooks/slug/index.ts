@@ -49,7 +49,7 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
 
   // try to find desired slug in collection items of current tenant
   if (desiredSlug) {
-    const tenantCollections = await req.payload.find({
+    const existing = await req.payload.find({
       collection: collection.slug,
       limit: 1,
       where: {
@@ -57,6 +57,11 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
           {
             department: {
               equals: department,
+            },
+          },
+          {
+            slug: {
+              equals: desiredSlug,
             },
           },
           {
@@ -70,12 +75,10 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
       },
     });
 
-    const existing = tenantCollections.docs.filter((tenantCollection) => (('slug' in tenantCollection) && tenantCollection.slug === desiredSlug));
-
-    if (existing.length > 0) {
+    if (existing.docs.length > 0) {
 
       // only report error if the found doc is not the currently edited one.
-      const isSelf = operation === 'update' && existing[0].id === dataParam.id;
+      const isSelf = operation === 'update' && existing.docs[0].id === dataParam.id;
 
       if (!isSelf) {
         existingError = true;
@@ -94,7 +97,7 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
     }
   }
 
-  if (!existingError) {
+  if (!existingError && desiredSlug) {
     dataParam[fieldSlugFieldName] = desiredSlug;
   }
 
