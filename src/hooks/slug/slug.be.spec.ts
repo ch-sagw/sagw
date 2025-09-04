@@ -72,7 +72,7 @@ test.describe('Slug field', () => {
 
   });
 
-  test('gets populated correctly fake', async ({
+  test('does not error if slug exists in other tenant', async ({
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
@@ -104,6 +104,12 @@ test.describe('Slug field', () => {
 
     const slugField = await page.locator('#field-slug');
 
+    await expect(slugField)
+      .toHaveValue('detail-page-title-not-sagw');
+
+    // reset title and slug, so not to disturb other sagw/no-sagw specific tests
+    await heroField.fill('Detail page title sagw after testing');
+    await saveButton.click();
     await expect(slugField)
       .toHaveValue('detail-page-title-not-sagw');
 
