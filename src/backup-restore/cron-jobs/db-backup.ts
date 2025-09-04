@@ -93,7 +93,7 @@ const main = async (): Promise<void> => {
 
     throw new Error(getErrorMessage(error));
   } finally {
-    dbHelper.getClient()
+    await dbHelper.getClient()
       ?.close();
   }
 };
