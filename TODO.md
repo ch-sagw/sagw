@@ -43,7 +43,6 @@ Payload Config:
 - layout fields in rows where appropriate. e.g. with link internal: the 3 fields can be in 1 row
 - show "published" column in collection overview
 - i don't see too much added value for our use-case for the formbuilder plugin. -> implement own solution
-- do we need OverviewPage and DetailPage? One should be enough?
 - add descriptions to collections: what is this collection for?
 - care about redirects: check redirects-plugin and decide if we use it or create our own
 - About SAGW -> Link block below RTE is missing. How do we do it? Add a "LinkBlock"? Or do we extend the RTE element with a linkBlock?
@@ -60,7 +59,3 @@ Misc:
 
 Testing:
 -------
-
-ASK STELLA:
--------
-- introduce collection "Reusable Text"? author can define "Publikation herunterladen" in 4 languages. Then, he can choose this as title in the PublicationsTeasersBlock
