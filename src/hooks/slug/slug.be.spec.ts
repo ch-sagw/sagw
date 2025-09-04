@@ -15,7 +15,7 @@ test.describe('Slug field', () => {
 
     const heroField = await page.locator('#field-hero .ContentEditable__root');
 
-    heroField.fill('Sample Detail. Page. $name üöä');
+    await heroField.fill('Sample Detail. Page. $name üöä');
 
     // save
     const saveButton = await page.getByRole('button', {
