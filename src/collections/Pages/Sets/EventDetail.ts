@@ -54,6 +54,12 @@ export const EventDetailPage: CollectionConfig = {
     read: (): boolean => true,
   },
   admin: {
+    defaultColumns: [
+      'adminTitle',
+      'slug',
+      'updatedAt',
+      '_status',
+    ],
     group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,
   },

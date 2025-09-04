@@ -27,6 +27,8 @@ export const DetailPage: CollectionConfig = {
     defaultColumns: [
       'adminTitle',
       'slug',
+      'updatedAt',
+      '_status',
     ],
     group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,

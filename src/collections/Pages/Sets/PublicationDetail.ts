@@ -18,6 +18,12 @@ export const PublicationDetailPage: CollectionConfig = {
     read: (): boolean => true,
   },
   admin: {
+    defaultColumns: [
+      'adminTitle',
+      'slug',
+      'updatedAt',
+      '_status',
+    ],
     group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,
   },

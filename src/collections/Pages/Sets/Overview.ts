@@ -24,6 +24,12 @@ export const OverviewPage: CollectionConfig = {
     update: globalAdminOrDepartmentAdminAccess,
   },
   admin: {
+    defaultColumns: [
+      'adminTitle',
+      'slug',
+      'updatedAt',
+      '_status',
+    ],
     group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,
   },
