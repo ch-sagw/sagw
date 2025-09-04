@@ -66,7 +66,6 @@ const replicateDb = async (replicateTo: string, dbHelperSource: DbHelper, prodDb
 
           collectionsCounter++;
         }
-
       }
     }
 
@@ -75,7 +74,7 @@ const replicateDb = async (replicateTo: string, dbHelperSource: DbHelper, prodDb
     console.log(chalk.bgRed('Error in DB replication.'));
     throw new Error(getErrorMessage(err));
   } finally {
-    dbHelperTarget?.getClient()
+    await dbHelperTarget?.getClient()
       ?.close();
   }
 };
@@ -221,9 +220,9 @@ const replicateProd = async (): Promise<void> => {
   } catch (err) {
     console.log(chalk.bgRed(err));
   } finally {
-    dbHelperSource?.getClient()
+    await dbHelperSource?.getClient()
       ?.close();
   }
 };
 
-replicateProd();
+await replicateProd();

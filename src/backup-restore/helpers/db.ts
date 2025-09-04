@@ -16,17 +16,26 @@ import {
 export class DbHelper {
   private _client: MongoClient | undefined;
 
-  public constructor() {
+  public constructor () {
     if (process.env.DATABASE_URI) {
       this._client = new MongoClient(process.env.DATABASE_URI);
-      this._client.connect();
     }
   }
 
+  public connect = async (): Promise<void> => {
+    if (!this._client) {
+      return;
+    }
+
+    await this._client.connect();
+  };
+
   public getClient = (): MongoClient | undefined => this._client;
 
-  public getDb = (dbName: string): Db | undefined => {
+  public getDb = async (dbName: string): Promise<Db | undefined> => {
     if (this._client) {
+      await this.connect();
+
       return this._client.db(dbName);
     }
 
@@ -34,13 +43,15 @@ export class DbHelper {
   };
 
   public getCollections = async (dbName: string): Promise<Collection<Document>[] | undefined> => {
-    const db = this.getDb(dbName);
+    await this.connect();
+    const db = await this.getDb(dbName);
     const collections = await db?.collections();
 
     return collections;
   };
 
   public getAllDocumentsOfCollection = async (collection: Collection): Promise<WithId<Document>[] | undefined> => {
+    await this.connect();
     const results = await collection.find({})
       .toArray();
 
@@ -48,7 +59,8 @@ export class DbHelper {
   };
 
   public deleteCollection = async (dbName: string, collectionName: string): Promise<void> => {
-    const db = this.getDb(dbName);
+    await this.connect();
+    const db = await this.getDb(dbName);
 
     await db?.collection(collectionName)
       .drop();
@@ -56,6 +68,7 @@ export class DbHelper {
   };
 
   public deleteAllCollections = async (dbName: string): Promise<void> => {
+    await this.connect();
     const collections = await this.getCollections(dbName);
 
     if (!collections) {
@@ -74,7 +87,8 @@ export class DbHelper {
   };
 
   public addDocumentsToCollection = async (dbName: string, collectionName: string, items: any): Promise<void> => {
-    const db = this.getDb(dbName);
+    await this.connect();
+    const db = await this.getDb(dbName);
 
     await db?.collection(collectionName)
       .insertMany(items);
@@ -82,6 +96,7 @@ export class DbHelper {
 
   // todo: add return type
   public getContentOfCollection = async (collection: Collection): Promise<any> => {
+    await this.connect();
     const results = await collection.find({})
       .toArray();
 

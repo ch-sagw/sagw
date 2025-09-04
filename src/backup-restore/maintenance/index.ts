@@ -23,4 +23,4 @@ const maintenanceEntry = async (): Promise<void> => {
   }
 };
 
-maintenanceEntry();
+await maintenanceEntry();

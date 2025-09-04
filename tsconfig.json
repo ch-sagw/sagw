@@ -36,7 +36,13 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    "*.ts",
+    "*.mjs",
+    "*.js",
+    ".next/types/**/*.ts",
+    "lint/*.mjs",
+    ".storybook/*.ts",
+    ".lintstagedrc.js"
   ],
   "exclude": [
     "node_modules",
