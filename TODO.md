@@ -37,7 +37,6 @@ Payload Config:
 - implement hidden texts global config (for a11y)
 - slug: add a slug-field to all pages! currently, we don't have slugs, but just id's. If we go for slugs -> make validation hook to ensure unique slugs per tenant
 - in general, grant api read access to collections only if collection is published
-- add indication on payload ui if author is on test or prod
 - richt-text sanitize: should we search for "  " and replace by " "? other optimizations?
 - set access control on all blocks/collections
 - layout fields in rows where appropriate. e.g. with link internal: the 3 fields can be in 1 row

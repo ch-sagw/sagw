@@ -1,0 +1,9 @@
+.env {
+  & .env-name {
+    font-weight: bold;
+    padding: 0.2rem 0.5rem;
+    background-color: red;
+    color: white;
+    border-radius: 0.2rem;
+  }
+}

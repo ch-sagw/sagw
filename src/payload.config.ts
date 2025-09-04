@@ -30,6 +30,7 @@ export default buildConfig({
         }
         : false,
     components: {
+      beforeDashboard: ['@/components/admin/EnvIndicator'],
       graphics: {
         Icon: '@/components/admin/graphics/Icon',
         Logo: '@/components/admin/graphics/Logo',
