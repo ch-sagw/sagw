@@ -11,5 +11,4 @@ export const fieldSlug: Field = {
   localized: true,
   name: fieldSlugFieldName,
   type: 'text',
-  unique: true,
 };
