@@ -17,6 +17,7 @@ Resend:
 
 NextJs:
 -------
+- generate sitemap
 
 Payload:
 --------
@@ -31,6 +32,7 @@ Payload:
 Vercel:
 --------
 - Disable branch protection for test? https://vercel.com/dev-0f45b8a0/sagw/settings/deployment-protection
+- Early Hints (HTTP status 103), e.g. for font-loading?
 
 Payload Config:
 --------

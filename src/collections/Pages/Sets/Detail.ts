@@ -13,6 +13,8 @@ import {
 import { blocks } from '@/blocks';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { versions } from '@/field-templates/versions';
+import { fieldSlug } from '@/field-templates/slug';
+import { hookSlug } from '@/hooks/slug';
 
 export const DetailPage: CollectionConfig = {
   access: {
@@ -28,6 +30,7 @@ export const DetailPage: CollectionConfig = {
   fields: [
     fieldLinkablePage,
     fieldAdminTitle,
+    fieldSlug,
     {
       tabs: [
 
@@ -57,7 +60,10 @@ export const DetailPage: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [hookSeoFallback],
-    beforeValidate: [hookAdminTitle],
+    beforeValidate: [
+      hookAdminTitle,
+      hookSlug,
+    ],
   },
   labels: {
     plural: 'Detail Pages',

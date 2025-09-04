@@ -13,6 +13,8 @@ import { blocks } from '@/blocks';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { fieldsLinkExternal } from '@/field-templates/links';
 import { versions } from '@/field-templates/versions';
+import { fieldSlug } from '@/field-templates/slug';
+import { hookSlug } from '@/hooks/slug';
 
 const fieldsForDetailPage: Field[] = [
 
@@ -58,6 +60,7 @@ export const EventDetailPage: CollectionConfig = {
   fields: [
     fieldLinkablePage,
     fieldAdminTitle,
+    fieldSlug,
     {
       tabs: [
 
@@ -154,7 +157,10 @@ export const EventDetailPage: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [hookSeoFallback],
-    beforeValidate: [hookAdminTitle],
+    beforeValidate: [
+      hookAdminTitle,
+      hookSlug,
+    ],
   },
   labels: {
     plural: 'Event Detail Pages',
