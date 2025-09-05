@@ -14,19 +14,21 @@ import { Departments } from '@/collections/Plc/Departments';
 import { ZenodoDocuments } from '@/collections/Plc/ZenodoDocuments';
 
 // Globals
-import { I18nForms } from './Globals/i18n/Forms';
-import { Consent } from './Globals/Consent';
-import { Footer } from './Globals/Footer';
-import { Header } from './Globals/Header';
-import { StatusMessage } from './Globals/StatusMessage';
+import { I18nForms } from '@/collections/Globals/i18n/Forms';
+import { Consent } from '@/collections/Globals/Consent';
+import { Footer } from '@/collections/Globals/Footer';
+import { Header } from '@/collections/Globals/Header';
+import { StatusMessage } from '@/collections/Globals/StatusMessage';
 
 // Pages -> Sets
 import { MagazineDetailPage } from '@/collections/Pages/Sets/MagazineDetail';
 import { OverviewPage } from '@/collections/Pages/Sets/Overview';
 import { DetailPage } from '@/collections/Pages/Sets/Detail';
-import { EventDetailPage } from './Pages/Sets/EventDetail';
-import { NewsDetailPage } from './Pages/Sets/NewsDetail';
-import { PublicationDetailPage } from './Pages/Sets/PublicationDetail';
+import { EventDetailPage } from '@/collections/Pages/Sets/EventDetail';
+import { NewsDetailPage } from '@/collections/Pages/Sets/NewsDetail';
+import { PublicationDetailPage } from '@/collections/Pages/Sets/PublicationDetail';
+import { NationalDictionaryDetailPage } from '@/collections/Pages/Sets/NationalDictionaryDetail';
+import { InstituteDetailPage } from '@/collections/Pages/Sets/InstituteDetail';
 
 // Pages -> Singletons
 import { ErrorPage } from '@/collections/Pages/Singletons/Error';
@@ -60,6 +62,8 @@ export const setsPageCollections = [
   EventDetailPage,
   NewsDetailPage,
   PublicationDetailPage,
+  InstituteDetailPage,
+  NationalDictionaryDetailPage,
 ];
 
 export const globalCollections = [
