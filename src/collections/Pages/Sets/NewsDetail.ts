@@ -10,18 +10,27 @@ import { hookSeoFallback } from '@/hooks/seoFallback';
 import { blocks } from '@/blocks';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { versions } from '@/field-templates/versions';
+import { fieldSlug } from '@/field-templates/slug';
+import { hookSlug } from '@/hooks/slug';
 
 export const NewsDetailPage: CollectionConfig = {
   access: {
     read: (): boolean => true,
   },
   admin: {
+    defaultColumns: [
+      'adminTitle',
+      'slug',
+      'updatedAt',
+      '_status',
+    ],
     group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,
     fieldAdminTitle,
+    fieldSlug,
     {
       tabs: [
 
@@ -84,7 +93,10 @@ export const NewsDetailPage: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [hookSeoFallback],
-    beforeValidate: [hookAdminTitle],
+    beforeValidate: [
+      hookAdminTitle,
+      hookSlug,
+    ],
   },
   labels: {
     plural: 'News Detail Pages',

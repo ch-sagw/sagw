@@ -808,6 +808,10 @@ export interface OverviewPage {
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
+  /**
+   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   */
+  slug?: string | null;
   hero: {
     title: {
       root: {
@@ -1164,6 +1168,10 @@ export interface DetailPage {
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
+  /**
+   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   */
+  slug?: string | null;
   hero: {
     title: {
       root: {
@@ -1520,6 +1528,10 @@ export interface MagazineDetailPage {
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
+  /**
+   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   */
+  slug?: string | null;
   overviewPageProps: {
     /**
      * This text will be used as text for the teasers on the overview page.
@@ -1884,6 +1896,10 @@ export interface EventDetailPage {
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
+  /**
+   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   */
+  slug?: string | null;
   eventDetails: {
     title: string;
     location?: string | null;
@@ -2268,6 +2284,10 @@ export interface NewsDetailPage {
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
+  /**
+   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   */
+  slug?: string | null;
   overviewPageProps: {
     /**
      * This text will be used as text for the teasers on the overview page.
@@ -2632,6 +2652,10 @@ export interface PublicationDetailPage {
   department?: (string | null) | Department;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
+  /**
+   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   */
+  slug?: string | null;
   overviewPageProps: {
     /**
      * This image will be used for the teasers on the overview page.
@@ -3916,6 +3940,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
   adminTitle?: T;
+  slug?: T;
   hero?:
     | T
     | {
@@ -4259,6 +4284,7 @@ export interface DetailPageSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
   adminTitle?: T;
+  slug?: T;
   hero?:
     | T
     | {
@@ -4602,6 +4628,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
   adminTitle?: T;
+  slug?: T;
   overviewPageProps?:
     | T
     | {
@@ -4952,6 +4979,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
   adminTitle?: T;
+  slug?: T;
   eventDetails?:
     | T
     | {
@@ -5315,6 +5343,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
   adminTitle?: T;
+  slug?: T;
   overviewPageProps?:
     | T
     | {
@@ -5665,6 +5694,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
   department?: T;
   isLinkable?: T;
   adminTitle?: T;
+  slug?: T;
   overviewPageProps?:
     | T
     | {
