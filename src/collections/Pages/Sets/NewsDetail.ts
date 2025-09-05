@@ -10,6 +10,7 @@ import { hookSeoFallback } from '@/hooks/seoFallback';
 import { blocks } from '@/blocks';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { versions } from '@/field-templates/versions';
+import { hookFormsBlockOnCreate } from '@/hooks/formsBlockOnCreate';
 
 export const NewsDetailPage: CollectionConfig = {
   access: {
@@ -84,7 +85,10 @@ export const NewsDetailPage: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [hookSeoFallback],
-    beforeValidate: [hookAdminTitle],
+    beforeValidate: [
+      hookAdminTitle,
+      hookFormsBlockOnCreate,
+    ],
   },
   labels: {
     plural: 'News Detail Pages',
