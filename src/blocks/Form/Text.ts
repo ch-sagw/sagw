@@ -6,7 +6,7 @@ import {
 
 // Only available on forms block
 
-export const TextBlock: Block = {
+export const textBlock = (hideWidthAndRequired?: boolean): Block => ({
   admin: {
     disableBlockName: true,
   },
@@ -20,6 +20,9 @@ export const TextBlock: Block = {
       type: 'row',
     },
     {
+      admin: {
+        hidden: hideWidthAndRequired,
+      },
       fields: [
         formFieldWidth,
         formFieldCheckbox,
@@ -33,4 +36,4 @@ export const TextBlock: Block = {
     singular: 'Text',
   },
   slug: 'textBlock',
-};
+});

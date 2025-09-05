@@ -6,7 +6,7 @@ import {
 
 // Only available on forms block
 
-export const CheckboxBlock: Block = {
+export const checkboxBlock = (): Block => ({
   admin: {
     disableBlockName: true,
   },
@@ -31,4 +31,4 @@ export const CheckboxBlock: Block = {
     singular: 'Checkbox',
   },
   slug: 'checkboxBlock',
-};
+});

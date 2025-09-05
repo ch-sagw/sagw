@@ -6,7 +6,7 @@ import {
 
 // Only available on forms block
 
-export const TextareaBlock: Block = {
+export const textareaBlock = (): Block => ({
   admin: {
     disableBlockName: true,
   },
@@ -33,4 +33,4 @@ export const TextareaBlock: Block = {
     singular: 'Textarea',
   },
   slug: 'textareaBlock',
-};
+});

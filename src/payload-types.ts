@@ -656,69 +656,100 @@ export interface Video {
 export interface Form {
   id: string;
   department?: (string | null) | Department;
+  /**
+   * A newsletter form has a fixed set of fields. Custom form can be build with any combination of fields as you like.
+   */
+  isNewsletterForm?: ('custom' | 'newsletter') | null;
   title: string;
+  subtitle?: string | null;
   submitButtonLabel: string;
-  recipientMail: string;
+  recipientMail?: string | null;
   /**
    * If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".
    */
   showPrivacyCheckbox?: boolean | null;
-  fields: (
-    | {
-        /**
-         * lowercase, no special characters
-         */
-        name: string;
-        label: string;
-        fieldWidth: 'full' | 'half';
-        required?: boolean | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'checkboxBlock';
-      }
-    | {
-        /**
-         * lowercase, no special characters
-         */
-        name: string;
-        label: string;
-        placeholder: string;
-        fieldWidth: 'full' | 'half';
-        required?: boolean | null;
-        fieldError?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'emailBlock';
-      }
-    | {
-        /**
-         * lowercase, no special characters
-         */
-        name: string;
-        label: string;
-        placeholder: string;
-        fieldWidth: 'full' | 'half';
-        required?: boolean | null;
-        fieldError?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'textBlock';
-      }
-    | {
-        /**
-         * lowercase, no special characters
-         */
-        name: string;
-        label: string;
-        placeholder: string;
-        fieldWidth: 'full' | 'half';
-        required?: boolean | null;
-        fieldError?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'textareaBlock';
-      }
-  )[];
+  fields?:
+    | (
+        | {
+            /**
+             * lowercase, no special characters
+             */
+            name: string;
+            label: string;
+            fieldWidth: 'full' | 'half';
+            required?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'checkboxBlock';
+          }
+        | {
+            /**
+             * lowercase, no special characters
+             */
+            name: string;
+            label: string;
+            placeholder: string;
+            fieldWidth: 'full' | 'half';
+            required?: boolean | null;
+            fieldError?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'emailBlock';
+          }
+        | {
+            /**
+             * lowercase, no special characters
+             */
+            name: string;
+            label: string;
+            placeholder: string;
+            fieldWidth: 'full' | 'half';
+            required?: boolean | null;
+            fieldError?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textBlock';
+          }
+        | {
+            /**
+             * lowercase, no special characters
+             */
+            name: string;
+            label: string;
+            placeholder: string;
+            fieldWidth: 'full' | 'half';
+            required?: boolean | null;
+            fieldError?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textareaBlock';
+          }
+      )[]
+    | null;
+  newsletterForm?: {
+    emailField: {
+      /**
+       * lowercase, no special characters
+       */
+      name: string;
+      label: string;
+      placeholder: string;
+      fieldWidth: 'full' | 'half';
+      required?: boolean | null;
+      fieldError?: string | null;
+    };
+    textField: {
+      /**
+       * lowercase, no special characters
+       */
+      name: string;
+      label: string;
+      placeholder: string;
+      fieldWidth: 'full' | 'half';
+      required?: boolean | null;
+      fieldError?: string | null;
+    };
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -6231,7 +6262,9 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface FormsSelect<T extends boolean = true> {
   department?: T;
+  isNewsletterForm?: T;
   title?: T;
+  subtitle?: T;
   submitButtonLabel?: T;
   recipientMail?: T;
   showPrivacyCheckbox?: T;
@@ -6283,6 +6316,30 @@ export interface FormsSelect<T extends boolean = true> {
               fieldError?: T;
               id?: T;
               blockName?: T;
+            };
+      };
+  newsletterForm?:
+    | T
+    | {
+        emailField?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              placeholder?: T;
+              fieldWidth?: T;
+              required?: T;
+              fieldError?: T;
+            };
+        textField?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              placeholder?: T;
+              fieldWidth?: T;
+              required?: T;
+              fieldError?: T;
             };
       };
   updatedAt?: T;
