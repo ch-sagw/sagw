@@ -29,6 +29,7 @@ import { NewsDetailPage } from '@/collections/Pages/Sets/NewsDetail';
 import { PublicationDetailPage } from '@/collections/Pages/Sets/PublicationDetail';
 import { NationalDictionaryDetailPage } from '@/collections/Pages/Sets/NationalDictionaryDetail';
 import { InstituteDetailPage } from '@/collections/Pages/Sets/InstituteDetail';
+import { ProjectDetailPage } from './Pages/Sets/ProjectDetail';
 
 // Pages -> Singletons
 import { ErrorPage } from '@/collections/Pages/Singletons/Error';
@@ -64,6 +65,7 @@ export const setsPageCollections = [
   PublicationDetailPage,
   InstituteDetailPage,
   NationalDictionaryDetailPage,
+  ProjectDetailPage,
 ];
 
 export const globalCollections = [

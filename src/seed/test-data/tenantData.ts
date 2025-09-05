@@ -577,4 +577,23 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
+  // project detail page
+  await payload.create({
+    collection: 'projectDetailPage',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      hero: {
+        colorMode: 'color',
+        colorScheme: 'bright',
+        lead: 'Project Detail Page Lead',
+        title: simpleRteConfig(`Project detail page title ${tenant.toUpperCase()}`),
+      },
+      overviewPageProps: {
+        text: 'Project Teaser Text',
+      },
+      project,
+    },
+  });
+
 };
