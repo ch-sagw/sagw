@@ -59,7 +59,7 @@ const sanitizeRichTextValue: FieldHook = (value: unknown): string | unknown => {
     sanitizeNode(cloned.root);
   }
 
-  return cloned.trim();
+  return cloned;
 
 };
 
