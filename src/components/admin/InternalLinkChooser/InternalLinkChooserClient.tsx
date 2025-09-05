@@ -1,23 +1,5 @@
 'use client';
 
-/*
-TODO: issue on revalidation
-
-Steps to reproduce:
-- in rte2 field, mark a word, and click the link button
-- in the overlay, choose internal link
-- without filling in any value, click save
-
--->> the internalLinkChooser component seems to disappear, a regular
-text field is rendered.
-
--->> this does not happen if the link chooser is not in a payload overlay.
-for example on promotion page in a block of a subsection
-
-Similar issue? https://github.com/payloadcms/payload/issues/12138
-
-*/
-
 import React, {
   JSX, useEffect, useState,
 } from 'react';
@@ -29,8 +11,8 @@ import {
 import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
 import { fieldLinkablePageFieldName } from '@/field-templates/linkablePage';
 import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
-import { InterfaceTenantCollectionObject } from '@/collections';
 import { useTenantSelection } from '@payloadcms/plugin-multi-tenant/client';
+import { InterfaceSlug } from '@/collections/Pages';
 
 interface InterfaceGroupedOptions {
   label: string;
@@ -41,12 +23,13 @@ interface InternalLinkChooserClientProps {
   currentId: string | number | undefined;
   path: string;
   collectionSlug: string;
-  tenantsCollections: Record<string, InterfaceTenantCollectionObject>;
+  setsSlugs: InterfaceSlug[];
+  singletonSlugs: InterfaceSlug[];
   required: boolean;
 }
 
 interface InterfaceFetchPages {
-  tenantsCollections: Record<string, InterfaceTenantCollectionObject>;
+  slugs: InterfaceSlug[];
   department: string;
   collectionSlug: string;
   currentId: string | number | undefined;
@@ -60,37 +43,33 @@ const globalIsLinkablePage = (page: any): page is { isLinkable: boolean; adminTi
 // fetch collection pages
 
 const fetchCollectionPages = async ({
-  tenantsCollections,
+  slugs,
   department,
   collectionSlug,
   currentId,
 }: InterfaceFetchPages): Promise<Option[]> => {
   const opts: Option[] = [];
 
-  if (!tenantsCollections) {
+  if (!slugs) {
     return opts;
   }
 
-  for await (const collectionKey of Object.keys(tenantsCollections)) {
-    const config = tenantsCollections[collectionKey];
+  for await (const slug of slugs) {
+    const res = await fetch(`/api/${slug.slug}?where[department][equals]=${department}`);
+    const json = await res.json();
 
-    if (!config.isGlobal) {
-      const res = await fetch(`/api/${collectionKey}?where[department][equals]=${department}`);
-      const json = await res.json();
+    for (const doc of json.docs) {
+      let isNotCurrentPage = true;
 
-      for (const doc of json.docs) {
-        let isNotCurrentPage = true;
+      if (currentId) {
+        isNotCurrentPage = `${slug.slug}/${doc.id}` !== `${collectionSlug}/${currentId}`;
+      }
 
-        if (currentId) {
-          isNotCurrentPage = `${collectionKey}/${doc.id}` !== `${collectionSlug}/${currentId}`;
-        }
-
-        if (collectionIsLinkablePage(doc) && isNotCurrentPage) {
-          opts.push({
-            label: doc[fieldAdminTitleFieldName],
-            value: `${collectionKey}/${doc.id}`,
-          });
-        }
+      if (collectionIsLinkablePage(doc) && isNotCurrentPage) {
+        opts.push({
+          label: doc[fieldAdminTitleFieldName],
+          value: `${slug.slug}/${doc.id}`,
+        });
       }
     }
   }
@@ -101,37 +80,33 @@ const fetchCollectionPages = async ({
 // fetch global pages
 
 const fetchGlobalPages = async ({
-  tenantsCollections,
+  slugs,
   department,
   collectionSlug,
   currentId,
 }: InterfaceFetchPages): Promise<Option[]> => {
   const opts: Option[] = [];
 
-  if (!tenantsCollections) {
+  if (!slugs) {
     return opts;
   }
 
-  for await (const collectionKey of Object.keys(tenantsCollections)) {
-    const config = tenantsCollections[collectionKey];
+  for await (const slug of slugs) {
+    const res = await fetch(`/api/${slug.slug}?where[department][equals]=${department}`);
+    const json = await res.json();
 
-    if (config.isGlobal) {
-      const res = await fetch(`/api/${collectionKey}?where[department][equals]=${department}`);
-      const json = await res.json();
+    for (const doc of json.docs) {
+      let isNotCurrentPage = true;
 
-      for (const doc of json.docs) {
-        let isNotCurrentPage = true;
+      if (currentId) {
+        isNotCurrentPage = `${slug.slug}/${doc.id}` !== `${collectionSlug}/${currentId}`;
+      }
 
-        if (currentId) {
-          isNotCurrentPage = `${collectionKey}/${doc.id}` !== `${collectionSlug}/${currentId}`;
-        }
-
-        if (globalIsLinkablePage(doc) && isNotCurrentPage) {
-          opts.push({
-            label: doc[fieldAdminTitleFieldName],
-            value: `${collectionKey}/${doc.id}`,
-          });
-        }
+      if (globalIsLinkablePage(doc) && isNotCurrentPage) {
+        opts.push({
+          label: doc[fieldAdminTitleFieldName],
+          value: `${slug.slug}/${doc.id}`,
+        });
       }
     }
   }
@@ -145,7 +120,8 @@ const InternalLinkChooserClient = ({
   currentId,
   path,
   collectionSlug,
-  tenantsCollections,
+  setsSlugs,
+  singletonSlugs,
   required,
 }: InternalLinkChooserClientProps): JSX.Element => {
 
@@ -185,13 +161,13 @@ const InternalLinkChooserClient = ({
           collectionSlug,
           currentId,
           department: tenant,
-          tenantsCollections,
+          slugs: singletonSlugs,
         }),
         fetchCollectionPages({
           collectionSlug,
           currentId,
           department: tenant,
-          tenantsCollections,
+          slugs: setsSlugs,
         }),
       ]);
 
@@ -213,11 +189,13 @@ const InternalLinkChooserClient = ({
       /* eslint-disable @typescript-eslint/no-floating-promises */
       loadOptions(tenantContext.selectedTenantID as string);
       /* eslint-enable @typescript-eslint/no-floating-promises */
+
     }
   }, [
     collectionSlug,
     currentId,
-    tenantsCollections,
+    setsSlugs,
+    singletonSlugs,
     tenantContext.selectedTenantID,
   ]);
 

@@ -2,7 +2,7 @@ import {
   CollectionConfig, CollectionSlug,
 } from 'payload';
 
-interface InterfaceSlug {
+export interface InterfaceSlug {
   exportName: string;
   fileName: string;
   folderName: string;
