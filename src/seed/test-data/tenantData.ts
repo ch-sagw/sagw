@@ -539,4 +539,61 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
+  // institute detail page
+  await payload.create({
+    collection: 'instituteDetailPage',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      hero: {
+        colorMode: 'color',
+        colorScheme: 'bright',
+        lead: 'Institute Detail Page Lead',
+        title: simpleRteConfig(`Institute detail page title ${tenant.toUpperCase()}`),
+      },
+      overviewPageProps: {
+        image,
+        text: 'Institute Teaser Text',
+      },
+    },
+  });
+
+  // national dictionary detail page
+  await payload.create({
+    collection: 'nationalDictionaryDetailPage',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      hero: {
+        colorMode: 'color',
+        colorScheme: 'bright',
+        lead: 'National Dictionary Detail Page Lead',
+        title: simpleRteConfig(`National Dictionary detail page title ${tenant.toUpperCase()}`),
+      },
+      overviewPageProps: {
+        image,
+        text: 'National Dictionary Teaser Text',
+      },
+    },
+  });
+
+  // project detail page
+  await payload.create({
+    collection: 'projectDetailPage',
+    data: {
+      _status: 'published',
+      department: tenantId,
+      hero: {
+        colorMode: 'color',
+        colorScheme: 'bright',
+        lead: 'Project Detail Page Lead',
+        title: simpleRteConfig(`Project detail page title ${tenant.toUpperCase()}`),
+      },
+      overviewPageProps: {
+        text: 'Project Teaser Text',
+      },
+      project,
+    },
+  });
+
 };

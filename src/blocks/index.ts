@@ -22,7 +22,11 @@ import { CtaLinkBlock } from '@/blocks/CtaLink';
 import { TitleSubtitleTextBlock } from '@/blocks/TitleSubtitleText';
 import { NetworkTeasersBlock } from '@/blocks/NetworkTeasers';
 import { PeopleOverviewBlock } from '@/blocks/PeopleOverview';
-import { ImageTeasersBlock } from './ImageTeasers';
+import { ImageTeasersBlock } from '@/blocks/ImageTeasers';
+import { NationalDictionariesOverviewBlock } from '@/blocks/NationalDictionariesOverview';
+import { InstitutesOverviewBlock } from '@/blocks/InstitutesOverview';
+import { ProjectOverviewBlock } from '@/blocks/ProjectOverview';
+import { ProjectTeasersBlock } from '@/blocks/ProjectTeasers';
 
 export const blocks = (exclude?: string[]): Block[] => {
   const availableBlocks = [
@@ -47,12 +51,16 @@ export const blocks = (exclude?: string[]): Block[] => {
     EventsOverviewBlock,
     PeopleOverviewBlock,
     NewsOverviewBlock,
+    NationalDictionariesOverviewBlock,
+    InstitutesOverviewBlock,
+    ProjectOverviewBlock,
 
     // automatic teasers
     EventsTeasersBlock,
     MagazineTeasersBlock,
     NewsTeasersBlock,
     PublicationsTeasersBlock,
+    ProjectTeasersBlock,
   ];
 
   if (!exclude) {
