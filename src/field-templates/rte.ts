@@ -14,13 +14,13 @@ import {
   UnorderedListFeature,
 } from '@payloadcms/richtext-lexical';
 import { SoftHyphenFeature } from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.server';
-import { fieldsLinkInternalOrExternal } from './links';
 import {
   FieldHook, RichTextField,
 } from 'payload';
 import { JSDOM } from 'jsdom';
 import domPurify from 'dompurify';
 import validator from 'validator';
+import { linkableSlugs } from '@/collections/Pages';
 
 const {
   window,
@@ -85,7 +85,8 @@ const rte2Editor = lexicalEditor({
     UnorderedListFeature(),
     OrderedListFeature(),
     LinkFeature({
-      fields: () => fieldsLinkInternalOrExternal,
+      enabledCollections: linkableSlugs,
+      maxDepth: 1,
     }),
   ],
 });
