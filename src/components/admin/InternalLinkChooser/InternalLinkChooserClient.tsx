@@ -23,8 +23,7 @@ interface InternalLinkChooserClientProps {
   currentId: string | number | undefined;
   path: string;
   collectionSlug: string;
-  setsSlugs: InterfaceSlug[];
-  singletonSlugs: InterfaceSlug[];
+  slugs: InterfaceSlug[];
   required: boolean;
 }
 
@@ -37,26 +36,31 @@ interface InterfaceFetchPages {
 
 const collectionIsLinkablePage = (page: any): page is { isLinkable: boolean; adminTitle: string, id: string } => fieldLinkablePageFieldName in page && typeof page[fieldAdminTitleFieldName] === 'string';
 
-const globalIsLinkablePage = (page: any): page is { isLinkable: boolean; adminTitle: string, id: string } => fieldLinkablePageFieldName in page &&
-  typeof page[fieldAdminTitleFieldName] === 'string';
-
 // fetch collection pages
 
-const fetchCollectionPages = async ({
+const fetchPages = async ({
   slugs,
   department,
   collectionSlug,
   currentId,
-}: InterfaceFetchPages): Promise<Option[]> => {
-  const opts: Option[] = [];
+}: InterfaceFetchPages): Promise<InterfaceGroupedOptions[]> => {
+  const allOptions: InterfaceGroupedOptions[] = [];
+
+  /*
+  {
+    label: 'Global Pages',
+      options: globalOpts,
+        },
+        */
 
   if (!slugs) {
-    return opts;
+    return allOptions;
   }
 
   for await (const slug of slugs) {
     const res = await fetch(`/api/${slug.slug}?where[department][equals]=${department}`);
     const json = await res.json();
+    const groupOptions: Option[] = [];
 
     for (const doc of json.docs) {
       let isNotCurrentPage = true;
@@ -66,52 +70,20 @@ const fetchCollectionPages = async ({
       }
 
       if (collectionIsLinkablePage(doc) && isNotCurrentPage) {
-        opts.push({
+        groupOptions.push({
           label: doc[fieldAdminTitleFieldName],
           value: `${slug.slug}/${doc.id}`,
         });
       }
     }
+
+    allOptions.push({
+      label: slug.displayName,
+      options: groupOptions,
+    });
   }
 
-  return opts;
-};
-
-// fetch global pages
-
-const fetchGlobalPages = async ({
-  slugs,
-  department,
-  collectionSlug,
-  currentId,
-}: InterfaceFetchPages): Promise<Option[]> => {
-  const opts: Option[] = [];
-
-  if (!slugs) {
-    return opts;
-  }
-
-  for await (const slug of slugs) {
-    const res = await fetch(`/api/${slug.slug}?where[department][equals]=${department}`);
-    const json = await res.json();
-
-    for (const doc of json.docs) {
-      let isNotCurrentPage = true;
-
-      if (currentId) {
-        isNotCurrentPage = `${slug.slug}/${doc.id}` !== `${collectionSlug}/${currentId}`;
-      }
-
-      if (globalIsLinkablePage(doc) && isNotCurrentPage) {
-        opts.push({
-          label: doc[fieldAdminTitleFieldName],
-          value: `${slug.slug}/${doc.id}`,
-        });
-      }
-    }
-  }
-
-  return opts;
+  return allOptions;
 };
 
 // component
@@ -120,8 +92,7 @@ const InternalLinkChooserClient = ({
   currentId,
   path,
   collectionSlug,
-  setsSlugs,
-  singletonSlugs,
+  slugs,
   required,
 }: InternalLinkChooserClientProps): JSX.Element => {
 
@@ -153,34 +124,14 @@ const InternalLinkChooserClient = ({
 
     const loadOptions = async (tenant: string): Promise<void> => {
       setLoading(true);
-      const [
-        globalOpts,
-        collectionOpts,
-      ] = await Promise.all([
-        fetchGlobalPages({
-          collectionSlug,
-          currentId,
-          department: tenant,
-          slugs: singletonSlugs,
-        }),
-        fetchCollectionPages({
-          collectionSlug,
-          currentId,
-          department: tenant,
-          slugs: setsSlugs,
-        }),
-      ]);
+      const opts = await fetchPages({
+        collectionSlug,
+        currentId,
+        department: tenant,
+        slugs,
+      });
 
-      setOptions([
-        {
-          label: 'Global Pages',
-          options: globalOpts,
-        },
-        {
-          label: 'Detail Pages',
-          options: collectionOpts,
-        },
-      ]);
+      setOptions([...opts]);
 
       setLoading(false);
     };
@@ -194,8 +145,7 @@ const InternalLinkChooserClient = ({
   }, [
     collectionSlug,
     currentId,
-    setsSlugs,
-    singletonSlugs,
+    slugs,
     tenantContext.selectedTenantID,
   ]);
 

@@ -3,6 +3,7 @@ import {
 } from 'payload';
 
 export interface InterfaceSlug {
+  displayName: string;
   exportName: string;
   fileName: string;
   folderName: string;
@@ -24,6 +25,7 @@ export const getPageImport = async (slugsArray: InterfaceSlug[]): Promise<Collec
 
 export const singletonSlugs: InterfaceSlug[] = [
   {
+    displayName: 'Home',
     exportName: 'HomePage',
     fileName: 'Home',
     folderName: 'Singletons',
@@ -31,6 +33,7 @@ export const singletonSlugs: InterfaceSlug[] = [
     slug: 'homePage',
   },
   {
+    displayName: 'Error Page',
     exportName: 'ErrorPage',
     fileName: 'Error',
     folderName: 'Singletons',
@@ -41,6 +44,7 @@ export const singletonSlugs: InterfaceSlug[] = [
 
 export const setsSlugs: InterfaceSlug[] = [
   {
+    displayName: 'Magazine Detail Page',
     exportName: 'MagazineDetailPage',
     fileName: 'MagazineDetail',
     folderName: 'Sets',
@@ -48,6 +52,7 @@ export const setsSlugs: InterfaceSlug[] = [
     slug: 'magazineDetailPage',
   },
   {
+    displayName: 'Overview Page',
     exportName: 'OverviewPage',
     fileName: 'Overview',
     folderName: 'Sets',
@@ -55,6 +60,7 @@ export const setsSlugs: InterfaceSlug[] = [
     slug: 'overviewPage',
   },
   {
+    displayName: 'Detail Page',
     exportName: 'DetailPage',
     fileName: 'Detail',
     folderName: 'Sets',
@@ -62,6 +68,7 @@ export const setsSlugs: InterfaceSlug[] = [
     slug: 'detailPage',
   },
   {
+    displayName: 'Event Detail Page',
     exportName: 'EventDetailPage',
     fileName: 'EventDetail',
     folderName: 'Sets',
@@ -69,6 +76,7 @@ export const setsSlugs: InterfaceSlug[] = [
     slug: 'eventDetailPage',
   },
   {
+    displayName: 'News Detail Page',
     exportName: 'NewsDetailPage',
     fileName: 'NewsDetail',
     folderName: 'Sets',
@@ -76,6 +84,7 @@ export const setsSlugs: InterfaceSlug[] = [
     slug: 'newsDetailPage',
   },
   {
+    displayName: 'Publication Detail Page',
     exportName: 'PublicationDetailPage',
     fileName: 'PublicationDetail',
     folderName: 'Sets',

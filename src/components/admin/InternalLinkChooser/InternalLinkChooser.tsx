@@ -26,8 +26,7 @@ const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
       collectionSlug={collectionSlug}
       currentId={id}
       path={path}
-      setsSlugs={setsSlugs}
-      singletonSlugs={singletonSlugs}
+      slugs={setsSlugs.concat(singletonSlugs)}
       required={hasRequired(field)
         ? field.required ?? false
         : false}
