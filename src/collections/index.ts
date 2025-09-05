@@ -95,4 +95,8 @@ collections.forEach((item) => {
   }
 });
 
+// manually add forms. this is an automatically generated collection by the
+// form builder plugin, so we don't manually add it to collections above.
+tenantsCollectionsObject['forms'] = {};
+
 export const tenantsCollections = tenantsCollectionsObject;
