@@ -45,7 +45,6 @@ Payload Config:
 - add descriptions to collections: what is this collection for?
 - care about redirects: check redirects-plugin and decide if we use it or create our own
 - About SAGW -> Link block below RTE is missing. How do we do it? Add a "LinkBlock"? Or do we extend the RTE element with a linkBlock?
-- remove tenantsCollectionsObject['forms'] = {}; in form-refactor pr
 
 Multitenant: (working with seed data)
 --------
