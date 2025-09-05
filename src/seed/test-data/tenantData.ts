@@ -318,7 +318,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       department: tenantId,
       fields: [
         {
-          // blockName: `Some form Block ${tenant.toUpperCase()}`,
           blockType: 'textBlock',
           fieldError: `Field error ${tenant.toUpperCase()}`,
           fieldWidth: 'half',
