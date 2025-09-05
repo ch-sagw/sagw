@@ -210,7 +210,9 @@ const InternalLinkChooserClient = ({
     };
 
     if (tenantContext.selectedTenantID && collectionSlug) {
+      /* eslint-disable @typescript-eslint/no-floating-promises */
       loadOptions(tenantContext.selectedTenantID as string);
+      /* eslint-enable @typescript-eslint/no-floating-promises */
     }
   }, [
     collectionSlug,

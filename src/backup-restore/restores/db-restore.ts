@@ -92,9 +92,9 @@ const main = async (): Promise<void> => {
   } catch (error) {
     console.log(chalk.bgRed(error));
   } finally {
-    dbHelper?.getClient()
+    await dbHelper?.getClient()
       ?.close();
   }
 };
 
-main();
+await main();

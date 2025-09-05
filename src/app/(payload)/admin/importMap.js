@@ -24,6 +24,7 @@ import { WatchTenantCollection as WatchTenantCollection_1d0591e3cf4f332c83a86da1
 import { default as default_34253356f327048e5e1d0c8dd6259985 } from '@/components/admin/graphics/Icon'
 import { default as default_7290b7198794a8ea161f702320c1cd8a } from '@/components/admin/graphics/Logo'
 import { GlobalViewRedirect as GlobalViewRedirect_d6d5f193a167989e2ee7d14202901e62 } from '@payloadcms/plugin-multi-tenant/rsc'
+import { default as default_c9f66f15708a71435f32d270d98eedc1 } from '@/components/admin/EnvIndicator'
 import { TenantSelector as TenantSelector_1d0591e3cf4f332c83a86da13a0de59a } from '@payloadcms/plugin-multi-tenant/client'
 import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from '@payloadcms/storage-vercel-blob/client'
 import { AdminErrorBoundary as AdminErrorBoundary_e5a9e14bdbe97e70ba60697217fe7688 } from '@payloadcms/plugin-sentry/client'
@@ -56,6 +57,7 @@ export const importMap = {
   "@/components/admin/graphics/Icon#default": default_34253356f327048e5e1d0c8dd6259985,
   "@/components/admin/graphics/Logo#default": default_7290b7198794a8ea161f702320c1cd8a,
   "@payloadcms/plugin-multi-tenant/rsc#GlobalViewRedirect": GlobalViewRedirect_d6d5f193a167989e2ee7d14202901e62,
+  "@/components/admin/EnvIndicator#default": default_c9f66f15708a71435f32d270d98eedc1,
   "@payloadcms/plugin-multi-tenant/client#TenantSelector": TenantSelector_1d0591e3cf4f332c83a86da13a0de59a,
   "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler": VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e,
   "@payloadcms/plugin-sentry/client#AdminErrorBoundary": AdminErrorBoundary_e5a9e14bdbe97e70ba60697217fe7688,
