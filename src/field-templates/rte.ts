@@ -7,6 +7,7 @@ import {
   lexicalEditor,
   LinkFeature,
   OrderedListFeature,
+  ParagraphFeature,
   StrikethroughFeature,
   SubscriptFeature,
   SuperscriptFeature,
@@ -32,15 +33,14 @@ const sanitizeNode = (node: any): void => {
 
     // clean up.
     // allow: letters, numbers, punctuation, space, tabs, newlines
-    node.text = validator.whitelist(node.text, '\\x09\\x0A\\x0D\\x20-\\x7E\\u00AD');
+    node.text = validator.whitelist(node.text, '\\x09\\x0A\\x0D\\x20-\\x7E\\u00A0-\\u00FF\\u2019');
 
     // sanitize
     node.text = purify.sanitize(node.text, {
       USE_PROFILES: {
         html: false,
       },
-    })
-      .trim();
+    });
   }
 
   if (node.children && Array.isArray(node.children)) {
@@ -59,7 +59,7 @@ const sanitizeRichTextValue: FieldHook = (value: unknown): string | unknown => {
     sanitizeNode(cloned.root);
   }
 
-  return cloned;
+  return cloned.trim();
 
 };
 
@@ -81,6 +81,7 @@ const rte2Editor = lexicalEditor({
     StrikethroughFeature(),
     SubscriptFeature(),
     SuperscriptFeature(),
+    ParagraphFeature(),
     HeadingFeature(),
     UnorderedListFeature(),
     OrderedListFeature(),

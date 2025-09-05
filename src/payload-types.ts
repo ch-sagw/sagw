@@ -509,9 +509,8 @@ export interface HomePage {
           }
         | {
             message?: string | null;
-            memberType?: {
-              executiveBoard?: boolean | null;
-              team?: boolean | null;
+            memberType: {
+              type: 'executiveBoard' | 'team';
             };
             id?: string | null;
             blockName?: string | null;
@@ -1189,9 +1188,8 @@ export interface MagazineDetailPage {
           }
         | {
             message?: string | null;
-            memberType?: {
-              executiveBoard?: boolean | null;
-              team?: boolean | null;
+            memberType: {
+              type: 'executiveBoard' | 'team';
             };
             id?: string | null;
             blockName?: string | null;
@@ -1591,9 +1589,8 @@ export interface OverviewPage {
           }
         | {
             message?: string | null;
-            memberType?: {
-              executiveBoard?: boolean | null;
-              team?: boolean | null;
+            memberType: {
+              type: 'executiveBoard' | 'team';
             };
             id?: string | null;
             blockName?: string | null;
@@ -1993,9 +1990,8 @@ export interface DetailPage {
           }
         | {
             message?: string | null;
-            memberType?: {
-              executiveBoard?: boolean | null;
-              team?: boolean | null;
+            memberType: {
+              type: 'executiveBoard' | 'team';
             };
             id?: string | null;
             blockName?: string | null;
@@ -2407,9 +2403,8 @@ export interface EventDetailPage {
           }
         | {
             message?: string | null;
-            memberType?: {
-              executiveBoard?: boolean | null;
-              team?: boolean | null;
+            memberType: {
+              type: 'executiveBoard' | 'team';
             };
             id?: string | null;
             blockName?: string | null;
@@ -2833,9 +2828,8 @@ export interface NewsDetailPage {
           }
         | {
             message?: string | null;
-            memberType?: {
-              executiveBoard?: boolean | null;
-              team?: boolean | null;
+            memberType: {
+              type: 'executiveBoard' | 'team';
             };
             id?: string | null;
             blockName?: string | null;
@@ -3246,9 +3240,8 @@ export interface PublicationDetailPage {
           }
         | {
             message?: string | null;
-            memberType?: {
-              executiveBoard?: boolean | null;
-              team?: boolean | null;
+            memberType: {
+              type: 'executiveBoard' | 'team';
             };
             id?: string | null;
             blockName?: string | null;
@@ -4155,8 +4148,7 @@ export interface HomePageSelect<T extends boolean = true> {
               memberType?:
                 | T
                 | {
-                    executiveBoard?: T;
-                    team?: T;
+                    type?: T;
                   };
               id?: T;
               blockName?: T;
@@ -4556,8 +4548,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
               memberType?:
                 | T
                 | {
-                    executiveBoard?: T;
-                    team?: T;
+                    type?: T;
                   };
               id?: T;
               blockName?: T;
@@ -4921,8 +4912,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
               memberType?:
                 | T
                 | {
-                    executiveBoard?: T;
-                    team?: T;
+                    type?: T;
                   };
               id?: T;
               blockName?: T;
@@ -5286,8 +5276,7 @@ export interface DetailPageSelect<T extends boolean = true> {
               memberType?:
                 | T
                 | {
-                    executiveBoard?: T;
-                    team?: T;
+                    type?: T;
                   };
               id?: T;
               blockName?: T;
@@ -5665,8 +5654,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
               memberType?:
                 | T
                 | {
-                    executiveBoard?: T;
-                    team?: T;
+                    type?: T;
                   };
               id?: T;
               blockName?: T;
@@ -6043,8 +6031,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
               memberType?:
                 | T
                 | {
-                    executiveBoard?: T;
-                    team?: T;
+                    type?: T;
                   };
               id?: T;
               blockName?: T;
@@ -6420,8 +6407,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
               memberType?:
                 | T
                 | {
-                    executiveBoard?: T;
-                    team?: T;
+                    type?: T;
                   };
               id?: T;
               blockName?: T;

@@ -19,16 +19,19 @@ export const PeopleOverviewBlock: Block = {
     {
       fields: [
         {
-          defaultValue: true,
-          label: memberTypeConfig.executiveBoard.label,
-          name: memberTypeConfig.executiveBoard.value,
-          type: 'checkbox',
-        },
-        {
-          defaultValue: true,
-          label: memberTypeConfig.team.label,
-          name: memberTypeConfig.team.value,
-          type: 'checkbox',
+          name: 'type',
+          options: [
+            {
+              label: memberTypeConfig.executiveBoard.label,
+              value: memberTypeConfig.executiveBoard.value,
+            },
+            {
+              label: memberTypeConfig.team.label,
+              value: memberTypeConfig.team.value,
+            },
+          ],
+          required: true,
+          type: 'select',
         },
       ],
       label: 'Which member types do you want to display in the overview?',
