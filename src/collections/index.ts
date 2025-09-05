@@ -12,6 +12,7 @@ import { PublicationTypes } from '@/collections/Plc/PublicationTypes';
 import { EventCategories } from '@/collections/Plc/EventCategories';
 import { Departments } from '@/collections/Plc/Departments';
 import { ZenodoDocuments } from '@/collections/Plc/ZenodoDocuments';
+import { Forms } from '@/collections/Plc/Forms';
 
 // Globals
 import { I18nForms } from '@/collections/Globals/i18n/Forms';
@@ -49,6 +50,7 @@ export const plcCollections = [
   EventCategories,
   Departments,
   Users,
+  Forms,
 ];
 
 export const singletonPageCollections = [

@@ -42,7 +42,6 @@ Payload Config:
 - set access control on all blocks/collections
 - layout fields in rows where appropriate. e.g. with link internal: the 3 fields can be in 1 row
 - show "published" column in collection overview
-- i don't see too much added value for our use-case for the formbuilder plugin. -> implement own solution
 - do we need OverviewPage and DetailPage? One should be enough?
 - add descriptions to collections: what is this collection for?
 - care about redirects: check redirects-plugin and decide if we use it or create our own

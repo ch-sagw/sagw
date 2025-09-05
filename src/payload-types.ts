@@ -91,13 +91,12 @@ export interface Config {
     eventCategory: EventCategory;
     departments: Department;
     users: User;
+    forms: Form;
     i18nForms: I18NForm;
     consent: Consent;
     footer: Footer;
     header: Header;
     statusMessage: StatusMessage;
-    forms: Form;
-    'form-submissions': FormSubmission;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -128,13 +127,12 @@ export interface Config {
     eventCategory: EventCategorySelect<false> | EventCategorySelect<true>;
     departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    forms: FormsSelect<false> | FormsSelect<true>;
     i18nForms: I18NFormsSelect<false> | I18NFormsSelect<true>;
     consent: ConsentSelect<false> | ConsentSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     statusMessage: StatusMessageSelect<false> | StatusMessageSelect<true>;
-    forms: FormsSelect<false> | FormsSelect<true>;
-    'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -691,61 +689,100 @@ export interface Video {
 export interface Form {
   id: string;
   department?: (string | null) | Department;
+  /**
+   * A newsletter form has a fixed set of fields. Custom form can be build with any combination of fields as you like.
+   */
+  isNewsletterForm?: ('custom' | 'newsletter') | null;
   title: string;
-  fields?:
-    | (
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            placeholder: string;
-            fieldError?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'checkbox';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            placeholder: string;
-            fieldError?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'email';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            placeholder: string;
-            fieldError?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'text';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            placeholder: string;
-            fieldError?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textarea';
-          }
-      )[]
-    | null;
+  subtitle?: string | null;
   submitButtonLabel: string;
-  recipientEMail: string;
+  recipientMail?: string | null;
   /**
    * If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".
    */
   showPrivacyCheckbox?: boolean | null;
+  fields?:
+    | (
+        | {
+            /**
+             * lowercase, no special characters
+             */
+            name: string;
+            label: string;
+            fieldWidth: 'full' | 'half';
+            required?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'checkboxBlock';
+          }
+        | {
+            /**
+             * lowercase, no special characters
+             */
+            name: string;
+            label: string;
+            placeholder: string;
+            fieldWidth: 'full' | 'half';
+            required?: boolean | null;
+            fieldError?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'emailBlock';
+          }
+        | {
+            /**
+             * lowercase, no special characters
+             */
+            name: string;
+            label: string;
+            placeholder: string;
+            fieldWidth: 'full' | 'half';
+            required?: boolean | null;
+            fieldError?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textBlock';
+          }
+        | {
+            /**
+             * lowercase, no special characters
+             */
+            name: string;
+            label: string;
+            placeholder: string;
+            fieldWidth: 'full' | 'half';
+            required?: boolean | null;
+            fieldError?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textareaBlock';
+          }
+      )[]
+    | null;
+  newsletterForm?: {
+    emailField: {
+      /**
+       * lowercase, no special characters
+       */
+      name: string;
+      label: string;
+      placeholder: string;
+      fieldWidth: 'full' | 'half';
+      required?: boolean | null;
+      fieldError?: string | null;
+    };
+    textField: {
+      /**
+       * lowercase, no special characters
+       */
+      name: string;
+      label: string;
+      placeholder: string;
+      fieldWidth: 'full' | 'half';
+      required?: boolean | null;
+      fieldError?: string | null;
+    };
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -4743,23 +4780,6 @@ export interface StatusMessage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "form-submissions".
- */
-export interface FormSubmission {
-  id: string;
-  form: string | Form;
-  submissionData?:
-    | {
-        field: string;
-        value: string;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -4862,6 +4882,10 @@ export interface PayloadLockedDocument {
         value: string | User;
       } | null)
     | ({
+        relationTo: 'forms';
+        value: string | Form;
+      } | null)
+    | ({
         relationTo: 'i18nForms';
         value: string | I18NForm;
       } | null)
@@ -4880,14 +4904,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'statusMessage';
         value: string | StatusMessage;
-      } | null)
-    | ({
-        relationTo: 'forms';
-        value: string | Form;
-      } | null)
-    | ({
-        relationTo: 'form-submissions';
-        value: string | FormSubmission;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -9012,6 +9028,96 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "forms_select".
+ */
+export interface FormsSelect<T extends boolean = true> {
+  department?: T;
+  isNewsletterForm?: T;
+  title?: T;
+  subtitle?: T;
+  submitButtonLabel?: T;
+  recipientMail?: T;
+  showPrivacyCheckbox?: T;
+  fields?:
+    | T
+    | {
+        checkboxBlock?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              fieldWidth?: T;
+              required?: T;
+              id?: T;
+              blockName?: T;
+            };
+        emailBlock?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              placeholder?: T;
+              fieldWidth?: T;
+              required?: T;
+              fieldError?: T;
+              id?: T;
+              blockName?: T;
+            };
+        textBlock?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              placeholder?: T;
+              fieldWidth?: T;
+              required?: T;
+              fieldError?: T;
+              id?: T;
+              blockName?: T;
+            };
+        textareaBlock?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              placeholder?: T;
+              fieldWidth?: T;
+              required?: T;
+              fieldError?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  newsletterForm?:
+    | T
+    | {
+        emailField?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              placeholder?: T;
+              fieldWidth?: T;
+              required?: T;
+              fieldError?: T;
+            };
+        textField?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              placeholder?: T;
+              fieldWidth?: T;
+              required?: T;
+              fieldError?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "i18nForms_select".
  */
 export interface I18NFormsSelect<T extends boolean = true> {
@@ -9245,88 +9351,6 @@ export interface StatusMessageSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "forms_select".
- */
-export interface FormsSelect<T extends boolean = true> {
-  department?: T;
-  title?: T;
-  fields?:
-    | T
-    | {
-        checkbox?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              width?: T;
-              required?: T;
-              placeholder?: T;
-              fieldError?: T;
-              id?: T;
-              blockName?: T;
-            };
-        email?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              width?: T;
-              required?: T;
-              placeholder?: T;
-              fieldError?: T;
-              id?: T;
-              blockName?: T;
-            };
-        text?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              width?: T;
-              required?: T;
-              placeholder?: T;
-              fieldError?: T;
-              id?: T;
-              blockName?: T;
-            };
-        textarea?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              width?: T;
-              required?: T;
-              placeholder?: T;
-              fieldError?: T;
-              id?: T;
-              blockName?: T;
-            };
-      };
-  submitButtonLabel?: T;
-  recipientEMail?: T;
-  showPrivacyCheckbox?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "form-submissions_select".
- */
-export interface FormSubmissionsSelect<T extends boolean = true> {
-  form?: T;
-  submissionData?:
-    | T
-    | {
-        field?: T;
-        value?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
