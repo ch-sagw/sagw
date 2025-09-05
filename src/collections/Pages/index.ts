@@ -91,6 +91,30 @@ export const setsSlugs: InterfaceSlug[] = [
     linkable: true,
     slug: 'publicationDetailPage',
   },
+  {
+    displayName: 'National Dictionary Detail Page',
+    exportName: 'NationalDictionaryDetailPage',
+    fileName: 'NationalDictionaryDetail',
+    folderName: 'Sets',
+    linkable: true,
+    slug: 'nationalDictionaryDetailPage',
+  },
+  {
+    displayName: 'Institute Detail Page',
+    exportName: 'InstituteDetailPage',
+    fileName: 'InstituteDetail',
+    folderName: 'Sets',
+    linkable: true,
+    slug: 'instituteDetailPage',
+  },
+  {
+    displayName: 'Project Detail Page',
+    exportName: 'ProjectDetailPage',
+    fileName: 'ProjectDetail',
+    folderName: 'Sets',
+    linkable: true,
+    slug: 'projectDetailPage',
+  },
 ];
 
 export const linkableSlugs = singletonSlugs.concat(setsSlugs)
