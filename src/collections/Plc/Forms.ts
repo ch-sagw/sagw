@@ -10,6 +10,7 @@ export const Forms: CollectionConfig = {
   },
   admin: {
     group: 'Global Content',
+    useAsTitle: 'title',
   },
   fields: [
     {
