@@ -191,6 +191,22 @@ test.describe('Departments only show content from users department', () => {
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
     await page.waitForLoadState('networkidle');
 
+    const heroField = await page.locator('#field-hero .ContentEditable__root');
+
+    await heroField.fill('Department Language test News Detail Page');
+
+    // save
+    const saveButton = await page.getByRole('button', {
+      name: 'Änderungen veröffentlichen',
+    });
+
+    await saveButton.click();
+
+    // wait for confirmation toast and close it
+    const closeToast = await page.locator('.payload-toast-container [data-close-button="true"]');
+
+    await closeToast.click();
+
     const langSwitch = await page.getByLabel('Sprache');
 
     await langSwitch.click({

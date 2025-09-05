@@ -12,6 +12,7 @@ import { PublicationTypes } from '@/collections/Plc/PublicationTypes';
 import { EventCategories } from '@/collections/Plc/EventCategories';
 import { Departments } from '@/collections/Plc/Departments';
 import { ZenodoDocuments } from '@/collections/Plc/ZenodoDocuments';
+import { Forms } from '@/collections/Plc/Forms';
 
 // Globals
 import { I18nForms } from './Globals/i18n/Forms';
@@ -30,6 +31,7 @@ import {
 // not be defined yet at the time of importing them into a block. That's why
 // we do it this way.
 
+// Pages -> Sets & Singletons
 const singletonPageCollections: CollectionConfig[] = await getPageImport(singletonSlugs);
 const setsPageCollections: CollectionConfig[] = await getPageImport(setsSlugs);
 
@@ -47,6 +49,7 @@ export const plcCollections: CollectionConfig[] = [
   EventCategories,
   Departments,
   Users,
+  Forms,
 ];
 
 export const globalCollections: CollectionConfig[] = [

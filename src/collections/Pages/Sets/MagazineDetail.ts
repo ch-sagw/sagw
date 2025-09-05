@@ -13,6 +13,8 @@ import {
 import { blocks } from '@/blocks';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { versions } from '@/field-templates/versions';
+import { fieldSlug } from '@/field-templates/slug';
+import { hookSlug } from '@/hooks/slug';
 
 export const MagazineDetailPage: CollectionConfig = {
   access: {
@@ -22,12 +24,19 @@ export const MagazineDetailPage: CollectionConfig = {
     update: globalAdminOrDepartmentAdminAccess,
   },
   admin: {
+    defaultColumns: [
+      'adminTitle',
+      'slug',
+      'updatedAt',
+      '_status',
+    ],
     group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,
     fieldAdminTitle,
+    fieldSlug,
     {
       tabs: [
 
@@ -89,7 +98,10 @@ export const MagazineDetailPage: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [hookSeoFallback],
-    beforeValidate: [hookAdminTitle],
+    beforeValidate: [
+      hookAdminTitle,
+      hookSlug,
+    ],
   },
   labels: {
     plural: 'Magazine Detail Pages',

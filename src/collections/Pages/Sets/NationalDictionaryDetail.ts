@@ -1,52 +1,57 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
-import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import { hookAdminTitle } from '@/hooks/adminTitle';
+import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 import { hookSeoFallback } from '@/hooks/seoFallback';
+import {
+  createAccess, globalAdminOrDepartmentAdminAccess,
+} from '@/collections/Pages/access/globalAdminOrDepartmentAdmin';
 import { blocks } from '@/blocks';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { versions } from '@/field-templates/versions';
-import { fieldSlug } from '@/field-templates/slug';
-import { hookSlug } from '@/hooks/slug';
 
-export const NewsDetailPage: CollectionConfig = {
+export const NationalDictionaryDetailPage: CollectionConfig = {
   access: {
-    read: (): boolean => true,
+    create: createAccess,
+    delete: globalAdminOrDepartmentAdminAccess,
+    read: () => true,
+    update: globalAdminOrDepartmentAdminAccess,
   },
   admin: {
-    defaultColumns: [
-      'adminTitle',
-      'slug',
-      'updatedAt',
-      '_status',
-    ],
     group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,
     fieldAdminTitle,
-    fieldSlug,
     {
       tabs: [
 
         // Content Tab
         {
           fields: [
-
             // Overview Page properties
             {
               fields: [
                 {
                   admin: {
-                    description: 'This text will be used as text for the teasers on the overview page.',
+                    description: 'This image will be used for the teasers on the overview page.',
+                  },
+                  name: 'image',
+                  relationTo: 'images',
+                  required: false,
+                  type: 'relationship',
+                },
+                {
+                  admin: {
+                    description: 'This text will be used for the teasers on the overview page.',
                   },
                   localized: true,
-                  name: 'teaserText',
+                  name: 'text',
                   required: true,
                   type: 'text',
                 },
@@ -57,21 +62,7 @@ export const NewsDetailPage: CollectionConfig = {
             },
 
             // Hero
-            fieldsHero([
-              {
-                name: 'date',
-                required: true,
-                type: 'date',
-              },
-              ...fieldsColorMode,
-            ]),
-
-            {
-              name: 'project',
-              relationTo: 'projects',
-              required: false,
-              type: 'relationship',
-            },
+            fieldsHero([...fieldsColorMode]),
 
             // Content Blocks
             {
@@ -80,7 +71,6 @@ export const NewsDetailPage: CollectionConfig = {
               name: 'content',
               type: 'blocks',
             },
-
           ],
           label: 'Content',
         },
@@ -93,15 +83,12 @@ export const NewsDetailPage: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [hookSeoFallback],
-    beforeValidate: [
-      hookAdminTitle,
-      hookSlug,
-    ],
+    beforeValidate: [hookAdminTitle],
   },
   labels: {
-    plural: 'News Detail Pages',
-    singular: 'News Detail',
+    plural: 'National Dictionary Detail Pages',
+    singular: 'National Dictionary Detail Page',
   },
-  slug: 'newsDetailPage',
+  slug: 'nationalDictionaryDetailPage',
   versions,
 };
