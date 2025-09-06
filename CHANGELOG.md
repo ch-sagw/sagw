@@ -1,5 +1,64 @@
 # Changelog
 
+## [0.11.0](https://github.com/ch-sagw/sagw/compare/v0.10.2...v0.11.0) (2025-09-06)
+
+
+### Chore
+
+* remove comment ([e39bdfc](https://github.com/ch-sagw/sagw/commit/e39bdfca1dc8d30bd2974ce988b6f08c89d625d4))
+* simplify query ([6153d42](https://github.com/ch-sagw/sagw/commit/6153d42c5658eabd3902b34fd275fb8848b62168))
+* update after buidl ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+
+
+### Documentation
+
+* add todo ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+* remove todo ([e39bdfc](https://github.com/ch-sagw/sagw/commit/e39bdfca1dc8d30bd2974ce988b6f08c89d625d4))
+* remove todos ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+
+
+### Features
+
+* add blocks for bibliographic reference and notification ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+* add detail pages for institute and national dictionary ([5540848](https://github.com/ch-sagw/sagw/commit/5540848aad9b898fdb936312fb031f05c8cc4700))
+* add detail pages for institute, national dictionary and projects ([#380](https://github.com/ch-sagw/sagw/issues/380)) ([5540848](https://github.com/ch-sagw/sagw/commit/5540848aad9b898fdb936312fb031f05c8cc4700))
+* add env-indicator on payload ui ([#376](https://github.com/ch-sagw/sagw/issues/376)) ([179a038](https://github.com/ch-sagw/sagw/commit/179a03897cb264a000830b736e98c75409b4ba45))
+* add field for project selection ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+* add no-floating-promises rule ([8161964](https://github.com/ch-sagw/sagw/commit/81619643dc7e1da79fb4ddf47b83d17972ac387c))
+* add possibility to add custom form or newsletter form ([e39bdfc](https://github.com/ch-sagw/sagw/commit/e39bdfca1dc8d30bd2974ce988b6f08c89d625d4))
+* add ProjectDetail page, projectOverview block and projectTeaser block ([5540848](https://github.com/ch-sagw/sagw/commit/5540848aad9b898fdb936312fb031f05c8cc4700))
+* add slug field to set pages ([6153d42](https://github.com/ch-sagw/sagw/commit/6153d42c5658eabd3902b34fd275fb8848b62168))
+* create dynamic import of sets and singletons, reuse in rte linkfeature ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+* make memberType selectable in people overview ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+* make slug unique per tenant ([6153d42](https://github.com/ch-sagw/sagw/commit/6153d42c5658eabd3902b34fd275fb8848b62168))
+* refactor rte, cleanup and sanitize input ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+* refactor to group pages in link dropdown by collection name ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+* replace form-plugin with own solution ([e39bdfc](https://github.com/ch-sagw/sagw/commit/e39bdfca1dc8d30bd2974ce988b6f08c89d625d4))
+* set default columns ([6153d42](https://github.com/ch-sagw/sagw/commit/6153d42c5658eabd3902b34fd275fb8848b62168))
+* use form title as adminTitle ([e39bdfc](https://github.com/ch-sagw/sagw/commit/e39bdfca1dc8d30bd2974ce988b6f08c89d625d4))
+
+
+### Bug Fixes
+
+* adapt remaining comments from marius ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+* correctly implement rte2 field in consent ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+* exclude soft-hyphen from sanitization ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+* fix linting issues ([8161964](https://github.com/ch-sagw/sagw/commit/81619643dc7e1da79fb4ddf47b83d17972ac387c))
+* improve performance, refactor to only search for pages and not all collections ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+* re-add recently added pages ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+* remove manual form collection import ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+* remove trim ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+* silence linter at justified non-awaiting promise ([8161964](https://github.com/ch-sagw/sagw/commit/81619643dc7e1da79fb4ddf47b83d17972ac387c))
+* temporarly read forms to collections manually until form-refactor pr is merged ([4c1af54](https://github.com/ch-sagw/sagw/commit/4c1af5470e486d5fa7ea5ea4041185516edbe638))
+* wip try to fix slug test ([6153d42](https://github.com/ch-sagw/sagw/commit/6153d42c5658eabd3902b34fd275fb8848b62168))
+
+
+### Test
+
+* fix failing test ([6153d42](https://github.com/ch-sagw/sagw/commit/6153d42c5658eabd3902b34fd275fb8848b62168))
+* fix tests to mitigate slug uniqueness errors ([6153d42](https://github.com/ch-sagw/sagw/commit/6153d42c5658eabd3902b34fd275fb8848b62168))
+* write test for slug field ([6153d42](https://github.com/ch-sagw/sagw/commit/6153d42c5658eabd3902b34fd275fb8848b62168))
+
 ## [0.10.2](https://github.com/ch-sagw/sagw/compare/v0.10.1...v0.10.2) (2025-09-03)
 
 
