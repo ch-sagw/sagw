@@ -1,4 +1,5 @@
 import { Block } from 'payload';
+import { memberTypeConfig } from '@/collections/Plc/People';
 
 // Example: About SAGW -> Team
 
@@ -14,6 +15,28 @@ export const PeopleOverviewBlock: Block = {
       defaultValue: 'Placeholder: all people entries will be displayed as overview here.',
       name: 'message',
       type: 'text',
+    },
+    {
+      fields: [
+        {
+          name: 'type',
+          options: [
+            {
+              label: memberTypeConfig.executiveBoard.label,
+              value: memberTypeConfig.executiveBoard.value,
+            },
+            {
+              label: memberTypeConfig.team.label,
+              value: memberTypeConfig.team.value,
+            },
+          ],
+          required: true,
+          type: 'select',
+        },
+      ],
+      label: 'Which member types do you want to display in the overview?',
+      name: 'memberType',
+      type: 'group',
     },
     {
       admin: {

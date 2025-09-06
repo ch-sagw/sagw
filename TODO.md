@@ -17,6 +17,7 @@ Resend:
 
 NextJs:
 -------
+- sanitize form-inputs (in app)
 - generate sitemap
 
 Payload:
@@ -38,13 +39,12 @@ Payload Config:
 --------
 - implement hidden texts global config (for a11y)
 - in general, grant api read access to collections only if collection is published
-- richt-text sanitize: should we search for "  " and replace by " "? other optimizations?
 - set access control on all blocks/collections
 - layout fields in rows where appropriate. e.g. with link internal: the 3 fields can be in 1 row
 - show "published" column in collection overview
-- do we need OverviewPage and DetailPage? One should be enough?
 - add descriptions to collections: what is this collection for?
 - care about redirects: check redirects-plugin and decide if we use it or create our own
+- About SAGW -> Link block below RTE is missing. How do we do it? Add a "LinkBlock"? Or do we extend the RTE element with a linkBlock?
 
 Multitenant: (working with seed data)
 --------
@@ -58,7 +58,3 @@ Misc:
 
 Testing:
 -------
-
-ASK STELLA:
--------
-- introduce collection "Reusable Text"? author can define "Publikation herunterladen" in 4 languages. Then, he can choose this as title in the PublicationsTeasersBlock

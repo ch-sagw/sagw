@@ -15,28 +15,27 @@ import { ZenodoDocuments } from '@/collections/Plc/ZenodoDocuments';
 import { Forms } from '@/collections/Plc/Forms';
 
 // Globals
-import { I18nForms } from '@/collections/Globals/i18n/Forms';
-import { Consent } from '@/collections/Globals/Consent';
-import { Footer } from '@/collections/Globals/Footer';
-import { Header } from '@/collections/Globals/Header';
-import { StatusMessage } from '@/collections/Globals/StatusMessage';
+import { I18nForms } from './Globals/i18n/Forms';
+import { Consent } from './Globals/Consent';
+import { Footer } from './Globals/Footer';
+import { Header } from './Globals/Header';
+import { StatusMessage } from './Globals/StatusMessage';
+import { CollectionConfig } from 'payload';
+import {
+  getPageImport, setsSlugs, singletonSlugs,
+} from '@/collections/Pages';
 
-// Pages -> Sets
-import { MagazineDetailPage } from '@/collections/Pages/Sets/MagazineDetail';
-import { OverviewPage } from '@/collections/Pages/Sets/Overview';
-import { DetailPage } from '@/collections/Pages/Sets/Detail';
-import { EventDetailPage } from '@/collections/Pages/Sets/EventDetail';
-import { NewsDetailPage } from '@/collections/Pages/Sets/NewsDetail';
-import { PublicationDetailPage } from '@/collections/Pages/Sets/PublicationDetail';
-import { NationalDictionaryDetailPage } from '@/collections/Pages/Sets/NationalDictionaryDetail';
-import { InstituteDetailPage } from '@/collections/Pages/Sets/InstituteDetail';
-import { ProjectDetailPage } from './Pages/Sets/ProjectDetail';
+// we want to define page slugs once. using the exported collections from this
+// file would not work if we would like to import the collections into a block
+// or collection -> circular reference or more specific, the collections would
+// not be defined yet at the time of importing them into a block. That's why
+// we do it this way.
 
-// Pages -> Singletons
-import { ErrorPage } from '@/collections/Pages/Singletons/Error';
-import { HomePage } from '@/collections/Pages/Singletons/Home';
+// Pages -> Sets & Singletons
+const singletonPageCollections: CollectionConfig[] = await getPageImport(singletonSlugs);
+const setsPageCollections: CollectionConfig[] = await getPageImport(setsSlugs);
 
-export const plcCollections = [
+export const plcCollections: CollectionConfig[] = [
   Images,
   Videos,
   Svgs,
@@ -53,24 +52,7 @@ export const plcCollections = [
   Forms,
 ];
 
-export const singletonPageCollections = [
-  HomePage,
-  ErrorPage,
-];
-
-export const setsPageCollections = [
-  OverviewPage,
-  DetailPage,
-  MagazineDetailPage,
-  EventDetailPage,
-  NewsDetailPage,
-  PublicationDetailPage,
-  InstituteDetailPage,
-  NationalDictionaryDetailPage,
-  ProjectDetailPage,
-];
-
-export const globalCollections = [
+export const globalCollections: CollectionConfig[] = [
   I18nForms,
   Consent,
   Footer,
@@ -115,9 +97,5 @@ collections.forEach((item) => {
     }
   }
 });
-
-// manually add forms. this is an automatically generated collection by the
-// form builder plugin, so we don't manually add it to collections above.
-tenantsCollectionsObject['forms'] = {};
 
 export const tenantsCollections = tenantsCollectionsObject;
