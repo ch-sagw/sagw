@@ -14,6 +14,7 @@ export const NotificationBlock: Block = {
     }),
   ],
   imageURL: '/admin-ui-images/notification.svg',
+  interfaceName: 'InterfaceNotification',
   labels: {
     plural: 'Notifications',
     singular: 'Notification',
