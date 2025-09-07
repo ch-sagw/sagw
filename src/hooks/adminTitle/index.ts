@@ -49,7 +49,9 @@ const lexicalToPlainText = (lexical: any): string => {
 export const hookAdminTitle: CollectionBeforeValidateHook = ({
   data,
 }) => {
-  const lexical = data?.hero?.title;
+  const lexical = data?.hero?.title.content;
+
+  console.log(lexical);
 
   if (lexical) {
     const plain = lexicalToPlainText(lexical);
