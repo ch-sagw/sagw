@@ -14,9 +14,95 @@ item 2
 item 3
 */
 
-import { InterfaceRte2 } from '@/payload-types';
+import {
+  InterfaceRte1, InterfaceRte2,
+} from '@/payload-types';
 
-export const sampleRteText: InterfaceRte2['content'] = {
+export const sampleRte1: InterfaceRte1['content'] = {
+  root: {
+
+    children: [
+
+      {
+
+        children: [
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Text',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'With',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Soft',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Hypens',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        textFormat: 0,
+        textStyle: '',
+        type: 'paragraph',
+        version: 1,
+      },
+    ],
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+};
+
+export const sampleRte2: InterfaceRte2['content'] = {
   root: {
     children: [
       {
