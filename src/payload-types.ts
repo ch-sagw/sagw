@@ -179,21 +179,7 @@ export interface HomePage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
+    title: InterfaceRte1;
     lead?: string | null;
     animated?: boolean | null;
     sideTitle: string;
@@ -209,21 +195,7 @@ export interface HomePage {
   content?:
     | (
         | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             id?: string | null;
             blockName?: string | null;
             blockType: 'textBlock';
@@ -306,21 +278,7 @@ export interface HomePage {
             colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
-              accordionContent: {
-                root: {
-                  type: string;
-                  children: {
-                    type: string;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
+              accordionContent: InterfaceRte2;
               id?: string | null;
             }[];
             id?: string | null;
@@ -451,43 +409,10 @@ export interface HomePage {
             blockName?: string | null;
             blockType: 'imageTeasersBlock';
           }
-        | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'notificationBlock';
-          }
+        | InterfaceNotification
         | {
             title: string;
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             copyButtonText: string;
             id?: string | null;
             blockName?: string | null;
@@ -628,6 +553,48 @@ export interface Department {
   };
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceRte1".
+ */
+export interface InterfaceRte1 {
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceRte2".
+ */
+export interface InterfaceRte2 {
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -889,6 +856,16 @@ export interface NetworkCategory {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNotification".
+ */
+export interface InterfaceNotification {
+  text: InterfaceRte2;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'notificationBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "errorPage".
  */
 export interface ErrorPage {
@@ -934,21 +911,7 @@ export interface MagazineDetailPage {
     teaserText: string;
   };
   hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
+    title: InterfaceRte1;
     lead?: string | null;
     author: string;
     date: string;
@@ -958,21 +921,7 @@ export interface MagazineDetailPage {
   content?:
     | (
         | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             id?: string | null;
             blockName?: string | null;
             blockType: 'textBlock';
@@ -1055,21 +1004,7 @@ export interface MagazineDetailPage {
             colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
-              accordionContent: {
-                root: {
-                  type: string;
-                  children: {
-                    type: string;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
+              accordionContent: InterfaceRte2;
               id?: string | null;
             }[];
             id?: string | null;
@@ -1200,43 +1135,10 @@ export interface MagazineDetailPage {
             blockName?: string | null;
             blockType: 'imageTeasersBlock';
           }
-        | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'notificationBlock';
-          }
+        | InterfaceNotification
         | {
             title: string;
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             copyButtonText: string;
             id?: string | null;
             blockName?: string | null;
@@ -1368,21 +1270,7 @@ export interface OverviewPage {
    */
   slug?: string | null;
   hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
+    title: InterfaceRte1;
     lead?: string | null;
     colorMode: 'white' | 'color';
     colorScheme?: ('bright' | 'dark') | null;
@@ -1390,21 +1278,7 @@ export interface OverviewPage {
   content?:
     | (
         | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             id?: string | null;
             blockName?: string | null;
             blockType: 'textBlock';
@@ -1487,21 +1361,7 @@ export interface OverviewPage {
             colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
-              accordionContent: {
-                root: {
-                  type: string;
-                  children: {
-                    type: string;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
+              accordionContent: InterfaceRte2;
               id?: string | null;
             }[];
             id?: string | null;
@@ -1632,43 +1492,10 @@ export interface OverviewPage {
             blockName?: string | null;
             blockType: 'imageTeasersBlock';
           }
-        | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'notificationBlock';
-          }
+        | InterfaceNotification
         | {
             title: string;
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             copyButtonText: string;
             id?: string | null;
             blockName?: string | null;
@@ -1800,21 +1627,7 @@ export interface DetailPage {
    */
   slug?: string | null;
   hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
+    title: InterfaceRte1;
     lead?: string | null;
     colorMode: 'white' | 'color';
     colorScheme?: ('bright' | 'dark') | null;
@@ -1822,21 +1635,7 @@ export interface DetailPage {
   content?:
     | (
         | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             id?: string | null;
             blockName?: string | null;
             blockType: 'textBlock';
@@ -1919,21 +1718,7 @@ export interface DetailPage {
             colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
-              accordionContent: {
-                root: {
-                  type: string;
-                  children: {
-                    type: string;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
+              accordionContent: InterfaceRte2;
               id?: string | null;
             }[];
             id?: string | null;
@@ -2064,43 +1849,10 @@ export interface DetailPage {
             blockName?: string | null;
             blockType: 'imageTeasersBlock';
           }
-        | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'notificationBlock';
-          }
+        | InterfaceNotification
         | {
             title: string;
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             copyButtonText: string;
             id?: string | null;
             blockName?: string | null;
@@ -2244,21 +1996,7 @@ export interface EventDetailPage {
   };
   showDetailPage?: ('true' | 'false') | null;
   hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
+    title: InterfaceRte1;
     lead?: string | null;
     colorMode: 'white' | 'color';
     colorScheme?: ('bright' | 'dark') | null;
@@ -2266,21 +2004,7 @@ export interface EventDetailPage {
   content?:
     | (
         | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             id?: string | null;
             blockName?: string | null;
             blockType: 'textBlock';
@@ -2363,21 +2087,7 @@ export interface EventDetailPage {
             colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
-              accordionContent: {
-                root: {
-                  type: string;
-                  children: {
-                    type: string;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
+              accordionContent: InterfaceRte2;
               id?: string | null;
             }[];
             id?: string | null;
@@ -2508,43 +2218,10 @@ export interface EventDetailPage {
             blockName?: string | null;
             blockType: 'imageTeasersBlock';
           }
-        | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'notificationBlock';
-          }
+        | InterfaceNotification
         | {
             title: string;
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             copyButtonText: string;
             id?: string | null;
             blockName?: string | null;
@@ -2698,21 +2375,7 @@ export interface NewsDetailPage {
     teaserText: string;
   };
   hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
+    title: InterfaceRte1;
     lead?: string | null;
     date: string;
     colorMode: 'white' | 'color';
@@ -2722,21 +2385,7 @@ export interface NewsDetailPage {
   content?:
     | (
         | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             id?: string | null;
             blockName?: string | null;
             blockType: 'textBlock';
@@ -2819,21 +2468,7 @@ export interface NewsDetailPage {
             colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
-              accordionContent: {
-                root: {
-                  type: string;
-                  children: {
-                    type: string;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
+              accordionContent: InterfaceRte2;
               id?: string | null;
             }[];
             id?: string | null;
@@ -2964,43 +2599,10 @@ export interface NewsDetailPage {
             blockName?: string | null;
             blockType: 'imageTeasersBlock';
           }
-        | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'notificationBlock';
-          }
+        | InterfaceNotification
         | {
             title: string;
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             copyButtonText: string;
             id?: string | null;
             blockName?: string | null;
@@ -3143,21 +2745,7 @@ export interface PublicationDetailPage {
     project?: (string | null) | Project;
   };
   hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
+    title: InterfaceRte1;
     lead?: string | null;
     colorMode: 'white' | 'color';
     colorScheme?: ('bright' | 'dark') | null;
@@ -3165,21 +2753,7 @@ export interface PublicationDetailPage {
   content?:
     | (
         | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             id?: string | null;
             blockName?: string | null;
             blockType: 'textBlock';
@@ -3262,21 +2836,7 @@ export interface PublicationDetailPage {
             colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
-              accordionContent: {
-                root: {
-                  type: string;
-                  children: {
-                    type: string;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
+              accordionContent: InterfaceRte2;
               id?: string | null;
             }[];
             id?: string | null;
@@ -3407,43 +2967,10 @@ export interface PublicationDetailPage {
             blockName?: string | null;
             blockType: 'imageTeasersBlock';
           }
-        | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'notificationBlock';
-          }
+        | InterfaceNotification
         | {
             title: string;
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             copyButtonText: string;
             id?: string | null;
             blockName?: string | null;
@@ -3605,21 +3132,7 @@ export interface NationalDictionaryDetailPage {
     text: string;
   };
   hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
+    title: InterfaceRte1;
     lead?: string | null;
     colorMode: 'white' | 'color';
     colorScheme?: ('bright' | 'dark') | null;
@@ -3627,21 +3140,7 @@ export interface NationalDictionaryDetailPage {
   content?:
     | (
         | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             id?: string | null;
             blockName?: string | null;
             blockType: 'textBlock';
@@ -3724,21 +3223,7 @@ export interface NationalDictionaryDetailPage {
             colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
-              accordionContent: {
-                root: {
-                  type: string;
-                  children: {
-                    type: string;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
+              accordionContent: InterfaceRte2;
               id?: string | null;
             }[];
             id?: string | null;
@@ -3869,43 +3354,10 @@ export interface NationalDictionaryDetailPage {
             blockName?: string | null;
             blockType: 'imageTeasersBlock';
           }
-        | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'notificationBlock';
-          }
+        | InterfaceNotification
         | {
             title: string;
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             copyButtonText: string;
             id?: string | null;
             blockName?: string | null;
@@ -4043,21 +3495,7 @@ export interface InstituteDetailPage {
     text: string;
   };
   hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
+    title: InterfaceRte1;
     lead?: string | null;
     colorMode: 'white' | 'color';
     colorScheme?: ('bright' | 'dark') | null;
@@ -4065,21 +3503,7 @@ export interface InstituteDetailPage {
   content?:
     | (
         | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             id?: string | null;
             blockName?: string | null;
             blockType: 'textBlock';
@@ -4162,21 +3586,7 @@ export interface InstituteDetailPage {
             colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
-              accordionContent: {
-                root: {
-                  type: string;
-                  children: {
-                    type: string;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
+              accordionContent: InterfaceRte2;
               id?: string | null;
             }[];
             id?: string | null;
@@ -4307,43 +3717,10 @@ export interface InstituteDetailPage {
             blockName?: string | null;
             blockType: 'imageTeasersBlock';
           }
-        | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'notificationBlock';
-          }
+        | InterfaceNotification
         | {
             title: string;
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             copyButtonText: string;
             id?: string | null;
             blockName?: string | null;
@@ -4478,21 +3855,7 @@ export interface ProjectDetailPage {
     text: string;
   };
   hero: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
+    title: InterfaceRte1;
     lead?: string | null;
     colorMode: 'white' | 'color';
     colorScheme?: ('bright' | 'dark') | null;
@@ -4500,21 +3863,7 @@ export interface ProjectDetailPage {
   content?:
     | (
         | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             id?: string | null;
             blockName?: string | null;
             blockType: 'textBlock';
@@ -4597,21 +3946,7 @@ export interface ProjectDetailPage {
             colorScheme?: ('bright' | 'dark') | null;
             acccordions: {
               accordionTitle: string;
-              accordionContent: {
-                root: {
-                  type: string;
-                  children: {
-                    type: string;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
+              accordionContent: InterfaceRte2;
               id?: string | null;
             }[];
             id?: string | null;
@@ -4742,43 +4077,10 @@ export interface ProjectDetailPage {
             blockName?: string | null;
             blockType: 'imageTeasersBlock';
           }
-        | {
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'notificationBlock';
-          }
+        | InterfaceNotification
         | {
             title: string;
-            text: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            text: InterfaceRte2;
             copyButtonText: string;
             id?: string | null;
             blockName?: string | null;
@@ -4941,21 +4243,7 @@ export interface I18NForm {
    * You may show this text in a checkbox on forms.
    */
   checkboxes: {
-    dataPrivacyCheckboxText: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
+    dataPrivacyCheckboxText: InterfaceRte2;
   };
   /**
    * This is the text which is shown if a form was successfully submitted.
@@ -5016,101 +4304,31 @@ export interface Consent {
   adminTitle?: string | null;
   banner: {
     title: string;
-    text: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
+    text: InterfaceRte2;
     buttonAcceptAll: string;
     buttonCustomizeSelection: string;
     buttonDeclineAll: string;
   };
   overlay: {
     title: string;
-    text: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
+    text: InterfaceRte2;
     buttonAcceptAll: string;
     buttonAcceptSelection: string;
     necessaryCookies: {
       title: string;
-      text: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
+      text: InterfaceRte2;
       toggleLabel: string;
     };
     analyticsPerformance: {
       title: string;
-      text: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
+      text: InterfaceRte2;
       toggleLabelOff: string;
       toggleLabelOn: string;
       toggleDefault?: ('on' | 'off') | null;
     };
     externalContent: {
       title: string;
-      text: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
+      text: InterfaceRte2;
       toggleLabelOff: string;
       toggleLabelOn: string;
       toggleDefault?: ('on' | 'off') | null;
@@ -5409,7 +4627,7 @@ export interface HomePageSelect<T extends boolean = true> {
   hero?:
     | T
     | {
-        title?: T;
+        title?: T | InterfaceRte1Select<T>;
         lead?: T;
         animated?: T;
         sideTitle?: T;
@@ -5432,7 +4650,7 @@ export interface HomePageSelect<T extends boolean = true> {
         textBlock?:
           | T
           | {
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               id?: T;
               blockName?: T;
             };
@@ -5518,7 +4736,7 @@ export interface HomePageSelect<T extends boolean = true> {
                 | T
                 | {
                     accordionTitle?: T;
-                    accordionContent?: T;
+                    accordionContent?: T | InterfaceRte2Select<T>;
                     id?: T;
                   };
               id?: T;
@@ -5662,18 +4880,12 @@ export interface HomePageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        notificationBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
+        notificationBlock?: T | InterfaceNotificationSelect<T>;
         bibliographicReferenceBlock?:
           | T
           | {
               title?: T;
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               copyButtonText?: T;
               id?: T;
               blockName?: T;
@@ -5807,6 +5019,29 @@ export interface HomePageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceRte1_select".
+ */
+export interface InterfaceRte1Select<T extends boolean = true> {
+  content?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceRte2_select".
+ */
+export interface InterfaceRte2Select<T extends boolean = true> {
+  content?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNotification_select".
+ */
+export interface InterfaceNotificationSelect<T extends boolean = true> {
+  text?: T | InterfaceRte2Select<T>;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "errorPage_select".
  */
 export interface ErrorPageSelect<T extends boolean = true> {
@@ -5851,7 +5086,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
   hero?:
     | T
     | {
-        title?: T;
+        title?: T | InterfaceRte1Select<T>;
         lead?: T;
         author?: T;
         date?: T;
@@ -5864,7 +5099,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
         textBlock?:
           | T
           | {
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               id?: T;
               blockName?: T;
             };
@@ -5950,7 +5185,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
                 | T
                 | {
                     accordionTitle?: T;
-                    accordionContent?: T;
+                    accordionContent?: T | InterfaceRte2Select<T>;
                     id?: T;
                   };
               id?: T;
@@ -6094,18 +5329,12 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        notificationBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
+        notificationBlock?: T | InterfaceNotificationSelect<T>;
         bibliographicReferenceBlock?:
           | T
           | {
               title?: T;
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               copyButtonText?: T;
               id?: T;
               blockName?: T;
@@ -6249,7 +5478,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
   hero?:
     | T
     | {
-        title?: T;
+        title?: T | InterfaceRte1Select<T>;
         lead?: T;
         colorMode?: T;
         colorScheme?: T;
@@ -6260,7 +5489,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
         textBlock?:
           | T
           | {
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               id?: T;
               blockName?: T;
             };
@@ -6346,7 +5575,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
                 | T
                 | {
                     accordionTitle?: T;
-                    accordionContent?: T;
+                    accordionContent?: T | InterfaceRte2Select<T>;
                     id?: T;
                   };
               id?: T;
@@ -6490,18 +5719,12 @@ export interface OverviewPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        notificationBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
+        notificationBlock?: T | InterfaceNotificationSelect<T>;
         bibliographicReferenceBlock?:
           | T
           | {
               title?: T;
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               copyButtonText?: T;
               id?: T;
               blockName?: T;
@@ -6645,7 +5868,7 @@ export interface DetailPageSelect<T extends boolean = true> {
   hero?:
     | T
     | {
-        title?: T;
+        title?: T | InterfaceRte1Select<T>;
         lead?: T;
         colorMode?: T;
         colorScheme?: T;
@@ -6656,7 +5879,7 @@ export interface DetailPageSelect<T extends boolean = true> {
         textBlock?:
           | T
           | {
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               id?: T;
               blockName?: T;
             };
@@ -6742,7 +5965,7 @@ export interface DetailPageSelect<T extends boolean = true> {
                 | T
                 | {
                     accordionTitle?: T;
-                    accordionContent?: T;
+                    accordionContent?: T | InterfaceRte2Select<T>;
                     id?: T;
                   };
               id?: T;
@@ -6886,18 +6109,12 @@ export interface DetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        notificationBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
+        notificationBlock?: T | InterfaceNotificationSelect<T>;
         bibliographicReferenceBlock?:
           | T
           | {
               title?: T;
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               copyButtonText?: T;
               id?: T;
               blockName?: T;
@@ -7055,7 +6272,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
   hero?:
     | T
     | {
-        title?: T;
+        title?: T | InterfaceRte1Select<T>;
         lead?: T;
         colorMode?: T;
         colorScheme?: T;
@@ -7066,7 +6283,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
         textBlock?:
           | T
           | {
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               id?: T;
               blockName?: T;
             };
@@ -7152,7 +6369,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
                 | T
                 | {
                     accordionTitle?: T;
-                    accordionContent?: T;
+                    accordionContent?: T | InterfaceRte2Select<T>;
                     id?: T;
                   };
               id?: T;
@@ -7296,18 +6513,12 @@ export interface EventDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        notificationBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
+        notificationBlock?: T | InterfaceNotificationSelect<T>;
         bibliographicReferenceBlock?:
           | T
           | {
               title?: T;
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               copyButtonText?: T;
               id?: T;
               blockName?: T;
@@ -7462,7 +6673,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
   hero?:
     | T
     | {
-        title?: T;
+        title?: T | InterfaceRte1Select<T>;
         lead?: T;
         date?: T;
         colorMode?: T;
@@ -7475,7 +6686,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
         textBlock?:
           | T
           | {
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               id?: T;
               blockName?: T;
             };
@@ -7561,7 +6772,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
                 | T
                 | {
                     accordionTitle?: T;
-                    accordionContent?: T;
+                    accordionContent?: T | InterfaceRte2Select<T>;
                     id?: T;
                   };
               id?: T;
@@ -7705,18 +6916,12 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        notificationBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
+        notificationBlock?: T | InterfaceNotificationSelect<T>;
         bibliographicReferenceBlock?:
           | T
           | {
               title?: T;
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               copyButtonText?: T;
               id?: T;
               blockName?: T;
@@ -7872,7 +7077,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
   hero?:
     | T
     | {
-        title?: T;
+        title?: T | InterfaceRte1Select<T>;
         lead?: T;
         colorMode?: T;
         colorScheme?: T;
@@ -7883,7 +7088,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
         textBlock?:
           | T
           | {
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               id?: T;
               blockName?: T;
             };
@@ -7969,7 +7174,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
                 | T
                 | {
                     accordionTitle?: T;
-                    accordionContent?: T;
+                    accordionContent?: T | InterfaceRte2Select<T>;
                     id?: T;
                   };
               id?: T;
@@ -8113,18 +7318,12 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        notificationBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
+        notificationBlock?: T | InterfaceNotificationSelect<T>;
         bibliographicReferenceBlock?:
           | T
           | {
               title?: T;
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               copyButtonText?: T;
               id?: T;
               blockName?: T;
@@ -8273,7 +7472,7 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
   hero?:
     | T
     | {
-        title?: T;
+        title?: T | InterfaceRte1Select<T>;
         lead?: T;
         colorMode?: T;
         colorScheme?: T;
@@ -8284,7 +7483,7 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
         textBlock?:
           | T
           | {
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               id?: T;
               blockName?: T;
             };
@@ -8370,7 +7569,7 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
                 | T
                 | {
                     accordionTitle?: T;
-                    accordionContent?: T;
+                    accordionContent?: T | InterfaceRte2Select<T>;
                     id?: T;
                   };
               id?: T;
@@ -8514,18 +7713,12 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        notificationBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
+        notificationBlock?: T | InterfaceNotificationSelect<T>;
         bibliographicReferenceBlock?:
           | T
           | {
               title?: T;
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               copyButtonText?: T;
               id?: T;
               blockName?: T;
@@ -8674,7 +7867,7 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
   hero?:
     | T
     | {
-        title?: T;
+        title?: T | InterfaceRte1Select<T>;
         lead?: T;
         colorMode?: T;
         colorScheme?: T;
@@ -8685,7 +7878,7 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
         textBlock?:
           | T
           | {
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               id?: T;
               blockName?: T;
             };
@@ -8771,7 +7964,7 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
                 | T
                 | {
                     accordionTitle?: T;
-                    accordionContent?: T;
+                    accordionContent?: T | InterfaceRte2Select<T>;
                     id?: T;
                   };
               id?: T;
@@ -8915,18 +8108,12 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        notificationBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
+        notificationBlock?: T | InterfaceNotificationSelect<T>;
         bibliographicReferenceBlock?:
           | T
           | {
               title?: T;
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               copyButtonText?: T;
               id?: T;
               blockName?: T;
@@ -9075,7 +8262,7 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
   hero?:
     | T
     | {
-        title?: T;
+        title?: T | InterfaceRte1Select<T>;
         lead?: T;
         colorMode?: T;
         colorScheme?: T;
@@ -9086,7 +8273,7 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
         textBlock?:
           | T
           | {
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               id?: T;
               blockName?: T;
             };
@@ -9172,7 +8359,7 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
                 | T
                 | {
                     accordionTitle?: T;
-                    accordionContent?: T;
+                    accordionContent?: T | InterfaceRte2Select<T>;
                     id?: T;
                   };
               id?: T;
@@ -9316,18 +8503,12 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        notificationBlock?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
+        notificationBlock?: T | InterfaceNotificationSelect<T>;
         bibliographicReferenceBlock?:
           | T
           | {
               title?: T;
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               copyButtonText?: T;
               id?: T;
               blockName?: T;
@@ -9787,7 +8968,7 @@ export interface I18NFormsSelect<T extends boolean = true> {
   checkboxes?:
     | T
     | {
-        dataPrivacyCheckboxText?: T;
+        dataPrivacyCheckboxText?: T | InterfaceRte2Select<T>;
       };
   submitSuccess?:
     | T
@@ -9858,7 +9039,7 @@ export interface ConsentSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
-        text?: T;
+        text?: T | InterfaceRte2Select<T>;
         buttonAcceptAll?: T;
         buttonCustomizeSelection?: T;
         buttonDeclineAll?: T;
@@ -9867,21 +9048,21 @@ export interface ConsentSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
-        text?: T;
+        text?: T | InterfaceRte2Select<T>;
         buttonAcceptAll?: T;
         buttonAcceptSelection?: T;
         necessaryCookies?:
           | T
           | {
               title?: T;
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               toggleLabel?: T;
             };
         analyticsPerformance?:
           | T
           | {
               title?: T;
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               toggleLabelOff?: T;
               toggleLabelOn?: T;
               toggleDefault?: T;
@@ -9890,7 +9071,7 @@ export interface ConsentSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              text?: T;
+              text?: T | InterfaceRte2Select<T>;
               toggleLabelOff?: T;
               toggleLabelOn?: T;
               toggleDefault?: T;

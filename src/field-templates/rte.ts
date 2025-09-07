@@ -16,7 +16,7 @@ import {
 } from '@payloadcms/richtext-lexical';
 import { SoftHyphenFeature } from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.server';
 import {
-  FieldHook, RichTextField,
+  FieldHook, GroupField,
 } from 'payload';
 import { JSDOM } from 'jsdom';
 import domPurify from 'dompurify';
@@ -99,36 +99,54 @@ interface InterfaceRteInputType {
 
 export const rte1 = ({
   name, required,
-}: InterfaceRteInputType): RichTextField => ({
-  editor: rte1Editor,
-  hooks: {
-    beforeValidate: [
-      ({
-        value,
-      }): FieldHook => sanitizeRichTextValue(value),
-    ],
-  },
-  localized: true,
+}: InterfaceRteInputType): GroupField => ({
+
+  // we want to have Rte in a group, so that we can automatically generate an
+  // interface for the rte content.
+
+  fields: [
+    {
+      editor: rte1Editor,
+      hooks: {
+        beforeValidate: [
+          ({
+            value,
+          }): FieldHook => sanitizeRichTextValue(value),
+        ],
+      },
+      localized: true,
+      name: 'content',
+      required,
+      type: 'richText',
+    },
+  ],
+  interfaceName: 'InterfaceRte1',
   name,
-  required,
-  type: 'richText',
+  type: 'group',
 });
 
 export const rte2 = ({
   name, required,
-}: InterfaceRteInputType): RichTextField => ({
-  editor: rte2Editor,
-  hooks: {
-    beforeValidate: [
-      ({
-        value,
-      }): FieldHook => sanitizeRichTextValue(value),
-    ],
-  },
-  localized: true,
+}: InterfaceRteInputType): GroupField => ({
+  fields: [
+    {
+      editor: rte2Editor,
+      hooks: {
+        beforeValidate: [
+          ({
+            value,
+          }): FieldHook => sanitizeRichTextValue(value),
+        ],
+      },
+      localized: true,
+      name: 'content',
+      required,
+      type: 'richText',
+    },
+  ],
+  interfaceName: 'InterfaceRte2',
   name,
-  required,
-  type: 'richText',
+  type: 'group',
 });
 
 /* eslint-enable new-cap */
