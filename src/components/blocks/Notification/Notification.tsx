@@ -12,6 +12,10 @@ export const Notification = ({
     className={styles.notification}
     data-testid='notification'
   >
-    <Rte text={text.content} />
+    <Rte
+      text={text.content}
+      context='notification'
+      rteConfig='rte2'
+    />
   </div>
 );

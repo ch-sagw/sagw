@@ -24,14 +24,34 @@ const meta: Meta<typeof Rte> = {
 export default meta;
 type Story = StoryObj<typeof Rte>;
 
-export const SampleRte1: Story = {
+export const Rte1HeroLead: Story = {
   args: {
+    context: 'heroLead',
+    rteConfig: 'rte1',
     text: sampleRte1,
   },
 };
 
-export const SampleRte2: Story = {
+export const Rte1MagazineDetailLead: Story = {
   args: {
+    context: 'magazineDetailLead',
+    rteConfig: 'rte1',
+    text: sampleRte1,
+  },
+};
+
+export const Rte2Notification: Story = {
+  args: {
+    context: 'notification',
+    rteConfig: 'rte2',
+    text: sampleRte2,
+  },
+};
+
+export const Rte2MagazineDetailText: Story = {
+  args: {
+    context: 'magazineDetailText',
+    rteConfig: 'rte2',
     text: sampleRte2,
   },
 };

@@ -8,6 +8,7 @@ import {
   LinkJSXConverter as linkJSXConverter,
   RichText,
 } from '@payloadcms/richtext-lexical/react';
+import { cva } from 'cva';
 import styles from '@/components/base/Rte/Rte.module.scss';
 import {
   InterfaceRte1, InterfaceRte2,
@@ -40,13 +41,35 @@ const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({
 
 export type InterfaceRtePropTypes = {
   text: InterfaceRte1['content'] | InterfaceRte2['content'];
+  rteConfig: 'rte1' | 'rte2';
+  context: 'notification' | 'heroLead' | 'magazineDetailLead' | 'magazineDetailText'
 };
 
+const rteClasses = cva([styles.rte], {
+  variants: {
+    context: {
+      heroLead: [styles.heroLead],
+      magazineDetailLead: [styles.magazineDetailLead],
+      magazineDetailText: [styles.magazineDetailText],
+      notification: [styles.notification],
+    },
+    rteConfig: {
+      rte1: [styles.rte1],
+      rte2: [styles.rte2],
+    },
+  },
+});
+
 export const Rte = ({
+  context,
   text,
+  rteConfig,
 }: InterfaceRtePropTypes): React.JSX.Element => (
   <RichText
-    className={styles.rte}
+    className={rteClasses({
+      context: context ?? undefined,
+      rteConfig: rteConfig ?? undefined,
+    })}
     converters={jsxConverters}
     data={text}
   />

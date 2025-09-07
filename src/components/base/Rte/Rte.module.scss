@@ -1,3 +1,29 @@
 .rte {
   color: black;
+
+  // rte configs
+  &.rte1 {
+    border: 1px solid black;
+  }
+
+  &.rte2 {
+    border: 1px dashed black;
+  }
+
+  // rte contexts
+  &.heroLead {
+    font-size: 3rem;
+  }
+
+  &.magazineDetailLead {
+    font-size: 4rem;
+  }
+
+  &.magazineDetailText {
+    font-size: 1rem;
+  }
+
+  &.notification {
+    font-size: 0.8rem;
+  }
 }

@@ -10,7 +10,17 @@ const meta: Meta<typeof Notification> = {
   args: {},
   component: Notification,
   decorators: [defaultDecorator],
-  parameters: {/* layout: 'centered', */ },
+  parameters: {
+
+    /* layout: 'centered', */
+    controls: {
+      exclude: [
+        'id',
+        'blockName',
+        'blockType',
+      ],
+    },
+  },
   tags: [
     'autodocs',
     'visual:check',
