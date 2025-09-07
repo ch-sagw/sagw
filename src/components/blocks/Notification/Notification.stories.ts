@@ -4,8 +4,7 @@ import type {
 } from '@storybook/nextjs-vite';
 import { Notification } from '@/components/blocks/Notification/Notification';
 import { defaultDecorator } from '@/storybook-helpers';
-import { InterfaceNotification } from '@/payload-types';
-import { sampleRteText } from '@/richtext-converter/sample-rte-content';
+import { sampleRte2 } from '@/components/base/Rte/Rte.sampleContent';
 
 const meta: Meta<typeof Notification> = {
   args: {},
@@ -15,6 +14,7 @@ const meta: Meta<typeof Notification> = {
   tags: [
     'autodocs',
     'visual:check',
+    'a11y:check',
   ],
   title: 'Components/Blocks/Notification',
 };
@@ -24,7 +24,9 @@ type Story = StoryObj<typeof Notification>;
 
 export const SampleNotification: Story = {
   args: {
-    text: sampleRteText as InterfaceNotification['text'],
+    text: {
+      content: sampleRte2,
+    },
   },
 };
 

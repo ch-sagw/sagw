@@ -13,8 +13,9 @@ const meta: Meta<typeof Button> = {
   tags: [
     'autodocs',
     'visual:check',
+    'a11y:check',
   ],
-  title: 'Components/Blocks/Button',
+  title: 'Components/Base/Button',
 };
 
 export default meta;

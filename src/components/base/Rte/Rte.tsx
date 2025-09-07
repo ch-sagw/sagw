@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import type {
   DefaultNodeTypes,
@@ -10,9 +8,11 @@ import {
   LinkJSXConverter as linkJSXConverter,
   RichText,
 } from '@payloadcms/richtext-lexical/react';
-import { SerializedEditorState } from 'node_modules/lexical/LexicalEditorState';
-import { SerializedLexicalNode } from 'node_modules/lexical/LexicalNode';
-import styles from '@/components/blocks/Rte/Rte.module.scss';
+import styles from '@/components/base/Rte/Rte.module.scss';
+import {
+  InterfaceRte1, InterfaceRte2,
+} from '@/payload-types';
+import { softHyphenJSXConverter } from '@/components/admin/rte/features/SoftHyphen/SoftHyphenNode';
 
 const internalDocToHref = ({
   linkNode,
@@ -35,14 +35,19 @@ const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({
   ...linkJSXConverter({
     internalDocToHref,
   }),
+  ...softHyphenJSXConverter,
 });
 
 export type InterfaceRtePropTypes = {
-  text: SerializedEditorState<SerializedLexicalNode>;
+  text: InterfaceRte1['content'] | InterfaceRte2['content'];
 };
 
 export const Rte = ({
   text,
 }: InterfaceRtePropTypes): React.JSX.Element => (
-  <RichText className={styles.rte} converters={jsxConverters} data={text} />
+  <RichText
+    className={styles.rte}
+    converters={jsxConverters}
+    data={text}
+  />
 );
