@@ -1,4 +1,3 @@
-/* eslint-disable new-cap */
 import {
   BoldFeature,
   FixedToolbarFeature,
@@ -22,6 +21,7 @@ import { JSDOM } from 'jsdom';
 import domPurify from 'dompurify';
 import validator from 'validator';
 import { linkableSlugs } from '@/collections/Pages/pages';
+import { LexicalRichTextAdapterProvider } from 'node_modules/@payloadcms/richtext-lexical/dist/types';
 
 const {
   window,
@@ -63,6 +63,7 @@ const sanitizeRichTextValue: FieldHook = (value: unknown): string | unknown => {
 
 };
 
+/* eslint-disable new-cap */
 const rte1Editor = lexicalEditor({
   features: [
     FixedToolbarFeature(),
@@ -91,22 +92,30 @@ const rte2Editor = lexicalEditor({
     }),
   ],
 });
+/* eslint-enable new-cap */
 
 interface InterfaceRteInputType {
   name: string;
   required: boolean;
 }
 
-export const rte1 = ({
-  name, required,
-}: InterfaceRteInputType): GroupField => ({
+interface InterfaceRteInputTypeInternal {
+  name: string;
+  required: boolean;
+  interfaceName: string;
+  editor: LexicalRichTextAdapterProvider;
+}
+
+const rte = ({
+  name, required, interfaceName, editor,
+}: InterfaceRteInputTypeInternal): GroupField => ({
 
   // we want to have Rte in a group, so that we can automatically generate an
   // interface for the rte content.
 
   fields: [
     {
-      editor: rte1Editor,
+      editor,
       hooks: {
         beforeValidate: [
           ({
@@ -120,33 +129,25 @@ export const rte1 = ({
       type: 'richText',
     },
   ],
-  interfaceName: 'InterfaceRte1',
+  interfaceName,
   name,
   type: 'group',
+});
+
+export const rte1 = ({
+  name, required,
+}: InterfaceRteInputType): GroupField => rte({
+  editor: rte1Editor,
+  interfaceName: 'InterfaceRte1',
+  name,
+  required,
 });
 
 export const rte2 = ({
   name, required,
-}: InterfaceRteInputType): GroupField => ({
-  fields: [
-    {
-      editor: rte2Editor,
-      hooks: {
-        beforeValidate: [
-          ({
-            value,
-          }): FieldHook => sanitizeRichTextValue(value),
-        ],
-      },
-      localized: true,
-      name: 'content',
-      required,
-      type: 'richText',
-    },
-  ],
+}: InterfaceRteInputType): GroupField => rte({
+  editor: rte2Editor,
   interfaceName: 'InterfaceRte2',
   name,
-  type: 'group',
+  required,
 });
-
-/* eslint-enable new-cap */
