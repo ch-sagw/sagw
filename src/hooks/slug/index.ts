@@ -10,6 +10,7 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
   collection,
   req,
   operation,
+  originalDoc,
 }) => {
   // Only enforce on create or update
   if (![
@@ -45,8 +46,6 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
     trim: true,
   });
 
-  let existingError = false;
-
   // try to find desired slug in collection items of current tenant
   if (desiredSlug) {
     const existing = await req.payload.find({
@@ -71,34 +70,33 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
             },
             /* eslint-enable @typescript-eslint/naming-convention */
           },
+          {
+            id: {
+              /* eslint-disable @typescript-eslint/naming-convention */
+              not_equals: originalDoc.id,
+              /* eslint-enable @typescript-eslint/naming-convention */
+            },
+          },
         ],
       },
     });
 
     if (existing.docs.length > 0) {
 
-      // only report error if the found doc is not the currently edited one.
-      const isSelf = operation === 'update' && existing.docs[0].id === dataParam.id;
+      throw new ValidationError({
+        errors: [
+          {
+            label: 'slug',
+            message: `Slug "${desiredSlug}" already exists in this tenant`,
+            path: 'slug',
+          },
+        ],
+        global: `Slug "${desiredSlug}" already exists in this tenant`,
+      });
+    } else if (desiredSlug) {
 
-      if (!isSelf) {
-        existingError = true;
-
-        throw new ValidationError({
-          errors: [
-            {
-              label: 'slug',
-              message: `Slug "${desiredSlug}" already exists in this tenant`,
-              path: 'slug',
-            },
-          ],
-          global: `Slug "${desiredSlug}" already exists in this tenant`,
-        });
-      }
+      dataParam[fieldSlugFieldName] = desiredSlug;
     }
-  }
-
-  if (!existingError && desiredSlug) {
-    dataParam[fieldSlugFieldName] = desiredSlug;
   }
 
   return dataParam;
