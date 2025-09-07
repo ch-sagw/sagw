@@ -9,9 +9,11 @@ export const hookAdminTitle: CollectionBeforeValidateHook = ({
   const lexical: SerializedEditorState = data?.hero?.title.content;
 
   if (lexical && data) {
-    data[fieldAdminTitleFieldName] = convertLexicalToPlaintext({
+    const transformedData = convertLexicalToPlaintext({
       data: lexical,
     });
+
+    data[fieldAdminTitleFieldName] = transformedData.replaceAll('\u00AD', '');
   }
 
   return data;

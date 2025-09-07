@@ -14,8 +14,18 @@ test.describe('Slug field', () => {
     await page.waitForLoadState('networkidle');
 
     const heroField = await page.locator('#field-hero .ContentEditable__root');
+    const hyphenButton = await page.locator('#field-hero .toolbar-popup__button-softHyphenButton');
+    const superscriptButton = await page.locator('#field-hero .toolbar-popup__button-superscript');
+    const subscriptButton = await page.locator('#field-hero .toolbar-popup__button-subscript');
 
     await heroField.fill('Sample Detail. Page. $name üöä');
+
+    await hyphenButton.click();
+    await heroField.pressSequentially('hyphen');
+    await superscriptButton.click();
+    await heroField.pressSequentially('sup');
+    await subscriptButton.click();
+    await heroField.pressSequentially('sub');
 
     // save
     const saveButton = await page.getByRole('button', {
@@ -40,7 +50,7 @@ test.describe('Slug field', () => {
     const slugField = await page.locator('#field-slug');
 
     await expect(slugField)
-      .toHaveValue('sample-detail-page-dollarname-uoa');
+      .toHaveValue('sample-detail-page-dollarname-uoahyphensupsub');
 
   });
 

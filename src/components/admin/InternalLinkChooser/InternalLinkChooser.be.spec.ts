@@ -7,19 +7,54 @@ import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 test.describe('Internal Link Chooser', () => {
   beforeEachPayloadLogin();
 
-  test('shows available links', async ({
+  test('shows available links in overlay context', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/admin/collections/header');
+
+    // go to consent page
+    await page.goto('http://localhost:3000/admin/');
     await page.waitForLoadState('networkidle');
 
-    const navItem1 = await page.locator('#navItems-row-0');
+    const dashboard = await page.locator('.dashboard');
+    const consentPageButton = await dashboard.getByText('Consent');
 
-    const linkTargetInput = await navItem1.getByLabel('Link Target');
+    await consentPageButton.click({
+      force: true,
+    });
+    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
 
-    await (await linkTargetInput.elementHandle())?.waitForElementState('stable');
+    // fill rte field, select text and click link button
+    const rte2Field = await page.locator('#field-banner__text .ContentEditable__root');
 
-    await linkTargetInput.click();
+    await rte2Field.fill('some link content');
+
+    const element = await page.getByText('some link content');
+
+    await (await element.elementHandle())?.waitForElementState('stable');
+
+    await element.click();
+    await page.keyboard.press('ControlOrMeta+A');
+
+    const linkButton = await page.locator('#field-banner__text .toolbar-popup__button-link');
+
+    await linkButton.click();
+
+    // choose internal link and click dropdown
+
+    const internalLinkRadio = await page.getByText('Interne Verlinkung');
+
+    // TODO: remove timeout, find workaround
+    await page.waitForTimeout(2000);
+
+    await internalLinkRadio.click();
+
+    const linksSection = await page.locator('#field-doc');
+    const linksDropdown = await linksSection.getByText('Wert auswählen');
+
+    await linksDropdown.click({
+      force: true,
+    });
 
     const link1 = await page.getByText('Home Page', {
       exact: true,
@@ -67,9 +102,10 @@ test.describe('Internal Link Chooser', () => {
       .toBeVisible();
     await expect(link9)
       .toBeVisible();
+
   });
 
-  test('shows available links in overlay context', async ({
+  test('shows available links', async ({
     page,
   }) => {
 
