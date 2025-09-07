@@ -11,6 +11,7 @@ export type SerializedSoftHyphenNode = SerializedLexicalNode & {
   text: string;
 };
 
+// export decorator node
 export class SoftHyphenNode extends DecoratorNode<JSX.Element> {
   public constructor(key?: NodeKey) {
     super(key);
@@ -70,3 +71,11 @@ export class SoftHyphenNode extends DecoratorNode<JSX.Element> {
     );
   }
 }
+
+// export converter
+
+export const softHyphenJSXConverter = {
+  /* eslint-disable @typescript-eslint/naming-convention */
+  'unicode-char': (): string => '­',
+  /* eslint-enable @typescript-eslint/naming-convention */
+};
