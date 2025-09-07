@@ -9,7 +9,7 @@ test.describe('Rte', () => {
     page,
   }) => {
 
-    await navigate(page, 'components-base-rte--sample-rte-1');
+    await navigate(page, 'components-base-rte--rte-1-hero-lead');
 
     const elem = await page.getByTestId('component');
     const paragraph = await elem.locator('p');
