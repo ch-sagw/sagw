@@ -3,9 +3,10 @@
 import { JSX } from 'react';
 import type { UIFieldServerProps } from 'payload';
 import InternalLinkChooserClient from './InternalLinkChooserClient';
-import {
-  setsSlugs, singletonSlugs,
-} from '@/collections/Pages';
+// import {
+//   setsSlugs, singletonSlugs,
+// } from '@/collections/Pages';
+import { linkableSlugs } from '@/collections/Pages/pages';
 
 type FieldWithRequired = {
   required?: boolean;
@@ -26,7 +27,7 @@ const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
       collectionSlug={collectionSlug}
       currentId={id}
       path={path}
-      slugs={setsSlugs.concat(singletonSlugs)}
+      slugs={linkableSlugs}
       required={hasRequired(field)
         ? field.required ?? false
         : false}
