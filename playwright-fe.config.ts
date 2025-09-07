@@ -1,7 +1,7 @@
 import {
   defineConfig, devices,
 } from '@playwright/test';
-import { vrtConfig } from '@/visual-regression-testing/config';
+import { vrtConfig } from '@/automated-testing/config';
 
 const projects = [
   // viewport micro

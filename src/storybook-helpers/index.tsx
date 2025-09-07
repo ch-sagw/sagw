@@ -1,6 +1,6 @@
 import { PartialStoryFn } from 'storybook/internal/types';
 import { ReactElement } from 'react';
-import { vrtConfig } from '@/visual-regression-testing/config';
+import { vrtConfig } from '@/automated-testing/config';
 
 export const defaultDecorator = (Story: PartialStoryFn): ReactElement => (
   <div
@@ -9,6 +9,7 @@ export const defaultDecorator = (Story: PartialStoryFn): ReactElement => (
       padding: '3rem',
     }}
     data-testid={vrtConfig.testid}
+    id={vrtConfig.testid}
   >
     <Story />
   </div>
