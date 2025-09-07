@@ -1,6 +1,4 @@
-import {
-  CollectionConfig, CollectionSlug,
-} from 'payload';
+import { CollectionSlug } from 'payload';
 
 export interface InterfaceSlug {
   displayName: string;
@@ -10,18 +8,6 @@ export interface InterfaceSlug {
   linkable: boolean;
   slug: CollectionSlug;
 }
-
-export const getPageImport = async (slugsArray: InterfaceSlug[]): Promise<CollectionConfig[]> => {
-  const returnArray = [];
-
-  for await (const slug of slugsArray) {
-    const importData = await import(`@/collections/Pages/${slug.folderName}/${slug.fileName}`);
-
-    returnArray.push(importData[slug.exportName]);
-  }
-
-  return returnArray;
-};
 
 export const singletonSlugs: InterfaceSlug[] = [
   {
@@ -42,7 +28,7 @@ export const singletonSlugs: InterfaceSlug[] = [
   },
 ];
 
-export const setsSlugs: InterfaceSlug[] = [
+const setsSlugs: InterfaceSlug[] = [
   {
     displayName: 'Magazine Detail Page',
     exportName: 'MagazineDetailPage',
@@ -117,6 +103,7 @@ export const setsSlugs: InterfaceSlug[] = [
   },
 ];
 
-export const linkableSlugs = singletonSlugs.concat(setsSlugs)
-  .filter((slug) => slug.linkable)
-  .map((slug) => slug.slug);
+export const allPages = singletonSlugs.concat(setsSlugs);
+
+export const linkableSlugs = allPages
+  .filter((slug) => slug.linkable);

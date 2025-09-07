@@ -13,27 +13,26 @@ import { EventCategories } from '@/collections/Plc/EventCategories';
 import { Departments } from '@/collections/Plc/Departments';
 import { ZenodoDocuments } from '@/collections/Plc/ZenodoDocuments';
 import { Forms } from '@/collections/Plc/Forms';
+import autogeneratePagesIndex from '@/collections/auto-generated-pages-index';
+import { singletonSlugs } from '@/collections/Pages/pages';
 
 // Globals
-import { I18nForms } from './Globals/i18n/Forms';
-import { Consent } from './Globals/Consent';
-import { Footer } from './Globals/Footer';
-import { Header } from './Globals/Header';
-import { StatusMessage } from './Globals/StatusMessage';
-import { CollectionConfig } from 'payload';
+import { I18nForms } from '@/collections/Globals/i18n/Forms';
+import { Consent } from '@/collections/Globals/Consent';
+import { Footer } from '@/collections/Globals/Footer';
+import { Header } from '@/collections/Globals/Header';
+import { StatusMessage } from '@/collections/Globals/StatusMessage';
 import {
-  getPageImport, setsSlugs, singletonSlugs,
-} from '@/collections/Pages';
+  CollectionConfig, CollectionSlug,
+} from 'payload';
 
 // we want to define page slugs once. using the exported collections from this
 // file would not work if we would like to import the collections into a block
 // or collection -> circular reference or more specific, the collections would
 // not be defined yet at the time of importing them into a block. That's why
 // we do it this way.
-
-// Pages -> Sets & Singletons
-const singletonPageCollections: CollectionConfig[] = await getPageImport(singletonSlugs);
-const setsPageCollections: CollectionConfig[] = await getPageImport(setsSlugs);
+// main reason for this was: we want to add colletions array to the link
+// feature in rte. we can't import it from here.
 
 export const plcCollections: CollectionConfig[] = [
   Images,
@@ -63,11 +62,8 @@ export const globalCollections: CollectionConfig[] = [
 // payload collections config
 export const collections = [
 
-  // Pages -> Singletons
-  ...singletonPageCollections,
-
-  // Pages -> Sets
-  ...setsPageCollections,
+  // Auto-generated pages index
+  ...autogeneratePagesIndex,
 
   // plc
   ...plcCollections,
@@ -86,9 +82,11 @@ export interface InterfaceTenantCollectionObject {
 
 const tenantsCollectionsObject: Record<string, InterfaceTenantCollectionObject> = {};
 
+const singletonSlugsarray = singletonSlugs.map((slug) => slug.slug);
+
 collections.forEach((item) => {
   if (item.slug !== Departments.slug) {
-    if (singletonPageCollections.includes(item) || globalCollections.includes(item)) {
+    if (singletonSlugsarray.includes(item.slug as CollectionSlug) || globalCollections.includes(item)) {
       tenantsCollectionsObject[item.slug] = {
         isGlobal: true,
       };
