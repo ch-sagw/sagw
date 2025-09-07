@@ -55,7 +55,7 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   webServer: {
-    command: 'next dev -H 0.0.0.0 -p 3000',
+    command: 'npm run generate:pages:collections && next dev -H 0.0.0.0 -p 3000',
     reuseExistingServer: !process.env.CI,
     stderr: 'pipe',
     stdout: 'pipe',
