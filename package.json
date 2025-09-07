@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "generate:pages:collections": "tsx src/collections/pages/generatePayloadPageImports.ts",
+    "generate:pages:collections": "tsx src/collections/Pages/generatePayloadPageImports.ts",
     "start:db": "docker compose -f docker-compose.yml run --rm -p 27017:27017 mongo --quiet --syslog",
     "dev:local": "cross-env NODE_OPTIONS=--no-deprecation ENV=local next dev -H 0.0.0.0 -p 3000",
     "dev:local:seed": "cross-env NODE_OPTIONS=--no-deprecation ENV=seed next dev -H 0.0.0.0 -p 3000",
