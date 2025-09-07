@@ -62,7 +62,7 @@ test.describe('Slug field', () => {
 
     const heroField = await page.locator('#field-hero .ContentEditable__root');
 
-    await heroField.fill('Sample Detail. Page. $name üöä');
+    await heroField.fill('Sample Detail. Page. $name üöähyphensupsub');
 
     // save
     const saveButton = await page.getByRole('button', {
@@ -71,7 +71,7 @@ test.describe('Slug field', () => {
 
     await saveButton.click();
 
-    const errorToast = await page.getByText('Slug "sample-detail-page-dollarname-uoa" already exists in this tenant');
+    const errorToast = await page.getByText('Slug "sample-detail-page-dollarname-uoahyphensupsub" already exists in this tenant');
 
     await expect(errorToast)
       .toBeVisible();
