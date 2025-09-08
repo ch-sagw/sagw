@@ -46,6 +46,8 @@ Payload Config:
 - care about redirects: check redirects-plugin and decide if we use it or create our own
 - About SAGW -> Link block below RTE is missing. How do we do it? Add a "LinkBlock"? Or do we extend the RTE element with a linkBlock?
 - slug error? after dev:seed, go to magazine detail and add a block -> error that the slug already exists
+- limit blocks on all pages
+- implement cololr-theme chooser for FG's
 
 Multitenant: (working with seed data)
 --------
