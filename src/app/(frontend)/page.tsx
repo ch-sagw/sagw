@@ -4,8 +4,6 @@ import React from 'react';
 import configPromise from '@/payload.config';
 import { Config } from '@/payload-types';
 import { Navigation } from '@/components/global/Navigation/Navigation';
-// import { Notification } from '@/components/blocks/Notification/Notification';
-// import { Rte } from '@/components/blocks/Rte/Rte';
 import { RenderBlocks } from '@/app/(frontend)/RenderBlocks';
 
 export default async function HomePage({
