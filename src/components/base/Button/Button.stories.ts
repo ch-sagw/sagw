@@ -21,7 +21,7 @@ const meta: Meta<typeof Button> = {
     'visual:check',
     'a11y:check',
   ],
-  title: 'Components/Base/Button',
+  title: 'Components/base/Button',
 };
 
 export default meta;
