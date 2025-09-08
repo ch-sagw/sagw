@@ -10,6 +10,7 @@ import { hookSeoFallback } from '@/hooks/seoFallback';
 import { blocks } from '@/blocks';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { versions } from '@/field-templates/versions';
+import { hookFormsBlockOnCreate } from '@/hooks/formsBlockOnCreate';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks/slug';
 
@@ -95,6 +96,7 @@ export const NewsDetailPage: CollectionConfig = {
     beforeChange: [hookSeoFallback],
     beforeValidate: [
       hookAdminTitle,
+      hookFormsBlockOnCreate,
       hookSlug,
     ],
   },
