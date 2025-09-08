@@ -1,3 +1,4 @@
+import 'server-only';
 import { getPayload } from 'payload';
 import React from 'react';
 import configPromise from '@/payload.config';

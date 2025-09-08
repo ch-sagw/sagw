@@ -1,3 +1,4 @@
+import 'server-only';
 import React, { Fragment } from 'react';
 import { Notification } from '@/components/blocks/Notification/Notification';
 import { Rte } from '@/components/blocks/Rte/Rte';
