@@ -5,6 +5,12 @@ import type {
 import { Button } from '@/components/base/Button/Button';
 import { defaultDecorator } from '@/storybook-helpers';
 
+type ButtonProps = React.ComponentProps<typeof Button>;
+
+type StrictStory = StoryObj<typeof Button> & {
+  args: ButtonProps;
+};
+
 const meta: Meta<typeof Button> = {
   args: {},
   component: Button,
@@ -19,9 +25,8 @@ const meta: Meta<typeof Button> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Button>;
 
-export const SampleButton: Story = {
+export const SampleButton: StrictStory = {
   args: {
     text: 'Sample Button text',
   },

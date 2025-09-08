@@ -8,6 +8,12 @@ import {
   sampleRte1, sampleRte2,
 } from '@/components/base/Rte/Rte.sampleContent';
 
+type RteProps = React.ComponentProps<typeof Rte>;
+
+type StrictStory = StoryObj<typeof Rte> & {
+  args: RteProps;
+};
+
 const meta: Meta<typeof Rte> = {
   args: {},
   component: Rte,
@@ -22,9 +28,8 @@ const meta: Meta<typeof Rte> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Rte>;
 
-export const Rte1HeroLead: Story = {
+export const Rte1HeroLead: StrictStory = {
   args: {
     context: 'heroLead',
     rteConfig: 'rte1',
@@ -32,7 +37,7 @@ export const Rte1HeroLead: Story = {
   },
 };
 
-export const Rte1MagazineDetailLead: Story = {
+export const Rte1MagazineDetailLead: StrictStory = {
   args: {
     context: 'magazineDetailLead',
     rteConfig: 'rte1',
@@ -40,7 +45,7 @@ export const Rte1MagazineDetailLead: Story = {
   },
 };
 
-export const Rte2Notification: Story = {
+export const Rte2Notification: StrictStory = {
   args: {
     context: 'notification',
     rteConfig: 'rte2',
@@ -48,7 +53,7 @@ export const Rte2Notification: Story = {
   },
 };
 
-export const Rte2MagazineDetailText: Story = {
+export const Rte2MagazineDetailText: StrictStory = {
   args: {
     context: 'magazineDetailText',
     rteConfig: 'rte2',
