@@ -105,8 +105,6 @@ test.describe('adminTitle', () => {
     const id = parts[parts.length - 1];
     const res = await fetch(`http://localhost:3000/api/newsDetailPage/${id}`);
 
-    console.log(`http://localhost:3000/api/newsDetailPage/${id}`);
-
     const newsPage = await res.json();
 
     await expect(newsPage.adminTitle)
