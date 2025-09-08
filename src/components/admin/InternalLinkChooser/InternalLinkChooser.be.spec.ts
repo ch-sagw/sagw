@@ -24,6 +24,8 @@ test.describe('Internal Link Chooser', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('load');
 
+    const url1 = /http:\/\/localhost:3000\/admin\/collections\/consent\/[a-f0-9]+$/u;
+
     // fill rte field, select text and click link button
     const rte2Field = await page.locator('#field-banner__text .ContentEditable__root');
 
@@ -32,6 +34,9 @@ test.describe('Internal Link Chooser', () => {
     const element = await page.getByText('some link content');
 
     await (await element.elementHandle())?.waitForElementState('stable');
+
+    await page.waitForRequest(url1);
+    await page.waitForRequest(url1);
 
     await element.click();
     await page.keyboard.press('ControlOrMeta+A');
@@ -44,8 +49,6 @@ test.describe('Internal Link Chooser', () => {
 
     // TODO: remove timeout, find workaround
     // await page.waitForTimeout(2000);
-
-    const url1 = /http:\/\/localhost:3000\/admin\/collections\/consent\/[a-f0-9]+$/u;
 
     await page.waitForRequest(url1);
     await page.waitForRequest(url1);
