@@ -14,6 +14,7 @@ export const TextBlock: Block = {
     }),
   ],
   imageURL: '/admin-ui-images/richtext.svg',
+  interfaceName: 'InterfaceTextBlock',
   labels: {
     plural: 'Richtext',
     singular: 'Richtext',

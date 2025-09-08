@@ -65,7 +65,9 @@ export const Header: CollectionConfig = {
               type: 'array',
             },
           ],
+          interfaceName: 'InterfaceNavigation',
           label: 'Navigation',
+          name: 'navigation',
         },
         {
           fields: [
