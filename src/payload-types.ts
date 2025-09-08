@@ -194,12 +194,7 @@ export interface HomePage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
+        | InterfaceTextBlock
         | {
             title: string;
             subtitle: string;
@@ -577,6 +572,16 @@ export interface InterfaceRte1 {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceTextBlock".
+ */
+export interface InterfaceTextBlock {
+  text: InterfaceRte2;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'textBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceRte2".
  */
 export interface InterfaceRte2 {
@@ -920,12 +925,7 @@ export interface MagazineDetailPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
+        | InterfaceTextBlock
         | {
             title: string;
             subtitle: string;
@@ -1277,12 +1277,7 @@ export interface OverviewPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
+        | InterfaceTextBlock
         | {
             title: string;
             subtitle: string;
@@ -1634,12 +1629,7 @@ export interface DetailPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
+        | InterfaceTextBlock
         | {
             title: string;
             subtitle: string;
@@ -2003,12 +1993,7 @@ export interface EventDetailPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
+        | InterfaceTextBlock
         | {
             title: string;
             subtitle: string;
@@ -2384,12 +2369,7 @@ export interface NewsDetailPage {
   project?: (string | null) | Project;
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
+        | InterfaceTextBlock
         | {
             title: string;
             subtitle: string;
@@ -2752,12 +2732,7 @@ export interface PublicationDetailPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
+        | InterfaceTextBlock
         | {
             title: string;
             subtitle: string;
@@ -3139,12 +3114,7 @@ export interface NationalDictionaryDetailPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
+        | InterfaceTextBlock
         | {
             title: string;
             subtitle: string;
@@ -3502,12 +3472,7 @@ export interface InstituteDetailPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
+        | InterfaceTextBlock
         | {
             title: string;
             subtitle: string;
@@ -3862,12 +3827,7 @@ export interface ProjectDetailPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
+        | InterfaceTextBlock
         | {
             title: string;
             subtitle: string;
@@ -4380,18 +4340,7 @@ export interface Header {
   id: string;
   department?: (string | null) | Department;
   adminTitle?: string | null;
-  navItems: {
-    navItemText: string;
-    navItemLink?: string | null;
-    subNavItems?:
-      | {
-          navItemText: string;
-          navItemLink?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-    id?: string | null;
-  }[];
+  navigation: InterfaceNavigation;
   metaLinks?:
     | {
         linkType: 'internal' | 'external';
@@ -4411,6 +4360,24 @@ export interface Header {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNavigation".
+ */
+export interface InterfaceNavigation {
+  navItems: {
+    navItemText: string;
+    navItemLink?: string | null;
+    subNavItems?:
+      | {
+          navItemText: string;
+          navItemLink?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    id?: string | null;
+  }[];
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4647,13 +4614,7 @@ export interface HomePageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
         titleSubtitleTextBlock?:
           | T
           | {
@@ -5026,6 +4987,15 @@ export interface InterfaceRte1Select<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceTextBlock_select".
+ */
+export interface InterfaceTextBlockSelect<T extends boolean = true> {
+  text?: T | InterfaceRte2Select<T>;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceRte2_select".
  */
 export interface InterfaceRte2Select<T extends boolean = true> {
@@ -5096,13 +5066,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
         titleSubtitleTextBlock?:
           | T
           | {
@@ -5486,13 +5450,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
         titleSubtitleTextBlock?:
           | T
           | {
@@ -5876,13 +5834,7 @@ export interface DetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
         titleSubtitleTextBlock?:
           | T
           | {
@@ -6280,13 +6232,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
         titleSubtitleTextBlock?:
           | T
           | {
@@ -6683,13 +6629,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
         titleSubtitleTextBlock?:
           | T
           | {
@@ -7085,13 +7025,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
         titleSubtitleTextBlock?:
           | T
           | {
@@ -7480,13 +7414,7 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
         titleSubtitleTextBlock?:
           | T
           | {
@@ -7875,13 +7803,7 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
         titleSubtitleTextBlock?:
           | T
           | {
@@ -8270,13 +8192,7 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
         titleSubtitleTextBlock?:
           | T
           | {
@@ -9123,20 +9039,7 @@ export interface FooterSelect<T extends boolean = true> {
 export interface HeaderSelect<T extends boolean = true> {
   department?: T;
   adminTitle?: T;
-  navItems?:
-    | T
-    | {
-        navItemText?: T;
-        navItemLink?: T;
-        subNavItems?:
-          | T
-          | {
-              navItemText?: T;
-              navItemLink?: T;
-              id?: T;
-            };
-        id?: T;
-      };
+  navigation?: T | InterfaceNavigationSelect<T>;
   metaLinks?:
     | T
     | {
@@ -9160,6 +9063,26 @@ export interface HeaderSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNavigation_select".
+ */
+export interface InterfaceNavigationSelect<T extends boolean = true> {
+  navItems?:
+    | T
+    | {
+        navItemText?: T;
+        navItemLink?: T;
+        subNavItems?:
+          | T
+          | {
+              navItemText?: T;
+              navItemLink?: T;
+              id?: T;
+            };
+        id?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
