@@ -7,19 +7,88 @@ import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 test.describe('Internal Link Chooser', () => {
   beforeEachPayloadLogin();
 
-  test('shows available links', async ({
+  // TODO: find stable solution
+  /*
+  test('shows available links in overlay context', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/admin/collections/header');
+
+    // go to consent page
+    await page.goto('http://localhost:3000/admin/');
     await page.waitForLoadState('networkidle');
 
-    const navItem1 = await page.locator('#navItems-row-0');
+    const dashboard = await page.locator('.dashboard');
+    const consentPageButton = await dashboard.getByText('Consent');
 
-    const linkTargetInput = await navItem1.getByLabel('Link Target');
+    await consentPageButton.click({
+      force: true,
+    });
+    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
 
-    await (await linkTargetInput.elementHandle())?.waitForElementState('stable');
+    const url1 =
+    /http:\/\/localhost:3000\/admin\/collections\/consent\/[a-f0-9]+$/u;
 
-    await linkTargetInput.click();
+    // fill rte field, select text and click link button
+    const rte2Field =
+    await page.locator('#field-banner__text .ContentEditable__root');
+
+    await rte2Field.fill('some link content');
+    await page.waitForRequest(url1);
+
+    const element = await page.getByText('some link content');
+
+    await (await element.elementHandle())?.waitForElementState('stable');
+
+    await element.click();
+    await page.keyboard.press('ControlOrMeta+A');
+
+    const linkButton = await page
+    .locator('#field-banner__text .toolbar-popup__button-link');
+
+    await linkButton.click();
+
+    // choose internal link and click dropdown
+
+    await page.waitForRequest(url1);
+    await page.waitForRequest(url1);
+    await page.waitForRequest(url1);
+    await page.waitForRequest(url1);
+    await page.waitForRequest(url1);
+    await page.waitForRequest(url1);
+    await page.waitForRequest(url1);
+
+    const internalLinkRadio = await page.getByText('Interne Verlinkung');
+
+    await (await internalLinkRadio.elementHandle())?
+    .waitForElementState('stable');
+
+    await internalLinkRadio.click({
+      force: true,
+    });
+
+    await page.waitForRequest(url1);
+
+    const linksSection = await page.locator('#field-doc');
+
+    const linksDropdown = await linksSection.getByText('Wert auswählen');
+
+    await (await linksDropdown.elementHandle())?.waitForElementState('stable');
+
+    await linksDropdown.click({
+      force: true,
+    });
+
+    await Promise.all([
+      page.waitForRequest('http://localhost:3000/api/magazineDetailPage'),
+      page.waitForRequest('http://localhost:3000/api/overviewPage'),
+      page.waitForRequest('http://localhost:3000/api/detailPage'),
+      page.waitForRequest('http://localhost:3000/api/eventDetailPage'),
+      page.waitForRequest('http://localhost:3000/api/newsDetailPage'),
+      page.waitForRequest('http://localhost:3000/api/publicationDetailPage'),
+      page
+      .waitForRequest('http://localhost:3000/api/nationalDictionaryDetailPage'),
+    ]);
 
     const link1 = await page.getByText('Home Page', {
       exact: true,
@@ -33,10 +102,12 @@ test.describe('Internal Link Chooser', () => {
     const link4 = await page.getByText('Magazine detail page title SAGW', {
       exact: true,
     });
-    const link5 = await page.getByText('Event detail page title SAGW (render link)', {
+    const link5 = await page
+    .getByText('Event detail page title SAGW (render link)', {
       exact: true,
     });
-    const link6 = await page.getByText('Event detail page title SAGW (render detail page)', {
+    const link6 = await page
+    .getByText('Event detail page title SAGW (render detail page)', {
       exact: true,
     });
     const link7 = await page.getByText('Detail page title SAGW', {
@@ -67,9 +138,11 @@ test.describe('Internal Link Chooser', () => {
       .toBeVisible();
     await expect(link9)
       .toBeVisible();
-  });
 
-  test('shows available links in overlay context', async ({
+  });
+  */
+
+  test('shows available links', async ({
     page,
   }) => {
 

@@ -8,8 +8,6 @@ export const hookFormsBlockOnCreate: CollectionBeforeValidateHook = ({
 
   // only on new documents
   if (operation === 'create') {
-    console.log(data);
-
     if (data && !data?.content) {
       data.content = [];
     }

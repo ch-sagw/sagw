@@ -3,9 +3,6 @@
 import { JSX } from 'react';
 import type { UIFieldServerProps } from 'payload';
 import InternalLinkChooserClient from './InternalLinkChooserClient';
-// import {
-//   setsSlugs, singletonSlugs,
-// } from '@/collections/Pages';
 import { linkableSlugs } from '@/collections/Pages/pages';
 
 type FieldWithRequired = {

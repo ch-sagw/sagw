@@ -1,4 +1,3 @@
-/* eslint-disable new-cap */
 import {
   BoldFeature,
   FixedToolbarFeature,
@@ -16,12 +15,13 @@ import {
 } from '@payloadcms/richtext-lexical';
 import { SoftHyphenFeature } from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.server';
 import {
-  FieldHook, RichTextField,
+  FieldHook, GroupField,
 } from 'payload';
 import { JSDOM } from 'jsdom';
 import domPurify from 'dompurify';
 import validator from 'validator';
 import { linkableSlugs } from '@/collections/Pages/pages';
+import { LexicalRichTextAdapterProvider } from 'node_modules/@payloadcms/richtext-lexical/dist/types';
 
 const {
   window,
@@ -63,6 +63,7 @@ const sanitizeRichTextValue: FieldHook = (value: unknown): string | unknown => {
 
 };
 
+/* eslint-disable new-cap */
 const rte1Editor = lexicalEditor({
   features: [
     FixedToolbarFeature(),
@@ -91,44 +92,62 @@ const rte2Editor = lexicalEditor({
     }),
   ],
 });
+/* eslint-enable new-cap */
 
 interface InterfaceRteInputType {
   name: string;
   required: boolean;
 }
 
+interface InterfaceRteInputTypeInternal {
+  name: string;
+  required: boolean;
+  interfaceName: string;
+  editor: LexicalRichTextAdapterProvider;
+}
+
+const rte = ({
+  name, required, interfaceName, editor,
+}: InterfaceRteInputTypeInternal): GroupField => ({
+
+  // we want to have Rte in a group, so that we can automatically generate an
+  // interface for the rte content.
+
+  fields: [
+    {
+      editor,
+      hooks: {
+        beforeValidate: [
+          ({
+            value,
+          }): FieldHook => sanitizeRichTextValue(value),
+        ],
+      },
+      localized: true,
+      name: 'content',
+      required,
+      type: 'richText',
+    },
+  ],
+  interfaceName,
+  name,
+  type: 'group',
+});
+
 export const rte1 = ({
   name, required,
-}: InterfaceRteInputType): RichTextField => ({
+}: InterfaceRteInputType): GroupField => rte({
   editor: rte1Editor,
-  hooks: {
-    beforeValidate: [
-      ({
-        value,
-      }): FieldHook => sanitizeRichTextValue(value),
-    ],
-  },
-  localized: true,
+  interfaceName: 'InterfaceRte1',
   name,
   required,
-  type: 'richText',
 });
 
 export const rte2 = ({
   name, required,
-}: InterfaceRteInputType): RichTextField => ({
+}: InterfaceRteInputType): GroupField => rte({
   editor: rte2Editor,
-  hooks: {
-    beforeValidate: [
-      ({
-        value,
-      }): FieldHook => sanitizeRichTextValue(value),
-    ],
-  },
-  localized: true,
+  interfaceName: 'InterfaceRte2',
   name,
   required,
-  type: 'richText',
 });
-
-/* eslint-enable new-cap */

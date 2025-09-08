@@ -1,10 +1,16 @@
 import fs from 'fs';
 import path from 'path';
+import inquirer from 'inquirer';
 
 const config = {
   boilerplateComponentName: 'component',
   boilerplateDirectory: 'convenience/generate-component/boilerplate',
   sourceDirectory: 'src/components',
+  subDirectories: {
+    base: 'base',
+    block: 'block',
+    global: 'global',
+  },
 };
 
 const getBoilerplateFiles = async (_sourceFiles?: string, _foundFiles?: string[]): Promise<string[]> => {
@@ -39,14 +45,15 @@ const createDirectories = (targetDirectory: string): void => {
   fs.mkdirSync(targetDirectory);
 };
 
-const copyFiles = (foundFiles: string[], componentName: string, targetDirectory: string): void => {
+const copyFiles = (foundFiles: string[], componentName: string, targetDirectory: string, componentFolder: string): void => {
   foundFiles.forEach((file) => {
     try {
       const fileData = fs.readFileSync(file, 'utf8');
 
       const fileDataWithCorrectName = fileData
-        .replace(/__name__/gu, componentName)
-        .replace(/__nameLowerCase__/gu, componentName.toLocaleLowerCase());
+        .replaceAll(/__name__/gu, componentName)
+        .replaceAll(/__nameLowerCase__/gu, componentName.toLocaleLowerCase())
+        .replaceAll(/__componentFolder__/gu, componentFolder);
 
       try {
         const relativePath = path.relative(config.boilerplateDirectory, file);
@@ -65,39 +72,56 @@ const copyFiles = (foundFiles: string[], componentName: string, targetDirectory:
   });
 };
 
-(async (): Promise<void> => {
+type ComponentType = 'base' | 'block' | 'global';
 
-  // make sure we get a component name passed as an argument
-  const args = process.argv.slice(2);
+await (async (): Promise<void> => {
 
-  if (args.length !== 1) {
-    console.log(`
-Please pass a component name like so:
-npm run generate ComponentName
-    `);
+  try {
 
-    return;
+    // ask for component type and name
+    const answerBase: ComponentType = 'base';
+    const answerBlock: ComponentType = 'block';
+    const answerGlobal: ComponentType = 'global';
+
+    const componentAnswer = await inquirer.prompt([
+      {
+        choices: [
+          answerBase,
+          answerBlock,
+          answerGlobal,
+        ],
+        message: 'What kind of component do you want to generate?',
+        name: 'componentType',
+        type: 'list',
+      },
+      {
+        message: 'How should the component be named? (use Pascal Case, e.g.: FooBar)',
+        name: 'componentName',
+        required: true,
+        type: 'input',
+      },
+    ]);
+
+    const targetDirectory = `${config.sourceDirectory}/${componentAnswer.componentType}/${componentAnswer.componentName}`;
+
+    // check if a component with the passed name does not already exist
+    if (fs.existsSync(targetDirectory)) {
+      throw new Error(`A component with the name ${componentAnswer.componentName} already exists in the folder ${componentAnswer.componentType}`);
+    }
+
+    const foundFiles = await getBoilerplateFiles();
+
+    if (foundFiles.length < 1) {
+      throw new Error('Could not find boilerplate files');
+    }
+
+    // create directories and copy files
+    createDirectories(targetDirectory);
+    copyFiles(foundFiles, componentAnswer.componentName, targetDirectory, componentAnswer.componentType);
+
+    console.log(`Successfully created component ${componentAnswer.componentName}`);
+
+  } catch (e) {
+    console.log(e);
   }
-
-  const [componentName] = args;
-  const targetDirectory = `${config.sourceDirectory}/${componentName}`;
-
-  // check if a component with the passed name does not already exist
-  if (fs.existsSync(targetDirectory)) {
-    console.log(`A component with the name ${componentName} already exists`);
-
-    return;
-  }
-
-  const foundFiles = await getBoilerplateFiles();
-
-  if (foundFiles.length < 1) {
-    console.log('Could not find boilerplate files');
-
-    return;
-  }
-
-  createDirectories(targetDirectory);
-  copyFiles(foundFiles, componentName, targetDirectory);
-
 })();

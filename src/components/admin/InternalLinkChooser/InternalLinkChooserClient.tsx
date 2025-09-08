@@ -46,13 +46,6 @@ const fetchPages = async ({
 }: InterfaceFetchPages): Promise<InterfaceGroupedOptions[]> => {
   const allOptions: InterfaceGroupedOptions[] = [];
 
-  /*
-  {
-    label: 'Global Pages',
-      options: globalOpts,
-        },
-        */
-
   if (!slugs) {
     return allOptions;
   }
@@ -77,10 +70,13 @@ const fetchPages = async ({
       }
     }
 
-    allOptions.push({
-      label: slug.displayName,
-      options: groupOptions,
-    });
+    if (groupOptions.length > 0) {
+      allOptions.push({
+        label: slug.displayName,
+        options: groupOptions,
+      });
+    }
+
   }
 
   return allOptions;

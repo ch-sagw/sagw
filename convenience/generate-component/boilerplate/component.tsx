@@ -1,30 +1,29 @@
 import 'server-only';
 import React from 'react';
+import { cva } from 'cva';
+import styles from '@/components/__componentFolder__/__name__/__name__.module.scss';
+import { Interface__name__ } from '@/payload-types';
 
-import styles from './__name__.module.scss';
+export type Interface__name__PropTypes = {
+  sampleProperty: string;
+  context: 'sampleContext'
+} & Interface__name__;
 
-export interface Interface__name__Props {
-  size?: 'small' | 'medium' | 'large';
-  onClick?: () => void;
-}
+const sampleClasses = cva([styles.baseStyle], {
+  variants: {
+    context: {
+      sampleContext: [styles.sampleContextStyle],
+    },
+  },
+});
 
 export const __name__ = ({
-  size = 'medium',
-  ...props
-}: Interface__name__Props): React.JSX.Element => {
-
-  console.log('__name__ did render');
-
-  return (
-    <button
-      type='button'
-      className={[
-        styles['button'],
-        styles[`button--${size}`],
-      ].join(' ')}
-      {...props}
-    >
-      Button
-    </button>
-  );
-};
+  context,
+  sampleProperty,
+}: Interface__name__PropTypes): React.JSX.Element => (
+  <div
+    className={sampleClasses({
+      context: context ?? undefined,
+    })}
+  >{sampleProperty}</div>
+);

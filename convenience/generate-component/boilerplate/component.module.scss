@@ -1,16 +1,7 @@
-@use "functions" as fn;
-@use "mediaqueries" as mq;
-@use "utilities" as ut;
+.baseStyle {
+  text-decoration: underline;
+}
 
-.button {
-  border-radius: fn.px-to-rem(20);
-  color: var(--sample-red);
-
-  @include mq.mq($from: medium) {
-    color: green;
-  }
-
-  @include ut.hover-style {
-    background-color: pink;
-  }
+.sampleContextStyle {
+  border: 1px solid black;
 }

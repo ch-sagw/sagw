@@ -1,0 +1,507 @@
+/*
+Some Title
+
+Some paragraph text with bold, italic, underline, strikethrouh, subscript,
+superscript, an external link and an internal link.
+
+Ordered list
+item 1
+item 2
+item 3
+Unordered list
+item 1
+item 2
+item 3
+*/
+
+import {
+  InterfaceRte1, InterfaceRte2,
+} from '@/payload-types';
+
+export const sampleRte1: InterfaceRte1['content'] = {
+  root: {
+
+    children: [
+
+      {
+
+        children: [
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Text',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'With',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Soft',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Hypens',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        textFormat: 0,
+        textStyle: '',
+        type: 'paragraph',
+        version: 1,
+      },
+    ],
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+};
+
+export const sampleRte2: InterfaceRte2['content'] = {
+  root: {
+    children: [
+      {
+        children: [
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Some Title',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        tag: 'h1',
+        type: 'heading',
+        version: 1,
+      },
+      {
+        children: [
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Some paragraph text with ',
+            type: 'text',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 1,
+            mode: 'normal',
+            style: '',
+            text: 'bold',
+            type: 'text',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: ', ',
+            type: 'text',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 2,
+            mode: 'normal',
+            style: '',
+            text: 'italic',
+            type: 'text',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: ', ',
+            type: 'text',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 8,
+            mode: 'normal',
+            style: '',
+            text: 'underline',
+            type: 'text',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: ', ',
+            type: 'text',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 4,
+            mode: 'normal',
+            style: '',
+            text: 'strikethrouh',
+            type: 'text',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: ', ',
+            type: 'text',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 32,
+            mode: 'normal',
+            style: '',
+            text: 'subscript',
+            type: 'text',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: ', ',
+            type: 'text',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 64,
+            mode: 'normal',
+            style: '',
+            text: 'superscript',
+            type: 'text',
+            version: 1,
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: ', an ',
+            type: 'text',
+            version: 1,
+          },
+          {
+            children: [
+              {
+                detail: 0,
+                format: 0,
+                mode: 'normal',
+                style: '',
+                text: 'external link',
+                type: 'text',
+                version: 1,
+              },
+            ],
+            direction: 'ltr',
+            fields: {
+              linkType: 'custom',
+              url: 'https://sagw.ch',
+            },
+            format: '',
+            id: '68bc49ce865bd534cfdc468c',
+            indent: 0,
+            type: 'link',
+            version: 3,
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: ' and an ',
+            type: 'text',
+            version: 1,
+          },
+          {
+            children: [
+              {
+                detail: 0,
+                format: 0,
+                mode: 'normal',
+                style: '',
+                text: 'internal link',
+                type: 'text',
+                version: 1,
+              },
+            ],
+            direction: 'ltr',
+            fields: {
+              doc: {
+                label: 'Magazine detail page title SAGWss',
+                relationTo: 'magazineDetailPage',
+                value: '68bc46aba70c17a6cef8a7d8',
+              },
+              linkType: 'internal',
+            },
+            format: '',
+            id: '68bc49de865bd534cfdc468d',
+            indent: 0,
+            type: 'link',
+            version: 3,
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: '.',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        textFormat: 0,
+        textStyle: '',
+        type: 'paragraph',
+        version: 1,
+      },
+      {
+        children: [
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Ordered list',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        tag: 'h2',
+        type: 'heading',
+        version: 1,
+      },
+      {
+        children: [
+          {
+            children: [
+              {
+                detail: 0,
+                format: 0,
+                mode: 'normal',
+                style: '',
+                text: 'item 1',
+                type: 'text',
+                version: 1,
+              },
+            ],
+            direction: 'ltr',
+            format: '',
+            indent: 0,
+            type: 'listitem',
+            value: 1,
+            version: 1,
+          },
+          {
+            children: [
+              {
+                detail: 0,
+                format: 0,
+                mode: 'normal',
+                style: '',
+                text: 'item 2',
+                type: 'text',
+                version: 1,
+              },
+            ],
+            direction: 'ltr',
+            format: '',
+            indent: 0,
+            type: 'listitem',
+            value: 2,
+            version: 1,
+          },
+          {
+            children: [
+              {
+                detail: 0,
+                format: 0,
+                mode: 'normal',
+                style: '',
+                text: 'item 3',
+                type: 'text',
+                version: 1,
+              },
+            ],
+            direction: 'ltr',
+            format: '',
+            indent: 0,
+            type: 'listitem',
+            value: 3,
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        listType: 'number',
+        start: 1,
+        tag: 'ol',
+        type: 'list',
+        version: 1,
+      },
+      {
+        children: [
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Unordered list',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        tag: 'h2',
+        type: 'heading',
+        version: 1,
+      },
+      {
+        children: [
+          {
+            children: [
+
+              {
+                detail: 0,
+                format: 0,
+                mode: 'normal',
+                style: '',
+                text: 'item 1',
+                type: 'text',
+                version: 1,
+              },
+            ],
+            direction: 'ltr',
+            format: '',
+            indent: 0,
+            type: 'listitem',
+            value: 1,
+            version: 1,
+          },
+          {
+            children: [
+              {
+                detail: 0,
+                format: 0,
+                mode: 'normal',
+                style: '',
+                text: 'item 2',
+                type: 'text',
+                version: 1,
+              },
+            ],
+            direction: 'ltr',
+            format: '',
+            indent: 0,
+            type: 'listitem',
+            value: 2,
+            version: 1,
+          },
+          {
+            children: [
+              {
+                detail: 0,
+                format: 0,
+                mode: 'normal',
+                style: '',
+                text: 'item 3',
+                type: 'text',
+                version: 1,
+              },
+            ],
+            direction: 'ltr',
+            format: '',
+            indent: 0,
+            type: 'listitem',
+            value: 3,
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        listType: 'bullet',
+        start: 1,
+        tag: 'ul',
+        type: 'list',
+        version: 1,
+      },
+    ],
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+};
