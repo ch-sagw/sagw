@@ -27,7 +27,7 @@ const meta: Meta<typeof Rte> = {
 
 export default meta;
 
-export const SampleStory: StrictStory = {
+export const RteStory: StrictStory = {
   args: {
     blockType: 'textBlock',
     text: {

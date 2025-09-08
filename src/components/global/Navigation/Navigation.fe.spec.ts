@@ -10,7 +10,7 @@ test('component should be visible', async ({
   // Put the story name in here. Get it from the url in storybook...
   await navigate(page, 'components-global-navigation--sample-navigation');
 
-  const elem = await page.getByText('some text');
+  const elem = await page.getByText('item 1');
 
   await expect(elem)
     .toBeVisible();

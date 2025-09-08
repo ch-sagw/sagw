@@ -8,9 +8,9 @@ test('component should be visible', async ({
   page,
 }) => {
   // Put the story name in here. Get it from the url in storybook...
-  await navigate(page, 'components-blocks-rte--sample-story');
+  await navigate(page, 'components-blocks-rte--rte-story');
 
-  const elem = await page.getByText('some text');
+  const elem = await page.getByText('some title');
 
   await expect(elem)
     .toBeVisible();
