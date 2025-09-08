@@ -42,19 +42,52 @@ test.describe('Internal Link Chooser', () => {
 
     // choose internal link and click dropdown
 
+    // TODO: remove timeout, find workaround
+    // await page.waitForTimeout(2000);
+
+    const url1 = /http:\/\/localhost:3000\/admin\/collections\/consent\/[a-f0-9]+$/u;
+
+    await page.waitForRequest(url1);
+    await page.waitForRequest(url1);
+    await page.waitForRequest(url1);
+    await page.waitForRequest(url1);
+    await page.waitForRequest(url1);
+    await page.waitForRequest(url1);
+    await page.waitForRequest(url1);
+
     const internalLinkRadio = await page.getByText('Interne Verlinkung');
 
-    // TODO: remove timeout, find workaround
-    await page.waitForTimeout(2000);
+    await (await internalLinkRadio.elementHandle())?.waitForElementState('stable');
 
-    await internalLinkRadio.click();
+    await internalLinkRadio.click({
+      force: true,
+    });
 
+    await page.waitForSelector('#field-doc');
     const linksSection = await page.locator('#field-doc');
+
+    await expect(linksSection)
+      .toBeVisible();
+
     const linksDropdown = await linksSection.getByText('Wert auswählen');
+
+    await (await linksDropdown.elementHandle())?.waitForElementState('stable');
 
     await linksDropdown.click({
       force: true,
     });
+
+    await Promise.all([
+      page.waitForRequest('http://localhost:3000/api/magazineDetailPage'),
+      page.waitForRequest('http://localhost:3000/api/overviewPage'),
+      page.waitForRequest('http://localhost:3000/api/detailPage'),
+      page.waitForRequest('http://localhost:3000/api/eventDetailPage'),
+      page.waitForRequest('http://localhost:3000/api/newsDetailPage'),
+      page.waitForRequest('http://localhost:3000/api/publicationDetailPage'),
+      page.waitForRequest('http://localhost:3000/api/nationalDictionaryDetailPage'),
+      page.waitForRequest('http://localhost:3000/api/instituteDetailPage'),
+
+    ]);
 
     const link1 = await page.getByText('Home Page', {
       exact: true,
