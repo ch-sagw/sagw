@@ -12,7 +12,7 @@ import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
 import { fieldLinkablePageFieldName } from '@/field-templates/linkablePage';
 import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import { useTenantSelection } from '@payloadcms/plugin-multi-tenant/client';
-import { InterfaceSlug } from '@/collections/Pages';
+import { InterfaceSlug } from '@/collections/Pages/pages';
 
 interface InterfaceGroupedOptions {
   label: string;

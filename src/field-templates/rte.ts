@@ -21,7 +21,7 @@ import {
 import { JSDOM } from 'jsdom';
 import domPurify from 'dompurify';
 import validator from 'validator';
-import { linkableSlugs } from '@/collections/Pages';
+import { linkableSlugs } from '@/collections/Pages/pages';
 
 const {
   window,
@@ -86,7 +86,7 @@ const rte2Editor = lexicalEditor({
     UnorderedListFeature(),
     OrderedListFeature(),
     LinkFeature({
-      enabledCollections: linkableSlugs,
+      enabledCollections: linkableSlugs.map((slug) => slug.slug),
       maxDepth: 1,
     }),
   ],
