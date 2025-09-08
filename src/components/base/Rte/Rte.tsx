@@ -1,3 +1,4 @@
+import 'server-only';
 import React from 'react';
 import type {
   DefaultNodeTypes,

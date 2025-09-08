@@ -1,3 +1,4 @@
+import 'server-only';
 import React from 'react';
 import { InterfaceNotification } from '@/payload-types';
 import styles from '@/components/blocks/Notification/Notification.module.scss';
