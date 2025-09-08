@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.12.0](https://github.com/ch-sagw/sagw/compare/v0.11.0...v0.12.0) (2025-09-08)
+
+
+### Chore
+
+* move generate task from playwright server start-script to package.json ([ceb2851](https://github.com/ch-sagw/sagw/commit/ceb2851444c2d284390720a4571b4bf92eed8bb6))
+* move generator files to pages folder ([ceb2851](https://github.com/ch-sagw/sagw/commit/ceb2851444c2d284390720a4571b4bf92eed8bb6))
+* refactor dynamic pages imports to prebuild automatic static imports ([ceb2851](https://github.com/ch-sagw/sagw/commit/ceb2851444c2d284390720a4571b4bf92eed8bb6))
+
+
+### Features
+
+* add forms block on newsdetail page creation ([#381](https://github.com/ch-sagw/sagw/issues/381)) ([cbe575b](https://github.com/ch-sagw/sagw/commit/cbe575b332b444235362cc8110a9e98bd809c07d))
+
+
+### Bug Fixes
+
+* fix casing ([ceb2851](https://github.com/ch-sagw/sagw/commit/ceb2851444c2d284390720a4571b4bf92eed8bb6))
+* fix slug hook to correctly report already used slug in tenant ([ceb2851](https://github.com/ch-sagw/sagw/commit/ceb2851444c2d284390720a4571b4bf92eed8bb6))
+
 ## [0.11.0](https://github.com/ch-sagw/sagw/compare/v0.10.2...v0.11.0) (2025-09-06)
 
 
