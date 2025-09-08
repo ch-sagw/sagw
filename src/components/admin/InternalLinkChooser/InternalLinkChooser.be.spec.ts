@@ -149,7 +149,7 @@ test.describe('Internal Link Chooser', () => {
     await page.goto('http://localhost:3000/admin/collections/header');
     await page.waitForLoadState('networkidle');
 
-    const navItem1 = await page.locator('#navItems-row-0');
+    const navItem1 = await page.locator('#navigation-navItems-row-0');
 
     const linkTargetInput = await navItem1.getByLabel('Link Target');
 
@@ -212,7 +212,7 @@ test.describe('Internal Link Chooser', () => {
     await page.goto('http://localhost:3000/admin/collections/header');
     await page.waitForLoadState('networkidle');
 
-    const navItem1 = await page.locator('#navItems-row-0');
+    const navItem1 = await page.locator('#navigation-navItems-row-0');
 
     const linkTargetInput = await navItem1.getByLabel('Link Target');
 
