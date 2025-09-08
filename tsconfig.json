@@ -42,10 +42,11 @@
     ".next/types/**/*.ts",
     "lint/*.mjs",
     ".storybook/*.ts",
-    ".lintstagedrc.js"
+    ".lintstagedrc.js",
+    "convenience/generate-component/index.ts"
   ],
   "exclude": [
     "node_modules",
-    "convenience"
+    "convenience/generate-component/boilerplate"
   ]
 }
