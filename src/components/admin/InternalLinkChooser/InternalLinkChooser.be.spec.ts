@@ -36,7 +36,7 @@ test.describe('Internal Link Chooser', () => {
     await (await element.elementHandle())?.waitForElementState('stable');
 
     await page.waitForRequest(url1);
-    await page.waitForRequest(url1);
+    // await page.waitForRequest(url1);
 
     await element.click();
     await page.keyboard.press('ControlOrMeta+A');
