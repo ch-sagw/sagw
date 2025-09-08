@@ -17,13 +17,10 @@ export const I18nForms: CollectionConfig = {
         description: 'You may show this text in a checkbox on forms.',
       },
       fields: [
-        {
-          editor: rte2,
-          localized: true,
+        rte2({
           name: 'dataPrivacyCheckboxText',
           required: true,
-          type: 'richText',
-        },
+        }),
       ],
       label: 'Checkboxes',
       name: 'checkboxes',

@@ -23,7 +23,7 @@ test.describe('seoFallback', () => {
     const dateField = await page.locator('#field-hero__date input');
 
     await teaserInput.fill('foo');
-    await heroField.fill('bar');
+    await heroField.fill('seo test news detail page');
     await dateField.fill('2025-08-31');
 
     // save

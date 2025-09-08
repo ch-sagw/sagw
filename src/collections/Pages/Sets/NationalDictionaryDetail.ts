@@ -13,10 +13,8 @@ import {
 import { blocks } from '@/blocks';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { versions } from '@/field-templates/versions';
-import { fieldSlug } from '@/field-templates/slug';
-import { hookSlug } from '@/hooks/slug';
 
-export const MagazineDetailPage: CollectionConfig = {
+export const NationalDictionaryDetailPage: CollectionConfig = {
   access: {
     create: createAccess,
     delete: globalAdminOrDepartmentAdminAccess,
@@ -24,35 +22,36 @@ export const MagazineDetailPage: CollectionConfig = {
     update: globalAdminOrDepartmentAdminAccess,
   },
   admin: {
-    defaultColumns: [
-      'adminTitle',
-      'slug',
-      'updatedAt',
-      '_status',
-    ],
     group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,
     fieldAdminTitle,
-    fieldSlug,
     {
       tabs: [
 
         // Content Tab
         {
           fields: [
-
             // Overview Page properties
             {
               fields: [
                 {
                   admin: {
-                    description: 'This text will be used as text for the teasers on the overview page.',
+                    description: 'This image will be used for the teasers on the overview page.',
+                  },
+                  name: 'image',
+                  relationTo: 'images',
+                  required: false,
+                  type: 'relationship',
+                },
+                {
+                  admin: {
+                    description: 'This text will be used for the teasers on the overview page.',
                   },
                   localized: true,
-                  name: 'teaserText',
+                  name: 'text',
                   required: true,
                   type: 'text',
                 },
@@ -63,21 +62,7 @@ export const MagazineDetailPage: CollectionConfig = {
             },
 
             // Hero
-            fieldsHero([
-              {
-                localized: true,
-                name: 'author',
-                required: true,
-                type: 'text',
-              },
-              {
-                localized: true,
-                name: 'date',
-                required: true,
-                type: 'date',
-              },
-              ...fieldsColorMode,
-            ]),
+            fieldsHero([...fieldsColorMode]),
 
             // Content Blocks
             {
@@ -98,15 +83,12 @@ export const MagazineDetailPage: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [hookSeoFallback],
-    beforeValidate: [
-      hookAdminTitle,
-      hookSlug,
-    ],
+    beforeValidate: [hookAdminTitle],
   },
   labels: {
-    plural: 'Magazine Detail Pages',
-    singular: 'Magazine Detail',
+    plural: 'National Dictionary Detail Pages',
+    singular: 'National Dictionary Detail Page',
   },
-  slug: 'magazineDetailPage',
+  slug: 'nationalDictionaryDetailPage',
   versions,
 };

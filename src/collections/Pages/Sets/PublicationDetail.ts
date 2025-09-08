@@ -10,18 +10,27 @@ import { hookSeoFallback } from '@/hooks/seoFallback';
 import { blocks } from '@/blocks';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { versions } from '@/field-templates/versions';
+import { fieldSlug } from '@/field-templates/slug';
+import { hookSlug } from '@/hooks/slug';
 
 export const PublicationDetailPage: CollectionConfig = {
   access: {
     read: (): boolean => true,
   },
   admin: {
+    defaultColumns: [
+      'adminTitle',
+      'slug',
+      'updatedAt',
+      '_status',
+    ],
     group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,
     fieldAdminTitle,
+    fieldSlug,
     {
       tabs: [
 
@@ -54,7 +63,7 @@ export const PublicationDetailPage: CollectionConfig = {
                   fields: [
                     {
                       admin: {
-                        width: '50%',
+                        width: '33.33%',
                       },
                       name: 'topic',
                       relationTo: 'publicationTopics',
@@ -63,11 +72,20 @@ export const PublicationDetailPage: CollectionConfig = {
                     },
                     {
                       admin: {
-                        width: '50%',
+                        width: '33.33%',
                       },
                       name: 'type',
                       relationTo: 'publicationTypes',
                       required: true,
+                      type: 'relationship',
+                    },
+                    {
+                      admin: {
+                        width: '33.33%',
+                      },
+                      name: 'project',
+                      relationTo: 'projects',
+                      required: false,
                       type: 'relationship',
                     },
                   ],
@@ -102,7 +120,10 @@ export const PublicationDetailPage: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [hookSeoFallback],
-    beforeValidate: [hookAdminTitle],
+    beforeValidate: [
+      hookAdminTitle,
+      hookSlug,
+    ],
   },
   labels: {
     plural: 'Publication Detail Pages',

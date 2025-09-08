@@ -13,10 +13,8 @@ import {
 import { blocks } from '@/blocks';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { versions } from '@/field-templates/versions';
-import { fieldSlug } from '@/field-templates/slug';
-import { hookSlug } from '@/hooks/slug';
 
-export const MagazineDetailPage: CollectionConfig = {
+export const ProjectDetailPage: CollectionConfig = {
   access: {
     create: createAccess,
     delete: globalAdminOrDepartmentAdminAccess,
@@ -24,19 +22,12 @@ export const MagazineDetailPage: CollectionConfig = {
     update: globalAdminOrDepartmentAdminAccess,
   },
   admin: {
-    defaultColumns: [
-      'adminTitle',
-      'slug',
-      'updatedAt',
-      '_status',
-    ],
     group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
     fieldLinkablePage,
     fieldAdminTitle,
-    fieldSlug,
     {
       tabs: [
 
@@ -44,15 +35,23 @@ export const MagazineDetailPage: CollectionConfig = {
         {
           fields: [
 
+            // project relation
+            {
+              name: 'project',
+              relationTo: 'projects',
+              required: true,
+              type: 'relationship',
+            },
+
             // Overview Page properties
             {
               fields: [
                 {
                   admin: {
-                    description: 'This text will be used as text for the teasers on the overview page.',
+                    description: 'This text will be used for the teasers on the overview page.',
                   },
                   localized: true,
-                  name: 'teaserText',
+                  name: 'text',
                   required: true,
                   type: 'text',
                 },
@@ -63,21 +62,7 @@ export const MagazineDetailPage: CollectionConfig = {
             },
 
             // Hero
-            fieldsHero([
-              {
-                localized: true,
-                name: 'author',
-                required: true,
-                type: 'text',
-              },
-              {
-                localized: true,
-                name: 'date',
-                required: true,
-                type: 'date',
-              },
-              ...fieldsColorMode,
-            ]),
+            fieldsHero([...fieldsColorMode]),
 
             // Content Blocks
             {
@@ -98,15 +83,12 @@ export const MagazineDetailPage: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [hookSeoFallback],
-    beforeValidate: [
-      hookAdminTitle,
-      hookSlug,
-    ],
+    beforeValidate: [hookAdminTitle],
   },
   labels: {
-    plural: 'Magazine Detail Pages',
-    singular: 'Magazine Detail',
+    plural: 'Project Detail Pages',
+    singular: 'Project Detail Page',
   },
-  slug: 'magazineDetailPage',
+  slug: 'projectDetailPage',
   versions,
 };

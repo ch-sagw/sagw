@@ -1,9 +1,9 @@
 import { Block } from 'payload';
 import { rte2 } from '@/field-templates/rte';
 
-// Example: Magazine Detail
+// Example: Publication Overview Page
 
-export const TextBlock: Block = {
+export const NotificationBlock: Block = {
   admin: {
     disableBlockName: true,
   },
@@ -13,10 +13,10 @@ export const TextBlock: Block = {
       required: true,
     }),
   ],
-  imageURL: '/admin-ui-images/richtext.svg',
+  imageURL: '/admin-ui-images/notification.svg',
   labels: {
-    plural: 'Richtext',
-    singular: 'Richtext',
+    plural: 'Notifications',
+    singular: 'Notification',
   },
-  slug: 'textBlock',
+  slug: 'notificationBlock',
 };

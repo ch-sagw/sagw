@@ -22,7 +22,7 @@ test.describe('adminTitle', () => {
     const dateField = await page.locator('#field-hero__date input');
 
     await teaserInput.fill('foo');
-    await heroField.fill('Hero Title');
+    await heroField.fill('News Detail Page Hero Title');
     await dateField.fill('2025-08-31');
 
     // save
@@ -51,6 +51,6 @@ test.describe('adminTitle', () => {
     const newsPage = await res.json();
 
     await expect(newsPage.adminTitle)
-      .toBe('Hero Title');
+      .toBe('News Detail Page Hero Title');
   });
 });
