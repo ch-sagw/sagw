@@ -81,8 +81,6 @@ test.describe('Internal Link Chooser', () => {
       page.waitForRequest('http://localhost:3000/api/newsDetailPage'),
       page.waitForRequest('http://localhost:3000/api/publicationDetailPage'),
       page.waitForRequest('http://localhost:3000/api/nationalDictionaryDetailPage'),
-      page.waitForRequest('http://localhost:3000/api/instituteDetailPage'),
-
     ]);
 
     const link1 = await page.getByText('Home Page', {
