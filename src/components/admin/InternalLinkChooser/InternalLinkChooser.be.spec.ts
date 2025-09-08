@@ -30,13 +30,11 @@ test.describe('Internal Link Chooser', () => {
     const rte2Field = await page.locator('#field-banner__text .ContentEditable__root');
 
     await rte2Field.fill('some link content');
+    await page.waitForRequest(url1);
 
     const element = await page.getByText('some link content');
 
     await (await element.elementHandle())?.waitForElementState('stable');
-
-    await page.waitForRequest(url1);
-    // await page.waitForRequest(url1);
 
     await element.click();
     await page.keyboard.press('ControlOrMeta+A');
@@ -46,9 +44,6 @@ test.describe('Internal Link Chooser', () => {
     await linkButton.click();
 
     // choose internal link and click dropdown
-
-    // TODO: remove timeout, find workaround
-    // await page.waitForTimeout(2000);
 
     await page.waitForRequest(url1);
     await page.waitForRequest(url1);
@@ -66,11 +61,9 @@ test.describe('Internal Link Chooser', () => {
       force: true,
     });
 
-    await page.waitForSelector('#field-doc');
-    const linksSection = await page.locator('#field-doc');
+    await page.waitForRequest(url1);
 
-    await expect(linksSection)
-      .toBeVisible();
+    const linksSection = await page.locator('#field-doc');
 
     const linksDropdown = await linksSection.getByText('Wert auswählen');
 
