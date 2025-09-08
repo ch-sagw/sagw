@@ -3,8 +3,9 @@ import React from 'react';
 import configPromise from '@/payload.config';
 import { Config } from '@/payload-types';
 import { Navigation } from '@/components/global/Navigation/Navigation';
-import { Notification } from '@/components/blocks/Notification/Notification';
-import { Rte } from '@/components/blocks/Rte/Rte';
+// import { Notification } from '@/components/blocks/Notification/Notification';
+// import { Rte } from '@/components/blocks/Rte/Rte';
+import { RenderBlocks } from '@/app/(frontend)/RenderBlocks';
 
 export default async function HomePage({
   params,
@@ -77,17 +78,7 @@ export default async function HomePage({
   return (
     <div className='home'>
       <Navigation navItems={navData.navItems} />
-      <div className='content'>
-        {pageData.content?.map((block) => {
-          if (block.blockType === 'notificationBlock') {
-            return (<Notification key={block.id} {...block} />);
-          } else if (block.blockType === 'textBlock') {
-            return (<Rte key={block.id} {...block} />);
-          }
-
-          return null;
-        })}
-      </div>
+      <RenderBlocks blocks={pageData.content} />
     </div>
   );
 }
