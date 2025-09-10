@@ -45,6 +45,7 @@ export const HomeTeasersBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/home-teasers.svg',
+  interfaceName: 'InterfaceHomeTeasersBlock',
   labels: {
     plural: 'Home Teasers',
     singular: 'Home Teasers',

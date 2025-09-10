@@ -44,6 +44,7 @@ export const MagazineTeasersBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/teasers.svg',
+  interfaceName: 'InterfaceMagazineTeasersBlock',
   labels: {
     plural: 'Magazine Teasers (automatic)',
     singular: 'Magazine Teasers (automatic)',

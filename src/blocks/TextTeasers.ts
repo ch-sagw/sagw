@@ -67,6 +67,7 @@ export const TextTeasersBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/text-teasers.svg',
+  interfaceName: 'InterfaceTextTeasersBlock',
   labels: {
     plural: 'Text Teasers',
     singular: 'Text Teasers',

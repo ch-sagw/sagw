@@ -40,6 +40,7 @@ export const VideoBlock: Block = {
 
   ],
   imageURL: '/admin-ui-images/video.svg',
+  interfaceName: 'InterfaceVideoBlock',
   labels: {
     plural: 'Videos',
     singular: 'Video',

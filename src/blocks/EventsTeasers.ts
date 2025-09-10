@@ -46,6 +46,7 @@ export const EventsTeasersBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/teasers.svg',
+  interfaceName: 'InterfaceEventsTeasersBlock',
   labels: {
     plural: 'Events Teasers (automatic)',
     singular: 'Events Teasers (automatic)',

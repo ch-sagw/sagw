@@ -46,6 +46,7 @@ export const NewsTeasersBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/teasers.svg',
+  interfaceName: 'InterfaceNewsTeasersBlock',
   labels: {
     plural: 'News Teasers (automatic)',
     singular: 'News Teasers (automatic)',

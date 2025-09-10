@@ -15,6 +15,7 @@ export const FormBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/form.svg',
+  interfaceName: 'InterfaceFormBlock',
   labels: {
     plural: 'Forms',
     singular: 'Form',

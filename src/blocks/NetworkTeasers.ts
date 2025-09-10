@@ -93,6 +93,7 @@ export const NetworkTeasersBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/network-teasers.svg',
+  interfaceName: 'InterfaceNetworkTeasersBlock',
   labels: {
     plural: 'Network Teasers',
     singular: 'Network Teasers',

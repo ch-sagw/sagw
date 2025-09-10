@@ -21,6 +21,7 @@ export const LinksBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/links.svg',
+  interfaceName: 'InterfaceLinksBlock',
   labels: {
     plural: 'Links',
     singular: 'Links',

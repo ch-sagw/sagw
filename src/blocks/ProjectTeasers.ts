@@ -44,6 +44,7 @@ export const ProjectTeasersBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/teasers.svg',
+  interfaceName: 'InterfaceProjectTeasersBlock',
   labels: {
     plural: 'Projects Teasers (automatic)',
     singular: 'Projects Teasers (automatic)',

@@ -30,6 +30,7 @@ export const CtaContactBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/cta-contact.svg',
+  interfaceName: 'InterfaceCtaContactBlock',
   labels: {
     plural: 'CTAs Contact',
     singular: 'CTA Contact',

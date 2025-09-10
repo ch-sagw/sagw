@@ -6,11 +6,6 @@ const config = {
   boilerplateComponentName: 'component',
   boilerplateDirectory: 'convenience/generate-component/boilerplate',
   sourceDirectory: 'src/components',
-  subDirectories: {
-    base: 'base',
-    block: 'block',
-    global: 'global',
-  },
 };
 
 const getBoilerplateFiles = async (_sourceFiles?: string, _foundFiles?: string[]): Promise<string[]> => {
@@ -72,7 +67,7 @@ const copyFiles = (foundFiles: string[], componentName: string, targetDirectory:
   });
 };
 
-type ComponentType = 'base' | 'block' | 'global';
+type ComponentType = 'base' | 'blocks' | 'global';
 
 await (async (): Promise<void> => {
 
@@ -80,7 +75,7 @@ await (async (): Promise<void> => {
 
     // ask for component type and name
     const answerBase: ComponentType = 'base';
-    const answerBlock: ComponentType = 'block';
+    const answerBlock: ComponentType = 'blocks';
     const answerGlobal: ComponentType = 'global';
 
     const componentAnswer = await inquirer.prompt([
