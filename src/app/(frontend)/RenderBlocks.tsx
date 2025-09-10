@@ -2,21 +2,12 @@ import 'server-only';
 import React, { Fragment } from 'react';
 import { Notification } from '@/components/blocks/Notification/Notification';
 import { Rte } from '@/components/blocks/Rte/Rte';
-
-type BlocksMap = {
-  notificationBlock: typeof Notification;
-  textBlock: typeof Rte;
-};
-
-const blockComponents: BlocksMap = {
-  notificationBlock: Notification,
-  textBlock: Rte,
-};
+import {
+  InterfaceNotification, InterfaceTextBlock,
+} from '@/payload-types';
 
 interface InterfaceRenderBlocksProps {
-  blocks: {
-    blockType: string; id?: string | null
-  }[] | null | undefined;
+  blocks: (InterfaceNotification | InterfaceTextBlock)[] | null | undefined;
 }
 
 export const RenderBlocks = ({
@@ -32,14 +23,24 @@ export const RenderBlocks = ({
             blockType,
           } = block;
 
-          if (blockType && blockType in blockComponents) {
-            const Block = blockComponents[blockType as keyof BlocksMap] as React.ComponentType<any>;
-
-            if (Block) {
+          if (blockType) {
+            if (blockType === 'notificationBlock') {
               return (
-                <Block key={block.id || index} {...block} />
+                <div key={block.id || index}>
+                  <Notification {...block} />
+                </div>
               );
             }
+
+            if (blockType === 'textBlock') {
+              return (
+                <div key={block.id || index}>
+                  <Rte {...block} />
+                </div>
+              );
+            }
+
+            return null;
           }
 
           return null;
