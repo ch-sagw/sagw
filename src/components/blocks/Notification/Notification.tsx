@@ -1,10 +1,10 @@
 import 'server-only';
 import React from 'react';
-import { InterfaceNotification } from '@/payload-types';
+import { InterfaceNotificationBlock } from '@/payload-types';
 import styles from '@/components/blocks/Notification/Notification.module.scss';
 import { Rte } from '@/components/base/Rte/Rte';
 
-export type InterfaceNotificationPropTypes = {} & InterfaceNotification;
+export type InterfaceNotificationPropTypes = {} & InterfaceNotificationBlock;
 
 export const Notification = ({
   text,
