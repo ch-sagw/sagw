@@ -40,6 +40,7 @@ export const AccordionBlock: Block = {
 
   ],
   imageURL: '/admin-ui-images/accordion.svg',
+  interfaceName: 'InterfaceAccordionBlock',
   labels: {
     plural: 'Accordions',
     singular: 'Accordion',

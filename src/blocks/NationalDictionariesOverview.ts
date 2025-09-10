@@ -26,6 +26,7 @@ export const NationalDictionariesOverviewBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/overview.svg',
+  interfaceName: 'InterfaceNationalDictionariesOverviewBlock',
   labels: {
     plural: 'National Dictionaries Overview (automatic)',
     singular: 'National Dictionaries Overview (automatic)',

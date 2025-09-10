@@ -26,6 +26,7 @@ export const MagazineOverviewBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/overview.svg',
+  interfaceName: 'InterfaceMagazineOverviewBlock',
   labels: {
     plural: 'Magazine Overview (automatic)',
     singular: 'Magazine Overview (automatic)',

@@ -56,6 +56,7 @@ export const DownloadsBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/downloads.svg',
+  interfaceName: 'InterfaceDownloadsBlock',
   labels: {
     plural: 'Downloads',
     singular: 'Downloads',

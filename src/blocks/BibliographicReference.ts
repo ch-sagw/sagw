@@ -26,6 +26,7 @@ export const BibliographicReferenceBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/bibliographic-reference.svg',
+  interfaceName: 'InterfaceBibliographicReferenceBlock',
   labels: {
     plural: 'Bibliographic References',
     singular: 'Bibliographic Reference',

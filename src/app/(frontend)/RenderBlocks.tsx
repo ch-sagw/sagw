@@ -3,11 +3,69 @@ import React, { Fragment } from 'react';
 import { Notification } from '@/components/blocks/Notification/Notification';
 import { Rte } from '@/components/blocks/Rte/Rte';
 import {
-  InterfaceNotification, InterfaceTextBlock,
+  InterfaceAccordionBlock,
+  InterfaceBibliographicReferenceBlock,
+  InterfaceCtaContactBlock,
+  InterfaceCtaLinkBlock,
+  InterfaceDownloadsBlock,
+  InterfaceEventsOverviewBlock,
+  InterfaceEventsTeasersBlock,
+  InterfaceFormBlock,
+  InterfaceHomeTeasersBlock,
+  InterfaceImageBlock,
+  InterfaceImageTeasersBlock,
+  InterfaceInstitutesOverviewBlock,
+  InterfaceLinksBlock,
+  InterfaceMagazineOverviewBlock,
+  InterfaceMagazineTeasersBlock,
+  InterfaceNationalDictionariesOverviewBlock,
+  InterfaceNetworkTeasersBlock,
+  InterfaceNewsOverviewBlock,
+  InterfaceNewsTeasersBlock,
+  InterfaceNotificationBlock,
+  InterfacePeopleOverviewBlock,
+  InterfaceProjectOverviewBlock,
+  InterfaceProjectTeasersBlock,
+  InterfacePublicationsOverviewBlock,
+  InterfacePublicationsTeasersBlock,
+  InterfaceTextBlock,
+  InterfaceTextTeasersBlock,
+  InterfaceTitleSubtitleTextBlock,
+  InterfaceVideoBlock,
 } from '@/payload-types';
 
 interface InterfaceRenderBlocksProps {
-  blocks: (InterfaceNotification | InterfaceTextBlock)[] | null | undefined;
+  blocks: (
+    InterfaceAccordionBlock |
+    InterfaceBibliographicReferenceBlock |
+    InterfaceCtaContactBlock |
+    InterfaceCtaLinkBlock |
+    InterfaceDownloadsBlock |
+    InterfaceEventsOverviewBlock |
+    InterfaceEventsTeasersBlock |
+    InterfaceFormBlock |
+    InterfaceHomeTeasersBlock |
+    InterfaceImageBlock |
+    InterfaceImageTeasersBlock |
+    InterfaceInstitutesOverviewBlock |
+    InterfaceLinksBlock |
+    InterfaceMagazineOverviewBlock |
+    InterfaceMagazineTeasersBlock |
+    InterfaceNationalDictionariesOverviewBlock |
+    InterfaceNetworkTeasersBlock |
+    InterfaceNewsOverviewBlock |
+    InterfaceNewsTeasersBlock |
+    InterfaceNotificationBlock |
+    InterfacePeopleOverviewBlock |
+    InterfaceProjectOverviewBlock |
+    InterfaceProjectTeasersBlock |
+    InterfacePublicationsOverviewBlock |
+    InterfacePublicationsTeasersBlock |
+    InterfaceTextBlock |
+    InterfaceTextTeasersBlock |
+    InterfaceTitleSubtitleTextBlock |
+    InterfaceVideoBlock
+  )[] | null | undefined;
 }
 
 export const RenderBlocks = ({
