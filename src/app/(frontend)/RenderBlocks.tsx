@@ -39,12 +39,11 @@ export const RenderBlocks = ({
                 </div>
               );
             }
-
-            return null;
           }
 
           return null;
         })}
+
       </Fragment>
     );
   }
