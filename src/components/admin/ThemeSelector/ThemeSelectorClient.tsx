@@ -88,7 +88,10 @@ const InternalLinkChooserClient = ({
       />
 
       {(selectedOption) && (
-        <div className={styles.preview}>
+        <div
+          className={styles.preview}
+          data-testid='image'
+        >
           <span className={styles.previewText}>Preview:</span>
           <Image
             className={styles.image}
