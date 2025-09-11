@@ -127,6 +127,7 @@ export interface Config {
     footer: Footer;
     header: Header;
     statusMessage: StatusMessage;
+    theme: Theme;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -163,6 +164,7 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     statusMessage: StatusMessageSelect<false> | StatusMessageSelect<true>;
+    theme: ThemeSelect<false> | ThemeSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -2016,6 +2018,19 @@ export interface StatusMessage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "theme".
+ */
+export interface Theme {
+  id: string;
+  department?: (string | null) | Department;
+  adminTitle?: string | null;
+  themeSelector: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -2140,6 +2155,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'statusMessage';
         value: string | StatusMessage;
+      } | null)
+    | ({
+        relationTo: 'theme';
+        value: string | Theme;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -3933,6 +3952,18 @@ export interface StatusMessageSelect<T extends boolean = true> {
       };
   showOnHomeOnly?: T;
   type?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "theme_select".
+ */
+export interface ThemeSelect<T extends boolean = true> {
+  department?: T;
+  adminTitle?: T;
+  themeSelector?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
