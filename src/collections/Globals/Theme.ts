@@ -23,6 +23,7 @@ export const Theme: CollectionConfig = {
           },
         },
       },
+      defaultValue: 'ocean',
       name: 'themeSelector',
       required: true,
       type: 'text',

@@ -1,19 +1,20 @@
 'use client';
 
+import Image from 'next/image';
 import React, { JSX } from 'react';
 import {
   FieldLabel,
   Select,
   useField,
 } from '@payloadcms/ui';
-import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
-import type { ThemeOption } from '@/components/admin/ThemeSelector/Themes';
 import {
   components, type OptionProps, type SingleValueProps,
 } from 'react-select';
+import type { InterfaceThemeOption } from '@/components/admin/ThemeSelector/Themes';
+import styles from '@/components/admin/ThemeSelector/styles.module.scss';
 
 interface InterfaceThemeSelectorClientProps {
-  options: Option[];
+  options: InterfaceThemeOption[];
   path: string;
 }
 
@@ -29,49 +30,34 @@ const InternalLinkChooserClient = ({
     path,
   });
 
-  const selectedOption = options.find((opt) => opt.value === value) ?? undefined;
+  const selectedOption = options.find((opt) => opt.value === value);
 
   const ThemeOptionLabel = ({
     label, colors,
   }: { label: unknown; colors: string[] }): JSX.Element => (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      flexWrap: 'nowrap',
-      gap: '1rem',
-      padding: '.5rem',
-    }}>
-      <div style={{
-        display: 'flex',
-        flexWrap: 'nowrap',
-        gap: '1rem',
-      }}>
+    <div className={styles.optionRow}>
+      <div className={styles.colors}>
         {colors.map((c, i) => (
           <div
             key={i}
+            className={styles.color}
             style={{
               backgroundColor: c,
-              border: '1px solid #ccc',
-              borderRadius: '50%',
-              flexBasis: '2rem',
-              height: '2rem',
             }}
           />
         ))}
       </div>
-      <span style={{
-        fontWeight: 'bold',
-      }}>{String(label)}</span>
+      <span className={styles.label}>{String(label)}</span>
     </div>
   );
 
-  const ColorOption = (props: OptionProps<ThemeOption>): JSX.Element => (
+  const ColorOption = (props: OptionProps<InterfaceThemeOption>): JSX.Element => (
     <components.Option {...props}>
       <ThemeOptionLabel label={props.data.label} colors={props.data.colors} />
     </components.Option>
   );
 
-  const ColorSingleValue = (props: SingleValueProps<ThemeOption>): JSX.Element => (
+  const ColorSingleValue = (props: SingleValueProps<InterfaceThemeOption>): JSX.Element => (
     <components.SingleValue {...props}>
       <ThemeOptionLabel label={props.data.label} colors={props.data.colors} />
     </components.SingleValue>
@@ -84,9 +70,9 @@ const InternalLinkChooserClient = ({
         htmlFor={`field-${path}`}
       />
       <Select
-        options={options}
+        options={options as unknown as any[]}
         inputId={`field-${path}`}
-        value={selectedOption}
+        value={selectedOption as any}
         isClearable={false}
         onChange={(newValue): void => {
           if (!newValue || Array.isArray(newValue)) {
@@ -100,6 +86,19 @@ const InternalLinkChooserClient = ({
           SingleValue: ColorSingleValue,
         }}
       />
+
+      {(selectedOption) && (
+        <div className={styles.preview}>
+          <span className={styles.previewText}>Preview:</span>
+          <Image
+            className={styles.image}
+            src={selectedOption.image}
+            alt={`Theme preview for ${selectedOption.label}`}
+            width={600}
+            height={400}
+          />
+        </div>
+      )}
     </div>
   );
 };

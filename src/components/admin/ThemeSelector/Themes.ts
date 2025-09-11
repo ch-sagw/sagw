@@ -1,16 +1,18 @@
-import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
-
-export type ThemeOption = Option & {
+export interface InterfaceThemeOption {
+  label: string;
+  value: string;
   colors: [string, string, string];
-};
+  image: string;
+}
 
-export const themes: ThemeOption[] = [
+export const themes: InterfaceThemeOption[] = [
   {
     colors: [
       '#FF5733',
       '#FFBD33',
       '#C70039',
     ],
+    image: '/theme-preview/sunset.png',
     label: 'Sunset',
     value: 'sunset',
   },
@@ -20,16 +22,8 @@ export const themes: ThemeOption[] = [
       '#00B4D8',
       '#90E0EF',
     ],
+    image: '/theme-preview/ocean.png',
     label: 'Ocean',
     value: 'ocean',
-  },
-  {
-    colors: [
-      '#2D6A4F',
-      '#40916C',
-      '#95D5B2',
-    ],
-    label: 'Forest',
-    value: 'forest',
   },
 ];
