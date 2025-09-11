@@ -1,5 +1,46 @@
 # Changelog
 
+## [0.13.0](https://github.com/ch-sagw/sagw/compare/v0.12.0...v0.13.0) (2025-09-11)
+
+
+### Chore
+
+* fix naming ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+* improve dev performance ([44116ad](https://github.com/ch-sagw/sagw/commit/44116ad3ccc3eb4f6414d60a0793a6d33ae7bce1))
+* reduce data transfer by using blockreferences ([44116ad](https://github.com/ch-sagw/sagw/commit/44116ad3ccc3eb4f6414d60a0793a6d33ae7bce1))
+* remove comment ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+* remove obsolete return ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+* rename api folder to make sure it does not collide with payload internal api routes ([44116ad](https://github.com/ch-sagw/sagw/commit/44116ad3ccc3eb4f6414d60a0793a6d33ae7bce1))
+* update after build ([44116ad](https://github.com/ch-sagw/sagw/commit/44116ad3ccc3eb4f6414d60a0793a6d33ae7bce1))
+* use blockReferences ([44116ad](https://github.com/ch-sagw/sagw/commit/44116ad3ccc3eb4f6414d60a0793a6d33ae7bce1))
+
+
+### Features
+
+* add generic renderBlocks method and use it on home ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+* add navigation component ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+* add rte block component ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+* add server-only import ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+* define interface name ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+* render sample components on home ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+
+
+### Bug Fixes
+
+* fix dir name ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+* make slug unique ([44116ad](https://github.com/ch-sagw/sagw/commit/44116ad3ccc3eb4f6414d60a0793a6d33ae7bce1))
+* render blocks explicitly to strongly type them ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+* render interfaces on all blocks, type blocks in renderBlocks accordingly ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+* use correct InterfaceNotificationBlock ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+* use correct slug ([44116ad](https://github.com/ch-sagw/sagw/commit/44116ad3ccc3eb4f6414d60a0793a6d33ae7bce1))
+
+
+### Test
+
+* add screenshots ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+* fix test ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+* update screenshots ([6ab2ecc](https://github.com/ch-sagw/sagw/commit/6ab2ecca688c1a13302f0506756fa85143b85939))
+
 ## [0.12.0](https://github.com/ch-sagw/sagw/compare/v0.11.0...v0.12.0) (2025-09-08)
 
 

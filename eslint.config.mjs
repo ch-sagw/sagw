@@ -18,7 +18,7 @@ const eslintConfig = [
       'src/app/(payload)/**/*',
       'convenience/generate-component/boilerplate/**/*',
       '!src/app/(payload)/**/*/',
-      '!src/app/(payload)/api/cron-blob-backup/*',
+      '!src/app/(payload)/cron-jobs/cron-blob-backup/*',
       'storybook-static',
     ],
   },

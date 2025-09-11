@@ -35,5 +35,5 @@ export const textBlock = (hideWidthAndRequired?: boolean): Block => ({
     plural: 'Text',
     singular: 'Text',
   },
-  slug: 'textBlock',
+  slug: 'textBlockForm',
 });
