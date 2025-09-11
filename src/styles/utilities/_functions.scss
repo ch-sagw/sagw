@@ -1,4 +1,4 @@
-@use "variables" as vars;
+@use "../scss-variables/variables" as vars;
 
 @function px-to-rem($size, $negate:null) {
   $multiplier: 1rem;

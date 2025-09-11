@@ -1,0 +1,118 @@
+@use "../utilities/functions" as *;
+
+// Typo mixins
+@mixin body-text-s {
+  font-family: var(--font-family-text);
+  font-size: px-to-rem(var(--body-text-s-size));
+  line-height: 1.4;
+}
+
+@mixin body-text-m {
+  font-family: var(--font-family-text);
+  font-size: px-to-rem(var(--body-text-m-size));
+  line-height: 1.5;
+}
+
+@mixin body-text-l {
+  font-family: var(--font-family-display);
+  font-size: px-to-rem(var(--body-text-l-size));
+}
+
+@mixin body-text-xl {
+  font-family: var(--font-family-display);
+  font-size: px-to-rem(var(--body-text-xl-size));
+  letter-spacing: 1%;
+  line-height: 1.4;
+}
+
+@mixin body-text-2xl {
+  font-family: var(--font-family-display);
+  font-size: px-to-rem(var(--body-text-2xl-size));
+  letter-spacing: 1%;
+  line-height: 1.2;
+}
+
+@mixin body-text-lead {
+  font-family: var(--font-family-display);
+  font-size: px-to-rem(var(--body-text-lead-size));
+  letter-spacing: 1%;
+  line-height: 1.4;
+}
+
+@mixin button-text {
+  font-family: var(--font-family-text);
+  font-weight: var(--font-weight-medium);
+  font-size: px-to-rem(var(--button-text-size));
+  letter-spacing: 1%;
+}
+
+@mixin input-text {
+  font-family: var(--font-family-text);
+  font-size: px-to-rem(var(--input-text-size));
+}
+
+@mixin label-text {
+  font-family: var(--font-family-text);
+  font-weight: var(--font-weight-medium);
+  font-size: px-to-rem(var(--label-text-size));
+  line-height: 1.2;
+}
+
+@mixin navigation-text {
+  font-family: var(--font-family-text);
+  font-size: px-to-rem(var(--navigation-text-size));
+}
+
+@mixin title-heading {
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 1%;
+  line-height: 1.1;
+}
+
+@mixin title-heading-1 {
+  @include title-heading;
+
+  font-size: px-to-rem(var(--title-heading-1-size));
+}
+
+@mixin title-heading-2 {
+  @include title-heading;
+
+  font-size: px-to-rem(var(--title-heading-2-size));
+}
+
+@mixin title-heading-3 {
+  @include title-heading;
+
+  font-size: px-to-rem(var(--title-heading-3-size));
+  line-height: 1.2;
+}
+
+@mixin title-heading-4 {
+  @include title-heading;
+
+  font-size: px-to-rem(var(--title-heading-4-size));
+  line-height: 1.2;
+}
+
+@mixin title-heading-5 {
+  @include title-heading;
+
+  font-size: px-to-rem(var(--title-heading-5-size));
+  line-height: 1.2;
+}
+
+@mixin title-heading-article {
+  @include title-heading;
+
+  font-size: px-to-rem(var(--title-heading-article-size));
+}
+
+@mixin title-heading-section {
+  font-family: var(--font-family-text);
+  font-weight: var(--font-weight-medium);
+  font-size: px-to-rem(var(--title-heading-section-size));
+  line-height: 1.2;
+  letter-spacing: 1%;
+}

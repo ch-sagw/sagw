@@ -1,0 +1,107 @@
+@use "../utilities/mediaqueries" as *;
+
+:root {
+  // Generic spacing values
+  --spacing-2xs: 4;
+  --spacing-xs: 8;
+  --spacing-s: 12;
+  --spacing-m: 16;
+  --spacing-l: 24;
+  --spacing-xl: 32;
+  --spacing-2xl: 48;
+  --spacing-3xl: 64;
+  --spacing-4xl: 96;
+  --spacing-5xl: 144;
+  --spacing-6xl: 192;
+  --spacing-7xl: 288;
+  --spacing-8xl: 384;
+
+  // Borders
+  --border-width-s: 1;
+  --border-width-m: 1.5;
+  --border-width-l: 2;
+
+  // Responsive spacings
+  --form-elements-between: var(--spacing-l);
+  --grid-columns: var(--spacing-2xs);
+  --grid-gutter: var(--spacing-l);
+  --grid-margin: var(--spacing-l);
+  --hero-small: var(--spacing-2xl);
+  --hero-big: var(--spacing-3xl);
+  --image-top: var(--spacing-2xl);
+  --image-bottom: var(--spacing-2xl);
+  --inside-elements-xs: var(--spacing-2xs);
+  --inside-elements-s: var(--spacing-xs);
+  --inside-elements-m: var(--spacing-m);
+  --inside-elements-l: var(--spacing-l);
+  --section-top: var(--spacing-4xl);
+  --section-bottom: var(--spacing-4xl);
+  --section-inside-s: var(--spacing-2xl);
+  --section-inside-m: var(--spacing-4xl);
+  --section-inside-l: var(--spacing-4xl);
+  --section-inside-title: var(--spacing-2xl);
+  --teaser-between-s: var(--spacing-l);
+  --teaser-between-m: var(--spacing-2xl);
+  --text-block-top: var(--spacing-2xl);
+  --text-block-bottom: var(--spacing-2xl);
+
+  @include mq($from: medium) {
+    --form-elements-between: var(--spacing-xl);
+    --grid-columns: var(--spacing-xs);
+    --grid-margin: var(--spacing-xl);
+    --hero-small: var(--spacing-3xl);
+    --hero-big: var(--spacing-4xl);
+    --inside-elements-xs: var(--spacing-xs);
+    --inside-elements-s: var(--spacing-s);
+    --inside-elements-m: var(--spacing-l);
+    --inside-elements-l: var(--spacing-xl);
+    --section-inside-s: var(--spacing-3xl);
+    --section-inside-l: var(--spacing-5xl);
+    --section-inside-title: var(--spacing-3xl);
+    --teaser-between-m: var(--spacing-3xl);
+    --text-block-top: var(--spacing-3xl);
+    --text-block-bottom: var(--spacing-3xl);
+  }
+
+  @include mq($from: large) {
+    --grid-columns: var(--spacing-s);
+    --grid-gutter: var(--spacing-2xl);
+    --grid-margin: var(--spacing-2xl);
+    --hero-small: var(--spacing-4xl);
+    --hero-big: var(--spacing-5xl);
+    --image-top: var(--spacing-2xl);
+    --image-bottom: var(--spacing-2xl);
+    --inside-elements-l: var(--spacing-xl);
+    --section-top: var(--spacing-4xl);
+    --section-bottom: var(--spacing-5xl);
+    --section-inside-m: var(--spacing-4xl);
+    --section-inside-l: var(--spacing-6xl);
+    --section-inside-title: var(--spacing-4xl);
+    --teaser-between-m: var(--spacing-4xl);
+    --text-block-top: var(--spacing-4xl);
+    --text-block-bottom: var(--spacing-4xl);
+  }
+
+  @include mq($from: ultra) {
+    --form-elements-between: var(--spacing-2xl);
+    --grid-gutter: 56;
+    --grid-margin: 56;
+    --hero-small: var(--spacing-7xl);
+    --hero-big: var(--spacing-7xl);
+    --image-top: var(--spacing-3xl);
+    --image-bottom: var(--spacing-3xl);
+    --inside-elements-xs: var(--spacing-s);
+    --inside-elements-s: var(--spacing-m);
+    --inside-elements-m: var(--spacing-xl);
+    --inside-elements-l: var(--spacing-2xl);
+    --teaser-between-s: var(--spacing-xl);
+    --section-top: var(--spacing-6xl);
+    --section-bottom: var(--spacing-7xl);
+    --section-inside-s: var(--spacing-4xl);
+    --section-inside-m: var(--spacing-5xl);
+    --section-inside-l: var(--spacing-7xl);
+    --teaser-between-m: var(--spacing-5xl);
+    --text-block-top: var(--spacing-5xl);
+    --text-block-bottom: var(--spacing-5xl);
+  }
+}

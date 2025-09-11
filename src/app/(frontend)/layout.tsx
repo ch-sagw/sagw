@@ -12,7 +12,7 @@ export default function RootLayout(props: { children: React.ReactNode }): React.
   } = props;
 
   return (
-    <html lang='en'>
+    <html className='theme-sagw' lang='en'>
       <body>
         <main>{children}</main>
       </body>
