@@ -21,20 +21,20 @@ Execution of the cron jobs is defined in `/vercel.json`.
 
 ### Cron job 1: blob backup
 
-`/src/app/(payload)/api/cron-blob-backup`
+`/src/app/(payload)/cron-jobs/cron-blob-backup`
 
 Get all blob data (vercel) and save to s3 (ovh).
 
 
 ### Cron job 2: db backup
 
-`/src/app/(payload)/api/cron-db-backup`
+`/src/app/(payload)/cron-jobs/cron-db-backup`
 
 Make db-dump (ovh) and save to s3 (ovh).
 
 ### Cron job 3: backups cleanup
 
-`/src/app/(payload)/api/cron-cleanup-backups`
+`/src/app/(payload)/cron-jobs/cron-cleanup-backups`
 
 Delete old blob-backups and db-backups.
 

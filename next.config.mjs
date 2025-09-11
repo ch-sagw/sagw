@@ -36,7 +36,9 @@ const nextConfig = {
   },
 };
 
-const configWithPayload = withPayload(nextConfig);
+const configWithPayload = withPayload(nextConfig, {
+  devBundleServerPackages: false,
+});
 
 export default withSentryConfig(configWithPayload, {
   devBundleServerPackages: false,

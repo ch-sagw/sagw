@@ -65,7 +65,37 @@ export interface Config {
   auth: {
     users: UserAuthOperations;
   };
-  blocks: {};
+  blocks: {
+    textBlock: InterfaceTextBlock;
+    titleSubtitleTextBlock: InterfaceTitleSubtitleTextBlock;
+    linksBlock: InterfaceLinksBlock;
+    downloadsBlock: InterfaceDownloadsBlock;
+    imageBlock: InterfaceImageBlock;
+    videoBlock: InterfaceVideoBlock;
+    accordionBlock: InterfaceAccordionBlock;
+    formBlock: InterfaceFormBlock;
+    ctaContactBlock: InterfaceCtaContactBlock;
+    ctaLinkBlock: InterfaceCtaLinkBlock;
+    homeTeasersBlock: InterfaceHomeTeasersBlock;
+    textTeasersBlock: InterfaceTextTeasersBlock;
+    networkTeasersBlock: InterfaceNetworkTeasersBlock;
+    imageTeasersBlock: InterfaceImageTeasersBlock;
+    notificationBlock: InterfaceNotificationBlock;
+    bibliographicReferenceBlock: InterfaceBibliographicReferenceBlock;
+    magazineOverviewBlock: InterfaceMagazineOverviewBlock;
+    publicationsOverviewBlock: InterfacePublicationsOverviewBlock;
+    eventsOverviewBlock: InterfaceEventsOverviewBlock;
+    peopleOverviewBlock: InterfacePeopleOverviewBlock;
+    newsOverviewBlock: InterfaceNewsOverviewBlock;
+    nationalDictionariesOverviewBlock: InterfaceNationalDictionariesOverviewBlock;
+    institutesOverviewBlock: InterfaceInstitutesOverviewBlock;
+    projectsOverviewBlock: InterfaceProjectOverviewBlock;
+    eventsTeasersBlock: InterfaceEventsTeasersBlock;
+    magazineTeasersBlock: InterfaceMagazineTeasersBlock;
+    newsTeasersBlock: InterfaceNewsTeasersBlock;
+    publicationsTeasersBlock: InterfacePublicationsTeasersBlock;
+    projectsTeasersBlock: InterfaceProjectTeasersBlock;
+  };
   collections: {
     homePage: HomePage;
     errorPage: ErrorPage;
@@ -167,122 +197,6 @@ export interface UserAuthOperations {
   unlock: {
     email: string;
     password: string;
-  };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "homePage".
- */
-export interface HomePage {
-  id: string;
-  department?: (string | null) | Department;
-  isLinkable?: boolean | null;
-  adminTitle?: string | null;
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    animated?: boolean | null;
-    sideTitle: string;
-    optionalLink?: {
-      includeLink?: boolean | null;
-      link?: {
-        openInNewWindow?: boolean | null;
-        linkText: string;
-        internalLink: string;
-      };
-    };
-  };
-  content?:
-    | (
-        | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
-        | InterfaceLinksBlock
-        | InterfaceDownloadsBlock
-        | InterfaceImageBlock
-        | InterfaceVideoBlock
-        | InterfaceAccordionBlock
-        | InterfaceFormBlock
-        | InterfaceCtaContactBlock
-        | InterfaceCtaLinkBlock
-        | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
-        | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
-        | InterfaceNotificationBlock
-        | InterfaceBibliographicReferenceBlock
-        | InterfaceMagazineOverviewBlock
-        | InterfacePublicationsOverviewBlock
-        | InterfaceEventsOverviewBlock
-        | InterfacePeopleOverviewBlock
-        | InterfaceNewsOverviewBlock
-        | InterfaceNationalDictionariesOverviewBlock
-        | InterfaceInstitutesOverviewBlock
-        | InterfaceProjectOverviewBlock
-        | InterfaceEventsTeasersBlock
-        | InterfaceMagazineTeasersBlock
-        | InterfaceNewsTeasersBlock
-        | InterfacePublicationsTeasersBlock
-        | InterfaceProjectTeasersBlock
-      )[]
-    | null;
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "departments".
- */
-export interface Department {
-  id: string;
-  name: string;
-  /**
-   * Used for domain-based department handling
-   */
-  domain?: string | null;
-  /**
-   * Used for url paths, example: /department-slug/page-slug
-   */
-  slug: string;
-  languages?: {
-    de?: boolean | null;
-    fr?: boolean | null;
-    it?: boolean | null;
-    en?: boolean | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceRte1".
- */
-export interface InterfaceRte1 {
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
   };
 }
 /**
@@ -401,6 +315,30 @@ export interface Document {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "departments".
+ */
+export interface Department {
+  id: string;
+  name: string;
+  /**
+   * Used for domain-based department handling
+   */
+  domain?: string | null;
+  /**
+   * Used for url paths, example: /department-slug/page-slug
+   */
+  slug: string;
+  languages?: {
+    de?: boolean | null;
+    fr?: boolean | null;
+    it?: boolean | null;
+    en?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * You can assign NewsDetail Pages, Event Detail Pages and Documents to a project. Then you could add a Downloads block to a page an tell it to list all downloads related to a project.
@@ -592,7 +530,7 @@ export interface Form {
             fieldError?: string | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'textBlock';
+            blockType: 'textBlockForm';
           }
         | {
             /**
@@ -1003,6 +941,98 @@ export interface InterfaceProjectTeasersBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'projectsTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homePage".
+ */
+export interface HomePage {
+  id: string;
+  department?: (string | null) | Department;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  hero: {
+    title: InterfaceRte1;
+    lead?: string | null;
+    animated?: boolean | null;
+    sideTitle: string;
+    optionalLink?: {
+      includeLink?: boolean | null;
+      link?: {
+        openInNewWindow?: boolean | null;
+        linkText: string;
+        internalLink: string;
+      };
+    };
+  };
+  content?:
+    | (
+        | InterfaceTextBlock
+        | InterfaceTitleSubtitleTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceTextTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceImageTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
+      )[]
+    | null;
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceRte1".
+ */
+export interface InterfaceRte1 {
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3611,7 +3641,7 @@ export interface FormsSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        textBlock?:
+        textBlockForm?:
           | T
           | {
               name?: T;

@@ -69,7 +69,8 @@ export const Forms: CollectionConfig = {
       admin: {
         condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
       },
-      blocks: FormBlocks,
+      blockReferences: FormBlocks,
+      blocks: [],
       name: 'fields',
       required: true,
       type: 'blocks',
