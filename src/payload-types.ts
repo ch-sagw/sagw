@@ -530,7 +530,7 @@ export interface Form {
             fieldError?: string | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'textBlock';
+            blockType: 'textBlockForm';
           }
         | {
             /**
@@ -3641,7 +3641,7 @@ export interface FormsSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        textBlock?:
+        textBlockForm?:
           | T
           | {
               name?: T;
