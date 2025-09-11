@@ -2,16 +2,9 @@
 
 import { JSX } from 'react';
 import type { UIFieldServerProps } from 'payload';
-import type { Option } from '@payloadcms/ui/elements/ReactSelect/';
+import { themes } from '@/components/admin/ThemeSelector/Themes';
 
-import ThemeSelector from './ThemeSelectorClient';
-
-const options: Option[] = [
-  {
-    label: 'foo',
-    value: 'bar',
-  },
-];
+import ThemeSelector from '@/components/admin/ThemeSelector/ThemeSelectorClient';
 
 const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
   const {
@@ -20,7 +13,7 @@ const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
 
   return (
     <ThemeSelector
-      options={options}
+      options={themes}
       path={path}
     />
   );
