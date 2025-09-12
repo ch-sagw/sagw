@@ -3,17 +3,17 @@
 @use "sass:meta";
 @use "sass:map";
 @use "sass:string";
-@use "variables" as vars;
+@use "../scss-variables/variables" as vars;
 
 // breakpoint map
 $mq-breakpoints: (
   zero: vars.$breakpoint-zero, // 0
-  micro: vars.$breakpoint-micro, // 360
-  small: vars.$breakpoint-small, // 600
-  medium: vars.$breakpoint-medium, // 840
+  micro: vars.$breakpoint-micro, // 320
+  small: vars.$breakpoint-small, // 360
+  medium: vars.$breakpoint-medium, // 640
   large: vars.$breakpoint-large, // 1024
   wide: vars.$breakpoint-wide, // 1280
-  ultra: vars.$breakpoint-ultra // 1440
+  ultra: vars.$breakpoint-ultra // 1600
 ) !default;
 
 // media type

@@ -1,0 +1,28 @@
+// Variable values shared by all themes
+:root {
+  --background-negative: var(--red-100);
+  --background-page: var(--white);
+  --background-positive: var(--sky-100);
+  --background-video: rgb(var(--black) / 40%);
+  --background-warning: var(--orange-100);
+  --border-image: rgb(var(--black) / 4%);
+  --border-negative: var(--red-200);
+  --border-positive: var(--sky-200);
+  --border-primary-inverted: var(--secondary-white);
+  --border-secondary: var(--gray-600);
+  --border-warning: var(--orange-200);
+  --icon-error: var(--red-700);
+  --icon-error-inverted: var(--red-200);
+  --icon-positive: var(--sky-700);
+  --icon-primary-inverted: var(--secondary-white);
+  --icon-secondary: var(--gray-600);
+  --icon-warning: var(--orange-700);
+  --interaction-primary-inverted-hover: var(--secondary-white);
+  --text-error: var(--red-700);
+  --text-error-inverted: var(--red-200);
+  --text-positive: var(--sky-700);
+  --text-primary: var(--secondary-black);
+  --text-primary-inverted: var(--secondary-white);
+  --text-secondary: var(--gray-600);
+  --text-warning: var(--orange-700);
+}

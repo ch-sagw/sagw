@@ -1,0 +1,75 @@
+@use "../utilities/mediaqueries" as *;
+
+:root {
+  // Base font size definitions
+  --font-size-xs: 14;
+  --font-size-s: 16;
+  --font-size-m: 18;
+  --font-size-l: 20;
+  --font-size-xl: 24;
+  --font-size-2xl: 32;
+  --font-size-3xl: 40;
+  --font-size-4xl: 56;
+  --font-size-5xl: 72;
+  --font-size-6xl: 96;
+  --font-size-7xl: 144;
+
+  // Responsive font sizes
+  --body-text-s-size: var(--font-size-xs);
+  --body-text-m-size: var(--font-size-m);
+  --body-text-l-size: var(--font-size-l);
+  --body-text-xl-size: var(--font-size-xl);
+  --body-text-2xl-size: var(--font-size-2xl);
+  --body-text-lead-size: var(--font-size-xl);
+  --button-text-size: var(--font-size-s);
+  --input-text-size: var(--font-size-s);
+  --label-text-size: var(--font-size-xs);
+  --navigation-text-size: var(--font-size-s);
+  --title-heading-1-size: var(--font-size-3xl);
+  --title-heading-2-size: var(--font-size-2xl);
+  --title-heading-3-size: var(--font-size-xl);
+  --title-heading-4-size: var(--font-size-l);
+  --title-heading-5-size: var(--font-size-m);
+  --title-heading-article-size: var(--font-size-4xl);
+  --title-heading-section-size: var(--font-size-m);
+
+  @include mq($from: medium) {
+    --body-text-s-size: var(--font-size-s);
+    --body-text-m-size: var(--font-size-l);
+    --body-text-l-size: var(--font-size-xl);
+    --body-text-xl-size: var(--font-size-2xl);
+    --body-text-2xl-size: var(--font-size-3xl);
+    --body-text-lead-size: var(--font-size-2xl);
+    --button-text-size: var(--font-size-m);
+    --input-text-size: var(--font-size-m);
+    --label-text-size: var(--font-size-s);
+    --navigation-text-size: var(--font-size-m);
+    --title-heading-1-size: var(--font-size-4xl);
+    --title-heading-2-size: var(--font-size-3xl);
+    --title-heading-3-size: var(--font-size-2xl);
+    --title-heading-4-size: var(--font-size-xl);
+    --title-heading-5-size: var(--font-size-l);
+    --title-heading-article-size: var(--font-size-6xl);
+    --title-heading-section-size: var(--font-size-l);
+  }
+
+  @include mq($from: ultra) {
+    --body-text-s-size: var(--font-size-m);
+    --body-text-m-size: var(--font-size-xl);
+    --body-text-l-size: var(--font-size-2xl);
+    --body-text-xl-size: var(--font-size-3xl);
+    --body-text-2xl-size: var(--font-size-4xl);
+    --body-text-lead-size: var(--font-size-3xl);
+    --button-text-size: var(--font-size-l);
+    --input-text-size: var(--font-size-l);
+    --label-text-size: var(--font-size-m);
+    --navigation-text-size: var(--font-size-l);
+    --title-heading-1-size: var(--font-size-6xl);
+    --title-heading-2-size: var(--font-size-4xl);
+    --title-heading-3-size: var(--font-size-3xl);
+    --title-heading-4-size: var(--font-size-2xl);
+    --title-heading-5-size: var(--font-size-xl);
+    --title-heading-article-size: var(--font-size-7xl);
+    --title-heading-section-size: var(--font-size-xl);
+  }
+}
