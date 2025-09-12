@@ -1,7 +1,7 @@
 import { JSX } from 'react';
 
 const icon = (): JSX.Element => (
-  <svg width='17' height='16' viewBox='0 0 17 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+  <svg viewBox='0 0 17 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <path d='M9.40069 2.51375L14.8669 12.0056C15.2501 12.6744 14.7551 13.5 13.9663 13.5H3.03381C2.24506 13.5 1.75006 12.6744 2.13319 12.0056L7.59944 2.51375C7.99319 1.82875 9.00694 1.82875 9.40069 2.51375Z' stroke-width='1.5' stroke-linecap='round' />
     <path d='M8.5 9V6.5' stroke='white' stroke-width='1.5' stroke-linecap='round' />
     <path d='M8.5 10.6875C8.81066 10.6875 9.0625 10.9393 9.0625 11.25C9.0625 11.5607 8.81066 11.8125 8.5 11.8125C8.18934 11.8125 7.9375 11.5607 7.9375 11.25C7.9375 10.9393 8.18934 10.6875 8.5 10.6875Z' fill='white' stroke='white' stroke-width='0.125' />
