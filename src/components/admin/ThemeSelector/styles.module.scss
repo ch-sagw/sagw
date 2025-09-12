@@ -1,0 +1,37 @@
+.optionRow {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  padding: 0.5rem;
+
+  & .colors {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1rem;
+
+    & .color {
+      border: 1px solid var(--theme-text);
+      border-radius: 50%;
+      flex-basis: 2rem;
+      height: 2rem;
+    }
+  }
+
+  .label {
+    font-weight: bold;
+  }
+}
+
+.preview {
+  .previewText {
+    display: block;
+    margin-block-start: 2rem;
+  }
+
+  .image {
+    border-radius: 1rem;
+    border: 2px solid var(--theme-text);
+    margin-block-start: 1rem;
+  }
+}
