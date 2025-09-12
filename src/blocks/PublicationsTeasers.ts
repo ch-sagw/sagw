@@ -38,6 +38,7 @@ export const PublicationsTeasersBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/teasers.svg',
+  interfaceName: 'InterfacePublicationsTeasersBlock',
   labels: {
     plural: 'Publications Teasers (automatic)',
     singular: 'Publications Teasers (automatic)',

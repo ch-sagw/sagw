@@ -32,7 +32,7 @@ const meta: Meta<typeof Notification> = {
     'visual:check',
     'a11y:check',
   ],
-  title: 'Components/Blocks/Notification',
+  title: 'Components/blocks/Notification',
 };
 
 export default meta;

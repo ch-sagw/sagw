@@ -50,6 +50,7 @@ export const ImageTeasersBlock: Block = {
 
   ],
   imageURL: '/admin-ui-images/image-teasers.svg',
+  interfaceName: 'InterfaceImageTeasersBlock',
   labels: {
     plural: 'Image Teasers',
     singular: 'Image Teasers',

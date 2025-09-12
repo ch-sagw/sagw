@@ -297,11 +297,13 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           linkType: 'external',
         },
       ],
-      navItems: [
-        {
-          navItemText: 'Home',
-        },
-      ],
+      navigation: {
+        navItems: [
+          {
+            navItemText: 'Home',
+          },
+        ],
+      },
     },
   });
 
@@ -328,7 +330,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       department: tenantId,
       fields: [
         {
-          blockType: 'textBlock',
+          blockType: 'textBlockForm',
           fieldError: `Field error ${tenant.toUpperCase()}`,
           fieldWidth: 'half',
           label: `Text field label ${tenant.toUpperCase()}`,
@@ -379,6 +381,26 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'homePage',
     data: {
       _status: 'published',
+      content: [
+        {
+          blockType: 'notificationBlock',
+          text: {
+            content: simpleRteConfig('Sample notification text.'),
+          },
+        },
+        {
+          blockType: 'textBlock',
+          text: {
+            content: simpleRteConfig('Sample Rte Block Content 1.'),
+          },
+        },
+        {
+          blockType: 'textBlock',
+          text: {
+            content: simpleRteConfig('Sample Rte Block Content 2.'),
+          },
+        },
+      ],
       department: tenantId,
       hero: {
         animated: true,

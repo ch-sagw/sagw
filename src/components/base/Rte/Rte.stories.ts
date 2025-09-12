@@ -24,7 +24,7 @@ const meta: Meta<typeof Rte> = {
     'visual:check',
     'a11y:check',
   ],
-  title: 'Components/Base/Rte',
+  title: 'Components/base/Rte',
 };
 
 export default meta;

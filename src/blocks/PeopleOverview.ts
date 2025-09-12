@@ -49,6 +49,7 @@ export const PeopleOverviewBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/overview.svg',
+  interfaceName: 'InterfacePeopleOverviewBlock',
   labels: {
     plural: 'People Overview (automatic)',
     singular: 'People Overview (automatic)',

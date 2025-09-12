@@ -26,6 +26,7 @@ export const InstitutesOverviewBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/overview.svg',
+  interfaceName: 'InterfaceInstitutesOverviewBlock',
   labels: {
     plural: 'Institutes Overview (automatic)',
     singular: 'Institutes Overview (automatic)',

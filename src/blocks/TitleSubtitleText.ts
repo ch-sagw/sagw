@@ -35,6 +35,7 @@ export const TitleSubtitleTextBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/title-subtitle-text.svg',
+  interfaceName: 'InterfaceTitleSubtitleTextBlock',
   labels: {
     plural: 'Title & Subtitle & Text',
     singular: 'Title & Subtitle & Text',

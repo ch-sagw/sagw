@@ -25,6 +25,7 @@ import { StatusMessage } from '@/collections/Globals/StatusMessage';
 import {
   CollectionConfig, CollectionSlug,
 } from 'payload';
+import { Theme } from '@/collections/Globals/Theme';
 
 // we want to define page slugs once. using the exported collections from this
 // file would not work if we would like to import the collections into a block
@@ -57,6 +58,7 @@ export const globalCollections: CollectionConfig[] = [
   Footer,
   Header,
   StatusMessage,
+  Theme,
 ];
 
 // payload collections config

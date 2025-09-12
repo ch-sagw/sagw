@@ -65,7 +65,37 @@ export interface Config {
   auth: {
     users: UserAuthOperations;
   };
-  blocks: {};
+  blocks: {
+    textBlock: InterfaceTextBlock;
+    titleSubtitleTextBlock: InterfaceTitleSubtitleTextBlock;
+    linksBlock: InterfaceLinksBlock;
+    downloadsBlock: InterfaceDownloadsBlock;
+    imageBlock: InterfaceImageBlock;
+    videoBlock: InterfaceVideoBlock;
+    accordionBlock: InterfaceAccordionBlock;
+    formBlock: InterfaceFormBlock;
+    ctaContactBlock: InterfaceCtaContactBlock;
+    ctaLinkBlock: InterfaceCtaLinkBlock;
+    homeTeasersBlock: InterfaceHomeTeasersBlock;
+    textTeasersBlock: InterfaceTextTeasersBlock;
+    networkTeasersBlock: InterfaceNetworkTeasersBlock;
+    imageTeasersBlock: InterfaceImageTeasersBlock;
+    notificationBlock: InterfaceNotificationBlock;
+    bibliographicReferenceBlock: InterfaceBibliographicReferenceBlock;
+    magazineOverviewBlock: InterfaceMagazineOverviewBlock;
+    publicationsOverviewBlock: InterfacePublicationsOverviewBlock;
+    eventsOverviewBlock: InterfaceEventsOverviewBlock;
+    peopleOverviewBlock: InterfacePeopleOverviewBlock;
+    newsOverviewBlock: InterfaceNewsOverviewBlock;
+    nationalDictionariesOverviewBlock: InterfaceNationalDictionariesOverviewBlock;
+    institutesOverviewBlock: InterfaceInstitutesOverviewBlock;
+    projectsOverviewBlock: InterfaceProjectOverviewBlock;
+    eventsTeasersBlock: InterfaceEventsTeasersBlock;
+    magazineTeasersBlock: InterfaceMagazineTeasersBlock;
+    newsTeasersBlock: InterfaceNewsTeasersBlock;
+    publicationsTeasersBlock: InterfacePublicationsTeasersBlock;
+    projectsTeasersBlock: InterfaceProjectTeasersBlock;
+  };
   collections: {
     homePage: HomePage;
     errorPage: ErrorPage;
@@ -97,6 +127,7 @@ export interface Config {
     footer: Footer;
     header: Header;
     statusMessage: StatusMessage;
+    theme: Theme;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -133,6 +164,7 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     statusMessage: StatusMessageSelect<false> | StatusMessageSelect<true>;
+    theme: ThemeSelect<false> | ThemeSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -171,409 +203,13 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "homePage".
+ * via the `definition` "InterfaceTextBlock".
  */
-export interface HomePage {
-  id: string;
-  department?: (string | null) | Department;
-  isLinkable?: boolean | null;
-  adminTitle?: string | null;
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    animated?: boolean | null;
-    sideTitle: string;
-    optionalLink?: {
-      includeLink?: boolean | null;
-      link?: {
-        openInNewWindow?: boolean | null;
-        linkText: string;
-        internalLink: string;
-      };
-    };
-  };
-  content?:
-    | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            title: string;
-            subtitle: string;
-            textBlocks: {
-              text: string;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'titleSubtitleTextBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
-          }
-        | {
-            title: string;
-            customOrAuto: 'custom' | 'auto';
-            downloads?:
-              | (
-                  | {
-                      relationTo: 'documents';
-                      value: string | Document;
-                    }
-                  | {
-                      relationTo: 'zenodoDocuments';
-                      value: string | ZenodoDocument;
-                    }
-                )[]
-              | null;
-            project?: (string | null) | Project;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'downloadsBlock';
-          }
-        | {
-            alignement?: ('left' | 'center' | 'right') | null;
-            image: string | Image;
-            title: string;
-            caption: string;
-            credits: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
-          }
-        | {
-            title: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            acccordions: {
-              accordionTitle: string;
-              accordionContent: InterfaceRte2;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'accordionBlock';
-          }
-        | {
-            form?: (string | null) | Form;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'formBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            contact: string | Person;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaContactBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            linkType: 'internal' | 'external';
-            linkInternal?: {
-              openInNewWindow?: boolean | null;
-              linkText: string;
-              internalLink: string;
-            };
-            linkExternal?: {
-              externalLinkText: string;
-              externalLink: string;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaLinkBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
-          }
-        | {
-            title: string;
-            lead: string;
-            /**
-             * Align Title & text horizontally or vertically
-             */
-            alignement?: ('vertical' | 'horizontal') | null;
-            textTeasers?:
-              | {
-                  title: string;
-                  text: string;
-                  link: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textTeasersBlock';
-          }
-        | {
-            filter: {
-              allCheckboxText: string;
-              title: string;
-            };
-            items: {
-              foundingYearText: string;
-              linkText: string;
-              items: {
-                title: string;
-                category: string | NetworkCategory;
-                foundingYear: number;
-                image: string | Image;
-                externalLink: string;
-                id?: string | null;
-              }[];
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'networkTeasersBlock';
-          }
-        | {
-            title?: string | null;
-            teasers: {
-              image:
-                | {
-                    relationTo: 'images';
-                    value: string | Image;
-                  }
-                | {
-                    relationTo: 'svgs';
-                    value: string | Svg;
-                  };
-              title: string;
-              text?: string | null;
-              linkType: 'internal' | 'external';
-              linkInternal?: {
-                openInNewWindow?: boolean | null;
-                linkText: string;
-                internalLink: string;
-              };
-              linkExternal?: {
-                externalLinkText: string;
-                externalLink: string;
-              };
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageTeasersBlock';
-          }
-        | InterfaceNotification
-        | {
-            title: string;
-            text: InterfaceRte2;
-            copyButtonText: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'bibliographicReferenceBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            memberType: {
-              type: 'executiveBoard' | 'team';
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'peopleOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'nationalDictionariesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'institutesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsOverviewBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsTeasersBlock';
-          }
-      )[]
-    | null;
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "departments".
- */
-export interface Department {
-  id: string;
-  name: string;
-  /**
-   * Used for domain-based department handling
-   */
-  domain?: string | null;
-  /**
-   * Used for url paths, example: /department-slug/page-slug
-   */
-  slug: string;
-  languages?: {
-    de?: boolean | null;
-    fr?: boolean | null;
-    it?: boolean | null;
-    en?: boolean | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceRte1".
- */
-export interface InterfaceRte1 {
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+export interface InterfaceTextBlock {
+  text: InterfaceRte2;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'textBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -598,6 +234,70 @@ export interface InterfaceRte2 {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceTitleSubtitleTextBlock".
+ */
+export interface InterfaceTitleSubtitleTextBlock {
+  title: string;
+  subtitle: string;
+  textBlocks: {
+    text: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'titleSubtitleTextBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceLinksBlock".
+ */
+export interface InterfaceLinksBlock {
+  title: string;
+  links?:
+    | {
+        linkType: 'internal' | 'external';
+        linkInternal?: {
+          openInNewWindow?: boolean | null;
+          linkText: string;
+          internalLink: string;
+        };
+        linkExternal?: {
+          externalLinkText: string;
+          externalLink: string;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'linksBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceDownloadsBlock".
+ */
+export interface InterfaceDownloadsBlock {
+  title: string;
+  customOrAuto: 'custom' | 'auto';
+  downloads?:
+    | (
+        | {
+            relationTo: 'documents';
+            value: string | Document;
+          }
+        | {
+            relationTo: 'zenodoDocuments';
+            value: string | ZenodoDocument;
+          }
+      )[]
+    | null;
+  project?: (string | null) | Project;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'downloadsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "documents".
  */
 export interface Document {
@@ -617,6 +317,30 @@ export interface Document {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "departments".
+ */
+export interface Department {
+  id: string;
+  name: string;
+  /**
+   * Used for domain-based department handling
+   */
+  domain?: string | null;
+  /**
+   * Used for url paths, example: /department-slug/page-slug
+   */
+  slug: string;
+  languages?: {
+    de?: boolean | null;
+    fr?: boolean | null;
+    it?: boolean | null;
+    en?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * You can assign NewsDetail Pages, Event Detail Pages and Documents to a project. Then you could add a Downloads block to a page an tell it to list all downloads related to a project.
@@ -654,6 +378,20 @@ export interface ZenodoDocument {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceImageBlock".
+ */
+export interface InterfaceImageBlock {
+  alignement?: ('left' | 'center' | 'right') | null;
+  image: string | Image;
+  title: string;
+  caption: string;
+  credits: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'imageBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "images".
  */
 export interface Image {
@@ -675,6 +413,20 @@ export interface Image {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceVideoBlock".
+ */
+export interface InterfaceVideoBlock {
+  video: string | Video;
+  title: string;
+  caption: string;
+  credits: string;
+  stillImage: string | Image;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'videoBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "videos".
  */
 export interface Video {
@@ -693,6 +445,33 @@ export interface Video {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceAccordionBlock".
+ */
+export interface InterfaceAccordionBlock {
+  title: string;
+  colorMode: 'white' | 'color';
+  colorScheme?: ('bright' | 'dark') | null;
+  acccordions: {
+    accordionTitle: string;
+    accordionContent: InterfaceRte2;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accordionBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceFormBlock".
+ */
+export interface InterfaceFormBlock {
+  form?: (string | null) | Form;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'formBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -753,7 +532,7 @@ export interface Form {
             fieldError?: string | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'textBlock';
+            blockType: 'textBlockForm';
           }
         | {
             /**
@@ -801,6 +580,20 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceCtaContactBlock".
+ */
+export interface InterfaceCtaContactBlock {
+  title: string;
+  text: string;
+  colorMode: 'white' | 'color';
+  colorScheme?: ('bright' | 'dark') | null;
+  contact: string | Person;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ctaContactBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "people".
  */
 export interface Person {
@@ -820,6 +613,48 @@ export interface Person {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceCtaLinkBlock".
+ */
+export interface InterfaceCtaLinkBlock {
+  title: string;
+  text: string;
+  linkType: 'internal' | 'external';
+  linkInternal?: {
+    openInNewWindow?: boolean | null;
+    linkText: string;
+    internalLink: string;
+  };
+  linkExternal?: {
+    externalLinkText: string;
+    externalLink: string;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ctaLinkBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHomeTeasersBlock".
+ */
+export interface InterfaceHomeTeasersBlock {
+  homeTeasers?:
+    | {
+        category: string;
+        title: string;
+        text: string;
+        icon: string | Svg;
+        openInNewWindow?: boolean | null;
+        linkText: string;
+        internalLink: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeTeasersBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -844,6 +679,58 @@ export interface Svg {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceTextTeasersBlock".
+ */
+export interface InterfaceTextTeasersBlock {
+  title: string;
+  lead: string;
+  /**
+   * Align Title & text horizontally or vertically
+   */
+  alignement?: ('vertical' | 'horizontal') | null;
+  textTeasers?:
+    | {
+        title: string;
+        text: string;
+        link: {
+          openInNewWindow?: boolean | null;
+          linkText: string;
+          internalLink: string;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'textTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNetworkTeasersBlock".
+ */
+export interface InterfaceNetworkTeasersBlock {
+  filter: {
+    allCheckboxText: string;
+    title: string;
+  };
+  items: {
+    foundingYearText: string;
+    linkText: string;
+    items: {
+      title: string;
+      category: string | NetworkCategory;
+      foundingYear: number;
+      image: string | Image;
+      externalLink: string;
+      id?: string | null;
+    }[];
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'networkTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "networkCategories".
  */
 export interface NetworkCategory {
@@ -856,13 +743,298 @@ export interface NetworkCategory {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceNotification".
+ * via the `definition` "InterfaceImageTeasersBlock".
  */
-export interface InterfaceNotification {
+export interface InterfaceImageTeasersBlock {
+  title?: string | null;
+  teasers: {
+    image:
+      | {
+          relationTo: 'images';
+          value: string | Image;
+        }
+      | {
+          relationTo: 'svgs';
+          value: string | Svg;
+        };
+    title: string;
+    text?: string | null;
+    linkType: 'internal' | 'external';
+    linkInternal?: {
+      openInNewWindow?: boolean | null;
+      linkText: string;
+      internalLink: string;
+    };
+    linkExternal?: {
+      externalLinkText: string;
+      externalLink: string;
+    };
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'imageTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNotificationBlock".
+ */
+export interface InterfaceNotificationBlock {
   text: InterfaceRte2;
   id?: string | null;
   blockName?: string | null;
   blockType: 'notificationBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceBibliographicReferenceBlock".
+ */
+export interface InterfaceBibliographicReferenceBlock {
+  title: string;
+  text: InterfaceRte2;
+  copyButtonText: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'bibliographicReferenceBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceMagazineOverviewBlock".
+ */
+export interface InterfaceMagazineOverviewBlock {
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'magazineOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfacePublicationsOverviewBlock".
+ */
+export interface InterfacePublicationsOverviewBlock {
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'publicationsOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceEventsOverviewBlock".
+ */
+export interface InterfaceEventsOverviewBlock {
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'eventsOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfacePeopleOverviewBlock".
+ */
+export interface InterfacePeopleOverviewBlock {
+  message?: string | null;
+  memberType: {
+    type: 'executiveBoard' | 'team';
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'peopleOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNewsOverviewBlock".
+ */
+export interface InterfaceNewsOverviewBlock {
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'newsOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNationalDictionariesOverviewBlock".
+ */
+export interface InterfaceNationalDictionariesOverviewBlock {
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'nationalDictionariesOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceInstitutesOverviewBlock".
+ */
+export interface InterfaceInstitutesOverviewBlock {
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'institutesOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceProjectOverviewBlock".
+ */
+export interface InterfaceProjectOverviewBlock {
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'projectsOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceEventsTeasersBlock".
+ */
+export interface InterfaceEventsTeasersBlock {
+  title: string;
+  linkText: string;
+  project?: (string | null) | Project;
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'eventsTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceMagazineTeasersBlock".
+ */
+export interface InterfaceMagazineTeasersBlock {
+  title: string;
+  lead?: string | null;
+  linkText: string;
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'magazineTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNewsTeasersBlock".
+ */
+export interface InterfaceNewsTeasersBlock {
+  title: string;
+  linkText: string;
+  project?: (string | null) | Project;
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'newsTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfacePublicationsTeasersBlock".
+ */
+export interface InterfacePublicationsTeasersBlock {
+  title: string;
+  linkText: string;
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'publicationsTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceProjectTeasersBlock".
+ */
+export interface InterfaceProjectTeasersBlock {
+  title: string;
+  lead?: string | null;
+  linkText: string;
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'projectsTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homePage".
+ */
+export interface HomePage {
+  id: string;
+  department?: (string | null) | Department;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  hero: {
+    title: InterfaceRte1;
+    lead?: string | null;
+    animated?: boolean | null;
+    sideTitle: string;
+    optionalLink?: {
+      includeLink?: boolean | null;
+      link?: {
+        openInNewWindow?: boolean | null;
+        linkText: string;
+        internalLink: string;
+      };
+    };
+  };
+  content?:
+    | (
+        | InterfaceTextBlock
+        | InterfaceTitleSubtitleTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceTextTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceImageTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
+      )[]
+    | null;
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceRte1".
+ */
+export interface InterfaceRte1 {
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -920,325 +1092,35 @@ export interface MagazineDetailPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            title: string;
-            subtitle: string;
-            textBlocks: {
-              text: string;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'titleSubtitleTextBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
-          }
-        | {
-            title: string;
-            customOrAuto: 'custom' | 'auto';
-            downloads?:
-              | (
-                  | {
-                      relationTo: 'documents';
-                      value: string | Document;
-                    }
-                  | {
-                      relationTo: 'zenodoDocuments';
-                      value: string | ZenodoDocument;
-                    }
-                )[]
-              | null;
-            project?: (string | null) | Project;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'downloadsBlock';
-          }
-        | {
-            alignement?: ('left' | 'center' | 'right') | null;
-            image: string | Image;
-            title: string;
-            caption: string;
-            credits: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
-          }
-        | {
-            title: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            acccordions: {
-              accordionTitle: string;
-              accordionContent: InterfaceRte2;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'accordionBlock';
-          }
-        | {
-            form?: (string | null) | Form;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'formBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            contact: string | Person;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaContactBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            linkType: 'internal' | 'external';
-            linkInternal?: {
-              openInNewWindow?: boolean | null;
-              linkText: string;
-              internalLink: string;
-            };
-            linkExternal?: {
-              externalLinkText: string;
-              externalLink: string;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaLinkBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
-          }
-        | {
-            title: string;
-            lead: string;
-            /**
-             * Align Title & text horizontally or vertically
-             */
-            alignement?: ('vertical' | 'horizontal') | null;
-            textTeasers?:
-              | {
-                  title: string;
-                  text: string;
-                  link: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textTeasersBlock';
-          }
-        | {
-            filter: {
-              allCheckboxText: string;
-              title: string;
-            };
-            items: {
-              foundingYearText: string;
-              linkText: string;
-              items: {
-                title: string;
-                category: string | NetworkCategory;
-                foundingYear: number;
-                image: string | Image;
-                externalLink: string;
-                id?: string | null;
-              }[];
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'networkTeasersBlock';
-          }
-        | {
-            title?: string | null;
-            teasers: {
-              image:
-                | {
-                    relationTo: 'images';
-                    value: string | Image;
-                  }
-                | {
-                    relationTo: 'svgs';
-                    value: string | Svg;
-                  };
-              title: string;
-              text?: string | null;
-              linkType: 'internal' | 'external';
-              linkInternal?: {
-                openInNewWindow?: boolean | null;
-                linkText: string;
-                internalLink: string;
-              };
-              linkExternal?: {
-                externalLinkText: string;
-                externalLink: string;
-              };
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageTeasersBlock';
-          }
-        | InterfaceNotification
-        | {
-            title: string;
-            text: InterfaceRte2;
-            copyButtonText: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'bibliographicReferenceBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            memberType: {
-              type: 'executiveBoard' | 'team';
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'peopleOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'nationalDictionariesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'institutesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsOverviewBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsTeasersBlock';
-          }
+        | InterfaceTextBlock
+        | InterfaceTitleSubtitleTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceTextTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceImageTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
       )[]
     | null;
   meta?: {
@@ -1277,325 +1159,35 @@ export interface OverviewPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            title: string;
-            subtitle: string;
-            textBlocks: {
-              text: string;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'titleSubtitleTextBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
-          }
-        | {
-            title: string;
-            customOrAuto: 'custom' | 'auto';
-            downloads?:
-              | (
-                  | {
-                      relationTo: 'documents';
-                      value: string | Document;
-                    }
-                  | {
-                      relationTo: 'zenodoDocuments';
-                      value: string | ZenodoDocument;
-                    }
-                )[]
-              | null;
-            project?: (string | null) | Project;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'downloadsBlock';
-          }
-        | {
-            alignement?: ('left' | 'center' | 'right') | null;
-            image: string | Image;
-            title: string;
-            caption: string;
-            credits: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
-          }
-        | {
-            title: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            acccordions: {
-              accordionTitle: string;
-              accordionContent: InterfaceRte2;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'accordionBlock';
-          }
-        | {
-            form?: (string | null) | Form;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'formBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            contact: string | Person;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaContactBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            linkType: 'internal' | 'external';
-            linkInternal?: {
-              openInNewWindow?: boolean | null;
-              linkText: string;
-              internalLink: string;
-            };
-            linkExternal?: {
-              externalLinkText: string;
-              externalLink: string;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaLinkBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
-          }
-        | {
-            title: string;
-            lead: string;
-            /**
-             * Align Title & text horizontally or vertically
-             */
-            alignement?: ('vertical' | 'horizontal') | null;
-            textTeasers?:
-              | {
-                  title: string;
-                  text: string;
-                  link: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textTeasersBlock';
-          }
-        | {
-            filter: {
-              allCheckboxText: string;
-              title: string;
-            };
-            items: {
-              foundingYearText: string;
-              linkText: string;
-              items: {
-                title: string;
-                category: string | NetworkCategory;
-                foundingYear: number;
-                image: string | Image;
-                externalLink: string;
-                id?: string | null;
-              }[];
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'networkTeasersBlock';
-          }
-        | {
-            title?: string | null;
-            teasers: {
-              image:
-                | {
-                    relationTo: 'images';
-                    value: string | Image;
-                  }
-                | {
-                    relationTo: 'svgs';
-                    value: string | Svg;
-                  };
-              title: string;
-              text?: string | null;
-              linkType: 'internal' | 'external';
-              linkInternal?: {
-                openInNewWindow?: boolean | null;
-                linkText: string;
-                internalLink: string;
-              };
-              linkExternal?: {
-                externalLinkText: string;
-                externalLink: string;
-              };
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageTeasersBlock';
-          }
-        | InterfaceNotification
-        | {
-            title: string;
-            text: InterfaceRte2;
-            copyButtonText: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'bibliographicReferenceBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            memberType: {
-              type: 'executiveBoard' | 'team';
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'peopleOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'nationalDictionariesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'institutesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsOverviewBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsTeasersBlock';
-          }
+        | InterfaceTextBlock
+        | InterfaceTitleSubtitleTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceTextTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceImageTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
       )[]
     | null;
   meta?: {
@@ -1634,325 +1226,35 @@ export interface DetailPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            title: string;
-            subtitle: string;
-            textBlocks: {
-              text: string;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'titleSubtitleTextBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
-          }
-        | {
-            title: string;
-            customOrAuto: 'custom' | 'auto';
-            downloads?:
-              | (
-                  | {
-                      relationTo: 'documents';
-                      value: string | Document;
-                    }
-                  | {
-                      relationTo: 'zenodoDocuments';
-                      value: string | ZenodoDocument;
-                    }
-                )[]
-              | null;
-            project?: (string | null) | Project;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'downloadsBlock';
-          }
-        | {
-            alignement?: ('left' | 'center' | 'right') | null;
-            image: string | Image;
-            title: string;
-            caption: string;
-            credits: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
-          }
-        | {
-            title: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            acccordions: {
-              accordionTitle: string;
-              accordionContent: InterfaceRte2;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'accordionBlock';
-          }
-        | {
-            form?: (string | null) | Form;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'formBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            contact: string | Person;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaContactBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            linkType: 'internal' | 'external';
-            linkInternal?: {
-              openInNewWindow?: boolean | null;
-              linkText: string;
-              internalLink: string;
-            };
-            linkExternal?: {
-              externalLinkText: string;
-              externalLink: string;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaLinkBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
-          }
-        | {
-            title: string;
-            lead: string;
-            /**
-             * Align Title & text horizontally or vertically
-             */
-            alignement?: ('vertical' | 'horizontal') | null;
-            textTeasers?:
-              | {
-                  title: string;
-                  text: string;
-                  link: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textTeasersBlock';
-          }
-        | {
-            filter: {
-              allCheckboxText: string;
-              title: string;
-            };
-            items: {
-              foundingYearText: string;
-              linkText: string;
-              items: {
-                title: string;
-                category: string | NetworkCategory;
-                foundingYear: number;
-                image: string | Image;
-                externalLink: string;
-                id?: string | null;
-              }[];
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'networkTeasersBlock';
-          }
-        | {
-            title?: string | null;
-            teasers: {
-              image:
-                | {
-                    relationTo: 'images';
-                    value: string | Image;
-                  }
-                | {
-                    relationTo: 'svgs';
-                    value: string | Svg;
-                  };
-              title: string;
-              text?: string | null;
-              linkType: 'internal' | 'external';
-              linkInternal?: {
-                openInNewWindow?: boolean | null;
-                linkText: string;
-                internalLink: string;
-              };
-              linkExternal?: {
-                externalLinkText: string;
-                externalLink: string;
-              };
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageTeasersBlock';
-          }
-        | InterfaceNotification
-        | {
-            title: string;
-            text: InterfaceRte2;
-            copyButtonText: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'bibliographicReferenceBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            memberType: {
-              type: 'executiveBoard' | 'team';
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'peopleOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'nationalDictionariesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'institutesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsOverviewBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsTeasersBlock';
-          }
+        | InterfaceTextBlock
+        | InterfaceTitleSubtitleTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceTextTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceImageTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
       )[]
     | null;
   meta?: {
@@ -2003,325 +1305,35 @@ export interface EventDetailPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            title: string;
-            subtitle: string;
-            textBlocks: {
-              text: string;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'titleSubtitleTextBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
-          }
-        | {
-            title: string;
-            customOrAuto: 'custom' | 'auto';
-            downloads?:
-              | (
-                  | {
-                      relationTo: 'documents';
-                      value: string | Document;
-                    }
-                  | {
-                      relationTo: 'zenodoDocuments';
-                      value: string | ZenodoDocument;
-                    }
-                )[]
-              | null;
-            project?: (string | null) | Project;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'downloadsBlock';
-          }
-        | {
-            alignement?: ('left' | 'center' | 'right') | null;
-            image: string | Image;
-            title: string;
-            caption: string;
-            credits: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
-          }
-        | {
-            title: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            acccordions: {
-              accordionTitle: string;
-              accordionContent: InterfaceRte2;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'accordionBlock';
-          }
-        | {
-            form?: (string | null) | Form;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'formBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            contact: string | Person;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaContactBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            linkType: 'internal' | 'external';
-            linkInternal?: {
-              openInNewWindow?: boolean | null;
-              linkText: string;
-              internalLink: string;
-            };
-            linkExternal?: {
-              externalLinkText: string;
-              externalLink: string;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaLinkBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
-          }
-        | {
-            title: string;
-            lead: string;
-            /**
-             * Align Title & text horizontally or vertically
-             */
-            alignement?: ('vertical' | 'horizontal') | null;
-            textTeasers?:
-              | {
-                  title: string;
-                  text: string;
-                  link: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textTeasersBlock';
-          }
-        | {
-            filter: {
-              allCheckboxText: string;
-              title: string;
-            };
-            items: {
-              foundingYearText: string;
-              linkText: string;
-              items: {
-                title: string;
-                category: string | NetworkCategory;
-                foundingYear: number;
-                image: string | Image;
-                externalLink: string;
-                id?: string | null;
-              }[];
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'networkTeasersBlock';
-          }
-        | {
-            title?: string | null;
-            teasers: {
-              image:
-                | {
-                    relationTo: 'images';
-                    value: string | Image;
-                  }
-                | {
-                    relationTo: 'svgs';
-                    value: string | Svg;
-                  };
-              title: string;
-              text?: string | null;
-              linkType: 'internal' | 'external';
-              linkInternal?: {
-                openInNewWindow?: boolean | null;
-                linkText: string;
-                internalLink: string;
-              };
-              linkExternal?: {
-                externalLinkText: string;
-                externalLink: string;
-              };
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageTeasersBlock';
-          }
-        | InterfaceNotification
-        | {
-            title: string;
-            text: InterfaceRte2;
-            copyButtonText: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'bibliographicReferenceBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            memberType: {
-              type: 'executiveBoard' | 'team';
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'peopleOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'nationalDictionariesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'institutesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsOverviewBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsTeasersBlock';
-          }
+        | InterfaceTextBlock
+        | InterfaceTitleSubtitleTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceTextTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceImageTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
       )[]
     | null;
   link?: {
@@ -2384,325 +1396,35 @@ export interface NewsDetailPage {
   project?: (string | null) | Project;
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            title: string;
-            subtitle: string;
-            textBlocks: {
-              text: string;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'titleSubtitleTextBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
-          }
-        | {
-            title: string;
-            customOrAuto: 'custom' | 'auto';
-            downloads?:
-              | (
-                  | {
-                      relationTo: 'documents';
-                      value: string | Document;
-                    }
-                  | {
-                      relationTo: 'zenodoDocuments';
-                      value: string | ZenodoDocument;
-                    }
-                )[]
-              | null;
-            project?: (string | null) | Project;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'downloadsBlock';
-          }
-        | {
-            alignement?: ('left' | 'center' | 'right') | null;
-            image: string | Image;
-            title: string;
-            caption: string;
-            credits: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
-          }
-        | {
-            title: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            acccordions: {
-              accordionTitle: string;
-              accordionContent: InterfaceRte2;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'accordionBlock';
-          }
-        | {
-            form?: (string | null) | Form;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'formBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            contact: string | Person;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaContactBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            linkType: 'internal' | 'external';
-            linkInternal?: {
-              openInNewWindow?: boolean | null;
-              linkText: string;
-              internalLink: string;
-            };
-            linkExternal?: {
-              externalLinkText: string;
-              externalLink: string;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaLinkBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
-          }
-        | {
-            title: string;
-            lead: string;
-            /**
-             * Align Title & text horizontally or vertically
-             */
-            alignement?: ('vertical' | 'horizontal') | null;
-            textTeasers?:
-              | {
-                  title: string;
-                  text: string;
-                  link: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textTeasersBlock';
-          }
-        | {
-            filter: {
-              allCheckboxText: string;
-              title: string;
-            };
-            items: {
-              foundingYearText: string;
-              linkText: string;
-              items: {
-                title: string;
-                category: string | NetworkCategory;
-                foundingYear: number;
-                image: string | Image;
-                externalLink: string;
-                id?: string | null;
-              }[];
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'networkTeasersBlock';
-          }
-        | {
-            title?: string | null;
-            teasers: {
-              image:
-                | {
-                    relationTo: 'images';
-                    value: string | Image;
-                  }
-                | {
-                    relationTo: 'svgs';
-                    value: string | Svg;
-                  };
-              title: string;
-              text?: string | null;
-              linkType: 'internal' | 'external';
-              linkInternal?: {
-                openInNewWindow?: boolean | null;
-                linkText: string;
-                internalLink: string;
-              };
-              linkExternal?: {
-                externalLinkText: string;
-                externalLink: string;
-              };
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageTeasersBlock';
-          }
-        | InterfaceNotification
-        | {
-            title: string;
-            text: InterfaceRte2;
-            copyButtonText: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'bibliographicReferenceBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            memberType: {
-              type: 'executiveBoard' | 'team';
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'peopleOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'nationalDictionariesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'institutesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsOverviewBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsTeasersBlock';
-          }
+        | InterfaceTextBlock
+        | InterfaceTitleSubtitleTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceTextTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceImageTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
       )[]
     | null;
   meta?: {
@@ -2752,325 +1474,35 @@ export interface PublicationDetailPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            title: string;
-            subtitle: string;
-            textBlocks: {
-              text: string;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'titleSubtitleTextBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
-          }
-        | {
-            title: string;
-            customOrAuto: 'custom' | 'auto';
-            downloads?:
-              | (
-                  | {
-                      relationTo: 'documents';
-                      value: string | Document;
-                    }
-                  | {
-                      relationTo: 'zenodoDocuments';
-                      value: string | ZenodoDocument;
-                    }
-                )[]
-              | null;
-            project?: (string | null) | Project;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'downloadsBlock';
-          }
-        | {
-            alignement?: ('left' | 'center' | 'right') | null;
-            image: string | Image;
-            title: string;
-            caption: string;
-            credits: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
-          }
-        | {
-            title: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            acccordions: {
-              accordionTitle: string;
-              accordionContent: InterfaceRte2;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'accordionBlock';
-          }
-        | {
-            form?: (string | null) | Form;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'formBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            contact: string | Person;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaContactBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            linkType: 'internal' | 'external';
-            linkInternal?: {
-              openInNewWindow?: boolean | null;
-              linkText: string;
-              internalLink: string;
-            };
-            linkExternal?: {
-              externalLinkText: string;
-              externalLink: string;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaLinkBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
-          }
-        | {
-            title: string;
-            lead: string;
-            /**
-             * Align Title & text horizontally or vertically
-             */
-            alignement?: ('vertical' | 'horizontal') | null;
-            textTeasers?:
-              | {
-                  title: string;
-                  text: string;
-                  link: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textTeasersBlock';
-          }
-        | {
-            filter: {
-              allCheckboxText: string;
-              title: string;
-            };
-            items: {
-              foundingYearText: string;
-              linkText: string;
-              items: {
-                title: string;
-                category: string | NetworkCategory;
-                foundingYear: number;
-                image: string | Image;
-                externalLink: string;
-                id?: string | null;
-              }[];
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'networkTeasersBlock';
-          }
-        | {
-            title?: string | null;
-            teasers: {
-              image:
-                | {
-                    relationTo: 'images';
-                    value: string | Image;
-                  }
-                | {
-                    relationTo: 'svgs';
-                    value: string | Svg;
-                  };
-              title: string;
-              text?: string | null;
-              linkType: 'internal' | 'external';
-              linkInternal?: {
-                openInNewWindow?: boolean | null;
-                linkText: string;
-                internalLink: string;
-              };
-              linkExternal?: {
-                externalLinkText: string;
-                externalLink: string;
-              };
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageTeasersBlock';
-          }
-        | InterfaceNotification
-        | {
-            title: string;
-            text: InterfaceRte2;
-            copyButtonText: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'bibliographicReferenceBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            memberType: {
-              type: 'executiveBoard' | 'team';
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'peopleOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'nationalDictionariesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'institutesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsOverviewBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsTeasersBlock';
-          }
+        | InterfaceTextBlock
+        | InterfaceTitleSubtitleTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceTextTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceImageTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
       )[]
     | null;
   meta?: {
@@ -3139,325 +1571,35 @@ export interface NationalDictionaryDetailPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            title: string;
-            subtitle: string;
-            textBlocks: {
-              text: string;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'titleSubtitleTextBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
-          }
-        | {
-            title: string;
-            customOrAuto: 'custom' | 'auto';
-            downloads?:
-              | (
-                  | {
-                      relationTo: 'documents';
-                      value: string | Document;
-                    }
-                  | {
-                      relationTo: 'zenodoDocuments';
-                      value: string | ZenodoDocument;
-                    }
-                )[]
-              | null;
-            project?: (string | null) | Project;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'downloadsBlock';
-          }
-        | {
-            alignement?: ('left' | 'center' | 'right') | null;
-            image: string | Image;
-            title: string;
-            caption: string;
-            credits: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
-          }
-        | {
-            title: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            acccordions: {
-              accordionTitle: string;
-              accordionContent: InterfaceRte2;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'accordionBlock';
-          }
-        | {
-            form?: (string | null) | Form;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'formBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            contact: string | Person;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaContactBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            linkType: 'internal' | 'external';
-            linkInternal?: {
-              openInNewWindow?: boolean | null;
-              linkText: string;
-              internalLink: string;
-            };
-            linkExternal?: {
-              externalLinkText: string;
-              externalLink: string;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaLinkBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
-          }
-        | {
-            title: string;
-            lead: string;
-            /**
-             * Align Title & text horizontally or vertically
-             */
-            alignement?: ('vertical' | 'horizontal') | null;
-            textTeasers?:
-              | {
-                  title: string;
-                  text: string;
-                  link: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textTeasersBlock';
-          }
-        | {
-            filter: {
-              allCheckboxText: string;
-              title: string;
-            };
-            items: {
-              foundingYearText: string;
-              linkText: string;
-              items: {
-                title: string;
-                category: string | NetworkCategory;
-                foundingYear: number;
-                image: string | Image;
-                externalLink: string;
-                id?: string | null;
-              }[];
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'networkTeasersBlock';
-          }
-        | {
-            title?: string | null;
-            teasers: {
-              image:
-                | {
-                    relationTo: 'images';
-                    value: string | Image;
-                  }
-                | {
-                    relationTo: 'svgs';
-                    value: string | Svg;
-                  };
-              title: string;
-              text?: string | null;
-              linkType: 'internal' | 'external';
-              linkInternal?: {
-                openInNewWindow?: boolean | null;
-                linkText: string;
-                internalLink: string;
-              };
-              linkExternal?: {
-                externalLinkText: string;
-                externalLink: string;
-              };
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageTeasersBlock';
-          }
-        | InterfaceNotification
-        | {
-            title: string;
-            text: InterfaceRte2;
-            copyButtonText: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'bibliographicReferenceBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            memberType: {
-              type: 'executiveBoard' | 'team';
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'peopleOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'nationalDictionariesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'institutesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsOverviewBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsTeasersBlock';
-          }
+        | InterfaceTextBlock
+        | InterfaceTitleSubtitleTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceTextTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceImageTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
       )[]
     | null;
   meta?: {
@@ -3502,325 +1644,35 @@ export interface InstituteDetailPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            title: string;
-            subtitle: string;
-            textBlocks: {
-              text: string;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'titleSubtitleTextBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
-          }
-        | {
-            title: string;
-            customOrAuto: 'custom' | 'auto';
-            downloads?:
-              | (
-                  | {
-                      relationTo: 'documents';
-                      value: string | Document;
-                    }
-                  | {
-                      relationTo: 'zenodoDocuments';
-                      value: string | ZenodoDocument;
-                    }
-                )[]
-              | null;
-            project?: (string | null) | Project;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'downloadsBlock';
-          }
-        | {
-            alignement?: ('left' | 'center' | 'right') | null;
-            image: string | Image;
-            title: string;
-            caption: string;
-            credits: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
-          }
-        | {
-            title: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            acccordions: {
-              accordionTitle: string;
-              accordionContent: InterfaceRte2;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'accordionBlock';
-          }
-        | {
-            form?: (string | null) | Form;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'formBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            contact: string | Person;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaContactBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            linkType: 'internal' | 'external';
-            linkInternal?: {
-              openInNewWindow?: boolean | null;
-              linkText: string;
-              internalLink: string;
-            };
-            linkExternal?: {
-              externalLinkText: string;
-              externalLink: string;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaLinkBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
-          }
-        | {
-            title: string;
-            lead: string;
-            /**
-             * Align Title & text horizontally or vertically
-             */
-            alignement?: ('vertical' | 'horizontal') | null;
-            textTeasers?:
-              | {
-                  title: string;
-                  text: string;
-                  link: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textTeasersBlock';
-          }
-        | {
-            filter: {
-              allCheckboxText: string;
-              title: string;
-            };
-            items: {
-              foundingYearText: string;
-              linkText: string;
-              items: {
-                title: string;
-                category: string | NetworkCategory;
-                foundingYear: number;
-                image: string | Image;
-                externalLink: string;
-                id?: string | null;
-              }[];
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'networkTeasersBlock';
-          }
-        | {
-            title?: string | null;
-            teasers: {
-              image:
-                | {
-                    relationTo: 'images';
-                    value: string | Image;
-                  }
-                | {
-                    relationTo: 'svgs';
-                    value: string | Svg;
-                  };
-              title: string;
-              text?: string | null;
-              linkType: 'internal' | 'external';
-              linkInternal?: {
-                openInNewWindow?: boolean | null;
-                linkText: string;
-                internalLink: string;
-              };
-              linkExternal?: {
-                externalLinkText: string;
-                externalLink: string;
-              };
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageTeasersBlock';
-          }
-        | InterfaceNotification
-        | {
-            title: string;
-            text: InterfaceRte2;
-            copyButtonText: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'bibliographicReferenceBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            memberType: {
-              type: 'executiveBoard' | 'team';
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'peopleOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'nationalDictionariesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'institutesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsOverviewBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsTeasersBlock';
-          }
+        | InterfaceTextBlock
+        | InterfaceTitleSubtitleTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceTextTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceImageTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
       )[]
     | null;
   meta?: {
@@ -3862,325 +1714,35 @@ export interface ProjectDetailPage {
   };
   content?:
     | (
-        | {
-            text: InterfaceRte2;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            title: string;
-            subtitle: string;
-            textBlocks: {
-              text: string;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'titleSubtitleTextBlock';
-          }
-        | {
-            title: string;
-            links?:
-              | {
-                  linkType: 'internal' | 'external';
-                  linkInternal?: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  linkExternal?: {
-                    externalLinkText: string;
-                    externalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'linksBlock';
-          }
-        | {
-            title: string;
-            customOrAuto: 'custom' | 'auto';
-            downloads?:
-              | (
-                  | {
-                      relationTo: 'documents';
-                      value: string | Document;
-                    }
-                  | {
-                      relationTo: 'zenodoDocuments';
-                      value: string | ZenodoDocument;
-                    }
-                )[]
-              | null;
-            project?: (string | null) | Project;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'downloadsBlock';
-          }
-        | {
-            alignement?: ('left' | 'center' | 'right') | null;
-            image: string | Image;
-            title: string;
-            caption: string;
-            credits: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageBlock';
-          }
-        | {
-            video: string | Video;
-            title: string;
-            caption: string;
-            credits: string;
-            stillImage: string | Image;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'videoBlock';
-          }
-        | {
-            title: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            acccordions: {
-              accordionTitle: string;
-              accordionContent: InterfaceRte2;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'accordionBlock';
-          }
-        | {
-            form?: (string | null) | Form;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'formBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            colorMode: 'white' | 'color';
-            colorScheme?: ('bright' | 'dark') | null;
-            contact: string | Person;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaContactBlock';
-          }
-        | {
-            title: string;
-            text: string;
-            linkType: 'internal' | 'external';
-            linkInternal?: {
-              openInNewWindow?: boolean | null;
-              linkText: string;
-              internalLink: string;
-            };
-            linkExternal?: {
-              externalLinkText: string;
-              externalLink: string;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaLinkBlock';
-          }
-        | {
-            homeTeasers?:
-              | {
-                  category: string;
-                  title: string;
-                  text: string;
-                  icon: string | Svg;
-                  openInNewWindow?: boolean | null;
-                  linkText: string;
-                  internalLink: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'homeTeasersBlock';
-          }
-        | {
-            title: string;
-            lead: string;
-            /**
-             * Align Title & text horizontally or vertically
-             */
-            alignement?: ('vertical' | 'horizontal') | null;
-            textTeasers?:
-              | {
-                  title: string;
-                  text: string;
-                  link: {
-                    openInNewWindow?: boolean | null;
-                    linkText: string;
-                    internalLink: string;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textTeasersBlock';
-          }
-        | {
-            filter: {
-              allCheckboxText: string;
-              title: string;
-            };
-            items: {
-              foundingYearText: string;
-              linkText: string;
-              items: {
-                title: string;
-                category: string | NetworkCategory;
-                foundingYear: number;
-                image: string | Image;
-                externalLink: string;
-                id?: string | null;
-              }[];
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'networkTeasersBlock';
-          }
-        | {
-            title?: string | null;
-            teasers: {
-              image:
-                | {
-                    relationTo: 'images';
-                    value: string | Image;
-                  }
-                | {
-                    relationTo: 'svgs';
-                    value: string | Svg;
-                  };
-              title: string;
-              text?: string | null;
-              linkType: 'internal' | 'external';
-              linkInternal?: {
-                openInNewWindow?: boolean | null;
-                linkText: string;
-                internalLink: string;
-              };
-              linkExternal?: {
-                externalLinkText: string;
-                externalLink: string;
-              };
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageTeasersBlock';
-          }
-        | InterfaceNotification
-        | {
-            title: string;
-            text: InterfaceRte2;
-            copyButtonText: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'bibliographicReferenceBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            memberType: {
-              type: 'executiveBoard' | 'team';
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'peopleOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'nationalDictionariesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'institutesOverviewBlock';
-          }
-        | {
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsOverviewBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'eventsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'magazineTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            project?: (string | null) | Project;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'newsTeasersBlock';
-          }
-        | {
-            title: string;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'publicationsTeasersBlock';
-          }
-        | {
-            title: string;
-            lead?: string | null;
-            linkText: string;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projectsTeasersBlock';
-          }
+        | InterfaceTextBlock
+        | InterfaceTitleSubtitleTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceTextTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceImageTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
       )[]
     | null;
   meta?: {
@@ -4380,18 +1942,7 @@ export interface Header {
   id: string;
   department?: (string | null) | Department;
   adminTitle?: string | null;
-  navItems: {
-    navItemText: string;
-    navItemLink?: string | null;
-    subNavItems?:
-      | {
-          navItemText: string;
-          navItemLink?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-    id?: string | null;
-  }[];
+  navigation: InterfaceNavigation;
   metaLinks?:
     | {
         linkType: 'internal' | 'external';
@@ -4411,6 +1962,24 @@ export interface Header {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNavigation".
+ */
+export interface InterfaceNavigation {
+  navItems: {
+    navItemText: string;
+    navItemLink?: string | null;
+    subNavItems?:
+      | {
+          navItemText: string;
+          navItemLink?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    id?: string | null;
+  }[];
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4443,6 +2012,19 @@ export interface StatusMessage {
    */
   showOnHomeOnly?: boolean | null;
   type: 'warn' | 'error' | 'success';
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "theme".
+ */
+export interface Theme {
+  id: string;
+  department?: (string | null) | Department;
+  adminTitle?: string | null;
+  themeSelector: string;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -4573,6 +2155,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'statusMessage';
         value: string | StatusMessage;
+      } | null)
+    | ({
+        relationTo: 'theme';
+        value: string | Theme;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -4647,359 +2233,35 @@ export interface HomePageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
-        titleSubtitleTextBlock?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              textBlocks?:
-                | T
-                | {
-                    text?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        linksBlock?:
-          | T
-          | {
-              title?: T;
-              links?:
-                | T
-                | {
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              customOrAuto?: T;
-              downloads?: T;
-              project?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        accordionBlock?:
-          | T
-          | {
-              title?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              acccordions?:
-                | T
-                | {
-                    accordionTitle?: T;
-                    accordionContent?: T | InterfaceRte2Select<T>;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaContactBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              contact?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaLinkBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              linkType?: T;
-              linkInternal?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-              linkExternal?:
-                | T
-                | {
-                    externalLinkText?: T;
-                    externalLink?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        textTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              alignement?: T;
-              textTeasers?:
-                | T
-                | {
-                    title?: T;
-                    text?: T;
-                    link?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        networkTeasersBlock?:
-          | T
-          | {
-              filter?:
-                | T
-                | {
-                    allCheckboxText?: T;
-                    title?: T;
-                  };
-              items?:
-                | T
-                | {
-                    foundingYearText?: T;
-                    linkText?: T;
-                    items?:
-                      | T
-                      | {
-                          title?: T;
-                          category?: T;
-                          foundingYear?: T;
-                          image?: T;
-                          externalLink?: T;
-                          id?: T;
-                        };
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        imageTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              teasers?:
-                | T
-                | {
-                    image?: T;
-                    title?: T;
-                    text?: T;
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        notificationBlock?: T | InterfaceNotificationSelect<T>;
-        bibliographicReferenceBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T | InterfaceRte2Select<T>;
-              copyButtonText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        peopleOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              memberType?:
-                | T
-                | {
-                    type?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        newsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        nationalDictionariesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        institutesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        newsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
+        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
+        linksBlock?: T | InterfaceLinksBlockSelect<T>;
+        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        videoBlock?: T | InterfaceVideoBlockSelect<T>;
+        accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
+        formBlock?: T | InterfaceFormBlockSelect<T>;
+        ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
+        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+        homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
+        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
+        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
+        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
+        publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
+        eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
+        peopleOverviewBlock?: T | InterfacePeopleOverviewBlockSelect<T>;
+        newsOverviewBlock?: T | InterfaceNewsOverviewBlockSelect<T>;
+        nationalDictionariesOverviewBlock?: T | InterfaceNationalDictionariesOverviewBlockSelect<T>;
+        institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
+        projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
+        eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
+        magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
+        newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
+        publicationsTeasersBlock?: T | InterfacePublicationsTeasersBlockSelect<T>;
+        projectsTeasersBlock?: T | InterfaceProjectTeasersBlockSelect<T>;
       };
   meta?:
     | T
@@ -5026,6 +2288,15 @@ export interface InterfaceRte1Select<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceTextBlock_select".
+ */
+export interface InterfaceTextBlockSelect<T extends boolean = true> {
+  text?: T | InterfaceRte2Select<T>;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceRte2_select".
  */
 export interface InterfaceRte2Select<T extends boolean = true> {
@@ -5033,10 +2304,409 @@ export interface InterfaceRte2Select<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceNotification_select".
+ * via the `definition` "InterfaceTitleSubtitleTextBlock_select".
  */
-export interface InterfaceNotificationSelect<T extends boolean = true> {
+export interface InterfaceTitleSubtitleTextBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  textBlocks?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceLinksBlock_select".
+ */
+export interface InterfaceLinksBlockSelect<T extends boolean = true> {
+  title?: T;
+  links?:
+    | T
+    | {
+        linkType?: T;
+        linkInternal?:
+          | T
+          | {
+              openInNewWindow?: T;
+              linkText?: T;
+              internalLink?: T;
+            };
+        linkExternal?:
+          | T
+          | {
+              externalLinkText?: T;
+              externalLink?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceDownloadsBlock_select".
+ */
+export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
+  title?: T;
+  customOrAuto?: T;
+  downloads?: T;
+  project?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceImageBlock_select".
+ */
+export interface InterfaceImageBlockSelect<T extends boolean = true> {
+  alignement?: T;
+  image?: T;
+  title?: T;
+  caption?: T;
+  credits?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceVideoBlock_select".
+ */
+export interface InterfaceVideoBlockSelect<T extends boolean = true> {
+  video?: T;
+  title?: T;
+  caption?: T;
+  credits?: T;
+  stillImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceAccordionBlock_select".
+ */
+export interface InterfaceAccordionBlockSelect<T extends boolean = true> {
+  title?: T;
+  colorMode?: T;
+  colorScheme?: T;
+  acccordions?:
+    | T
+    | {
+        accordionTitle?: T;
+        accordionContent?: T | InterfaceRte2Select<T>;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceFormBlock_select".
+ */
+export interface InterfaceFormBlockSelect<T extends boolean = true> {
+  form?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceCtaContactBlock_select".
+ */
+export interface InterfaceCtaContactBlockSelect<T extends boolean = true> {
+  title?: T;
+  text?: T;
+  colorMode?: T;
+  colorScheme?: T;
+  contact?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceCtaLinkBlock_select".
+ */
+export interface InterfaceCtaLinkBlockSelect<T extends boolean = true> {
+  title?: T;
+  text?: T;
+  linkType?: T;
+  linkInternal?:
+    | T
+    | {
+        openInNewWindow?: T;
+        linkText?: T;
+        internalLink?: T;
+      };
+  linkExternal?:
+    | T
+    | {
+        externalLinkText?: T;
+        externalLink?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHomeTeasersBlock_select".
+ */
+export interface InterfaceHomeTeasersBlockSelect<T extends boolean = true> {
+  homeTeasers?:
+    | T
+    | {
+        category?: T;
+        title?: T;
+        text?: T;
+        icon?: T;
+        openInNewWindow?: T;
+        linkText?: T;
+        internalLink?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceTextTeasersBlock_select".
+ */
+export interface InterfaceTextTeasersBlockSelect<T extends boolean = true> {
+  title?: T;
+  lead?: T;
+  alignement?: T;
+  textTeasers?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        link?:
+          | T
+          | {
+              openInNewWindow?: T;
+              linkText?: T;
+              internalLink?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNetworkTeasersBlock_select".
+ */
+export interface InterfaceNetworkTeasersBlockSelect<T extends boolean = true> {
+  filter?:
+    | T
+    | {
+        allCheckboxText?: T;
+        title?: T;
+      };
+  items?:
+    | T
+    | {
+        foundingYearText?: T;
+        linkText?: T;
+        items?:
+          | T
+          | {
+              title?: T;
+              category?: T;
+              foundingYear?: T;
+              image?: T;
+              externalLink?: T;
+              id?: T;
+            };
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceImageTeasersBlock_select".
+ */
+export interface InterfaceImageTeasersBlockSelect<T extends boolean = true> {
+  title?: T;
+  teasers?:
+    | T
+    | {
+        image?: T;
+        title?: T;
+        text?: T;
+        linkType?: T;
+        linkInternal?:
+          | T
+          | {
+              openInNewWindow?: T;
+              linkText?: T;
+              internalLink?: T;
+            };
+        linkExternal?:
+          | T
+          | {
+              externalLinkText?: T;
+              externalLink?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNotificationBlock_select".
+ */
+export interface InterfaceNotificationBlockSelect<T extends boolean = true> {
   text?: T | InterfaceRte2Select<T>;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceBibliographicReferenceBlock_select".
+ */
+export interface InterfaceBibliographicReferenceBlockSelect<T extends boolean = true> {
+  title?: T;
+  text?: T | InterfaceRte2Select<T>;
+  copyButtonText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceMagazineOverviewBlock_select".
+ */
+export interface InterfaceMagazineOverviewBlockSelect<T extends boolean = true> {
+  message?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfacePublicationsOverviewBlock_select".
+ */
+export interface InterfacePublicationsOverviewBlockSelect<T extends boolean = true> {
+  message?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceEventsOverviewBlock_select".
+ */
+export interface InterfaceEventsOverviewBlockSelect<T extends boolean = true> {
+  message?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfacePeopleOverviewBlock_select".
+ */
+export interface InterfacePeopleOverviewBlockSelect<T extends boolean = true> {
+  message?: T;
+  memberType?:
+    | T
+    | {
+        type?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNewsOverviewBlock_select".
+ */
+export interface InterfaceNewsOverviewBlockSelect<T extends boolean = true> {
+  message?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNationalDictionariesOverviewBlock_select".
+ */
+export interface InterfaceNationalDictionariesOverviewBlockSelect<T extends boolean = true> {
+  message?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceInstitutesOverviewBlock_select".
+ */
+export interface InterfaceInstitutesOverviewBlockSelect<T extends boolean = true> {
+  message?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceProjectOverviewBlock_select".
+ */
+export interface InterfaceProjectOverviewBlockSelect<T extends boolean = true> {
+  message?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceEventsTeasersBlock_select".
+ */
+export interface InterfaceEventsTeasersBlockSelect<T extends boolean = true> {
+  title?: T;
+  linkText?: T;
+  project?: T;
+  message?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceMagazineTeasersBlock_select".
+ */
+export interface InterfaceMagazineTeasersBlockSelect<T extends boolean = true> {
+  title?: T;
+  lead?: T;
+  linkText?: T;
+  message?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNewsTeasersBlock_select".
+ */
+export interface InterfaceNewsTeasersBlockSelect<T extends boolean = true> {
+  title?: T;
+  linkText?: T;
+  project?: T;
+  message?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfacePublicationsTeasersBlock_select".
+ */
+export interface InterfacePublicationsTeasersBlockSelect<T extends boolean = true> {
+  title?: T;
+  linkText?: T;
+  message?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceProjectTeasersBlock_select".
+ */
+export interface InterfaceProjectTeasersBlockSelect<T extends boolean = true> {
+  title?: T;
+  lead?: T;
+  linkText?: T;
+  message?: T;
   id?: T;
   blockName?: T;
 }
@@ -5096,359 +2766,35 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
-        titleSubtitleTextBlock?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              textBlocks?:
-                | T
-                | {
-                    text?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        linksBlock?:
-          | T
-          | {
-              title?: T;
-              links?:
-                | T
-                | {
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              customOrAuto?: T;
-              downloads?: T;
-              project?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        accordionBlock?:
-          | T
-          | {
-              title?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              acccordions?:
-                | T
-                | {
-                    accordionTitle?: T;
-                    accordionContent?: T | InterfaceRte2Select<T>;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaContactBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              contact?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaLinkBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              linkType?: T;
-              linkInternal?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-              linkExternal?:
-                | T
-                | {
-                    externalLinkText?: T;
-                    externalLink?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        textTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              alignement?: T;
-              textTeasers?:
-                | T
-                | {
-                    title?: T;
-                    text?: T;
-                    link?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        networkTeasersBlock?:
-          | T
-          | {
-              filter?:
-                | T
-                | {
-                    allCheckboxText?: T;
-                    title?: T;
-                  };
-              items?:
-                | T
-                | {
-                    foundingYearText?: T;
-                    linkText?: T;
-                    items?:
-                      | T
-                      | {
-                          title?: T;
-                          category?: T;
-                          foundingYear?: T;
-                          image?: T;
-                          externalLink?: T;
-                          id?: T;
-                        };
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        imageTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              teasers?:
-                | T
-                | {
-                    image?: T;
-                    title?: T;
-                    text?: T;
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        notificationBlock?: T | InterfaceNotificationSelect<T>;
-        bibliographicReferenceBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T | InterfaceRte2Select<T>;
-              copyButtonText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        peopleOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              memberType?:
-                | T
-                | {
-                    type?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        newsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        nationalDictionariesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        institutesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        newsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
+        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
+        linksBlock?: T | InterfaceLinksBlockSelect<T>;
+        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        videoBlock?: T | InterfaceVideoBlockSelect<T>;
+        accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
+        formBlock?: T | InterfaceFormBlockSelect<T>;
+        ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
+        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+        homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
+        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
+        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
+        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
+        publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
+        eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
+        peopleOverviewBlock?: T | InterfacePeopleOverviewBlockSelect<T>;
+        newsOverviewBlock?: T | InterfaceNewsOverviewBlockSelect<T>;
+        nationalDictionariesOverviewBlock?: T | InterfaceNationalDictionariesOverviewBlockSelect<T>;
+        institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
+        projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
+        eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
+        magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
+        newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
+        publicationsTeasersBlock?: T | InterfacePublicationsTeasersBlockSelect<T>;
+        projectsTeasersBlock?: T | InterfaceProjectTeasersBlockSelect<T>;
       };
   meta?:
     | T
@@ -5486,359 +2832,35 @@ export interface OverviewPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
-        titleSubtitleTextBlock?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              textBlocks?:
-                | T
-                | {
-                    text?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        linksBlock?:
-          | T
-          | {
-              title?: T;
-              links?:
-                | T
-                | {
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              customOrAuto?: T;
-              downloads?: T;
-              project?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        accordionBlock?:
-          | T
-          | {
-              title?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              acccordions?:
-                | T
-                | {
-                    accordionTitle?: T;
-                    accordionContent?: T | InterfaceRte2Select<T>;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaContactBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              contact?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaLinkBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              linkType?: T;
-              linkInternal?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-              linkExternal?:
-                | T
-                | {
-                    externalLinkText?: T;
-                    externalLink?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        textTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              alignement?: T;
-              textTeasers?:
-                | T
-                | {
-                    title?: T;
-                    text?: T;
-                    link?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        networkTeasersBlock?:
-          | T
-          | {
-              filter?:
-                | T
-                | {
-                    allCheckboxText?: T;
-                    title?: T;
-                  };
-              items?:
-                | T
-                | {
-                    foundingYearText?: T;
-                    linkText?: T;
-                    items?:
-                      | T
-                      | {
-                          title?: T;
-                          category?: T;
-                          foundingYear?: T;
-                          image?: T;
-                          externalLink?: T;
-                          id?: T;
-                        };
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        imageTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              teasers?:
-                | T
-                | {
-                    image?: T;
-                    title?: T;
-                    text?: T;
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        notificationBlock?: T | InterfaceNotificationSelect<T>;
-        bibliographicReferenceBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T | InterfaceRte2Select<T>;
-              copyButtonText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        peopleOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              memberType?:
-                | T
-                | {
-                    type?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        newsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        nationalDictionariesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        institutesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        newsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
+        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
+        linksBlock?: T | InterfaceLinksBlockSelect<T>;
+        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        videoBlock?: T | InterfaceVideoBlockSelect<T>;
+        accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
+        formBlock?: T | InterfaceFormBlockSelect<T>;
+        ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
+        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+        homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
+        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
+        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
+        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
+        publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
+        eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
+        peopleOverviewBlock?: T | InterfacePeopleOverviewBlockSelect<T>;
+        newsOverviewBlock?: T | InterfaceNewsOverviewBlockSelect<T>;
+        nationalDictionariesOverviewBlock?: T | InterfaceNationalDictionariesOverviewBlockSelect<T>;
+        institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
+        projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
+        eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
+        magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
+        newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
+        publicationsTeasersBlock?: T | InterfacePublicationsTeasersBlockSelect<T>;
+        projectsTeasersBlock?: T | InterfaceProjectTeasersBlockSelect<T>;
       };
   meta?:
     | T
@@ -5876,359 +2898,35 @@ export interface DetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
-        titleSubtitleTextBlock?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              textBlocks?:
-                | T
-                | {
-                    text?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        linksBlock?:
-          | T
-          | {
-              title?: T;
-              links?:
-                | T
-                | {
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              customOrAuto?: T;
-              downloads?: T;
-              project?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        accordionBlock?:
-          | T
-          | {
-              title?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              acccordions?:
-                | T
-                | {
-                    accordionTitle?: T;
-                    accordionContent?: T | InterfaceRte2Select<T>;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaContactBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              contact?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaLinkBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              linkType?: T;
-              linkInternal?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-              linkExternal?:
-                | T
-                | {
-                    externalLinkText?: T;
-                    externalLink?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        textTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              alignement?: T;
-              textTeasers?:
-                | T
-                | {
-                    title?: T;
-                    text?: T;
-                    link?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        networkTeasersBlock?:
-          | T
-          | {
-              filter?:
-                | T
-                | {
-                    allCheckboxText?: T;
-                    title?: T;
-                  };
-              items?:
-                | T
-                | {
-                    foundingYearText?: T;
-                    linkText?: T;
-                    items?:
-                      | T
-                      | {
-                          title?: T;
-                          category?: T;
-                          foundingYear?: T;
-                          image?: T;
-                          externalLink?: T;
-                          id?: T;
-                        };
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        imageTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              teasers?:
-                | T
-                | {
-                    image?: T;
-                    title?: T;
-                    text?: T;
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        notificationBlock?: T | InterfaceNotificationSelect<T>;
-        bibliographicReferenceBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T | InterfaceRte2Select<T>;
-              copyButtonText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        peopleOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              memberType?:
-                | T
-                | {
-                    type?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        newsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        nationalDictionariesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        institutesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        newsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
+        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
+        linksBlock?: T | InterfaceLinksBlockSelect<T>;
+        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        videoBlock?: T | InterfaceVideoBlockSelect<T>;
+        accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
+        formBlock?: T | InterfaceFormBlockSelect<T>;
+        ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
+        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+        homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
+        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
+        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
+        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
+        publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
+        eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
+        peopleOverviewBlock?: T | InterfacePeopleOverviewBlockSelect<T>;
+        newsOverviewBlock?: T | InterfaceNewsOverviewBlockSelect<T>;
+        nationalDictionariesOverviewBlock?: T | InterfaceNationalDictionariesOverviewBlockSelect<T>;
+        institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
+        projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
+        eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
+        magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
+        newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
+        publicationsTeasersBlock?: T | InterfacePublicationsTeasersBlockSelect<T>;
+        projectsTeasersBlock?: T | InterfaceProjectTeasersBlockSelect<T>;
       };
   meta?:
     | T
@@ -6280,359 +2978,35 @@ export interface EventDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
-        titleSubtitleTextBlock?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              textBlocks?:
-                | T
-                | {
-                    text?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        linksBlock?:
-          | T
-          | {
-              title?: T;
-              links?:
-                | T
-                | {
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              customOrAuto?: T;
-              downloads?: T;
-              project?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        accordionBlock?:
-          | T
-          | {
-              title?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              acccordions?:
-                | T
-                | {
-                    accordionTitle?: T;
-                    accordionContent?: T | InterfaceRte2Select<T>;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaContactBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              contact?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaLinkBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              linkType?: T;
-              linkInternal?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-              linkExternal?:
-                | T
-                | {
-                    externalLinkText?: T;
-                    externalLink?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        textTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              alignement?: T;
-              textTeasers?:
-                | T
-                | {
-                    title?: T;
-                    text?: T;
-                    link?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        networkTeasersBlock?:
-          | T
-          | {
-              filter?:
-                | T
-                | {
-                    allCheckboxText?: T;
-                    title?: T;
-                  };
-              items?:
-                | T
-                | {
-                    foundingYearText?: T;
-                    linkText?: T;
-                    items?:
-                      | T
-                      | {
-                          title?: T;
-                          category?: T;
-                          foundingYear?: T;
-                          image?: T;
-                          externalLink?: T;
-                          id?: T;
-                        };
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        imageTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              teasers?:
-                | T
-                | {
-                    image?: T;
-                    title?: T;
-                    text?: T;
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        notificationBlock?: T | InterfaceNotificationSelect<T>;
-        bibliographicReferenceBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T | InterfaceRte2Select<T>;
-              copyButtonText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        peopleOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              memberType?:
-                | T
-                | {
-                    type?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        newsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        nationalDictionariesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        institutesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        newsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
+        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
+        linksBlock?: T | InterfaceLinksBlockSelect<T>;
+        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        videoBlock?: T | InterfaceVideoBlockSelect<T>;
+        accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
+        formBlock?: T | InterfaceFormBlockSelect<T>;
+        ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
+        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+        homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
+        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
+        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
+        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
+        publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
+        eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
+        peopleOverviewBlock?: T | InterfacePeopleOverviewBlockSelect<T>;
+        newsOverviewBlock?: T | InterfaceNewsOverviewBlockSelect<T>;
+        nationalDictionariesOverviewBlock?: T | InterfaceNationalDictionariesOverviewBlockSelect<T>;
+        institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
+        projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
+        eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
+        magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
+        newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
+        publicationsTeasersBlock?: T | InterfacePublicationsTeasersBlockSelect<T>;
+        projectsTeasersBlock?: T | InterfaceProjectTeasersBlockSelect<T>;
       };
   link?:
     | T
@@ -6683,359 +3057,35 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
-        titleSubtitleTextBlock?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              textBlocks?:
-                | T
-                | {
-                    text?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        linksBlock?:
-          | T
-          | {
-              title?: T;
-              links?:
-                | T
-                | {
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              customOrAuto?: T;
-              downloads?: T;
-              project?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        accordionBlock?:
-          | T
-          | {
-              title?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              acccordions?:
-                | T
-                | {
-                    accordionTitle?: T;
-                    accordionContent?: T | InterfaceRte2Select<T>;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaContactBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              contact?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaLinkBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              linkType?: T;
-              linkInternal?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-              linkExternal?:
-                | T
-                | {
-                    externalLinkText?: T;
-                    externalLink?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        textTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              alignement?: T;
-              textTeasers?:
-                | T
-                | {
-                    title?: T;
-                    text?: T;
-                    link?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        networkTeasersBlock?:
-          | T
-          | {
-              filter?:
-                | T
-                | {
-                    allCheckboxText?: T;
-                    title?: T;
-                  };
-              items?:
-                | T
-                | {
-                    foundingYearText?: T;
-                    linkText?: T;
-                    items?:
-                      | T
-                      | {
-                          title?: T;
-                          category?: T;
-                          foundingYear?: T;
-                          image?: T;
-                          externalLink?: T;
-                          id?: T;
-                        };
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        imageTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              teasers?:
-                | T
-                | {
-                    image?: T;
-                    title?: T;
-                    text?: T;
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        notificationBlock?: T | InterfaceNotificationSelect<T>;
-        bibliographicReferenceBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T | InterfaceRte2Select<T>;
-              copyButtonText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        peopleOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              memberType?:
-                | T
-                | {
-                    type?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        newsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        nationalDictionariesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        institutesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        newsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
+        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
+        linksBlock?: T | InterfaceLinksBlockSelect<T>;
+        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        videoBlock?: T | InterfaceVideoBlockSelect<T>;
+        accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
+        formBlock?: T | InterfaceFormBlockSelect<T>;
+        ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
+        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+        homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
+        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
+        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
+        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
+        publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
+        eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
+        peopleOverviewBlock?: T | InterfacePeopleOverviewBlockSelect<T>;
+        newsOverviewBlock?: T | InterfaceNewsOverviewBlockSelect<T>;
+        nationalDictionariesOverviewBlock?: T | InterfaceNationalDictionariesOverviewBlockSelect<T>;
+        institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
+        projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
+        eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
+        magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
+        newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
+        publicationsTeasersBlock?: T | InterfacePublicationsTeasersBlockSelect<T>;
+        projectsTeasersBlock?: T | InterfaceProjectTeasersBlockSelect<T>;
       };
   meta?:
     | T
@@ -7085,359 +3135,35 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
-        titleSubtitleTextBlock?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              textBlocks?:
-                | T
-                | {
-                    text?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        linksBlock?:
-          | T
-          | {
-              title?: T;
-              links?:
-                | T
-                | {
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              customOrAuto?: T;
-              downloads?: T;
-              project?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        accordionBlock?:
-          | T
-          | {
-              title?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              acccordions?:
-                | T
-                | {
-                    accordionTitle?: T;
-                    accordionContent?: T | InterfaceRte2Select<T>;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaContactBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              contact?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaLinkBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              linkType?: T;
-              linkInternal?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-              linkExternal?:
-                | T
-                | {
-                    externalLinkText?: T;
-                    externalLink?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        textTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              alignement?: T;
-              textTeasers?:
-                | T
-                | {
-                    title?: T;
-                    text?: T;
-                    link?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        networkTeasersBlock?:
-          | T
-          | {
-              filter?:
-                | T
-                | {
-                    allCheckboxText?: T;
-                    title?: T;
-                  };
-              items?:
-                | T
-                | {
-                    foundingYearText?: T;
-                    linkText?: T;
-                    items?:
-                      | T
-                      | {
-                          title?: T;
-                          category?: T;
-                          foundingYear?: T;
-                          image?: T;
-                          externalLink?: T;
-                          id?: T;
-                        };
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        imageTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              teasers?:
-                | T
-                | {
-                    image?: T;
-                    title?: T;
-                    text?: T;
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        notificationBlock?: T | InterfaceNotificationSelect<T>;
-        bibliographicReferenceBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T | InterfaceRte2Select<T>;
-              copyButtonText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        peopleOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              memberType?:
-                | T
-                | {
-                    type?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        newsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        nationalDictionariesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        institutesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        newsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
+        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
+        linksBlock?: T | InterfaceLinksBlockSelect<T>;
+        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        videoBlock?: T | InterfaceVideoBlockSelect<T>;
+        accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
+        formBlock?: T | InterfaceFormBlockSelect<T>;
+        ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
+        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+        homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
+        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
+        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
+        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
+        publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
+        eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
+        peopleOverviewBlock?: T | InterfacePeopleOverviewBlockSelect<T>;
+        newsOverviewBlock?: T | InterfaceNewsOverviewBlockSelect<T>;
+        nationalDictionariesOverviewBlock?: T | InterfaceNationalDictionariesOverviewBlockSelect<T>;
+        institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
+        projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
+        eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
+        magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
+        newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
+        publicationsTeasersBlock?: T | InterfacePublicationsTeasersBlockSelect<T>;
+        projectsTeasersBlock?: T | InterfaceProjectTeasersBlockSelect<T>;
       };
   meta?:
     | T
@@ -7480,359 +3206,35 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
-        titleSubtitleTextBlock?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              textBlocks?:
-                | T
-                | {
-                    text?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        linksBlock?:
-          | T
-          | {
-              title?: T;
-              links?:
-                | T
-                | {
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              customOrAuto?: T;
-              downloads?: T;
-              project?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        accordionBlock?:
-          | T
-          | {
-              title?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              acccordions?:
-                | T
-                | {
-                    accordionTitle?: T;
-                    accordionContent?: T | InterfaceRte2Select<T>;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaContactBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              contact?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaLinkBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              linkType?: T;
-              linkInternal?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-              linkExternal?:
-                | T
-                | {
-                    externalLinkText?: T;
-                    externalLink?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        textTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              alignement?: T;
-              textTeasers?:
-                | T
-                | {
-                    title?: T;
-                    text?: T;
-                    link?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        networkTeasersBlock?:
-          | T
-          | {
-              filter?:
-                | T
-                | {
-                    allCheckboxText?: T;
-                    title?: T;
-                  };
-              items?:
-                | T
-                | {
-                    foundingYearText?: T;
-                    linkText?: T;
-                    items?:
-                      | T
-                      | {
-                          title?: T;
-                          category?: T;
-                          foundingYear?: T;
-                          image?: T;
-                          externalLink?: T;
-                          id?: T;
-                        };
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        imageTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              teasers?:
-                | T
-                | {
-                    image?: T;
-                    title?: T;
-                    text?: T;
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        notificationBlock?: T | InterfaceNotificationSelect<T>;
-        bibliographicReferenceBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T | InterfaceRte2Select<T>;
-              copyButtonText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        peopleOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              memberType?:
-                | T
-                | {
-                    type?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        newsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        nationalDictionariesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        institutesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        newsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
+        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
+        linksBlock?: T | InterfaceLinksBlockSelect<T>;
+        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        videoBlock?: T | InterfaceVideoBlockSelect<T>;
+        accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
+        formBlock?: T | InterfaceFormBlockSelect<T>;
+        ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
+        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+        homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
+        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
+        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
+        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
+        publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
+        eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
+        peopleOverviewBlock?: T | InterfacePeopleOverviewBlockSelect<T>;
+        newsOverviewBlock?: T | InterfaceNewsOverviewBlockSelect<T>;
+        nationalDictionariesOverviewBlock?: T | InterfaceNationalDictionariesOverviewBlockSelect<T>;
+        institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
+        projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
+        eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
+        magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
+        newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
+        publicationsTeasersBlock?: T | InterfacePublicationsTeasersBlockSelect<T>;
+        projectsTeasersBlock?: T | InterfaceProjectTeasersBlockSelect<T>;
       };
   meta?:
     | T
@@ -7875,359 +3277,35 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
-        titleSubtitleTextBlock?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              textBlocks?:
-                | T
-                | {
-                    text?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        linksBlock?:
-          | T
-          | {
-              title?: T;
-              links?:
-                | T
-                | {
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              customOrAuto?: T;
-              downloads?: T;
-              project?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        accordionBlock?:
-          | T
-          | {
-              title?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              acccordions?:
-                | T
-                | {
-                    accordionTitle?: T;
-                    accordionContent?: T | InterfaceRte2Select<T>;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaContactBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              contact?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaLinkBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              linkType?: T;
-              linkInternal?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-              linkExternal?:
-                | T
-                | {
-                    externalLinkText?: T;
-                    externalLink?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        textTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              alignement?: T;
-              textTeasers?:
-                | T
-                | {
-                    title?: T;
-                    text?: T;
-                    link?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        networkTeasersBlock?:
-          | T
-          | {
-              filter?:
-                | T
-                | {
-                    allCheckboxText?: T;
-                    title?: T;
-                  };
-              items?:
-                | T
-                | {
-                    foundingYearText?: T;
-                    linkText?: T;
-                    items?:
-                      | T
-                      | {
-                          title?: T;
-                          category?: T;
-                          foundingYear?: T;
-                          image?: T;
-                          externalLink?: T;
-                          id?: T;
-                        };
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        imageTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              teasers?:
-                | T
-                | {
-                    image?: T;
-                    title?: T;
-                    text?: T;
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        notificationBlock?: T | InterfaceNotificationSelect<T>;
-        bibliographicReferenceBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T | InterfaceRte2Select<T>;
-              copyButtonText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        peopleOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              memberType?:
-                | T
-                | {
-                    type?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        newsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        nationalDictionariesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        institutesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        newsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
+        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
+        linksBlock?: T | InterfaceLinksBlockSelect<T>;
+        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        videoBlock?: T | InterfaceVideoBlockSelect<T>;
+        accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
+        formBlock?: T | InterfaceFormBlockSelect<T>;
+        ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
+        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+        homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
+        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
+        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
+        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
+        publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
+        eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
+        peopleOverviewBlock?: T | InterfacePeopleOverviewBlockSelect<T>;
+        newsOverviewBlock?: T | InterfaceNewsOverviewBlockSelect<T>;
+        nationalDictionariesOverviewBlock?: T | InterfaceNationalDictionariesOverviewBlockSelect<T>;
+        institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
+        projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
+        eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
+        magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
+        newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
+        publicationsTeasersBlock?: T | InterfacePublicationsTeasersBlockSelect<T>;
+        projectsTeasersBlock?: T | InterfaceProjectTeasersBlockSelect<T>;
       };
   meta?:
     | T
@@ -8270,359 +3348,35 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              text?: T | InterfaceRte2Select<T>;
-              id?: T;
-              blockName?: T;
-            };
-        titleSubtitleTextBlock?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              textBlocks?:
-                | T
-                | {
-                    text?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        linksBlock?:
-          | T
-          | {
-              title?: T;
-              links?:
-                | T
-                | {
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        downloadsBlock?:
-          | T
-          | {
-              title?: T;
-              customOrAuto?: T;
-              downloads?: T;
-              project?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              alignement?: T;
-              image?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              id?: T;
-              blockName?: T;
-            };
-        videoBlock?:
-          | T
-          | {
-              video?: T;
-              title?: T;
-              caption?: T;
-              credits?: T;
-              stillImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        accordionBlock?:
-          | T
-          | {
-              title?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              acccordions?:
-                | T
-                | {
-                    accordionTitle?: T;
-                    accordionContent?: T | InterfaceRte2Select<T>;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaContactBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              colorMode?: T;
-              colorScheme?: T;
-              contact?: T;
-              id?: T;
-              blockName?: T;
-            };
-        ctaLinkBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              linkType?: T;
-              linkInternal?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-              linkExternal?:
-                | T
-                | {
-                    externalLinkText?: T;
-                    externalLink?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        homeTeasersBlock?:
-          | T
-          | {
-              homeTeasers?:
-                | T
-                | {
-                    category?: T;
-                    title?: T;
-                    text?: T;
-                    icon?: T;
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        textTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              alignement?: T;
-              textTeasers?:
-                | T
-                | {
-                    title?: T;
-                    text?: T;
-                    link?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        networkTeasersBlock?:
-          | T
-          | {
-              filter?:
-                | T
-                | {
-                    allCheckboxText?: T;
-                    title?: T;
-                  };
-              items?:
-                | T
-                | {
-                    foundingYearText?: T;
-                    linkText?: T;
-                    items?:
-                      | T
-                      | {
-                          title?: T;
-                          category?: T;
-                          foundingYear?: T;
-                          image?: T;
-                          externalLink?: T;
-                          id?: T;
-                        };
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        imageTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              teasers?:
-                | T
-                | {
-                    image?: T;
-                    title?: T;
-                    text?: T;
-                    linkType?: T;
-                    linkInternal?:
-                      | T
-                      | {
-                          openInNewWindow?: T;
-                          linkText?: T;
-                          internalLink?: T;
-                        };
-                    linkExternal?:
-                      | T
-                      | {
-                          externalLinkText?: T;
-                          externalLink?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        notificationBlock?: T | InterfaceNotificationSelect<T>;
-        bibliographicReferenceBlock?:
-          | T
-          | {
-              title?: T;
-              text?: T | InterfaceRte2Select<T>;
-              copyButtonText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        peopleOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              memberType?:
-                | T
-                | {
-                    type?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        newsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        nationalDictionariesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        institutesOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsOverviewBlock?:
-          | T
-          | {
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        eventsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        magazineTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        newsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              project?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        publicationsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projectsTeasersBlock?:
-          | T
-          | {
-              title?: T;
-              lead?: T;
-              linkText?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | InterfaceTextBlockSelect<T>;
+        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
+        linksBlock?: T | InterfaceLinksBlockSelect<T>;
+        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        videoBlock?: T | InterfaceVideoBlockSelect<T>;
+        accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
+        formBlock?: T | InterfaceFormBlockSelect<T>;
+        ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
+        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+        homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
+        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
+        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
+        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
+        publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
+        eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
+        peopleOverviewBlock?: T | InterfacePeopleOverviewBlockSelect<T>;
+        newsOverviewBlock?: T | InterfaceNewsOverviewBlockSelect<T>;
+        nationalDictionariesOverviewBlock?: T | InterfaceNationalDictionariesOverviewBlockSelect<T>;
+        institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
+        projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
+        eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
+        magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
+        newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
+        publicationsTeasersBlock?: T | InterfacePublicationsTeasersBlockSelect<T>;
+        projectsTeasersBlock?: T | InterfaceProjectTeasersBlockSelect<T>;
       };
   meta?:
     | T
@@ -8906,7 +3660,7 @@ export interface FormsSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        textBlock?:
+        textBlockForm?:
           | T
           | {
               name?: T;
@@ -9123,20 +3877,7 @@ export interface FooterSelect<T extends boolean = true> {
 export interface HeaderSelect<T extends boolean = true> {
   department?: T;
   adminTitle?: T;
-  navItems?:
-    | T
-    | {
-        navItemText?: T;
-        navItemLink?: T;
-        subNavItems?:
-          | T
-          | {
-              navItemText?: T;
-              navItemLink?: T;
-              id?: T;
-            };
-        id?: T;
-      };
+  navigation?: T | InterfaceNavigationSelect<T>;
   metaLinks?:
     | T
     | {
@@ -9160,6 +3901,26 @@ export interface HeaderSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNavigation_select".
+ */
+export interface InterfaceNavigationSelect<T extends boolean = true> {
+  navItems?:
+    | T
+    | {
+        navItemText?: T;
+        navItemLink?: T;
+        subNavItems?:
+          | T
+          | {
+              navItemText?: T;
+              navItemLink?: T;
+              id?: T;
+            };
+        id?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -9191,6 +3952,18 @@ export interface StatusMessageSelect<T extends boolean = true> {
       };
   showOnHomeOnly?: T;
   type?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "theme_select".
+ */
+export interface ThemeSelect<T extends boolean = true> {
+  department?: T;
+  adminTitle?: T;
+  themeSelector?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

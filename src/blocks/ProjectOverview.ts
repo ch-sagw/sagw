@@ -26,6 +26,7 @@ export const ProjectOverviewBlock: Block = {
     },
   ],
   imageURL: '/admin-ui-images/overview.svg',
+  interfaceName: 'InterfaceProjectOverviewBlock',
   labels: {
     plural: 'Projects Overview (automatic)',
     singular: 'Projects Overview (automatic)',

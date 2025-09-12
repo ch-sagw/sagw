@@ -76,7 +76,8 @@ export const NewsDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blocks: blocks(),
+              blockReferences: blocks(),
+              blocks: [],
               label: 'Content',
               name: 'content',
               type: 'blocks',
