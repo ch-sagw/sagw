@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.14.0](https://github.com/ch-sagw/sagw/compare/v0.13.0...v0.14.0) (2025-09-13)
+
+
+### Features
+
+* add empty theme-selector admin component, add theme collection ([1288403](https://github.com/ch-sagw/sagw/commit/12884036f121274d803fadaf91f125d2bd42a376))
+* add preview image, style properly ([1288403](https://github.com/ch-sagw/sagw/commit/12884036f121274d803fadaf91f125d2bd42a376))
+* add sample colors, render them in custom select options ([1288403](https://github.com/ch-sagw/sagw/commit/12884036f121274d803fadaf91f125d2bd42a376))
+* adding icons and webfonts ([394b813](https://github.com/ch-sagw/sagw/commit/394b8130a9f9e71996c17f1232b05e98a8ba6f7c))
+
+
+### Style
+
+* adding new css variable and mixins files ([394b813](https://github.com/ch-sagw/sagw/commit/394b8130a9f9e71996c17f1232b05e98a8ba6f7c))
+
+
+### Test
+
+* add tests for theme selector ([1288403](https://github.com/ch-sagw/sagw/commit/12884036f121274d803fadaf91f125d2bd42a376))
+
 ## [0.13.0](https://github.com/ch-sagw/sagw/compare/v0.12.0...v0.13.0) (2025-09-11)
 
 
