@@ -1,7 +1,18 @@
-.baseStyle {
-  text-decoration: underline;
-}
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
 
-.sampleContextStyle {
-  border: 1px solid black;
+// @use "../../../styles/utilities/mediaqueries" as *;
+
+.inputText {
+  .input {
+    @include body-text-m;
+  }
+
+  .label {
+    @include body-text-s;
+  }
+
+  .error {
+    @include body-text-s;
+  }
 }
