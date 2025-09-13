@@ -26,14 +26,41 @@ const meta: Meta<typeof InputText> = {
 
 export default meta;
 
-export const SampleStory: StrictStory = {
+export const Text: StrictStory = {
   args: {
     defaultValue: '',
-    errorText: 'Bitte geben Sie ihren Namen an.',
+    errorText: '',
     id: 'someId',
-    label: 'Name',
+    label: 'Text input field',
     name: 'name',
-    placeholder: 'Ihr Name',
+    placeholder: 'Placeholder text',
     required: true,
+    type: 'text',
+  },
+};
+
+export const Email: StrictStory = {
+  args: {
+    defaultValue: '',
+    errorText: '',
+    id: 'someId',
+    label: 'Email input field',
+    name: 'name',
+    placeholder: 'Placeholder text',
+    required: true,
+    type: 'email',
+  },
+};
+
+export const WithError: StrictStory = {
+  args: {
+    defaultValue: '',
+    errorText: 'Bitte geben Sie eine korrekte E-Mail Adresse an.',
+    id: 'someId',
+    label: 'Email input field',
+    name: 'name',
+    placeholder: 'Placeholder text',
+    required: true,
+    type: 'email',
   },
 };
