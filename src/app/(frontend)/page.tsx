@@ -5,6 +5,7 @@ import configPromise from '@/payload.config';
 import { Config } from '@/payload-types';
 import { Navigation } from '@/components/global/Navigation/Navigation';
 import { RenderBlocks } from '@/app/(frontend)/RenderBlocks';
+import { Form } from '@/components/blocks/Form/Form';
 
 export default async function HomePage({
   params,
@@ -76,6 +77,7 @@ export default async function HomePage({
 
   return (
     <div className='home'>
+      <Form />
       <Navigation navItems={navData.navItems} />
       <RenderBlocks blocks={pageData.content} />
     </div>
