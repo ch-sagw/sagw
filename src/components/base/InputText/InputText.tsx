@@ -1,5 +1,5 @@
 import React from 'react';
-// import styles from '@/components/base/InputText/InputText.module.scss';
+import styles from '@/components/base/InputText/InputText.module.scss';
 
 export type InterfaceInputTextPropTypes = {
   id: string;
@@ -9,6 +9,7 @@ export type InterfaceInputTextPropTypes = {
   name: string;
   required: boolean;
   defaultValue: string;
+  type: 'email' | 'text';
 };
 
 export const InputText = ({
@@ -19,21 +20,28 @@ export const InputText = ({
   name,
   required,
   defaultValue,
+  type,
 }: InterfaceInputTextPropTypes): React.JSX.Element => (
-  <div data-testid='input-text'>
+  <div
+    data-testid='input-text'
+    className={styles.inputText}
+  >
     <input
+      className={styles.input}
       aria-describedby={id}
       aria-required={required}
-      type='text'
+      type={type}
       placeholder={placeholder}
       required={required}
       name={name}
       defaultValue={defaultValue}
     />
     <label
+      className={styles.label}
       htmlFor={id}
     >{label}</label>
     <span
+      className={styles.error}
       id={id}
       aria-live='assertive'
       role='alert'
