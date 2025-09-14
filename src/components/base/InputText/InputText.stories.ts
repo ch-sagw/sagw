@@ -15,7 +15,11 @@ const meta: Meta<typeof InputText> = {
   args: {},
   component: InputText,
   decorators: [defaultDecorator],
-  parameters: {/* layout: 'centered', */ },
+  globals: {
+    backgrounds: {
+      value: 'light',
+    },
+  },
   tags: [
     'autodocs',
     'visual:check',
@@ -28,7 +32,7 @@ export default meta;
 
 export const Text: StrictStory = {
   args: {
-    colorScheme: 'bright',
+    colorTheme: 'light',
     defaultValue: '',
     errorText: '',
     label: 'Text input field',
@@ -41,7 +45,7 @@ export const Text: StrictStory = {
 
 export const Email: StrictStory = {
   args: {
-    colorScheme: 'bright',
+    colorTheme: 'light',
     defaultValue: '',
     errorText: '',
     label: 'Email input field',
@@ -54,7 +58,7 @@ export const Email: StrictStory = {
 
 export const WithError: StrictStory = {
   args: {
-    colorScheme: 'bright',
+    colorTheme: 'light',
     defaultValue: '',
     errorText: 'Bitte geben Sie eine korrekte E-Mail Adresse an.',
     label: 'Email input field',
@@ -67,7 +71,7 @@ export const WithError: StrictStory = {
 
 export const WithDefaultValue: StrictStory = {
   args: {
-    colorScheme: 'bright',
+    colorTheme: 'light',
     defaultValue: 'Default Value',
     errorText: '',
     label: 'Email input field',
@@ -75,5 +79,23 @@ export const WithDefaultValue: StrictStory = {
     placeholder: 'Placeholder text',
     required: true,
     type: 'email',
+  },
+};
+
+export const DarkVariant: StrictStory = {
+  args: {
+    colorTheme: 'dark',
+    defaultValue: 'Default Value',
+    errorText: 'Bitte geben Sie eine korrekte E-Mail Adresse an.',
+    label: 'Email input field',
+    name: 'name',
+    placeholder: 'Placeholder text',
+    required: true,
+    type: 'email',
+  },
+  globals: {
+    backgrounds: {
+      value: 'dark',
+    },
   },
 };
