@@ -10,7 +10,8 @@
     "selector-class-pattern": null,
     "selector-pseudo-element-colon-notation": "single",
     "@stylistic/block-closing-brace-newline-after": null,
-    "@stylistic/max-line-length": null
+    "@stylistic/max-line-length": null,
+    "no-duplicate-selectors": null
   },
   "ignoreFiles": [
     "convenience/generate-component/boilerplate/styles/*.scss"
