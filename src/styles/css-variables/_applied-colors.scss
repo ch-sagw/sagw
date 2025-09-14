@@ -8,7 +8,8 @@
   --border-image: rgb(var(--black) / 4%);
   --border-negative: var(--red-200);
   --border-positive: var(--sky-200);
-  --border-primary-inverted: var(--secondary-white);
+  --border-primary: var(--primary-blue-dark);
+  --border-primary-inverted: var(--primary-blue-light);
   --border-secondary: var(--gray-600);
   --border-warning: var(--orange-200);
   --icon-error: var(--red-700);
@@ -24,5 +25,6 @@
   --text-primary: var(--secondary-black);
   --text-primary-inverted: var(--secondary-white);
   --text-secondary: var(--gray-600);
+  --text-secondary-inverted: var(--primary-blue-light);
   --text-warning: var(--orange-700);
 }
