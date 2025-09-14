@@ -41,7 +41,7 @@ export const Text: StrictStory = {
 
 export const Email: StrictStory = {
   args: {
-    // colorScheme: 'bright',
+    colorScheme: 'bright',
     defaultValue: '',
     errorText: '',
     label: 'Email input field',
