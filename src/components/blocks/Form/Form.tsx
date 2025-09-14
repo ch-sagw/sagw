@@ -43,6 +43,7 @@ export const Form = (): React.JSX.Element => {
         required={true}
         defaultValue={state?.values.email || ''}
         type='email'
+        colorTheme='light'
       />
 
       <button disabled={pending}>Sign up</button>

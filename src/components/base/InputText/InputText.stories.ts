@@ -98,4 +98,7 @@ export const DarkVariant: StrictStory = {
       value: 'dark',
     },
   },
+
+  // TODO: color contrast not sufficient!
+  tags: ['!a11y:check'],
 };

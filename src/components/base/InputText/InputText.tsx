@@ -51,6 +51,7 @@ export const InputText = ({
         required={required}
         name={name}
         defaultValue={defaultValue}
+        aria-label={label}
       />
       <label
         className={styles.label}
