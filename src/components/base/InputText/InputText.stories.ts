@@ -28,6 +28,7 @@ export default meta;
 
 export const Text: StrictStory = {
   args: {
+    colorScheme: 'bright',
     defaultValue: '',
     errorText: '',
     label: 'Text input field',
@@ -40,6 +41,7 @@ export const Text: StrictStory = {
 
 export const Email: StrictStory = {
   args: {
+    // colorScheme: 'bright',
     defaultValue: '',
     errorText: '',
     label: 'Email input field',
@@ -52,6 +54,7 @@ export const Email: StrictStory = {
 
 export const WithError: StrictStory = {
   args: {
+    colorScheme: 'bright',
     defaultValue: '',
     errorText: 'Bitte geben Sie eine korrekte E-Mail Adresse an.',
     label: 'Email input field',
@@ -64,6 +67,7 @@ export const WithError: StrictStory = {
 
 export const WithDefaultValue: StrictStory = {
   args: {
+    colorScheme: 'bright',
     defaultValue: 'Default Value',
     errorText: '',
     label: 'Email input field',

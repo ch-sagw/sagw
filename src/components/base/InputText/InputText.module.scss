@@ -15,7 +15,7 @@
   --focus-margin-block: 6;
   --input-height: var(--spacing-2xl);
 
-  &.darkMode {
+  &.dark {
     --color-error: var(--text-error-inverted);
     --color-text: var(--text-primary-inverted);
     --color-placeholder: var(--text-secondary-inverted);
