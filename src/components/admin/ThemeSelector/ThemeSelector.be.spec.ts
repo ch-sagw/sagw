@@ -48,7 +48,7 @@ test.describe('Theme selector', () => {
     });
 
     const option2 = await page.getByRole('option', {
-      name: 'Ocean',
+      name: 'Sunset',
     })
       .locator('span');
 
