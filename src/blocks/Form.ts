@@ -11,7 +11,6 @@ export const FormBlock: Block = {
       hasMany: false,
       name: 'form',
       relationTo: 'forms',
-      required: true,
       type: 'relationship',
     },
   ],
