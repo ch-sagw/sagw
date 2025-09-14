@@ -25,6 +25,7 @@
   & {
     position: relative;
     color: var(--color-text);
+    margin-block-start: px-to-rem(calc(var(--focus-margin-block) + var(--body-text-m-size) * 0.25));
   }
 
   @include mq($from: medium) {
