@@ -41,17 +41,21 @@ export const InputText = ({
       className={styles.label}
       htmlFor={id}
     >{label}</label>
-    <span
-      className={styles.error}
-      id={id}
-      aria-live='assertive'
-      role='alert'
-    >
-      <Icon
-        name='warning'
-        className={styles.icon}
-      />
-      <span>{errorText}</span>
-    </span>
+
+    {errorText &&
+      <span
+        className={styles.error}
+        id={id}
+        aria-live='assertive'
+        role='alert'
+      >
+        <Icon
+          name='warning'
+          className={styles.icon}
+        />
+        <span>{errorText}</span>
+      </span>
+
+    }
   </div >
 );
