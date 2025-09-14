@@ -468,7 +468,7 @@ export interface InterfaceAccordionBlock {
  * via the `definition` "InterfaceFormBlock".
  */
 export interface InterfaceFormBlock {
-  form?: (string | null) | Form;
+  form: string | Form;
   id?: string | null;
   blockName?: string | null;
   blockType: 'formBlock';
