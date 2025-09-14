@@ -11,14 +11,14 @@ export type InterfaceInputTextPropTypes = {
   required: boolean;
   defaultValue: string;
   type: 'email' | 'text';
-  colorScheme: 'bright' | 'dark';
+  colorTheme: 'light' | 'dark';
 };
 
 const classes = cva([styles.inputText], {
   variants: {
-    colorScheme: {
-      bright: [styles.bright],
+    colorTheme: {
       dark: [styles.dark],
+      light: [styles.light],
     },
   },
 });
@@ -31,7 +31,7 @@ export const InputText = ({
   required,
   defaultValue,
   type,
-  colorScheme,
+  colorTheme,
 }: InterfaceInputTextPropTypes): React.JSX.Element => {
   const inputId = useId();
 
@@ -39,7 +39,7 @@ export const InputText = ({
     <div
       data-testid='input-text'
       className={classes({
-        colorScheme,
+        colorTheme,
       })}
     >
       <input
