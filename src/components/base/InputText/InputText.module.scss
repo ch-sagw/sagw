@@ -1,18 +1,117 @@
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
-
-// @use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
 
 .inputText {
+  --color-error: var(--text-error);
+  --color-text: var(--text-primary);
+  --color-placeholder: var(--text-secondary);
+  --color-border: var(--border-primary);
+  --line-height: var(--spacing-2xl);
+  --label-active-shift: 20;
+  --transition-duration: var(--motion-speed-very-fast);
+  --transition-ease: var(--motion-ease-in-out);
+
+  &.darkMode {
+    --color-error: var(--text-error-inverted);
+    --color-text: var(--text-primary-inverted);
+    --color-placeholder: var(--text-secondary-inverted);
+    --color-border: var(--border-primary-inverted);
+  }
+
+  & {
+    position: relative;
+    color: var(--color-text);
+  }
+
+  @include mq($from: medium) {
+    --line-height: var(--spacing-3xl);
+  }
+
   .input {
     @include body-text-m;
+
+    width: 100%;
+    appearance: none;
+    color: currentcolor;
+    background-color: transparent;
+    border: none;
+    border-block-end: px-to-rem(var(--border-width-m)) solid var(--color-border);
+    line-height: px-to-rem(var(--line-height));
+    padding: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    &::placeholder {
+      color: transparent;
+      transition: color var(--transition-duration) var(--transition-ease);
+
+      @include reduced-motion {
+        transition: none;
+      }
+
+      @include forced-colors {
+        opacity: 0;
+        transition-property: opacity;
+      }
+    }
+
+    &:focus,
+    &:active {
+      &::placeholder {
+        color: var(--color-placeholder);
+
+        @include forced-colors {
+          opacity: 1;
+        }
+      }
+    }
+
+    &:focus-visible {
+      @include focus-visible;
+    }
   }
 
   .label {
-    @include body-text-s;
+    @include body-text-m;
+
+    inset-block-start: px-to-rem(calc(var(--line-height) - var(--font-size-m)) / 2);
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    position: absolute;
+    pointer-events: none;
+    transform-origin: left center;
+    transition: transform var(--transition-duration) var(--transition-ease), top var(--transition-duration) var(--transition-ease);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    @include reduced-motion {
+      transition: none;
+    }
   }
 
   .error {
     @include body-text-s;
+
+    color: var(--color-error);
+    display: flex;
+    align-items: center;
+    margin-block-start: px-to-rem(var(--spacing-xs));
+
+    .icon {
+      flex-basis: px-to-rem(var(--spacing-m));
+      flex-grow: 0;
+      flex-shrink: 0;
+      margin-inline-end: px-to-rem(var(--spacing-xs));
+    }
   }
+}
+
+.input:focus + .label,
+.input:not(:placeholder-shown) + .label {
+  inset-block-start: px-to-rem(calc(-1 * var(--label-active-shift)));
+  transform: scale(75%);
 }
