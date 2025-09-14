@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '@/components/base/InputText/InputText.module.scss';
+import { Icon } from '@/icons';
 
 export type InterfaceInputTextPropTypes = {
   id: string;
@@ -45,6 +46,12 @@ export const InputText = ({
       id={id}
       aria-live='assertive'
       role='alert'
-    >{errorText}</span>
-  </div>
+    >
+      <Icon
+        name='warning'
+        className={styles.icon}
+      />
+      <span>{errorText}</span>
+    </span>
+  </div >
 );
