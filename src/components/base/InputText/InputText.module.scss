@@ -8,10 +8,12 @@
   --color-text: var(--text-primary);
   --color-placeholder: var(--text-secondary);
   --color-border: var(--border-primary);
-  --line-height: var(--spacing-2xl);
   --label-active-shift: 20;
   --transition-duration: var(--motion-speed-very-fast);
   --transition-ease: var(--motion-ease-in-out);
+  --focus-padding-inline: 8;
+  --focus-margin-block: 6;
+  --input-height: var(--spacing-2xl);
 
   &.darkMode {
     --color-error: var(--text-error-inverted);
@@ -26,7 +28,7 @@
   }
 
   @include mq($from: medium) {
-    --line-height: var(--spacing-3xl);
+    --input-height: var(--spacing-3xl);
   }
 
   .input {
@@ -38,11 +40,12 @@
     background-color: transparent;
     border: none;
     border-block-end: px-to-rem(var(--border-width-m)) solid var(--color-border);
-    line-height: px-to-rem(var(--line-height));
-    padding: 0;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    margin: px-to-rem(var(--focus-margin-block)) 0 0;
+    padding: px-to-rem(calc((var(--input-height) - var(--body-text-m-size) * var(--body-text-m-line-height)) / 2)) 0;
+    transition: padding-inline-start var(--transition-duration) var(--transition-ease);
 
     &::placeholder {
       color: transparent;
@@ -60,6 +63,9 @@
 
     &:focus,
     &:active {
+      padding-inline-start: px-to-rem(var(--focus-padding-inline));
+      padding-inline-end: px-to-rem(var(--focus-padding-inline));
+
       &::placeholder {
         color: var(--color-placeholder);
 
@@ -77,7 +83,7 @@
   .label {
     @include body-text-m;
 
-    inset-block-start: px-to-rem(calc(var(--line-height) - var(--font-size-m)) / 2);
+    inset-block-start: px-to-rem(calc((var(--input-height) - var(--body-text-m-size) * var(--body-text-m-line-height)) / 2 + var(--focus-margin-block)));
     inset-inline-start: 0;
     inset-inline-end: 0;
     position: absolute;
