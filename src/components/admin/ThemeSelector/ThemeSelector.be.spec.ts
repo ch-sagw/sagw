@@ -41,11 +41,16 @@ test.describe('Theme selector', () => {
     });
     await page.waitForLoadState('networkidle');
 
-    const selectedOption = await page.getByText('ocean');
+    const selectedOption = await page.getByLabel('Color Theme');
 
-    await selectedOption.click();
+    await selectedOption.click({
+      force: true,
+    });
 
-    const option2 = await page.getByText('sunset');
+    const option2 = await page.getByRole('option', {
+      name: 'Ocean',
+    })
+      .locator('span');
 
     await option2.click();
     await page.waitForLoadState('networkidle');
