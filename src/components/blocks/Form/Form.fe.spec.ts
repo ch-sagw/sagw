@@ -10,7 +10,7 @@ test('component should be visible', async ({
   // Put the story name in here. Get it from the url in storybook...
   await navigate(page, 'components-blocks-form--sample-story');
 
-  const elem = await page.getByText('email');
+  const elem = await page.getByText('text field label sagw');
 
   await expect(elem)
     .toBeVisible();
