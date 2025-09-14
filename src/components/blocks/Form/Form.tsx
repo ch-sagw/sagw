@@ -36,13 +36,13 @@ export const Form = (): React.JSX.Element => {
   return (
     <form action={formAction}>
       <InputText
-        id='email'
         label='email'
         placeholder='some placeholder'
         errorText={mailError}
         name='email'
         required={true}
         defaultValue={state?.values.email || ''}
+        type='email'
       />
 
       <button disabled={pending}>Sign up</button>

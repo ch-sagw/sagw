@@ -30,7 +30,6 @@ export const Text: StrictStory = {
   args: {
     defaultValue: '',
     errorText: '',
-    id: 'someId',
     label: 'Text input field',
     name: 'name',
     placeholder: 'Placeholder text',
@@ -43,7 +42,6 @@ export const Email: StrictStory = {
   args: {
     defaultValue: '',
     errorText: '',
-    id: 'someId',
     label: 'Email input field',
     name: 'name',
     placeholder: 'Placeholder text',
@@ -56,7 +54,18 @@ export const WithError: StrictStory = {
   args: {
     defaultValue: '',
     errorText: 'Bitte geben Sie eine korrekte E-Mail Adresse an.',
-    id: 'someId',
+    label: 'Email input field',
+    name: 'name',
+    placeholder: 'Placeholder text',
+    required: true,
+    type: 'email',
+  },
+};
+
+export const WithDefaultValue: StrictStory = {
+  args: {
+    defaultValue: 'Default Value',
+    errorText: '',
     label: 'Email input field',
     name: 'name',
     placeholder: 'Placeholder text',
