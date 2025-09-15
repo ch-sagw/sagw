@@ -1,19 +1,3 @@
-/*
-Some Title
-
-Some paragraph text with bold, italic, underline, strikethrouh, subscript,
-superscript, an external link and an internal link.
-
-Ordered list
-item 1
-item 2
-item 3
-Unordered list
-item 1
-item 2
-item 3
-*/
-
 import {
   InterfaceRte1, InterfaceRte2,
 } from '@/payload-types';
@@ -101,6 +85,22 @@ export const sampleRte1: InterfaceRte1['content'] = {
     version: 1,
   },
 };
+
+/*
+Some Title
+
+Some paragraph text with bold, italic, underline, strikethrouh, subscript,
+superscript, an external link and an internal link.
+
+Ordered list
+item 1
+item 2
+item 3
+Unordered list
+item 1
+item 2
+item 3
+*/
 
 export const sampleRte2: InterfaceRte2['content'] = {
   root: {
@@ -495,6 +495,78 @@ export const sampleRte2: InterfaceRte2['content'] = {
         start: 1,
         tag: 'ul',
         type: 'list',
+        version: 1,
+      },
+    ],
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+};
+
+/*
+Example for data privacy checkbox
+*/
+
+export const sampleRtePrivacyCheckbox: InterfaceRte2['content'] = {
+  root: {
+    children: [
+      {
+        children: [
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Ich habe die Hinweise zum ',
+            type: 'text',
+            version: 1,
+          },
+          {
+            children: [
+              {
+                detail: 0,
+                format: 0,
+                mode: 'normal',
+                style: '',
+                text: 'Datenschutz',
+                type: 'text',
+                version: 1,
+              },
+            ],
+            direction: 'ltr',
+            fields: {
+              doc: {
+                label: 'Home Page',
+                relationTo: 'homePage',
+                value: '68c6f2a27b546854b2c701ff',
+              },
+              linkType: 'internal',
+            },
+            format: '',
+            id: '68c7f8ebb2920188de8380de',
+            indent: 0,
+            type: 'link',
+            version: 3,
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: ' gelesen und akzeptiere sie.',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        textFormat: 0,
+        textStyle: '',
+        type: 'paragraph',
         version: 1,
       },
     ],
