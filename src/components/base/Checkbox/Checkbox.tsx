@@ -15,16 +15,8 @@ export type InterfaceCheckboxPropTypes = {
   checked: boolean;
   errorText: string;
   colorTheme: 'light' | 'dark';
+  className?: string;
 };
-
-const classes = cva([styles.checkbox], {
-  variants: {
-    colorTheme: {
-      dark: [styles.dark],
-      light: [styles.light],
-    },
-  },
-});
 
 export const Checkbox = ({
   value,
@@ -33,11 +25,24 @@ export const Checkbox = ({
   checked,
   errorText,
   colorTheme,
+  className,
 }: InterfaceCheckboxPropTypes): React.JSX.Element => {
   const [
     checkedState,
     setCheckedState,
   ] = useState(checked);
+
+  const classes = cva([
+    styles.checkbox,
+    className,
+  ], {
+    variants: {
+      colorTheme: {
+        dark: [styles.dark],
+        light: [styles.light],
+      },
+    },
+  });
 
   const onInputChange = (): void => {
     setCheckedState(!checkedState);
