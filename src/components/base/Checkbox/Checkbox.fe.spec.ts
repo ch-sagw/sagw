@@ -4,7 +4,7 @@ import {
 } from '@playwright/test';
 import { navigate } from '@/automated-testing/helpers';
 
-test.describe('Input Text', () => {
+test.describe('Checkbox', () => {
   test('correctly checks on click', async ({
     page,
   }) => {
