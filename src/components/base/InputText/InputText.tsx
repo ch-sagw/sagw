@@ -11,6 +11,7 @@ export type BaseProps = {
   required: boolean;
   defaultValue: string;
   colorTheme: 'light' | 'dark';
+  className?: string;
 };
 
 type InputProps = BaseProps & {
@@ -23,19 +24,6 @@ type TextareaProps = BaseProps & {
 
 export type InterfaceInputTextPropTypes = InputProps | TextareaProps;
 
-const classes = cva([styles.inputText], {
-  variants: {
-    colorTheme: {
-      dark: [styles.dark],
-      light: [styles.light],
-    },
-    type: {
-      text: [styles.text],
-      textarea: [styles.textarea],
-    },
-  },
-});
-
 export const InputText = ({
   label,
   placeholder,
@@ -45,8 +33,25 @@ export const InputText = ({
   defaultValue,
   type,
   colorTheme,
+  className,
 }: InterfaceInputTextPropTypes): React.JSX.Element => {
   const inputId = useId();
+
+  const classes = cva([
+    styles.inputText,
+    className,
+  ], {
+    variants: {
+      colorTheme: {
+        dark: [styles.dark],
+        light: [styles.light],
+      },
+      type: {
+        text: [styles.text],
+        textarea: [styles.textarea],
+      },
+    },
+  });
 
   const Elem: React.ElementType = type === 'textarea'
     ? 'textarea'
