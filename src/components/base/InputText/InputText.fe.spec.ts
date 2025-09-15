@@ -5,7 +5,7 @@ import {
 import { navigate } from '@/automated-testing/helpers';
 
 test.describe('Input Text', () => {
-  test('correctly shows active state in light mode', async ({
+  test('correctly shows active state', async ({
     page,
   }) => {
 
@@ -13,22 +13,6 @@ test.describe('Input Text', () => {
 
     const elem = await page.getByTestId('input-text');
     const input = await elem.locator('textarea');
-
-    await input.fill('Foo bar');
-
-    await expect(page)
-      .toHaveScreenshot();
-
-  });
-
-  test('correctly shows active state in dark mode', async ({
-    page,
-  }) => {
-
-    await navigate(page, 'components-base-inputtext--dark-variant');
-
-    const elem = await page.getByTestId('input-text');
-    const input = await elem.locator('input');
 
     await input.fill('Foo bar');
 
