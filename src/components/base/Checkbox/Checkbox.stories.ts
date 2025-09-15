@@ -4,6 +4,7 @@ import type {
 } from '@storybook/nextjs-vite';
 import { Checkbox } from '@/components/base/Checkbox/Checkbox';
 import { defaultDecorator } from '@/storybook-helpers';
+import { sampleRtePrivacyCheckbox } from '@/components/base/Rte/Rte.sampleContent';
 
 type CheckboxProps = React.ComponentProps<typeof Checkbox>;
 
@@ -31,7 +32,7 @@ export const DefaultCheckbox: StrictStory = {
     checked: false,
     colorTheme: 'light',
     errorText: '',
-    label: 'Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.',
+    label: sampleRtePrivacyCheckbox,
     name: 'name',
     value: 'value',
   },
@@ -42,7 +43,7 @@ export const CheckedCheckbox: StrictStory = {
     checked: true,
     colorTheme: 'light',
     errorText: '',
-    label: 'Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.',
+    label: sampleRtePrivacyCheckbox,
     name: 'name',
     value: 'value',
   },
@@ -53,7 +54,7 @@ export const CheckboxWithError: StrictStory = {
     checked: false,
     colorTheme: 'light',
     errorText: 'Bitte akzeptieren sie die Hinweise zum Datenschutz.',
-    label: 'Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.',
+    label: sampleRtePrivacyCheckbox,
     name: 'name',
     value: 'value',
   },
@@ -64,7 +65,7 @@ export const DarkVariant: StrictStory = {
     checked: false,
     colorTheme: 'dark',
     errorText: 'Bitte akzeptieren sie die Hinweise zum Datenschutz.',
-    label: 'Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.',
+    label: sampleRtePrivacyCheckbox,
     name: 'name',
     value: 'value',
   },

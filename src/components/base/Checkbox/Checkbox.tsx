@@ -4,11 +4,14 @@ import React, { useState } from 'react';
 import { cva } from 'cva';
 import { Icon } from '@/icons';
 import styles from '@/components/base/Checkbox/Checkbox.module.scss';
+import {
+  InterfaceRtePropTypes, Rte,
+} from '@/components/base/Rte/Rte';
 
 export type InterfaceCheckboxPropTypes = {
   value: string;
   name: string;
-  label: string;
+  label: InterfaceRtePropTypes['text'];
   checked: boolean;
   errorText: string;
   colorTheme: 'light' | 'dark';
@@ -62,7 +65,10 @@ export const Checkbox = ({
         htmlFor={value}
         className={styles.label}
       >
-        {label}
+        <Rte
+          text={label}
+          rteConfig='rte2'
+        />
       </label>
 
       {errorText &&
