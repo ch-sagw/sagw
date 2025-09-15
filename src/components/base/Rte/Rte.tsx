@@ -43,7 +43,7 @@ const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({
 export type InterfaceRtePropTypes = {
   text: InterfaceRte1['content'] | InterfaceRte2['content'];
   rteConfig: 'rte1' | 'rte2';
-  context: 'notification' | 'heroLead' | 'magazineDetailLead' | 'magazineDetailText'
+  context?: 'notification' | 'heroLead' | 'magazineDetailLead' | 'magazineDetailText'
 };
 
 const rteClasses = cva([styles.rte], {
