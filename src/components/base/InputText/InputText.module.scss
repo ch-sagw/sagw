@@ -85,7 +85,6 @@
   }
 
   &.textarea .input {
-    // height: px-to-rem(calc(var(--body-text-m-line-height) * var(--body-text-m-size) * 3));
     height: px-to-rem(calc(var(--input-height) + 2 * var(--body-text-m-size) * var(--body-text-m-line-height)));
 
     @supports (field-sizing: content) {

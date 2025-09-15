@@ -1,0 +1,84 @@
+'use client';
+
+import React, { useState } from 'react';
+import { cva } from 'cva';
+import { Icon } from '@/icons';
+import styles from '@/components/base/Checkbox/Checkbox.module.scss';
+
+export type InterfaceCheckboxPropTypes = {
+  value: string;
+  name: string;
+  label: string;
+  checked: boolean;
+  errorText: string;
+  colorTheme: 'light' | 'dark';
+};
+
+const classes = cva([styles.checkbox], {
+  variants: {
+    colorTheme: {
+      dark: [styles.dark],
+      light: [styles.light],
+    },
+  },
+});
+
+export const Checkbox = ({
+  value,
+  name,
+  label,
+  checked,
+  errorText,
+  colorTheme,
+}: InterfaceCheckboxPropTypes): React.JSX.Element => {
+  const [
+    checkedState,
+    setCheckedState,
+  ] = useState(checked);
+
+  const onInputChange = (): void => {
+    setCheckedState(!checkedState);
+  };
+
+  return (
+    <div className={classes({
+      colorTheme,
+    })}>
+      <input
+        className={styles.input}
+        type='checkbox'
+        name={name}
+        id={value}
+        checked={checkedState}
+        onChange={onInputChange}
+      />
+
+      <Icon
+        name='checked'
+        className={styles.icon}
+      />
+
+      <label
+        htmlFor={value}
+        className={styles.label}
+      >
+        {label}
+      </label>
+
+      {errorText &&
+        <span
+          className={styles.error}
+          id={name}
+          aria-live='assertive'
+          role='alert'
+        >
+          <Icon
+            name='warning'
+            className={styles.errorIcon}
+          />
+          <span>{errorText}</span>
+        </span>
+      }
+    </div>
+  );
+};
