@@ -40,6 +40,7 @@ test.describe('Theme selector', () => {
       force: true,
     });
     await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
 
     const selectedOption = await page.getByLabel('Color Theme');
 
@@ -54,6 +55,7 @@ test.describe('Theme selector', () => {
 
     await option2.click();
     await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
 
     const image = await page.getByTestId('image');
 
