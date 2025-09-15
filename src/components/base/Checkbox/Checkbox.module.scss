@@ -10,11 +10,12 @@
   --color-inactive: var(--text-secondary);
   --checkbox-dimensions: 18;
   --icon-dimensions: 28;
+  --checkbox-gap-shift: 3;
 
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  gap: px-to-rem(var(--spacing-m));
+  gap: px-to-rem(calc(var(--spacing-m) - var(--checkbox-gap-shift)));
   align-items: center;
   color: var(--color-active);
 
@@ -32,6 +33,10 @@
     position: absolute;
     opacity: 0;
     pointer-events: none;
+
+    &:focus-visible ~ .label {
+      @include focus-visible;
+    }
   }
 
   .label {
