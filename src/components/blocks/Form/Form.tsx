@@ -8,10 +8,15 @@ import { submitForm } from '@/app/actions/submitForm';
 import {
   Form as InterfaceForm, InterfaceFormBlock,
 } from '@/payload-types';
+import { hiddenFormDefinitionFieldName } from '@/components/blocks/Form/Form.config';
 
-import { InputText } from '@/components/base/InputText/InputText';
+import {
+  InputText, InterfaceInputTextPropTypes,
+} from '@/components/base/InputText/InputText';
 
-// import styles from '@/components/blocks/Form/Form.module.scss';
+import { Checkbox } from '@/components/base/Checkbox/Checkbox';
+
+import styles from '@/components/blocks/Form/Form.module.scss';
 
 export type InterfaceFormPropTypes = {} & InterfaceFormBlock;
 
@@ -25,17 +30,15 @@ export const Form = ({
   ] = useActionState(submitForm, null);
 
   const [
-    mailError,
-    setMailError,
-  ] = useState('');
+    errors,
+    setErrors,
+  ] = useState<Record<string, string[] | undefined>>({});
 
   useEffect(() => {
     if (!state || !state.error) {
-      setMailError('');
+      setErrors({});
     } else {
-      if (state.error.fieldErrors.email) {
-        setMailError(state.error.fieldErrors.email.join(', '));
-      }
+      setErrors(state.error.fieldErrors ?? {});
     }
   }, [state]);
 
@@ -54,21 +57,49 @@ export const Form = ({
   }
 
   return (
-    <form action={formAction}>
+    <form
+      action={formAction}
+      className={styles.form}
+      noValidate
+    >
+      <input type='hidden' name={hiddenFormDefinitionFieldName} value={JSON.stringify(renderForm.fields)} />
+
       {renderForm.fields?.map((field, i) => {
-        if (field.blockType === 'textBlockForm' || field.blockType === 'emailBlock') {
+        if (field.blockType === 'textBlockForm' || field.blockType === 'emailBlock' || field.blockType === 'textareaBlock') {
+          let fieldType: InterfaceInputTextPropTypes['type'];
+
+          if (field.blockType === 'textBlockForm' || field.blockType === 'emailBlock') {
+            fieldType = 'text';
+          } else {
+            fieldType = 'textarea';
+          }
+
           return (
             <InputText
+              className={`${styles.field} ${styles[`field-width-${field.fieldWidth}`]}`}
               key={i}
               label={field.label}
               placeholder={field.placeholder}
-              errorText={mailError}
+              errorText={errors[field.name]?.join(', ') || ''}
               name={field.name}
               required={field.required || false}
-              defaultValue={state?.values.email || ''}
-              type={field.blockType === 'textBlockForm'
-                ? 'text'
-                : 'email'}
+              defaultValue={String(state?.values?.[field.name] ?? '')}
+              type={fieldType}
+              colorTheme='light'
+            />
+          );
+        }
+
+        if (field.blockType === 'checkboxBlock') {
+          return (
+            <Checkbox
+              key={i}
+              className={`${styles.field} ${styles[`field-width-${field.fieldWidth}`]}`}
+              value={field.name}
+              name={field.name}
+              label={field.label.content}
+              checked={false}
+              errorText={errors[field.name]?.join(', ') || ''}
               colorTheme='light'
             />
           );
