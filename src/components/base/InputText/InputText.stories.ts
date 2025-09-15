@@ -56,6 +56,19 @@ export const Email: StrictStory = {
   },
 };
 
+export const Textarea: StrictStory = {
+  args: {
+    colorTheme: 'light',
+    defaultValue: '',
+    errorText: '',
+    label: 'Textarea',
+    name: 'name',
+    placeholder: 'Placeholder text',
+    required: true,
+    type: 'textarea',
+  },
+};
+
 export const WithError: StrictStory = {
   args: {
     colorTheme: 'light',

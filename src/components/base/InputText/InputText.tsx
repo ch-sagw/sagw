@@ -3,22 +3,35 @@ import { cva } from 'cva';
 import styles from '@/components/base/InputText/InputText.module.scss';
 import { Icon } from '@/icons';
 
-export type InterfaceInputTextPropTypes = {
+export type BaseProps = {
   label: string;
   placeholder: string;
   errorText: string;
   name: string;
   required: boolean;
   defaultValue: string;
-  type: 'email' | 'text';
   colorTheme: 'light' | 'dark';
 };
+
+type InputProps = BaseProps & {
+  type: 'email' | 'text';
+};
+
+type TextareaProps = BaseProps & {
+  type: 'textarea';
+};
+
+export type InterfaceInputTextPropTypes = InputProps | TextareaProps;
 
 const classes = cva([styles.inputText], {
   variants: {
     colorTheme: {
       dark: [styles.dark],
       light: [styles.light],
+    },
+    type: {
+      text: [styles.text],
+      textarea: [styles.textarea],
     },
   },
 });
@@ -35,23 +48,36 @@ export const InputText = ({
 }: InterfaceInputTextPropTypes): React.JSX.Element => {
   const inputId = useId();
 
+  const Elem: React.ElementType = type === 'textarea'
+    ? 'textarea'
+    : 'input';
+
   return (
     <div
       data-testid='input-text'
       className={classes({
         colorTheme,
+        type: type === 'text' || type === 'email'
+          ? 'text'
+          : 'textarea',
       })}
     >
-      <input
+      <Elem
         className={styles.input}
         aria-describedby={inputId}
         aria-required={required}
-        type={type}
         placeholder={placeholder}
         required={required}
         name={name}
         defaultValue={defaultValue}
         aria-label={label}
+        {...(type === 'textarea'
+          ? {
+            rows: 1,
+          }
+          : {
+            type,
+          })}
       />
       <label
         className={styles.label}
