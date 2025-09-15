@@ -43,6 +43,10 @@
     color: currentcolor;
     margin-left: px-to-rem(calc(-1 * (var(--spacing-m) + var(--icon-dimensions))));
     padding-left: px-to-rem(calc(var(--spacing-m) + var(--icon-dimensions)));
+
+    @include reduced-motion {
+      transition: none;
+    }
   }
 
   .icon {
@@ -58,10 +62,10 @@
     path {
       opacity: 0;
       transition: opacity var(--motion-speed-very-fast) var(--motion-ease-in-out);
-    }
 
-    @include reduced-motion {
-      transition: none;
+      @include reduced-motion {
+        transition: none;
+      }
     }
 
     &:before {
@@ -73,6 +77,10 @@
       inset-block-start: px-to-rem(calc((var(--icon-dimensions) - var(--checkbox-dimensions)) / 2));
       inset-inline-start: px-to-rem(calc((var(--icon-dimensions) - var(--checkbox-dimensions)) / 2));
       transition: border-color var(--motion-speed-very-fast) var(--motion-ease-in-out);
+
+      @include reduced-motion {
+        transition: none;
+      }
     }
   }
 
