@@ -59,6 +59,7 @@ export const Checkbox = ({
         id={value}
         checked={checkedState}
         onChange={onInputChange}
+        value={value}
       />
 
       <Icon

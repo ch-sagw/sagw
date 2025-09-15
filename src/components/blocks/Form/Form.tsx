@@ -1,7 +1,8 @@
 'use client';
 
 import React, {
-  useActionState, useEffect,
+  Fragment, useActionState,
+  useEffect,
   useState,
 } from 'react';
 import { submitForm } from '@/app/actions/submitForm';
@@ -43,7 +44,7 @@ export const Form = ({
   }, [state]);
 
   if (!form) {
-    return <></>;
+    return <Fragment></Fragment>;
   }
 
   let renderForm;
@@ -53,7 +54,7 @@ export const Form = ({
   }
 
   if (!renderForm) {
-    return <></>;
+    return <Fragment></Fragment>;
   }
 
   return (
@@ -95,7 +96,7 @@ export const Form = ({
             <Checkbox
               key={i}
               className={`${styles.field} ${styles[`field-width-${field.fieldWidth}`]}`}
-              value={field.name}
+              value='on'
               name={field.name}
               label={field.label.content}
               checked={false}
@@ -105,7 +106,7 @@ export const Form = ({
           );
         }
 
-        return <></>;
+        return <Fragment key={i}></Fragment>;
       })}
 
       <button disabled={pending}>Sign up</button>

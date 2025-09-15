@@ -17,6 +17,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
   await new Promise((resolve) => setTimeout(resolve, 0));
 
   const fields = JSON.parse(formData.get(hiddenFormDefinitionFieldName) as string);
+
   const shape: Record<string, any> = {};
 
   for (const field of fields) {
@@ -50,11 +51,13 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       }
     } else if (field.blockType === 'checkboxBlock') {
       if (field.required) {
+
         shape[field.name] = z
           .string()
           .refine((val) => val === 'on', {
-            message: field.fieldError || `${field.label} must be checked`,
+            message: field.fieldError,
           });
+
       } else {
         shape[field.name] = z.string()
           .optional();
@@ -67,7 +70,16 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
   const data: Record<string, unknown> = {};
 
   fields.forEach((f: any) => {
-    data[f.name] = formData.get(f.name);
+    const val = formData.get(f.name);
+
+    if (f.blockType === 'checkboxBlock') {
+      // Normalize unchecked checkboxes to empty string
+      data[f.name] = val === null
+        ? ''
+        : val;
+    } else {
+      data[f.name] = val;
+    }
   });
 
   const validated = schema.safeParse(data);
