@@ -67,7 +67,7 @@
     &:before {
       content: "";
       position: absolute;
-      border: 2px solid currentcolor;
+      border: px-to-rem(var(--border-width-l)) solid currentcolor;
       width: px-to-rem(var(--checkbox-dimensions));
       height: px-to-rem(var(--checkbox-dimensions));
       inset-block-start: px-to-rem(calc((var(--icon-dimensions) - var(--checkbox-dimensions)) / 2));
