@@ -12,7 +12,7 @@
   --transition-duration: var(--motion-speed-very-fast);
   --transition-ease: var(--motion-ease-in-out);
   --focus-padding-inline: 8;
-  --focus-margin-block: 6;
+  --focus-margin-block: 5;
   --input-height: var(--spacing-2xl);
 
   &.dark {
@@ -30,6 +30,10 @@
 
   @include mq($from: medium) {
     --input-height: var(--spacing-3xl);
+  }
+
+  @include mq($from: ultra) {
+    --focus-margin-block: 12;
   }
 
   .input {
