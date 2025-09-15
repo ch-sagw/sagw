@@ -41,6 +41,7 @@ test.describe('Theme selector', () => {
     });
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('load');
+    await page.waitForLoadState('domcontentloaded');
 
     const selectedOption = await page.getByLabel('Color Theme');
 
