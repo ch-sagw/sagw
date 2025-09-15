@@ -8,11 +8,10 @@
   --color-text: var(--text-primary);
   --color-placeholder: var(--text-secondary);
   --color-border: var(--border-primary);
-  --label-active-shift: 20;
+  --label-active-shift: 6;
   --transition-duration: var(--motion-speed-very-fast);
   --transition-ease: var(--motion-ease-in-out);
   --focus-padding-inline: 8;
-  --focus-margin-block: 5;
   --input-height: var(--spacing-2xl);
 
   &.dark {
@@ -25,7 +24,7 @@
   & {
     position: relative;
     color: var(--color-text);
-    margin-block-start: px-to-rem(calc(var(--focus-margin-block) + var(--body-text-m-size) * 0.25));
+    margin-block-start: px-to-rem(calc(var(--body-text-m-size) * 0.75 + var(--label-active-shift)));
   }
 
   @include mq($from: medium) {
@@ -33,7 +32,7 @@
   }
 
   @include mq($from: ultra) {
-    --focus-margin-block: 12;
+    --input-height: var(--spacing-4xl);
   }
 
   .input {
@@ -45,7 +44,7 @@
     background-color: transparent;
     border: none;
     border-block-end: px-to-rem(var(--border-width-m)) solid var(--color-border);
-    margin: px-to-rem(var(--focus-margin-block)) 0 0;
+    margin: 0;
     padding: px-to-rem(calc((var(--input-height) - var(--body-text-m-size) * var(--body-text-m-line-height)) / 2)) 0;
     transition: padding-inline-start var(--transition-duration) var(--transition-ease);
 
@@ -104,12 +103,12 @@
   .label {
     @include body-text-m;
 
-    inset-block-start: px-to-rem(calc((var(--input-height) - var(--body-text-m-size) * var(--body-text-m-line-height)) / 2 + var(--focus-margin-block)));
+    inset-block-start: px-to-rem(calc((var(--input-height) - var(--body-text-m-size) * var(--body-text-m-line-height)) / 2));
     inset-inline-start: 0;
     inset-inline-end: 0;
     position: absolute;
     pointer-events: none;
-    transform-origin: left center;
+    transform-origin: 0 0%;
     transition: transform var(--transition-duration) var(--transition-ease), top var(--transition-duration) var(--transition-ease);
     text-overflow: ellipsis;
     overflow: hidden;
@@ -140,6 +139,6 @@
 
 .input:focus + .label,
 .input:not(:placeholder-shown) + .label {
-  inset-block-start: px-to-rem(calc(-1 * var(--label-active-shift)));
+  inset-block-start: px-to-rem(calc(-1 * var(--body-text-m-size) * 0.75 - var(--border-width-m) - var(--label-active-shift)));
   transform: scale(75%);
 }
