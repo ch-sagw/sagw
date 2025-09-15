@@ -109,10 +109,13 @@
     position: absolute;
     pointer-events: none;
     transform-origin: 0 0%;
-    transition: transform var(--transition-duration) var(--transition-ease), top var(--transition-duration) var(--transition-ease);
+    transition-duration: var(--transition-duration);
+    transition-timing-function: var(--transition-ease);
+    transition-property: transform, top, color;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    color: var(--color-placeholder);
 
     @include reduced-motion {
       transition: none;
@@ -141,4 +144,5 @@
 .input:not(:placeholder-shown) + .label {
   inset-block-start: px-to-rem(calc(-1 * var(--body-text-m-size) * 0.75 - var(--border-width-m) - var(--label-active-shift)));
   transform: scale(75%);
+  color: var(--color-text);
 }
