@@ -4,14 +4,29 @@ import {
 } from '@playwright/test';
 import { navigate } from '@/automated-testing/helpers';
 
-test('component should be visible', async ({
-  page,
-}) => {
-  // Put the story name in here. Get it from the url in storybook...
-  await navigate(page, 'components-base-checkbox--sample-story');
+test.describe('Input Text', () => {
+  test('correctly checks on click', async ({
+    page,
+  }) => {
 
-  const elem = await page.getByText('some text');
+    await navigate(page, 'components-base-checkbox--default-checkbox');
 
-  await expect(elem)
-    .toBeVisible();
+    const elem = await page.getByTestId('checkbox-label');
+    const input = await page.getByRole('checkbox');
+
+    await elem.click({
+      position: {
+        x: 10,
+        y: 10,
+      },
+    });
+
+    await expect(input)
+      .toBeChecked();
+
+    await expect(elem)
+      .toHaveScreenshot();
+
+  });
+
 });

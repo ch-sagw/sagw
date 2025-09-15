@@ -64,6 +64,7 @@ export const Checkbox = ({
       <label
         htmlFor={value}
         className={styles.label}
+        data-testid='checkbox-label'
       >
         <Rte
           text={label}
