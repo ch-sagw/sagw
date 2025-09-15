@@ -31,18 +31,10 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
           .optional()
           .or(z.literal(''));
       }
-    } else if (field.blockType === 'textBlockForm') {
+    } else if (field.blockType === 'textBlockForm' || field.blockType === 'textareaBlock') {
       if (field.required) {
-        shape[field.name] = z.string()
-          .min(1, field.fieldError);
-      } else {
-        shape[field.name] = z.string()
-          .optional()
-          .or(z.literal(''));
-      }
-    } else if (field.blockType === 'textareaBlock') {
-      if (field.required) {
-        shape[field.name] = z.string()
+        shape[field.name] = z
+          .string()
           .min(1, field.fieldError);
       } else {
         shape[field.name] = z.string()
@@ -51,13 +43,11 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       }
     } else if (field.blockType === 'checkboxBlock') {
       if (field.required) {
-
         shape[field.name] = z
           .string()
           .refine((val) => val === 'on', {
             message: field.fieldError,
           });
-
       } else {
         shape[field.name] = z.string()
           .optional();
@@ -86,7 +76,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
 
   if (!validated.success) {
     return {
-      error: validated.error.flatten(),
+      error: z.flattenError(validated.error),
       values: data,
     };
   }
