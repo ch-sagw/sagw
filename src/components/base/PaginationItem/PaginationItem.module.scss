@@ -1,0 +1,30 @@
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+
+.paginationItem {
+  @include button-text;
+  @include button-reset;
+
+  --padding-block: 19;
+  --padding-inline: 22.5;
+
+  @include mq($from: medium) {
+    --padding-block: 23;
+    --padding-inline: 26.5;
+  }
+
+  & {
+    display: block;
+    padding: px-to-rem(var(--padding-block)) px-to-rem(var(--padding-inline));
+  }
+
+  &.number {
+    border: px-to-rem((var(--border-width-m))) solid var(--border-primary);
+
+    &.active {
+      border-color: var(--border-weak);
+    }
+  }
+}

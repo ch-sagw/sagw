@@ -10,6 +10,7 @@ export const defaultDecorator = (Story: PartialStoryFn): ReactElement => (
     }}
     data-testid={vrtConfig.testid}
     id={vrtConfig.testid}
+    className='theme-sagw'
   >
     <Story />
   </div>
