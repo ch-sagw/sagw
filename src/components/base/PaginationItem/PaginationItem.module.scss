@@ -26,6 +26,10 @@
 
     &.active {
       border-color: var(--border-weak);
+
+      @include forced-colors {
+        border-color: LinkText;
+      }
     }
   }
 }

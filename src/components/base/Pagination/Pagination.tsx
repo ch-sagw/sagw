@@ -22,68 +22,140 @@ export const Pagination = ({
 
   /* eslint-disable sort-keys */
   const maxNumberOfButtons: Record<typeof bp, number> = {
-    zero: 3,
-    micro: 5,
+    zero: 4,
+    micro: 4,
     small: 5,
     medium: 7,
-    large: 7,
+    large: 9,
     wide: 9,
     ultra: 9,
   };
 
   const maxButtons = maxNumberOfButtons[bp];
 
-  const getPages = (): (number | 'filler')[] => {
-    const totalNumberButtons = Math.min(totalPages, maxButtons);
+  const buildPagesFromRange = (start: number, end: number): (number | 'filler')[] => {
+    const pages: (number | 'filler')[] = [];
 
-    // If total pages fit within number buttons → show all
-    if (totalPages <= totalNumberButtons) {
+    pages.push(1);
+
+    if (start > 2) {
+      pages.push('filler');
+    }
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    if (end < totalPages - 1) {
+      pages.push('filler');
+    }
+
+    pages.push(totalPages);
+
+    return pages;
+  };
+
+  const getPages = (): (number | 'filler')[] => {
+
+    // If everything fits -> show all pages
+    if (totalPages <= maxButtons) {
       return Array.from({
         length: totalPages,
       }, (_, i) => i + 1);
     }
 
-    const pages: (number | 'filler')[] = [];
+    // #####
+    // Special small-viewport behavior: zero / micro / small
+    // Show a contiguous sliding range of numbers (no fillers)
+    // #####
+    if (bp === 'zero' || bp === 'micro' || bp === 'small') {
+      const rangeSize = Math.min(maxButtons, totalPages);
+      const maxStart = Math.max(1, totalPages - rangeSize + 1);
+      const rawStart = currentPage - 1;
+      const start = Math.min(Math.max(1, rawStart), maxStart);
 
-    // reserve for first + last
-    const windowSize = totalNumberButtons - 2;
-    const half = Math.floor(windowSize / 2);
-
-    let start = currentPage - half;
-    let end = currentPage + half;
-
-    // Clamp window
-    if (start < 2) {
-      start = 2;
-      end = start + windowSize - 1;
-    }
-    if (end > totalPages - 1) {
-      end = totalPages - 1;
-      start = end - windowSize + 1;
+      return Array.from({
+        length: rangeSize,
+      }, (_, i) => start + i);
     }
 
-    // Always first
-    pages.push(1);
+    // #####
+    // General logic for larger viewports
+    // #####
+    const maxMiddleRange = Math.min(totalPages - 2, Math.max(1, maxButtons - 2));
 
-    // Filler before
-    if (start > 2) {
-      pages.push('filler');
+    const tryFind = (rangeSize: number, requirePrevNext: boolean): (number | 'filler')[] | null => {
+      // center-like start
+      let start = currentPage - Math.floor(rangeSize / 2);
+
+      if (start < 2) {
+        start = 2;
+      }
+      const maxStart = Math.max(2, totalPages - rangeSize);
+
+      if (start > maxStart) {
+        start = maxStart;
+      }
+      let end = start + rangeSize - 1;
+
+      if (requirePrevNext) {
+        if (start > currentPage - 1) {
+          start = Math.max(2, currentPage - 1);
+          end = start + rangeSize - 1;
+        }
+        if (end < currentPage + 1) {
+          end = Math.min(totalPages - 1, currentPage + 1);
+          start = end - rangeSize + 1;
+        }
+        if (start < 2) {
+          start = 2;
+        }
+        if (end > totalPages - 1) {
+          end = totalPages - 1;
+        }
+      }
+
+      const beforeFiller = start > 2
+        ? 1
+        : 0;
+      const afterFiller = end < totalPages - 1
+        ? 1
+        : 0;
+      const totalItems = 2 + rangeSize + beforeFiller + afterFiller;
+
+      if (totalItems <= maxButtons) {
+        return buildPagesFromRange(start, end);
+      }
+
+      return null;
+    };
+
+    for (let rangeSize = maxMiddleRange; rangeSize >= 1; rangeSize--) {
+      if (rangeSize >= 3) {
+        const candidate = tryFind(rangeSize, true);
+
+        if (candidate) {
+          return candidate;
+        }
+      }
     }
 
-    // Middle window
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
+    for (let rangeSize = maxMiddleRange; rangeSize >= 1; rangeSize--) {
+      const candidate = tryFind(rangeSize, false);
+
+      if (candidate) {
+        return candidate;
+      }
     }
 
-    // Filler after
-    if (end < totalPages - 1) {
-      pages.push('filler');
-    }
-
-    // Always last
-    pages.push(totalPages);
-
-    return pages;
+    return ([
+      1,
+      'filler',
+      currentPage,
+      'filler',
+      totalPages,
+    ] as (number | 'filler')[])
+      .slice(0, maxButtons);
   };
 
   const pages = getPages();
@@ -92,13 +164,16 @@ export const Pagination = ({
     <div
       className={styles.pagination}
     >
-      {pages.map((p, idx) => (p === 'filler'
+      {pages.map((p, key) => (p === 'filler'
         ? (
-          <PaginationItem key={`f-${idx}`} type='filler' />
+          <PaginationItem
+            key={`filler-${key}`}
+            type='filler'
+          />
         )
         : (
           <PaginationItem
-            key={p}
+            key={`page-${p}`}
             type='number'
             number={p}
             active={p === currentPage}

@@ -26,20 +26,6 @@ const meta: Meta<typeof Pagination> = {
 
 export default meta;
 
-export const Pages2: StrictStory = {
-  args: {
-    currentPage: 1,
-    totalPages: 2,
-  },
-};
-
-export const Pages3: StrictStory = {
-  args: {
-    currentPage: 1,
-    totalPages: 3,
-  },
-};
-
 export const Pages5: StrictStory = {
   args: {
     currentPage: 1,
@@ -58,5 +44,26 @@ export const Pages20: StrictStory = {
   args: {
     currentPage: 1,
     totalPages: 20,
+  },
+};
+
+export const Pages10Active5: StrictStory = {
+  args: {
+    currentPage: 5,
+    totalPages: 10,
+  },
+};
+
+export const Pages10Active6: StrictStory = {
+  args: {
+    currentPage: 6,
+    totalPages: 10,
+  },
+};
+
+export const Pages10Active7: StrictStory = {
+  args: {
+    currentPage: 7,
+    totalPages: 10,
   },
 };
