@@ -1,0 +1,21 @@
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/functions" as *;
+
+.tag {
+  @include label-text;
+
+  --spacing-block: 6;
+
+  display: inline-block;
+  padding: px-to-rem(var(--spacing-2xs)) px-to-rem(var(--spacing-block));
+
+  &.primary {
+    color: var(--text-secondary-inverted);
+    background-color: var(--brand-primary);
+  }
+
+  &.secondary {
+    color: var(--text-primary);
+    background-color: var(--brand-secondary);
+  }
+}
