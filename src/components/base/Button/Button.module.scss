@@ -1,4 +1,145 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-animations" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+:root {
+  --button-background-color: none;
+  --button-border-color: currentcolor;
+  --button-color: var(--interaction-primary);
+  --button-icon-size: var(--spacing-m);
+  --button-padding-block: 20;
+  --button-padding-inline: var(--spacing-l);
+}
+
 .button {
-  font-size: 2rem;
-  color: black;
+  @include button-text;
+
+  --button-color: var(--interaction-primary);
+
+  display: flex;
+  align-items: center;
+  column-gap: px-to-rem(var(--spacing-m));
+  background: var(--button-background-color);
+  border: px-to-rem(var(--border-width-m)) solid var(--button-border-color);
+  color: var(--button-color);
+
+  &:not(.buttonText) {
+    padding-block: px-to-rem(var(--button-padding-block));
+    padding-inline: px-to-rem(var(--spacing-l));
+  }
+
+  &:is(a) {
+    display: inline-flex;
+    text-decoration: none;
+  }
+
+  &[disabled] {
+    // TODO define disabled style
+    opacity: 0.5;
+  }
+
+  .iconStart,
+  .iconEnd {
+    flex: 0 0 px-to-rem(var(--button-icon-size));
+    width: px-to-rem(var(--button-icon-size));
+    height: px-to-rem(var(--button-icon-size));
+
+    svg {
+      stroke: var(--button-icon-color);
+    }
+  }
+}
+
+.buttonFilled {
+  @include font-smoothing-reset;
+
+  --button-background-color: var(--interaction-primary);
+  --button-border-color: var(--interaction-primary);
+  --button-color: var(--text-primary-inverted);
+  --button-icon-color: var(--icon-secondary-inverted);
+
+  &:is(:hover, :focus) {
+    --button-background-color: var(--interaction-primary-hover);
+  }
+}
+
+.buttonFilled.dark {
+  @include font-smoothing;
+
+  --button-background-color: var(--interaction-primary-inverted);
+  --button-border-color: var(--interaction-primary-inverted);
+  --button-color: var(--interaction-primary);
+  --button-icon-color: var(--icon-secondary);
+
+  &:is(:hover, :focus) {
+    --button-background-color: var(--interaction-primary-inverted-hover);
+    --button-border-color: var(--interaction-primary-inverted-hover);
+  }
+}
+
+.buttonOutlined {
+  --button-background-color: none;
+  --button-icon-color: var(--icon-primary);
+
+  &:is(:hover, :focus) {
+    --button-border-color: var(--interaction-primary-hover);
+    --button-color: var(--interaction-primary-hover);
+    --button-icon-color: var(--interaction-primary-hover);
+  }
+}
+
+.buttonOutlined.dark {
+  --button-border-color: currentcolor;
+  --button-color: var(--interaction-primary-inverted);
+  --button-icon-color: currentcolor;
+
+  &:is(:hover, :focus) {
+    --button-color: var(--interaction-primary-inverted-hover);
+  }
+}
+
+.buttonText {
+  --button-icon-color: var(--interaction-secondary);
+
+  @include reduced-motion {
+    --animation-duration: 0s;
+  }
+
+  padding-inline: 0;
+  border: none;
+
+  &:is(:hover, :focus) {
+    --button-icon-color: var(--interaction-secondary-hover);
+  }
+
+  &:is(:hover, :focus) .innerText:after {
+    @include animation-slide-line-in;
+  }
+
+  &.dark {
+    --button-color: var(--text-primary-inverted);
+    --button-icon-color: var(--interaction-primary-inverted);
+  }
+
+  .innerText {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    padding-block-end: px-to-rem(var(--spacing-m));
+
+    &:after {
+      @include animation-slide-line-out;
+
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: px-to-rem(var(--border-width-l));
+      inset-inline: 0;
+      inset-block-end: 0;
+      background: currentcolor;
+      transform: translateX(-100%);
+    }
+  }
 }
