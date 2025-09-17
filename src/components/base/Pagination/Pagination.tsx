@@ -34,8 +34,10 @@ export const Pagination = ({
   const maxButtons = maxNumberOfButtons[bp];
 
   const getPages = (): (number | 'filler')[] => {
-    // 1. Small enough → just show all
-    if (totalPages <= maxButtons + 2) {
+    const totalNumberButtons = Math.min(totalPages, maxButtons);
+
+    // If total pages fit within number buttons → show all
+    if (totalPages <= totalNumberButtons) {
       return Array.from({
         length: totalPages,
       }, (_, i) => i + 1);
@@ -44,13 +46,13 @@ export const Pagination = ({
     const pages: (number | 'filler')[] = [];
 
     // reserve for first + last
-    const windowSize = maxButtons - 2;
+    const windowSize = totalNumberButtons - 2;
     const half = Math.floor(windowSize / 2);
 
     let start = currentPage - half;
     let end = currentPage + half;
 
-    // 2. Clamp window
+    // Clamp window
     if (start < 2) {
       start = 2;
       end = start + windowSize - 1;
@@ -60,37 +62,25 @@ export const Pagination = ({
       start = end - windowSize + 1;
     }
 
-    // 3. Always first
+    // Always first
     pages.push(1);
 
-    // 4. Filler before
+    // Filler before
     if (start > 2) {
-      if (start === 3) {
-
-        // no filler if gap == 1
-        pages.push(2);
-      } else {
-        pages.push('filler');
-      }
+      pages.push('filler');
     }
 
-    // 5. Middle window
+    // Middle window
     for (let i = start; i <= end; i++) {
       pages.push(i);
     }
 
-    // 6. Filler after
+    // Filler after
     if (end < totalPages - 1) {
-      if (end === totalPages - 2) {
-
-        // no filler if gap == 1
-        pages.push(totalPages - 1);
-      } else {
-        pages.push('filler');
-      }
+      pages.push('filler');
     }
 
-    // 7. Always last
+    // Always last
     pages.push(totalPages);
 
     return pages;
