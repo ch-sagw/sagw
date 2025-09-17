@@ -18,7 +18,7 @@
     --color-error: var(--text-error-inverted);
     --color-text: var(--text-primary-inverted);
     --color-placeholder: var(--text-secondary-inverted);
-    --color-border: var(--border-primary-inverted);
+    --color-border: var(--border-secondary-inverted);
   }
 
   & {
@@ -97,7 +97,7 @@
   }
 
   &.dark .input:focus-visible {
-    outline-color: var(--border-primary-inverted);
+    outline-color: var(--color-border);
   }
 
   .label {
