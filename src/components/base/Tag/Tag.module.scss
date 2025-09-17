@@ -1,5 +1,6 @@
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
 
 .tag {
   @include label-text;
@@ -8,6 +9,10 @@
 
   display: inline-block;
   padding: px-to-rem(var(--spacing-2xs)) px-to-rem(var(--spacing-block));
+
+  @include forced-colors {
+    border: px-to-rem(var(--border-width-s)) solid LinkText;
+  }
 
   &.primary {
     color: var(--text-secondary-inverted);
