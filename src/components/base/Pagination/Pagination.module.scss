@@ -1,0 +1,12 @@
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/functions" as *;
+
+.pagination {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: px-to-rem(var(--spacing-m));
+
+  @include mq($from: medium) {
+    gap: px-to-rem(var(--spacing-l));
+  }
+}

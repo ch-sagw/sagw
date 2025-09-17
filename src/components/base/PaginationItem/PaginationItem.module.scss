@@ -21,6 +21,7 @@
   }
 
   &.number {
+    cursor: pointer;
     border: px-to-rem((var(--border-width-m))) solid var(--border-primary);
 
     &.active {
