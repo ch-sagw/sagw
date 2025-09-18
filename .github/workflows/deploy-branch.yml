@@ -49,11 +49,6 @@ jobs:
         run: npm run lint
       - name: Test FE
         run: npm run test:fe:native
-      - uses: daun/playwright-report-summary@v3
-        if: always()
-        with:
-          report-file: test-results/results-fe.json
-          comment-title: 'Test results FE'
       - name: Test BE
         run: npm run test:be:native
         env:
@@ -65,6 +60,8 @@ jobs:
           ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           ENV: playwright
+      - name: Merge test reports
+        run: PLAYWRIGHT_JSON_OUTPUT_NAME=results.json npx playwright merge-reports --reporter html,json ./test-results
       - uses: daun/playwright-report-summary@v3
         if: always()
         with:
