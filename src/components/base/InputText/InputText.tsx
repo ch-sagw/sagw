@@ -1,4 +1,9 @@
-import React, { useId } from 'react';
+'use client';
+
+import React, {
+  useEffect,
+  useId, useRef,
+} from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/InputText/InputText.module.scss';
 import { Icon } from '@/icons';
@@ -12,6 +17,7 @@ export type BaseProps = {
   defaultValue: string;
   colorTheme: 'light' | 'dark';
   className?: string;
+  autofocus?: boolean;
 };
 
 type InputProps = BaseProps & {
@@ -34,8 +40,16 @@ export const InputText = ({
   type,
   colorTheme,
   className,
+  autofocus,
 }: InterfaceInputTextPropTypes): React.JSX.Element => {
   const inputId = useId();
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (autofocus && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [autofocus]);
 
   const classes = cva([
     styles.inputText,
@@ -68,6 +82,7 @@ export const InputText = ({
       })}
     >
       <Elem
+        ref={inputRef as React.Ref<HTMLInputElement & HTMLTextAreaElement>}
         className={styles.input}
         aria-describedby={
           errorText
@@ -98,8 +113,6 @@ export const InputText = ({
         <span
           className={styles.error}
           id={inputId}
-          aria-live='assertive'
-          role='alert'
         >
           <Icon
             name='warning'
