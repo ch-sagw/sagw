@@ -33,7 +33,14 @@ export default defineConfig({
     },
   ],
   reporter: process.env.CI
-    ? 'blob'
+    ? [
+      [
+        'blob',
+        {
+          outputFile: 'blob-report/be.zip',
+        },
+      ],
+    ]
     : [
       [
         'html',

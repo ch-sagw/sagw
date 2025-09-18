@@ -77,7 +77,14 @@ export default defineConfig({
   fullyParallel: true,
   projects,
   reporter: process.env.CI
-    ? 'blob'
+    ? [
+      [
+        'blob',
+        {
+          outputFile: 'blob-report/fe.zip',
+        },
+      ],
+    ]
     : [
       [
         'html',
