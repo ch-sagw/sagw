@@ -1,5 +1,4 @@
 import type {
-  ArgTypes,
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
@@ -13,53 +12,7 @@ type StrictStory = StoryObj<typeof Button> & {
   args: ButtonProps;
 };
 
-const argTypes: Partial<ArgTypes<ButtonProps>> = {
-  ariaLabel: {
-    control: {
-      type: 'text',
-    },
-  },
-  colorTheme: {
-    control: {
-      type: 'radio',
-    },
-    options: [
-      'light',
-      'dark',
-    ],
-  },
-  element: {
-    control: {
-      type: 'radio',
-    },
-    options: [
-      'button',
-      'link',
-    ],
-  },
-  href: {
-    control: {
-      type: 'text',
-    },
-    table: {
-      category: 'Link variant',
-    },
-  },
-  style: {
-    control: {
-      type: 'radio',
-    },
-    options: [
-      'filled',
-      'outlined',
-      'text',
-    ],
-  },
-};
-
 const meta: Meta<typeof Button> = {
-  argTypes,
-  args: {},
   component: Button,
   decorators: [defaultDecorator],
   globals: {
