@@ -16,7 +16,7 @@ test.describe('Toggle', () => {
     await page.addStyleTag({
       content: `
       input:after {
-        box-shadow: none;
+        box-shadow: none !important;
       }
     `,
     });
@@ -39,7 +39,7 @@ test.describe('Toggle', () => {
     await page.addStyleTag({
       content: `
       input:after {
-        box-shadow: none;
+        box-shadow: none !important;
       }
     `,
     });
