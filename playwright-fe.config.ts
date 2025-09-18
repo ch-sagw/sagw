@@ -61,17 +61,10 @@ const projects = [
 
 ];
 
-export const reporterBlob = (type: 'fe' | 'be'): ReporterDescription => [
-  'blob',
-  {
-    outputFile: `test-results/blob-report/${type}.zip`,
-  },
-];
-
-const reporterJson = (type: 'fe' | 'be'): ReporterDescription => [
+const reporterJson: ReporterDescription = [
   'json',
   {
-    outputFile: `test-results/results-${type}.json`,
+    outputFile: 'test-results/results.json',
   },
 ];
 
@@ -85,8 +78,8 @@ const reporterHtml: ReporterDescription = [
   },
 ];
 
-export const defaultReporters = (type: 'fe' | 'be'): ReporterDescription[] => [
-  reporterJson(type),
+export const defaultReporters: ReporterDescription[] = [
+  reporterJson,
   reporterList,
   reporterHtml,
 ];
@@ -104,12 +97,7 @@ export default defineConfig({
   fullyParallel: true,
   outputDir: 'test-results/main',
   projects,
-  reporter: process.env.CI
-    ? [
-      reporterBlob('fe'),
-      ...defaultReporters('fe'),
-    ]
-    : defaultReporters('fe'),
+  reporter: defaultReporters,
   retries: 0,
   testDir: './src/',
   testMatch: '**/*.fe.spec.ts?(x)',

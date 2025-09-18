@@ -2,9 +2,7 @@ import {
   defineConfig, devices,
 } from '@playwright/test';
 import dotenv from 'dotenv';
-import {
-  defaultReporters, reporterBlob,
-} from 'playwright-fe.config';
+import { defaultReporters } from 'playwright-fe.config';
 
 dotenv.config({
   override: true,
@@ -34,12 +32,7 @@ export default defineConfig({
       use: devices['Desktop Chrome HiDPI'],
     },
   ],
-  reporter: process.env.CI
-    ? [
-      reporterBlob('be'),
-      ...defaultReporters('be'),
-    ]
-    : defaultReporters('be'),
+  reporter: defaultReporters,
   retries: 0,
   testDir: './src/',
   testMatch: '**/*.be.spec.ts?(x)',
