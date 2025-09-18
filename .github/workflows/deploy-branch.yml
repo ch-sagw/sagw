@@ -61,11 +61,11 @@ jobs:
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           ENV: playwright
       - name: Merge test reports
-        run: npx playwright merge-reports --reporter html ./blob-report
+        run: npx playwright merge-reports --reporter json ./blob-report > blob-report/merged-report.json
       - uses: daun/playwright-report-summary@v3
         if: always()
         with:
-          report-file: blob-report/report.jsonl
+          report-file: blob-report/merged-report.json
           comment-title: 'Test results BE'
       - uses: actions/upload-artifact@v4
         if: always()
