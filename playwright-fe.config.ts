@@ -102,6 +102,7 @@ export default defineConfig({
   },
   forbidOnly: Boolean(process.env.CI),
   fullyParallel: true,
+  outputDir: 'test-results/main',
   projects,
   reporter: process.env.CI
     ? [

@@ -27,7 +27,10 @@ export const Toggle = ({
   };
 
   return (
-    <div className={styles.toggle}>
+    <div
+      className={styles.toggle}
+      data-testid='toggle'
+    >
       <input
         className={styles.input}
         type='checkbox'

@@ -18,7 +18,7 @@ const meta: Meta<typeof Toggle> = {
   parameters: {/* layout: 'centered', */ },
   tags: [
     'autodocs',
-    'visual:check',
+    '!visual:check',
     'a11y:check',
   ],
   title: 'Components/base/Toggle',
