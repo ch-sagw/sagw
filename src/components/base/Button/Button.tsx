@@ -35,6 +35,7 @@ const classes = cva([styles.button], {
       iconEnd: [styles.iconEnd],
       iconStart: [styles.iconStart],
       innerText: [styles.innerText],
+      line: [styles.line],
       outlined: [styles.buttonOutlined],
       text: [styles.buttonText],
     },
@@ -80,7 +81,10 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
               <Icon name={iconInlineStart} />
             </span>
           )}
-          <span className={styles.innerText}>{text}</span>
+          <span className={styles.innerText}>
+            {text}
+            <span className={styles.line}></span>
+          </span>
           {iconInlineEnd && (
             <span className={styles.iconEnd}>
               <Icon name={iconInlineEnd} />
@@ -107,7 +111,10 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
           <Icon name={iconInlineStart} />
         </span>
       )}
-      <span className={styles.innerText}>{text}</span>
+      <span className={styles.innerText}>
+        {text}
+        <span className={styles.line}></span>
+      </span>
       {iconInlineEnd && (
         <span className={styles.iconEnd}>
           <Icon name={iconInlineEnd} />

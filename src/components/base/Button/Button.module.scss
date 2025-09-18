@@ -1,5 +1,4 @@
 @use "../../../styles/utilities/functions" as *;
-@use "../../../styles/mixins/mixins-animations" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/utilities/utilities" as *;
@@ -102,9 +101,10 @@
 
 .buttonText {
   --button-icon-color: var(--interaction-secondary);
+  --line-animation-duration: var(--motion-speed-very-fast);
 
   @include reduced-motion {
-    --animation-duration: 0s;
+    --line-animation-duration: 0s;
   }
 
   padding-inline: 0;
@@ -114,8 +114,19 @@
     --button-icon-color: var(--interaction-secondary-hover);
   }
 
+  &:is(:hover, :focus) .innerText:before {
+    transform: translateX(100%);
+    transition-timing-function: var(--motion-ease-in);
+    z-index: 2;
+  }
+
+  &:is(:hover, :focus) .innerText .line {
+    transform: translateX(-100%);
+    transition-duration: 0s;
+  }
+
   &:is(:hover, :focus) .innerText:after {
-    @include animation-slide-line-in;
+    opacity: 1;
   }
 
   &.dark {
@@ -127,11 +138,11 @@
     position: relative;
     overflow: hidden;
     display: inline-block;
-    padding-block-end: px-to-rem(var(--spacing-m));
+    padding-block: px-to-rem(var(--spacing-m));
 
+    .line,
+    &:before,
     &:after {
-      @include animation-slide-line-out;
-
       position: absolute;
       content: "";
       width: 100%;
@@ -139,7 +150,24 @@
       inset-inline: 0;
       inset-block-end: 0;
       background: currentcolor;
-      transform: translateX(-100%);
+      transform: translateX(0);
+      transition:
+        transform var(--line-animation-duration)
+        var(--motion-ease-out);
+      pointer-events: none;
+    }
+
+    .line {
+      background: canvas;
+      z-index: 2;
+    }
+
+    &:after {
+      z-index: 1;
+    }
+
+    &:before {
+      background: canvas;
     }
   }
 }
