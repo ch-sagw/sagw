@@ -2,6 +2,7 @@ import 'server-only';
 import React, { Fragment } from 'react';
 import { Notification } from '@/components/blocks/Notification/Notification';
 import { Rte } from '@/components/blocks/Rte/Rte';
+import { Form } from '@/components/blocks/Form/Form';
 import {
   InterfaceAccordionBlock,
   InterfaceBibliographicReferenceBlock,
@@ -94,6 +95,14 @@ export const RenderBlocks = ({
               return (
                 <div key={block.id || index}>
                   <Rte {...block} />
+                </div>
+              );
+            }
+
+            if (blockType === 'formBlock') {
+              return (
+                <div key={block.id || index}>
+                  <Form {...block} />
                 </div>
               );
             }

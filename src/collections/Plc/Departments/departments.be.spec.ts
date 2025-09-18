@@ -70,10 +70,10 @@ test.describe('Departments only show content from users department', () => {
     await page.goto('http://localhost:3000/admin/collections/forms');
     await page.waitForLoadState('networkidle');
 
-    const expectedForm = await page.getByText('Form SAGW', {
+    const expectedForm = await page.getByText('Contact Form SAGW', {
       exact: true,
     });
-    const notExpectedForm = await page.getByText('Form NOT-SAGW', {
+    const notExpectedForm = await page.getByText('Contact Form NOT-SAGW', {
       exact: true,
     });
 

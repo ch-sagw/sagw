@@ -1,13 +1,21 @@
+// just temporary, some definitions, not to get any linting errors
+
 .rte {
   color: black;
 
   // rte configs
   &.rte1 {
-    border: 1px solid black;
+    // border: 1px solid black;
+    color: inherit;
   }
 
   &.rte2 {
-    border: 1px dashed black;
+    // border: 1px dashed black;
+    color: inherit;
+  }
+
+  a {
+    color: inherit;
   }
 
   // rte contexts

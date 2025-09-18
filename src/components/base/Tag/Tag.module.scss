@@ -1,0 +1,32 @@
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.tag {
+  @include label-text;
+
+  --spacing-block: 6;
+
+  display: inline-block;
+  padding: px-to-rem(var(--spacing-2xs)) px-to-rem(var(--spacing-block));
+
+  @supports (text-box-trim: trim-both) {
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
+    padding-block: px-to-rem(var(--spacing-xs));
+  }
+
+  @include forced-colors {
+    border: px-to-rem(var(--border-width-s)) solid CanvasText;
+  }
+
+  &.primary {
+    color: var(--text-secondary-inverted);
+    background-color: var(--brand-primary);
+  }
+
+  &.secondary {
+    color: var(--text-primary);
+    background-color: var(--brand-secondary);
+  }
+}

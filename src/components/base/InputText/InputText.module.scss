@@ -1,0 +1,148 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.inputText {
+  --color-error: var(--text-error);
+  --color-text: var(--text-primary);
+  --color-placeholder: var(--text-secondary);
+  --color-border: var(--border-primary);
+  --label-active-shift: 6;
+  --transition-duration: var(--motion-speed-very-fast);
+  --transition-ease: var(--motion-ease-in-out);
+  --focus-padding-inline: 8;
+  --input-height: var(--spacing-2xl);
+
+  &.dark {
+    --color-error: var(--text-error-inverted);
+    --color-text: var(--text-primary-inverted);
+    --color-placeholder: var(--text-secondary-inverted);
+    --color-border: var(--border-secondary-inverted);
+  }
+
+  & {
+    position: relative;
+    color: var(--color-text);
+    margin-block-start: px-to-rem(calc(var(--body-text-m-size) * 0.75 + var(--label-active-shift)));
+  }
+
+  @include mq($from: medium) {
+    --input-height: var(--spacing-3xl);
+  }
+
+  @include mq($from: ultra) {
+    --input-height: var(--spacing-4xl);
+  }
+
+  .input {
+    @include body-text-m;
+
+    width: 100%;
+    appearance: none;
+    color: currentcolor;
+    background-color: transparent;
+    border: none;
+    border-block-end: px-to-rem(var(--border-width-m)) solid var(--color-border);
+    margin: 0;
+    padding: px-to-rem(calc((var(--input-height) - var(--body-text-m-size) * var(--body-text-m-line-height)) / 2)) 0;
+    transition: padding-inline-start var(--transition-duration) var(--transition-ease);
+
+    &::placeholder {
+      color: transparent;
+      transition: color var(--transition-duration) var(--transition-ease);
+
+      @include reduced-motion {
+        transition: none;
+      }
+
+      @include forced-colors {
+        opacity: 0;
+        transition-property: opacity;
+      }
+    }
+
+    &:focus,
+    &:active {
+      padding-inline-start: px-to-rem(var(--focus-padding-inline));
+      padding-inline-end: px-to-rem(var(--focus-padding-inline));
+
+      &::placeholder {
+        color: var(--color-placeholder);
+
+        @include forced-colors {
+          opacity: 1;
+        }
+      }
+    }
+
+    &:focus-visible {
+      @include focus-visible;
+    }
+  }
+
+  &.text .input {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  &.textarea .input {
+    height: px-to-rem(calc(var(--input-height) + 2 * var(--body-text-m-size) * var(--body-text-m-line-height)));
+
+    @supports (field-sizing: content) {
+      height: auto;
+      field-sizing: content;
+    }
+  }
+
+  &.dark .input:focus-visible {
+    outline-color: var(--color-border);
+  }
+
+  .label {
+    @include body-text-m;
+
+    inset-block-start: px-to-rem(calc((var(--input-height) - var(--body-text-m-size) * var(--body-text-m-line-height)) / 2));
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    position: absolute;
+    pointer-events: none;
+    transform-origin: 0 0%;
+    transition-duration: var(--transition-duration);
+    transition-timing-function: var(--transition-ease);
+    transition-property: transform, top, color;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--color-placeholder);
+
+    @include reduced-motion {
+      transition: none;
+    }
+  }
+
+  .error {
+    @include body-text-s;
+
+    color: var(--color-error);
+    display: flex;
+    align-items: center;
+    margin-block-start: px-to-rem(var(--spacing-xs));
+
+    .icon {
+      flex-basis: px-to-rem(var(--spacing-m));
+      height: px-to-rem(var(--spacing-m));
+      flex-grow: 0;
+      flex-shrink: 0;
+      margin-inline-end: px-to-rem(var(--spacing-xs));
+    }
+  }
+}
+
+.input:focus + .label,
+.input:not(:placeholder-shown) + .label {
+  inset-block-start: px-to-rem(calc(-1 * var(--body-text-m-size) * 0.75 - var(--border-width-m) - var(--label-active-shift)));
+  transform: scale(75%);
+  color: var(--color-text);
+}

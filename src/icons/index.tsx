@@ -1,3 +1,5 @@
+import styles from '@/icons/styles.module.scss';
+
 import horizontalInner from '@/icons/keyvisual-lines/horizontal-inner';
 import horizontalMiddle from '@/icons/keyvisual-lines/horizontal-middle';
 import horizontalOuter from '@/icons/keyvisual-lines/horizontal-outer';
@@ -36,51 +38,57 @@ import warningFilled from '@/icons/ui/warning-filled';
 import warning from '@/icons/ui/warning';
 import { JSX } from 'react';
 
-type IconsMap = {
-  [key: string]: JSX.Element;
-};
-
-const Icons: IconsMap = {
-  arrowLeft: arrowLeft(),
-  arrowRight: arrowRight(),
-  caretDown: caretDown(),
-  checked: checked(),
-  checkmarkFilled: checkmarkFilled(),
-  close: close(),
-  config: config(),
-  copy: copy(),
-  download: download(),
-  errorFilled: errorFilled(),
-  exportIcon: exportIcon(),
-  externalLink: externalLink(),
-  facebook: facebook(),
-  filePdf: filePdf(),
-  horizontalInner: horizontalInner(),
-  horizontalMiddle: horizontalMiddle(),
-  horizontalOuter: horizontalOuter(),
-  instagram: instagram(),
-  language: language(),
-  linkedin: linkedin(),
-  longDash: longDash(),
-  mail: mail(),
-  menu: menu(),
-  minus: minus(),
-  phone: phone(),
-  play: play(),
-  plus: plus(),
-  square: square(),
-  verticalInner: verticalInner(),
-  verticalMiddle: verticalMiddle(),
-  verticalOuter: verticalOuter(),
-  warning: warning(),
-  warningFilled: warningFilled(),
-  xIcon: xIcon(),
+const Icons = {
+  arrowLeft,
+  arrowRight,
+  caretDown,
+  checked,
+  checkmarkFilled,
+  close,
+  config,
+  copy,
+  download,
+  errorFilled,
+  exportIcon,
+  externalLink,
+  facebook,
+  filePdf,
+  horizontalInner,
+  horizontalMiddle,
+  horizontalOuter,
+  instagram,
+  language,
+  linkedin,
+  longDash,
+  mail,
+  menu,
+  minus,
+  phone,
+  play,
+  plus,
+  square,
+  verticalInner,
+  verticalMiddle,
+  verticalOuter,
+  warning,
+  warningFilled,
+  xIcon,
 };
 
 interface InterfaceIcon {
   name: keyof typeof Icons;
+  className?: string;
 }
 
 export const Icon = ({
   name,
-}: InterfaceIcon): JSX.Element => Icons[name];
+  className,
+}: InterfaceIcon): JSX.Element => {
+  const IconComponent = Icons[name];
+
+  return (
+    <span className={`${styles.icon} ${className}`}><IconComponent /></span>
+
+  );
+
+};

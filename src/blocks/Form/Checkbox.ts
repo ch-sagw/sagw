@@ -1,8 +1,9 @@
 import { Block } from 'payload';
 
 import {
-  formFieldCheckbox, formFieldLabel, formFieldName, formFieldWidth,
+  formFieldCheckbox, formFieldError, formFieldName, formFieldWidth,
 } from '@/blocks/Form/DefaultFields';
+import { rte2 } from '@/field-templates/rte';
 
 // Only available on forms block
 
@@ -11,13 +12,11 @@ export const checkboxBlock = (): Block => ({
     disableBlockName: true,
   },
   fields: [
-    {
-      fields: [
-        formFieldName,
-        formFieldLabel,
-      ],
-      type: 'row',
-    },
+    formFieldName,
+    rte2({
+      name: 'label',
+      required: true,
+    }),
     {
       fields: [
         formFieldWidth,
@@ -25,6 +24,7 @@ export const checkboxBlock = (): Block => ({
       ],
       type: 'row',
     },
+    formFieldError,
   ],
   labels: {
     plural: 'Checkbox',

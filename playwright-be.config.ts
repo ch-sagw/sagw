@@ -32,21 +32,30 @@ export default defineConfig({
       use: devices['Desktop Chrome HiDPI'],
     },
   ],
-  reporter: [
-    [
-      'html',
-      {
-        open: 'never',
-      },
+  reporter: process.env.CI
+    ? [
+      [
+        'blob',
+        {
+          outputFile: 'blob-report/be.zip',
+        },
+      ],
+    ]
+    : [
+      [
+        'html',
+        {
+          open: 'never',
+        },
+      ],
+      [
+        'json',
+        {
+          outputFile: 'test-results/results-be.json',
+        },
+      ],
+      ['list'],
     ],
-    [
-      'json',
-      {
-        outputFile: 'test-results/results.json',
-      },
-    ],
-    ['list'],
-  ],
   retries: 0,
   testDir: './src/',
   testMatch: '**/*.be.spec.ts?(x)',

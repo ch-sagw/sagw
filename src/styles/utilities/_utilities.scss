@@ -1,3 +1,5 @@
+@use "./functions" as *;
+
 // ##############################
 // Hover / Focus styling
 // ##############################
@@ -81,6 +83,17 @@
 @mixin reduced-motion {
   @media (prefers-reduced-motion) {
     @content;
+  }
+}
+
+@mixin focus-visible {
+  & {
+    outline: px-to-rem(var(--border-width-l)) solid var(--border-primary);
+    outline-offset: px-to-rem(calc(-1 * var(--border-width-l)));
+  }
+
+  @include forced-colors {
+    outline-color: LinkText;
   }
 }
 

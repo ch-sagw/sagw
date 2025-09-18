@@ -499,9 +499,10 @@ export interface Form {
              * lowercase, no special characters
              */
             name: string;
-            label: string;
+            label: InterfaceRte2;
             fieldWidth: 'full' | 'half';
             required?: boolean | null;
+            fieldError?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'checkboxBlock';
@@ -3642,9 +3643,10 @@ export interface FormsSelect<T extends boolean = true> {
           | T
           | {
               name?: T;
-              label?: T;
+              label?: T | InterfaceRte2Select<T>;
               fieldWidth?: T;
               required?: T;
+              fieldError?: T;
               id?: T;
               blockName?: T;
             };
