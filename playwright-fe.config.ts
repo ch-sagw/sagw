@@ -76,21 +76,23 @@ export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
   fullyParallel: true,
   projects,
-  reporter: [
-    [
-      'html',
-      {
-        open: 'never',
-      },
+  reporter: process.env.CI
+    ? 'blob'
+    : [
+      [
+        'html',
+        {
+          open: 'never',
+        },
+      ],
+      [
+        'json',
+        {
+          outputFile: 'test-results/results-fe.json',
+        },
+      ],
+      ['list'],
     ],
-    [
-      'json',
-      {
-        outputFile: 'test-results/results-fe.json',
-      },
-    ],
-    ['list'],
-  ],
   retries: 0,
   testDir: './src/',
   testMatch: '**/*.fe.spec.ts?(x)',
