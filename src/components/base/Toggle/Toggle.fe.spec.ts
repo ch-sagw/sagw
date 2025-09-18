@@ -12,10 +12,13 @@ test.describe('Toggle', () => {
     await navigate(page, 'components-base-toggle--checked');
 
     const elem = await page.getByTestId('toggle');
-    const inputAfterElem = await elem.locator('.input:after');
 
-    await inputAfterElem.evaluate((e) => {
-      e.style.boxShadow = 'none';
+    await page.addStyleTag({
+      content: `
+      input:after {
+        box-shadow: none;
+      }
+    `,
     });
 
     await expect(elem)
@@ -32,10 +35,13 @@ test.describe('Toggle', () => {
     await navigate(page, 'components-base-toggle--unchecked');
 
     const elem = await page.getByTestId('toggle');
-    const inputAfterElem = await elem.locator('.input:after');
 
-    await inputAfterElem.evaluate((e) => {
-      e.style.boxShadow = 'none';
+    await page.addStyleTag({
+      content: `
+      input:after {
+        box-shadow: none;
+      }
+    `,
     });
 
     await expect(elem)
