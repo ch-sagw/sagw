@@ -42,7 +42,7 @@ export default defineConfig({
     [
       'json',
       {
-        outputFile: 'test-results/results.json',
+        outputFile: 'test-results/results-be.json',
       },
     ],
     ['list'],

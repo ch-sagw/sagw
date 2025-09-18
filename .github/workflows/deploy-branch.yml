@@ -49,6 +49,10 @@ jobs:
         run: npm run lint
       - name: Test FE
         run: npm run test:fe:native
+      - uses: daun/playwright-report-summary@v3
+        if: always()
+        with:
+          report-file: test-results/results-fe.json
       - name: Test BE
         run: npm run test:be:native
         env:
@@ -60,11 +64,10 @@ jobs:
           ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           ENV: playwright
-          
       - uses: daun/playwright-report-summary@v3
         if: always()
         with:
-          report-file: test-results/results.json
+          report-file: test-results/results-be.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
