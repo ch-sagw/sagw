@@ -61,7 +61,7 @@ jobs:
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           ENV: playwright
       - name: Merge test reports
-        run: PLAYWRIGHT_JSON_OUTPUT_NAME=results.json npx playwright merge-reports --reporter html ./blob-reports
+        run: PLAYWRIGHT_JSON_OUTPUT_NAME=results.json npx playwright merge-reports --reporter html ./blob-report
       - uses: daun/playwright-report-summary@v3
         if: always()
         with:
