@@ -69,7 +69,12 @@ export const InputText = ({
     >
       <Elem
         className={styles.input}
-        aria-describedby={inputId}
+        aria-describedby={
+          errorText
+            ? inputId
+            : undefined
+        }
+        aria-invalid={Boolean(errorText)}
         aria-required={required}
         placeholder={placeholder}
         required={required}

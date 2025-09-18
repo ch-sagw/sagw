@@ -53,6 +53,12 @@ export const Checkbox = ({
       colorTheme,
     })}>
       <input
+        aria-describedby={
+          errorText
+            ? value
+            : undefined
+        }
+        aria-invalid={Boolean(errorText)}
         className={styles.input}
         type='checkbox'
         name={name}
