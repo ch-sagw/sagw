@@ -35,6 +35,12 @@ export const PaginationItem = (props: InterfacePaginationItemPropTypes): React.J
       type,
     } = props;
 
+    const additionalAttributes: Record<string, string> = {};
+
+    if (active) {
+      additionalAttributes['aria-current'] = 'page';
+    }
+
     return (
       <button
         className={classes({
@@ -42,6 +48,8 @@ export const PaginationItem = (props: InterfacePaginationItemPropTypes): React.J
           type,
         })}
         onClick={onClick}
+        aria-current='page'
+        {...additionalAttributes}
       >{number}</button>
     );
   }
@@ -55,6 +63,7 @@ export const PaginationItem = (props: InterfacePaginationItemPropTypes): React.J
       className={classes({
         type,
       })}
+      aria-hidden={true}
     >...</span>
   );
 };

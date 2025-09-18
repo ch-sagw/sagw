@@ -7,12 +7,14 @@ export type InterfacePaginationPropTypes = {
   totalPages: number;
   currentPage: number;
   onPageChange?: (page: number) => void;
+  paginationTitle: string;
 };
 
 export const Pagination = ({
   currentPage,
   totalPages,
   onPageChange,
+  paginationTitle,
 }: InterfacePaginationPropTypes): React.JSX.Element => {
   const bp = useBreakpoint();
 
@@ -161,26 +163,31 @@ export const Pagination = ({
   const pages = getPages();
 
   return (
-    <div
+    <nav
       className={styles.pagination}
+      aria-labelledby='pagination'
     >
-      {pages.map((p, key) => (p === 'filler'
-        ? (
-          <PaginationItem
-            key={`filler-${key}`}
-            type='filler'
-          />
-        )
-        : (
-          <PaginationItem
-            key={`page-${p}`}
-            type='number'
-            number={p}
-            active={p === currentPage}
-            onClick={() => onPageChange?.(p)}
-          />
-        )))}
-    </div>
+      <h2 id='pagination' className={styles.hiddenTitle}>{paginationTitle}</h2>
+
+      <ul className={styles.list}>
+        {pages.map((p, key) => (p === 'filler'
+          ? (
+            <li key={`filler-${key}`}>
+              <PaginationItem type='filler' />
+            </li>
+          )
+          : (
+            <li key={`page-${p}`}>
+              <PaginationItem
+                type='number'
+                number={p}
+                active={p === currentPage}
+                onClick={() => onPageChange?.(p)}
+              />
+            </li>
+          )))}
+      </ul>
+    </nav>
   );
 
 };

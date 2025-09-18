@@ -26,6 +26,7 @@
 
     &.active {
       border-color: var(--border-weak);
+      cursor: default;
 
       @include forced-colors {
         border-color: LinkText;
