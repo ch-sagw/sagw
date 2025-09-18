@@ -1,5 +1,6 @@
 import {
   defineConfig, devices,
+  ReporterDescription,
 } from '@playwright/test';
 import { vrtConfig } from '@/automated-testing/config';
 
@@ -60,6 +61,36 @@ const projects = [
 
 ];
 
+export const reporterBlob = (type: 'fe' | 'be'): ReporterDescription => [
+  'blob',
+  {
+    outputFile: `test-results/blob-report/${type}.zip`,
+  },
+];
+
+const reporterJson = (type: 'fe' | 'be'): ReporterDescription => [
+  'json',
+  {
+    outputFile: `test-results/results-${type}.json`,
+  },
+];
+
+const reporterList: ReporterDescription = ['list'];
+
+const reporterHtml: ReporterDescription = [
+  'html',
+  {
+    open: 'never',
+    outputFolder: 'test-results/html',
+  },
+];
+
+export const defaultReporters = (type: 'fe' | 'be'): ReporterDescription[] => [
+  reporterJson(type),
+  reporterList,
+  reporterHtml,
+];
+
 export default defineConfig({
   expect: {
     toHaveScreenshot: {
@@ -74,42 +105,10 @@ export default defineConfig({
   projects,
   reporter: process.env.CI
     ? [
-      [
-        'blob',
-        {
-          outputFile: 'test-results/blob-report/fe.zip',
-        },
-      ],
-      [
-        'json',
-        {
-          outputFile: 'test-results/results-fe.json',
-        },
-      ],
-      ['list'],
-      [
-        'html',
-        {
-          open: 'never',
-        },
-      ],
+      reporterBlob('fe'),
+      ...defaultReporters('fe'),
     ]
-    : [
-      [
-        'html',
-        {
-          open: 'never',
-          outputFolder: 'test-results/html',
-        },
-      ],
-      [
-        'json',
-        {
-          outputFile: 'test-results/results-fe.json',
-        },
-      ],
-      ['list'],
-    ],
+    : defaultReporters('fe'),
   retries: 0,
   testDir: './src/',
   testMatch: '**/*.fe.spec.ts?(x)',

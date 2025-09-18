@@ -1,8 +1,10 @@
 import {
   defineConfig, devices,
 } from '@playwright/test';
-
 import dotenv from 'dotenv';
+import {
+  defaultReporters, reporterBlob,
+} from 'playwright-fe.config';
 
 dotenv.config({
   override: true,
@@ -34,35 +36,10 @@ export default defineConfig({
   ],
   reporter: process.env.CI
     ? [
-      [
-        'blob',
-        {
-          outputFile: 'test-results/blob-report/be.zip',
-        },
-      ],
-      [
-        'json',
-        {
-          outputFile: 'test-results/results-be.json',
-        },
-      ],
+      reporterBlob('be'),
+      ...defaultReporters('be'),
     ]
-    : [
-      [
-        'html',
-        {
-          open: 'never',
-          outputFolder: 'test-results/html',
-        },
-      ],
-      [
-        'json',
-        {
-          outputFile: 'test-results/results-be.json',
-        },
-      ],
-      ['list'],
-    ],
+    : defaultReporters('be'),
   retries: 0,
   testDir: './src/',
   testMatch: '**/*.be.spec.ts?(x)',
