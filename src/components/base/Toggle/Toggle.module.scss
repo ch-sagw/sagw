@@ -1,0 +1,143 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+
+.toggle {
+  --checkbox-height: 36;
+  --checkbox-width: 80;
+  --label-padding-to-toggle: 6;
+  --label-padding-to-end: 10;
+  --border-width: 2;
+  --handle-dimensions: 32;
+
+  @include fieldset-reset;
+
+  position: relative;
+  width: px-to-rem(var(--checkbox-width));
+  height: px-to-rem(var(--checkbox-height));
+
+  .label {
+    @include label-text;
+
+    $labelPaddingSmall: px-to-rem(var(--label-padding-to-end));
+    $labelPaddingBig: px-to-rem(calc(var(--border-width) + var(--handle-dimensions) + var(--label-padding-to-toggle)));
+
+    position: absolute;
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+    inset-inline-start: 0;
+    inset-block-start: 0;
+    height: px-to-rem(var(--checkbox-height));
+    width: px-to-rem(var(--checkbox-width));
+    line-height: px-to-rem(var(--checkbox-height));
+    text-align: center;
+
+    @include reduced-motion {
+      transition: none;
+    }
+
+    .labelOff,
+    .labelOn {
+      position: absolute;
+      user-select: none;
+      transition: opacity var(--motion-speed-very-fast) var(--motion-ease-in-out);
+      inset-inline-start: 0;
+      inset-block-start: 0;
+      height: px-to-rem(var(--checkbox-height));
+      width: px-to-rem(var(--checkbox-width));
+    }
+
+    .labelOff {
+      color: var(--interaction-primary);
+      padding-inline-end: $labelPaddingSmall;
+      padding-inline-start: $labelPaddingBig;
+    }
+
+    .labelOn {
+      color: var(--interaction-primary-inverted);
+      padding-inline-start: $labelPaddingSmall;
+      padding-inline-end: $labelPaddingBig;
+      opacity: 0;
+    }
+  }
+
+  .input {
+    position: absolute;
+    appearance: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    width: px-to-rem(var(--checkbox-width));
+    height: px-to-rem(var(--checkbox-height));
+    background-color: var(--interaction-primary-inverted);
+    border-radius: px-to-rem(var(--checkbox-height));
+    pointer-events: none;
+    transition: background-color var(--motion-speed-very-fast) var(--motion-ease-in-out);
+
+    @include reduced-motion {
+      transition: none;
+    }
+
+    @include forced-colors {
+      background-color: Highlight;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      inset-block-start: px-to-rem(var(--border-width));
+      inset-inline-start: px-to-rem(var(--border-width));
+      background: var(--white);
+      width: px-to-rem(var(--handle-dimensions));
+      height: px-to-rem(var(--handle-dimensions));
+      border-radius: 50%;
+      transition-duration: var(--motion-speed-very-fast);
+      transition-timing-function: var(--motion-ease-in-out);
+      transition-property: inset-inline-start;
+      box-shadow:
+        0 px-to-rem(3) px-to-rem(1) 0 #0000000f,
+        0 px-to-rem(3) px-to-rem(8) 0 #00000026,
+        0 0 0 px-to-rem(1) #0000000a;
+
+      @include reduced-motion {
+        transition: none;
+      }
+    }
+
+    &:checked {
+      background-color: var(--interaction-primary);
+
+      @include forced-colors {
+        background-color: Highlight;
+      }
+
+      &:after {
+        box-shadow:
+          0 px-to-rem(3) px-to-rem(1) 0 #0000000f,
+          0 px-to-rem(3) px-to-rem(8) 0 #00000026,
+          0 0 0 px-to-rem(1) #0000000a;
+      }
+
+      ~ .label {
+        & .labelOff {
+          opacity: 0;
+        }
+
+        & .labelOn {
+          opacity: 1;
+        }
+      }
+    }
+
+    &:checked:after {
+      inset-inline-start: px-to-rem(calc(var(--checkbox-width) - var(--handle-dimensions) - var(--border-width)));
+    }
+
+    &:focus-visible {
+      @include focus-visible;
+    }
+  }
+}
