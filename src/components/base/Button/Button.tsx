@@ -1,4 +1,3 @@
-import 'server-only';
 import React from 'react';
 import styles from '@/components/base/Button/Button.module.scss';
 

@@ -1,4 +1,3 @@
-import 'server-only';
 import React from 'react';
 import styles from '@/components/blocks/Rte/Rte.module.scss';
 import { InterfaceTextBlock } from '@/payload-types';

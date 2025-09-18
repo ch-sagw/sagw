@@ -323,7 +323,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   });
 
   // add form item
-  await payload.create({
+  const form = await payload.create({
     collection: 'forms',
     data: {
       _status: 'published',
@@ -331,17 +331,45 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       fields: [
         {
           blockType: 'textBlockForm',
-          fieldError: `Field error ${tenant.toUpperCase()}`,
+          fieldError: 'Geben Sie Ihren Namen an.',
           fieldWidth: 'half',
-          label: `Text field label ${tenant.toUpperCase()}`,
-          name: `Text field name ${tenant.toUpperCase()}`,
-          placeholder: `Text field placeholder ${tenant.toUpperCase()}`,
+          label: 'Name',
+          name: 'name',
+          placeholder: 'Ihr Name',
+          required: true,
+        },
+        {
+          blockType: 'emailBlock',
+          fieldError: 'Geben Sie ihre E-Mail-Adresse an.',
+          fieldWidth: 'half',
+          label: 'E-Mail',
+          name: 'email',
+          placeholder: 'Ihre E-Mail Adresse',
+          required: true,
+        },
+        {
+          blockType: 'textareaBlock',
+          fieldError: 'Geben Sie ihren Kommentar an.',
+          fieldWidth: 'full',
+          label: 'Kommentar',
+          name: 'comment',
+          placeholder: 'Ihr Kommentar',
+          required: true,
+        },
+        {
+          blockType: 'checkboxBlock',
+          fieldError: 'Bitte akzeptieren Sie die Hinweise zum Datenschutz.',
+          fieldWidth: 'full',
+          label: {
+            content: simpleRteConfig('Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.'),
+          },
+          name: 'checkbox',
           required: true,
         },
       ],
       recipientMail: 'foo@bar.baz',
-      submitButtonLabel: `Submit button ${tenant.toUpperCase()}`,
-      title: `Form ${tenant.toUpperCase()}`,
+      submitButtonLabel: 'Abschicken',
+      title: `Contact Form ${tenant.toUpperCase()}`,
     },
   });
 
@@ -382,6 +410,10 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     data: {
       _status: 'published',
       content: [
+        {
+          blockType: 'formBlock',
+          form,
+        },
         {
           blockType: 'notificationBlock',
           text: {

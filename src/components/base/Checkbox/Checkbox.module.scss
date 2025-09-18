@@ -1,0 +1,112 @@
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/functions" as *;
+
+.checkbox {
+  @include body-text-s;
+
+  --color-error: var(--text-error);
+  --color-active: var(--text-primary);
+  --color-inactive: var(--text-secondary);
+  --checkbox-dimensions: 18;
+  --icon-dimensions: 28;
+  --checkbox-gap-shift: 3;
+
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: px-to-rem(calc(var(--spacing-m) - var(--checkbox-gap-shift)));
+  align-items: center;
+  color: var(--color-active);
+
+  &.dark {
+    --color-error: var(--text-error-inverted);
+    --color-active: var(--text-primary-inverted);
+    --color-inactive: var(--text-secondary-inverted);
+  }
+
+  &:has(.input:not(:checked)) {
+    color: var(--color-inactive);
+  }
+
+  .input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+
+    &:focus-visible ~ .label {
+      @include focus-visible;
+    }
+  }
+
+  .label {
+    flex: 1;
+    user-select: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: color var(--motion-speed-very-fast) var(--motion-ease-in-out);
+    color: currentcolor;
+    margin-left: px-to-rem(calc(-1 * (var(--spacing-m) + var(--icon-dimensions))));
+    padding-left: px-to-rem(calc(var(--spacing-m) + var(--icon-dimensions)));
+
+    @include reduced-motion {
+      transition: none;
+    }
+  }
+
+  .icon {
+    display: block;
+    flex-basis: px-to-rem(var(--icon-dimensions));
+    flex-shrink: 0;
+    flex-grow: 0;
+    height: px-to-rem(var(--icon-dimensions));
+    position: relative;
+    pointer-events: none;
+    color: currentcolor;
+
+    path {
+      opacity: 0;
+      transition: opacity var(--motion-speed-very-fast) var(--motion-ease-in-out);
+
+      @include reduced-motion {
+        transition: none;
+      }
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      border: px-to-rem(var(--border-width-l)) solid currentcolor;
+      width: px-to-rem(var(--checkbox-dimensions));
+      height: px-to-rem(var(--checkbox-dimensions));
+      inset-block-start: px-to-rem(calc((var(--icon-dimensions) - var(--checkbox-dimensions)) / 2));
+      inset-inline-start: px-to-rem(calc((var(--icon-dimensions) - var(--checkbox-dimensions)) / 2));
+      transition: border-color var(--motion-speed-very-fast) var(--motion-ease-in-out);
+
+      @include reduced-motion {
+        transition: none;
+      }
+    }
+  }
+
+  .input:checked ~ .icon path {
+    opacity: 1;
+  }
+
+  .error {
+    @include body-text-s;
+
+    width: 100%;
+    color: var(--color-error);
+    display: flex;
+    align-items: center;
+
+    .errorIcon {
+      flex-basis: px-to-rem(var(--spacing-m));
+      height: px-to-rem(var(--spacing-m));
+      flex-grow: 0;
+      flex-shrink: 0;
+      margin-inline-end: px-to-rem(var(--spacing-xs));
+    }
+  }
+}

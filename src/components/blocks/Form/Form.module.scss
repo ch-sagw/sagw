@@ -1,0 +1,19 @@
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  width: 100%;
+}
+
+.field {
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.field-width-half {
+  flex-basis: calc(50% - 2rem);
+}
+
+.field-width-full {
+  flex-basis: 100%;
+}
