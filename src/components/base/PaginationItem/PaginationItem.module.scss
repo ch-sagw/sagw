@@ -7,25 +7,27 @@
   @include button-text;
   @include button-reset;
 
-  --padding-block: 19;
-  --padding-inline: 22.5;
+  --pagination-item-size: 56;
 
   @include mq($from: medium) {
-    --padding-block: 23;
-    --padding-inline: 26.5;
+    --pagination-item-size: 64;
   }
 
   & {
-    display: block;
-    padding: px-to-rem(var(--padding-block)) px-to-rem(var(--padding-inline));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: px-to-rem(var(--pagination-item-size));
+    height: px-to-rem(var(--pagination-item-size));
+    color: var(--interaction-primary);
   }
 
   &.number {
     cursor: pointer;
-    border: px-to-rem((var(--border-width-m))) solid var(--border-primary);
+    border: px-to-rem((var(--border-width-m))) solid var(--border-weak);
 
     &.active {
-      border-color: var(--border-weak);
+      border-color: var(--border-primary);
       cursor: default;
 
       @include forced-colors {

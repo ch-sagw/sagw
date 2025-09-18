@@ -169,7 +169,7 @@ export const Pagination = ({
     >
       <h2 id='pagination' className={styles.hiddenTitle}>{paginationTitle}</h2>
 
-      <ul className={styles.list}>
+      <ol className={styles.list}>
         {pages.map((p, key) => (p === 'filler'
           ? (
             <li key={`filler-${key}`}>
@@ -186,7 +186,7 @@ export const Pagination = ({
               />
             </li>
           )))}
-      </ul>
+      </ol>
     </nav>
   );
 

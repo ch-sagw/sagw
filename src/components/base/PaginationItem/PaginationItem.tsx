@@ -48,7 +48,6 @@ export const PaginationItem = (props: InterfacePaginationItemPropTypes): React.J
           type,
         })}
         onClick={onClick}
-        aria-current='page'
         {...additionalAttributes}
       >{number}</button>
     );
