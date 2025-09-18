@@ -53,6 +53,7 @@ jobs:
         if: always()
         with:
           report-file: test-results/results-fe.json
+          comment-title: 'Test results FE'
       - name: Test BE
         run: npm run test:be:native
         env:
@@ -68,6 +69,7 @@ jobs:
         if: always()
         with:
           report-file: test-results/results-be.json
+          comment-title: 'Test results BE'
       - uses: actions/upload-artifact@v4
         if: always()
         with:
