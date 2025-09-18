@@ -37,7 +37,13 @@ export default defineConfig({
       [
         'blob',
         {
-          outputFile: 'blob-report/be.zip',
+          outputFile: 'test-results/blob-report/be.zip',
+        },
+      ],
+      [
+        'json',
+        {
+          outputFile: 'test-results/results-be.json',
         },
       ],
     ]
@@ -46,6 +52,7 @@ export default defineConfig({
         'html',
         {
           open: 'never',
+          outputFolder: 'test-results/html',
         },
       ],
       [
