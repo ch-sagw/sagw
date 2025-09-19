@@ -1,5 +1,6 @@
 import {
   defineConfig, devices,
+  ReporterDescription,
 } from '@playwright/test';
 import { vrtConfig } from '@/automated-testing/config';
 
@@ -60,46 +61,43 @@ const projects = [
 
 ];
 
+const reporterJson: ReporterDescription = [
+  'json',
+  {
+    outputFile: 'test-results/results.json',
+  },
+];
+
+const reporterList: ReporterDescription = ['list'];
+
+const reporterHtml: ReporterDescription = [
+  'html',
+  {
+    open: 'never',
+    outputFolder: 'test-results/html',
+  },
+];
+
+export const defaultReporters: ReporterDescription[] = [
+  reporterJson,
+  reporterList,
+  reporterHtml,
+];
+
 export default defineConfig({
   expect: {
     toHaveScreenshot: {
-
-      // _comparator: 'ssim-cie94',
-
       maxDiffPixelRatio: 0,
       maxDiffPixels: 0,
       pathTemplate: `src/{testFileDir}/${vrtConfig.snapshotFolder}/{testName}/{projectName}{ext}`,
-      // scale: 'device',
       threshold: 0,
     },
   },
   forbidOnly: Boolean(process.env.CI),
   fullyParallel: true,
+  outputDir: 'test-results/main',
   projects,
-  reporter: process.env.CI
-    ? [
-      [
-        'blob',
-        {
-          outputFile: 'blob-report/fe.zip',
-        },
-      ],
-    ]
-    : [
-      [
-        'html',
-        {
-          open: 'never',
-        },
-      ],
-      [
-        'json',
-        {
-          outputFile: 'test-results/results-fe.json',
-        },
-      ],
-      ['list'],
-    ],
+  reporter: defaultReporters,
   retries: 0,
   testDir: './src/',
   testMatch: '**/*.fe.spec.ts?(x)',
