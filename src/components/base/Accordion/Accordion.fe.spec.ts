@@ -21,6 +21,9 @@ test('correctly opens accordion', async ({
   await expect(content)
     .toBeVisible();
 
-  await expect(elem)
-    .toHaveScreenshot();
+  await expect(page)
+    .toHaveScreenshot({
+      animations: 'disabled',
+      fullPage: true,
+    });
 });
