@@ -20,6 +20,16 @@ test('correctly opens accordion', async ({
   await expect(content)
     .toBeVisible();
 
+  // TODO: icon results in tiny pixel diff in github actions.
+  // find stable solution.
+  await page.addStyleTag({
+    content: `
+    #component svg {
+      display: none !important;
+    }
+  `,
+  });
+
   await expect(page)
     .toHaveScreenshot({
       animations: 'disabled',
