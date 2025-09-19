@@ -8,19 +8,15 @@
 // - Define forced color styles for all variants and modes
 // - Define focus styles for all variants and modes
 
-:root {
+.button {
+  @include button-text;
+
   --button-background-color: none;
   --button-border-color: currentcolor;
   --button-color: var(--interaction-primary);
   --button-icon-size: var(--spacing-m);
   --button-padding-block: 20;
   --button-padding-inline: var(--spacing-l);
-}
-
-.button {
-  @include button-text;
-
-  --button-color: var(--interaction-primary);
 
   display: flex;
   align-items: center;
@@ -115,14 +111,16 @@
     --line-animation-duration: 0s;
   }
 
-  --button-icon-color: var(--interaction-secondary);
-  --line-animation-duration: var(--motion-speed-very-fast);
-  --line-cover-color: canvas;
+  & {
+    --button-icon-color: var(--interaction-secondary);
+    --line-animation-duration: var(--motion-speed-very-fast);
+    --line-cover-color: canvas;
 
-  // Redefined because we want to use the --button-padding-block
-  // variable on the innerText element.
-  padding-block: 0;
-  border: none;
+    // Redefined because we want to use the --button-padding-block
+    // variable on the innerText element.
+    padding-block: 0;
+    border: none;
+  }
 
   &:is(:hover, :focus) {
     --button-icon-color: var(--interaction-secondary-hover);
