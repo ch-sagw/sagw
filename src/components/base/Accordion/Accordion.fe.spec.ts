@@ -7,7 +7,6 @@ import { navigate } from '@/automated-testing/helpers';
 test('correctly opens accordion', async ({
   page,
 }) => {
-  // Put the story name in here. Get it from the url in storybook...
   await navigate(page, 'components-base-accordion--default-accordion');
 
   const elem = await page.getByTestId('accordion');
