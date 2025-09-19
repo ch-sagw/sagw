@@ -484,7 +484,9 @@ export interface Form {
    * A newsletter form has a fixed set of fields. Custom form can be build with any combination of fields as you like.
    */
   isNewsletterForm?: ('custom' | 'newsletter') | null;
+  colorMode: 'dark' | 'white';
   title: string;
+  titleLevel: '2' | '3' | '4' | '5';
   subtitle?: string | null;
   submitButtonLabel: string;
   recipientMail?: string | null;
@@ -3631,7 +3633,9 @@ export interface UsersSelect<T extends boolean = true> {
 export interface FormsSelect<T extends boolean = true> {
   department?: T;
   isNewsletterForm?: T;
+  colorMode?: T;
   title?: T;
+  titleLevel?: T;
   subtitle?: T;
   submitButtonLabel?: T;
   recipientMail?: T;

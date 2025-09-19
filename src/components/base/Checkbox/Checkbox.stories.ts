@@ -30,7 +30,7 @@ export default meta;
 export const DefaultCheckbox: StrictStory = {
   args: {
     checked: false,
-    colorTheme: 'light',
+    colorMode: 'white',
     errorText: '',
     label: sampleRtePrivacyCheckbox,
     name: 'name',
@@ -41,7 +41,7 @@ export const DefaultCheckbox: StrictStory = {
 export const CheckedCheckbox: StrictStory = {
   args: {
     checked: true,
-    colorTheme: 'light',
+    colorMode: 'white',
     errorText: '',
     label: sampleRtePrivacyCheckbox,
     name: 'name',
@@ -52,7 +52,7 @@ export const CheckedCheckbox: StrictStory = {
 export const CheckboxWithError: StrictStory = {
   args: {
     checked: false,
-    colorTheme: 'light',
+    colorMode: 'white',
     errorText: 'Bitte akzeptieren sie die Hinweise zum Datenschutz.',
     label: sampleRtePrivacyCheckbox,
     name: 'name',
@@ -63,7 +63,7 @@ export const CheckboxWithError: StrictStory = {
 export const DarkVariant: StrictStory = {
   args: {
     checked: false,
-    colorTheme: 'dark',
+    colorMode: 'dark',
     errorText: 'Bitte akzeptieren sie die Hinweise zum Datenschutz.',
     label: sampleRtePrivacyCheckbox,
     name: 'name',
