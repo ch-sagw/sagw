@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, {
+  useEffect, useRef, useState,
+} from 'react';
 import { cva } from 'cva';
 import { Icon } from '@/icons';
 import styles from '@/components/base/Checkbox/Checkbox.module.scss';
@@ -16,6 +18,7 @@ export type InterfaceCheckboxPropTypes = {
   errorText: string;
   colorTheme: 'light' | 'dark';
   className?: string;
+  autofocus?: boolean;
 };
 
 export const Checkbox = ({
@@ -26,11 +29,20 @@ export const Checkbox = ({
   errorText,
   colorTheme,
   className,
+  autofocus,
 }: InterfaceCheckboxPropTypes): React.JSX.Element => {
+  const checkboxRef = useRef<HTMLInputElement>(null);
+
   const [
     checkedState,
     setCheckedState,
   ] = useState(checked);
+
+  useEffect(() => {
+    if (autofocus && checkboxRef.current) {
+      checkboxRef.current.focus();
+    }
+  }, [autofocus]);
 
   const classes = cva([
     styles.checkbox,
@@ -53,6 +65,7 @@ export const Checkbox = ({
       colorTheme,
     })}>
       <input
+        ref={checkboxRef}
         aria-describedby={
           errorText
             ? value
@@ -88,8 +101,6 @@ export const Checkbox = ({
         <span
           className={styles.error}
           id={name}
-          aria-live='assertive'
-          role='alert'
         >
           <Icon
             name='warning'
