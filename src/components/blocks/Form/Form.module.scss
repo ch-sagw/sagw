@@ -34,11 +34,13 @@
     width: 100%;
   }
 
-  .field-width-half {
-    flex-basis: calc(50% - #{px-to-rem(var(--grid-gutter)) / 2});
-  }
+  .field {
+    &.half {
+      flex-basis: calc(50% - #{px-to-rem(var(--grid-gutter)) / 2});
+    }
 
-  .field-width-full {
-    flex-basis: 100%;
+    &.full {
+      flex-basis: 100%;
+    }
   }
 }

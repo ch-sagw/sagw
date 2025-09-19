@@ -22,11 +22,20 @@ import styles from '@/components/blocks/Form/Form.module.scss';
 
 export type InterfaceFormPropTypes = {} & InterfaceFormBlock;
 
-const classes = cva([styles.formBlock], {
+const sectionClasses = cva([styles.formBlock], {
   variants: {
     colorMode: {
       dark: [styles.dark],
       white: null,
+    },
+  },
+});
+
+const fieldClasses = cva([styles.field], {
+  variants: {
+    fieldWidth: {
+      full: [styles.full],
+      half: [styles.half],
     },
   },
 });
@@ -85,7 +94,7 @@ export const Form = ({
 
   return (
     <section
-      className={classes({
+      className={sectionClasses({
         colorMode: renderForm.colorMode,
       })}
     >
@@ -114,7 +123,9 @@ export const Form = ({
             return (
               <InputText
                 autofocus={field.name === firstErrorFieldName}
-                className={`${styles.field} ${styles[`field-width-${field.fieldWidth}`]}`}
+                className={fieldClasses({
+                  fieldWidth: field.fieldWidth,
+                })}
                 key={i}
                 label={field.label}
                 placeholder={field.placeholder}
@@ -140,7 +151,9 @@ export const Form = ({
               <Checkbox
                 autofocus={field.name === firstErrorFieldName}
                 key={i}
-                className={`${styles.field} ${styles[`field-width-${field.fieldWidth}`]}`}
+                className={fieldClasses({
+                  fieldWidth: field.fieldWidth,
+                })}
                 value='on'
                 name={field.name}
                 label={field.label.content}
