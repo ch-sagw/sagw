@@ -33,7 +33,6 @@ export default meta;
 
 export const ButtonPrimaryFilled: StrictStory = {
   args: {
-    ariaHasPopUp: false,
     colorTheme: 'light',
     element: 'button',
     style: 'filled',
@@ -43,7 +42,6 @@ export const ButtonPrimaryFilled: StrictStory = {
 
 export const ButtonPrimaryFilledDark: StrictStory = {
   args: {
-    ariaHasPopUp: false,
     colorTheme: 'dark',
     element: 'button',
     style: 'filled',
@@ -58,7 +56,6 @@ export const ButtonPrimaryFilledDark: StrictStory = {
 
 export const ButtonPrimaryFilledDarkDisabled: StrictStory = {
   args: {
-    ariaHasPopUp: false,
     colorTheme: 'dark',
     disabled: true,
     element: 'button',
@@ -74,7 +71,6 @@ export const ButtonPrimaryFilledDarkDisabled: StrictStory = {
 
 export const ButtonPrimaryFilledIconStart: StrictStory = {
   args: {
-    ariaHasPopUp: false,
     colorTheme: 'light',
     element: 'button',
     iconInlineStart: 'menu' as keyof typeof Icon,
@@ -85,7 +81,6 @@ export const ButtonPrimaryFilledIconStart: StrictStory = {
 
 export const ButtonPrimaryFilledIconStartDark: StrictStory = {
   args: {
-    ariaHasPopUp: false,
     colorTheme: 'dark',
     element: 'button',
     iconInlineStart: 'menu' as keyof typeof Icon,
@@ -101,7 +96,6 @@ export const ButtonPrimaryFilledIconStartDark: StrictStory = {
 
 export const ButtonPrimaryOutlined: StrictStory = {
   args: {
-    ariaHasPopUp: false,
     colorTheme: 'light',
     element: 'button',
     iconInlineStart: 'menu' as keyof typeof Icon,
@@ -112,7 +106,6 @@ export const ButtonPrimaryOutlined: StrictStory = {
 
 export const ButtonPrimaryOutlinedDark: StrictStory = {
   args: {
-    ariaHasPopUp: false,
     buttonType: 'button',
     colorTheme: 'dark',
     element: 'button',
@@ -129,7 +122,6 @@ export const ButtonPrimaryOutlinedDark: StrictStory = {
 
 export const ButtonText: StrictStory = {
   args: {
-    ariaHasPopUp: false,
     colorTheme: 'light',
     element: 'button',
     iconInlineStart: 'config' as keyof typeof Icon,
@@ -140,7 +132,6 @@ export const ButtonText: StrictStory = {
 
 export const ButtonTextDark: StrictStory = {
   args: {
-    ariaHasPopUp: false,
     colorTheme: 'dark',
     element: 'button',
     iconInlineStart: 'config' as keyof typeof Icon,
@@ -156,7 +147,6 @@ export const ButtonTextDark: StrictStory = {
 
 export const ButtonLinkPrimaryFilled: StrictStory = {
   args: {
-    ariaHasPopUp: false,
     colorTheme: 'light',
     element: 'link',
     href: 'https://www.sagw.ch',
@@ -168,7 +158,6 @@ export const ButtonLinkPrimaryFilled: StrictStory = {
 
 export const ButtonLinkPrimaryOutlined: StrictStory = {
   args: {
-    ariaHasPopUp: false,
     colorTheme: 'light',
     element: 'link',
     href: 'https://www.sagw.ch',
@@ -180,7 +169,6 @@ export const ButtonLinkPrimaryOutlined: StrictStory = {
 
 export const ButtonLinkText: StrictStory = {
   args: {
-    ariaHasPopUp: false,
     colorTheme: 'light',
     element: 'link',
     href: 'https://www.sagw.ch',
@@ -193,7 +181,6 @@ export const ButtonLinkText: StrictStory = {
 export const ButtonLinkTextCurrent: StrictStory = {
   args: {
     ariaCurrent: true,
-    ariaHasPopUp: false,
     ariaLabel: 'Deutsch',
     colorTheme: 'light',
     element: 'link',

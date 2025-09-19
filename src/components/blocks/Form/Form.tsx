@@ -15,6 +15,7 @@ import {
   InputText, InterfaceInputTextPropTypes,
 } from '@/components/base/InputText/InputText';
 
+import { Button } from '@/components/base/Button/Button';
 import { Checkbox } from '@/components/base/Checkbox/Checkbox';
 
 import styles from '@/components/blocks/Form/Form.module.scss';
@@ -109,7 +110,14 @@ export const Form = ({
         return <Fragment key={i}></Fragment>;
       })}
 
-      <button disabled={pending}>Sign up</button>
+      <Button
+        buttonType='submit'
+        colorTheme='light'
+        disabled={pending}
+        element='button'
+        style='filled'
+        text='Absenden'
+      />
     </form>
 
   );

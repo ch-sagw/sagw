@@ -9,6 +9,7 @@ type BaseProps = {
   ariaControls?: string;
   ariaLabel?: string,
   autoFocus?: boolean;
+  buttonType?: 'submit' | 'button';
   colorTheme: 'light' | 'dark';
   disabled?: boolean;
   element: 'button' | 'link';
@@ -21,8 +22,7 @@ type BaseProps = {
 };
 
 type ButtonProps = BaseProps & {
-  ariaHasPopUp: boolean;
-  buttonType?: 'submit' | 'button';
+  ariaHasPopUp?: boolean | undefined;
 };
 
 type ButtonLinkProps = BaseProps & {
@@ -68,6 +68,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     ariaCurrent,
     ariaLabel,
     autoFocus,
+    buttonType,
     colorTheme,
     disabled,
     element,
@@ -136,7 +137,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
       data-testid='button'
       onClick={onClick}
       popoverTarget={popOverTarget}
-      type='button'
+      type={buttonType}
     >
       {iconInlineStart && (
         <span className={styles.iconStart}>
