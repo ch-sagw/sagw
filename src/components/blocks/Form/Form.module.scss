@@ -19,6 +19,7 @@
     @include title-heading-3;
 
     color: var(--text-primary);
+    margin: 0 0 px-to-rem(var(--section-inside-s));
   }
 
   .subtitle {

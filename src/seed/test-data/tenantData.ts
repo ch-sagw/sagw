@@ -327,6 +327,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'forms',
     data: {
       _status: 'published',
+      colorMode: 'dark',
       department: tenantId,
       fields: [
         {
