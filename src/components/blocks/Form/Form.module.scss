@@ -1,19 +1,44 @@
-.form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  width: 100%;
-}
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
 
-.field {
-  flex-shrink: 0;
-  flex-grow: 0;
-}
+.formBlock {
+  &.dark {
+    background-color: var(--background-cta);
 
-.field-width-half {
-  flex-basis: calc(50% - 2rem);
-}
+    .title {
+      color: var(--text-primary-inverted);
+    }
 
-.field-width-full {
-  flex-basis: 100%;
+    .subtitle {
+      color: var(--text-secondary-inverted);
+    }
+  }
+
+  .title {
+    @include title-heading-3;
+
+    color: var(--text-primary);
+  }
+
+  .subtitle {
+    @include body-text-xl;
+
+    color: var(--text-secondary);
+  }
+
+  .form {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: px-to-rem(var(--grid-gutter));
+    row-gap: px-to-rem(var(--section-inside-s));
+    width: 100%;
+  }
+
+  .field-width-half {
+    flex-basis: calc(50% - #{px-to-rem(var(--grid-gutter)) / 2});
+  }
+
+  .field-width-full {
+    flex-basis: 100%;
+  }
 }

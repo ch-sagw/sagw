@@ -3,6 +3,7 @@ import { versions } from '@/field-templates/versions';
 import { FormBlocks } from '@/blocks/Form/index';
 import { emailBlock } from '@/blocks/Form/Email';
 import { textBlock } from '@/blocks/Form/Text';
+import { fieldsColorModeWhiteDark } from '@/field-templates/colorMode';
 
 export const Forms: CollectionConfig = {
   access: {
@@ -31,11 +32,42 @@ export const Forms: CollectionConfig = {
       ],
       type: 'radio',
     },
+    fieldsColorModeWhiteDark,
     {
-      localized: true,
-      name: 'title',
-      required: true,
-      type: 'text',
+      fields: [
+        {
+          localized: true,
+          name: 'title',
+          required: true,
+          type: 'text',
+        },
+        {
+          defaultValue: '2',
+          localized: true,
+          name: 'titleLevel',
+          options: [
+            {
+              label: '2',
+              value: '2',
+            },
+            {
+              label: '3',
+              value: '3',
+            },
+            {
+              label: '4',
+              value: '4',
+            },
+            {
+              label: '5',
+              value: '5',
+            },
+          ],
+          required: true,
+          type: 'radio',
+        },
+      ],
+      type: 'row',
     },
     {
       localized: true,

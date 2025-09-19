@@ -16,7 +16,7 @@ export type InterfaceCheckboxPropTypes = {
   label: InterfaceRtePropTypes['text'];
   checked: boolean;
   errorText: string;
-  colorTheme: 'light' | 'dark';
+  colorMode: 'white' | 'dark';
   className?: string;
   autofocus?: boolean;
 };
@@ -27,7 +27,7 @@ export const Checkbox = ({
   label,
   checked,
   errorText,
-  colorTheme,
+  colorMode,
   className,
   autofocus,
 }: InterfaceCheckboxPropTypes): React.JSX.Element => {
@@ -49,9 +49,9 @@ export const Checkbox = ({
     className,
   ], {
     variants: {
-      colorTheme: {
+      colorMode: {
         dark: [styles.dark],
-        light: [styles.light],
+        white: null,
       },
     },
   });
@@ -62,7 +62,7 @@ export const Checkbox = ({
 
   return (
     <div className={classes({
-      colorTheme,
+      colorMode,
     })}>
       <input
         ref={checkboxRef}

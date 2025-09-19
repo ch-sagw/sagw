@@ -370,6 +370,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       recipientMail: 'foo@bar.baz',
       submitButtonLabel: 'Abschicken',
       title: `Contact Form ${tenant.toUpperCase()}`,
+      titleLevel: '2',
     },
   });
 
