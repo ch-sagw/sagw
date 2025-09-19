@@ -61,6 +61,9 @@
           & {
             border-bottom: none;
             margin-bottom: 0;
+
+            // TODO: discuss focus style in general
+            outline-offset: px-to-rem(calc(-1 * var(--border-width-l) + var(--spacing-xs)));
           }
         }
       }
