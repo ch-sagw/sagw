@@ -21,21 +21,21 @@
 @mixin body-text-xl {
   font-family: var(--font-family-display);
   font-size: px-to-rem(var(--body-text-xl-size));
-  letter-spacing: 1%;
+  letter-spacing: 0.009rem;
   line-height: 1.4;
 }
 
 @mixin body-text-2xl {
   font-family: var(--font-family-display);
   font-size: px-to-rem(var(--body-text-2xl-size));
-  letter-spacing: 1%;
+  letter-spacing: 0.009rem;
   line-height: 1.2;
 }
 
 @mixin body-text-lead {
   font-family: var(--font-family-display);
   font-size: px-to-rem(var(--body-text-lead-size));
-  letter-spacing: 1%;
+  letter-spacing: 0.009rem;
   line-height: 1.4;
 }
 
@@ -43,7 +43,7 @@
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-medium);
   font-size: px-to-rem(var(--button-text-size));
-  letter-spacing: 1%;
+  letter-spacing: 0.009rem;
 }
 
 @mixin input-text {
@@ -66,7 +66,7 @@
 @mixin title-heading {
   font-family: var(--font-family-display);
   font-weight: var(--font-weight-bold);
-  letter-spacing: 1%;
+  letter-spacing: 0.009rem;
   line-height: 1.1;
 }
 
@@ -114,5 +114,5 @@
   font-weight: var(--font-weight-medium);
   font-size: px-to-rem(var(--title-heading-section-size));
   line-height: 1.2;
-  letter-spacing: 1%;
+  letter-spacing: 0.009rem;
 }

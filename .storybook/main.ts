@@ -10,6 +10,9 @@ const config: StorybookConfig = {
     options: {},
   },
   stories: ['../src/**/*.stories.@(ts|tsx)'],
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+  },
 };
 
 export default config;
