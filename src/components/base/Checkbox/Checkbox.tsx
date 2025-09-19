@@ -44,6 +44,10 @@ export const Checkbox = ({
     }
   }, [autofocus]);
 
+  useEffect(() => {
+    setCheckedState(checked);
+  }, [checked]);
+
   const classes = cva([
     styles.checkbox,
     className,

@@ -129,6 +129,13 @@ export const Form = ({
           }
 
           if (field.blockType === 'checkboxBlock') {
+            let checked = false;
+            const serverState = state?.values?.[field.name];
+
+            if (serverState) {
+              checked = serverState === 'on';
+            }
+
             return (
               <Checkbox
                 autofocus={field.name === firstErrorFieldName}
@@ -137,7 +144,7 @@ export const Form = ({
                 value='on'
                 name={field.name}
                 label={field.label.content}
-                checked={false}
+                checked={checked}
                 errorText={errors[field.name]?.join(', ') || ''}
                 colorMode={renderForm.colorMode}
               />
