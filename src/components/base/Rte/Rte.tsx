@@ -42,30 +42,35 @@ const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({
 export type InterfaceRtePropTypes = {
   text: InterfaceRte1['content'] | InterfaceRte2['content'];
   rteConfig: 'rte1' | 'rte2';
-  context?: 'notification' | 'heroLead' | 'magazineDetailLead' | 'magazineDetailText'
+  context?: 'notification' | 'heroLead' | 'magazineDetailLead' | 'magazineDetailText',
+  className?: string;
 };
-
-const rteClasses = cva([styles.rte], {
-  variants: {
-    context: {
-      heroLead: [styles.heroLead],
-      magazineDetailLead: [styles.magazineDetailLead],
-      magazineDetailText: [styles.magazineDetailText],
-      notification: [styles.notification],
-    },
-    rteConfig: {
-      rte1: [styles.rte1],
-      rte2: [styles.rte2],
-    },
-  },
-});
 
 export const Rte = ({
   context,
   text,
   rteConfig,
-}: InterfaceRtePropTypes): React.JSX.Element => (
-  <RichText
+  className,
+}: InterfaceRtePropTypes): React.JSX.Element => {
+  const rteClasses = cva([
+    styles.rte,
+    className,
+  ], {
+    variants: {
+      context: {
+        heroLead: [styles.heroLead],
+        magazineDetailLead: [styles.magazineDetailLead],
+        magazineDetailText: [styles.magazineDetailText],
+        notification: [styles.notification],
+      },
+      rteConfig: {
+        rte1: [styles.rte1],
+        rte2: [styles.rte2],
+      },
+    },
+  });
+
+  return (<RichText
     className={rteClasses({
       context: context ?? undefined,
       rteConfig: rteConfig ?? undefined,
@@ -73,4 +78,5 @@ export const Rte = ({
     converters={jsxConverters}
     data={text}
   />
-);
+  );
+};
