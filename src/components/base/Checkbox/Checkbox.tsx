@@ -79,7 +79,7 @@ export const Checkbox = ({
         className={styles.input}
         type='checkbox'
         name={name}
-        id={value}
+        id={name}
         checked={checkedState}
         onChange={onInputChange}
         value={value}
@@ -91,7 +91,7 @@ export const Checkbox = ({
       />
 
       <label
-        htmlFor={value}
+        htmlFor={name}
         className={styles.label}
         data-testid='checkbox-label'
       >
