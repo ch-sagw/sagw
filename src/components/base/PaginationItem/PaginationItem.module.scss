@@ -1,0 +1,38 @@
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+
+.paginationItem {
+  @include button-text;
+  @include button-reset;
+
+  --pagination-item-size: 56;
+
+  @include mq($from: medium) {
+    --pagination-item-size: 64;
+  }
+
+  & {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: px-to-rem(var(--pagination-item-size));
+    height: px-to-rem(var(--pagination-item-size));
+    color: var(--interaction-primary);
+  }
+
+  &.number {
+    cursor: pointer;
+    border: px-to-rem((var(--border-width-m))) solid var(--border-weak);
+
+    &.active {
+      border-color: var(--border-primary);
+      cursor: default;
+
+      @include forced-colors {
+        border-color: LinkText;
+      }
+    }
+  }
+}

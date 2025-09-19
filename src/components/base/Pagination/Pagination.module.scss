@@ -1,0 +1,21 @@
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.pagination {
+  .hiddenTitle {
+    @include screen-reader-only;
+  }
+
+  .list {
+    @include list-reset;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: px-to-rem(var(--spacing-m));
+
+    @include mq($from: medium) {
+      gap: px-to-rem(var(--spacing-l));
+    }
+  }
+}
