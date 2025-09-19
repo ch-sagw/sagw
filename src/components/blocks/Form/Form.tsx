@@ -35,6 +35,11 @@ export const Form = ({
     setErrors,
   ] = useState<Record<string, string[] | undefined>>({});
 
+  const [
+    firstErrorFieldName,
+    setFirstErrorFieldName,
+  ] = useState('');
+
   useEffect(() => {
     if (!state || !state.error) {
       setErrors({});
@@ -42,6 +47,15 @@ export const Form = ({
       setErrors(state.error.fieldErrors ?? {});
     }
   }, [state]);
+
+  useEffect(() => {
+
+    const [firstErrorKey] = Object.keys(errors);
+
+    if (firstErrorKey) {
+      setFirstErrorFieldName(firstErrorKey);
+    }
+  }, [errors]);
 
   if (!form) {
     return <Fragment></Fragment>;
@@ -77,6 +91,7 @@ export const Form = ({
 
           return (
             <InputText
+              autofocus={field.name === firstErrorFieldName}
               className={`${styles.field} ${styles[`field-width-${field.fieldWidth}`]}`}
               key={i}
               label={field.label}
@@ -94,6 +109,7 @@ export const Form = ({
         if (field.blockType === 'checkboxBlock') {
           return (
             <Checkbox
+              autofocus={field.name === firstErrorFieldName}
               key={i}
               className={`${styles.field} ${styles[`field-width-${field.fieldWidth}`]}`}
               value='on'
