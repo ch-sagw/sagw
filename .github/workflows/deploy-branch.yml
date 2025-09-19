@@ -18,7 +18,7 @@ jobs:
     if: github.head_ref != 'release-please--branches--main'
     env:
       HOME: /root
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     permissions:
       pull-requests: write
     container:
