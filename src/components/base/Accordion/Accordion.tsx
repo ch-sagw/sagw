@@ -45,7 +45,10 @@ export const Accordion = ({
   };
 
   return (
-    <div className={styles.accordion}>
+    <div
+      className={styles.accordion}
+      data-testid='accordion'
+    >
       {items.map((item, key) => (
         <div
           key={key}
@@ -61,6 +64,7 @@ export const Accordion = ({
               }}
               aria-controls={`accordion-section-${key}`}
               aria-expanded={key === activeAccordion}
+              data-testid='button'
             >
               <span className={styles.buttonText}>{item.title}</span>
               <Icon
@@ -76,6 +80,7 @@ export const Accordion = ({
             hidden={key !== activeAccordion}
             aria-hidden={key !== activeAccordion}
             inert={key !== activeAccordion}
+            data-testid='content'
           >
             <Rte
               className={styles.rte}

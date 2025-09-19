@@ -4,14 +4,23 @@ import {
 } from '@playwright/test';
 import { navigate } from '@/automated-testing/helpers';
 
-test('component should be visible', async ({
+test('correctly opens accordion', async ({
   page,
 }) => {
   // Put the story name in here. Get it from the url in storybook...
-  await navigate(page, 'components-base-accordion--sample-story');
+  await navigate(page, 'components-base-accordion--default-accordion');
 
-  const elem = await page.getByText('some text');
+  const elem = await page.getByTestId('accordion');
+  const button = await elem.getByTestId('button')
+    .nth(1);
+  const content = await elem.getByTestId('content')
+    .nth(1);
+
+  await button.click();
+
+  await expect(content)
+    .toBeVisible();
 
   await expect(elem)
-    .toBeVisible();
+    .toHaveScreenshot();
 });
