@@ -8,6 +8,7 @@ export type InterfaceTogglePropTypes = {
   value: string;
   name: string;
   checked: boolean;
+  hiddenLabel: string;
 };
 
 export const Toggle = ({
@@ -16,6 +17,7 @@ export const Toggle = ({
   value,
   name,
   checked,
+  hiddenLabel,
 }: InterfaceTogglePropTypes): React.JSX.Element => {
   const [
     checkedState,
@@ -45,8 +47,9 @@ export const Toggle = ({
         className={styles.label}
         htmlFor={value}
       >
-        <span className={styles.labelOff}>{labelOff}</span>
-        <span className={styles.labelOn}>{labelOn}</span>
+        <span className={styles.hiddenLabel}>{hiddenLabel}</span>
+        <span className={styles.labelOff} aria-hidden='true'>{labelOff}</span>
+        <span className={styles.labelOn} aria-hidden='true'>{labelOn}</span>
       </label>
     </div>
   );

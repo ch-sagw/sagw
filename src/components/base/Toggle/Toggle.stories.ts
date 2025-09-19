@@ -29,6 +29,7 @@ export default meta;
 export const Checked: StrictStory = {
   args: {
     checked: true,
+    hiddenLabel: 'Performance & Analytics',
     labelOff: 'Aus',
     labelOn: 'An',
     name: 'toggle-name',
@@ -39,6 +40,7 @@ export const Checked: StrictStory = {
 export const Unchecked: StrictStory = {
   args: {
     checked: false,
+    hiddenLabel: 'Performance & Analytics',
     labelOff: 'Aus',
     labelOn: 'An',
     name: 'toggle-name',

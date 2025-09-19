@@ -36,6 +36,10 @@
       transition: none;
     }
 
+    .hiddenLabel {
+      @include screen-reader-only;
+    }
+
     .labelOff,
     .labelOn {
       position: absolute;
