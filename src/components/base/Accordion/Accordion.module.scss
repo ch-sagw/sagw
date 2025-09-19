@@ -75,8 +75,6 @@
       transition-duration: var(--motion-speed-fast);
       transition-timing-function: var(--motion-ease-in-out);
       opacity: 0;
-
-      // visibility: hidden;
     }
 
     .rte {
@@ -87,8 +85,6 @@
       .content {
         grid-template-rows: 1fr;
         opacity: 1;
-
-        // visibility: visible;
       }
 
       .icon {

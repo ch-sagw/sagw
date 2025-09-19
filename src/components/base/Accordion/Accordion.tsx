@@ -59,6 +59,8 @@ export const Accordion = ({
               onClick={() => {
                 onClick(key);
               }}
+              aria-controls={`accordion-section-${key}`}
+              aria-expanded={key === activeAccordion}
             >
               <span className={styles.buttonText}>{item.title}</span>
               <Icon
@@ -68,7 +70,13 @@ export const Accordion = ({
             </button>
           </HeadingElem>
 
-          <section className={styles.content}>
+          <section
+            id={`accordion-section-${key}`}
+            className={styles.content}
+            hidden={key !== activeAccordion}
+            aria-hidden={key !== activeAccordion}
+            inert={key !== activeAccordion}
+          >
             <Rte
               className={styles.rte}
               text={item.content}
