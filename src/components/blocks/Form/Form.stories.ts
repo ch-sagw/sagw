@@ -2,19 +2,19 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { Form } from '@/components/blocks/Form/Form';
+import { FormComponent } from '@/components/blocks/Form/Form.component';
 import { defaultDecorator } from '@/storybook-helpers';
 import { sampleRtePrivacyCheckbox } from '@/components/base/Rte/Rte.sampleContent';
 
-type FormProps = React.ComponentProps<typeof Form>;
+type FormProps = React.ComponentProps<typeof FormComponent>;
 
-type StrictStory = StoryObj<typeof Form> & {
+type StrictStory = StoryObj<typeof FormComponent> & {
   args: FormProps;
 };
 
-const meta: Meta<typeof Form> = {
+const meta: Meta<typeof FormComponent> = {
   args: {},
-  component: Form,
+  component: FormComponent,
   decorators: [defaultDecorator],
   parameters: {/* layout: 'centered', */ },
   tags: [
@@ -28,7 +28,11 @@ const meta: Meta<typeof Form> = {
 export default meta;
 
 const formConfigDark: FormProps = {
-  blockType: 'formBlock',
+  action: () => {
+    console.log('some submit action');
+  },
+  errors: {},
+  firstErrorFieldName: '',
   form: {
     colorMode: 'dark',
     createdAt: '2025-09-14T15:43:50.512Z',
@@ -121,7 +125,56 @@ const formConfigDark: FormProps = {
     titleLevel: '2',
     updatedAt: '2025-09-14T15:43:50.512Z',
   },
-  id: '68c6e3e422861b09d2c342b3',
+  i18n: {
+    dataPrivacyCheckbox: {
+      dataPrivacyCheckboxText: {
+        content: sampleRtePrivacyCheckbox,
+      },
+      errorMessage: 'Foo bas',
+    },
+    submitError: {
+      optionalLink: {
+        includeLink: false,
+
+        link: {
+          internalLink: '/',
+          linkText: 'foo',
+          openInNewWindow: false,
+        },
+      },
+      text: 'Submit text error SAGW',
+      title: 'Submit title error SAGW',
+    },
+    submitSuccess: {
+      optionalLink: {
+        includeLink: false,
+        link: {
+          internalLink: '/',
+          linkText: 'foo',
+          openInNewWindow: false,
+        },
+      },
+      text: 'Submit text success SAGW',
+      title: 'Submit title success SAGW',
+    },
+    submitWarn: {
+      optionalLink: {
+        includeLink: false,
+        link: {
+          internalLink: '/',
+          linkText: 'foo',
+          openInNewWindow: false,
+        },
+      },
+      text: 'Submit text warn SAGW',
+      title: 'Submit title warn SAGW',
+
+    },
+  },
+  pending: false,
+  state: null,
+  submitError: false,
+  submitSuccess: false,
 
 };
 
