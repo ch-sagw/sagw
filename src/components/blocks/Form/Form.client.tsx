@@ -6,6 +6,9 @@
 3. make notification component
 4. properly configure from/to mail addresses
 5. handle submit success/error appropriately
+6. add 2nd form to seed: Newsletter
+7. implement newsletter actionText
+8. if success / error -> hide form
 */
 
 import React, {

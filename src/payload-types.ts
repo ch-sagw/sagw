@@ -576,6 +576,10 @@ export interface Form {
       required?: boolean | null;
       fieldError?: string | null;
     };
+    /**
+     * The action text to show at the bottom of the notification. e.g.: "Resend verifiaction E-Mail again."
+     */
+    actionText: string;
   };
   updatedAt: string;
   createdAt: string;
@@ -3722,6 +3726,7 @@ export interface FormsSelect<T extends boolean = true> {
               required?: T;
               fieldError?: T;
             };
+        actionText?: T;
       };
   updatedAt?: T;
   createdAt?: T;

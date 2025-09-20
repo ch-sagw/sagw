@@ -6,6 +6,7 @@ import {
   Form as InterfaceForm, InterfaceI18NForms,
 } from '@/payload-types';
 import { hiddenFormDefinitionFieldName } from '@/components/blocks/Form/Form.config';
+import { FormNotification } from '@/components/base/FormNotification/FormNotification';
 
 import {
   InputText, InterfaceInputTextPropTypes,
@@ -70,16 +71,32 @@ export const FormComponent = ({
       })}
     >
       {submitError &&
-        <Fragment>
-          <p>{i18n.submitError.title}</p>
-          <p>{i18n.submitError.text}</p>
-        </Fragment>
+        <FormNotification
+          actionText='foo'
+          colorMode={form.colorMode}
+          onAction={() => {
+
+            // TODO
+            console.log('todo');
+          }}
+          text={i18n.submitError.text}
+          title={i18n.submitError.title}
+          type='error'
+        />
       }
       {submitSuccess &&
-        <Fragment>
-          <p>{i18n.submitSuccess.title}</p>
-          <p>{i18n.submitSuccess.text}</p>
-        </Fragment>
+        <FormNotification
+          actionText='foo'
+          colorMode={form.colorMode}
+
+          // TODO
+          onAction={() => {
+            console.log('todo');
+          }}
+          text={i18n.submitSuccess.text}
+          title={i18n.submitSuccess.title}
+          type='success'
+        />
       }
 
       <TitleElem className={styles.title}>{form.title}</TitleElem>

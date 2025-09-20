@@ -1,0 +1,90 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.formNotification.isButton {
+  @include button-reset;
+
+  cursor: pointer;
+
+  &:focus-visible {
+    @include focus-visible;
+  }
+}
+
+.formNotification.formNotification {
+  text-align: left;
+  background: var(--color-background);
+  width: 100%;
+
+  --icon-dimensions: 36;
+  --padding-block-large: 32;
+
+  @include mq($from: large) {
+    --padding-block-large: 48;
+  }
+
+  &.success.dark {
+    --color-background: var(--background-cta);
+    --color-title: var(--text-primary-inverted);
+    --color-text: var(--text-secondary-inverted);
+    --color-button: var(--text-primary-inverted);
+    --color-icon: var(--text-secondary-inverted);
+  }
+
+  &.success.white {
+    --color-background: var(--background-positive);
+    --color-title: var(--text-positive);
+    --color-text: var(--text-positive);
+    --color-button: var(--text-positive);
+    --color-icon: var(--icon-positive);
+  }
+
+  &.error {
+    --color-background: var(--background-negative);
+    --color-title: var(--text-error);
+    --color-text: var(--text-error);
+    --color-button: var(--text-error);
+    --color-icon: var(--icon-error);
+  }
+
+  .icon {
+    color: var(--color-icon);
+    width: px-to-rem(var(--icon-dimensions));
+    height: px-to-rem(var(--icon-dimensions));
+
+    path {
+      stroke: none;
+      fill: currentcolor;
+    }
+  }
+
+  .title {
+    @include title-heading-4;
+
+    color: var(--color-title);
+    margin: 0;
+    padding: px-to-rem(var(--inside-elements-m)) 0;
+  }
+
+  .text {
+    @include body-text-m;
+
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .button {
+    @include button-text;
+
+    color: var(--color-button);
+    margin: 0;
+    padding: px-to-rem(var(--padding-block-large)) 0 0;
+  }
+
+  @include forced-colors {
+    outline: px-to-rem(var(--border-width-s)) solid ActiveText;
+    outline-offset: px-to-rem(var(--inside-elements-s));
+  }
+}

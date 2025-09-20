@@ -122,6 +122,15 @@ export const Forms: CollectionConfig = {
           name: 'textField',
           type: 'group',
         },
+        {
+          admin: {
+            description: 'The action text to show at the bottom of the notification. e.g.: "Resend verifiaction E-Mail again."',
+          },
+          localized: true,
+          name: 'actionText',
+          required: true,
+          type: 'text',
+        },
       ],
       name: 'newsletterForm',
       type: 'group',

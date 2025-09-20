@@ -32,7 +32,7 @@
     display: flex;
     flex-wrap: wrap;
     column-gap: px-to-rem(var(--grid-gutter));
-    row-gap: px-to-rem(var(--section-inside-s));
+    row-gap: px-to-rem(var(--form-elements-between));
     width: 100%;
   }
 
