@@ -1804,11 +1804,22 @@ export interface User {
 export interface I18NForm {
   id: string;
   department?: (string | null) | Department;
+  i18nForms: InterfaceI18NForms;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nForms".
+ */
+export interface InterfaceI18NForms {
   /**
    * You may show this text in a checkbox on forms.
    */
-  checkboxes: {
+  dataPrivacyCheckbox: {
     dataPrivacyCheckboxText: InterfaceRte2;
+    errorMessage: string;
   };
   /**
    * This is the text which is shown if a form was successfully submitted.
@@ -1855,9 +1866,6 @@ export interface I18NForm {
       };
     };
   };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3725,10 +3733,21 @@ export interface FormsSelect<T extends boolean = true> {
  */
 export interface I18NFormsSelect<T extends boolean = true> {
   department?: T;
-  checkboxes?:
+  i18nForms?: T | InterfaceI18NFormsSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nForms_select".
+ */
+export interface InterfaceI18NFormsSelect<T extends boolean = true> {
+  dataPrivacyCheckbox?:
     | T
     | {
         dataPrivacyCheckboxText?: T | InterfaceRte2Select<T>;
+        errorMessage?: T;
       };
   submitSuccess?:
     | T
@@ -3784,9 +3803,6 @@ export interface I18NFormsSelect<T extends boolean = true> {
                   };
             };
       };
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

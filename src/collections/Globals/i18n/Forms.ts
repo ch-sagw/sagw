@@ -13,89 +13,102 @@ export const I18nForms: CollectionConfig = {
   },
   fields: [
     {
-      admin: {
-        description: 'You may show this text in a checkbox on forms.',
-      },
       fields: [
-        rte2({
-          name: 'dataPrivacyCheckboxText',
-          required: true,
-        }),
-      ],
-      label: 'Checkboxes',
-      name: 'checkboxes',
-      type: 'group',
-    },
+        {
+          admin: {
+            description: 'You may show this text in a checkbox on forms.',
+          },
+          fields: [
+            rte2({
+              name: 'dataPrivacyCheckboxText',
+              required: true,
+            }),
+            {
+              localized: true,
+              name: 'errorMessage',
+              required: true,
+              type: 'text',
+            },
+          ],
+          label: '',
+          name: 'dataPrivacyCheckbox',
+          type: 'group',
+        },
 
-    {
-      admin: {
-        description: 'This is the text which is shown if a form was successfully submitted.',
-      },
-      fields: [
         {
-          localized: true,
-          name: 'title',
-          required: true,
-          type: 'text',
+          admin: {
+            description: 'This is the text which is shown if a form was successfully submitted.',
+          },
+          fields: [
+            {
+              localized: true,
+              name: 'title',
+              required: true,
+              type: 'text',
+            },
+            {
+              localized: true,
+              name: 'text',
+              required: true,
+              type: 'text',
+            },
+            fieldsLinkInternalWithToggle,
+          ],
+          label: 'Submit Success',
+          name: 'submitSuccess',
+          type: 'group',
         },
-        {
-          localized: true,
-          name: 'text',
-          required: true,
-          type: 'text',
-        },
-        fieldsLinkInternalWithToggle,
-      ],
-      label: 'Submit Success',
-      name: 'submitSuccess',
-      type: 'group',
-    },
 
-    {
-      admin: {
-        description: 'This is the text which is shown if there was an error submitting a form.',
-      },
-      fields: [
         {
-          localized: true,
-          name: 'title',
-          required: true,
-          type: 'text',
+          admin: {
+            description: 'This is the text which is shown if there was an error submitting a form.',
+          },
+          fields: [
+            {
+              localized: true,
+              name: 'title',
+              required: true,
+              type: 'text',
+            },
+            {
+              localized: true,
+              name: 'text',
+              required: true,
+              type: 'text',
+            },
+            fieldsLinkInternalWithToggle,
+          ],
+          label: 'Submit Error',
+          name: 'submitError',
+          type: 'group',
         },
-        {
-          localized: true,
-          name: 'text',
-          required: true,
-          type: 'text',
-        },
-        fieldsLinkInternalWithToggle,
-      ],
-      label: 'Submit Error',
-      name: 'submitError',
-      type: 'group',
-    },
 
-    {
-      admin: {
-        description: 'This is the text which is shown if there was an warning submitting a form.',
-      },
-      fields: [
         {
-          localized: true,
-          name: 'title',
-          required: true,
-          type: 'text',
+          admin: {
+            description: 'This is the text which is shown if there was an warning submitting a form.',
+          },
+          fields: [
+            {
+              localized: true,
+              name: 'title',
+              required: true,
+              type: 'text',
+            },
+            {
+              localized: true,
+              name: 'text',
+              required: true,
+              type: 'text',
+            },
+            fieldsLinkInternalWithToggle,
+          ],
+          label: 'Submit Warn',
+          name: 'submitWarn',
+          type: 'group',
         },
-        {
-          localized: true,
-          name: 'text',
-          required: true,
-          type: 'text',
-        },
-        fieldsLinkInternalWithToggle,
       ],
-      label: 'Submit Warn',
-      name: 'submitWarn',
+      interfaceName: 'InterfaceI18nForms',
+      name: 'i18nForms',
       type: 'group',
     },
   ],

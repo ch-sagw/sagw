@@ -1,4 +1,3 @@
-import 'server-only';
 import { getPayload } from 'payload';
 import React from 'react';
 import configPromise from '@/payload.config';
@@ -16,6 +15,8 @@ export default async function HomePage({
   const payload = await getPayload({
     config: configPromise,
   });
+
+  // TODO: infer department from url
 
   const tenants = await payload.find({
     collection: 'departments',
@@ -77,7 +78,10 @@ export default async function HomePage({
   return (
     <div className='home'>
       <Navigation navItems={navData.navItems} />
-      <RenderBlocks blocks={pageData.content} />
+      <RenderBlocks
+        blocks={pageData.content}
+        tenantId={tenant}
+      />
     </div>
   );
 }

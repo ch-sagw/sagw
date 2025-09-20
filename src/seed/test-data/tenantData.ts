@@ -380,26 +380,29 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'i18nForms',
     data: {
       _status: 'published',
-      checkboxes: {
-        dataPrivacyCheckboxText: {
-          content: simpleRteConfig(`Data privacy checkbox ${tenant.toUpperCase()}`),
+      department: tenantId,
+      i18nForms: {
+        dataPrivacyCheckbox: {
+          dataPrivacyCheckboxText: {
+            content: simpleRteConfig(`Data privacy checkbox ${tenant.toUpperCase()}`),
+          },
+          errorMessage: 'Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen',
+        },
+        submitError: {
+          text: `Submit text error ${tenant.toUpperCase()}`,
+          title: `Submit title error ${tenant.toUpperCase()}`,
+        },
+        submitSuccess: {
+          text: `Submit text success ${tenant.toUpperCase()}`,
+          title: `Submit title success ${tenant.toUpperCase()}`,
+        },
+        submitWarn: {
+          text: `Submit text warn ${tenant.toUpperCase()}`,
+          title: `Submit title warn ${tenant.toUpperCase()}`,
         },
       },
-      department: tenantId,
-      submitError: {
-        text: `Submit text error ${tenant.toUpperCase()}`,
-        title: `Submit title error ${tenant.toUpperCase()}`,
-      },
-      submitSuccess: {
-        text: `Submit text success ${tenant.toUpperCase()}`,
-        title: `Submit title success ${tenant.toUpperCase()}`,
-      },
-      submitWarn: {
-        text: `Submit text warn ${tenant.toUpperCase()}`,
-        title: `Submit title warn ${tenant.toUpperCase()}`,
-      },
-
     },
+
   });
 
   // ############

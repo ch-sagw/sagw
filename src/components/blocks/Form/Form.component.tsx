@@ -1,23 +1,8 @@
 'use client';
 
-/*
-1. render newsletter form
-2. get global 18n form data for success and error
-3. make notification component
-4. show privacy checkbox
-5. handle submit success/error appropriately
-*/
-
-import React, {
-  Fragment, useActionState,
-  useEffect,
-  useState,
-} from 'react';
+import React, { Fragment } from 'react';
 import { cva } from 'cva';
-import { submitForm } from '@/app/actions/submitForm';
-import {
-  Form as InterfaceForm, InterfaceFormBlock,
-} from '@/payload-types';
+import { Form as InterfaceForm } from '@/payload-types';
 import { hiddenFormDefinitionFieldName } from '@/components/blocks/Form/Form.config';
 
 import {
@@ -27,8 +12,7 @@ import {
 import { Checkbox } from '@/components/base/Checkbox/Checkbox';
 
 import styles from '@/components/blocks/Form/Form.module.scss';
-
-export type InterfaceFormPropTypes = {} & InterfaceFormBlock;
+import { ZodError } from 'zod';
 
 const sectionClasses = cva([styles.formBlock], {
   variants: {
@@ -48,107 +32,48 @@ const fieldClasses = cva([styles.field], {
   },
 });
 
-export const Form = ({
+type InterfaceFormClientPropTypes = {
+  form: InterfaceForm;
+  action: (payload: FormData) => void;
+  firstErrorFieldName: string;
+  pending: boolean;
+  state: {
+    error: ReturnType<ZodError['flatten']>;
+    values: Record<string, unknown>;
+  } | null;
+  errors: Record<string, string[] | undefined>;
+};
+
+export const FormComponent = ({
   form,
-}: InterfaceFormPropTypes): React.JSX.Element => {
+  action,
+  firstErrorFieldName,
+  pending,
+  state,
+  errors,
+}: InterfaceFormClientPropTypes): React.JSX.Element => {
 
-  // --- State
-
-  const [
-    state,
-    formAction,
-    pending,
-  ] = useActionState(submitForm, null);
-
-  const [
-    errors,
-    setErrors,
-  ] = useState<Record<string, string[] | undefined>>({});
-
-  const [
-    firstErrorFieldName,
-    setFirstErrorFieldName,
-  ] = useState('');
-
-  // --- Effects
-
-  useEffect(() => {
-    if (!state || !state.error) {
-      setErrors({});
-    } else {
-      setErrors(state.error.fieldErrors ?? {});
-    }
-  }, [state]);
-
-  useEffect(() => {
-
-    const [firstErrorKey] = Object.keys(errors);
-
-    if (firstErrorKey) {
-      setFirstErrorFieldName(firstErrorKey);
-    }
-  }, [errors]);
-
-  // --- Form Data
-
-  if (!form) {
-    return <Fragment></Fragment>;
-  }
-
-  let renderForm;
-
-  if (typeof form === 'object') {
-    renderForm = form as InterfaceForm;
-  }
-
-  if (!renderForm) {
-    return <Fragment></Fragment>;
-  }
-
-  // --- Privacy Checkbox
-
-  if (renderForm.showPrivacyCheckbox) {
-
-    /*
-    const payload = await getPayload({
-      config: configPromise,
-    });
-
-    const tenants = await payload.find({
-      collection: 'departments',
-      depth: 1,
-      where: {
-        name: {
-          equals: 'SAGW',
-        },
-      },
-    });
-    */
-  }
-
-  // --- Render
-
-  const TitleElem: React.ElementType = `h${renderForm.titleLevel}`;
+  const TitleElem: React.ElementType = `h${form.titleLevel}`;
 
   return (
     <section
       className={sectionClasses({
-        colorMode: renderForm.colorMode,
+        colorMode: form.colorMode,
       })}
     >
-      <TitleElem className={styles.title}>{renderForm.title}</TitleElem>
-      {renderForm.subtitle &&
-        <p className={styles.subtitle}>{renderForm.subtitle}</p>
+      <TitleElem className={styles.title}>{form.title}</TitleElem>
+      {form.subtitle &&
+        <p className={styles.subtitle}>{form.subtitle}</p>
       }
 
       <form
-        action={formAction}
+        action={action}
         className={styles.form}
         noValidate
       >
-        <input type='hidden' name={hiddenFormDefinitionFieldName} value={JSON.stringify(renderForm)} />
+        <input type='hidden' name={hiddenFormDefinitionFieldName} value={JSON.stringify(form)} />
 
-        {renderForm.fields?.map((field, i) => {
+        {form.fields?.map((field, i) => {
           if (field.blockType === 'textBlockForm' || field.blockType === 'emailBlock' || field.blockType === 'textareaBlock') {
             let fieldType: InterfaceInputTextPropTypes['type'];
 
@@ -172,7 +97,7 @@ export const Form = ({
                 required={field.required || false}
                 defaultValue={String(state?.values?.[field.name] ?? '')}
                 type={fieldType}
-                colorMode={renderForm.colorMode}
+                colorMode={form.colorMode}
               />
             );
           }
@@ -197,7 +122,7 @@ export const Form = ({
                 label={field.label.content}
                 checked={checked}
                 errorText={errors[field.name]?.join(', ') || ''}
-                colorMode={renderForm.colorMode}
+                colorMode={form.colorMode}
               />
             );
           }
@@ -205,7 +130,7 @@ export const Form = ({
           return <Fragment key={i}></Fragment>;
         })}
 
-        <button disabled={pending}>{renderForm.submitButtonLabel}</button>
+        <button disabled={pending}>{form.submitButtonLabel}</button>
       </form>
     </section>
   );
