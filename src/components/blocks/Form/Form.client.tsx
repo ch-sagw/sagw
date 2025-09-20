@@ -26,6 +26,7 @@ type InterfaceFormClientPropTypes = {
 
 export const FormClient = ({
   form,
+  i18n,
 }: InterfaceFormClientPropTypes): React.JSX.Element => {
 
   // --- State
@@ -110,6 +111,7 @@ export const FormClient = ({
           }
       }
       errors={errors}
+      i18n={i18n}
       submitSuccess={submitSuccess}
       submitError={submitError}
     />

@@ -2,7 +2,9 @@
 
 import React, { Fragment } from 'react';
 import { cva } from 'cva';
-import { Form as InterfaceForm } from '@/payload-types';
+import {
+  Form as InterfaceForm, InterfaceI18NForms,
+} from '@/payload-types';
 import { hiddenFormDefinitionFieldName } from '@/components/blocks/Form/Form.config';
 
 import {
@@ -44,6 +46,7 @@ type InterfaceFormClientPropTypes = {
   errors: Record<string, string[] | undefined>;
   submitError: boolean;
   submitSuccess: boolean;
+  i18n: InterfaceI18NForms;
 };
 
 export const FormComponent = ({
@@ -55,6 +58,7 @@ export const FormComponent = ({
   errors,
   submitError,
   submitSuccess,
+  i18n,
 }: InterfaceFormClientPropTypes): React.JSX.Element => {
 
   const TitleElem: React.ElementType = `h${form.titleLevel}`;
@@ -66,10 +70,16 @@ export const FormComponent = ({
       })}
     >
       {submitError &&
-        <p>ERROR</p>
+        <Fragment>
+          <p>{i18n.submitError.title}</p>
+          <p>{i18n.submitError.text}</p>
+        </Fragment>
       }
       {submitSuccess &&
-        <p>SUCCESS</p>
+        <Fragment>
+          <p>{i18n.submitSuccess.title}</p>
+          <p>{i18n.submitSuccess.text}</p>
+        </Fragment>
       }
 
       <TitleElem className={styles.title}>{form.title}</TitleElem>

@@ -1,7 +1,6 @@
 import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
 
-// TODO: infer department from url
 export const getTenant = async (): Promise<string | null> => {
   const payload = await getPayload({
     config: configPromise,
@@ -12,6 +11,7 @@ export const getTenant = async (): Promise<string | null> => {
     depth: 1,
     where: {
       name: {
+        // TODO: infer department from url
         equals: 'SAGW',
       },
     },
