@@ -1,5 +1,13 @@
 'use client';
 
+/*
+1. render newsletter form
+2. get global 18n form data for success and error
+3. make notification component
+4. show privacy checkbox
+5. handle submit success/error appropriately
+*/
+
 import React, {
   Fragment, useActionState,
   useEffect,
@@ -43,6 +51,9 @@ const fieldClasses = cva([styles.field], {
 export const Form = ({
   form,
 }: InterfaceFormPropTypes): React.JSX.Element => {
+
+  // --- State
+
   const [
     state,
     formAction,
@@ -58,6 +69,8 @@ export const Form = ({
     firstErrorFieldName,
     setFirstErrorFieldName,
   ] = useState('');
+
+  // --- Effects
 
   useEffect(() => {
     if (!state || !state.error) {
@@ -76,6 +89,8 @@ export const Form = ({
     }
   }, [errors]);
 
+  // --- Form Data
+
   if (!form) {
     return <Fragment></Fragment>;
   }
@@ -89,6 +104,29 @@ export const Form = ({
   if (!renderForm) {
     return <Fragment></Fragment>;
   }
+
+  // --- Privacy Checkbox
+
+  if (renderForm.showPrivacyCheckbox) {
+
+    /*
+    const payload = await getPayload({
+      config: configPromise,
+    });
+
+    const tenants = await payload.find({
+      collection: 'departments',
+      depth: 1,
+      where: {
+        name: {
+          equals: 'SAGW',
+        },
+      },
+    });
+    */
+  }
+
+  // --- Render
 
   const TitleElem: React.ElementType = `h${renderForm.titleLevel}`;
 
@@ -108,7 +146,7 @@ export const Form = ({
         className={styles.form}
         noValidate
       >
-        <input type='hidden' name={hiddenFormDefinitionFieldName} value={JSON.stringify(renderForm.fields)} />
+        <input type='hidden' name={hiddenFormDefinitionFieldName} value={JSON.stringify(renderForm)} />
 
         {renderForm.fields?.map((field, i) => {
           if (field.blockType === 'textBlockForm' || field.blockType === 'emailBlock' || field.blockType === 'textareaBlock') {
@@ -167,7 +205,7 @@ export const Form = ({
           return <Fragment key={i}></Fragment>;
         })}
 
-        <button disabled={pending}>Sign up</button>
+        <button disabled={pending}>{renderForm.submitButtonLabel}</button>
       </form>
     </section>
   );

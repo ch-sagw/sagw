@@ -2,6 +2,8 @@
 
 import { z } from 'zod';
 import { hiddenFormDefinitionFieldName } from '@/components/blocks/Form/Form.config';
+import { sendMail } from '@/mail/sendMail';
+import { subscribe } from '@/mail/subscribe';
 
 type SubmitFormResult =
   | null
@@ -11,12 +13,10 @@ type SubmitFormResult =
     };
 
 export const submitForm = async (prevState: any, formData: FormData): Promise<SubmitFormResult> => {
-
-  // TEMP: until we do async work (send mail), we silence the warning
-  // with some kind of await
-  await new Promise((resolve) => setTimeout(resolve, 0));
-
-  const fields = JSON.parse(formData.get(hiddenFormDefinitionFieldName) as string);
+  const hiddenFormData = JSON.parse(formData.get(hiddenFormDefinitionFieldName) as string);
+  const {
+    fields,
+  } = hiddenFormData;
 
   const shape: Record<string, any> = {};
 
@@ -74,6 +74,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
 
   const validated = schema.safeParse(data);
 
+  // validation result
   if (!validated.success) {
     return {
       error: z.flattenError(validated.error),
@@ -81,7 +82,33 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
     };
   }
 
-  // TODO: do something, like sending an email
+  // send mail or subscribe
+  if (hiddenFormData.isNewsletterForm === 'custom') {
+    const mailResult = await sendMail({
+      // from: 'sagw@resend.dev',
+      // from: 'foo@bar.com',
+      content: 'helo from sagw',
+      from: '',
+      subject: 'subject',
 
+      // testing mail send
+      to: 'delivered@resend.dev',
+
+      // real mail send
+      // to: hiddenFormData.recipientMail,
+    });
+
+    if (mailResult) {
+      return null;
+    }
+  } else {
+    const subscribeResult = await subscribe();
+
+    if (subscribeResult) {
+      return null;
+    }
+  }
+
+  // TODO handle error
   return null;
 };
