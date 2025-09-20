@@ -1,9 +1,10 @@
-import { getPayload } from 'payload';
 import React from 'react';
+import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
 import { Config } from '@/payload-types';
 import { Navigation } from '@/components/global/Navigation/Navigation';
 import { RenderBlocks } from '@/app/(frontend)/RenderBlocks';
+import { getTenant } from '@/app/providers/TenantProvider.server';
 
 export default async function HomePage({
   params,
@@ -16,23 +17,11 @@ export default async function HomePage({
     config: configPromise,
   });
 
-  // TODO: infer department from url
+  const tenant: string | null = await getTenant();
 
-  const tenants = await payload.find({
-    collection: 'departments',
-    depth: 1,
-    where: {
-      name: {
-        equals: 'SAGW',
-      },
-    },
-  });
-
-  if (!tenants.docs || tenants.docs.length < 1) {
+  if (!tenant) {
     return <p>No tenant data</p>;
   }
-
-  const tenant = tenants.docs[0].id;
 
   const pagesData = await payload.find({
     collection: 'homePage',
