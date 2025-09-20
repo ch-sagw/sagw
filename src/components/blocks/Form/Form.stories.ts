@@ -27,7 +27,7 @@ const meta: Meta<typeof FormComponent> = {
 
 export default meta;
 
-const formConfigDark: FormProps = {
+const defaultFormConfig: FormProps = {
   action: () => {
     console.log('some submit action');
   },
@@ -44,7 +44,7 @@ const formConfigDark: FormProps = {
         fieldWidth: 'half',
         id: '68c6e2b6833c54485eb1b84c',
         label: 'Text field label SAGW',
-        name: 'Text field name SAGW',
+        name: 'field1',
         placeholder: 'Text field placeholder SAGW',
         required: true,
       },
@@ -54,7 +54,7 @@ const formConfigDark: FormProps = {
         fieldWidth: 'half',
         id: '68c6e2b6833c54485eb1b84c',
         label: 'Text field label SAGW',
-        name: 'Text field name SAGW',
+        name: 'field2',
         placeholder: 'Text field placeholder SAGW',
         required: true,
       },
@@ -66,7 +66,7 @@ const formConfigDark: FormProps = {
         label: {
           content: sampleRtePrivacyCheckbox,
         },
-        name: 'checkbox',
+        name: 'checkbox1',
         required: true,
       },
       {
@@ -77,7 +77,7 @@ const formConfigDark: FormProps = {
         label: {
           content: sampleRtePrivacyCheckbox,
         },
-        name: 'checkbox',
+        name: 'checkbox2',
         required: false,
       },
       {
@@ -178,18 +178,52 @@ const formConfigDark: FormProps = {
 
 };
 
-const formConfigWhite: FormProps = {
-  ...formConfigDark,
-  form: {
-    ...(formConfigDark.form as Exclude<FormProps['form'], string | null | undefined>),
-    colorMode: 'white',
-  },
-};
-
 export const FormDark: StrictStory = {
-  args: formConfigDark,
+  args: defaultFormConfig,
 };
 
 export const FormWhite: StrictStory = {
-  args: formConfigWhite,
+  args: {
+    ...defaultFormConfig,
+    form: {
+      ...(defaultFormConfig.form as Exclude<FormProps['form'], string | null | undefined>),
+      colorMode: 'white',
+    },
+  },
 };
+
+export const SubmitSuccess: StrictStory = {
+  args: {
+    ...defaultFormConfig,
+    submitSuccess: true,
+  },
+};
+
+export const SubmitError: StrictStory = {
+  args: {
+    ...defaultFormConfig,
+    submitError: true,
+  },
+};
+
+export const FieldErrors: StrictStory = {
+  args: {
+    ...defaultFormConfig,
+    errors: {
+      checkbox1: ['Error on checkbox 1'],
+      checkbox2: ['Error on checkbox 2'],
+      email: ['Error on email'],
+      field1: ['Error on text field 1'],
+      field2: ['Error on text field 2'],
+      textarea: ['Error on textarea'],
+    },
+  },
+};
+
+export const PendingState: StrictStory = {
+  args: {
+    ...defaultFormConfig,
+    pending: true,
+  },
+};
+
