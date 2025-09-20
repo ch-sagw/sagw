@@ -6,10 +6,13 @@ import { sendMail } from '@/mail/sendMail';
 import { subscribe } from '@/mail/subscribe';
 
 type SubmitFormResult =
-  | null
   | {
-      error: z.ZodFlattenedError<Record<string, unknown>>;
-      values: Record<string, unknown>;
+    success: true;
+  }
+  | {
+      success: false;
+      error?: z.ZodFlattenedError<Record<string, unknown>>;
+      values?: Record<string, unknown>;
     };
 
 export const submitForm = async (prevState: any, formData: FormData): Promise<SubmitFormResult> => {
@@ -78,6 +81,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
   if (!validated.success) {
     return {
       error: z.flattenError(validated.error),
+      success: false,
       values: data,
     };
   }
@@ -86,9 +90,9 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
   if (hiddenFormData.isNewsletterForm === 'custom') {
     const mailResult = await sendMail({
       // from: 'sagw@resend.dev',
-      // from: 'foo@bar.com',
       content: 'helo from sagw',
-      from: '',
+      from: 'sagw@resend.dev',
+      // from: 'foo@bar.com',
       subject: 'subject',
 
       // testing mail send
@@ -99,16 +103,23 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
     });
 
     if (mailResult) {
-      return null;
+      return {
+        success: true,
+      };
     }
   } else {
     const subscribeResult = await subscribe();
 
     if (subscribeResult) {
-      return null;
+      return {
+        success: true,
+      };
     }
   }
 
   // TODO handle error
-  return null;
+  return {
+    success: false,
+    values: data,
+  };
 };

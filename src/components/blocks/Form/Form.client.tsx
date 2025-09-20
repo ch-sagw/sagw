@@ -4,7 +4,7 @@
 1. render newsletter form
 2. get global 18n form data for success and error
 3. make notification component
-
+4. properly configure from/to mail addresses
 5. handle submit success/error appropriately
 */
 
@@ -46,13 +46,39 @@ export const FormClient = ({
     setFirstErrorFieldName,
   ] = useState('');
 
+  const [
+    submitError,
+    setSubmitError,
+  ] = useState(false);
+
+  const [
+    submitSuccess,
+    setSubmitSuccess,
+  ] = useState(false);
+
   // --- Effects
 
   useEffect(() => {
-    if (!state || !state.error) {
+
+    // form submitted successfully
+    if (state && state.success) {
+      setSubmitError(false);
+      setSubmitSuccess(true);
+    }
+
+    // might be initial state
+    if (!state || state.success) {
       setErrors({});
     } else {
-      setErrors(state.error.fieldErrors ?? {});
+
+      // field errors
+      setErrors(state.error?.fieldErrors ?? {});
+
+      // form submission error
+      if (!state.error) {
+        setSubmitError(true);
+        setSubmitSuccess(false);
+      }
     }
   }, [state]);
 
@@ -65,6 +91,8 @@ export const FormClient = ({
     }
   }, [errors]);
 
+  // general submit success / error
+
   // --- Render
 
   return (
@@ -73,8 +101,17 @@ export const FormClient = ({
       action={formAction}
       firstErrorFieldName={firstErrorFieldName}
       pending={pending}
-      state={state}
+      state={
+        !state || state.success
+          ? null
+          : {
+            error: state.error,
+            values: state.values,
+          }
+      }
       errors={errors}
+      submitSuccess={submitSuccess}
+      submitError={submitError}
     />
   );
 };

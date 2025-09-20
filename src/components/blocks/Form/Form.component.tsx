@@ -38,10 +38,12 @@ type InterfaceFormClientPropTypes = {
   firstErrorFieldName: string;
   pending: boolean;
   state: {
-    error: ReturnType<ZodError['flatten']>;
-    values: Record<string, unknown>;
+    error?: ReturnType<ZodError['flatten']>;
+    values?: Record<string, unknown>;
   } | null;
   errors: Record<string, string[] | undefined>;
+  submitError: boolean;
+  submitSuccess: boolean;
 };
 
 export const FormComponent = ({
@@ -51,6 +53,8 @@ export const FormComponent = ({
   pending,
   state,
   errors,
+  submitError,
+  submitSuccess,
 }: InterfaceFormClientPropTypes): React.JSX.Element => {
 
   const TitleElem: React.ElementType = `h${form.titleLevel}`;
@@ -61,6 +65,13 @@ export const FormComponent = ({
         colorMode: form.colorMode,
       })}
     >
+      {submitError &&
+        <p>ERROR</p>
+      }
+      {submitSuccess &&
+        <p>SUCCESS</p>
+      }
+
       <TitleElem className={styles.title}>{form.title}</TitleElem>
       {form.subtitle &&
         <p className={styles.subtitle}>{form.subtitle}</p>
