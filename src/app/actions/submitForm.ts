@@ -86,17 +86,11 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
     };
   }
 
-  if (!process.env.MAIL_SENDER_ADDRESS || !process.env.MAIL_RECIPIENT_TEST) {
+  if (!process.env.MAIL_SENDER_ADDRESS) {
     return {
       success: false,
       values: data,
     };
-  }
-
-  let recipient = hiddenFormData.recipientMail;
-
-  if (process.env.ENV === 'playwright') {
-    recipient = process.env.MAIL_RECIPIENT_TEST;
   }
 
   // send mail or subscribe
@@ -110,7 +104,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       // TODO: make config in payload
       subject: 'SAGW Form submisssion',
 
-      to: recipient,
+      to: hiddenFormData.recipientMail,
     });
 
     if (mailResult) {

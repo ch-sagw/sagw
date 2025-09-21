@@ -79,7 +79,10 @@ export const FormComponent = ({
 
       {submitError &&
         <FormNotification
-          actionText='foo'
+          actionText={form.isNewsletterForm === 'newsletter'
+            ? form.newsletterFields?.actionText || ''
+            : ''
+          }
           colorMode={form.colorMode}
           onAction={() => {
 

@@ -369,7 +369,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         },
       ],
       isNewsletterForm: 'custom',
-      recipientMail: 'foo@bar.baz',
+      recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: false,
       submitButtonLabel: 'Abschicken',
       subtitle: `Subtitle for contact Form ${tenant.toUpperCase()}`,
@@ -379,7 +379,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   });
 
   // add newsletter form
-  await payload.create({
+  const newsletterForm = await payload.create({
     collection: 'forms',
     data: {
       _status: 'published',
@@ -401,7 +401,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           placeholder: 'Ihr Name',
         },
       },
-      recipientMail: 'foo@bar.baz',
+      recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: true,
       submitButtonLabel: 'Abschicken',
       subtitle: `Subtitle for Newsletter Form ${tenant.toUpperCase()}`,
@@ -453,6 +453,10 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         {
           blockType: 'formBlock',
           form,
+        },
+        {
+          blockType: 'formBlock',
+          form: newsletterForm,
         },
         {
           blockType: 'notificationBlock',
