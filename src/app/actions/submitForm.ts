@@ -33,7 +33,6 @@ const generateMailContent = (formData: FormData, hiddenFormData: InterfaceForm):
 
 export const submitForm = async (prevState: any, formData: FormData): Promise<SubmitFormResult> => {
 
-  // TODO: type form data
   const hiddenFormData: InterfaceForm = JSON.parse(formData.get(hiddenFormDefinitionFieldName) as string);
   const {
     fields,

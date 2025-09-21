@@ -1,9 +1,5 @@
 'use client';
 
-/*
-10. tests
-*/
-
 import React, {
   useActionState,
   useEffect,
