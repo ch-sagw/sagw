@@ -369,6 +369,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         },
       ],
       isNewsletterForm: 'custom',
+      mailSubject: 'Form submission on SAGW',
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: false,
       submitButtonLabel: 'Abschicken',

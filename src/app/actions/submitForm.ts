@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { hiddenFormDefinitionFieldName } from '@/components/blocks/Form/Form.config';
 import { sendMail } from '@/mail/sendMail';
 import { subscribe } from '@/mail/subscribe';
+import { Form as InterfaceForm } from '@/payload-types';
 
 type SubmitFormResult =
   | {
@@ -15,22 +16,45 @@ type SubmitFormResult =
       values?: Record<string, unknown>;
     };
 
+const generateMailContent = (formData: FormData, hiddenFormData: InterfaceForm): string => {
+  let mailContent = '';
+
+  hiddenFormData.fields?.forEach((field) => {
+    const {
+      name,
+    } = field;
+    const value = formData.get(name);
+
+    mailContent += `${name}:\n${value}\n\n\n`;
+  });
+
+  return mailContent;
+};
+
 export const submitForm = async (prevState: any, formData: FormData): Promise<SubmitFormResult> => {
-  const hiddenFormData = JSON.parse(formData.get(hiddenFormDefinitionFieldName) as string);
+
+  // TODO: type form data
+  const hiddenFormData: InterfaceForm = JSON.parse(formData.get(hiddenFormDefinitionFieldName) as string);
   const {
     fields,
   } = hiddenFormData;
 
   const shape: Record<string, any> = {};
 
+  if (!fields) {
+    return {
+      success: true,
+    };
+  }
+
   for (const field of fields) {
     if (field.blockType === 'emailBlock') {
       if (field.required) {
         shape[field.name] = z
-          .email(field.fieldError);
+          .email(field.fieldError || '');
       } else {
         shape[field.name] = z
-          .email(field.fieldError)
+          .email(field.fieldError || '')
           .optional()
           .or(z.literal(''));
       }
@@ -38,7 +62,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       if (field.required) {
         shape[field.name] = z
           .string()
-          .min(1, field.fieldError);
+          .min(1, field.fieldError || '');
       } else {
         shape[field.name] = z.string()
           .optional()
@@ -49,7 +73,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
         shape[field.name] = z
           .string()
           .refine((val) => val === 'on', {
-            message: field.fieldError,
+            message: field.fieldError || '',
           });
       } else {
         shape[field.name] = z.string()
@@ -96,15 +120,10 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
   // send mail or subscribe
   if (hiddenFormData.isNewsletterForm === 'custom') {
     const mailResult = await sendMail({
-
-      // TODO: generate mail data
-      content: 'helo from sagw',
+      content: generateMailContent(formData, hiddenFormData),
       from: process.env.MAIL_SENDER_ADDRESS,
-
-      // TODO: make config in payload
-      subject: 'SAGW Form submisssion',
-
-      to: hiddenFormData.recipientMail,
+      subject: hiddenFormData.mailSubject || '',
+      to: hiddenFormData.recipientMail || '',
     });
 
     if (mailResult) {

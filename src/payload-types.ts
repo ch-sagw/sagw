@@ -490,6 +490,7 @@ export interface Form {
   subtitle?: string | null;
   submitButtonLabel: string;
   recipientMail?: string | null;
+  mailSubject?: string | null;
   /**
    * If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".
    */
@@ -3656,6 +3657,7 @@ export interface FormsSelect<T extends boolean = true> {
   subtitle?: T;
   submitButtonLabel?: T;
   recipientMail?: T;
+  mailSubject?: T;
   showPrivacyCheckbox?: T;
   fields?:
     | T
