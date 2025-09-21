@@ -100,6 +100,16 @@ export const Forms: CollectionConfig = {
       type: 'email',
     },
 
+    // Mail subject
+    {
+      admin: {
+        condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
+      },
+      name: 'mailSubject',
+      required: true,
+      type: 'text',
+    },
+
     // privacy checkbox
     {
       admin: {
