@@ -45,11 +45,7 @@ const classes = cva([styles.button], {
     style: {
       buttonPlay: [styles.buttonPlay],
       filled: [styles.buttonFilled],
-      iconEnd: [styles.iconEnd],
       iconOnly: [styles.iconOnly],
-      iconStart: [styles.iconStart],
-      innerText: [styles.innerText],
-      line: [styles.line],
       outlined: [styles.buttonOutlined],
       socialLink: [styles.socialLink],
       text: [styles.buttonText],
