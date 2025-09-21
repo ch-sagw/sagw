@@ -14,6 +14,8 @@ export const Forms: CollectionConfig = {
     useAsTitle: 'title',
   },
   fields: [
+
+    // newsletter or custom form
     {
       admin: {
         description: 'A newsletter form has a fixed set of fields. Custom form can be build with any combination of fields as you like.',
@@ -32,7 +34,11 @@ export const Forms: CollectionConfig = {
       ],
       type: 'radio',
     },
+
+    // color mode
     fieldsColorModeWhiteDark,
+
+    // title & subtitle
     {
       fields: [
         {
@@ -75,12 +81,16 @@ export const Forms: CollectionConfig = {
       required: false,
       type: 'text',
     },
+
+    // submit button
     {
       localized: true,
       name: 'submitButtonLabel',
       required: true,
       type: 'text',
     },
+
+    // recipient
     {
       admin: {
         condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
@@ -89,6 +99,8 @@ export const Forms: CollectionConfig = {
       required: true,
       type: 'email',
     },
+
+    // privacy checkbox
     {
       admin: {
         description: 'If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".',
@@ -97,6 +109,8 @@ export const Forms: CollectionConfig = {
       name: 'showPrivacyCheckbox',
       type: 'checkbox',
     },
+
+    // custom form fields
     {
       admin: {
         condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
@@ -107,6 +121,8 @@ export const Forms: CollectionConfig = {
       required: true,
       type: 'blocks',
     },
+
+    // newsletter form fields
     {
       admin: {
         condition: (_, siblingData) => siblingData.isNewsletterForm === 'newsletter',
@@ -114,12 +130,12 @@ export const Forms: CollectionConfig = {
       fields: [
         {
           fields: emailBlock(true).fields,
-          name: 'emailField',
+          name: 'email',
           type: 'group',
         },
         {
           fields: textBlock(true).fields,
-          name: 'textField',
+          name: 'name',
           type: 'group',
         },
         {
@@ -132,7 +148,7 @@ export const Forms: CollectionConfig = {
           type: 'text',
         },
       ],
-      name: 'newsletterForm',
+      name: 'newsletterFields',
       type: 'group',
     },
   ],

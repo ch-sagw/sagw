@@ -1,4 +1,3 @@
-import 'server-only';
 import React from 'react';
 import { cva } from 'cva';
 import { Icon } from '@/icons';

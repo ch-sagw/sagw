@@ -368,9 +368,44 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           required: true,
         },
       ],
+      isNewsletterForm: 'custom',
       recipientMail: 'foo@bar.baz',
+      showPrivacyCheckbox: false,
       submitButtonLabel: 'Abschicken',
+      subtitle: `Subtitle for contact Form ${tenant.toUpperCase()}`,
       title: `Contact Form ${tenant.toUpperCase()}`,
+      titleLevel: '2',
+    },
+  });
+
+  // add newsletter form
+  await payload.create({
+    collection: 'forms',
+    data: {
+      _status: 'published',
+      colorMode: 'dark',
+      department: tenantId,
+      isNewsletterForm: 'newsletter',
+      newsletterFields: {
+        actionText: 'Erneut senden',
+        email: {
+          fieldError: 'Bitte geben Sie die E-Mail Adresse an.',
+          fieldWidth: 'half',
+          label: 'E-Mail',
+          placeholder: 'Ihre E-Mail Adresse',
+        },
+        name: {
+          fieldError: 'Bitte geben Sie Ihren Namen an.',
+          fieldWidth: 'half',
+          label: 'Name',
+          placeholder: 'Ihr Name',
+        },
+      },
+      recipientMail: 'foo@bar.baz',
+      showPrivacyCheckbox: true,
+      submitButtonLabel: 'Abschicken',
+      subtitle: `Subtitle for Newsletter Form ${tenant.toUpperCase()}`,
+      title: `Newsletter Form ${tenant.toUpperCase()}`,
       titleLevel: '2',
     },
   });
@@ -388,6 +423,10 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           },
           errorMessage: 'Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen',
         },
+        newsletterSubmitSuccess: {
+          text: `Newsletter Submit text success ${tenant.toUpperCase()}`,
+          title: `Newsletter Submit title success ${tenant.toUpperCase()}`,
+        },
         submitError: {
           text: `Submit text error ${tenant.toUpperCase()}`,
           title: `Submit title error ${tenant.toUpperCase()}`,
@@ -395,10 +434,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         submitSuccess: {
           text: `Submit text success ${tenant.toUpperCase()}`,
           title: `Submit title success ${tenant.toUpperCase()}`,
-        },
-        submitWarn: {
-          text: `Submit text warn ${tenant.toUpperCase()}`,
-          title: `Submit title warn ${tenant.toUpperCase()}`,
         },
       },
     },

@@ -61,6 +61,30 @@ export const I18nForms: CollectionConfig = {
 
         {
           admin: {
+            description: 'This is the text which is shown if a newsletter form was successfully submitted. Only relevant if you want to add newsletter forms.',
+          },
+          fields: [
+            {
+              localized: true,
+              name: 'title',
+              required: true,
+              type: 'text',
+            },
+            {
+              localized: true,
+              name: 'text',
+              required: true,
+              type: 'text',
+            },
+            fieldsLinkInternalWithToggle,
+          ],
+          label: 'Newsletter Submit Success',
+          name: 'newsletterSubmitSuccess',
+          type: 'group',
+        },
+
+        {
+          admin: {
             description: 'This is the text which is shown if there was an error submitting a form.',
           },
           fields: [
@@ -80,30 +104,6 @@ export const I18nForms: CollectionConfig = {
           ],
           label: 'Submit Error',
           name: 'submitError',
-          type: 'group',
-        },
-
-        {
-          admin: {
-            description: 'This is the text which is shown if there was an warning submitting a form.',
-          },
-          fields: [
-            {
-              localized: true,
-              name: 'title',
-              required: true,
-              type: 'text',
-            },
-            {
-              localized: true,
-              name: 'text',
-              required: true,
-              type: 'text',
-            },
-            fieldsLinkInternalWithToggle,
-          ],
-          label: 'Submit Warn',
-          name: 'submitWarn',
           type: 'group',
         },
       ],
