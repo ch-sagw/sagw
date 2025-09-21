@@ -13,9 +13,9 @@ export const TenantProvider = ({
   tenant: string;
   children: React.ReactNode;
 }): React.JSX.Element => (
-  <TenantContext.Provider value={tenant}>
+  <TenantContext value={tenant}>
     {children}
-  </TenantContext.Provider>
+  </TenantContext>
 );
 
 export const useTenant = (): string => {
