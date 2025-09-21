@@ -86,8 +86,6 @@ export const FormClient = ({
     }
   }, [errors]);
 
-  // general submit success / error
-
   // --- Render
 
   return (
