@@ -2,7 +2,6 @@
 
 /*
 4. properly configure from/to mail addresses
-9. check data-fetch pattern (server/client, use-hook, suspense)
 10. tests
 */
 

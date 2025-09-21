@@ -17,13 +17,10 @@ export const sendMail = async ({
     const resend = new Resend(process.env.RESEND_KEY);
 
     const sendResponse = await resend.emails.send({
-      // from: 'vorhall@resend.dev',
-      // from: 'foo@bar.com',
       from,
       html: content,
       subject,
       to,
-      // to: 'delivered@resend.dev',
     });
 
     if (!sendResponse.error) {

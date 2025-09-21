@@ -89,10 +89,8 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
   // send mail or subscribe
   if (hiddenFormData.isNewsletterForm === 'custom') {
     const mailResult = await sendMail({
-      // from: 'sagw@resend.dev',
       content: 'helo from sagw',
       from: 'sagw@resend.dev',
-      // from: 'foo@bar.com',
       subject: 'subject',
 
       // testing mail send

@@ -4,7 +4,7 @@
  * - OVH_OS_ACCESS_PRIVATE_KEY
  * - OVH_OS_IMAGES_BACKUP_CONTAINER_ENDPOINT
  * - RESEND_KEY
- * - MAIL_TO
+ * - MAIL_RECIPIENT_BACKUP_RESTORE
  */
 
 import type { Bucket } from '@aws-sdk/client-s3';

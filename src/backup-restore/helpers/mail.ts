@@ -1,7 +1,7 @@
 /**
  * Requires the following env-variables:
  * - RESEND_KEY
- * - MAIL_TO
+ * - MAIL_RECIPIENT_BACKUP_RESTORE
  */
 
 import '../../../.env/index';
@@ -10,7 +10,7 @@ import config from '@/backup-restore/config';
 
 export default async (subject: string, message: string, failure: boolean): Promise<void> => {
 
-  if (!process.env.RESEND_KEY || !process.env.MAIL_TO) {
+  if (!process.env.RESEND_KEY || !process.env.MAIL_RECIPIENT_BACKUP_RESTORE) {
     return;
   }
 
@@ -35,7 +35,7 @@ export default async (subject: string, message: string, failure: boolean): Promi
       from: 'onboarding@resend.dev',
       html: messageContent,
       subject,
-      to: process.env.MAIL_TO,
+      to: process.env.MAIL_RECIPIENT_BACKUP_RESTORE,
     });
   } catch (err) {
     console.log('Error sending mail');
