@@ -1,7 +1,6 @@
 'use client';
 
 /*
-4. properly configure from/to mail addresses
 10. tests
 */
 
@@ -71,6 +70,8 @@ export const FormClient = ({
 
       // field errors
       setErrors(state.error?.fieldErrors ?? {});
+      setSubmitError(false);
+      setSubmitSuccess(false);
 
       // form submission error
       if (!state.error) {
