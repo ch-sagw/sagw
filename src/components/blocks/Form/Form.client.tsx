@@ -2,8 +2,8 @@
 
 /*
 4. properly configure from/to mail addresses
-8. if success / error -> hide form
 9. check data-fetch pattern (server/client, use-hook, suspense)
+10. tests
 */
 
 import React, {

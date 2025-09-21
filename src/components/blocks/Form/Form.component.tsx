@@ -1,4 +1,5 @@
-'use client';
+// Server component. Since imported into Form.client, inherently
+// becomes a client component.
 
 import React, { Fragment } from 'react';
 import { cva } from 'cva';

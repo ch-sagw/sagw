@@ -103,17 +103,16 @@ const defaultFormConfig: FormProps = {
     ],
     id: '68c6e2b6ec3710c8de69135e',
     isNewsletterForm: 'custom',
-    newsletterForm: {
-      emailField: {
+    newsletterFields: {
+      actionText: 'Erneut senden',
+      email: {
         fieldWidth: 'full',
         label: 'foo',
-        name: 'bar',
         placeholder: 'baz',
       },
-      textField: {
+      name: {
         fieldWidth: 'full',
         label: 'foo',
-        name: 'bar',
         placeholder: 'baz',
       },
     },
@@ -131,6 +130,10 @@ const defaultFormConfig: FormProps = {
         content: sampleRtePrivacyCheckbox,
       },
       errorMessage: 'Foo bas',
+    },
+    newsletterSubmitSuccess: {
+      text: 'Newsletter submit success',
+      title: 'Nesletter submit title',
     },
     submitError: {
       optionalLink: {
@@ -156,19 +159,6 @@ const defaultFormConfig: FormProps = {
       },
       text: 'Submit text success SAGW',
       title: 'Submit title success SAGW',
-    },
-    submitWarn: {
-      optionalLink: {
-        includeLink: false,
-        link: {
-          internalLink: '/',
-          linkText: 'foo',
-          openInNewWindow: false,
-        },
-      },
-      text: 'Submit text warn SAGW',
-      title: 'Submit title warn SAGW',
-
     },
   },
   pending: false,
