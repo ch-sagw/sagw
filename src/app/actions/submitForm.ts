@@ -86,25 +86,31 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
     };
   }
 
-  if (!process.env.MAIL_SENDER_ADDRESS) {
+  if (!process.env.MAIL_SENDER_ADDRESS || !process.env.MAIL_RECIPIENT_TEST) {
     return {
       success: false,
       values: data,
     };
   }
 
+  let recipient = hiddenFormData.recipientMail;
+
+  if (process.env.ENV === 'playwright') {
+    recipient = process.env.MAIL_RECIPIENT_TEST;
+  }
+
   // send mail or subscribe
   if (hiddenFormData.isNewsletterForm === 'custom') {
     const mailResult = await sendMail({
+
+      // TODO: generate mail data
       content: 'helo from sagw',
       from: process.env.MAIL_SENDER_ADDRESS,
-      subject: 'subject',
 
-      // testing mail send
-      to: 'delivered@resend.dev',
+      // TODO: make config in payload
+      subject: 'SAGW Form submisssion',
 
-      // real mail send
-      // to: hiddenFormData.recipientMail,
+      to: recipient,
     });
 
     if (mailResult) {
