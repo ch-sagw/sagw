@@ -10,7 +10,7 @@ import config from '@/backup-restore/config';
 
 export default async (subject: string, message: string, failure: boolean): Promise<void> => {
 
-  if (!process.env.RESEND_KEY || !process.env.MAIL_RECIPIENT_BACKUP_RESTORE) {
+  if (!process.env.RESEND_KEY || !process.env.MAIL_RECIPIENT_BACKUP_RESTORE || !process.env.MAIL_SENDER_ADDRESS) {
     return;
   }
 
@@ -32,7 +32,7 @@ export default async (subject: string, message: string, failure: boolean): Promi
     const resend = new Resend(process.env.RESEND_KEY);
 
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: process.env.MAIL_SENDER_ADDRESS,
       html: messageContent,
       subject,
       to: process.env.MAIL_RECIPIENT_BACKUP_RESTORE,

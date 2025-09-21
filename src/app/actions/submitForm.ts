@@ -86,11 +86,18 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
     };
   }
 
+  if (!process.env.MAIL_SENDER_ADDRESS) {
+    return {
+      success: false,
+      values: data,
+    };
+  }
+
   // send mail or subscribe
   if (hiddenFormData.isNewsletterForm === 'custom') {
     const mailResult = await sendMail({
       content: 'helo from sagw',
-      from: 'sagw@resend.dev',
+      from: process.env.MAIL_SENDER_ADDRESS,
       subject: 'subject',
 
       // testing mail send
@@ -115,7 +122,6 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
     }
   }
 
-  // TODO handle error
   return {
     success: false,
     values: data,
