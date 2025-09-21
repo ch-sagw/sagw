@@ -14,6 +14,7 @@ Resend:
 -------
 - Create SAGW account
 - Add SAGW Resend token to env file
+- Write test to see if mail content is correct
 
 NextJs:
 -------
