@@ -84,10 +84,21 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
         target,
       } = props;
 
+      let ariaLabelText = ariaLabel;
+
+      if (target === '_blank') {
+
+        ariaLabelText = ariaLabel
+          ? ariaLabel
+          : text;
+
+        ariaLabelText += ' (link target opens in a new tab)';
+      }
+
       return (
         <Link
           aria-current={ariaCurrent}
-          aria-label={ariaLabel}
+          aria-label={ariaLabelText}
           className={classes({
             colorTheme,
             style,
