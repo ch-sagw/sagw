@@ -59,6 +59,7 @@ jobs:
           PAYLOAD_INITIAL_PASSWORD: ${{ secrets.PAYLOAD_INITIAL_PASSWORD }}
           ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
           MAIL_SENDER_ADDRESS: ${{ secrets.MAIL_SENDER_ADDRESS }}
+          RESEND_KEY: ${{ secrets.RESEND_KEY }}
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           ENV: playwright
       - uses: daun/playwright-report-summary@v3
