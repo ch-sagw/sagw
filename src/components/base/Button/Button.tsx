@@ -1,40 +1,54 @@
-import React from 'react';
+'use client';
+
+import React, { Fragment } from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/Button/Button.module.scss';
 import { Icon } from '@/icons';
 import Link from 'next/link';
 
-type BaseProps = {
+type BaseWrapperProps = {
   ariaCurrent?: boolean;
   ariaControls?: string;
-  ariaLabel?: string,
+  ariaLabel?: string;
   autoFocus?: boolean;
   buttonType?: 'submit' | 'button';
   colorTheme: 'light' | 'dark';
   disabled?: boolean;
-  element: 'button' | 'link';
-  iconInlineStart?: keyof typeof Icon | undefined;
-  iconInlineEnd?: keyof typeof Icon | undefined;
   onClick?: () => void;
   popOverTarget?: string;
   style: 'filled' | 'outlined' | 'text' | 'buttonPlay' | 'socialLink';
-  text: string;
+  prefetch?: 'auto' | true | false | null;
 };
 
+type ContentProps = {
+  iconInlineStart?: keyof typeof Icon | undefined;
+  iconInlineEnd?: keyof typeof Icon | undefined;
+  element: 'button' | 'link';
+  text: string;
+}
+
+type BaseProps = BaseWrapperProps & ContentProps;
+
 type ButtonProps = BaseProps & {
+  element: 'button';
   ariaHasPopUp?: boolean | undefined;
 };
 
-type ButtonLinkProps = BaseProps & {
+type LinkProps = BaseProps & {
+  element: 'link';
   href: string;
-  target?: '_blank' | undefined;
+  target?: '_blank';
 };
 
 type ButtonPlayProps = ButtonProps & {
+  style: 'buttonPlay';
   ariaLabel: '';
 };
 
-export type InterfaceButtonPropTypes = ButtonProps | ButtonLinkProps | ButtonPlayProps;
+export type InterfaceButtonPropTypes =
+  | ButtonProps
+  | LinkProps
+  | ButtonPlayProps;
 
 const classes = cva([styles.button], {
   variants: {
@@ -58,6 +72,36 @@ const classes = cva([styles.button], {
 // - Add support for loading state
 // - Add support for visually hidden text for target _blank
 
+const buttonLinkContent = ({
+  iconInlineStart,
+  text,
+  iconInlineEnd,
+  element,
+}: ContentProps): React.JSX.Element => (
+  <Fragment>
+    {iconInlineStart && (
+      <span className={styles.iconStart}>
+        <Icon name={iconInlineStart} className={`${element}__icon--${iconInlineStart}`} />
+      </span>
+    )}
+    {
+      text && (
+        <span className={styles.innerText}>
+          {text}
+          <span className={styles.line}></span>
+        </span>
+      )
+    }
+    {
+      iconInlineEnd && (
+        <span className={styles.iconEnd}>
+          <Icon name={iconInlineEnd} className={`${element}__icon--${iconInlineEnd}`} />
+        </span>
+      )
+    }
+  </Fragment>
+);
+
 export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
   const {
     ariaControls,
@@ -71,6 +115,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     iconInlineEnd,
     iconInlineStart,
     popOverTarget,
+    prefetch,
     style,
     text,
     onClick,
@@ -106,24 +151,14 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
           data-testid='link'
           href={href}
           target={target}
+          prefetch={prefetch}
         >
-          {iconInlineStart && (
-            <span className={styles.iconStart}>
-              <Icon name={iconInlineStart} className={`link__icon--${iconInlineStart}`} />
-            </span>
-          )}
-          {text && (
-            <span className={styles.innerText}>
-              {text}
-              <span className={styles.line}></span>
-            </span>
-          )}
-          {iconInlineEnd && (
-            <span className={styles.iconEnd}>
-              <Icon name={iconInlineEnd} className={`link__icon--${iconInlineEnd}`} />
-            </span>
-          )
-          }
+          {buttonLinkContent({
+            element: 'link',
+            iconInlineEnd,
+            iconInlineStart,
+            text,
+          })}
         </Link >
       );
     }
@@ -144,24 +179,14 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
       data-testid='button'
       onClick={onClick}
       popoverTarget={popOverTarget}
-      type={buttonType}
+      type={buttonType ?? 'button'}
     >
-      {iconInlineStart && (
-        <span className={styles.iconStart}>
-          <Icon name={iconInlineStart} className={`button__icon--${iconInlineStart}`} />
-        </span>
-      )}
-      {text && (
-        <span className={styles.innerText}>
-          {text}
-          <span className={styles.line}></span>
-        </span>
-      )}
-      {iconInlineEnd && (
-        <span className={styles.iconEnd}>
-          <Icon name={iconInlineEnd} className={`button__icon--${iconInlineEnd}`} />
-        </span>
-      )}
+      {buttonLinkContent({
+        element: 'button',
+        iconInlineEnd,
+        iconInlineStart,
+        text,
+      })}
     </button>
   );
 };
