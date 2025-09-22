@@ -484,100 +484,112 @@ export interface Form {
    * A newsletter form has a fixed set of fields. Custom form can be build with any combination of fields as you like.
    */
   isNewsletterForm?: ('custom' | 'newsletter') | null;
+  colorMode: 'dark' | 'white';
   title: string;
+  titleLevel: '2' | '3' | '4' | '5';
   subtitle?: string | null;
   submitButtonLabel: string;
   recipientMail?: string | null;
+  mailSubject?: string | null;
   /**
    * If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".
    */
   showPrivacyCheckbox?: boolean | null;
-  fields?:
-    | (
-        | {
-            /**
-             * lowercase, no special characters
-             */
-            name: string;
-            label: InterfaceRte2;
-            fieldWidth: 'full' | 'half';
-            required?: boolean | null;
-            fieldError?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'checkboxBlock';
-          }
-        | {
-            /**
-             * lowercase, no special characters
-             */
-            name: string;
-            label: string;
-            placeholder: string;
-            fieldWidth: 'full' | 'half';
-            required?: boolean | null;
-            fieldError?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'emailBlock';
-          }
-        | {
-            /**
-             * lowercase, no special characters
-             */
-            name: string;
-            label: string;
-            placeholder: string;
-            fieldWidth: 'full' | 'half';
-            required?: boolean | null;
-            fieldError?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlockForm';
-          }
-        | {
-            /**
-             * lowercase, no special characters
-             */
-            name: string;
-            label: string;
-            placeholder: string;
-            fieldWidth: 'full' | 'half';
-            required?: boolean | null;
-            fieldError?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textareaBlock';
-          }
-      )[]
-    | null;
-  newsletterForm?: {
-    emailField: {
-      /**
-       * lowercase, no special characters
-       */
-      name: string;
+  fields?: (InterfaceCheckboxField | InterfaceEmailField | InterfaceTextField | InterfaceTextTextarea)[] | null;
+  newsletterFields?: {
+    email: {
       label: string;
       placeholder: string;
       fieldWidth: 'full' | 'half';
       required?: boolean | null;
       fieldError?: string | null;
     };
-    textField: {
-      /**
-       * lowercase, no special characters
-       */
-      name: string;
+    name: {
       label: string;
       placeholder: string;
       fieldWidth: 'full' | 'half';
       required?: boolean | null;
       fieldError?: string | null;
     };
+    /**
+     * The action text to show at the bottom of the notification. e.g.: "Resend verifiaction E-Mail again."
+     */
+    actionText: string;
   };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceCheckboxField".
+ */
+export interface InterfaceCheckboxField {
+  /**
+   * lowercase, no special characters
+   */
+  name: string;
+  label: InterfaceRte2;
+  fieldWidth: 'full' | 'half';
+  required?: boolean | null;
+  fieldError?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'checkboxBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceEmailField".
+ */
+export interface InterfaceEmailField {
+  label: string;
+  placeholder: string;
+  /**
+   * lowercase, no special characters
+   */
+  name: string;
+  fieldWidth: 'full' | 'half';
+  required?: boolean | null;
+  fieldError?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'emailBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceTextField".
+ */
+export interface InterfaceTextField {
+  label: string;
+  placeholder: string;
+  /**
+   * lowercase, no special characters
+   */
+  name: string;
+  fieldWidth: 'full' | 'half';
+  required?: boolean | null;
+  fieldError?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'textBlockForm';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceTextTextarea".
+ */
+export interface InterfaceTextTextarea {
+  /**
+   * lowercase, no special characters
+   */
+  name: string;
+  label: string;
+  placeholder: string;
+  fieldWidth: 'full' | 'half';
+  required?: boolean | null;
+  fieldError?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'textareaBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1802,16 +1814,42 @@ export interface User {
 export interface I18NForm {
   id: string;
   department?: (string | null) | Department;
+  i18nForms: InterfaceI18NForms;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nForms".
+ */
+export interface InterfaceI18NForms {
   /**
    * You may show this text in a checkbox on forms.
    */
-  checkboxes: {
+  dataPrivacyCheckbox: {
     dataPrivacyCheckboxText: InterfaceRte2;
+    errorMessage: string;
   };
   /**
    * This is the text which is shown if a form was successfully submitted.
    */
   submitSuccess: {
+    title: string;
+    text: string;
+    optionalLink?: {
+      includeLink?: boolean | null;
+      link?: {
+        openInNewWindow?: boolean | null;
+        linkText: string;
+        internalLink: string;
+      };
+    };
+  };
+  /**
+   * This is the text which is shown if a newsletter form was successfully submitted. Only relevant if you want to add newsletter forms.
+   */
+  newsletterSubmitSuccess: {
     title: string;
     text: string;
     optionalLink?: {
@@ -1838,24 +1876,6 @@ export interface I18NForm {
       };
     };
   };
-  /**
-   * This is the text which is shown if there was an warning submitting a form.
-   */
-  submitWarn: {
-    title: string;
-    text: string;
-    optionalLink?: {
-      includeLink?: boolean | null;
-      link?: {
-        openInNewWindow?: boolean | null;
-        linkText: string;
-        internalLink: string;
-      };
-    };
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3631,85 +3651,44 @@ export interface UsersSelect<T extends boolean = true> {
 export interface FormsSelect<T extends boolean = true> {
   department?: T;
   isNewsletterForm?: T;
+  colorMode?: T;
   title?: T;
+  titleLevel?: T;
   subtitle?: T;
   submitButtonLabel?: T;
   recipientMail?: T;
+  mailSubject?: T;
   showPrivacyCheckbox?: T;
   fields?:
     | T
     | {
-        checkboxBlock?:
-          | T
-          | {
-              name?: T;
-              label?: T | InterfaceRte2Select<T>;
-              fieldWidth?: T;
-              required?: T;
-              fieldError?: T;
-              id?: T;
-              blockName?: T;
-            };
-        emailBlock?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              placeholder?: T;
-              fieldWidth?: T;
-              required?: T;
-              fieldError?: T;
-              id?: T;
-              blockName?: T;
-            };
-        textBlockForm?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              placeholder?: T;
-              fieldWidth?: T;
-              required?: T;
-              fieldError?: T;
-              id?: T;
-              blockName?: T;
-            };
-        textareaBlock?:
-          | T
-          | {
-              name?: T;
-              label?: T;
-              placeholder?: T;
-              fieldWidth?: T;
-              required?: T;
-              fieldError?: T;
-              id?: T;
-              blockName?: T;
-            };
+        checkboxBlock?: T | InterfaceCheckboxFieldSelect<T>;
+        emailBlock?: T | InterfaceEmailFieldSelect<T>;
+        textBlockForm?: T | InterfaceTextFieldSelect<T>;
+        textareaBlock?: T | InterfaceTextTextareaSelect<T>;
       };
-  newsletterForm?:
+  newsletterFields?:
     | T
     | {
-        emailField?:
+        email?:
           | T
           | {
-              name?: T;
               label?: T;
               placeholder?: T;
               fieldWidth?: T;
               required?: T;
               fieldError?: T;
             };
-        textField?:
+        name?:
           | T
           | {
-              name?: T;
               label?: T;
               placeholder?: T;
               fieldWidth?: T;
               required?: T;
               fieldError?: T;
             };
+        actionText?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -3717,16 +3696,100 @@ export interface FormsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceCheckboxField_select".
+ */
+export interface InterfaceCheckboxFieldSelect<T extends boolean = true> {
+  name?: T;
+  label?: T | InterfaceRte2Select<T>;
+  fieldWidth?: T;
+  required?: T;
+  fieldError?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceEmailField_select".
+ */
+export interface InterfaceEmailFieldSelect<T extends boolean = true> {
+  label?: T;
+  placeholder?: T;
+  name?: T;
+  fieldWidth?: T;
+  required?: T;
+  fieldError?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceTextField_select".
+ */
+export interface InterfaceTextFieldSelect<T extends boolean = true> {
+  label?: T;
+  placeholder?: T;
+  name?: T;
+  fieldWidth?: T;
+  required?: T;
+  fieldError?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceTextTextarea_select".
+ */
+export interface InterfaceTextTextareaSelect<T extends boolean = true> {
+  name?: T;
+  label?: T;
+  placeholder?: T;
+  fieldWidth?: T;
+  required?: T;
+  fieldError?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "i18nForms_select".
  */
 export interface I18NFormsSelect<T extends boolean = true> {
   department?: T;
-  checkboxes?:
+  i18nForms?: T | InterfaceI18NFormsSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nForms_select".
+ */
+export interface InterfaceI18NFormsSelect<T extends boolean = true> {
+  dataPrivacyCheckbox?:
     | T
     | {
         dataPrivacyCheckboxText?: T | InterfaceRte2Select<T>;
+        errorMessage?: T;
       };
   submitSuccess?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        optionalLink?:
+          | T
+          | {
+              includeLink?: T;
+              link?:
+                | T
+                | {
+                    openInNewWindow?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+            };
+      };
+  newsletterSubmitSuccess?:
     | T
     | {
         title?: T;
@@ -3762,27 +3825,6 @@ export interface I18NFormsSelect<T extends boolean = true> {
                   };
             };
       };
-  submitWarn?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        optionalLink?:
-          | T
-          | {
-              includeLink?: T;
-              link?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

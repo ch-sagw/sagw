@@ -26,6 +26,7 @@ export const checkboxBlock = (): Block => ({
     },
     formFieldError,
   ],
+  interfaceName: 'InterfaceCheckboxField',
   labels: {
     plural: 'Checkbox',
     singular: 'Checkbox',

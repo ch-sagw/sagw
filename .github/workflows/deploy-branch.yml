@@ -58,18 +58,17 @@ jobs:
           PAYLOAD_INITIAL_USER_MAIL: ${{ secrets.PAYLOAD_INITIAL_USER_MAIL }}
           PAYLOAD_INITIAL_PASSWORD: ${{ secrets.PAYLOAD_INITIAL_PASSWORD }}
           ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+          MAIL_SENDER_ADDRESS: ${{ secrets.MAIL_SENDER_ADDRESS }}
+          RESEND_KEY: ${{ secrets.RESEND_KEY }}
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           ENV: playwright
-      - name: Merge test reports
-        run: npx playwright merge-reports --reporter json ./blob-report > blob-report/merged-report.json
       - uses: daun/playwright-report-summary@v3
         if: always()
         with:
-          report-file: blob-report/merged-report.json
-          comment-title: 'Test results BE'
+          report-file: test-results/results.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report
-          path: blob-report/
+          path: test-results/html/
           retention-days: 30

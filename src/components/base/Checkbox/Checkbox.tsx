@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, {
+  useEffect, useRef, useState,
+} from 'react';
 import { cva } from 'cva';
 import { Icon } from '@/icons';
 import styles from '@/components/base/Checkbox/Checkbox.module.scss';
@@ -14,8 +16,9 @@ export type InterfaceCheckboxPropTypes = {
   label: InterfaceRtePropTypes['text'];
   checked: boolean;
   errorText: string;
-  colorTheme: 'light' | 'dark';
+  colorMode: 'white' | 'dark';
   className?: string;
+  autofocus?: boolean;
 };
 
 export const Checkbox = ({
@@ -24,22 +27,35 @@ export const Checkbox = ({
   label,
   checked,
   errorText,
-  colorTheme,
+  colorMode,
   className,
+  autofocus,
 }: InterfaceCheckboxPropTypes): React.JSX.Element => {
+  const checkboxRef = useRef<HTMLInputElement>(null);
+
   const [
     checkedState,
     setCheckedState,
   ] = useState(checked);
+
+  useEffect(() => {
+    if (autofocus && checkboxRef.current) {
+      checkboxRef.current.focus();
+    }
+  }, [autofocus]);
+
+  useEffect(() => {
+    setCheckedState(checked);
+  }, [checked]);
 
   const classes = cva([
     styles.checkbox,
     className,
   ], {
     variants: {
-      colorTheme: {
+      colorMode: {
         dark: [styles.dark],
-        light: [styles.light],
+        white: null,
       },
     },
   });
@@ -50,19 +66,20 @@ export const Checkbox = ({
 
   return (
     <div className={classes({
-      colorTheme,
+      colorMode,
     })}>
       <input
+        ref={checkboxRef}
         aria-describedby={
           errorText
-            ? value
+            ? name
             : undefined
         }
         aria-invalid={Boolean(errorText)}
         className={styles.input}
         type='checkbox'
         name={name}
-        id={value}
+        id={name}
         checked={checkedState}
         onChange={onInputChange}
         value={value}
@@ -74,7 +91,7 @@ export const Checkbox = ({
       />
 
       <label
-        htmlFor={value}
+        htmlFor={name}
         className={styles.label}
         data-testid='checkbox-label'
       >
@@ -88,8 +105,6 @@ export const Checkbox = ({
         <span
           className={styles.error}
           id={name}
-          aria-live='assertive'
-          role='alert'
         >
           <Icon
             name='warning'

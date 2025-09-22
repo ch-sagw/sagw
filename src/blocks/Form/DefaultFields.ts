@@ -25,7 +25,7 @@ export const formFieldPlacehodler: Field = {
 };
 
 export const formFieldWidth: Field = {
-  defaultValue: 'full',
+  defaultValue: 'half',
   name: 'fieldWidth',
   options: [
     {

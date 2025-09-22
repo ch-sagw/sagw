@@ -1,4 +1,9 @@
-import React, { useId } from 'react';
+'use client';
+
+import React, {
+  useEffect,
+  useId, useRef,
+} from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/InputText/InputText.module.scss';
 import { Icon } from '@/icons';
@@ -10,8 +15,9 @@ export type BaseProps = {
   name: string;
   required: boolean;
   defaultValue: string;
-  colorTheme: 'light' | 'dark';
+  colorMode: 'white' | 'dark';
   className?: string;
+  autofocus?: boolean;
 };
 
 type InputProps = BaseProps & {
@@ -32,19 +38,27 @@ export const InputText = ({
   required,
   defaultValue,
   type,
-  colorTheme,
+  colorMode,
   className,
+  autofocus,
 }: InterfaceInputTextPropTypes): React.JSX.Element => {
   const inputId = useId();
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (autofocus && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [autofocus]);
 
   const classes = cva([
     styles.inputText,
     className,
   ], {
     variants: {
-      colorTheme: {
+      colorMode: {
         dark: [styles.dark],
-        light: [styles.light],
+        white: null,
       },
       type: {
         text: [styles.text],
@@ -61,17 +75,18 @@ export const InputText = ({
     <div
       data-testid='input-text'
       className={classes({
-        colorTheme,
+        colorMode,
         type: type === 'text' || type === 'email'
           ? 'text'
           : 'textarea',
       })}
     >
       <Elem
+        ref={inputRef as React.Ref<HTMLInputElement & HTMLTextAreaElement>}
         className={styles.input}
         aria-describedby={
           errorText
-            ? inputId
+            ? `error-${inputId}`
             : undefined
         }
         aria-invalid={Boolean(errorText)}
@@ -81,6 +96,7 @@ export const InputText = ({
         name={name}
         defaultValue={defaultValue}
         aria-label={label}
+        id={inputId}
         {...(type === 'textarea'
           ? {
             rows: 1,
@@ -97,9 +113,7 @@ export const InputText = ({
       {errorText &&
         <span
           className={styles.error}
-          id={inputId}
-          aria-live='assertive'
-          role='alert'
+          id={`error-${inputId}`}
         >
           <Icon
             name='warning'

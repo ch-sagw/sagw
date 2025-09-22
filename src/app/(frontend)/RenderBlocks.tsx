@@ -2,7 +2,7 @@ import 'server-only';
 import React, { Fragment } from 'react';
 import { Notification } from '@/components/blocks/Notification/Notification';
 import { Rte } from '@/components/blocks/Rte/Rte';
-import { Form } from '@/components/blocks/Form/Form';
+import { FormServer } from '@/components/blocks/Form/Form.server';
 import {
   InterfaceAccordionBlock,
   InterfaceBibliographicReferenceBlock,
@@ -36,6 +36,7 @@ import {
 } from '@/payload-types';
 
 interface InterfaceRenderBlocksProps {
+  tenantId: string;
   blocks: (
     InterfaceAccordionBlock |
     InterfaceBibliographicReferenceBlock |
@@ -71,6 +72,7 @@ interface InterfaceRenderBlocksProps {
 
 export const RenderBlocks = ({
   blocks,
+  tenantId,
 }: InterfaceRenderBlocksProps): React.JSX.Element | null => {
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0;
 
@@ -102,7 +104,10 @@ export const RenderBlocks = ({
             if (blockType === 'formBlock') {
               return (
                 <div key={block.id || index}>
-                  <Form {...block} />
+                  <FormServer
+                    tenantId={tenantId}
+                    {...block}
+                  />
                 </div>
               );
             }

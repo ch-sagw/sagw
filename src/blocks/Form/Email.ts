@@ -6,34 +6,42 @@ import {
 
 // Only available on forms block
 
-export const emailBlock = (hideWidthAndRequired?: boolean): Block => ({
-  admin: {
-    disableBlockName: true,
-  },
-  fields: [
-    {
-      fields: [
-        formFieldName,
-        formFieldLabel,
-        formFieldPlacehodler,
-      ],
-      type: 'row',
+export const emailBlock = (isForNewsletter?: boolean): Block => {
+  const fields = [
+    formFieldLabel,
+    formFieldPlacehodler,
+  ];
+
+  if (!isForNewsletter) {
+    fields.push(formFieldName);
+  }
+
+  return {
+    admin: {
+      disableBlockName: true,
     },
-    {
-      admin: {
-        hidden: hideWidthAndRequired,
+    fields: [
+      {
+        fields,
+        type: 'row',
       },
-      fields: [
-        formFieldWidth,
-        formFieldCheckbox,
-      ],
-      type: 'row',
+      {
+        admin: {
+          hidden: isForNewsletter,
+        },
+        fields: [
+          formFieldWidth,
+          formFieldCheckbox,
+        ],
+        type: 'row',
+      },
+      formFieldError,
+    ],
+    interfaceName: 'InterfaceEmailField',
+    labels: {
+      plural: 'Email',
+      singular: 'Email',
     },
-    formFieldError,
-  ],
-  labels: {
-    plural: 'Email',
-    singular: 'Email',
-  },
-  slug: 'emailBlock',
-});
+    slug: 'emailBlock',
+  };
+};
