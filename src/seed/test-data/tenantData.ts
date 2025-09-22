@@ -432,6 +432,44 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
             content: simpleRteConfig('Sample Rte Block Content 2.'),
           },
         },
+        {
+          accordions: [
+            {
+              accordionContent: {
+                content: simpleRteConfig('Some content'),
+              },
+              accordionTitle: 'Accordion 1',
+            },
+            {
+              accordionContent: {
+                content: simpleRteConfig('Some content'),
+              },
+              accordionTitle: 'Accordion 2',
+            },
+            {
+              accordionContent: {
+                content: simpleRteConfig('Some content'),
+              },
+              accordionTitle: 'Accordion 3',
+            },
+            {
+              accordionContent: {
+                content: simpleRteConfig('Some content'),
+              },
+              accordionTitle: 'Accordion 4',
+            },
+            {
+              accordionContent: {
+                content: simpleRteConfig('Some content'),
+              },
+              accordionTitle: 'Accordion 5',
+            },
+          ],
+          blockType: 'accordionBlock',
+          colorMode: 'white',
+          title: `Accordion main title ${tenant.toUpperCase()}`,
+          titleLevel: '2',
+        },
       ],
       department: tenantId,
       hero: {
@@ -474,8 +512,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       _status: 'published',
       department: tenantId,
       hero: {
-        colorMode: 'color',
-        colorScheme: 'bright',
+        colorMode: 'white',
         lead: 'Detail Page Lead',
         title: {
           content: simpleRteConfig(`Detail page title ${tenant.toUpperCase()}`),
@@ -491,8 +528,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       _status: 'published',
       department: tenantId,
       hero: {
-        colorMode: 'color',
-        colorScheme: 'bright',
+        colorMode: 'white',
         lead: 'Overview Page Lead',
         title: {
           content: simpleRteConfig(`Overview page title ${tenant.toUpperCase()}`),
@@ -509,8 +545,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       department: tenantId,
       hero: {
         author: 'Author',
-        colorMode: 'color',
-        colorScheme: 'bright',
+        colorMode: 'white',
         date: '2025-08-31T12:00:00.000Z',
         lead: 'Magazine Detail Page Lead',
         title: {
@@ -536,8 +571,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         title: `Event details title ${tenant.toUpperCase()} (render detail page)`,
       },
       hero: {
-        colorMode: 'color',
-        colorScheme: 'bright',
+        colorMode: 'white',
         lead: 'Event Detail Page Lead',
         title: {
           content: simpleRteConfig(`Event detail page title ${tenant.toUpperCase()} (render detail page)`),
@@ -560,8 +594,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         title: `Event detail title ${tenant.toUpperCase()} (render link)`,
       },
       hero: {
-        colorMode: 'color',
-        colorScheme: 'bright',
+        colorMode: 'white',
         title: {
           content: simpleRteConfig(`Event detail page title ${tenant.toUpperCase()} (render link)`),
         },
@@ -581,8 +614,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       _status: 'published',
       department: tenantId,
       hero: {
-        colorMode: 'color',
-        colorScheme: 'bright',
+        colorMode: 'white',
         date: '2025-08-31T12:00:00.000Z',
         lead: 'News Detail Page Lead',
         title: {
@@ -607,8 +639,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       },
       department: tenantId,
       hero: {
-        colorMode: 'color',
-        colorScheme: 'bright',
+        colorMode: 'white',
         lead: 'Publication Detail Page Lead',
         title: {
           content: simpleRteConfig(`Publication detail page title ${tenant.toUpperCase()}`),
@@ -627,8 +658,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       _status: 'published',
       department: tenantId,
       hero: {
-        colorMode: 'color',
-        colorScheme: 'bright',
+        colorMode: 'white',
         lead: 'Institute Detail Page Lead',
         title: {
           content: simpleRteConfig(`Institute detail page title ${tenant.toUpperCase()}`),
@@ -648,8 +678,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       _status: 'published',
       department: tenantId,
       hero: {
-        colorMode: 'color',
-        colorScheme: 'bright',
+        colorMode: 'white',
         lead: 'National Dictionary Detail Page Lead',
         title: {
           content: simpleRteConfig(`National Dictionary detail page title ${tenant.toUpperCase()}`),
@@ -669,8 +698,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       _status: 'published',
       department: tenantId,
       hero: {
-        colorMode: 'color',
-        colorScheme: 'bright',
+        colorMode: 'white',
         lead: 'Project Detail Page Lead',
         title: {
           content: simpleRteConfig(`Project detail page title ${tenant.toUpperCase()}`),

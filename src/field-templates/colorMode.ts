@@ -1,46 +1,49 @@
-import { Field } from 'payload';
+import {
+  Field, Option,
+} from 'payload';
 
-export const fieldsColorScheme: Field = {
-  defaultValue: 'bright',
-  label: 'Color Scheme',
-  localized: false,
-  name: 'colorScheme',
-  options: [
-    {
-      label: 'bright',
-      value: 'bright',
-    },
-    {
-      label: 'dark',
+interface InterfaceFieldsColorMode {
+  white: boolean;
+  light: boolean;
+  dark: boolean;
+}
+
+export const fieldsColorMode = ({
+  white,
+  light,
+  dark,
+}: InterfaceFieldsColorMode): Field[] => {
+  const options: Option[] = [];
+
+  if (white) {
+    options.push({
+      label: 'White',
+      value: 'white',
+    });
+  }
+
+  if (dark) {
+    options.push({
+      label: 'Dark',
       value: 'dark',
-    },
-  ],
-  required: true,
-  type: 'select',
-};
+    });
+  }
 
-export const fieldsColorMode: Field[] = [
-  {
-    defaultValue: 'color',
-    label: 'Color Mode',
-    name: 'colorMode',
-    options: [
-      {
-        label: 'White',
-        value: 'white',
-      },
-      {
-        label: 'Color',
-        value: 'color',
-      },
-    ],
-    required: true,
-    type: 'select',
-  },
-  {
-    admin: {
-      condition: (_, siblingData) => siblingData.colorMode === 'color',
+  if (light) {
+    options.push({
+      label: 'Light',
+      value: 'light',
+    });
+  }
+
+  return [
+    {
+      defaultValue: 'white',
+      label: 'Color Mode',
+      name: 'colorMode',
+      options,
+      required: true,
+      type: 'radio',
     },
-    ...fieldsColorScheme,
-  },
-];
+  ];
+};

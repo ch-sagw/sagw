@@ -11,7 +11,6 @@ import {
   createAccess, globalAdminOrDepartmentAdminAccess,
 } from '@/collections/Pages/access/globalAdminOrDepartmentAdmin';
 import { blocks } from '@/blocks';
-import { fieldsColorMode } from '@/field-templates/colorMode';
 import { versions } from '@/field-templates/versions';
 
 export const NationalDictionaryDetailPage: CollectionConfig = {
@@ -62,7 +61,7 @@ export const NationalDictionaryDetailPage: CollectionConfig = {
             },
 
             // Hero
-            fieldsHero([...fieldsColorMode]),
+            fieldsHero(false),
 
             // Content Blocks
             {

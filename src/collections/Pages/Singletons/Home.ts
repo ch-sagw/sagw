@@ -26,21 +26,24 @@ export const HomePage: CollectionConfig = {
         // Content Tab
         {
           fields: [
-            fieldsHero([
-              {
+            fieldsHero(
+              true,
+              [
+                {
                 // TODO: enable for SAGW only
-                defaultValue: true,
-                name: 'animated',
-                type: 'checkbox',
-              },
-              {
-                localized: true,
-                name: 'sideTitle',
-                required: true,
-                type: 'text',
-              },
-              fieldsLinkInternalWithToggle,
-            ]),
+                  defaultValue: true,
+                  name: 'animated',
+                  type: 'checkbox',
+                },
+                {
+                  localized: true,
+                  name: 'sideTitle',
+                  required: true,
+                  type: 'text',
+                },
+                fieldsLinkInternalWithToggle,
+              ],
+            ),
 
             // Content Blocks
             {
