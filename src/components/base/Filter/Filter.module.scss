@@ -1,0 +1,93 @@
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+
+.checkBoxList {
+  @include list-reset;
+
+  --label-background: var(--background-light);
+  --label-color: var(--text-primary);
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: px-to-rem(var(--spacing-xs));
+
+  label {
+    @include label-text;
+
+    display: inline-block;
+    position: relative;
+    padding-block: px-to-rem(var(--spacing-s));
+    padding-inline: px-to-rem(var(--spacing-m));
+    background: var(--label-background);
+    border-radius: px-to-rem(var(--spacing-m));
+    color: var(--label-color);
+
+    @supports (text-box-trim: trim-both) {
+      text-box-edge: cap alphabetic;
+      text-box-trim: trim-both;
+    }
+
+    &:has(.checkBox:checked) {
+      --label-background: var(--background-inverted);
+      --label-color: var(--text-primary-inverted);
+    }
+
+    &:has(.checkBox:focus),
+    &:has(.checkBox:hover) {
+      --label-background: var(--background-inverted);
+      --label-color: var(--text-primary-inverted);
+    }
+  }
+
+  .checkBox {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0;
+  }
+}
+
+.filterSelectLabel {
+  --label-background: var(--background-light);
+  --label-color: var(--text-primary);
+
+  position: relative;
+  padding-block: px-to-rem(var(--spacing-s));
+
+  &:after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    border-radius: px-to-rem(var(--spacing-m));
+    background: var(--label-background);
+  }
+}
+
+.filterSelectLabelText {
+  @include screen-reader-only;
+}
+
+.filterSelect {
+  @include label-text;
+
+  position: relative;
+  padding-block: px-to-rem(var(--spacing-s));
+  padding-inline: px-to-rem(var(--spacing-m));
+  background: none;
+  border: 0;
+  color: var(--label-color);
+
+  :after {
+    position: absolute;
+    inset-inline-end: 0;
+    content: "";
+    height: 20px;
+    width: 20px;
+    background: pink;
+  }
+}
