@@ -12,6 +12,7 @@ import { FormNotification } from '@/components/base/FormNotification/FormNotific
 import {
   InputText, InterfaceInputTextPropTypes,
 } from '@/components/base/InputText/InputText';
+import { Button } from '@/components/base/Button/Button';
 
 import { Checkbox } from '@/components/base/Checkbox/Checkbox';
 
@@ -186,7 +187,14 @@ export const FormComponent = ({
             return <Fragment key={i}></Fragment>;
           })}
 
-          <button disabled={pending}>{form.submitButtonLabel}</button>
+          <Button
+            element='button'
+            disabled={pending}
+            buttonType='submit'
+            colorMode={form.colorMode}
+            style='filled'
+            text={form.submitButtonLabel}
+          />
         </form>
       }
     </section >
