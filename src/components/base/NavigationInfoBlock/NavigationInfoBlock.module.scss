@@ -3,18 +3,18 @@
 
 .infoBlock {
   margin: px-to-rem(var(--spacing-l)) px-to-rem(var(--spacing-2xl));
-}
 
-.title {
-  @include title-heading-4;
+  .title {
+    @include title-heading-4;
 
-  color: var(--text-primary-inverted);
-  margin: 0 0 px-to-rem(var(--spacing-xs));
-}
+    color: var(--text-primary-inverted);
+    margin: 0 0 px-to-rem(var(--spacing-xs));
+  }
 
-.text {
-  @include body-text-m;
+  .text {
+    @include body-text-m;
 
-  color: var(--text-secondary-inverted);
-  margin: 0;
+    color: var(--text-secondary-inverted);
+    margin: 0;
+  }
 }
