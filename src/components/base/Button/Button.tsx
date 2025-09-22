@@ -12,7 +12,7 @@ type BaseWrapperProps = {
   ariaLabel?: string;
   autoFocus?: boolean;
   buttonType?: 'submit' | 'button';
-  colorTheme: 'light' | 'dark';
+  colorMode: 'white' | 'dark';
   disabled?: boolean;
   onClick?: () => void;
   popOverTarget?: string;
@@ -52,9 +52,9 @@ export type InterfaceButtonPropTypes =
 
 const classes = cva([styles.button], {
   variants: {
-    colorTheme: {
+    colorMode: {
       dark: [styles.dark],
-      light: [styles.light],
+      white: [styles.white],
     },
     style: {
       buttonPlay: [styles.buttonPlay],
@@ -109,7 +109,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     ariaLabel,
     autoFocus,
     buttonType,
-    colorTheme,
+    colorMode,
     disabled,
     element,
     iconInlineEnd,
@@ -145,7 +145,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
           aria-current={ariaCurrent}
           aria-label={ariaLabelText}
           className={classes({
-            colorTheme,
+            colorMode,
             style,
           })}
           data-testid='link'
@@ -172,7 +172,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
       aria-label={ariaLabel}
       autoFocus={autoFocus}
       className={classes({
-        colorTheme,
+        colorMode,
         style,
       })}
       disabled={disabled}

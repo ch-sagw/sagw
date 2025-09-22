@@ -33,7 +33,7 @@ export default meta;
 
 export const ButtonPrimaryFilled: StrictStory = {
   args: {
-    colorTheme: 'light',
+    colorMode: 'white',
     element: 'button',
     style: 'filled',
     text: 'Alle zulassen',
@@ -42,7 +42,7 @@ export const ButtonPrimaryFilled: StrictStory = {
 
 export const ButtonPrimaryFilledDark: StrictStory = {
   args: {
-    colorTheme: 'dark',
+    colorMode: 'dark',
     element: 'button',
     style: 'filled',
     text: 'Alle ablehnen',
@@ -56,7 +56,7 @@ export const ButtonPrimaryFilledDark: StrictStory = {
 
 export const ButtonPrimaryFilledDarkDisabled: StrictStory = {
   args: {
-    colorTheme: 'dark',
+    colorMode: 'dark',
     disabled: true,
     element: 'button',
     style: 'filled',
@@ -71,7 +71,7 @@ export const ButtonPrimaryFilledDarkDisabled: StrictStory = {
 
 export const ButtonPrimaryFilledIconStart: StrictStory = {
   args: {
-    colorTheme: 'light',
+    colorMode: 'white',
     element: 'button',
     iconInlineStart: 'menu' as keyof typeof Icon,
     style: 'filled',
@@ -81,7 +81,7 @@ export const ButtonPrimaryFilledIconStart: StrictStory = {
 
 export const ButtonPrimaryFilledIconStartDark: StrictStory = {
   args: {
-    colorTheme: 'dark',
+    colorMode: 'dark',
     element: 'button',
     iconInlineStart: 'menu' as keyof typeof Icon,
     style: 'filled',
@@ -96,7 +96,7 @@ export const ButtonPrimaryFilledIconStartDark: StrictStory = {
 
 export const ButtonPrimaryOutlined: StrictStory = {
   args: {
-    colorTheme: 'light',
+    colorMode: 'white',
     element: 'button',
     iconInlineStart: 'menu' as keyof typeof Icon,
     style: 'outlined',
@@ -107,7 +107,7 @@ export const ButtonPrimaryOutlined: StrictStory = {
 export const ButtonPrimaryOutlinedDark: StrictStory = {
   args: {
     buttonType: 'button',
-    colorTheme: 'dark',
+    colorMode: 'dark',
     element: 'button',
     iconInlineStart: 'menu' as keyof typeof Icon,
     style: 'outlined',
@@ -122,7 +122,7 @@ export const ButtonPrimaryOutlinedDark: StrictStory = {
 
 export const ButtonText: StrictStory = {
   args: {
-    colorTheme: 'light',
+    colorMode: 'white',
     element: 'button',
     iconInlineStart: 'config' as keyof typeof Icon,
     style: 'text',
@@ -132,7 +132,7 @@ export const ButtonText: StrictStory = {
 
 export const ButtonTextDark: StrictStory = {
   args: {
-    colorTheme: 'dark',
+    colorMode: 'dark',
     element: 'button',
     iconInlineStart: 'config' as keyof typeof Icon,
     style: 'text',
@@ -147,7 +147,7 @@ export const ButtonTextDark: StrictStory = {
 
 export const ButtonLinkPrimaryFilled: StrictStory = {
   args: {
-    colorTheme: 'light',
+    colorMode: 'white',
     element: 'link',
     href: 'https://www.sagw.ch',
     style: 'filled',
@@ -158,7 +158,7 @@ export const ButtonLinkPrimaryFilled: StrictStory = {
 
 export const ButtonLinkPrimaryOutlined: StrictStory = {
   args: {
-    colorTheme: 'light',
+    colorMode: 'white',
     element: 'link',
     href: 'https://www.sagw.ch',
     style: 'outlined',
@@ -169,7 +169,7 @@ export const ButtonLinkPrimaryOutlined: StrictStory = {
 
 export const ButtonLinkText: StrictStory = {
   args: {
-    colorTheme: 'light',
+    colorMode: 'white',
     element: 'link',
     href: 'https://www.sagw.ch',
     style: 'text',
@@ -182,7 +182,7 @@ export const ButtonLinkTextCurrent: StrictStory = {
   args: {
     ariaCurrent: true,
     ariaLabel: 'Deutsch',
-    colorTheme: 'light',
+    colorMode: 'white',
     element: 'link',
     href: '/de',
     style: 'text',
@@ -193,7 +193,7 @@ export const ButtonLinkTextCurrent: StrictStory = {
 export const ButtonLinkSocial: StrictStory = {
   args: {
     ariaLabel: 'Die SAGW auf Linkedin',
-    colorTheme: 'dark',
+    colorMode: 'dark',
     element: 'link',
     href: 'https://www.linkedin.com/company/sagwassh',
     iconInlineStart: 'instagram' as keyof typeof Icon,
@@ -213,7 +213,7 @@ export const ButtonPlay: StrictStory = {
     ariaHasPopUp: false,
     ariaLabel: 'Video mit dem Titel die SAGW stellt sich vor laden und abspielen.',
     buttonType: 'button',
-    colorTheme: 'light',
+    colorMode: 'white',
     element: 'button',
     iconInlineStart: 'play' as keyof typeof Icon,
     style: 'buttonPlay',
