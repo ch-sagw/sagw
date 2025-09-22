@@ -2,32 +2,58 @@
 
 import { z } from 'zod';
 import { hiddenFormDefinitionFieldName } from '@/components/blocks/Form/Form.config';
+import { sendMail } from '@/mail/sendMail';
+import { subscribe } from '@/mail/subscribe';
+import { Form as InterfaceForm } from '@/payload-types';
 
 type SubmitFormResult =
-  | null
   | {
-      error: z.ZodFlattenedError<Record<string, unknown>>;
-      values: Record<string, unknown>;
+    success: true;
+  }
+  | {
+      success: false;
+      error?: z.ZodFlattenedError<Record<string, unknown>>;
+      values?: Record<string, unknown>;
     };
+
+const generateMailContent = (formData: FormData, hiddenFormData: InterfaceForm): string => {
+  let mailContent = '';
+
+  hiddenFormData.fields?.forEach((field) => {
+    const {
+      name,
+    } = field;
+    const value = formData.get(name);
+
+    mailContent += `${name}:\n${value}\n\n\n`;
+  });
+
+  return mailContent;
+};
 
 export const submitForm = async (prevState: any, formData: FormData): Promise<SubmitFormResult> => {
 
-  // TEMP: until we do async work (send mail), we silence the warning
-  // with some kind of await
-  await new Promise((resolve) => setTimeout(resolve, 0));
-
-  const fields = JSON.parse(formData.get(hiddenFormDefinitionFieldName) as string);
+  const hiddenFormData: InterfaceForm = JSON.parse(formData.get(hiddenFormDefinitionFieldName) as string);
+  const {
+    fields,
+  } = hiddenFormData;
 
   const shape: Record<string, any> = {};
+
+  if (!fields) {
+    return {
+      success: true,
+    };
+  }
 
   for (const field of fields) {
     if (field.blockType === 'emailBlock') {
       if (field.required) {
         shape[field.name] = z
-          .email(field.fieldError);
+          .email(field.fieldError || '');
       } else {
         shape[field.name] = z
-          .email(field.fieldError)
+          .email(field.fieldError || '')
           .optional()
           .or(z.literal(''));
       }
@@ -35,7 +61,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       if (field.required) {
         shape[field.name] = z
           .string()
-          .min(1, field.fieldError);
+          .min(1, field.fieldError || '');
       } else {
         shape[field.name] = z.string()
           .optional()
@@ -46,7 +72,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
         shape[field.name] = z
           .string()
           .refine((val) => val === 'on', {
-            message: field.fieldError,
+            message: field.fieldError || '',
           });
       } else {
         shape[field.name] = z.string()
@@ -74,14 +100,48 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
 
   const validated = schema.safeParse(data);
 
+  // validation result
   if (!validated.success) {
     return {
       error: z.flattenError(validated.error),
+      success: false,
       values: data,
     };
   }
 
-  // TODO: do something, like sending an email
+  if (!process.env.MAIL_SENDER_ADDRESS) {
+    return {
+      success: false,
+      values: data,
+    };
+  }
 
-  return null;
+  // send mail or subscribe
+  if (hiddenFormData.isNewsletterForm === 'custom') {
+    const mailResult = await sendMail({
+      content: generateMailContent(formData, hiddenFormData),
+      from: process.env.MAIL_SENDER_ADDRESS,
+      subject: hiddenFormData.mailSubject || '',
+      to: hiddenFormData.recipientMail || '',
+    });
+
+    if (mailResult) {
+      return {
+        success: true,
+      };
+    }
+  } else {
+    const subscribeResult = await subscribe();
+
+    if (subscribeResult) {
+      return {
+        success: true,
+      };
+    }
+  }
+
+  return {
+    success: false,
+    values: data,
+  };
 };

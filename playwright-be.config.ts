@@ -26,6 +26,7 @@ export default defineConfig({
   },
   forbidOnly: Boolean(process.env.CI),
   fullyParallel: true,
+  outputDir: 'test-results/main',
   projects: [
     {
       name: 'chromium-1280',

@@ -5,7 +5,7 @@
  * - OVH_OS_IMAGES_BACKUP_CONTAINER_ENDPOINT
  * - BLOB_READ_WRITE_TOKEN
  * - RESEND_KEY
- * - MAIL_TO
+ * - MAIL_RECIPIENT_BACKUP_RESTORE
  */
 
 import { Readable } from 'node:stream';

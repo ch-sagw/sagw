@@ -14,6 +14,7 @@ Resend:
 -------
 - Create SAGW account
 - Add SAGW Resend token to env file
+- Write test to see if mail content is correct
 
 NextJs:
 -------
@@ -29,6 +30,7 @@ Payload:
 - implement draft preview: https://payloadcms.com/docs/admin/preview#draft-preview
 - implement document locking: https://payloadcms.com/docs/admin/locked-documents
 - implement resend
+- for formfields: name field should have a custom validation regex (lowercase, no spaces, only dashes)
 
 Vercel:
 --------
