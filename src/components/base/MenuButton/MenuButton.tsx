@@ -7,18 +7,18 @@ import styles from '@/components/base/MenuButton/MenuButton.module.scss';
 export type InterfaceMenuButtonPropTypes = {
   onClick: () => void;
   open: boolean;
-  className?: string;
   hiddenTexts: {
     openMenu: string;
     closeMenu: string;
-  }
+  },
+  className?: string;
 };
 
 export const MenuButton = ({
   open,
   onClick,
-  className,
   hiddenTexts,
+  className,
 }: InterfaceMenuButtonPropTypes): React.JSX.Element => {
   const classes = cva([
     styles.button,
