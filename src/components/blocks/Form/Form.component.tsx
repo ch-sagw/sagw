@@ -83,6 +83,7 @@ export const FormComponent = ({
             ? form.newsletterFields?.actionText || ''
             : ''
           }
+          autofocus={true}
           colorMode={form.colorMode}
           onAction={() => {
 
@@ -101,6 +102,7 @@ export const FormComponent = ({
             ? form.newsletterFields?.actionText || ''
             : ''
           }
+          autofocus={true}
           colorMode={form.colorMode}
 
           // TODO

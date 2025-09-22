@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  useEffect, useRef,
+} from 'react';
 import { cva } from 'cva';
 import { Icon } from '@/icons';
 import styles from '@/components/base/FormNotification/FormNotification.module.scss';
@@ -8,6 +10,7 @@ type BaseNotification = {
   title: string;
   text: string;
   colorMode: 'white' | 'dark';
+  autofocus?: boolean;
 };
 
 type ActionProps =
@@ -23,7 +26,9 @@ export const FormNotification = ({
   actionText,
   onAction,
   colorMode,
+  autofocus,
 }: InterfaceFormNotificationPropTypes): React.JSX.Element => {
+  const elementRef = useRef<HTMLButtonElement | HTMLDivElement>(null);
   const sampleClasses = cva([styles.formNotification], {
     variants: {
       action: {
@@ -41,6 +46,13 @@ export const FormNotification = ({
     },
   });
 
+  useEffect(() => {
+    if (autofocus && elementRef.current) {
+      console.log('will set autofocus');
+      elementRef.current.focus();
+    }
+  }, [autofocus]);
+
   const WrapperElem: React.ElementType = actionText
     ? 'button'
     : 'div';
@@ -51,12 +63,14 @@ export const FormNotification = ({
 
   return (
     <WrapperElem
+      ref={elementRef as React.Ref<HTMLButtonElement & HTMLDivElement>}
       className={sampleClasses({
         action: Boolean(actionText),
         colorMode,
         type,
       })}
       onClick={onAction ?? undefined}
+      role='alert'
     >
       <Icon
         className={styles.icon}

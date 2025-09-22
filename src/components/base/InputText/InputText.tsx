@@ -86,7 +86,7 @@ export const InputText = ({
         className={styles.input}
         aria-describedby={
           errorText
-            ? inputId
+            ? `error-${inputId}`
             : undefined
         }
         aria-invalid={Boolean(errorText)}
@@ -96,6 +96,7 @@ export const InputText = ({
         name={name}
         defaultValue={defaultValue}
         aria-label={label}
+        id={inputId}
         {...(type === 'textarea'
           ? {
             rows: 1,
@@ -112,7 +113,7 @@ export const InputText = ({
       {errorText &&
         <span
           className={styles.error}
-          id={inputId}
+          id={`error-${inputId}`}
         >
           <Icon
             name='warning'

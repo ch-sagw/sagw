@@ -72,7 +72,7 @@ export const Checkbox = ({
         ref={checkboxRef}
         aria-describedby={
           errorText
-            ? value
+            ? name
             : undefined
         }
         aria-invalid={Boolean(errorText)}
