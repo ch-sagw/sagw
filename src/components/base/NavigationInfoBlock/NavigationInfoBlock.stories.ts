@@ -17,7 +17,6 @@ const meta: Meta<typeof NavigationInfoBlock> = {
   decorators: [defaultDecorator],
   parameters: {/* layout: 'centered', */ },
   tags: [
-    'autodocs',
     'visual:check',
     'a11y:check',
   ],

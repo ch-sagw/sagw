@@ -17,7 +17,6 @@ const meta: Meta<typeof Metanav> = {
   decorators: [defaultDecorator],
   parameters: {/* layout: 'centered', */ },
   tags: [
-    'autodocs',
     'visual:check',
     'a11y:check',
   ],
