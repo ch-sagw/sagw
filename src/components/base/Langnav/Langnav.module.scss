@@ -1,0 +1,15 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.langnav {
+  &.visible .list {
+    display: flex;
+  }
+
+  .list {
+    @include list-reset;
+
+    display: none;
+    gap: px-to-rem(var(--spacing-xl));
+  }
+}
