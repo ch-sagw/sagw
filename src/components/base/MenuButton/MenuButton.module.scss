@@ -1,6 +1,5 @@
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
-@use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/utilities/utilities" as *;
 
 .button {
@@ -48,6 +47,14 @@
     inset-inline-start: $leftPosition;
     transition-duration: var(--motion-speed-very-fast);
     transition-timing-function: (--motion-ease-in-out);
+
+    @include forced-colors {
+      background-color: LinkText;
+    }
+
+    @include reduced-motion {
+      transition: none;
+    }
   }
 
   .dash1 {
