@@ -10,8 +10,43 @@
   flex-wrap: nowrap;
   width: 100%;
   gap: px-to-rem(var(--items-spacing));
+  padding: px-to-rem(var(--section-top)) px-to-rem(var(--grid-margin)) px-to-rem(var(--section-bottom));
+
+  &.light {
+    --background-color: var(--background-light);
+    --text-color: var(--text-primary);
+    --border-color: var(--border-primary);
+    --icon-color: var(--interaction-secondary);
+  }
+
+  &.white {
+    --background-color: var(--background-page);
+    --text-color: var(--text-primary);
+    --border-color: var(--border-primary);
+    --icon-color: var(--interaction-secondary);
+  }
+
+  &.dark {
+    --background-color: var(--background-cta);
+    --text-color: var(--text-primary-inverted);
+    --border-color: var(--border-secondary-inverted);
+    --icon-color: var(--icon-error-inverted);
+  }
+
+  & {
+    background-color: var(--background-color);
+  }
+
+  .heading {
+    @include title-heading-3;
+
+    margin-block-start: 0;
+    color: var(--text-color);
+  }
 
   .item {
+    border-bottom: px-to-rem(var(--border-width-l)) solid var(--border-color);
+
     .title {
       margin: 0;
 
@@ -20,7 +55,7 @@
         @include title-heading-4;
 
         cursor: pointer;
-        color: var(--text-primary);
+        color: var(--text-color);
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
@@ -28,7 +63,6 @@
         gap: px-to-rem(var(--spacing-m));
         width: 100%;
         padding: px-to-rem(var(--spacing-xl)) 0;
-        border-bottom: px-to-rem(var(--border-width-l)) solid var(--border-primary);
         margin-bottom: px-to-rem(calc(-1 * var(--border-width-l)));
 
         .buttonText {
@@ -45,13 +79,13 @@
           height: px-to-rem(var(--spacing-l));
           flex-shrink: 0;
           flex-grow: 0;
-          color: var(--interaction-secondary);
+          color: var(--icon-color);
           transition: transform var(--motion-speed-very-fast) var(--motion-ease-in-out);
         }
 
         @include hover-style {
           &:not(:focus-visible) .buttonText {
-            border-bottom-color: var(--border-primary);
+            border-bottom-color: var(--border-color);
           }
         }
 
@@ -70,24 +104,39 @@
     }
 
     .content {
+      color: var(--text-color);
       display: grid;
       grid-template-rows: 0fr;
       overflow: hidden;
       will-change: opacity, grid-template-rows;
-      transition-property: grid-template-rows, opacity;
+      transition-property: grid-template-rows, opacity, padding-block-end, margin-block-start;
       transition-duration: var(--motion-speed-fast);
       transition-timing-function: var(--motion-ease-in-out);
       opacity: 0;
+      margin-block-start: 0;
+      padding-block-end: 0;
     }
 
     .rte {
       min-height: 0;
+
+      :first-child {
+        padding-block-start: 0;
+        margin-block-start: 0;
+      }
+
+      :last-child {
+        padding-block-end: 0;
+        margin-block-end: 0;
+      }
     }
 
     &.active {
       .content {
         grid-template-rows: 1fr;
         opacity: 1;
+        margin-block-start: px-to-rem(var(--spacing-s));
+        padding-block-end: px-to-rem(calc(var(--spacing-2xl) + var(--spacing-xl)));
       }
 
       .icon {

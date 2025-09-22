@@ -1,21 +1,23 @@
-import 'server-only';
+'use client';
+
 import React, { useState } from 'react';
 import { cva } from 'cva';
-import styles from '@/components/base/Accordion/Accordion.module.scss';
+import styles from '@/components/blocks/Accordion/Accordion.module.scss';
 import { Icon } from '@/icons';
-import {
-  InterfaceRtePropTypes, Rte,
-} from '@/components/base/Rte/Rte';
+import { Rte } from '@/components/base/Rte/Rte';
+import { InterfaceAccordionBlock } from '@/payload-types';
 
-interface InterfaceAccordionItem {
-  title: string;
-  content: InterfaceRtePropTypes['text'];
-}
+export type InterfaceAccordionPropTypes = {} & InterfaceAccordionBlock;
 
-export type InterfaceAccordionPropTypes = {
-  items: InterfaceAccordionItem[];
-  titleLevel: 2 | 3 | 4 | 5;
-};
+const accordionClasses = cva([styles.accordion], {
+  variants: {
+    colorMode: {
+      dark: styles.dark,
+      light: styles.light,
+      white: styles.white,
+    },
+  },
+});
 
 const accordionItemClasses = cva([styles.item], {
   variants: {
@@ -27,14 +29,19 @@ const accordionItemClasses = cva([styles.item], {
 });
 
 export const Accordion = ({
-  items,
+  accordions,
+  title,
   titleLevel,
-}: InterfaceAccordionPropTypes): React.JSX.Element => {
+  colorMode,
+}: InterfaceAccordionBlock): React.JSX.Element => {
   const [
     activeAccordion,
     setActiveAccordion,
   ] = useState<number | undefined>(undefined);
-  const HeadingElem: React.ElementType = `h${titleLevel}`;
+
+  const mainLevel = parseInt(titleLevel, 10);
+  const TitleElem: React.ElementType = `h${mainLevel}` as keyof React.JSX.IntrinsicElements;
+  const HeadingElem: React.ElementType = `h${mainLevel + 1}` as keyof React.JSX.IntrinsicElements;
 
   const onClick = (id: number): void => {
     if (id === activeAccordion) {
@@ -46,10 +53,16 @@ export const Accordion = ({
 
   return (
     <div
-      className={styles.accordion}
+      className={accordionClasses({
+        colorMode,
+      })}
       data-testid='accordion'
     >
-      {items.map((item, key) => (
+      <TitleElem className={styles.heading}>
+        {title}
+      </TitleElem>
+
+      {accordions.map((item, key) => (
         <div
           key={key}
           className={accordionItemClasses({
@@ -66,7 +79,7 @@ export const Accordion = ({
               aria-expanded={key === activeAccordion}
               data-testid='button'
             >
-              <span className={styles.buttonText}>{item.title}</span>
+              <span className={styles.buttonText}>{item.accordionTitle}</span>
               <Icon
                 name='plus'
                 className={styles.icon}
@@ -84,7 +97,7 @@ export const Accordion = ({
           >
             <Rte
               className={styles.rte}
-              text={item.content}
+              text={item.accordionContent.content}
               rteConfig='rte2'
             />
           </section>

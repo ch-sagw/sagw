@@ -3,6 +3,7 @@ import React, { Fragment } from 'react';
 import { Notification } from '@/components/blocks/Notification/Notification';
 import { Rte } from '@/components/blocks/Rte/Rte';
 import { Form } from '@/components/blocks/Form/Form';
+import { Accordion } from '@/components/blocks/Accordion/Accordion';
 import {
   InterfaceAccordionBlock,
   InterfaceBibliographicReferenceBlock,
@@ -103,6 +104,14 @@ export const RenderBlocks = ({
               return (
                 <div key={block.id || index}>
                   <Form {...block} />
+                </div>
+              );
+            }
+
+            if (blockType === 'accordionBlock') {
+              return (
+                <div key={block.id || index}>
+                  <Accordion {...block} />
                 </div>
               );
             }
