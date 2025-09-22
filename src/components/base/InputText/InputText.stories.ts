@@ -32,7 +32,7 @@ export default meta;
 
 export const Text: StrictStory = {
   args: {
-    colorTheme: 'light',
+    colorMode: 'white',
     defaultValue: '',
     errorText: '',
     label: 'Text input field',
@@ -45,7 +45,7 @@ export const Text: StrictStory = {
 
 export const Email: StrictStory = {
   args: {
-    colorTheme: 'light',
+    colorMode: 'white',
     defaultValue: '',
     errorText: '',
     label: 'Email input field',
@@ -58,7 +58,7 @@ export const Email: StrictStory = {
 
 export const Textarea: StrictStory = {
   args: {
-    colorTheme: 'light',
+    colorMode: 'white',
     defaultValue: '',
     errorText: '',
     label: 'Textarea',
@@ -71,7 +71,7 @@ export const Textarea: StrictStory = {
 
 export const WithError: StrictStory = {
   args: {
-    colorTheme: 'light',
+    colorMode: 'white',
     defaultValue: '',
     errorText: 'Bitte geben Sie eine korrekte E-Mail Adresse an.',
     label: 'Email input field',
@@ -84,7 +84,7 @@ export const WithError: StrictStory = {
 
 export const WithDefaultValue: StrictStory = {
   args: {
-    colorTheme: 'light',
+    colorMode: 'white',
     defaultValue: 'Default Value',
     errorText: '',
     label: 'Email input field',
@@ -97,7 +97,7 @@ export const WithDefaultValue: StrictStory = {
 
 export const DarkVariant: StrictStory = {
   args: {
-    colorTheme: 'dark',
+    colorMode: 'dark',
     defaultValue: 'Default Value',
     errorText: 'Bitte geben Sie eine korrekte E-Mail Adresse an.',
     label: 'Email input field',

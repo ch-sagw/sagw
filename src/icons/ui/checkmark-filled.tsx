@@ -1,10 +1,7 @@
 import { JSX } from 'react';
 
 const icon = (): JSX.Element => (
-  <svg viewBox='0 0 17 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
-    <path d='M8.5 14C11.8137 14 14.5 11.3137 14.5 8C14.5 4.68629 11.8137 2 8.5 2C5.18629 2 2.5 4.68629 2.5 8C2.5 11.3137 5.18629 14 8.5 14Z' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
-    <path d='M6 8.5L7.5 10L11 6.5' stroke='white' strokeWidth='1.5' strokeLinecap='square' />
-  </svg>
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'><path d='M13 0a13 13 0 1 0 13 13A13.013 13.013 0 0 0 13 0Zm5.707 10.707-7 7a1.001 1.001 0 0 1-1.415 0l-3-3a1 1 0 1 1 1.416-1.415L11 15.587l6.293-6.293a1 1 0 1 1 1.415 1.415Z' /></svg>
 );
 
 export default icon;

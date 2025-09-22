@@ -15,7 +15,7 @@ export type BaseProps = {
   name: string;
   required: boolean;
   defaultValue: string;
-  colorTheme: 'light' | 'dark';
+  colorMode: 'white' | 'dark';
   className?: string;
   autofocus?: boolean;
 };
@@ -38,7 +38,7 @@ export const InputText = ({
   required,
   defaultValue,
   type,
-  colorTheme,
+  colorMode,
   className,
   autofocus,
 }: InterfaceInputTextPropTypes): React.JSX.Element => {
@@ -56,9 +56,9 @@ export const InputText = ({
     className,
   ], {
     variants: {
-      colorTheme: {
+      colorMode: {
         dark: [styles.dark],
-        light: [styles.light],
+        white: null,
       },
       type: {
         text: [styles.text],
@@ -75,7 +75,7 @@ export const InputText = ({
     <div
       data-testid='input-text'
       className={classes({
-        colorTheme,
+        colorMode,
         type: type === 'text' || type === 'email'
           ? 'text'
           : 'textarea',
@@ -86,7 +86,7 @@ export const InputText = ({
         className={styles.input}
         aria-describedby={
           errorText
-            ? inputId
+            ? `error-${inputId}`
             : undefined
         }
         aria-invalid={Boolean(errorText)}
@@ -96,6 +96,7 @@ export const InputText = ({
         name={name}
         defaultValue={defaultValue}
         aria-label={label}
+        id={inputId}
         {...(type === 'textarea'
           ? {
             rows: 1,
@@ -112,7 +113,7 @@ export const InputText = ({
       {errorText &&
         <span
           className={styles.error}
-          id={inputId}
+          id={`error-${inputId}`}
         >
           <Icon
             name='warning'
