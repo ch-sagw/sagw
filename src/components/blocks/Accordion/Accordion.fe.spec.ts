@@ -7,7 +7,7 @@ import { navigate } from '@/automated-testing/helpers';
 test('correctly opens accordion', async ({
   page,
 }) => {
-  await navigate(page, 'components-base-accordion--default-accordion');
+  await navigate(page, 'components-blocks-accordion--background-white');
 
   const elem = await page.getByTestId('accordion');
   const button = await elem.getByTestId('button')

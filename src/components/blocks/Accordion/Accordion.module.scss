@@ -64,6 +64,7 @@
         width: 100%;
         padding: px-to-rem(var(--spacing-xl)) 0;
         margin-bottom: px-to-rem(calc(-1 * var(--border-width-l)));
+        text-align: left;
 
         .buttonText {
           border-bottom: px-to-rem(var(--border-width-l)) solid transparent;
