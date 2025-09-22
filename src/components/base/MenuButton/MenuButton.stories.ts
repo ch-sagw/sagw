@@ -37,6 +37,11 @@ export const Open: StrictStory = {
     },
     open: true,
   },
+  globals: {
+    backgrounds: {
+      value: 'dark',
+    },
+  },
 };
 
 export const Closed: StrictStory = {
@@ -49,5 +54,10 @@ export const Closed: StrictStory = {
       console.log('some click handler');
     },
     open: false,
+  },
+  globals: {
+    backgrounds: {
+      value: 'dark',
+    },
   },
 };
