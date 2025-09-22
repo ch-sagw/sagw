@@ -1,5 +1,5 @@
 import React, {
-  useEffect, useRef,
+  useEffect, useId, useRef,
 } from 'react';
 import { cva } from 'cva';
 import { Icon } from '@/icons';
@@ -29,6 +29,7 @@ export const FormNotification = ({
   autofocus,
 }: InterfaceFormNotificationPropTypes): React.JSX.Element => {
   const elementRef = useRef<HTMLButtonElement | HTMLDivElement>(null);
+  const notificationId = useId();
   const sampleClasses = cva([styles.formNotification], {
     variants: {
       action: {
@@ -70,17 +71,27 @@ export const FormNotification = ({
         type,
       })}
       onClick={onAction ?? undefined}
-      role='alert'
+      role={actionText
+        ? undefined
+        : 'alert'
+      }
+      aria-labelledby={actionText
+        ? notificationId
+        : undefined
+      }
     >
       <Icon
         className={styles.icon}
         name={iconName}
       />
-      <p className={styles.title}>{title}</p>
-      <p className={styles.text}>{text}</p>
-      {actionText &&
-        <p className={styles.button}>{actionText}</p>
-      }
+
+      <div id={notificationId}>
+        <p className={styles.title}>{title}</p>
+        <p className={styles.text}>{text}</p>
+        {actionText &&
+          <p className={styles.button}>{actionText}</p>
+        }
+      </div>
     </WrapperElem>
   );
 };
