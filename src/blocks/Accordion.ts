@@ -25,15 +25,47 @@ export const AccordionBlock: Block = {
   },
   fields: [
     {
-      localized: true,
-      name: 'title',
-      required: true,
-      type: 'text',
+      fields: [
+        {
+          localized: true,
+          name: 'title',
+          required: true,
+          type: 'text',
+        },
+        {
+          name: 'titleLevel',
+          options: [
+            {
+              label: '2',
+              value: '2',
+            },
+            {
+              label: '3',
+              value: '3',
+            },
+            {
+              label: '4',
+              value: '4',
+            },
+            {
+              label: '5',
+              value: '5',
+            },
+          ],
+          required: true,
+          type: 'radio',
+        },
+      ],
+      type: 'row',
     },
-    ...fieldsColorMode,
+    ...fieldsColorMode({
+      dark: true,
+      light: true,
+      white: true,
+    }),
     {
       fields: AccordionItem,
-      name: 'acccordions',
+      name: 'accordions',
       required: true,
       type: 'array',
     },

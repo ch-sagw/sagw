@@ -3,7 +3,7 @@ import { versions } from '@/field-templates/versions';
 import { FormBlocks } from '@/blocks/Form/index';
 import { emailBlock } from '@/blocks/Form/Email';
 import { textBlock } from '@/blocks/Form/Text';
-import { fieldsColorModeWhiteDark } from '@/field-templates/colorMode';
+import { fieldsColorMode } from '@/field-templates/colorMode';
 
 export const Forms: CollectionConfig = {
   access: {
@@ -36,7 +36,11 @@ export const Forms: CollectionConfig = {
     },
 
     // color mode
-    fieldsColorModeWhiteDark,
+    ...fieldsColorMode({
+      dark: true,
+      light: false,
+      white: true,
+    }),
 
     // title & subtitle
     {

@@ -10,7 +10,6 @@ import {
 } from '@/field-templates/adminTitle';
 import { hookSeoFallback } from '@/hooks/seoFallback';
 import { blocks } from '@/blocks';
-import { fieldsColorMode } from '@/field-templates/colorMode';
 import { fieldsLinkExternal } from '@/field-templates/links';
 import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
@@ -24,7 +23,7 @@ const fieldsForDetailPage: Field[] = [
     },
     fields: [
       // Hero
-      fieldsHero([...fieldsColorMode]),
+      fieldsHero(false),
 
       // Content Blocks
       {

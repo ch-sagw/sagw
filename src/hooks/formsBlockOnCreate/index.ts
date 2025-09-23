@@ -1,3 +1,11 @@
+/*
+Convenience for authors...
+
+e.g. on NewsDetail Page, most likely, there will be a newsletter subscription
+form. On create we add an empty formBlock so that authors don't need to
+add it.
+*/
+
 import {
   Block, CollectionBeforeValidateHook,
 } from 'payload';
