@@ -11,7 +11,6 @@ import {
   createAccess, globalAdminOrDepartmentAdminAccess,
 } from '@/collections/Pages/access/globalAdminOrDepartmentAdmin';
 import { blocks } from '@/blocks';
-import { fieldsColorMode } from '@/field-templates/colorMode';
 import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks/slug';
@@ -63,21 +62,23 @@ export const MagazineDetailPage: CollectionConfig = {
             },
 
             // Hero
-            fieldsHero([
-              {
-                localized: true,
-                name: 'author',
-                required: true,
-                type: 'text',
-              },
-              {
-                localized: true,
-                name: 'date',
-                required: true,
-                type: 'date',
-              },
-              ...fieldsColorMode,
-            ]),
+            fieldsHero(
+              false,
+              [
+                {
+                  localized: true,
+                  name: 'author',
+                  required: true,
+                  type: 'text',
+                },
+                {
+                  localized: true,
+                  name: 'date',
+                  required: true,
+                  type: 'date',
+                },
+              ],
+            ),
 
             // Content Blocks
             {

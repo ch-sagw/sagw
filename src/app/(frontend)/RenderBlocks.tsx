@@ -2,6 +2,7 @@ import 'server-only';
 import React, { Fragment } from 'react';
 import { Notification } from '@/components/blocks/Notification/Notification';
 import { Rte } from '@/components/blocks/Rte/Rte';
+import { Accordion } from '@/components/blocks/Accordion/Accordion';
 import { FormServer } from '@/components/blocks/Form/Form.server';
 import {
   InterfaceAccordionBlock,
@@ -108,6 +109,14 @@ export const RenderBlocks = ({
                     tenantId={tenantId}
                     {...block}
                   />
+                </div>
+              );
+            }
+
+            if (blockType === 'accordionBlock') {
+              return (
+                <div key={block.id || index}>
+                  <Accordion {...block} />
                 </div>
               );
             }

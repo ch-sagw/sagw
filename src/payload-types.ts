@@ -452,9 +452,9 @@ export interface Video {
  */
 export interface InterfaceAccordionBlock {
   title: string;
-  colorMode: 'white' | 'color';
-  colorScheme?: ('bright' | 'dark') | null;
-  acccordions: {
+  titleLevel: '2' | '3' | '4' | '5';
+  colorMode: 'white' | 'dark' | 'light';
+  accordions: {
     accordionTitle: string;
     accordionContent: InterfaceRte2;
     id?: string | null;
@@ -484,7 +484,7 @@ export interface Form {
    * A newsletter form has a fixed set of fields. Custom form can be build with any combination of fields as you like.
    */
   isNewsletterForm?: ('custom' | 'newsletter') | null;
-  colorMode: 'dark' | 'white';
+  colorMode: 'white' | 'dark';
   title: string;
   titleLevel: '2' | '3' | '4' | '5';
   subtitle?: string | null;
@@ -598,8 +598,7 @@ export interface InterfaceTextTextarea {
 export interface InterfaceCtaContactBlock {
   title: string;
   text: string;
-  colorMode: 'white' | 'color';
-  colorScheme?: ('bright' | 'dark') | null;
+  colorMode: 'white' | 'dark' | 'light';
   contact: string | Person;
   id?: string | null;
   blockName?: string | null;
@@ -1098,10 +1097,9 @@ export interface MagazineDetailPage {
   hero: {
     title: InterfaceRte1;
     lead?: string | null;
+    colorMode: 'white' | 'dark' | 'light';
     author: string;
     date: string;
-    colorMode: 'white' | 'color';
-    colorScheme?: ('bright' | 'dark') | null;
   };
   content?:
     | (
@@ -1167,8 +1165,7 @@ export interface OverviewPage {
   hero: {
     title: InterfaceRte1;
     lead?: string | null;
-    colorMode: 'white' | 'color';
-    colorScheme?: ('bright' | 'dark') | null;
+    colorMode: 'white' | 'dark' | 'light';
   };
   content?:
     | (
@@ -1234,8 +1231,7 @@ export interface DetailPage {
   hero: {
     title: InterfaceRte1;
     lead?: string | null;
-    colorMode: 'white' | 'color';
-    colorScheme?: ('bright' | 'dark') | null;
+    colorMode: 'white' | 'dark' | 'light';
   };
   content?:
     | (
@@ -1313,8 +1309,7 @@ export interface EventDetailPage {
   hero: {
     title: InterfaceRte1;
     lead?: string | null;
-    colorMode: 'white' | 'color';
-    colorScheme?: ('bright' | 'dark') | null;
+    colorMode: 'white' | 'dark' | 'light';
   };
   content?:
     | (
@@ -1402,9 +1397,8 @@ export interface NewsDetailPage {
   hero: {
     title: InterfaceRte1;
     lead?: string | null;
+    colorMode: 'white' | 'dark' | 'light';
     date: string;
-    colorMode: 'white' | 'color';
-    colorScheme?: ('bright' | 'dark') | null;
   };
   project?: (string | null) | Project;
   content?:
@@ -1482,8 +1476,7 @@ export interface PublicationDetailPage {
   hero: {
     title: InterfaceRte1;
     lead?: string | null;
-    colorMode: 'white' | 'color';
-    colorScheme?: ('bright' | 'dark') | null;
+    colorMode: 'white' | 'dark' | 'light';
   };
   content?:
     | (
@@ -1579,8 +1572,7 @@ export interface NationalDictionaryDetailPage {
   hero: {
     title: InterfaceRte1;
     lead?: string | null;
-    colorMode: 'white' | 'color';
-    colorScheme?: ('bright' | 'dark') | null;
+    colorMode: 'white' | 'dark' | 'light';
   };
   content?:
     | (
@@ -1652,8 +1644,7 @@ export interface InstituteDetailPage {
   hero: {
     title: InterfaceRte1;
     lead?: string | null;
-    colorMode: 'white' | 'color';
-    colorScheme?: ('bright' | 'dark') | null;
+    colorMode: 'white' | 'dark' | 'light';
   };
   content?:
     | (
@@ -1722,8 +1713,7 @@ export interface ProjectDetailPage {
   hero: {
     title: InterfaceRte1;
     lead?: string | null;
-    colorMode: 'white' | 'color';
-    colorScheme?: ('bright' | 'dark') | null;
+    colorMode: 'white' | 'dark' | 'light';
   };
   content?:
     | (
@@ -2411,9 +2401,9 @@ export interface InterfaceVideoBlockSelect<T extends boolean = true> {
  */
 export interface InterfaceAccordionBlockSelect<T extends boolean = true> {
   title?: T;
+  titleLevel?: T;
   colorMode?: T;
-  colorScheme?: T;
-  acccordions?:
+  accordions?:
     | T
     | {
         accordionTitle?: T;
@@ -2440,7 +2430,6 @@ export interface InterfaceCtaContactBlockSelect<T extends boolean = true> {
   title?: T;
   text?: T;
   colorMode?: T;
-  colorScheme?: T;
   contact?: T;
   id?: T;
   blockName?: T;
@@ -2779,10 +2768,9 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
     | {
         title?: T | InterfaceRte1Select<T>;
         lead?: T;
+        colorMode?: T;
         author?: T;
         date?: T;
-        colorMode?: T;
-        colorScheme?: T;
       };
   content?:
     | T
@@ -2848,7 +2836,6 @@ export interface OverviewPageSelect<T extends boolean = true> {
         title?: T | InterfaceRte1Select<T>;
         lead?: T;
         colorMode?: T;
-        colorScheme?: T;
       };
   content?:
     | T
@@ -2914,7 +2901,6 @@ export interface DetailPageSelect<T extends boolean = true> {
         title?: T | InterfaceRte1Select<T>;
         lead?: T;
         colorMode?: T;
-        colorScheme?: T;
       };
   content?:
     | T
@@ -2994,7 +2980,6 @@ export interface EventDetailPageSelect<T extends boolean = true> {
         title?: T | InterfaceRte1Select<T>;
         lead?: T;
         colorMode?: T;
-        colorScheme?: T;
       };
   content?:
     | T
@@ -3070,9 +3055,8 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
     | {
         title?: T | InterfaceRte1Select<T>;
         lead?: T;
-        date?: T;
         colorMode?: T;
-        colorScheme?: T;
+        date?: T;
       };
   project?: T;
   content?:
@@ -3151,7 +3135,6 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
         title?: T | InterfaceRte1Select<T>;
         lead?: T;
         colorMode?: T;
-        colorScheme?: T;
       };
   content?:
     | T
@@ -3222,7 +3205,6 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
         title?: T | InterfaceRte1Select<T>;
         lead?: T;
         colorMode?: T;
-        colorScheme?: T;
       };
   content?:
     | T
@@ -3293,7 +3275,6 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
         title?: T | InterfaceRte1Select<T>;
         lead?: T;
         colorMode?: T;
-        colorScheme?: T;
       };
   content?:
     | T
@@ -3364,7 +3345,6 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
         title?: T | InterfaceRte1Select<T>;
         lead?: T;
         colorMode?: T;
-        colorScheme?: T;
       };
   content?:
     | T
