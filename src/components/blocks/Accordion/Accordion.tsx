@@ -6,6 +6,7 @@ import styles from '@/components/blocks/Accordion/Accordion.module.scss';
 import { Icon } from '@/icons';
 import { Rte } from '@/components/base/Rte/Rte';
 import { InterfaceAccordionBlock } from '@/payload-types';
+import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
 
 export type InterfaceAccordionPropTypes = {} & InterfaceAccordionBlock;
 
@@ -38,6 +39,14 @@ export const Accordion = ({
     activeAccordion,
     setActiveAccordion,
   ] = useState<number | undefined>(undefined);
+
+  useKeyboardShortcut({
+    condition: activeAccordion !== undefined,
+    key: 'Escape',
+    onKeyPressed: () => {
+      setActiveAccordion(undefined);
+    },
+  });
 
   const mainLevel = parseInt(titleLevel, 10);
   const TitleElem: React.ElementType = `h${mainLevel}` as keyof React.JSX.IntrinsicElements;
