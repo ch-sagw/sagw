@@ -484,7 +484,7 @@ export interface Form {
    * A newsletter form has a fixed set of fields. Custom form can be build with any combination of fields as you like.
    */
   isNewsletterForm?: ('custom' | 'newsletter') | null;
-  colorMode: 'dark' | 'white';
+  colorMode: 'white' | 'dark';
   title: string;
   titleLevel: '2' | '3' | '4' | '5';
   subtitle?: string | null;
