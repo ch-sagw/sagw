@@ -17,7 +17,7 @@ export const useKeyboardShortcut = ({
   condition,
 }: InterfaceUseKeyboardShortcutProps): void => {
   useEffect(() => {
-    const keyDownHandler = (e: globalThis.KeyboardEvent) => {
+    const keyDownHandler = (e: globalThis.KeyboardEvent): void => {
       if (e.key === key) {
         e.preventDefault();
         onKeyPressed();
