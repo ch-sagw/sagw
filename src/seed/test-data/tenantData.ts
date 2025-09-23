@@ -327,6 +327,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'forms',
     data: {
       _status: 'published',
+      colorMode: 'dark',
       department: tenantId,
       fields: [
         {
@@ -367,9 +368,46 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           required: true,
         },
       ],
-      recipientMail: 'foo@bar.baz',
+      isNewsletterForm: 'custom',
+      mailSubject: 'Form submission on SAGW',
+      recipientMail: 'delivered@resend.dev',
+      showPrivacyCheckbox: false,
       submitButtonLabel: 'Abschicken',
+      subtitle: `Subtitle for contact Form ${tenant.toUpperCase()}`,
       title: `Contact Form ${tenant.toUpperCase()}`,
+      titleLevel: '2',
+    },
+  });
+
+  // add newsletter form
+  const newsletterForm = await payload.create({
+    collection: 'forms',
+    data: {
+      _status: 'published',
+      colorMode: 'dark',
+      department: tenantId,
+      isNewsletterForm: 'newsletter',
+      newsletterFields: {
+        actionText: 'Erneut senden',
+        email: {
+          fieldError: 'Bitte geben Sie die E-Mail Adresse an.',
+          fieldWidth: 'half',
+          label: 'E-Mail',
+          placeholder: 'Ihre E-Mail Adresse',
+        },
+        name: {
+          fieldError: 'Bitte geben Sie Ihren Namen an.',
+          fieldWidth: 'half',
+          label: 'Name',
+          placeholder: 'Ihr Name',
+        },
+      },
+      recipientMail: 'delivered@resend.dev',
+      showPrivacyCheckbox: true,
+      submitButtonLabel: 'Abschicken',
+      subtitle: `Subtitle for Newsletter Form ${tenant.toUpperCase()}`,
+      title: `Newsletter Form ${tenant.toUpperCase()}`,
+      titleLevel: '2',
     },
   });
 
@@ -378,26 +416,29 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'i18nForms',
     data: {
       _status: 'published',
-      checkboxes: {
-        dataPrivacyCheckboxText: {
-          content: simpleRteConfig(`Data privacy checkbox ${tenant.toUpperCase()}`),
+      department: tenantId,
+      i18nForms: {
+        dataPrivacyCheckbox: {
+          dataPrivacyCheckboxText: {
+            content: simpleRteConfig(`Data privacy checkbox ${tenant.toUpperCase()}`),
+          },
+          errorMessage: 'Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen',
+        },
+        newsletterSubmitSuccess: {
+          text: `Newsletter Submit text success ${tenant.toUpperCase()}`,
+          title: `Newsletter Submit title success ${tenant.toUpperCase()}`,
+        },
+        submitError: {
+          text: `Submit text error ${tenant.toUpperCase()}`,
+          title: `Submit title error ${tenant.toUpperCase()}`,
+        },
+        submitSuccess: {
+          text: `Submit text success ${tenant.toUpperCase()}`,
+          title: `Submit title success ${tenant.toUpperCase()}`,
         },
       },
-      department: tenantId,
-      submitError: {
-        text: `Submit text error ${tenant.toUpperCase()}`,
-        title: `Submit title error ${tenant.toUpperCase()}`,
-      },
-      submitSuccess: {
-        text: `Submit text success ${tenant.toUpperCase()}`,
-        title: `Submit title success ${tenant.toUpperCase()}`,
-      },
-      submitWarn: {
-        text: `Submit text warn ${tenant.toUpperCase()}`,
-        title: `Submit title warn ${tenant.toUpperCase()}`,
-      },
-
     },
+
   });
 
   // ############
@@ -413,6 +454,10 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         {
           blockType: 'formBlock',
           form,
+        },
+        {
+          blockType: 'formBlock',
+          form: newsletterForm,
         },
         {
           blockType: 'notificationBlock',
