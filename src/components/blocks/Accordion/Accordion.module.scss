@@ -67,8 +67,11 @@
         text-align: left;
 
         .buttonText {
-          border-bottom: px-to-rem(var(--border-width-l)) solid transparent;
-          transition: border var(--motion-speed-very-fast) var(--motion-ease-in-out);
+          text-decoration-line: underline;
+          text-underline-offset: px-to-rem(var(--spacing-2xs));
+          text-decoration-thickness: px-to-rem(var(--border-width-l));
+          text-decoration-color: transparent;
+          transition: text-decoration-color var(--motion-speed-very-fast) var(--motion-ease-in-out);
 
           @include reduced-motion {
             transition: none;
@@ -86,7 +89,7 @@
 
         @include hover-style {
           &:not(:focus-visible) .buttonText {
-            border-bottom-color: var(--border-color);
+            text-decoration-color: var(--border-color);
           }
         }
 
@@ -95,7 +98,6 @@
 
           & {
             border-bottom: none;
-            margin-bottom: 0;
 
             // TODO: discuss focus style in general
             outline-offset: px-to-rem(calc(-1 * var(--border-width-l) + var(--spacing-xs)));
