@@ -45,6 +45,8 @@
   }
 
   .item {
+    @include list-reset;
+
     border-bottom: px-to-rem(var(--border-width-l)) solid var(--border-color);
 
     .title {

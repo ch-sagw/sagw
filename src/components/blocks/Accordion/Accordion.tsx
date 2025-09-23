@@ -63,46 +63,48 @@ export const Accordion = ({
       </TitleElem>
 
       {accordions.map((item, key) => (
-        <div
+        <ul
           key={key}
           className={accordionItemClasses({
             active: key === activeAccordion,
           })}
         >
-          <HeadingElem className={styles.title}>
-            <button
-              className={styles.button}
-              onClick={() => {
-                onClick(key);
-              }}
-              aria-controls={`accordion-section-${key}`}
-              aria-expanded={key === activeAccordion}
-              data-testid='button'
+          <li>
+            <HeadingElem className={styles.title}>
+              <button
+                className={styles.button}
+                onClick={() => {
+                  onClick(key);
+                }}
+                aria-controls={`accordion-section-${key}`}
+                aria-expanded={key === activeAccordion}
+                data-testid='button'
+              >
+                <span className={styles.buttonText}>{item.accordionTitle}</span>
+                <Icon
+                  name='plus'
+                  className={styles.icon}
+                />
+              </button>
+            </HeadingElem>
+
+            <section
+              id={`accordion-section-${key}`}
+              className={styles.content}
+              hidden={key !== activeAccordion}
+              aria-hidden={key !== activeAccordion}
+              inert={key !== activeAccordion}
+              data-testid='content'
             >
-              <span className={styles.buttonText}>{item.accordionTitle}</span>
-              <Icon
-                name='plus'
-                className={styles.icon}
+              <Rte
+                className={styles.rte}
+                text={item.accordionContent.content}
+                rteConfig='rte2'
               />
-            </button>
-          </HeadingElem>
+            </section>
+          </li>
 
-          <section
-            id={`accordion-section-${key}`}
-            className={styles.content}
-            hidden={key !== activeAccordion}
-            aria-hidden={key !== activeAccordion}
-            inert={key !== activeAccordion}
-            data-testid='content'
-          >
-            <Rte
-              className={styles.rte}
-              text={item.accordionContent.content}
-              rteConfig='rte2'
-            />
-          </section>
-
-        </div>
+        </ul>
       ))}
     </div>
 
