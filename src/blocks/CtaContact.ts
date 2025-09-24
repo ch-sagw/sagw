@@ -20,7 +20,11 @@ export const CtaContactBlock: Block = {
       required: true,
       type: 'text',
     },
-    ...fieldsColorMode,
+    ...fieldsColorMode({
+      dark: true,
+      light: true,
+      white: true,
+    }),
     {
       hasMany: false,
       name: 'contact',

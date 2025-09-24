@@ -1,0 +1,152 @@
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/functions" as *;
+
+.accordion {
+  --items-spacing: 20;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 100%;
+  gap: px-to-rem(var(--items-spacing));
+  padding: px-to-rem(var(--section-top)) px-to-rem(var(--grid-margin)) px-to-rem(var(--section-bottom));
+
+  &.light {
+    --background-color: var(--background-light);
+    --text-color: var(--text-primary);
+    --border-color: var(--border-primary);
+    --icon-color: var(--interaction-secondary);
+  }
+
+  &.white {
+    --background-color: var(--background-page);
+    --text-color: var(--text-primary);
+    --border-color: var(--border-primary);
+    --icon-color: var(--interaction-secondary);
+  }
+
+  &.dark {
+    --background-color: var(--background-cta);
+    --text-color: var(--text-primary-inverted);
+    --border-color: var(--border-secondary-inverted);
+    --icon-color: var(--icon-error-inverted);
+  }
+
+  & {
+    background-color: var(--background-color);
+  }
+
+  .heading {
+    @include title-heading-3;
+
+    margin-block-start: 0;
+    color: var(--text-color);
+  }
+
+  .item {
+    @include list-reset;
+
+    border-bottom: px-to-rem(var(--border-width-l)) solid var(--border-color);
+
+    .title {
+      margin: 0;
+
+      .button {
+        @include button-reset;
+        @include title-heading-4;
+
+        cursor: pointer;
+        color: var(--text-color);
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: px-to-rem(var(--spacing-m));
+        width: 100%;
+        padding: px-to-rem(var(--spacing-xl)) 0;
+        margin-bottom: px-to-rem(calc(-1 * var(--border-width-l)));
+        text-align: left;
+
+        .buttonText {
+          text-decoration-line: underline;
+          text-underline-offset: px-to-rem(var(--spacing-2xs));
+          text-decoration-thickness: px-to-rem(var(--border-width-l));
+          text-decoration-color: transparent;
+          transition: text-decoration-color var(--motion-speed-very-fast) var(--motion-ease-in-out);
+
+          @include reduced-motion {
+            transition: none;
+          }
+        }
+
+        .icon {
+          flex-basis: px-to-rem(var(--spacing-l));
+          height: px-to-rem(var(--spacing-l));
+          flex-shrink: 0;
+          flex-grow: 0;
+          color: var(--icon-color);
+          transition: transform var(--motion-speed-very-fast) var(--motion-ease-in-out);
+        }
+
+        @include hover-style {
+          &:not(:focus-visible) .buttonText {
+            text-decoration-color: var(--border-color);
+          }
+        }
+
+        &:focus-visible {
+          @include focus-visible;
+
+          & {
+            border-bottom: none;
+
+            // TODO: discuss focus style in general
+            outline-offset: px-to-rem(calc(-1 * var(--border-width-l) + var(--spacing-xs)));
+          }
+        }
+      }
+    }
+
+    .content {
+      color: var(--text-color);
+      display: grid;
+      grid-template-rows: 0fr;
+      overflow: hidden;
+      will-change: opacity, grid-template-rows;
+      transition-property: grid-template-rows, opacity, padding-block-end, margin-block-start;
+      transition-duration: var(--motion-speed-fast);
+      transition-timing-function: var(--motion-ease-in-out);
+      opacity: 0;
+      margin-block-start: 0;
+      padding-block-end: 0;
+    }
+
+    .rte {
+      min-height: 0;
+
+      :first-child {
+        padding-block-start: 0;
+        margin-block-start: 0;
+      }
+
+      :last-child {
+        padding-block-end: 0;
+        margin-block-end: 0;
+      }
+    }
+
+    &.active {
+      .content {
+        grid-template-rows: 1fr;
+        opacity: 1;
+        margin-block-start: px-to-rem(var(--spacing-s));
+        padding-block-end: px-to-rem(calc(var(--spacing-2xl) + var(--spacing-xl)));
+      }
+
+      .icon {
+        transform: rotate3d(0, 0, 1, 45deg);
+      }
+    }
+  }
+}

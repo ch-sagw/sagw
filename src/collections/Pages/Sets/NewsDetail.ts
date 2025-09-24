@@ -8,7 +8,6 @@ import {
 } from '@/field-templates/adminTitle';
 import { hookSeoFallback } from '@/hooks/seoFallback';
 import { blocks } from '@/blocks';
-import { fieldsColorMode } from '@/field-templates/colorMode';
 import { versions } from '@/field-templates/versions';
 import { hookFormsBlockOnCreate } from '@/hooks/formsBlockOnCreate';
 import { fieldSlug } from '@/field-templates/slug';
@@ -58,14 +57,16 @@ export const NewsDetailPage: CollectionConfig = {
             },
 
             // Hero
-            fieldsHero([
-              {
-                name: 'date',
-                required: true,
-                type: 'date',
-              },
-              ...fieldsColorMode,
-            ]),
+            fieldsHero(
+              false,
+              [
+                {
+                  name: 'date',
+                  required: true,
+                  type: 'date',
+                },
+              ],
+            ),
 
             {
               name: 'project',

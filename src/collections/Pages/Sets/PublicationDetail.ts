@@ -8,7 +8,6 @@ import {
 } from '@/field-templates/adminTitle';
 import { hookSeoFallback } from '@/hooks/seoFallback';
 import { blocks } from '@/blocks';
-import { fieldsColorMode } from '@/field-templates/colorMode';
 import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks/slug';
@@ -98,7 +97,7 @@ export const PublicationDetailPage: CollectionConfig = {
             },
 
             // Hero
-            fieldsHero([...fieldsColorMode]),
+            fieldsHero(false),
 
             // Content Blocks
             {
