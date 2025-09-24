@@ -51,9 +51,18 @@ export const Langnav = ({
 
   // --- Helpers
 
-  const toggleMenu = (show: boolean): void => {
+  const toggleMenu = ({
+    show,
+    skipAutofocus,
+  }: {
+    show: boolean;
+    skipAutofocus: boolean;
+  }): void => {
     setMenuVisible(show);
-    setToggleButtonAutofocus(!show);
+
+    if (!skipAutofocus) {
+      setToggleButtonAutofocus(!show);
+    }
   };
 
   const getCurrentLang = (): InterfaceLangnavItem => {
@@ -75,7 +84,10 @@ export const Langnav = ({
     condition: menuVisible,
     key: 'Escape',
     onKeyPressed: () => {
-      toggleMenu(false);
+      toggleMenu({
+        show: false,
+        skipAutofocus: false,
+      });
     },
   });
 
@@ -107,7 +119,10 @@ export const Langnav = ({
   // --- Effects
 
   useEffect(() => {
-    toggleMenu(reducedMenu);
+    toggleMenu({
+      show: reducedMenu,
+      skipAutofocus: true,
+    });
   }, [reducedMenu]);
 
   // --- Event Handlers
@@ -117,7 +132,10 @@ export const Langnav = ({
       return;
     }
 
-    toggleMenu(!menuVisible);
+    toggleMenu({
+      show: !menuVisible,
+      skipAutofocus: false,
+    });
   };
 
   const onMouseEnter = (): void => {
@@ -125,7 +143,10 @@ export const Langnav = ({
       return;
     }
 
-    toggleMenu(true);
+    toggleMenu({
+      show: true,
+      skipAutofocus: false,
+    });
   };
 
   const onMouseLeave = (): void => {
@@ -133,7 +154,10 @@ export const Langnav = ({
       return;
     }
 
-    toggleMenu(false);
+    toggleMenu({
+      show: false,
+      skipAutofocus: false,
+    });
   };
 
   // --- Render
@@ -177,7 +201,14 @@ export const Langnav = ({
             key={key}
           >
             <Button
-              onClick={onLangSelect}
+              onClick={() => {
+                toggleMenu({
+                  show: false,
+                  skipAutofocus: false,
+                });
+
+                onLangSelect();
+              }}
               className={styles.item}
               text={reducedMenu
                 ? item.shortText
