@@ -130,12 +130,36 @@ export const ButtonText: StrictStory = {
   },
 };
 
+export const ButtonTextSmall: StrictStory = {
+  args: {
+    colorMode: 'white',
+    element: 'button',
+    style: 'textSmall',
+    text: 'Auswahl anpassen',
+  },
+};
+
 export const ButtonTextDark: StrictStory = {
   args: {
     colorMode: 'dark',
     element: 'button',
     iconInlineStart: 'config' as keyof typeof Icon,
     style: 'text',
+    text: 'Auswahl anpassen',
+  },
+  globals: {
+    backgrounds: {
+      value: 'dark',
+    },
+  },
+};
+
+export const ButtonTextDarkBrightText: StrictStory = {
+  args: {
+    colorMode: 'dark',
+    element: 'button',
+    iconInlineStart: 'config' as keyof typeof Icon,
+    style: 'textBright',
     text: 'Auswahl anpassen',
   },
   globals: {

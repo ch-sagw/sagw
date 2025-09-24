@@ -190,9 +190,13 @@
   }
 
   &.dark {
-    --button-color: var(--text-primary-inverted);
+    --button-color: var(--text-secondary-inverted);
     --button-icon-color: var(--interaction-primary-inverted);
     --line-cover-color: var(--interaction-primary);
+
+    &:hover {
+      --button-color: var(--text-primary-inverted);
+    }
   }
 
   .innerText {
@@ -247,6 +251,24 @@
         background: LinkText;
       }
     }
+  }
+}
+
+/**
+  * Text only variant, small version (e.g. metanav)
+  */
+.buttonTextSmall {
+  @include body-text-s;
+}
+
+/**
+  * Text only variant, bright version (e.g. nav level 1)
+  */
+.buttonTextBright {
+  &.dark {
+    --button-color: var(--text-primary-inverted);
+    --button-icon-color: var(--interaction-primary-inverted);
+    --line-cover-color: var(--interaction-primary);
   }
 }
 

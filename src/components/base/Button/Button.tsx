@@ -16,8 +16,9 @@ type BaseWrapperProps = {
   disabled?: boolean;
   onClick?: () => void;
   popOverTarget?: string;
-  style: 'filled' | 'outlined' | 'text' | 'buttonPlay' | 'socialLink';
+  style: 'filled' | 'outlined' | 'text' | 'textSmall' | 'textBright' | 'buttonPlay' | 'socialLink';
   prefetch?: 'auto' | true | false | null;
+  className?: string;
 };
 
 type ContentProps = {
@@ -49,23 +50,6 @@ export type InterfaceButtonPropTypes =
   | ButtonProps
   | LinkProps
   | ButtonPlayProps;
-
-const classes = cva([styles.button], {
-  variants: {
-    colorMode: {
-      dark: [styles.dark],
-      white: [styles.white],
-    },
-    style: {
-      buttonPlay: [styles.buttonPlay],
-      filled: [styles.buttonFilled],
-      iconOnly: [styles.iconOnly],
-      outlined: [styles.buttonOutlined],
-      socialLink: [styles.socialLink],
-      text: [styles.buttonText],
-    },
-  },
-});
 
 // TODOs
 // - Integrate tracking events or necessary data attributes
@@ -119,7 +103,36 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     style,
     text,
     onClick,
+    className,
   } = props;
+
+  const classes = cva([
+    styles.button,
+    className,
+  ], {
+    variants: {
+      colorMode: {
+        dark: [styles.dark],
+        white: [styles.white],
+      },
+      style: {
+        buttonPlay: [styles.buttonPlay],
+        filled: [styles.buttonFilled],
+        iconOnly: [styles.iconOnly],
+        outlined: [styles.buttonOutlined],
+        socialLink: [styles.socialLink],
+        text: [styles.buttonText],
+        textBright: [
+          styles.buttonText,
+          styles.buttonTextBright,
+        ],
+        textSmall: [
+          styles.buttonText,
+          styles.buttonTextSmall,
+        ],
+      },
+    },
+  });
 
   // Render the NextJS link element
   if (element === 'link') {
