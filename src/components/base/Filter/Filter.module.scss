@@ -42,7 +42,7 @@
     padding-block-end: px-to-rem(calc(var(--spacing-xs) + 1));
     padding-inline: px-to-rem(var(--spacing-m));
     background: var(--label-background);
-    border-radius: px-to-rem(var(--spacing-m));
+    border-radius: px-to-rem(var(--spacing-l));
     color: var(--label-color);
     transition:
       background-color var(--animation-duration) var(--motion-ease-out),
@@ -50,7 +50,6 @@
 
     @supports (text-box-trim: trim-both) {
       padding-block: px-to-rem(calc(var(--spacing-m) - 2));
-      border-radius: px-to-rem(var(--spacing-l));
       text-box-edge: cap alphabetic;
       text-box-trim: trim-both;
     }
@@ -101,10 +100,18 @@
     --label-background: var(--background-light);
     --label-color: var(--interaction-primary);
     --icon-color: var(--label-color);
-    --animation-duration: var(--motion-speed-fast);
+    --animation-duration: var(--motion-speed-very-fast);
 
     position: relative;
     display: inline-block;
+
+    .filterSelect {
+      transition: color var(--animation-duration) var(--motion-ease-out);
+    }
+
+    .filterSelectLabelIcon path {
+      transition: stroke var(--animation-duration) var(--motion-ease-out);
+    }
   }
 
   &:has(select:focus),
@@ -120,25 +127,13 @@
 
     &:after,
     &:before {
-      transition:
-        background-color var(--animation-duration)
-        var(--motion-ease-in);
-    }
-
-    .filterSelect {
-      transition: color var(--animation-duration) var(--motion-ease-in);
-    }
-
-    .filterSelectLabelIcon {
-      transition: stroke var(--animation-duration) var(--motion-ease-in);
+      transition: background-color var(--animation-duration) var(--motion-ease-in);
     }
   }
 
   &:after,
   &:before {
-    transition:
-      background-color var(--animation-duration)
-      var(--motion-ease-out);
+    transition: background-color var(--animation-duration) var(--motion-ease-out);
   }
 
   &:after {
@@ -180,10 +175,10 @@
     width: px-to-rem(var(--icon-size));
     height: px-to-rem(var(--icon-size));
     z-index: 2;
-    transition: stroke var(--animation-duration) var(--motion-ease-out);
 
     path {
       stroke: var(--icon-color);
+      transition: stroke var(--animation-duration) var(--motion-ease-out);
     }
   }
 }
@@ -207,5 +202,9 @@
     max-width: 100%;
     text-overflow: ellipsis;
     transition: color var(--animation-duration) var(--motion-ease-out);
+  }
+
+  @include mq($from: small) {
+    padding-block: px-to-rem(var(--spacing-s));
   }
 }

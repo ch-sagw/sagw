@@ -26,7 +26,7 @@ const meta: Meta<typeof Filter> = {
 
 export default meta;
 
-export const SpecialisedSocieties: StrictStory = {
+export const TransformativeSelectToRadios: StrictStory = {
   args: {
     filterItems: [
       {
@@ -76,7 +76,7 @@ export const SpecialisedSocieties: StrictStory = {
   },
 };
 
-export const SpecialisedSocietiesWithAmounts: StrictStory = {
+export const TransformativeSelectToRadiosWithAmounts: StrictStory = {
   args: {
     filterItems: [
       {
@@ -134,7 +134,7 @@ export const SpecialisedSocietiesWithAmounts: StrictStory = {
   },
 };
 
-export const PublicationType: StrictStory = {
+export const staticSelect: StrictStory = {
   args: {
     filterItems: [
       {
@@ -174,7 +174,7 @@ export const PublicationType: StrictStory = {
   },
 };
 
-export const PublicationTypeWithAmounts: StrictStory = {
+export const staticSelectWithAmounts: StrictStory = {
   args: {
     filterItems: [
       {
