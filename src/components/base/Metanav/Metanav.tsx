@@ -1,9 +1,16 @@
 import 'server-only';
 import React from 'react';
 import styles from '@/components/base/Metanav/Metanav.module.scss';
+import { Button } from '../Button/Button';
+
+type InterfaceMetanavItem = {
+  text: string;
+  link: string;
+  target: '_self' | '_blank';
+}
 
 export type InterfaceMetanavPropTypes = {
-  items: string[],
+  items: InterfaceMetanavItem[],
   className?: string,
 };
 
@@ -16,7 +23,17 @@ export const Metanav = ({
       <li
         key={key}
       >
-        {item}
+        <Button
+          className={styles.item}
+          text={item.text}
+          style='textSmall'
+          colorMode='dark'
+          element='link'
+          href={item.link}
+          target={item.target === '_blank'
+            ? item.target
+            : undefined}
+        />
       </li>
     ))}
   </ul>

@@ -6,4 +6,8 @@
 
   display: flex;
   gap: px-to-rem(var(--spacing-xl));
+
+  .item {
+    padding: 0;
+  }
 }

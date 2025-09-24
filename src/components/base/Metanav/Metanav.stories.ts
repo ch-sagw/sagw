@@ -28,8 +28,21 @@ export default meta;
 export const DefaultMetanav: StrictStory = {
   args: {
     items: [
-      'foo',
-      'bar',
+      {
+        link: 'https://foo.bar',
+        target: '_blank',
+        text: 'Brand Guidelines',
+      },
+      {
+        link: 'https://foo.bar',
+        target: '_blank',
+        text: 'Intranet',
+      },
+      {
+        link: 'https://foo.bar',
+        target: '_blank',
+        text: 'mySAGW',
+      },
     ],
   },
   globals: {
