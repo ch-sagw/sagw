@@ -1,43 +1,82 @@
 @use "../../../styles/utilities/utilities" as *;
 @use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 
-.checkBoxList {
+.filterTransformativeSelect {
+  .radioButtonListWrapper {
+    @include mq($to: small) {
+      display: none;
+    }
+  }
+
+  .selectWrapper {
+    @include mq($from: small) {
+      display: none;
+    }
+  }
+}
+
+/**
+ * Radio Button List Variant
+ */
+.radioButtonList {
   @include list-reset;
 
   --label-background: var(--background-light);
-  --label-color: var(--text-primary);
+  --label-color: var(--interaction-primary);
+  --animation-duration: var(--motion-speed-very-fast);
 
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: px-to-rem(var(--spacing-xs));
+  gap: px-to-rem(var(--spacing-m));
 
   label {
     @include label-text;
+    @include font-smoothing;
 
     display: inline-block;
     position: relative;
-    padding-block: px-to-rem(var(--spacing-s));
+    padding-block-start: px-to-rem(var(--spacing-xs));
+    padding-block-end: px-to-rem(calc(var(--spacing-xs) + 1));
     padding-inline: px-to-rem(var(--spacing-m));
     background: var(--label-background);
     border-radius: px-to-rem(var(--spacing-m));
     color: var(--label-color);
+    transition:
+      background-color var(--animation-duration) var(--motion-ease-out),
+      color var(--animation-duration) var(--motion-ease-out);
 
     @supports (text-box-trim: trim-both) {
+      padding-block: px-to-rem(calc(var(--spacing-m) - 2));
+      border-radius: px-to-rem(var(--spacing-l));
       text-box-edge: cap alphabetic;
       text-box-trim: trim-both;
     }
 
     &:has(.checkBox:checked) {
+      @include forced-colors {
+        filter: invert(1);
+      }
+
+      & {
+        --label-background: var(--background-inverted);
+        --label-color: var(--text-primary-inverted);
+
+        transition:
+          background-color var(--animation-duration) var(--motion-ease-out),
+          color var(--animation-duration) var(--motion-ease-out);
+      }
+    }
+
+    &:has(.checkBox:hover) {
       --label-background: var(--background-inverted);
       --label-color: var(--text-primary-inverted);
     }
 
-    &:has(.checkBox:focus),
-    &:has(.checkBox:hover) {
-      --label-background: var(--background-inverted);
-      --label-color: var(--text-primary-inverted);
+    @include forced-colors {
+      border: px-to-rem(var(--border-width-s)) solid CanvasText;
     }
   }
 
@@ -46,25 +85,106 @@
     inset: 0;
     z-index: 0;
     opacity: 0;
+    cursor: pointer;
   }
 }
 
+/**
+ * Select Variant
+ */
 .filterSelectLabel {
-  --label-background: var(--background-light);
-  --label-color: var(--text-primary);
+  @include mq($to: medium) {
+    width: 100%;
+  }
 
-  position: relative;
-  padding-block: px-to-rem(var(--spacing-s));
+  & {
+    --label-background: var(--background-light);
+    --label-color: var(--interaction-primary);
+    --icon-color: var(--label-color);
+    --animation-duration: var(--motion-speed-fast);
+
+    position: relative;
+    display: inline-block;
+  }
+
+  &:has(select:focus),
+  &:has(select:hover) {
+    @include forced-colors {
+      filter: invert(1);
+    }
+
+    & {
+      --label-background: var(--background-inverted);
+      --label-color: var(--text-primary-inverted);
+    }
+
+    &:after,
+    &:before {
+      transition:
+        background-color var(--animation-duration)
+        var(--motion-ease-in);
+    }
+
+    .filterSelect {
+      transition: color var(--animation-duration) var(--motion-ease-in);
+    }
+
+    .filterSelectLabelIcon {
+      transition: stroke var(--animation-duration) var(--motion-ease-in);
+    }
+  }
+
+  &:after,
+  &:before {
+    transition:
+      background-color var(--animation-duration)
+      var(--motion-ease-out);
+  }
 
   &:after {
+    @include forced-colors {
+      border: px-to-rem(var(--border-width-s)) solid CanvasText;
+    }
+
+    & {
+      position: absolute;
+      inset: 0;
+      content: "";
+      height: 100%;
+      width: 100%;
+      z-index: -1;
+      border-radius: px-to-rem(var(--spacing-l));
+      background: var(--label-background);
+    }
+  }
+
+  &:before {
     position: absolute;
-    inset: 0;
+    inset-block-start: 50%;
+    inset-inline-end: px-to-rem(2);
     content: "";
-    height: 100%;
-    width: 100%;
-    z-index: -1;
-    border-radius: px-to-rem(var(--spacing-m));
+    height: px-to-rem(var(--spacing-m));
+    width: px-to-rem(var(--spacing-m));
+    transform: translateY(-50%);
     background: var(--label-background);
+    z-index: 2;
+  }
+
+  .filterSelectLabelIcon {
+    --icon-size: var(--spacing-m);
+
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-end: px-to-rem(var(--spacing-m));
+    transform: translateY(-50%);
+    width: px-to-rem(var(--icon-size));
+    height: px-to-rem(var(--icon-size));
+    z-index: 2;
+    transition: stroke var(--animation-duration) var(--motion-ease-out);
+
+    path {
+      stroke: var(--icon-color);
+    }
   }
 }
 
@@ -75,19 +195,17 @@
 .filterSelect {
   @include label-text;
 
-  position: relative;
-  padding-block: px-to-rem(var(--spacing-s));
-  padding-inline: px-to-rem(var(--spacing-m));
-  background: none;
-  border: 0;
-  color: var(--label-color);
-
-  :after {
-    position: absolute;
-    inset-inline-end: 0;
-    content: "";
-    height: 20px;
-    width: 20px;
-    background: pink;
+  & {
+    appearance: none;
+    position: relative;
+    padding-block: px-to-rem(var(--spacing-m));
+    padding-inline-start: px-to-rem(var(--spacing-l));
+    padding-inline-end: px-to-rem(var(--spacing-2xl));
+    background: none;
+    border: 0;
+    color: var(--label-color);
+    max-width: 100%;
+    text-overflow: ellipsis;
+    transition: color var(--animation-duration) var(--motion-ease-out);
   }
 }
