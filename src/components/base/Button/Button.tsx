@@ -147,45 +147,43 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
 
   // Render the NextJS link element
   if (element === 'link') {
-    if ('href' in props && 'target' in props) {
-      const {
-        href,
-        target,
-      } = props;
+    const {
+      href,
+      target,
+    } = props;
 
-      let ariaLabelText = ariaLabel;
+    let ariaLabelText = ariaLabel;
 
-      if (target === '_blank') {
+    if (target === '_blank') {
 
-        ariaLabelText = ariaLabel
-          ? ariaLabel
-          : text;
+      ariaLabelText = ariaLabel
+        ? ariaLabel
+        : text;
 
-        ariaLabelText += ' (link target opens in a new tab)';
-      }
-
-      return (
-        <Link
-          aria-current={ariaCurrent}
-          aria-label={ariaLabelText}
-          className={classes({
-            colorMode,
-            style,
-          })}
-          data-testid='link'
-          href={href}
-          target={target}
-          prefetch={prefetch}
-        >
-          {buttonLinkContent({
-            element: 'link',
-            iconInlineEnd,
-            iconInlineStart,
-            text,
-          })}
-        </Link >
-      );
+      ariaLabelText += ' (link target opens in a new tab)';
     }
+
+    return (
+      <Link
+        aria-current={ariaCurrent}
+        aria-label={ariaLabelText}
+        className={classes({
+          colorMode,
+          style,
+        })}
+        data-testid='link'
+        href={href}
+        target={target}
+        prefetch={prefetch}
+      >
+        {buttonLinkContent({
+          element: 'link',
+          iconInlineEnd,
+          iconInlineStart,
+          text,
+        })}
+      </Link >
+    );
   }
 
   if (element === 'button') {

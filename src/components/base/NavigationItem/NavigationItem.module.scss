@@ -1,7 +1,36 @@
-.baseStyle {
-  text-decoration: underline;
-}
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
 
-.sampleContextStyle {
-  border: 1px solid black;
+.item {
+  --button-text-size: var(--font-size-m);
+
+  border: 1px solid red;
+  padding: px-to-rem(var(--grid-margin));
+
+  .buttonWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .buttonLevel1 {
+      padding: 0;
+    }
+
+    .icon {
+      color: var(--icon-secondary-inverted);
+      flex-basis: px-to-rem(var(--spacing-m));
+      flex-shrink: 0;
+      flex-grow: 0;
+    }
+  }
+
+  .menu {
+    @include list-reset;
+
+    .buttonLevel2 {
+      padding: 0;
+    }
+  }
 }

@@ -1,6 +1,3 @@
-// TODO
-// close on escape
-
 'use client';
 
 import React, {
