@@ -6,10 +6,26 @@
     display: flex;
   }
 
+  .currentLang {
+    padding: 0;
+  }
+
   .list {
     @include list-reset;
 
     display: none;
-    gap: px-to-rem(var(--spacing-xl));
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 0;
+
+    &.reduced {
+      gap: px-to-rem(var(--spacing-xl));
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .item {
+      padding: 0;
+    }
   }
 }

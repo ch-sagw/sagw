@@ -29,11 +29,34 @@ export const SampleStory: StrictStory = {
   args: {
     currentLang: 'de',
     items: [
-      'de',
-      'fr',
+      {
+        shortText: 'De',
+        text: 'Deutsch',
+        value: 'de',
+      },
+      {
+        shortText: 'Fr',
+        text: 'Français',
+        value: 'fr',
+      },
+      {
+        shortText: 'It',
+        text: 'Italiano',
+        value: 'it',
+      },
+      {
+        shortText: 'En',
+        text: 'English',
+        value: 'en',
+      },
     ],
     onLangSelect: () => {
       console.log('lang select handler');
+    },
+  },
+  globals: {
+    backgrounds: {
+      value: 'dark',
     },
   },
 };

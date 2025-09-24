@@ -1,16 +1,34 @@
+// TODO
+// close on escape
+
 'use client';
 
-import React, { useState } from 'react';
+import React, {
+  useEffect, useState,
+} from 'react';
 import { cva } from 'cva';
-import { useIsTouchDevice } from '@/hooks/useIsTouchDevice';
+import { Button } from '@/components/base/Button/Button';
 import styles from '@/components/base/Langnav/Langnav.module.scss';
+import { useIsTouchDevice } from '@/hooks/useIsTouchDevice';
+import { useBreakpoint } from '@/hooks/useBreakpoint';
+import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
+
+// --- Types
+
+export type InterfaceLangnavItem = {
+  text: string;
+  shortText: string;
+  value: string;
+}
 
 export type InterfaceLangnavPropTypes = {
-  items: string[];
+  items: InterfaceLangnavItem[];
   className?: string;
   onLangSelect: () => void;
   currentLang: string;
 };
+
+// --- Component
 
 export const Langnav = ({
   items,
@@ -19,16 +37,49 @@ export const Langnav = ({
   currentLang,
 }: InterfaceLangnavPropTypes): React.JSX.Element => {
 
-  // --- Hoooks
-
-  const isTouchDevice = useIsTouchDevice();
-
   // --- State
 
   const [
     menuVisible,
     setMenuVisible,
   ] = useState(false);
+
+  const [
+    toggleButtonAutofocus,
+    setToggleButtonAutofocus,
+  ] = useState(false);
+
+  // --- Helpers
+
+  const toggleMenu = (show: boolean): void => {
+    setMenuVisible(show);
+    setToggleButtonAutofocus(!show);
+  };
+
+  const getCurrentLang = (): InterfaceLangnavItem => {
+    const langObj = items.filter((item) => item.value === currentLang);
+
+    if (langObj.length === 1) {
+      return langObj[0];
+    }
+
+    return items[0];
+  };
+
+  // --- Hoooks
+
+  const isTouchDevice = useIsTouchDevice();
+  const breakpoint = useBreakpoint();
+
+  useKeyboardShortcut({
+    condition: menuVisible,
+    key: 'Escape',
+    onKeyPressed: () => {
+      toggleMenu(false);
+    },
+  });
+
+  const reducedMenu = breakpoint === 'zero' || breakpoint === 'micro' || breakpoint === 'small' || breakpoint === 'medium';
 
   // --- Classes
 
@@ -44,14 +95,29 @@ export const Langnav = ({
     },
   });
 
+  const listClasses = cva([styles.list], {
+    variants: {
+      reducedMenu: {
+        true: [styles.reduced],
+        white: null,
+      },
+    },
+  });
+
+  // --- Effects
+
+  useEffect(() => {
+    toggleMenu(reducedMenu);
+  }, [reducedMenu]);
+
   // --- Event Handlers
 
-  const onClick = (): void => {
-    if (!isTouchDevice) {
+  const onClick = (e: React.PointerEvent<HTMLButtonElement>): void => {
+    if (!isTouchDevice && e.nativeEvent.pointerType === 'mouse') {
       return;
     }
 
-    setMenuVisible(!menuVisible);
+    toggleMenu(!menuVisible);
   };
 
   const onMouseEnter = (): void => {
@@ -59,7 +125,7 @@ export const Langnav = ({
       return;
     }
 
-    setMenuVisible(true);
+    toggleMenu(true);
   };
 
   const onMouseLeave = (): void => {
@@ -67,7 +133,7 @@ export const Langnav = ({
       return;
     }
 
-    setMenuVisible(false);
+    toggleMenu(false);
   };
 
   // --- Render
@@ -77,23 +143,55 @@ export const Langnav = ({
       className={classes({
         menuVisible,
       })}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseEnter={reducedMenu
+        ? undefined
+        : onMouseEnter}
+      onMouseLeave={reducedMenu
+        ? undefined
+        : onMouseLeave}
     >
-      <button
-        onClick={onClick}
 
-      >{currentLang}</button>
+      {/* --- Toggle button */}
+      {!reducedMenu &&
+        <Button
+          onClick={onClick}
+          className={styles.currentLang}
+          text={getCurrentLang().shortText}
+          style='text'
+          colorMode='dark'
+          element='button'
+          ariaExpanded={menuVisible}
+          autoFocus={toggleButtonAutofocus}
+        />
+      }
 
+      {/* --- List of languages */}
       <ul
-        className={styles.list}
-        aria-hidden={menuVisible}
+        className={listClasses({
+          reducedMenu,
+        })}
+        inert={!menuVisible}
       >
         {items.map((item, key: number) => (
           <li
             key={key}
           >
-            <button onClick={onLangSelect}>{item}</button>
+            <Button
+              onClick={onLangSelect}
+              className={styles.item}
+              text={reducedMenu
+                ? item.shortText
+                : item.text
+              }
+              style='text'
+              colorMode='dark'
+              element='button'
+              disabled={!reducedMenu && item.value === currentLang}
+              ariaCurrent={(item.value === currentLang && reducedMenu)
+                ? true
+                : undefined
+              }
+            />
           </li>
         ))}
       </ul>

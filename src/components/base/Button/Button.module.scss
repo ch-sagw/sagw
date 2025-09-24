@@ -251,6 +251,10 @@
         background: LinkText;
       }
     }
+
+    &.dark {
+      --button-color: var(--text-primary-inverted);
+    }
   }
 }
 

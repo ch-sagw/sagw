@@ -1,6 +1,8 @@
 'use client';
 
-import React, { Fragment } from 'react';
+import React, {
+  Fragment, useEffect, useRef,
+} from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/Button/Button.module.scss';
 import { Icon } from '@/icons';
@@ -14,7 +16,7 @@ type BaseWrapperProps = {
   buttonType?: 'submit' | 'button';
   colorMode: 'white' | 'dark';
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.PointerEvent<HTMLButtonElement>) => void;
   popOverTarget?: string;
   style: 'filled' | 'outlined' | 'text' | 'textSmall' | 'textBright' | 'buttonPlay' | 'socialLink';
   prefetch?: 'auto' | true | false | null;
@@ -33,6 +35,7 @@ type BaseProps = BaseWrapperProps & ContentProps;
 type ButtonProps = BaseProps & {
   element: 'button';
   ariaHasPopUp?: boolean | undefined;
+  ariaExpanded?: boolean | undefined;
 };
 
 type LinkProps = BaseProps & {
@@ -106,6 +109,14 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     className,
   } = props;
 
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (autoFocus && buttonRef.current) {
+      buttonRef.current.focus();
+    }
+  }, [autoFocus]);
+
   const classes = cva([
     styles.button,
     className,
@@ -177,29 +188,40 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     }
   }
 
-  // Render a proper button
-  return (
-    <button
-      aria-current={ariaCurrent}
-      aria-controls={ariaControls}
-      aria-label={ariaLabel}
-      autoFocus={autoFocus}
-      className={classes({
-        colorMode,
-        style,
-      })}
-      disabled={disabled}
-      data-testid='button'
-      onClick={onClick}
-      popoverTarget={popOverTarget}
-      type={buttonType ?? 'button'}
-    >
-      {buttonLinkContent({
-        element: 'button',
-        iconInlineEnd,
-        iconInlineStart,
-        text,
-      })}
-    </button>
-  );
+  if (element === 'button') {
+    const {
+      ariaExpanded,
+    } = props;
+
+    // Render a proper button
+    return (
+      <button
+        ref={buttonRef}
+        aria-current={ariaCurrent}
+        aria-controls={ariaControls}
+        aria-label={ariaLabel}
+        autoFocus={autoFocus}
+        className={classes({
+          colorMode,
+          style,
+        })}
+        disabled={disabled}
+        data-testid='button'
+        onClick={onClick}
+        popoverTarget={popOverTarget}
+        type={buttonType ?? 'button'}
+        aria-expanded={ariaExpanded}
+      >
+        {buttonLinkContent({
+          element: 'button',
+          iconInlineEnd,
+          iconInlineStart,
+          text,
+        })}
+      </button>
+    );
+  }
+
+  return <Fragment />;
+
 };
