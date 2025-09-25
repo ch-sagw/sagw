@@ -16,16 +16,13 @@ type InterfaceNavigationItemChild = {
 
 type InterfaceNavigationItemWithItems = {
   text: string;
-  // link: string;
   link?: never;
-  // items?: never;
   items: InterfaceNavigationItemChild[];
   expandableId: number;
 };
 
 type InterfaceNavigationItemWithoutItems = {
   text: string;
-  // items: InterfaceNavigationItemChild[];
   items?: never;
   link: string;
   expandableId?: never;
@@ -71,7 +68,7 @@ export const NavigationItem = ({
 
   const {
     menuVisible,
-    toggleButtonAutofocus,
+    toggleButtonAutofocus: toggleButtonAutofocusFromHover,
     onToggleClick: onToggleClickFromHover,
     onMouseEnter,
     onMouseLeave,
@@ -80,6 +77,7 @@ export const NavigationItem = ({
   const {
     activeElement,
     onToggleClick,
+    toggleButtonAutofocus,
   } = useExpandOnClick();
 
   const breakpoint = useBreakpoint();
@@ -123,8 +121,8 @@ export const NavigationItem = ({
               : menuVisible
             }
             autoFocus={smallBreakpoint
-              ? undefined
-              : toggleButtonAutofocus
+              ? toggleButtonAutofocus
+              : toggleButtonAutofocusFromHover
             }
           />
         }

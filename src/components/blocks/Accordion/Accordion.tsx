@@ -38,7 +38,9 @@ export const Accordion = ({
 
   const {
     activeElement,
+    buttonRefs,
     onToggleClick,
+    toggleButtonAutofocus,
   } = useExpandOnClick();
 
   const mainLevel = parseInt(titleLevel, 10);
@@ -67,6 +69,9 @@ export const Accordion = ({
             <Fragment>
               <HeadingElem className={styles.title}>
                 <button
+                  ref={(el) => {
+                    buttonRefs.current[key] = el;
+                  }}
                   className={styles.button}
                   onClick={() => {
                     onToggleClick(key);
@@ -74,6 +79,7 @@ export const Accordion = ({
                   aria-controls={`accordion-section-${key}`}
                   aria-expanded={key === activeElement}
                   data-testid='button'
+                  autoFocus={toggleButtonAutofocus}
                 >
                   <span className={styles.buttonText}>{item.accordionTitle}</span>
                   <Icon
