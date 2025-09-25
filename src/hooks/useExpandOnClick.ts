@@ -5,6 +5,8 @@ import React, {
 } from 'react';
 import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
 
+// --- Interfaces
+
 export interface InterfaceExpandableElement {
   activeElement: number | undefined;
   onToggleClick: (key: number) => void;
@@ -12,8 +14,15 @@ export interface InterfaceExpandableElement {
   buttonRefs: RefObject<(HTMLButtonElement | null)[]>;
 }
 
+// --- Hook
+
 export const useExpandOnClick = (): InterfaceExpandableElement => {
+
+  // --- Refs
+
   const buttonRefs = React.useRef<(HTMLButtonElement | null)[]>([]);
+
+  // --- State
 
   const [
     activeElement,
@@ -30,6 +39,8 @@ export const useExpandOnClick = (): InterfaceExpandableElement => {
     setToggleButtonAutofocus,
   ] = useState<boolean>(false);
 
+  // --- Effects
+
   useEffect(() => {
     if (toggleButtonAutofocus && lastActiveElement) {
       buttonRefs.current[lastActiveElement]?.focus();
@@ -39,10 +50,13 @@ export const useExpandOnClick = (): InterfaceExpandableElement => {
     lastActiveElement,
   ]);
 
+  // --- Hooks
+
   useKeyboardShortcut({
     condition: activeElement !== undefined,
     key: 'Escape',
     onKeyPressed: () => {
+
       // as soon as closed, we want to set the focus. but after closed,
       // the state for activeElement is already undefined.
       setLastActiveElement(activeElement);
@@ -52,6 +66,8 @@ export const useExpandOnClick = (): InterfaceExpandableElement => {
 
     },
   });
+
+  // --- Event handlers
 
   const onToggleClick = (key: number): void => {
     setToggleButtonAutofocus(false);
