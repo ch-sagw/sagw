@@ -2,11 +2,11 @@
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/animations" as *;
 
 .expandableMenu {
   --button-text-size: var(--font-size-m);
 
-  border: 1px solid red;
   padding: px-to-rem(var(--grid-margin));
 
   .buttonWrapper {
@@ -33,24 +33,15 @@
 
   .list {
     @include list-reset;
-
-    display: grid;
-    grid-template-rows: 0fr;
-    overflow: hidden;
-    will-change: opacity, grid-template-rows;
-    transition-property: grid-template-rows, opacity;
-    transition-duration: var(--motion-speed-fast);
-    transition-timing-function: var(--motion-ease-in-out);
-    opacity: 0;
+    @include expandable-wrapper;
 
     .listWrapper {
-      min-height: 0;
+      @include expandable-content;
     }
 
     &.visible,
     &.active {
-      grid-template-rows: 1fr;
-      opacity: 1;
+      @include expandable-wrapper-visible;
 
       .item {
         transform: translate3d(0, 0, 0);

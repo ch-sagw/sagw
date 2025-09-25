@@ -1,6 +1,7 @@
 @use "../../../styles/utilities/utilities" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/animations" as *;
 
 .expandableElement {
   --items-spacing: 20;
@@ -115,21 +116,16 @@
     }
 
     .content {
+      @include expandable-wrapper;
+
       color: var(--text-color);
-      display: grid;
-      grid-template-rows: 0fr;
-      overflow: hidden;
-      will-change: opacity, grid-template-rows;
       transition-property: grid-template-rows, opacity, padding-block-end, margin-block-start;
-      transition-duration: var(--motion-speed-fast);
-      transition-timing-function: var(--motion-ease-in-out);
-      opacity: 0;
       margin-block-start: 0;
       padding-block-end: 0;
     }
 
     .rte {
-      min-height: 0;
+      @include expandable-content;
 
       :first-child {
         padding-block-start: 0;
@@ -144,8 +140,8 @@
 
     &.active {
       .content {
-        grid-template-rows: 1fr;
-        opacity: 1;
+        @include expandable-wrapper-visible;
+
         margin-block-start: px-to-rem(var(--spacing-s));
         padding-block-end: px-to-rem(calc(var(--spacing-2xl) + var(--spacing-xl)));
       }

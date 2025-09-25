@@ -1,0 +1,23 @@
+// ##############################
+// Expandable
+// ##############################
+
+@mixin expandable-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  will-change: opacity, grid-template-rows;
+  transition-property: grid-template-rows, opacity;
+  transition-duration: var(--motion-speed-fast);
+  transition-timing-function: var(--motion-ease-in-out);
+  opacity: 0;
+}
+
+@mixin expandable-wrapper-visible {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+@mixin expandable-content {
+  min-height: 0;
+}

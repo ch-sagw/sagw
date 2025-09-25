@@ -1,5 +1,6 @@
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/animations" as *;
 
 .expandableMenu {
   .toggle {
@@ -8,21 +9,14 @@
   }
 
   .list:not(.nonExpandable) {
-    display: grid;
-    grid-template-rows: 0fr;
-    overflow: hidden;
-    will-change: opacity, grid-template-rows;
-    transition-property: grid-template-rows, opacity;
-    transition-duration: var(--motion-speed-fast);
-    transition-timing-function: var(--motion-ease-in-out);
-    opacity: 0;
+    @include expandable-wrapper;
   }
 
   .list {
     @include list-reset;
 
     .listWrapper {
-      min-height: 0;
+      @include expandable-content;
     }
 
     &.nonExpandable {
@@ -43,8 +37,7 @@
 
   .list:not(.nonExpandable) {
     &.visible {
-      grid-template-rows: 1fr;
-      opacity: 1;
+      @include expandable-wrapper-visible;
     }
 
     .item {
