@@ -3,7 +3,7 @@
 @use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/utilities/utilities" as *;
 
-.item {
+.expandableMenu {
   --button-text-size: var(--font-size-m);
 
   border: 1px solid red;
@@ -26,11 +26,37 @@
     }
   }
 
-  .menu {
+  .list {
     @include list-reset;
 
-    .buttonLevel2 {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    will-change: opacity, grid-template-rows;
+    transition-property: grid-template-rows, opacity;
+    transition-duration: var(--motion-speed-fast);
+    transition-timing-function: var(--motion-ease-in-out);
+    opacity: 0;
+
+    .listWrapper {
+      min-height: 0;
+    }
+
+    &.visible {
+      grid-template-rows: 1fr;
+      opacity: 1;
+
+      & {
+        .item {
+          transform: translate3d(0, 0, 0) !important;
+        }
+      }
+    }
+
+    .item {
       padding: 0;
+      transform: translate3d(0, px-to-rem(calc(-1 * var(--spacing-xs))), 0);
+      transition: transform var(--motion-speed-very-fast) var(--motion-ease-in-out);
     }
   }
 }

@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { cva } from 'cva';
 import { Button } from '@/components/base/Button/Button';
 import styles from '@/components/base/NavigationItem/NavigationItem.module.scss';
 import { useBreakpoint } from '@/hooks/useBreakpoint';
 import { Icon } from '@/icons';
+import { useExpandOnHover } from '@/hooks/useExpandOnHover';
+
+// --- Interfaces
 
 type InterfaceNavigationItemChild = {
   text: string;
@@ -25,32 +29,53 @@ export type InterfaceNavigationItemPropTypes =
   | InterfaceNavigationItemWithItems
   | InterfaceNavigationItemWithoutItems;
 
+// --- Classes
+
+const listClasses = cva([styles.list], {
+  variants: {
+    menuVisible: {
+      false: null,
+      true: [styles.visible],
+    },
+  },
+});
+
+// --- Component
+
 export const NavigationItem = ({
   text,
   items,
   link,
 }: InterfaceNavigationItemPropTypes): React.JSX.Element => {
-  const breakpoint = useBreakpoint();
+  // --- Hooks
 
-  const [
-    levelExpanded,
-    setLevelExpanded,
-  ] = useState(false);
+  const {
+    menuVisible,
+    toggleButtonAutofocus,
+    toggleMenu,
+    onToggleClick,
+    onMouseEnter,
+    onMouseLeave,
+  } = useExpandOnHover();
+
+  const breakpoint = useBreakpoint();
 
   const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro';
 
-  const onLevel1Click = (): void => {
-    setLevelExpanded(!levelExpanded);
-  };
+  // --- Render
 
   return (
-    <div className={styles.item}>
+    <div
+      className={styles.expandableMenu}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <div className={styles.buttonWrapper}>
 
         {/* Render button */}
         {items &&
           <Button
-            onClick={onLevel1Click}
+            onClick={onToggleClick}
             text={text}
             style={smallBreakpoint
               ? 'textBright'
@@ -59,6 +84,8 @@ export const NavigationItem = ({
             colorMode='dark'
             element='button'
             className={styles.buttonLevel1}
+            ariaExpanded={menuVisible}
+            autoFocus={toggleButtonAutofocus}
           />
         }
 
@@ -86,24 +113,35 @@ export const NavigationItem = ({
 
       </div>
 
-      {levelExpanded &&
-        <ul className={styles.menu}>
+      <ul
+        className={listClasses({
+          menuVisible,
+        })}
+        inert={!menuVisible}
+      >
+        <div className={styles.listWrapper}>
           {items?.map((child, id) => (
-            <Button
-              key={id}
-              text={child.text}
-              style={smallBreakpoint
-                ? 'textBright'
-                : 'text'
-              }
-              colorMode='dark'
-              element='link'
-              href={child.link}
-              className={styles.buttonLevel2}
-            />
+            <li key={id}>
+              <Button
+                onClick={() => {
+                  toggleMenu({
+                    show: false,
+                  });
+                }}
+                text={child.text}
+                style={smallBreakpoint
+                  ? 'textBright'
+                  : 'text'
+                }
+                colorMode='dark'
+                element='link'
+                href={child.link}
+                className={styles.item}
+              />
+            </li>
           ))}
-        </ul>
-      }
+        </div>
+      </ul>
     </div >
   );
 };

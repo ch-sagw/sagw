@@ -1,31 +1,59 @@
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/utilities/utilities" as *;
 
-.langnav {
-  &.visible .list {
-    display: flex;
+.expandableMenu {
+  .toggle {
+    padding: 0;
+    width: 100%;
   }
 
-  .currentLang {
-    padding: 0;
+  .list:not(.nonExpandable) {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    will-change: opacity, grid-template-rows;
+    transition-property: grid-template-rows, opacity;
+    transition-duration: var(--motion-speed-fast);
+    transition-timing-function: var(--motion-ease-in-out);
+    opacity: 0;
   }
 
   .list {
     @include list-reset;
 
-    display: none;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    gap: 0;
+    .listWrapper {
+      min-height: 0;
+    }
 
-    &.reduced {
-      gap: px-to-rem(var(--spacing-xl));
-      flex-direction: row;
-      flex-wrap: wrap;
+    &.nonExpandable {
+      width: 100%;
+
+      .listWrapper {
+        display: flex;
+        gap: px-to-rem(var(--spacing-xl));
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
     }
 
     .item {
       padding: 0;
     }
+  }
+
+  .list:not(.nonExpandable) {
+    &.visible {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .item {
+      transform: translate3d(0, px-to-rem(calc(-1 * var(--spacing-xs))), 0);
+      transition: transform var(--motion-speed-very-fast) var(--motion-ease-in-out);
+    }
+  }
+
+  .list.visible:not(.nonExpandable) .item {
+    transform: translate3d(0, 0, 0) !important;
   }
 }

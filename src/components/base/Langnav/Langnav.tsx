@@ -1,16 +1,13 @@
 'use client';
 
-import React, {
-  useEffect, useState,
-} from 'react';
+import React from 'react';
 import { cva } from 'cva';
 import { Button } from '@/components/base/Button/Button';
 import styles from '@/components/base/Langnav/Langnav.module.scss';
-import { useIsTouchDevice } from '@/hooks/useIsTouchDevice';
 import { useBreakpoint } from '@/hooks/useBreakpoint';
-import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
+import { useExpandOnHover } from '@/hooks/useExpandOnHover';
 
-// --- Types
+// --- Interfaces
 
 export type InterfaceLangnavItem = {
   text: string;
@@ -25,6 +22,21 @@ export type InterfaceLangnavPropTypes = {
   currentLang: string;
 };
 
+// --- Classes
+
+const listClasses = cva([styles.list], {
+  variants: {
+    menuVisible: {
+      false: null,
+      true: [styles.visible],
+    },
+    nonExpandableMenu: {
+      false: null,
+      true: [styles.nonExpandable],
+    },
+  },
+});
+
 // --- Component
 
 export const Langnav = ({
@@ -34,149 +46,54 @@ export const Langnav = ({
   currentLang,
 }: InterfaceLangnavPropTypes): React.JSX.Element => {
 
-  // --- State
+  // --- Hooks
 
-  const [
+  const {
     menuVisible,
-    setMenuVisible,
-  ] = useState(false);
-
-  const [
     toggleButtonAutofocus,
-    setToggleButtonAutofocus,
-  ] = useState(false);
+    toggleMenu,
+    onToggleClick,
+    onMouseEnter,
+    onMouseLeave,
+  } = useExpandOnHover();
+
+  const breakpoint = useBreakpoint();
+
+  const nonExpandableMenu: boolean =
+    breakpoint === 'zero' ||
+    breakpoint === 'micro' ||
+    breakpoint === 'small' ||
+    breakpoint === 'medium';
 
   // --- Helpers
-
-  const toggleMenu = ({
-    show,
-    skipAutofocus,
-  }: {
-    show: boolean;
-    skipAutofocus: boolean;
-  }): void => {
-    setMenuVisible(show);
-
-    if (!skipAutofocus) {
-      setToggleButtonAutofocus(!show);
-    }
-  };
 
   const getCurrentLang = (): InterfaceLangnavItem => {
     const langObj = items.filter((item) => item.value === currentLang);
 
-    if (langObj.length === 1) {
-      return langObj[0];
-    }
-
-    return items[0];
-  };
-
-  // --- Hoooks
-
-  const isTouchDevice = useIsTouchDevice();
-  const breakpoint = useBreakpoint();
-
-  useKeyboardShortcut({
-    condition: menuVisible,
-    key: 'Escape',
-    onKeyPressed: () => {
-      toggleMenu({
-        show: false,
-        skipAutofocus: false,
-      });
-    },
-  });
-
-  const reducedMenu = breakpoint === 'zero' || breakpoint === 'micro' || breakpoint === 'small' || breakpoint === 'medium';
-
-  // --- Classes
-
-  const classes = cva([
-    styles.langnav,
-    className,
-  ], {
-    variants: {
-      menuVisible: {
-        true: [styles.visible],
-        white: null,
-      },
-    },
-  });
-
-  const listClasses = cva([styles.list], {
-    variants: {
-      reducedMenu: {
-        true: [styles.reduced],
-        white: null,
-      },
-    },
-  });
-
-  // --- Effects
-
-  useEffect(() => {
-    toggleMenu({
-      show: reducedMenu,
-      skipAutofocus: true,
-    });
-  }, [reducedMenu]);
-
-  // --- Event Handlers
-
-  const onClick = (e: React.PointerEvent<HTMLButtonElement>): void => {
-    if (!isTouchDevice && e.nativeEvent.pointerType === 'mouse') {
-      return;
-    }
-
-    toggleMenu({
-      show: !menuVisible,
-      skipAutofocus: false,
-    });
-  };
-
-  const onMouseEnter = (): void => {
-    if (isTouchDevice) {
-      return;
-    }
-
-    toggleMenu({
-      show: true,
-      skipAutofocus: false,
-    });
-  };
-
-  const onMouseLeave = (): void => {
-    if (isTouchDevice) {
-      return;
-    }
-
-    toggleMenu({
-      show: false,
-      skipAutofocus: false,
-    });
+    return langObj.length === 1
+      ? langObj[0]
+      : items[0];
   };
 
   // --- Render
 
   return (
     <div
-      className={classes({
-        menuVisible,
-      })}
-      onMouseEnter={reducedMenu
+      className={cva([
+        styles.expandableMenu,
+        className,
+      ])()}
+      onMouseEnter={nonExpandableMenu
         ? undefined
         : onMouseEnter}
-      onMouseLeave={reducedMenu
+      onMouseLeave={nonExpandableMenu
         ? undefined
         : onMouseLeave}
     >
-
-      {/* --- Toggle button */}
-      {!reducedMenu &&
+      {!nonExpandableMenu && (
         <Button
-          onClick={onClick}
-          className={styles.currentLang}
+          onClick={onToggleClick}
+          className={styles.toggle}
           text={getCurrentLang().shortText}
           style='text'
           colorMode='dark'
@@ -184,44 +101,42 @@ export const Langnav = ({
           ariaExpanded={menuVisible}
           autoFocus={toggleButtonAutofocus}
         />
-      }
+      )}
 
-      {/* --- List of languages */}
       <ul
         className={listClasses({
-          reducedMenu,
+          menuVisible: nonExpandableMenu || menuVisible,
+          nonExpandableMenu,
         })}
-        inert={!menuVisible}
+        inert={!nonExpandableMenu && !menuVisible}
       >
-        {items.map((item, key: number) => (
-          <li
-            key={key}
-          >
-            <Button
-              onClick={() => {
-                toggleMenu({
-                  show: false,
-                  skipAutofocus: false,
-                });
-
-                onLangSelect();
-              }}
-              className={styles.item}
-              text={reducedMenu
-                ? item.shortText
-                : item.text
-              }
-              style='text'
-              colorMode='dark'
-              element='button'
-              disabled={!reducedMenu && item.value === currentLang}
-              ariaCurrent={(item.value === currentLang && reducedMenu)
-                ? true
-                : undefined
-              }
-            />
-          </li>
-        ))}
+        <div className={styles.listWrapper}>
+          {items.map((item, key: number) => (
+            <li key={key}>
+              <Button
+                onClick={() => {
+                  toggleMenu({
+                    show: false,
+                  });
+                  onLangSelect();
+                }}
+                className={styles.item}
+                text={nonExpandableMenu
+                  ? item.shortText
+                  : item.text}
+                style='text'
+                colorMode='dark'
+                element='button'
+                disabled={!nonExpandableMenu && item.value === currentLang}
+                ariaCurrent={
+                  item.value === currentLang && nonExpandableMenu
+                    ? true
+                    : undefined
+                }
+              />
+            </li>
+          ))}
+        </div>
       </ul>
     </div>
   );
