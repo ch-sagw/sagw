@@ -1,28 +1,51 @@
+// TODO:
+// - if item is opened, close others
+
 import React from 'react';
 import { cva } from 'cva';
+import {
+  InterfaceNavigationItemPropTypes, NavigationItem,
+} from '@/components/base/NavigationItem/NavigationItem';
 import styles from '@/components/base/Navigation/Navigation.module.scss';
-import { InterfaceNavigation } from '@/payload-types';
 
 export type InterfaceNavigationPropTypes = {
-  sampleProperty: string;
-  context: 'sampleContext'
-} & InterfaceNavigation;
-
-const sampleClasses = cva([styles.baseStyle], {
-  variants: {
-    context: {
-      sampleContext: [styles.sampleContextStyle],
-    },
-  },
-});
+  sections: InterfaceNavigationItemPropTypes[];
+  footer: boolean;
+};
 
 export const Navigation = ({
-  context,
-  sampleProperty,
-}: InterfaceNavigationPropTypes): React.JSX.Element => (
-  <div
-    className={sampleClasses({
-      context: context ?? undefined,
-    })}
-  >{sampleProperty}</div>
-);
+  sections,
+  footer,
+}: InterfaceNavigationPropTypes): React.JSX.Element => {
+  const classes = cva([styles.nav], {
+    variants: {
+      footer: {
+        false: '',
+        true: styles.footer,
+      },
+    },
+  });
+
+  return (
+    <nav className={classes({
+      footer,
+    })}>
+      {sections.map((section: InterfaceNavigationItemPropTypes, key: number) => (
+        <NavigationItem
+          className={styles.item}
+          key={key}
+          text={section.text}
+          footer={section.footer}
+          {...('items' in section
+            ? {
+              expandableId: section.expandableId as NonNullable<typeof section.expandableId>,
+              items: section.items as NonNullable<typeof section.items>,
+            }
+            : {
+              link: section.link as NonNullable<typeof section.link>,
+            })}
+        />
+      ))}
+    </nav>
+  );
+};

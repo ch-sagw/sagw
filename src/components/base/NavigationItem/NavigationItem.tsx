@@ -20,6 +20,7 @@ type InterfaceNavigationItemWithItems = {
   items: InterfaceNavigationItemChild[];
   expandableId: number;
   footer?: boolean;
+  className?: string;
 };
 
 type InterfaceNavigationItemWithoutItems = {
@@ -28,6 +29,7 @@ type InterfaceNavigationItemWithoutItems = {
   link: string;
   expandableId?: never;
   footer?: boolean;
+  className?: string;
 };
 
 export type InterfaceNavigationItemPropTypes =
@@ -66,6 +68,7 @@ export const NavigationItem = ({
   link,
   expandableId,
   footer,
+  className,
 }: InterfaceNavigationItemPropTypes): React.JSX.Element => {
 
   // --- Hooks
@@ -90,7 +93,10 @@ export const NavigationItem = ({
 
   // --- Classes
 
-  const menuClasses = cva([styles.expandableMenu], {
+  const menuClasses = cva([
+    styles.expandableMenu,
+    className,
+  ], {
     variants: {
       footer: {
         false: '',
@@ -100,6 +106,18 @@ export const NavigationItem = ({
   });
 
   // --- Render
+
+  let level1AriaCurrent;
+
+  if (smallBreakpoint) {
+    if (expandableId === activeElement) {
+      level1AriaCurrent = true;
+    }
+  } else {
+    if (menuVisible) {
+      level1AriaCurrent = true;
+    }
+  }
 
   return (
     <div
@@ -135,6 +153,7 @@ export const NavigationItem = ({
             colorMode='dark'
             element='button'
             className={styles.buttonLevel1}
+            ariaCurrent={level1AriaCurrent}
             ariaExpanded={smallBreakpoint
               ? expandableId === activeElement
               : menuVisible
@@ -173,7 +192,7 @@ export const NavigationItem = ({
       </div>
 
       {/* Expandable content */}
-      <ul
+      <div
         className={listClasses({
           active: smallBreakpoint && expandableId === activeElement,
           menuVisible: !smallBreakpoint && menuVisible,
@@ -183,7 +202,7 @@ export const NavigationItem = ({
           : !menuVisible && !footer
         }
       >
-        <div className={styles.listWrapper}>
+        <ul className={styles.listWrapper}>
           {items?.map((child, id) => (
             <li key={id}>
               <Button
@@ -199,8 +218,8 @@ export const NavigationItem = ({
               />
             </li>
           ))}
-        </div>
-      </ul>
+        </ul>
+      </div>
     </div >
   );
 };

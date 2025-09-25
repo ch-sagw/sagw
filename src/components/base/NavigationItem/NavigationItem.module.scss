@@ -7,13 +7,20 @@
 .expandableMenu {
   --button-text-size: var(--font-size-m);
 
-  padding: px-to-rem(var(--grid-margin));
+  padding: 0;
   cursor: pointer;
+  position: relative;
+
+  @include mq($from: large) {
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+  }
 
   .buttonWrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: px-to-rem(var(--spacing-m));
 
     & {
       margin-block-end: px-to-rem(var(--spacing-s));
@@ -45,11 +52,17 @@
   }
 
   .list {
-    @include list-reset;
     @include expandable-wrapper;
+
+    @include mq($from: large) {
+      position: absolute;
+      inset-block-start: 100%;
+      inset-inline-start: 0;
+    }
 
     .listWrapper {
       @include expandable-content;
+      @include list-reset;
 
       display: flex;
       flex-direction: column;
@@ -91,6 +104,7 @@
     margin-block-start: px-to-rem(var(--spacing-xs));
 
     @include mq($from: large) {
+      position: relative;
       display: flex;
       grid-template-rows: unset;
       overflow: visible;

@@ -1,7 +1,24 @@
-.baseStyle {
-  text-decoration: underline;
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/animations" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+
+.nav {
+  @include mq($from: large) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: px-to-rem(calc(2 * var(--spacing-m)));
+    width: 100%;
+  }
 }
 
-.sampleContextStyle {
-  border: 1px solid black;
+.nav.footer {
+  align-items: flex-start;
+
+  .item {
+    flex: 1 1 0;
+  }
 }
