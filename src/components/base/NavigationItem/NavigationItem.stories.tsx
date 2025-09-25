@@ -28,6 +28,7 @@ export default meta;
 
 export const WithChildren: StrictStory = {
   args: {
+    expandableId: 1,
     items: [
       {
         link: 'Übersicht',

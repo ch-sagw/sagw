@@ -2,14 +2,10 @@
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/functions" as *;
 
-.accordion {
+.expandableElement {
   --items-spacing: 20;
 
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
   width: 100%;
-  gap: px-to-rem(var(--items-spacing));
   padding: px-to-rem(var(--section-top)) px-to-rem(var(--grid-margin)) px-to-rem(var(--section-bottom));
 
   &.light {
@@ -42,6 +38,16 @@
 
     margin-block-start: 0;
     color: var(--text-color);
+  }
+
+  .list {
+    @include list-reset;
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: px-to-rem(var(--items-spacing));
   }
 
   .item {

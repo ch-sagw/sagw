@@ -23,6 +23,11 @@
       flex-basis: px-to-rem(var(--spacing-m));
       flex-shrink: 0;
       flex-grow: 0;
+      transition: transform var(--motion-speed-very-fast) var(--motion-ease-in-out);
+
+      &.active {
+        transform: rotate3d(0, 0, 1, 180deg);
+      }
     }
   }
 
@@ -42,14 +47,13 @@
       min-height: 0;
     }
 
-    &.visible {
+    &.visible,
+    &.active {
       grid-template-rows: 1fr;
       opacity: 1;
 
-      & {
-        .item {
-          transform: translate3d(0, 0, 0) !important;
-        }
+      .item {
+        transform: translate3d(0, 0, 0);
       }
     }
 

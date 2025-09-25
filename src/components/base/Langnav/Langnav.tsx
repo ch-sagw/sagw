@@ -51,7 +51,6 @@ export const Langnav = ({
   const {
     menuVisible,
     toggleButtonAutofocus,
-    toggleMenu,
     onToggleClick,
     onMouseEnter,
     onMouseLeave,
@@ -115,9 +114,6 @@ export const Langnav = ({
             <li key={key}>
               <Button
                 onClick={() => {
-                  toggleMenu({
-                    show: false,
-                  });
                   onLangSelect();
                 }}
                 className={styles.item}

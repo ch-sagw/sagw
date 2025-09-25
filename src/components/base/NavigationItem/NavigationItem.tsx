@@ -5,6 +5,7 @@ import styles from '@/components/base/NavigationItem/NavigationItem.module.scss'
 import { useBreakpoint } from '@/hooks/useBreakpoint';
 import { Icon } from '@/icons';
 import { useExpandOnHover } from '@/hooks/useExpandOnHover';
+import { useExpandOnClick } from '@/hooks/useExpandOnClick';
 
 // --- Interfaces
 
@@ -15,14 +16,19 @@ type InterfaceNavigationItemChild = {
 
 type InterfaceNavigationItemWithItems = {
   text: string;
-  link: string;
-  items?: never;
+  // link: string;
+  link?: never;
+  // items?: never;
+  items: InterfaceNavigationItemChild[];
+  expandableId: number;
 };
 
 type InterfaceNavigationItemWithoutItems = {
   text: string;
-  items: InterfaceNavigationItemChild[];
-  link?: never;
+  // items: InterfaceNavigationItemChild[];
+  items?: never;
+  link: string;
+  expandableId?: never;
 };
 
 export type InterfaceNavigationItemPropTypes =
@@ -33,9 +39,22 @@ export type InterfaceNavigationItemPropTypes =
 
 const listClasses = cva([styles.list], {
   variants: {
+    active: {
+      false: '',
+      true: styles.active,
+    },
     menuVisible: {
       false: null,
       true: [styles.visible],
+    },
+  },
+});
+
+const iconClasses = cva([styles.icon], {
+  variants: {
+    active: {
+      false: '',
+      true: styles.active,
     },
   },
 });
@@ -46,17 +65,22 @@ export const NavigationItem = ({
   text,
   items,
   link,
+  expandableId,
 }: InterfaceNavigationItemPropTypes): React.JSX.Element => {
   // --- Hooks
 
   const {
     menuVisible,
     toggleButtonAutofocus,
-    toggleMenu,
-    onToggleClick,
+    onToggleClick: onToggleClickFromHover,
     onMouseEnter,
     onMouseLeave,
   } = useExpandOnHover();
+
+  const {
+    activeElement,
+    onToggleClick,
+  } = useExpandOnClick();
 
   const breakpoint = useBreakpoint();
 
@@ -67,15 +91,25 @@ export const NavigationItem = ({
   return (
     <div
       className={styles.expandableMenu}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseEnter={smallBreakpoint
+        ? undefined
+        : onMouseEnter}
+      onMouseLeave={smallBreakpoint
+        ? undefined
+        : onMouseLeave
+      }
     >
       <div className={styles.buttonWrapper}>
 
         {/* Render button */}
         {items &&
           <Button
-            onClick={onToggleClick}
+            onClick={smallBreakpoint
+              ? (): void => {
+                onToggleClick(expandableId);
+              }
+              : onToggleClickFromHover
+            }
             text={text}
             style={smallBreakpoint
               ? 'textBright'
@@ -84,8 +118,14 @@ export const NavigationItem = ({
             colorMode='dark'
             element='button'
             className={styles.buttonLevel1}
-            ariaExpanded={menuVisible}
-            autoFocus={toggleButtonAutofocus}
+            ariaExpanded={smallBreakpoint
+              ? expandableId === activeElement
+              : menuVisible
+            }
+            autoFocus={smallBreakpoint
+              ? undefined
+              : toggleButtonAutofocus
+            }
           />
         }
 
@@ -107,7 +147,9 @@ export const NavigationItem = ({
         {(smallBreakpoint && items) &&
           <Icon
             name='caretDown'
-            className={styles.icon}
+            className={iconClasses({
+              active: expandableId === activeElement,
+            })}
           />
         }
 
@@ -115,19 +157,18 @@ export const NavigationItem = ({
 
       <ul
         className={listClasses({
-          menuVisible,
+          active: smallBreakpoint && expandableId === activeElement,
+          menuVisible: !smallBreakpoint && menuVisible,
         })}
-        inert={!menuVisible}
+        inert={smallBreakpoint
+          ? expandableId !== activeElement
+          : !menuVisible
+        }
       >
         <div className={styles.listWrapper}>
           {items?.map((child, id) => (
             <li key={id}>
               <Button
-                onClick={() => {
-                  toggleMenu({
-                    show: false,
-                  });
-                }}
                 text={child.text}
                 style={smallBreakpoint
                   ? 'textBright'

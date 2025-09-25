@@ -1,16 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Fragment } from 'react';
 import { cva } from 'cva';
 import styles from '@/components/blocks/Accordion/Accordion.module.scss';
 import { Icon } from '@/icons';
 import { Rte } from '@/components/base/Rte/Rte';
 import { InterfaceAccordionBlock } from '@/payload-types';
-import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
+import { useExpandOnClick } from '@/hooks/useExpandOnClick';
 
 export type InterfaceAccordionPropTypes = {} & InterfaceAccordionBlock;
 
-const accordionClasses = cva([styles.accordion], {
+const accordionClasses = cva([styles.expandableElement], {
   variants: {
     colorMode: {
       dark: styles.dark,
@@ -35,30 +35,15 @@ export const Accordion = ({
   titleLevel,
   colorMode,
 }: InterfaceAccordionBlock): React.JSX.Element => {
-  const [
-    activeAccordion,
-    setActiveAccordion,
-  ] = useState<number | undefined>(undefined);
 
-  useKeyboardShortcut({
-    condition: activeAccordion !== undefined,
-    key: 'Escape',
-    onKeyPressed: () => {
-      setActiveAccordion(undefined);
-    },
-  });
+  const {
+    activeElement,
+    onToggleClick,
+  } = useExpandOnClick();
 
   const mainLevel = parseInt(titleLevel, 10);
   const TitleElem: React.ElementType = `h${mainLevel}` as keyof React.JSX.IntrinsicElements;
   const HeadingElem: React.ElementType = `h${mainLevel + 1}` as keyof React.JSX.IntrinsicElements;
-
-  const onClick = (id: number): void => {
-    if (id === activeAccordion) {
-      setActiveAccordion(undefined);
-    } else {
-      setActiveAccordion(id);
-    }
-  };
 
   return (
     <div
@@ -71,50 +56,52 @@ export const Accordion = ({
         {title}
       </TitleElem>
 
-      {accordions.map((item, key) => (
-        <ul
-          key={key}
-          className={accordionItemClasses({
-            active: key === activeAccordion,
-          })}
-        >
-          <li>
-            <HeadingElem className={styles.title}>
-              <button
-                className={styles.button}
-                onClick={() => {
-                  onClick(key);
-                }}
-                aria-controls={`accordion-section-${key}`}
-                aria-expanded={key === activeAccordion}
-                data-testid='button'
+      <ul className={styles.list}>
+        {accordions.map((item, key) => (
+          <li
+            key={key}
+            className={accordionItemClasses({
+              active: key === activeElement,
+            })}
+          >
+            <Fragment>
+              <HeadingElem className={styles.title}>
+                <button
+                  className={styles.button}
+                  onClick={() => {
+                    onToggleClick(key);
+                  }}
+                  aria-controls={`accordion-section-${key}`}
+                  aria-expanded={key === activeElement}
+                  data-testid='button'
+                >
+                  <span className={styles.buttonText}>{item.accordionTitle}</span>
+                  <Icon
+                    name='plus'
+                    className={styles.icon}
+                  />
+                </button>
+              </HeadingElem>
+
+              <section
+                id={`accordion-section-${key}`}
+                className={styles.content}
+                hidden={key !== activeElement}
+                aria-hidden={key !== activeElement}
+                inert={key !== activeElement}
+                data-testid='content'
               >
-                <span className={styles.buttonText}>{item.accordionTitle}</span>
-                <Icon
-                  name='plus'
-                  className={styles.icon}
+                <Rte
+                  className={styles.rte}
+                  text={item.accordionContent.content}
+                  rteConfig='rte2'
                 />
-              </button>
-            </HeadingElem>
+              </section>
+            </Fragment>
 
-            <section
-              id={`accordion-section-${key}`}
-              className={styles.content}
-              hidden={key !== activeAccordion}
-              aria-hidden={key !== activeAccordion}
-              inert={key !== activeAccordion}
-              data-testid='content'
-            >
-              <Rte
-                className={styles.rte}
-                text={item.accordionContent.content}
-                rteConfig='rte2'
-              />
-            </section>
           </li>
-
-        </ul>
-      ))}
+        ))}
+      </ul>
     </div>
 
   );
