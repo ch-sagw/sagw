@@ -24,9 +24,20 @@
 
       .listWrapper {
         display: flex;
-        gap: px-to-rem(var(--spacing-xl));
         flex-direction: row;
         flex-wrap: wrap;
+      }
+
+      .item {
+        padding: 0 px-to-rem(calc(var(--spacing-xl) / 2));
+      }
+
+      li:first-of-type .item {
+        padding-inline-start: 0;
+      }
+
+      li:last-of-type .item {
+        padding-inline-end: 0;
       }
     }
 
