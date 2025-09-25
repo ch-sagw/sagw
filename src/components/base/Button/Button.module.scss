@@ -11,6 +11,7 @@
   --button-color: var(--interaction-primary);
   --button-icon-size: var(--spacing-m);
   --button-padding-block: 20;
+  --button-padding-block-inner-text: var(--spacing-m);
   --button-padding-inline: var(--spacing-l);
 
   display: flex;
@@ -203,7 +204,7 @@
     position: relative;
     overflow: hidden;
     display: inline-block;
-    padding-block: px-to-rem(var(--spacing-m));
+    padding-block: px-to-rem(var(--button-padding-block-inner-text));
 
     .line,
     &:before,

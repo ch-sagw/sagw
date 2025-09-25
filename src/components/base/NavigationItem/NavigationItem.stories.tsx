@@ -26,35 +26,37 @@ const meta: Meta<typeof NavigationItem> = {
 
 export default meta;
 
+const items = [
+  {
+    link: 'foo',
+    text: 'Übersicht',
+  },
+  {
+    link: 'foo',
+    text: 'Projekte',
+  },
+  {
+    link: 'foo',
+    text: 'Magazin',
+  },
+  {
+    link: 'foo',
+    text: 'Publikationen',
+  },
+  {
+    link: 'foo',
+    text: 'Veranstaltungen',
+  },
+  {
+    link: 'foo',
+    text: 'News',
+  },
+];
+
 export const WithChildren: StrictStory = {
   args: {
     expandableId: 1,
-    items: [
-      {
-        link: 'foo',
-        text: 'Übersicht',
-      },
-      {
-        link: 'foo',
-        text: 'Projekte',
-      },
-      {
-        link: 'foo',
-        text: 'Magazin',
-      },
-      {
-        link: 'foo',
-        text: 'Publikationen',
-      },
-      {
-        link: 'foo',
-        text: 'Veranstaltungen',
-      },
-      {
-        link: 'foo',
-        text: 'News',
-      },
-    ],
+    items,
     text: 'Förderung',
   },
   globals: {
@@ -67,6 +69,20 @@ export const WithChildren: StrictStory = {
 export const WithoutChildren: StrictStory = {
   args: {
     link: 'foo',
+    text: 'Förderung',
+  },
+  globals: {
+    backgrounds: {
+      value: 'dark',
+    },
+  },
+};
+
+export const Footer: StrictStory = {
+  args: {
+    expandableId: 1,
+    footer: true,
+    items,
     text: 'Förderung',
   },
   globals: {

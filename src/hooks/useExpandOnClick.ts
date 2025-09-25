@@ -11,7 +11,7 @@ export interface InterfaceExpandableElement {
   activeElement: number | undefined;
   onToggleClick: (key: number) => void;
   toggleButtonAutofocus: boolean;
-  buttonRefs: RefObject<(HTMLButtonElement | null)[]>;
+  buttonRefs: RefObject<(HTMLButtonElement | HTMLDivElement | null)[]>;
 }
 
 // --- Hook
@@ -20,7 +20,7 @@ export const useExpandOnClick = (): InterfaceExpandableElement => {
 
   // --- Refs
 
-  const buttonRefs = React.useRef<(HTMLButtonElement | null)[]>([]);
+  const buttonRefs = React.useRef<(HTMLButtonElement | HTMLDivElement | null)[]>([]);
 
   // --- State
 

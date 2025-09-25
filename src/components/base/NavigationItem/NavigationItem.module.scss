@@ -8,11 +8,20 @@
   --button-text-size: var(--font-size-m);
 
   padding: px-to-rem(var(--grid-margin));
+  cursor: pointer;
 
   .buttonWrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    & {
+      margin-block-end: px-to-rem(var(--spacing-s));
+    }
+
+    @include mq($from: large) {
+      margin-block-end: px-to-rem(var(--spacing-xl));
+    }
 
     .buttonLevel1 {
       padding: 0;
@@ -28,6 +37,10 @@
       &.active {
         transform: rotate3d(0, 0, 1, 180deg);
       }
+
+      @include reduced-motion {
+        transition: none;
+      }
     }
   }
 
@@ -35,19 +48,12 @@
     @include list-reset;
     @include expandable-wrapper;
 
-    margin-block-start: px-to-rem(var(--spacing-s));
-
-    @include mq($from: medium) {
-      margin-block-start: px-to-rem(var(--spacing-xl));
-    }
-
     .listWrapper {
       @include expandable-content;
 
       display: flex;
       flex-direction: column;
       flex-wrap: nowrap;
-      gap: px-to-rem(0);
     }
 
     &.visible,
@@ -55,18 +61,49 @@
       @include expandable-wrapper-visible;
 
       .item {
-        @include mq($from: medium) {
-          transform: translate3d(px-to-rem(var(--spacing-l)), 0, 0);
+        transform: translate3d(px-to-rem(var(--spacing-l)), 0, 0);
+
+        @include mq($from: large) {
+          transform: none;
         }
       }
     }
 
     .item {
       padding: 0;
+      transition: transform var(--motion-speed-very-fast) var(--motion-ease-in-out);
 
-      @include mq($from: medium) {
-        transition: transform var(--motion-speed-very-fast) var(--motion-ease-in-out);
+      @include mq($from: large) {
+        transition: none;
+      }
+
+      @include reduced-motion {
+        transition: none;
       }
     }
+  }
+}
+
+.expandableMenu.footer {
+  --button-text-size: 15;
+
+  .list {
+    margin-block-start: px-to-rem(var(--spacing-xs));
+
+    @include mq($from: large) {
+      display: flex;
+      grid-template-rows: unset;
+      overflow: visible;
+      transition: none;
+      opacity: 1;
+    }
+  }
+
+  .item.item {
+    --button-padding-block-inner-text: 13;
+    --button-text-size: 15;
+
+    transform: none;
+    transition: none;
   }
 }

@@ -1,3 +1,5 @@
+@use "./utilities" as *;
+
 // ##############################
 // Expandable
 // ##############################
@@ -11,6 +13,10 @@
   transition-duration: var(--motion-speed-fast);
   transition-timing-function: var(--motion-ease-in-out);
   opacity: 0;
+
+  @include reduced-motion {
+    transition: none;
+  }
 }
 
 @mixin expandable-wrapper-visible {

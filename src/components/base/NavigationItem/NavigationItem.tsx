@@ -19,6 +19,7 @@ type InterfaceNavigationItemWithItems = {
   link?: never;
   items: InterfaceNavigationItemChild[];
   expandableId: number;
+  footer?: boolean;
 };
 
 type InterfaceNavigationItemWithoutItems = {
@@ -26,6 +27,7 @@ type InterfaceNavigationItemWithoutItems = {
   items?: never;
   link: string;
   expandableId?: never;
+  footer?: boolean;
 };
 
 export type InterfaceNavigationItemPropTypes =
@@ -63,6 +65,7 @@ export const NavigationItem = ({
   items,
   link,
   expandableId,
+  footer,
 }: InterfaceNavigationItemPropTypes): React.JSX.Element => {
 
   // --- Hooks
@@ -85,11 +88,24 @@ export const NavigationItem = ({
 
   const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
 
+  // --- Classes
+
+  const menuClasses = cva([styles.expandableMenu], {
+    variants: {
+      footer: {
+        false: '',
+        true: styles.footer,
+      },
+    },
+  });
+
   // --- Render
 
   return (
     <div
-      className={styles.expandableMenu}
+      className={menuClasses({
+        footer,
+      })}
       onMouseEnter={smallBreakpoint
         ? undefined
         : onMouseEnter}
@@ -97,20 +113,22 @@ export const NavigationItem = ({
         ? undefined
         : onMouseLeave
       }
+      onClick={(smallBreakpoint && expandableId
+        ? (): void => {
+          onToggleClick(expandableId);
+        }
+        : onToggleClickFromHover
+      )}
     >
-      <div className={styles.buttonWrapper}>
+      <div
+        className={styles.buttonWrapper}
+      >
 
         {/* Render button */}
         {items &&
           <Button
-            onClick={smallBreakpoint
-              ? (): void => {
-                onToggleClick(expandableId);
-              }
-              : onToggleClickFromHover
-            }
             text={text}
-            style={smallBreakpoint
+            style={smallBreakpoint || footer
               ? 'textBright'
               : 'text'
             }
@@ -132,7 +150,7 @@ export const NavigationItem = ({
         {!items &&
           <Button
             text={text}
-            style={smallBreakpoint
+            style={smallBreakpoint || footer
               ? 'textBright'
               : 'text'
             }
@@ -162,7 +180,7 @@ export const NavigationItem = ({
         })}
         inert={smallBreakpoint
           ? expandableId !== activeElement
-          : !menuVisible
+          : !menuVisible && !footer
         }
       >
         <div className={styles.listWrapper}>
@@ -170,7 +188,10 @@ export const NavigationItem = ({
             <li key={id}>
               <Button
                 text={child.text}
-                style='text'
+                style={footer
+                  ? 'textSmall'
+                  : 'text'
+                }
                 colorMode='dark'
                 element='link'
                 href={child.link}

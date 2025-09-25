@@ -18,7 +18,9 @@
   .list:not(.nonExpandable) {
     @include expandable-wrapper;
 
-    margin-block-start: px-to-rem(var(--spacing-xl));
+    & {
+      margin-block-start: px-to-rem(var(--spacing-xl));
+    }
   }
 
   .list {

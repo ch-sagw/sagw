@@ -14,7 +14,7 @@ export interface InterfaceToggleMenuArgs {
 export interface InterfaceExpandableMenu {
   menuVisible: boolean;
   toggleButtonAutofocus: boolean;
-  onToggleClick: (e: React.PointerEvent<HTMLButtonElement>) => void;
+  onToggleClick: (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement> | React.PointerEvent<HTMLDivElement | HTMLButtonElement>) => void;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }
@@ -67,9 +67,11 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
 
   // --- Event handlers
 
-  const onToggleClick = (e: React.PointerEvent<HTMLButtonElement>): void => {
-    if (!isTouchDevice && e.nativeEvent.pointerType === 'mouse') {
-      return;
+  const onToggleClick = (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement> | React.PointerEvent<HTMLDivElement | HTMLButtonElement>): void => {
+    if ('pointerType' in e.nativeEvent) {
+      if (!isTouchDevice && e.nativeEvent.pointerType === 'mouse') {
+        return;
+      }
     }
 
     toggleMenu({
@@ -81,6 +83,7 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
     if (isTouchDevice) {
       return;
     }
+
     toggleMenu({
       show: true,
     });
@@ -90,6 +93,7 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
     if (isTouchDevice) {
       return;
     }
+
     toggleMenu({
       show: false,
     });
