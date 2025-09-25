@@ -31,28 +31,28 @@ export const WithChildren: StrictStory = {
     expandableId: 1,
     items: [
       {
-        link: 'Übersicht',
-        text: 'foo',
+        link: 'foo',
+        text: 'Übersicht',
       },
       {
-        link: 'Projekte',
-        text: 'foo',
+        link: 'foo',
+        text: 'Projekte',
       },
       {
-        link: 'Magazin',
-        text: 'foo',
+        link: 'foo',
+        text: 'Magazin',
       },
       {
-        link: 'Publikationen',
-        text: 'foo',
+        link: 'foo',
+        text: 'Publikationen',
       },
       {
-        link: 'Veranstaltungen',
-        text: 'foo',
+        link: 'foo',
+        text: 'Veranstaltungen',
       },
       {
-        link: 'News',
-        text: 'foo',
+        link: 'foo',
+        text: 'News',
       },
     ],
     text: 'Förderung',

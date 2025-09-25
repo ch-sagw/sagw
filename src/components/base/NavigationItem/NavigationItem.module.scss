@@ -35,8 +35,19 @@
     @include list-reset;
     @include expandable-wrapper;
 
+    margin-block-start: px-to-rem(var(--spacing-s));
+
+    @include mq($from: medium) {
+      margin-block-start: px-to-rem(var(--spacing-xl));
+    }
+
     .listWrapper {
       @include expandable-content;
+
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      gap: px-to-rem(0);
     }
 
     &.visible,
@@ -44,14 +55,18 @@
       @include expandable-wrapper-visible;
 
       .item {
-        transform: translate3d(0, 0, 0);
+        @include mq($from: medium) {
+          transform: translate3d(px-to-rem(var(--spacing-l)), 0, 0);
+        }
       }
     }
 
     .item {
       padding: 0;
-      transform: translate3d(0, px-to-rem(calc(-1 * var(--spacing-xs))), 0);
-      transition: transform var(--motion-speed-very-fast) var(--motion-ease-in-out);
+
+      @include mq($from: medium) {
+        transition: transform var(--motion-speed-very-fast) var(--motion-ease-in-out);
+      }
     }
   }
 }

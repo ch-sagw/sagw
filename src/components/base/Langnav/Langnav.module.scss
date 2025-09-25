@@ -1,15 +1,24 @@
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/utilities/utilities" as *;
 @use "../../../styles/utilities/animations" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
 
 .expandableMenu {
+  @include mq($from: medium) {
+    --button-text-size: var(--font-size-m);
+  }
+
   .toggle {
+    text-align: right;
     padding: 0;
     width: 100%;
+    justify-content: flex-end;
   }
 
   .list:not(.nonExpandable) {
     @include expandable-wrapper;
+
+    margin-block-start: px-to-rem(var(--spacing-xl));
   }
 
   .list {
@@ -17,13 +26,17 @@
 
     .listWrapper {
       @include expandable-content;
+
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: flex-end;
     }
 
     &.nonExpandable {
       width: 100%;
 
       .listWrapper {
-        display: flex;
         flex-direction: row;
         flex-wrap: wrap;
       }
@@ -50,14 +63,5 @@
     &.visible {
       @include expandable-wrapper-visible;
     }
-
-    .item {
-      transform: translate3d(0, px-to-rem(calc(-1 * var(--spacing-xs))), 0);
-      transition: transform var(--motion-speed-very-fast) var(--motion-ease-in-out);
-    }
-  }
-
-  .list.visible:not(.nonExpandable) .item {
-    transform: translate3d(0, 0, 0) !important;
   }
 }

@@ -203,7 +203,7 @@
     position: relative;
     overflow: hidden;
     display: inline-block;
-    padding-block: px-to-rem(var(--button-padding-block));
+    padding-block: px-to-rem(var(--spacing-m));
 
     .line,
     &:before,

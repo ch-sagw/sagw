@@ -64,6 +64,7 @@ export const NavigationItem = ({
   link,
   expandableId,
 }: InterfaceNavigationItemPropTypes): React.JSX.Element => {
+
   // --- Hooks
 
   const {
@@ -82,7 +83,7 @@ export const NavigationItem = ({
 
   const breakpoint = useBreakpoint();
 
-  const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro';
+  const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
 
   // --- Render
 
@@ -153,6 +154,7 @@ export const NavigationItem = ({
 
       </div>
 
+      {/* Expandable content */}
       <ul
         className={listClasses({
           active: smallBreakpoint && expandableId === activeElement,
@@ -168,10 +170,7 @@ export const NavigationItem = ({
             <li key={id}>
               <Button
                 text={child.text}
-                style={smallBreakpoint
-                  ? 'textBright'
-                  : 'text'
-                }
+                style='text'
                 colorMode='dark'
                 element='link'
                 href={child.link}
