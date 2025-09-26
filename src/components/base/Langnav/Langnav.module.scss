@@ -8,6 +8,10 @@
     --button-text-size: var(--font-size-m);
   }
 
+  & {
+    position: relative;
+  }
+
   .toggle {
     text-align: right;
     padding: 0;
@@ -20,6 +24,9 @@
 
     & {
       margin-block-start: px-to-rem(var(--spacing-xl));
+      position: absolute;
+      inset-block-start: 100%;
+      inset-inline-end: 0;
     }
   }
 
