@@ -1,0 +1,128 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/animations" as *;
+
+.expandableMenu {
+  --button-text-size: var(--font-size-m);
+
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+
+  @include mq($from: large) {
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+  }
+
+  .buttonWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: px-to-rem(var(--spacing-m));
+
+    & {
+      margin-block-end: px-to-rem(var(--spacing-s));
+    }
+
+    @include mq($from: large) {
+      margin-block-end: px-to-rem(var(--spacing-xl));
+    }
+
+    .buttonLevel1 {
+      padding: 0;
+      user-select: none;
+      width: 100%;
+    }
+
+    .icon {
+      color: var(--icon-secondary-inverted);
+      flex-basis: px-to-rem(var(--spacing-m));
+      flex-shrink: 0;
+      flex-grow: 0;
+      transition: transform var(--motion-speed-very-fast) var(--motion-ease-in-out);
+
+      &.active {
+        transform: rotate3d(0, 0, 1, 180deg);
+      }
+
+      @include reduced-motion {
+        transition: none;
+      }
+    }
+  }
+
+  .list {
+    @include expandable-wrapper;
+
+    @include mq($from: large) {
+      position: absolute;
+      inset-block-start: 100%;
+      inset-inline-start: 0;
+      width: max-content;
+      min-width: 100%;
+    }
+
+    .listWrapper {
+      @include expandable-content;
+      @include list-reset;
+
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
+
+    &.visible,
+    &.active {
+      @include expandable-wrapper-visible;
+
+      .item {
+        transform: translate3d(px-to-rem(var(--spacing-l)), 0, 0);
+
+        @include mq($from: large) {
+          transform: none;
+        }
+      }
+    }
+
+    .item {
+      padding: 0;
+      transition: transform var(--motion-speed-very-fast) var(--motion-ease-in-out);
+      user-select: none;
+
+      @include mq($from: large) {
+        transition: none;
+      }
+
+      @include reduced-motion {
+        transition: none;
+      }
+    }
+  }
+}
+
+.expandableMenu.footer {
+  --button-text-size: 15;
+
+  .list {
+    margin-block-start: px-to-rem(var(--spacing-xs));
+
+    @include mq($from: large) {
+      position: relative;
+      display: flex;
+      grid-template-rows: unset;
+      overflow: visible;
+      transition: none;
+      opacity: 1;
+    }
+  }
+
+  .item.item {
+    --button-padding-block-inner-text: 13;
+    --button-text-size: 15;
+
+    transform: none;
+    transition: none;
+  }
+}

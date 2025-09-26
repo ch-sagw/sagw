@@ -5,6 +5,7 @@
   font-family: var(--font-family-text);
   font-size: px-to-rem(var(--body-text-s-size));
   line-height: var(--body-text-s-line-height);
+  font-weight: var(--font-weight-normal);
 }
 
 @mixin body-text-m {

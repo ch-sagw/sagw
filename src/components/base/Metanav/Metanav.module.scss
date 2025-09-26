@@ -1,0 +1,13 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.metanav {
+  @include list-reset;
+
+  display: flex;
+  gap: px-to-rem(var(--spacing-xl));
+
+  .item {
+    padding: 0;
+  }
+}
