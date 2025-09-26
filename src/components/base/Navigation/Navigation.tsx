@@ -1,7 +1,7 @@
 // TODO:
 // - if item is opened, close others
 
-import React from 'react';
+import React, { useState } from 'react';
 import { cva } from 'cva';
 import {
   InterfaceNavigationItemPropTypes, NavigationItem,
@@ -17,6 +17,11 @@ export const Navigation = ({
   sections,
   footer,
 }: InterfaceNavigationPropTypes): React.JSX.Element => {
+  const [
+    itemsState,
+    setItemsState,
+  ] = useState<number | undefined>(undefined);
+
   const classes = cva([styles.nav], {
     variants: {
       footer: {
@@ -40,6 +45,14 @@ export const Navigation = ({
             ? {
               expandableId: section.expandableId as NonNullable<typeof section.expandableId>,
               items: section.items as NonNullable<typeof section.items>,
+              onExpand: (expandKey: number | undefined): void => {
+                if (expandKey !== undefined) {
+                  setItemsState(expandKey);
+                }
+              },
+              setExpanded: itemsState === key
+                ? itemsState
+                : undefined,
             }
             : {
               link: section.link as NonNullable<typeof section.link>,

@@ -57,6 +57,10 @@ export const WithChildren: StrictStory = {
   args: {
     expandableId: 1,
     items,
+    onExpand: () => {
+      console.log('some expand handler');
+    },
+    setExpanded: undefined,
     text: 'Förderung',
   },
   globals: {
@@ -83,6 +87,10 @@ export const Footer: StrictStory = {
     expandableId: 1,
     footer: true,
     items,
+    onExpand: () => {
+      console.log('some expand handler');
+    },
+    setExpanded: undefined,
     text: 'Förderung',
   },
   globals: {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { cva } from 'cva';
 import { Button } from '@/components/base/Button/Button';
 import styles from '@/components/base/NavigationItem/NavigationItem.module.scss';
@@ -21,6 +21,8 @@ type InterfaceNavigationItemWithItems = {
   expandableId: number;
   footer?: boolean;
   className?: string;
+  setExpanded: number | undefined;
+  onExpand: (key: number | undefined) => void;
 };
 
 type InterfaceNavigationItemWithoutItems = {
@@ -30,6 +32,8 @@ type InterfaceNavigationItemWithoutItems = {
   expandableId?: never;
   footer?: boolean;
   className?: string;
+  setExpanded?: never;
+  onExpand?: never;
 };
 
 export type InterfaceNavigationItemPropTypes =
@@ -69,6 +73,8 @@ export const NavigationItem = ({
   expandableId,
   footer,
   className,
+  setExpanded,
+  onExpand,
 }: InterfaceNavigationItemPropTypes): React.JSX.Element => {
 
   // --- Hooks
@@ -85,11 +91,19 @@ export const NavigationItem = ({
     activeElement,
     onToggleClick,
     toggleButtonAutofocus,
+    setActiveElement,
   } = useExpandOnClick();
 
   const breakpoint = useBreakpoint();
 
   const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
+
+  useEffect(() => {
+    setActiveElement(setExpanded);
+  }, [
+    setExpanded,
+    setActiveElement,
+  ]);
 
   // --- Classes
 
@@ -134,6 +148,14 @@ export const NavigationItem = ({
       onClick={(smallBreakpoint && expandableId
         ? (): void => {
           onToggleClick(expandableId);
+
+          if (expandableId !== undefined) {
+            const nextState = expandableId === activeElement
+              ? undefined
+              : expandableId;
+
+            onExpand?.(nextState);
+          }
         }
         : onToggleClickFromHover
       )}
