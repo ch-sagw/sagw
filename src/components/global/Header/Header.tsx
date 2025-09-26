@@ -1,3 +1,6 @@
+// TODO
+// - hidden text from navigationInfoBlock
+
 import React from 'react';
 import styles from '@/components/global/Header/Header.module.scss';
 import {
