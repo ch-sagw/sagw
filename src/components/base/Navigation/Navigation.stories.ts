@@ -86,21 +86,37 @@ export const Header: StrictStory = {
       {
         expandableId: 1,
         items: items2,
+        onExpand: (): void => {
+          console.log('some expand handler');
+        },
+        setExpanded: undefined,
         text: 'Förderung',
       },
       {
         expandableId: 2,
         items: items3,
+        onExpand: (): void => {
+          console.log('some expand handler');
+        },
+        setExpanded: undefined,
         text: 'Netzwerk',
       },
       {
         expandableId: 3,
         items: items2,
+        onExpand: (): void => {
+          console.log('some expand handler');
+        },
+        setExpanded: undefined,
         text: 'Aktivitäten',
       },
       {
         expandableId: 4,
         items,
+        onExpand: (): void => {
+          console.log('some expand handler');
+        },
+        setExpanded: undefined,
         text: 'Über Uns',
       },
     ],
@@ -125,24 +141,40 @@ export const Footer: StrictStory = {
         expandableId: 1,
         footer: true,
         items: items2,
+        onExpand: (): void => {
+          console.log('some expand handler');
+        },
+        setExpanded: undefined,
         text: 'Förderung',
       },
       {
         expandableId: 2,
         footer: true,
         items: items3,
+        onExpand: (): void => {
+          console.log('some expand handler');
+        },
+        setExpanded: undefined,
         text: 'Netzwerk',
       },
       {
         expandableId: 3,
         footer: true,
         items,
+        onExpand: (): void => {
+          console.log('some expand handler');
+        },
+        setExpanded: undefined,
         text: 'Aktivitäten',
       },
       {
         expandableId: 4,
         footer: true,
         items,
+        onExpand: (): void => {
+          console.log('some expand handler');
+        },
+        setExpanded: undefined,
         text: 'Über Uns',
       },
     ],

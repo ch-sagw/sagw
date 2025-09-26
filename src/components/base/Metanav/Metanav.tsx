@@ -1,7 +1,7 @@
 import 'server-only';
 import React from 'react';
 import styles from '@/components/base/Metanav/Metanav.module.scss';
-import { Button } from '../Button/Button';
+import { Button } from '@/components/base/Button/Button';
 
 type InterfaceMetanavItem = {
   text: string;

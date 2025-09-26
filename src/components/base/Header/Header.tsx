@@ -1,27 +1,62 @@
 import React from 'react';
-import { cva } from 'cva';
 import styles from '@/components/base/Header/Header.module.scss';
+import {
+  InterfaceNavigationPropTypes, Navigation,
+} from '../Navigation/Navigation';
+import {
+  InterfaceMenuButtonPropTypes, MenuButton,
+} from '../MenuButton/MenuButton';
+import {
+  InterfaceNavigationInfoBlockPropTypes, NavigationInfoBlock,
+} from '../NavigationInfoBlock/NavigationInfoBlock';
+import {
+  InterfaceMetanavPropTypes, Metanav,
+} from '../Metanav/Metanav';
+import {
+  InterfaceLangnavPropTypes, Langnav,
+} from '../Langnav/Langnav';
 
 export type InterfaceHeaderPropTypes = {
-  sampleProperty: string;
-  context: 'sampleContext'
+  navigation: InterfaceNavigationPropTypes;
+  menuButton: InterfaceMenuButtonPropTypes;
+  navigationInfoBlock: InterfaceNavigationInfoBlockPropTypes;
+  metanav: InterfaceMetanavPropTypes;
+  langnav: InterfaceLangnavPropTypes;
 };
 
-const sampleClasses = cva([styles.baseStyle], {
-  variants: {
-    context: {
-      sampleContext: [styles.sampleContextStyle],
-    },
-  },
-});
-
 export const Header = ({
-  context,
-  sampleProperty,
+  navigation,
+  menuButton,
+  navigationInfoBlock,
+  metanav,
+  langnav,
 }: InterfaceHeaderPropTypes): React.JSX.Element => (
-  <div
-    className={sampleClasses({
-      context: context ?? undefined,
-    })}
-  >{sampleProperty}</div>
+  <header className={styles.header}>
+    <div className={styles.logo}>Logo</div>
+
+    <Navigation
+      {...navigation}
+      className={styles.navigation}
+    />
+
+    <NavigationInfoBlock
+      {...navigationInfoBlock}
+      className={styles.infoBlock}
+    />
+
+    <Langnav
+      {...langnav}
+      className={styles.langnav}
+    />
+
+    <Metanav
+      {...metanav}
+      className={styles.metanav}
+    />
+
+    <MenuButton
+      {...menuButton}
+      className={styles.menuButton}
+    />
+  </header>
 );

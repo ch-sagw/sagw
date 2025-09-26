@@ -11,18 +11,23 @@ import styles from '@/components/base/Navigation/Navigation.module.scss';
 export type InterfaceNavigationPropTypes = {
   sections: InterfaceNavigationItemPropTypes[];
   footer: boolean;
+  className?: string;
 };
 
 export const Navigation = ({
   sections,
   footer,
+  className,
 }: InterfaceNavigationPropTypes): React.JSX.Element => {
   const [
     itemsState,
     setItemsState,
   ] = useState<number | undefined>(undefined);
 
-  const classes = cva([styles.nav], {
+  const classes = cva([
+    styles.nav,
+    className,
+  ], {
     variants: {
       footer: {
         false: '',

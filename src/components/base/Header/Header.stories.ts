@@ -4,6 +4,11 @@ import type {
 } from '@storybook/nextjs-vite';
 import { Header } from '@/components/base/Header/Header';
 import { defaultDecorator } from '@/storybook-helpers';
+import { Header as NavigationHeader } from '@/components/base/Navigation/Navigation.stories';
+import { Closed as MenuButton } from '@/components/base/MenuButton/MenuButton.stories';
+import { DefaultInfoBlock } from '@/components/base/NavigationInfoBlock/NavigationInfoBlock.stories';
+import { DefaultMetanav } from '@/components/base/Metanav/Metanav.stories';
+import { DefaultLangNav } from '@/components/base/Langnav/Langnav.stories';
 
 type HeaderProps = React.ComponentProps<typeof Header>;
 
@@ -26,9 +31,12 @@ const meta: Meta<typeof Header> = {
 
 export default meta;
 
-export const SampleStory: StrictStory = {
+export const DefaultHeader: StrictStory = {
   args: {
-    context: 'sampleContext',
-    sampleProperty: 'some text',
+    langnav: DefaultLangNav.args,
+    menuButton: MenuButton.args,
+    metanav: DefaultMetanav.args,
+    navigation: NavigationHeader.args,
+    navigationInfoBlock: DefaultInfoBlock.args,
   },
 };

@@ -1,7 +1,25 @@
-.baseStyle {
-  text-decoration: underline;
-}
+.header {
+  .logo {
+    border: 1px solid red;
+  }
 
-.sampleContextStyle {
-  border: 1px solid black;
+  .navigation {
+    border: 1px solid green;
+  }
+
+  .infoBlock {
+    border: 1px solid blue;
+  }
+
+  .langnav {
+    border: 1px solid pink;
+  }
+
+  .metanav {
+    border: 1px solid gray;
+  }
+
+  .menuButton {
+    border: 1px solid greenyellow;
+  }
 }

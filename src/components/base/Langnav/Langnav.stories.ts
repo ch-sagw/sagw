@@ -25,7 +25,7 @@ const meta: Meta<typeof Langnav> = {
 
 export default meta;
 
-export const SampleStory: StrictStory = {
+export const DefaultLangNav: StrictStory = {
   args: {
     currentLang: 'de',
     items: [
