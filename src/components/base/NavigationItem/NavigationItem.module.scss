@@ -58,7 +58,7 @@
 
     @include mq($from: large) {
       position: absolute;
-      inset-block-start: 100%;
+      inset-block-start: px-to-rem(calc(100% + var(--spacing-m)));
       inset-inline-start: 0;
       width: max-content;
       min-width: 100%;
@@ -105,6 +105,8 @@
 .expandableMenu.footer {
   --button-text-size: 15;
 
+  cursor: default;
+
   .list {
     margin-block-start: px-to-rem(var(--spacing-xs));
 
@@ -120,9 +122,17 @@
 
   .item.item {
     --button-padding-block-inner-text: 13;
-    --button-text-size: 15;
 
     transform: none;
     transition: none;
+    font-size: px-to-rem(15);
+  }
+
+  .footerColumnTitle {
+    @include button-text;
+
+    // font-weight: bold;
+    font-size: px-to-rem(var(--button-text-size));
+    color: var(--text-primary-inverted);
   }
 }

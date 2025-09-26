@@ -172,8 +172,13 @@ export const NavigationItem = ({
         className={styles.buttonWrapper}
       >
 
+        {/* In the footer large viewport we don't want buttons or links */}
+        {items && (footer && !smallBreakpoint) &&
+          <p className={styles.footerColumnTitle}>{text}</p>
+        }
+
         {/* Render button */}
-        {items &&
+        {items && !(footer && !smallBreakpoint) &&
           <Button
             text={text}
             style={smallBreakpoint || footer
@@ -232,7 +237,13 @@ export const NavigationItem = ({
           : !menuVisible && !footer
         }
       >
-        <ul className={styles.listWrapper}>
+        <ul
+          className={styles.listWrapper}
+          aria-label={items && (footer && !smallBreakpoint)
+            ? text
+            : undefined
+          }
+        >
           {items?.map((child, id) => (
             <li key={id}>
               <Button
