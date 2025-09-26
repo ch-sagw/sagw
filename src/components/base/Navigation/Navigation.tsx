@@ -1,6 +1,3 @@
-// TODO:
-// - if item is opened, close others
-
 import React, { useState } from 'react';
 import { cva } from 'cva';
 import {
