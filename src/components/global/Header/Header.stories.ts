@@ -34,6 +34,7 @@ export default meta;
 export const DefaultHeader: StrictStory = {
   args: {
     langnav: DefaultLangNav.args,
+    logoName: 'sagw',
     menuButton: MenuButton.args,
     metanav: DefaultMetanav.args,
     navigation: NavigationHeader.args,

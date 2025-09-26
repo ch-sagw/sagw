@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import styles from '@/icons/styles.module.scss';
 
 import horizontalInner from '@/icons/keyvisual-lines/horizontal-inner';
@@ -36,7 +37,6 @@ import plus from '@/icons/ui/plus';
 import square from '@/icons/ui/square';
 import warningFilled from '@/icons/ui/warning-filled';
 import warning from '@/icons/ui/warning';
-import { JSX } from 'react';
 
 const Icons = {
   arrowLeft,

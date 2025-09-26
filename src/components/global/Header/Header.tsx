@@ -19,12 +19,15 @@ import {
   InterfaceLangnavPropTypes, Langnav,
 } from '@/components/base/Langnav/Langnav';
 
+import { HeaderLogo } from '@/components/base/HeaderLogo/HeaderLogo';
+
 export type InterfaceHeaderPropTypes = {
   navigation: InterfaceNavigationPropTypes;
   menuButton: InterfaceMenuButtonPropTypes;
   navigationInfoBlock: InterfaceNavigationInfoBlockPropTypes;
   metanav: InterfaceMetanavPropTypes;
   langnav: InterfaceLangnavPropTypes;
+  logoName: 'sagw';
 };
 
 export const Header = ({
@@ -33,9 +36,13 @@ export const Header = ({
   navigationInfoBlock,
   metanav,
   langnav,
+  logoName,
 }: InterfaceHeaderPropTypes): React.JSX.Element => (
   <header className={styles.header}>
-    <div className={styles.logo}>Logo</div>
+    <HeaderLogo
+      className={styles.logo}
+      name={logoName}
+    />
 
     <Navigation
       {...navigation}
