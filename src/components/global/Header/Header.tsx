@@ -1,6 +1,5 @@
 // TODO
 // - hidden text from navigationInfoBlock
-// - footer variant: disable level 1 hover
 
 import React from 'react';
 import styles from '@/components/global/Header/Header.module.scss';
