@@ -37,30 +37,33 @@ export const Navigation = ({
     <nav className={classes({
       footer,
     })}>
-      {sections.map((section: InterfaceNavigationItemPropTypes, key: number) => (
-        <NavigationItem
-          className={styles.item}
-          key={key}
-          text={section.text}
-          footer={section.footer}
-          {...('items' in section
-            ? {
-              expandableId: section.expandableId as NonNullable<typeof section.expandableId>,
-              items: section.items as NonNullable<typeof section.items>,
-              onExpand: (expandKey: number | undefined): void => {
-                if (expandKey !== undefined) {
-                  setItemsState(expandKey);
+      <ul className={styles.list}>
+        {sections.map((section: InterfaceNavigationItemPropTypes, key: number) => (
+          <li key={key}>
+            <NavigationItem
+              className={styles.item}
+              text={section.text}
+              footer={section.footer}
+              {...('items' in section
+                ? {
+                  expandableId: section.expandableId as NonNullable<typeof section.expandableId>,
+                  items: section.items as NonNullable<typeof section.items>,
+                  onExpand: (expandKey: number | undefined): void => {
+                    if (expandKey !== undefined) {
+                      setItemsState(expandKey);
+                    }
+                  },
+                  setExpanded: itemsState === key
+                    ? itemsState
+                    : undefined,
                 }
-              },
-              setExpanded: itemsState === key
-                ? itemsState
-                : undefined,
-            }
-            : {
-              link: section.link as NonNullable<typeof section.link>,
-            })}
-        />
-      ))}
+                : {
+                  link: section.link as NonNullable<typeof section.link>,
+                })}
+            />
+          </li>
+        ))}
+      </ul>
     </nav>
   );
 };

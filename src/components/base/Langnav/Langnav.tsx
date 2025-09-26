@@ -24,7 +24,7 @@ export type InterfaceLangnavPropTypes = {
 
 // --- Classes
 
-const listClasses = cva([styles.list], {
+const listClasses = cva([styles.listWrapper], {
   variants: {
     menuVisible: {
       false: null,
@@ -98,18 +98,19 @@ export const Langnav = ({
           colorMode='dark'
           element='button'
           ariaExpanded={menuVisible}
+          ariaLabel={getCurrentLang().text}
           autoFocus={toggleButtonAutofocus}
         />
       )}
 
-      <ul
+      <div
         className={listClasses({
           menuVisible: nonExpandableMenu || menuVisible,
           nonExpandableMenu,
         })}
         inert={!nonExpandableMenu && !menuVisible}
       >
-        <div className={styles.listWrapper}>
+        <ul className={styles.list}>
           {items.map((item, key: number) => (
             <li key={key}>
               <Button
@@ -124,16 +125,20 @@ export const Langnav = ({
                 colorMode='dark'
                 element='button'
                 disabled={!nonExpandableMenu && item.value === currentLang}
+                ariaLabel={nonExpandableMenu
+                  ? item.text
+                  : undefined
+                }
                 ariaCurrent={
-                  item.value === currentLang && nonExpandableMenu
+                  item.value === currentLang
                     ? true
                     : undefined
                 }
               />
             </li>
           ))}
-        </div>
-      </ul>
+        </ul>
+      </div>
     </div>
   );
 };

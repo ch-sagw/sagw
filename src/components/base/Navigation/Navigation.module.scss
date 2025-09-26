@@ -3,7 +3,9 @@
 @use "../../../styles/utilities/animations" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
 
-.nav {
+.list {
+  @include list-reset;
+
   @include mq($from: large) {
     display: flex;
     flex-direction: row;
@@ -15,7 +17,7 @@
   }
 }
 
-.nav.footer {
+.nav.footer .list {
   align-items: flex-start;
 
   .item {

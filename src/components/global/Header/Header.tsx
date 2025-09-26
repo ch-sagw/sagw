@@ -1,5 +1,6 @@
 // TODO
 // - hidden text from navigationInfoBlock
+// - leve2 link not wide enough
 
 import React from 'react';
 import styles from '@/components/global/Header/Header.module.scss';
