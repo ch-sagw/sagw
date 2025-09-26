@@ -2,7 +2,7 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { Header } from '@/components/base/Header/Header';
+import { Header } from '@/components/global/Header/Header';
 import { defaultDecorator } from '@/storybook-helpers';
 import { Header as NavigationHeader } from '@/components/base/Navigation/Navigation.stories';
 import { Closed as MenuButton } from '@/components/base/MenuButton/MenuButton.stories';
@@ -26,7 +26,7 @@ const meta: Meta<typeof Header> = {
     'visual:check',
     'a11y:check',
   ],
-  title: 'Components/base/Header',
+  title: 'Components/global/Header',
 };
 
 export default meta;

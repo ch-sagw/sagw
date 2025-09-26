@@ -1,20 +1,20 @@
 import React from 'react';
-import styles from '@/components/base/Header/Header.module.scss';
+import styles from '@/components/global/Header/Header.module.scss';
 import {
   InterfaceNavigationPropTypes, Navigation,
-} from '../Navigation/Navigation';
+} from '@/components/base/Navigation/Navigation';
 import {
   InterfaceMenuButtonPropTypes, MenuButton,
-} from '../MenuButton/MenuButton';
+} from '@/components/base/MenuButton/MenuButton';
 import {
   InterfaceNavigationInfoBlockPropTypes, NavigationInfoBlock,
-} from '../NavigationInfoBlock/NavigationInfoBlock';
+} from '@/components/base/NavigationInfoBlock/NavigationInfoBlock';
 import {
   InterfaceMetanavPropTypes, Metanav,
-} from '../Metanav/Metanav';
+} from '@/components/base/Metanav/Metanav';
 import {
   InterfaceLangnavPropTypes, Langnav,
-} from '../Langnav/Langnav';
+} from '@/components/base/Langnav/Langnav';
 
 export type InterfaceHeaderPropTypes = {
   navigation: InterfaceNavigationPropTypes;
