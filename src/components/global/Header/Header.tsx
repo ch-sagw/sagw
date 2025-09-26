@@ -1,6 +1,6 @@
 // TODO
 // - hidden text from navigationInfoBlock
-// - leve2 link not wide enough
+// - footer variant: disable level 1 hover
 
 import React from 'react';
 import styles from '@/components/global/Header/Header.module.scss';

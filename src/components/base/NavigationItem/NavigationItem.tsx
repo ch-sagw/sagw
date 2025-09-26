@@ -140,10 +140,18 @@ export const NavigationItem = ({
       })}
       onMouseEnter={smallBreakpoint
         ? undefined
-        : onMouseEnter}
+        : (): void => {
+          if (!footer) {
+            onMouseEnter();
+          }
+        }}
       onMouseLeave={smallBreakpoint
         ? undefined
-        : onMouseLeave
+        : (): void => {
+          if (!footer) {
+            onMouseLeave();
+          }
+        }
       }
       onClick={(smallBreakpoint && expandableId
         ? (): void => {
