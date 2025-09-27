@@ -11,7 +11,8 @@
     --color-text: var(--interaction-primary);
   }
 
-  margin: px-to-rem(var(--spacing-l)) px-to-rem(var(--spacing-2xl));
+  margin-block-end: px-to-rem(var(--spacing-l));
+  margin-inline-end: px-to-rem(var(--spacing-2xl));
 
   .title {
     @include title-heading-4;

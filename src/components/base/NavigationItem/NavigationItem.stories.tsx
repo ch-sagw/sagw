@@ -56,6 +56,7 @@ const items = [
 export const WithChildren: StrictStory = {
   args: {
     colorMode: 'dark',
+    description: 'Förderung von langfristigen Forschungsinfrastrukturen',
     expandableId: 1,
     items,
     onExpand: () => {
@@ -74,6 +75,7 @@ export const WithChildren: StrictStory = {
 export const WithChildrenLight: StrictStory = {
   args: {
     colorMode: 'light',
+    description: 'Förderung von langfristigen Forschungsinfrastrukturen',
     expandableId: 1,
     items,
     onExpand: () => {
@@ -92,6 +94,7 @@ export const WithChildrenLight: StrictStory = {
 export const WithChildrenWhite: StrictStory = {
   args: {
     colorMode: 'white',
+    description: 'Förderung von langfristigen Forschungsinfrastrukturen',
     expandableId: 1,
     items,
     onExpand: () => {

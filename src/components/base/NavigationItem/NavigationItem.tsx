@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React, {
+  useEffect, useRef,
+} from 'react';
 import { cva } from 'cva';
 import { Button } from '@/components/base/Button/Button';
 import styles from '@/components/base/NavigationItem/NavigationItem.module.scss';
@@ -17,6 +19,7 @@ type InterfaceNavigationItemChild = {
 
 type InterfaceNavigationItemWithItems = {
   text: string;
+  description?: string;
   link?: never;
   items: InterfaceNavigationItemChild[];
   expandableId: number;
@@ -25,10 +28,12 @@ type InterfaceNavigationItemWithItems = {
   setExpanded: number | undefined;
   onExpand: (key: number | undefined) => void;
   colorMode: ColorMode;
+  hoveredItemCallback?: (item: number | undefined) => void;
 };
 
 type InterfaceNavigationItemWithoutItems = {
   text: string;
+  description?: never;
   items?: never;
   link: string;
   expandableId?: never;
@@ -37,6 +42,7 @@ type InterfaceNavigationItemWithoutItems = {
   setExpanded?: never;
   onExpand?: never;
   colorMode: ColorMode;
+  hoveredItemCallback?: never;
 };
 
 export type InterfaceNavigationItemPropTypes =
@@ -79,6 +85,8 @@ export const NavigationItem = ({
   setExpanded,
   onExpand,
   colorMode,
+  hoveredItemCallback,
+  description,
 }: InterfaceNavigationItemPropTypes): React.JSX.Element => {
 
   // --- Hooks
@@ -102,7 +110,34 @@ export const NavigationItem = ({
 
   const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
 
+  // --- Refs
+
+  const lastReported = useRef<number | undefined>(undefined);
+
+  // --- Effects
+
   useEffect(() => {
+
+    // report hovered item to parent
+
+    const nextValue = menuVisible
+      ? expandableId
+      : undefined;
+
+    if (hoveredItemCallback && nextValue !== lastReported.current) {
+      hoveredItemCallback(nextValue);
+      lastReported.current = nextValue;
+    }
+  }, [
+    menuVisible,
+    expandableId,
+    hoveredItemCallback,
+  ]);
+
+  useEffect(() => {
+
+    // react to changes on setExpanded prop
+
     setActiveElement(setExpanded);
   }, [
     setExpanded,
@@ -194,6 +229,7 @@ export const NavigationItem = ({
             element='button'
             className={styles.buttonLevel1}
             ariaCurrent={level1AriaCurrent}
+            ariaDescription={description || undefined}
             ariaExpanded={smallBreakpoint
               ? expandableId === activeElement
               : menuVisible

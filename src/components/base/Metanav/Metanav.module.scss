@@ -1,11 +1,19 @@
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
 
 .metanav {
   @include list-reset;
 
   display: flex;
-  gap: px-to-rem(var(--spacing-xl));
+  flex-wrap: wrap;
+  column-gap: px-to-rem(var(--spacing-xl));
+  align-items: center;
+  justify-content: flex-start;
+
+  @include mq($from: large) {
+    justify-content: flex-end;
+  }
 
   .item {
     padding: 0;

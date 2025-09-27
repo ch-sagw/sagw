@@ -65,6 +65,10 @@
   &:not([disabled]):is(:hover, :focus) {
     transition-timing-function: var(--motion-ease-out);
   }
+
+  .visuallyHidden {
+    @include screen-reader-only;
+  }
 }
 
 /**

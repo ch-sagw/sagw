@@ -6,11 +6,14 @@ import {
 import { ColorMode } from '@/components/base/types/colorMode';
 import styles from '@/components/base/Navigation/Navigation.module.scss';
 
+export type InterfaceHoveredItemCallbackType = Record<string, number | undefined>;
+
 export type InterfaceNavigationPropTypes = {
   sections: InterfaceNavigationItemPropTypes[];
   footer: boolean;
   className?: string;
   colorMode: ColorMode;
+  hoveredItemCallback?: (item: InterfaceHoveredItemCallbackType) => void;
 };
 
 export const Navigation = ({
@@ -18,6 +21,7 @@ export const Navigation = ({
   footer,
   className,
   colorMode,
+  hoveredItemCallback,
 }: InterfaceNavigationPropTypes): React.JSX.Element => {
   const [
     itemsState,
@@ -51,7 +55,17 @@ export const Navigation = ({
               footer={section.footer}
               {...('items' in section
                 ? {
+                  description: section.description,
                   expandableId: section.expandableId as NonNullable<typeof section.expandableId>,
+                  hoveredItemCallback: (item: number | undefined): void => {
+
+                    if (section.expandableId && hoveredItemCallback) {
+                      const returnObject: InterfaceHoveredItemCallbackType = {};
+
+                      returnObject[section.expandableId] = item;
+                      hoveredItemCallback(returnObject);
+                    }
+                  },
                   items: section.items as NonNullable<typeof section.items>,
                   onExpand: (expandKey: number | undefined): void => {
                     if (expandKey !== undefined) {

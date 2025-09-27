@@ -13,6 +13,7 @@ type BaseWrapperProps = {
   ariaCurrent?: boolean;
   ariaControls?: string;
   ariaLabel?: string;
+  ariaDescription?: string;
   autoFocus?: boolean;
   buttonType?: 'submit' | 'button';
   colorMode: ColorMode;
@@ -95,6 +96,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     ariaControls,
     ariaCurrent,
     ariaLabel,
+    ariaDescription,
     autoFocus,
     buttonType,
     colorMode,
@@ -212,6 +214,10 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
         type={buttonType ?? 'button'}
         aria-expanded={ariaExpanded}
       >
+        {ariaDescription &&
+          <span className={styles.visuallyHidden}>{ariaDescription}</span>
+        }
+
         {buttonLinkContent({
           element: 'button',
           iconInlineEnd,

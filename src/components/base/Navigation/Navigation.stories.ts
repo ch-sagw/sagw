@@ -84,6 +84,7 @@ const headerSections: InterfaceNavigationItemPropTypes[] = [
   },
   {
     colorMode: 'dark',
+    description: 'Förderung von langfristigen Forschungsinfrastrukturen',
     expandableId: 1,
     items: items2,
     onExpand: (): void => {
@@ -94,6 +95,7 @@ const headerSections: InterfaceNavigationItemPropTypes[] = [
   },
   {
     colorMode: 'dark',
+    description: 'Unsere 63 Fachgesellschaften unter einem Dach',
     expandableId: 2,
     items: items3,
     onExpand: (): void => {
@@ -104,6 +106,7 @@ const headerSections: InterfaceNavigationItemPropTypes[] = [
   },
   {
     colorMode: 'dark',
+    description: 'Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft',
     expandableId: 3,
     items: items2,
     onExpand: (): void => {
@@ -114,6 +117,7 @@ const headerSections: InterfaceNavigationItemPropTypes[] = [
   },
   {
     colorMode: 'dark',
+    description: 'Alles Wissenswertes über die SAGW',
     expandableId: 4,
     items,
     onExpand: (): void => {
@@ -133,6 +137,7 @@ const footerSections: InterfaceNavigationItemPropTypes[] = [
   },
   {
     colorMode: 'dark',
+    description: 'Förderung von langfristigen Forschungsinfrastrukturen',
     expandableId: 1,
     footer: true,
     items: items2,
@@ -144,6 +149,7 @@ const footerSections: InterfaceNavigationItemPropTypes[] = [
   },
   {
     colorMode: 'dark',
+    description: 'Unsere 63 Fachgesellschaften unter einem Dach',
     expandableId: 2,
     footer: true,
     items: items3,
@@ -155,6 +161,7 @@ const footerSections: InterfaceNavigationItemPropTypes[] = [
   },
   {
     colorMode: 'dark',
+    description: 'Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft',
     expandableId: 3,
     footer: true,
     items,
@@ -166,6 +173,7 @@ const footerSections: InterfaceNavigationItemPropTypes[] = [
   },
   {
     colorMode: 'dark',
+    description: 'Alles Wissenswertes über die SAGW',
     expandableId: 4,
     footer: true,
     items,
