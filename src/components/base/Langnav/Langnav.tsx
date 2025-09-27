@@ -6,6 +6,7 @@ import { Button } from '@/components/base/Button/Button';
 import styles from '@/components/base/Langnav/Langnav.module.scss';
 import { useBreakpoint } from '@/hooks/useBreakpoint';
 import { useExpandOnHover } from '@/hooks/useExpandOnHover';
+import { ColorMode } from '@/components/base/types/colorMode';
 
 // --- Interfaces
 
@@ -20,6 +21,7 @@ export type InterfaceLangnavPropTypes = {
   className?: string;
   onLangSelect: () => void;
   currentLang: string;
+  colorMode: ColorMode;
 };
 
 // --- Classes
@@ -44,6 +46,7 @@ export const Langnav = ({
   className,
   onLangSelect,
   currentLang,
+  colorMode,
 }: InterfaceLangnavPropTypes): React.JSX.Element => {
 
   // --- Hooks
@@ -81,6 +84,7 @@ export const Langnav = ({
       className={cva([
         styles.expandableMenu,
         className,
+        styles[colorMode],
       ])()}
       onMouseEnter={nonExpandableMenu
         ? undefined
@@ -95,7 +99,7 @@ export const Langnav = ({
           className={styles.toggle}
           text={getCurrentLang().shortText}
           style='text'
-          colorMode='dark'
+          colorMode={colorMode}
           element='button'
           ariaExpanded={menuVisible}
           ariaLabel={getCurrentLang().text}
@@ -122,7 +126,7 @@ export const Langnav = ({
                   ? item.shortText
                   : item.text}
                 style='text'
-                colorMode='dark'
+                colorMode={colorMode}
                 element='button'
                 disabled={!nonExpandableMenu && item.value === currentLang}
                 ariaLabel={nonExpandableMenu

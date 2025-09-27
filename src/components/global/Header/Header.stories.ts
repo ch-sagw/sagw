@@ -4,11 +4,11 @@ import type {
 } from '@storybook/nextjs-vite';
 import { Header } from '@/components/global/Header/Header';
 import { defaultDecorator } from '@/storybook-helpers';
-import { Header as NavigationHeader } from '@/components/base/Navigation/Navigation.stories';
+import { HeaderDark as NavigationHeader } from '@/components/base/Navigation/Navigation.stories';
 import { Closed as MenuButton } from '@/components/base/MenuButton/MenuButton.stories';
-import { DefaultInfoBlock } from '@/components/base/NavigationInfoBlock/NavigationInfoBlock.stories';
-import { DefaultMetanav } from '@/components/base/Metanav/Metanav.stories';
-import { DefaultLangNav } from '@/components/base/Langnav/Langnav.stories';
+import { InfoBlockDark } from '@/components/base/NavigationInfoBlock/NavigationInfoBlock.stories';
+import { MetanavDark } from '@/components/base/Metanav/Metanav.stories';
+import { LangNavDark } from '@/components/base/Langnav/Langnav.stories';
 
 type HeaderProps = React.ComponentProps<typeof Header>;
 
@@ -31,13 +31,38 @@ const meta: Meta<typeof Header> = {
 
 export default meta;
 
-export const DefaultHeader: StrictStory = {
+export const HeaderDark: StrictStory = {
   args: {
-    langnav: DefaultLangNav.args,
+    colorMode: 'dark',
+    langnav: LangNavDark.args,
     logoName: 'sagw',
     menuButton: MenuButton.args,
-    metanav: DefaultMetanav.args,
+    metanav: MetanavDark.args,
     navigation: NavigationHeader.args,
-    navigationInfoBlock: DefaultInfoBlock.args,
+    navigationInfoBlock: InfoBlockDark.args,
+  },
+};
+
+export const HeaderLight: StrictStory = {
+  args: {
+    colorMode: 'light',
+    langnav: LangNavDark.args,
+    logoName: 'sagw',
+    menuButton: MenuButton.args,
+    metanav: MetanavDark.args,
+    navigation: NavigationHeader.args,
+    navigationInfoBlock: InfoBlockDark.args,
+  },
+};
+
+export const HeaderWhite: StrictStory = {
+  args: {
+    colorMode: 'white',
+    langnav: LangNavDark.args,
+    logoName: 'sagw',
+    menuButton: MenuButton.args,
+    metanav: MetanavDark.args,
+    navigation: NavigationHeader.args,
+    navigationInfoBlock: InfoBlockDark.args,
   },
 };

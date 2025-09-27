@@ -26,8 +26,21 @@ const meta: Meta<typeof HeaderLogo> = {
 
 export default meta;
 
-export const LogoSagw: StrictStory = {
+export const LogoSagwDark: StrictStory = {
   args: {
+    colorMode: 'dark',
+    name: 'sagw',
+  },
+  globals: {
+    backgrounds: {
+      value: 'dark',
+    },
+  },
+};
+
+export const LogoSagwLight: StrictStory = {
+  args: {
+    colorMode: 'light',
     name: 'sagw',
   },
 };

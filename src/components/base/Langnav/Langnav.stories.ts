@@ -25,31 +25,34 @@ const meta: Meta<typeof Langnav> = {
 
 export default meta;
 
-export const DefaultLangNav: StrictStory = {
+const items = [
+  {
+    shortText: 'De',
+    text: 'Deutsch',
+    value: 'de',
+  },
+  {
+    shortText: 'Fr',
+    text: 'Français',
+    value: 'fr',
+  },
+  {
+    shortText: 'It',
+    text: 'Italiano',
+    value: 'it',
+  },
+  {
+    shortText: 'En',
+    text: 'English',
+    value: 'en',
+  },
+];
+
+export const LangNavDark: StrictStory = {
   args: {
+    colorMode: 'dark',
     currentLang: 'de',
-    items: [
-      {
-        shortText: 'De',
-        text: 'Deutsch',
-        value: 'de',
-      },
-      {
-        shortText: 'Fr',
-        text: 'Français',
-        value: 'fr',
-      },
-      {
-        shortText: 'It',
-        text: 'Italiano',
-        value: 'it',
-      },
-      {
-        shortText: 'En',
-        text: 'English',
-        value: 'en',
-      },
-    ],
+    items,
     onLangSelect: () => {
       console.log('lang select handler');
     },
@@ -57,6 +60,38 @@ export const DefaultLangNav: StrictStory = {
   globals: {
     backgrounds: {
       value: 'dark',
+    },
+  },
+};
+
+export const LangNavLight: StrictStory = {
+  args: {
+    colorMode: 'light',
+    currentLang: 'de',
+    items,
+    onLangSelect: () => {
+      console.log('lang select handler');
+    },
+  },
+  globals: {
+    backgrounds: {
+      value: 'light',
+    },
+  },
+};
+
+export const LangNavWhite: StrictStory = {
+  args: {
+    colorMode: 'white',
+    currentLang: 'de',
+    items,
+    onLangSelect: () => {
+      console.log('lang select handler');
+    },
+  },
+  globals: {
+    backgrounds: {
+      value: 'white',
     },
   },
 };

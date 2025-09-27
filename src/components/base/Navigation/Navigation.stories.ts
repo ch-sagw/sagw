@@ -3,6 +3,7 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import { Navigation } from '@/components/base/Navigation/Navigation';
+import { InterfaceNavigationItemPropTypes } from '../NavigationItem/NavigationItem';
 import { defaultDecorator } from '@/storybook-helpers';
 
 type NavigationProps = React.ComponentProps<typeof Navigation>;
@@ -75,51 +76,112 @@ const items3 = [
   },
 ];
 
-export const Header: StrictStory = {
+const headerSections: InterfaceNavigationItemPropTypes[] = [
+  {
+    colorMode: 'dark',
+    link: 'foo',
+    text: 'Home',
+  },
+  {
+    colorMode: 'dark',
+    expandableId: 1,
+    items: items2,
+    onExpand: (): void => {
+      console.log('some expand handler');
+    },
+    setExpanded: undefined,
+    text: 'Förderung',
+  },
+  {
+    colorMode: 'dark',
+    expandableId: 2,
+    items: items3,
+    onExpand: (): void => {
+      console.log('some expand handler');
+    },
+    setExpanded: undefined,
+    text: 'Netzwerk',
+  },
+  {
+    colorMode: 'dark',
+    expandableId: 3,
+    items: items2,
+    onExpand: (): void => {
+      console.log('some expand handler');
+    },
+    setExpanded: undefined,
+    text: 'Aktivitäten',
+  },
+  {
+    colorMode: 'dark',
+    expandableId: 4,
+    items,
+    onExpand: (): void => {
+      console.log('some expand handler');
+    },
+    setExpanded: undefined,
+    text: 'Über Uns',
+  },
+];
+
+const footerSections: InterfaceNavigationItemPropTypes[] = [
+  {
+    colorMode: 'dark',
+    footer: true,
+    link: 'foo',
+    text: 'Home',
+  },
+  {
+    colorMode: 'dark',
+    expandableId: 1,
+    footer: true,
+    items: items2,
+    onExpand: (): void => {
+      console.log('some expand handler');
+    },
+    setExpanded: undefined,
+    text: 'Förderung',
+  },
+  {
+    colorMode: 'dark',
+    expandableId: 2,
+    footer: true,
+    items: items3,
+    onExpand: (): void => {
+      console.log('some expand handler');
+    },
+    setExpanded: undefined,
+    text: 'Netzwerk',
+  },
+  {
+    colorMode: 'dark',
+    expandableId: 3,
+    footer: true,
+    items,
+    onExpand: (): void => {
+      console.log('some expand handler');
+    },
+    setExpanded: undefined,
+    text: 'Aktivitäten',
+  },
+  {
+    colorMode: 'dark',
+    expandableId: 4,
+    footer: true,
+    items,
+    onExpand: (): void => {
+      console.log('some expand handler');
+    },
+    setExpanded: undefined,
+    text: 'Über Uns',
+  },
+];
+
+export const HeaderDark: StrictStory = {
   args: {
+    colorMode: 'dark',
     footer: false,
-    sections: [
-      {
-        link: 'foo',
-        text: 'Home',
-      },
-      {
-        expandableId: 1,
-        items: items2,
-        onExpand: (): void => {
-          console.log('some expand handler');
-        },
-        setExpanded: undefined,
-        text: 'Förderung',
-      },
-      {
-        expandableId: 2,
-        items: items3,
-        onExpand: (): void => {
-          console.log('some expand handler');
-        },
-        setExpanded: undefined,
-        text: 'Netzwerk',
-      },
-      {
-        expandableId: 3,
-        items: items2,
-        onExpand: (): void => {
-          console.log('some expand handler');
-        },
-        setExpanded: undefined,
-        text: 'Aktivitäten',
-      },
-      {
-        expandableId: 4,
-        items,
-        onExpand: (): void => {
-          console.log('some expand handler');
-        },
-        setExpanded: undefined,
-        text: 'Über Uns',
-      },
-    ],
+    sections: headerSections,
   },
   globals: {
     backgrounds: {
@@ -128,56 +190,37 @@ export const Header: StrictStory = {
   },
 };
 
+export const HeaderLight: StrictStory = {
+  args: {
+    colorMode: 'light',
+    footer: false,
+    sections: headerSections,
+  },
+  globals: {
+    backgrounds: {
+      value: 'light',
+    },
+  },
+};
+
+export const HeaderWhite: StrictStory = {
+  args: {
+    colorMode: 'white',
+    footer: false,
+    sections: headerSections,
+  },
+  globals: {
+    backgrounds: {
+      value: 'white',
+    },
+  },
+};
+
 export const Footer: StrictStory = {
   args: {
+    colorMode: 'dark',
     footer: true,
-    sections: [
-      {
-        footer: true,
-        link: 'foo',
-        text: 'Home',
-      },
-      {
-        expandableId: 1,
-        footer: true,
-        items: items2,
-        onExpand: (): void => {
-          console.log('some expand handler');
-        },
-        setExpanded: undefined,
-        text: 'Förderung',
-      },
-      {
-        expandableId: 2,
-        footer: true,
-        items: items3,
-        onExpand: (): void => {
-          console.log('some expand handler');
-        },
-        setExpanded: undefined,
-        text: 'Netzwerk',
-      },
-      {
-        expandableId: 3,
-        footer: true,
-        items,
-        onExpand: (): void => {
-          console.log('some expand handler');
-        },
-        setExpanded: undefined,
-        text: 'Aktivitäten',
-      },
-      {
-        expandableId: 4,
-        footer: true,
-        items,
-        onExpand: (): void => {
-          console.log('some expand handler');
-        },
-        setExpanded: undefined,
-        text: 'Über Uns',
-      },
-    ],
+    sections: footerSections,
   },
   globals: {
     backgrounds: {

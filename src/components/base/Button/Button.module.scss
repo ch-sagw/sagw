@@ -155,6 +155,7 @@
     --button-icon-color: var(--interaction-secondary);
     --line-animation-duration: var(--motion-speed-very-fast);
     --line-cover-color: canvas;
+    --button-color: var(--text-primary);
 
     // Redefined because we want to use the --button-padding-block
     // variable on the innerText element.
@@ -198,6 +199,12 @@
     &:hover {
       --button-color: var(--text-primary-inverted);
     }
+  }
+
+  &.light {
+    --button-color: var(--interaction-primary);
+    --button-icon-color: var(--interaction-primary);
+    --line-cover-color: var(--background-light);
   }
 
   .innerText {

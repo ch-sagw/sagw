@@ -6,6 +6,7 @@ import { useBreakpoint } from '@/hooks/useBreakpoint';
 import { Icon } from '@/icons';
 import { useExpandOnHover } from '@/hooks/useExpandOnHover';
 import { useExpandOnClick } from '@/hooks/useExpandOnClick';
+import { ColorMode } from '@/components/base/types/colorMode';
 
 // --- Interfaces
 
@@ -23,6 +24,7 @@ type InterfaceNavigationItemWithItems = {
   className?: string;
   setExpanded: number | undefined;
   onExpand: (key: number | undefined) => void;
+  colorMode: ColorMode;
 };
 
 type InterfaceNavigationItemWithoutItems = {
@@ -34,6 +36,7 @@ type InterfaceNavigationItemWithoutItems = {
   className?: string;
   setExpanded?: never;
   onExpand?: never;
+  colorMode: ColorMode;
 };
 
 export type InterfaceNavigationItemPropTypes =
@@ -75,6 +78,7 @@ export const NavigationItem = ({
   className,
   setExpanded,
   onExpand,
+  colorMode,
 }: InterfaceNavigationItemPropTypes): React.JSX.Element => {
 
   // --- Hooks
@@ -110,6 +114,7 @@ export const NavigationItem = ({
   const menuClasses = cva([
     styles.expandableMenu,
     className,
+    styles[colorMode],
   ], {
     variants: {
       footer: {
@@ -185,7 +190,7 @@ export const NavigationItem = ({
               ? 'textBright'
               : 'text'
             }
-            colorMode='dark'
+            colorMode={colorMode}
             element='button'
             className={styles.buttonLevel1}
             ariaCurrent={level1AriaCurrent}
@@ -208,7 +213,7 @@ export const NavigationItem = ({
               ? 'textBright'
               : 'text'
             }
-            colorMode='dark'
+            colorMode={colorMode}
             element='link'
             href={link}
             className={styles.buttonLevel1}
@@ -252,7 +257,7 @@ export const NavigationItem = ({
                   ? 'textSmall'
                   : 'text'
                 }
-                colorMode='dark'
+                colorMode={colorMode}
                 element='link'
                 href={child.link}
                 className={styles.item}

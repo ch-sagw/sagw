@@ -55,6 +55,7 @@ const items = [
 
 export const WithChildren: StrictStory = {
   args: {
+    colorMode: 'dark',
     expandableId: 1,
     items,
     onExpand: () => {
@@ -70,8 +71,45 @@ export const WithChildren: StrictStory = {
   },
 };
 
+export const WithChildrenLight: StrictStory = {
+  args: {
+    colorMode: 'light',
+    expandableId: 1,
+    items,
+    onExpand: () => {
+      console.log('some expand handler');
+    },
+    setExpanded: undefined,
+    text: 'Förderung',
+  },
+  globals: {
+    backgrounds: {
+      value: 'light',
+    },
+  },
+};
+
+export const WithChildrenWhite: StrictStory = {
+  args: {
+    colorMode: 'white',
+    expandableId: 1,
+    items,
+    onExpand: () => {
+      console.log('some expand handler');
+    },
+    setExpanded: undefined,
+    text: 'Förderung',
+  },
+  globals: {
+    backgrounds: {
+      value: 'white',
+    },
+  },
+};
+
 export const WithoutChildren: StrictStory = {
   args: {
+    colorMode: 'dark',
     link: 'foo',
     text: 'Förderung',
   },
@@ -84,6 +122,7 @@ export const WithoutChildren: StrictStory = {
 
 export const Footer: StrictStory = {
   args: {
+    colorMode: 'dark',
     expandableId: 1,
     footer: true,
     items,
@@ -99,3 +138,4 @@ export const Footer: StrictStory = {
     },
   },
 };
+

@@ -6,6 +6,7 @@
   @include button-reset;
 
   --dashes-vertical-spacing: 8;
+  --background-color: var(--icon-secondary-inverted);
 
   $verticalCenter: calc((var(--spacing-2xl) - var(--border-width-l)) / 2);
   $leftPosition: px-to-rem(calc((var(--spacing-2xl) - var(--spacing-l)) / 2));
@@ -15,6 +16,11 @@
   display: block;
   position: relative;
   cursor: pointer;
+
+  &.white,
+  &.light {
+    --background-color: var(--icon-primary);
+  }
 
   &.open {
     .dash1 {
@@ -43,7 +49,7 @@
     position: absolute;
     width: px-to-rem(var(--spacing-l));
     height: px-to-rem(var(--border-width-l));
-    background-color: var(--icon-secondary-inverted);
+    background-color: var(--background-color);
     inset-inline-start: $leftPosition;
     transition-duration: var(--motion-speed-very-fast);
     transition-timing-function: (--motion-ease-in-out);

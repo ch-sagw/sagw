@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { cva } from 'cva';
+import { ColorMode } from '@/components/base/types/colorMode';
 import styles from '@/components/base/MenuButton/MenuButton.module.scss';
 
 export type InterfaceMenuButtonPropTypes = {
@@ -12,6 +13,7 @@ export type InterfaceMenuButtonPropTypes = {
     closeMenu: string;
   },
   className?: string;
+  colorMode: ColorMode;
 };
 
 export const MenuButton = ({
@@ -19,10 +21,12 @@ export const MenuButton = ({
   onClick,
   hiddenTexts,
   className,
+  colorMode,
 }: InterfaceMenuButtonPropTypes): React.JSX.Element => {
   const classes = cva([
     styles.button,
     className,
+    styles[colorMode],
   ], {
     variants: {
       open: {

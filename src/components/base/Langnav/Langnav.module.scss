@@ -23,7 +23,7 @@
     @include expandable-wrapper;
 
     & {
-      margin-block-start: px-to-rem(var(--spacing-xl));
+      padding-block-start: px-to-rem(var(--spacing-xl));
       position: absolute;
       inset-block-start: 100%;
       inset-inline-end: 0;

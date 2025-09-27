@@ -3,18 +3,21 @@ import { cva } from 'cva';
 import {
   InterfaceNavigationItemPropTypes, NavigationItem,
 } from '@/components/base/NavigationItem/NavigationItem';
+import { ColorMode } from '@/components/base/types/colorMode';
 import styles from '@/components/base/Navigation/Navigation.module.scss';
 
 export type InterfaceNavigationPropTypes = {
   sections: InterfaceNavigationItemPropTypes[];
   footer: boolean;
   className?: string;
+  colorMode: ColorMode;
 };
 
 export const Navigation = ({
   sections,
   footer,
   className,
+  colorMode,
 }: InterfaceNavigationPropTypes): React.JSX.Element => {
   const [
     itemsState,
@@ -24,6 +27,7 @@ export const Navigation = ({
   const classes = cva([
     styles.nav,
     className,
+    styles[colorMode],
   ], {
     variants: {
       footer: {
@@ -41,6 +45,7 @@ export const Navigation = ({
         {sections.map((section: InterfaceNavigationItemPropTypes, key: number) => (
           <li key={key}>
             <NavigationItem
+              colorMode={colorMode}
               className={styles.item}
               text={section.text}
               footer={section.footer}

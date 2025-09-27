@@ -17,7 +17,7 @@ const meta: Meta<typeof Button> = {
   decorators: [defaultDecorator],
   globals: {
     backgrounds: {
-      value: 'light',
+      value: 'white',
     },
   },
   parameters: {/* layout: 'centered', */ },
@@ -150,6 +150,21 @@ export const ButtonTextDark: StrictStory = {
   globals: {
     backgrounds: {
       value: 'dark',
+    },
+  },
+};
+
+export const ButtonTextLight: StrictStory = {
+  args: {
+    colorMode: 'light',
+    element: 'button',
+    iconInlineStart: 'config' as keyof typeof Icon,
+    style: 'text',
+    text: 'Auswahl anpassen',
+  },
+  globals: {
+    backgrounds: {
+      value: 'light',
     },
   },
 };

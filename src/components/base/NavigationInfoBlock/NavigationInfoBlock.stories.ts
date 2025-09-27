@@ -25,14 +25,41 @@ const meta: Meta<typeof NavigationInfoBlock> = {
 
 export default meta;
 
-export const DefaultInfoBlock: StrictStory = {
+export const InfoBlockDark: StrictStory = {
   args: {
+    colorMode: 'dark',
     text: 'Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft',
     title: 'Aktivitäten',
   },
   globals: {
     backgrounds: {
       value: 'dark',
+    },
+  },
+};
+
+export const InfoBlockLight: StrictStory = {
+  args: {
+    colorMode: 'light',
+    text: 'Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft',
+    title: 'Aktivitäten',
+  },
+  globals: {
+    backgrounds: {
+      value: 'light',
+    },
+  },
+};
+
+export const InfoBlockWhite: StrictStory = {
+  args: {
+    colorMode: 'white',
+    text: 'Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft',
+    title: 'Aktivitäten',
+  },
+  globals: {
+    backgrounds: {
+      value: 'white',
     },
   },
 };

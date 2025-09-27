@@ -1,5 +1,15 @@
 .header {
-  background-color: var(--background-inverted);
+  &.dark {
+    background-color: var(--background-inverted);
+  }
+
+  &.white {
+    background-color: var(--background-page);
+  }
+
+  &.light {
+    background-color: var(--background-light);
+  }
 
   .logo {
     border: 1px solid red;

@@ -2,8 +2,9 @@ import 'server-only';
 import React from 'react';
 import styles from '@/components/base/Metanav/Metanav.module.scss';
 import { Button } from '@/components/base/Button/Button';
+import { ColorMode } from '@/components/base/types/colorMode';
 
-type InterfaceMetanavItem = {
+export type InterfaceMetanavItem = {
   text: string;
   link: string;
   target: '_self' | '_blank';
@@ -12,13 +13,15 @@ type InterfaceMetanavItem = {
 export type InterfaceMetanavPropTypes = {
   items: InterfaceMetanavItem[],
   className?: string,
+  colorMode: ColorMode;
 };
 
 export const Metanav = ({
   items,
   className,
+  colorMode,
 }: InterfaceMetanavPropTypes): React.JSX.Element => (
-  <ul className={`${styles.metanav} ${className}`}>
+  <ul className={`${styles.metanav} ${className} ${styles[colorMode]}`}>
     {items.map((item, key: number) => (
       <li
         key={key}
@@ -27,7 +30,7 @@ export const Metanav = ({
           className={styles.item}
           text={item.text}
           style='textSmall'
-          colorMode='dark'
+          colorMode={colorMode}
           element='link'
           href={item.link}
           target={item.target === '_blank'

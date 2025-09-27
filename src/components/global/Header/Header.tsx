@@ -18,6 +18,7 @@ import {
 import {
   InterfaceLangnavPropTypes, Langnav,
 } from '@/components/base/Langnav/Langnav';
+import { ColorMode } from '@/components/base/types/colorMode';
 
 import { HeaderLogo } from '@/components/base/HeaderLogo/HeaderLogo';
 
@@ -28,6 +29,7 @@ export type InterfaceHeaderPropTypes = {
   metanav: InterfaceMetanavPropTypes;
   langnav: InterfaceLangnavPropTypes;
   logoName: 'sagw';
+  colorMode: ColorMode;
 };
 
 export const Header = ({
@@ -37,36 +39,43 @@ export const Header = ({
   metanav,
   langnav,
   logoName,
+  colorMode,
 }: InterfaceHeaderPropTypes): React.JSX.Element => (
-  <header className={styles.header}>
+  <header className={`${styles.header} ${styles[colorMode]}`}>
     <HeaderLogo
       className={styles.logo}
       name={logoName}
+      colorMode={colorMode}
     />
 
     <Navigation
       {...navigation}
       className={styles.navigation}
+      colorMode={colorMode}
     />
 
     <NavigationInfoBlock
       {...navigationInfoBlock}
       className={styles.infoBlock}
+      colorMode={colorMode}
     />
 
     <Langnav
       {...langnav}
       className={styles.langnav}
+      colorMode={colorMode}
     />
 
     <Metanav
       {...metanav}
       className={styles.metanav}
+      colorMode={colorMode}
     />
 
     <MenuButton
       {...menuButton}
       className={styles.menuButton}
+      colorMode={colorMode}
     />
   </header>
 );

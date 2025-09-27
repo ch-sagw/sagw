@@ -4,7 +4,19 @@
 
 .logo.sagw {
   path {
-    fill: var(--white);
     stroke: none;
+  }
+
+  &.dark {
+    path {
+      fill: var(--white);
+    }
+  }
+
+  &.white,
+  &.light {
+    path {
+      fill: var(--black);
+    }
   }
 }

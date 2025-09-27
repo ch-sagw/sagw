@@ -28,6 +28,7 @@ export default meta;
 
 export const Open: StrictStory = {
   args: {
+    colorMode: 'dark',
     hiddenTexts: {
       closeMenu: 'Menu schliessen',
       openMenu: 'Menu öffnen',
@@ -46,6 +47,7 @@ export const Open: StrictStory = {
 
 export const Closed: StrictStory = {
   args: {
+    colorMode: 'dark',
     hiddenTexts: {
       closeMenu: 'Menu schliessen',
       openMenu: 'Menu öffnen',
@@ -58,6 +60,44 @@ export const Closed: StrictStory = {
   globals: {
     backgrounds: {
       value: 'dark',
+    },
+  },
+};
+
+export const Light: StrictStory = {
+  args: {
+    colorMode: 'light',
+    hiddenTexts: {
+      closeMenu: 'Menu schliessen',
+      openMenu: 'Menu öffnen',
+    },
+    onClick: () => {
+      console.log('some click handler');
+    },
+    open: false,
+  },
+  globals: {
+    backgrounds: {
+      value: 'light',
+    },
+  },
+};
+
+export const White: StrictStory = {
+  args: {
+    colorMode: 'white',
+    hiddenTexts: {
+      closeMenu: 'Menu schliessen',
+      openMenu: 'Menu öffnen',
+    },
+    onClick: () => {
+      console.log('some click handler');
+    },
+    open: false,
+  },
+  globals: {
+    backgrounds: {
+      value: 'white',
     },
   },
 };

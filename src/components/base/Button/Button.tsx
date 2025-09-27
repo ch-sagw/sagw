@@ -7,6 +7,7 @@ import { cva } from 'cva';
 import styles from '@/components/base/Button/Button.module.scss';
 import { Icon } from '@/icons';
 import Link from 'next/link';
+import { ColorMode } from '@/components/base/types/colorMode';
 
 type BaseWrapperProps = {
   ariaCurrent?: boolean;
@@ -14,7 +15,7 @@ type BaseWrapperProps = {
   ariaLabel?: string;
   autoFocus?: boolean;
   buttonType?: 'submit' | 'button';
-  colorMode: 'white' | 'dark';
+  colorMode: ColorMode;
   disabled?: boolean;
   onClick?: (e: React.PointerEvent<HTMLButtonElement>) => void;
   popOverTarget?: string;
@@ -124,6 +125,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     variants: {
       colorMode: {
         dark: [styles.dark],
+        light: [styles.light],
         white: [styles.white],
       },
       style: {
