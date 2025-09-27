@@ -1,6 +1,4 @@
-import React, {
-  useEffect, useRef,
-} from 'react';
+import React, { useEffect } from 'react';
 import { cva } from 'cva';
 import { Button } from '@/components/base/Button/Button';
 import styles from '@/components/base/NavigationItem/NavigationItem.module.scss';
@@ -75,29 +73,6 @@ const iconClasses = cva([styles.icon], {
   },
 });
 
-// --- Helpers
-const measureElementHeight = (el: HTMLElement): number => {
-  if (!el) {
-    return 0;
-  }
-
-  const clone = el.cloneNode(true) as HTMLElement;
-
-  clone.style.visibility = 'hidden';
-  clone.style.position = 'absolute';
-  clone.style.height = 'auto';
-  clone.style.maxHeight = 'none';
-  clone.style.opacity = '0';
-  clone.style.pointerEvents = 'none';
-  document.body.appendChild(clone);
-
-  const height = clone.offsetHeight;
-
-  document.body.removeChild(clone);
-
-  return height;
-};
-
 // --- Component
 
 export const NavigationItem = ({
@@ -123,6 +98,9 @@ export const NavigationItem = ({
     onToggleClick: onToggleClickFromHover,
     onMouseEnter,
     onMouseLeave,
+    expandableRef,
+    measureElementHeight,
+    lastReported,
   } = useExpandOnHover();
 
   const {
@@ -135,11 +113,6 @@ export const NavigationItem = ({
   const breakpoint = useBreakpoint();
 
   const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
-
-  // --- Refs
-
-  const lastReported = useRef<number | undefined>(undefined);
-  const expandableRef = useRef<HTMLDivElement>(null);
 
   // --- Effects
 
@@ -157,6 +130,7 @@ export const NavigationItem = ({
     menuVisible,
     expandableId,
     hoveredItemCallback,
+    lastReported,
   ]);
 
   // react to changes on setExpanded prop
@@ -180,6 +154,8 @@ export const NavigationItem = ({
     expandableId,
     onHeightChange,
     items,
+    expandableRef,
+    measureElementHeight,
   ]);
 
   // --- Classes
