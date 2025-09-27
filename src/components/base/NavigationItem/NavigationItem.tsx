@@ -182,7 +182,6 @@ export const NavigationItem = ({
     onHeightChange,
     items,
     expandableRef,
-    measureElementHeight,
   ]);
 
   // --- Classes
