@@ -8,19 +8,25 @@ import React, {
 } from 'react';
 import styles from '@/components/global/Header/Header.module.scss';
 import {
-  InterfaceHoveredItemCallbackType, InterfaceNavigationPropTypes, Navigation,
+  InterfaceHoveredItemCallbackType,
+  InterfaceNavigationPropTypes,
+  Navigation,
 } from '@/components/base/Navigation/Navigation';
 import {
-  InterfaceMenuButtonPropTypes, MenuButton,
+  InterfaceMenuButtonPropTypes,
+  MenuButton,
 } from '@/components/base/MenuButton/MenuButton';
 import {
-  InterfaceNavigationInfoBlockPropTypes, NavigationInfoBlock,
+  InterfaceNavigationInfoBlockPropTypes,
+  NavigationInfoBlock,
 } from '@/components/base/NavigationInfoBlock/NavigationInfoBlock';
 import {
-  InterfaceMetanavPropTypes, Metanav,
+  InterfaceMetanavPropTypes,
+  Metanav,
 } from '@/components/base/Metanav/Metanav';
 import {
-  InterfaceLangnavPropTypes, Langnav,
+  InterfaceLangnavPropTypes,
+  Langnav,
 } from '@/components/base/Langnav/Langnav';
 import { ColorMode } from '@/components/base/types/colorMode';
 
@@ -39,7 +45,7 @@ export type InterfaceHeaderPropTypes = {
   colorMode: ColorMode;
 };
 
-// --- Render
+// --- Component
 
 export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
@@ -69,8 +75,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       const selectedSections = sections.filter((section) => String(section.expandableId) === selectedItem);
 
       if (selectedSections.length > 0) {
-        console.log(selectedSections[0]);
-
         setInfoBlockContent({
           text: selectedSections[0].description || '',
           title: selectedSections[0].text,
@@ -135,6 +139,8 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       colorMode={props.colorMode}
     />
   );
+
+  // --- Render
 
   return (
     <header className={`${styles.header} ${styles[props.colorMode]}`}>
