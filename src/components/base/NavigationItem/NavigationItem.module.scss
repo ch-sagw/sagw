@@ -8,7 +8,6 @@
   --button-text-size: var(--font-size-m);
 
   padding: 0;
-  cursor: pointer;
   position: relative;
 
   @include mq($from: large) {
@@ -58,7 +57,7 @@
 
     @include mq($from: large) {
       position: absolute;
-      padding-block-start: px-to-rem(var(--spacing-m));
+      padding-block: px-to-rem(var(--spacing-m));
       inset-block-start: 100%;
       inset-inline-start: 0;
       width: max-content;
@@ -91,9 +90,11 @@
       padding: 0;
       transition: transform var(--motion-speed-very-fast) var(--motion-ease-in-out);
       user-select: none;
+      width: 100%;
 
       @include mq($from: large) {
         transition: none;
+        width: auto;
       }
 
       @include reduced-motion {
@@ -132,7 +133,6 @@
   .footerColumnTitle {
     @include button-text;
 
-    // font-weight: bold;
     font-size: px-to-rem(var(--button-text-size));
     color: var(--text-primary-inverted);
   }

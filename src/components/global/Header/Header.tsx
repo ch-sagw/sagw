@@ -2,9 +2,22 @@
 // - hidden text from navigationInfoBlock
 // - level 2 with long texts have overflow. is there a smart solution?
 // - connect Header to cms
+// - tests
+// - also measure height of langnav
+// - in small viewport, set height to auto
+// - on breakpoint change, handle header height
+// - also expand header if lang nav is hovered
+// - on scroll, morph to white
+// - footer on mobile: if expanded, before first and after last
+//       -> more spacing
+// - focus handling: if one menu is open, tab to the next and open
+//       --> previous should close
+// - make nav position absolute. then, as well, define a top-margin on the root
+// layout to compensate for the nav height
+// - make info-text fade in. and fix top spacing
 
 import React, {
-  Fragment, useState,
+  Fragment, useEffect, useRef, useState,
 } from 'react';
 import styles from '@/components/global/Header/Header.module.scss';
 import {
@@ -49,6 +62,10 @@ export type InterfaceHeaderPropTypes = {
 
 export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
+  // --- Refs
+
+  const headerRef = useRef<HTMLElement>(null);
+
   // --- Hooks
 
   const breakpoint = useBreakpoint();
@@ -56,18 +73,51 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
 
   // --- State
+  const [
+    isHovering,
+    setIsHovering,
+  ] = useState(false);
 
   const [
     infoBlockContent,
     setInfoBlockContent,
   ] = useState<{ title: string; text: string } | undefined>();
 
+  const [
+    navMaxHeight,
+    setNavMaxHeight,
+  ] = useState(0);
+
+  const [
+    totalHeaderHeight,
+    setTotalHeaderHeight,
+  ] = useState(0);
+
+  const [
+    headerNaturalHeight,
+    setHeaderNatualHeight,
+  ] = useState(0);
+
+  // --- Effects
+
+  useEffect(() => {
+    if (!headerRef.current) {
+      return;
+    }
+    const naturalHeight = headerRef.current.offsetHeight;
+
+    setHeaderNatualHeight(naturalHeight);
+    setTotalHeaderHeight(naturalHeight + navMaxHeight);
+  }, [navMaxHeight]);
+
   // --- Callbacks
 
-  const handleHoveredItem = ((item: InterfaceHoveredItemCallbackType): void => {
+  const handleHoveredItem = (item: InterfaceHoveredItemCallbackType): void => {
     const [selectedItem] = Object.keys(item);
 
     if (item[selectedItem]) {
+      setIsHovering(true);
+
       const {
         sections,
       } = props.navigation;
@@ -85,7 +135,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     } else {
       setInfoBlockContent(undefined);
     }
-  });
+  };
 
   // --- Render Helpers
 
@@ -121,6 +171,11 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       className={styles.navigation}
       colorMode={props.colorMode}
       hoveredItemCallback={handleHoveredItem}
+      navMaxHeightCallback={(maxHeight: number) => {
+        if (maxHeight >= 0) {
+          setNavMaxHeight(maxHeight);
+        }
+      }}
     />
   );
 
@@ -143,7 +198,15 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   // --- Render
 
   return (
-    <header className={`${styles.header} ${styles[props.colorMode]}`}>
+    <header
+      style={totalHeaderHeight
+        ? {
+          height: isHovering
+            ? `${totalHeaderHeight + 72}px`
+            : `${headerNaturalHeight}px`,
+        }
+        : undefined}
+      ref={headerRef} className={`${styles.header} ${styles[props.colorMode]}`}>
 
       {smallBreakpoint &&
         <Fragment>
@@ -165,7 +228,18 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
         <Fragment>
           {metanavRender()}
 
-          <div className={styles.logoWrapper}>
+          <div
+            className={styles.logoWrapper}
+            onMouseLeave={() => {
+              setIsHovering(false);
+            }}
+            onFocus={() => {
+              setIsHovering(true);
+            }}
+            onBlur={() => {
+              setIsHovering(false);
+            }}
+          >
             {headerLogoRender()}
             {navigationRender()}
             {langnavRender()}

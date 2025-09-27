@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, {
+  useCallback, useEffect, useState,
+} from 'react';
 import { cva } from 'cva';
 import {
   InterfaceNavigationItemPropTypes, NavigationItem,
 } from '@/components/base/NavigationItem/NavigationItem';
 import { ColorMode } from '@/components/base/types/colorMode';
 import styles from '@/components/base/Navigation/Navigation.module.scss';
+
+// --- Interfaces
 
 export type InterfaceHoveredItemCallbackType = Record<string, number | undefined>;
 
@@ -14,7 +18,10 @@ export type InterfaceNavigationPropTypes = {
   className?: string;
   colorMode: ColorMode;
   hoveredItemCallback?: (item: InterfaceHoveredItemCallbackType) => void;
+  navMaxHeightCallback?: (maxHeight: number) => void;
 };
+
+// --- Component
 
 export const Navigation = ({
   sections,
@@ -22,11 +29,45 @@ export const Navigation = ({
   className,
   colorMode,
   hoveredItemCallback,
+  navMaxHeightCallback,
 }: InterfaceNavigationPropTypes): React.JSX.Element => {
+
+  // --- State
+
   const [
     itemsState,
     setItemsState,
   ] = useState<number | undefined>(undefined);
+
+  const [
+    heights,
+    setHeights,
+  ] = useState<Record<number, number>>({});
+
+  // --- Effects
+
+  useEffect(() => {
+    const maxHeight = Math.max(...Object.values(heights));
+
+    if (navMaxHeightCallback) {
+      navMaxHeightCallback(maxHeight);
+    }
+  }, [
+    heights,
+    navMaxHeightCallback,
+  ]);
+
+  // --- Callbacks
+
+  const handleHeightChange = useCallback((id: number, height: number) => {
+    setHeights((prev) => ({
+      ...prev,
+      [id]: height,
+    }));
+
+  }, []);
+
+  // --- Classes
 
   const classes = cva([
     styles.nav,
@@ -41,10 +82,14 @@ export const Navigation = ({
     },
   });
 
+  // --- Render
+
   return (
-    <nav className={classes({
-      footer,
-    })}>
+    <nav
+      className={classes({
+        footer,
+      })}
+    >
       <ul className={styles.list}>
         {sections.map((section: InterfaceNavigationItemPropTypes, key: number) => (
           <li key={key}>
@@ -72,6 +117,7 @@ export const Navigation = ({
                       setItemsState(expandKey);
                     }
                   },
+                  onHeightChange: handleHeightChange,
                   setExpanded: itemsState === key
                     ? itemsState
                     : undefined,

@@ -29,6 +29,7 @@ type InterfaceNavigationItemWithItems = {
   onExpand: (key: number | undefined) => void;
   colorMode: ColorMode;
   hoveredItemCallback?: (item: number | undefined) => void;
+  onHeightChange?: (id: number, height: number) => void;
 };
 
 type InterfaceNavigationItemWithoutItems = {
@@ -43,6 +44,7 @@ type InterfaceNavigationItemWithoutItems = {
   onExpand?: never;
   colorMode: ColorMode;
   hoveredItemCallback?: never;
+  onHeightChange?: never;
 };
 
 export type InterfaceNavigationItemPropTypes =
@@ -73,6 +75,29 @@ const iconClasses = cva([styles.icon], {
   },
 });
 
+// --- Helpers
+const measureElementHeight = (el: HTMLElement): number => {
+  if (!el) {
+    return 0;
+  }
+
+  const clone = el.cloneNode(true) as HTMLElement;
+
+  clone.style.visibility = 'hidden';
+  clone.style.position = 'absolute';
+  clone.style.height = 'auto';
+  clone.style.maxHeight = 'none';
+  clone.style.opacity = '0';
+  clone.style.pointerEvents = 'none';
+  document.body.appendChild(clone);
+
+  const height = clone.offsetHeight;
+
+  document.body.removeChild(clone);
+
+  return height;
+};
+
 // --- Component
 
 export const NavigationItem = ({
@@ -87,6 +112,7 @@ export const NavigationItem = ({
   colorMode,
   hoveredItemCallback,
   description,
+  onHeightChange,
 }: InterfaceNavigationItemPropTypes): React.JSX.Element => {
 
   // --- Hooks
@@ -113,13 +139,12 @@ export const NavigationItem = ({
   // --- Refs
 
   const lastReported = useRef<number | undefined>(undefined);
+  const expandableRef = useRef<HTMLDivElement>(null);
 
   // --- Effects
 
+  // report hovered item to parent
   useEffect(() => {
-
-    // report hovered item to parent
-
     const nextValue = menuVisible
       ? expandableId
       : undefined;
@@ -134,14 +159,27 @@ export const NavigationItem = ({
     hoveredItemCallback,
   ]);
 
+  // react to changes on setExpanded prop
   useEffect(() => {
-
-    // react to changes on setExpanded prop
-
     setActiveElement(setExpanded);
   }, [
     setExpanded,
     setActiveElement,
+  ]);
+
+  // keep track of expanded heights
+  useEffect(() => {
+    if (!expandableRef.current || expandableId === undefined) {
+      return;
+    }
+
+    const height = measureElementHeight(expandableRef.current);
+
+    onHeightChange?.(expandableId, height);
+  }, [
+    expandableId,
+    onHeightChange,
+    items,
   ]);
 
   // --- Classes
@@ -269,6 +307,7 @@ export const NavigationItem = ({
 
       {/* Expandable content */}
       <div
+        ref={expandableRef}
         className={listClasses({
           active: smallBreakpoint && expandableId === activeElement,
           menuVisible: !smallBreakpoint && menuVisible,
