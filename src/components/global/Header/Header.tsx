@@ -5,8 +5,6 @@
 // - on scroll, morph to white
 // - footer on mobile: if expanded, before first and after last
 //       -> more spacing
-// - show/hide logic for mobile
-// - with keyboard, info text should show already if level1 has focus
 
 import React, {
   Fragment, useCallback, useEffect, useRef, useState,
@@ -96,6 +94,11 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     setHeaderNatualHeight,
   ] = useState(0);
 
+  const [
+    mobileMenuOpen,
+    setMobileMenuOpen,
+  ] = useState(false);
+
   // --- Effects
 
   // set nav height
@@ -103,17 +106,21 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     if (!headerRef.current) {
       return;
     }
-    const naturalHeight = headerRef.current.offsetHeight;
-    const langOrNavMaxHeight = Math.max(navMaxHeight, langNavMaxHeight);
 
-    setHeaderNatualHeight(naturalHeight);
-    setTotalHeaderHeight(naturalHeight + langOrNavMaxHeight);
+    if (!smallBreakpoint) {
+      const naturalHeight = headerRef.current.offsetHeight;
+      const langOrNavMaxHeight = Math.max(navMaxHeight, langNavMaxHeight);
 
-    props.getNavHeight?.(naturalHeight);
+      setHeaderNatualHeight(naturalHeight);
+      setTotalHeaderHeight(naturalHeight + langOrNavMaxHeight);
+
+      props.getNavHeight?.(naturalHeight);
+    }
   }, [
     navMaxHeight,
     langNavMaxHeight,
     props,
+    smallBreakpoint,
   ]);
 
   // --- Callbacks
@@ -144,8 +151,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   };
 
   const handleLangNavHover = useCallback((visibility: boolean): void => {
-    console.log('handleLangNavHover called with', visibility, 'current isHovering:', isHovering);
-
     if (smallBreakpoint) {
       return;
     }
@@ -236,6 +241,11 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       {...props.menuButton}
       className={styles.menuButton}
       colorMode={props.colorMode}
+      open={mobileMenuOpen}
+      onClick={() => {
+        setMobileMenuOpen(!mobileMenuOpen);
+
+      }}
     />
   );
 
@@ -262,12 +272,18 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
             {menuButtonRender()}
           </div>
 
-          {navigationRender()}
+          <div className={`${styles.mobileMenu} ${mobileMenuOpen
+            ? styles.open
+            : undefined}`}>
+            <div className={styles.mobileMenuWrapper}>
+              {navigationRender()}
 
-          <div className={`${styles.horizontalLine} ${styles[props.colorMode]}`}></div>
+              <div className={`${styles.horizontalLine} ${styles[props.colorMode]}`}></div>
 
-          {langnavRender()}
-          {metanavRender()}
+              {langnavRender()}
+              {metanavRender()}
+            </div>
+          </div>
         </Fragment>
       }
 

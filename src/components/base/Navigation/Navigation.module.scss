@@ -6,6 +6,8 @@
 .list {
   @include list-reset;
 
+  margin-block-start: px-to-rem(var(--spacing-2xl));
+
   @include mq($from: large) {
     display: flex;
     flex-direction: row;
@@ -14,6 +16,7 @@
     align-items: center;
     column-gap: px-to-rem(calc(2 * var(--spacing-m)));
     width: 100%;
+    margin-block-start: 0;
   }
 }
 
