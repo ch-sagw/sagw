@@ -3,9 +3,6 @@
 @use "../../../styles/utilities/utilities" as *;
 @use "../../../styles/utilities/animations" as *;
 
-// @use "../../../styles/utilities/utilities" as *;
-// @use "../../../styles/mixins/mixins-typo" as *;
-
 .header {
   --margin-nav-bottom: 56;
 
@@ -15,7 +12,9 @@
   width: 100%;
   padding: px-to-rem(var(--grid-margin));
   overflow: hidden;
-  transition: height var(--motion-speed-very-fast) var(--motion-ease-in-out);
+  transition: height, background-color;
+  transition-duration: var(--motion-speed-very-fast);
+  transition-timing-function: var(--motion-ease-in-out);
 
   @include reduced-motion {
     transition: none;

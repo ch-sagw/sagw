@@ -2,9 +2,6 @@
 // - level 2 with long texts have overflow. is there a smart solution?
 // - connect Header to cms
 // - tests
-// - footer on mobile: if expanded, before first and after last
-//       -> more spacing
-// - make variants for light, white
 
 import React, {
   Fragment, useCallback, useEffect, useRef, useState,
