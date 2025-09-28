@@ -5,16 +5,14 @@
 // - also measure height of langnav
 // - in small viewport, set height to auto
 // - on breakpoint change, handle header height
-// - also expand header if lang nav is hovered
 // - on scroll, morph to white
 // - footer on mobile: if expanded, before first and after last
 //       -> more spacing
-// - focus handling: if one menu is open, tab to the next and open
-//       --> previous should close
 // - make nav position absolute. then, as well, define a top-margin on the root
 // layout to compensate for the nav height
 // - make info-text fade in. and fix top spacing
 // show/hide logic for mobile
+// add infotext for lang-hover
 
 import React, {
   Fragment, useEffect, useRef, useState,
@@ -100,6 +98,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
   // --- Effects
 
+  // set nav height
   useEffect(() => {
     if (!headerRef.current) {
       return;
@@ -137,6 +136,16 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     }
   };
 
+  const handleLangNavHover = (visibility: boolean): void => {
+    if (smallBreakpoint) {
+      return;
+    }
+
+    if (!isHovering) {
+      setIsHovering(visibility);
+    }
+  };
+
   // --- Render Helpers
 
   const metanavRender = (): React.JSX.Element => (
@@ -152,6 +161,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       {...props.langnav}
       className={styles.langnav}
       colorMode={props.colorMode}
+      visibilityCallback={handleLangNavHover}
     />
   );
 

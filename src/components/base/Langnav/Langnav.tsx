@@ -1,6 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, {
+  useEffect, useRef,
+} from 'react';
 import { cva } from 'cva';
 import { Button } from '@/components/base/Button/Button';
 import styles from '@/components/base/Langnav/Langnav.module.scss';
@@ -22,6 +24,7 @@ export type InterfaceLangnavPropTypes = {
   onLangSelect: () => void;
   currentLang: string;
   colorMode: ColorMode;
+  visibilityCallback?: (visible: boolean) => void;
 };
 
 // --- Classes
@@ -47,7 +50,11 @@ export const Langnav = ({
   onLangSelect,
   currentLang,
   colorMode,
+  visibilityCallback,
 }: InterfaceLangnavPropTypes): React.JSX.Element => {
+
+  // -- Refs
+  const rootRef = useRef<HTMLDivElement>(null);
 
   // --- Hooks
 
@@ -57,6 +64,7 @@ export const Langnav = ({
     onToggleClick,
     onMouseEnter,
     onMouseLeave,
+    handleBlur,
   } = useExpandOnHover();
 
   const breakpoint = useBreakpoint();
@@ -66,6 +74,16 @@ export const Langnav = ({
     breakpoint === 'micro' ||
     breakpoint === 'small' ||
     breakpoint === 'medium';
+
+  // --- Effects
+  useEffect(() => {
+    if (visibilityCallback) {
+      visibilityCallback(menuVisible);
+    }
+  }, [
+    menuVisible,
+    visibilityCallback,
+  ]);
 
   // --- Helpers
 
@@ -81,6 +99,12 @@ export const Langnav = ({
 
   return (
     <div
+      ref={rootRef}
+      onBlur={(evt) => {
+        if (!nonExpandableMenu) {
+          handleBlur(evt, rootRef);
+        }
+      }}
       className={cva([
         styles.expandableMenu,
         className,
