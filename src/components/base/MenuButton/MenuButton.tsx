@@ -38,6 +38,7 @@ export const MenuButton = ({
 
   return (
     <button
+      data-testid='menuButton'
       className={classes({
         open,
       })}

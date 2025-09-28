@@ -286,6 +286,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
   return (
     <header
+      data-testid='header'
       style={totalHeaderHeight && !smallBreakpoint
         ? {
           height: isHovering

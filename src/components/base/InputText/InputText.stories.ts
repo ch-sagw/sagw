@@ -17,7 +17,7 @@ const meta: Meta<typeof InputText> = {
   decorators: [defaultDecorator],
   globals: {
     backgrounds: {
-      value: 'light',
+      value: 'white',
     },
   },
   tags: [

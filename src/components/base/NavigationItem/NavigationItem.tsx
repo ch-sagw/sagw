@@ -194,6 +194,7 @@ export const NavigationItem = ({
 
   return (
     <div
+      data-testid='navigationItem'
       ref={rootRef}
       onBlur={(evt) => {
         if (!smallBreakpoint) {
