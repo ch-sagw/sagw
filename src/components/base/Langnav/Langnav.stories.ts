@@ -52,10 +52,12 @@ export const LangNavDark: StrictStory = {
   args: {
     colorMode: 'dark',
     currentLang: 'de',
+    description: 'Die SAGW Webseite ist in vier Sprachen verfügbar',
     items,
     onLangSelect: () => {
       console.log('lang select handler');
     },
+    title: 'Sprachen',
   },
   globals: {
     backgrounds: {
@@ -68,10 +70,12 @@ export const LangNavLight: StrictStory = {
   args: {
     colorMode: 'light',
     currentLang: 'de',
+    description: 'Die SAGW Webseite ist in vier Sprachen verfügbar',
     items,
     onLangSelect: () => {
       console.log('lang select handler');
     },
+    title: 'Sprachen',
   },
   globals: {
     backgrounds: {
@@ -84,10 +88,12 @@ export const LangNavWhite: StrictStory = {
   args: {
     colorMode: 'white',
     currentLang: 'de',
+    description: 'Die SAGW Webseite ist in vier Sprachen verfügbar',
     items,
     onLangSelect: () => {
       console.log('lang select handler');
     },
+    title: 'Sprachen',
   },
   globals: {
     backgrounds: {

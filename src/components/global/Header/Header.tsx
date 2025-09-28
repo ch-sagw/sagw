@@ -10,11 +10,10 @@
 // - make nav position absolute. then, as well, define a top-margin on the root
 // layout to compensate for the nav height
 // - make info-text fade in. and fix top spacing
-// show/hide logic for mobile
-// add infotext for lang-hover
+// - show/hide logic for mobile
 
 import React, {
-  Fragment, useEffect, useRef, useState,
+  Fragment, useCallback, useEffect, useRef, useState,
 } from 'react';
 import styles from '@/components/global/Header/Header.module.scss';
 import {
@@ -144,7 +143,9 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     }
   };
 
-  const handleLangNavHover = (visibility: boolean): void => {
+  const handleLangNavHover = useCallback((visibility: boolean): void => {
+    console.log('handleLangNavHover called with', visibility, 'current isHovering:', isHovering);
+
     if (smallBreakpoint) {
       return;
     }
@@ -152,7 +153,31 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     if (!isHovering) {
       setIsHovering(visibility);
     }
-  };
+
+    if (isHovering && visibility) {
+      setInfoBlockContent(visibility
+        ? {
+          text: props.langnav.description || '',
+          title: props.langnav.title || '',
+        }
+        : undefined);
+    }
+
+  }, [
+    isHovering,
+    smallBreakpoint,
+    props.langnav.description,
+    props.langnav.title,
+  ]);
+
+  const handleLangHeightChange = useCallback((height: number) => {
+    if (smallBreakpoint) {
+      return;
+    }
+    setLangNavMaxHeight((prev) => (prev === height
+      ? prev
+      : height));
+  }, [smallBreakpoint]);
 
   // --- Render Helpers
 
@@ -170,13 +195,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       className={styles.langnav}
       colorMode={props.colorMode}
       visibilityCallback={handleLangNavHover}
-      onHeightChange={(height: number) => {
-        if (smallBreakpoint) {
-          return;
-        }
-
-        setLangNavMaxHeight(height);
-      }}
+      onHeightChange={handleLangHeightChange}
     />
   );
 

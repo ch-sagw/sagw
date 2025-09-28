@@ -27,6 +27,8 @@ export type InterfaceLangnavPropTypes = {
   colorMode: ColorMode;
   visibilityCallback?: (visible: boolean) => void;
   onHeightChange?: (height: number) => void;
+  title: string;
+  description: string;
 };
 
 // --- Classes
@@ -54,6 +56,8 @@ export const Langnav = ({
   colorMode,
   visibilityCallback,
   onHeightChange,
+  description,
+  title,
 }: InterfaceLangnavPropTypes): React.JSX.Element => {
 
   // -- Refs
@@ -146,6 +150,7 @@ export const Langnav = ({
           ariaExpanded={menuVisible}
           ariaLabel={getCurrentLang().text}
           autoFocus={toggleButtonAutofocus}
+          ariaDescription={`${title}: ${description}` || undefined}
         />
       )}
 
