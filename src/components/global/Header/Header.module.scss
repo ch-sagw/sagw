@@ -9,7 +9,7 @@
 .header {
   --margin-nav-bottom: 56;
 
-  position: absolute;
+  position: sticky;
   inset-block-start: 0;
   inset-inline-start: 0;
   width: 100%;

@@ -15,3 +15,17 @@ export const defaultDecorator = (Story: PartialStoryFn): ReactElement => (
     <Story />
   </div>
 );
+
+export const defaultDecoratorNoPadding = (Story: PartialStoryFn): ReactElement => (
+  <div
+    style={{
+      display: 'block',
+      padding: '0',
+    }}
+    data-testid={vrtConfig.testid}
+    id={vrtConfig.testid}
+    className='theme-sagw'
+  >
+    <Story />
+  </div>
+);
