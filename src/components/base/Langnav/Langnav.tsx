@@ -61,6 +61,7 @@ export const Langnav = ({
 }: InterfaceLangnavPropTypes): React.JSX.Element => {
 
   // -- Refs
+
   const rootRef = useRef<HTMLDivElement>(null);
   const expandableRef = useRef<HTMLDivElement>(null);
 
@@ -84,6 +85,7 @@ export const Langnav = ({
     breakpoint === 'medium';
 
   // --- Effects
+
   useEffect(() => {
     if (visibilityCallback) {
       visibilityCallback(menuVisible);

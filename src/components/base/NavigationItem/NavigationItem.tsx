@@ -94,6 +94,7 @@ export const NavigationItem = ({
 }: InterfaceNavigationItemPropTypes): React.JSX.Element => {
 
   // --- Refs
+
   const lastReported = useRef<number | undefined>(undefined);
   const expandableRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);

@@ -1,4 +1,3 @@
-import 'server-only';
 import React from 'react';
 import { ColorMode } from '@/components/base/types/colorMode';
 import styles from '@/components/base/NavigationInfoBlock/NavigationInfoBlock.module.scss';

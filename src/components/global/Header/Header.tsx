@@ -1,7 +1,6 @@
 // TODO
 // - level 2 with long texts have overflow. is there a smart solution?
 // - connect Header to cms
-// - tests
 
 import React, {
   Fragment, useCallback, useEffect, useRef, useState,

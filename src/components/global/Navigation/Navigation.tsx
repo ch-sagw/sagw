@@ -1,4 +1,3 @@
-import 'server-only';
 import React from 'react';
 import styles from '@/components/global/Navigation/Navigation.module.scss';
 import { InterfaceNavigation } from '@/payload-types';
