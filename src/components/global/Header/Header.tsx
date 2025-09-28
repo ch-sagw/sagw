@@ -1,5 +1,4 @@
 // TODO
-// - hidden text from navigationInfoBlock
 // - level 2 with long texts have overflow. is there a smart solution?
 // - connect Header to cms
 // - tests
@@ -15,6 +14,7 @@
 // - make nav position absolute. then, as well, define a top-margin on the root
 // layout to compensate for the nav height
 // - make info-text fade in. and fix top spacing
+// show/hide logic for mobile
 
 import React, {
   Fragment, useEffect, useRef, useState,
