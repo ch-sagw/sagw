@@ -189,6 +189,9 @@ export const HeaderDark: StrictStory = {
   args: {
     colorMode: 'dark',
     footer: false,
+    hoveredItemCallback: () => {
+      console.log('some callback');
+    },
     sections: headerSections,
   },
   globals: {
@@ -202,6 +205,9 @@ export const HeaderLight: StrictStory = {
   args: {
     colorMode: 'light',
     footer: false,
+    hoveredItemCallback: () => {
+      console.log('some callback');
+    },
     sections: headerSections,
   },
   globals: {
@@ -215,6 +221,9 @@ export const HeaderWhite: StrictStory = {
   args: {
     colorMode: 'white',
     footer: false,
+    hoveredItemCallback: () => {
+      console.log('some callback');
+    },
     sections: headerSections,
   },
   globals: {
