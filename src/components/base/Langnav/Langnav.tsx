@@ -9,6 +9,7 @@ import styles from '@/components/base/Langnav/Langnav.module.scss';
 import { useBreakpoint } from '@/hooks/useBreakpoint';
 import { useExpandOnHover } from '@/hooks/useExpandOnHover';
 import { ColorMode } from '@/components/base/types/colorMode';
+import { measureElementHeight } from '@/components/helpers/elementHeight';
 
 // --- Interfaces
 
@@ -25,6 +26,7 @@ export type InterfaceLangnavPropTypes = {
   currentLang: string;
   colorMode: ColorMode;
   visibilityCallback?: (visible: boolean) => void;
+  onHeightChange?: (height: number) => void;
 };
 
 // --- Classes
@@ -51,10 +53,12 @@ export const Langnav = ({
   currentLang,
   colorMode,
   visibilityCallback,
+  onHeightChange,
 }: InterfaceLangnavPropTypes): React.JSX.Element => {
 
   // -- Refs
   const rootRef = useRef<HTMLDivElement>(null);
+  const expandableRef = useRef<HTMLDivElement>(null);
 
   // --- Hooks
 
@@ -83,6 +87,20 @@ export const Langnav = ({
   }, [
     menuVisible,
     visibilityCallback,
+  ]);
+
+  // keep track of expanded heights
+  useEffect(() => {
+    if (!expandableRef.current) {
+      return;
+    }
+
+    const height = measureElementHeight(expandableRef.current);
+
+    onHeightChange?.(height);
+  }, [
+    onHeightChange,
+    expandableRef,
   ]);
 
   // --- Helpers
@@ -137,6 +155,7 @@ export const Langnav = ({
           nonExpandableMenu,
         })}
         inert={!nonExpandableMenu && !menuVisible}
+        ref={expandableRef}
       >
         <ul className={styles.list}>
           {items.map((item, key: number) => (

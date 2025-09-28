@@ -9,6 +9,7 @@ import { Icon } from '@/icons';
 import { useExpandOnHover } from '@/hooks/useExpandOnHover';
 import { useExpandOnClick } from '@/hooks/useExpandOnClick';
 import { ColorMode } from '@/components/base/types/colorMode';
+import { measureElementHeight } from '@/components/helpers/elementHeight';
 
 // --- Interfaces
 
@@ -74,30 +75,6 @@ const iconClasses = cva([styles.icon], {
     },
   },
 });
-
-// --- Helpers
-
-const measureElementHeight = (el: HTMLElement): number => {
-  if (!el) {
-    return 0;
-  }
-
-  const clone = el.cloneNode(true) as HTMLElement;
-
-  clone.style.visibility = 'hidden';
-  clone.style.position = 'absolute';
-  clone.style.height = 'auto';
-  clone.style.maxHeight = 'none';
-  clone.style.opacity = '0';
-  clone.style.pointerEvents = 'none';
-  document.body.appendChild(clone);
-
-  const height = clone.offsetHeight;
-
-  document.body.removeChild(clone);
-
-  return height;
-};
 
 // --- Component
 

@@ -2,7 +2,6 @@
 // - level 2 with long texts have overflow. is there a smart solution?
 // - connect Header to cms
 // - tests
-// - also measure height of langnav
 // - in small viewport, set height to auto
 // - on breakpoint change, handle header height
 // - on scroll, morph to white
@@ -87,6 +86,11 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   ] = useState(0);
 
   const [
+    langNavMaxHeight,
+    setLangNavMaxHeight,
+  ] = useState(0);
+
+  const [
     totalHeaderHeight,
     setTotalHeaderHeight,
   ] = useState(0);
@@ -104,10 +108,14 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       return;
     }
     const naturalHeight = headerRef.current.offsetHeight;
+    const langOrNavMaxHeight = Math.max(navMaxHeight, langNavMaxHeight);
 
     setHeaderNatualHeight(naturalHeight);
-    setTotalHeaderHeight(naturalHeight + navMaxHeight);
-  }, [navMaxHeight]);
+    setTotalHeaderHeight(naturalHeight + langOrNavMaxHeight);
+  }, [
+    navMaxHeight,
+    langNavMaxHeight,
+  ]);
 
   // --- Callbacks
 
@@ -162,6 +170,13 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       className={styles.langnav}
       colorMode={props.colorMode}
       visibilityCallback={handleLangNavHover}
+      onHeightChange={(height: number) => {
+        if (smallBreakpoint) {
+          return;
+        }
+
+        setLangNavMaxHeight(height);
+      }}
     />
   );
 
