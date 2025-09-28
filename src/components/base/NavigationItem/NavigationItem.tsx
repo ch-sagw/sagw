@@ -119,6 +119,7 @@ export const NavigationItem = ({
   // --- Refs
   const lastReported = useRef<number | undefined>(undefined);
   const expandableRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   // --- Hooks
 
@@ -128,6 +129,7 @@ export const NavigationItem = ({
     onToggleClick: onToggleClickFromHover,
     onMouseEnter,
     onMouseLeave,
+    handleBlur,
   } = useExpandOnHover();
 
   const {
@@ -215,6 +217,12 @@ export const NavigationItem = ({
 
   return (
     <div
+      ref={rootRef}
+      onBlur={(evt) => {
+        if (!smallBreakpoint) {
+          handleBlur(evt, rootRef);
+        }
+      }}
       className={menuClasses({
         footer,
       })}

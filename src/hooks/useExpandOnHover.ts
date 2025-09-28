@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import {
+  RefObject, useState,
+} from 'react';
 import { useIsTouchDevice } from '@/hooks/useIsTouchDevice';
 import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
 
@@ -17,6 +19,7 @@ export interface InterfaceExpandableMenu {
   onToggleClick: (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement> | React.PointerEvent<HTMLDivElement | HTMLButtonElement>) => void;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
+  handleBlur: (e: React.FocusEvent, rootRef: RefObject<HTMLDivElement | null>) => void;
 }
 
 // --- Hook
@@ -99,7 +102,19 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
     });
   };
 
+  const handleBlur = (e: React.FocusEvent, rootRef: RefObject<HTMLDivElement | null>): void => {
+    const related = e.relatedTarget as Node | null;
+
+    // if focus is still inside this menu, do nothing
+    if (rootRef.current && related && rootRef.current.contains(related)) {
+      return;
+    }
+
+    onMouseLeave();
+  };
+
   return {
+    handleBlur,
     menuVisible,
     onMouseEnter,
     onMouseLeave,
