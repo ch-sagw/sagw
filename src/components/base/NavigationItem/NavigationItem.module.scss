@@ -57,7 +57,7 @@
 
     @include mq($from: large) {
       position: absolute;
-      padding-block: px-to-rem(var(--spacing-m));
+      padding-block: px-to-rem(var(--spacing-l));
       inset-block-start: 100%;
       inset-inline-start: 0;
       width: max-content;

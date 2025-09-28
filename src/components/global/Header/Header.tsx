@@ -2,15 +2,11 @@
 // - level 2 with long texts have overflow. is there a smart solution?
 // - connect Header to cms
 // - tests
-// - in small viewport, set height to auto
-// - on breakpoint change, handle header height
 // - on scroll, morph to white
 // - footer on mobile: if expanded, before first and after last
 //       -> more spacing
-// - make nav position absolute. then, as well, define a top-margin on the root
-// layout to compensate for the nav height
-// - make info-text fade in. and fix top spacing
 // - show/hide logic for mobile
+// - with keyboard, info text should show already if level1 has focus
 
 import React, {
   Fragment, useCallback, useEffect, useRef, useState,
@@ -52,6 +48,7 @@ export type InterfaceHeaderPropTypes = {
   langnav: InterfaceLangnavPropTypes;
   logoName: 'sagw';
   colorMode: ColorMode;
+  getNavHeight?: (height: number) => void;
 };
 
 // --- Component
@@ -111,9 +108,12 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
     setHeaderNatualHeight(naturalHeight);
     setTotalHeaderHeight(naturalHeight + langOrNavMaxHeight);
+
+    props.getNavHeight?.(naturalHeight);
   }, [
     navMaxHeight,
     langNavMaxHeight,
+    props,
   ]);
 
   // --- Callbacks
@@ -243,13 +243,16 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
   return (
     <header
-      style={totalHeaderHeight
+      style={totalHeaderHeight && !smallBreakpoint
         ? {
           height: isHovering
             ? `${totalHeaderHeight + 72}px`
             : `${headerNaturalHeight}px`,
         }
-        : undefined}
+        : {
+          height: 'auto',
+        }
+      }
       ref={headerRef} className={`${styles.header} ${styles[props.colorMode]}`}>
 
       {smallBreakpoint &&
