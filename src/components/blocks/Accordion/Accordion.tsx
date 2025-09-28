@@ -63,21 +63,21 @@ export const Accordion = ({
           <li
             key={key}
             className={accordionItemClasses({
-              active: key === activeElement,
+              active: item.id === activeElement,
             })}
           >
             <Fragment>
               <HeadingElem className={styles.title}>
                 <button
                   ref={(el) => {
-                    buttonRefs.current[key] = el;
+                    buttonRefs.current[item.id || String(key)] = el;
                   }}
                   className={styles.button}
                   onClick={() => {
-                    onToggleClick(key);
+                    onToggleClick(item.id || String(key));
                   }}
                   aria-controls={`accordion-section-${key}`}
-                  aria-expanded={key === activeElement}
+                  aria-expanded={item.id === activeElement}
                   data-testid='button'
                   autoFocus={toggleButtonAutofocus}
                 >
@@ -92,9 +92,9 @@ export const Accordion = ({
               <section
                 id={`accordion-section-${key}`}
                 className={styles.content}
-                hidden={key !== activeElement}
-                aria-hidden={key !== activeElement}
-                inert={key !== activeElement}
+                hidden={item.id !== activeElement}
+                aria-hidden={item.id !== activeElement}
+                inert={item.id !== activeElement}
                 data-testid='content'
               >
                 <Rte

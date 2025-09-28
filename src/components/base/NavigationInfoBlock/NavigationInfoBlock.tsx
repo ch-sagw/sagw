@@ -3,8 +3,8 @@ import { ColorMode } from '@/components/base/types/colorMode';
 import styles from '@/components/base/NavigationInfoBlock/NavigationInfoBlock.module.scss';
 
 export type InterfaceNavigationInfoBlockPropTypes = {
-  title: string;
-  text: string;
+  title?: string;
+  text?: string;
   className?: string;
   colorMode: ColorMode;
 };

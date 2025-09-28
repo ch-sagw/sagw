@@ -15,6 +15,7 @@
   transition: height, background-color;
   transition-duration: var(--motion-speed-very-fast);
   transition-timing-function: var(--motion-ease-in-out);
+  z-index: 999;
 
   @include reduced-motion {
     transition: none;

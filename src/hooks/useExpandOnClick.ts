@@ -8,11 +8,11 @@ import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
 // --- Interfaces
 
 export interface InterfaceExpandableElement {
-  activeElement: number | undefined;
-  onToggleClick: (key: number) => void;
+  activeElement: string | undefined;
+  onToggleClick: (key: string) => void;
   toggleButtonAutofocus: boolean;
-  buttonRefs: RefObject<(HTMLButtonElement | HTMLDivElement | null)[]>;
-  setActiveElement: (key: number | undefined) => void;
+  buttonRefs: RefObject<Record<string, HTMLButtonElement | HTMLDivElement | null>>;
+  setActiveElement: (key: string | undefined) => void;
 }
 
 // --- Hook
@@ -21,19 +21,19 @@ export const useExpandOnClick = (): InterfaceExpandableElement => {
 
   // --- Refs
 
-  const buttonRefs = React.useRef<(HTMLButtonElement | HTMLDivElement | null)[]>([]);
+  const buttonRefs = React.useRef<Record<string, HTMLButtonElement | HTMLDivElement | null>>({});
 
   // --- State
 
   const [
     activeElement,
     setActiveElement,
-  ] = useState<number | undefined>(undefined);
+  ] = useState<string | undefined>(undefined);
 
   const [
     lastActiveElement,
     setLastActiveElement,
-  ] = useState<number | undefined>(undefined);
+  ] = useState<string | undefined>(undefined);
 
   const [
     toggleButtonAutofocus,
@@ -70,7 +70,7 @@ export const useExpandOnClick = (): InterfaceExpandableElement => {
 
   // --- Event handlers
 
-  const onToggleClick = (key: number): void => {
+  const onToggleClick = (key: string): void => {
     setToggleButtonAutofocus(false);
     if (key === activeElement) {
       setActiveElement(undefined);

@@ -4,11 +4,11 @@ import { ColorMode } from '@/components/base/types/colorMode';
 
 import sagw from '@/components/base/HeaderLogo/logos/sagw';
 
-const Logos = {
+export const Logos = {
   sagw,
 };
 
-interface InterfaceHeaderLogoPropTypes {
+export interface InterfaceHeaderLogoPropTypes {
   name: keyof typeof Logos;
   className?: string;
   colorMode: ColorMode;

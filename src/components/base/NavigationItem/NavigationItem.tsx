@@ -1,3 +1,5 @@
+'use client';
+
 import React, {
   useEffect, useRef,
 } from 'react';
@@ -23,14 +25,14 @@ type InterfaceNavigationItemWithItems = {
   description?: string;
   link?: never;
   items: InterfaceNavigationItemChild[];
-  expandableId: number;
+  expandableId: string;
   footer?: boolean;
   className?: string;
-  setExpanded: number | undefined;
-  onExpand: (key: number | undefined) => void;
+  setExpanded: string | undefined;
+  onExpand?: (key: string | undefined) => void;
   colorMode: ColorMode;
-  hoveredItemCallback?: (item: number | undefined) => void;
-  onHeightChange?: (id: number, height: number) => void;
+  hoveredItemCallback?: (item: string | undefined) => void;
+  onHeightChange?: (id: string, height: number) => void;
 };
 
 type InterfaceNavigationItemWithoutItems = {
@@ -95,7 +97,7 @@ export const NavigationItem = ({
 
   // --- Refs
 
-  const lastReported = useRef<number | undefined>(undefined);
+  const lastReported = useRef<string | undefined>(undefined);
   const expandableRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
 

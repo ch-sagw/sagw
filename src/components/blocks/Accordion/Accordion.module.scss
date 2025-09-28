@@ -118,10 +118,12 @@
     .content {
       @include expandable-wrapper;
 
-      color: var(--text-color);
-      transition-property: grid-template-rows, opacity, padding-block-end, margin-block-start;
-      margin-block-start: 0;
-      padding-block-end: 0;
+      & {
+        color: var(--text-color);
+        transition-property: grid-template-rows, opacity, padding-block-end, margin-block-start;
+        margin-block-start: 0;
+        padding-block-end: 0;
+      }
     }
 
     .rte {

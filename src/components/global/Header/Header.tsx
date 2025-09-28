@@ -1,6 +1,12 @@
 // TODO
 // - level 2 with long texts have overflow. is there a smart solution?
 // - connect Header to cms
+// - make sure header design works without metanav
+// - on desktop, fokus on level 2 -> esc no longer works (no focus on level 1)
+// - z-index on header
+// - level1 link without children is vertically 1px off
+
+'use client';
 
 import React, {
   Fragment, useCallback, useEffect, useRef, useState,
@@ -8,44 +14,43 @@ import React, {
 import styles from '@/components/global/Header/Header.module.scss';
 import {
   InterfaceHoveredItemCallbackType,
-  InterfaceNavigationPropTypes,
   Navigation,
 } from '@/components/base/Navigation/Navigation';
-import {
-  InterfaceMenuButtonPropTypes,
-  MenuButton,
-} from '@/components/base/MenuButton/MenuButton';
-import {
-  InterfaceNavigationInfoBlockPropTypes,
-  NavigationInfoBlock,
-} from '@/components/base/NavigationInfoBlock/NavigationInfoBlock';
-import {
-  InterfaceMetanavPropTypes,
-  Metanav,
-} from '@/components/base/Metanav/Metanav';
-import {
-  InterfaceLangnavPropTypes,
-  Langnav,
-} from '@/components/base/Langnav/Langnav';
+import { MenuButton } from '@/components/base/MenuButton/MenuButton';
+import { NavigationInfoBlock } from '@/components/base/NavigationInfoBlock/NavigationInfoBlock';
+import { Metanav } from '@/components/base/Metanav/Metanav';
+import { Langnav } from '@/components/base/Langnav/Langnav';
 import { ColorMode } from '@/components/base/types/colorMode';
 
-import { HeaderLogo } from '@/components/base/HeaderLogo/HeaderLogo';
+import {
+  HeaderLogo, Logos,
+} from '@/components/base/HeaderLogo/HeaderLogo';
 import { useBreakpoint } from '@/hooks/useBreakpoint';
 import { useWindowScroll } from '@/hooks/useWindowScroll';
 import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
 import { useScrollLock } from '@/hooks/useScrollLock';
 
+import {
+  InterfaceHeaderLanguageNavigation, InterfaceHeaderLogo, InterfaceHeaderMetaNavigation, InterfaceHeaderNavigation,
+} from '@/payload-types';
+
 // --- Interfaces
 
+export type InterfaceHeaderPropTypesCms = {
+  langnav: InterfaceHeaderLanguageNavigation;
+  logo: InterfaceHeaderLogo;
+  metanav: InterfaceHeaderMetaNavigation;
+  navigation: InterfaceHeaderNavigation;
+}
+
 export type InterfaceHeaderPropTypes = {
-  navigation: InterfaceNavigationPropTypes;
-  menuButton: InterfaceMenuButtonPropTypes;
-  navigationInfoBlock: InterfaceNavigationInfoBlockPropTypes;
-  metanav: InterfaceMetanavPropTypes;
-  langnav: InterfaceLangnavPropTypes;
-  logoName: 'sagw';
   colorMode: ColorMode;
-};
+  menuButton: {
+    open: string,
+    close: string,
+  };
+  currentLang: string;
+} & InterfaceHeaderPropTypesCms;
 
 // --- Component
 
@@ -108,9 +113,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     condition: isHovering,
     key: 'Escape',
     onKeyPressed: () => {
-
       setIsHovering(false);
-
     },
   });
 
@@ -152,15 +155,15 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       setIsHovering(true);
 
       const {
-        sections,
+        navItems,
       } = props.navigation;
 
-      const selectedSections = sections.filter((section) => String(section.expandableId) === selectedItem);
+      const selectedSections = navItems.filter((section) => section.id === selectedItem);
 
       if (selectedSections.length > 0) {
         setInfoBlockContent({
           text: selectedSections[0].description || '',
-          title: selectedSections[0].text,
+          title: selectedSections[0].navItemText,
         });
 
       }
@@ -220,7 +223,21 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
   const metanavRender = (): React.JSX.Element => (
     <Metanav
-      {...props.metanav}
+      items={props.metanav.metaLinks?.map((item) => {
+        if (item.linkType === 'internal') {
+          return {
+            link: item.linkInternal?.internalLink || '',
+            target: '_self',
+            text: item.linkInternal?.linkText || '',
+          };
+        }
+
+        return {
+          link: item.linkExternal?.externalLink || '',
+          target: '_blank',
+          text: item.linkExternal?.externalLinkText || '',
+        };
+      }) || []}
       className={styles.metanav}
       colorMode={renderColorMode()}
     />
@@ -228,17 +245,45 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
   const langnavRender = (): React.JSX.Element => (
     <Langnav
-      {...props.langnav}
+
+      // TODO: put in internal i18n
+      items={[
+        {
+          shortText: 'De',
+          text: 'Deutsch',
+          value: 'de',
+        },
+        {
+          shortText: 'Fr',
+          text: 'Français',
+          value: 'fr',
+        },
+        {
+          shortText: 'It',
+          text: 'Italiano',
+          value: 'it',
+        },
+        {
+          shortText: 'En',
+          text: 'English',
+          value: 'en',
+        },
+      ]}
+      currentLang=''
+      title={props.langnav.title}
+      description={props.langnav.description}
       className={styles.langnav}
       colorMode={renderColorMode()}
       visibilityCallback={handleLangNavHover}
       onHeightChange={handleLangHeightChange}
+      onLangSelect={() => {
+        console.log('TODO: on lang select');
+      }}
     />
   );
 
   const navigationInfoBlockRender = (): React.JSX.Element => (
     <NavigationInfoBlock
-      {...props.navigationInfoBlock}
       className={styles.infoBlock}
       colorMode={renderColorMode()}
       text={infoBlockContent?.text || ''}
@@ -248,7 +293,37 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
   const navigationRender = (): React.JSX.Element => (
     <Navigation
-      {...props.navigation}
+
+      sections={props.navigation.navItems.map((item, key) => {
+        if (item.subNavItems) {
+
+          // level 1 with subnav items
+          return {
+            colorMode: props.colorMode,
+            description: item.description || '',
+            expandableId: item.id || String(key),
+            footer: false,
+            items: item.subNavItems.map((subnavItem) => ({
+              colorMode: props.colorMode,
+              footer: false,
+              link: subnavItem.navItemLink || '',
+              text: subnavItem.navItemText || '',
+            })),
+            setExpanded: undefined,
+            text: item.navItemText || '',
+          };
+        }
+
+        // level 1 without subnav items
+        return {
+          colorMode: props.colorMode,
+          footer: false,
+          link: item.navItemLink || '',
+          text: item.navItemText || '',
+        };
+
+      })}
+      footer={false}
       className={styles.navigation}
       colorMode={renderColorMode()}
       hoveredItemCallback={handleHoveredItem}
@@ -260,17 +335,29 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     />
   );
 
-  const headerLogoRender = (): React.JSX.Element => (
-    <HeaderLogo
-      className={styles.logo}
-      name={props.logoName}
-      colorMode={renderColorMode()}
-    />
-  );
+  const headerLogoRender = (): React.JSX.Element => {
+
+    // TODO: is fallback to SAGW ok?
+
+    const logoName = (props.logo.logo in Logos
+      ? props.logo.logo
+      : 'sagw') as keyof typeof Logos;
+
+    return (
+      <HeaderLogo
+        className={styles.logo}
+        name={logoName}
+        colorMode={renderColorMode()}
+      />
+    );
+  };
 
   const menuButtonRender = (): React.JSX.Element => (
     <MenuButton
-      {...props.menuButton}
+      hiddenTexts={{
+        closeMenu: props.menuButton.close,
+        openMenu: props.menuButton.open,
+      }}
       className={styles.menuButton}
       colorMode={renderColorMode()}
       open={mobileMenuOpen}

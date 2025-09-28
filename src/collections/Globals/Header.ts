@@ -8,27 +8,47 @@ import {
 } from '@/field-templates/adminTitle';
 import { versions } from '@/field-templates/versions';
 
-const navLink: Field[] = [
+const navLinkDefaultFields: Field[] = [
+  {
+    localized: true,
+    name: 'navItemText',
+    required: true,
+    type: 'text',
+  },
+  {
+    admin: {
+      components: {
+        Field: {
+          path: '@/components/admin/InternalLinkChooser/InternalLinkChooser',
+        },
+      },
+    },
+    name: 'navItemLink',
+    type: 'text',
+  },
+];
+
+const navLinkLevel1: Field[] = [
   {
     fields: [
       {
-        localized: true,
-        name: 'navItemText',
-        required: true,
-        type: 'text',
-      },
-      {
         admin: {
-          components: {
-            Field: {
-              path: '@/components/admin/InternalLinkChooser/InternalLinkChooser',
-            },
-          },
+          description: 'If the user hovers over this menu item in the navigation, this is shown as a description in the Header',
         },
-        name: 'navItemLink',
+        localized: true,
+        name: 'description',
+        required: false,
         type: 'text',
       },
+      ...navLinkDefaultFields,
     ],
+    type: 'group',
+  },
+];
+
+const navLinkLevel2: Field[] = [
+  {
+    fields: navLinkDefaultFields,
     type: 'group',
   },
 ];
@@ -49,9 +69,9 @@ export const Header: CollectionConfig = {
           fields: [
             {
               fields: [
-                ...navLink,
+                ...navLinkLevel1,
                 {
-                  fields: navLink,
+                  fields: navLinkLevel2,
                   label: 'Sub-Navigation Item',
                   maxRows: 5,
                   name: 'subNavItems',
@@ -59,15 +79,40 @@ export const Header: CollectionConfig = {
                 },
               ],
               label: 'Main-Navigation Item',
-              maxRows: 4,
+              maxRows: 5,
               name: 'navItems',
               required: true,
               type: 'array',
             },
           ],
-          interfaceName: 'InterfaceNavigation',
+          interfaceName: 'InterfaceHeaderNavigation',
           label: 'Navigation',
           name: 'navigation',
+        },
+        {
+          fields: [
+            {
+              admin: {
+                description: 'If the user hovers over the language selection, this is shown as a title in the Header',
+              },
+              localized: true,
+              name: 'title',
+              required: true,
+              type: 'text',
+            },
+            {
+              admin: {
+                description: 'If the user hovers over the language selection, this is shown as a description in the Header',
+              },
+              localized: true,
+              name: 'description',
+              required: true,
+              type: 'text',
+            },
+          ],
+          interfaceName: 'InterfaceHeaderLanguageNavigation',
+          label: 'Language Navigation',
+          name: 'languageNavigation',
         },
         {
           fields: [
@@ -78,19 +123,22 @@ export const Header: CollectionConfig = {
               type: 'array',
             },
           ],
+          interfaceName: 'InterfaceHeaderMetaNavigation',
           label: 'Metanvaigation',
+          name: 'metanavigation',
         },
         {
           fields: [
             {
-              label: 'Logo (SVG)',
+              label: 'Logo Name',
               name: 'logo',
-              relationTo: 'svgs',
               required: true,
-              type: 'relationship',
+              type: 'text',
             },
           ],
+          interfaceName: 'InterfaceHeaderLogo',
           label: 'Logo',
+          name: 'logo',
         },
       ],
       type: 'tabs',

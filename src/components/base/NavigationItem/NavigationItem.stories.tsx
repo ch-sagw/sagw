@@ -57,7 +57,7 @@ export const WithChildren: StrictStory = {
   args: {
     colorMode: 'dark',
     description: 'Förderung von langfristigen Forschungsinfrastrukturen',
-    expandableId: 1,
+    expandableId: '1',
     items,
     onExpand: () => {
       console.log('some expand handler');
@@ -76,7 +76,7 @@ export const WithChildrenLight: StrictStory = {
   args: {
     colorMode: 'light',
     description: 'Förderung von langfristigen Forschungsinfrastrukturen',
-    expandableId: 1,
+    expandableId: '1',
     items,
     onExpand: () => {
       console.log('some expand handler');
@@ -95,7 +95,7 @@ export const WithChildrenWhite: StrictStory = {
   args: {
     colorMode: 'white',
     description: 'Förderung von langfristigen Forschungsinfrastrukturen',
-    expandableId: 1,
+    expandableId: '1',
     items,
     onExpand: () => {
       console.log('some expand handler');
@@ -126,7 +126,7 @@ export const WithoutChildren: StrictStory = {
 export const Footer: StrictStory = {
   args: {
     colorMode: 'dark',
-    expandableId: 1,
+    expandableId: '1',
     footer: true,
     items,
     onExpand: () => {

@@ -63,7 +63,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   });
 
   // add svg
-  const svg = await payload.create({
+  await payload.create({
     collection: 'svgs',
     data: {
       _status: 'published',
@@ -287,20 +287,128 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     data: {
       _status: 'published',
       department: tenantId,
-      logo: svg,
-      metaLinks: [
-        {
-          linkExternal: {
-            externalLink: 'https://www.foo.bar',
-            externalLinkText: `Metalink ${tenant.toUpperCase()}`,
+      languageNavigation: {
+        description: 'Die SAGW Webseite ist in vier Sprachen verfügbar',
+        title: 'Sprachen',
+      },
+      logo: {
+        logo: 'sagw',
+      },
+      metanavigation: {
+        metaLinks: [
+          {
+            linkExternal: {
+              externalLink: 'https://www.foo.bar',
+              externalLinkText: 'Brand Guidelines',
+            },
+            linkType: 'external',
           },
-          linkType: 'external',
-        },
-      ],
+          {
+            linkExternal: {
+              externalLink: 'https://www.foo.bar',
+              externalLinkText: 'Intranet',
+            },
+            linkType: 'external',
+          },
+          {
+            linkExternal: {
+              externalLink: 'https://www.foo.bar',
+              externalLinkText: 'mySAGW',
+            },
+            linkType: 'external',
+          },
+        ],
+      },
       navigation: {
         navItems: [
           {
+            description: '',
+            navItemLink: '/',
             navItemText: 'Home',
+          },
+          {
+            description: 'Förderung von langfristigen Forschungsinfrastrukturen',
+            navItemText: 'Förderung',
+            subNavItems: [
+              {
+                navItemLink: '/',
+                navItemText: 'Übersicht',
+              },
+              {
+                navItemLink: '/',
+                navItemText: 'Institute',
+              },
+              {
+                navItemLink: '/',
+                navItemText: 'Editionen',
+              },
+              {
+                navItemLink: '/',
+                navItemText: 'Reisebeiträge',
+              },
+              {
+                navItemLink: '/',
+                navItemText: 'Early Career Award',
+              },
+            ],
+          },
+          {
+            description: 'Unsere 63 Fachgesellschaften unter einem Dach',
+            navItemText: 'Netzwerk',
+            subNavItems: [
+              {
+                navItemLink: '/',
+                navItemText: 'Fachgesellschaften',
+              },
+            ],
+          },
+          {
+            description: 'Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft',
+            navItemText: 'Aktivitäten',
+            subNavItems: [
+              {
+                navItemLink: '/',
+                navItemText: 'Übersicht',
+              },
+              {
+                navItemLink: '/',
+                navItemText: 'Magazin',
+              },
+              {
+                navItemLink: '/',
+                navItemText: 'Publikationen',
+              },
+              {
+                navItemLink: '/',
+                navItemText: 'Veranstaltungen',
+              },
+              {
+                navItemLink: '/',
+                navItemText: 'News',
+              },
+            ],
+          },
+          {
+            description: 'Alles Wissenswertes über die SAGW',
+            navItemText: 'Über uns',
+            subNavItems: [
+              {
+                navItemLink: '/',
+                navItemText: 'Die SAGW',
+              },
+              {
+                navItemLink: '/',
+                navItemText: 'Team',
+              },
+              {
+                navItemLink: '/',
+                navItemText: 'Kontakt',
+              },
+              {
+                navItemLink: '/',
+                navItemText: 'Offene Stellen',
+              },
+            ],
           },
         ],
       },

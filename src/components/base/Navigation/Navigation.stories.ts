@@ -85,7 +85,7 @@ const headerSections: InterfaceNavigationItemPropTypes[] = [
   {
     colorMode: 'dark',
     description: 'Förderung von langfristigen Forschungsinfrastrukturen',
-    expandableId: 1,
+    expandableId: '1',
     items: items2,
     onExpand: (): void => {
       console.log('some expand handler');
@@ -96,7 +96,7 @@ const headerSections: InterfaceNavigationItemPropTypes[] = [
   {
     colorMode: 'dark',
     description: 'Unsere 63 Fachgesellschaften unter einem Dach',
-    expandableId: 2,
+    expandableId: '2',
     items: items3,
     onExpand: (): void => {
       console.log('some expand handler');
@@ -107,7 +107,7 @@ const headerSections: InterfaceNavigationItemPropTypes[] = [
   {
     colorMode: 'dark',
     description: 'Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft',
-    expandableId: 3,
+    expandableId: '3',
     items: items2,
     onExpand: (): void => {
       console.log('some expand handler');
@@ -118,7 +118,7 @@ const headerSections: InterfaceNavigationItemPropTypes[] = [
   {
     colorMode: 'dark',
     description: 'Alles Wissenswertes über die SAGW',
-    expandableId: 4,
+    expandableId: '4',
     items,
     onExpand: (): void => {
       console.log('some expand handler');
@@ -138,7 +138,7 @@ const footerSections: InterfaceNavigationItemPropTypes[] = [
   {
     colorMode: 'dark',
     description: 'Förderung von langfristigen Forschungsinfrastrukturen',
-    expandableId: 1,
+    expandableId: '1',
     footer: true,
     items: items2,
     onExpand: (): void => {
@@ -150,7 +150,7 @@ const footerSections: InterfaceNavigationItemPropTypes[] = [
   {
     colorMode: 'dark',
     description: 'Unsere 63 Fachgesellschaften unter einem Dach',
-    expandableId: 2,
+    expandableId: '2',
     footer: true,
     items: items3,
     onExpand: (): void => {
@@ -162,7 +162,7 @@ const footerSections: InterfaceNavigationItemPropTypes[] = [
   {
     colorMode: 'dark',
     description: 'Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft',
-    expandableId: 3,
+    expandableId: '3',
     footer: true,
     items,
     onExpand: (): void => {
@@ -174,7 +174,7 @@ const footerSections: InterfaceNavigationItemPropTypes[] = [
   {
     colorMode: 'dark',
     description: 'Alles Wissenswertes über die SAGW',
-    expandableId: 4,
+    expandableId: '4',
     footer: true,
     items,
     onExpand: (): void => {

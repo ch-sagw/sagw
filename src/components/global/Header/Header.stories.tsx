@@ -6,11 +6,6 @@ import {
   Header, InterfaceHeaderPropTypes,
 } from '@/components/global/Header/Header';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
-import { HeaderDark as NavigationHeader } from '@/components/base/Navigation/Navigation.stories';
-import { Closed as MenuButton } from '@/components/base/MenuButton/MenuButton.stories';
-import { InfoBlockDark } from '@/components/base/NavigationInfoBlock/NavigationInfoBlock.stories';
-import { MetanavDark } from '@/components/base/Metanav/Metanav.stories';
-import { LangNavDark } from '@/components/base/Langnav/Langnav.stories';
 import React, { Fragment } from 'react';
 
 type HeaderProps = React.ComponentProps<typeof Header>;
@@ -53,16 +48,170 @@ const render = (args: Partial<InterfaceHeaderPropTypes> & InterfaceHeaderPropTyp
 
 );
 
-export const HeaderDark: StrictStory = {
-  args: {
-    colorMode: 'dark',
-    langnav: LangNavDark.args,
-    logoName: 'sagw',
-    menuButton: MenuButton.args,
-    metanav: MetanavDark.args,
-    navigation: NavigationHeader.args,
-    navigationInfoBlock: InfoBlockDark.args,
+const defaultArgs: InterfaceHeaderPropTypes = {
+  colorMode: 'dark',
+  currentLang: 'de',
+  langnav: {
+    description: 'Die SAGW Webseite ist in vier Sprachen verfügbar',
+    title: 'Sprachen',
   },
+  logo: {
+    logo: 'sagw',
+  },
+  menuButton: {
+    close: 'Schliessen',
+    open: 'Öffnen',
+  },
+  metanav: {
+    metaLinks: [
+      {
+        id: '68d9829011bbf7dfaf2c56ac',
+        linkExternal: {
+          externalLink: 'https://www.foo.bar',
+          externalLinkText: 'Brand Guidelines',
+        },
+        linkType: 'external',
+      },
+
+      {
+        id: '68d9829011bbf7dfaf2c56ad',
+        linkExternal: {
+          externalLink: 'https://www.foo.bar',
+          externalLinkText: 'Intranet',
+        },
+        linkType: 'external',
+      },
+      {
+        id: '68d9829011bbf7dfaf2c56ae',
+        linkExternal: {
+          externalLink: 'https://www.foo.bar',
+          externalLinkText: 'mySAGW',
+        },
+        linkType: 'external',
+      },
+    ],
+  },
+  navigation: {
+    navItems: [
+
+      {
+        description: '',
+        id: '68d9683b1eed56c026882f30',
+        navItemLink: '/',
+        navItemText: 'Home',
+      },
+
+      {
+        description: 'Förderung von langfristigen Forschungsinfrastrukturen',
+        id: '68d9683b1eed56c026882f36',
+        navItemText: 'Förderung',
+        subNavItems: [
+          {
+            id: '68d9683b1eed56c026882f31',
+            navItemLink: '/',
+            navItemText: 'Übersicht',
+          },
+          {
+            id: '68d9683b1eed56c026882f32',
+            navItemLink: '/',
+            navItemText: 'Institute',
+          },
+          {
+            id: '68d9683b1eed56c026882f33',
+            navItemLink: '/',
+            navItemText: 'Editionen',
+          },
+          {
+            id: '68d9683b1eed56c026882f34',
+            navItemLink: '/',
+            navItemText: 'Reisebeiträge',
+          },
+
+          {
+            id: '68d9683b1eed56c026882f35',
+            navItemLink: '/',
+            navItemText: 'Early Career Award',
+          },
+        ],
+      },
+      {
+        description: 'Unsere 63 Fachgesellschaften unter einem Dach',
+        id: '68d9683b1eed56c026882f38',
+        navItemText: 'Netzwerk',
+        subNavItems: [
+          {
+            id: '68d9683b1eed56c026882f37',
+            navItemLink: '/',
+            navItemText: 'Fachgesellschaften',
+          },
+        ],
+      },
+      {
+        description: 'Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft',
+        id: '68d9683b1eed56c026882f3e',
+        navItemText: 'Aktivitäten',
+        subNavItems: [
+          {
+            id: '68d9683b1eed56c026882f39',
+            navItemLink: '/',
+            navItemText: 'Übersicht',
+          },
+          {
+            id: '68d9683b1eed56c026882f3a',
+            navItemLink: '/',
+            navItemText: 'Magazin',
+          },
+          {
+            id: '68d9683b1eed56c026882f3b',
+            navItemLink: '/',
+            navItemText: 'Publikationen',
+          },
+          {
+            id: '68d9683b1eed56c026882f3c',
+            navItemLink: '/',
+            navItemText: 'Veranstaltungen',
+          },
+          {
+            id: '68d9683b1eed56c026882f3d',
+            navItemLink: '/',
+            navItemText: 'News',
+          },
+        ],
+      },
+      {
+        description: 'Alles Wissenswertes über die SAGW',
+        id: '68d9683b1eed56c026882f43',
+        navItemText: 'Über Uns',
+        subNavItems: [
+          {
+            id: '68d9683b1eed56c026882f3f',
+            navItemLink: '/',
+            navItemText: 'Die SAGW',
+          },
+          {
+            id: '68d9683b1eed56c026882f40',
+            navItemLink: '/',
+            navItemText: 'Team',
+          },
+          {
+            id: '68d9683b1eed56c026882f41',
+            navItemLink: '/',
+            navItemText: 'Kontakt',
+          },
+          {
+            id: '68d9683b1eed56c026882f42',
+            navItemLink: '/',
+            navItemText: 'Offene Stellen',
+          },
+        ],
+      },
+    ],
+  },
+
+};
+
+export const HeaderDark: StrictStory = {
+  args: defaultArgs,
   parameters: {
     layout: 'fullscreen',
   },
@@ -71,13 +220,8 @@ export const HeaderDark: StrictStory = {
 
 export const HeaderLight: StrictStory = {
   args: {
+    ...defaultArgs,
     colorMode: 'light',
-    langnav: LangNavDark.args,
-    logoName: 'sagw',
-    menuButton: MenuButton.args,
-    metanav: MetanavDark.args,
-    navigation: NavigationHeader.args,
-    navigationInfoBlock: InfoBlockDark.args,
   },
   parameters: {
     layout: 'fullscreen',
@@ -87,16 +231,12 @@ export const HeaderLight: StrictStory = {
 
 export const HeaderWhite: StrictStory = {
   args: {
+    ...defaultArgs,
     colorMode: 'white',
-    langnav: LangNavDark.args,
-    logoName: 'sagw',
-    menuButton: MenuButton.args,
-    metanav: MetanavDark.args,
-    navigation: NavigationHeader.args,
-    navigationInfoBlock: InfoBlockDark.args,
   },
   parameters: {
     layout: 'fullscreen',
   },
   render: (args) => render(args),
 };
+

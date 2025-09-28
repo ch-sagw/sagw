@@ -10,7 +10,7 @@ import styles from '@/components/base/Navigation/Navigation.module.scss';
 
 // --- Interfaces
 
-export type InterfaceHoveredItemCallbackType = Record<string, number | undefined>;
+export type InterfaceHoveredItemCallbackType = Record<string, string | undefined>;
 
 export type InterfaceNavigationPropTypes = {
   sections: InterfaceNavigationItemPropTypes[];
@@ -37,12 +37,12 @@ export const Navigation = ({
   const [
     itemsState,
     setItemsState,
-  ] = useState<number | undefined>(undefined);
+  ] = useState<string | undefined>(undefined);
 
   const [
     heights,
     setHeights,
-  ] = useState<Record<number, number>>({});
+  ] = useState<Record<string, number>>({});
 
   // --- Effects
 
@@ -59,7 +59,7 @@ export const Navigation = ({
 
   // --- Callbacks
 
-  const handleHeightChange = useCallback((id: number, height: number) => {
+  const handleHeightChange = useCallback((id: string, height: number) => {
     setHeights((prev) => ({
       ...prev,
       [id]: height,
@@ -102,7 +102,7 @@ export const Navigation = ({
                 ? {
                   description: section.description,
                   expandableId: section.expandableId as NonNullable<typeof section.expandableId>,
-                  hoveredItemCallback: (item: number | undefined): void => {
+                  hoveredItemCallback: (item: string | undefined): void => {
 
                     if (section.expandableId && hoveredItemCallback) {
                       const returnObject: InterfaceHoveredItemCallbackType = {};
@@ -112,13 +112,13 @@ export const Navigation = ({
                     }
                   },
                   items: section.items as NonNullable<typeof section.items>,
-                  onExpand: (expandKey: number | undefined): void => {
+                  onExpand: (expandKey: string | undefined): void => {
                     if (expandKey !== undefined) {
                       setItemsState(expandKey);
                     }
                   },
                   onHeightChange: handleHeightChange,
-                  setExpanded: itemsState === key
+                  setExpanded: itemsState === section.expandableId
                     ? itemsState
                     : undefined,
                 }
