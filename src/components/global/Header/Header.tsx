@@ -2,9 +2,9 @@
 // - level 2 with long texts have overflow. is there a smart solution?
 // - connect Header to cms
 // - tests
-// - on scroll, morph to white
 // - footer on mobile: if expanded, before first and after last
 //       -> more spacing
+// - make variants for light, white
 
 import React, {
   Fragment, useCallback, useEffect, useRef, useState,
@@ -35,6 +35,9 @@ import { ColorMode } from '@/components/base/types/colorMode';
 
 import { HeaderLogo } from '@/components/base/HeaderLogo/HeaderLogo';
 import { useBreakpoint } from '@/hooks/useBreakpoint';
+import { useWindowScroll } from '@/hooks/useWindowScroll';
+import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
+import { useScrollLock } from '@/hooks/useScrollLock';
 
 // --- Interfaces
 
@@ -46,7 +49,6 @@ export type InterfaceHeaderPropTypes = {
   langnav: InterfaceLangnavPropTypes;
   logoName: 'sagw';
   colorMode: ColorMode;
-  getNavHeight?: (height: number) => void;
 };
 
 // --- Component
@@ -57,13 +59,8 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
   const headerRef = useRef<HTMLElement>(null);
 
-  // --- Hooks
-
-  const breakpoint = useBreakpoint();
-
-  const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
-
   // --- State
+
   const [
     isHovering,
     setIsHovering,
@@ -99,6 +96,28 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     setMobileMenuOpen,
   ] = useState(false);
 
+  const [
+    didScroll,
+    setDidScroll,
+  ] = useState(false);
+
+  // --- Hooks
+
+  useScrollLock(mobileMenuOpen);
+  const breakpoint = useBreakpoint();
+  const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
+  const scrollPosition = useWindowScroll();
+
+  useKeyboardShortcut({
+    condition: isHovering,
+    key: 'Escape',
+    onKeyPressed: () => {
+
+      setIsHovering(false);
+
+    },
+  });
+
   // --- Effects
 
   // set nav height
@@ -113,8 +132,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
       setHeaderNatualHeight(naturalHeight);
       setTotalHeaderHeight(naturalHeight + langOrNavMaxHeight);
-
-      props.getNavHeight?.(naturalHeight);
     }
   }, [
     navMaxHeight,
@@ -122,6 +139,13 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     props,
     smallBreakpoint,
   ]);
+
+  // handle scroll
+  useEffect(() => {
+
+    // 0 would be too brutal
+    setDidScroll(scrollPosition > 50);
+  }, [scrollPosition]);
 
   // --- Callbacks
 
@@ -186,11 +210,23 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
   // --- Render Helpers
 
+  const renderColorMode = (): ColorMode => {
+    let {
+      colorMode,
+    } = props;
+
+    if ((didScroll && !isHovering) && !(smallBreakpoint && mobileMenuOpen)) {
+      colorMode = 'white';
+    }
+
+    return colorMode;
+  };
+
   const metanavRender = (): React.JSX.Element => (
     <Metanav
       {...props.metanav}
       className={styles.metanav}
-      colorMode={props.colorMode}
+      colorMode={renderColorMode()}
     />
   );
 
@@ -198,7 +234,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     <Langnav
       {...props.langnav}
       className={styles.langnav}
-      colorMode={props.colorMode}
+      colorMode={renderColorMode()}
       visibilityCallback={handleLangNavHover}
       onHeightChange={handleLangHeightChange}
     />
@@ -208,7 +244,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     <NavigationInfoBlock
       {...props.navigationInfoBlock}
       className={styles.infoBlock}
-      colorMode={props.colorMode}
+      colorMode={renderColorMode()}
       text={infoBlockContent?.text || ''}
       title={infoBlockContent?.title || ''}
     />
@@ -218,7 +254,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     <Navigation
       {...props.navigation}
       className={styles.navigation}
-      colorMode={props.colorMode}
+      colorMode={renderColorMode()}
       hoveredItemCallback={handleHoveredItem}
       navMaxHeightCallback={(maxHeight: number) => {
         if (maxHeight >= 0) {
@@ -232,7 +268,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     <HeaderLogo
       className={styles.logo}
       name={props.logoName}
-      colorMode={props.colorMode}
+      colorMode={renderColorMode()}
     />
   );
 
@@ -240,7 +276,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     <MenuButton
       {...props.menuButton}
       className={styles.menuButton}
-      colorMode={props.colorMode}
+      colorMode={renderColorMode()}
       open={mobileMenuOpen}
       onClick={() => {
         setMobileMenuOpen(!mobileMenuOpen);
@@ -256,6 +292,8 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       style={totalHeaderHeight && !smallBreakpoint
         ? {
           height: isHovering
+
+            // 72 for the bottom padding of the nav-content
             ? `${totalHeaderHeight + 72}px`
             : `${headerNaturalHeight}px`,
         }
@@ -263,7 +301,11 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
           height: 'auto',
         }
       }
-      ref={headerRef} className={`${styles.header} ${styles[props.colorMode]}`}>
+      ref={headerRef}
+      className={`${styles.header} ${styles[renderColorMode()]} ${mobileMenuOpen
+        ? styles.expanded
+        : undefined}`}
+    >
 
       {smallBreakpoint &&
         <Fragment>
@@ -278,7 +320,9 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
             <div className={styles.mobileMenuWrapper}>
               {navigationRender()}
 
-              <div className={`${styles.horizontalLine} ${styles[props.colorMode]}`}></div>
+              <div
+                className={`${styles.horizontalLine} ${styles[renderColorMode()]}`}
+              ></div>
 
               {langnavRender()}
               {metanavRender()}

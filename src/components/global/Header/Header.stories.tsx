@@ -79,6 +79,9 @@ export const HeaderLight: StrictStory = {
     navigation: NavigationHeader.args,
     navigationInfoBlock: InfoBlockDark.args,
   },
+  parameters: {
+    layout: 'fullscreen',
+  },
   render: (args) => render(args),
 };
 
@@ -91,6 +94,9 @@ export const HeaderWhite: StrictStory = {
     metanav: MetanavDark.args,
     navigation: NavigationHeader.args,
     navigationInfoBlock: InfoBlockDark.args,
+  },
+  parameters: {
+    layout: 'fullscreen',
   },
   render: (args) => render(args),
 };

@@ -26,6 +26,11 @@
     padding-block-end: 0;
   }
 
+  &.expanded {
+    max-height: 100vh;
+    overflow-y: visible;
+  }
+
   &.dark {
     background-color: var(--background-inverted);
   }
