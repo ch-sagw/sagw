@@ -6,6 +6,6 @@ html.scrollLock {
 * {
   // text-rendering: optimizelegibility;
   // font-family: sans-serif !important;
-  letter-spacing: 0;
-  line-height: 100%;
+  letter-spacing: 0 !important;
+  line-height: 100% !important;
 }
