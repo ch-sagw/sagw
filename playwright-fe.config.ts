@@ -112,6 +112,6 @@ export default defineConfig({
     url: 'http://localhost:6006',
   },
   workers: process.env.CI
-    ? 2
+    ? 1
     : 5,
 });
