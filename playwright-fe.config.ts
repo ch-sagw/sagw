@@ -10,6 +10,7 @@ const projects = [
     name: 'chromium-400',
     use: {
       ...devices['Desktop Chrome'],
+      deviceScaleFactor: 2,
       viewport: {
         height: 480,
         width: 400,
