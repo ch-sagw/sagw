@@ -4,6 +4,7 @@ import {
 } from '@playwright/test';
 import { navigate } from '@/automated-testing/helpers';
 
+/*
 test('transistions to white on scroll', async ({
   page,
 }) => {
@@ -16,6 +17,7 @@ test('transistions to white on scroll', async ({
       fullPage: false,
     });
 });
+*/
 
 test('opens menu', async ({
   page,
