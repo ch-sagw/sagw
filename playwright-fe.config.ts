@@ -17,7 +17,6 @@ const projects = [
     },
   },
 
-  /*
   // viewport small
   {
     name: 'chromium-700',
@@ -59,7 +58,6 @@ const projects = [
     name: 'webkit',
     use: devices['Desktop Safari'],
   },
-  */
 
 ];
 
@@ -102,7 +100,7 @@ export default defineConfig({
   reporter: defaultReporters,
   retries: 0,
   testDir: './src/',
-  testMatch: '**/*.fe.spec.ts?(x)',
+  testMatch: '**/*.foo-fe.spec.ts?(x)',
   use: {
     trace: 'on-first-retry',
   },
