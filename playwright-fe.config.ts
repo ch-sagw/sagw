@@ -17,6 +17,7 @@ const projects = [
     },
   },
 
+  /*
   // viewport small
   {
     name: 'chromium-700',
@@ -58,6 +59,7 @@ const projects = [
     name: 'webkit',
     use: devices['Desktop Safari'],
   },
+  */
 
 ];
 
