@@ -90,6 +90,7 @@ export default defineConfig({
       maxDiffPixelRatio: 0,
       maxDiffPixels: 0,
       pathTemplate: `src/{testFileDir}/${vrtConfig.snapshotFolder}/{testName}/{projectName}{ext}`,
+      scale: 'device',
       threshold: 0,
     },
   },
