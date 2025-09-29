@@ -104,7 +104,7 @@ export default defineConfig({
   reporter: defaultReporters,
   retries: 0,
   testDir: './src/',
-  testMatch: '**/*.foo-fe.spec.ts?(x)',
+  testMatch: '**/*.fe.spec.ts?(x)',
   use: {
     trace: 'on-first-retry',
   },
