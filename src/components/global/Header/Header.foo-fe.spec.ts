@@ -39,6 +39,8 @@ test('opens menu', async ({
     await navButton.hover();
   }
 
+  await page.waitForTimeout(2000);
+
   await expect(page)
     .toHaveScreenshot({
       animations: 'disabled',
