@@ -1,0 +1,65 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.downloadLink {
+  --animation-duration: var(--motion-speed-very-fast);
+  --icon-color: var(--interaction-secondary);
+  --icon-color-hover-focus: var(--interaction-secondary-hover);
+  --icon-size: 24;
+  --text-color: var(--text-primary);
+
+  display: flex;
+  align-items: center;
+  column-gap: px-to-rem(var(--spacing-l));
+  color: var(--text-color);
+  text-decoration: none;
+
+  .linkText {
+    text-decoration-line: underline;
+    text-underline-offset: px-to-rem(var(--spacing-2xs));
+    text-decoration-thickness: px-to-rem(var(--border-width-l));
+    text-decoration-color: transparent;
+    transition: text-decoration-color var(--animation-duration) var(--motion-ease-out);
+  }
+
+  &:focus,
+  &:hover {
+    .linkText {
+      text-decoration-color: var(--text-color);
+      transition-timing-function: var(--motion-ease-in);
+    }
+
+    .icon svg path {
+      stroke: var(--icon-color-hover-focus);
+    }
+  }
+}
+
+.wrapperText {
+  display: flex;
+  flex-direction: column;
+  row-gap: px-to-rem(var(--spacing-xs));
+}
+
+.linkText {
+  @include title-heading-4;
+}
+
+.metaInfo {
+  @include body-text-s;
+
+  color: var(--text-secondary);
+}
+
+.icon {
+  width: px-to-rem(var(--icon-size));
+  height: px-to-rem(var(--icon-size));
+  flex: 0 0 px-to-rem(var(--icon-size));
+
+  svg path {
+    stroke: var(--icon-color);
+    transition: stroke var(--animation-duration) var(--motion-ease-out);
+  }
+}
