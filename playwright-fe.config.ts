@@ -10,7 +10,6 @@ const projects = [
     name: 'chromium-400',
     use: {
       ...devices['Desktop Chrome'],
-      deviceScaleFactor: 2,
       viewport: {
         height: 480,
         width: 400,
@@ -88,10 +87,12 @@ export const defaultReporters: ReporterDescription[] = [
 export default defineConfig({
   expect: {
     toHaveScreenshot: {
+
+      /* eslint-disable @typescript-eslint/naming-convention*/
+      _comparator: 'ssim-cie94',
       maxDiffPixelRatio: 0,
       maxDiffPixels: 0,
       pathTemplate: `src/{testFileDir}/${vrtConfig.snapshotFolder}/{testName}/{projectName}{ext}`,
-      scale: 'device',
       threshold: 0,
     },
   },
