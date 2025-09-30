@@ -5,20 +5,19 @@
 .filterList {
   @include list-reset;
 
+  --list-gap: var(--spacing-m);
+  --list-flex-direction: row;
+
   display: flex;
-  gap: px-to-rem(var(--spacing-m));
+  gap: px-to-rem(var(--list-gap));
+  flex-direction: var(--list-flex-direction);
 
   @include mq($to: small) {
-    flex-direction: column;
+    --list-flex-direction: column;
   }
 
-  @include mq($from: large) {
-    flex-direction: row;
-    gap: px-to-rem(var(--spacing-l));
-  }
-
-  @include mq($from: large) {
-    flex-direction: row;
+  @include mq($from: medium) {
+    --list-gap: var(--spacing-l);
   }
 
   .filterListItem {
