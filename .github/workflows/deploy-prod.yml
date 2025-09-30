@@ -24,7 +24,7 @@ jobs:
     if: github.head_ref != 'release-please--branches--main'
     env:
       HOME: /root
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     container:
       # if the docker image is changed, also change it in deploy-branch.yml and in Dockerfile.testing
       image: mcr.microsoft.com/playwright:v1.55.1-noble
@@ -66,7 +66,7 @@ jobs:
           ENV: playwright
   deploy-production:
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

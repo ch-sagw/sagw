@@ -1,9 +1,7 @@
 // TODO
 // - level 2 with long texts have overflow. is there a smart solution?
-// - connect Header to cms
 // - make sure header design works without metanav
 // - on desktop, fokus on level 2 -> esc no longer works (no focus on level 1)
-// - z-index on header
 // - level1 link without children is vertically 1px off
 
 'use client';
