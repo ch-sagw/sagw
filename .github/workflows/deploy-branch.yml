@@ -14,6 +14,8 @@ permissions:
   statuses: write
 on: pull_request
 jobs:
+
+  # Frontend Test Job
   test-fe:
     if: github.head_ref != 'release-please--branches--main'
     env:
@@ -66,42 +68,8 @@ jobs:
       #   if: always()
       #   with:
       #     report-file: test-results/results.json
-      # - uses: actions/upload-artifact@v4
-      #   if: always()
-      #   with:
-      #     name: playwright-report
-      #     path: test-results/html/
-      #     retention-days: 30
 
-  merge-reports:
-    # Merge reports after playwright-tests, even if some shards have failed
-    if: ${{ !cancelled() }}
-    needs: [test-fe]
-
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version-file: '.nvmrc'
-        cache: 'npm'
-    - name: Install dependencies
-      run: npm ci
-    - name: Download blob reports
-      uses: actions/download-artifact@v4
-      with:
-        path: all-blob-reports
-        pattern: blob-report-*
-        merge-multiple: true
-    - name: Merge into HTML Report
-      run: npx playwright merge-reports --reporter html ./all-blob-reports
-    - name: Upload HTML report
-      uses: actions/upload-artifact@v4
-      with:
-        name: html-report--attempt-${{ github.run_attempt }}
-        path: playwright-report
-        retention-days: 14
-
+  # Backend Test Job
   test-be:
     needs: test-fe
     runs-on: blacksmith-4vcpu-ubuntu-2404
@@ -136,3 +104,40 @@ jobs:
           RESEND_KEY: ${{ secrets.RESEND_KEY }}
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           ENV: playwright
+      - name: Upload blob report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: blob-report-be
+          path: blob-report
+          retention-days: 1
+
+  # Merge Reports Job
+  merge-reports:
+    # Merge reports after playwright-tests, even if some shards have failed
+    if: ${{ !cancelled() }}
+    needs: [test-fe]
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: '.nvmrc'
+        cache: 'npm'
+    - name: Install dependencies
+      run: npm ci
+    - name: Download blob reports
+      uses: actions/download-artifact@v4
+      with:
+        path: all-blob-reports
+        pattern: blob-report-*
+        merge-multiple: true
+    - name: Merge into HTML Report
+      run: npx playwright merge-reports --reporter html ./all-blob-reports
+    - name: Upload HTML report
+      uses: actions/upload-artifact@v4
+      with:
+        name: html-report--attempt-${{ github.run_attempt }}
+        path: playwright-report
+        retention-days: 14
