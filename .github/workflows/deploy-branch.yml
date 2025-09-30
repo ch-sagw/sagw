@@ -53,7 +53,7 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Test FE
-        run: npm run playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} -c playwright-fe.config.ts
+        run: test:fe:native:shard
       - name: Test BE
         run: npm run test:be:native
         env:

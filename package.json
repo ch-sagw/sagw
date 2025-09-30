@@ -24,7 +24,7 @@
     "build-storybook": "storybook build",
     "docker:build": "sudo docker compose -f docker-compose.yml build",
     "test:fe:native": "playwright test -c playwright-fe.config.ts",
-    "test:fe:native:shard": "playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} -c playwright-fe.config.ts",
+    "test:fe:native:shard": "playwright test --shard=${matrix.shardIndex}/${matrix.shardTotal} -c playwright-fe.config.ts",
     "test:fe:native:watch": "playwright test -c playwright-fe.config.ts --ui-port=8080 --ui-host=0.0.0.0",
     "test:fe": "docker compose -f docker-compose.yml run --rm fe npm run test:fe:native",
     "test:fe:watch": "docker compose -f docker-compose.yml run --rm -p 8080:8080 fe npm run test:fe:native:watch",
