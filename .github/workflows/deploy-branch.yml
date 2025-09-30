@@ -54,6 +54,9 @@ jobs:
         run: npm run lint
       - name: Test FE
         run: npm run test:fe:native:shard
+        env:
+          SHARD_INDEX: ${{ matrix.shardIndex }}
+          SHARD_TOTAL: ${{ matrix.shardTotal }}
       - name: Test BE
         run: npm run test:be:native
         env:
