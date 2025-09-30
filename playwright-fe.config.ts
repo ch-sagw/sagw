@@ -69,6 +69,7 @@ const reporterJson: ReporterDescription = [
 ];
 
 const reporterList: ReporterDescription = ['list'];
+const reporterBlob: ReporterDescription = ['blob'];
 
 const reporterHtml: ReporterDescription = [
   'html',
@@ -82,6 +83,11 @@ export const defaultReporters: ReporterDescription[] = [
   reporterJson,
   reporterList,
   reporterHtml,
+];
+
+const ciReporters: ReporterDescription[] = [
+  reporterList,
+  reporterBlob,
 ];
 
 export default defineConfig({
@@ -102,7 +108,7 @@ export default defineConfig({
   outputDir: 'test-results/main',
   projects,
   reporter: process.env.CI
-    ? 'blob'
+    ? ciReporters
     : defaultReporters,
   retries: 0,
   testDir: './src/',
