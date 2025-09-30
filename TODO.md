@@ -9,6 +9,8 @@ Storybook:
 Github:
 -------
 - add branch restrictions on main
+- add test sharding to deploy-prod.yml
+- add sharding for be tests as well
 
 Resend:
 -------

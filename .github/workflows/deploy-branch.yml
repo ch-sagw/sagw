@@ -58,7 +58,7 @@ jobs:
           SHARD_INDEX: ${{ matrix.shardIndex }}
           SHARD_TOTAL: ${{ matrix.shardTotal }}
       - name: Upload blob report
-        if: ${{ !cancelled() }}
+        if: ${{ failure() && !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
           name: blob-report-${{ matrix.shardIndex }}
@@ -67,7 +67,7 @@ jobs:
 
   # Merge Reports Job
   merge-reports:
-    if: ${{ !cancelled() }}
+    if: ${{ failure() && !cancelled() }}
     needs: test-fe
 
     runs-on: ubuntu-latest
@@ -134,7 +134,7 @@ jobs:
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           ENV: playwright
       - name: Upload HTML report
-        if: always()
+        if: ${{ failure() && !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
