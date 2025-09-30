@@ -134,7 +134,7 @@ export const TransformativeSelectToRadiosWithAmounts: StrictStory = {
   },
 };
 
-export const staticSelect: StrictStory = {
+export const StaticSelect: StrictStory = {
   args: {
     filterItems: [
       {
@@ -174,7 +174,7 @@ export const staticSelect: StrictStory = {
   },
 };
 
-export const staticSelectWithAmounts: StrictStory = {
+export const StaticSelectWithAmounts: StrictStory = {
   args: {
     filterItems: [
       {
