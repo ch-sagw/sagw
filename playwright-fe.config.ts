@@ -101,7 +101,9 @@ export default defineConfig({
   fullyParallel: true,
   outputDir: 'test-results/main',
   projects,
-  reporter: defaultReporters,
+  reporter: process.env.CI
+    ? 'blob'
+    : defaultReporters,
   retries: 0,
   testDir: './src/',
   testMatch: '**/*.fe.spec.ts?(x)',
