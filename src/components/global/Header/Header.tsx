@@ -1,7 +1,5 @@
 // TODO
 // - level 2 with long texts have overflow. is there a smart solution?
-// - make sure header design works without metanav
-// - on desktop, fokus on level 2 -> esc no longer works (no focus on level 1)
 // - level1 link without children is vertically 1px off
 
 'use client';
@@ -219,27 +217,33 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     return colorMode;
   };
 
-  const metanavRender = (): React.JSX.Element => (
-    <Metanav
-      items={props.metanav.metaLinks?.map((item) => {
-        if (item.linkType === 'internal') {
-          return {
-            link: item.linkInternal?.internalLink || '',
-            target: '_self',
-            text: item.linkInternal?.linkText || '',
-          };
-        }
+  const metanavRender = (): React.JSX.Element => {
+    if (props.metanav.metaLinks && props.metanav.metaLinks?.length > 0) {
+      return (
+        <Metanav
+          items={props.metanav.metaLinks?.map((item) => {
+            if (item.linkType === 'internal') {
+              return {
+                link: item.linkInternal?.internalLink || '',
+                target: '_self',
+                text: item.linkInternal?.linkText || '',
+              };
+            }
 
-        return {
-          link: item.linkExternal?.externalLink || '',
-          target: '_blank',
-          text: item.linkExternal?.externalLinkText || '',
-        };
-      }) || []}
-      className={styles.metanav}
-      colorMode={renderColorMode()}
-    />
-  );
+            return {
+              link: item.linkExternal?.externalLink || '',
+              target: '_blank',
+              text: item.linkExternal?.externalLinkText || '',
+            };
+          }) || []}
+          className={styles.metanav}
+          colorMode={renderColorMode()}
+        />
+      );
+    }
+
+    return <Fragment />;
+  };
 
   const langnavRender = (): React.JSX.Element => (
     <Langnav

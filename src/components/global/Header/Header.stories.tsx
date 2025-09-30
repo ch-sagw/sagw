@@ -240,3 +240,16 @@ export const HeaderWhite: StrictStory = {
   render: (args) => render(args),
 };
 
+export const HeaderWithoutMetanav: StrictStory = {
+  args: {
+    ...defaultArgs,
+    metanav: {
+      metaLinks: [],
+    },
+  },
+  parameters: {
+    layout: 'fullscreen',
+  },
+  render: (args) => render(args),
+};
+
