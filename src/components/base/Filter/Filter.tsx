@@ -100,8 +100,8 @@ export const Filter = ({
             data-testid='filter-select'
             name={name}
           >
-            {items.map((item: any, idx: number) => (
-              <option key={idx} value={item.value ?? item}>
+            {items.map((item: any, id: number) => (
+              <option key={id} value={item.value ?? item}>
                 {item.label}{item.amount !== undefined && ` (${item.amount})`}
               </option>
             ))}
