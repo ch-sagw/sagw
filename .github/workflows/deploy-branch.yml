@@ -64,10 +64,6 @@ jobs:
           name: blob-report-${{ matrix.shardIndex }}
           path: blob-report
           retention-days: 1
-      # - uses: daun/playwright-report-summary@v3
-      #   if: always()
-      #   with:
-      #     report-file: test-results/results.json
 
   # Merge Reports Job
   merge-reports:
@@ -90,13 +86,17 @@ jobs:
         pattern: blob-report-*
         merge-multiple: true
     - name: Merge into HTML Report
-      run: npx playwright merge-reports --reporter html ./all-blob-reports
+      run: npx playwright merge-reports --reporter html,json ./all-blob-reports
     - name: Upload HTML report
       uses: actions/upload-artifact@v4
       with:
         name: html-report--attempt-${{ github.run_attempt }}
         path: playwright-report
         retention-days: 14
+    # - uses: daun/playwright-report-summary@v3
+    #   if: always()
+    #   with:
+    #     report-file: test-results/results.json
 
   # Backend Test Job
   test-be:
@@ -133,10 +133,10 @@ jobs:
           RESEND_KEY: ${{ secrets.RESEND_KEY }}
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           ENV: playwright
-      - name: Upload blob report
-        if: ${{ !cancelled() }}
+      - name: Upload HTML report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: blob-report-be
-          path: blob-report
+          name: playwright-report
+          path: test-results/html/
           retention-days: 1
