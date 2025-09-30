@@ -25,7 +25,7 @@ export default defineConfig({
     },
   },
   forbidOnly: Boolean(process.env.CI),
-  fullyParallel: true,
+  fullyParallel: false,
   outputDir: 'test-results/main',
   projects: [
     {
