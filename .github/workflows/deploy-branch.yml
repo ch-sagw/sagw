@@ -21,6 +21,11 @@ jobs:
     runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       pull-requests: write
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
     container:
       # if the docker image is changed, also change it in deploy-prod.yml and in Dockerfile.testing
       image: mcr.microsoft.com/playwright:v1.55.1-noble
@@ -48,7 +53,7 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Test FE
-        run: npm run test:fe:native
+        run: npm run test:fe:native:shard
       - name: Test BE
         run: npm run test:be:native
         env:
