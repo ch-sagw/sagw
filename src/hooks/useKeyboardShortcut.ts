@@ -19,8 +19,9 @@ export const useKeyboardShortcut = ({
   useEffect(() => {
     const keyDownHandler = (e: globalThis.KeyboardEvent): void => {
       if (e.key === key) {
-        e.preventDefault();
-        onKeyPressed();
+        window.requestAnimationFrame(() => {
+          onKeyPressed();
+        });
       }
     };
 
