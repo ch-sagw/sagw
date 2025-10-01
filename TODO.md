@@ -54,7 +54,6 @@ Payload Config:
 Multitenant: (working with seed data)
 --------
 - issue: on autologin, tenant-cookie is not set after login -> create github issue
-- issue v3.54.0, ok in v3.52.0: multi-tenant & versions and global collection: can't be created if db empty: "Error creating autosave global multi tenant document for homePage"... department seems undefined -> create github issue
 
 Misc:
 --------
