@@ -36,7 +36,6 @@ const defaultFormConfig: FormProps = {
   form: {
     colorMode: 'dark',
     createdAt: '2025-09-14T15:43:50.512Z',
-    department: '68c6e2b3ec3710c8de6912f8',
     fields: [
       {
         blockType: 'textBlockForm',
@@ -120,6 +119,7 @@ const defaultFormConfig: FormProps = {
     showPrivacyCheckbox: true,
     submitButtonLabel: 'Submit button SAGW',
     subtitle: 'Erhalten Sie Updates zu aktuellen Projekten, Artikel, Publikationen und Veranstaltungen',
+    tenant: '68c6e2b3ec3710c8de6912f8',
     title: 'Form SAGW',
     titleLevel: '2',
     updatedAt: '2025-09-14T15:43:50.512Z',

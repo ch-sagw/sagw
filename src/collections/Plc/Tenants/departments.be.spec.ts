@@ -4,7 +4,7 @@ import {
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 
-test.describe('Departments only show content from users department', () => {
+test.describe('Tenants only show content from users tenant', () => {
   beforeEachPayloadLogin();
 
   test('images', async ({
@@ -165,7 +165,7 @@ test.describe('Departments only show content from users department', () => {
     // disable french in tenant config, go to detail page and check
     // if french is no longer choosable in lang dropdown
 
-    await page.goto('http://localhost:3000/admin/collections/departments');
+    await page.goto('http://localhost:3000/admin/collections/tenants');
     await page.waitForLoadState('networkidle');
 
     const sagw = await page.locator('.cell-name a');
@@ -193,7 +193,7 @@ test.describe('Departments only show content from users department', () => {
 
     const heroField = await page.locator('#field-hero .ContentEditable__root');
 
-    await heroField.fill('Department Language test News Detail Page');
+    await heroField.fill('Tenant Language test News Detail Page');
 
     // save
     const saveButton = await page.getByRole('button', {

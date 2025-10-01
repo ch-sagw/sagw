@@ -1,10 +1,10 @@
 export const userRoles = {
-  admin: 'global-admin',
+  admin: 'super-admin',
   user: 'global-user',
 } as const;
 
-export const departmentRoles = {
-  admin: 'admin',
+export const tenantRoles = {
+  admin: 'tenant-admin',
   editor: 'editor',
   editorMagazine: 'editor-magazine',
   translator: 'translator',

@@ -1,38 +1,53 @@
 import type { CollectionConfig } from 'payload';
-import { tenantsArrayField } from '@payloadcms/plugin-multi-tenant/fields';
-
 import { createAccess } from '@/collections/Plc/Users/access/create';
 import { readAccess } from '@/collections/Plc/Users/access/read';
 import { updateAndDeleteAccess } from '@/collections/Plc/Users/access/updateAndDelete';
 import { ensureUniqueUsername } from '@/collections/Plc/Users/hooks/ensureUniqueUsername';
-import { isGlobalAdmin } from '@/access/isGlobalAdmin';
+import { isSuperAdmin } from '@/access/isSuperAdmin';
+import { setCookieBasedOnDomain } from '@/collections/Plc/Users/hooks/setCookieBasedOnDomain';
+import { tenantsArrayField } from '@payloadcms/plugin-multi-tenant/fields';
 import {
-  departmentRoles, userRoles,
+  tenantRoles, userRoles,
 } from '@/collections/Plc/Users/roles';
-// import { setTenantAfterLogin }
-// from '@/collections/Plc/Users/hooks/afterMeHook';
 
-const defaultDepartmentArrayField = tenantsArrayField({
+const defaultTenantArrayField = tenantsArrayField({
   arrayFieldAccess: {},
   rowFields: [
     {
-      defaultValue: [departmentRoles.editor],
+      access: {
+        update: ({
+          req,
+        }): boolean => {
+          const {
+            user,
+          } = req;
+
+          if (!user) {
+            return false;
+          }
+
+          if (isSuperAdmin(user)) {
+            return true;
+          }
+
+          return true;
+        },
+      },
+      defaultValue: [tenantRoles.editor],
       hasMany: true,
       name: 'roles',
       options: [
-        departmentRoles.admin,
-        departmentRoles.editor,
-        departmentRoles.editorMagazine,
-        departmentRoles.translator,
+        tenantRoles.admin,
+        tenantRoles.editor,
       ],
       required: true,
       type: 'select',
     },
   ],
   tenantFieldAccess: {},
-  tenantsArrayFieldName: 'departments',
-  tenantsArrayTenantFieldName: 'department',
-  tenantsCollectionSlug: 'departments',
+  tenantsArrayFieldName: 'tenants',
+  tenantsArrayTenantFieldName: 'tenant',
+  tenantsCollectionSlug: 'tenants',
 });
 
 export const Users: CollectionConfig = {
@@ -43,16 +58,42 @@ export const Users: CollectionConfig = {
     update: updateAndDeleteAccess,
   },
   admin: {
-    group: 'Org',
     useAsTitle: 'email',
   },
   auth: true,
+  // endpoints: [externalUsersLogin],
   fields: [
+    {
+      access: {
+        read: () => false,
+        update: ({
+          req, id,
+        }): boolean => {
+          const {
+            user,
+          } = req;
+
+          if (!user) {
+            return false;
+          }
+
+          if (id === user.id) {
+            // Allow user to update their own password
+            return true;
+          }
+
+          return isSuperAdmin(user);
+        },
+      },
+      hidden: true,
+      name: 'password',
+      type: 'text',
+    },
     {
       access: {
         update: ({
           req,
-        }) => isGlobalAdmin(req.user),
+        }) => isSuperAdmin(req.user),
       },
       admin: {
         position: 'sidebar',
@@ -75,23 +116,15 @@ export const Users: CollectionConfig = {
       type: 'text',
     },
     {
-      ...defaultDepartmentArrayField,
+      ...defaultTenantArrayField,
       admin: {
-        ...(defaultDepartmentArrayField?.admin || {}),
+        ...(defaultTenantArrayField?.admin || {}),
         position: 'sidebar',
       },
     },
   ],
-
-  /*
-    There is the issue that multitenant-plugin is not setting the tenant
-    cookie after autologin. we might do it manually.
-  */
-  /*
   hooks: {
-    afterMe: [setTenantAfterLogin],
+    afterLogin: [setCookieBasedOnDomain],
   },
-  */
-
   slug: 'users',
 };

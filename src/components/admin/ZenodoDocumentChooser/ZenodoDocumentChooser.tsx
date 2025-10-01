@@ -91,7 +91,7 @@ const ZenodoDocumentChooser = (): JSX.Element => {
     startTransition(async () => {
       try {
         // check for existing id
-        const zenodoResponse = await fetch(`/api/zenodoDocuments?where[department][equals]=${tenant}&where[zenodoId][equals]=${id}`);
+        const zenodoResponse = await fetch(`/api/zenodoDocuments?where[tenant][equals]=${tenant}&where[zenodoId][equals]=${id}`);
         const responseJson = await zenodoResponse.json();
 
         if (responseJson.docs?.length > 0) {

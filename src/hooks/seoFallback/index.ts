@@ -9,7 +9,7 @@ type WithSeo = {
   meta?: {
     seo?: Seo;
   };
-  department: string;
+  tenant: string;
 };
 
 export const hookSeoFallback: CollectionBeforeChangeHook<WithSeo> = async ({
@@ -33,8 +33,8 @@ export const hookSeoFallback: CollectionBeforeChangeHook<WithSeo> = async ({
     collection: 'homePage',
     limit: 1,
     where: {
-      department: {
-        equals: data.department,
+      tenant: {
+        equals: data.tenant,
       },
     },
   });

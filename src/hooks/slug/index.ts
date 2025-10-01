@@ -34,9 +34,9 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
     return dataParam;
   }
 
-  const department = dataParam.department || req.user?.department;
+  const tenant = dataParam.tenant || req.user?.tenants;
 
-  if (!department) {
+  if (!tenant) {
     return dataParam;
   }
 
@@ -54,8 +54,10 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
       where: {
         and: [
           {
-            department: {
-              equals: department,
+
+            // TODO: tenant now is an array. Does it still work?
+            tenant: {
+              equals: tenant,
             },
           },
           {

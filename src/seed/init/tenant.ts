@@ -4,14 +4,15 @@ export const seedTenant = async (payload: Payload, tenantName: string, tenantSlu
 
   try {
     const tenants = await payload.find({
-      collection: 'departments',
+      collection: 'tenants',
       limit: 1,
     });
 
     if (tenants.docs.length === 0) {
       const tenant = await payload.create({
-        collection: 'departments',
+        collection: 'tenants',
         data: {
+          domain: `${tenantSlug}.localhost`,
           name: tenantName,
           slug: tenantSlug,
         },
