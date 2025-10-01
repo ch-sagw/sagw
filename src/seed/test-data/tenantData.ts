@@ -3,7 +3,7 @@
 import { Payload } from 'payload';
 
 import { simpleRteConfig } from '@/seed/test-data/helpers';
-import { userRoles } from '@/collections/Plc/Users/roles';
+import { tenantRoles } from '@/collections/Plc/Users/roles';
 
 export const addDataForTenant = async (payload: Payload, tenant: string): Promise<void> => {
 
@@ -35,8 +35,13 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           ? process.env.PAYLOAD_INITIAL_USER_MAIL
           : `${tenant}@foo.bar`,
         password: process.env.PAYLOAD_INITIAL_PASSWORD,
-        roles: [userRoles.admin],
-        username: `${tenant}-super-admin`,
+        tenants: [
+          {
+            roles: [tenantRoles.admin],
+            tenant: tenantId,
+          },
+        ],
+        username: `${tenant}-admin`,
       },
     });
   }
