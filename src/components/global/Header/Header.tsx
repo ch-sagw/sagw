@@ -99,6 +99,11 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     setDidScroll,
   ] = useState(false);
 
+  const [
+    bodyFontSize,
+    setBodyFontSize,
+  ] = useState(16);
+
   // --- Hooks
 
   useScrollLock(mobileMenuOpen);
@@ -106,6 +111,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
   const scrollPosition = useWindowScroll();
 
+  // close on escape
   useKeyboardShortcut({
     condition: isHovering,
     key: 'Escape',
@@ -114,7 +120,25 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     },
   });
 
+  // close on return key
+  useKeyboardShortcut({
+    condition: isHovering,
+    key: 'Enter',
+    onKeyPressed: () => {
+      setIsHovering(false);
+    },
+  });
+
   // --- Effects
+
+  // set body font size
+  useEffect(() => {
+    const bodyFontSizeDefinition = window.getComputedStyle(document.body)
+      .getPropertyValue('font-size')
+      .split('px');
+
+    setBodyFontSize(parseInt(bodyFontSizeDefinition[0], 10) || 16);
+  }, []);
 
   // set nav height
   useEffect(() => {
@@ -126,14 +150,15 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       const naturalHeight = headerRef.current.offsetHeight;
       const langOrNavMaxHeight = Math.max(navMaxHeight, langNavMaxHeight);
 
-      setHeaderNatualHeight(naturalHeight);
-      setTotalHeaderHeight(naturalHeight + langOrNavMaxHeight);
+      setHeaderNatualHeight(naturalHeight / bodyFontSize);
+      setTotalHeaderHeight((naturalHeight + langOrNavMaxHeight) / bodyFontSize);
     }
   }, [
     navMaxHeight,
     langNavMaxHeight,
     props,
     smallBreakpoint,
+    bodyFontSize,
   ]);
 
   // handle scroll
@@ -382,8 +407,8 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
           height: isHovering
 
             // 72 for the bottom padding of the nav-content
-            ? `${totalHeaderHeight + 72}px`
-            : `${headerNaturalHeight}px`,
+            ? `${totalHeaderHeight + (72 / bodyFontSize)}rem`
+            : `${headerNaturalHeight}rem`,
         }
         : {
           height: 'auto',
