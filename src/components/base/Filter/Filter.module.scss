@@ -27,35 +27,31 @@
     --animation-duration: 0s;
   }
 
-  & {
-    --label-background: var(--background-light);
-    --label-color: var(--interaction-primary);
-    --animation-duration: var(--motion-speed-very-fast);
-    --radio-button-outline-offset: var(--border-width-l);
+  --label-background: var(--background-light);
+  --label-color: var(--interaction-primary);
+  --animation-duration: var(--motion-speed-very-fast);
+  --radio-button-outline-offset: var(--border-width-l);
 
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: px-to-rem(var(--spacing-m));
-  }
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: px-to-rem(var(--spacing-m));
 
   label {
     @include label-text;
     @include font-smoothing;
 
-    & {
-      display: inline-block;
-      position: relative;
-      padding-block-start: px-to-rem(var(--spacing-xs));
-      padding-block-end: px-to-rem(calc(var(--spacing-xs) + 1));
-      padding-inline: px-to-rem(var(--spacing-m));
-      background: var(--label-background);
-      border-radius: px-to-rem(var(--spacing-l));
-      color: var(--label-color);
-      transition:
-        background-color var(--animation-duration) var(--motion-ease-out),
-        color var(--animation-duration) var(--motion-ease-out);
-    }
+    display: inline-block;
+    position: relative;
+    padding-block-start: px-to-rem(var(--spacing-xs));
+    padding-block-end: px-to-rem(calc(var(--spacing-xs) + 1));
+    padding-inline: px-to-rem(var(--spacing-m));
+    background: var(--label-background);
+    border-radius: px-to-rem(var(--spacing-l));
+    color: var(--label-color);
+    transition:
+      background-color var(--animation-duration) var(--motion-ease-out),
+      color var(--animation-duration) var(--motion-ease-out);
 
     @supports (text-box-trim: trim-both) {
       padding-block: px-to-rem(calc(var(--spacing-m) - 2));
@@ -87,15 +83,13 @@
           filter: invert(1);
         }
 
-        & {
-          --label-background: var(--background-inverted);
-          --label-color: var(--text-primary-inverted);
+        --label-background: var(--background-inverted);
+        --label-color: var(--text-primary-inverted);
 
-          outline-offset: px-to-rem(var(--radio-button-outline-offset));
-          transition:
-            background-color var(--animation-duration) var(--motion-ease-in),
-            color var(--animation-duration) var(--motion-ease-in);
-        }
+        outline-offset: px-to-rem(var(--radio-button-outline-offset));
+        transition:
+          background-color var(--animation-duration) var(--motion-ease-in),
+          color var(--animation-duration) var(--motion-ease-in);
       }
 
       @include forced-colors {
@@ -129,15 +123,13 @@
       --animation-duration: 0s;
     }
 
-    & {
-      --label-background: var(--background-light);
-      --label-color: var(--interaction-primary);
-      --icon-color: var(--label-color);
-      --animation-duration: var(--motion-speed-very-fast);
+    --label-background: var(--background-light);
+    --label-color: var(--interaction-primary);
+    --icon-color: var(--label-color);
+    --animation-duration: var(--motion-speed-very-fast);
 
-      position: relative;
-      display: inline-block;
-    }
+    position: relative;
+    display: inline-block;
 
     .filterSelect {
       transition: color var(--animation-duration) var(--motion-ease-out);
@@ -154,10 +146,8 @@
       filter: invert(1);
     }
 
-    & {
-      --label-background: var(--background-inverted);
-      --label-color: var(--text-primary-inverted);
-    }
+    --label-background: var(--background-inverted);
+    --label-color: var(--text-primary-inverted);
 
     &:after,
     &:before {
@@ -169,9 +159,7 @@
     &:after {
       @include focus-visible;
 
-      & {
-        outline-offset: px-to-rem(var(--border-width-l));
-      }
+      outline-offset: px-to-rem(var(--border-width-l));
     }
   }
 
@@ -185,16 +173,14 @@
       border: px-to-rem(var(--border-width-s)) solid CanvasText;
     }
 
-    & {
-      position: absolute;
-      inset: 0;
-      content: "";
-      height: 100%;
-      width: 100%;
-      z-index: -1;
-      border-radius: px-to-rem(var(--spacing-l));
-      background: var(--label-background);
-    }
+    position: absolute;
+    inset: 0;
+    content: "";
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    border-radius: px-to-rem(var(--spacing-l));
+    background: var(--label-background);
   }
 
   &:before {
@@ -225,10 +211,8 @@
         --icon-color: currentcolor;
       }
 
-      & {
-        stroke: var(--icon-color);
-        transition: stroke var(--animation-duration) var(--motion-ease-out);
-      }
+      stroke: var(--icon-color);
+      transition: stroke var(--animation-duration) var(--motion-ease-out);
     }
   }
 }
@@ -240,21 +224,19 @@
 .filterSelect {
   @include label-text;
 
-  & {
-    appearance: none;
-    position: relative;
-    padding-block: px-to-rem(var(--spacing-m));
-    padding-inline-start: px-to-rem(var(--spacing-l));
-    padding-inline-end: px-to-rem(var(--spacing-2xl));
-    background: none;
-    border: 0;
-    outline: 0;
-    color: var(--label-color);
-    max-width: 100%;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    transition: color var(--animation-duration) var(--motion-ease-out);
-  }
+  appearance: none;
+  position: relative;
+  padding-block: px-to-rem(var(--spacing-m));
+  padding-inline-start: px-to-rem(var(--spacing-l));
+  padding-inline-end: px-to-rem(var(--spacing-2xl));
+  background: none;
+  border: 0;
+  outline: 0;
+  color: var(--label-color);
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  transition: color var(--animation-duration) var(--motion-ease-out);
 
   @include mq($from: small) {
     padding-block: px-to-rem(var(--spacing-s));
