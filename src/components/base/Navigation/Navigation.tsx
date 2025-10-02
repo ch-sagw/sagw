@@ -100,7 +100,6 @@ export const Navigation = ({
               footer={section.footer}
               {...('items' in section
                 ? {
-                  description: section.description,
                   expandableId: section.expandableId as NonNullable<typeof section.expandableId>,
                   hoveredItemCallback: (item: string | undefined): void => {
 

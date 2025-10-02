@@ -22,7 +22,6 @@ type InterfaceNavigationItemChild = {
 
 type InterfaceNavigationItemWithItems = {
   text: string;
-  description?: string;
   link?: never;
   items: InterfaceNavigationItemChild[];
   expandableId: string;
@@ -37,7 +36,6 @@ type InterfaceNavigationItemWithItems = {
 
 type InterfaceNavigationItemWithoutItems = {
   text: string;
-  description?: never;
   items?: never;
   link: string;
   expandableId?: never;
@@ -91,7 +89,6 @@ export const NavigationItem = ({
   onExpand,
   colorMode,
   hoveredItemCallback,
-  description,
   onHeightChange,
 }: InterfaceNavigationItemPropTypes): React.JSX.Element => {
 
@@ -258,7 +255,6 @@ export const NavigationItem = ({
             element='button'
             className={styles.buttonLevel1}
             ariaCurrent={level1AriaCurrent}
-            ariaDescription={description || undefined}
             ariaExpanded={smallBreakpoint
               ? expandableId === activeElement
               : menuVisible
