@@ -61,7 +61,6 @@ export const Users: CollectionConfig = {
     useAsTitle: 'email',
   },
   auth: true,
-  // endpoints: [externalUsersLogin],
   fields: [
     {
       access: {
