@@ -15,59 +15,20 @@ permissions:
 on: pull_request
 jobs:
 
-  # Common setup job
-  setup:
-    if: github.head_ref != 'release-please--branches--main'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'npm'
-
-      # Cache node_modules
-      - name: Cache node_modules
-        id: node-cache
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-
-      - name: Install dependencies
-        if: steps.node-cache.outputs.cache-hit != 'true'
-        run: npm ci
-
-      # Cache Playwright browsers
-      - name: Cache Playwright browsers
-        id: pw-cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-pw-${{ hashFiles('package-lock.json') }}
-
-      - name: Install Playwright Browsers
-        if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps
-
-  # Lint once
+  # Lint
   lint:
     if: github.head_ref != 'release-please--branches--main'
-    needs: setup
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-      - name: Restore node_modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-      - run: npm run lint
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
 
   # Frontend Test Job
   test-fe:
@@ -90,17 +51,10 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-      - name: Restore node_modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-
-      - name: Restore Playwright browsers
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-pw-${{ hashFiles('package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
       - name: Test FE
         run: npm run test:fe:native:shard
         env:
@@ -142,17 +96,10 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-      - name: Restore node_modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-
-      - name: Restore Playwright browsers
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-pw-${{ hashFiles('package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
       - name: Test BE
         run: npm run test:be:native:shard
         env:
@@ -187,6 +134,8 @@ jobs:
       with:
         node-version-file: '.nvmrc'
         cache: 'npm'
+    - name: Install dependencies
+      run: npm ci
     - name: Download blob reports
       uses: actions/download-artifact@v4
       with:
