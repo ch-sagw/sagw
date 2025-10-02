@@ -23,6 +23,7 @@ type BaseWrapperProps = {
   style: 'filled' | 'outlined' | 'text' | 'textSmall' | 'textBright' | 'buttonPlay' | 'socialLink';
   prefetch?: 'auto' | true | false | null;
   className?: string;
+  isActive?: boolean;
 };
 
 type ContentProps = {
@@ -110,6 +111,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     text,
     onClick,
     className,
+    isActive,
   } = props;
 
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -129,6 +131,10 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
         dark: [styles.dark],
         light: [styles.light],
         white: [styles.white],
+      },
+      isActive: {
+        false: undefined,
+        true: styles.isActive,
       },
       style: {
         buttonPlay: [styles.buttonPlay],
@@ -173,6 +179,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
         aria-label={ariaLabelText}
         className={classes({
           colorMode,
+          isActive,
           style,
         })}
         data-testid='link'
@@ -205,6 +212,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
         autoFocus={autoFocus}
         className={classes({
           colorMode,
+          isActive,
           style,
         })}
         disabled={disabled}

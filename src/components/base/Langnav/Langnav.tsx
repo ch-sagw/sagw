@@ -153,6 +153,7 @@ export const Langnav = ({
           ariaLabel={getCurrentLang().text}
           autoFocus={toggleButtonAutofocus}
           ariaDescription={`${title}: ${description}` || undefined}
+          isActive={true}
         />
       )}
 

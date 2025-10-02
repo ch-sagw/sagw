@@ -184,6 +184,17 @@ export const ButtonTextDarkBrightText: StrictStory = {
   },
 };
 
+export const ButtonTextActive: StrictStory = {
+  args: {
+    colorMode: 'white',
+    element: 'button',
+    iconInlineStart: 'config' as keyof typeof Icon,
+    isActive: true,
+    style: 'text',
+    text: 'Auswahl anpassen',
+  },
+};
+
 export const ButtonLinkPrimaryFilled: StrictStory = {
   args: {
     colorMode: 'white',

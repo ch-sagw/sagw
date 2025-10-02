@@ -250,7 +250,8 @@
     }
   }
 
-  &[aria-current] {
+  &[aria-current],
+  &.isActive {
     .innerText:before,
     .innerText .line {
       display: none;
