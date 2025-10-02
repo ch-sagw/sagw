@@ -30,6 +30,7 @@ export const LogoSagwDark: StrictStory = {
   args: {
     colorMode: 'dark',
     link: '/',
+    linkText: 'Back to Homepage',
     name: 'sagw',
   },
   globals: {
@@ -43,6 +44,7 @@ export const LogoSagwLight: StrictStory = {
   args: {
     colorMode: 'light',
     link: '/',
+    linkText: 'Back to Homepage',
     name: 'sagw',
   },
 };

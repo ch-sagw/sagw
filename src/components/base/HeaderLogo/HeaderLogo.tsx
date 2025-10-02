@@ -13,6 +13,7 @@ export interface InterfaceHeaderLogoPropTypes {
   className?: string;
   colorMode: ColorMode;
   link: string;
+  linkText: string;
 }
 
 export const HeaderLogo = ({
@@ -20,11 +21,13 @@ export const HeaderLogo = ({
   name,
   colorMode,
   link,
+  linkText,
 }: InterfaceHeaderLogoPropTypes): React.JSX.Element => {
   const IconComponent = Logos[name];
 
   return (
     <a
+      aria-label={linkText}
       href={link}
       className={`${styles.logo} ${styles[name]} ${className} ${styles[colorMode]}`}
     >

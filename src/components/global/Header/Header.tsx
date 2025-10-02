@@ -416,6 +416,9 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     return (
       <HeaderLogo
         link={props.logoLink}
+
+        // TODO: define in i18n in code
+        linkText='Back to Homepage'
         className={styles.logo}
         name={logoName}
         colorMode={renderColorMode()}
