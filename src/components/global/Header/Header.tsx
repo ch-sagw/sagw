@@ -428,12 +428,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
             onMouseLeave={() => {
               setIsHovering(false);
             }}
-            onFocus={() => {
-              setIsHovering(true);
-            }}
-            onBlur={() => {
-              setIsHovering(false);
-            }}
           >
             {headerLogoRender()}
             {navigationRender()}
