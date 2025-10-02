@@ -2,3 +2,7 @@ html.scrollLock {
   max-height: 100vh;
   overflow: hidden;
 }
+
+body {
+  font-size: var(--font-size-s);
+}
