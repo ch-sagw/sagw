@@ -33,9 +33,7 @@
     --icon-color: var(--icon-error-inverted);
   }
 
-  & {
-    background-color: var(--background-color);
-  }
+  background-color: var(--background-color);
 
   .heading {
     @include title-heading-3;
@@ -98,12 +96,10 @@
         &:focus-visible {
           @include focus-visible;
 
-          & {
-            border-bottom: none;
+          border-bottom: none;
 
-            // TODO: discuss focus style in general
-            outline-offset: px-to-rem(calc(-1 * var(--border-width-l) + var(--spacing-xs)));
-          }
+          // TODO: discuss focus style in general
+          outline-offset: px-to-rem(calc(-1 * var(--border-width-l) + var(--spacing-xs)));
         }
       }
     }

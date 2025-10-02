@@ -13,14 +13,12 @@
     --pagination-item-size: 64;
   }
 
-  & {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: px-to-rem(var(--pagination-item-size));
-    height: px-to-rem(var(--pagination-item-size));
-    color: var(--interaction-primary);
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: px-to-rem(var(--pagination-item-size));
+  height: px-to-rem(var(--pagination-item-size));
+  color: var(--interaction-primary);
 
   &.number {
     cursor: pointer;

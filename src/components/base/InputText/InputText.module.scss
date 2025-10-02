@@ -21,11 +21,9 @@
     --color-border: var(--border-secondary-inverted);
   }
 
-  & {
-    position: relative;
-    color: var(--color-text);
-    margin-block-start: px-to-rem(calc(var(--body-text-m-size) * 0.75 + var(--label-active-shift)));
-  }
+  position: relative;
+  color: var(--color-text);
+  margin-block-start: px-to-rem(calc(var(--body-text-m-size) * 0.75 + var(--label-active-shift)));
 
   @include mq($from: medium) {
     --input-height: var(--spacing-3xl);
