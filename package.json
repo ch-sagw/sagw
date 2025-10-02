@@ -29,6 +29,7 @@
     "test:fe": "docker compose -f docker-compose.yml run --rm fe npm run test:fe:native",
     "test:fe:watch": "docker compose -f docker-compose.yml run --rm -p 8080:8080 fe npm run test:fe:native:watch",
     "test:be:native": "npm run generate:pages:collections && npx playwright test -c playwright-be.config.ts",
+    "test:be:native:shard": "npm run generate:pages:collections && npx playwright test --shard=$SHARD_INDEX/$SHARD_TOTAL -c playwright-be.config.ts",
     "test:be:watch:native": "npm run generate:pages:collections && npx playwright test -c playwright-be.config.ts --ui-port=8080 --ui-host=0.0.0.0",
     "test:be": "docker compose -f docker-compose.yml run --rm be npm run test:be:native",
     "test:be:watch": "docker compose -f docker-compose.yml run --rm -p 8080:8080 be npm run test:be:watch:native",
