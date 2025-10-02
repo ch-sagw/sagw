@@ -189,6 +189,11 @@ export const Langnav = ({
                     ? true
                     : undefined
                 }
+                isActive={
+                  item.text === getCurrentLang().text
+                    ? true
+                    : undefined
+                }
               />
             </li>
           ))}
