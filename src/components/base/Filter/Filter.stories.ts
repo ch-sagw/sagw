@@ -12,6 +12,11 @@ type StrictStory = StoryObj<typeof Filter> & {
 };
 
 const meta: Meta<typeof Filter> = {
+  argTypes: {
+    onValueChange: {
+      action: 'value changed',
+    },
+  },
   args: {},
   component: Filter,
   decorators: [defaultDecorator],

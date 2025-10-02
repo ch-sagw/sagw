@@ -5,16 +5,19 @@ import { cva } from 'cva';
 import styles from '@/components/base/Filter/Filter.module.scss';
 import { Icon } from '@/icons';
 
+interface InterfaceFilterItem {
+  amount?: number;
+  checked?: boolean;
+  label?: string;
+  value: string;
+}
+
 export type InterfaceFilterPropTypes = {
-  filterItems: {
-    amount?: number;
-    checked?: boolean;
-    label?: string;
-    value: string;
-  }[];
+  filterItems: InterfaceFilterItem[];
   labelText: string;
   name: string;
   type: 'staticSelect' | 'transformativeSelect'
+  onValueChange?: (selectedValue: string) => void;
 };
 
 const classes = cva([styles.filter], {
@@ -31,19 +34,18 @@ export const Filter = ({
   labelText,
   name,
   type,
+  onValueChange,
 }: InterfaceFilterPropTypes): React.JSX.Element => {
+  const [initiallySelectedItem] = filterItems.filter((item) => item.checked);
+
   const [
-    items,
-    setItems,
-  ] = useState(filterItems);
+    selectedItem,
+    setSelectedItem,
+  ] = useState<string | undefined>(initiallySelectedItem?.value || undefined);
 
   const handleChange = (value: string): void => {
-    const updatedFilterItems = filterItems.map((item) => ({
-      ...item,
-      checked: item.value === value,
-    }));
-
-    setItems(updatedFilterItems);
+    setSelectedItem(value);
+    onValueChange?.(value);
   };
 
   return (
@@ -61,22 +63,30 @@ export const Filter = ({
             className={styles.radioButtonList}
             data-testid='filter-radio-button-list'
           >
-            {items.map((item: any, id: number) => (
-              <li key={id}>
-                <label>
+            {filterItems.map((item: InterfaceFilterItem, id: number) => {
+              const inputId = `${name}-${id}`;
+
+              return (
+                <li
+                  className={styles.radioButtonListItem}
+                  key={id}
+                >
                   <input
-                    className={styles.checkBox}
-                    checked={item.checked ?? false}
+                    className={styles.radioButton}
+                    checked={selectedItem === item.value}
                     name={name}
+                    id={inputId}
                     type='radio'
                     value={item.value ?? item}
                     onChange={() => handleChange(item.value)}
                   />
-                  {item.label}
-                  {item.amount !== undefined && <>&nbsp;({item.amount})</>}
-                </label>
-              </li>
-            ))}
+                  <label htmlFor={inputId}>
+                    {item.label}
+                    {item.amount !== undefined && <>&nbsp;({item.amount})</>}
+                  </label>
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}
@@ -99,8 +109,9 @@ export const Filter = ({
             className={styles.filterSelect}
             data-testid='filter-select'
             name={name}
+            onChange={(evt) => onValueChange?.(evt.target.value)}
           >
-            {items.map((item: any, id: number) => (
+            {filterItems.map((item: any, id: number) => (
               <option key={id} value={item.value ?? item}>
                 {item.label}{item.amount !== undefined && ` (${item.amount})`}
               </option>

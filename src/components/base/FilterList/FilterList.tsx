@@ -1,17 +1,20 @@
-import 'server-only';
+'use client';
+
 import React from 'react';
 import styles from '@/components/base/FilterList/FilterList.module.scss';
 import {
   Filter,
   InterfaceFilterPropTypes,
-} from '../Filter/Filter';
+} from '@/components/base/Filter/Filter';
 
 export type InterfaceFilterListPropTypes = {
   filterListItems: any;
+  onValueChange?: (selectedValue: string) => void;
 }
 
 export const FilterList = ({
   filterListItems,
+  onValueChange,
 }: InterfaceFilterListPropTypes): React.JSX.Element => (
   <ul
     className={styles.filterList}
@@ -30,6 +33,7 @@ export const FilterList = ({
           labelText={filter.labelText}
           name={filter.name}
           type={filter.type}
+          onValueChange={onValueChange}
         />
       </li>
     ))}
