@@ -67,6 +67,7 @@ import { useBreakpoint } from '@/hooks/useBreakpoint';
 import { useWindowScroll } from '@/hooks/useWindowScroll';
 import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
 import { useScrollLock } from '@/hooks/useScrollLock';
+import { useInputMethod } from '@/hooks/useInputMethod';
 
 import {
   InterfaceHeaderLanguageNavigation, InterfaceHeaderLogo, InterfaceHeaderMetaNavigation, InterfaceHeaderNavigation,
@@ -146,9 +147,15 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     setBodyFontSize,
   ] = useState(16);
 
+  const [
+    hoveredSection,
+    setHoveredSection,
+  ] = useState<'mainNav' | 'langNav' | null>(null);
+
   // --- Hooks
 
   useScrollLock(mobileMenuOpen);
+  const isKeyboard = useInputMethod();
   const breakpoint = useBreakpoint();
   const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
   const scrollPosition = useWindowScroll();
@@ -157,15 +164,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   useKeyboardShortcut({
     condition: isHovering,
     key: 'Escape',
-    onKeyPressed: () => {
-      setIsHovering(false);
-    },
-  });
-
-  // close on return key
-  useKeyboardShortcut({
-    condition: isHovering,
-    key: 'Enter',
     onKeyPressed: () => {
       setIsHovering(false);
     },
@@ -213,10 +211,12 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   // --- Callbacks
 
   const handleHoveredItem = (item: InterfaceHoveredItemCallbackType): void => {
+
     const [selectedItem] = Object.keys(item);
 
     if (item[selectedItem]) {
       setIsHovering(true);
+      setHoveredSection('mainNav');
 
       const {
         navItems,
@@ -234,6 +234,11 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
     } else {
       setInfoBlockContent(undefined);
+
+      // on keyboard navigation, hide the menu
+      if (isKeyboard && isHovering && hoveredSection === 'mainNav') {
+        setIsHovering(false);
+      }
     }
   };
 
@@ -247,6 +252,8 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     }
 
     if (isHovering && visibility) {
+      setHoveredSection('langNav');
+
       setInfoBlockContent(visibility
         ? {
           text: props.langnav.description || '',
@@ -255,11 +262,17 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
         : undefined);
     }
 
+    // on keyboard navigation, hide the menu
+    if (isHovering && !visibility && isKeyboard && hoveredSection === 'langNav') {
+      setIsHovering(false);
+    }
   }, [
     isHovering,
     smallBreakpoint,
     props.langnav.description,
     props.langnav.title,
+    isKeyboard,
+    hoveredSection,
   ]);
 
   const handleLangHeightChange = useCallback((height: number) => {
