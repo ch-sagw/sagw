@@ -70,9 +70,7 @@
     & + label:hover {
       @include focus-visible;
 
-      & {
-        outline-offset: px-to-rem(var(--radio-button-outline-offset));
-      }
+      outline-offset: px-to-rem(var(--radio-button-outline-offset));
     }
 
     &:checked {
@@ -118,26 +116,24 @@
     width: 100%;
   }
 
-  & {
-    @include reduced-motion {
-      --animation-duration: 0s;
-    }
+  @include reduced-motion {
+    --animation-duration: 0s;
+  }
 
-    --label-background: var(--background-light);
-    --label-color: var(--interaction-primary);
-    --icon-color: var(--label-color);
-    --animation-duration: var(--motion-speed-very-fast);
+  --label-background: var(--background-light);
+  --label-color: var(--interaction-primary);
+  --icon-color: var(--label-color);
+  --animation-duration: var(--motion-speed-very-fast);
 
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 
-    .filterSelect {
-      transition: color var(--animation-duration) var(--motion-ease-out);
-    }
+  .filterSelect {
+    transition: color var(--animation-duration) var(--motion-ease-out);
+  }
 
-    .filterSelectLabelIcon path {
-      transition: stroke var(--animation-duration) var(--motion-ease-out);
-    }
+  .filterSelectLabelIcon path {
+    transition: stroke var(--animation-duration) var(--motion-ease-out);
   }
 
   &:has(select:focus),
