@@ -7,11 +7,11 @@ export const getTenant = async (): Promise<string | null> => {
   });
 
   const tenants = await payload.find({
-    collection: 'departments',
+    collection: 'tenants',
     depth: 1,
     where: {
       name: {
-        // TODO: infer department from url
+        // TODO: infer tenant from url
         equals: 'SAGW',
       },
     },

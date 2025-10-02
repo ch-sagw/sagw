@@ -7,9 +7,7 @@ import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 import { hookSeoFallback } from '@/hooks/seoFallback';
-import {
-  createAccess, globalAdminOrDepartmentAdminAccess,
-} from '@/collections/Pages/access/globalAdminOrDepartmentAdmin';
+import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superAdminOrTenantAdmin';
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
@@ -17,10 +15,10 @@ import { hookSlug } from '@/hooks/slug';
 
 export const OverviewPage: CollectionConfig = {
   access: {
-    create: createAccess,
-    delete: globalAdminOrDepartmentAdminAccess,
+    create: superAdminOrTenantAdminAccess,
+    delete: superAdminOrTenantAdminAccess,
     read: () => true,
-    update: globalAdminOrDepartmentAdminAccess,
+    update: superAdminOrTenantAdminAccess,
   },
   admin: {
     defaultColumns: [

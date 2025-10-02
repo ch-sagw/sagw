@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       # if the docker image is changed, also change it in deploy-branch.yml and in Dockerfile.testing
-      image: mcr.microsoft.com/playwright:v1.55.0-noble
+      image: mcr.microsoft.com/playwright:v1.55.1-noble
 
     services:
       mongo:

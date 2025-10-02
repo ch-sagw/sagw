@@ -80,7 +80,7 @@ export default buildConfig({
 
       try {
         const fullTenant = await req.payload.findByID({
-          collection: 'departments',
+          collection: 'tenants',
           id: tenant,
           req,
         });

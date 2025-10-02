@@ -5,7 +5,7 @@
 
 # ATTENTION: If the docker image is changed here, it also needs to be changed in deploy-branch.yml and deploy-prod.yml
 
-FROM mcr.microsoft.com/playwright:v1.55.0-noble
+FROM mcr.microsoft.com/playwright:v1.55.1-noble
 WORKDIR /src
 COPY --exclude=node_modules . .
 RUN npm install

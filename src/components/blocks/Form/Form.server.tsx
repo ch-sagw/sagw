@@ -26,7 +26,7 @@ export const FormServer = async ({
     collection: 'i18nForms',
     depth: 1,
     where: {
-      department: {
+      tenant: {
         equals: tenantId,
       },
     },

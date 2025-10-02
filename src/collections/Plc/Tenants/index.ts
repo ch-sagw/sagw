@@ -1,11 +1,11 @@
 import type { CollectionConfig } from 'payload';
 
-import { isGlobalAdminAccess } from '@/access/isGlobalAdmin';
-import { updateAndDeleteAccess } from '@/collections/Plc/Departments/access/updateAndDelete';
+import { isSuperAdminAccess } from '@/access/isSuperAdmin';
+import { updateAndDeleteAccess } from '@/collections/Plc/Tenants/access/updateAndDelete';
 
-export const Departments: CollectionConfig = {
+export const Tenants: CollectionConfig = {
   access: {
-    create: isGlobalAdminAccess,
+    create: isSuperAdminAccess,
     delete: updateAndDeleteAccess,
     read: ({
       req,
@@ -31,7 +31,7 @@ export const Departments: CollectionConfig = {
     },
     {
       admin: {
-        description: 'Used for domain-based department handling',
+        description: 'Used for domain-based tenant handling',
       },
       name: 'domain',
       type: 'text',
@@ -39,7 +39,7 @@ export const Departments: CollectionConfig = {
     },
     {
       admin: {
-        description: 'Used for url paths, example: /department-slug/page-slug',
+        description: 'Used for url paths, example: /tenant-slug/page-slug',
       },
       index: true,
       localized: true,
@@ -75,5 +75,5 @@ export const Departments: CollectionConfig = {
       type: 'group',
     },
   ],
-  slug: 'departments',
+  slug: 'tenants',
 };
