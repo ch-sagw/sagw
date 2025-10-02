@@ -92,6 +92,7 @@ export default async function HomePage({
     currentLang: 'de',
     langnav: langnavData,
     logo: logoData,
+    logoLink: '/',
     menuButton: {
       close: 'Close',
       open: 'Open',

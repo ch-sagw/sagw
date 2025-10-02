@@ -29,6 +29,7 @@ export default meta;
 export const LogoSagwDark: StrictStory = {
   args: {
     colorMode: 'dark',
+    link: '/',
     name: 'sagw',
   },
   globals: {
@@ -41,6 +42,7 @@ export const LogoSagwDark: StrictStory = {
 export const LogoSagwLight: StrictStory = {
   args: {
     colorMode: 'light',
+    link: '/',
     name: 'sagw',
   },
 };

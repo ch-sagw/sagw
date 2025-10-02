@@ -46,6 +46,7 @@ export type InterfaceHeaderPropTypes = {
     close: string,
   };
   currentLang: string;
+  logoLink: string;
 } & InterfaceHeaderPropTypesCms;
 
 // --- Component
@@ -347,6 +348,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
     return (
       <HeaderLogo
+        link={props.logoLink}
         className={styles.logo}
         name={logoName}
         colorMode={renderColorMode()}

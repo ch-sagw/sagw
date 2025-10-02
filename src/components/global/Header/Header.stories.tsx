@@ -58,6 +58,7 @@ const defaultArgs: InterfaceHeaderPropTypes = {
   logo: {
     logo: 'sagw',
   },
+  logoLink: '/',
   menuButton: {
     close: 'Schliessen',
     open: 'Öffnen',
