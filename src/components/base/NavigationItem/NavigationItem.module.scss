@@ -99,6 +99,11 @@
       }
     }
   }
+
+  &.light .icon,
+  &.white .icon {
+    color: currentcolor;
+  }
 }
 
 .expandableMenu.footer {
