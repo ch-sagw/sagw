@@ -155,17 +155,15 @@
     --line-cover-color: canvasText;
   }
 
-  & {
-    --button-icon-color: var(--interaction-secondary);
-    --line-animation-duration: var(--motion-speed-very-fast);
-    --line-cover-color: canvas;
-    --button-color: var(--text-primary);
+  --button-icon-color: var(--interaction-secondary);
+  --line-animation-duration: var(--motion-speed-very-fast);
+  --line-cover-color: canvas;
+  --button-color: var(--text-primary);
 
-    // Redefined because we want to use the --button-padding-block
-    // variable on the innerText element.
-    padding-block: 0;
-    border: none;
-  }
+  // Redefined because we want to use the --button-padding-block
+  // variable on the innerText element.
+  padding-block: 0;
+  border: none;
 
   &:not([disabled]):is(:hover, :focus) {
     --button-icon-color: var(--interaction-secondary-hover);

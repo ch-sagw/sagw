@@ -1,5 +1,53 @@
 # Changelog
 
+## [0.14.0](https://github.com/ch-sagw/sagw/compare/v0.13.0...v0.14.0) (2025-09-23)
+
+
+### Chore
+
+* **be:** implement tenant selector provider ([6e5f954](https://github.com/ch-sagw/sagw/commit/6e5f954861c3842d8b2cf65c46bc2731ef6395ae))
+
+
+### Features
+
+* add checkbox component ([6c97d78](https://github.com/ch-sagw/sagw/commit/6c97d789831829cab6a7257e6423f432a64a7ce6))
+* add empty theme-selector admin component, add theme collection ([1288403](https://github.com/ch-sagw/sagw/commit/12884036f121274d803fadaf91f125d2bd42a376))
+* add form block component ([6c97d78](https://github.com/ch-sagw/sagw/commit/6c97d789831829cab6a7257e6423f432a64a7ce6))
+* add pagination component ([b59b0b0](https://github.com/ch-sagw/sagw/commit/b59b0b052047c752a520fc43c75046a3d648aa0b))
+* add preview image, style properly ([1288403](https://github.com/ch-sagw/sagw/commit/12884036f121274d803fadaf91f125d2bd42a376))
+* add sample colors, render them in custom select options ([1288403](https://github.com/ch-sagw/sagw/commit/12884036f121274d803fadaf91f125d2bd42a376))
+* add tag component ([7f78d4a](https://github.com/ch-sagw/sagw/commit/7f78d4afdfdd671b4736f49f2210d1a6be5bc9ca))
+* add text input component ([6c97d78](https://github.com/ch-sagw/sagw/commit/6c97d789831829cab6a7257e6423f432a64a7ce6))
+* add textarea input component ([6c97d78](https://github.com/ch-sagw/sagw/commit/6c97d789831829cab6a7257e6423f432a64a7ce6))
+* add toggle component ([2caf7a0](https://github.com/ch-sagw/sagw/commit/2caf7a0f7fcd6f4c15598008b4762c67de6a7cc7))
+* add toggle component ([#405](https://github.com/ch-sagw/sagw/issues/405)) ([2caf7a0](https://github.com/ch-sagw/sagw/commit/2caf7a0f7fcd6f4c15598008b4762c67de6a7cc7))
+* adding icons and webfonts ([394b813](https://github.com/ch-sagw/sagw/commit/394b8130a9f9e71996c17f1232b05e98a8ba6f7c))
+* **be:** implement form block ([6e5f954](https://github.com/ch-sagw/sagw/commit/6e5f954861c3842d8b2cf65c46bc2731ef6395ae))
+* **be:** implement mail sending ([6e5f954](https://github.com/ch-sagw/sagw/commit/6e5f954861c3842d8b2cf65c46bc2731ef6395ae))
+* **be:** render accordion component ([048b8f5](https://github.com/ch-sagw/sagw/commit/048b8f5c7604daa29603c39d5dbf6cd266e1e239))
+* **be:** rework color mode ([6e5f954](https://github.com/ch-sagw/sagw/commit/6e5f954861c3842d8b2cf65c46bc2731ef6395ae))
+* create server action to handle form submissions ([6c97d78](https://github.com/ch-sagw/sagw/commit/6c97d789831829cab6a7257e6423f432a64a7ce6))
+* **fe:** add accordion component ([048b8f5](https://github.com/ch-sagw/sagw/commit/048b8f5c7604daa29603c39d5dbf6cd266e1e239))
+* **fe:** create form block ([6e5f954](https://github.com/ch-sagw/sagw/commit/6e5f954861c3842d8b2cf65c46bc2731ef6395ae))
+* **fe:** create form success/error notification ([6e5f954](https://github.com/ch-sagw/sagw/commit/6e5f954861c3842d8b2cf65c46bc2731ef6395ae))
+* implement form-validation with zod ([6c97d78](https://github.com/ch-sagw/sagw/commit/6c97d789831829cab6a7257e6423f432a64a7ce6))
+* working on button variants ([8ac8585](https://github.com/ch-sagw/sagw/commit/8ac85854d2e072e3702e0da304eadcf51da84b01))
+
+
+### Bug Fixes
+
+* set focus on form validation errors ([#404](https://github.com/ch-sagw/sagw/issues/404)) ([3991eaa](https://github.com/ch-sagw/sagw/commit/3991eaa348f4ee2ebe7266956f349e33383f75ab))
+
+
+### Style
+
+* adding new css variable and mixins files ([394b813](https://github.com/ch-sagw/sagw/commit/394b8130a9f9e71996c17f1232b05e98a8ba6f7c))
+
+
+### Test
+
+* add tests for theme selector ([1288403](https://github.com/ch-sagw/sagw/commit/12884036f121274d803fadaf91f125d2bd42a376))
+
 ## [0.13.0](https://github.com/ch-sagw/sagw/compare/v0.12.0...v0.13.0) (2025-09-11)
 
 

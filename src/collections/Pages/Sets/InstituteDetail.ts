@@ -7,18 +7,16 @@ import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 import { hookSeoFallback } from '@/hooks/seoFallback';
-import {
-  createAccess, globalAdminOrDepartmentAdminAccess,
-} from '@/collections/Pages/access/globalAdminOrDepartmentAdmin';
+import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superAdminOrTenantAdmin';
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 
 export const InstituteDetailPage: CollectionConfig = {
   access: {
-    create: createAccess,
-    delete: globalAdminOrDepartmentAdminAccess,
+    create: superAdminOrTenantAdminAccess,
+    delete: superAdminOrTenantAdminAccess,
     read: () => true,
-    update: globalAdminOrDepartmentAdminAccess,
+    update: superAdminOrTenantAdminAccess,
   },
   admin: {
     group: 'Pages',

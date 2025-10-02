@@ -70,7 +70,7 @@
 
 @mixin screen-reader-only {
   border: 0;
-  clip: rect(0 0 0 0);
+  clip-path: rect(0 0 0 0);
   height: 1px;
   margin: -1px;
   overflow: hidden;
@@ -87,10 +87,8 @@
 }
 
 @mixin focus-visible {
-  & {
-    outline: px-to-rem(var(--border-width-l)) solid var(--border-primary);
-    outline-offset: px-to-rem(calc(-1 * var(--border-width-l)));
-  }
+  outline: px-to-rem(var(--border-width-l)) solid var(--border-primary);
+  outline-offset: px-to-rem(calc(-1 * var(--border-width-l)));
 
   @include forced-colors {
     outline-color: LinkText;

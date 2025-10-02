@@ -32,7 +32,7 @@ export default async function HomePage({
     locale: lang,
     overrideAccess: false,
     where: {
-      department: {
+      tenant: {
         equals: tenant,
       },
     },
@@ -45,7 +45,7 @@ export default async function HomePage({
     locale: lang,
     overrideAccess: false,
     where: {
-      department: {
+      tenant: {
         equals: tenant,
       },
     },

@@ -17,6 +17,8 @@ const eslintConfig = [
       'next-env.d.ts',
       'src/app/(payload)/**/*',
       'convenience/generate-component/boilerplate/**/*',
+      'playwright-report/**/*',
+      'test-results/**/*',
       '!src/app/(payload)/**/*/',
       '!src/app/(payload)/cron-jobs/cron-blob-backup/*',
       'storybook-static',

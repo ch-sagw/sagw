@@ -30,9 +30,7 @@
     --icon-color: var(--icon-error-inverted);
   }
 
-  & {
-    background-color: var(--background-color);
-  }
+  background-color: var(--background-color);
 
   .heading {
     @include title-heading-3;
@@ -105,12 +103,10 @@
         &:focus-visible {
           @include focus-visible;
 
-          & {
-            border-bottom: none;
+          border-bottom: none;
 
-            // TODO: discuss focus style in general
-            outline-offset: px-to-rem(calc(-1 * var(--border-width-l) + var(--spacing-xs)));
-          }
+          // TODO: discuss focus style in general
+          outline-offset: px-to-rem(calc(-1 * var(--border-width-l) + var(--spacing-xs)));
         }
       }
     }
@@ -118,12 +114,10 @@
     .content {
       @include expandable-wrapper;
 
-      & {
-        color: var(--text-color);
-        transition-property: grid-template-rows, opacity, padding-block-end, margin-block-start;
-        margin-block-start: 0;
-        padding-block-end: 0;
-      }
+      color: var(--text-color);
+      transition-property: grid-template-rows, opacity, padding-block-end, margin-block-start;
+      margin-block-start: 0;
+      padding-block-end: 0;
     }
 
     .rte {

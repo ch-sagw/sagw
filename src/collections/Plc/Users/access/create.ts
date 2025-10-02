@@ -1,14 +1,12 @@
 import type { Access } from 'payload';
 
 import type {
-  Department, User,
+  Tenant, User,
 } from '@/payload-types';
 
-import { isGlobalAdmin } from '@/access/isGlobalAdmin';
-import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
-import {
-  departmentRoles, userRoles,
-} from '@/collections/Plc/Users/roles';
+import { isSuperAdmin } from '@/access/isSuperAdmin';
+import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
+import { tenantRoles } from '../roles';
 
 export const createAccess: Access<User> = ({
   req,
@@ -17,22 +15,22 @@ export const createAccess: Access<User> = ({
     return false;
   }
 
-  if (isGlobalAdmin(req.user)) {
+  if (isSuperAdmin(req.user)) {
     return true;
   }
 
-  if (!isGlobalAdmin(req.user) && req.data?.roles?.includes(userRoles.admin)) {
+  if (!isSuperAdmin(req.user) && req.data?.roles?.includes('super-admin')) {
     return false;
   }
 
-  const adminDepartmentAccessIDs = getUserDepartmentIDs(req.user, departmentRoles.admin);
+  const adminTenantAccessIDs = getUserTenantIDs(req.user, tenantRoles.admin);
 
-  const requestedDepartments: Department['id'][] =
-    req.data?.departments?.map((t: { department: Department['id'] }) => t.department) ?? [];
+  const requestedTenants: Tenant['id'][] =
+    req.data?.tenants?.map((t: { tenant: Tenant['id'] }) => t.tenant) ?? [];
 
-  const hasAccessToAllRequestedDepartments = requestedDepartments.every((departmentId) => adminDepartmentAccessIDs.includes(departmentId));
+  const hasAccessToAllRequestedTenants = requestedTenants.every((tenantID) => adminTenantAccessIDs.includes(tenantID));
 
-  if (hasAccessToAllRequestedDepartments) {
+  if (hasAccessToAllRequestedTenants) {
     return true;
   }
 

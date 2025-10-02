@@ -3,6 +3,7 @@
 import { Payload } from 'payload';
 
 import { simpleRteConfig } from '@/seed/test-data/helpers';
+import { tenantRoles } from '@/collections/Plc/Users/roles';
 
 export const addDataForTenant = async (payload: Payload, tenant: string): Promise<void> => {
 
@@ -12,7 +13,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
 
   // create tenant
   const tenantId = await payload.create({
-    collection: 'departments',
+    collection: 'tenants',
     data: {
       languages: {
         de: true,
@@ -30,19 +31,17 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     await payload.create({
       collection: 'users',
       data: {
-        department: tenantId,
-        departments: [
-          {
-            department: tenantId,
-            roles: ['admin'],
-          },
-        ],
         email: tenant === 'sagw'
           ? process.env.PAYLOAD_INITIAL_USER_MAIL
           : `${tenant}@foo.bar`,
         password: process.env.PAYLOAD_INITIAL_PASSWORD,
-        roles: ['global-user'],
-        username: tenant,
+        tenants: [
+          {
+            roles: [tenantRoles.admin],
+            tenant: tenantId,
+          },
+        ],
+        username: `${tenant}-admin`,
       },
     });
   }
@@ -57,7 +56,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     data: {
       _status: 'published',
       alt: `${tenant.toUpperCase} image`,
-      department: tenantId,
+      tenant: tenantId,
     },
     filePath: `src/seed/test-data/assets/${tenant}.png`,
   });
@@ -67,8 +66,8 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'svgs',
     data: {
       _status: 'published',
-      department: tenantId,
       name: `${tenant.toUpperCase()} SVG`,
+      tenant: tenantId,
     },
     filePath: `src/seed/test-data/assets/${tenant}.svg`,
   });
@@ -78,7 +77,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'videos',
     data: {
       _status: 'published',
-      department: tenantId,
+      tenant: tenantId,
     },
     filePath: `src/seed/test-data/assets/${tenant}.mp4`,
   });
@@ -88,7 +87,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'documents',
     data: {
       _status: 'published',
-      department: tenantId,
+      tenant: tenantId,
       title: `${tenant.toUpperCase()} Document`,
     },
     filePath: `src/seed/test-data/assets/${tenant}.pdf`,
@@ -99,7 +98,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'zenodoDocuments',
     data: {
       _status: 'published',
-      department: tenantId,
       files: [
         {
           format: 'pdf',
@@ -109,6 +107,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         },
       ],
       publicationDate: '1919-05-01',
+      tenant: tenantId,
       title: `Sample Zenodo Document ${tenant.toUpperCase()}`,
       zenodoId: '1512691',
     },
@@ -122,7 +121,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       collection: 'zenodoDocuments',
       data: {
         _status: 'published',
-        department: tenantId,
         files: [
           {
             format: 'pdf',
@@ -132,6 +130,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           },
         ],
         publicationDate: '1919-05-01',
+        tenant: tenantId,
         title: `Sample Zenodo Document ${tenant.toUpperCase()}`,
         zenodoId: '15126918',
       },
@@ -147,8 +146,8 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'publicationTopics',
     data: {
       _status: 'published',
-      department: tenantId,
       publicationTopic: `Publication Topic 1 ${tenant.toUpperCase()}`,
+      tenant: tenantId,
     },
   });
 
@@ -157,8 +156,8 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'publicationTypes',
     data: {
       _status: 'published',
-      department: tenantId,
       publicationType: `Publication Type 1 ${tenant.toUpperCase()}`,
+      tenant: tenantId,
     },
   });
 
@@ -167,8 +166,8 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'networkCategories',
     data: {
       _status: 'published',
-      department: tenantId,
       name: `Network Category 1 ${tenant.toUpperCase()}`,
+      tenant: tenantId,
     },
   });
 
@@ -177,8 +176,8 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'projects',
     data: {
       _status: 'published',
-      department: tenantId,
       name: `Project 1 ${tenant.toUpperCase()}`,
+      tenant: tenantId,
     },
   });
 
@@ -187,7 +186,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'people',
     data: {
       _status: 'published',
-      department: tenantId,
       firstname: `Firstname ${tenant.toUpperCase()}`,
       function: 'Some function',
       lastname: `Lastname ${tenant.toUpperCase()}`,
@@ -195,6 +193,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       memberType: 'executiveBoard',
       personDepartment: 'admin',
       phone: '031 123 45 67',
+      tenant: tenantId,
     },
   });
 
@@ -203,8 +202,8 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'eventCategory',
     data: {
       _status: 'published',
-      department: tenantId,
       eventCategory: `Event Category 1 ${tenant.toUpperCase()}`,
+      tenant: tenantId,
     },
   });
 
@@ -222,7 +221,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         },
         title: `Title ${tenant.toUpperCase()}`,
       },
-      department: tenantId,
       overlay: {
         analyticsPerformance: {
           text: {
@@ -255,6 +253,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         title: `Title ${tenant.toUpperCase()}`,
 
       },
+      tenant: tenantId,
     },
   });
 
@@ -275,9 +274,9 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         zipCode: `Zip ${tenant.toUpperCase()}`,
       },
       copyright: `Copyright ${tenant.toUpperCase()}`,
-      department: tenantId,
       impressum: `Impressum ${tenant.toUpperCase()}`,
       legal: `Legal ${tenant.toUpperCase()}`,
+      tenant: tenantId,
     },
   });
 
@@ -286,7 +285,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'header',
     data: {
       _status: 'published',
-      department: tenantId,
       languageNavigation: {
         description: 'Die SAGW Webseite ist in vier Sprachen verfügbar',
         title: 'Sprachen',
@@ -412,6 +410,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           },
         ],
       },
+      tenant: tenantId,
     },
   });
 
@@ -420,11 +419,11 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'statusMessage',
     data: {
       _status: 'published',
-      department: tenantId,
       message: `Status Message ${tenant.toUpperCase()}`,
       show: {
         display: 'hide',
       },
+      tenant: tenantId,
       title: `Status Title ${tenant.toUpperCase()}`,
       type: 'error',
     },
@@ -436,7 +435,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     data: {
       _status: 'published',
       colorMode: 'dark',
-      department: tenantId,
       fields: [
         {
           blockType: 'textBlockForm',
@@ -482,6 +480,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       showPrivacyCheckbox: false,
       submitButtonLabel: 'Abschicken',
       subtitle: `Subtitle for contact Form ${tenant.toUpperCase()}`,
+      tenant: tenantId,
       title: `Contact Form ${tenant.toUpperCase()}`,
       titleLevel: '2',
     },
@@ -493,7 +492,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     data: {
       _status: 'published',
       colorMode: 'dark',
-      department: tenantId,
       isNewsletterForm: 'newsletter',
       newsletterFields: {
         actionText: 'Erneut senden',
@@ -514,6 +512,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       showPrivacyCheckbox: true,
       submitButtonLabel: 'Abschicken',
       subtitle: `Subtitle for Newsletter Form ${tenant.toUpperCase()}`,
+      tenant: tenantId,
       title: `Newsletter Form ${tenant.toUpperCase()}`,
       titleLevel: '2',
     },
@@ -524,7 +523,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'i18nForms',
     data: {
       _status: 'published',
-      department: tenantId,
       i18nForms: {
         dataPrivacyCheckbox: {
           dataPrivacyCheckboxText: {
@@ -545,6 +543,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           title: `Submit title success ${tenant.toUpperCase()}`,
         },
       },
+      tenant: tenantId,
     },
 
   });
@@ -624,7 +623,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           titleLevel: '2',
         },
       ],
-      department: tenantId,
       hero: {
         animated: true,
         lead: 'Home Lead',
@@ -641,6 +639,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           title: `SEO Title ${tenant.toUpperCase()}`,
         },
       },
+      tenant: tenantId,
     },
   });
 
@@ -649,12 +648,12 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'errorPage',
     data: {
       _status: 'published',
-      department: tenantId,
       homeButtonText: 'Home Button Text',
       notFound: {
         description: 'Error description',
         title: `Not found title ${tenant.toUpperCase()}`,
       },
+      tenant: tenantId,
     },
   });
 
@@ -663,7 +662,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'detailPage',
     data: {
       _status: 'published',
-      department: tenantId,
       hero: {
         colorMode: 'white',
         lead: 'Detail Page Lead',
@@ -671,6 +669,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           content: simpleRteConfig(`Detail page title ${tenant.toUpperCase()}`),
         },
       },
+      tenant: tenantId,
     },
   });
 
@@ -679,7 +678,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'overviewPage',
     data: {
       _status: 'published',
-      department: tenantId,
       hero: {
         colorMode: 'white',
         lead: 'Overview Page Lead',
@@ -687,6 +685,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           content: simpleRteConfig(`Overview page title ${tenant.toUpperCase()}`),
         },
       },
+      tenant: tenantId,
     },
   });
 
@@ -695,7 +694,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'magazineDetailPage',
     data: {
       _status: 'published',
-      department: tenantId,
       hero: {
         author: 'Author',
         colorMode: 'white',
@@ -708,6 +706,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       overviewPageProps: {
         teaserText: 'Magazine Detail Teaser Text',
       },
+      tenant: tenantId,
     },
   });
 
@@ -716,7 +715,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'eventDetailPage',
     data: {
       _status: 'published',
-      department: tenantId,
       eventDetails: {
         category: eventCategory.id,
         date: '2025-08-31T12:00:00.000Z',
@@ -731,6 +729,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         },
       },
       showDetailPage: 'true',
+      tenant: tenantId,
     },
   });
 
@@ -739,7 +738,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'eventDetailPage',
     data: {
       _status: 'published',
-      department: tenantId,
       eventDetails: {
         category: eventCategory.id,
         date: '2025-08-31T12:00:00.000Z',
@@ -757,6 +755,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         externalLinkText: 'External Link',
       },
       showDetailPage: 'false',
+      tenant: tenantId,
     },
   });
 
@@ -765,7 +764,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'newsDetailPage',
     data: {
       _status: 'published',
-      department: tenantId,
       hero: {
         colorMode: 'white',
         date: '2025-08-31T12:00:00.000Z',
@@ -778,6 +776,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         teaserText: 'Overview Teaser Text',
       },
       project: project.id,
+      tenant: tenantId,
     },
   });
 
@@ -790,7 +789,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         topic: publicationTopic.id,
         type: publicationType.id,
       },
-      department: tenantId,
       hero: {
         colorMode: 'white',
         lead: 'Publication Detail Page Lead',
@@ -801,6 +799,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       overviewPageProps: {
         image,
       },
+      tenant: tenantId,
     },
   });
 
@@ -809,7 +808,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'instituteDetailPage',
     data: {
       _status: 'published',
-      department: tenantId,
       hero: {
         colorMode: 'white',
         lead: 'Institute Detail Page Lead',
@@ -821,6 +819,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         image,
         text: 'Institute Teaser Text',
       },
+      tenant: tenantId,
     },
   });
 
@@ -829,7 +828,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'nationalDictionaryDetailPage',
     data: {
       _status: 'published',
-      department: tenantId,
       hero: {
         colorMode: 'white',
         lead: 'National Dictionary Detail Page Lead',
@@ -841,6 +839,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         image,
         text: 'National Dictionary Teaser Text',
       },
+      tenant: tenantId,
     },
   });
 
@@ -849,7 +848,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'projectDetailPage',
     data: {
       _status: 'published',
-      department: tenantId,
       hero: {
         colorMode: 'white',
         lead: 'Project Detail Page Lead',
@@ -861,6 +859,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         text: 'Project Teaser Text',
       },
       project,
+      tenant: tenantId,
     },
   });
 

@@ -20,10 +20,7 @@
     align-items: center;
     justify-content: space-between;
     gap: px-to-rem(var(--spacing-m));
-
-    & {
-      margin-block-end: px-to-rem(var(--spacing-s));
-    }
+    margin-block-end: px-to-rem(var(--spacing-s));
 
     @include mq($from: large) {
       margin-block-end: px-to-rem(var(--spacing-xl));

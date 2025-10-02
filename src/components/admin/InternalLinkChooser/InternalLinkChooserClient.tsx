@@ -29,7 +29,7 @@ interface InternalLinkChooserClientProps {
 
 interface InterfaceFetchPages {
   slugs: InterfaceSlug[];
-  department: string;
+  tenant: string;
   collectionSlug: string;
   currentId: string | number | undefined;
 }
@@ -40,7 +40,7 @@ const collectionIsLinkablePage = (page: any): page is { isLinkable: boolean; adm
 
 const fetchPages = async ({
   slugs,
-  department,
+  tenant,
   collectionSlug,
   currentId,
 }: InterfaceFetchPages): Promise<InterfaceGroupedOptions[]> => {
@@ -51,7 +51,7 @@ const fetchPages = async ({
   }
 
   for await (const slug of slugs) {
-    const res = await fetch(`/api/${slug.slug}?where[department][equals]=${department}`);
+    const res = await fetch(`/api/${slug.slug}?where[tenant][equals]=${tenant}`);
     const json = await res.json();
     const groupOptions: Option[] = [];
 
@@ -123,8 +123,8 @@ const InternalLinkChooserClient = ({
       const opts = await fetchPages({
         collectionSlug,
         currentId,
-        department: tenant,
         slugs,
+        tenant,
       });
 
       setOptions([...opts]);
