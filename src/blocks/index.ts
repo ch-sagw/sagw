@@ -18,7 +18,6 @@ import { EventsOverviewBlock } from '@/blocks/EventsOverview';
 import { FormBlock } from '@/blocks/Form';
 import { CtaContactBlock } from '@/blocks/CtaContact';
 import { CtaLinkBlock } from '@/blocks/CtaLink';
-import { TitleSubtitleTextBlock } from '@/blocks/TitleSubtitleText';
 import { NetworkTeasersBlock } from '@/blocks/NetworkTeasers';
 import { PeopleOverviewBlock } from '@/blocks/PeopleOverview';
 import { NotificationBlock } from './Notification';
@@ -32,7 +31,6 @@ import { ProjectTeasersBlock } from '@/blocks/ProjectTeasers';
 export const blocks = (exclude?: string[]): Block[] => {
   const availableBlocks = [
     TextBlock,
-    TitleSubtitleTextBlock,
     LinksBlock,
     DownloadsBlock,
     ImageBlock,
