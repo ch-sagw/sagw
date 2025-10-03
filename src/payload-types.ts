@@ -450,17 +450,38 @@ export interface Video {
  * via the `definition` "InterfaceAccordionBlock".
  */
 export interface InterfaceAccordionBlock {
-  title: string;
+  title: InterfaceRte1;
   titleLevel: '2' | '3' | '4' | '5';
   colorMode: 'white' | 'dark' | 'light';
   accordions: {
-    accordionTitle: string;
+    accordionTitle: InterfaceRte1;
     accordionContent: InterfaceRte2;
     id?: string | null;
   }[];
   id?: string | null;
   blockName?: string | null;
   blockType: 'accordionBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceRte1".
+ */
+export interface InterfaceRte1 {
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1016,27 +1037,6 @@ export interface HomePage {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceRte1".
- */
-export interface InterfaceRte1 {
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2415,13 +2415,13 @@ export interface InterfaceVideoBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceAccordionBlock_select".
  */
 export interface InterfaceAccordionBlockSelect<T extends boolean = true> {
-  title?: T;
+  title?: T | InterfaceRte1Select<T>;
   titleLevel?: T;
   colorMode?: T;
   accordions?:
     | T
     | {
-        accordionTitle?: T;
+        accordionTitle?: T | InterfaceRte1Select<T>;
         accordionContent?: T | InterfaceRte2Select<T>;
         id?: T;
       };

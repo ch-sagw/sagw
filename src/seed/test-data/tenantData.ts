@@ -2,7 +2,7 @@
 
 import { Payload } from 'payload';
 
-import { simpleRteConfig } from '@/seed/test-data/helpers';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { tenantRoles } from '@/collections/Plc/Users/roles';
 
 export const addDataForTenant = async (payload: Payload, tenant: string): Promise<void> => {
@@ -590,36 +590,48 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
               accordionContent: {
                 content: simpleRteConfig('Some content'),
               },
-              accordionTitle: 'Accordion 1',
+              accordionTitle: {
+                content: simpleRteConfig('Accordion 1'),
+              },
             },
             {
               accordionContent: {
                 content: simpleRteConfig('Some content'),
               },
-              accordionTitle: 'Accordion 2',
+              accordionTitle: {
+                content: simpleRteConfig('Accordion 2'),
+              },
             },
             {
               accordionContent: {
                 content: simpleRteConfig('Some content'),
               },
-              accordionTitle: 'Accordion 3',
+              accordionTitle: {
+                content: simpleRteConfig('Accordion 3'),
+              },
             },
             {
               accordionContent: {
                 content: simpleRteConfig('Some content'),
               },
-              accordionTitle: 'Accordion 4',
+              accordionTitle: {
+                content: simpleRteConfig('Accordion 4'),
+              },
             },
             {
               accordionContent: {
                 content: simpleRteConfig('Some content'),
               },
-              accordionTitle: 'Accordion 5',
+              accordionTitle: {
+                content: simpleRteConfig('Accordion 5'),
+              },
             },
           ],
           blockType: 'accordionBlock',
           colorMode: 'white',
-          title: `Accordion main title ${tenant.toUpperCase()}`,
+          title: {
+            content: simpleRteConfig(`Accordion main title ${tenant.toUpperCase()}`),
+          },
           titleLevel: '2',
         },
       ],

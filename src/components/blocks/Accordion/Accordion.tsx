@@ -55,7 +55,10 @@ export const Accordion = ({
       data-testid='accordion'
     >
       <TitleElem className={styles.heading}>
-        {title}
+        <Rte
+          rteConfig='rte1'
+          text={title.content}
+        />
       </TitleElem>
 
       <ul className={styles.list}>
@@ -81,7 +84,12 @@ export const Accordion = ({
                   data-testid='button'
                   autoFocus={toggleButtonAutofocus}
                 >
-                  <span className={styles.buttonText}>{item.accordionTitle}</span>
+                  <span className={styles.buttonText}>
+                    <Rte
+                      rteConfig='rte1'
+                      text={item.accordionTitle.content}
+                    />
+                  </span>
                   <Icon
                     name='plus'
                     className={styles.icon}
