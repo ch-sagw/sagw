@@ -879,6 +879,10 @@ export interface InterfaceNewsOverviewBlock {
  * via the `definition` "InterfaceNationalDictionariesOverviewBlock".
  */
 export interface InterfaceNationalDictionariesOverviewBlock {
+  /**
+   * This will be used as "More info" text on the teasers
+   */
+  moreInfoButtonText: string;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -889,6 +893,10 @@ export interface InterfaceNationalDictionariesOverviewBlock {
  * via the `definition` "InterfaceInstitutesOverviewBlock".
  */
 export interface InterfaceInstitutesOverviewBlock {
+  /**
+   * This will be used as "More info" text on the teasers
+   */
+  moreInfoButtonText: string;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -2662,6 +2670,7 @@ export interface InterfaceNewsOverviewBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceNationalDictionariesOverviewBlock_select".
  */
 export interface InterfaceNationalDictionariesOverviewBlockSelect<T extends boolean = true> {
+  moreInfoButtonText?: T;
   message?: T;
   id?: T;
   blockName?: T;
@@ -2671,6 +2680,7 @@ export interface InterfaceNationalDictionariesOverviewBlockSelect<T extends bool
  * via the `definition` "InterfaceInstitutesOverviewBlock_select".
  */
 export interface InterfaceInstitutesOverviewBlockSelect<T extends boolean = true> {
+  moreInfoButtonText?: T;
   message?: T;
   id?: T;
   blockName?: T;

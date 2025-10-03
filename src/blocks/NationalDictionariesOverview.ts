@@ -9,6 +9,15 @@ export const NationalDictionariesOverviewBlock: Block = {
   fields: [
     {
       admin: {
+        description: 'This will be used as "More info" text on the teasers',
+      },
+      localized: true,
+      name: 'moreInfoButtonText',
+      required: true,
+      type: 'text',
+    },
+    {
+      admin: {
         hidden: true,
       },
       defaultValue: 'Placeholder: all national dictionary detail pages will be displayed as overview here.',
