@@ -208,6 +208,71 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     setDidScroll(scrollPosition > 50);
   }, [scrollPosition]);
 
+  useEffect(() => {
+    if (!mobileMenuOpen) {
+      return undefined;
+    }
+
+    const menu = headerRef.current?.querySelector<HTMLDivElement>('[data-header="focus-region"]');
+
+    if (!menu) {
+      return undefined;
+    }
+
+    // Get focusable elements
+    const focusableEls = menu.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])');
+
+    if (focusableEls.length === 0) {
+      return undefined;
+    }
+
+    const focusableArray = Array.from(focusableEls);
+    const lastFocusable = focusableArray[focusableArray.length - 1];
+    const [firstFocusable] = focusableArray.filter((elem) => elem.classList.contains(styles.menuButton));
+
+    // Create a focusable element at the very end that loops back
+    const loopTrap = document.createElement('button');
+
+    loopTrap.tabIndex = 0;
+    loopTrap.setAttribute('aria-label', 'End of menu');
+    loopTrap.style.cssText = 'position: absolute; left: -9999px;';
+
+    const handleLoopFocus = (): void => {
+      firstFocusable?.focus();
+    };
+
+    loopTrap.addEventListener('focus', handleLoopFocus);
+    menu.appendChild(loopTrap);
+
+    // Keyboard trap
+    const handleKeyDown = (e: KeyboardEvent): void => {
+      if (e.key !== 'Tab') {
+        return;
+      }
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusable) {
+          e.preventDefault();
+          lastFocusable?.focus();
+        }
+      } else {
+        if (document.activeElement === lastFocusable) {
+          e.preventDefault();
+          firstFocusable?.focus();
+        }
+      }
+    };
+
+    menu.addEventListener('keydown', handleKeyDown);
+
+    // Cleanup
+    return () => {
+      loopTrap.removeEventListener('focus', handleLoopFocus);
+      menu.removeEventListener('keydown', handleKeyDown);
+      loopTrap.remove();
+    };
+  }, [mobileMenuOpen]);
+
   // --- Callbacks
 
   const handleHoveredItem = (item: InterfaceHoveredItemCallbackType): void => {
@@ -479,15 +544,20 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     >
 
       {smallBreakpoint &&
-        <Fragment>
+        <div data-header='focus-region'>
           <div className={styles.logoWrapper}>
             {headerLogoRender()}
             {menuButtonRender()}
           </div>
 
-          <div className={`${styles.mobileMenu} ${mobileMenuOpen
-            ? styles.open
-            : undefined}`}>
+          <div
+            className={`${styles.mobileMenu} ${mobileMenuOpen
+              ? styles.open
+              : undefined}`}
+            inert={!mobileMenuOpen || undefined}
+            role='dialog'
+            aria-modal='true'
+          >
             <div className={styles.mobileMenuWrapper}>
               {navigationRender()}
 
@@ -499,7 +569,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
               {metanavRender()}
             </div>
           </div>
-        </Fragment>
+        </div>
       }
 
       {!smallBreakpoint &&
