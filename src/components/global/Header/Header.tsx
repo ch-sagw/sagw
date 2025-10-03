@@ -6,8 +6,6 @@
 TODOs from marius
 ----
 - der infoblock hat aktuell kein fade-in analog der subnavi
-- im safari auf iOS 26.0 kann ich mit voice over aus der mobile navigation
-rausswipen.
 - in den chromium basierten browsern (edge/chrome) kann ich bei mir in nvda
 und jaws das untermenü nicht öffnen. weder mit space noch enter.
 im firefox klappt es
@@ -41,6 +39,8 @@ der sticky header kriegt die höhe in pixel. damit der proportional mit
 der schrift mitskaliert, müssten wir die angaben in rem setzen. wenn man dies
 macht, haben wir aber je nach viewport-breite ungünstige umbrüche, teilweise
 schon bei 120%.
+- im safari auf iOS 26.0 kann ich mit voice over aus der mobile navigation
+rausswipen.
 
 */
 
