@@ -7,7 +7,7 @@ import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 test.describe('forms', () => {
   beforeEachPayloadLogin();
 
-  test('ensure unique label / name for all fields', async ({
+  test('correctly derives name from label', async ({
     page,
   }) => {
     // create a form
@@ -25,7 +25,8 @@ test.describe('forms', () => {
     await recipientMail.fill('foo@bar.com');
     await subject.fill('subject');
 
-    // add 2 fields
+    // add block
+
     const addFieldButton = await page.getByText('Field hinzufügen', {
       exact: true,
     });
@@ -38,42 +39,28 @@ test.describe('forms', () => {
 
     await textBlock.click();
 
-    await addFieldButton.click();
-
-    await textBlock.click();
-
-    // fill fields of block
-
     const firstBlock = await page.locator('#fields-row-0');
-    const secondBlock = await page.locator('#fields-row-1');
 
     const label1 = await firstBlock.getByLabel('Label');
     const placeholder1 = await firstBlock.getByLabel('Placeholder');
     const error1 = await firstBlock.getByLabel('Field Error');
 
-    const label2 = await secondBlock.getByLabel('Label');
-    const placeholder2 = await secondBlock.getByLabel('Placeholder');
-    const error2 = await secondBlock.getByLabel('Field Error');
-
-    await label1.fill('label');
+    await label1.fill('$4_20-"^3asd-%&*"+');
     await placeholder1.fill('placeholder');
     await error1.fill('error');
-
-    await label2.fill('label');
-    await placeholder2.fill('placeholder');
-    await error2.fill('error');
 
     // save
     const saveButton = await page.getByRole('button', {
       name: 'Änderungen veröffentlichen',
     });
 
+    // expect specific name derived from label
     await saveButton.click();
 
-    // expect error
-    const error = await page.locator('.field-error');
+    const hiddenNameField = await firstBlock.locator('#field-fields__0__name');
 
-    await expect(error)
-      .toHaveText('Duplicate label "label" is not allowed.');
+    await expect(hiddenNameField)
+      .toHaveValue('4_20-3asd-');
+
   });
 });
