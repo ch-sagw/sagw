@@ -4,11 +4,11 @@ import type {
 } from 'payload';
 import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
 
-import { isGlobalAdmin } from '@/access/isGlobalAdmin';
-import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
-import { isAccessingSelf } from '@/collections/Plc/Users/access/isAccessingSelf';
+import { isSuperAdmin } from '@/access/isSuperAdmin';
+import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
+import { isAccessingSelf } from './isAccessingSelf';
 import { getCollectionIDType } from '@/utilities/getCollectionIdType';
-import { departmentRoles } from '@/collections/Plc/Users/roles';
+import { tenantRoles } from '../roles';
 
 export const readAccess: Access<User> = ({
   req, id,
@@ -24,25 +24,24 @@ export const readAccess: Access<User> = ({
     return true;
   }
 
-  const superAdmin = isGlobalAdmin(req.user);
-  const selectedDepartment = getTenantFromCookie(
+  const superAdmin = isSuperAdmin(req.user);
+  const selectedTenant = getTenantFromCookie(
     req.headers,
     getCollectionIDType({
-      collectionSlug: 'departments',
+      collectionSlug: 'tenants',
       payload: req.payload,
     }),
   );
-  const adminDepartmentAccessIDs = getUserDepartmentIDs(req.user, departmentRoles.admin);
+  const adminTenantAccessIDs = getUserTenantIDs(req.user, tenantRoles.admin);
 
-  if (selectedDepartment) {
-    // If it's a super admin, or they have access to the department ID
-    // set in cookie
-    const hasDepartmentAccess = adminDepartmentAccessIDs.some((accessId) => accessId === selectedDepartment);
+  if (selectedTenant) {
+    // If it's a super admin, or they have access to the tenant ID set in cookie
+    const hasTenantAccess = adminTenantAccessIDs.some((accessId) => accessId === selectedTenant);
 
-    if (superAdmin || hasDepartmentAccess) {
+    if (superAdmin || hasTenantAccess) {
       return {
-        'departments.department': {
-          equals: selectedDepartment,
+        'tenants.tenant': {
+          equals: selectedTenant,
         },
       };
     }
@@ -60,8 +59,8 @@ export const readAccess: Access<User> = ({
         },
       },
       {
-        'departments.department': {
-          in: adminDepartmentAccessIDs,
+        'tenants.tenant': {
+          in: adminTenantAccessIDs,
         },
       },
     ],

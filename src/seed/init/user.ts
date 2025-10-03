@@ -1,4 +1,5 @@
 import { Payload } from 'payload';
+import { userRoles } from '@/collections/Plc/Users/roles';
 
 export const seedInitialUser = async (payload: Payload, tenantId: string): Promise<void> => {
   try {
@@ -15,20 +16,13 @@ export const seedInitialUser = async (payload: Payload, tenantId: string): Promi
 
       // create the first admin user and link it to the tenant
       if (process.env.PAYLOAD_INITIAL_USER_MAIL && process.env.PAYLOAD_INITIAL_PASSWORD) {
+
         await payload.create({
           collection: 'users',
           data: {
-            department: tenantId,
-            departments: [
-              {
-                department: tenantId,
-                roles: ['admin'],
-              },
-            ],
             email: process.env.PAYLOAD_INITIAL_USER_MAIL,
             password: process.env.PAYLOAD_INITIAL_PASSWORD,
-            roles: ['global-admin'],
-            username: 'init-user',
+            roles: [userRoles.admin],
           },
         });
 

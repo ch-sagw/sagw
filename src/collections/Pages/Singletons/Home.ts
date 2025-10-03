@@ -11,7 +11,10 @@ import { versions } from '@/field-templates/versions';
 
 export const HomePage: CollectionConfig = {
   access: {
+    create: (): boolean => true,
+    delete: (): boolean => true,
     read: (): boolean => true,
+    update: (): boolean => true,
   },
   admin: {
     group: 'Pages',

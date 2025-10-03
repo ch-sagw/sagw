@@ -41,8 +41,6 @@ const configWithPayload = withPayload(nextConfig, {
 });
 
 export default withSentryConfig(configWithPayload, {
-  devBundleServerPackages: false,
-}, {
   authToken: process.env.SENTRY_AUTH_TOKEN,
   automaticVercelMonitors: true,
   disableLogger: true,

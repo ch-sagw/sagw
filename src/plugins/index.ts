@@ -15,8 +15,8 @@ import { Videos } from '@/collections/Plc/Videos';
 import { Documents } from '@/collections/Plc/Documents';
 import { getServerSideURL } from '@/utilities/getUrl';
 import type { Config } from '@/payload-types';
-import { isGlobalAdmin } from '@/access/isGlobalAdmin';
-import { getUserDepartmentIDs } from '@/utilities/getUserDepartmentIds';
+import { isSuperAdmin } from '@/access/isSuperAdmin';
+import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
 import { tenantsCollections } from '@/collections';
 import { Svgs } from '@/collections/Plc/Svgs';
 
@@ -93,22 +93,18 @@ const plugins: Plugin[] = [
         update: ({
           req,
         }) => {
-          if (isGlobalAdmin(req.user)) {
+          if (isSuperAdmin(req.user)) {
             return true;
           }
 
-          return getUserDepartmentIDs(req.user).length > 0;
+          return getUserTenantIDs(req.user).length > 0;
         },
       },
-      name: 'department',
     },
     tenantsArrayField: {
-      arrayFieldName: 'departments',
-      arrayTenantFieldName: 'department',
       includeDefaultField: false,
     },
-    tenantsSlug: 'departments',
-    userHasAccessToAllTenants: (user) => isGlobalAdmin(user),
+    userHasAccessToAllTenants: (user) => isSuperAdmin(user),
   }),
 
 ];

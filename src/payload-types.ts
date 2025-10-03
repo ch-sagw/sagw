@@ -119,7 +119,7 @@ export interface Config {
     publicationTopics: PublicationTopic;
     publicationTypes: PublicationType;
     eventCategory: EventCategory;
-    departments: Department;
+    tenants: Tenant;
     users: User;
     forms: Form;
     i18nForms: I18NForm;
@@ -156,7 +156,7 @@ export interface Config {
     publicationTopics: PublicationTopicsSelect<false> | PublicationTopicsSelect<true>;
     publicationTypes: PublicationTypesSelect<false> | PublicationTypesSelect<true>;
     eventCategory: EventCategorySelect<false> | EventCategorySelect<true>;
-    departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
+    tenants: TenantsSelect<false> | TenantsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     i18nForms: I18NFormsSelect<false> | I18NFormsSelect<true>;
@@ -220,7 +220,7 @@ export interface InterfaceRte2 {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -302,7 +302,7 @@ export interface InterfaceDownloadsBlock {
  */
 export interface Document {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   title: string;
   project?: (string | null) | Project;
   updatedAt: string;
@@ -320,17 +320,17 @@ export interface Document {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "departments".
+ * via the `definition` "tenants".
  */
-export interface Department {
+export interface Tenant {
   id: string;
   name: string;
   /**
-   * Used for domain-based department handling
+   * Used for domain-based tenant handling
    */
   domain?: string | null;
   /**
-   * Used for url paths, example: /department-slug/page-slug
+   * Used for url paths, example: /tenant-slug/page-slug
    */
   slug: string;
   languages?: {
@@ -350,7 +350,7 @@ export interface Department {
  */
 export interface Project {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   name: string;
   updatedAt: string;
   createdAt: string;
@@ -362,7 +362,7 @@ export interface Project {
  */
 export interface ZenodoDocument {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   zenodoId: string;
   title: string;
   publicationDate: string;
@@ -396,7 +396,7 @@ export interface InterfaceImageBlock {
  */
 export interface Image {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   alt?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -431,7 +431,7 @@ export interface InterfaceVideoBlock {
  */
 export interface Video {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   alt?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -479,7 +479,7 @@ export interface InterfaceFormBlock {
  */
 export interface Form {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   /**
    * A newsletter form has a fixed set of fields. Custom form can be build with any combination of fields as you like.
    */
@@ -610,7 +610,7 @@ export interface InterfaceCtaContactBlock {
  */
 export interface Person {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   personDepartment: 'admin' | 'science' | 'com' | 'direction';
   memberType: 'executiveBoard' | 'team';
   prefix?: string | null;
@@ -674,7 +674,7 @@ export interface InterfaceHomeTeasersBlock {
  */
 export interface Svg {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   name: string;
   updatedAt: string;
   createdAt: string;
@@ -747,7 +747,7 @@ export interface InterfaceNetworkTeasersBlock {
  */
 export interface NetworkCategory {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   name: string;
   updatedAt: string;
   createdAt: string;
@@ -962,7 +962,7 @@ export interface InterfaceProjectTeasersBlock {
  */
 export interface HomePage {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   hero: {
@@ -1036,7 +1036,7 @@ export interface InterfaceRte1 {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -1054,7 +1054,7 @@ export interface InterfaceRte1 {
  */
 export interface ErrorPage {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   homeButtonText: string;
   notFound: {
     title: string;
@@ -1081,7 +1081,7 @@ export interface ErrorPage {
  */
 export interface MagazineDetailPage {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
@@ -1155,7 +1155,7 @@ export interface MagazineDetailPage {
  */
 export interface OverviewPage {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
@@ -1221,7 +1221,7 @@ export interface OverviewPage {
  */
 export interface DetailPage {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
@@ -1287,7 +1287,7 @@ export interface DetailPage {
  */
 export interface EventDetailPage {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
@@ -1369,7 +1369,7 @@ export interface EventDetailPage {
  */
 export interface EventCategory {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   eventCategory: string;
   updatedAt: string;
   createdAt: string;
@@ -1381,7 +1381,7 @@ export interface EventCategory {
  */
 export interface NewsDetailPage {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
@@ -1455,7 +1455,7 @@ export interface NewsDetailPage {
  */
 export interface PublicationDetailPage {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
@@ -1532,7 +1532,7 @@ export interface PublicationDetailPage {
  */
 export interface PublicationTopic {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   publicationTopic: string;
   updatedAt: string;
   createdAt: string;
@@ -1544,7 +1544,7 @@ export interface PublicationTopic {
  */
 export interface PublicationType {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   publicationType: string;
   updatedAt: string;
   createdAt: string;
@@ -1556,7 +1556,7 @@ export interface PublicationType {
  */
 export interface NationalDictionaryDetailPage {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   overviewPageProps: {
@@ -1628,7 +1628,7 @@ export interface NationalDictionaryDetailPage {
  */
 export interface InstituteDetailPage {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   overviewPageProps: {
@@ -1700,7 +1700,7 @@ export interface InstituteDetailPage {
  */
 export interface ProjectDetailPage {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   project: string | Project;
@@ -1769,13 +1769,13 @@ export interface ProjectDetailPage {
  */
 export interface User {
   id: string;
-  department?: (string | null) | Department;
-  roles?: ('global-admin' | 'global-user')[] | null;
+  password?: string | null;
+  roles?: ('super-admin' | 'global-user')[] | null;
   username?: string | null;
-  departments?:
+  tenants?:
     | {
-        department: string | Department;
-        roles: ('admin' | 'editor' | 'editor-magazine' | 'translator')[];
+        tenant: string | Tenant;
+        roles: ('tenant-admin' | 'editor')[];
         id?: string | null;
       }[]
     | null;
@@ -1795,7 +1795,6 @@ export interface User {
         expiresAt: string;
       }[]
     | null;
-  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1803,7 +1802,7 @@ export interface User {
  */
 export interface I18NForm {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   i18nForms: InterfaceI18NForms;
   updatedAt: string;
   createdAt: string;
@@ -1873,7 +1872,7 @@ export interface InterfaceI18NForms {
  */
 export interface Consent {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   adminTitle?: string | null;
   banner: {
     title: string;
@@ -1917,7 +1916,7 @@ export interface Consent {
  */
 export interface Footer {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   adminTitle?: string | null;
   legal: string;
   impressum: string;
@@ -1951,7 +1950,7 @@ export interface Footer {
  */
 export interface Header {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   adminTitle?: string | null;
   navigation: InterfaceNavigation;
   metaLinks?:
@@ -1998,7 +1997,7 @@ export interface InterfaceNavigation {
  */
 export interface StatusMessage {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   adminTitle?: string | null;
   show: {
     /**
@@ -2033,7 +2032,7 @@ export interface StatusMessage {
  */
 export interface Theme {
   id: string;
-  department?: (string | null) | Department;
+  tenant?: (string | null) | Tenant;
   adminTitle?: string | null;
   themeSelector: string;
   updatedAt: string;
@@ -2136,8 +2135,8 @@ export interface PayloadLockedDocument {
         value: string | EventCategory;
       } | null)
     | ({
-        relationTo: 'departments';
-        value: string | Department;
+        relationTo: 'tenants';
+        value: string | Tenant;
       } | null)
     | ({
         relationTo: 'users';
@@ -2218,7 +2217,7 @@ export interface PayloadMigration {
  * via the `definition` "homePage_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
   hero?:
@@ -2725,7 +2724,7 @@ export interface InterfaceProjectTeasersBlockSelect<T extends boolean = true> {
  * via the `definition` "errorPage_select".
  */
 export interface ErrorPageSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   homeButtonText?: T;
   notFound?:
     | T
@@ -2754,7 +2753,7 @@ export interface ErrorPageSelect<T extends boolean = true> {
  * via the `definition` "magazineDetailPage_select".
  */
 export interface MagazineDetailPageSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
@@ -2826,7 +2825,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
  * via the `definition` "overviewPage_select".
  */
 export interface OverviewPageSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
@@ -2891,7 +2890,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
  * via the `definition` "detailPage_select".
  */
 export interface DetailPageSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
@@ -2956,7 +2955,7 @@ export interface DetailPageSelect<T extends boolean = true> {
  * via the `definition` "eventDetailPage_select".
  */
 export interface EventDetailPageSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
@@ -3041,7 +3040,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
  * via the `definition` "newsDetailPage_select".
  */
 export interface NewsDetailPageSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
@@ -3113,7 +3112,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
  * via the `definition` "publicationDetailPage_select".
  */
 export interface PublicationDetailPageSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
@@ -3190,7 +3189,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
  * via the `definition` "nationalDictionaryDetailPage_select".
  */
 export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
   overviewPageProps?:
@@ -3260,7 +3259,7 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
  * via the `definition` "instituteDetailPage_select".
  */
 export interface InstituteDetailPageSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
   overviewPageProps?:
@@ -3330,7 +3329,7 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
  * via the `definition` "projectDetailPage_select".
  */
 export interface ProjectDetailPageSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
   project?: T;
@@ -3400,7 +3399,7 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
  * via the `definition` "images_select".
  */
 export interface ImagesSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   alt?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -3420,7 +3419,7 @@ export interface ImagesSelect<T extends boolean = true> {
  * via the `definition` "videos_select".
  */
 export interface VideosSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   alt?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -3440,7 +3439,7 @@ export interface VideosSelect<T extends boolean = true> {
  * via the `definition` "svgs_select".
  */
 export interface SvgsSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   name?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -3460,7 +3459,7 @@ export interface SvgsSelect<T extends boolean = true> {
  * via the `definition` "networkCategories_select".
  */
 export interface NetworkCategoriesSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   name?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -3471,7 +3470,7 @@ export interface NetworkCategoriesSelect<T extends boolean = true> {
  * via the `definition` "documents_select".
  */
 export interface DocumentsSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   title?: T;
   project?: T;
   updatedAt?: T;
@@ -3492,7 +3491,7 @@ export interface DocumentsSelect<T extends boolean = true> {
  * via the `definition` "zenodoDocuments_select".
  */
 export interface ZenodoDocumentsSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   zenodoId?: T;
   title?: T;
   publicationDate?: T;
@@ -3513,7 +3512,7 @@ export interface ZenodoDocumentsSelect<T extends boolean = true> {
  * via the `definition` "projects_select".
  */
 export interface ProjectsSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   name?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -3524,7 +3523,7 @@ export interface ProjectsSelect<T extends boolean = true> {
  * via the `definition` "people_select".
  */
 export interface PeopleSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   personDepartment?: T;
   memberType?: T;
   prefix?: T;
@@ -3545,7 +3544,7 @@ export interface PeopleSelect<T extends boolean = true> {
  * via the `definition` "publicationTopics_select".
  */
 export interface PublicationTopicsSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   publicationTopic?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -3556,7 +3555,7 @@ export interface PublicationTopicsSelect<T extends boolean = true> {
  * via the `definition` "publicationTypes_select".
  */
 export interface PublicationTypesSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   publicationType?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -3567,7 +3566,7 @@ export interface PublicationTypesSelect<T extends boolean = true> {
  * via the `definition` "eventCategory_select".
  */
 export interface EventCategorySelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   eventCategory?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -3575,9 +3574,9 @@ export interface EventCategorySelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "departments_select".
+ * via the `definition` "tenants_select".
  */
-export interface DepartmentsSelect<T extends boolean = true> {
+export interface TenantsSelect<T extends boolean = true> {
   name?: T;
   domain?: T;
   slug?: T;
@@ -3597,13 +3596,13 @@ export interface DepartmentsSelect<T extends boolean = true> {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  department?: T;
+  password?: T;
   roles?: T;
   username?: T;
-  departments?:
+  tenants?:
     | T
     | {
-        department?: T;
+        tenant?: T;
         roles?: T;
         id?: T;
       };
@@ -3629,7 +3628,7 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "forms_select".
  */
 export interface FormsSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   isNewsletterForm?: T;
   colorMode?: T;
   title?: T;
@@ -3734,7 +3733,7 @@ export interface InterfaceTextTextareaSelect<T extends boolean = true> {
  * via the `definition` "i18nForms_select".
  */
 export interface I18NFormsSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   i18nForms?: T | InterfaceI18NFormsSelect<T>;
   updatedAt?: T;
   createdAt?: T;
@@ -3811,7 +3810,7 @@ export interface InterfaceI18NFormsSelect<T extends boolean = true> {
  * via the `definition` "consent_select".
  */
 export interface ConsentSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   adminTitle?: T;
   banner?:
     | T
@@ -3864,7 +3863,7 @@ export interface ConsentSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   adminTitle?: T;
   legal?: T;
   impressum?: T;
@@ -3899,7 +3898,7 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   adminTitle?: T;
   navigation?: T | InterfaceNavigationSelect<T>;
   metaLinks?:
@@ -3951,7 +3950,7 @@ export interface InterfaceNavigationSelect<T extends boolean = true> {
  * via the `definition` "statusMessage_select".
  */
 export interface StatusMessageSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   adminTitle?: T;
   show?:
     | T
@@ -3985,7 +3984,7 @@ export interface StatusMessageSelect<T extends boolean = true> {
  * via the `definition` "theme_select".
  */
 export interface ThemeSelect<T extends boolean = true> {
-  department?: T;
+  tenant?: T;
   adminTitle?: T;
   themeSelector?: T;
   updatedAt?: T;
