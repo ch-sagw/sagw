@@ -77,9 +77,8 @@ export interface Config {
     ctaContactBlock: InterfaceCtaContactBlock;
     ctaLinkBlock: InterfaceCtaLinkBlock;
     homeTeasersBlock: InterfaceHomeTeasersBlock;
-    textTeasersBlock: InterfaceTextTeasersBlock;
     networkTeasersBlock: InterfaceNetworkTeasersBlock;
-    imageTeasersBlock: InterfaceImageTeasersBlock;
+    genericTeasersBlock: InterfaceImageTeasersBlock;
     notificationBlock: InterfaceNotificationBlock;
     bibliographicReferenceBlock: InterfaceBibliographicReferenceBlock;
     magazineOverviewBlock: InterfaceMagazineOverviewBlock;
@@ -697,40 +696,6 @@ export interface Svg {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceTextTeasersBlock".
- */
-export interface InterfaceTextTeasersBlock {
-  title: string;
-  lead: string;
-  /**
-   * Align Title & text horizontally or vertically
-   */
-  alignement?: ('vertical' | 'horizontal') | null;
-  textTeasers?:
-    | {
-        title: string;
-        text: string;
-        link: {
-          linkType: 'internal' | 'external';
-          linkInternal?: {
-            linkText: string;
-            internalLink: string;
-          };
-          linkExternal?: {
-            externalLinkText: string;
-            externalLink: string;
-          };
-          id?: string | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'textTeasersBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceNetworkTeasersBlock".
  */
 export interface InterfaceNetworkTeasersBlock {
@@ -771,19 +736,24 @@ export interface NetworkCategory {
  * via the `definition` "InterfaceImageTeasersBlock".
  */
 export interface InterfaceImageTeasersBlock {
-  title?: string | null;
+  title: string;
+  lead?: string | null;
+  /**
+   * Align Title & text horizontally or vertically
+   */
+  alignement?: ('vertical' | 'horizontal') | null;
   teasers: {
-    image:
-      | {
-          relationTo: 'images';
-          value: string | Image;
-        }
-      | {
-          relationTo: 'svgs';
-          value: string | Svg;
-        };
     title: string;
     text?: string | null;
+    image?:
+      | ({
+          relationTo: 'images';
+          value: string | Image;
+        } | null)
+      | ({
+          relationTo: 'svgs';
+          value: string | Svg;
+        } | null);
     linkType: 'internal' | 'external';
     linkInternal?: {
       linkText: string;
@@ -797,7 +767,7 @@ export interface InterfaceImageTeasersBlock {
   }[];
   id?: string | null;
   blockName?: string | null;
-  blockType: 'imageTeasersBlock';
+  blockType: 'genericTeasersBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1011,7 +981,6 @@ export interface HomePage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
@@ -1112,7 +1081,6 @@ export interface MagazineDetailPage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
@@ -1178,7 +1146,6 @@ export interface OverviewPage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
@@ -1244,7 +1211,6 @@ export interface DetailPage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
@@ -1322,7 +1288,6 @@ export interface EventDetailPage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
@@ -1412,7 +1377,6 @@ export interface NewsDetailPage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
@@ -1489,7 +1453,6 @@ export interface PublicationDetailPage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
@@ -1585,7 +1548,6 @@ export interface NationalDictionaryDetailPage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
@@ -1657,7 +1619,6 @@ export interface InstituteDetailPage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
@@ -1726,7 +1687,6 @@ export interface ProjectDetailPage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
@@ -2279,9 +2239,8 @@ export interface HomePageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
@@ -2501,42 +2460,6 @@ export interface InterfaceHomeTeasersBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceTextTeasersBlock_select".
- */
-export interface InterfaceTextTeasersBlockSelect<T extends boolean = true> {
-  title?: T;
-  lead?: T;
-  alignement?: T;
-  textTeasers?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        link?:
-          | T
-          | {
-              linkType?: T;
-              linkInternal?:
-                | T
-                | {
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-              linkExternal?:
-                | T
-                | {
-                    externalLinkText?: T;
-                    externalLink?: T;
-                  };
-              id?: T;
-            };
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceNetworkTeasersBlock_select".
  */
 export interface InterfaceNetworkTeasersBlockSelect<T extends boolean = true> {
@@ -2571,12 +2494,14 @@ export interface InterfaceNetworkTeasersBlockSelect<T extends boolean = true> {
  */
 export interface InterfaceImageTeasersBlockSelect<T extends boolean = true> {
   title?: T;
+  lead?: T;
+  alignement?: T;
   teasers?:
     | T
     | {
-        image?: T;
         title?: T;
         text?: T;
+        image?: T;
         linkType?: T;
         linkInternal?:
           | T
@@ -2819,9 +2744,8 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
@@ -2884,9 +2808,8 @@ export interface OverviewPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
@@ -2949,9 +2872,8 @@ export interface DetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
@@ -3028,9 +2950,8 @@ export interface EventDetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
@@ -3106,9 +3027,8 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
@@ -3183,9 +3103,8 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
@@ -3253,9 +3172,8 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
@@ -3323,9 +3241,8 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
@@ -3393,9 +3310,8 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
