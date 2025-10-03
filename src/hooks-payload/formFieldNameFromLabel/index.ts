@@ -2,7 +2,9 @@ import { SerializedEditorState } from 'node_modules/lexical/LexicalEditorState';
 import validator from 'validator';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 
-export const nameFromLabel = (siblingData: Partial<any>): string => {
+export const formFieldNameFromLabel = ({
+  siblingData,
+}: Partial<any>): string => {
   if (!siblingData?.label) {
     return '';
   }

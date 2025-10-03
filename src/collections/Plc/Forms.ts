@@ -4,6 +4,7 @@ import { FormBlocks } from '@/blocks/Form/index';
 import { emailBlock } from '@/blocks/Form/Email';
 import { textBlock } from '@/blocks/Form/Text';
 import { fieldsColorMode } from '@/field-templates/colorMode';
+import { formEnsureUniqueName } from '@/hooks-payload/formEnsureUniqueName';
 
 export const Forms: CollectionConfig = {
   access: {
@@ -131,6 +132,9 @@ export const Forms: CollectionConfig = {
       },
       blockReferences: FormBlocks,
       blocks: [],
+      hooks: {
+        beforeChange: [formEnsureUniqueName],
+      },
       name: 'fields',
       required: true,
       type: 'blocks',
