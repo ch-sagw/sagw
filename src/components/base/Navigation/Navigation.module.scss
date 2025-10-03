@@ -17,6 +17,12 @@
     width: 100%;
     margin-block-start: 0;
   }
+
+  > li:last-of-type [data-submenu] {
+    @include mq($from: large, $to: wide) {
+      max-width: 200%;
+    }
+  }
 }
 
 .nav.footer .list {
