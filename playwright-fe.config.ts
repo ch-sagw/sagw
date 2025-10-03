@@ -85,7 +85,7 @@ export const defaultReporters: ReporterDescription[] = [
   reporterHtml,
 ];
 
-const ciReporters: ReporterDescription[] = [
+export const ciReporters: ReporterDescription[] = [
   reporterList,
   reporterBlob,
 ];
