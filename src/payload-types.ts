@@ -67,7 +67,6 @@ export interface Config {
   };
   blocks: {
     textBlock: InterfaceTextBlock;
-    titleSubtitleTextBlock: InterfaceTitleSubtitleTextBlock;
     linksBlock: InterfaceLinksBlock;
     downloadsBlock: InterfaceDownloadsBlock;
     imageBlock: InterfaceImageBlock;
@@ -233,21 +232,6 @@ export interface InterfaceRte2 {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceTitleSubtitleTextBlock".
- */
-export interface InterfaceTitleSubtitleTextBlock {
-  title: string;
-  subtitle: string;
-  textBlocks: {
-    text: string;
-    id?: string | null;
-  }[];
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'titleSubtitleTextBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceLinksBlock".
  */
 export interface InterfaceLinksBlock {
@@ -275,7 +259,6 @@ export interface InterfaceLinksBlock {
  * via the `definition` "InterfaceDownloadsBlock".
  */
 export interface InterfaceDownloadsBlock {
-  title: string;
   customOrAuto: 'custom' | 'auto';
   downloads?:
     | (
@@ -971,7 +954,6 @@ export interface HomePage {
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -1071,7 +1053,6 @@ export interface MagazineDetailPage {
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -1136,7 +1117,6 @@ export interface OverviewPage {
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -1201,7 +1181,6 @@ export interface DetailPage {
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -1278,7 +1257,6 @@ export interface EventDetailPage {
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -1367,7 +1345,6 @@ export interface NewsDetailPage {
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -1443,7 +1420,6 @@ export interface PublicationDetailPage {
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -1538,7 +1514,6 @@ export interface NationalDictionaryDetailPage {
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -1609,7 +1584,6 @@ export interface InstituteDetailPage {
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -1677,7 +1651,6 @@ export interface ProjectDetailPage {
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -2229,7 +2202,6 @@ export interface HomePageSelect<T extends boolean = true> {
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -2298,22 +2270,6 @@ export interface InterfaceRte2Select<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceTitleSubtitleTextBlock_select".
- */
-export interface InterfaceTitleSubtitleTextBlockSelect<T extends boolean = true> {
-  title?: T;
-  subtitle?: T;
-  textBlocks?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceLinksBlock_select".
  */
 export interface InterfaceLinksBlockSelect<T extends boolean = true> {
@@ -2344,7 +2300,6 @@ export interface InterfaceLinksBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceDownloadsBlock_select".
  */
 export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
-  title?: T;
   customOrAuto?: T;
   downloads?: T;
   project?: T;
@@ -2734,7 +2689,6 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -2798,7 +2752,6 @@ export interface OverviewPageSelect<T extends boolean = true> {
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -2862,7 +2815,6 @@ export interface DetailPageSelect<T extends boolean = true> {
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -2940,7 +2892,6 @@ export interface EventDetailPageSelect<T extends boolean = true> {
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -3017,7 +2968,6 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -3093,7 +3043,6 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -3162,7 +3111,6 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -3231,7 +3179,6 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -3300,7 +3247,6 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
