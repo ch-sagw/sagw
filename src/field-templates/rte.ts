@@ -14,6 +14,7 @@ import {
   UnorderedListFeature,
 } from '@payloadcms/richtext-lexical';
 import { SoftHyphenFeature } from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.server';
+import { NonBreakingSpaceFeature } from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpace.server';
 import {
   FieldHook, GroupField,
 } from 'payload';
@@ -70,6 +71,7 @@ const rte1Editor = lexicalEditor({
     SubscriptFeature(),
     SuperscriptFeature(),
     SoftHyphenFeature(),
+    NonBreakingSpaceFeature(),
   ],
 });
 
@@ -90,6 +92,7 @@ const rte2Editor = lexicalEditor({
       enabledCollections: linkableSlugs.map((slug) => slug.slug),
       maxDepth: 1,
     }),
+    NonBreakingSpaceFeature(),
   ],
 });
 /* eslint-enable new-cap */

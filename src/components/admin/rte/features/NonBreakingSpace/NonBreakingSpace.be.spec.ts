@@ -4,7 +4,7 @@ import {
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 
-test.describe('Softhyphen', () => {
+test.describe('NonBreakingSpace', () => {
   beforeEachPayloadLogin();
 
   test('correctly displays in rte field', async ({
@@ -14,10 +14,10 @@ test.describe('Softhyphen', () => {
     await page.waitForLoadState('networkidle');
 
     const rteField = await page.locator('#field-hero .ContentEditable__root');
-    const hyphenButton = await page.locator('#field-hero .toolbar-popup__button-softHyphenButton');
+    const nbspButton = await page.locator('#field-hero .toolbar-popup__button-nonBreakingSpaceButton');
 
-    await rteField.fill('detailpagetitle');
-    await hyphenButton.click();
+    await rteField.fill('detailpagetitle-non-breaking-space');
+    await nbspButton.click();
     await rteField.pressSequentially('bar');
 
     // save
@@ -34,7 +34,7 @@ test.describe('Softhyphen', () => {
 
     // wait for refresh
     const title = await page.getByRole('heading', {
-      name: 'detailpagetitlebar',
+      name: 'detailpagetitle-non-breaking-space bar',
     });
 
     await expect(title)
@@ -45,7 +45,7 @@ test.describe('Softhyphen', () => {
   });
 
   test('has correct api payload', async () => {
-    const detailPagesRes = await fetch('http://localhost:3000/api/detailPage?where[adminTitle][equals]=detailpagetitlebar');
+    const detailPagesRes = await fetch('http://localhost:3000/api/detailPage?where[slug][equals]=detailpagetitle-non-breaking-space-bar');
     const detailPagesData = await detailPagesRes.json();
 
     await expect(detailPagesData.docs.length)
@@ -55,10 +55,10 @@ test.describe('Softhyphen', () => {
     const [, heroTitle] = detailPageData.hero.title.content.root.children[0].children;
 
     await expect(heroTitle.text)
-      .toBe('\u00AD');
+      .toBe('\u00A0');
 
     await expect(heroTitle.type)
-      .toBe('unicode-char-shy');
+      .toBe('unicode-char-nbsp');
 
   });
 });

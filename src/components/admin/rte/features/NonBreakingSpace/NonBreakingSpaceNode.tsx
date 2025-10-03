@@ -5,16 +5,16 @@ import {
 } from 'lexical';
 import React, { JSX } from 'react';
 
-const nodeType = 'unicode-char-shy';
+const nodeType = 'unicode-char-nbsp';
 
-export type SerializedSoftHyphenNode = SerializedLexicalNode & {
+export type SerializedNonBreakingSpaceNode = SerializedLexicalNode & {
   type: typeof nodeType;
   version: 1;
   text: string;
 };
 
 // export decorator node
-export class SoftHyphenNode extends DecoratorNode<JSX.Element> {
+export class NonBreakingSpaceNode extends DecoratorNode<JSX.Element> {
   public constructor(key?: NodeKey) {
     super(key);
   }
@@ -23,8 +23,8 @@ export class SoftHyphenNode extends DecoratorNode<JSX.Element> {
     return nodeType;
   }
 
-  public static clone(node: SoftHyphenNode): SoftHyphenNode {
-    return new SoftHyphenNode(node.__key);
+  public static clone(node: NonBreakingSpaceNode): NonBreakingSpaceNode {
+    return new NonBreakingSpaceNode(node.__key);
   }
 
   public createDOM(): HTMLElement {
@@ -39,23 +39,23 @@ export class SoftHyphenNode extends DecoratorNode<JSX.Element> {
     return false;
   }
 
-  public exportJSON(): SerializedSoftHyphenNode {
+  public exportJSON(): SerializedNonBreakingSpaceNode {
     return {
-      text: '\u00AD',
+      text: '\u00A0',
       type: nodeType,
       version: 1,
     };
   }
 
-  public static importJSON(): SoftHyphenNode {
-    return new SoftHyphenNode();
+  public static importJSON(): NonBreakingSpaceNode {
+    return new NonBreakingSpaceNode();
   }
 
   public decorate(): JSX.Element {
     return (
       <span
         style={{
-          backgroundColor: '#8B0000',
+          backgroundColor: '#008b00',
           borderRadius: '2px',
           color: '#fff',
           display: 'inline-block',
@@ -66,9 +66,9 @@ export class SoftHyphenNode extends DecoratorNode<JSX.Element> {
           margin: '0 2px',
           textAlign: 'center',
         }}
-        title='Soft hyphen'
+        title='Non-Breaking space'
       >
-        (-)
+        [ ]
       </span>
     );
   }
@@ -76,6 +76,6 @@ export class SoftHyphenNode extends DecoratorNode<JSX.Element> {
 
 // export converter
 
-export const softHyphenJSXConverter = {
-  [nodeType]: (): string => '­',
+export const nonBreakingSpaceJSXConverter = {
+  [nodeType]: (): string => ' ',
 };
