@@ -25,6 +25,15 @@ visualStories.forEach((story) => {
 
     await (await elem.elementHandle())?.waitForElementState('stable');
 
+    const head = await page.locator('head #addon-backgrounds-color');
+    const body = page.locator('body');
+
+    await expect(body)
+      .not.toHaveClass('sb-show-preparing-story');
+
+    await expect(head)
+      .toBeAttached();
+
     await expect(page)
       .toHaveScreenshot({
         animations: 'disabled',

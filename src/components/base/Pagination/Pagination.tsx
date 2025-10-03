@@ -1,3 +1,5 @@
+'use client';
+
 import React, { Fragment } from 'react';
 import styles from '@/components/base/Pagination/Pagination.module.scss';
 import { PaginationItem } from '../PaginationItem/PaginationItem';

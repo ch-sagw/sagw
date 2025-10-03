@@ -5,7 +5,7 @@
 }
 
 body {
-  @include body-text-m;
+  @include body-text-s;
   @include font-smoothing;
 
   background: var(--background-page);

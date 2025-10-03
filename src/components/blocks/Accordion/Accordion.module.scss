@@ -1,15 +1,12 @@
 @use "../../../styles/utilities/utilities" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/animations" as *;
 
-.accordion {
+.expandableElement {
   --items-spacing: 20;
 
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
   width: 100%;
-  gap: px-to-rem(var(--items-spacing));
   padding: px-to-rem(var(--section-top)) px-to-rem(var(--grid-margin)) px-to-rem(var(--section-bottom));
 
   &.light {
@@ -40,6 +37,16 @@
 
     margin-block-start: 0;
     color: var(--text-color);
+  }
+
+  .list {
+    @include list-reset;
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: px-to-rem(var(--items-spacing));
   }
 
   .item {
@@ -105,21 +112,16 @@
     }
 
     .content {
+      @include expandable-wrapper;
+
       color: var(--text-color);
-      display: grid;
-      grid-template-rows: 0fr;
-      overflow: hidden;
-      will-change: opacity, grid-template-rows;
       transition-property: grid-template-rows, opacity, padding-block-end, margin-block-start;
-      transition-duration: var(--motion-speed-fast);
-      transition-timing-function: var(--motion-ease-in-out);
-      opacity: 0;
       margin-block-start: 0;
       padding-block-end: 0;
     }
 
     .rte {
-      min-height: 0;
+      @include expandable-content;
 
       :first-child {
         padding-block-start: 0;
@@ -134,8 +136,8 @@
 
     &.active {
       .content {
-        grid-template-rows: 1fr;
-        opacity: 1;
+        @include expandable-wrapper-visible;
+
         margin-block-start: px-to-rem(var(--spacing-s));
         padding-block-end: px-to-rem(calc(var(--spacing-2xl) + var(--spacing-xl)));
       }

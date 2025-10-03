@@ -1,4 +1,3 @@
-import 'server-only';
 import React, { useState } from 'react';
 import styles from '@/components/base/Toggle/Toggle.module.scss';
 

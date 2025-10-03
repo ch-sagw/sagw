@@ -1,0 +1,80 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.button {
+  @include button-reset;
+
+  --dashes-vertical-spacing: 8;
+  --background-color: var(--icon-secondary-inverted);
+
+  $verticalCenter: calc((var(--spacing-2xl) - var(--border-width-l)) / 2);
+  $leftPosition: px-to-rem(calc((var(--spacing-2xl) - var(--spacing-l)) / 2));
+
+  width: px-to-rem(var(--spacing-2xl));
+  height: px-to-rem(var(--spacing-2xl));
+  display: block;
+  position: relative;
+  cursor: pointer;
+
+  &.white,
+  &.light {
+    --background-color: var(--icon-primary);
+  }
+
+  &.open {
+    .dash1 {
+      transform-origin: 50% 50%;
+      transform:
+        translate3d(0, px-to-rem(var(--dashes-vertical-spacing)), 0)
+        rotate3d(0, 0, 1, 45deg);
+    }
+
+    .dash2 {
+      opacity: 0;
+    }
+
+    .dash3 {
+      transform-origin: 50% 50%;
+      transform:
+        translate3d(0, px-to-rem(calc(-1 * var(--dashes-vertical-spacing))), 0)
+        rotate3d(0, 0, 1, -45deg);
+    }
+  }
+
+  .dash1,
+  .dash2,
+  .dash3 {
+    display: block;
+    position: absolute;
+    width: px-to-rem(var(--spacing-l));
+    height: px-to-rem(var(--border-width-l));
+    background-color: var(--background-color);
+    inset-inline-start: $leftPosition;
+    transition-duration: var(--motion-speed-very-fast);
+    transition-timing-function: (--motion-ease-in-out);
+
+    @include forced-colors {
+      background-color: LinkText;
+    }
+
+    @include reduced-motion {
+      transition: none;
+    }
+  }
+
+  .dash1 {
+    inset-block-start: px-to-rem(calc($verticalCenter - var(--dashes-vertical-spacing)));
+    transition-property: transform;
+  }
+
+  .dash2 {
+    inset-block-start: px-to-rem($verticalCenter);
+    transition-property: opacity;
+  }
+
+  .dash3 {
+    inset-block-start: px-to-rem(calc($verticalCenter + var(--dashes-vertical-spacing)));
+    transition-property: transform;
+  }
+}

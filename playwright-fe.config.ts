@@ -69,6 +69,7 @@ const reporterJson: ReporterDescription = [
 ];
 
 const reporterList: ReporterDescription = ['list'];
+const reporterBlob: ReporterDescription = ['blob'];
 
 const reporterHtml: ReporterDescription = [
   'html',
@@ -84,9 +85,18 @@ export const defaultReporters: ReporterDescription[] = [
   reporterHtml,
 ];
 
+export const ciReporters: ReporterDescription[] = [
+  reporterList,
+  reporterBlob,
+];
+
 export default defineConfig({
   expect: {
     toHaveScreenshot: {
+
+      /* eslint-disable @typescript-eslint/naming-convention*/
+      // @ts-expect-error: name error
+      _comparator: 'ssim-cie94',
       maxDiffPixelRatio: 0,
       maxDiffPixels: 0,
       pathTemplate: `src/{testFileDir}/${vrtConfig.snapshotFolder}/{testName}/{projectName}{ext}`,
@@ -97,7 +107,9 @@ export default defineConfig({
   fullyParallel: true,
   outputDir: 'test-results/main',
   projects,
-  reporter: defaultReporters,
+  reporter: process.env.CI
+    ? ciReporters
+    : defaultReporters,
   retries: 0,
   testDir: './src/',
   testMatch: '**/*.fe.spec.ts?(x)',

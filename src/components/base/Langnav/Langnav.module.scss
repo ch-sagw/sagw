@@ -1,0 +1,64 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/animations" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+
+.expandableMenu {
+  @include mq($from: medium) {
+    --button-text-size: var(--font-size-m);
+  }
+
+  position: relative;
+
+  .toggle {
+    text-align: right;
+    padding: 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .listWrapper:not(.nonExpandable) {
+    @include expandable-wrapper;
+
+    padding-block-start: px-to-rem(var(--spacing-l));
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline-end: 0;
+  }
+
+  .listWrapper {
+    .list {
+      @include expandable-content;
+      @include list-reset;
+
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: flex-end;
+    }
+
+    &.nonExpandable {
+      .list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-inline-start: px-to-rem(calc(var(--spacing-xl) / 2), negative);
+
+        .item {
+          padding: 0 px-to-rem(calc(var(--spacing-xl) / 2));
+        }
+      }
+    }
+
+    .item {
+      padding: 0;
+    }
+  }
+
+  .listWrapper:not(.nonExpandable) {
+    &.visible {
+      @include expandable-wrapper-visible;
+    }
+  }
+}

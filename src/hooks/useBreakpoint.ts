@@ -1,3 +1,5 @@
+'use client';
+
 import {
   useEffect, useState,
 } from 'react';
@@ -16,25 +18,28 @@ const breakpointQueries: Record<BreakpointName, string> = {
 };
 
 export const useBreakpoint = (): BreakpointName => {
-  const getCurrent = (): BreakpointName => {
-    for (const [
-      name,
-      query,
-    ] of Object.entries(breakpointQueries) as [BreakpointName, string][]) {
-      if (window.matchMedia(query).matches) {
-        return name;
-      }
-    }
-
-    return 'zero';
-  };
-
   const [
     breakpoint,
     setBreakpoint,
-  ] = useState<BreakpointName>(() => getCurrent());
+  ] = useState<BreakpointName>('large');
 
   useEffect(() => {
+    const getCurrent = (): BreakpointName => {
+      for (const [
+        name,
+        query,
+      ] of Object.entries(breakpointQueries) as [BreakpointName, string][]) {
+        if (window.matchMedia(query).matches) {
+          return name;
+        }
+      }
+
+      return 'zero';
+    };
+
+    // Set initial value on mount
+    setBreakpoint(getCurrent());
+
     const mqls = Object.entries(breakpointQueries)
       .map(([
         name,

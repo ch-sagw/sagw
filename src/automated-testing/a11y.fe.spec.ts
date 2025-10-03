@@ -17,6 +17,7 @@ try {
 
   const a11yStories: IndexEntry[] = filterA11yStories(Object.values(manifest.entries) as IndexEntry[]);
 
+  // for await (const story of a11yStories) {
   a11yStories.forEach((story) => {
     test(story.id, async ({
       page,
@@ -28,6 +29,15 @@ try {
       await (await elem.elementHandle())?.waitForElementState('stable');
       await page.locator(`#${vrtConfig.testid}`)
         .waitFor();
+
+      const head = await page.locator('head #addon-backgrounds-color');
+      const body = page.locator('body');
+
+      await expect(body)
+        .not.toHaveClass('sb-show-preparing-story');
+
+      await expect(head)
+        .toBeAttached();
 
       const accessibilityScanResults = await new Axe({
         page,

@@ -1,23 +1,29 @@
 'use client';
 
-import React, { Fragment } from 'react';
+import React, {
+  Fragment, useEffect, useRef,
+} from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/Button/Button.module.scss';
 import { Icon } from '@/icons';
 import Link from 'next/link';
+import { ColorMode } from '@/components/base/types/colorMode';
 
 type BaseWrapperProps = {
   ariaCurrent?: boolean;
   ariaControls?: string;
   ariaLabel?: string;
+  ariaDescription?: string;
   autoFocus?: boolean;
   buttonType?: 'submit' | 'button';
-  colorMode: 'white' | 'dark';
+  colorMode: ColorMode;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.PointerEvent<HTMLButtonElement>) => void;
   popOverTarget?: string;
-  style: 'filled' | 'outlined' | 'text' | 'buttonPlay' | 'socialLink';
+  style: 'filled' | 'outlined' | 'text' | 'textSmall' | 'textBright' | 'buttonPlay' | 'socialLink';
   prefetch?: 'auto' | true | false | null;
+  className?: string;
+  isActive?: boolean;
 };
 
 type ContentProps = {
@@ -32,6 +38,7 @@ type BaseProps = BaseWrapperProps & ContentProps;
 type ButtonProps = BaseProps & {
   element: 'button';
   ariaHasPopUp?: boolean | undefined;
+  ariaExpanded?: boolean | undefined;
 };
 
 type LinkProps = BaseProps & {
@@ -49,23 +56,6 @@ export type InterfaceButtonPropTypes =
   | ButtonProps
   | LinkProps
   | ButtonPlayProps;
-
-const classes = cva([styles.button], {
-  variants: {
-    colorMode: {
-      dark: [styles.dark],
-      white: [styles.white],
-    },
-    style: {
-      buttonPlay: [styles.buttonPlay],
-      filled: [styles.buttonFilled],
-      iconOnly: [styles.iconOnly],
-      outlined: [styles.buttonOutlined],
-      socialLink: [styles.socialLink],
-      text: [styles.buttonText],
-    },
-  },
-});
 
 // TODOs
 // - Integrate tracking events or necessary data attributes
@@ -107,6 +97,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     ariaControls,
     ariaCurrent,
     ariaLabel,
+    ariaDescription,
     autoFocus,
     buttonType,
     colorMode,
@@ -119,74 +110,132 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     style,
     text,
     onClick,
+    className,
+    isActive,
   } = props;
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (autoFocus && buttonRef.current) {
+      buttonRef.current.focus();
+    }
+  }, [autoFocus]);
+
+  const classes = cva([
+    styles.button,
+    className,
+  ], {
+    variants: {
+      colorMode: {
+        dark: [styles.dark],
+        light: [styles.light],
+        white: [styles.white],
+      },
+      isActive: {
+        false: undefined,
+        true: styles.isActive,
+      },
+      style: {
+        buttonPlay: [styles.buttonPlay],
+        filled: [styles.buttonFilled],
+        iconOnly: [styles.iconOnly],
+        outlined: [styles.buttonOutlined],
+        socialLink: [styles.socialLink],
+        text: [styles.buttonText],
+        textBright: [
+          styles.buttonText,
+          styles.buttonTextBright,
+        ],
+        textSmall: [
+          styles.buttonText,
+          styles.buttonTextSmall,
+        ],
+      },
+    },
+  });
 
   // Render the NextJS link element
   if (element === 'link') {
-    if ('href' in props && 'target' in props) {
-      const {
-        href,
-        target,
-      } = props;
+    const {
+      href,
+      target,
+    } = props;
 
-      let ariaLabelText = ariaLabel;
+    let ariaLabelText = ariaLabel;
 
-      if (target === '_blank') {
+    if (target === '_blank') {
 
-        ariaLabelText = ariaLabel
-          ? ariaLabel
-          : text;
+      ariaLabelText = ariaLabel
+        ? ariaLabel
+        : text;
 
-        ariaLabelText += ' (link target opens in a new tab)';
-      }
-
-      return (
-        <Link
-          aria-current={ariaCurrent}
-          aria-label={ariaLabelText}
-          className={classes({
-            colorMode,
-            style,
-          })}
-          data-testid='link'
-          href={href}
-          target={target}
-          prefetch={prefetch}
-        >
-          {buttonLinkContent({
-            element: 'link',
-            iconInlineEnd,
-            iconInlineStart,
-            text,
-          })}
-        </Link >
-      );
+      ariaLabelText += ' (link target opens in a new tab)';
     }
+
+    return (
+      <Link
+        aria-current={ariaCurrent}
+        aria-label={ariaLabelText}
+        className={classes({
+          colorMode,
+          isActive,
+          style,
+        })}
+        data-testid='link'
+        href={href}
+        target={target}
+        prefetch={prefetch}
+      >
+        {buttonLinkContent({
+          element: 'link',
+          iconInlineEnd,
+          iconInlineStart,
+          text,
+        })}
+      </Link >
+    );
   }
 
-  // Render a proper button
-  return (
-    <button
-      aria-current={ariaCurrent}
-      aria-controls={ariaControls}
-      aria-label={ariaLabel}
-      autoFocus={autoFocus}
-      className={classes({
-        colorMode,
-        style,
-      })}
-      disabled={disabled}
-      data-testid='button'
-      onClick={onClick}
-      popoverTarget={popOverTarget}
-      type={buttonType ?? 'button'}
-    >
-      {buttonLinkContent({
-        element: 'button',
-        iconInlineEnd,
-        iconInlineStart,
-        text,
-      })}
-    </button>
-  );
+  if (element === 'button') {
+    const {
+      ariaExpanded,
+    } = props;
+
+    // Render a proper button
+    return (
+      <button
+        ref={buttonRef}
+        aria-current={ariaCurrent}
+        aria-controls={ariaControls}
+        aria-label={ariaLabel}
+        autoFocus={autoFocus}
+        className={classes({
+          colorMode,
+          isActive,
+          style,
+        })}
+        disabled={disabled}
+        data-testid='button'
+        onClick={onClick}
+        popoverTarget={popOverTarget}
+        type={buttonType ?? 'button'}
+        aria-expanded={ariaExpanded}
+      >
+        {ariaDescription &&
+          <span className={styles.visuallyHidden}>{ariaDescription}</span>
+        }
+
+        {buttonLinkContent({
+          element: 'button',
+          iconInlineEnd,
+          iconInlineStart,
+          text,
+        })}
+      </button>
+    );
+  }
+
+  return <Fragment />;
+
 };

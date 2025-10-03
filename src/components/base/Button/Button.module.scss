@@ -11,6 +11,7 @@
   --button-color: var(--interaction-primary);
   --button-icon-size: var(--spacing-m);
   --button-padding-block: 20;
+  --button-padding-block-inner-text: var(--spacing-m);
   --button-padding-inline: var(--spacing-l);
 
   display: flex;
@@ -63,6 +64,10 @@
 
   &:not([disabled]):is(:hover, :focus) {
     transition-timing-function: var(--motion-ease-out);
+  }
+
+  .visuallyHidden {
+    @include screen-reader-only;
   }
 }
 
@@ -153,6 +158,7 @@
   --button-icon-color: var(--interaction-secondary);
   --line-animation-duration: var(--motion-speed-very-fast);
   --line-cover-color: canvas;
+  --button-color: var(--text-primary);
 
   // Redefined because we want to use the --button-padding-block
   // variable on the innerText element.
@@ -188,16 +194,26 @@
   }
 
   &.dark {
-    --button-color: var(--text-primary-inverted);
+    --button-color: var(--text-secondary-inverted);
     --button-icon-color: var(--interaction-primary-inverted);
     --line-cover-color: var(--interaction-primary);
+
+    &:hover {
+      --button-color: var(--text-primary-inverted);
+    }
+  }
+
+  &.light {
+    --button-color: var(--interaction-primary);
+    --button-icon-color: var(--interaction-primary);
+    --line-cover-color: var(--background-light);
   }
 
   .innerText {
     position: relative;
     overflow: hidden;
     display: inline-block;
-    padding-block: px-to-rem(var(--button-padding-block));
+    padding-block: px-to-rem(var(--button-padding-block-inner-text));
 
     .line,
     &:before,
@@ -234,7 +250,8 @@
     }
   }
 
-  &[aria-current] {
+  &[aria-current],
+  &.isActive {
     .innerText:before,
     .innerText .line {
       display: none;
@@ -245,6 +262,28 @@
         background: LinkText;
       }
     }
+
+    &.dark {
+      --button-color: var(--text-primary-inverted);
+    }
+  }
+}
+
+/**
+  * Text only variant, small version (e.g. metanav)
+  */
+.buttonTextSmall {
+  @include body-text-s;
+}
+
+/**
+  * Text only variant, bright version (e.g. nav level 1)
+  */
+.buttonTextBright {
+  &.dark {
+    --button-color: var(--text-primary-inverted);
+    --button-icon-color: var(--interaction-primary-inverted);
+    --line-cover-color: var(--interaction-primary);
   }
 }
 

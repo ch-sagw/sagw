@@ -5,7 +5,7 @@ import './preview.css';
 const preview: Preview = {
   initialGlobals: {
     backgrounds: {
-      value: 'light',
+      value: 'white',
     },
   },
   parameters: {
@@ -17,6 +17,10 @@ const preview: Preview = {
         },
         light: {
           name: 'SAGW Light',
+          value: '#C8E1F0',
+        },
+        white: {
+          name: 'SAGW White',
           value: '#FFF',
         },
       },

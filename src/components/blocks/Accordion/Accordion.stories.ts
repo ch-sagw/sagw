@@ -35,30 +35,35 @@ const items = [
       content: sampleRte2,
     },
     accordionTitle: 'Title 1',
+    id: '1',
   },
   {
     accordionContent: {
       content: sampleRtePrivacyCheckbox,
     },
     accordionTitle: 'Title 2',
+    id: '2',
   },
   {
     accordionContent: {
       content: sampleRte2,
     },
     accordionTitle: 'Title 3',
+    id: '3',
   },
   {
     accordionContent: {
       content: sampleRtePrivacyCheckbox,
     },
     accordionTitle: 'Title 4',
+    id: '4',
   },
   {
     accordionContent: {
       content: sampleRte2,
     },
     accordionTitle: 'Title 5',
+    id: '5',
   },
 ];
 

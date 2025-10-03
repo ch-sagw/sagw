@@ -1,0 +1,28 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+
+.list {
+  @include list-reset;
+
+  margin-block-start: px-to-rem(var(--spacing-2xl));
+
+  @include mq($from: large) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: px-to-rem(calc(2 * var(--spacing-m)));
+    width: 100%;
+    margin-block-start: 0;
+  }
+}
+
+.nav.footer .list {
+  align-items: baseline;
+
+  .item {
+    flex: 1 1 0;
+  }
+}

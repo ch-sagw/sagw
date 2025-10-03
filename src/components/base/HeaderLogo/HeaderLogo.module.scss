@@ -1,0 +1,27 @@
+.logo {
+  display: block;
+
+  svg {
+    height: 100%;
+    width: auto;
+  }
+}
+
+.logo.sagw {
+  path {
+    stroke: none;
+  }
+
+  &.dark {
+    path {
+      fill: var(--white);
+    }
+  }
+
+  &.white,
+  &.light {
+    path {
+      fill: var(--black);
+    }
+  }
+}

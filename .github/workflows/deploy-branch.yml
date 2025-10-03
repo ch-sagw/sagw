@@ -14,27 +14,37 @@ permissions:
   statuses: write
 on: pull_request
 jobs:
-  test:
+
+  # Lint
+  lint:
     if: github.head_ref != 'release-please--branches--main'
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+
+  # Frontend Test Job
+  test-fe:
+    if: github.head_ref != 'release-please--branches--main'
+    needs: [lint]
     env:
       HOME: /root
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
     container:
       # if the docker image is changed, also change it in deploy-prod.yml and in Dockerfile.testing
       image: mcr.microsoft.com/playwright:v1.55.1-noble
-
-    services:
-      mongo:
-        image: mongo:8
-        ports:
-          - 27017:27017
-        env:
-          MONGO_INITDB_ROOT_USERNAME: user
-          MONGO_INITDB_ROOT_PASSWORD: pass
-          MONGO_INITDB_DATABASE: sagw-test
-
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -45,13 +55,56 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Lint
-        run: npm run lint
       - name: Test FE
-        run: npm run test:fe:native
-      - name: Test BE
-        run: npm run test:be:native
+        run: npm run test:fe:native:shard
         env:
+          SHARD_INDEX: ${{ matrix.shardIndex }}
+          SHARD_TOTAL: ${{ matrix.shardTotal }}
+      - name: Upload blob report
+        if: ${{ failure() && !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: blob-report-fe-${{ matrix.shardIndex }}
+          path: blob-report
+          retention-days: 1
+
+  # Backend Test Job
+  test-be:
+    if: github.head_ref != 'release-please--branches--main'
+    needs: [lint]
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
+    container:
+      # if the docker image is changed, also change it in deploy-prod.yml and in Dockerfile.testing
+      image: mcr.microsoft.com/playwright:v1.55.1-noble
+    services:
+      mongo:
+        image: mongo:8
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: user
+          MONGO_INITDB_ROOT_PASSWORD: pass
+          MONGO_INITDB_DATABASE: sagw-test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Test BE
+        run: npm run test:be:native:shard
+        env:
+          SHARD_INDEX: ${{ matrix.shardIndex }}
+          SHARD_TOTAL: ${{ matrix.shardTotal }}
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
           DATABASE_NAME: sagwplaywright
           DATABASE_URI: mongodb://user:pass@mongo:27017/sagwplaywright?authSource=admin
@@ -62,13 +115,38 @@ jobs:
           RESEND_KEY: ${{ secrets.RESEND_KEY }}
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           ENV: playwright
-      - uses: daun/playwright-report-summary@v3
-        if: always()
+      - name: Upload blob report
+        if: ${{ failure() && !cancelled() }}
+        uses: actions/upload-artifact@v4
         with:
-          report-file: test-results/results.json
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-report
-          path: test-results/html/
-          retention-days: 30
+          name: blob-report-be-${{ matrix.shardIndex }}
+          path: blob-report
+          retention-days: 1
+
+  # Merge Reports Job
+  merge-reports:
+    if: ${{ failure() && !cancelled() }}
+    needs: [test-fe, test-be]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: '.nvmrc'
+        cache: 'npm'
+    - name: Install dependencies
+      run: npm ci
+    - name: Download blob reports
+      uses: actions/download-artifact@v4
+      with:
+        path: all-blob-reports
+        pattern: blob-report-*
+        merge-multiple: true
+    - name: Merge into HTML Report
+      run: npx playwright merge-reports --reporter html,json ./all-blob-reports
+    - name: Upload HTML report
+      uses: actions/upload-artifact@v4
+      with:
+        name: html-report--attempt-${{ github.run_attempt }}
+        path: playwright-report
+        retention-days: 14

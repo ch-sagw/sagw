@@ -1952,7 +1952,55 @@ export interface Header {
   id: string;
   tenant?: (string | null) | Tenant;
   adminTitle?: string | null;
-  navigation: InterfaceNavigation;
+  navigation: InterfaceHeaderNavigation;
+  languageNavigation: InterfaceHeaderLanguageNavigation;
+  metanavigation?: InterfaceHeaderMetaNavigation;
+  logo: InterfaceHeaderLogo;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeaderNavigation".
+ */
+export interface InterfaceHeaderNavigation {
+  navItems: {
+    /**
+     * If the user hovers over this menu item in the navigation, this is shown as a description in the Header
+     */
+    description?: string | null;
+    navItemText: string;
+    navItemLink?: string | null;
+    subNavItems?:
+      | {
+          navItemText: string;
+          navItemLink?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    id?: string | null;
+  }[];
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeaderLanguageNavigation".
+ */
+export interface InterfaceHeaderLanguageNavigation {
+  /**
+   * If the user hovers over the language selection, this is shown as a title in the Header
+   */
+  title: string;
+  /**
+   * If the user hovers over the language selection, this is shown as a description in the Header
+   */
+  description: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeaderMetaNavigation".
+ */
+export interface InterfaceHeaderMetaNavigation {
   metaLinks?:
     | {
         linkType: 'internal' | 'external';
@@ -1968,28 +2016,13 @@ export interface Header {
         id?: string | null;
       }[]
     | null;
-  logo: string | Svg;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceNavigation".
+ * via the `definition` "InterfaceHeaderLogo".
  */
-export interface InterfaceNavigation {
-  navItems: {
-    navItemText: string;
-    navItemLink?: string | null;
-    subNavItems?:
-      | {
-          navItemText: string;
-          navItemLink?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-    id?: string | null;
-  }[];
+export interface InterfaceHeaderLogo {
+  logo: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3900,7 +3933,48 @@ export interface FooterSelect<T extends boolean = true> {
 export interface HeaderSelect<T extends boolean = true> {
   tenant?: T;
   adminTitle?: T;
-  navigation?: T | InterfaceNavigationSelect<T>;
+  navigation?: T | InterfaceHeaderNavigationSelect<T>;
+  languageNavigation?: T | InterfaceHeaderLanguageNavigationSelect<T>;
+  metanavigation?: T | InterfaceHeaderMetaNavigationSelect<T>;
+  logo?: T | InterfaceHeaderLogoSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeaderNavigation_select".
+ */
+export interface InterfaceHeaderNavigationSelect<T extends boolean = true> {
+  navItems?:
+    | T
+    | {
+        description?: T;
+        navItemText?: T;
+        navItemLink?: T;
+        subNavItems?:
+          | T
+          | {
+              navItemText?: T;
+              navItemLink?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeaderLanguageNavigation_select".
+ */
+export interface InterfaceHeaderLanguageNavigationSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeaderMetaNavigation_select".
+ */
+export interface InterfaceHeaderMetaNavigationSelect<T extends boolean = true> {
   metaLinks?:
     | T
     | {
@@ -3920,30 +3994,13 @@ export interface HeaderSelect<T extends boolean = true> {
             };
         id?: T;
       };
-  logo?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceNavigation_select".
+ * via the `definition` "InterfaceHeaderLogo_select".
  */
-export interface InterfaceNavigationSelect<T extends boolean = true> {
-  navItems?:
-    | T
-    | {
-        navItemText?: T;
-        navItemLink?: T;
-        subNavItems?:
-          | T
-          | {
-              navItemText?: T;
-              navItemLink?: T;
-              id?: T;
-            };
-        id?: T;
-      };
+export interface InterfaceHeaderLogoSelect<T extends boolean = true> {
+  logo?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

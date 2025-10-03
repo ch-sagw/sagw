@@ -1,4 +1,3 @@
-import 'server-only';
 import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/__componentFolder__/__name__/__name__.module.scss';
