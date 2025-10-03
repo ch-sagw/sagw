@@ -1,8 +1,17 @@
 import { Field } from 'payload';
+import { nameFromLabel } from '@/hooks/payload/nameFromLabel';
 
 export const formFieldName: Field = {
   admin: {
-    description: 'lowercase, no special characters',
+    disabled: true,
+    hidden: true,
+  },
+  hooks: {
+    beforeValidate: [
+      ({
+        siblingData,
+      }): string => nameFromLabel(siblingData),
+    ],
   },
   localized: true,
   name: 'name',

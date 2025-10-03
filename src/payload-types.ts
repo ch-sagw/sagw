@@ -257,7 +257,6 @@ export interface InterfaceLinksBlock {
     | {
         linkType: 'internal' | 'external';
         linkInternal?: {
-          openInNewWindow?: boolean | null;
           linkText: string;
           internalLink: string;
         };
@@ -525,9 +524,6 @@ export interface Form {
  * via the `definition` "InterfaceCheckboxField".
  */
 export interface InterfaceCheckboxField {
-  /**
-   * lowercase, no special characters
-   */
   name: string;
   label: InterfaceRte2;
   fieldWidth: 'full' | 'half';
@@ -544,9 +540,6 @@ export interface InterfaceCheckboxField {
 export interface InterfaceEmailField {
   label: string;
   placeholder: string;
-  /**
-   * lowercase, no special characters
-   */
   name: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
@@ -562,9 +555,6 @@ export interface InterfaceEmailField {
 export interface InterfaceTextField {
   label: string;
   placeholder: string;
-  /**
-   * lowercase, no special characters
-   */
   name: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
@@ -578,9 +568,6 @@ export interface InterfaceTextField {
  * via the `definition` "InterfaceTextTextarea".
  */
 export interface InterfaceTextTextarea {
-  /**
-   * lowercase, no special characters
-   */
   name: string;
   label: string;
   placeholder: string;
@@ -635,7 +622,6 @@ export interface InterfaceCtaLinkBlock {
   text: string;
   linkType: 'internal' | 'external';
   linkInternal?: {
-    openInNewWindow?: boolean | null;
     linkText: string;
     internalLink: string;
   };
@@ -658,7 +644,6 @@ export interface InterfaceHomeTeasersBlock {
         title: string;
         text: string;
         icon: string | Svg;
-        openInNewWindow?: boolean | null;
         linkText: string;
         internalLink: string;
         id?: string | null;
@@ -705,9 +690,16 @@ export interface InterfaceTextTeasersBlock {
         title: string;
         text: string;
         link: {
-          openInNewWindow?: boolean | null;
-          linkText: string;
-          internalLink: string;
+          linkType: 'internal' | 'external';
+          linkInternal?: {
+            linkText: string;
+            internalLink: string;
+          };
+          linkExternal?: {
+            externalLinkText: string;
+            externalLink: string;
+          };
+          id?: string | null;
         };
         id?: string | null;
       }[]
@@ -773,7 +765,6 @@ export interface InterfaceImageTeasersBlock {
     text?: string | null;
     linkType: 'internal' | 'external';
     linkInternal?: {
-      openInNewWindow?: boolean | null;
       linkText: string;
       internalLink: string;
     };
@@ -973,7 +964,6 @@ export interface HomePage {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
-        openInNewWindow?: boolean | null;
         linkText: string;
         internalLink: string;
       };
@@ -1829,7 +1819,6 @@ export interface InterfaceI18NForms {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
-        openInNewWindow?: boolean | null;
         linkText: string;
         internalLink: string;
       };
@@ -1844,7 +1833,6 @@ export interface InterfaceI18NForms {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
-        openInNewWindow?: boolean | null;
         linkText: string;
         internalLink: string;
       };
@@ -1859,7 +1847,6 @@ export interface InterfaceI18NForms {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
-        openInNewWindow?: boolean | null;
         linkText: string;
         internalLink: string;
       };
@@ -2005,7 +1992,6 @@ export interface InterfaceHeaderMetaNavigation {
     | {
         linkType: 'internal' | 'external';
         linkInternal?: {
-          openInNewWindow?: boolean | null;
           linkText: string;
           internalLink: string;
         };
@@ -2045,7 +2031,6 @@ export interface StatusMessage {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
-      openInNewWindow?: boolean | null;
       linkText: string;
       internalLink: string;
     };
@@ -2267,7 +2252,6 @@ export interface HomePageSelect<T extends boolean = true> {
               link?:
                 | T
                 | {
-                    openInNewWindow?: T;
                     linkText?: T;
                     internalLink?: T;
                   };
@@ -2374,7 +2358,6 @@ export interface InterfaceLinksBlockSelect<T extends boolean = true> {
         linkInternal?:
           | T
           | {
-              openInNewWindow?: T;
               linkText?: T;
               internalLink?: T;
             };
@@ -2477,7 +2460,6 @@ export interface InterfaceCtaLinkBlockSelect<T extends boolean = true> {
   linkInternal?:
     | T
     | {
-        openInNewWindow?: T;
         linkText?: T;
         internalLink?: T;
       };
@@ -2502,7 +2484,6 @@ export interface InterfaceHomeTeasersBlockSelect<T extends boolean = true> {
         title?: T;
         text?: T;
         icon?: T;
-        openInNewWindow?: T;
         linkText?: T;
         internalLink?: T;
         id?: T;
@@ -2526,9 +2507,20 @@ export interface InterfaceTextTeasersBlockSelect<T extends boolean = true> {
         link?:
           | T
           | {
-              openInNewWindow?: T;
-              linkText?: T;
-              internalLink?: T;
+              linkType?: T;
+              linkInternal?:
+                | T
+                | {
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+              linkExternal?:
+                | T
+                | {
+                    externalLinkText?: T;
+                    externalLink?: T;
+                  };
+              id?: T;
             };
         id?: T;
       };
@@ -2581,7 +2573,6 @@ export interface InterfaceImageTeasersBlockSelect<T extends boolean = true> {
         linkInternal?:
           | T
           | {
-              openInNewWindow?: T;
               linkText?: T;
               internalLink?: T;
             };
@@ -3795,7 +3786,6 @@ export interface InterfaceI18NFormsSelect<T extends boolean = true> {
               link?:
                 | T
                 | {
-                    openInNewWindow?: T;
                     linkText?: T;
                     internalLink?: T;
                   };
@@ -3813,7 +3803,6 @@ export interface InterfaceI18NFormsSelect<T extends boolean = true> {
               link?:
                 | T
                 | {
-                    openInNewWindow?: T;
                     linkText?: T;
                     internalLink?: T;
                   };
@@ -3831,7 +3820,6 @@ export interface InterfaceI18NFormsSelect<T extends boolean = true> {
               link?:
                 | T
                 | {
-                    openInNewWindow?: T;
                     linkText?: T;
                     internalLink?: T;
                   };
@@ -3982,7 +3970,6 @@ export interface InterfaceHeaderMetaNavigationSelect<T extends boolean = true> {
         linkInternal?:
           | T
           | {
-              openInNewWindow?: T;
               linkText?: T;
               internalLink?: T;
             };
@@ -4025,7 +4012,6 @@ export interface StatusMessageSelect<T extends boolean = true> {
         link?:
           | T
           | {
-              openInNewWindow?: T;
               linkText?: T;
               internalLink?: T;
             };

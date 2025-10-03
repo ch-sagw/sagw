@@ -1,19 +1,16 @@
 import { CollectionBeforeValidateHook } from 'payload';
 import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical';
-import { convertLexicalToPlaintext } from '@payloadcms/richtext-lexical/plaintext';
+import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 
 export const hookAdminTitle: CollectionBeforeValidateHook = ({
   data,
 }) => {
   const lexical: SerializedEditorState = data?.hero?.title.content;
+  const dataString = rte1ToPlaintext(lexical);
 
-  if (lexical && data) {
-    const transformedData = convertLexicalToPlaintext({
-      data: lexical,
-    });
-
-    data[fieldAdminTitleFieldName] = transformedData.replaceAll('\u00AD', '');
+  if (data) {
+    data[fieldAdminTitleFieldName] = dataString;
   }
 
   return data;
