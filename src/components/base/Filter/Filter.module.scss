@@ -67,16 +67,16 @@
     opacity: 0;
     cursor: pointer;
 
-    & + label:hover {
-      @include focus-visible;
+    @include mouse-only {
+      & + label:hover {
+        @include focus-visible;
 
-      outline-offset: px-to-rem(var(--radio-button-outline-offset));
+        outline-offset: px-to-rem(var(--radio-button-outline-offset));
+      }
     }
 
     &:checked {
       & + label {
-        @include focus-visible;
-
         @include forced-colors {
           filter: invert(1);
         }
@@ -84,7 +84,6 @@
         --label-background: var(--background-inverted);
         --label-color: var(--text-primary-inverted);
 
-        outline-offset: px-to-rem(var(--radio-button-outline-offset));
         transition:
           background-color var(--animation-duration) var(--motion-ease-in),
           color var(--animation-duration) var(--motion-ease-in);
@@ -97,8 +96,12 @@
 
     &:focus {
       & + label {
+        @include focus-visible;
+
         --label-background: var(--background-inverted);
         --label-color: var(--text-primary-inverted);
+
+        outline-offset: px-to-rem(var(--radio-button-outline-offset));
       }
     }
   }
