@@ -2,16 +2,16 @@ import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
-import { hookAdminTitle } from '@/hooks/adminTitle';
+import { hookAdminTitle } from '@/hooks-payload/adminTitle';
 import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
-import { hookSeoFallback } from '@/hooks/seoFallback';
+import { hookSeoFallback } from '@/hooks-payload/seoFallback';
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
-import { hookFormsBlockOnCreate } from '@/hooks/formsBlockOnCreate';
+import { hookFormsBlockOnCreate } from '@/hooks-payload/formsBlockOnCreate';
 import { fieldSlug } from '@/field-templates/slug';
-import { hookSlug } from '@/hooks/slug';
+import { hookSlug } from '@/hooks-payload/slug';
 
 export const NewsDetailPage: CollectionConfig = {
   access: {
