@@ -68,6 +68,7 @@ import { useWindowScroll } from '@/hooks/useWindowScroll';
 import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
 import { useScrollLock } from '@/hooks/useScrollLock';
 import { useInputMethod } from '@/hooks/useInputMethod';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
 
 import {
   InterfaceHeaderLanguageNavigation, InterfaceHeaderLogo, InterfaceHeaderMetaNavigation, InterfaceHeaderNavigation,
@@ -155,6 +156,12 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   // --- Hooks
 
   useScrollLock(mobileMenuOpen);
+  useFocusTrap({
+    condition: mobileMenuOpen,
+    focusTrapRootElement: headerRef.current?.querySelector<HTMLDivElement>('[data-header="focus-region"]'),
+    ignoreElementsWithClasses: [styles.logo],
+  });
+
   const isKeyboard = useInputMethod();
   const breakpoint = useBreakpoint();
   const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
@@ -207,71 +214,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     // 0 would be too brutal
     setDidScroll(scrollPosition > 50);
   }, [scrollPosition]);
-
-  useEffect(() => {
-    if (!mobileMenuOpen) {
-      return undefined;
-    }
-
-    const menu = headerRef.current?.querySelector<HTMLDivElement>('[data-header="focus-region"]');
-
-    if (!menu) {
-      return undefined;
-    }
-
-    // Get focusable elements
-    const focusableEls = menu.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])');
-
-    if (focusableEls.length === 0) {
-      return undefined;
-    }
-
-    const focusableArray = Array.from(focusableEls);
-    const lastFocusable = focusableArray[focusableArray.length - 1];
-    const [firstFocusable] = focusableArray.filter((elem) => elem.classList.contains(styles.menuButton));
-
-    // Create a focusable element at the very end that loops back
-    const loopTrap = document.createElement('button');
-
-    loopTrap.tabIndex = 0;
-    loopTrap.setAttribute('aria-label', 'End of menu');
-    loopTrap.style.cssText = 'position: absolute; left: -9999px;';
-
-    const handleLoopFocus = (): void => {
-      firstFocusable?.focus();
-    };
-
-    loopTrap.addEventListener('focus', handleLoopFocus);
-    menu.appendChild(loopTrap);
-
-    // Keyboard trap
-    const handleKeyDown = (e: KeyboardEvent): void => {
-      if (e.key !== 'Tab') {
-        return;
-      }
-
-      if (e.shiftKey) {
-        if (document.activeElement === firstFocusable) {
-          e.preventDefault();
-          lastFocusable?.focus();
-        }
-      } else {
-        if (document.activeElement === lastFocusable) {
-          e.preventDefault();
-          firstFocusable?.focus();
-        }
-      }
-    };
-
-    menu.addEventListener('keydown', handleKeyDown);
-
-    // Cleanup
-    return () => {
-      loopTrap.removeEventListener('focus', handleLoopFocus);
-      menu.removeEventListener('keydown', handleKeyDown);
-      loopTrap.remove();
-    };
-  }, [mobileMenuOpen]);
 
   // --- Callbacks
 
