@@ -1,7 +1,7 @@
 import {
   Block, Field,
 } from 'payload';
-import { fieldsLinkInternal } from '@/field-templates/links';
+import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
 
 // Example: Promotion, Activities
 
@@ -19,7 +19,7 @@ const textTeaserItem: Field[] = [
     type: 'textarea',
   },
   {
-    fields: fieldsLinkInternal,
+    fields: fieldsLinkInternalOrExternal,
     name: 'link',
     type: 'group',
   },
