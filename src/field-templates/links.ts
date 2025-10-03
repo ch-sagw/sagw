@@ -2,12 +2,6 @@ import { Field } from 'payload';
 
 export const fieldsLinkInternal: Field[] = [
   {
-    defaultValue: false,
-    label: 'In neuem Fenster öffnen',
-    name: 'openInNewWindow',
-    type: 'checkbox',
-  },
-  {
     localized: true,
     name: 'linkText',
     required: true,
