@@ -8,22 +8,10 @@ export const BibliographicReferenceBlock: Block = {
     disableBlockName: true,
   },
   fields: [
-    {
-      localized: true,
-      name: 'title',
-      required: true,
-      type: 'text',
-    },
     rte2({
       name: 'text',
       required: true,
     }),
-    {
-      localized: true,
-      name: 'copyButtonText',
-      required: true,
-      type: 'text',
-    },
   ],
   imageURL: '/admin-ui-images/bibliographic-reference.svg',
   interfaceName: 'InterfaceBibliographicReferenceBlock',

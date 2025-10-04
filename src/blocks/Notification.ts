@@ -8,6 +8,14 @@ export const NotificationBlock: Block = {
     disableBlockName: true,
   },
   fields: [
+    {
+      admin: {
+        description: 'If disabled, the notification will not be shown.',
+      },
+      defaultValue: true,
+      name: 'show',
+      type: 'checkbox',
+    },
     rte2({
       name: 'text',
       required: true,

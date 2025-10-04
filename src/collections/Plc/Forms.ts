@@ -39,7 +39,7 @@ export const Forms: CollectionConfig = {
     // color mode
     ...fieldsColorMode({
       dark: true,
-      light: false,
+      light: true,
       white: true,
     }),
 
@@ -49,7 +49,7 @@ export const Forms: CollectionConfig = {
         {
           localized: true,
           name: 'title',
-          required: true,
+          required: false,
           type: 'text',
         },
         {

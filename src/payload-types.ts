@@ -115,6 +115,7 @@ export interface Config {
     zenodoDocuments: ZenodoDocument;
     projects: Project;
     people: Person;
+    teams: Team;
     publicationTopics: PublicationTopic;
     publicationTypes: PublicationType;
     eventCategory: EventCategory;
@@ -153,6 +154,7 @@ export interface Config {
     zenodoDocuments: ZenodoDocumentsSelect<false> | ZenodoDocumentsSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     people: PeopleSelect<false> | PeopleSelect<true>;
+    teams: TeamsSelect<false> | TeamsSelect<true>;
     publicationTopics: PublicationTopicsSelect<false> | PublicationTopicsSelect<true>;
     publicationTypes: PublicationTypesSelect<false> | PublicationTypesSelect<true>;
     eventCategory: EventCategorySelect<false> | EventCategorySelect<true>;
@@ -241,7 +243,7 @@ export interface InterfaceLinksBlock {
   title: string;
   links?:
     | {
-        linkType: 'internal' | 'external';
+        linkType: 'internal' | 'external' | 'mail';
         linkInternal?: {
           description?: string | null;
           linkText: string;
@@ -251,6 +253,10 @@ export interface InterfaceLinksBlock {
           description?: string | null;
           externalLinkText: string;
           externalLink: string;
+        };
+        linkMail?: {
+          linkText: string;
+          'E-Mail': string;
         };
         id?: string | null;
       }[]
@@ -360,6 +366,7 @@ export interface ZenodoDocument {
     size?: number | null;
     id?: string | null;
   }[];
+  project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -384,7 +391,7 @@ export interface InterfaceImageBlock {
 export interface Image {
   id: string;
   tenant?: (string | null) | Tenant;
-  alt?: string | null;
+  alt: string;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -404,8 +411,7 @@ export interface Image {
  */
 export interface InterfaceVideoBlock {
   video: string | Video;
-  title: string;
-  caption: string;
+  caption?: string | null;
   credits: string;
   stillImage: string | Image;
   id?: string | null;
@@ -419,7 +425,7 @@ export interface InterfaceVideoBlock {
 export interface Video {
   id: string;
   tenant?: (string | null) | Tenant;
-  alt?: string | null;
+  title: string;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -492,8 +498,8 @@ export interface Form {
    * A newsletter form has a fixed set of fields. Custom form can be build with any combination of fields as you like.
    */
   isNewsletterForm?: ('custom' | 'newsletter') | null;
-  colorMode: 'white' | 'dark';
-  title: string;
+  colorMode: 'white' | 'dark' | 'light';
+  title?: string | null;
   titleLevel: '2' | '3' | '4' | '5';
   subtitle?: string | null;
   submitButtonLabel: string;
@@ -607,17 +613,30 @@ export interface InterfaceCtaContactBlock {
 export interface Person {
   id: string;
   tenant?: (string | null) | Tenant;
-  personDepartment: 'admin' | 'science' | 'com' | 'direction';
-  memberType: 'executiveBoard' | 'team';
+  team?: (string | Team)[] | null;
   prefix?: string | null;
   firstname: string;
   middleName?: string | null;
   lastname: string;
-  function: string;
+  function?: string | null;
   mail: string;
   phone?: string | null;
   image?: (string | null) | Image;
   fullName?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * You can assign People to teams.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "teams".
+ */
+export interface Team {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  name: string;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -629,7 +648,7 @@ export interface Person {
 export interface InterfaceCtaLinkBlock {
   title: string;
   text: string;
-  linkType: 'internal' | 'external';
+  linkType: 'internal' | 'external' | 'mail';
   linkInternal?: {
     description?: string | null;
     linkText: string;
@@ -639,6 +658,10 @@ export interface InterfaceCtaLinkBlock {
     description?: string | null;
     externalLinkText: string;
     externalLink: string;
+  };
+  linkMail?: {
+    linkText: string;
+    'E-Mail': string;
   };
   id?: string | null;
   blockName?: string | null;
@@ -747,7 +770,7 @@ export interface InterfaceImageTeasersBlock {
           relationTo: 'svgs';
           value: string | Svg;
         } | null);
-    linkType: 'internal' | 'external';
+    linkType: 'internal' | 'external' | 'mail';
     linkInternal?: {
       description?: string | null;
       linkText: string;
@@ -757,6 +780,10 @@ export interface InterfaceImageTeasersBlock {
       description?: string | null;
       externalLinkText: string;
       externalLink: string;
+    };
+    linkMail?: {
+      linkText: string;
+      'E-Mail': string;
     };
     id?: string | null;
   }[];
@@ -769,6 +796,10 @@ export interface InterfaceImageTeasersBlock {
  * via the `definition` "InterfaceNotificationBlock".
  */
 export interface InterfaceNotificationBlock {
+  /**
+   * If disabled, the notification will not be shown.
+   */
+  show?: boolean | null;
   text: InterfaceRte2;
   id?: string | null;
   blockName?: string | null;
@@ -779,9 +810,7 @@ export interface InterfaceNotificationBlock {
  * via the `definition` "InterfaceBibliographicReferenceBlock".
  */
 export interface InterfaceBibliographicReferenceBlock {
-  title: string;
   text: InterfaceRte2;
-  copyButtonText: string;
   id?: string | null;
   blockName?: string | null;
   blockType: 'bibliographicReferenceBlock';
@@ -1871,18 +1900,24 @@ export interface InterfaceI18NForms {
 export interface I18NGlobal {
   id: string;
   tenant?: (string | null) | Tenant;
-  /**
-   * If you add a Download-Block, this will be used as a title
-   */
-  downloadTitle: string;
-  /**
-   * If you add a CTA-Contact-Block, this will be used as the button text
-   */
-  writeEmailButtonText: string;
-  /**
-   * On magazine detail pages, we use this to show the "Copy Text" button
-   */
-  exportArticleButtonText: string;
+  generic: {
+    /**
+     * If you add a Download-Block, this will be used as a title
+     */
+    downloadTitle: string;
+    /**
+     * If you add a CTA-Contact-Block, this will be used as the button text
+     */
+    writeEmailButtonText: string;
+    /**
+     * On magazine detail pages, we use this to show the "Copy Text" button
+     */
+    exportArticleButtonText: string;
+  };
+  bibliographicReference: {
+    title: string;
+    copyButtonText: string;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1945,20 +1980,20 @@ export interface Footer {
   contact: {
     title: string;
     address1: string;
-    address2: string;
-    poBox: string;
+    address2?: string | null;
+    poBox?: string | null;
     countryCode: string;
     zipCode: string;
     city: string;
-    phone: string;
-    mail: string;
+    phone?: string | null;
+    mail?: string | null;
   };
   socialLinks?:
     | {
         description?: string | null;
         externalLinkText: string;
         externalLink: string;
-        icon?: ('linkedIn' | 'twitter' | 'facebook') | null;
+        icon?: ('linkedIn' | 'instagram' | 'facebook' | 'twitter') | null;
         id?: string | null;
       }[]
     | null;
@@ -2025,7 +2060,7 @@ export interface InterfaceHeaderLanguageNavigation {
 export interface InterfaceHeaderMetaNavigation {
   metaLinks?:
     | {
-        linkType: 'internal' | 'external';
+        linkType: 'internal' | 'external' | 'mail';
         linkInternal?: {
           description?: string | null;
           linkText: string;
@@ -2035,6 +2070,10 @@ export interface InterfaceHeaderMetaNavigation {
           description?: string | null;
           externalLinkText: string;
           externalLink: string;
+        };
+        linkMail?: {
+          linkText: string;
+          'E-Mail': string;
         };
         id?: string | null;
       }[]
@@ -2177,6 +2216,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'people';
         value: string | Person;
+      } | null)
+    | ({
+        relationTo: 'teams';
+        value: string | Team;
       } | null)
     | ({
         relationTo: 'publicationTopics';
@@ -2395,6 +2438,12 @@ export interface InterfaceLinksBlockSelect<T extends boolean = true> {
               externalLinkText?: T;
               externalLink?: T;
             };
+        linkMail?:
+          | T
+          | {
+              linkText?: T;
+              'E-Mail'?: T;
+            };
         id?: T;
       };
   id?: T;
@@ -2430,7 +2479,6 @@ export interface InterfaceImageBlockSelect<T extends boolean = true> {
  */
 export interface InterfaceVideoBlockSelect<T extends boolean = true> {
   video?: T;
-  title?: T;
   caption?: T;
   credits?: T;
   stillImage?: T;
@@ -2497,6 +2545,12 @@ export interface InterfaceCtaLinkBlockSelect<T extends boolean = true> {
         description?: T;
         externalLinkText?: T;
         externalLink?: T;
+      };
+  linkMail?:
+    | T
+    | {
+        linkText?: T;
+        'E-Mail'?: T;
       };
   id?: T;
   blockName?: T;
@@ -2581,6 +2635,12 @@ export interface InterfaceImageTeasersBlockSelect<T extends boolean = true> {
               externalLinkText?: T;
               externalLink?: T;
             };
+        linkMail?:
+          | T
+          | {
+              linkText?: T;
+              'E-Mail'?: T;
+            };
         id?: T;
       };
   id?: T;
@@ -2591,6 +2651,7 @@ export interface InterfaceImageTeasersBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceNotificationBlock_select".
  */
 export interface InterfaceNotificationBlockSelect<T extends boolean = true> {
+  show?: T;
   text?: T | InterfaceRte2Select<T>;
   id?: T;
   blockName?: T;
@@ -2600,9 +2661,7 @@ export interface InterfaceNotificationBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceBibliographicReferenceBlock_select".
  */
 export interface InterfaceBibliographicReferenceBlockSelect<T extends boolean = true> {
-  title?: T;
   text?: T | InterfaceRte2Select<T>;
-  copyButtonText?: T;
   id?: T;
   blockName?: T;
 }
@@ -3456,7 +3515,7 @@ export interface ImagesSelect<T extends boolean = true> {
  */
 export interface VideosSelect<T extends boolean = true> {
   tenant?: T;
-  alt?: T;
+  title?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -3540,6 +3599,7 @@ export interface ZenodoDocumentsSelect<T extends boolean = true> {
         size?: T;
         id?: T;
       };
+  project?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -3561,8 +3621,7 @@ export interface ProjectsSelect<T extends boolean = true> {
  */
 export interface PeopleSelect<T extends boolean = true> {
   tenant?: T;
-  personDepartment?: T;
-  memberType?: T;
+  team?: T;
   prefix?: T;
   firstname?: T;
   middleName?: T;
@@ -3572,6 +3631,17 @@ export interface PeopleSelect<T extends boolean = true> {
   phone?: T;
   image?: T;
   fullName?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "teams_select".
+ */
+export interface TeamsSelect<T extends boolean = true> {
+  tenant?: T;
+  name?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -3848,9 +3918,19 @@ export interface InterfaceI18NFormsSelect<T extends boolean = true> {
  */
 export interface I18NGlobalsSelect<T extends boolean = true> {
   tenant?: T;
-  downloadTitle?: T;
-  writeEmailButtonText?: T;
-  exportArticleButtonText?: T;
+  generic?:
+    | T
+    | {
+        downloadTitle?: T;
+        writeEmailButtonText?: T;
+        exportArticleButtonText?: T;
+      };
+  bibliographicReference?:
+    | T
+    | {
+        title?: T;
+        copyButtonText?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -4010,6 +4090,12 @@ export interface InterfaceHeaderMetaNavigationSelect<T extends boolean = true> {
               description?: T;
               externalLinkText?: T;
               externalLink?: T;
+            };
+        linkMail?:
+          | T
+          | {
+              linkText?: T;
+              'E-Mail'?: T;
             };
         id?: T;
       };

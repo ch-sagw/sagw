@@ -14,8 +14,8 @@ export const Videos: CollectionConfig = {
   fields: [
     {
       localized: true,
-      name: 'alt',
-      required: false,
+      name: 'title',
+      required: true,
       type: 'text',
     },
   ],

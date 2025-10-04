@@ -78,6 +78,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     data: {
       _status: 'published',
       tenant: tenantId,
+      title: `video ${tenant}`,
     },
     filePath: `src/seed/test-data/assets/${tenant}.mp4`,
   });
@@ -87,6 +88,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'documents',
     data: {
       _status: 'published',
+      date: '2025-10-30',
       tenant: tenantId,
       title: `${tenant.toUpperCase()} Document`,
     },
@@ -181,6 +183,16 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
+  // create a team
+  const team = await payload.create({
+    collection: 'teams',
+    data: {
+      _status: 'published',
+      name: `Team 1 ${tenant.toUpperCase()}`,
+      tenant: tenantId,
+    },
+  });
+
   // create person in people
   await payload.create({
     collection: 'people',
@@ -190,9 +202,8 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       function: 'Some function',
       lastname: `Lastname ${tenant.toUpperCase()}`,
       mail: 'foo@bar.com',
-      memberType: 'executiveBoard',
-      personDepartment: 'admin',
       phone: '031 123 45 67',
+      team: [team],
       tenant: tenantId,
     },
   });

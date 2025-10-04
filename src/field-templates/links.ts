@@ -60,6 +60,21 @@ export const fieldsLinkExternal: Field[] = [
   },
 ];
 
+export const fieldsMail: Field[] = [
+  {
+    localized: true,
+    name: 'linkText',
+    required: true,
+    type: 'text',
+  },
+  {
+    localized: false,
+    name: 'E-Mail',
+    required: true,
+    type: 'email',
+  },
+];
+
 export const fieldsLinkInternalWithToggle: Field = {
   fields: [
     {
@@ -97,6 +112,10 @@ export const fieldsLinkInternalOrExternal: Field[] = [
         label: 'External',
         value: 'external',
       },
+      {
+        label: 'E-Mail',
+        value: 'mail',
+      },
     ],
     required: true,
     type: 'radio',
@@ -115,6 +134,14 @@ export const fieldsLinkInternalOrExternal: Field[] = [
     },
     fields: fieldsLinkExternal,
     name: 'linkExternal',
+    type: 'group',
+  },
+  {
+    admin: {
+      condition: (data, siblingData) => siblingData.linkType === 'mail',
+    },
+    fields: fieldsMail,
+    name: 'linkMail',
     type: 'group',
   },
 ];
