@@ -121,6 +121,7 @@ export interface Config {
     users: User;
     forms: Form;
     i18nForms: I18NForm;
+    i18nGlobals: I18NGlobal;
     consent: Consent;
     footer: Footer;
     header: Header;
@@ -158,6 +159,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     i18nForms: I18NFormsSelect<false> | I18NFormsSelect<true>;
+    i18nGlobals: I18NGlobalsSelect<false> | I18NGlobalsSelect<true>;
     consent: ConsentSelect<false> | ConsentSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -1796,6 +1798,29 @@ export interface InterfaceI18NForms {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "i18nGlobals".
+ */
+export interface I18NGlobal {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  /**
+   * If you add a Download-Block, this will be used as a title
+   */
+  downloadTitle: string;
+  /**
+   * If you add a CTA-Contact-Block, this will be used as the button text
+   */
+  writeEmailButtonText: string;
+  /**
+   * On magazine detail pages, we use this to show the "Copy Text" button
+   */
+  exportArticleButtonText: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "consent".
  */
 export interface Consent {
@@ -2108,6 +2133,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'i18nForms';
         value: string | I18NForm;
+      } | null)
+    | ({
+        relationTo: 'i18nGlobals';
+        value: string | I18NGlobal;
       } | null)
     | ({
         relationTo: 'consent';
@@ -3697,6 +3726,19 @@ export interface InterfaceI18NFormsSelect<T extends boolean = true> {
                   };
             };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "i18nGlobals_select".
+ */
+export interface I18NGlobalsSelect<T extends boolean = true> {
+  tenant?: T;
+  downloadTitle?: T;
+  writeEmailButtonText?: T;
+  exportArticleButtonText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

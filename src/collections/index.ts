@@ -18,6 +18,7 @@ import { singletonSlugs } from '@/collections/Pages/pages';
 
 // Globals
 import { I18nForms } from '@/collections/Globals/i18n/Forms';
+import { I18nGlobals } from './Globals/i18n/Globals';
 import { Consent } from '@/collections/Globals/Consent';
 import { Footer } from '@/collections/Globals/Footer';
 import { Header } from '@/collections/Globals/Header';
@@ -54,6 +55,7 @@ export const plcCollections: CollectionConfig[] = [
 
 export const globalCollections: CollectionConfig[] = [
   I18nForms,
+  I18nGlobals,
   Consent,
   Footer,
   Header,
