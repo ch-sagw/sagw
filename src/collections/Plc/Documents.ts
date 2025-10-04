@@ -16,6 +16,11 @@ export const Documents: CollectionConfig = {
       type: 'text',
     },
     {
+      name: 'date',
+      required: true,
+      type: 'date',
+    },
+    {
       name: 'project',
       relationTo: 'projects',
       required: false,

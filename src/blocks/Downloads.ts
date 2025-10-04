@@ -8,6 +8,12 @@ export const DownloadsBlock: Block = {
   },
   fields: [
     {
+      localized: true,
+      name: 'subtitle',
+      required: false,
+      type: 'text',
+    },
+    {
       defaultValue: 'custom',
       name: 'customOrAuto',
       options: [

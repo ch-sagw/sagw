@@ -27,6 +27,7 @@ import { NationalDictionariesOverviewBlock } from '@/blocks/NationalDictionaries
 import { InstitutesOverviewBlock } from '@/blocks/InstitutesOverview';
 import { ProjectOverviewBlock } from '@/blocks/ProjectOverview';
 import { ProjectTeasersBlock } from '@/blocks/ProjectTeasers';
+import { FootnotesBlock } from '@/blocks/Footnotes';
 
 export const blocks = (exclude?: string[]): Block[] => {
   const availableBlocks = [
@@ -44,6 +45,7 @@ export const blocks = (exclude?: string[]): Block[] => {
     GenericTeasersBlock,
     NotificationBlock,
     BibliographicReferenceBlock,
+    FootnotesBlock,
 
     // automatic overviews
     MagazineOverviewBlock,

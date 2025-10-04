@@ -80,6 +80,7 @@ export interface Config {
     genericTeasersBlock: InterfaceImageTeasersBlock;
     notificationBlock: InterfaceNotificationBlock;
     bibliographicReferenceBlock: InterfaceBibliographicReferenceBlock;
+    footnoteBlock: InterfaceFootnotesBlock;
     magazineOverviewBlock: InterfaceMagazineOverviewBlock;
     publicationsOverviewBlock: InterfacePublicationsOverviewBlock;
     eventsOverviewBlock: InterfaceEventsOverviewBlock;
@@ -242,10 +243,12 @@ export interface InterfaceLinksBlock {
     | {
         linkType: 'internal' | 'external';
         linkInternal?: {
+          description?: string | null;
           linkText: string;
           internalLink: string;
         };
         linkExternal?: {
+          description?: string | null;
           externalLinkText: string;
           externalLink: string;
         };
@@ -261,6 +264,7 @@ export interface InterfaceLinksBlock {
  * via the `definition` "InterfaceDownloadsBlock".
  */
 export interface InterfaceDownloadsBlock {
+  subtitle?: string | null;
   customOrAuto: 'custom' | 'auto';
   downloads?:
     | (
@@ -287,6 +291,7 @@ export interface Document {
   id: string;
   tenant?: (string | null) | Tenant;
   title: string;
+  date: string;
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
@@ -366,8 +371,7 @@ export interface ZenodoDocument {
 export interface InterfaceImageBlock {
   alignement?: ('left' | 'center' | 'right') | null;
   image: string | Image;
-  title: string;
-  caption: string;
+  caption?: string | null;
   credits: string;
   id?: string | null;
   blockName?: string | null;
@@ -627,10 +631,12 @@ export interface InterfaceCtaLinkBlock {
   text: string;
   linkType: 'internal' | 'external';
   linkInternal?: {
+    description?: string | null;
     linkText: string;
     internalLink: string;
   };
   linkExternal?: {
+    description?: string | null;
     externalLinkText: string;
     externalLink: string;
   };
@@ -649,6 +655,7 @@ export interface InterfaceHomeTeasersBlock {
         title: string;
         text: string;
         icon: string | Svg;
+        description?: string | null;
         linkText: string;
         internalLink: string;
         id?: string | null;
@@ -689,13 +696,14 @@ export interface InterfaceNetworkTeasersBlock {
     title: string;
   };
   items: {
-    foundingYearText: string;
+    foundingYearText?: string | null;
     linkText: string;
     items: {
       title: string;
       category: string | NetworkCategory;
-      foundingYear: number;
+      foundingYear?: number | null;
       image: string | Image;
+      description?: string | null;
       externalLink: string;
       id?: string | null;
     }[];
@@ -741,10 +749,12 @@ export interface InterfaceImageTeasersBlock {
         } | null);
     linkType: 'internal' | 'external';
     linkInternal?: {
+      description?: string | null;
       linkText: string;
       internalLink: string;
     };
     linkExternal?: {
+      description?: string | null;
       externalLinkText: string;
       externalLink: string;
     };
@@ -778,6 +788,38 @@ export interface InterfaceBibliographicReferenceBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceFootnotesBlock".
+ */
+export interface InterfaceFootnotesBlock {
+  title: string;
+  text: InterfaceRte3;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'footnoteBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceRte3".
+ */
+export interface InterfaceRte3 {
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceMagazineOverviewBlock".
  */
 export interface InterfaceMagazineOverviewBlock {
@@ -791,6 +833,9 @@ export interface InterfaceMagazineOverviewBlock {
  * via the `definition` "InterfacePublicationsOverviewBlock".
  */
 export interface InterfacePublicationsOverviewBlock {
+  title: string;
+  filterTitleAllTopics: string;
+  filterTitleAllPublications: string;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -801,6 +846,7 @@ export interface InterfacePublicationsOverviewBlock {
  * via the `definition` "InterfaceEventsOverviewBlock".
  */
 export interface InterfaceEventsOverviewBlock {
+  title: string;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -824,6 +870,7 @@ export interface InterfacePeopleOverviewBlock {
  * via the `definition` "InterfaceNewsOverviewBlock".
  */
 export interface InterfaceNewsOverviewBlock {
+  title: string;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -873,8 +920,11 @@ export interface InterfaceProjectOverviewBlock {
  */
 export interface InterfaceEventsTeasersBlock {
   title: string;
-  linkText: string;
-  project?: (string | null) | Project;
+  /**
+   * Do you want to add a link to the Events overview page?
+   */
+  link?: ('no' | 'yes') | null;
+  linkText?: string | null;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -885,8 +935,6 @@ export interface InterfaceEventsTeasersBlock {
  * via the `definition` "InterfaceMagazineTeasersBlock".
  */
 export interface InterfaceMagazineTeasersBlock {
-  title: string;
-  lead?: string | null;
   linkText: string;
   message?: string | null;
   id?: string | null;
@@ -899,8 +947,11 @@ export interface InterfaceMagazineTeasersBlock {
  */
 export interface InterfaceNewsTeasersBlock {
   title: string;
-  linkText: string;
-  project?: (string | null) | Project;
+  /**
+   * Do you want to add a link to the News overview page?
+   */
+  link?: ('no' | 'yes') | null;
+  linkText?: string | null;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -912,7 +963,11 @@ export interface InterfaceNewsTeasersBlock {
  */
 export interface InterfacePublicationsTeasersBlock {
   title: string;
-  linkText: string;
+  /**
+   * Do you want to add a link to the Publications overview page?
+   */
+  link?: ('no' | 'yes') | null;
+  linkText?: string | null;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -923,8 +978,6 @@ export interface InterfacePublicationsTeasersBlock {
  * via the `definition` "InterfaceProjectTeasersBlock".
  */
 export interface InterfaceProjectTeasersBlock {
-  title: string;
-  lead?: string | null;
   linkText: string;
   message?: string | null;
   id?: string | null;
@@ -948,6 +1001,7 @@ export interface HomePage {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
+        description?: string | null;
         linkText: string;
         internalLink: string;
       };
@@ -969,6 +1023,7 @@ export interface HomePage {
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1068,6 +1123,7 @@ export interface MagazineDetailPage {
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1132,6 +1188,7 @@ export interface OverviewPage {
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1196,6 +1253,7 @@ export interface DetailPage {
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1272,6 +1330,7 @@ export interface EventDetailPage {
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1288,6 +1347,7 @@ export interface EventDetailPage {
       )[]
     | null;
   link?: {
+    description?: string | null;
     externalLinkText: string;
     externalLink: string;
   };
@@ -1360,6 +1420,7 @@ export interface NewsDetailPage {
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1435,6 +1496,7 @@ export interface PublicationDetailPage {
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1529,6 +1591,7 @@ export interface NationalDictionaryDetailPage {
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1599,6 +1662,7 @@ export interface InstituteDetailPage {
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1666,6 +1730,7 @@ export interface ProjectDetailPage {
         | InterfaceImageTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1762,6 +1827,7 @@ export interface InterfaceI18NForms {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
+        description?: string | null;
         linkText: string;
         internalLink: string;
       };
@@ -1776,6 +1842,7 @@ export interface InterfaceI18NForms {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
+        description?: string | null;
         linkText: string;
         internalLink: string;
       };
@@ -1790,6 +1857,7 @@ export interface InterfaceI18NForms {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
+        description?: string | null;
         linkText: string;
         internalLink: string;
       };
@@ -1887,6 +1955,7 @@ export interface Footer {
   };
   socialLinks?:
     | {
+        description?: string | null;
         externalLinkText: string;
         externalLink: string;
         icon?: ('linkedIn' | 'twitter' | 'facebook') | null;
@@ -1958,10 +2027,12 @@ export interface InterfaceHeaderMetaNavigation {
     | {
         linkType: 'internal' | 'external';
         linkInternal?: {
+          description?: string | null;
           linkText: string;
           internalLink: string;
         };
         linkExternal?: {
+          description?: string | null;
           externalLinkText: string;
           externalLink: string;
         };
@@ -1997,6 +2068,7 @@ export interface StatusMessage {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      description?: string | null;
       linkText: string;
       internalLink: string;
     };
@@ -2222,6 +2294,7 @@ export interface HomePageSelect<T extends boolean = true> {
               link?:
                 | T
                 | {
+                    description?: T;
                     linkText?: T;
                     internalLink?: T;
                   };
@@ -2244,6 +2317,7 @@ export interface HomePageSelect<T extends boolean = true> {
         genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -2310,12 +2384,14 @@ export interface InterfaceLinksBlockSelect<T extends boolean = true> {
         linkInternal?:
           | T
           | {
+              description?: T;
               linkText?: T;
               internalLink?: T;
             };
         linkExternal?:
           | T
           | {
+              description?: T;
               externalLinkText?: T;
               externalLink?: T;
             };
@@ -2329,6 +2405,7 @@ export interface InterfaceLinksBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceDownloadsBlock_select".
  */
 export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
+  subtitle?: T;
   customOrAuto?: T;
   downloads?: T;
   project?: T;
@@ -2342,7 +2419,6 @@ export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
 export interface InterfaceImageBlockSelect<T extends boolean = true> {
   alignement?: T;
   image?: T;
-  title?: T;
   caption?: T;
   credits?: T;
   id?: T;
@@ -2411,12 +2487,14 @@ export interface InterfaceCtaLinkBlockSelect<T extends boolean = true> {
   linkInternal?:
     | T
     | {
+        description?: T;
         linkText?: T;
         internalLink?: T;
       };
   linkExternal?:
     | T
     | {
+        description?: T;
         externalLinkText?: T;
         externalLink?: T;
       };
@@ -2435,6 +2513,7 @@ export interface InterfaceHomeTeasersBlockSelect<T extends boolean = true> {
         title?: T;
         text?: T;
         icon?: T;
+        description?: T;
         linkText?: T;
         internalLink?: T;
         id?: T;
@@ -2465,6 +2544,7 @@ export interface InterfaceNetworkTeasersBlockSelect<T extends boolean = true> {
               category?: T;
               foundingYear?: T;
               image?: T;
+              description?: T;
               externalLink?: T;
               id?: T;
             };
@@ -2490,12 +2570,14 @@ export interface InterfaceImageTeasersBlockSelect<T extends boolean = true> {
         linkInternal?:
           | T
           | {
+              description?: T;
               linkText?: T;
               internalLink?: T;
             };
         linkExternal?:
           | T
           | {
+              description?: T;
               externalLinkText?: T;
               externalLink?: T;
             };
@@ -2526,6 +2608,23 @@ export interface InterfaceBibliographicReferenceBlockSelect<T extends boolean = 
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceFootnotesBlock_select".
+ */
+export interface InterfaceFootnotesBlockSelect<T extends boolean = true> {
+  title?: T;
+  text?: T | InterfaceRte3Select<T>;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceRte3_select".
+ */
+export interface InterfaceRte3Select<T extends boolean = true> {
+  content?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceMagazineOverviewBlock_select".
  */
 export interface InterfaceMagazineOverviewBlockSelect<T extends boolean = true> {
@@ -2538,6 +2637,9 @@ export interface InterfaceMagazineOverviewBlockSelect<T extends boolean = true> 
  * via the `definition` "InterfacePublicationsOverviewBlock_select".
  */
 export interface InterfacePublicationsOverviewBlockSelect<T extends boolean = true> {
+  title?: T;
+  filterTitleAllTopics?: T;
+  filterTitleAllPublications?: T;
   message?: T;
   id?: T;
   blockName?: T;
@@ -2547,6 +2649,7 @@ export interface InterfacePublicationsOverviewBlockSelect<T extends boolean = tr
  * via the `definition` "InterfaceEventsOverviewBlock_select".
  */
 export interface InterfaceEventsOverviewBlockSelect<T extends boolean = true> {
+  title?: T;
   message?: T;
   id?: T;
   blockName?: T;
@@ -2570,6 +2673,7 @@ export interface InterfacePeopleOverviewBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceNewsOverviewBlock_select".
  */
 export interface InterfaceNewsOverviewBlockSelect<T extends boolean = true> {
+  title?: T;
   message?: T;
   id?: T;
   blockName?: T;
@@ -2609,8 +2713,8 @@ export interface InterfaceProjectOverviewBlockSelect<T extends boolean = true> {
  */
 export interface InterfaceEventsTeasersBlockSelect<T extends boolean = true> {
   title?: T;
+  link?: T;
   linkText?: T;
-  project?: T;
   message?: T;
   id?: T;
   blockName?: T;
@@ -2620,8 +2724,6 @@ export interface InterfaceEventsTeasersBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceMagazineTeasersBlock_select".
  */
 export interface InterfaceMagazineTeasersBlockSelect<T extends boolean = true> {
-  title?: T;
-  lead?: T;
   linkText?: T;
   message?: T;
   id?: T;
@@ -2633,8 +2735,8 @@ export interface InterfaceMagazineTeasersBlockSelect<T extends boolean = true> {
  */
 export interface InterfaceNewsTeasersBlockSelect<T extends boolean = true> {
   title?: T;
+  link?: T;
   linkText?: T;
-  project?: T;
   message?: T;
   id?: T;
   blockName?: T;
@@ -2645,6 +2747,7 @@ export interface InterfaceNewsTeasersBlockSelect<T extends boolean = true> {
  */
 export interface InterfacePublicationsTeasersBlockSelect<T extends boolean = true> {
   title?: T;
+  link?: T;
   linkText?: T;
   message?: T;
   id?: T;
@@ -2655,8 +2758,6 @@ export interface InterfacePublicationsTeasersBlockSelect<T extends boolean = tru
  * via the `definition` "InterfaceProjectTeasersBlock_select".
  */
 export interface InterfaceProjectTeasersBlockSelect<T extends boolean = true> {
-  title?: T;
-  lead?: T;
   linkText?: T;
   message?: T;
   id?: T;
@@ -2731,6 +2832,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
         genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -2794,6 +2896,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
         genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -2857,6 +2960,7 @@ export interface DetailPageSelect<T extends boolean = true> {
         genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -2934,6 +3038,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
         genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -2951,6 +3056,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
   link?:
     | T
     | {
+        description?: T;
         externalLinkText?: T;
         externalLink?: T;
       };
@@ -3010,6 +3116,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
         genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -3085,6 +3192,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
         genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -3153,6 +3261,7 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
         genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -3221,6 +3330,7 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
         genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -3289,6 +3399,7 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
         genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -3397,6 +3508,7 @@ export interface NetworkCategoriesSelect<T extends boolean = true> {
 export interface DocumentsSelect<T extends boolean = true> {
   tenant?: T;
   title?: T;
+  date?: T;
   project?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -3687,6 +3799,7 @@ export interface InterfaceI18NFormsSelect<T extends boolean = true> {
               link?:
                 | T
                 | {
+                    description?: T;
                     linkText?: T;
                     internalLink?: T;
                   };
@@ -3704,6 +3817,7 @@ export interface InterfaceI18NFormsSelect<T extends boolean = true> {
               link?:
                 | T
                 | {
+                    description?: T;
                     linkText?: T;
                     internalLink?: T;
                   };
@@ -3721,6 +3835,7 @@ export interface InterfaceI18NFormsSelect<T extends boolean = true> {
               link?:
                 | T
                 | {
+                    description?: T;
                     linkText?: T;
                     internalLink?: T;
                   };
@@ -3819,6 +3934,7 @@ export interface FooterSelect<T extends boolean = true> {
   socialLinks?:
     | T
     | {
+        description?: T;
         externalLinkText?: T;
         externalLink?: T;
         icon?: T;
@@ -3884,12 +4000,14 @@ export interface InterfaceHeaderMetaNavigationSelect<T extends boolean = true> {
         linkInternal?:
           | T
           | {
+              description?: T;
               linkText?: T;
               internalLink?: T;
             };
         linkExternal?:
           | T
           | {
+              description?: T;
               externalLinkText?: T;
               externalLink?: T;
             };
@@ -3926,6 +4044,7 @@ export interface StatusMessageSelect<T extends boolean = true> {
         link?:
           | T
           | {
+              description?: T;
               linkText?: T;
               internalLink?: T;
             };

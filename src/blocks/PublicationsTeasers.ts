@@ -14,6 +14,27 @@ export const PublicationsTeasersBlock: Block = {
       type: 'text',
     },
     {
+      admin: {
+        description: 'Do you want to add a link to the Publications overview page?',
+      },
+      defaultValue: 'no',
+      name: 'link',
+      options: [
+        {
+          label: 'No',
+          value: 'no',
+        },
+        {
+          label: 'Yes',
+          value: 'yes',
+        },
+      ],
+      type: 'radio',
+    },
+    {
+      admin: {
+        condition: (_, siblingData) => siblingData.link === 'yes',
+      },
       localized: true,
       name: 'linkText',
       required: true,

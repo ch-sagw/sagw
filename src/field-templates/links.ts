@@ -3,6 +3,12 @@ import { Field } from 'payload';
 export const fieldsLinkInternal: Field[] = [
   {
     localized: true,
+    name: 'description',
+    required: false,
+    type: 'text',
+  },
+  {
+    localized: true,
     name: 'linkText',
     required: true,
     type: 'text',
@@ -22,6 +28,12 @@ export const fieldsLinkInternal: Field[] = [
 ];
 
 export const fieldsLinkExternal: Field[] = [
+  {
+    localized: true,
+    name: 'description',
+    required: false,
+    type: 'text',
+  },
   {
     localized: true,
     name: 'externalLinkText',

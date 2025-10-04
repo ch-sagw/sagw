@@ -20,7 +20,7 @@ const fieldsNetworkItem: Field[] = [
   },
   {
     name: 'foundingYear',
-    required: true,
+    required: false,
     type: 'number',
   },
   {
@@ -70,7 +70,7 @@ export const NetworkTeasersBlock: Block = {
         {
           localized: true,
           name: 'foundingYearText',
-          required: true,
+          required: false,
           type: 'text',
         },
         {

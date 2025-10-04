@@ -52,6 +52,7 @@ Payload Config:
 - add descriptions to collections: what is this collection for?
 - care about redirects: check redirects-plugin and decide if we use it or create our own
 - limit blocks on all pages
+- add admin ui images for blocks: generic teaser, footnotes
 
 Multitenant: (working with seed data)
 --------

@@ -8,6 +8,24 @@ export const PublicationsOverviewBlock: Block = {
   },
   fields: [
     {
+      localized: true,
+      name: 'title',
+      required: true,
+      type: 'text',
+    },
+    {
+      localized: true,
+      name: 'filterTitleAllTopics',
+      required: true,
+      type: 'text',
+    },
+    {
+      localized: true,
+      name: 'filterTitleAllPublications',
+      required: true,
+      type: 'text',
+    },
+    {
       admin: {
         hidden: true,
       },

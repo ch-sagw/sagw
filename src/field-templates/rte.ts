@@ -95,6 +95,26 @@ const rte2Editor = lexicalEditor({
     NonBreakingSpaceFeature(),
   ],
 });
+
+const rte3Editor = lexicalEditor({
+  features: [
+    FixedToolbarFeature(),
+    BoldFeature(),
+    ItalicFeature(),
+    UnderlineFeature(),
+    StrikethroughFeature(),
+    SubscriptFeature(),
+    SuperscriptFeature(),
+    ParagraphFeature(),
+    UnorderedListFeature(),
+    OrderedListFeature(),
+    LinkFeature({
+      enabledCollections: linkableSlugs.map((slug) => slug.slug),
+      maxDepth: 1,
+    }),
+    NonBreakingSpaceFeature(),
+  ],
+});
 /* eslint-enable new-cap */
 
 interface InterfaceRteInputType {
@@ -151,6 +171,15 @@ export const rte2 = ({
 }: InterfaceRteInputType): GroupField => rte({
   editor: rte2Editor,
   interfaceName: 'InterfaceRte2',
+  name,
+  required,
+});
+
+export const rte3 = ({
+  name, required,
+}: InterfaceRteInputType): GroupField => rte({
+  editor: rte3Editor,
+  interfaceName: 'InterfaceRte3',
   name,
   required,
 });
