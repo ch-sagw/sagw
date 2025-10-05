@@ -98,6 +98,8 @@ export interface Config {
   collections: {
     homePage: HomePage;
     errorPage: ErrorPage;
+    dataPrivacyPage: DataPrivacyPage;
+    impressumPage: ImpressumPage;
     magazineDetailPage: MagazineDetailPage;
     overviewPage: OverviewPage;
     detailPage: DetailPage;
@@ -137,6 +139,8 @@ export interface Config {
   collectionsSelect: {
     homePage: HomePageSelect<false> | HomePageSelect<true>;
     errorPage: ErrorPageSelect<false> | ErrorPageSelect<true>;
+    dataPrivacyPage: DataPrivacyPageSelect<false> | DataPrivacyPageSelect<true>;
+    impressumPage: ImpressumPageSelect<false> | ImpressumPageSelect<true>;
     magazineDetailPage: MagazineDetailPageSelect<false> | MagazineDetailPageSelect<true>;
     overviewPage: OverviewPageSelect<false> | OverviewPageSelect<true>;
     detailPage: DetailPageSelect<false> | DetailPageSelect<true>;
@@ -1095,6 +1099,128 @@ export interface ErrorPage {
     title: string;
     description: string;
   };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dataPrivacyPage".
+ */
+export interface DataPrivacyPage {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  hero: {
+    title: InterfaceRte1;
+    lead?: string | null;
+    colorMode: 'white' | 'dark' | 'light';
+  };
+  content?:
+    | (
+        | InterfaceTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceImageTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
+      )[]
+    | null;
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "impressumPage".
+ */
+export interface ImpressumPage {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  hero: {
+    title: InterfaceRte1;
+    lead?: string | null;
+    colorMode: 'white' | 'dark' | 'light';
+  };
+  content?:
+    | (
+        | InterfaceTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceImageTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
+      )[]
+    | null;
   meta?: {
     seo?: {
       index?: boolean | null;
@@ -2150,6 +2276,14 @@ export interface PayloadLockedDocument {
         value: string | ErrorPage;
       } | null)
     | ({
+        relationTo: 'dataPrivacyPage';
+        value: string | DataPrivacyPage;
+      } | null)
+    | ({
+        relationTo: 'impressumPage';
+        value: string | ImpressumPage;
+      } | null)
+    | ({
         relationTo: 'magazineDetailPage';
         value: string | MagazineDetailPage;
       } | null)
@@ -2834,6 +2968,132 @@ export interface ErrorPageSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dataPrivacyPage_select".
+ */
+export interface DataPrivacyPageSelect<T extends boolean = true> {
+  tenant?: T;
+  isLinkable?: T;
+  adminTitle?: T;
+  hero?:
+    | T
+    | {
+        title?: T | InterfaceRte1Select<T>;
+        lead?: T;
+        colorMode?: T;
+      };
+  content?:
+    | T
+    | {
+        textBlock?: T | InterfaceTextBlockSelect<T>;
+        linksBlock?: T | InterfaceLinksBlockSelect<T>;
+        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        videoBlock?: T | InterfaceVideoBlockSelect<T>;
+        accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
+        formBlock?: T | InterfaceFormBlockSelect<T>;
+        ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
+        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+        homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
+        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
+        magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
+        publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
+        eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
+        peopleOverviewBlock?: T | InterfacePeopleOverviewBlockSelect<T>;
+        newsOverviewBlock?: T | InterfaceNewsOverviewBlockSelect<T>;
+        nationalDictionariesOverviewBlock?: T | InterfaceNationalDictionariesOverviewBlockSelect<T>;
+        institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
+        projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
+        eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
+        magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
+        newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
+        publicationsTeasersBlock?: T | InterfacePublicationsTeasersBlockSelect<T>;
+        projectsTeasersBlock?: T | InterfaceProjectTeasersBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "impressumPage_select".
+ */
+export interface ImpressumPageSelect<T extends boolean = true> {
+  tenant?: T;
+  isLinkable?: T;
+  adminTitle?: T;
+  hero?:
+    | T
+    | {
+        title?: T | InterfaceRte1Select<T>;
+        lead?: T;
+        colorMode?: T;
+      };
+  content?:
+    | T
+    | {
+        textBlock?: T | InterfaceTextBlockSelect<T>;
+        linksBlock?: T | InterfaceLinksBlockSelect<T>;
+        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        videoBlock?: T | InterfaceVideoBlockSelect<T>;
+        accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
+        formBlock?: T | InterfaceFormBlockSelect<T>;
+        ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
+        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+        homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
+        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
+        magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
+        publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
+        eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
+        peopleOverviewBlock?: T | InterfacePeopleOverviewBlockSelect<T>;
+        newsOverviewBlock?: T | InterfaceNewsOverviewBlockSelect<T>;
+        nationalDictionariesOverviewBlock?: T | InterfaceNationalDictionariesOverviewBlockSelect<T>;
+        institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
+        projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
+        eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
+        magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
+        newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
+        publicationsTeasersBlock?: T | InterfacePublicationsTeasersBlockSelect<T>;
+        projectsTeasersBlock?: T | InterfaceProjectTeasersBlockSelect<T>;
       };
   meta?:
     | T

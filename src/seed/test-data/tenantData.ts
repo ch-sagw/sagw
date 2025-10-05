@@ -680,6 +680,52 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
+  // create impressum page
+  await payload.create({
+    collection: 'impressumPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'textBlock',
+          text: {
+            content: simpleRteConfig(`some impressum content for ${tenant}`),
+          },
+        },
+      ],
+      hero: {
+        colorMode: 'dark',
+        title: {
+          content: simpleRteConfig(`Impressum page ${tenant}`),
+        },
+      },
+      tenant: tenantId,
+    },
+  });
+
+  // create data privacy page
+  await payload.create({
+    collection: 'dataPrivacyPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'textBlock',
+          text: {
+            content: simpleRteConfig(`some data privacy content for ${tenant}`),
+          },
+        },
+      ],
+      hero: {
+        colorMode: 'dark',
+        title: {
+          content: simpleRteConfig(`Data privacy page ${tenant}`),
+        },
+      },
+      tenant: tenantId,
+    },
+  });
+
   // create detail page
   await payload.create({
     collection: 'detailPage',

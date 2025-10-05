@@ -3,6 +3,8 @@
 
 import { HomePage } from '@/collections/Pages/Singletons/Home';
 import { ErrorPage } from '@/collections/Pages/Singletons/Error';
+import { DataPrivacyPage } from '@/collections/Pages/Singletons/DataPrivacy';
+import { ImpressumPage } from '@/collections/Pages/Singletons/Impressum';
 import { MagazineDetailPage } from '@/collections/Pages/Sets/MagazineDetail';
 import { OverviewPage } from '@/collections/Pages/Sets/Overview';
 import { DetailPage } from '@/collections/Pages/Sets/Detail';
@@ -16,6 +18,8 @@ import { ProjectDetailPage } from '@/collections/Pages/Sets/ProjectDetail';
 export default [
   HomePage,
   ErrorPage,
+  DataPrivacyPage,
+  ImpressumPage,
   MagazineDetailPage,
   OverviewPage,
   DetailPage,

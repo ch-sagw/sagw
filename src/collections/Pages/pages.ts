@@ -26,6 +26,22 @@ export const singletonSlugs: InterfaceSlug[] = [
     linkable: false,
     slug: 'errorPage',
   },
+  {
+    displayName: 'Data Privacy Page',
+    exportName: 'DataPrivacyPage',
+    fileName: 'DataPrivacy',
+    folderName: 'Singletons',
+    linkable: false,
+    slug: 'dataPrivacyPage',
+  },
+  {
+    displayName: 'Impressum Page',
+    exportName: 'ImpressumPage',
+    fileName: 'Impressum',
+    folderName: 'Singletons',
+    linkable: false,
+    slug: 'impressumPage',
+  },
 ];
 
 const setsSlugs: InterfaceSlug[] = [
