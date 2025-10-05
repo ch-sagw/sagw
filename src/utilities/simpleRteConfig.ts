@@ -1,20 +1,6 @@
-interface InterfaceRteNode {
-  [k: string]: unknown;
-  root: {
-    type: string;
-    children: {
-      [k: string]: unknown;
-      type: string;
-      version: number;
-    }[];
-    direction: 'ltr' | 'rtl' | null;
-    format: '' | 'left' | 'start' | 'center' | 'right' | 'end' | 'justify';
-    indent: number;
-    version: number;
-  };
-}
+import { InterfaceRte } from '@/components/base/types/rte';
 
-export const simpleRteConfig = (text: string): InterfaceRteNode => ({
+export const simpleRteConfig = (text: string): InterfaceRte => ({
   root: {
     children: [
       {
@@ -33,6 +19,7 @@ export const simpleRteConfig = (text: string): InterfaceRteNode => ({
         format: '',
         indent: 0,
         textFormat: 0,
+        textStyle: '',
         type: 'paragraph',
         version: 1,
       },

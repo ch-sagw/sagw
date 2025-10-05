@@ -32,48 +32,28 @@ export default meta;
 
 const items = [
   {
-    accordionContent: {
-      content: sampleRte2,
-    },
-    accordionTitle: {
-      content: simpleRteConfig('Title 1'),
-    },
+    accordionContent: sampleRte2,
+    accordionTitle: simpleRteConfig('Title 1'),
     id: '1',
   },
   {
-    accordionContent: {
-      content: sampleRtePrivacyCheckbox,
-    },
-    accordionTitle: {
-      content: simpleRteConfig('Title 2'),
-    },
+    accordionContent: sampleRtePrivacyCheckbox,
+    accordionTitle: simpleRteConfig('Title 2'),
     id: '2',
   },
   {
-    accordionContent: {
-      content: sampleRte2,
-    },
-    accordionTitle: {
-      content: simpleRteConfig('Title 3'),
-    },
+    accordionContent: sampleRte2,
+    accordionTitle: simpleRteConfig('Title 3'),
     id: '3',
   },
   {
-    accordionContent: {
-      content: sampleRtePrivacyCheckbox,
-    },
-    accordionTitle: {
-      content: simpleRteConfig('Title 4'),
-    },
+    accordionContent: sampleRtePrivacyCheckbox,
+    accordionTitle: simpleRteConfig('Title 4'),
     id: '4',
   },
   {
-    accordionContent: {
-      content: sampleRte2,
-    },
-    accordionTitle: {
-      content: simpleRteConfig('Title 5'),
-    },
+    accordionContent: sampleRte2,
+    accordionTitle: simpleRteConfig('Title 5'),
     id: '5',
   },
 ];
@@ -83,9 +63,7 @@ export const BackgroundWhite: StrictStory = {
     accordions: items,
     blockType: 'accordionBlock',
     colorMode: 'white',
-    title: {
-      content: simpleRteConfig('Accordion title'),
-    },
+    title: simpleRteConfig('Accordion title'),
     titleLevel: '4',
   },
 };
@@ -95,9 +73,7 @@ export const BackgroundLight: StrictStory = {
     accordions: items,
     blockType: 'accordionBlock',
     colorMode: 'light',
-    title: {
-      content: simpleRteConfig('Accordion title'),
-    },
+    title: simpleRteConfig('Accordion title'),
     titleLevel: '4',
   },
 };
@@ -107,9 +83,7 @@ export const BackgroundDark: StrictStory = {
     accordions: items,
     blockType: 'accordionBlock',
     colorMode: 'dark',
-    title: {
-      content: simpleRteConfig('Accordion title'),
-    },
+    title: simpleRteConfig('Accordion title'),
     titleLevel: '4',
   },
 };

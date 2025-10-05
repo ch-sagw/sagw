@@ -41,9 +41,7 @@ export const SampleNotification: StrictStory = {
   args: {
     blockName: 'foo',
     blockType: 'notificationBlock',
-    text: {
-      content: sampleRte2,
-    },
+    text: sampleRte2,
   },
 };
 

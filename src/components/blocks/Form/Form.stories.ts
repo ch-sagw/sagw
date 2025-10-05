@@ -62,9 +62,7 @@ const defaultFormConfig: FormProps = {
         fieldError: 'checkbox error',
         fieldWidth: 'half',
         id: '69c6e2b6833c54485eb1b84c',
-        label: {
-          content: sampleRtePrivacyCheckbox,
-        },
+        label: sampleRtePrivacyCheckbox,
         name: 'checkbox1',
         required: true,
       },
@@ -73,9 +71,7 @@ const defaultFormConfig: FormProps = {
         fieldError: 'checkbox error',
         fieldWidth: 'half',
         id: '67c6e2b6833c54485eb1b84c',
-        label: {
-          content: sampleRtePrivacyCheckbox,
-        },
+        label: sampleRtePrivacyCheckbox,
         name: 'checkbox2',
         required: false,
       },
