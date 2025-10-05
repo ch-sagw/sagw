@@ -68,6 +68,7 @@
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.009rem;
   line-height: 1.1;
+  margin-block-start: 0;
 }
 
 @mixin title-heading-1 {

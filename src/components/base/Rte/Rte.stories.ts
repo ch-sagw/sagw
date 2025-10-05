@@ -18,7 +18,9 @@ const meta: Meta<typeof Rte> = {
   args: {},
   component: Rte,
   decorators: [defaultDecorator],
-  parameters: {/* layout: 'centered', */ },
+  parameters: {
+    layout: 'fullscreen',
+  },
   tags: [
     'autodocs',
     'visual:check',

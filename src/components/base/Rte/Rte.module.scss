@@ -1,7 +1,11 @@
-// just temporary, some definitions, not to get any linting errors
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
 
 .rte {
-  color: black;
+  color: var(--text-primary);
+  text-wrap: pretty;
 
   // rte configs
   &.rte1 {
@@ -10,8 +14,82 @@
   }
 
   &.rte2 {
-    // border: 1px dashed black;
-    color: inherit;
+    h2 {
+      @include title-heading-3;
+
+      margin-block-end: px-to-rem(var(--section-inside-s));
+    }
+
+    h3 {
+      @include title-heading-4;
+
+      margin-block-end: px-to-rem(var(--inside-elements-l));
+
+      &:is(h2 + h3) {
+        @include mq($from: large) {
+          background: deeppink;
+        }
+      }
+
+      &:not(h2 + h3, :first-child) {
+        margin-block-start: px-to-rem(var(--text-block-top));
+
+        @include mq($from: large) {
+          margin-block-start: px-to-rem(calc(var(--text-block-top) / 2));
+        }
+      }
+    }
+
+    h4 {
+      @include title-heading-5;
+
+      & + ul {
+        margin-block-start: px-to-rem(var(--spacing-s), true);
+      }
+    }
+
+    h5 {
+      font-weight: bold;
+    }
+
+    p {
+      @include mq($to: large) {
+        margin-block: px-to-rem(var(--spacing-l));
+      }
+
+      &:first-of-type {
+        margin-block-start: 0;
+      }
+
+      & + h4 {
+        margin-block-start: px-to-rem(var(--inside-elements-m));
+      }
+    }
+
+    // TODO
+    // marker for li in ul? Figma example just copy paste or on purpose?
+    ul,
+    ol {
+      padding-inline-start: px-to-rem(40);
+
+      li {
+        margin-block: px-to-rem(var(--spacing-2xs));
+      }
+    }
+
+    a {
+      color: var(--interaction-primary);
+      text-decoration: none;
+      text-decoration-line: underline;
+      text-underline-offset: px-to-rem(var(--spacing-2xs));
+      text-decoration-thickness: px-to-rem(var(--border-width-l));
+      text-decoration-color: currentcolor;
+    }
+
+    ::selection {
+      background: var(--interaction-primary);
+      color: var(--text-primary-inverted);
+    }
   }
 
   a {
@@ -28,7 +106,38 @@
   }
 
   &.magazineDetailText {
-    font-size: 1rem;
+    --heading-alignment-compensation: 5;
+
+    @include body-text-m;
+
+    // Introducing grid columns and sticky
+    @include mq($from: large) {
+      display: grid;
+      grid-template-columns: [sticky-title] 1fr [content] 3fr;
+      column-gap: px-to-rem(var(--grid-gutter));
+
+      h2:first-child,
+      h3:first-child {
+        position: sticky;
+
+        // TODO set --sticky-offset-top dynamically
+        top: px-to-rem(var(--sticky-offset-top, 0));
+        scroll-margin-top: px-to-rem(var(--sticky-offset-top, 0));
+        padding-inline-end: px-to-rem(var(--section-inside-m));
+        background: var(--background-page);
+        margin-block-end: -100%;
+      }
+
+      // Vertically center the first line of the
+      // headings next to each other
+      h3:nth-child(2) {
+        margin-block-start: px-to-rem(var(--heading-alignment-compensation));
+      }
+
+      > :not(:first-child) {
+        grid-column: content;
+      }
+    }
   }
 
   &.notification {
