@@ -57,7 +57,7 @@ export const Accordion = ({
       <TitleElem className={styles.heading}>
         <Rte
           rteConfig='rte1'
-          text={title.content}
+          text={title}
         />
       </TitleElem>
 
@@ -87,7 +87,7 @@ export const Accordion = ({
                   <span className={styles.buttonText}>
                     <Rte
                       rteConfig='rte1'
-                      text={item.accordionTitle.content}
+                      text={item.accordionTitle}
                     />
                   </span>
                   <Icon
@@ -107,7 +107,7 @@ export const Accordion = ({
               >
                 <Rte
                   className={styles.rte}
-                  text={item.accordionContent.content}
+                  text={item.accordionContent}
                   rteConfig='rte2'
                 />
               </section>

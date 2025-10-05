@@ -28,7 +28,7 @@ export const textareaBlock = (): Block => ({
     },
     formFieldError,
   ],
-  interfaceName: 'InterfaceTextTextarea',
+  interfaceName: 'InterfaceTextareaField',
   labels: {
     plural: 'Textarea',
     singular: 'Textarea',

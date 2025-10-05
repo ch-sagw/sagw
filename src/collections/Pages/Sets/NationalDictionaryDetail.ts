@@ -59,7 +59,7 @@ export const NationalDictionaryDetailPage: CollectionConfig = {
             },
 
             // Hero
-            fieldsHero(false),
+            fieldsHero,
 
             // Content Blocks
             {

@@ -28,7 +28,7 @@ export const DataPrivacyPage: CollectionConfig = {
         // Content Tab
         {
           fields: [
-            fieldsHero(false),
+            fieldsHero,
 
             // Content Blocks
             {

@@ -23,7 +23,7 @@ const fieldsForDetailPage: Field[] = [
     },
     fields: [
       // Hero
-      fieldsHero(false),
+      fieldsHero,
 
       // Content Blocks
       {

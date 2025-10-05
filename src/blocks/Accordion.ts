@@ -56,7 +56,7 @@ export const AccordionBlock: Block = {
       ],
       type: 'row',
     },
-    ...fieldsColorMode({
+    fieldsColorMode({
       dark: true,
       light: true,
       white: true,

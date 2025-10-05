@@ -59,7 +59,7 @@ export const ProjectDetailPage: CollectionConfig = {
             },
 
             // Hero
-            fieldsHero(false),
+            fieldsHero,
 
             // Content Blocks
             {

@@ -42,7 +42,7 @@ export const DetailPage: CollectionConfig = {
           fields: [
 
             // Hero
-            fieldsHero(false),
+            fieldsHero,
 
             // Content Blocks
             {

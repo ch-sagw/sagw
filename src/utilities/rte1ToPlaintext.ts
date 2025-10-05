@@ -1,7 +1,7 @@
-import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical';
+import { InterfaceRte } from '@/components/base/types/rte';
 import { convertLexicalToPlaintext } from '@payloadcms/richtext-lexical/plaintext';
 
-export const rte1ToPlaintext = (rte1Content: SerializedEditorState): string => {
+export const rte1ToPlaintext = (rte1Content: InterfaceRte): string => {
 
   const transformedData = convertLexicalToPlaintext({
     data: rte1Content,

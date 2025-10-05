@@ -3,6 +3,7 @@ import type {
   DefaultNodeTypes,
   SerializedLinkNode,
 } from '@payloadcms/richtext-lexical';
+import type { InterfaceRte } from '@/components/base/types/rte';
 import {
   type JSXConvertersFunction,
   LinkJSXConverter as linkJSXConverter,
@@ -10,9 +11,6 @@ import {
 } from '@payloadcms/richtext-lexical/react';
 import { cva } from 'cva';
 import styles from '@/components/base/Rte/Rte.module.scss';
-import {
-  InterfaceRte1, InterfaceRte2,
-} from '@/payload-types';
 import { softHyphenJSXConverter } from '@/components/admin/rte/features/SoftHyphen/SoftHyphenNode';
 
 const internalDocToHref = ({
@@ -40,7 +38,7 @@ const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({
 });
 
 export type InterfaceRtePropTypes = {
-  text: InterfaceRte1['content'] | InterfaceRte2['content'];
+  text: InterfaceRte;
   rteConfig: 'rte1' | 'rte2';
   context?: 'notification' | 'heroLead' | 'magazineDetailLead' | 'magazineDetailText',
   className?: string;

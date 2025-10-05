@@ -28,7 +28,7 @@ export const ImpressumPage: CollectionConfig = {
         // Content Tab
         {
           fields: [
-            fieldsHero(false),
+            fieldsHero,
 
             // Content Blocks
             {

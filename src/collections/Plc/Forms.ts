@@ -38,7 +38,7 @@ export const Forms: CollectionConfig = {
     },
 
     // color mode
-    ...fieldsColorMode({
+    fieldsColorMode({
       dark: true,
       light: true,
       white: true,

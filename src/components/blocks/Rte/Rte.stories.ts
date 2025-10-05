@@ -29,9 +29,7 @@ export default meta;
 
 export const RteStory: StrictStory = {
   args: {
-    blockType: 'textBlock',
-    text: {
-      content: sampleRte2,
-    },
+    // blockType: 'textBlock',
+    text: sampleRte2,
   },
 };

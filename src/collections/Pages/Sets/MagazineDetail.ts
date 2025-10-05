@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { fieldsHero } from '@/field-templates/hero';
+import { fieldsHeroMagazineDetail } from '@/field-templates/hero';
 import { hookAdminTitle } from '@/hooks-payload/adminTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
@@ -60,23 +60,7 @@ export const MagazineDetailPage: CollectionConfig = {
             },
 
             // Hero
-            fieldsHero(
-              false,
-              [
-                {
-                  localized: true,
-                  name: 'author',
-                  required: true,
-                  type: 'text',
-                },
-                {
-                  localized: true,
-                  name: 'date',
-                  required: true,
-                  type: 'date',
-                },
-              ],
-            ),
+            fieldsHeroMagazineDetail,
 
             // Content Blocks
             {

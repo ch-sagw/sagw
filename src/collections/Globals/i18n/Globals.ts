@@ -70,7 +70,6 @@ export const I18nGlobals: CollectionConfig = {
               },
               fields: [
                 rte2({
-                  hideLabel: true,
                   name: 'dataPrivacyCheckboxText',
                   required: true,
                 }),

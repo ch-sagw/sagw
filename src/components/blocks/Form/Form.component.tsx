@@ -167,7 +167,7 @@ export const FormComponent = ({
                   })}
                   value='on'
                   name={field.name}
-                  label={field.label.content}
+                  label={field.label}
                   checked={checked}
                   errorText={errors[field.name]?.join(', ') || ''}
                   colorMode={form.colorMode}

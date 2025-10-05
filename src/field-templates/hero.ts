@@ -3,36 +3,101 @@ import {
 } from 'payload';
 import { rte1 } from '@/field-templates/rte';
 import { fieldsColorMode } from '@/field-templates/colorMode';
+import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
 
-export const fieldsHero = (hideColorMode: boolean, additionalFields?: Field[]): GroupField => {
+const colorMode = fieldsColorMode({
+  dark: true,
+  light: true,
+  white: true,
+});
 
-  let colorMode: Field[] = [];
+const titleField = rte1({
+  name: 'title',
+  required: true,
+});
 
-  if (!hideColorMode) {
-    colorMode = fieldsColorMode({
-      dark: true,
-      light: true,
-      white: true,
-    });
-  }
+const leadField: Field = {
+  localized: true,
+  name: 'lead',
+  required: false,
+  type: 'text',
+};
 
-  return {
-    fields: [
-      rte1({
-        name: 'title',
-        required: true,
-      }),
-      {
-        localized: true,
-        name: 'lead',
-        required: false,
-        type: 'text',
-      },
-      ...colorMode,
-      ...additionalFields || [],
-    ],
-    label: 'Hero',
-    name: 'hero',
-    type: 'group',
-  };
+const generalProps: {
+  label: string;
+  name: string;
+  type: 'group';
+} = {
+  label: 'Hero',
+  name: 'hero',
+  type: 'group',
+};
+
+export const fieldsHero: GroupField = {
+  fields: [
+    titleField,
+    leadField,
+    colorMode,
+  ],
+  interfaceName: 'InterfaceHeroField',
+  ...generalProps,
+};
+
+export const fieldsHeroHome: GroupField = {
+  fields: [
+    titleField,
+    leadField,
+    {
+      // TODO: enable for SAGW only
+      defaultValue: true,
+      name: 'animated',
+      type: 'checkbox',
+    },
+    {
+      localized: true,
+      name: 'sideTitle',
+      required: true,
+      type: 'text',
+    },
+    fieldsLinkInternalWithToggle,
+  ],
+  interfaceName: 'InterfaceHeroFieldHome',
+  ...generalProps,
+};
+
+export const fieldsHeroMagazineDetail: GroupField = {
+  fields: [
+    titleField,
+    leadField,
+    colorMode,
+    {
+      localized: true,
+      name: 'author',
+      required: true,
+      type: 'text',
+    },
+    {
+      localized: true,
+      name: 'date',
+      required: true,
+      type: 'date',
+    },
+  ],
+  interfaceName: 'InterfaceHeroFieldMagazineDetail',
+  ...generalProps,
+};
+
+export const fieldsHeroNewsDetail: GroupField = {
+  fields: [
+    titleField,
+    leadField,
+    colorMode,
+    {
+      name: 'date',
+      required: true,
+      type: 'date',
+    },
+  ],
+  interfaceName: 'InterfaceHeroFieldNewsDetail',
+  ...generalProps,
 };

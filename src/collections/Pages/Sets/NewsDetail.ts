@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { fieldsHero } from '@/field-templates/hero';
+import { fieldsHeroNewsDetail } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import { hookAdminTitle } from '@/hooks-payload/adminTitle';
 import {
@@ -57,16 +57,7 @@ export const NewsDetailPage: CollectionConfig = {
             },
 
             // Hero
-            fieldsHero(
-              false,
-              [
-                {
-                  name: 'date',
-                  required: true,
-                  type: 'date',
-                },
-              ],
-            ),
+            fieldsHeroNewsDetail,
 
             {
               name: 'project',

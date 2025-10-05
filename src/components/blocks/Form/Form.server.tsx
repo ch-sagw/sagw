@@ -96,9 +96,7 @@ export const FormServer = async ({
       blockType: 'checkboxBlock',
       fieldError: i18nForm.dataPrivacyCheckbox.errorMessage,
       fieldWidth: 'full',
-      label: {
-        content: i18nForm.dataPrivacyCheckbox.dataPrivacyCheckboxText.content,
-      },
+      label: i18nForm.dataPrivacyCheckbox.dataPrivacyCheckboxText,
       name: `checkbox-${renderForm.id}`,
       required: true,
     });

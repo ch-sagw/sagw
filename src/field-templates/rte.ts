@@ -16,7 +16,8 @@ import {
 import { SoftHyphenFeature } from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.server';
 import { NonBreakingSpaceFeature } from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpace.server';
 import {
-  FieldHook, GroupField,
+  Field,
+  FieldHook,
 } from 'payload';
 import { JSDOM } from 'jsdom';
 import domPurify from 'dompurify';
@@ -120,75 +121,51 @@ const rte3Editor = lexicalEditor({
 interface InterfaceRteInputType {
   name: string;
   required: boolean;
-  hideLabel?: boolean;
 }
 
 interface InterfaceRteInputTypeInternal {
   name: string;
   required: boolean;
-  interfaceName: string;
   editor: LexicalRichTextAdapterProvider;
-  hideLabel?: boolean;
 }
 
 const rte = ({
-  name, required, interfaceName, editor, hideLabel,
-}: InterfaceRteInputTypeInternal): GroupField => ({
-
-  admin: {
-    hideGutter: true,
+  name, required, editor,
+}: InterfaceRteInputTypeInternal): Field => ({
+  editor,
+  hooks: {
+    beforeValidate: [
+      ({
+        value,
+      }): FieldHook => sanitizeRichTextValue(value),
+    ],
   },
-  // we want to have Rte in a group, so that we can automatically generate an
-  // interface for the rte content.
-
-  fields: [
-    {
-      editor,
-      hooks: {
-        beforeValidate: [
-          ({
-            value,
-          }): FieldHook => sanitizeRichTextValue(value),
-        ],
-      },
-      localized: true,
-      name: 'content',
-      required,
-      type: 'richText',
-    },
-  ],
-  interfaceName,
-  label: hideLabel
-    ? ''
-    : undefined,
+  localized: true,
   name,
-  type: 'group',
+  required,
+  type: 'richText',
 });
 
 export const rte1 = ({
   name, required,
-}: InterfaceRteInputType): GroupField => rte({
+}: InterfaceRteInputType): Field => rte({
   editor: rte1Editor,
-  interfaceName: 'InterfaceRte1',
   name,
   required,
 });
 
 export const rte2 = ({
-  name, required, hideLabel,
-}: InterfaceRteInputType): GroupField => rte({
+  name, required,
+}: InterfaceRteInputType): Field => rte({
   editor: rte2Editor,
-  hideLabel,
-  interfaceName: 'InterfaceRte2',
   name,
   required,
 });
 
 export const rte3 = ({
   name, required,
-}: InterfaceRteInputType): GroupField => rte({
+}: InterfaceRteInputType): Field => rte({
   editor: rte3Editor,
-  interfaceName: 'InterfaceRte3',
   name,
   required,
 });

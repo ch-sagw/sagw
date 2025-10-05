@@ -1,6 +1,6 @@
-import { SerializedEditorState } from 'node_modules/lexical/LexicalEditorState';
 import validator from 'validator';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
+import { Form as InterfaceForm } from '@/payload-types';
 
 export const formFieldNameFromLabel = ({
   siblingData,
@@ -9,23 +9,25 @@ export const formFieldNameFromLabel = ({
     return '';
   }
 
-  let {
-    label,
-  } = siblingData;
+  const formElement: NonNullable<NonNullable<InterfaceForm['fields']>>[number] = siblingData;
 
-  if (siblingData?.blockType === 'checkboxBlock') {
-    const lexical: SerializedEditorState = siblingData?.label.content;
+  let labelText;
 
-    label = rte1ToPlaintext(lexical);
+  if (formElement?.blockType === 'checkboxBlock') {
+    const lexical = formElement?.label;
+
+    labelText = rte1ToPlaintext(lexical);
+  } else {
+    labelText = formElement.label;
   }
 
   // Lowercase, trim, replace spaces with dashes
-  const slug = label.toLowerCase()
+  const name = labelText.toLowerCase()
     .trim()
     .replace(/\s+/gu, '-');
 
   // Whitelist only letters, numbers, dashes, underscores
-  const whitelistedSlug = validator.whitelist(slug, 'a-z0-9-_');
+  const whitelistedName = validator.whitelist(name, 'a-z0-9-_');
 
-  return whitelistedSlug;
+  return whitelistedName;
 };

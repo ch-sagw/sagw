@@ -211,17 +211,7 @@ export interface UserAuthOperations {
  * via the `definition` "InterfaceTextBlock".
  */
 export interface InterfaceTextBlock {
-  text: InterfaceRte2;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'textBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceRte2".
- */
-export interface InterfaceRte2 {
-  content: {
+  text: {
     root: {
       type: string;
       children: {
@@ -236,6 +226,9 @@ export interface InterfaceRte2 {
     };
     [k: string]: unknown;
   };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'textBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -446,24 +439,7 @@ export interface Video {
  * via the `definition` "InterfaceAccordionBlock".
  */
 export interface InterfaceAccordionBlock {
-  title: InterfaceRte1;
-  titleLevel: '2' | '3' | '4' | '5';
-  colorMode: 'white' | 'dark' | 'light';
-  accordions: {
-    accordionTitle: InterfaceRte1;
-    accordionContent: InterfaceRte2;
-    id?: string | null;
-  }[];
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'accordionBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceRte1".
- */
-export interface InterfaceRte1 {
-  content: {
+  title: {
     root: {
       type: string;
       children: {
@@ -478,6 +454,44 @@ export interface InterfaceRte1 {
     };
     [k: string]: unknown;
   };
+  titleLevel: '2' | '3' | '4' | '5';
+  colorMode: 'white' | 'dark' | 'light';
+  accordions: {
+    accordionTitle: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    accordionContent: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accordionBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -535,7 +549,7 @@ export interface Form {
       };
     };
   };
-  fields?: (InterfaceCheckboxField | InterfaceEmailField | InterfaceTextField | InterfaceTextTextarea)[] | null;
+  fields?: (InterfaceCheckboxField | InterfaceEmailField | InterfaceTextField | InterfaceTextareaField)[] | null;
   newsletterFields?: {
     email: {
       label: string;
@@ -566,7 +580,21 @@ export interface Form {
  */
 export interface InterfaceCheckboxField {
   name: string;
-  label: InterfaceRte2;
+  label: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
   fieldError?: string | null;
@@ -606,9 +634,9 @@ export interface InterfaceTextField {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceTextTextarea".
+ * via the `definition` "InterfaceTextareaField".
  */
-export interface InterfaceTextTextarea {
+export interface InterfaceTextareaField {
   name: string;
   label: string;
   placeholder: string;
@@ -826,38 +854,7 @@ export interface InterfaceNotificationBlock {
    * If disabled, the notification will not be shown.
    */
   show?: boolean | null;
-  text: InterfaceRte2;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'notificationBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceBibliographicReferenceBlock".
- */
-export interface InterfaceBibliographicReferenceBlock {
-  text: InterfaceRte2;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'bibliographicReferenceBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceFootnotesBlock".
- */
-export interface InterfaceFootnotesBlock {
-  title: string;
-  text: InterfaceRte3;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'footnoteBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceRte3".
- */
-export interface InterfaceRte3 {
-  content: {
+  text: {
     root: {
       type: string;
       children: {
@@ -872,6 +869,58 @@ export interface InterfaceRte3 {
     };
     [k: string]: unknown;
   };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'notificationBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceBibliographicReferenceBlock".
+ */
+export interface InterfaceBibliographicReferenceBlock {
+  text: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'bibliographicReferenceBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceFootnotesBlock".
+ */
+export interface InterfaceFootnotesBlock {
+  title: string;
+  text: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'footnoteBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1048,20 +1097,7 @@ export interface HomePage {
   tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    animated?: boolean | null;
-    sideTitle: string;
-    optionalLink?: {
-      includeLink?: boolean | null;
-      link?: {
-        description?: string | null;
-        linkText: string;
-        internalLink: string;
-      };
-    };
-  };
+  hero: InterfaceHeroFieldHome;
   content?:
     | (
         | InterfaceTextBlock
@@ -1108,6 +1144,38 @@ export interface HomePage {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeroFieldHome".
+ */
+export interface InterfaceHeroFieldHome {
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  lead?: string | null;
+  animated?: boolean | null;
+  sideTitle: string;
+  optionalLink?: {
+    includeLink?: boolean | null;
+    link?: {
+      description?: string | null;
+      linkText: string;
+      internalLink: string;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1145,11 +1213,7 @@ export interface DataPrivacyPage {
   tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
+  hero: InterfaceHeroField;
   content?:
     | (
         | InterfaceTextBlock
@@ -1199,6 +1263,29 @@ export interface DataPrivacyPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeroField".
+ */
+export interface InterfaceHeroField {
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  lead?: string | null;
+  colorMode: 'white' | 'dark' | 'light';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "impressumPage".
  */
 export interface ImpressumPage {
@@ -1206,11 +1293,7 @@ export interface ImpressumPage {
   tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
+  hero: InterfaceHeroField;
   content?:
     | (
         | InterfaceTextBlock
@@ -1277,13 +1360,7 @@ export interface MagazineDetailPage {
      */
     teaserText: string;
   };
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-    author: string;
-    date: string;
-  };
+  hero: InterfaceHeroFieldMagazineDetail;
   content?:
     | (
         | InterfaceTextBlock
@@ -1333,6 +1410,31 @@ export interface MagazineDetailPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeroFieldMagazineDetail".
+ */
+export interface InterfaceHeroFieldMagazineDetail {
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  lead?: string | null;
+  colorMode: 'white' | 'dark' | 'light';
+  author: string;
+  date: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "overviewPage".
  */
 export interface OverviewPage {
@@ -1344,11 +1446,7 @@ export interface OverviewPage {
    * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
    */
   slug?: string | null;
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
+  hero: InterfaceHeroField;
   content?:
     | (
         | InterfaceTextBlock
@@ -1409,11 +1507,7 @@ export interface DetailPage {
    * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
    */
   slug?: string | null;
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
+  hero: InterfaceHeroField;
   content?:
     | (
         | InterfaceTextBlock
@@ -1486,11 +1580,7 @@ export interface EventDetailPage {
     dateEnd?: string | null;
   };
   showDetailPage?: ('true' | 'false') | null;
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
+  hero: InterfaceHeroField;
   content?:
     | (
         | InterfaceTextBlock
@@ -1574,12 +1664,7 @@ export interface NewsDetailPage {
      */
     teaserText: string;
   };
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-    date: string;
-  };
+  hero: InterfaceHeroFieldNewsDetail;
   project?: (string | null) | Project;
   content?:
     | (
@@ -1630,6 +1715,30 @@ export interface NewsDetailPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeroFieldNewsDetail".
+ */
+export interface InterfaceHeroFieldNewsDetail {
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  lead?: string | null;
+  colorMode: 'white' | 'dark' | 'light';
+  date: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "publicationDetailPage".
  */
 export interface PublicationDetailPage {
@@ -1652,11 +1761,7 @@ export interface PublicationDetailPage {
     type: string | PublicationType;
     project?: (string | null) | Project;
   };
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
+  hero: InterfaceHeroField;
   content?:
     | (
         | InterfaceTextBlock
@@ -1747,11 +1852,7 @@ export interface NationalDictionaryDetailPage {
      */
     text: string;
   };
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
+  hero: InterfaceHeroField;
   content?:
     | (
         | InterfaceTextBlock
@@ -1818,11 +1919,7 @@ export interface InstituteDetailPage {
      */
     text: string;
   };
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
+  hero: InterfaceHeroField;
   content?:
     | (
         | InterfaceTextBlock
@@ -1886,11 +1983,7 @@ export interface ProjectDetailPage {
      */
     text: string;
   };
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
+  hero: InterfaceHeroField;
   content?:
     | (
         | InterfaceTextBlock
@@ -2001,7 +2094,21 @@ export interface I18NGlobal {
      * You may show this text in a checkbox on forms.
      */
     dataPrivacyCheckbox: {
-      dataPrivacyCheckboxText: InterfaceRte2;
+      dataPrivacyCheckboxText: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
       errorMessage: string;
     };
   };
@@ -2019,31 +2126,101 @@ export interface Consent {
   adminTitle?: string | null;
   banner: {
     title: string;
-    text: InterfaceRte2;
+    text: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
     buttonAcceptAll: string;
     buttonCustomizeSelection: string;
     buttonDeclineAll: string;
   };
   overlay: {
     title: string;
-    text: InterfaceRte2;
+    text: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
     buttonAcceptAll: string;
     buttonAcceptSelection: string;
     necessaryCookies: {
       title: string;
-      text: InterfaceRte2;
+      text: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
       toggleLabel: string;
     };
     analyticsPerformance: {
       title: string;
-      text: InterfaceRte2;
+      text: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
       toggleLabelOff: string;
       toggleLabelOn: string;
       toggleDefault?: ('on' | 'off') | null;
     };
     externalContent: {
       title: string;
-      text: InterfaceRte2;
+      text: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
       toggleLabelOff: string;
       toggleLabelOn: string;
       toggleDefault?: ('on' | 'off') | null;
@@ -2414,26 +2591,7 @@ export interface HomePageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        animated?: T;
-        sideTitle?: T;
-        optionalLink?:
-          | T
-          | {
-              includeLink?: T;
-              link?:
-                | T
-                | {
-                    description?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-            };
-      };
+  hero?: T | InterfaceHeroFieldHomeSelect<T>;
   content?:
     | T
     | {
@@ -2484,26 +2642,34 @@ export interface HomePageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceRte1_select".
+ * via the `definition` "InterfaceHeroFieldHome_select".
  */
-export interface InterfaceRte1Select<T extends boolean = true> {
-  content?: T;
+export interface InterfaceHeroFieldHomeSelect<T extends boolean = true> {
+  title?: T;
+  lead?: T;
+  animated?: T;
+  sideTitle?: T;
+  optionalLink?:
+    | T
+    | {
+        includeLink?: T;
+        link?:
+          | T
+          | {
+              description?: T;
+              linkText?: T;
+              internalLink?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceTextBlock_select".
  */
 export interface InterfaceTextBlockSelect<T extends boolean = true> {
-  text?: T | InterfaceRte2Select<T>;
+  text?: T;
   id?: T;
   blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceRte2_select".
- */
-export interface InterfaceRte2Select<T extends boolean = true> {
-  content?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2581,14 +2747,14 @@ export interface InterfaceVideoBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceAccordionBlock_select".
  */
 export interface InterfaceAccordionBlockSelect<T extends boolean = true> {
-  title?: T | InterfaceRte1Select<T>;
+  title?: T;
   titleLevel?: T;
   colorMode?: T;
   accordions?:
     | T
     | {
-        accordionTitle?: T | InterfaceRte1Select<T>;
-        accordionContent?: T | InterfaceRte2Select<T>;
+        accordionTitle?: T;
+        accordionContent?: T;
         id?: T;
       };
   id?: T;
@@ -2743,7 +2909,7 @@ export interface InterfaceGenericTeasersBlockSelect<T extends boolean = true> {
  */
 export interface InterfaceNotificationBlockSelect<T extends boolean = true> {
   show?: T;
-  text?: T | InterfaceRte2Select<T>;
+  text?: T;
   id?: T;
   blockName?: T;
 }
@@ -2752,7 +2918,7 @@ export interface InterfaceNotificationBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceBibliographicReferenceBlock_select".
  */
 export interface InterfaceBibliographicReferenceBlockSelect<T extends boolean = true> {
-  text?: T | InterfaceRte2Select<T>;
+  text?: T;
   id?: T;
   blockName?: T;
 }
@@ -2762,16 +2928,9 @@ export interface InterfaceBibliographicReferenceBlockSelect<T extends boolean = 
  */
 export interface InterfaceFootnotesBlockSelect<T extends boolean = true> {
   title?: T;
-  text?: T | InterfaceRte3Select<T>;
+  text?: T;
   id?: T;
   blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceRte3_select".
- */
-export interface InterfaceRte3Select<T extends boolean = true> {
-  content?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2950,13 +3109,7 @@ export interface DataPrivacyPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
@@ -3007,19 +3160,22 @@ export interface DataPrivacyPageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeroField_select".
+ */
+export interface InterfaceHeroFieldSelect<T extends boolean = true> {
+  title?: T;
+  lead?: T;
+  colorMode?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "impressumPage_select".
  */
 export interface ImpressumPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
@@ -3082,15 +3238,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
     | {
         teaserText?: T;
       };
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-        author?: T;
-        date?: T;
-      };
+  hero?: T | InterfaceHeroFieldMagazineDetailSelect<T>;
   content?:
     | T
     | {
@@ -3141,6 +3289,17 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeroFieldMagazineDetail_select".
+ */
+export interface InterfaceHeroFieldMagazineDetailSelect<T extends boolean = true> {
+  title?: T;
+  lead?: T;
+  colorMode?: T;
+  author?: T;
+  date?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "overviewPage_select".
  */
 export interface OverviewPageSelect<T extends boolean = true> {
@@ -3148,13 +3307,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
@@ -3212,13 +3365,7 @@ export interface DetailPageSelect<T extends boolean = true> {
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
@@ -3290,13 +3437,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
         dateEnd?: T;
       };
   showDetailPage?: T;
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
@@ -3366,14 +3507,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
     | {
         teaserText?: T;
       };
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-        date?: T;
-      };
+  hero?: T | InterfaceHeroFieldNewsDetailSelect<T>;
   project?: T;
   content?:
     | T
@@ -3425,6 +3559,16 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeroFieldNewsDetail_select".
+ */
+export interface InterfaceHeroFieldNewsDetailSelect<T extends boolean = true> {
+  title?: T;
+  lead?: T;
+  colorMode?: T;
+  date?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "publicationDetailPage_select".
  */
 export interface PublicationDetailPageSelect<T extends boolean = true> {
@@ -3444,13 +3588,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
         type?: T;
         project?: T;
       };
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
@@ -3513,13 +3651,7 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
         image?: T;
         text?: T;
       };
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
@@ -3582,13 +3714,7 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
         image?: T;
         text?: T;
       };
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
@@ -3651,13 +3777,7 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
     | {
         text?: T;
       };
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
@@ -4004,7 +4124,7 @@ export interface FormsSelect<T extends boolean = true> {
         checkboxBlock?: T | InterfaceCheckboxFieldSelect<T>;
         emailBlock?: T | InterfaceEmailFieldSelect<T>;
         textBlockForm?: T | InterfaceTextFieldSelect<T>;
-        textareaBlock?: T | InterfaceTextTextareaSelect<T>;
+        textareaBlock?: T | InterfaceTextareaFieldSelect<T>;
       };
   newsletterFields?:
     | T
@@ -4039,7 +4159,7 @@ export interface FormsSelect<T extends boolean = true> {
  */
 export interface InterfaceCheckboxFieldSelect<T extends boolean = true> {
   name?: T;
-  label?: T | InterfaceRte2Select<T>;
+  label?: T;
   fieldWidth?: T;
   required?: T;
   fieldError?: T;
@@ -4076,9 +4196,9 @@ export interface InterfaceTextFieldSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceTextTextarea_select".
+ * via the `definition` "InterfaceTextareaField_select".
  */
-export interface InterfaceTextTextareaSelect<T extends boolean = true> {
+export interface InterfaceTextareaFieldSelect<T extends boolean = true> {
   name?: T;
   label?: T;
   placeholder?: T;
@@ -4113,7 +4233,7 @@ export interface I18NGlobalsSelect<T extends boolean = true> {
         dataPrivacyCheckbox?:
           | T
           | {
-              dataPrivacyCheckboxText?: T | InterfaceRte2Select<T>;
+              dataPrivacyCheckboxText?: T;
               errorMessage?: T;
             };
       };
@@ -4132,7 +4252,7 @@ export interface ConsentSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
-        text?: T | InterfaceRte2Select<T>;
+        text?: T;
         buttonAcceptAll?: T;
         buttonCustomizeSelection?: T;
         buttonDeclineAll?: T;
@@ -4141,21 +4261,21 @@ export interface ConsentSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
-        text?: T | InterfaceRte2Select<T>;
+        text?: T;
         buttonAcceptAll?: T;
         buttonAcceptSelection?: T;
         necessaryCookies?:
           | T
           | {
               title?: T;
-              text?: T | InterfaceRte2Select<T>;
+              text?: T;
               toggleLabel?: T;
             };
         analyticsPerformance?:
           | T
           | {
               title?: T;
-              text?: T | InterfaceRte2Select<T>;
+              text?: T;
               toggleLabelOff?: T;
               toggleLabelOn?: T;
               toggleDefault?: T;
@@ -4164,7 +4284,7 @@ export interface ConsentSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              text?: T | InterfaceRte2Select<T>;
+              text?: T;
               toggleLabelOff?: T;
               toggleLabelOn?: T;
               toggleDefault?: T;
