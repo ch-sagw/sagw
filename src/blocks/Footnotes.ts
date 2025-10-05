@@ -1,5 +1,5 @@
 import { Block } from 'payload';
-import { rte3 } from '@/field-templates/rte';
+import { rte2 } from '@/field-templates/rte';
 
 // Example: Magazine detail page
 
@@ -14,7 +14,7 @@ export const FootnotesBlock: Block = {
       required: true,
       type: 'text',
     },
-    rte3({
+    rte2({
       name: 'text',
       required: true,
     }),

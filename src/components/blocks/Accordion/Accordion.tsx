@@ -108,7 +108,7 @@ export const Accordion = ({
                 <Rte
                   className={styles.rte}
                   text={item.accordionContent}
-                  rteConfig='rte2'
+                  rteConfig='rte3'
                 />
               </section>
             </Fragment>

@@ -4,7 +4,7 @@ import type {
 } from '@storybook/nextjs-vite';
 import { Rte } from '@/components/blocks/Rte/Rte';
 import { defaultDecorator } from '@/storybook-helpers';
-import { sampleRte2 } from '@/components/base/Rte/Rte.sampleContent';
+import { sampleRte3 } from '@/components/base/Rte/Rte.sampleContent';
 
 type RteProps = React.ComponentProps<typeof Rte>;
 
@@ -30,6 +30,6 @@ export default meta;
 export const RteStory: StrictStory = {
   args: {
     // blockType: 'textBlock',
-    text: sampleRte2,
+    text: sampleRte3,
   },
 };

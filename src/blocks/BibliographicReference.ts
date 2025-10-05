@@ -1,5 +1,5 @@
 import { Block } from 'payload';
-import { rte2 } from '@/field-templates/rte';
+import { rte3 } from '@/field-templates/rte';
 
 // Example: Publication Detail Page
 
@@ -8,7 +8,7 @@ export const BibliographicReferenceBlock: Block = {
     disableBlockName: true,
   },
   fields: [
-    rte2({
+    rte3({
       name: 'text',
       required: true,
     }),

@@ -15,7 +15,7 @@ export const Notification = ({
     <Rte
       text={text}
       context='notification'
-      rteConfig='rte2'
+      rteConfig='rte3'
     />
   </div>
 );

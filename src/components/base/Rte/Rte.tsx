@@ -39,7 +39,7 @@ const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({
 
 export type InterfaceRtePropTypes = {
   text: InterfaceRte;
-  rteConfig: 'rte1' | 'rte2';
+  rteConfig: 'rte1' | 'rte2' | 'rte3';
   context?: 'notification' | 'heroLead' | 'magazineDetailLead' | 'magazineDetailText',
   className?: string;
 };
@@ -64,6 +64,7 @@ export const Rte = ({
       rteConfig: {
         rte1: [styles.rte1],
         rte2: [styles.rte2],
+        rte3: [styles.rte3],
       },
     },
   });

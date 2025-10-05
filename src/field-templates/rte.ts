@@ -86,7 +86,6 @@ const rte2Editor = lexicalEditor({
     SubscriptFeature(),
     SuperscriptFeature(),
     ParagraphFeature(),
-    HeadingFeature(),
     UnorderedListFeature(),
     OrderedListFeature(),
     LinkFeature({
@@ -107,6 +106,15 @@ const rte3Editor = lexicalEditor({
     SubscriptFeature(),
     SuperscriptFeature(),
     ParagraphFeature(),
+    HeadingFeature({
+      enabledHeadingSizes: [
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+      ],
+    }),
     UnorderedListFeature(),
     OrderedListFeature(),
     LinkFeature({
@@ -116,6 +124,7 @@ const rte3Editor = lexicalEditor({
     NonBreakingSpaceFeature(),
   ],
 });
+
 /* eslint-enable new-cap */
 
 interface InterfaceRteInputType {

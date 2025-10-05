@@ -99,7 +99,7 @@ export const Checkbox = ({
       >
         <Rte
           text={label}
-          rteConfig='rte2'
+          rteConfig='rte3'
         />
       </label>
 

@@ -2,7 +2,7 @@ import {
   Block, Field,
 } from 'payload';
 import {
-  rte1, rte2,
+  rte1, rte3,
 } from '@/field-templates/rte';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 
@@ -13,7 +13,7 @@ const AccordionItem: Field[] = [
     name: 'accordionTitle',
     required: true,
   }),
-  rte2({
+  rte3({
     name: 'accordionContent',
     required: true,
   }),

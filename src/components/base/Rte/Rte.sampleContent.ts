@@ -97,7 +97,7 @@ item 2
 item 3
 */
 
-export const sampleRte2: InterfaceRte = {
+export const sampleRte3: InterfaceRte = {
   root: {
     children: [
       {

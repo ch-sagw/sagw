@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload';
 import { versions } from '@/field-templates/versions';
-import { rte2 } from '@/field-templates/rte';
+import { rte3 } from '@/field-templates/rte';
 
 export const I18nGlobals: CollectionConfig = {
   access: {
@@ -69,7 +69,7 @@ export const I18nGlobals: CollectionConfig = {
                 hideGutter: true,
               },
               fields: [
-                rte2({
+                rte3({
                   name: 'dataPrivacyCheckboxText',
                   required: true,
                 }),

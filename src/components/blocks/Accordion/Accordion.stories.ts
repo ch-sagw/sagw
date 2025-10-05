@@ -5,7 +5,7 @@ import type {
 import { Accordion } from '@/components/blocks/Accordion/Accordion';
 import { defaultDecorator } from '@/storybook-helpers';
 import {
-  sampleRte2, sampleRtePrivacyCheckbox,
+  sampleRte3, sampleRtePrivacyCheckbox,
 } from '@/components/base/Rte/Rte.sampleContent';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
@@ -32,7 +32,7 @@ export default meta;
 
 const items = [
   {
-    accordionContent: sampleRte2,
+    accordionContent: sampleRte3,
     accordionTitle: simpleRteConfig('Title 1'),
     id: '1',
   },
@@ -42,7 +42,7 @@ const items = [
     id: '2',
   },
   {
-    accordionContent: sampleRte2,
+    accordionContent: sampleRte3,
     accordionTitle: simpleRteConfig('Title 3'),
     id: '3',
   },
@@ -52,7 +52,7 @@ const items = [
     id: '4',
   },
   {
-    accordionContent: sampleRte2,
+    accordionContent: sampleRte3,
     accordionTitle: simpleRteConfig('Title 5'),
     id: '5',
   },
