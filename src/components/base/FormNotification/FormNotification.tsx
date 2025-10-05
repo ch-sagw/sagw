@@ -4,12 +4,13 @@ import React, {
 import { cva } from 'cva';
 import { Icon } from '@/icons';
 import styles from '@/components/base/FormNotification/FormNotification.module.scss';
+import { ColorMode } from '@/components/base/types/colorMode';
 
 type BaseNotification = {
   type: 'success' | 'error';
   title: string;
   text: string;
-  colorMode: 'white' | 'dark';
+  colorMode: ColorMode;
   autofocus?: boolean;
 };
 
@@ -38,6 +39,7 @@ export const FormNotification = ({
       },
       colorMode: {
         dark: [styles.dark],
+        light: [styles.white],
         white: [styles.white],
       },
       type: {
@@ -49,7 +51,6 @@ export const FormNotification = ({
 
   useEffect(() => {
     if (autofocus && elementRef.current) {
-      console.log('will set autofocus');
       elementRef.current.focus();
     }
   }, [autofocus]);

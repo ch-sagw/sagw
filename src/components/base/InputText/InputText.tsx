@@ -7,6 +7,7 @@ import React, {
 import { cva } from 'cva';
 import styles from '@/components/base/InputText/InputText.module.scss';
 import { Icon } from '@/icons';
+import { ColorMode } from '@/components/base/types/colorMode';
 
 export type BaseProps = {
   label: string;
@@ -15,7 +16,7 @@ export type BaseProps = {
   name: string;
   required: boolean;
   defaultValue: string;
-  colorMode: 'white' | 'dark';
+  colorMode: ColorMode;
   className?: string;
   autofocus?: boolean;
 };
@@ -58,6 +59,7 @@ export const InputText = ({
     variants: {
       colorMode: {
         dark: [styles.dark],
+        light: null,
         white: null,
       },
       type: {

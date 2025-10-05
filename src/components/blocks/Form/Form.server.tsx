@@ -107,7 +107,6 @@ export const FormServer = async ({
   return (
     <FormClient
       form={renderForm}
-      i18n={i18nForm}
     />
   );
 };

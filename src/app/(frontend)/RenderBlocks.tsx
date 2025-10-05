@@ -12,10 +12,11 @@ import {
   InterfaceDownloadsBlock,
   InterfaceEventsOverviewBlock,
   InterfaceEventsTeasersBlock,
+  InterfaceFootnotesBlock,
   InterfaceFormBlock,
+  InterfaceGenericTeasersBlock,
   InterfaceHomeTeasersBlock,
   InterfaceImageBlock,
-  InterfaceImageTeasersBlock,
   InterfaceInstitutesOverviewBlock,
   InterfaceLinksBlock,
   InterfaceMagazineOverviewBlock,
@@ -31,8 +32,6 @@ import {
   InterfacePublicationsOverviewBlock,
   InterfacePublicationsTeasersBlock,
   InterfaceTextBlock,
-  InterfaceTextTeasersBlock,
-  InterfaceTitleSubtitleTextBlock,
   InterfaceVideoBlock,
 } from '@/payload-types';
 
@@ -47,9 +46,10 @@ interface InterfaceRenderBlocksProps {
     InterfaceEventsOverviewBlock |
     InterfaceEventsTeasersBlock |
     InterfaceFormBlock |
+    InterfaceFootnotesBlock |
     InterfaceHomeTeasersBlock |
     InterfaceImageBlock |
-    InterfaceImageTeasersBlock |
+    InterfaceGenericTeasersBlock |
     InterfaceInstitutesOverviewBlock |
     InterfaceLinksBlock |
     InterfaceMagazineOverviewBlock |
@@ -65,8 +65,6 @@ interface InterfaceRenderBlocksProps {
     InterfacePublicationsOverviewBlock |
     InterfacePublicationsTeasersBlock |
     InterfaceTextBlock |
-    InterfaceTextTeasersBlock |
-    InterfaceTitleSubtitleTextBlock |
     InterfaceVideoBlock
   )[] | null | undefined;
 }

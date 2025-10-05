@@ -490,6 +490,14 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: false,
       submitButtonLabel: 'Abschicken',
+      submitError: {
+        text: `Submit text error ${tenant.toUpperCase()}`,
+        title: `Submit title error ${tenant.toUpperCase()}`,
+      },
+      submitSuccess: {
+        text: `Submit text success ${tenant.toUpperCase()}`,
+        title: `Submit title success ${tenant.toUpperCase()}`,
+      },
       subtitle: `Subtitle for contact Form ${tenant.toUpperCase()}`,
       tenant: tenantId,
       title: `Contact Form ${tenant.toUpperCase()}`,
@@ -522,6 +530,14 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: true,
       submitButtonLabel: 'Abschicken',
+      submitError: {
+        text: `Newsletter Submit text error ${tenant.toUpperCase()}`,
+        title: `Newsletter Submit title error ${tenant.toUpperCase()}`,
+      },
+      submitSuccess: {
+        text: `Newsletter Submit text success ${tenant.toUpperCase()}`,
+        title: `Newsletter Submit title success ${tenant.toUpperCase()}`,
+      },
       subtitle: `Subtitle for Newsletter Form ${tenant.toUpperCase()}`,
       tenant: tenantId,
       title: `Newsletter Form ${tenant.toUpperCase()}`,
@@ -540,18 +556,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
             content: simpleRteConfig(`Data privacy checkbox ${tenant.toUpperCase()}`),
           },
           errorMessage: 'Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen',
-        },
-        newsletterSubmitSuccess: {
-          text: `Newsletter Submit text success ${tenant.toUpperCase()}`,
-          title: `Newsletter Submit title success ${tenant.toUpperCase()}`,
-        },
-        submitError: {
-          text: `Submit text error ${tenant.toUpperCase()}`,
-          title: `Submit title error ${tenant.toUpperCase()}`,
-        },
-        submitSuccess: {
-          text: `Submit text success ${tenant.toUpperCase()}`,
-          title: `Submit title success ${tenant.toUpperCase()}`,
         },
       },
       tenant: tenantId,

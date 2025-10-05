@@ -75,7 +75,7 @@ export const GenericTeasersBlock: Block = {
 
   ],
   imageURL: '/admin-ui-images/image-teasers.svg',
-  interfaceName: 'InterfaceImageTeasersBlock',
+  interfaceName: 'InterfaceGenericTeasersBlock',
   labels: {
     plural: 'Generic Teasers',
     singular: 'Generic Teasers',

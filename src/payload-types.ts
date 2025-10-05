@@ -77,7 +77,7 @@ export interface Config {
     ctaLinkBlock: InterfaceCtaLinkBlock;
     homeTeasersBlock: InterfaceHomeTeasersBlock;
     networkTeasersBlock: InterfaceNetworkTeasersBlock;
-    genericTeasersBlock: InterfaceImageTeasersBlock;
+    genericTeasersBlock: InterfaceGenericTeasersBlock;
     notificationBlock: InterfaceNotificationBlock;
     bibliographicReferenceBlock: InterfaceBibliographicReferenceBlock;
     footnoteBlock: InterfaceFootnotesBlock;
@@ -513,6 +513,30 @@ export interface Form {
    * If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".
    */
   showPrivacyCheckbox?: boolean | null;
+  submitSuccess: {
+    title: string;
+    text: string;
+    optionalLink?: {
+      includeLink?: boolean | null;
+      link?: {
+        description?: string | null;
+        linkText: string;
+        internalLink: string;
+      };
+    };
+  };
+  submitError: {
+    title: string;
+    text: string;
+    optionalLink?: {
+      includeLink?: boolean | null;
+      link?: {
+        description?: string | null;
+        linkText: string;
+        internalLink: string;
+      };
+    };
+  };
   fields?: (InterfaceCheckboxField | InterfaceEmailField | InterfaceTextField | InterfaceTextTextarea)[] | null;
   newsletterFields?: {
     email: {
@@ -753,9 +777,9 @@ export interface NetworkCategory {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceImageTeasersBlock".
+ * via the `definition` "InterfaceGenericTeasersBlock".
  */
-export interface InterfaceImageTeasersBlock {
+export interface InterfaceGenericTeasersBlock {
   title: string;
   lead?: string | null;
   /**
@@ -1053,7 +1077,7 @@ export interface HomePage {
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
         | InterfaceFootnotesBlock
@@ -1141,7 +1165,7 @@ export interface DataPrivacyPage {
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
         | InterfaceFootnotesBlock
@@ -1202,7 +1226,7 @@ export interface ImpressumPage {
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
         | InterfaceFootnotesBlock
@@ -1275,7 +1299,7 @@ export interface MagazineDetailPage {
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
         | InterfaceFootnotesBlock
@@ -1340,7 +1364,7 @@ export interface OverviewPage {
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
         | InterfaceFootnotesBlock
@@ -1405,7 +1429,7 @@ export interface DetailPage {
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
         | InterfaceFootnotesBlock
@@ -1482,7 +1506,7 @@ export interface EventDetailPage {
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
         | InterfaceFootnotesBlock
@@ -1572,7 +1596,7 @@ export interface NewsDetailPage {
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
         | InterfaceFootnotesBlock
@@ -1648,7 +1672,7 @@ export interface PublicationDetailPage {
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
         | InterfaceFootnotesBlock
@@ -1743,7 +1767,7 @@ export interface NationalDictionaryDetailPage {
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
         | InterfaceFootnotesBlock
@@ -1814,7 +1838,7 @@ export interface InstituteDetailPage {
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
         | InterfaceFootnotesBlock
@@ -1882,7 +1906,7 @@ export interface ProjectDetailPage {
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
         | InterfaceFootnotesBlock
@@ -1972,51 +1996,6 @@ export interface InterfaceI18NForms {
   dataPrivacyCheckbox: {
     dataPrivacyCheckboxText: InterfaceRte2;
     errorMessage: string;
-  };
-  /**
-   * This is the text which is shown if a form was successfully submitted.
-   */
-  submitSuccess: {
-    title: string;
-    text: string;
-    optionalLink?: {
-      includeLink?: boolean | null;
-      link?: {
-        description?: string | null;
-        linkText: string;
-        internalLink: string;
-      };
-    };
-  };
-  /**
-   * This is the text which is shown if a newsletter form was successfully submitted. Only relevant if you want to add newsletter forms.
-   */
-  newsletterSubmitSuccess: {
-    title: string;
-    text: string;
-    optionalLink?: {
-      includeLink?: boolean | null;
-      link?: {
-        description?: string | null;
-        linkText: string;
-        internalLink: string;
-      };
-    };
-  };
-  /**
-   * This is the text which is shown if there was an error submitting a form.
-   */
-  submitError: {
-    title: string;
-    text: string;
-    optionalLink?: {
-      includeLink?: boolean | null;
-      link?: {
-        description?: string | null;
-        linkText: string;
-        internalLink: string;
-      };
-    };
   };
 }
 /**
@@ -2491,7 +2470,7 @@ export interface HomePageSelect<T extends boolean = true> {
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
@@ -2742,9 +2721,9 @@ export interface InterfaceNetworkTeasersBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceImageTeasersBlock_select".
+ * via the `definition` "InterfaceGenericTeasersBlock_select".
  */
-export interface InterfaceImageTeasersBlockSelect<T extends boolean = true> {
+export interface InterfaceGenericTeasersBlockSelect<T extends boolean = true> {
   title?: T;
   lead?: T;
   alignement?: T;
@@ -3014,7 +2993,7 @@ export interface DataPrivacyPageSelect<T extends boolean = true> {
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
@@ -3077,7 +3056,7 @@ export interface ImpressumPageSelect<T extends boolean = true> {
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
@@ -3148,7 +3127,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
@@ -3212,7 +3191,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
@@ -3276,7 +3255,7 @@ export interface DetailPageSelect<T extends boolean = true> {
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
@@ -3354,7 +3333,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
@@ -3432,7 +3411,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
@@ -3508,7 +3487,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
@@ -3577,7 +3556,7 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
@@ -3646,7 +3625,7 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
@@ -3715,7 +3694,7 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        genericTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
         footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
@@ -4005,6 +3984,42 @@ export interface FormsSelect<T extends boolean = true> {
   recipientMail?: T;
   mailSubject?: T;
   showPrivacyCheckbox?: T;
+  submitSuccess?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        optionalLink?:
+          | T
+          | {
+              includeLink?: T;
+              link?:
+                | T
+                | {
+                    description?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+            };
+      };
+  submitError?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        optionalLink?:
+          | T
+          | {
+              includeLink?: T;
+              link?:
+                | T
+                | {
+                    description?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+            };
+      };
   fields?:
     | T
     | {
@@ -4116,60 +4131,6 @@ export interface InterfaceI18NFormsSelect<T extends boolean = true> {
     | {
         dataPrivacyCheckboxText?: T | InterfaceRte2Select<T>;
         errorMessage?: T;
-      };
-  submitSuccess?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        optionalLink?:
-          | T
-          | {
-              includeLink?: T;
-              link?:
-                | T
-                | {
-                    description?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-            };
-      };
-  newsletterSubmitSuccess?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        optionalLink?:
-          | T
-          | {
-              includeLink?: T;
-              link?:
-                | T
-                | {
-                    description?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-            };
-      };
-  submitError?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        optionalLink?:
-          | T
-          | {
-              includeLink?: T;
-              link?:
-                | T
-                | {
-                    description?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-            };
       };
 }
 /**
