@@ -545,18 +545,27 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
-  // add i18n for forms
+  // add i18n dataw
   await payload.create({
-    collection: 'i18nForms',
+    collection: 'i18nGlobals',
     data: {
       _status: 'published',
-      i18nForms: {
+      bibliographicReference: {
+        copyButtonText: 'Copy button text',
+        title: 'Title',
+      },
+      forms: {
         dataPrivacyCheckbox: {
           dataPrivacyCheckboxText: {
             content: simpleRteConfig(`Data privacy checkbox ${tenant.toUpperCase()}`),
           },
           errorMessage: 'Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen',
         },
+      },
+      generic: {
+        downloadTitle: 'Download title',
+        exportArticleButtonText: 'Export article button text',
+        writeEmailButtonText: 'Write email button text',
       },
       tenant: tenantId,
     },

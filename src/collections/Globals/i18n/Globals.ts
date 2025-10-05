@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload';
 import { versions } from '@/field-templates/versions';
+import { rte2 } from '@/field-templates/rte';
 
 export const I18nGlobals: CollectionConfig = {
   access: {
@@ -59,6 +60,31 @@ export const I18nGlobals: CollectionConfig = {
             },
           ],
           name: 'bibliographicReference',
+        },
+        {
+          fields: [
+            {
+              admin: {
+                description: 'You may show this text in a checkbox on forms.',
+              },
+              fields: [
+                rte2({
+                  name: 'dataPrivacyCheckboxText',
+                  required: true,
+                }),
+                {
+                  localized: true,
+                  name: 'errorMessage',
+                  required: true,
+                  type: 'text',
+                },
+              ],
+              label: '',
+              name: 'dataPrivacyCheckbox',
+              type: 'group',
+            },
+          ],
+          name: 'forms',
         },
       ],
       type: 'tabs',

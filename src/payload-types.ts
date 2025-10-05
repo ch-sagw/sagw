@@ -124,7 +124,6 @@ export interface Config {
     tenants: Tenant;
     users: User;
     forms: Form;
-    i18nForms: I18NForm;
     i18nGlobals: I18NGlobal;
     consent: Consent;
     footer: Footer;
@@ -165,7 +164,6 @@ export interface Config {
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
-    i18nForms: I18NFormsSelect<false> | I18NFormsSelect<true>;
     i18nGlobals: I18NGlobalsSelect<false> | I18NGlobalsSelect<true>;
     consent: ConsentSelect<false> | ConsentSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
@@ -1975,31 +1973,6 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "i18nForms".
- */
-export interface I18NForm {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  i18nForms: InterfaceI18NForms;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceI18nForms".
- */
-export interface InterfaceI18NForms {
-  /**
-   * You may show this text in a checkbox on forms.
-   */
-  dataPrivacyCheckbox: {
-    dataPrivacyCheckboxText: InterfaceRte2;
-    errorMessage: string;
-  };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "i18nGlobals".
  */
 export interface I18NGlobal {
@@ -2022,6 +1995,15 @@ export interface I18NGlobal {
   bibliographicReference: {
     title: string;
     copyButtonText: string;
+  };
+  forms: {
+    /**
+     * You may show this text in a checkbox on forms.
+     */
+    dataPrivacyCheckbox: {
+      dataPrivacyCheckboxText: InterfaceRte2;
+      errorMessage: string;
+    };
   };
   updatedAt: string;
   createdAt: string;
@@ -2357,10 +2339,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'forms';
         value: string | Form;
-      } | null)
-    | ({
-        relationTo: 'i18nForms';
-        value: string | I18NForm;
       } | null)
     | ({
         relationTo: 'i18nGlobals';
@@ -4112,29 +4090,6 @@ export interface InterfaceTextTextareaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "i18nForms_select".
- */
-export interface I18NFormsSelect<T extends boolean = true> {
-  tenant?: T;
-  i18nForms?: T | InterfaceI18NFormsSelect<T>;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceI18nForms_select".
- */
-export interface InterfaceI18NFormsSelect<T extends boolean = true> {
-  dataPrivacyCheckbox?:
-    | T
-    | {
-        dataPrivacyCheckboxText?: T | InterfaceRte2Select<T>;
-        errorMessage?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "i18nGlobals_select".
  */
 export interface I18NGlobalsSelect<T extends boolean = true> {
@@ -4151,6 +4106,16 @@ export interface I18NGlobalsSelect<T extends boolean = true> {
     | {
         title?: T;
         copyButtonText?: T;
+      };
+  forms?:
+    | T
+    | {
+        dataPrivacyCheckbox?:
+          | T
+          | {
+              dataPrivacyCheckboxText?: T | InterfaceRte2Select<T>;
+              errorMessage?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
