@@ -120,6 +120,7 @@ const rte3Editor = lexicalEditor({
 interface InterfaceRteInputType {
   name: string;
   required: boolean;
+  hideLabel?: boolean;
 }
 
 interface InterfaceRteInputTypeInternal {
@@ -127,12 +128,16 @@ interface InterfaceRteInputTypeInternal {
   required: boolean;
   interfaceName: string;
   editor: LexicalRichTextAdapterProvider;
+  hideLabel?: boolean;
 }
 
 const rte = ({
-  name, required, interfaceName, editor,
+  name, required, interfaceName, editor, hideLabel,
 }: InterfaceRteInputTypeInternal): GroupField => ({
 
+  admin: {
+    hideGutter: true,
+  },
   // we want to have Rte in a group, so that we can automatically generate an
   // interface for the rte content.
 
@@ -153,6 +158,9 @@ const rte = ({
     },
   ],
   interfaceName,
+  label: hideLabel
+    ? ''
+    : undefined,
   name,
   type: 'group',
 });
@@ -167,9 +175,10 @@ export const rte1 = ({
 });
 
 export const rte2 = ({
-  name, required,
+  name, required, hideLabel,
 }: InterfaceRteInputType): GroupField => rte({
   editor: rte2Editor,
+  hideLabel,
   interfaceName: 'InterfaceRte2',
   name,
   required,

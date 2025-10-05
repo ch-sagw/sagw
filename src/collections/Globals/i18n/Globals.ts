@@ -66,9 +66,11 @@ export const I18nGlobals: CollectionConfig = {
             {
               admin: {
                 description: 'You may show this text in a checkbox on forms.',
+                hideGutter: true,
               },
               fields: [
                 rte2({
+                  hideLabel: true,
                   name: 'dataPrivacyCheckboxText',
                   required: true,
                 }),
@@ -79,7 +81,6 @@ export const I18nGlobals: CollectionConfig = {
                   type: 'text',
                 },
               ],
-              label: '',
               name: 'dataPrivacyCheckbox',
               type: 'group',
             },
