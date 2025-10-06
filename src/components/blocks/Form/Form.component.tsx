@@ -16,6 +16,7 @@ import { Checkbox } from '@/components/base/Checkbox/Checkbox';
 
 import styles from '@/components/blocks/Form/Form.module.scss';
 import { ZodError } from 'zod';
+import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 
 const sectionClasses = cva([styles.formBlock], {
   variants: {
@@ -70,9 +71,9 @@ export const FormComponent = ({
       })}
     >
 
-      <TitleElem className={styles.title}>{form.title}</TitleElem>
+      <TitleElem className={styles.title}>{rte1ToPlaintext(form.title)}</TitleElem>
       {form.subtitle &&
-        <p className={styles.subtitle}>{form.subtitle}</p>
+        <p className={styles.subtitle}>{rte1ToPlaintext(form.subtitle)}</p>
       }
 
       {submitError &&
@@ -88,8 +89,8 @@ export const FormComponent = ({
             // TODO
             console.log('todo');
           }}
-          text={form.submitError.text}
-          title={form.submitError.title}
+          text={rte1ToPlaintext(form.submitError.text)}
+          title={rte1ToPlaintext(form.submitError.title)}
           type='error'
         />
       }
@@ -107,8 +108,8 @@ export const FormComponent = ({
           onAction={() => {
             console.log('todo');
           }}
-          text={form.submitSuccess.text}
-          title={form.submitSuccess.title}
+          text={rte1ToPlaintext(form.submitSuccess.text)}
+          title={rte1ToPlaintext(form.submitSuccess.title)}
           type='success'
         />
       }
@@ -138,8 +139,8 @@ export const FormComponent = ({
                     fieldWidth: field.fieldWidth,
                   })}
                   key={i}
-                  label={field.label}
-                  placeholder={field.placeholder}
+                  label={rte1ToPlaintext(field.label)}
+                  placeholder={rte1ToPlaintext(field.placeholder)}
                   errorText={errors[field.name]?.join(', ') || ''}
                   name={field.name}
                   required={field.required || false}
