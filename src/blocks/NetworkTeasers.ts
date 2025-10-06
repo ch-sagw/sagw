@@ -2,16 +2,15 @@ import {
   Block, Field,
 } from 'payload';
 import { fieldsLinkExternal } from '@/field-templates/links';
+import { rte1 } from '@/field-templates/rte';
 
 // Example: Network
 
 const fieldsNetworkItem: Field[] = [
-  {
-    localized: true,
+  rte1({
     name: 'title',
     required: true,
-    type: 'text',
-  },
+  }),
   {
     name: 'category',
     relationTo: 'networkCategories',
@@ -46,18 +45,14 @@ export const NetworkTeasersBlock: Block = {
     // Filter
     {
       fields: [
-        {
-          localized: true,
+        rte1({
           name: 'allCheckboxText',
           required: true,
-          type: 'text',
-        },
-        {
-          localized: true,
+        }),
+        rte1({
           name: 'title',
           required: true,
-          type: 'text',
-        },
+        }),
       ],
       label: 'Filter',
       name: 'filter',
@@ -67,18 +62,14 @@ export const NetworkTeasersBlock: Block = {
     // Network items
     {
       fields: [
-        {
-          localized: true,
+        rte1({
           name: 'foundingYearText',
           required: false,
-          type: 'text',
-        },
-        {
-          localized: true,
+        }),
+        rte1({
           name: 'linkText',
           required: true,
-          type: 'text',
-        },
+        }),
         {
           fields: fieldsNetworkItem,
           label: 'Network items',

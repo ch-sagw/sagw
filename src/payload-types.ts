@@ -256,7 +256,21 @@ export interface InterfaceTextBlock {
  * via the `definition` "InterfaceLinksBlock".
  */
 export interface InterfaceLinksBlock {
-  title: string;
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   links?:
     | {
         linkType: 'internal' | 'external' | 'mail';
@@ -286,7 +300,21 @@ export interface InterfaceLinksBlock {
  * via the `definition` "InterfaceDownloadsBlock".
  */
 export interface InterfaceDownloadsBlock {
-  subtitle?: string | null;
+  subtitle?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   customOrAuto: 'custom' | 'auto';
   downloads?:
     | (
@@ -495,8 +523,36 @@ export interface InterfaceHeroFieldNewsDetail {
 export interface InterfaceImageBlock {
   alignement?: ('left' | 'center' | 'right') | null;
   image: string | Image;
-  caption?: string | null;
-  credits: string;
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  credits: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'imageBlock';
@@ -1082,8 +1138,36 @@ export interface InterfaceTextareaField {
  * via the `definition` "InterfaceCtaContactBlock".
  */
 export interface InterfaceCtaContactBlock {
-  title: string;
-  text: string;
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  text: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   colorMode: 'white' | 'dark' | 'light';
   contact: string | Person;
   id?: string | null;
@@ -1135,8 +1219,36 @@ export interface Team {
  * via the `definition` "InterfaceCtaLinkBlock".
  */
 export interface InterfaceCtaLinkBlock {
-  title: string;
-  text: string;
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  text: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   linkType: 'internal' | 'external' | 'mail';
   linkInternal?: {
     description?: string | null;
@@ -1164,12 +1276,42 @@ export interface InterfaceHomeTeasersBlock {
   homeTeasers?:
     | {
         category: string;
-        title: string;
-        text: string;
+        title: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        text: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
         icon: string | Svg;
-        description?: string | null;
-        linkText: string;
-        internalLink: string;
+        link: {
+          description?: string | null;
+          linkText: string;
+          internalLink: string;
+        };
         id?: string | null;
       }[]
     | null;
@@ -1204,14 +1346,84 @@ export interface Svg {
  */
 export interface InterfaceNetworkTeasersBlock {
   filter: {
-    allCheckboxText: string;
-    title: string;
+    allCheckboxText: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
   };
   items: {
-    foundingYearText?: string | null;
-    linkText: string;
+    foundingYearText?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    linkText: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
     items: {
-      title: string;
+      title: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
       category: string | NetworkCategory;
       foundingYear?: number | null;
       image: string | Image;
@@ -1241,15 +1453,71 @@ export interface NetworkCategory {
  * via the `definition` "InterfaceGenericTeasersBlock".
  */
 export interface InterfaceGenericTeasersBlock {
-  title: string;
-  lead?: string | null;
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  lead?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * Align Title & text horizontally or vertically
    */
   alignement?: ('vertical' | 'horizontal') | null;
   teasers: {
-    title: string;
-    text?: string | null;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    text?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
     image?:
       | ({
           relationTo: 'images';
@@ -1337,7 +1605,21 @@ export interface InterfaceBibliographicReferenceBlock {
  * via the `definition` "InterfaceFootnotesBlock".
  */
 export interface InterfaceFootnotesBlock {
-  title: string;
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   text: {
     root: {
       type: string;
@@ -1372,9 +1654,51 @@ export interface InterfaceMagazineOverviewBlock {
  * via the `definition` "InterfacePublicationsOverviewBlock".
  */
 export interface InterfacePublicationsOverviewBlock {
-  title: string;
-  filterTitleAllTopics: string;
-  filterTitleAllPublications: string;
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  filterTitleAllTopics: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  filterTitleAllPublications: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1385,7 +1709,21 @@ export interface InterfacePublicationsOverviewBlock {
  * via the `definition` "InterfaceEventsOverviewBlock".
  */
 export interface InterfaceEventsOverviewBlock {
-  title: string;
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1397,9 +1735,10 @@ export interface InterfaceEventsOverviewBlock {
  */
 export interface InterfacePeopleOverviewBlock {
   message?: string | null;
-  memberType: {
-    type: 'executiveBoard' | 'team';
-  };
+  /**
+   * Which team members do you want to display in the overview?
+   */
+  teams: string | Team;
   id?: string | null;
   blockName?: string | null;
   blockType: 'peopleOverviewBlock';
@@ -1409,7 +1748,21 @@ export interface InterfacePeopleOverviewBlock {
  * via the `definition` "InterfaceNewsOverviewBlock".
  */
 export interface InterfaceNewsOverviewBlock {
-  title: string;
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1423,7 +1776,21 @@ export interface InterfaceNationalDictionariesOverviewBlock {
   /**
    * This will be used as "More info" text on the teasers
    */
-  moreInfoButtonText: string;
+  moreInfoButtonText: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1437,7 +1804,21 @@ export interface InterfaceInstitutesOverviewBlock {
   /**
    * This will be used as "More info" text on the teasers
    */
-  moreInfoButtonText: string;
+  moreInfoButtonText: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1458,12 +1839,40 @@ export interface InterfaceProjectOverviewBlock {
  * via the `definition` "InterfaceEventsTeasersBlock".
  */
 export interface InterfaceEventsTeasersBlock {
-  title: string;
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   /**
    * Do you want to add a link to the Events overview page?
    */
   link?: ('no' | 'yes') | null;
-  linkText?: string | null;
+  linkText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1474,7 +1883,21 @@ export interface InterfaceEventsTeasersBlock {
  * via the `definition` "InterfaceMagazineTeasersBlock".
  */
 export interface InterfaceMagazineTeasersBlock {
-  linkText: string;
+  linkText: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1485,7 +1908,21 @@ export interface InterfaceMagazineTeasersBlock {
  * via the `definition` "InterfaceNewsTeasersBlock".
  */
 export interface InterfaceNewsTeasersBlock {
-  title: string;
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   /**
    * Do you want to add a link to the News overview page?
    */
@@ -1501,7 +1938,21 @@ export interface InterfaceNewsTeasersBlock {
  * via the `definition` "InterfacePublicationsTeasersBlock".
  */
 export interface InterfacePublicationsTeasersBlock {
-  title: string;
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   /**
    * Do you want to add a link to the Publications overview page?
    */
@@ -1517,7 +1968,21 @@ export interface InterfacePublicationsTeasersBlock {
  * via the `definition` "InterfaceProjectTeasersBlock".
  */
 export interface InterfaceProjectTeasersBlock {
-  linkText: string;
+  linkText: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -3203,9 +3668,13 @@ export interface InterfaceHomeTeasersBlockSelect<T extends boolean = true> {
         title?: T;
         text?: T;
         icon?: T;
-        description?: T;
-        linkText?: T;
-        internalLink?: T;
+        link?:
+          | T
+          | {
+              description?: T;
+              linkText?: T;
+              internalLink?: T;
+            };
         id?: T;
       };
   id?: T;
@@ -3348,11 +3817,7 @@ export interface InterfaceEventsOverviewBlockSelect<T extends boolean = true> {
  */
 export interface InterfacePeopleOverviewBlockSelect<T extends boolean = true> {
   message?: T;
-  memberType?:
-    | T
-    | {
-        type?: T;
-      };
+  teams?: T;
   id?: T;
   blockName?: T;
 }

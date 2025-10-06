@@ -1,3 +1,4 @@
+import { rte1 } from '@/field-templates/rte';
 import { Block } from 'payload';
 
 // Example: Magazine Detail
@@ -32,18 +33,14 @@ export const ImageBlock: Block = {
       required: true,
       type: 'relationship',
     },
-    {
-      localized: true,
+    rte1({
       name: 'caption',
       required: false,
-      type: 'text',
-    },
-    {
-      localized: true,
+    }),
+    rte1({
       name: 'credits',
       required: true,
-      type: 'text',
-    },
+    }),
   ],
   imageURL: '/admin-ui-images/image.svg',
   interfaceName: 'InterfaceImageBlock',

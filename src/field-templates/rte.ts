@@ -16,8 +16,8 @@ import {
 import { SoftHyphenFeature } from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.server';
 import { NonBreakingSpaceFeature } from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpace.server';
 import {
-  Field,
   FieldHook,
+  RichTextField,
 } from 'payload';
 import { JSDOM } from 'jsdom';
 import domPurify from 'dompurify';
@@ -140,7 +140,7 @@ interface InterfaceRteInputTypeInternal {
 
 const rte = ({
   name, required, editor,
-}: InterfaceRteInputTypeInternal): Field => ({
+}: InterfaceRteInputTypeInternal): RichTextField => ({
   editor,
   hooks: {
     beforeValidate: [
@@ -157,7 +157,7 @@ const rte = ({
 
 export const rte1 = ({
   name, required,
-}: InterfaceRteInputType): Field => rte({
+}: InterfaceRteInputType): RichTextField => rte({
   editor: rte1Editor,
   name,
   required,
@@ -165,7 +165,7 @@ export const rte1 = ({
 
 export const rte2 = ({
   name, required,
-}: InterfaceRteInputType): Field => rte({
+}: InterfaceRteInputType): RichTextField => rte({
   editor: rte2Editor,
   name,
   required,
@@ -173,7 +173,7 @@ export const rte2 = ({
 
 export const rte3 = ({
   name, required,
-}: InterfaceRteInputType): Field => rte({
+}: InterfaceRteInputType): RichTextField => rte({
   editor: rte3Editor,
   name,
   required,

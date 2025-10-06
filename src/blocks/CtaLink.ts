@@ -1,5 +1,6 @@
 import { Block } from 'payload';
 import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
+import { rte1 } from '@/field-templates/rte';
 
 // Example: Early Career Award
 
@@ -8,18 +9,14 @@ export const CtaLinkBlock: Block = {
     disableBlockName: true,
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'title',
       required: true,
-      type: 'text',
-    },
-    {
-      localized: true,
+    }),
+    rte1({
       name: 'text',
       required: true,
-      type: 'text',
-    },
+    }),
     ...fieldsLinkInternalOrExternal,
   ],
   imageURL: '/admin-ui-images/cta-link.svg',

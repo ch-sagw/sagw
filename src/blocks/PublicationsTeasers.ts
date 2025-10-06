@@ -1,3 +1,4 @@
+import { rte1 } from '@/field-templates/rte';
 import { Block } from 'payload';
 
 // Example: Activities
@@ -7,12 +8,10 @@ export const PublicationsTeasersBlock: Block = {
     disableBlockName: true,
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'title',
       required: true,
-      type: 'text',
-    },
+    }),
     {
       admin: {
         description: 'Do you want to add a link to the Publications overview page?',

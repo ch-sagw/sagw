@@ -1,4 +1,5 @@
 import { Block } from 'payload';
+import { rte1 } from '@/field-templates/rte';
 
 // Example: Publication Detail
 
@@ -7,12 +8,10 @@ export const DownloadsBlock: Block = {
     disableBlockName: true,
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'subtitle',
       required: false,
-      type: 'text',
-    },
+    }),
     {
       defaultValue: 'custom',
       name: 'customOrAuto',

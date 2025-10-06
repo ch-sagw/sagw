@@ -2,23 +2,20 @@ import {
   Block, Field,
 } from 'payload';
 import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
+import { rte1 } from '@/field-templates/rte';
 
 // Example: Early Career Award, Institutes Overview
 // Example: Magazine Detail
 
 const TeaserItem: Field[] = [
-  {
-    localized: true,
+  rte1({
     name: 'title',
     required: true,
-    type: 'text',
-  },
-  {
-    localized: true,
+  }),
+  rte1({
     name: 'text',
     required: false,
-    type: 'text',
-  },
+  }),
   {
     name: 'image',
     relationTo: [
@@ -36,18 +33,14 @@ export const GenericTeasersBlock: Block = {
     disableBlockName: true,
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'title',
       required: true,
-      type: 'text',
-    },
-    {
-      localized: true,
+    }),
+    rte1({
       name: 'lead',
       required: false,
-      type: 'text',
-    },
+    }),
     {
       admin: {
         description: 'Align Title & text horizontally or vertically',

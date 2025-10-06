@@ -1,17 +1,6 @@
 import type { CollectionConfig } from 'payload';
 import { versions } from '@/field-templates/versions';
 
-export const memberTypeConfig = {
-  executiveBoard: {
-    label: 'Vorstand',
-    value: 'executiveBoard',
-  },
-  team: {
-    label: 'Team',
-    value: 'team',
-  },
-};
-
 export const People: CollectionConfig = {
   access: {
     read: () => true,

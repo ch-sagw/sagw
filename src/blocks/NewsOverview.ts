@@ -1,3 +1,4 @@
+import { rte1 } from '@/field-templates/rte';
 import { Block } from 'payload';
 
 // Example: Magazine Overview
@@ -7,12 +8,10 @@ export const NewsOverviewBlock: Block = {
     disableBlockName: true,
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'title',
       required: true,
-      type: 'text',
-    },
+    }),
     {
       admin: {
         hidden: true,
