@@ -6,6 +6,7 @@ import { textBlock } from '@/blocks/Form/Text';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { formEnsureUniqueName } from '@/hooks-payload/formEnsureUniqueName';
 import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
+import { rte1 } from '@/field-templates/rte';
 
 export const Forms: CollectionConfig = {
   access: {
@@ -47,12 +48,10 @@ export const Forms: CollectionConfig = {
     // title & subtitle
     {
       fields: [
-        {
-          localized: true,
+        rte1({
           name: 'title',
           required: false,
-          type: 'text',
-        },
+        }),
         {
           defaultValue: '2',
           localized: true,
@@ -81,12 +80,10 @@ export const Forms: CollectionConfig = {
       ],
       type: 'row',
     },
-    {
-      localized: true,
+    rte1({
       name: 'subtitle',
       required: false,
-      type: 'text',
-    },
+    }),
 
     // submit button
     {
@@ -131,18 +128,14 @@ export const Forms: CollectionConfig = {
       fields: [
         {
           fields: [
-            {
-              localized: true,
+            rte1({
               name: 'title',
               required: true,
-              type: 'text',
-            },
-            {
-              localized: true,
+            }),
+            rte1({
               name: 'text',
               required: true,
-              type: 'text',
-            },
+            }),
             fieldsLinkInternalWithToggle,
           ],
           label: 'Submit Success',
@@ -152,18 +145,14 @@ export const Forms: CollectionConfig = {
 
         {
           fields: [
-            {
-              localized: true,
+            rte1({
               name: 'title',
               required: true,
-              type: 'text',
-            },
-            {
-              localized: true,
+            }),
+            rte1({
               name: 'text',
               required: true,
-              type: 'text',
-            },
+            }),
             fieldsLinkInternalWithToggle,
           ],
           label: 'Submit Error',
@@ -207,7 +196,7 @@ export const Forms: CollectionConfig = {
         },
         {
           admin: {
-            description: 'The action text to show at the bottom of the notification. e.g.: "Resend verifiaction E-Mail again."',
+            description: 'The action text to show at the bottom of the notification. e.g.: "Send verifiaction E-Mail again."',
           },
           localized: true,
           name: 'actionText',
