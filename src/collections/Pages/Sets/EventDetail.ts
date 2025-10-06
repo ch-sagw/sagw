@@ -14,6 +14,7 @@ import { fieldsLinkExternal } from '@/field-templates/links';
 import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
+import { rte1 } from '@/field-templates/rte';
 
 const fieldsForDetailPage: Field[] = [
 
@@ -75,30 +76,22 @@ export const EventDetailPage: CollectionConfig = {
           fields: [
             {
               fields: [
-                {
-                  localized: true,
+                rte1({
                   name: 'title',
                   required: true,
-                  type: 'text',
-                },
-                {
-                  localized: true,
+                }),
+                rte1({
                   name: 'location',
                   required: false,
-                  type: 'text',
-                },
-                {
-                  localized: true,
+                }),
+                rte1({
                   name: 'language',
                   required: false,
-                  type: 'text',
-                },
-                {
-                  localized: true,
+                }),
+                rte1({
                   name: 'time',
                   required: false,
-                  type: 'text',
-                },
+                }),
                 {
                   name: 'category',
                   relationTo: 'eventCategory',

@@ -12,6 +12,7 @@ import { versions } from '@/field-templates/versions';
 import { hookFormsBlockOnCreate } from '@/hooks-payload/formsBlockOnCreate';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
+import { rte1 } from '@/field-templates/rte';
 
 export const NewsDetailPage: CollectionConfig = {
   access: {
@@ -45,10 +46,10 @@ export const NewsDetailPage: CollectionConfig = {
                   admin: {
                     description: 'This text will be used as text for the teasers on the overview page.',
                   },
-                  localized: true,
-                  name: 'teaserText',
-                  required: true,
-                  type: 'text',
+                  ...rte1({
+                    name: 'teaserText',
+                    required: true,
+                  }),
                 },
               ],
               label: 'Overview Page properties',
