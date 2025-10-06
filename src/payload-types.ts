@@ -4231,7 +4231,7 @@ export interface Footer {
   id: string;
   tenant?: (string | null) | Tenant;
   adminTitle?: string | null;
-  'Data privacy link text': {
+  legal: {
     root: {
       type: string;
       children: {
@@ -4246,7 +4246,7 @@ export interface Footer {
     };
     [k: string]: unknown;
   };
-  'Impressum link text': {
+  impressum: {
     root: {
       type: string;
       children: {
@@ -6689,8 +6689,8 @@ export interface ConsentSelect<T extends boolean = true> {
 export interface FooterSelect<T extends boolean = true> {
   tenant?: T;
   adminTitle?: T;
-  'Data privacy link text'?: T;
-  'Impressum link text'?: T;
+  legal?: T;
+  impressum?: T;
   copyright?: T;
   contact?:
     | T

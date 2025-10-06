@@ -47,10 +47,10 @@ export const Footer: CollectionConfig = {
     fieldAdminTitleDefaultValue('Footer'),
 
     rte1({
-      name: 'Data privacy link text',
+      name: 'legal',
     }),
     rte1({
-      name: 'Impressum link text',
+      name: 'impressum',
     }),
     rte1({
       disableLocalization: true,

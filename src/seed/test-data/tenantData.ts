@@ -90,7 +90,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       _status: 'published',
       date: '2025-10-30',
       tenant: tenantId,
-      title: `${tenant.toUpperCase()} Document`,
+      title: simpleRteConfig(`${tenant.toUpperCase()} Document`),
     },
     filePath: `src/seed/test-data/assets/${tenant}.pdf`,
   });
@@ -148,7 +148,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'publicationTopics',
     data: {
       _status: 'published',
-      publicationTopic: `Publication Topic 1 ${tenant.toUpperCase()}`,
+      publicationTopic: simpleRteConfig(`Publication Topic 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
   });
@@ -158,7 +158,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'publicationTypes',
     data: {
       _status: 'published',
-      publicationType: `Publication Type 1 ${tenant.toUpperCase()}`,
+      publicationType: simpleRteConfig(`Publication Type 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
   });
@@ -168,7 +168,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'networkCategories',
     data: {
       _status: 'published',
-      name: `Network Category 1 ${tenant.toUpperCase()}`,
+      name: simpleRteConfig(`Network Category 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
   });
@@ -178,7 +178,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'projects',
     data: {
       _status: 'published',
-      name: `Project 1 ${tenant.toUpperCase()}`,
+      name: simpleRteConfig(`Project 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
   });
@@ -188,7 +188,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'teams',
     data: {
       _status: 'published',
-      name: `Team 1 ${tenant.toUpperCase()}`,
+      name: simpleRteConfig(`Team 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
   });
@@ -198,11 +198,12 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'people',
     data: {
       _status: 'published',
-      firstname: `Firstname ${tenant.toUpperCase()}`,
-      function: 'Some function',
-      lastname: `Lastname ${tenant.toUpperCase()}`,
-      mail: 'foo@bar.com',
-      phone: '031 123 45 67',
+      firstname: simpleRteConfig(`Firstname ${tenant.toUpperCase()}`),
+      function: simpleRteConfig('Some function'),
+      lastname: simpleRteConfig(`Lastname ${tenant.toUpperCase()}`),
+      mail: simpleRteConfig('foo@bar.com'),
+      name: simpleRteConfig(`Name ${tenant.toUpperCase()}`),
+      phone: simpleRteConfig('031 123 45 67'),
       team: [team],
       tenant: tenantId,
     },
@@ -213,7 +214,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'eventCategory',
     data: {
       _status: 'published',
-      eventCategory: `Event Category 1 ${tenant.toUpperCase()}`,
+      eventCategory: simpleRteConfig(`Event Category 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
   });
@@ -224,34 +225,34 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     data: {
       _status: 'published',
       banner: {
-        buttonAcceptAll: `Accept all ${tenant.toUpperCase()}`,
-        buttonCustomizeSelection: `Customize ${tenant.toUpperCase()}`,
-        buttonDeclineAll: `Decline ${tenant.toUpperCase()}`,
+        buttonAcceptAll: simpleRteConfig(`Accept all ${tenant.toUpperCase()}`),
+        buttonCustomizeSelection: simpleRteConfig(`Customize ${tenant.toUpperCase()}`),
+        buttonDeclineAll: simpleRteConfig(`Decline ${tenant.toUpperCase()}`),
         text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
-        title: `Title ${tenant.toUpperCase()}`,
+        title: simpleRteConfig(`Title ${tenant.toUpperCase()}`),
       },
       overlay: {
         analyticsPerformance: {
           text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
-          title: `Title ${tenant.toUpperCase()}`,
-          toggleLabelOff: `Toggle Off ${tenant.toUpperCase()}`,
-          toggleLabelOn: `Toggle On ${tenant.toUpperCase()}`,
+          title: simpleRteConfig(`Title ${tenant.toUpperCase()}`),
+          toggleLabelOff: simpleRteConfig(`Toggle Off ${tenant.toUpperCase()}`),
+          toggleLabelOn: simpleRteConfig(`Toggle On ${tenant.toUpperCase()}`),
         },
-        buttonAcceptAll: `Accept all ${tenant.toUpperCase()}`,
-        buttonAcceptSelection: `Accept selection ${tenant.toUpperCase()}`,
+        buttonAcceptAll: simpleRteConfig(`Accept all ${tenant.toUpperCase()}`),
+        buttonAcceptSelection: simpleRteConfig(`Accept selection ${tenant.toUpperCase()}`),
         externalContent: {
           text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
-          title: `Title ${tenant.toUpperCase()}`,
-          toggleLabelOff: `Toggle off ${tenant.toUpperCase()}`,
-          toggleLabelOn: `Toggle on ${tenant.toUpperCase()}`,
+          title: simpleRteConfig(`Title ${tenant.toUpperCase()}`),
+          toggleLabelOff: simpleRteConfig(`Toggle off ${tenant.toUpperCase()}`),
+          toggleLabelOn: simpleRteConfig(`Toggle on ${tenant.toUpperCase()}`),
         },
         necessaryCookies: {
           text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
-          title: `Title ${tenant.toUpperCase()}`,
-          toggleLabel: `Toggle label ${tenant.toUpperCase()}`,
+          title: simpleRteConfig(`Title ${tenant.toUpperCase()}`),
+          toggleLabel: simpleRteConfig(`Toggle label ${tenant.toUpperCase()}`),
         },
         text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
-        title: `Title ${tenant.toUpperCase()}`,
+        title: simpleRteConfig(`Title ${tenant.toUpperCase()}`),
 
       },
       tenant: tenantId,
@@ -264,19 +265,19 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     data: {
       _status: 'published',
       contact: {
-        address1: `Address 1 ${tenant.toUpperCase()}`,
-        address2: `Address 2 ${tenant.toUpperCase()}`,
-        city: `City ${tenant.toUpperCase()}`,
-        countryCode: `Country Code ${tenant.toUpperCase()}`,
-        mail: 'foo@bar.baz',
-        phone: '031 123 45 67',
-        poBox: `PoBox ${tenant.toUpperCase()}`,
-        title: `Title ${tenant.toUpperCase()}`,
-        zipCode: `Zip ${tenant.toUpperCase()}`,
+        address1: simpleRteConfig(`Address 1 ${tenant.toUpperCase()}`),
+        address2: simpleRteConfig(`Address 2 ${tenant.toUpperCase()}`),
+        city: simpleRteConfig(`City ${tenant.toUpperCase()}`),
+        countryCode: simpleRteConfig(`Country Code ${tenant.toUpperCase()}`),
+        mail: simpleRteConfig('foo@bar.baz'),
+        phone: simpleRteConfig('031 123 45 67'),
+        poBox: simpleRteConfig(`PoBox ${tenant.toUpperCase()}`),
+        title: simpleRteConfig(`Title ${tenant.toUpperCase()}`),
+        zipCode: simpleRteConfig(`Zip ${tenant.toUpperCase()}`),
       },
-      copyright: `Copyright ${tenant.toUpperCase()}`,
-      impressum: `Impressum ${tenant.toUpperCase()}`,
-      legal: `Legal ${tenant.toUpperCase()}`,
+      copyright: simpleRteConfig(`Copyright ${tenant.toUpperCase()}`),
+      impressum: simpleRteConfig(`Impressum ${tenant.toUpperCase()}`),
+      legal: simpleRteConfig(`Legal ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
   });
@@ -287,32 +288,29 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     data: {
       _status: 'published',
       languageNavigation: {
-        description: 'Die SAGW Webseite ist in vier Sprachen verfügbar',
-        title: 'Sprachen',
-      },
-      logo: {
-        logo: 'sagw',
+        description: simpleRteConfig('Die SAGW Webseite ist in vier Sprachen verfügbar'),
+        title: simpleRteConfig('Sprachen'),
       },
       metanavigation: {
         metaLinks: [
           {
             linkExternal: {
               externalLink: 'https://www.foo.bar',
-              externalLinkText: 'Brand Guidelines',
+              externalLinkText: simpleRteConfig('Brand Guidelines'),
             },
             linkType: 'external',
           },
           {
             linkExternal: {
               externalLink: 'https://www.foo.bar',
-              externalLinkText: 'Intranet',
+              externalLinkText: simpleRteConfig('Intranet'),
             },
             linkType: 'external',
           },
           {
             linkExternal: {
               externalLink: 'https://www.foo.bar',
-              externalLinkText: 'mySAGW',
+              externalLinkText: simpleRteConfig('mySAGW'),
             },
             linkType: 'external',
           },
@@ -321,91 +319,91 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       navigation: {
         navItems: [
           {
-            description: '',
+            description: simpleRteConfig(''),
             navItemLink: '/',
-            navItemText: 'Home',
+            navItemText: simpleRteConfig('Home'),
           },
           {
-            description: 'Förderung von langfristigen Forschungsinfrastrukturen',
-            navItemText: 'Förderung',
+            description: simpleRteConfig('Förderung von langfristigen Forschungsinfrastrukturen'),
+            navItemText: simpleRteConfig('Förderung'),
             subNavItems: [
               {
                 navItemLink: '/',
-                navItemText: 'Übersicht',
+                navItemText: simpleRteConfig('Übersicht'),
               },
               {
                 navItemLink: '/',
-                navItemText: 'Institute',
+                navItemText: simpleRteConfig('Institute'),
               },
               {
                 navItemLink: '/',
-                navItemText: 'Editionen',
+                navItemText: simpleRteConfig('Editionen'),
               },
               {
                 navItemLink: '/',
-                navItemText: 'Reisebeiträge',
+                navItemText: simpleRteConfig('Reisebeiträge'),
               },
               {
                 navItemLink: '/',
-                navItemText: 'Early Career Award',
+                navItemText: simpleRteConfig('Early Career Award'),
               },
             ],
           },
           {
-            description: 'Unsere 63 Fachgesellschaften unter einem Dach',
-            navItemText: 'Netzwerk',
+            description: simpleRteConfig('Unsere 63 Fachgesellschaften unter einem Dach'),
+            navItemText: simpleRteConfig('Netzwerk'),
             subNavItems: [
               {
                 navItemLink: '/',
-                navItemText: 'Fachgesellschaften',
+                navItemText: simpleRteConfig('Fachgesellschaften'),
               },
             ],
           },
           {
-            description: 'Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft',
-            navItemText: 'Aktivitäten',
+            description: simpleRteConfig('Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft'),
+            navItemText: simpleRteConfig('Aktivitäten'),
             subNavItems: [
               {
                 navItemLink: '/',
-                navItemText: 'Übersicht',
+                navItemText: simpleRteConfig('Übersicht'),
               },
               {
                 navItemLink: '/',
-                navItemText: 'Magazin',
+                navItemText: simpleRteConfig('Magazin'),
               },
               {
                 navItemLink: '/',
-                navItemText: 'Publikationen',
+                navItemText: simpleRteConfig('Publikationen'),
               },
               {
                 navItemLink: '/',
-                navItemText: 'Veranstaltungen',
+                navItemText: simpleRteConfig('Veranstaltungen'),
               },
               {
                 navItemLink: '/',
-                navItemText: 'News',
+                navItemText: simpleRteConfig('News'),
               },
             ],
           },
           {
-            description: 'Alles Wissenswertes über die SAGW',
-            navItemText: 'Über uns',
+            description: simpleRteConfig('Alles Wissenswertes über die SAGW'),
+            navItemText: simpleRteConfig('Über uns'),
             subNavItems: [
               {
                 navItemLink: '/',
-                navItemText: 'Die SAGW',
+                navItemText: simpleRteConfig('Die SAGW'),
               },
               {
                 navItemLink: '/',
-                navItemText: 'Team',
+                navItemText: simpleRteConfig('Team'),
               },
               {
                 navItemLink: '/',
-                navItemText: 'Kontakt',
+                navItemText: simpleRteConfig('Kontakt'),
               },
               {
                 navItemLink: '/',
-                navItemText: 'Offene Stellen',
+                navItemText: simpleRteConfig('Offene Stellen'),
               },
             ],
           },
@@ -420,12 +418,12 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'statusMessage',
     data: {
       _status: 'published',
-      message: `Status Message ${tenant.toUpperCase()}`,
+      message: simpleRteConfig(`Status Message ${tenant.toUpperCase()}`),
       show: {
         display: 'hide',
       },
       tenant: tenantId,
-      title: `Status Title ${tenant.toUpperCase()}`,
+      title: simpleRteConfig(`Status Title ${tenant.toUpperCase()}`),
       type: 'error',
     },
   });
@@ -439,34 +437,34 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       fields: [
         {
           blockType: 'textBlockForm',
-          fieldError: 'Geben Sie Ihren Namen an.',
+          fieldError: simpleRteConfig('Geben Sie Ihren Namen an.'),
           fieldWidth: 'half',
-          label: 'Name',
+          label: simpleRteConfig('Name'),
           name: 'name',
-          placeholder: 'Ihr Name',
+          placeholder: simpleRteConfig('Ihr Name'),
           required: true,
         },
         {
           blockType: 'emailBlock',
-          fieldError: 'Geben Sie ihre E-Mail-Adresse an.',
+          fieldError: simpleRteConfig('Geben Sie ihre E-Mail-Adresse an.'),
           fieldWidth: 'half',
-          label: 'E-Mail',
+          label: simpleRteConfig('E-Mail'),
           name: 'email',
-          placeholder: 'Ihre E-Mail Adresse',
+          placeholder: simpleRteConfig('Ihre E-Mail Adresse'),
           required: true,
         },
         {
           blockType: 'textareaBlock',
-          fieldError: 'Geben Sie ihren Kommentar an.',
+          fieldError: simpleRteConfig('Geben Sie ihren Kommentar an.'),
           fieldWidth: 'full',
-          label: 'Kommentar',
+          label: simpleRteConfig('Kommentar'),
           name: 'comment',
-          placeholder: 'Ihr Kommentar',
+          placeholder: simpleRteConfig('Ihr Kommentar'),
           required: true,
         },
         {
           blockType: 'checkboxBlock',
-          fieldError: 'Bitte akzeptieren Sie die Hinweise zum Datenschutz.',
+          fieldError: simpleRteConfig('Bitte akzeptieren Sie die Hinweise zum Datenschutz.'),
           fieldWidth: 'full',
           label: simpleRteConfig('Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.'),
           name: 'checkbox-custom',
@@ -479,16 +477,16 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       showPrivacyCheckbox: false,
       submitButtonLabel: 'Abschicken',
       submitError: {
-        text: `Submit text error ${tenant.toUpperCase()}`,
-        title: `Submit title error ${tenant.toUpperCase()}`,
+        text: simpleRteConfig(`Submit text error ${tenant.toUpperCase()}`),
+        title: simpleRteConfig(`Submit title error ${tenant.toUpperCase()}`),
       },
       submitSuccess: {
-        text: `Submit text success ${tenant.toUpperCase()}`,
-        title: `Submit title success ${tenant.toUpperCase()}`,
+        text: simpleRteConfig(`Submit text success ${tenant.toUpperCase()}`),
+        title: simpleRteConfig(`Submit title success ${tenant.toUpperCase()}`),
       },
-      subtitle: `Subtitle for contact Form ${tenant.toUpperCase()}`,
+      subtitle: simpleRteConfig(`Subtitle for contact Form ${tenant.toUpperCase()}`),
       tenant: tenantId,
-      title: `Contact Form ${tenant.toUpperCase()}`,
+      title: simpleRteConfig(`Contact Form ${tenant.toUpperCase()}`),
       titleLevel: '2',
     },
   });
@@ -503,32 +501,32 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       newsletterFields: {
         actionText: 'Erneut senden',
         email: {
-          fieldError: 'Bitte geben Sie die E-Mail Adresse an.',
+          fieldError: simpleRteConfig('Bitte geben Sie die E-Mail Adresse an.'),
           fieldWidth: 'half',
-          label: 'E-Mail',
-          placeholder: 'Ihre E-Mail Adresse',
+          label: simpleRteConfig('E-Mail'),
+          placeholder: simpleRteConfig('Ihre E-Mail Adresse'),
         },
         name: {
-          fieldError: 'Bitte geben Sie Ihren Namen an.',
+          fieldError: simpleRteConfig('Bitte geben Sie Ihren Namen an.'),
           fieldWidth: 'half',
-          label: 'Name',
-          placeholder: 'Ihr Name',
+          label: simpleRteConfig('Name'),
+          placeholder: simpleRteConfig('Ihr Name'),
         },
       },
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: true,
       submitButtonLabel: 'Abschicken',
       submitError: {
-        text: `Newsletter Submit text error ${tenant.toUpperCase()}`,
-        title: `Newsletter Submit title error ${tenant.toUpperCase()}`,
+        text: simpleRteConfig(`Newsletter Submit text error ${tenant.toUpperCase()}`),
+        title: simpleRteConfig(`Newsletter Submit title error ${tenant.toUpperCase()}`),
       },
       submitSuccess: {
-        text: `Newsletter Submit text success ${tenant.toUpperCase()}`,
-        title: `Newsletter Submit title success ${tenant.toUpperCase()}`,
+        text: simpleRteConfig(`Newsletter Submit text success ${tenant.toUpperCase()}`),
+        title: simpleRteConfig(`Newsletter Submit title success ${tenant.toUpperCase()}`),
       },
-      subtitle: `Subtitle for Newsletter Form ${tenant.toUpperCase()}`,
+      subtitle: simpleRteConfig(`Subtitle for Newsletter Form ${tenant.toUpperCase()}`),
       tenant: tenantId,
-      title: `Newsletter Form ${tenant.toUpperCase()}`,
+      title: simpleRteConfig(`Newsletter Form ${tenant.toUpperCase()}`),
       titleLevel: '2',
     },
   });
@@ -539,19 +537,19 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     data: {
       _status: 'published',
       bibliographicReference: {
-        copyButtonText: 'Copy button text',
-        title: 'Title',
+        copyButtonText: simpleRteConfig('Copy button text'),
+        title: simpleRteConfig('Title'),
       },
       forms: {
         dataPrivacyCheckbox: {
           dataPrivacyCheckboxText: simpleRteConfig(`Data privacy checkbox ${tenant.toUpperCase()}`),
-          errorMessage: 'Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen',
+          errorMessage: simpleRteConfig('Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen'),
         },
       },
       generic: {
-        downloadTitle: 'Download title',
-        exportArticleButtonText: 'Export article button text',
-        writeEmailButtonText: 'Write email button text',
+        downloadTitle: simpleRteConfig('Download title'),
+        exportArticleButtonText: simpleRteConfig('Export article button text'),
+        writeEmailButtonText: simpleRteConfig('Write email button text'),
       },
       tenant: tenantId,
     },
@@ -619,8 +617,8 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       ],
       hero: {
         animated: true,
-        lead: 'Home Lead',
-        sideTitle: 'Home Side-Title',
+        lead: simpleRteConfig('Home Lead'),
+        sideTitle: simpleRteConfig('Home Side-Title'),
         title: simpleRteConfig(`Home Title ${tenant.toUpperCase()}`),
       },
       meta: {
@@ -640,10 +638,10 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'errorPage',
     data: {
       _status: 'published',
-      homeButtonText: 'Home Button Text',
+      homeButtonText: simpleRteConfig('Home Button Text'),
       notFound: {
-        description: 'Error description',
-        title: `Not found title ${tenant.toUpperCase()}`,
+        description: simpleRteConfig('Error description'),
+        title: simpleRteConfig(`Not found title ${tenant.toUpperCase()}`),
       },
       tenant: tenantId,
     },
@@ -694,7 +692,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       _status: 'published',
       hero: {
         colorMode: 'white',
-        lead: 'Detail Page Lead',
+        lead: simpleRteConfig('Detail Page Lead'),
         title: simpleRteConfig(`Detail page title ${tenant.toUpperCase()}`),
       },
       tenant: tenantId,
@@ -708,7 +706,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       _status: 'published',
       hero: {
         colorMode: 'white',
-        lead: 'Overview Page Lead',
+        lead: simpleRteConfig('Overview Page Lead'),
         title: simpleRteConfig(`Overview page title ${tenant.toUpperCase()}`),
       },
       tenant: tenantId,
@@ -721,14 +719,14 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     data: {
       _status: 'published',
       hero: {
-        author: 'Author',
+        author: simpleRteConfig('Author'),
         colorMode: 'white',
         date: '2025-08-31T12:00:00.000Z',
-        lead: 'Magazine Detail Page Lead',
+        lead: simpleRteConfig('Magazine Detail Page Lead'),
         title: simpleRteConfig(`Magazine detail page title ${tenant.toUpperCase()}`),
       },
       overviewPageProps: {
-        teaserText: 'Magazine Detail Teaser Text',
+        teaserText: simpleRteConfig('Magazine Detail Teaser Text'),
       },
       tenant: tenantId,
     },
@@ -743,11 +741,11 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         category: eventCategory.id,
         date: '2025-08-31T12:00:00.000Z',
         project: project.id,
-        title: `Event details title ${tenant.toUpperCase()} (render detail page)`,
+        title: simpleRteConfig(`Event details title ${tenant.toUpperCase()} (render detail page)`),
       },
       hero: {
         colorMode: 'white',
-        lead: 'Event Detail Page Lead',
+        lead: simpleRteConfig('Event Detail Page Lead'),
         title: simpleRteConfig(`Event detail page title ${tenant.toUpperCase()} (render detail page)`),
       },
       showDetailPage: 'true',
@@ -764,7 +762,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         category: eventCategory.id,
         date: '2025-08-31T12:00:00.000Z',
         project: project.id,
-        title: `Event detail title ${tenant.toUpperCase()} (render link)`,
+        title: simpleRteConfig(`Event detail title ${tenant.toUpperCase()} (render link)`),
       },
       hero: {
         colorMode: 'white',
@@ -772,7 +770,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       },
       link: {
         externalLink: 'https://www.foo.bar',
-        externalLinkText: 'External Link',
+        externalLinkText: simpleRteConfig('External Link'),
       },
       showDetailPage: 'false',
       tenant: tenantId,
@@ -787,11 +785,11 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       hero: {
         colorMode: 'white',
         date: '2025-08-31T12:00:00.000Z',
-        lead: 'News Detail Page Lead',
+        lead: simpleRteConfig('News Detail Page Lead'),
         title: simpleRteConfig(`News detail page title ${tenant.toUpperCase()}`),
       },
       overviewPageProps: {
-        teaserText: 'Overview Teaser Text',
+        teaserText: simpleRteConfig('Overview Teaser Text'),
       },
       project: project.id,
       tenant: tenantId,
@@ -809,7 +807,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       },
       hero: {
         colorMode: 'white',
-        lead: 'Publication Detail Page Lead',
+        lead: simpleRteConfig('Publication Detail Page Lead'),
         title: simpleRteConfig(`Publication detail page title ${tenant.toUpperCase()}`),
       },
       overviewPageProps: {
@@ -826,12 +824,12 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       _status: 'published',
       hero: {
         colorMode: 'white',
-        lead: 'Institute Detail Page Lead',
+        lead: simpleRteConfig('Institute Detail Page Lead'),
         title: simpleRteConfig(`Institute detail page title ${tenant.toUpperCase()}`),
       },
       overviewPageProps: {
         image,
-        text: 'Institute Teaser Text',
+        teaserText: simpleRteConfig('Institute Teaser Text'),
       },
       tenant: tenantId,
     },
@@ -844,12 +842,12 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       _status: 'published',
       hero: {
         colorMode: 'white',
-        lead: 'National Dictionary Detail Page Lead',
+        lead: simpleRteConfig('National Dictionary Detail Page Lead'),
         title: simpleRteConfig(`National Dictionary detail page title ${tenant.toUpperCase()}`),
       },
       overviewPageProps: {
         image,
-        text: 'National Dictionary Teaser Text',
+        teaserText: simpleRteConfig('National Dictionary Teaser Text'),
       },
       tenant: tenantId,
     },
@@ -862,11 +860,11 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       _status: 'published',
       hero: {
         colorMode: 'white',
-        lead: 'Project Detail Page Lead',
+        lead: simpleRteConfig('Project Detail Page Lead'),
         title: simpleRteConfig(`Project detail page title ${tenant.toUpperCase()}`),
       },
       overviewPageProps: {
-        text: 'Project Teaser Text',
+        teaserText: simpleRteConfig('Project Teaser Text'),
       },
       project,
       tenant: tenantId,
