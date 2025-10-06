@@ -170,7 +170,7 @@ const defaultArgs: InterfaceHeaderPropTypes = {
           {
             id: '68d9683b1eed56c026882f3c',
             navItemLink: '/',
-            navItemText: 'Veranstaltungen',
+            navItemText: 'Veranstaltungen gibt es eine ganze Menge!',
           },
           {
             id: '68d9683b1eed56c026882f3d',
@@ -202,7 +202,7 @@ const defaultArgs: InterfaceHeaderPropTypes = {
           {
             id: '68d9683b1eed56c026882f42',
             navItemLink: '/',
-            navItemText: 'Offene Stellen',
+            navItemText: 'Offene Stellen sind immer was Tolles!',
           },
         ],
       },
