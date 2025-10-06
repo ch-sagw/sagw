@@ -1,18 +1,14 @@
 import { Field } from 'payload';
+import { rte1 } from './rte';
 
 export const fieldsLinkInternal: Field[] = [
-  {
-    localized: true,
+  rte1({
     name: 'description',
-    required: false,
-    type: 'text',
-  },
-  {
-    localized: true,
+    notRequired: true,
+  }),
+  rte1({
     name: 'linkText',
-    required: true,
-    type: 'text',
-  },
+  }),
   {
     admin: {
       components: {
@@ -28,18 +24,13 @@ export const fieldsLinkInternal: Field[] = [
 ];
 
 export const fieldsLinkExternal: Field[] = [
-  {
-    localized: true,
+  rte1({
     name: 'description',
-    required: false,
-    type: 'text',
-  },
-  {
-    localized: true,
+    notRequired: true,
+  }),
+  rte1({
     name: 'externalLinkText',
-    required: true,
-    type: 'text',
-  },
+  }),
   {
     name: 'externalLink',
     required: true,
@@ -61,12 +52,9 @@ export const fieldsLinkExternal: Field[] = [
 ];
 
 export const fieldsMail: Field[] = [
-  {
-    localized: true,
+  rte1({
     name: 'linkText',
-    required: true,
-    type: 'text',
-  },
+  }),
   {
     localized: false,
     name: 'E-Mail',
