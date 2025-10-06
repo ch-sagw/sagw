@@ -59,6 +59,7 @@ Payload Config:
 !!
 - check hooks, if they work after migrating to rte1
 - check admin - conditions for string comparisons
+- rte1ToPlaintext now has undefined as option. check if it works everywhere
 
 
 Multitenant: (working with seed data)
