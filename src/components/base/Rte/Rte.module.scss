@@ -40,10 +40,20 @@
       }
     }
 
-    h4 {
+    h3,
+    h4,
+    h5 {
+      & + p {
+        margin-block-start: 0;
+      }
+    }
+
+    h4,
+    h5 {
       @include title-heading-5;
 
-      & + ul {
+      & + ul,
+      & + ol {
         margin-block-start: px-to-rem(var(--spacing-s), true);
       }
     }
@@ -61,7 +71,8 @@
         margin-block-start: 0;
       }
 
-      & + h4 {
+      & + h4,
+      & + h5 {
         margin-block-start: px-to-rem(var(--inside-elements-m));
       }
     }
