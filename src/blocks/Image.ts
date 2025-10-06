@@ -35,11 +35,10 @@ export const ImageBlock: Block = {
     },
     rte1({
       name: 'caption',
-      required: false,
+      notRequired: true,
     }),
     rte1({
       name: 'credits',
-      required: true,
     }),
   ],
   imageURL: '/admin-ui-images/image.svg',

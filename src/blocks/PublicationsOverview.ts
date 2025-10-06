@@ -10,15 +10,12 @@ export const PublicationsOverviewBlock: Block = {
   fields: [
     rte1({
       name: 'title',
-      required: true,
     }),
     rte1({
       name: 'filterTitleAllTopics',
-      required: true,
     }),
     rte1({
       name: 'filterTitleAllPublications',
-      required: true,
     }),
     {
       admin: {

@@ -11,7 +11,6 @@ export const PublicationTopics: CollectionConfig = {
   fields: [
     rte1({
       name: 'publicationTopic',
-      required: true,
     }),
     {
       admin: {

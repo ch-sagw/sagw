@@ -10,7 +10,6 @@ export const EventsTeasersBlock: Block = {
   fields: [
     rte1({
       name: 'title',
-      required: true,
     }),
     {
       admin: {
@@ -36,7 +35,6 @@ export const EventsTeasersBlock: Block = {
       },
       ...rte1({
         name: 'linkText',
-        required: true,
       }),
     },
     {

@@ -64,11 +64,9 @@ export const StatusMessage: CollectionConfig = {
     },
     rte1({
       name: 'title',
-      required: true,
     }),
     rte1({
       name: 'message',
-      required: true,
     }),
     fieldsLinkInternalWithToggle,
     {

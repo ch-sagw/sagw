@@ -50,7 +50,7 @@ export const Forms: CollectionConfig = {
       fields: [
         rte1({
           name: 'title',
-          required: false,
+          notRequired: true,
         }),
         {
           defaultValue: '2',
@@ -82,7 +82,7 @@ export const Forms: CollectionConfig = {
     },
     rte1({
       name: 'subtitle',
-      required: false,
+      notRequired: true,
     }),
 
     // submit button
@@ -130,11 +130,9 @@ export const Forms: CollectionConfig = {
           fields: [
             rte1({
               name: 'title',
-              required: true,
             }),
             rte1({
               name: 'text',
-              required: true,
             }),
             fieldsLinkInternalWithToggle,
           ],
@@ -147,11 +145,9 @@ export const Forms: CollectionConfig = {
           fields: [
             rte1({
               name: 'title',
-              required: true,
             }),
             rte1({
               name: 'text',
-              required: true,
             }),
             fieldsLinkInternalWithToggle,
           ],

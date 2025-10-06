@@ -22,7 +22,6 @@ export const I18nGlobals: CollectionConfig = {
               },
               ...rte1({
                 name: 'downloadTitle',
-                required: true,
               }),
             },
             {
@@ -31,7 +30,6 @@ export const I18nGlobals: CollectionConfig = {
               },
               ...rte1({
                 name: 'writeEmailButtonText',
-                required: true,
               }),
             },
             {
@@ -40,7 +38,6 @@ export const I18nGlobals: CollectionConfig = {
               },
               ...rte1({
                 name: 'exportArticleButtonText',
-                required: true,
               }),
             },
           ],
@@ -50,11 +47,9 @@ export const I18nGlobals: CollectionConfig = {
           fields: [
             rte1({
               name: 'title',
-              required: true,
             }),
             rte1({
               name: 'copyButtonText',
-              required: true,
             }),
           ],
           name: 'bibliographicReference',
@@ -69,11 +64,9 @@ export const I18nGlobals: CollectionConfig = {
               fields: [
                 rte3({
                   name: 'dataPrivacyCheckboxText',
-                  required: true,
                 }),
                 rte1({
                   name: 'errorMessage',
-                  required: true,
                 }),
               ],
               name: 'dataPrivacyCheckbox',

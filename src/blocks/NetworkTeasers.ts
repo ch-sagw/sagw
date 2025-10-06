@@ -47,11 +47,9 @@ export const NetworkTeasersBlock: Block = {
       fields: [
         rte1({
           name: 'allCheckboxText',
-          required: true,
         }),
         rte1({
           name: 'title',
-          required: true,
         }),
       ],
       label: 'Filter',
@@ -64,11 +62,10 @@ export const NetworkTeasersBlock: Block = {
       fields: [
         rte1({
           name: 'foundingYearText',
-          required: false,
+          notRequired: true,
         }),
         rte1({
           name: 'linkText',
-          required: true,
         }),
         {
           fields: fieldsNetworkItem,

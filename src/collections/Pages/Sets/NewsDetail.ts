@@ -48,7 +48,6 @@ export const NewsDetailPage: CollectionConfig = {
                   },
                   ...rte1({
                     name: 'teaserText',
-                    required: true,
                   }),
                 },
               ],

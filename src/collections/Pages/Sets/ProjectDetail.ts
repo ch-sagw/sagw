@@ -50,7 +50,6 @@ export const ProjectDetailPage: CollectionConfig = {
                   },
                   ...rte1({
                     name: 'teaserText',
-                    required: true,
                   }),
                 },
               ],

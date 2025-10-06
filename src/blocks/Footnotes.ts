@@ -12,11 +12,9 @@ export const FootnotesBlock: Block = {
   fields: [
     rte1({
       name: 'title',
-      required: true,
     }),
     rte2({
       name: 'text',
-      required: true,
     }),
   ],
   imageURL: '/admin-ui-images/notification.svg',

@@ -21,40 +21,36 @@ export const People: CollectionConfig = {
 
     rte1({
       name: 'prefix',
-      required: false,
+      notRequired: true,
     }),
     rte1({
       disableLocalization: true,
       name: 'firstname',
-      required: true,
     }),
     rte1({
       disableLocalization: true,
       name: 'middleName',
-      required: false,
+      notRequired: true,
     }),
     rte1({
       disableLocalization: true,
       name: 'lastname',
-      required: true,
     }),
     rte1({
       name: 'function',
-      required: false,
+      notRequired: true,
     }),
     rte1({
       disableLocalization: true,
       name: 'mail',
-      required: true,
     }),
     rte1({
       disableLocalization: true,
       name: 'phone',
-      required: false,
+      notRequired: true,
     }),
     rte1({
       name: 'name',
-      required: true,
     }),
     {
       name: 'image',

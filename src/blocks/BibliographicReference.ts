@@ -10,7 +10,6 @@ export const BibliographicReferenceBlock: Block = {
   fields: [
     rte3({
       name: 'text',
-      required: true,
     }),
   ],
   imageURL: '/admin-ui-images/bibliographic-reference.svg',

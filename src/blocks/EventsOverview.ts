@@ -10,7 +10,6 @@ export const EventsOverviewBlock: Block = {
   fields: [
     rte1({
       name: 'title',
-      required: true,
     }),
     {
       admin: {

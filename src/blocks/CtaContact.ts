@@ -11,11 +11,9 @@ export const CtaContactBlock: Block = {
   fields: [
     rte1({
       name: 'title',
-      required: true,
     }),
     rte1({
       name: 'text',
-      required: true,
     }),
     fieldsColorMode({
       dark: true,

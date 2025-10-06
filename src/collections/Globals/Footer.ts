@@ -48,62 +48,54 @@ export const Footer: CollectionConfig = {
 
     rte1({
       name: 'Data privacy link text',
-      required: true,
     }),
     rte1({
       name: 'Impressum link text',
-      required: true,
     }),
     rte1({
       disableLocalization: true,
       name: 'copyright',
-      required: true,
     }),
 
     {
       fields: [
         rte1({
           name: 'title',
-          required: true,
         }),
         rte1({
           disableLocalization: true,
           name: 'address1',
-          required: true,
         }),
         rte1({
           disableLocalization: true,
           name: 'address2',
-          required: false,
+          notRequired: true,
         }),
         rte1({
           disableLocalization: true,
           name: 'poBox',
-          required: false,
+          notRequired: true,
         }),
         rte1({
           disableLocalization: true,
           name: 'countryCode',
-          required: true,
         }),
         rte1({
           disableLocalization: true,
           name: 'zipCode',
-          required: true,
         }),
         rte1({
           name: 'city',
-          required: true,
         }),
         rte1({
           disableLocalization: true,
           name: 'phone',
-          required: false,
+          notRequired: true,
         }),
         rte1({
           disableLocalization: true,
           name: 'mail',
-          required: false,
+          notRequired: true,
         }),
       ],
       label: 'Kontakt',

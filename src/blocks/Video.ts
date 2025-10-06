@@ -16,11 +16,10 @@ export const VideoBlock: Block = {
     },
     rte1({
       name: 'caption',
-      required: false,
+      notRequired: true,
     }),
     rte1({
       name: 'credits',
-      required: true,
     }),
     {
       name: 'stillImage',

@@ -10,7 +10,7 @@ export const DownloadsBlock: Block = {
   fields: [
     rte1({
       name: 'subtitle',
-      required: false,
+      notRequired: true,
     }),
     {
       defaultValue: 'custom',

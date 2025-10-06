@@ -15,11 +15,9 @@ const homeTeaserItem: Field[] = [
   },
   rte1({
     name: 'title',
-    required: true,
   }),
   rte1({
     name: 'text',
-    required: true,
   }),
   {
     name: 'icon',

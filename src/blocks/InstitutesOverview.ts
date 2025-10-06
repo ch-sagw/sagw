@@ -14,7 +14,6 @@ export const InstitutesOverviewBlock: Block = {
       },
       ...rte1({
         name: 'moreInfoButtonText',
-        required: true,
       }),
     },
     {

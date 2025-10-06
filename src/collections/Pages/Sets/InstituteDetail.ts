@@ -50,7 +50,6 @@ export const InstituteDetailPage: CollectionConfig = {
                   },
                   ...rte1({
                     name: 'teaserText',
-                    required: true,
                   }),
                 },
               ],

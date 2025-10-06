@@ -25,12 +25,10 @@ export const formFieldName: Field = {
 
 export const formFieldLabel: Field = rte1({
   name: 'label',
-  required: true,
 });
 
 export const formFieldPlacehodler: Field = rte1({
   name: 'placeholder',
-  required: true,
 });
 
 export const formFieldWidth: Field = {
@@ -62,6 +60,5 @@ export const formFieldError: Field = {
   },
   ...rte1({
     name: 'fieldError',
-    required: true,
   }),
 };

@@ -12,7 +12,6 @@ export const Projects: CollectionConfig = {
   fields: [
     rte1({
       name: 'name',
-      required: true,
     }),
 
     // Joins

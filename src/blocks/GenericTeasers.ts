@@ -10,11 +10,10 @@ import { rte1 } from '@/field-templates/rte';
 const TeaserItem: Field[] = [
   rte1({
     name: 'title',
-    required: true,
   }),
   rte1({
     name: 'text',
-    required: false,
+    notRequired: true,
   }),
   {
     name: 'image',
@@ -35,11 +34,10 @@ export const GenericTeasersBlock: Block = {
   fields: [
     rte1({
       name: 'title',
-      required: true,
     }),
     rte1({
       name: 'lead',
-      required: false,
+      notRequired: true,
     }),
     {
       admin: {

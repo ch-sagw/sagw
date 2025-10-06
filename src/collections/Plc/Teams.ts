@@ -12,7 +12,6 @@ export const Teams: CollectionConfig = {
   fields: [
     rte1({
       name: 'name',
-      required: true,
     }),
     {
       admin: {

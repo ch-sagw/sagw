@@ -14,11 +14,9 @@ import { versions } from '@/field-templates/versions';
 const overlaySection: Field[] = [
   rte1({
     name: 'title',
-    required: true,
   }),
   rte3({
     name: 'text',
-    required: true,
   }),
 ];
 
@@ -26,7 +24,6 @@ const overlaySectionWithoutToggle: Field[] = [
   ...overlaySection,
   rte1({
     name: 'toggleLabel',
-    required: true,
   }),
 ];
 
@@ -34,11 +31,9 @@ const overlaySectionWithToggle: Field[] = [
   ...overlaySection,
   rte1({
     name: 'toggleLabelOff',
-    required: true,
   }),
   rte1({
     name: 'toggleLabelOn',
-    required: true,
   }),
   {
     defaultValue: 'on',
@@ -75,23 +70,18 @@ export const Consent: CollectionConfig = {
           fields: [
             rte1({
               name: 'title',
-              required: true,
             }),
             rte3({
               name: 'text',
-              required: true,
             }),
             rte1({
               name: 'buttonAcceptAll',
-              required: true,
             }),
             rte1({
               name: 'buttonCustomizeSelection',
-              required: true,
             }),
             rte1({
               name: 'buttonDeclineAll',
-              required: true,
             }),
           ],
           label: 'Consent Banner',
@@ -103,19 +93,15 @@ export const Consent: CollectionConfig = {
           fields: [
             rte1({
               name: 'title',
-              required: true,
             }),
             rte3({
               name: 'text',
-              required: true,
             }),
             rte1({
               name: 'buttonAcceptAll',
-              required: true,
             }),
             rte1({
               name: 'buttonAcceptSelection',
-              required: true,
             }),
             {
               fields: overlaySectionWithoutToggle,

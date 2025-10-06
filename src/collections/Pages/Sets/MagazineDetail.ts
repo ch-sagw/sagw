@@ -51,7 +51,6 @@ export const MagazineDetailPage: CollectionConfig = {
                   },
                   ...rte2({
                     name: 'teaserText',
-                    required: true,
                   }),
                 },
               ],

@@ -18,7 +18,6 @@ export const NotificationBlock: Block = {
     },
     rte3({
       name: 'text',
-      required: true,
     }),
   ],
   imageURL: '/admin-ui-images/notification.svg',

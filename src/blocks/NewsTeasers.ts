@@ -10,7 +10,6 @@ export const NewsTeasersBlock: Block = {
   fields: [
     rte1({
       name: 'title',
-      required: true,
     }),
     {
       admin: {

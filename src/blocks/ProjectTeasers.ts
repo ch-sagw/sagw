@@ -10,7 +10,6 @@ export const ProjectTeasersBlock: Block = {
   fields: [
     rte1({
       name: 'linkText',
-      required: true,
     }),
     {
       admin: {

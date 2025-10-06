@@ -78,19 +78,18 @@ export const EventDetailPage: CollectionConfig = {
               fields: [
                 rte1({
                   name: 'title',
-                  required: true,
                 }),
                 rte1({
                   name: 'location',
-                  required: false,
+                  notRequired: true,
                 }),
                 rte1({
                   name: 'language',
-                  required: false,
+                  notRequired: true,
                 }),
                 rte1({
                   name: 'time',
-                  required: false,
+                  notRequired: true,
                 }),
                 {
                   name: 'category',

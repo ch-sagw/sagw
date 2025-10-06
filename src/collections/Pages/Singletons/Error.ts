@@ -20,7 +20,6 @@ export const ErrorPage: CollectionConfig = {
           fields: [
             rte1({
               name: 'homeButtonText',
-              required: true,
             }),
 
             // 404
@@ -28,11 +27,9 @@ export const ErrorPage: CollectionConfig = {
               fields: [
                 rte1({
                   name: 'title',
-                  required: true,
                 }),
                 rte1({
                   name: 'description',
-                  required: true,
                 }),
               ],
               label: '404',

@@ -50,7 +50,6 @@ export const NationalDictionaryDetailPage: CollectionConfig = {
                   },
                   ...rte1({
                     name: 'teaserText',
-                    required: true,
                   }),
                 },
               ],

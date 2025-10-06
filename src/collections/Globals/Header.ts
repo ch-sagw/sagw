@@ -12,7 +12,6 @@ import { rte1 } from '@/field-templates/rte';
 const navLinkDefaultFields: Field[] = [
   rte1({
     name: 'navItemText',
-    required: true,
   }),
   {
     admin: {
@@ -36,7 +35,7 @@ const navLinkLevel1: Field[] = [
         },
         ...rte1({
           name: 'description',
-          required: false,
+          notRequired: true,
         }),
       },
       ...navLinkDefaultFields,
@@ -96,7 +95,6 @@ export const Header: CollectionConfig = {
               },
               ...rte1({
                 name: 'title',
-                required: true,
               }),
             },
             {
@@ -105,7 +103,6 @@ export const Header: CollectionConfig = {
               },
               ...rte1({
                 name: 'description',
-                required: true,
               }),
             },
           ],

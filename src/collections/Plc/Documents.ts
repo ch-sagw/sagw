@@ -12,7 +12,6 @@ export const Documents: CollectionConfig = {
   fields: [
     rte1({
       name: 'title',
-      required: true,
     }),
     {
       name: 'date',

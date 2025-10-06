@@ -10,7 +10,6 @@ export const TextBlock: Block = {
   fields: [
     rte3({
       name: 'text',
-      required: true,
     }),
   ],
   imageURL: '/admin-ui-images/richtext.svg',

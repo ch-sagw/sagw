@@ -14,7 +14,6 @@ export const NationalDictionariesOverviewBlock: Block = {
       },
       ...rte1({
         name: 'moreInfoButtonText',
-        required: true,
       }),
     },
     {

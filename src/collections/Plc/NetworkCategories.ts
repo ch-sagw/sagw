@@ -10,7 +10,6 @@ export const NetworkCategories: CollectionConfig = {
   fields: [
     rte1({
       name: 'name',
-      required: true,
     }),
   ],
   slug: 'networkCategories',

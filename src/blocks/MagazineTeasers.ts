@@ -10,7 +10,6 @@ export const MagazineTeasersBlock: Block = {
   fields: [
     rte1({
       name: 'linkText',
-      required: true,
     }),
     {
       admin: {

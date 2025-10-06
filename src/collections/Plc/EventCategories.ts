@@ -11,7 +11,6 @@ export const EventCategories: CollectionConfig = {
   fields: [
     rte1({
       name: 'eventCategory',
-      required: true,
     }),
     {
       admin: {

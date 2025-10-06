@@ -11,7 +11,6 @@ export const LinksBlock: Block = {
   fields: [
     rte1({
       name: 'title',
-      required: true,
     }),
     {
       fields: fieldsLinkInternalOrExternal,
