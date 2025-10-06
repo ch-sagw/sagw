@@ -7,14 +7,13 @@ import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 import { versions } from '@/field-templates/versions';
+import { rte1 } from '@/field-templates/rte';
 
 const navLinkDefaultFields: Field[] = [
-  {
-    localized: true,
+  rte1({
     name: 'navItemText',
     required: true,
-    type: 'text',
-  },
+  }),
   {
     admin: {
       components: {
@@ -35,10 +34,10 @@ const navLinkLevel1: Field[] = [
         admin: {
           description: 'If the user hovers over this menu item in the navigation, this is shown as a description in the Header',
         },
-        localized: true,
-        name: 'description',
-        required: false,
-        type: 'text',
+        ...rte1({
+          name: 'description',
+          required: false,
+        }),
       },
       ...navLinkDefaultFields,
     ],
@@ -95,19 +94,19 @@ export const Header: CollectionConfig = {
               admin: {
                 description: 'If the user hovers over the language selection, this is shown as a title in the Header',
               },
-              localized: true,
-              name: 'title',
-              required: true,
-              type: 'text',
+              ...rte1({
+                name: 'title',
+                required: true,
+              }),
             },
             {
               admin: {
                 description: 'If the user hovers over the language selection, this is shown as a description in the Header',
               },
-              localized: true,
-              name: 'description',
-              required: true,
-              type: 'text',
+              ...rte1({
+                name: 'description',
+                required: true,
+              }),
             },
           ],
           interfaceName: 'InterfaceHeaderLanguageNavigation',
@@ -126,19 +125,6 @@ export const Header: CollectionConfig = {
           interfaceName: 'InterfaceHeaderMetaNavigation',
           label: 'Metanvaigation',
           name: 'metanavigation',
-        },
-        {
-          fields: [
-            {
-              label: 'Logo Name',
-              name: 'logo',
-              required: true,
-              type: 'text',
-            },
-          ],
-          interfaceName: 'InterfaceHeaderLogo',
-          label: 'Logo',
-          name: 'logo',
         },
       ],
       type: 'tabs',

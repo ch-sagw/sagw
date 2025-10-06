@@ -130,16 +130,18 @@ const rte3Editor = lexicalEditor({
 interface InterfaceRteInputType {
   name: string;
   required: boolean;
+  disableLocalization?: boolean;
 }
 
 interface InterfaceRteInputTypeInternal {
   name: string;
   required: boolean;
   editor: LexicalRichTextAdapterProvider;
+  disableLocalization?: boolean;
 }
 
 const rte = ({
-  name, required, editor,
+  name, required, editor, disableLocalization,
 }: InterfaceRteInputTypeInternal): RichTextField => ({
   editor,
   hooks: {
@@ -149,15 +151,16 @@ const rte = ({
       }): FieldHook => sanitizeRichTextValue(value),
     ],
   },
-  localized: true,
+  localized: !disableLocalization,
   name,
   required,
   type: 'richText',
 });
 
 export const rte1 = ({
-  name, required,
+  name, required, disableLocalization,
 }: InterfaceRteInputType): RichTextField => rte({
+  disableLocalization,
   editor: rte1Editor,
   name,
   required,

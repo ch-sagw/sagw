@@ -5,6 +5,7 @@ import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 import { versions } from '@/field-templates/versions';
+import { rte1 } from '@/field-templates/rte';
 
 export const StatusMessage: CollectionConfig = {
   access: {
@@ -61,18 +62,14 @@ export const StatusMessage: CollectionConfig = {
       name: 'show',
       type: 'group',
     },
-    {
-      localized: true,
+    rte1({
       name: 'title',
       required: true,
-      type: 'text',
-    },
-    {
-      localized: true,
+    }),
+    rte1({
       name: 'message',
       required: true,
-      type: 'text',
-    },
+    }),
     fieldsLinkInternalWithToggle,
     {
       admin: {
