@@ -62,6 +62,10 @@
       min-width: 100%;
     }
 
+    @include mq($from: large, $to: wide) {
+      max-width: 250%;
+    }
+
     .listWrapper {
       @include expandable-content;
       @include list-reset;
@@ -88,7 +92,8 @@
       padding: 0;
       transition: transform var(--motion-speed-very-fast) var(--motion-ease-in-out);
       user-select: none;
-      width: 100%;
+      width: calc(100% - px-to-rem(var(--spacing-l)));
+      text-wrap: pretty;
 
       @include mq($from: large) {
         transition: none;
