@@ -134,7 +134,28 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    projects: {
+      relatedNewsPages: 'newsDetailPage';
+      relatedEventPages: 'eventDetailPage';
+      relatedPublicationPages: 'publicationDetailPage';
+      relatedProjectPages: 'projectDetailPage';
+      relatedDocuments: 'documents';
+      relatedZenodoDocuments: 'zenodoDocuments';
+    };
+    teams: {
+      relatedPeople: 'people';
+    };
+    publicationTopics: {
+      relatedPublicationPages: 'publicationDetailPage';
+    };
+    publicationTypes: {
+      relatedPublicationPages: 'publicationDetailPage';
+    };
+    eventCategory: {
+      relatedEventPages: 'eventDetailPage';
+    };
+  };
   collectionsSelect: {
     homePage: HomePageSelect<false> | HomePageSelect<true>;
     errorPage: ErrorPageSelect<false> | ErrorPageSelect<true>;
@@ -341,30 +362,131 @@ export interface Project {
   id: string;
   tenant?: (string | null) | Tenant;
   name: string;
+  relatedNewsPages?: {
+    docs?: (string | NewsDetailPage)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  relatedEventPages?: {
+    docs?: (string | EventDetailPage)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  relatedPublicationPages?: {
+    docs?: (string | PublicationDetailPage)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  relatedProjectPages?: {
+    docs?: (string | ProjectDetailPage)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  relatedDocuments?: {
+    docs?: (string | Document)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  relatedZenodoDocuments?: {
+    docs?: (string | ZenodoDocument)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "zenodoDocuments".
+ * via the `definition` "newsDetailPage".
  */
-export interface ZenodoDocument {
+export interface NewsDetailPage {
   id: string;
   tenant?: (string | null) | Tenant;
-  zenodoId: string;
-  title: string;
-  publicationDate: string;
-  files: {
-    link?: string | null;
-    format?: string | null;
-    size?: number | null;
-    id?: string | null;
-  }[];
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  /**
+   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   */
+  slug?: string | null;
+  overviewPageProps: {
+    /**
+     * This text will be used as text for the teasers on the overview page.
+     */
+    teaserText: string;
+  };
+  hero: InterfaceHeroFieldNewsDetail;
   project?: (string | null) | Project;
+  content?:
+    | (
+        | InterfaceTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceGenericTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
+      )[]
+    | null;
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeroFieldNewsDetail".
+ */
+export interface InterfaceHeroFieldNewsDetail {
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  lead?: string | null;
+  colorMode: 'white' | 'dark' | 'light';
+  date: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -691,6 +813,11 @@ export interface Team {
   id: string;
   tenant?: (string | null) | Tenant;
   name: string;
+  relatedPeople?: {
+    docs?: (string | Person)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1090,6 +1217,315 @@ export interface InterfaceProjectTeasersBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventDetailPage".
+ */
+export interface EventDetailPage {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  /**
+   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   */
+  slug?: string | null;
+  eventDetails: {
+    title: string;
+    location?: string | null;
+    language?: string | null;
+    time?: string | null;
+    category?: (string | null) | EventCategory;
+    project?: (string | null) | Project;
+    date: string;
+    multipleDays?: boolean | null;
+    dateEnd?: string | null;
+  };
+  showDetailPage?: ('true' | 'false') | null;
+  hero: InterfaceHeroField;
+  content?:
+    | (
+        | InterfaceTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceGenericTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
+      )[]
+    | null;
+  link?: {
+    description?: string | null;
+    externalLinkText: string;
+    externalLink: string;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventCategory".
+ */
+export interface EventCategory {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  eventCategory: string;
+  relatedEventPages?: {
+    docs?: (string | EventDetailPage)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeroField".
+ */
+export interface InterfaceHeroField {
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  lead?: string | null;
+  colorMode: 'white' | 'dark' | 'light';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationDetailPage".
+ */
+export interface PublicationDetailPage {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  /**
+   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   */
+  slug?: string | null;
+  overviewPageProps: {
+    /**
+     * This image will be used for the teasers on the overview page.
+     */
+    image: string | Image;
+  };
+  categorization: {
+    topic: string | PublicationTopic;
+    type: string | PublicationType;
+    project?: (string | null) | Project;
+  };
+  hero: InterfaceHeroField;
+  content?:
+    | (
+        | InterfaceTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceGenericTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
+      )[]
+    | null;
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationTopics".
+ */
+export interface PublicationTopic {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  publicationTopic: string;
+  relatedPublicationPages?: {
+    docs?: (string | PublicationDetailPage)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationTypes".
+ */
+export interface PublicationType {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  publicationType: string;
+  relatedPublicationPages?: {
+    docs?: (string | PublicationDetailPage)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projectDetailPage".
+ */
+export interface ProjectDetailPage {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  project: string | Project;
+  overviewPageProps: {
+    /**
+     * This text will be used for the teasers on the overview page.
+     */
+    text: string;
+  };
+  hero: InterfaceHeroField;
+  content?:
+    | (
+        | InterfaceTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceGenericTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
+      )[]
+    | null;
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "zenodoDocuments".
+ */
+export interface ZenodoDocument {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  zenodoId: string;
+  title: string;
+  publicationDate: string;
+  files: {
+    link?: string | null;
+    format?: string | null;
+    size?: number | null;
+    id?: string | null;
+  }[];
+  project?: (string | null) | Project;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "homePage".
  */
 export interface HomePage {
@@ -1260,29 +1696,6 @@ export interface DataPrivacyPage {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceHeroField".
- */
-export interface InterfaceHeroField {
-  title: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  lead?: string | null;
-  colorMode: 'white' | 'dark' | 'light';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1557,284 +1970,6 @@ export interface DetailPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "eventDetailPage".
- */
-export interface EventDetailPage {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  isLinkable?: boolean | null;
-  adminTitle?: string | null;
-  /**
-   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
-   */
-  slug?: string | null;
-  eventDetails: {
-    title: string;
-    location?: string | null;
-    language?: string | null;
-    time?: string | null;
-    category?: (string | null) | EventCategory;
-    project?: (string | null) | Project;
-    date: string;
-    multipleDays?: boolean | null;
-    dateEnd?: string | null;
-  };
-  showDetailPage?: ('true' | 'false') | null;
-  hero: InterfaceHeroField;
-  content?:
-    | (
-        | InterfaceTextBlock
-        | InterfaceLinksBlock
-        | InterfaceDownloadsBlock
-        | InterfaceImageBlock
-        | InterfaceVideoBlock
-        | InterfaceAccordionBlock
-        | InterfaceFormBlock
-        | InterfaceCtaContactBlock
-        | InterfaceCtaLinkBlock
-        | InterfaceHomeTeasersBlock
-        | InterfaceNetworkTeasersBlock
-        | InterfaceGenericTeasersBlock
-        | InterfaceNotificationBlock
-        | InterfaceBibliographicReferenceBlock
-        | InterfaceFootnotesBlock
-        | InterfaceMagazineOverviewBlock
-        | InterfacePublicationsOverviewBlock
-        | InterfaceEventsOverviewBlock
-        | InterfacePeopleOverviewBlock
-        | InterfaceNewsOverviewBlock
-        | InterfaceNationalDictionariesOverviewBlock
-        | InterfaceInstitutesOverviewBlock
-        | InterfaceProjectOverviewBlock
-        | InterfaceEventsTeasersBlock
-        | InterfaceMagazineTeasersBlock
-        | InterfaceNewsTeasersBlock
-        | InterfacePublicationsTeasersBlock
-        | InterfaceProjectTeasersBlock
-      )[]
-    | null;
-  link?: {
-    description?: string | null;
-    externalLinkText: string;
-    externalLink: string;
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "eventCategory".
- */
-export interface EventCategory {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  eventCategory: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "newsDetailPage".
- */
-export interface NewsDetailPage {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  isLinkable?: boolean | null;
-  adminTitle?: string | null;
-  /**
-   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
-   */
-  slug?: string | null;
-  overviewPageProps: {
-    /**
-     * This text will be used as text for the teasers on the overview page.
-     */
-    teaserText: string;
-  };
-  hero: InterfaceHeroFieldNewsDetail;
-  project?: (string | null) | Project;
-  content?:
-    | (
-        | InterfaceTextBlock
-        | InterfaceLinksBlock
-        | InterfaceDownloadsBlock
-        | InterfaceImageBlock
-        | InterfaceVideoBlock
-        | InterfaceAccordionBlock
-        | InterfaceFormBlock
-        | InterfaceCtaContactBlock
-        | InterfaceCtaLinkBlock
-        | InterfaceHomeTeasersBlock
-        | InterfaceNetworkTeasersBlock
-        | InterfaceGenericTeasersBlock
-        | InterfaceNotificationBlock
-        | InterfaceBibliographicReferenceBlock
-        | InterfaceFootnotesBlock
-        | InterfaceMagazineOverviewBlock
-        | InterfacePublicationsOverviewBlock
-        | InterfaceEventsOverviewBlock
-        | InterfacePeopleOverviewBlock
-        | InterfaceNewsOverviewBlock
-        | InterfaceNationalDictionariesOverviewBlock
-        | InterfaceInstitutesOverviewBlock
-        | InterfaceProjectOverviewBlock
-        | InterfaceEventsTeasersBlock
-        | InterfaceMagazineTeasersBlock
-        | InterfaceNewsTeasersBlock
-        | InterfacePublicationsTeasersBlock
-        | InterfaceProjectTeasersBlock
-      )[]
-    | null;
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceHeroFieldNewsDetail".
- */
-export interface InterfaceHeroFieldNewsDetail {
-  title: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  lead?: string | null;
-  colorMode: 'white' | 'dark' | 'light';
-  date: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publicationDetailPage".
- */
-export interface PublicationDetailPage {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  isLinkable?: boolean | null;
-  adminTitle?: string | null;
-  /**
-   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
-   */
-  slug?: string | null;
-  overviewPageProps: {
-    /**
-     * This image will be used for the teasers on the overview page.
-     */
-    image: string | Image;
-  };
-  categorization: {
-    topic: string | PublicationTopic;
-    type: string | PublicationType;
-    project?: (string | null) | Project;
-  };
-  hero: InterfaceHeroField;
-  content?:
-    | (
-        | InterfaceTextBlock
-        | InterfaceLinksBlock
-        | InterfaceDownloadsBlock
-        | InterfaceImageBlock
-        | InterfaceVideoBlock
-        | InterfaceAccordionBlock
-        | InterfaceFormBlock
-        | InterfaceCtaContactBlock
-        | InterfaceCtaLinkBlock
-        | InterfaceHomeTeasersBlock
-        | InterfaceNetworkTeasersBlock
-        | InterfaceGenericTeasersBlock
-        | InterfaceNotificationBlock
-        | InterfaceBibliographicReferenceBlock
-        | InterfaceFootnotesBlock
-        | InterfaceMagazineOverviewBlock
-        | InterfacePublicationsOverviewBlock
-        | InterfaceEventsOverviewBlock
-        | InterfacePeopleOverviewBlock
-        | InterfaceNewsOverviewBlock
-        | InterfaceNationalDictionariesOverviewBlock
-        | InterfaceInstitutesOverviewBlock
-        | InterfaceProjectOverviewBlock
-        | InterfaceEventsTeasersBlock
-        | InterfaceMagazineTeasersBlock
-        | InterfaceNewsTeasersBlock
-        | InterfacePublicationsTeasersBlock
-        | InterfaceProjectTeasersBlock
-      )[]
-    | null;
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publicationTopics".
- */
-export interface PublicationTopic {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  publicationTopic: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publicationTypes".
- */
-export interface PublicationType {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  publicationType: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "nationalDictionaryDetailPage".
  */
 export interface NationalDictionaryDetailPage {
@@ -1914,70 +2049,6 @@ export interface InstituteDetailPage {
      * This image will be used for the teasers on the overview page.
      */
     image: string | Image;
-    /**
-     * This text will be used for the teasers on the overview page.
-     */
-    text: string;
-  };
-  hero: InterfaceHeroField;
-  content?:
-    | (
-        | InterfaceTextBlock
-        | InterfaceLinksBlock
-        | InterfaceDownloadsBlock
-        | InterfaceImageBlock
-        | InterfaceVideoBlock
-        | InterfaceAccordionBlock
-        | InterfaceFormBlock
-        | InterfaceCtaContactBlock
-        | InterfaceCtaLinkBlock
-        | InterfaceHomeTeasersBlock
-        | InterfaceNetworkTeasersBlock
-        | InterfaceGenericTeasersBlock
-        | InterfaceNotificationBlock
-        | InterfaceBibliographicReferenceBlock
-        | InterfaceFootnotesBlock
-        | InterfaceMagazineOverviewBlock
-        | InterfacePublicationsOverviewBlock
-        | InterfaceEventsOverviewBlock
-        | InterfacePeopleOverviewBlock
-        | InterfaceNewsOverviewBlock
-        | InterfaceNationalDictionariesOverviewBlock
-        | InterfaceInstitutesOverviewBlock
-        | InterfaceProjectOverviewBlock
-        | InterfaceEventsTeasersBlock
-        | InterfaceMagazineTeasersBlock
-        | InterfaceNewsTeasersBlock
-        | InterfacePublicationsTeasersBlock
-        | InterfaceProjectTeasersBlock
-      )[]
-    | null;
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projectDetailPage".
- */
-export interface ProjectDetailPage {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  isLinkable?: boolean | null;
-  adminTitle?: string | null;
-  project: string | Project;
-  overviewPageProps: {
     /**
      * This text will be used for the teasers on the overview page.
      */
@@ -3948,6 +4019,12 @@ export interface ZenodoDocumentsSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   tenant?: T;
   name?: T;
+  relatedNewsPages?: T;
+  relatedEventPages?: T;
+  relatedPublicationPages?: T;
+  relatedProjectPages?: T;
+  relatedDocuments?: T;
+  relatedZenodoDocuments?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -3979,6 +4056,7 @@ export interface PeopleSelect<T extends boolean = true> {
 export interface TeamsSelect<T extends boolean = true> {
   tenant?: T;
   name?: T;
+  relatedPeople?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -3990,6 +4068,7 @@ export interface TeamsSelect<T extends boolean = true> {
 export interface PublicationTopicsSelect<T extends boolean = true> {
   tenant?: T;
   publicationTopic?: T;
+  relatedPublicationPages?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -4001,6 +4080,7 @@ export interface PublicationTopicsSelect<T extends boolean = true> {
 export interface PublicationTypesSelect<T extends boolean = true> {
   tenant?: T;
   publicationType?: T;
+  relatedPublicationPages?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -4012,6 +4092,7 @@ export interface PublicationTypesSelect<T extends boolean = true> {
 export interface EventCategorySelect<T extends boolean = true> {
   tenant?: T;
   eventCategory?: T;
+  relatedEventPages?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
