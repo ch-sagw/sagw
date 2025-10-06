@@ -19,11 +19,19 @@ test.describe('forms', () => {
     const buttonLabel = await page.locator('#field-submitButtonLabel');
     const recipientMail = await page.locator('#field-recipientMail');
     const subject = await page.locator('#field-mailSubject');
+    const successTitle = await page.locator('#field-submitSuccess__title');
+    const successText = await page.locator('#field-submitSuccess__text');
+    const errorTitle = await page.locator('#field-submitError__title');
+    const errorText = await page.locator('#field-submitError__text');
 
     await title.fill('title');
     await buttonLabel.fill('button label');
     await recipientMail.fill('foo@bar.com');
     await subject.fill('subject');
+    await successTitle.fill('success title');
+    await successText.fill('success text');
+    await errorTitle.fill('error title');
+    await errorText.fill('error text');
 
     // add block
 

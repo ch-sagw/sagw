@@ -52,7 +52,7 @@ test.describe('NonBreakingSpace', () => {
       .toBeGreaterThanOrEqual(1);
 
     const [detailPageData] = detailPagesData.docs;
-    const [, heroTitle] = detailPageData.hero.title.content.root.children[0].children;
+    const [, heroTitle] = detailPageData.hero.title.root.children[0].children;
 
     await expect(heroTitle.text)
       .toBe('\u00A0');

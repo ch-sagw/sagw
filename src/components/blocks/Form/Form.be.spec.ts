@@ -157,7 +157,7 @@ test.describe('Custom Form', () => {
     const mailField = await form.getByLabel('e-mail');
     const nameField = await form.getByLabel('name');
     const textareaField = await form.getByLabel('kommentar');
-    const checkboxField = await form.locator('#checkbox');
+    const checkboxField = await form.locator('#ich-habe-die-hinweise-zum-datenschutz-gelesen-und-akzeptiere-sie');
 
     await nameField.fill('testname');
     await mailField.fill('testmail');
