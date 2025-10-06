@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload';
 import { versions } from '@/field-templates/versions';
+import { rte1 } from '@/field-templates/rte';
 
 export const Projects: CollectionConfig = {
   admin: {
@@ -9,12 +10,10 @@ export const Projects: CollectionConfig = {
     useAsTitle: 'name',
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'name',
       required: true,
-      type: 'text',
-    },
+    }),
 
     // Joins
     {

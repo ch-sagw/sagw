@@ -340,7 +340,21 @@ export interface InterfaceDownloadsBlock {
 export interface Document {
   id: string;
   tenant?: (string | null) | Tenant;
-  title: string;
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   date: string;
   project?: (string | null) | Project;
   updatedAt: string;
@@ -389,7 +403,21 @@ export interface Tenant {
 export interface Project {
   id: string;
   tenant?: (string | null) | Tenant;
-  name: string;
+  name: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   relatedNewsPages?: {
     docs?: (string | NewsDetailPage)[];
     hasNextPage?: boolean;
@@ -441,7 +469,21 @@ export interface NewsDetailPage {
     /**
      * This text will be used as text for the teasers on the overview page.
      */
-    teaserText: string;
+    teaserText: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
   };
   hero: InterfaceHeroFieldNewsDetail;
   project?: (string | null) | Project;
@@ -1210,13 +1252,126 @@ export interface Person {
   id: string;
   tenant?: (string | null) | Tenant;
   team?: (string | Team)[] | null;
-  prefix?: string | null;
-  firstname: string;
-  middleName?: string | null;
-  lastname: string;
-  function?: string | null;
-  mail: string;
-  phone?: string | null;
+  prefix?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  firstname: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  middleName?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  lastname: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  function?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  mail: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  phone?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  name: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   image?: (string | null) | Image;
   fullName?: string | null;
   updatedAt: string;
@@ -1232,7 +1387,21 @@ export interface Person {
 export interface Team {
   id: string;
   tenant?: (string | null) | Tenant;
-  name: string;
+  name: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   relatedPeople?: {
     docs?: (string | Person)[];
     hasNextPage?: boolean;
@@ -1471,7 +1640,21 @@ export interface InterfaceNetworkTeasersBlock {
 export interface NetworkCategory {
   id: string;
   tenant?: (string | null) | Tenant;
-  name: string;
+  name: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -2157,7 +2340,21 @@ export interface EventDetailPage {
 export interface EventCategory {
   id: string;
   tenant?: (string | null) | Tenant;
-  eventCategory: string;
+  eventCategory: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   relatedEventPages?: {
     docs?: (string | EventDetailPage)[];
     hasNextPage?: boolean;
@@ -2269,7 +2466,21 @@ export interface PublicationDetailPage {
 export interface PublicationTopic {
   id: string;
   tenant?: (string | null) | Tenant;
-  publicationTopic: string;
+  publicationTopic: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   relatedPublicationPages?: {
     docs?: (string | PublicationDetailPage)[];
     hasNextPage?: boolean;
@@ -2286,7 +2497,21 @@ export interface PublicationTopic {
 export interface PublicationType {
   id: string;
   tenant?: (string | null) | Tenant;
-  publicationType: string;
+  publicationType: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   relatedPublicationPages?: {
     docs?: (string | PublicationDetailPage)[];
     hasNextPage?: boolean;
@@ -2310,7 +2535,21 @@ export interface ProjectDetailPage {
     /**
      * This text will be used for the teasers on the overview page.
      */
-    text: string;
+    teaserText: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
   };
   hero: InterfaceHeroField;
   content?:
@@ -2477,10 +2716,52 @@ export interface InterfaceHeroFieldHome {
 export interface ErrorPage {
   id: string;
   tenant?: (string | null) | Tenant;
-  homeButtonText: string;
+  homeButtonText: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   notFound: {
-    title: string;
-    description: string;
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    description: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
   };
   meta?: {
     seo?: {
@@ -2628,7 +2909,21 @@ export interface MagazineDetailPage {
     /**
      * This text will be used as text for the teasers on the overview page.
      */
-    teaserText: string;
+    teaserText: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
   };
   hero: InterfaceHeroFieldMagazineDetail;
   content?:
@@ -2842,7 +3137,21 @@ export interface NationalDictionaryDetailPage {
     /**
      * This text will be used for the teasers on the overview page.
      */
-    text: string;
+    teaserText: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
   };
   hero: InterfaceHeroField;
   content?:
@@ -2909,7 +3218,7 @@ export interface InstituteDetailPage {
     /**
      * This text will be used for the teasers on the overview page.
      */
-    text: {
+    teaserText: {
       root: {
         type: string;
         children: {
@@ -5143,7 +5452,7 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
     | T
     | {
         image?: T;
-        text?: T;
+        teaserText?: T;
       };
   hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
@@ -5206,7 +5515,7 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
     | T
     | {
         image?: T;
-        text?: T;
+        teaserText?: T;
       };
   hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
@@ -5269,7 +5578,7 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
   overviewPageProps?:
     | T
     | {
-        text?: T;
+        teaserText?: T;
       };
   hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
@@ -5466,6 +5775,7 @@ export interface PeopleSelect<T extends boolean = true> {
   function?: T;
   mail?: T;
   phone?: T;
+  name?: T;
   image?: T;
   fullName?: T;
   updatedAt?: T;

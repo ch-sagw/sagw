@@ -54,6 +54,13 @@ Payload Config:
 - limit blocks on all pages
 - add admin ui images for blocks: generic teaser, footnotes
 
+
+---
+!!
+- check hooks, if they work after migrating to rte1
+- check admin - conditions for string comparisons
+
+
 Multitenant: (working with seed data)
 --------
 - issue: on autologin, tenant-cookie is not set after login -> create github issue
