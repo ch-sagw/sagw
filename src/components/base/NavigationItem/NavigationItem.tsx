@@ -264,8 +264,7 @@ export const NavigationItem = ({
               ? toggleButtonAutofocus
               : toggleButtonAutofocusFromHover
             }
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               onSimulateKeyDownForScreenReader();
             }}
           />
