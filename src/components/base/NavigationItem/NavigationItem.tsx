@@ -104,7 +104,7 @@ export const NavigationItem = ({
     menuVisible,
     toggleButtonAutofocus: toggleButtonAutofocusFromHover,
     onToggleClick: onToggleClickFromHover,
-    onKeyDown,
+    onSimulateKeyDownForScreenReader,
     onMouseEnter,
     onMouseLeave,
     handleBlur,
@@ -264,14 +264,9 @@ export const NavigationItem = ({
               ? toggleButtonAutofocus
               : toggleButtonAutofocusFromHover
             }
-            onKeyDown={(e) => {
-              console.log(`key down was ${e.key}`);
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                if (!footer) {
-                  onKeyDown();
-                }
-              }
+            onClick={(e) => {
+              e.stopPropagation();
+              onSimulateKeyDownForScreenReader();
             }}
           />
         }

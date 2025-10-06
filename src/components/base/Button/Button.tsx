@@ -19,7 +19,6 @@ type BaseWrapperProps = {
   colorMode: ColorMode;
   disabled?: boolean;
   onClick?: (e: React.PointerEvent<HTMLButtonElement>) => void;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void;
   popOverTarget?: string;
   style: 'filled' | 'outlined' | 'text' | 'textSmall' | 'textBright' | 'buttonPlay' | 'socialLink';
   prefetch?: 'auto' | true | false | null;
@@ -111,7 +110,6 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     style,
     text,
     onClick,
-    onKeyDown,
     className,
     isActive,
   } = props;
@@ -220,7 +218,6 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
         disabled={disabled}
         data-testid='button'
         onClick={onClick}
-        onKeyDown={onKeyDown}
         popoverTarget={popOverTarget}
         type={buttonType ?? 'button'}
         aria-expanded={ariaExpanded}
