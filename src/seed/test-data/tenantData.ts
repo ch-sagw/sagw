@@ -2,7 +2,7 @@
 
 import { Payload } from 'payload';
 
-import { simpleRteConfig } from '@/seed/test-data/helpers';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { tenantRoles } from '@/collections/Plc/Users/roles';
 
 export const addDataForTenant = async (payload: Payload, tenant: string): Promise<void> => {
@@ -78,6 +78,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     data: {
       _status: 'published',
       tenant: tenantId,
+      title: `video ${tenant}`,
     },
     filePath: `src/seed/test-data/assets/${tenant}.mp4`,
   });
@@ -87,6 +88,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'documents',
     data: {
       _status: 'published',
+      date: '2025-10-30',
       tenant: tenantId,
       title: `${tenant.toUpperCase()} Document`,
     },
@@ -181,6 +183,16 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
+  // create a team
+  const team = await payload.create({
+    collection: 'teams',
+    data: {
+      _status: 'published',
+      name: `Team 1 ${tenant.toUpperCase()}`,
+      tenant: tenantId,
+    },
+  });
+
   // create person in people
   await payload.create({
     collection: 'people',
@@ -190,9 +202,8 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       function: 'Some function',
       lastname: `Lastname ${tenant.toUpperCase()}`,
       mail: 'foo@bar.com',
-      memberType: 'executiveBoard',
-      personDepartment: 'admin',
       phone: '031 123 45 67',
+      team: [team],
       tenant: tenantId,
     },
   });
@@ -216,16 +227,12 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         buttonAcceptAll: `Accept all ${tenant.toUpperCase()}`,
         buttonCustomizeSelection: `Customize ${tenant.toUpperCase()}`,
         buttonDeclineAll: `Decline ${tenant.toUpperCase()}`,
-        text: {
-          content: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
-        },
+        text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
         title: `Title ${tenant.toUpperCase()}`,
       },
       overlay: {
         analyticsPerformance: {
-          text: {
-            content: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
-          },
+          text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
           title: `Title ${tenant.toUpperCase()}`,
           toggleLabelOff: `Toggle Off ${tenant.toUpperCase()}`,
           toggleLabelOn: `Toggle On ${tenant.toUpperCase()}`,
@@ -233,23 +240,17 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         buttonAcceptAll: `Accept all ${tenant.toUpperCase()}`,
         buttonAcceptSelection: `Accept selection ${tenant.toUpperCase()}`,
         externalContent: {
-          text: {
-            content: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
-          },
+          text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
           title: `Title ${tenant.toUpperCase()}`,
           toggleLabelOff: `Toggle off ${tenant.toUpperCase()}`,
           toggleLabelOn: `Toggle on ${tenant.toUpperCase()}`,
         },
         necessaryCookies: {
-          text: {
-            content: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
-          },
+          text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
           title: `Title ${tenant.toUpperCase()}`,
           toggleLabel: `Toggle label ${tenant.toUpperCase()}`,
         },
-        text: {
-          content: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
-        },
+        text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
         title: `Title ${tenant.toUpperCase()}`,
 
       },
@@ -467,10 +468,8 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           blockType: 'checkboxBlock',
           fieldError: 'Bitte akzeptieren Sie die Hinweise zum Datenschutz.',
           fieldWidth: 'full',
-          label: {
-            content: simpleRteConfig('Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.'),
-          },
-          name: 'checkbox',
+          label: simpleRteConfig('Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.'),
+          name: 'checkbox-custom',
           required: true,
         },
       ],
@@ -479,6 +478,14 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: false,
       submitButtonLabel: 'Abschicken',
+      submitError: {
+        text: `Submit text error ${tenant.toUpperCase()}`,
+        title: `Submit title error ${tenant.toUpperCase()}`,
+      },
+      submitSuccess: {
+        text: `Submit text success ${tenant.toUpperCase()}`,
+        title: `Submit title success ${tenant.toUpperCase()}`,
+      },
       subtitle: `Subtitle for contact Form ${tenant.toUpperCase()}`,
       tenant: tenantId,
       title: `Contact Form ${tenant.toUpperCase()}`,
@@ -511,6 +518,14 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: true,
       submitButtonLabel: 'Abschicken',
+      submitError: {
+        text: `Newsletter Submit text error ${tenant.toUpperCase()}`,
+        title: `Newsletter Submit title error ${tenant.toUpperCase()}`,
+      },
+      submitSuccess: {
+        text: `Newsletter Submit text success ${tenant.toUpperCase()}`,
+        title: `Newsletter Submit title success ${tenant.toUpperCase()}`,
+      },
       subtitle: `Subtitle for Newsletter Form ${tenant.toUpperCase()}`,
       tenant: tenantId,
       title: `Newsletter Form ${tenant.toUpperCase()}`,
@@ -518,30 +533,25 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
-  // add i18n for forms
+  // add i18n data
   await payload.create({
-    collection: 'i18nForms',
+    collection: 'i18nGlobals',
     data: {
       _status: 'published',
-      i18nForms: {
+      bibliographicReference: {
+        copyButtonText: 'Copy button text',
+        title: 'Title',
+      },
+      forms: {
         dataPrivacyCheckbox: {
-          dataPrivacyCheckboxText: {
-            content: simpleRteConfig(`Data privacy checkbox ${tenant.toUpperCase()}`),
-          },
+          dataPrivacyCheckboxText: simpleRteConfig(`Data privacy checkbox ${tenant.toUpperCase()}`),
           errorMessage: 'Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen',
         },
-        newsletterSubmitSuccess: {
-          text: `Newsletter Submit text success ${tenant.toUpperCase()}`,
-          title: `Newsletter Submit title success ${tenant.toUpperCase()}`,
-        },
-        submitError: {
-          text: `Submit text error ${tenant.toUpperCase()}`,
-          title: `Submit title error ${tenant.toUpperCase()}`,
-        },
-        submitSuccess: {
-          text: `Submit text success ${tenant.toUpperCase()}`,
-          title: `Submit title success ${tenant.toUpperCase()}`,
-        },
+      },
+      generic: {
+        downloadTitle: 'Download title',
+        exportArticleButtonText: 'Export article button text',
+        writeEmailButtonText: 'Write email button text',
       },
       tenant: tenantId,
     },
@@ -568,58 +578,42 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         },
         {
           blockType: 'notificationBlock',
-          text: {
-            content: simpleRteConfig('Sample notification text.'),
-          },
+          text: simpleRteConfig('Sample notification text.'),
         },
         {
           blockType: 'textBlock',
-          text: {
-            content: simpleRteConfig('Sample Rte Block Content 1.'),
-          },
+          text: simpleRteConfig('Sample Rte Block Content 1.'),
         },
         {
           blockType: 'textBlock',
-          text: {
-            content: simpleRteConfig('Sample Rte Block Content 2.'),
-          },
+          text: simpleRteConfig('Sample Rte Block Content 2.'),
         },
         {
           accordions: [
             {
-              accordionContent: {
-                content: simpleRteConfig('Some content'),
-              },
-              accordionTitle: 'Accordion 1',
+              accordionContent: simpleRteConfig('Some content'),
+              accordionTitle: simpleRteConfig('Accordion 1'),
             },
             {
-              accordionContent: {
-                content: simpleRteConfig('Some content'),
-              },
-              accordionTitle: 'Accordion 2',
+              accordionContent: simpleRteConfig('Some content'),
+              accordionTitle: simpleRteConfig('Accordion 2'),
             },
             {
-              accordionContent: {
-                content: simpleRteConfig('Some content'),
-              },
-              accordionTitle: 'Accordion 3',
+              accordionContent: simpleRteConfig('Some content'),
+              accordionTitle: simpleRteConfig('Accordion 3'),
             },
             {
-              accordionContent: {
-                content: simpleRteConfig('Some content'),
-              },
-              accordionTitle: 'Accordion 4',
+              accordionContent: simpleRteConfig('Some content'),
+              accordionTitle: simpleRteConfig('Accordion 4'),
             },
             {
-              accordionContent: {
-                content: simpleRteConfig('Some content'),
-              },
-              accordionTitle: 'Accordion 5',
+              accordionContent: simpleRteConfig('Some content'),
+              accordionTitle: simpleRteConfig('Accordion 5'),
             },
           ],
           blockType: 'accordionBlock',
           colorMode: 'white',
-          title: `Accordion main title ${tenant.toUpperCase()}`,
+          title: simpleRteConfig(`Accordion main title ${tenant.toUpperCase()}`),
           titleLevel: '2',
         },
       ],
@@ -627,9 +621,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         animated: true,
         lead: 'Home Lead',
         sideTitle: 'Home Side-Title',
-        title: {
-          content: simpleRteConfig(`Home Title ${tenant.toUpperCase()}`),
-        },
+        title: simpleRteConfig(`Home Title ${tenant.toUpperCase()}`),
       },
       meta: {
         seo: {
@@ -657,6 +649,44 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
+  // create impressum page
+  await payload.create({
+    collection: 'impressumPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'textBlock',
+          text: simpleRteConfig(`some impressum content for ${tenant}`),
+        },
+      ],
+      hero: {
+        colorMode: 'dark',
+        title: simpleRteConfig(`Impressum page ${tenant}`),
+      },
+      tenant: tenantId,
+    },
+  });
+
+  // create data privacy page
+  await payload.create({
+    collection: 'dataPrivacyPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'textBlock',
+          text: simpleRteConfig(`some data privacy content for ${tenant}`),
+        },
+      ],
+      hero: {
+        colorMode: 'dark',
+        title: simpleRteConfig(`Data privacy page ${tenant}`),
+      },
+      tenant: tenantId,
+    },
+  });
+
   // create detail page
   await payload.create({
     collection: 'detailPage',
@@ -665,9 +695,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       hero: {
         colorMode: 'white',
         lead: 'Detail Page Lead',
-        title: {
-          content: simpleRteConfig(`Detail page title ${tenant.toUpperCase()}`),
-        },
+        title: simpleRteConfig(`Detail page title ${tenant.toUpperCase()}`),
       },
       tenant: tenantId,
     },
@@ -681,9 +709,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       hero: {
         colorMode: 'white',
         lead: 'Overview Page Lead',
-        title: {
-          content: simpleRteConfig(`Overview page title ${tenant.toUpperCase()}`),
-        },
+        title: simpleRteConfig(`Overview page title ${tenant.toUpperCase()}`),
       },
       tenant: tenantId,
     },
@@ -699,9 +725,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         colorMode: 'white',
         date: '2025-08-31T12:00:00.000Z',
         lead: 'Magazine Detail Page Lead',
-        title: {
-          content: simpleRteConfig(`Magazine detail page title ${tenant.toUpperCase()}`),
-        },
+        title: simpleRteConfig(`Magazine detail page title ${tenant.toUpperCase()}`),
       },
       overviewPageProps: {
         teaserText: 'Magazine Detail Teaser Text',
@@ -724,9 +748,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       hero: {
         colorMode: 'white',
         lead: 'Event Detail Page Lead',
-        title: {
-          content: simpleRteConfig(`Event detail page title ${tenant.toUpperCase()} (render detail page)`),
-        },
+        title: simpleRteConfig(`Event detail page title ${tenant.toUpperCase()} (render detail page)`),
       },
       showDetailPage: 'true',
       tenant: tenantId,
@@ -746,9 +768,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       },
       hero: {
         colorMode: 'white',
-        title: {
-          content: simpleRteConfig(`Event detail page title ${tenant.toUpperCase()} (render link)`),
-        },
+        title: simpleRteConfig(`Event detail page title ${tenant.toUpperCase()} (render link)`),
       },
       link: {
         externalLink: 'https://www.foo.bar',
@@ -768,9 +788,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         colorMode: 'white',
         date: '2025-08-31T12:00:00.000Z',
         lead: 'News Detail Page Lead',
-        title: {
-          content: simpleRteConfig(`News detail page title ${tenant.toUpperCase()}`),
-        },
+        title: simpleRteConfig(`News detail page title ${tenant.toUpperCase()}`),
       },
       overviewPageProps: {
         teaserText: 'Overview Teaser Text',
@@ -792,9 +810,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       hero: {
         colorMode: 'white',
         lead: 'Publication Detail Page Lead',
-        title: {
-          content: simpleRteConfig(`Publication detail page title ${tenant.toUpperCase()}`),
-        },
+        title: simpleRteConfig(`Publication detail page title ${tenant.toUpperCase()}`),
       },
       overviewPageProps: {
         image,
@@ -811,9 +827,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       hero: {
         colorMode: 'white',
         lead: 'Institute Detail Page Lead',
-        title: {
-          content: simpleRteConfig(`Institute detail page title ${tenant.toUpperCase()}`),
-        },
+        title: simpleRteConfig(`Institute detail page title ${tenant.toUpperCase()}`),
       },
       overviewPageProps: {
         image,
@@ -831,9 +845,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       hero: {
         colorMode: 'white',
         lead: 'National Dictionary Detail Page Lead',
-        title: {
-          content: simpleRteConfig(`National Dictionary detail page title ${tenant.toUpperCase()}`),
-        },
+        title: simpleRteConfig(`National Dictionary detail page title ${tenant.toUpperCase()}`),
       },
       overviewPageProps: {
         image,
@@ -851,9 +863,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       hero: {
         colorMode: 'white',
         lead: 'Project Detail Page Lead',
-        title: {
-          content: simpleRteConfig(`Project detail page title ${tenant.toUpperCase()}`),
-        },
+        title: simpleRteConfig(`Project detail page title ${tenant.toUpperCase()}`),
       },
       overviewPageProps: {
         text: 'Project Teaser Text',

@@ -67,7 +67,6 @@ export interface Config {
   };
   blocks: {
     textBlock: InterfaceTextBlock;
-    titleSubtitleTextBlock: InterfaceTitleSubtitleTextBlock;
     linksBlock: InterfaceLinksBlock;
     downloadsBlock: InterfaceDownloadsBlock;
     imageBlock: InterfaceImageBlock;
@@ -77,11 +76,11 @@ export interface Config {
     ctaContactBlock: InterfaceCtaContactBlock;
     ctaLinkBlock: InterfaceCtaLinkBlock;
     homeTeasersBlock: InterfaceHomeTeasersBlock;
-    textTeasersBlock: InterfaceTextTeasersBlock;
     networkTeasersBlock: InterfaceNetworkTeasersBlock;
-    imageTeasersBlock: InterfaceImageTeasersBlock;
+    genericTeasersBlock: InterfaceGenericTeasersBlock;
     notificationBlock: InterfaceNotificationBlock;
     bibliographicReferenceBlock: InterfaceBibliographicReferenceBlock;
+    footnoteBlock: InterfaceFootnotesBlock;
     magazineOverviewBlock: InterfaceMagazineOverviewBlock;
     publicationsOverviewBlock: InterfacePublicationsOverviewBlock;
     eventsOverviewBlock: InterfaceEventsOverviewBlock;
@@ -99,6 +98,8 @@ export interface Config {
   collections: {
     homePage: HomePage;
     errorPage: ErrorPage;
+    dataPrivacyPage: DataPrivacyPage;
+    impressumPage: ImpressumPage;
     magazineDetailPage: MagazineDetailPage;
     overviewPage: OverviewPage;
     detailPage: DetailPage;
@@ -116,13 +117,14 @@ export interface Config {
     zenodoDocuments: ZenodoDocument;
     projects: Project;
     people: Person;
+    teams: Team;
     publicationTopics: PublicationTopic;
     publicationTypes: PublicationType;
     eventCategory: EventCategory;
     tenants: Tenant;
     users: User;
     forms: Form;
-    i18nForms: I18NForm;
+    i18nGlobals: I18NGlobal;
     consent: Consent;
     footer: Footer;
     header: Header;
@@ -132,10 +134,33 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    projects: {
+      relatedNewsPages: 'newsDetailPage';
+      relatedEventPages: 'eventDetailPage';
+      relatedPublicationPages: 'publicationDetailPage';
+      relatedProjectPages: 'projectDetailPage';
+      relatedDocuments: 'documents';
+      relatedZenodoDocuments: 'zenodoDocuments';
+    };
+    teams: {
+      relatedPeople: 'people';
+    };
+    publicationTopics: {
+      relatedPublicationPages: 'publicationDetailPage';
+    };
+    publicationTypes: {
+      relatedPublicationPages: 'publicationDetailPage';
+    };
+    eventCategory: {
+      relatedEventPages: 'eventDetailPage';
+    };
+  };
   collectionsSelect: {
     homePage: HomePageSelect<false> | HomePageSelect<true>;
     errorPage: ErrorPageSelect<false> | ErrorPageSelect<true>;
+    dataPrivacyPage: DataPrivacyPageSelect<false> | DataPrivacyPageSelect<true>;
+    impressumPage: ImpressumPageSelect<false> | ImpressumPageSelect<true>;
     magazineDetailPage: MagazineDetailPageSelect<false> | MagazineDetailPageSelect<true>;
     overviewPage: OverviewPageSelect<false> | OverviewPageSelect<true>;
     detailPage: DetailPageSelect<false> | DetailPageSelect<true>;
@@ -153,13 +178,14 @@ export interface Config {
     zenodoDocuments: ZenodoDocumentsSelect<false> | ZenodoDocumentsSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     people: PeopleSelect<false> | PeopleSelect<true>;
+    teams: TeamsSelect<false> | TeamsSelect<true>;
     publicationTopics: PublicationTopicsSelect<false> | PublicationTopicsSelect<true>;
     publicationTypes: PublicationTypesSelect<false> | PublicationTypesSelect<true>;
     eventCategory: EventCategorySelect<false> | EventCategorySelect<true>;
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
-    i18nForms: I18NFormsSelect<false> | I18NFormsSelect<true>;
+    i18nGlobals: I18NGlobalsSelect<false> | I18NGlobalsSelect<true>;
     consent: ConsentSelect<false> | ConsentSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -206,17 +232,7 @@ export interface UserAuthOperations {
  * via the `definition` "InterfaceTextBlock".
  */
 export interface InterfaceTextBlock {
-  text: InterfaceRte2;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'textBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceRte2".
- */
-export interface InterfaceRte2 {
-  content: {
+  text: {
     root: {
       type: string;
       children: {
@@ -231,21 +247,9 @@ export interface InterfaceRte2 {
     };
     [k: string]: unknown;
   };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceTitleSubtitleTextBlock".
- */
-export interface InterfaceTitleSubtitleTextBlock {
-  title: string;
-  subtitle: string;
-  textBlocks: {
-    text: string;
-    id?: string | null;
-  }[];
   id?: string | null;
   blockName?: string | null;
-  blockType: 'titleSubtitleTextBlock';
+  blockType: 'textBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -255,15 +259,20 @@ export interface InterfaceLinksBlock {
   title: string;
   links?:
     | {
-        linkType: 'internal' | 'external';
+        linkType: 'internal' | 'external' | 'mail';
         linkInternal?: {
-          openInNewWindow?: boolean | null;
+          description?: string | null;
           linkText: string;
           internalLink: string;
         };
         linkExternal?: {
+          description?: string | null;
           externalLinkText: string;
           externalLink: string;
+        };
+        linkMail?: {
+          linkText: string;
+          'E-Mail': string;
         };
         id?: string | null;
       }[]
@@ -277,7 +286,7 @@ export interface InterfaceLinksBlock {
  * via the `definition` "InterfaceDownloadsBlock".
  */
 export interface InterfaceDownloadsBlock {
-  title: string;
+  subtitle?: string | null;
   customOrAuto: 'custom' | 'auto';
   downloads?:
     | (
@@ -304,6 +313,7 @@ export interface Document {
   id: string;
   tenant?: (string | null) | Tenant;
   title: string;
+  date: string;
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
@@ -352,169 +362,35 @@ export interface Project {
   id: string;
   tenant?: (string | null) | Tenant;
   name: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "zenodoDocuments".
- */
-export interface ZenodoDocument {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  zenodoId: string;
-  title: string;
-  publicationDate: string;
-  files: {
-    link?: string | null;
-    format?: string | null;
-    size?: number | null;
-    id?: string | null;
-  }[];
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceImageBlock".
- */
-export interface InterfaceImageBlock {
-  alignement?: ('left' | 'center' | 'right') | null;
-  image: string | Image;
-  title: string;
-  caption: string;
-  credits: string;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'imageBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "images".
- */
-export interface Image {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  alt?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceVideoBlock".
- */
-export interface InterfaceVideoBlock {
-  video: string | Video;
-  title: string;
-  caption: string;
-  credits: string;
-  stillImage: string | Image;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'videoBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "videos".
- */
-export interface Video {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  alt?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceAccordionBlock".
- */
-export interface InterfaceAccordionBlock {
-  title: string;
-  titleLevel: '2' | '3' | '4' | '5';
-  colorMode: 'white' | 'dark' | 'light';
-  accordions: {
-    accordionTitle: string;
-    accordionContent: InterfaceRte2;
-    id?: string | null;
-  }[];
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'accordionBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceFormBlock".
- */
-export interface InterfaceFormBlock {
-  form?: (string | null) | Form;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'formBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "forms".
- */
-export interface Form {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  /**
-   * A newsletter form has a fixed set of fields. Custom form can be build with any combination of fields as you like.
-   */
-  isNewsletterForm?: ('custom' | 'newsletter') | null;
-  colorMode: 'white' | 'dark';
-  title: string;
-  titleLevel: '2' | '3' | '4' | '5';
-  subtitle?: string | null;
-  submitButtonLabel: string;
-  recipientMail?: string | null;
-  mailSubject?: string | null;
-  /**
-   * If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".
-   */
-  showPrivacyCheckbox?: boolean | null;
-  fields?: (InterfaceCheckboxField | InterfaceEmailField | InterfaceTextField | InterfaceTextTextarea)[] | null;
-  newsletterFields?: {
-    email: {
-      label: string;
-      placeholder: string;
-      fieldWidth: 'full' | 'half';
-      required?: boolean | null;
-      fieldError?: string | null;
-    };
-    name: {
-      label: string;
-      placeholder: string;
-      fieldWidth: 'full' | 'half';
-      required?: boolean | null;
-      fieldError?: string | null;
-    };
-    /**
-     * The action text to show at the bottom of the notification. e.g.: "Resend verifiaction E-Mail again."
-     */
-    actionText: string;
+  relatedNewsPages?: {
+    docs?: (string | NewsDetailPage)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  relatedEventPages?: {
+    docs?: (string | EventDetailPage)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  relatedPublicationPages?: {
+    docs?: (string | PublicationDetailPage)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  relatedProjectPages?: {
+    docs?: (string | ProjectDetailPage)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  relatedDocuments?: {
+    docs?: (string | Document)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  relatedZenodoDocuments?: {
+    docs?: (string | ZenodoDocument)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
   };
   updatedAt: string;
   createdAt: string;
@@ -522,467 +398,28 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceCheckboxField".
+ * via the `definition` "newsDetailPage".
  */
-export interface InterfaceCheckboxField {
-  /**
-   * lowercase, no special characters
-   */
-  name: string;
-  label: InterfaceRte2;
-  fieldWidth: 'full' | 'half';
-  required?: boolean | null;
-  fieldError?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'checkboxBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceEmailField".
- */
-export interface InterfaceEmailField {
-  label: string;
-  placeholder: string;
-  /**
-   * lowercase, no special characters
-   */
-  name: string;
-  fieldWidth: 'full' | 'half';
-  required?: boolean | null;
-  fieldError?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'emailBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceTextField".
- */
-export interface InterfaceTextField {
-  label: string;
-  placeholder: string;
-  /**
-   * lowercase, no special characters
-   */
-  name: string;
-  fieldWidth: 'full' | 'half';
-  required?: boolean | null;
-  fieldError?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'textBlockForm';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceTextTextarea".
- */
-export interface InterfaceTextTextarea {
-  /**
-   * lowercase, no special characters
-   */
-  name: string;
-  label: string;
-  placeholder: string;
-  fieldWidth: 'full' | 'half';
-  required?: boolean | null;
-  fieldError?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'textareaBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceCtaContactBlock".
- */
-export interface InterfaceCtaContactBlock {
-  title: string;
-  text: string;
-  colorMode: 'white' | 'dark' | 'light';
-  contact: string | Person;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'ctaContactBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "people".
- */
-export interface Person {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  personDepartment: 'admin' | 'science' | 'com' | 'direction';
-  memberType: 'executiveBoard' | 'team';
-  prefix?: string | null;
-  firstname: string;
-  middleName?: string | null;
-  lastname: string;
-  function: string;
-  mail: string;
-  phone?: string | null;
-  image?: (string | null) | Image;
-  fullName?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceCtaLinkBlock".
- */
-export interface InterfaceCtaLinkBlock {
-  title: string;
-  text: string;
-  linkType: 'internal' | 'external';
-  linkInternal?: {
-    openInNewWindow?: boolean | null;
-    linkText: string;
-    internalLink: string;
-  };
-  linkExternal?: {
-    externalLinkText: string;
-    externalLink: string;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'ctaLinkBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceHomeTeasersBlock".
- */
-export interface InterfaceHomeTeasersBlock {
-  homeTeasers?:
-    | {
-        category: string;
-        title: string;
-        text: string;
-        icon: string | Svg;
-        openInNewWindow?: boolean | null;
-        linkText: string;
-        internalLink: string;
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'homeTeasersBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "svgs".
- */
-export interface Svg {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceTextTeasersBlock".
- */
-export interface InterfaceTextTeasersBlock {
-  title: string;
-  lead: string;
-  /**
-   * Align Title & text horizontally or vertically
-   */
-  alignement?: ('vertical' | 'horizontal') | null;
-  textTeasers?:
-    | {
-        title: string;
-        text: string;
-        link: {
-          openInNewWindow?: boolean | null;
-          linkText: string;
-          internalLink: string;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'textTeasersBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceNetworkTeasersBlock".
- */
-export interface InterfaceNetworkTeasersBlock {
-  filter: {
-    allCheckboxText: string;
-    title: string;
-  };
-  items: {
-    foundingYearText: string;
-    linkText: string;
-    items: {
-      title: string;
-      category: string | NetworkCategory;
-      foundingYear: number;
-      image: string | Image;
-      externalLink: string;
-      id?: string | null;
-    }[];
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'networkTeasersBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "networkCategories".
- */
-export interface NetworkCategory {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceImageTeasersBlock".
- */
-export interface InterfaceImageTeasersBlock {
-  title?: string | null;
-  teasers: {
-    image:
-      | {
-          relationTo: 'images';
-          value: string | Image;
-        }
-      | {
-          relationTo: 'svgs';
-          value: string | Svg;
-        };
-    title: string;
-    text?: string | null;
-    linkType: 'internal' | 'external';
-    linkInternal?: {
-      openInNewWindow?: boolean | null;
-      linkText: string;
-      internalLink: string;
-    };
-    linkExternal?: {
-      externalLinkText: string;
-      externalLink: string;
-    };
-    id?: string | null;
-  }[];
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'imageTeasersBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceNotificationBlock".
- */
-export interface InterfaceNotificationBlock {
-  text: InterfaceRte2;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'notificationBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceBibliographicReferenceBlock".
- */
-export interface InterfaceBibliographicReferenceBlock {
-  title: string;
-  text: InterfaceRte2;
-  copyButtonText: string;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'bibliographicReferenceBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceMagazineOverviewBlock".
- */
-export interface InterfaceMagazineOverviewBlock {
-  message?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'magazineOverviewBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfacePublicationsOverviewBlock".
- */
-export interface InterfacePublicationsOverviewBlock {
-  message?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'publicationsOverviewBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceEventsOverviewBlock".
- */
-export interface InterfaceEventsOverviewBlock {
-  message?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'eventsOverviewBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfacePeopleOverviewBlock".
- */
-export interface InterfacePeopleOverviewBlock {
-  message?: string | null;
-  memberType: {
-    type: 'executiveBoard' | 'team';
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'peopleOverviewBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceNewsOverviewBlock".
- */
-export interface InterfaceNewsOverviewBlock {
-  message?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'newsOverviewBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceNationalDictionariesOverviewBlock".
- */
-export interface InterfaceNationalDictionariesOverviewBlock {
-  message?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'nationalDictionariesOverviewBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceInstitutesOverviewBlock".
- */
-export interface InterfaceInstitutesOverviewBlock {
-  message?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'institutesOverviewBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceProjectOverviewBlock".
- */
-export interface InterfaceProjectOverviewBlock {
-  message?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'projectsOverviewBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceEventsTeasersBlock".
- */
-export interface InterfaceEventsTeasersBlock {
-  title: string;
-  linkText: string;
-  project?: (string | null) | Project;
-  message?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'eventsTeasersBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceMagazineTeasersBlock".
- */
-export interface InterfaceMagazineTeasersBlock {
-  title: string;
-  lead?: string | null;
-  linkText: string;
-  message?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'magazineTeasersBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceNewsTeasersBlock".
- */
-export interface InterfaceNewsTeasersBlock {
-  title: string;
-  linkText: string;
-  project?: (string | null) | Project;
-  message?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'newsTeasersBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfacePublicationsTeasersBlock".
- */
-export interface InterfacePublicationsTeasersBlock {
-  title: string;
-  linkText: string;
-  message?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'publicationsTeasersBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceProjectTeasersBlock".
- */
-export interface InterfaceProjectTeasersBlock {
-  title: string;
-  lead?: string | null;
-  linkText: string;
-  message?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'projectsTeasersBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "homePage".
- */
-export interface HomePage {
+export interface NewsDetailPage {
   id: string;
   tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    animated?: boolean | null;
-    sideTitle: string;
-    optionalLink?: {
-      includeLink?: boolean | null;
-      link?: {
-        openInNewWindow?: boolean | null;
-        linkText: string;
-        internalLink: string;
-      };
-    };
+  /**
+   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   */
+  slug?: string | null;
+  overviewPageProps: {
+    /**
+     * This text will be used as text for the teasers on the overview page.
+     */
+    teaserText: string;
   };
+  hero: InterfaceHeroFieldNewsDetail;
+  project?: (string | null) | Project;
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -992,11 +429,11 @@ export interface HomePage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1029,10 +466,10 @@ export interface HomePage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceRte1".
+ * via the `definition` "InterfaceHeroFieldNewsDetail".
  */
-export interface InterfaceRte1 {
-  content: {
+export interface InterfaceHeroFieldNewsDetail {
+  title: {
     root: {
       type: string;
       children: {
@@ -1047,6 +484,1134 @@ export interface InterfaceRte1 {
     };
     [k: string]: unknown;
   };
+  lead?: string | null;
+  colorMode: 'white' | 'dark' | 'light';
+  date: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceImageBlock".
+ */
+export interface InterfaceImageBlock {
+  alignement?: ('left' | 'center' | 'right') | null;
+  image: string | Image;
+  caption?: string | null;
+  credits: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'imageBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "images".
+ */
+export interface Image {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceVideoBlock".
+ */
+export interface InterfaceVideoBlock {
+  video: string | Video;
+  caption?: string | null;
+  credits: string;
+  stillImage: string | Image;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'videoBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos".
+ */
+export interface Video {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  title: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceAccordionBlock".
+ */
+export interface InterfaceAccordionBlock {
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  titleLevel: '2' | '3' | '4' | '5';
+  colorMode: 'white' | 'dark' | 'light';
+  accordions: {
+    accordionTitle: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    accordionContent: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accordionBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceFormBlock".
+ */
+export interface InterfaceFormBlock {
+  form?: (string | null) | Form;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'formBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "forms".
+ */
+export interface Form {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  /**
+   * A newsletter form has a fixed set of fields. Custom form can be build with any combination of fields as you like.
+   */
+  isNewsletterForm?: ('custom' | 'newsletter') | null;
+  colorMode: 'white' | 'dark' | 'light';
+  title?: string | null;
+  titleLevel: '2' | '3' | '4' | '5';
+  subtitle?: string | null;
+  submitButtonLabel: string;
+  recipientMail?: string | null;
+  mailSubject?: string | null;
+  /**
+   * If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".
+   */
+  showPrivacyCheckbox?: boolean | null;
+  submitSuccess: {
+    title: string;
+    text: string;
+    optionalLink?: {
+      includeLink?: boolean | null;
+      link?: {
+        description?: string | null;
+        linkText: string;
+        internalLink: string;
+      };
+    };
+  };
+  submitError: {
+    title: string;
+    text: string;
+    optionalLink?: {
+      includeLink?: boolean | null;
+      link?: {
+        description?: string | null;
+        linkText: string;
+        internalLink: string;
+      };
+    };
+  };
+  fields?: (InterfaceCheckboxField | InterfaceEmailField | InterfaceTextField | InterfaceTextareaField)[] | null;
+  newsletterFields?: {
+    email: {
+      label: string;
+      placeholder: string;
+      fieldWidth: 'full' | 'half';
+      required?: boolean | null;
+      fieldError?: string | null;
+    };
+    name: {
+      label: string;
+      placeholder: string;
+      fieldWidth: 'full' | 'half';
+      required?: boolean | null;
+      fieldError?: string | null;
+    };
+    /**
+     * The action text to show at the bottom of the notification. e.g.: "Resend verifiaction E-Mail again."
+     */
+    actionText: string;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceCheckboxField".
+ */
+export interface InterfaceCheckboxField {
+  name: string;
+  label: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  fieldWidth: 'full' | 'half';
+  required?: boolean | null;
+  fieldError?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'checkboxBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceEmailField".
+ */
+export interface InterfaceEmailField {
+  label: string;
+  placeholder: string;
+  name: string;
+  fieldWidth: 'full' | 'half';
+  required?: boolean | null;
+  fieldError?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'emailBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceTextField".
+ */
+export interface InterfaceTextField {
+  label: string;
+  placeholder: string;
+  name: string;
+  fieldWidth: 'full' | 'half';
+  required?: boolean | null;
+  fieldError?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'textBlockForm';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceTextareaField".
+ */
+export interface InterfaceTextareaField {
+  name: string;
+  label: string;
+  placeholder: string;
+  fieldWidth: 'full' | 'half';
+  required?: boolean | null;
+  fieldError?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'textareaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceCtaContactBlock".
+ */
+export interface InterfaceCtaContactBlock {
+  title: string;
+  text: string;
+  colorMode: 'white' | 'dark' | 'light';
+  contact: string | Person;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ctaContactBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "people".
+ */
+export interface Person {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  team?: (string | Team)[] | null;
+  prefix?: string | null;
+  firstname: string;
+  middleName?: string | null;
+  lastname: string;
+  function?: string | null;
+  mail: string;
+  phone?: string | null;
+  image?: (string | null) | Image;
+  fullName?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * You can assign People to teams.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "teams".
+ */
+export interface Team {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  name: string;
+  relatedPeople?: {
+    docs?: (string | Person)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceCtaLinkBlock".
+ */
+export interface InterfaceCtaLinkBlock {
+  title: string;
+  text: string;
+  linkType: 'internal' | 'external' | 'mail';
+  linkInternal?: {
+    description?: string | null;
+    linkText: string;
+    internalLink: string;
+  };
+  linkExternal?: {
+    description?: string | null;
+    externalLinkText: string;
+    externalLink: string;
+  };
+  linkMail?: {
+    linkText: string;
+    'E-Mail': string;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ctaLinkBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHomeTeasersBlock".
+ */
+export interface InterfaceHomeTeasersBlock {
+  homeTeasers?:
+    | {
+        category: string;
+        title: string;
+        text: string;
+        icon: string | Svg;
+        description?: string | null;
+        linkText: string;
+        internalLink: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "svgs".
+ */
+export interface Svg {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNetworkTeasersBlock".
+ */
+export interface InterfaceNetworkTeasersBlock {
+  filter: {
+    allCheckboxText: string;
+    title: string;
+  };
+  items: {
+    foundingYearText?: string | null;
+    linkText: string;
+    items: {
+      title: string;
+      category: string | NetworkCategory;
+      foundingYear?: number | null;
+      image: string | Image;
+      description?: string | null;
+      externalLink: string;
+      id?: string | null;
+    }[];
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'networkTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "networkCategories".
+ */
+export interface NetworkCategory {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceGenericTeasersBlock".
+ */
+export interface InterfaceGenericTeasersBlock {
+  title: string;
+  lead?: string | null;
+  /**
+   * Align Title & text horizontally or vertically
+   */
+  alignement?: ('vertical' | 'horizontal') | null;
+  teasers: {
+    title: string;
+    text?: string | null;
+    image?:
+      | ({
+          relationTo: 'images';
+          value: string | Image;
+        } | null)
+      | ({
+          relationTo: 'svgs';
+          value: string | Svg;
+        } | null);
+    linkType: 'internal' | 'external' | 'mail';
+    linkInternal?: {
+      description?: string | null;
+      linkText: string;
+      internalLink: string;
+    };
+    linkExternal?: {
+      description?: string | null;
+      externalLinkText: string;
+      externalLink: string;
+    };
+    linkMail?: {
+      linkText: string;
+      'E-Mail': string;
+    };
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'genericTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNotificationBlock".
+ */
+export interface InterfaceNotificationBlock {
+  /**
+   * If disabled, the notification will not be shown.
+   */
+  show?: boolean | null;
+  text: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'notificationBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceBibliographicReferenceBlock".
+ */
+export interface InterfaceBibliographicReferenceBlock {
+  text: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'bibliographicReferenceBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceFootnotesBlock".
+ */
+export interface InterfaceFootnotesBlock {
+  title: string;
+  text: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'footnoteBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceMagazineOverviewBlock".
+ */
+export interface InterfaceMagazineOverviewBlock {
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'magazineOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfacePublicationsOverviewBlock".
+ */
+export interface InterfacePublicationsOverviewBlock {
+  title: string;
+  filterTitleAllTopics: string;
+  filterTitleAllPublications: string;
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'publicationsOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceEventsOverviewBlock".
+ */
+export interface InterfaceEventsOverviewBlock {
+  title: string;
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'eventsOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfacePeopleOverviewBlock".
+ */
+export interface InterfacePeopleOverviewBlock {
+  message?: string | null;
+  memberType: {
+    type: 'executiveBoard' | 'team';
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'peopleOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNewsOverviewBlock".
+ */
+export interface InterfaceNewsOverviewBlock {
+  title: string;
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'newsOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNationalDictionariesOverviewBlock".
+ */
+export interface InterfaceNationalDictionariesOverviewBlock {
+  /**
+   * This will be used as "More info" text on the teasers
+   */
+  moreInfoButtonText: string;
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'nationalDictionariesOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceInstitutesOverviewBlock".
+ */
+export interface InterfaceInstitutesOverviewBlock {
+  /**
+   * This will be used as "More info" text on the teasers
+   */
+  moreInfoButtonText: string;
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'institutesOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceProjectOverviewBlock".
+ */
+export interface InterfaceProjectOverviewBlock {
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'projectsOverviewBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceEventsTeasersBlock".
+ */
+export interface InterfaceEventsTeasersBlock {
+  title: string;
+  /**
+   * Do you want to add a link to the Events overview page?
+   */
+  link?: ('no' | 'yes') | null;
+  linkText?: string | null;
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'eventsTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceMagazineTeasersBlock".
+ */
+export interface InterfaceMagazineTeasersBlock {
+  linkText: string;
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'magazineTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNewsTeasersBlock".
+ */
+export interface InterfaceNewsTeasersBlock {
+  title: string;
+  /**
+   * Do you want to add a link to the News overview page?
+   */
+  link?: ('no' | 'yes') | null;
+  linkText?: string | null;
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'newsTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfacePublicationsTeasersBlock".
+ */
+export interface InterfacePublicationsTeasersBlock {
+  title: string;
+  /**
+   * Do you want to add a link to the Publications overview page?
+   */
+  link?: ('no' | 'yes') | null;
+  linkText?: string | null;
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'publicationsTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceProjectTeasersBlock".
+ */
+export interface InterfaceProjectTeasersBlock {
+  linkText: string;
+  message?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'projectsTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventDetailPage".
+ */
+export interface EventDetailPage {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  /**
+   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   */
+  slug?: string | null;
+  eventDetails: {
+    title: string;
+    location?: string | null;
+    language?: string | null;
+    time?: string | null;
+    category?: (string | null) | EventCategory;
+    project?: (string | null) | Project;
+    date: string;
+    multipleDays?: boolean | null;
+    dateEnd?: string | null;
+  };
+  showDetailPage?: ('true' | 'false') | null;
+  hero: InterfaceHeroField;
+  content?:
+    | (
+        | InterfaceTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceGenericTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
+      )[]
+    | null;
+  link?: {
+    description?: string | null;
+    externalLinkText: string;
+    externalLink: string;
+  };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventCategory".
+ */
+export interface EventCategory {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  eventCategory: string;
+  relatedEventPages?: {
+    docs?: (string | EventDetailPage)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeroField".
+ */
+export interface InterfaceHeroField {
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  lead?: string | null;
+  colorMode: 'white' | 'dark' | 'light';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationDetailPage".
+ */
+export interface PublicationDetailPage {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  /**
+   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   */
+  slug?: string | null;
+  overviewPageProps: {
+    /**
+     * This image will be used for the teasers on the overview page.
+     */
+    image: string | Image;
+  };
+  categorization: {
+    topic: string | PublicationTopic;
+    type: string | PublicationType;
+    project?: (string | null) | Project;
+  };
+  hero: InterfaceHeroField;
+  content?:
+    | (
+        | InterfaceTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceGenericTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
+      )[]
+    | null;
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationTopics".
+ */
+export interface PublicationTopic {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  publicationTopic: string;
+  relatedPublicationPages?: {
+    docs?: (string | PublicationDetailPage)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publicationTypes".
+ */
+export interface PublicationType {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  publicationType: string;
+  relatedPublicationPages?: {
+    docs?: (string | PublicationDetailPage)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projectDetailPage".
+ */
+export interface ProjectDetailPage {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  project: string | Project;
+  overviewPageProps: {
+    /**
+     * This text will be used for the teasers on the overview page.
+     */
+    text: string;
+  };
+  hero: InterfaceHeroField;
+  content?:
+    | (
+        | InterfaceTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceGenericTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
+      )[]
+    | null;
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "zenodoDocuments".
+ */
+export interface ZenodoDocument {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  zenodoId: string;
+  title: string;
+  publicationDate: string;
+  files: {
+    link?: string | null;
+    format?: string | null;
+    size?: number | null;
+    id?: string | null;
+  }[];
+  project?: (string | null) | Project;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homePage".
+ */
+export interface HomePage {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  hero: InterfaceHeroFieldHome;
+  content?:
+    | (
+        | InterfaceTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceGenericTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
+      )[]
+    | null;
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeroFieldHome".
+ */
+export interface InterfaceHeroFieldHome {
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  lead?: string | null;
+  animated?: boolean | null;
+  sideTitle: string;
+  optionalLink?: {
+    includeLink?: boolean | null;
+    link?: {
+      description?: string | null;
+      linkText: string;
+      internalLink: string;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1060,6 +1625,120 @@ export interface ErrorPage {
     title: string;
     description: string;
   };
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dataPrivacyPage".
+ */
+export interface DataPrivacyPage {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  hero: InterfaceHeroField;
+  content?:
+    | (
+        | InterfaceTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceGenericTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
+      )[]
+    | null;
+  meta?: {
+    seo?: {
+      index?: boolean | null;
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Image;
+      description?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "impressumPage".
+ */
+export interface ImpressumPage {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  isLinkable?: boolean | null;
+  adminTitle?: string | null;
+  hero: InterfaceHeroField;
+  content?:
+    | (
+        | InterfaceTextBlock
+        | InterfaceLinksBlock
+        | InterfaceDownloadsBlock
+        | InterfaceImageBlock
+        | InterfaceVideoBlock
+        | InterfaceAccordionBlock
+        | InterfaceFormBlock
+        | InterfaceCtaContactBlock
+        | InterfaceCtaLinkBlock
+        | InterfaceHomeTeasersBlock
+        | InterfaceNetworkTeasersBlock
+        | InterfaceGenericTeasersBlock
+        | InterfaceNotificationBlock
+        | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
+        | InterfaceMagazineOverviewBlock
+        | InterfacePublicationsOverviewBlock
+        | InterfaceEventsOverviewBlock
+        | InterfacePeopleOverviewBlock
+        | InterfaceNewsOverviewBlock
+        | InterfaceNationalDictionariesOverviewBlock
+        | InterfaceInstitutesOverviewBlock
+        | InterfaceProjectOverviewBlock
+        | InterfaceEventsTeasersBlock
+        | InterfaceMagazineTeasersBlock
+        | InterfaceNewsTeasersBlock
+        | InterfacePublicationsTeasersBlock
+        | InterfaceProjectTeasersBlock
+      )[]
+    | null;
   meta?: {
     seo?: {
       index?: boolean | null;
@@ -1094,17 +1773,10 @@ export interface MagazineDetailPage {
      */
     teaserText: string;
   };
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-    author: string;
-    date: string;
-  };
+  hero: InterfaceHeroFieldMagazineDetail;
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -1114,11 +1786,11 @@ export interface MagazineDetailPage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1151,6 +1823,31 @@ export interface MagazineDetailPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeroFieldMagazineDetail".
+ */
+export interface InterfaceHeroFieldMagazineDetail {
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  lead?: string | null;
+  colorMode: 'white' | 'dark' | 'light';
+  author: string;
+  date: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "overviewPage".
  */
 export interface OverviewPage {
@@ -1162,15 +1859,10 @@ export interface OverviewPage {
    * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
    */
   slug?: string | null;
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
+  hero: InterfaceHeroField;
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -1180,11 +1872,11 @@ export interface OverviewPage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1228,15 +1920,10 @@ export interface DetailPage {
    * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
    */
   slug?: string | null;
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
+  hero: InterfaceHeroField;
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -1246,11 +1933,11 @@ export interface DetailPage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1277,275 +1964,6 @@ export interface DetailPage {
       description?: string | null;
     };
   };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "eventDetailPage".
- */
-export interface EventDetailPage {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  isLinkable?: boolean | null;
-  adminTitle?: string | null;
-  /**
-   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
-   */
-  slug?: string | null;
-  eventDetails: {
-    title: string;
-    location?: string | null;
-    language?: string | null;
-    time?: string | null;
-    category?: (string | null) | EventCategory;
-    project?: (string | null) | Project;
-    date: string;
-    multipleDays?: boolean | null;
-    dateEnd?: string | null;
-  };
-  showDetailPage?: ('true' | 'false') | null;
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
-  content?:
-    | (
-        | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
-        | InterfaceLinksBlock
-        | InterfaceDownloadsBlock
-        | InterfaceImageBlock
-        | InterfaceVideoBlock
-        | InterfaceAccordionBlock
-        | InterfaceFormBlock
-        | InterfaceCtaContactBlock
-        | InterfaceCtaLinkBlock
-        | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
-        | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
-        | InterfaceNotificationBlock
-        | InterfaceBibliographicReferenceBlock
-        | InterfaceMagazineOverviewBlock
-        | InterfacePublicationsOverviewBlock
-        | InterfaceEventsOverviewBlock
-        | InterfacePeopleOverviewBlock
-        | InterfaceNewsOverviewBlock
-        | InterfaceNationalDictionariesOverviewBlock
-        | InterfaceInstitutesOverviewBlock
-        | InterfaceProjectOverviewBlock
-        | InterfaceEventsTeasersBlock
-        | InterfaceMagazineTeasersBlock
-        | InterfaceNewsTeasersBlock
-        | InterfacePublicationsTeasersBlock
-        | InterfaceProjectTeasersBlock
-      )[]
-    | null;
-  link?: {
-    externalLinkText: string;
-    externalLink: string;
-  };
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "eventCategory".
- */
-export interface EventCategory {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  eventCategory: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "newsDetailPage".
- */
-export interface NewsDetailPage {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  isLinkable?: boolean | null;
-  adminTitle?: string | null;
-  /**
-   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
-   */
-  slug?: string | null;
-  overviewPageProps: {
-    /**
-     * This text will be used as text for the teasers on the overview page.
-     */
-    teaserText: string;
-  };
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-    date: string;
-  };
-  project?: (string | null) | Project;
-  content?:
-    | (
-        | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
-        | InterfaceLinksBlock
-        | InterfaceDownloadsBlock
-        | InterfaceImageBlock
-        | InterfaceVideoBlock
-        | InterfaceAccordionBlock
-        | InterfaceFormBlock
-        | InterfaceCtaContactBlock
-        | InterfaceCtaLinkBlock
-        | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
-        | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
-        | InterfaceNotificationBlock
-        | InterfaceBibliographicReferenceBlock
-        | InterfaceMagazineOverviewBlock
-        | InterfacePublicationsOverviewBlock
-        | InterfaceEventsOverviewBlock
-        | InterfacePeopleOverviewBlock
-        | InterfaceNewsOverviewBlock
-        | InterfaceNationalDictionariesOverviewBlock
-        | InterfaceInstitutesOverviewBlock
-        | InterfaceProjectOverviewBlock
-        | InterfaceEventsTeasersBlock
-        | InterfaceMagazineTeasersBlock
-        | InterfaceNewsTeasersBlock
-        | InterfacePublicationsTeasersBlock
-        | InterfaceProjectTeasersBlock
-      )[]
-    | null;
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publicationDetailPage".
- */
-export interface PublicationDetailPage {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  isLinkable?: boolean | null;
-  adminTitle?: string | null;
-  /**
-   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
-   */
-  slug?: string | null;
-  overviewPageProps: {
-    /**
-     * This image will be used for the teasers on the overview page.
-     */
-    image: string | Image;
-  };
-  categorization: {
-    topic: string | PublicationTopic;
-    type: string | PublicationType;
-    project?: (string | null) | Project;
-  };
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
-  content?:
-    | (
-        | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
-        | InterfaceLinksBlock
-        | InterfaceDownloadsBlock
-        | InterfaceImageBlock
-        | InterfaceVideoBlock
-        | InterfaceAccordionBlock
-        | InterfaceFormBlock
-        | InterfaceCtaContactBlock
-        | InterfaceCtaLinkBlock
-        | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
-        | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
-        | InterfaceNotificationBlock
-        | InterfaceBibliographicReferenceBlock
-        | InterfaceMagazineOverviewBlock
-        | InterfacePublicationsOverviewBlock
-        | InterfaceEventsOverviewBlock
-        | InterfacePeopleOverviewBlock
-        | InterfaceNewsOverviewBlock
-        | InterfaceNationalDictionariesOverviewBlock
-        | InterfaceInstitutesOverviewBlock
-        | InterfaceProjectOverviewBlock
-        | InterfaceEventsTeasersBlock
-        | InterfaceMagazineTeasersBlock
-        | InterfaceNewsTeasersBlock
-        | InterfacePublicationsTeasersBlock
-        | InterfaceProjectTeasersBlock
-      )[]
-    | null;
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publicationTopics".
- */
-export interface PublicationTopic {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  publicationTopic: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publicationTypes".
- */
-export interface PublicationType {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  publicationType: string;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1569,15 +1987,10 @@ export interface NationalDictionaryDetailPage {
      */
     text: string;
   };
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
+  hero: InterfaceHeroField;
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -1587,11 +2000,11 @@ export interface NationalDictionaryDetailPage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1641,15 +2054,10 @@ export interface InstituteDetailPage {
      */
     text: string;
   };
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
+  hero: InterfaceHeroField;
   content?:
     | (
         | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
         | InterfaceImageBlock
@@ -1659,80 +2067,11 @@ export interface InstituteDetailPage {
         | InterfaceCtaContactBlock
         | InterfaceCtaLinkBlock
         | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
         | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
+        | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceBibliographicReferenceBlock
-        | InterfaceMagazineOverviewBlock
-        | InterfacePublicationsOverviewBlock
-        | InterfaceEventsOverviewBlock
-        | InterfacePeopleOverviewBlock
-        | InterfaceNewsOverviewBlock
-        | InterfaceNationalDictionariesOverviewBlock
-        | InterfaceInstitutesOverviewBlock
-        | InterfaceProjectOverviewBlock
-        | InterfaceEventsTeasersBlock
-        | InterfaceMagazineTeasersBlock
-        | InterfaceNewsTeasersBlock
-        | InterfacePublicationsTeasersBlock
-        | InterfaceProjectTeasersBlock
-      )[]
-    | null;
-  meta?: {
-    seo?: {
-      index?: boolean | null;
-      title?: string | null;
-      /**
-       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-       */
-      image?: (string | null) | Image;
-      description?: string | null;
-    };
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projectDetailPage".
- */
-export interface ProjectDetailPage {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  isLinkable?: boolean | null;
-  adminTitle?: string | null;
-  project: string | Project;
-  overviewPageProps: {
-    /**
-     * This text will be used for the teasers on the overview page.
-     */
-    text: string;
-  };
-  hero: {
-    title: InterfaceRte1;
-    lead?: string | null;
-    colorMode: 'white' | 'dark' | 'light';
-  };
-  content?:
-    | (
-        | InterfaceTextBlock
-        | InterfaceTitleSubtitleTextBlock
-        | InterfaceLinksBlock
-        | InterfaceDownloadsBlock
-        | InterfaceImageBlock
-        | InterfaceVideoBlock
-        | InterfaceAccordionBlock
-        | InterfaceFormBlock
-        | InterfaceCtaContactBlock
-        | InterfaceCtaLinkBlock
-        | InterfaceHomeTeasersBlock
-        | InterfaceTextTeasersBlock
-        | InterfaceNetworkTeasersBlock
-        | InterfaceImageTeasersBlock
-        | InterfaceNotificationBlock
-        | InterfaceBibliographicReferenceBlock
+        | InterfaceFootnotesBlock
         | InterfaceMagazineOverviewBlock
         | InterfacePublicationsOverviewBlock
         | InterfaceEventsOverviewBlock
@@ -1798,73 +2137,55 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "i18nForms".
+ * via the `definition` "i18nGlobals".
  */
-export interface I18NForm {
+export interface I18NGlobal {
   id: string;
   tenant?: (string | null) | Tenant;
-  i18nForms: InterfaceI18NForms;
+  generic: {
+    /**
+     * If you add a Download-Block, this will be used as a title
+     */
+    downloadTitle: string;
+    /**
+     * If you add a CTA-Contact-Block, this will be used as the button text
+     */
+    writeEmailButtonText: string;
+    /**
+     * On magazine detail pages, we use this to show the "Copy Text" button
+     */
+    exportArticleButtonText: string;
+  };
+  bibliographicReference: {
+    title: string;
+    copyButtonText: string;
+  };
+  forms: {
+    /**
+     * You may show this text in a checkbox on forms.
+     */
+    dataPrivacyCheckbox: {
+      dataPrivacyCheckboxText: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      errorMessage: string;
+    };
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceI18nForms".
- */
-export interface InterfaceI18NForms {
-  /**
-   * You may show this text in a checkbox on forms.
-   */
-  dataPrivacyCheckbox: {
-    dataPrivacyCheckboxText: InterfaceRte2;
-    errorMessage: string;
-  };
-  /**
-   * This is the text which is shown if a form was successfully submitted.
-   */
-  submitSuccess: {
-    title: string;
-    text: string;
-    optionalLink?: {
-      includeLink?: boolean | null;
-      link?: {
-        openInNewWindow?: boolean | null;
-        linkText: string;
-        internalLink: string;
-      };
-    };
-  };
-  /**
-   * This is the text which is shown if a newsletter form was successfully submitted. Only relevant if you want to add newsletter forms.
-   */
-  newsletterSubmitSuccess: {
-    title: string;
-    text: string;
-    optionalLink?: {
-      includeLink?: boolean | null;
-      link?: {
-        openInNewWindow?: boolean | null;
-        linkText: string;
-        internalLink: string;
-      };
-    };
-  };
-  /**
-   * This is the text which is shown if there was an error submitting a form.
-   */
-  submitError: {
-    title: string;
-    text: string;
-    optionalLink?: {
-      includeLink?: boolean | null;
-      link?: {
-        openInNewWindow?: boolean | null;
-        linkText: string;
-        internalLink: string;
-      };
-    };
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1876,31 +2197,101 @@ export interface Consent {
   adminTitle?: string | null;
   banner: {
     title: string;
-    text: InterfaceRte2;
+    text: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
     buttonAcceptAll: string;
     buttonCustomizeSelection: string;
     buttonDeclineAll: string;
   };
   overlay: {
     title: string;
-    text: InterfaceRte2;
+    text: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
     buttonAcceptAll: string;
     buttonAcceptSelection: string;
     necessaryCookies: {
       title: string;
-      text: InterfaceRte2;
+      text: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
       toggleLabel: string;
     };
     analyticsPerformance: {
       title: string;
-      text: InterfaceRte2;
+      text: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
       toggleLabelOff: string;
       toggleLabelOn: string;
       toggleDefault?: ('on' | 'off') | null;
     };
     externalContent: {
       title: string;
-      text: InterfaceRte2;
+      text: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
       toggleLabelOff: string;
       toggleLabelOn: string;
       toggleDefault?: ('on' | 'off') | null;
@@ -1924,19 +2315,20 @@ export interface Footer {
   contact: {
     title: string;
     address1: string;
-    address2: string;
-    poBox: string;
+    address2?: string | null;
+    poBox?: string | null;
     countryCode: string;
     zipCode: string;
     city: string;
-    phone: string;
-    mail: string;
+    phone?: string | null;
+    mail?: string | null;
   };
   socialLinks?:
     | {
+        description?: string | null;
         externalLinkText: string;
         externalLink: string;
-        icon?: ('linkedIn' | 'twitter' | 'facebook') | null;
+        icon?: ('linkedIn' | 'instagram' | 'facebook' | 'twitter') | null;
         id?: string | null;
       }[]
     | null;
@@ -2003,15 +2395,20 @@ export interface InterfaceHeaderLanguageNavigation {
 export interface InterfaceHeaderMetaNavigation {
   metaLinks?:
     | {
-        linkType: 'internal' | 'external';
+        linkType: 'internal' | 'external' | 'mail';
         linkInternal?: {
-          openInNewWindow?: boolean | null;
+          description?: string | null;
           linkText: string;
           internalLink: string;
         };
         linkExternal?: {
+          description?: string | null;
           externalLinkText: string;
           externalLink: string;
+        };
+        linkMail?: {
+          linkText: string;
+          'E-Mail': string;
         };
         id?: string | null;
       }[]
@@ -2045,7 +2442,7 @@ export interface StatusMessage {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
-      openInNewWindow?: boolean | null;
+      description?: string | null;
       linkText: string;
       internalLink: string;
     };
@@ -2086,6 +2483,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'errorPage';
         value: string | ErrorPage;
+      } | null)
+    | ({
+        relationTo: 'dataPrivacyPage';
+        value: string | DataPrivacyPage;
+      } | null)
+    | ({
+        relationTo: 'impressumPage';
+        value: string | ImpressumPage;
       } | null)
     | ({
         relationTo: 'magazineDetailPage';
@@ -2156,6 +2561,10 @@ export interface PayloadLockedDocument {
         value: string | Person;
       } | null)
     | ({
+        relationTo: 'teams';
+        value: string | Team;
+      } | null)
+    | ({
         relationTo: 'publicationTopics';
         value: string | PublicationTopic;
       } | null)
@@ -2180,8 +2589,8 @@ export interface PayloadLockedDocument {
         value: string | Form;
       } | null)
     | ({
-        relationTo: 'i18nForms';
-        value: string | I18NForm;
+        relationTo: 'i18nGlobals';
+        value: string | I18NGlobal;
       } | null)
     | ({
         relationTo: 'consent';
@@ -2253,31 +2662,11 @@ export interface HomePageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        animated?: T;
-        sideTitle?: T;
-        optionalLink?:
-          | T
-          | {
-              includeLink?: T;
-              link?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-            };
-      };
+  hero?: T | InterfaceHeroFieldHomeSelect<T>;
   content?:
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -2287,11 +2676,11 @@ export interface HomePageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -2324,40 +2713,32 @@ export interface HomePageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceRte1_select".
+ * via the `definition` "InterfaceHeroFieldHome_select".
  */
-export interface InterfaceRte1Select<T extends boolean = true> {
-  content?: T;
+export interface InterfaceHeroFieldHomeSelect<T extends boolean = true> {
+  title?: T;
+  lead?: T;
+  animated?: T;
+  sideTitle?: T;
+  optionalLink?:
+    | T
+    | {
+        includeLink?: T;
+        link?:
+          | T
+          | {
+              description?: T;
+              linkText?: T;
+              internalLink?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceTextBlock_select".
  */
 export interface InterfaceTextBlockSelect<T extends boolean = true> {
-  text?: T | InterfaceRte2Select<T>;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceRte2_select".
- */
-export interface InterfaceRte2Select<T extends boolean = true> {
-  content?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceTitleSubtitleTextBlock_select".
- */
-export interface InterfaceTitleSubtitleTextBlockSelect<T extends boolean = true> {
-  title?: T;
-  subtitle?: T;
-  textBlocks?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
+  text?: T;
   id?: T;
   blockName?: T;
 }
@@ -2374,15 +2755,22 @@ export interface InterfaceLinksBlockSelect<T extends boolean = true> {
         linkInternal?:
           | T
           | {
-              openInNewWindow?: T;
+              description?: T;
               linkText?: T;
               internalLink?: T;
             };
         linkExternal?:
           | T
           | {
+              description?: T;
               externalLinkText?: T;
               externalLink?: T;
+            };
+        linkMail?:
+          | T
+          | {
+              linkText?: T;
+              'E-Mail'?: T;
             };
         id?: T;
       };
@@ -2394,7 +2782,7 @@ export interface InterfaceLinksBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceDownloadsBlock_select".
  */
 export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
-  title?: T;
+  subtitle?: T;
   customOrAuto?: T;
   downloads?: T;
   project?: T;
@@ -2408,7 +2796,6 @@ export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
 export interface InterfaceImageBlockSelect<T extends boolean = true> {
   alignement?: T;
   image?: T;
-  title?: T;
   caption?: T;
   credits?: T;
   id?: T;
@@ -2420,7 +2807,6 @@ export interface InterfaceImageBlockSelect<T extends boolean = true> {
  */
 export interface InterfaceVideoBlockSelect<T extends boolean = true> {
   video?: T;
-  title?: T;
   caption?: T;
   credits?: T;
   stillImage?: T;
@@ -2439,7 +2825,7 @@ export interface InterfaceAccordionBlockSelect<T extends boolean = true> {
     | T
     | {
         accordionTitle?: T;
-        accordionContent?: T | InterfaceRte2Select<T>;
+        accordionContent?: T;
         id?: T;
       };
   id?: T;
@@ -2477,15 +2863,22 @@ export interface InterfaceCtaLinkBlockSelect<T extends boolean = true> {
   linkInternal?:
     | T
     | {
-        openInNewWindow?: T;
+        description?: T;
         linkText?: T;
         internalLink?: T;
       };
   linkExternal?:
     | T
     | {
+        description?: T;
         externalLinkText?: T;
         externalLink?: T;
+      };
+  linkMail?:
+    | T
+    | {
+        linkText?: T;
+        'E-Mail'?: T;
       };
   id?: T;
   blockName?: T;
@@ -2502,34 +2895,9 @@ export interface InterfaceHomeTeasersBlockSelect<T extends boolean = true> {
         title?: T;
         text?: T;
         icon?: T;
-        openInNewWindow?: T;
+        description?: T;
         linkText?: T;
         internalLink?: T;
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceTextTeasersBlock_select".
- */
-export interface InterfaceTextTeasersBlockSelect<T extends boolean = true> {
-  title?: T;
-  lead?: T;
-  alignement?: T;
-  textTeasers?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        link?:
-          | T
-          | {
-              openInNewWindow?: T;
-              linkText?: T;
-              internalLink?: T;
-            };
         id?: T;
       };
   id?: T;
@@ -2558,6 +2926,7 @@ export interface InterfaceNetworkTeasersBlockSelect<T extends boolean = true> {
               category?: T;
               foundingYear?: T;
               image?: T;
+              description?: T;
               externalLink?: T;
               id?: T;
             };
@@ -2567,29 +2936,38 @@ export interface InterfaceNetworkTeasersBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceImageTeasersBlock_select".
+ * via the `definition` "InterfaceGenericTeasersBlock_select".
  */
-export interface InterfaceImageTeasersBlockSelect<T extends boolean = true> {
+export interface InterfaceGenericTeasersBlockSelect<T extends boolean = true> {
   title?: T;
+  lead?: T;
+  alignement?: T;
   teasers?:
     | T
     | {
-        image?: T;
         title?: T;
         text?: T;
+        image?: T;
         linkType?: T;
         linkInternal?:
           | T
           | {
-              openInNewWindow?: T;
+              description?: T;
               linkText?: T;
               internalLink?: T;
             };
         linkExternal?:
           | T
           | {
+              description?: T;
               externalLinkText?: T;
               externalLink?: T;
+            };
+        linkMail?:
+          | T
+          | {
+              linkText?: T;
+              'E-Mail'?: T;
             };
         id?: T;
       };
@@ -2601,7 +2979,8 @@ export interface InterfaceImageTeasersBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceNotificationBlock_select".
  */
 export interface InterfaceNotificationBlockSelect<T extends boolean = true> {
-  text?: T | InterfaceRte2Select<T>;
+  show?: T;
+  text?: T;
   id?: T;
   blockName?: T;
 }
@@ -2610,9 +2989,17 @@ export interface InterfaceNotificationBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceBibliographicReferenceBlock_select".
  */
 export interface InterfaceBibliographicReferenceBlockSelect<T extends boolean = true> {
+  text?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceFootnotesBlock_select".
+ */
+export interface InterfaceFootnotesBlockSelect<T extends boolean = true> {
   title?: T;
-  text?: T | InterfaceRte2Select<T>;
-  copyButtonText?: T;
+  text?: T;
   id?: T;
   blockName?: T;
 }
@@ -2630,6 +3017,9 @@ export interface InterfaceMagazineOverviewBlockSelect<T extends boolean = true> 
  * via the `definition` "InterfacePublicationsOverviewBlock_select".
  */
 export interface InterfacePublicationsOverviewBlockSelect<T extends boolean = true> {
+  title?: T;
+  filterTitleAllTopics?: T;
+  filterTitleAllPublications?: T;
   message?: T;
   id?: T;
   blockName?: T;
@@ -2639,6 +3029,7 @@ export interface InterfacePublicationsOverviewBlockSelect<T extends boolean = tr
  * via the `definition` "InterfaceEventsOverviewBlock_select".
  */
 export interface InterfaceEventsOverviewBlockSelect<T extends boolean = true> {
+  title?: T;
   message?: T;
   id?: T;
   blockName?: T;
@@ -2662,6 +3053,7 @@ export interface InterfacePeopleOverviewBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceNewsOverviewBlock_select".
  */
 export interface InterfaceNewsOverviewBlockSelect<T extends boolean = true> {
+  title?: T;
   message?: T;
   id?: T;
   blockName?: T;
@@ -2671,6 +3063,7 @@ export interface InterfaceNewsOverviewBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceNationalDictionariesOverviewBlock_select".
  */
 export interface InterfaceNationalDictionariesOverviewBlockSelect<T extends boolean = true> {
+  moreInfoButtonText?: T;
   message?: T;
   id?: T;
   blockName?: T;
@@ -2680,6 +3073,7 @@ export interface InterfaceNationalDictionariesOverviewBlockSelect<T extends bool
  * via the `definition` "InterfaceInstitutesOverviewBlock_select".
  */
 export interface InterfaceInstitutesOverviewBlockSelect<T extends boolean = true> {
+  moreInfoButtonText?: T;
   message?: T;
   id?: T;
   blockName?: T;
@@ -2699,8 +3093,8 @@ export interface InterfaceProjectOverviewBlockSelect<T extends boolean = true> {
  */
 export interface InterfaceEventsTeasersBlockSelect<T extends boolean = true> {
   title?: T;
+  link?: T;
   linkText?: T;
-  project?: T;
   message?: T;
   id?: T;
   blockName?: T;
@@ -2710,8 +3104,6 @@ export interface InterfaceEventsTeasersBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceMagazineTeasersBlock_select".
  */
 export interface InterfaceMagazineTeasersBlockSelect<T extends boolean = true> {
-  title?: T;
-  lead?: T;
   linkText?: T;
   message?: T;
   id?: T;
@@ -2723,8 +3115,8 @@ export interface InterfaceMagazineTeasersBlockSelect<T extends boolean = true> {
  */
 export interface InterfaceNewsTeasersBlockSelect<T extends boolean = true> {
   title?: T;
+  link?: T;
   linkText?: T;
-  project?: T;
   message?: T;
   id?: T;
   blockName?: T;
@@ -2735,6 +3127,7 @@ export interface InterfaceNewsTeasersBlockSelect<T extends boolean = true> {
  */
 export interface InterfacePublicationsTeasersBlockSelect<T extends boolean = true> {
   title?: T;
+  link?: T;
   linkText?: T;
   message?: T;
   id?: T;
@@ -2745,8 +3138,6 @@ export interface InterfacePublicationsTeasersBlockSelect<T extends boolean = tru
  * via the `definition` "InterfaceProjectTeasersBlock_select".
  */
 export interface InterfaceProjectTeasersBlockSelect<T extends boolean = true> {
-  title?: T;
-  lead?: T;
   linkText?: T;
   message?: T;
   id?: T;
@@ -2783,32 +3174,17 @@ export interface ErrorPageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "magazineDetailPage_select".
+ * via the `definition` "dataPrivacyPage_select".
  */
-export interface MagazineDetailPageSelect<T extends boolean = true> {
+export interface DataPrivacyPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
-  slug?: T;
-  overviewPageProps?:
-    | T
-    | {
-        teaserText?: T;
-      };
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-        author?: T;
-        date?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -2818,11 +3194,11 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -2855,25 +3231,26 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "overviewPage_select".
+ * via the `definition` "InterfaceHeroField_select".
  */
-export interface OverviewPageSelect<T extends boolean = true> {
+export interface InterfaceHeroFieldSelect<T extends boolean = true> {
+  title?: T;
+  lead?: T;
+  colorMode?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "impressumPage_select".
+ */
+export interface ImpressumPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
-  slug?: T;
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -2883,11 +3260,143 @@ export interface OverviewPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
+        magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
+        publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
+        eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
+        peopleOverviewBlock?: T | InterfacePeopleOverviewBlockSelect<T>;
+        newsOverviewBlock?: T | InterfaceNewsOverviewBlockSelect<T>;
+        nationalDictionariesOverviewBlock?: T | InterfaceNationalDictionariesOverviewBlockSelect<T>;
+        institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
+        projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
+        eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
+        magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
+        newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
+        publicationsTeasersBlock?: T | InterfacePublicationsTeasersBlockSelect<T>;
+        projectsTeasersBlock?: T | InterfaceProjectTeasersBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "magazineDetailPage_select".
+ */
+export interface MagazineDetailPageSelect<T extends boolean = true> {
+  tenant?: T;
+  isLinkable?: T;
+  adminTitle?: T;
+  slug?: T;
+  overviewPageProps?:
+    | T
+    | {
+        teaserText?: T;
+      };
+  hero?: T | InterfaceHeroFieldMagazineDetailSelect<T>;
+  content?:
+    | T
+    | {
+        textBlock?: T | InterfaceTextBlockSelect<T>;
+        linksBlock?: T | InterfaceLinksBlockSelect<T>;
+        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        videoBlock?: T | InterfaceVideoBlockSelect<T>;
+        accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
+        formBlock?: T | InterfaceFormBlockSelect<T>;
+        ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
+        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+        homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
+        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
+        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
+        magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
+        publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
+        eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
+        peopleOverviewBlock?: T | InterfacePeopleOverviewBlockSelect<T>;
+        newsOverviewBlock?: T | InterfaceNewsOverviewBlockSelect<T>;
+        nationalDictionariesOverviewBlock?: T | InterfaceNationalDictionariesOverviewBlockSelect<T>;
+        institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
+        projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
+        eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
+        magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
+        newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
+        publicationsTeasersBlock?: T | InterfacePublicationsTeasersBlockSelect<T>;
+        projectsTeasersBlock?: T | InterfaceProjectTeasersBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              index?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeroFieldMagazineDetail_select".
+ */
+export interface InterfaceHeroFieldMagazineDetailSelect<T extends boolean = true> {
+  title?: T;
+  lead?: T;
+  colorMode?: T;
+  author?: T;
+  date?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "overviewPage_select".
+ */
+export interface OverviewPageSelect<T extends boolean = true> {
+  tenant?: T;
+  isLinkable?: T;
+  adminTitle?: T;
+  slug?: T;
+  hero?: T | InterfaceHeroFieldSelect<T>;
+  content?:
+    | T
+    | {
+        textBlock?: T | InterfaceTextBlockSelect<T>;
+        linksBlock?: T | InterfaceLinksBlockSelect<T>;
+        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        videoBlock?: T | InterfaceVideoBlockSelect<T>;
+        accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
+        formBlock?: T | InterfaceFormBlockSelect<T>;
+        ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
+        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+        homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
+        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
+        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -2927,18 +3436,11 @@ export interface DetailPageSelect<T extends boolean = true> {
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -2948,11 +3450,11 @@ export interface DetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -3006,18 +3508,11 @@ export interface EventDetailPageSelect<T extends boolean = true> {
         dateEnd?: T;
       };
   showDetailPage?: T;
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -3027,11 +3522,11 @@ export interface EventDetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -3049,6 +3544,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
   link?:
     | T
     | {
+        description?: T;
         externalLinkText?: T;
         externalLink?: T;
       };
@@ -3082,20 +3578,12 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
     | {
         teaserText?: T;
       };
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-        date?: T;
-      };
+  hero?: T | InterfaceHeroFieldNewsDetailSelect<T>;
   project?: T;
   content?:
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -3105,11 +3593,11 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -3142,6 +3630,16 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeroFieldNewsDetail_select".
+ */
+export interface InterfaceHeroFieldNewsDetailSelect<T extends boolean = true> {
+  title?: T;
+  lead?: T;
+  colorMode?: T;
+  date?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "publicationDetailPage_select".
  */
 export interface PublicationDetailPageSelect<T extends boolean = true> {
@@ -3161,18 +3659,11 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
         type?: T;
         project?: T;
       };
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -3182,11 +3673,11 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -3231,18 +3722,11 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
         image?: T;
         text?: T;
       };
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -3252,11 +3736,11 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -3301,18 +3785,11 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
         image?: T;
         text?: T;
       };
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -3322,11 +3799,11 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -3371,18 +3848,11 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
     | {
         text?: T;
       };
-  hero?:
-    | T
-    | {
-        title?: T | InterfaceRte1Select<T>;
-        lead?: T;
-        colorMode?: T;
-      };
+  hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
-        titleSubtitleTextBlock?: T | InterfaceTitleSubtitleTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         imageBlock?: T | InterfaceImageBlockSelect<T>;
@@ -3392,11 +3862,11 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
         ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         homeTeasersBlock?: T | InterfaceHomeTeasersBlockSelect<T>;
-        textTeasersBlock?: T | InterfaceTextTeasersBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
-        imageTeasersBlock?: T | InterfaceImageTeasersBlockSelect<T>;
+        genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         bibliographicReferenceBlock?: T | InterfaceBibliographicReferenceBlockSelect<T>;
+        footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
         publicationsOverviewBlock?: T | InterfacePublicationsOverviewBlockSelect<T>;
         eventsOverviewBlock?: T | InterfaceEventsOverviewBlockSelect<T>;
@@ -3453,7 +3923,7 @@ export interface ImagesSelect<T extends boolean = true> {
  */
 export interface VideosSelect<T extends boolean = true> {
   tenant?: T;
-  alt?: T;
+  title?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -3505,6 +3975,7 @@ export interface NetworkCategoriesSelect<T extends boolean = true> {
 export interface DocumentsSelect<T extends boolean = true> {
   tenant?: T;
   title?: T;
+  date?: T;
   project?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -3536,6 +4007,7 @@ export interface ZenodoDocumentsSelect<T extends boolean = true> {
         size?: T;
         id?: T;
       };
+  project?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -3547,6 +4019,12 @@ export interface ZenodoDocumentsSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   tenant?: T;
   name?: T;
+  relatedNewsPages?: T;
+  relatedEventPages?: T;
+  relatedPublicationPages?: T;
+  relatedProjectPages?: T;
+  relatedDocuments?: T;
+  relatedZenodoDocuments?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -3557,8 +4035,7 @@ export interface ProjectsSelect<T extends boolean = true> {
  */
 export interface PeopleSelect<T extends boolean = true> {
   tenant?: T;
-  personDepartment?: T;
-  memberType?: T;
+  team?: T;
   prefix?: T;
   firstname?: T;
   middleName?: T;
@@ -3574,11 +4051,24 @@ export interface PeopleSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "teams_select".
+ */
+export interface TeamsSelect<T extends boolean = true> {
+  tenant?: T;
+  name?: T;
+  relatedPeople?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "publicationTopics_select".
  */
 export interface PublicationTopicsSelect<T extends boolean = true> {
   tenant?: T;
   publicationTopic?: T;
+  relatedPublicationPages?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -3590,6 +4080,7 @@ export interface PublicationTopicsSelect<T extends boolean = true> {
 export interface PublicationTypesSelect<T extends boolean = true> {
   tenant?: T;
   publicationType?: T;
+  relatedPublicationPages?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -3601,6 +4092,7 @@ export interface PublicationTypesSelect<T extends boolean = true> {
 export interface EventCategorySelect<T extends boolean = true> {
   tenant?: T;
   eventCategory?: T;
+  relatedEventPages?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -3671,13 +4163,49 @@ export interface FormsSelect<T extends boolean = true> {
   recipientMail?: T;
   mailSubject?: T;
   showPrivacyCheckbox?: T;
+  submitSuccess?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        optionalLink?:
+          | T
+          | {
+              includeLink?: T;
+              link?:
+                | T
+                | {
+                    description?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+            };
+      };
+  submitError?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        optionalLink?:
+          | T
+          | {
+              includeLink?: T;
+              link?:
+                | T
+                | {
+                    description?: T;
+                    linkText?: T;
+                    internalLink?: T;
+                  };
+            };
+      };
   fields?:
     | T
     | {
         checkboxBlock?: T | InterfaceCheckboxFieldSelect<T>;
         emailBlock?: T | InterfaceEmailFieldSelect<T>;
         textBlockForm?: T | InterfaceTextFieldSelect<T>;
-        textareaBlock?: T | InterfaceTextTextareaSelect<T>;
+        textareaBlock?: T | InterfaceTextareaFieldSelect<T>;
       };
   newsletterFields?:
     | T
@@ -3712,7 +4240,7 @@ export interface FormsSelect<T extends boolean = true> {
  */
 export interface InterfaceCheckboxFieldSelect<T extends boolean = true> {
   name?: T;
-  label?: T | InterfaceRte2Select<T>;
+  label?: T;
   fieldWidth?: T;
   required?: T;
   fieldError?: T;
@@ -3749,9 +4277,9 @@ export interface InterfaceTextFieldSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceTextTextarea_select".
+ * via the `definition` "InterfaceTextareaField_select".
  */
-export interface InterfaceTextTextareaSelect<T extends boolean = true> {
+export interface InterfaceTextareaFieldSelect<T extends boolean = true> {
   name?: T;
   label?: T;
   placeholder?: T;
@@ -3763,80 +4291,36 @@ export interface InterfaceTextTextareaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "i18nForms_select".
+ * via the `definition` "i18nGlobals_select".
  */
-export interface I18NFormsSelect<T extends boolean = true> {
+export interface I18NGlobalsSelect<T extends boolean = true> {
   tenant?: T;
-  i18nForms?: T | InterfaceI18NFormsSelect<T>;
+  generic?:
+    | T
+    | {
+        downloadTitle?: T;
+        writeEmailButtonText?: T;
+        exportArticleButtonText?: T;
+      };
+  bibliographicReference?:
+    | T
+    | {
+        title?: T;
+        copyButtonText?: T;
+      };
+  forms?:
+    | T
+    | {
+        dataPrivacyCheckbox?:
+          | T
+          | {
+              dataPrivacyCheckboxText?: T;
+              errorMessage?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceI18nForms_select".
- */
-export interface InterfaceI18NFormsSelect<T extends boolean = true> {
-  dataPrivacyCheckbox?:
-    | T
-    | {
-        dataPrivacyCheckboxText?: T | InterfaceRte2Select<T>;
-        errorMessage?: T;
-      };
-  submitSuccess?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        optionalLink?:
-          | T
-          | {
-              includeLink?: T;
-              link?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-            };
-      };
-  newsletterSubmitSuccess?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        optionalLink?:
-          | T
-          | {
-              includeLink?: T;
-              link?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-            };
-      };
-  submitError?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        optionalLink?:
-          | T
-          | {
-              includeLink?: T;
-              link?:
-                | T
-                | {
-                    openInNewWindow?: T;
-                    linkText?: T;
-                    internalLink?: T;
-                  };
-            };
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3849,7 +4333,7 @@ export interface ConsentSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
-        text?: T | InterfaceRte2Select<T>;
+        text?: T;
         buttonAcceptAll?: T;
         buttonCustomizeSelection?: T;
         buttonDeclineAll?: T;
@@ -3858,21 +4342,21 @@ export interface ConsentSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
-        text?: T | InterfaceRte2Select<T>;
+        text?: T;
         buttonAcceptAll?: T;
         buttonAcceptSelection?: T;
         necessaryCookies?:
           | T
           | {
               title?: T;
-              text?: T | InterfaceRte2Select<T>;
+              text?: T;
               toggleLabel?: T;
             };
         analyticsPerformance?:
           | T
           | {
               title?: T;
-              text?: T | InterfaceRte2Select<T>;
+              text?: T;
               toggleLabelOff?: T;
               toggleLabelOn?: T;
               toggleDefault?: T;
@@ -3881,7 +4365,7 @@ export interface ConsentSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              text?: T | InterfaceRte2Select<T>;
+              text?: T;
               toggleLabelOff?: T;
               toggleLabelOn?: T;
               toggleDefault?: T;
@@ -3917,6 +4401,7 @@ export interface FooterSelect<T extends boolean = true> {
   socialLinks?:
     | T
     | {
+        description?: T;
         externalLinkText?: T;
         externalLink?: T;
         icon?: T;
@@ -3982,15 +4467,22 @@ export interface InterfaceHeaderMetaNavigationSelect<T extends boolean = true> {
         linkInternal?:
           | T
           | {
-              openInNewWindow?: T;
+              description?: T;
               linkText?: T;
               internalLink?: T;
             };
         linkExternal?:
           | T
           | {
+              description?: T;
               externalLinkText?: T;
               externalLink?: T;
+            };
+        linkMail?:
+          | T
+          | {
+              linkText?: T;
+              'E-Mail'?: T;
             };
         id?: T;
       };
@@ -4025,7 +4517,7 @@ export interface StatusMessageSelect<T extends boolean = true> {
         link?:
           | T
           | {
-              openInNewWindow?: T;
+              description?: T;
               linkText?: T;
               internalLink?: T;
             };

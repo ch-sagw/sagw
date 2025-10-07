@@ -4,6 +4,8 @@ import { FormBlocks } from '@/blocks/Form/index';
 import { emailBlock } from '@/blocks/Form/Email';
 import { textBlock } from '@/blocks/Form/Text';
 import { fieldsColorMode } from '@/field-templates/colorMode';
+import { formEnsureUniqueName } from '@/hooks-payload/formEnsureUniqueName';
+import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
 
 export const Forms: CollectionConfig = {
   access: {
@@ -36,9 +38,9 @@ export const Forms: CollectionConfig = {
     },
 
     // color mode
-    ...fieldsColorMode({
+    fieldsColorMode({
       dark: true,
-      light: false,
+      light: true,
       white: true,
     }),
 
@@ -48,7 +50,7 @@ export const Forms: CollectionConfig = {
         {
           localized: true,
           name: 'title',
-          required: true,
+          required: false,
           type: 'text',
         },
         {
@@ -124,6 +126,54 @@ export const Forms: CollectionConfig = {
       type: 'checkbox',
     },
 
+    // error/success for custom form
+    {
+      fields: [
+        {
+          fields: [
+            {
+              localized: true,
+              name: 'title',
+              required: true,
+              type: 'text',
+            },
+            {
+              localized: true,
+              name: 'text',
+              required: true,
+              type: 'text',
+            },
+            fieldsLinkInternalWithToggle,
+          ],
+          label: 'Submit Success',
+          name: 'submitSuccess',
+          type: 'group',
+        },
+
+        {
+          fields: [
+            {
+              localized: true,
+              name: 'title',
+              required: true,
+              type: 'text',
+            },
+            {
+              localized: true,
+              name: 'text',
+              required: true,
+              type: 'text',
+            },
+            fieldsLinkInternalWithToggle,
+          ],
+          label: 'Submit Error',
+          name: 'submitError',
+          type: 'group',
+        },
+      ],
+      type: 'group',
+    },
+
     // custom form fields
     {
       admin: {
@@ -131,6 +181,9 @@ export const Forms: CollectionConfig = {
       },
       blockReferences: FormBlocks,
       blocks: [],
+      hooks: {
+        beforeChange: [formEnsureUniqueName],
+      },
       name: 'fields',
       required: true,
       type: 'blocks',

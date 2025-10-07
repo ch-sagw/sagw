@@ -8,6 +8,12 @@ export const EventsOverviewBlock: Block = {
   },
   fields: [
     {
+      localized: true,
+      name: 'title',
+      required: true,
+      type: 'text',
+    },
+    {
       admin: {
         hidden: true,
       },

@@ -1,8 +1,20 @@
 import { Field } from 'payload';
+import { formFieldNameFromLabel } from '@/hooks-payload/formFieldNameFromLabel';
 
 export const formFieldName: Field = {
+  access: {
+    // visible in API
+    read: () => true,
+
+    // writable from hooks
+    update: () => true,
+  },
   admin: {
-    description: 'lowercase, no special characters',
+    hidden: true,
+    readOnly: true,
+  },
+  hooks: {
+    beforeValidate: [formFieldNameFromLabel],
   },
   localized: true,
   name: 'name',

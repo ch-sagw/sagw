@@ -4,7 +4,7 @@ import type {
 } from '@storybook/nextjs-vite';
 import { Notification } from '@/components/blocks/Notification/Notification';
 import { defaultDecorator } from '@/storybook-helpers';
-import { sampleRte2 } from '@/components/base/Rte/Rte.sampleContent';
+import { sampleRte3 } from '@/components/base/Rte/Rte.sampleContent';
 
 type NotificationProps = React.ComponentProps<typeof Notification>;
 
@@ -41,9 +41,7 @@ export const SampleNotification: StrictStory = {
   args: {
     blockName: 'foo',
     blockType: 'notificationBlock',
-    text: {
-      content: sampleRte2,
-    },
+    text: sampleRte3,
   },
 };
 

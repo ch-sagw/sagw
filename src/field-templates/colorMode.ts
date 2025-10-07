@@ -12,7 +12,7 @@ export const fieldsColorMode = ({
   white,
   light,
   dark,
-}: InterfaceFieldsColorMode): Field[] => {
+}: InterfaceFieldsColorMode): Field => {
   const options: Option[] = [];
 
   if (white) {
@@ -36,14 +36,12 @@ export const fieldsColorMode = ({
     });
   }
 
-  return [
-    {
-      defaultValue: 'white',
-      label: 'Color Mode',
-      name: 'colorMode',
-      options,
-      required: true,
-      type: 'radio',
-    },
-  ];
+  return {
+    defaultValue: 'white',
+    label: 'Color Mode',
+    name: 'colorMode',
+    options,
+    required: true,
+    type: 'radio',
+  };
 };

@@ -12,7 +12,7 @@ export const Images: CollectionConfig = {
     {
       localized: true,
       name: 'alt',
-      required: false,
+      required: true,
       type: 'text',
     },
   ],

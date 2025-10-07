@@ -3,6 +3,7 @@ import { versions } from '@/field-templates/versions';
 
 export const PublicationTopics: CollectionConfig = {
   admin: {
+    defaultColumns: ['publicationTopic'],
     group: 'Global Content',
     useAsTitle: 'publicationTopic',
   },
@@ -12,6 +13,15 @@ export const PublicationTopics: CollectionConfig = {
       name: 'publicationTopic',
       required: true,
       type: 'text',
+    },
+    {
+      admin: {
+        allowCreate: false,
+      },
+      collection: 'publicationDetailPage',
+      name: 'relatedPublicationPages',
+      on: 'categorization.topic',
+      type: 'join',
     },
   ],
   slug: 'publicationTopics',

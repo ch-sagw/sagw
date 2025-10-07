@@ -6,19 +6,15 @@ import React, {
   useState,
 } from 'react';
 import { submitForm } from '@/app/actions/submitForm';
-import {
-  Form as InterfaceForm, InterfaceI18NForms,
-} from '@/payload-types';
+import { Form as InterfaceForm } from '@/payload-types';
 import { FormComponent } from '@/components/blocks/Form/Form.component';
 
 type InterfaceFormClientPropTypes = {
   form: InterfaceForm;
-  i18n: InterfaceI18NForms;
 };
 
 export const FormClient = ({
   form,
-  i18n,
 }: InterfaceFormClientPropTypes): React.JSX.Element => {
 
   // --- State
@@ -103,7 +99,6 @@ export const FormClient = ({
           }
       }
       errors={errors}
-      i18n={i18n}
       submitSuccess={submitSuccess}
       submitError={submitError}
     />

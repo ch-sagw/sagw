@@ -1,14 +1,9 @@
-import {
-  InterfaceRte1, InterfaceRte2,
-} from '@/payload-types';
+import { InterfaceRte } from '@/components/base/types/rte';
 
-export const sampleRte1: InterfaceRte1['content'] = {
+export const sampleRte1: InterfaceRte = {
   root: {
-
     children: [
-
       {
-
         children: [
 
           {
@@ -23,7 +18,7 @@ export const sampleRte1: InterfaceRte1['content'] = {
 
           {
             text: '­',
-            type: 'unicode-char',
+            type: 'unicode-char-shy',
             version: 1,
           },
 
@@ -39,7 +34,7 @@ export const sampleRte1: InterfaceRte1['content'] = {
 
           {
             text: '­',
-            type: 'unicode-char',
+            type: 'unicode-char-shy',
             version: 1,
           },
 
@@ -55,7 +50,7 @@ export const sampleRte1: InterfaceRte1['content'] = {
 
           {
             text: '­',
-            type: 'unicode-char',
+            type: 'unicode-char-shy',
             version: 1,
           },
 
@@ -102,7 +97,7 @@ item 2
 item 3
 */
 
-export const sampleRte2: InterfaceRte2['content'] = {
+export const sampleRte3: InterfaceRte = {
   root: {
     children: [
       {
@@ -258,6 +253,7 @@ export const sampleRte2: InterfaceRte2['content'] = {
             direction: 'ltr',
             fields: {
               linkType: 'custom',
+              newTab: false,
               url: 'https://sagw.ch',
             },
             format: '',
@@ -295,6 +291,7 @@ export const sampleRte2: InterfaceRte2['content'] = {
                 value: '68bc46aba70c17a6cef8a7d8',
               },
               linkType: 'internal',
+              newTab: false,
             },
             format: '',
             id: '68bc49de865bd534cfdc468d',
@@ -510,7 +507,7 @@ export const sampleRte2: InterfaceRte2['content'] = {
 Example for data privacy checkbox
 */
 
-export const sampleRtePrivacyCheckbox: InterfaceRte2['content'] = {
+export const sampleRtePrivacyCheckbox: InterfaceRte = {
   root: {
     children: [
       {
@@ -544,6 +541,7 @@ export const sampleRtePrivacyCheckbox: InterfaceRte2['content'] = {
                 value: '68c6f2a27b546854b2c701ff',
               },
               linkType: 'internal',
+              newTab: false,
             },
             format: '',
             id: '68c7f8ebb2920188de8380de',

@@ -5,8 +5,9 @@ import type {
 import { Accordion } from '@/components/blocks/Accordion/Accordion';
 import { defaultDecorator } from '@/storybook-helpers';
 import {
-  sampleRte2, sampleRtePrivacyCheckbox,
+  sampleRte3, sampleRtePrivacyCheckbox,
 } from '@/components/base/Rte/Rte.sampleContent';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 type AccordionProps = React.ComponentProps<typeof Accordion>;
 
@@ -31,38 +32,28 @@ export default meta;
 
 const items = [
   {
-    accordionContent: {
-      content: sampleRte2,
-    },
-    accordionTitle: 'Title 1',
+    accordionContent: sampleRte3,
+    accordionTitle: simpleRteConfig('Title 1'),
     id: '1',
   },
   {
-    accordionContent: {
-      content: sampleRtePrivacyCheckbox,
-    },
-    accordionTitle: 'Title 2',
+    accordionContent: sampleRtePrivacyCheckbox,
+    accordionTitle: simpleRteConfig('Title 2'),
     id: '2',
   },
   {
-    accordionContent: {
-      content: sampleRte2,
-    },
-    accordionTitle: 'Title 3',
+    accordionContent: sampleRte3,
+    accordionTitle: simpleRteConfig('Title 3'),
     id: '3',
   },
   {
-    accordionContent: {
-      content: sampleRtePrivacyCheckbox,
-    },
-    accordionTitle: 'Title 4',
+    accordionContent: sampleRtePrivacyCheckbox,
+    accordionTitle: simpleRteConfig('Title 4'),
     id: '4',
   },
   {
-    accordionContent: {
-      content: sampleRte2,
-    },
-    accordionTitle: 'Title 5',
+    accordionContent: sampleRte3,
+    accordionTitle: simpleRteConfig('Title 5'),
     id: '5',
   },
 ];
@@ -72,7 +63,7 @@ export const BackgroundWhite: StrictStory = {
     accordions: items,
     blockType: 'accordionBlock',
     colorMode: 'white',
-    title: 'Accordion title',
+    title: simpleRteConfig('Accordion title'),
     titleLevel: '4',
   },
 };
@@ -82,7 +73,7 @@ export const BackgroundLight: StrictStory = {
     accordions: items,
     blockType: 'accordionBlock',
     colorMode: 'light',
-    title: 'Accordion title',
+    title: simpleRteConfig('Accordion title'),
     titleLevel: '4',
   },
 };
@@ -92,7 +83,7 @@ export const BackgroundDark: StrictStory = {
     accordions: items,
     blockType: 'accordionBlock',
     colorMode: 'dark',
-    title: 'Accordion title',
+    title: simpleRteConfig('Accordion title'),
     titleLevel: '4',
   },
 };

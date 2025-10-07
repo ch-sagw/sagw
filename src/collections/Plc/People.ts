@@ -22,38 +22,14 @@ export const People: CollectionConfig = {
   },
   fields: [
     {
-      name: 'personDepartment',
-      options: [
-        {
-          label: 'Adminstration',
-          value: 'admin',
-        },
-        {
-          label: 'Wissenschaftliche Mitarbeiter:in',
-          value: 'science',
-        },
-        {
-          label: 'Kommunikation',
-          value: 'com',
-        },
-        {
-          label: 'Geschäftsleitung',
-          value: 'direction',
-        },
-      ],
-      required: true,
-      type: 'select',
+      hasMany: true,
+      name: 'team',
+      relationTo: 'teams',
+      required: false,
+      type: 'relationship',
     },
     {
-      name: 'memberType',
-      options: [
-        memberTypeConfig.executiveBoard,
-        memberTypeConfig.team,
-      ],
-      required: true,
-      type: 'select',
-    },
-    {
+      localized: true,
       name: 'prefix',
       required: false,
       type: 'text',
@@ -76,7 +52,7 @@ export const People: CollectionConfig = {
     {
       localized: true,
       name: 'function',
-      required: true,
+      required: false,
       type: 'text',
     },
     {

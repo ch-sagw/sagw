@@ -1,11 +1,12 @@
 import {
   Block, Field,
 } from 'payload';
-import { fieldsLinkInternal } from '@/field-templates/links';
+import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
 
-// Example: Promotion, Activities
+// Example: Early Career Award, Institutes Overview
+// Example: Magazine Detail
 
-const textTeaserItem: Field[] = [
+const TeaserItem: Field[] = [
   {
     localized: true,
     name: 'title',
@@ -15,17 +16,22 @@ const textTeaserItem: Field[] = [
   {
     localized: true,
     name: 'text',
-    required: true,
-    type: 'textarea',
+    required: false,
+    type: 'text',
   },
   {
-    fields: fieldsLinkInternal,
-    name: 'link',
-    type: 'group',
+    name: 'image',
+    relationTo: [
+      'images',
+      'svgs',
+    ],
+    required: false,
+    type: 'relationship',
   },
+  ...fieldsLinkInternalOrExternal,
 ];
 
-export const TextTeasersBlock: Block = {
+export const GenericTeasersBlock: Block = {
   admin: {
     disableBlockName: true,
   },
@@ -39,8 +45,8 @@ export const TextTeasersBlock: Block = {
     {
       localized: true,
       name: 'lead',
-      required: true,
-      type: 'textarea',
+      required: false,
+      type: 'text',
     },
     {
       admin: {
@@ -61,16 +67,18 @@ export const TextTeasersBlock: Block = {
       type: 'select',
     },
     {
-      fields: textTeaserItem,
-      name: 'textTeasers',
+      fields: TeaserItem,
+      name: 'teasers',
+      required: true,
       type: 'array',
     },
+
   ],
-  imageURL: '/admin-ui-images/text-teasers.svg',
-  interfaceName: 'InterfaceTextTeasersBlock',
+  imageURL: '/admin-ui-images/image-teasers.svg',
+  interfaceName: 'InterfaceGenericTeasersBlock',
   labels: {
-    plural: 'Text Teasers',
-    singular: 'Text Teasers',
+    plural: 'Generic Teasers',
+    singular: 'Generic Teasers',
   },
-  slug: 'textTeasersBlock',
+  slug: 'genericTeasersBlock',
 };

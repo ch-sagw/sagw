@@ -9,18 +9,6 @@ export const ProjectTeasersBlock: Block = {
   fields: [
     {
       localized: true,
-      name: 'title',
-      required: true,
-      type: 'text',
-    },
-    {
-      localized: true,
-      name: 'lead',
-      required: false,
-      type: 'text',
-    },
-    {
-      localized: true,
       name: 'linkText',
       required: true,
       type: 'text',

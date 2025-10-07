@@ -3,17 +3,17 @@ import {
 } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
-import { hookAdminTitle } from '@/hooks/adminTitle';
+import { hookAdminTitle } from '@/hooks-payload/adminTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
-import { hookSeoFallback } from '@/hooks/seoFallback';
+import { hookSeoFallback } from '@/hooks-payload/seoFallback';
 import { blocks } from '@/blocks';
 import { fieldsLinkExternal } from '@/field-templates/links';
 import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
-import { hookSlug } from '@/hooks/slug';
+import { hookSlug } from '@/hooks-payload/slug';
 
 const fieldsForDetailPage: Field[] = [
 
@@ -23,7 +23,7 @@ const fieldsForDetailPage: Field[] = [
     },
     fields: [
       // Hero
-      fieldsHero(false),
+      fieldsHero,
 
       // Content Blocks
       {

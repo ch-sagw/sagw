@@ -5,8 +5,10 @@ import {
 } from 'lexical';
 import React, { JSX } from 'react';
 
+const nodeType = 'unicode-char-shy';
+
 export type SerializedSoftHyphenNode = SerializedLexicalNode & {
-  type: 'unicode-char';
+  type: typeof nodeType;
   version: 1;
   text: string;
 };
@@ -18,7 +20,7 @@ export class SoftHyphenNode extends DecoratorNode<JSX.Element> {
   }
 
   public static getType(): string {
-    return 'unicode-char';
+    return nodeType;
   }
 
   public static clone(node: SoftHyphenNode): SoftHyphenNode {
@@ -40,7 +42,7 @@ export class SoftHyphenNode extends DecoratorNode<JSX.Element> {
   public exportJSON(): SerializedSoftHyphenNode {
     return {
       text: '\u00AD',
-      type: 'unicode-char',
+      type: nodeType,
       version: 1,
     };
   }
@@ -75,7 +77,5 @@ export class SoftHyphenNode extends DecoratorNode<JSX.Element> {
 // export converter
 
 export const softHyphenJSXConverter = {
-  /* eslint-disable @typescript-eslint/naming-convention */
-  'unicode-char': (): string => '­',
-  /* eslint-enable @typescript-eslint/naming-convention */
+  [nodeType]: (): string => '­',
 };

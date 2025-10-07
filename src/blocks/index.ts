@@ -10,7 +10,6 @@ import { NewsTeasersBlock } from '@/blocks/NewsTeasers';
 import { PublicationsTeasersBlock } from '@/blocks/PublicationsTeasers';
 import { TextBlock } from '@/blocks/Text';
 import { VideoBlock } from '@/blocks/Video';
-import { TextTeasersBlock } from '@/blocks/TextTeasers';
 import { AccordionBlock } from '@/blocks/Accordion';
 import { NewsOverviewBlock } from '@/blocks/NewsOverview';
 import { MagazineOverviewBlock } from '@/blocks/MagazineOverview';
@@ -19,21 +18,20 @@ import { EventsOverviewBlock } from '@/blocks/EventsOverview';
 import { FormBlock } from '@/blocks/Form';
 import { CtaContactBlock } from '@/blocks/CtaContact';
 import { CtaLinkBlock } from '@/blocks/CtaLink';
-import { TitleSubtitleTextBlock } from '@/blocks/TitleSubtitleText';
 import { NetworkTeasersBlock } from '@/blocks/NetworkTeasers';
 import { PeopleOverviewBlock } from '@/blocks/PeopleOverview';
 import { NotificationBlock } from './Notification';
 import { BibliographicReferenceBlock } from './BibliographicReference';
-import { ImageTeasersBlock } from '@/blocks/ImageTeasers';
+import { GenericTeasersBlock } from './GenericTeasers';
 import { NationalDictionariesOverviewBlock } from '@/blocks/NationalDictionariesOverview';
 import { InstitutesOverviewBlock } from '@/blocks/InstitutesOverview';
 import { ProjectOverviewBlock } from '@/blocks/ProjectOverview';
 import { ProjectTeasersBlock } from '@/blocks/ProjectTeasers';
+import { FootnotesBlock } from '@/blocks/Footnotes';
 
 export const blocks = (exclude?: string[]): Block[] => {
   const availableBlocks = [
     TextBlock,
-    TitleSubtitleTextBlock,
     LinksBlock,
     DownloadsBlock,
     ImageBlock,
@@ -43,11 +41,11 @@ export const blocks = (exclude?: string[]): Block[] => {
     CtaContactBlock,
     CtaLinkBlock,
     HomeTeasersBlock,
-    TextTeasersBlock,
     NetworkTeasersBlock,
-    ImageTeasersBlock,
+    GenericTeasersBlock,
     NotificationBlock,
     BibliographicReferenceBlock,
+    FootnotesBlock,
 
     // automatic overviews
     MagazineOverviewBlock,

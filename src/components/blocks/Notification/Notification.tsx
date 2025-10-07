@@ -13,9 +13,9 @@ export const Notification = ({
     data-testid='notification'
   >
     <Rte
-      text={text.content}
+      text={text}
       context='notification'
-      rteConfig='rte2'
+      rteConfig='rte3'
     />
   </div>
 );

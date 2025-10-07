@@ -34,14 +34,8 @@ export const ImageBlock: Block = {
     },
     {
       localized: true,
-      name: 'title',
-      required: true,
-      type: 'text',
-    },
-    {
-      localized: true,
       name: 'caption',
-      required: true,
+      required: false,
       type: 'text',
     },
     {

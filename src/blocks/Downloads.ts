@@ -9,8 +9,8 @@ export const DownloadsBlock: Block = {
   fields: [
     {
       localized: true,
-      name: 'title',
-      required: true,
+      name: 'subtitle',
+      required: false,
       type: 'text',
     },
     {

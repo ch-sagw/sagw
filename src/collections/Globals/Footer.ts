@@ -18,12 +18,16 @@ const fieldsSocialLink: Field[] = [
         value: 'linkedIn',
       },
       {
-        label: 'X (Twitter)',
-        value: 'twitter',
+        label: 'Intagram',
+        value: 'instagram',
       },
       {
         label: 'Facebook',
         value: 'facebook',
+      },
+      {
+        label: 'X (Twitter)',
+        value: 'twitter',
       },
     ],
     type: 'select',
@@ -75,12 +79,12 @@ export const Footer: CollectionConfig = {
         },
         {
           name: 'address2',
-          required: true,
+          required: false,
           type: 'text',
         },
         {
           name: 'poBox',
-          required: true,
+          required: false,
           type: 'text',
         },
         {
@@ -101,12 +105,12 @@ export const Footer: CollectionConfig = {
         },
         {
           name: 'phone',
-          required: true,
+          required: false,
           type: 'text',
         },
         {
           name: 'mail',
-          required: true,
+          required: false,
           type: 'email',
         },
       ],

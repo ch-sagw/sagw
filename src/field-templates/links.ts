@@ -2,10 +2,10 @@ import { Field } from 'payload';
 
 export const fieldsLinkInternal: Field[] = [
   {
-    defaultValue: false,
-    label: 'In neuem Fenster öffnen',
-    name: 'openInNewWindow',
-    type: 'checkbox',
+    localized: true,
+    name: 'description',
+    required: false,
+    type: 'text',
   },
   {
     localized: true,
@@ -30,6 +30,12 @@ export const fieldsLinkInternal: Field[] = [
 export const fieldsLinkExternal: Field[] = [
   {
     localized: true,
+    name: 'description',
+    required: false,
+    type: 'text',
+  },
+  {
+    localized: true,
     name: 'externalLinkText',
     required: true,
     type: 'text',
@@ -51,6 +57,21 @@ export const fieldsLinkExternal: Field[] = [
 
       return 'The URL has an invalid format. The URL must have a format like https://www.google.com or www.google.com.';
     },
+  },
+];
+
+export const fieldsMail: Field[] = [
+  {
+    localized: true,
+    name: 'linkText',
+    required: true,
+    type: 'text',
+  },
+  {
+    localized: false,
+    name: 'E-Mail',
+    required: true,
+    type: 'email',
   },
 ];
 
@@ -91,6 +112,10 @@ export const fieldsLinkInternalOrExternal: Field[] = [
         label: 'External',
         value: 'external',
       },
+      {
+        label: 'E-Mail',
+        value: 'mail',
+      },
     ],
     required: true,
     type: 'radio',
@@ -109,6 +134,14 @@ export const fieldsLinkInternalOrExternal: Field[] = [
     },
     fields: fieldsLinkExternal,
     name: 'linkExternal',
+    type: 'group',
+  },
+  {
+    admin: {
+      condition: (data, siblingData) => siblingData.linkType === 'mail',
+    },
+    fields: fieldsMail,
+    name: 'linkMail',
     type: 'group',
   },
 ];

@@ -52,13 +52,13 @@ test.describe('Softhyphen', () => {
       .toBeGreaterThanOrEqual(1);
 
     const [detailPageData] = detailPagesData.docs;
-    const [, heroTitle] = detailPageData.hero.title.content.root.children[0].children;
+    const [, heroTitle] = detailPageData.hero.title.root.children[0].children;
 
     await expect(heroTitle.text)
       .toBe('\u00AD');
 
     await expect(heroTitle.type)
-      .toBe('unicode-char');
+      .toBe('unicode-char-shy');
 
   });
 });

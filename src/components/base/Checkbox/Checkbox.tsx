@@ -9,6 +9,7 @@ import styles from '@/components/base/Checkbox/Checkbox.module.scss';
 import {
   InterfaceRtePropTypes, Rte,
 } from '@/components/base/Rte/Rte';
+import { ColorMode } from '@/components/base/types/colorMode';
 
 export type InterfaceCheckboxPropTypes = {
   value: string;
@@ -16,7 +17,7 @@ export type InterfaceCheckboxPropTypes = {
   label: InterfaceRtePropTypes['text'];
   checked: boolean;
   errorText: string;
-  colorMode: 'white' | 'dark';
+  colorMode: ColorMode;
   className?: string;
   autofocus?: boolean;
 };
@@ -55,6 +56,7 @@ export const Checkbox = ({
     variants: {
       colorMode: {
         dark: [styles.dark],
+        light: null,
         white: null,
       },
     },
@@ -97,7 +99,7 @@ export const Checkbox = ({
       >
         <Rte
           text={label}
-          rteConfig='rte2'
+          rteConfig='rte3'
         />
       </label>
 

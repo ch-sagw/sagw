@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { hookSeoFallback } from '@/hooks/seoFallback';
+import { hookSeoFallback } from '@/hooks-payload/seoFallback';
 import { versions } from '@/field-templates/versions';
 
 export const ErrorPage: CollectionConfig = {

@@ -1,19 +1,19 @@
 import {
   Block, Field,
 } from 'payload';
-import { rte2 } from '@/field-templates/rte';
+import {
+  rte1, rte3,
+} from '@/field-templates/rte';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 
 // Example: Promotion page
 
 const AccordionItem: Field[] = [
-  {
-    localized: true,
+  rte1({
     name: 'accordionTitle',
     required: true,
-    type: 'text',
-  },
-  rte2({
+  }),
+  rte3({
     name: 'accordionContent',
     required: true,
   }),
@@ -26,12 +26,10 @@ export const AccordionBlock: Block = {
   fields: [
     {
       fields: [
-        {
-          localized: true,
+        rte1({
           name: 'title',
           required: true,
-          type: 'text',
-        },
+        }),
         {
           name: 'titleLevel',
           options: [
@@ -58,7 +56,7 @@ export const AccordionBlock: Block = {
       ],
       type: 'row',
     },
-    ...fieldsColorMode({
+    fieldsColorMode({
       dark: true,
       light: true,
       white: true,

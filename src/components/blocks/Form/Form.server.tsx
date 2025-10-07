@@ -2,7 +2,7 @@ import 'server-only';
 import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
 import {
-  InterfaceEmailField, Form as InterfaceForm, InterfaceFormBlock, InterfaceI18NForms, InterfaceTextField,
+  InterfaceEmailField, Form as InterfaceForm, InterfaceFormBlock, InterfaceTextField,
 } from '@/payload-types';
 import { FormClient } from '@/components/blocks/Form/Form.client';
 import { Fragment } from 'react';
@@ -23,7 +23,7 @@ export const FormServer = async ({
   });
 
   const i18nData = await payload.find({
-    collection: 'i18nForms',
+    collection: 'i18nGlobals',
     depth: 1,
     where: {
       tenant: {
@@ -36,7 +36,7 @@ export const FormServer = async ({
     return <p>No i18n data</p>;
   }
 
-  const i18nForm = i18nData.docs[0].i18nForms as InterfaceI18NForms;
+  const i18nForm = i18nData.docs[0].forms;
 
   // --- Make sure form exists
 
@@ -96,9 +96,7 @@ export const FormServer = async ({
       blockType: 'checkboxBlock',
       fieldError: i18nForm.dataPrivacyCheckbox.errorMessage,
       fieldWidth: 'full',
-      label: {
-        content: i18nForm.dataPrivacyCheckbox.dataPrivacyCheckboxText.content,
-      },
+      label: i18nForm.dataPrivacyCheckbox.dataPrivacyCheckboxText,
       name: `checkbox-${renderForm.id}`,
       required: true,
     });
@@ -107,7 +105,6 @@ export const FormServer = async ({
   return (
     <FormClient
       form={renderForm}
-      i18n={i18nForm}
     />
   );
 };

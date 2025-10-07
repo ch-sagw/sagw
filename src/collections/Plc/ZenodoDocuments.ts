@@ -66,6 +66,12 @@ export const ZenodoDocuments: CollectionConfig = {
       type: 'array',
     },
     {
+      name: 'project',
+      relationTo: 'projects',
+      required: false,
+      type: 'relationship',
+    },
+    {
       admin: {
         components: {
           Field: {

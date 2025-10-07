@@ -5,7 +5,7 @@ import type {
 import { Rte } from '@/components/base/Rte/Rte';
 import { defaultDecorator } from '@/storybook-helpers';
 import {
-  sampleRte1, sampleRte2,
+  sampleRte1, sampleRte3,
 } from '@/components/base/Rte/Rte.sampleContent';
 
 type RteProps = React.ComponentProps<typeof Rte>;
@@ -45,18 +45,18 @@ export const Rte1MagazineDetailLead: StrictStory = {
   },
 };
 
-export const Rte2Notification: StrictStory = {
+export const Rte3Notification: StrictStory = {
   args: {
     context: 'notification',
-    rteConfig: 'rte2',
-    text: sampleRte2,
+    rteConfig: 'rte3',
+    text: sampleRte3,
   },
 };
 
-export const Rte2MagazineDetailText: StrictStory = {
+export const Rte3MagazineDetailText: StrictStory = {
   args: {
     context: 'magazineDetailText',
-    rteConfig: 'rte2',
-    text: sampleRte2,
+    rteConfig: 'rte3',
+    text: sampleRte3,
   },
 };

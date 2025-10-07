@@ -3,9 +3,7 @@
 
 import React, { Fragment } from 'react';
 import { cva } from 'cva';
-import {
-  Form as InterfaceForm, InterfaceI18NForms,
-} from '@/payload-types';
+import { Form as InterfaceForm } from '@/payload-types';
 import { hiddenFormDefinitionFieldName } from '@/components/blocks/Form/Form.config';
 import { FormNotification } from '@/components/base/FormNotification/FormNotification';
 
@@ -23,6 +21,7 @@ const sectionClasses = cva([styles.formBlock], {
   variants: {
     colorMode: {
       dark: [styles.dark],
+      light: [styles.light],
       white: null,
     },
   },
@@ -49,7 +48,6 @@ type InterfaceFormClientPropTypes = {
   errors: Record<string, string[] | undefined>;
   submitError: boolean;
   submitSuccess: boolean;
-  i18n: InterfaceI18NForms;
 };
 
 export const FormComponent = ({
@@ -61,7 +59,6 @@ export const FormComponent = ({
   errors,
   submitError,
   submitSuccess,
-  i18n,
 }: InterfaceFormClientPropTypes): React.JSX.Element => {
 
   const TitleElem: React.ElementType = `h${form.titleLevel}`;
@@ -91,8 +88,8 @@ export const FormComponent = ({
             // TODO
             console.log('todo');
           }}
-          text={i18n.submitError.text}
-          title={i18n.submitError.title}
+          text={form.submitError.text}
+          title={form.submitError.title}
           type='error'
         />
       }
@@ -110,14 +107,8 @@ export const FormComponent = ({
           onAction={() => {
             console.log('todo');
           }}
-          text={form.isNewsletterForm === 'custom'
-            ? i18n.submitSuccess.text
-            : i18n.newsletterSubmitSuccess.text
-          }
-          title={form.isNewsletterForm === 'custom'
-            ? i18n.submitSuccess.title
-            : i18n.newsletterSubmitSuccess.title
-          }
+          text={form.submitSuccess.text}
+          title={form.submitSuccess.title}
           type='success'
         />
       }
@@ -176,7 +167,7 @@ export const FormComponent = ({
                   })}
                   value='on'
                   name={field.name}
-                  label={field.label.content}
+                  label={field.label}
                   checked={checked}
                   errorText={errors[field.name]?.join(', ') || ''}
                   colorMode={form.colorMode}

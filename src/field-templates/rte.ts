@@ -14,8 +14,10 @@ import {
   UnorderedListFeature,
 } from '@payloadcms/richtext-lexical';
 import { SoftHyphenFeature } from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.server';
+import { NonBreakingSpaceFeature } from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpace.server';
 import {
-  FieldHook, GroupField,
+  Field,
+  FieldHook,
 } from 'payload';
 import { JSDOM } from 'jsdom';
 import domPurify from 'dompurify';
@@ -70,6 +72,7 @@ const rte1Editor = lexicalEditor({
     SubscriptFeature(),
     SuperscriptFeature(),
     SoftHyphenFeature(),
+    NonBreakingSpaceFeature(),
   ],
 });
 
@@ -83,15 +86,45 @@ const rte2Editor = lexicalEditor({
     SubscriptFeature(),
     SuperscriptFeature(),
     ParagraphFeature(),
-    HeadingFeature(),
     UnorderedListFeature(),
     OrderedListFeature(),
     LinkFeature({
       enabledCollections: linkableSlugs.map((slug) => slug.slug),
       maxDepth: 1,
     }),
+    NonBreakingSpaceFeature(),
   ],
 });
+
+const rte3Editor = lexicalEditor({
+  features: [
+    FixedToolbarFeature(),
+    BoldFeature(),
+    ItalicFeature(),
+    UnderlineFeature(),
+    StrikethroughFeature(),
+    SubscriptFeature(),
+    SuperscriptFeature(),
+    ParagraphFeature(),
+    HeadingFeature({
+      enabledHeadingSizes: [
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+      ],
+    }),
+    UnorderedListFeature(),
+    OrderedListFeature(),
+    LinkFeature({
+      enabledCollections: linkableSlugs.map((slug) => slug.slug),
+      maxDepth: 1,
+    }),
+    NonBreakingSpaceFeature(),
+  ],
+});
+
 /* eslint-enable new-cap */
 
 interface InterfaceRteInputType {
@@ -102,52 +135,46 @@ interface InterfaceRteInputType {
 interface InterfaceRteInputTypeInternal {
   name: string;
   required: boolean;
-  interfaceName: string;
   editor: LexicalRichTextAdapterProvider;
 }
 
 const rte = ({
-  name, required, interfaceName, editor,
-}: InterfaceRteInputTypeInternal): GroupField => ({
-
-  // we want to have Rte in a group, so that we can automatically generate an
-  // interface for the rte content.
-
-  fields: [
-    {
-      editor,
-      hooks: {
-        beforeValidate: [
-          ({
-            value,
-          }): FieldHook => sanitizeRichTextValue(value),
-        ],
-      },
-      localized: true,
-      name: 'content',
-      required,
-      type: 'richText',
-    },
-  ],
-  interfaceName,
+  name, required, editor,
+}: InterfaceRteInputTypeInternal): Field => ({
+  editor,
+  hooks: {
+    beforeValidate: [
+      ({
+        value,
+      }): FieldHook => sanitizeRichTextValue(value),
+    ],
+  },
+  localized: true,
   name,
-  type: 'group',
+  required,
+  type: 'richText',
 });
 
 export const rte1 = ({
   name, required,
-}: InterfaceRteInputType): GroupField => rte({
+}: InterfaceRteInputType): Field => rte({
   editor: rte1Editor,
-  interfaceName: 'InterfaceRte1',
   name,
   required,
 });
 
 export const rte2 = ({
   name, required,
-}: InterfaceRteInputType): GroupField => rte({
+}: InterfaceRteInputType): Field => rte({
   editor: rte2Editor,
-  interfaceName: 'InterfaceRte2',
+  name,
+  required,
+});
+
+export const rte3 = ({
+  name, required,
+}: InterfaceRteInputType): Field => rte({
+  editor: rte3Editor,
   name,
   required,
 });

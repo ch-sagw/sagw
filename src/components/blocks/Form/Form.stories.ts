@@ -62,9 +62,7 @@ const defaultFormConfig: FormProps = {
         fieldError: 'checkbox error',
         fieldWidth: 'half',
         id: '69c6e2b6833c54485eb1b84c',
-        label: {
-          content: sampleRtePrivacyCheckbox,
-        },
+        label: sampleRtePrivacyCheckbox,
         name: 'checkbox1',
         required: true,
       },
@@ -73,9 +71,7 @@ const defaultFormConfig: FormProps = {
         fieldError: 'checkbox error',
         fieldWidth: 'half',
         id: '67c6e2b6833c54485eb1b84c',
-        label: {
-          content: sampleRtePrivacyCheckbox,
-        },
+        label: sampleRtePrivacyCheckbox,
         name: 'checkbox2',
         required: false,
       },
@@ -118,23 +114,6 @@ const defaultFormConfig: FormProps = {
     recipientMail: 'foo@bar.baz',
     showPrivacyCheckbox: true,
     submitButtonLabel: 'Submit button SAGW',
-    subtitle: 'Erhalten Sie Updates zu aktuellen Projekten, Artikel, Publikationen und Veranstaltungen',
-    tenant: '68c6e2b3ec3710c8de6912f8',
-    title: 'Form SAGW',
-    titleLevel: '2',
-    updatedAt: '2025-09-14T15:43:50.512Z',
-  },
-  i18n: {
-    dataPrivacyCheckbox: {
-      dataPrivacyCheckboxText: {
-        content: sampleRtePrivacyCheckbox,
-      },
-      errorMessage: 'Foo bas',
-    },
-    newsletterSubmitSuccess: {
-      text: 'Newsletter submit success',
-      title: 'Nesletter submit title',
-    },
     submitError: {
       optionalLink: {
         includeLink: false,
@@ -142,24 +121,28 @@ const defaultFormConfig: FormProps = {
         link: {
           internalLink: '/',
           linkText: 'foo',
-          openInNewWindow: false,
         },
       },
-      text: 'Submit text error SAGW',
-      title: 'Submit title error SAGW',
+      text: 'submit error text',
+      title: 'submit error title',
     },
     submitSuccess: {
       optionalLink: {
         includeLink: false,
+
         link: {
           internalLink: '/',
           linkText: 'foo',
-          openInNewWindow: false,
         },
       },
-      text: 'Submit text success SAGW',
-      title: 'Submit title success SAGW',
+      text: 'submit success text',
+      title: 'submit success title',
     },
+    subtitle: 'Erhalten Sie Updates zu aktuellen Projekten, Artikel, Publikationen und Veranstaltungen',
+    tenant: '68c6e2b3ec3710c8de6912f8',
+    title: 'Form SAGW',
+    titleLevel: '2',
+    updatedAt: '2025-09-14T15:43:50.512Z',
   },
   pending: false,
   state: null,
@@ -178,6 +161,16 @@ export const FormWhite: StrictStory = {
     form: {
       ...(defaultFormConfig.form as Exclude<FormProps['form'], string | null | undefined>),
       colorMode: 'white',
+    },
+  },
+};
+
+export const FormLight: StrictStory = {
+  args: {
+    ...defaultFormConfig,
+    form: {
+      ...(defaultFormConfig.form as Exclude<FormProps['form'], string | null | undefined>),
+      colorMode: 'light',
     },
   },
 };

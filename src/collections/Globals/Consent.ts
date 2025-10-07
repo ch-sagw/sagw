@@ -6,7 +6,7 @@ import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 
-import { rte2 } from '@/field-templates/rte';
+import { rte3 } from '@/field-templates/rte';
 import { versions } from '@/field-templates/versions';
 
 const overlaySection: Field[] = [
@@ -16,7 +16,7 @@ const overlaySection: Field[] = [
     required: true,
     type: 'text',
   },
-  rte2({
+  rte3({
     name: 'text',
     required: true,
   }),
@@ -85,7 +85,7 @@ export const Consent: CollectionConfig = {
               required: true,
               type: 'text',
             },
-            rte2({
+            rte3({
               name: 'text',
               required: true,
             }),
@@ -121,7 +121,7 @@ export const Consent: CollectionConfig = {
               required: true,
               type: 'text',
             },
-            rte2({
+            rte3({
               name: 'text',
               required: true,
             }),
