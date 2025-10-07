@@ -105,6 +105,7 @@ export const NavigationItem = ({
     menuVisible,
     toggleButtonAutofocus: toggleButtonAutofocusFromHover,
     onToggleClick: onToggleClickFromHover,
+    onSimulateKeyDownForScreenReader,
     onMouseEnter,
     onMouseLeave,
     handleBlur,
@@ -268,6 +269,9 @@ export const NavigationItem = ({
               ? toggleButtonAutofocus
               : toggleButtonAutofocusFromHover
             }
+            onClick={() => {
+              onSimulateKeyDownForScreenReader();
+            }}
           />
         }
 

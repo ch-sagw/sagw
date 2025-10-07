@@ -73,7 +73,7 @@
         margin-bottom: px-to-rem(calc(-1 * var(--border-width-l)));
         text-align: left;
 
-        .buttonText {
+        .buttonText p {
           text-decoration-line: underline;
           text-underline-offset: px-to-rem(var(--spacing-2xs));
           text-decoration-thickness: px-to-rem(var(--border-width-l));
@@ -95,7 +95,7 @@
         }
 
         @include hover-style {
-          &:not(:focus-visible) .buttonText {
+          &:not(:focus-visible) .buttonText p {
             text-decoration-color: var(--border-color);
           }
         }

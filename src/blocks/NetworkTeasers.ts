@@ -9,7 +9,6 @@ import { rte1 } from '@/field-templates/rte';
 const fieldsNetworkItem: Field[] = [
   rte1({
     name: 'title',
-    required: true,
   }),
   {
     name: 'category',
