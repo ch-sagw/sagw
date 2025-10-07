@@ -13,8 +13,9 @@ test.describe('Softhyphen', () => {
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
     await page.waitForLoadState('networkidle');
 
-    const rteField = await page.locator('#field-hero .ContentEditable__root');
-    const hyphenButton = await page.locator('#field-hero .toolbar-popup__button-softHyphenButton');
+    const rteField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
+      .nth(0);
+    const hyphenButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-softHyphenButton');
 
     await rteField.fill('detailpagetitle');
     await hyphenButton.click();

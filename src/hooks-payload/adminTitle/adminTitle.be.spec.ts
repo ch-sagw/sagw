@@ -14,11 +14,10 @@ test.describe('adminTitle', () => {
     await page.goto('http://localhost:3000/admin/collections/newsDetailPage/create');
     await page.waitForLoadState('networkidle');
 
-    const teaserInput = await page.getByRole('textbox', {
-      name: 'Teaser Text',
-    });
+    const teaserInput = await page.locator('#field-overviewPageProps .ContentEditable__root');
 
-    const heroField = await page.locator('#field-hero .ContentEditable__root');
+    const heroField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
+      .nth(0);
     const dateField = await page.locator('#field-hero__date input');
 
     await teaserInput.fill('foo');
@@ -61,15 +60,14 @@ test.describe('adminTitle', () => {
     await page.goto('http://localhost:3000/admin/collections/newsDetailPage/create');
     await page.waitForLoadState('networkidle');
 
-    const teaserInput = await page.getByRole('textbox', {
-      name: 'Teaser Text',
-    });
+    const teaserInput = await page.locator('#field-overviewPageProps .ContentEditable__root');
 
-    const heroField = await page.locator('#field-hero .ContentEditable__root');
+    const heroField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
+      .nth(0);
     const dateField = await page.locator('#field-hero__date input');
-    const hyphenButton = await page.locator('#field-hero .toolbar-popup__button-softHyphenButton');
-    const superscriptButton = await page.locator('#field-hero .toolbar-popup__button-superscript');
-    const subscriptButton = await page.locator('#field-hero .toolbar-popup__button-subscript');
+    const hyphenButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-softHyphenButton');
+    const superscriptButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-superscript');
+    const subscriptButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-subscript');
 
     await teaserInput.fill('foo');
     await heroField.fill('News Detail Page Hero Title Transform');

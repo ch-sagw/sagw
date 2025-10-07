@@ -15,11 +15,10 @@ test.describe('seoFallback', () => {
     await page.goto('http://localhost:3000/admin/collections/newsDetailPage/create');
     await page.waitForLoadState('networkidle');
 
-    const teaserInput = await page.getByRole('textbox', {
-      name: 'Teaser Text',
-    });
-
-    const heroField = await page.locator('#field-hero .ContentEditable__root');
+    const teaserInput = await page.locator('.ContentEditable__root')
+      .nth(0);
+    const heroField = await page.locator('.ContentEditable__root')
+      .nth(0);
     const dateField = await page.locator('#field-hero__date input');
 
     await teaserInput.fill('foo');

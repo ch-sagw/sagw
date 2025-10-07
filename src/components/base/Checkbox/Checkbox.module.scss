@@ -52,6 +52,10 @@
     @include reduced-motion {
       transition: none;
     }
+
+    a {
+      color: inherit;
+    }
   }
 
   .icon {

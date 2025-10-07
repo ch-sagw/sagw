@@ -16,7 +16,9 @@ import { Checkbox } from '@/components/base/Checkbox/Checkbox';
 
 import styles from '@/components/blocks/Form/Form.module.scss';
 import { ZodError } from 'zod';
-import { rteToHtml } from '@/utilities/rteToHtml';
+import {
+  rte3ToHtml, rteToHtml,
+} from '@/utilities/rteToHtml';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 
 const sectionClasses = cva([styles.formBlock], {
@@ -177,7 +179,7 @@ export const FormComponent = ({
                   })}
                   value='on'
                   name={field.name}
-                  label={rteToHtml(field.label)}
+                  label={rte3ToHtml(field.label)}
                   checked={checked}
                   errorText={errors[field.name]?.join(', ') || ''}
                   colorMode={form.colorMode}

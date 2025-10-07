@@ -15,12 +15,10 @@ test.describe('forms', () => {
     await page.waitForLoadState('networkidle');
 
     // fill global fields
-    const title = await page.locator('#field-title');
     const buttonLabel = await page.locator('#field-submitButtonLabel');
     const recipientMail = await page.locator('#field-recipientMail');
     const subject = await page.locator('#field-mailSubject');
 
-    await title.fill('title');
     await buttonLabel.fill('button label');
     await recipientMail.fill('foo@bar.com');
     await subject.fill('subject');
@@ -42,18 +40,45 @@ test.describe('forms', () => {
 
     await textBlock.click();
 
+    // fill fields for success/error
+    const successBlock = await page.locator('#field-submitSuccess');
+    const errorBlock = await page.locator('#field-submitError');
+
+    const successTitle = await successBlock.locator('.rich-text-lexical')
+      .nth(0)
+      .locator('.ContentEditable__root');
+    const successText = await successBlock.locator('.rich-text-lexical')
+      .nth(1)
+      .locator('.ContentEditable__root');
+
+    const errorTitle = await errorBlock.locator('.rich-text-lexical')
+      .nth(0)
+      .locator('.ContentEditable__root');
+    const errorText = await errorBlock.locator('.rich-text-lexical')
+      .nth(1)
+      .locator('.ContentEditable__root');
+
+    await successTitle.fill('success title');
+    await successText.fill('success text');
+    await errorTitle.fill('error title');
+    await errorText.fill('error text');
+
     // fill fields of block
 
     const firstBlock = await page.locator('#fields-row-0');
     const secondBlock = await page.locator('#fields-row-1');
 
-    const label1 = await firstBlock.getByLabel('Label');
+    const label1 = await firstBlock.locator('.ContentEditable__root')
+      .nth(0);
     const placeholder1 = await firstBlock.getByLabel('Placeholder');
-    const error1 = await firstBlock.getByLabel('Field Error');
+    const error1 = await firstBlock.locator('.ContentEditable__root')
+      .nth(1);
 
-    const label2 = await secondBlock.getByLabel('Label');
+    const label2 = await secondBlock.locator('.ContentEditable__root')
+      .nth(0);
     const placeholder2 = await secondBlock.getByLabel('Placeholder');
-    const error2 = await secondBlock.getByLabel('Field Error');
+    const error2 = await secondBlock.locator('.ContentEditable__root')
+      .nth(1);
 
     await label1.fill('label');
     await placeholder1.fill('placeholder');
