@@ -1039,21 +1039,7 @@ export interface Form {
         };
         [k: string]: unknown;
       };
-      placeholder: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
+      placeholder: string;
       fieldWidth: 'full' | 'half';
       required?: boolean | null;
       fieldError?: {
@@ -1088,21 +1074,7 @@ export interface Form {
         };
         [k: string]: unknown;
       };
-      placeholder: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
+      placeholder: string;
       fieldWidth: 'full' | 'half';
       required?: boolean | null;
       fieldError?: {
@@ -1192,21 +1164,7 @@ export interface InterfaceEmailField {
     };
     [k: string]: unknown;
   };
-  placeholder: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  placeholder: string;
   name: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
@@ -1249,21 +1207,7 @@ export interface InterfaceTextField {
     };
     [k: string]: unknown;
   };
-  placeholder: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  placeholder: string;
   name: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
@@ -1307,21 +1251,7 @@ export interface InterfaceTextareaField {
     };
     [k: string]: unknown;
   };
-  placeholder: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  placeholder: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
   fieldError?: {

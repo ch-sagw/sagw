@@ -1,7 +1,8 @@
 import React from 'react';
 import { InterfaceNotificationBlock } from '@/payload-types';
 import styles from '@/components/blocks/Notification/Notification.module.scss';
-import { Rte } from '@/components/base/Rte/Rte';
+import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
 export type InterfaceNotificationPropTypes = {} & InterfaceNotificationBlock;
 
@@ -12,10 +13,10 @@ export const Notification = ({
     className={styles.notification}
     data-testid='notification'
   >
-    <Rte
-      text={text}
-      context='notification'
-      rteConfig='rte3'
+    <SafeHtml
+      as='p'
+      html={rteToHtml(text)}
+
     />
   </div>
 );

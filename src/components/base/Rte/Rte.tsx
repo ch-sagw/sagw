@@ -12,6 +12,7 @@ import {
 import { cva } from 'cva';
 import styles from '@/components/base/Rte/Rte.module.scss';
 import { softHyphenJSXConverter } from '@/components/admin/rte/features/SoftHyphen/SoftHyphenNode';
+import { nonBreakingSpaceJSXConverter } from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpaceNode';
 
 const internalDocToHref = ({
   linkNode,
@@ -35,6 +36,7 @@ const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({
     internalDocToHref,
   }),
   ...softHyphenJSXConverter,
+  ...nonBreakingSpaceJSXConverter,
 });
 
 export type InterfaceRtePropTypes = {

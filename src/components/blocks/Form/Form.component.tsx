@@ -16,7 +16,8 @@ import { Checkbox } from '@/components/base/Checkbox/Checkbox';
 
 import styles from '@/components/blocks/Form/Form.module.scss';
 import { ZodError } from 'zod';
-import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
+import { rteToHtml } from '@/utilities/rteToHtml';
+import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 
 const sectionClasses = cva([styles.formBlock], {
   variants: {
@@ -70,10 +71,18 @@ export const FormComponent = ({
         colorMode: form.colorMode,
       })}
     >
+      <SafeHtml
+        as={TitleElem}
+        className={styles.title}
+        html={rteToHtml(form.title)}
+      />
 
-      <TitleElem className={styles.title}>{rte1ToPlaintext(form.title)}</TitleElem>
       {form.subtitle &&
-        <p className={styles.subtitle}>{rte1ToPlaintext(form.subtitle)}</p>
+        <SafeHtml
+          as='p'
+          className={styles.subtitle}
+          html={rteToHtml(form.subtitle)}
+        />
       }
 
       {submitError &&
@@ -89,8 +98,8 @@ export const FormComponent = ({
             // TODO
             console.log('todo');
           }}
-          text={rte1ToPlaintext(form.submitError.text)}
-          title={rte1ToPlaintext(form.submitError.title)}
+          text={rteToHtml(form.submitError.text)}
+          title={rteToHtml(form.submitError.title)}
           type='error'
         />
       }
@@ -108,14 +117,14 @@ export const FormComponent = ({
           onAction={() => {
             console.log('todo');
           }}
-          text={rte1ToPlaintext(form.submitSuccess.text)}
-          title={rte1ToPlaintext(form.submitSuccess.title)}
+          text={rteToHtml(form.submitSuccess.text)}
+          title={rteToHtml(form.submitSuccess.title)}
           type='success'
         />
       }
 
       {!submitSuccess &&
-        < form
+        <form
           action={action}
           className={styles.form}
           noValidate
@@ -139,8 +148,8 @@ export const FormComponent = ({
                     fieldWidth: field.fieldWidth,
                   })}
                   key={i}
-                  label={rte1ToPlaintext(field.label)}
-                  placeholder={rte1ToPlaintext(field.placeholder)}
+                  label={rteToHtml(field.label)}
+                  placeholder={field.placeholder}
                   errorText={errors[field.name]?.join(', ') || ''}
                   name={field.name}
                   required={field.required || false}
@@ -168,7 +177,7 @@ export const FormComponent = ({
                   })}
                   value='on'
                   name={field.name}
-                  label={field.label}
+                  label={rteToHtml(field.label)}
                   checked={checked}
                   errorText={errors[field.name]?.join(', ') || ''}
                   colorMode={form.colorMode}

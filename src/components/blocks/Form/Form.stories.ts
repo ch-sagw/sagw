@@ -45,7 +45,7 @@ const defaultFormConfig: FormProps = {
         id: '68c6e2b6833c54485eb1b84c',
         label: simpleRteConfig('Text field label SAGW'),
         name: 'field1',
-        placeholder: simpleRteConfig('Text field placeholder SAGW'),
+        placeholder: 'Text field placeholder SAGW',
         required: true,
       },
       {
@@ -55,7 +55,7 @@ const defaultFormConfig: FormProps = {
         id: '68c6e2b6833c54485eb1b84c',
         label: simpleRteConfig('Text field label SAGW'),
         name: 'field2',
-        placeholder: simpleRteConfig('Text field placeholder SAGW'),
+        placeholder: 'Text field placeholder SAGW',
         required: true,
       },
       {
@@ -83,7 +83,7 @@ const defaultFormConfig: FormProps = {
         id: '66c6e2b6833c54485eb1b84c',
         label: simpleRteConfig('E-Mail'),
         name: 'email',
-        placeholder: simpleRteConfig('Ihre E-Mail Adresse'),
+        placeholder: 'Ihre E-Mail Adresse',
         required: true,
       },
       {
@@ -93,7 +93,7 @@ const defaultFormConfig: FormProps = {
         id: '65c6e2b6833c54485eb1b84c',
         label: simpleRteConfig('Kommentar'),
         name: 'textarea',
-        placeholder: simpleRteConfig('Ihr Kommentar'),
+        placeholder: 'Ihr Kommentar',
         required: true,
       },
     ],
@@ -104,12 +104,12 @@ const defaultFormConfig: FormProps = {
       email: {
         fieldWidth: 'full',
         label: simpleRteConfig('foo'),
-        placeholder: simpleRteConfig('baz'),
+        placeholder: 'baz',
       },
       name: {
         fieldWidth: 'full',
         label: simpleRteConfig('foo'),
-        placeholder: simpleRteConfig('baz'),
+        placeholder: 'baz',
       },
     },
     recipientMail: 'foo@bar.baz',

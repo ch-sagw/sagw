@@ -5,6 +5,7 @@ import { cva } from 'cva';
 import { Icon } from '@/icons';
 import styles from '@/components/base/FormNotification/FormNotification.module.scss';
 import { ColorMode } from '@/components/base/types/colorMode';
+import { SafeHtml } from '../SafeHtml/SafeHtml';
 
 type BaseNotification = {
   type: 'success' | 'error';
@@ -87,10 +88,24 @@ export const FormNotification = ({
       />
 
       <div id={notificationId}>
-        <p className={styles.title}>{title}</p>
-        <p className={styles.text}>{text}</p>
+        <SafeHtml
+          className={styles.title}
+          as='p'
+          html={title}
+        />
+
+        <SafeHtml
+          className={styles.text}
+          as='p'
+          html={text}
+        />
+
         {actionText &&
-          <p className={styles.button}>{actionText}</p>
+          <SafeHtml
+            className={styles.button}
+            as='p'
+            html={actionText}
+          />
         }
       </div>
     </WrapperElem>

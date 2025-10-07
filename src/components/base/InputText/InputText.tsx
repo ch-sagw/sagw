@@ -8,6 +8,7 @@ import { cva } from 'cva';
 import styles from '@/components/base/InputText/InputText.module.scss';
 import { Icon } from '@/icons';
 import { ColorMode } from '@/components/base/types/colorMode';
+import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 
 export type BaseProps = {
   label: string;
@@ -107,10 +108,12 @@ export const InputText = ({
             type,
           })}
       />
-      <label
+      <SafeHtml
+        as='label'
         className={styles.label}
         htmlFor={inputId}
-      >{label}</label>
+        html={label}
+      />
 
       {errorText &&
         <span
@@ -121,7 +124,10 @@ export const InputText = ({
             name='warning'
             className={styles.icon}
           />
-          <span>{errorText}</span>
+          <SafeHtml
+            as='span'
+            html={errorText}
+          />
         </span>
       }
     </div >

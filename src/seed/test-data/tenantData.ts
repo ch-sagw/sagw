@@ -441,7 +441,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           fieldWidth: 'half',
           label: simpleRteConfig('Name'),
           name: 'name',
-          placeholder: simpleRteConfig('Ihr Name'),
+          placeholder: 'Ihr Name',
           required: true,
         },
         {
@@ -450,7 +450,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           fieldWidth: 'half',
           label: simpleRteConfig('E-Mail'),
           name: 'email',
-          placeholder: simpleRteConfig('Ihre E-Mail Adresse'),
+          placeholder: 'Ihre E-Mail Adresse',
           required: true,
         },
         {
@@ -459,7 +459,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           fieldWidth: 'full',
           label: simpleRteConfig('Kommentar'),
           name: 'comment',
-          placeholder: simpleRteConfig('Ihr Kommentar'),
+          placeholder: 'Ihr Kommentar',
           required: true,
         },
         {
@@ -504,13 +504,13 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           fieldError: simpleRteConfig('Bitte geben Sie die E-Mail Adresse an.'),
           fieldWidth: 'half',
           label: simpleRteConfig('E-Mail'),
-          placeholder: simpleRteConfig('Ihre E-Mail Adresse'),
+          placeholder: 'Ihre E-Mail Adresse',
         },
         name: {
           fieldError: simpleRteConfig('Bitte geben Sie Ihren Namen an.'),
           fieldWidth: 'half',
           label: simpleRteConfig('Name'),
-          placeholder: simpleRteConfig('Ihr Name'),
+          placeholder: 'Ihr Name',
         },
       },
       recipientMail: 'delivered@resend.dev',

@@ -27,9 +27,12 @@ export const formFieldLabel: Field = rte1({
   name: 'label',
 });
 
-export const formFieldPlacehodler: Field = rte1({
+export const formFieldPlacehodler: Field = {
+  localized: true,
   name: 'placeholder',
-});
+  required: true,
+  type: 'text',
+};
 
 export const formFieldWidth: Field = {
   defaultValue: 'half',

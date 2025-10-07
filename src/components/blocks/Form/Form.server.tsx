@@ -72,7 +72,7 @@ export const FormServer = async ({
       fieldWidth: 'half',
       label: renderForm.newsletterFields?.name.label || simpleRteConfig(''),
       name: 'name',
-      placeholder: renderForm.newsletterFields?.name.placeholder || simpleRteConfig(''),
+      placeholder: renderForm.newsletterFields?.name.placeholder || '',
       required: true,
     };
 
@@ -82,7 +82,8 @@ export const FormServer = async ({
       fieldWidth: 'half',
       label: renderForm.newsletterFields?.email.label || simpleRteConfig(''),
       name: 'email',
-      placeholder: renderForm.newsletterFields?.name.placeholder || simpleRteConfig(''),
+      placeholder: renderForm.newsletterFields?.name.placeholder ||
+        '',
       required: true,
     };
 
