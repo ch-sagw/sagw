@@ -4,7 +4,7 @@ import type {
 } from '@storybook/nextjs-vite';
 import { FormComponent } from '@/components/blocks/Form/Form.component';
 import { defaultDecorator } from '@/storybook-helpers';
-import { sampleRtePrivacyCheckbox } from '@/components/base/Rte/Rte.sampleContent';
+import { sampleRtePrivacyCheckbox } from '@/utilities/rteSampleContent';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 type FormProps = React.ComponentProps<typeof FormComponent>;
