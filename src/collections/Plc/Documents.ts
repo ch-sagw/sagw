@@ -15,7 +15,7 @@ export const Documents: CollectionConfig = {
     }),
     {
       name: 'date',
-      required: true,
+      required: false,
       type: 'date',
     },
     {
