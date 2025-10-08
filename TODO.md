@@ -57,9 +57,15 @@ Payload Config:
 
 ---
 !!
-- check hooks, if they work after migrating to rte1
-- check admin - conditions for string comparisons
-- useMemo for rteToHtml conversion?
+- useMemo for rteToHtml conversion in prop -> see notification
+- useMemo for component -> see notification
+- home -> remove info text
+
+
+---
+- e-mail placeholder wrong: shows placeholder from name
+- safari: on first focus/blur: placeholder and label visible
+---
 
 
 Multitenant: (working with seed data)
