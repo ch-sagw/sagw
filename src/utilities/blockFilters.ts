@@ -1,20 +1,5 @@
-// List of all overview block types that should be unique
-const OVERVIEW_BLOCK_TYPES = [
-  'magazineOverviewBlock',
-  'publicationsOverviewBlock',
-  'eventsOverviewBlock',
-  'peopleOverviewBlock',
-  'newsOverviewBlock',
-  'nationalDictionariesOverviewBlock',
-  'institutesOverviewBlock',
-  'projectsOverviewBlock',
-] as const;
+import { OVERVIEW_BLOCK_TYPES } from '@/blocks';
 
-/**
- * Creates a filterOptions function that prevents multiple overview blocks
- * @param allBlockTypes - Array of all available block types
- * @returns filterOptions function for Payload blocks field
- */
 export const createSingleOverviewBlockFilter = <T extends string>(
   allBlockTypes: readonly T[],
 ) => ({

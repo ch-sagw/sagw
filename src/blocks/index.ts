@@ -29,6 +29,22 @@ import { ProjectOverviewBlock } from '@/blocks/ProjectOverview';
 import { ProjectTeasersBlock } from '@/blocks/ProjectTeasers';
 import { FootnotesBlock } from '@/blocks/Footnotes';
 
+// Overview blocks. Group them, since we need to ensure 1 block
+// per page in the page collections.
+const overviewBlocks = [
+  MagazineOverviewBlock,
+  PublicationsOverviewBlock,
+  EventsOverviewBlock,
+  PeopleOverviewBlock,
+  NewsOverviewBlock,
+  NationalDictionariesOverviewBlock,
+  InstitutesOverviewBlock,
+  ProjectOverviewBlock,
+] as const;
+
+// Export overview block slugs for filtering
+export const OVERVIEW_BLOCK_TYPES = overviewBlocks.map((block) => block.slug) as readonly string[];
+
 const availableBlocksConst = [
   TextBlock,
   LinksBlock,
@@ -47,14 +63,7 @@ const availableBlocksConst = [
   FootnotesBlock,
 
   // automatic overviews
-  MagazineOverviewBlock,
-  PublicationsOverviewBlock,
-  EventsOverviewBlock,
-  PeopleOverviewBlock,
-  NewsOverviewBlock,
-  NationalDictionariesOverviewBlock,
-  InstitutesOverviewBlock,
-  ProjectOverviewBlock,
+  ...overviewBlocks,
 
   // automatic teasers
   EventsTeasersBlock,
