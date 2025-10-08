@@ -27,7 +27,7 @@ export default buildConfig({
         ? {
           email: process.env.PAYLOAD_INITIAL_USER_MAIL,
           password: process.env.PAYLOAD_INITIAL_PASSWORD,
-          prefillOnly: true,
+          prefillOnly: false,
         }
         : false,
     components: {
