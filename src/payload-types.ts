@@ -425,7 +425,7 @@ export interface Document {
     };
     [k: string]: unknown;
   };
-  date: string;
+  date?: string | null;
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
