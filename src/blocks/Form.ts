@@ -2,7 +2,7 @@ import { Block } from 'payload';
 
 // Example: Activities
 
-export const FormBlock: Block = {
+export const FormBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -21,4 +21,4 @@ export const FormBlock: Block = {
     singular: 'Form',
   },
   slug: 'formBlock',
-};
+} as const satisfies Block;

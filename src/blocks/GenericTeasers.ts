@@ -27,7 +27,7 @@ const TeaserItem: Field[] = [
   ...fieldsLinkInternalOrExternal,
 ];
 
-export const GenericTeasersBlock: Block = {
+export const GenericTeasersBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -72,4 +72,4 @@ export const GenericTeasersBlock: Block = {
     singular: 'Generic Teasers',
   },
   slug: 'genericTeasersBlock',
-};
+} as const satisfies Block;

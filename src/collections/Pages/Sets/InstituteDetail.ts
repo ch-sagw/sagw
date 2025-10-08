@@ -63,7 +63,11 @@ export const InstituteDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blockReferences: blocks(),
+              blockReferences: blocks([
+                'textBlock',
+                'linksBlock',
+                'notificationBlock',
+              ]),
               blocks: [],
               label: 'Content',
               name: 'content',

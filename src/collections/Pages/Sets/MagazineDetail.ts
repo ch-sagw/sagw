@@ -64,7 +64,15 @@ export const MagazineDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blockReferences: blocks(),
+              blockReferences: blocks([
+                'textBlock',
+                'footnoteBlock',
+                'linksBlock',
+                'downloadsBlock',
+                'imageBlock',
+                'formBlock',
+                'notificationBlock',
+              ]),
               blocks: [],
               label: 'Content',
               name: 'content',

@@ -3,7 +3,7 @@ import { rte3 } from '@/field-templates/rte';
 
 // Example: Publication Detail Page
 
-export const BibliographicReferenceBlock: Block = {
+export const BibliographicReferenceBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -19,4 +19,4 @@ export const BibliographicReferenceBlock: Block = {
     singular: 'Bibliographic Reference',
   },
   slug: 'bibliographicReferenceBlock',
-};
+} as const satisfies Block;

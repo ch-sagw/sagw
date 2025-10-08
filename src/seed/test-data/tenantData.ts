@@ -574,10 +574,10 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           blockType: 'formBlock',
           form: newsletterForm,
         },
-        {
-          blockType: 'notificationBlock',
-          text: simpleRteConfig('Sample notification text.'),
-        },
+        // {
+        //   blockType: 'notificationBlock',
+        //   text: simpleRteConfig('Sample notification text.'),
+        // },
         {
           blockType: 'textBlock',
           text: simpleRteConfig('Sample Rte Block Content 1.'),
@@ -586,34 +586,34 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           blockType: 'textBlock',
           text: simpleRteConfig('Sample Rte Block Content 2.'),
         },
-        {
-          accordions: [
-            {
-              accordionContent: simpleRteConfig('Some content'),
-              accordionTitle: simpleRteConfig('Accordion 1'),
-            },
-            {
-              accordionContent: simpleRteConfig('Some content'),
-              accordionTitle: simpleRteConfig('Accordion 2'),
-            },
-            {
-              accordionContent: simpleRteConfig('Some content'),
-              accordionTitle: simpleRteConfig('Accordion 3'),
-            },
-            {
-              accordionContent: simpleRteConfig('Some content'),
-              accordionTitle: simpleRteConfig('Accordion 4'),
-            },
-            {
-              accordionContent: simpleRteConfig('Some content'),
-              accordionTitle: simpleRteConfig('Accordion 5'),
-            },
-          ],
-          blockType: 'accordionBlock',
-          colorMode: 'white',
-          title: simpleRteConfig(`Accordion main title ${tenant.toUpperCase()}`),
-          titleLevel: '2',
-        },
+        // {
+        //   accordions: [
+        //     {
+        //       accordionContent: simpleRteConfig('Some content'),
+        //       accordionTitle: simpleRteConfig('Accordion 1'),
+        //     },
+        //     {
+        //       accordionContent: simpleRteConfig('Some content'),
+        //       accordionTitle: simpleRteConfig('Accordion 2'),
+        //     },
+        //     {
+        //       accordionContent: simpleRteConfig('Some content'),
+        //       accordionTitle: simpleRteConfig('Accordion 3'),
+        //     },
+        //     {
+        //       accordionContent: simpleRteConfig('Some content'),
+        //       accordionTitle: simpleRteConfig('Accordion 4'),
+        //     },
+        //     {
+        //       accordionContent: simpleRteConfig('Some content'),
+        //       accordionTitle: simpleRteConfig('Accordion 5'),
+        //     },
+        //   ],
+        //   blockType: 'accordionBlock',
+        //   colorMode: 'white',
+        //   title: simpleRteConfig(`Accordion title ${tenant.toUpperCase()}`),
+        //   titleLevel: '2',
+        // },
       ],
       hero: {
         animated: true,

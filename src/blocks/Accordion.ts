@@ -17,7 +17,7 @@ const AccordionItem: Field[] = [
   }),
 ];
 
-export const AccordionBlock: Block = {
+export const AccordionBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -73,4 +73,4 @@ export const AccordionBlock: Block = {
     singular: 'Accordion',
   },
   slug: 'accordionBlock',
-};
+} as const satisfies Block;

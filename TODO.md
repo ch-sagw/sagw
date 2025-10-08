@@ -51,7 +51,6 @@ Payload Config:
 - show "published" column in collection overview
 - add descriptions to collections: what is this collection for?
 - care about redirects: check redirects-plugin and decide if we use it or create our own
-- limit blocks on all pages
 - add admin ui images for blocks: generic teaser, footnotes
 
 
@@ -60,6 +59,7 @@ Payload Config:
 - useMemo for rteToHtml conversion in prop -> see notification
 - useMemo for component -> see notification
 - home -> remove info text
+- only allow 1 overview block per page
 
 
 ---

@@ -3,7 +3,7 @@ import { Block } from 'payload';
 
 // Example: Activities
 
-export const NewsTeasersBlock: Block = {
+export const NewsTeasersBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -31,7 +31,7 @@ export const NewsTeasersBlock: Block = {
     },
     {
       admin: {
-        condition: (_, siblingData) => siblingData.link === 'yes',
+        condition: (_, siblingData): boolean => siblingData.link === 'yes',
       },
       localized: true,
       name: 'linkText',
@@ -63,4 +63,4 @@ export const NewsTeasersBlock: Block = {
     singular: 'News Teasers (automatic)',
   },
   slug: 'newsTeasersBlock',
-};
+} as const satisfies Block;

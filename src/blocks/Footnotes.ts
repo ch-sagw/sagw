@@ -5,7 +5,7 @@ import {
 
 // Example: Magazine detail page
 
-export const FootnotesBlock: Block = {
+export const FootnotesBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -24,4 +24,4 @@ export const FootnotesBlock: Block = {
     singular: 'Footnote',
   },
   slug: 'footnoteBlock',
-};
+} as const satisfies Block;

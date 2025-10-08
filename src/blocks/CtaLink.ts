@@ -4,7 +4,7 @@ import { rte1 } from '@/field-templates/rte';
 
 // Example: Early Career Award
 
-export const CtaLinkBlock: Block = {
+export const CtaLinkBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -24,4 +24,4 @@ export const CtaLinkBlock: Block = {
     singular: 'CTA Link',
   },
   slug: 'ctaLinkBlock',
-};
+} as const satisfies Block;

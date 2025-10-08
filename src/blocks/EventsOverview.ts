@@ -3,7 +3,7 @@ import { Block } from 'payload';
 
 // Example: Events Overview
 
-export const EventsOverviewBlock: Block = {
+export const EventsOverviewBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -36,4 +36,4 @@ export const EventsOverviewBlock: Block = {
     singular: 'Events Overview (automatic)',
   },
   slug: 'eventsOverviewBlock',
-};
+} as const satisfies Block;

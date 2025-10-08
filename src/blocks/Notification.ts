@@ -3,7 +3,7 @@ import { rte3 } from '@/field-templates/rte';
 
 // Example: Publication Overview Page
 
-export const NotificationBlock: Block = {
+export const NotificationBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -27,4 +27,4 @@ export const NotificationBlock: Block = {
     singular: 'Notification',
   },
   slug: 'notificationBlock',
-};
+} as const satisfies Block;

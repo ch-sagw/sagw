@@ -4,7 +4,7 @@ import { rte1 } from '@/field-templates/rte';
 
 // Example: Magazine Detail
 
-export const LinksBlock: Block = {
+export const LinksBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -25,4 +25,4 @@ export const LinksBlock: Block = {
     singular: 'Links',
   },
   slug: 'linksBlock',
-};
+} as const satisfies Block;

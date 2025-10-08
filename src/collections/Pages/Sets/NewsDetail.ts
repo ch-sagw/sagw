@@ -68,7 +68,15 @@ export const NewsDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blockReferences: blocks(),
+              blockReferences: blocks([
+                'textBlock',
+                'linksBlock',
+                'downloadsBlock',
+                'imageBlock',
+                'formBlock',
+                'notificationBlock',
+                'newsTeasersBlock',
+              ]),
               blocks: [],
               label: 'Content',
               name: 'content',

@@ -36,7 +36,7 @@ const fieldsNetworkItem: Field[] = [
   }),
 ];
 
-export const NetworkTeasersBlock: Block = {
+export const NetworkTeasersBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -86,4 +86,4 @@ export const NetworkTeasersBlock: Block = {
     singular: 'Network Teasers',
   },
   slug: 'networkTeasersBlock',
-};
+} as const satisfies Block;

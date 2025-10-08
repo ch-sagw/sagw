@@ -63,7 +63,17 @@ export const ProjectDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blockReferences: blocks(),
+              blockReferences: blocks([
+                'textBlock',
+                'linksBlock',
+                'downloadsBlock',
+                'formBlock',
+                'ctaContactBlock',
+                'notificationBlock',
+                'eventsTeasersBlock',
+                'newsTeasersBlock',
+                'publicationsTeasersBlock',
+              ]),
               blocks: [],
               label: 'Content',
               name: 'content',

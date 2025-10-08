@@ -3,7 +3,7 @@ import { rte3 } from '@/field-templates/rte';
 
 // Example: Magazine Detail
 
-export const TextBlock: Block = {
+export const TextBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -19,4 +19,4 @@ export const TextBlock: Block = {
     singular: 'Richtext',
   },
   slug: 'textBlock',
-};
+} as const satisfies Block;

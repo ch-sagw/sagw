@@ -3,7 +3,7 @@ import { Block } from 'payload';
 
 // Example: Magazine Detail
 
-export const ImageBlock: Block = {
+export const ImageBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -48,4 +48,4 @@ export const ImageBlock: Block = {
     singular: 'Image',
   },
   slug: 'imageBlock',
-};
+} as const satisfies Block;

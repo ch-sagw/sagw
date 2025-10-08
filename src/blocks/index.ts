@@ -29,45 +29,52 @@ import { ProjectOverviewBlock } from '@/blocks/ProjectOverview';
 import { ProjectTeasersBlock } from '@/blocks/ProjectTeasers';
 import { FootnotesBlock } from '@/blocks/Footnotes';
 
-export const blocks = (exclude?: string[]): Block[] => {
-  const availableBlocks = [
-    TextBlock,
-    LinksBlock,
-    DownloadsBlock,
-    ImageBlock,
-    VideoBlock,
-    AccordionBlock,
-    FormBlock,
-    CtaContactBlock,
-    CtaLinkBlock,
-    HomeTeasersBlock,
-    NetworkTeasersBlock,
-    GenericTeasersBlock,
-    NotificationBlock,
-    BibliographicReferenceBlock,
-    FootnotesBlock,
+const availableBlocksConst = [
+  TextBlock,
+  LinksBlock,
+  DownloadsBlock,
+  ImageBlock,
+  VideoBlock,
+  AccordionBlock,
+  FormBlock,
+  CtaContactBlock,
+  CtaLinkBlock,
+  HomeTeasersBlock,
+  NetworkTeasersBlock,
+  GenericTeasersBlock,
+  NotificationBlock,
+  BibliographicReferenceBlock,
+  FootnotesBlock,
 
-    // automatic overviews
-    MagazineOverviewBlock,
-    PublicationsOverviewBlock,
-    EventsOverviewBlock,
-    PeopleOverviewBlock,
-    NewsOverviewBlock,
-    NationalDictionariesOverviewBlock,
-    InstitutesOverviewBlock,
-    ProjectOverviewBlock,
+  // automatic overviews
+  MagazineOverviewBlock,
+  PublicationsOverviewBlock,
+  EventsOverviewBlock,
+  PeopleOverviewBlock,
+  NewsOverviewBlock,
+  NationalDictionariesOverviewBlock,
+  InstitutesOverviewBlock,
+  ProjectOverviewBlock,
 
-    // automatic teasers
-    EventsTeasersBlock,
-    MagazineTeasersBlock,
-    NewsTeasersBlock,
-    PublicationsTeasersBlock,
-    ProjectTeasersBlock,
-  ];
+  // automatic teasers
+  EventsTeasersBlock,
+  MagazineTeasersBlock,
+  NewsTeasersBlock,
+  PublicationsTeasersBlock,
+  ProjectTeasersBlock,
+] as const;
 
-  if (!exclude) {
+export type BlockSlug = typeof availableBlocksConst[number]['slug'];
+
+export const blocks = <T extends readonly BlockSlug[] | undefined = readonly BlockSlug[] | undefined>(
+  include?: T,
+): Block[] => {
+
+  const availableBlocks: Block[] = [...availableBlocksConst];
+
+  if (!include || include.length === 0) {
     return availableBlocks;
   }
 
-  return availableBlocks.filter((block) => !exclude.includes(block.slug));
+  return availableBlocks.filter((block) => include.includes(block.slug as BlockSlug));
 };

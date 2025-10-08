@@ -32,7 +32,7 @@ export const ImpressumPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blockReferences: blocks(),
+              blockReferences: blocks(['textBlock']),
               blocks: [],
               label: 'Content',
               name: 'content',

@@ -3,7 +3,7 @@ import { Block } from 'payload';
 
 // Example: Magazine Overview
 
-export const NationalDictionariesOverviewBlock: Block = {
+export const NationalDictionariesOverviewBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -41,4 +41,4 @@ export const NationalDictionariesOverviewBlock: Block = {
     singular: 'National Dictionaries Overview (automatic)',
   },
   slug: 'nationalDictionariesOverviewBlock',
-};
+} as const satisfies Block;

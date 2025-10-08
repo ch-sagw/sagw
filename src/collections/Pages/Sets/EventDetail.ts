@@ -28,7 +28,13 @@ const fieldsForDetailPage: Field[] = [
 
       // Content Blocks
       {
-        blockReferences: blocks(),
+        blockReferences: blocks([
+          'textBlock',
+          'linksBlock',
+          'downloadsBlock',
+          'formBlock',
+          'notificationBlock',
+        ]),
         blocks: [],
         label: 'Content',
         name: 'content',

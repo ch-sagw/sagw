@@ -84,7 +84,9 @@ test.describe('forms', () => {
     await placeholder1.fill('placeholder');
     await error1.fill('error');
 
-    await label2.fill('label');
+    await label2.fill('label', {
+      force: true,
+    });
     await placeholder2.fill('placeholder');
     await error2.fill('error');
 

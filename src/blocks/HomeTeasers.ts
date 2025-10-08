@@ -32,7 +32,7 @@ const homeTeaserItem: Field[] = [
   },
 ];
 
-export const HomeTeasersBlock: Block = {
+export const HomeTeasersBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -50,4 +50,4 @@ export const HomeTeasersBlock: Block = {
     singular: 'Home Teasers',
   },
   slug: 'homeTeasersBlock',
-};
+} as const satisfies Block;

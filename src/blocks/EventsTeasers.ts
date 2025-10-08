@@ -3,7 +3,7 @@ import { Block } from 'payload';
 
 // Example: Activities
 
-export const EventsTeasersBlock: Block = {
+export const EventsTeasersBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -31,7 +31,7 @@ export const EventsTeasersBlock: Block = {
     },
     {
       admin: {
-        condition: (_, siblingData) => siblingData.link === 'yes',
+        condition: (_, siblingData): boolean => siblingData.link === 'yes',
       },
       ...rte1({
         name: 'linkText',
@@ -62,4 +62,4 @@ export const EventsTeasersBlock: Block = {
     singular: 'Events Teasers (automatic)',
   },
   slug: 'eventsTeasersBlock',
-};
+} as const satisfies Block;
