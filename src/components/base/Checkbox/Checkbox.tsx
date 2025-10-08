@@ -96,7 +96,7 @@ export const Checkbox = ({
         data-testid='checkbox-label'
       >
         <SafeHtml
-          as='p'
+          as='span'
           html={label}
         />
       </label>
