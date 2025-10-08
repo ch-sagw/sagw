@@ -8,7 +8,7 @@ import { nonBreakingSpaceJSXConverter } from '@/components/admin/rte/features/No
 import {
   DefaultNodeTypes, SerializedLinkNode,
 } from '@payloadcms/richtext-lexical';
-import { convertLexicalNodesToHTML } from 'node_modules/@payloadcms/richtext-lexical/dist/features/converters/lexicalToHtml/sync';
+import { SerializedParagraphNode } from '@payloadcms/richtext-lexical/lexical';
 
 const internalDocToHref = ({
   linkNode,
@@ -45,13 +45,28 @@ const createHtmlConverters = ({
     }): string => {
 
       // Recursively render the paragraph’s children without wrapping <p> !
-      const inner = convertLexicalNodesToHTML({
-        converters,
-        nodes: node.children,
-        parent: node,
-      });
+      const paragraphNode = node as SerializedParagraphNode;
 
-      return inner.join('');
+      // Recursively render children using convertLexicalToHTML,
+      // but with disableContainer = true to avoid <div> wrappers.
+      const childrenHtml = paragraphNode.children
+        .map((child) => convertLexicalToHTML({
+          converters: () => converters,
+          data: {
+            root: {
+              children: [child],
+              direction: null,
+              format: '',
+              indent: 0,
+              type: 'root',
+              version: 1,
+            },
+          },
+          disableContainer: true,
+        }))
+        .join('');
+
+      return childrenHtml;
     };
   }
 
@@ -63,6 +78,16 @@ interface InterfaceRteToHtmlProps {
   wrap?: boolean;
 }
 
+// avoid unneccessary rebuild of converters by statically defining
+// the 2 sets of converters
+
+const convertersWithWrap = createHtmlConverters({
+  wrap: true,
+});
+const convertersWithoutWrap = createHtmlConverters({
+  wrap: false,
+});
+
 const rteToHtmlBase = ({
   content,
   wrap,
@@ -71,9 +96,9 @@ const rteToHtmlBase = ({
     return '';
   }
 
-  const htmlConverters = createHtmlConverters({
-    wrap,
-  });
+  const htmlConverters = wrap
+    ? convertersWithWrap
+    : convertersWithoutWrap;
 
   const transformedData = convertLexicalToHTML({
     converters: htmlConverters,
