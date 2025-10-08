@@ -6,7 +6,7 @@ import { rteToHtml } from '@/utilities/rteToHtml';
 
 export type InterfaceNotificationPropTypes = {} & InterfaceNotificationBlock;
 
-export const Notification = ({
+const NotificationBase = ({
   text,
 }: InterfaceNotificationPropTypes): React.JSX.Element => (
   <div
@@ -20,3 +20,5 @@ export const Notification = ({
     />
   </div>
 );
+
+export const Notification = React.memo(NotificationBase);
