@@ -5,7 +5,7 @@ type SafeHTMLProps<T extends React.ElementType> = {
   html: string;
 } & React.ComponentPropsWithoutRef<T>;
 
-export const SafeHtml = <T extends React.ElementType = 'div'>({
+const SafeHtmlBase = <T extends React.ElementType = 'div'>({
   as,
   html,
   ...props
@@ -19,3 +19,4 @@ export const SafeHtml = <T extends React.ElementType = 'div'>({
   }} />;
 };
 
+export const SafeHtml = React.memo(SafeHtmlBase);
