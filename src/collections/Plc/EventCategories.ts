@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload';
 import { versions } from '@/field-templates/versions';
+import { rte1 } from '@/field-templates/rte';
 
 export const EventCategories: CollectionConfig = {
   admin: {
@@ -8,12 +9,9 @@ export const EventCategories: CollectionConfig = {
     useAsTitle: 'eventCategory',
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'eventCategory',
-      required: true,
-      type: 'text',
-    },
+    }),
     {
       admin: {
         allowCreate: false,

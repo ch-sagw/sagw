@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload';
 import { versions } from '@/field-templates/versions';
+import { rte1 } from '@/field-templates/rte';
 
 export const PublicationTopics: CollectionConfig = {
   admin: {
@@ -8,12 +9,9 @@ export const PublicationTopics: CollectionConfig = {
     useAsTitle: 'publicationTopic',
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'publicationTopic',
-      required: true,
-      type: 'text',
-    },
+    }),
     {
       admin: {
         allowCreate: false,

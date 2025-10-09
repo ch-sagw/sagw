@@ -1,18 +1,17 @@
 import { Block } from 'payload';
+import { rte1 } from '@/field-templates/rte';
 
 // Example: Publication Detail
 
-export const DownloadsBlock: Block = {
+export const DownloadsBlock = {
   admin: {
     disableBlockName: true,
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'subtitle',
-      required: false,
-      type: 'text',
-    },
+      notRequired: true,
+    }),
     {
       defaultValue: 'custom',
       name: 'customOrAuto',
@@ -31,7 +30,7 @@ export const DownloadsBlock: Block = {
     },
     {
       admin: {
-        condition: (_, siblingData) => siblingData.customOrAuto === 'custom',
+        condition: (_, siblingData): boolean => siblingData.customOrAuto === 'custom',
       },
       hasMany: true,
       label: 'Select documents to add',
@@ -45,7 +44,7 @@ export const DownloadsBlock: Block = {
     },
     {
       admin: {
-        condition: (_, siblingData) => siblingData.customOrAuto === 'auto',
+        condition: (_, siblingData): boolean => siblingData.customOrAuto === 'auto',
       },
       hasMany: false,
       label: 'Select the project from which you want to show the downloads',
@@ -62,4 +61,4 @@ export const DownloadsBlock: Block = {
     singular: 'Downloads',
   },
   slug: 'downloadsBlock',
-};
+} as const satisfies Block;

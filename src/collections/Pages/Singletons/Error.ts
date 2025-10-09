@@ -2,6 +2,7 @@ import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { hookSeoFallback } from '@/hooks-payload/seoFallback';
 import { versions } from '@/field-templates/versions';
+import { rte1 } from '@/field-templates/rte';
 
 export const ErrorPage: CollectionConfig = {
   access: {
@@ -17,29 +18,19 @@ export const ErrorPage: CollectionConfig = {
         // Content Tab
         {
           fields: [
-
-            {
-              localized: true,
+            rte1({
               name: 'homeButtonText',
-              required: true,
-              type: 'text',
-            },
+            }),
 
             // 404
             {
               fields: [
-                {
-                  localized: true,
+                rte1({
                   name: 'title',
-                  required: true,
-                  type: 'text',
-                },
-                {
-                  localized: true,
+                }),
+                rte1({
                   name: 'description',
-                  required: true,
-                  type: 'text',
-                },
+                }),
               ],
               label: '404',
               name: 'notFound',

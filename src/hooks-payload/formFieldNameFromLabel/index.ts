@@ -11,15 +11,7 @@ export const formFieldNameFromLabel = ({
 
   const formElement: NonNullable<NonNullable<InterfaceForm['fields']>>[number] = siblingData;
 
-  let labelText;
-
-  if (formElement?.blockType === 'checkboxBlock') {
-    const lexical = formElement?.label;
-
-    labelText = rte1ToPlaintext(lexical);
-  } else {
-    labelText = formElement.label;
-  }
+  const labelText = rte1ToPlaintext(formElement?.label);
 
   // Lowercase, trim, replace spaces with dashes
   const name = labelText.toLowerCase()

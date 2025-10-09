@@ -6,7 +6,7 @@ import { Accordion } from '@/components/blocks/Accordion/Accordion';
 import { defaultDecorator } from '@/storybook-helpers';
 import {
   sampleRte3, sampleRtePrivacyCheckbox,
-} from '@/components/base/Rte/Rte.sampleContent';
+} from '@/utilities/rteSampleContent';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 type AccordionProps = React.ComponentProps<typeof Accordion>;

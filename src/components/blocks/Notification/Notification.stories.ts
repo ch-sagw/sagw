@@ -4,7 +4,7 @@ import type {
 } from '@storybook/nextjs-vite';
 import { Notification } from '@/components/blocks/Notification/Notification';
 import { defaultDecorator } from '@/storybook-helpers';
-import { sampleRte3 } from '@/components/base/Rte/Rte.sampleContent';
+import { sampleRte3 } from '@/utilities/rteSampleContent';
 
 type NotificationProps = React.ComponentProps<typeof Notification>;
 

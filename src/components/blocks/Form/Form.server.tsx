@@ -6,6 +6,7 @@ import {
 } from '@/payload-types';
 import { FormClient } from '@/components/blocks/Form/Form.client';
 import { Fragment } from 'react';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 type InterfaceFormServerPropTypes = {
   tenantId: string;
@@ -69,7 +70,7 @@ export const FormServer = async ({
       blockType: 'textBlockForm',
       fieldError: renderForm.newsletterFields?.name.fieldError,
       fieldWidth: 'half',
-      label: renderForm.newsletterFields?.name.label || '',
+      label: renderForm.newsletterFields?.name.label || simpleRteConfig(''),
       name: 'name',
       placeholder: renderForm.newsletterFields?.name.placeholder || '',
       required: true,
@@ -79,9 +80,10 @@ export const FormServer = async ({
       blockType: 'emailBlock',
       fieldError: renderForm.newsletterFields?.email.fieldError,
       fieldWidth: 'half',
-      label: renderForm.newsletterFields?.email.label || '',
+      label: renderForm.newsletterFields?.email.label || simpleRteConfig(''),
       name: 'email',
-      placeholder: renderForm.newsletterFields?.name.placeholder || '',
+      placeholder: renderForm.newsletterFields?.name.placeholder ||
+        '',
       required: true,
     };
 

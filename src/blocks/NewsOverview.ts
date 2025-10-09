@@ -1,18 +1,16 @@
+import { rte1 } from '@/field-templates/rte';
 import { Block } from 'payload';
 
 // Example: Magazine Overview
 
-export const NewsOverviewBlock: Block = {
+export const NewsOverviewBlock = {
   admin: {
     disableBlockName: true,
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'title',
-      required: true,
-      type: 'text',
-    },
+    }),
     {
       admin: {
         hidden: true,
@@ -38,4 +36,4 @@ export const NewsOverviewBlock: Block = {
     singular: 'News Overview (automatic)',
   },
   slug: 'newsOverviewBlock',
-};
+} as const satisfies Block;

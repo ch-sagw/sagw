@@ -1,8 +1,9 @@
+import { rte1 } from '@/field-templates/rte';
 import { Block } from 'payload';
 
 // Example: Institutes Overview
 
-export const InstitutesOverviewBlock: Block = {
+export const InstitutesOverviewBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -11,10 +12,9 @@ export const InstitutesOverviewBlock: Block = {
       admin: {
         description: 'This will be used as "More info" text on the teasers',
       },
-      localized: true,
-      name: 'moreInfoButtonText',
-      required: true,
-      type: 'text',
+      ...rte1({
+        name: 'moreInfoButtonText',
+      }),
     },
     {
       admin: {
@@ -41,4 +41,4 @@ export const InstitutesOverviewBlock: Block = {
     singular: 'Institutes Overview (automatic)',
   },
   slug: 'institutesOverviewBlock',
-};
+} as const satisfies Block;

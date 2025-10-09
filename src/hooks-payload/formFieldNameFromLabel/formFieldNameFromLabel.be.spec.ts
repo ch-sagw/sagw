@@ -12,17 +12,30 @@ test.describe('forms', () => {
   }) => {
     // create a form
     await page.goto('http://localhost:3000/admin/collections/forms/create');
-    await page.waitForLoadState('networkidle');
 
     // fill global fields
-    const title = await page.locator('#field-title');
+    const title = await page.locator('.ContentEditable__root')
+      .nth(0);
     const buttonLabel = await page.locator('#field-submitButtonLabel');
     const recipientMail = await page.locator('#field-recipientMail');
     const subject = await page.locator('#field-mailSubject');
-    const successTitle = await page.locator('#field-submitSuccess__title');
-    const successText = await page.locator('#field-submitSuccess__text');
-    const errorTitle = await page.locator('#field-submitError__title');
-    const errorText = await page.locator('#field-submitError__text');
+
+    const successBlock = await page.locator('#field-submitSuccess');
+    const errorBlock = await page.locator('#field-submitError');
+
+    const successTitle = await successBlock.locator('.rich-text-lexical')
+      .nth(0)
+      .locator('.ContentEditable__root');
+    const successText = await successBlock.locator('.rich-text-lexical')
+      .nth(1)
+      .locator('.ContentEditable__root');
+
+    const errorTitle = await errorBlock.locator('.rich-text-lexical')
+      .nth(0)
+      .locator('.ContentEditable__root');
+    const errorText = await errorBlock.locator('.rich-text-lexical')
+      .nth(1)
+      .locator('.ContentEditable__root');
 
     await title.fill('title');
     await buttonLabel.fill('button label');
@@ -49,9 +62,15 @@ test.describe('forms', () => {
 
     const firstBlock = await page.locator('#fields-row-0');
 
-    const label1 = await firstBlock.getByLabel('Label');
+    await firstBlock.waitFor({
+      state: 'visible',
+    });
+
+    const label1 = await firstBlock.locator('.ContentEditable__root')
+      .nth(0);
     const placeholder1 = await firstBlock.getByLabel('Placeholder');
-    const error1 = await firstBlock.getByLabel('Field Error');
+    const error1 = await firstBlock.locator('.ContentEditable__root')
+      .nth(1);
 
     await label1.fill('$4_20-"^3asd-%&*"+');
     await placeholder1.fill('placeholder');
@@ -64,6 +83,10 @@ test.describe('forms', () => {
 
     // expect specific name derived from label
     await saveButton.click();
+
+    await page.waitForLoadState('networkidle', {
+      timeout: 10000,
+    });
 
     const hiddenNameField = await firstBlock.locator('#field-fields__0__name');
 

@@ -4,7 +4,7 @@ import type {
 } from '@storybook/nextjs-vite';
 import { Rte } from '@/components/blocks/Rte/Rte';
 import { defaultDecorator } from '@/storybook-helpers';
-import { sampleRte3 } from '@/components/base/Rte/Rte.sampleContent';
+import { sampleRte3 } from '@/utilities/rteSampleContent';
 
 type RteProps = React.ComponentProps<typeof Rte>;
 

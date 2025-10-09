@@ -25,14 +25,14 @@ import { useInputMethod } from '@/hooks/useInputMethod';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 
 import {
-  InterfaceHeaderLanguageNavigation, InterfaceHeaderLogo, InterfaceHeaderMetaNavigation, InterfaceHeaderNavigation,
+  InterfaceHeaderLanguageNavigation, InterfaceHeaderMetaNavigation, InterfaceHeaderNavigation,
 } from '@/payload-types';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
 // --- Interfaces
 
 export type InterfaceHeaderPropTypesCms = {
   langnav: InterfaceHeaderLanguageNavigation;
-  logo: InterfaceHeaderLogo;
   metanav: InterfaceHeaderMetaNavigation;
   navigation: InterfaceHeaderNavigation;
 }
@@ -187,8 +187,8 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
       if (selectedSections.length > 0) {
         setInfoBlockContent({
-          text: selectedSections[0].description || '',
-          title: selectedSections[0].navItemText,
+          text: rteToHtml(selectedSections[0].description),
+          title: rteToHtml(selectedSections[0].navItemText),
         });
 
       }
@@ -217,8 +217,8 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
       setInfoBlockContent(visibility
         ? {
-          text: props.langnav.description || '',
-          title: props.langnav.title || '',
+          text: rteToHtml(props.langnav.description),
+          title: rteToHtml(props.langnav.title),
         }
         : undefined);
     }
@@ -268,14 +268,14 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
               return {
                 link: item.linkInternal?.internalLink || '',
                 target: '_self',
-                text: item.linkInternal?.linkText || '',
+                text: rteToHtml(item.linkInternal?.linkText),
               };
             }
 
             return {
               link: item.linkExternal?.externalLink || '',
               target: '_blank',
-              text: item.linkExternal?.externalLinkText || '',
+              text: rteToHtml(item.linkExternal?.externalLinkText),
             };
           }) || []}
           className={styles.metanav}
@@ -314,8 +314,8 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
         },
       ]}
       currentLang=''
-      title={props.langnav.title}
-      description={props.langnav.description}
+      title={rteToHtml(props.langnav.title)}
+      description={rteToHtml(props.langnav.description)}
       className={styles.langnav}
       colorMode={renderColorMode()}
       visibilityCallback={handleLangNavHover}
@@ -344,17 +344,17 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
           // level 1 with subnav items
           return {
             colorMode: props.colorMode,
-            description: item.description || '',
+            description: rteToHtml(item.description),
             expandableId: item.id || String(key),
             footer: false,
             items: item.subNavItems.map((subnavItem) => ({
               colorMode: props.colorMode,
               footer: false,
               link: subnavItem.navItemLink || '',
-              text: subnavItem.navItemText || '',
+              text: rteToHtml(subnavItem.navItemText),
             })),
             setExpanded: undefined,
-            text: item.navItemText || '',
+            text: rteToHtml(item.navItemText) || '',
           };
         }
 
@@ -363,7 +363,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
           colorMode: props.colorMode,
           footer: false,
           link: item.navItemLink || '',
-          text: item.navItemText || '',
+          text: rteToHtml(item.navItemText),
         };
 
       })}
@@ -381,11 +381,9 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
   const headerLogoRender = (): React.JSX.Element => {
 
-    // TODO: is fallback to SAGW ok?
+    // TODO: derive logo name from tenant
 
-    const logoName = (props.logo.logo in Logos
-      ? props.logo.logo
-      : 'sagw') as keyof typeof Logos;
+    const logoName = 'sagw' as keyof typeof Logos;
 
     return (
       <HeaderLogo

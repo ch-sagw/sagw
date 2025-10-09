@@ -12,6 +12,7 @@ import { useExpandOnHover } from '@/hooks/useExpandOnHover';
 import { useExpandOnClick } from '@/hooks/useExpandOnClick';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { measureElementHeight } from '@/components/helpers/elementHeight';
+import { SafeHtml } from '../SafeHtml/SafeHtml';
 
 // --- Interfaces
 
@@ -241,7 +242,11 @@ export const NavigationItem = ({
 
         {/* In the footer large viewport we don't want buttons or links */}
         {items && (footer && !smallBreakpoint) &&
-          <p className={styles.footerColumnTitle}>{text}</p>
+          <SafeHtml
+            className={styles.footerColumnTitle}
+            as='p'
+            html={text}
+          />
         }
 
         {/* Render button */}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ColorMode } from '@/components/base/types/colorMode';
 import styles from '@/components/base/NavigationInfoBlock/NavigationInfoBlock.module.scss';
+import { SafeHtml } from '../SafeHtml/SafeHtml';
 
 export type InterfaceNavigationInfoBlockPropTypes = {
   title?: string;
@@ -22,7 +23,20 @@ export const NavigationInfoBlock = ({
     role='presentation'
     className={`${styles.infoBlock} ${className} ${styles[colorMode]}`}
   >
-    <p className={styles.title}>{title}</p>
-    <p className={styles.text}>{text}</p>
+    {title &&
+      <SafeHtml
+        as='p'
+        className={styles.title}
+        html={title}
+      />
+    }
+
+    {text &&
+      <SafeHtml
+        as='p'
+        className={styles.text}
+        html={text}
+      />
+    }
   </div>
 );

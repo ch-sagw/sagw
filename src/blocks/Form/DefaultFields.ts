@@ -1,5 +1,6 @@
 import { Field } from 'payload';
 import { formFieldNameFromLabel } from '@/hooks-payload/formFieldNameFromLabel';
+import { rte1 } from '@/field-templates/rte';
 
 export const formFieldName: Field = {
   access: {
@@ -22,12 +23,9 @@ export const formFieldName: Field = {
   type: 'text',
 };
 
-export const formFieldLabel: Field = {
-  localized: true,
+export const formFieldLabel: Field = rte1({
   name: 'label',
-  required: true,
-  type: 'text',
-};
+});
 
 export const formFieldPlacehodler: Field = {
   localized: true,
@@ -63,8 +61,7 @@ export const formFieldError: Field = {
   admin: {
     condition: (_, siblingData) => siblingData.required === true,
   },
-  localized: true,
-  name: 'fieldError',
-  required: true,
-  type: 'text',
+  ...rte1({
+    name: 'fieldError',
+  }),
 };

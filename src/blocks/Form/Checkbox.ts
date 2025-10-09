@@ -15,7 +15,6 @@ export const checkboxBlock = (): Block => ({
     formFieldName,
     rte3({
       name: 'label',
-      required: true,
     }),
     {
       fields: [

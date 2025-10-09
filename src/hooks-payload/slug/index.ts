@@ -54,11 +54,8 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
       where: {
         and: [
           {
-
-            // TODO: tenant now is an array. Does it still work? Write
-            // test for it?
             tenant: {
-              equals: tenant,
+              in: tenant,
             },
           },
           {

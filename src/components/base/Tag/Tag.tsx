@@ -1,6 +1,7 @@
 import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/Tag/Tag.module.scss';
+import { SafeHtml } from '../SafeHtml/SafeHtml';
 
 export type InterfaceTagPropTypes = {
   text: string;
@@ -26,10 +27,13 @@ export const Tag = ({
   });
 
   return (
-    <span
+    <SafeHtml
+      as='span'
       className={classes({
         colorTheme,
       })}
-    >{text}</span>
+      html={text}
+
+    />
   );
 };

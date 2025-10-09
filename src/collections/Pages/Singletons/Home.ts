@@ -32,7 +32,16 @@ export const HomePage: CollectionConfig = {
 
             // Content Blocks
             {
-              blockReferences: blocks(),
+              blockReferences: blocks([
+                'textBlock',
+                'formBlock',
+                'homeTeasersBlock',
+                'projectsTeasersBlock',
+                'eventsTeasersBlock',
+                'magazineTeasersBlock',
+                'newsTeasersBlock',
+                'publicationsTeasersBlock',
+              ]),
               blocks: [],
               label: 'Content',
               name: 'content',

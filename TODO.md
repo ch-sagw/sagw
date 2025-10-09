@@ -9,8 +9,6 @@ Storybook:
 Github:
 -------
 - add branch restrictions on main
-- add test sharding to deploy-prod.yml
-- add sharding for be tests as well
 
 Resend:
 -------
@@ -51,8 +49,22 @@ Payload Config:
 - show "published" column in collection overview
 - add descriptions to collections: what is this collection for?
 - care about redirects: check redirects-plugin and decide if we use it or create our own
-- limit blocks on all pages
 - add admin ui images for blocks: generic teaser, footnotes
+
+
+---
+!!
+- useMemo for rteToHtml conversion in prop -> see notification
+- useMemo for component -> see notification
+- home -> remove info text
+- only allow 1 overview block per page
+
+
+---
+- e-mail placeholder wrong: shows placeholder from name
+- safari: on first focus/blur: placeholder and label visible
+---
+
 
 Multitenant: (working with seed data)
 --------

@@ -13,8 +13,9 @@ test.describe('NonBreakingSpace', () => {
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
     await page.waitForLoadState('networkidle');
 
-    const rteField = await page.locator('#field-hero .ContentEditable__root');
-    const nbspButton = await page.locator('#field-hero .toolbar-popup__button-nonBreakingSpaceButton');
+    const rteField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
+      .nth(0);
+    const nbspButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-nonBreakingSpaceButton');
 
     await rteField.fill('detailpagetitle-non-breaking-space');
     await nbspButton.click();

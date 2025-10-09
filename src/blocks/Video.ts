@@ -1,8 +1,9 @@
+import { rte1 } from '@/field-templates/rte';
 import { Block } from 'payload';
 
 // Example: Magazine Detail
 
-export const VideoBlock: Block = {
+export const VideoBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -13,18 +14,13 @@ export const VideoBlock: Block = {
       required: true,
       type: 'relationship',
     },
-    {
-      localized: true,
+    rte1({
       name: 'caption',
-      required: false,
-      type: 'text',
-    },
-    {
-      localized: true,
+      notRequired: true,
+    }),
+    rte1({
       name: 'credits',
-      required: true,
-      type: 'text',
-    },
+    }),
     {
       name: 'stillImage',
       relationTo: 'images',
@@ -40,4 +36,4 @@ export const VideoBlock: Block = {
     singular: 'Video',
   },
   slug: 'videoBlock',
-};
+} as const satisfies Block;

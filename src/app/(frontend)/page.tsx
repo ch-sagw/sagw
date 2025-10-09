@@ -79,19 +79,12 @@ export default async function HomePage({
     return <p>No metanav data in header data</p>;
   }
 
-  const logoData = headerData.docs[0].logo;
-
-  if (!logoData) {
-    return <p>No logo data in header data</p>;
-  }
-
   const colorMode: ColorMode = 'dark';
 
   const headerProps = {
     colorMode,
     currentLang: 'de',
     langnav: langnavData,
-    logo: logoData,
     logoLink: '/',
     menuButton: {
       close: 'Close',

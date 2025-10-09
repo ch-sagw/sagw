@@ -11,15 +11,13 @@ import { fieldsColorMode } from '@/field-templates/colorMode';
 const AccordionItem: Field[] = [
   rte1({
     name: 'accordionTitle',
-    required: true,
   }),
   rte3({
     name: 'accordionContent',
-    required: true,
   }),
 ];
 
-export const AccordionBlock: Block = {
+export const AccordionBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -28,7 +26,6 @@ export const AccordionBlock: Block = {
       fields: [
         rte1({
           name: 'title',
-          required: true,
         }),
         {
           name: 'titleLevel',
@@ -76,4 +73,4 @@ export const AccordionBlock: Block = {
     singular: 'Accordion',
   },
   slug: 'accordionBlock',
-};
+} as const satisfies Block;

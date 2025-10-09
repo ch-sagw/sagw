@@ -1,18 +1,16 @@
+import { rte1 } from '@/field-templates/rte';
 import { Block } from 'payload';
 
 // Example: Activities
 
-export const MagazineTeasersBlock: Block = {
+export const MagazineTeasersBlock = {
   admin: {
     disableBlockName: true,
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'linkText',
-      required: true,
-      type: 'text',
-    },
+    }),
     {
       admin: {
         hidden: true,
@@ -38,4 +36,4 @@ export const MagazineTeasersBlock: Block = {
     singular: 'Magazine Teasers (automatic)',
   },
   slug: 'magazineTeasersBlock',
-};
+} as const satisfies Block;

@@ -7,6 +7,7 @@ import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 import { versions } from '@/field-templates/versions';
+import { rte1 } from '@/field-templates/rte';
 
 const fieldsSocialLink: Field[] = [
   ...fieldsLinkExternal,
@@ -44,75 +45,58 @@ export const Footer: CollectionConfig = {
   },
   fields: [
     fieldAdminTitleDefaultValue('Footer'),
-    {
-      label: 'Datenschutz',
-      localized: true,
+
+    rte1({
       name: 'legal',
-      required: true,
-      type: 'text',
-    },
-    {
-      label: 'Impressum',
-      localized: true,
+    }),
+    rte1({
       name: 'impressum',
-      required: true,
-      type: 'text',
-    },
-    {
-      localized: true,
+    }),
+    rte1({
+      disableLocalization: true,
       name: 'copyright',
-      required: true,
-      type: 'text',
-    },
+    }),
+
     {
       fields: [
-        {
-          localized: true,
+        rte1({
           name: 'title',
-          required: true,
-          type: 'text',
-        },
-        {
+        }),
+        rte1({
+          disableLocalization: true,
           name: 'address1',
-          required: true,
-          type: 'text',
-        },
-        {
+        }),
+        rte1({
+          disableLocalization: true,
           name: 'address2',
-          required: false,
-          type: 'text',
-        },
-        {
+          notRequired: true,
+        }),
+        rte1({
+          disableLocalization: true,
           name: 'poBox',
-          required: false,
-          type: 'text',
-        },
-        {
+          notRequired: true,
+        }),
+        rte1({
+          disableLocalization: true,
           name: 'countryCode',
-          required: true,
-          type: 'text',
-        },
-        {
+        }),
+        rte1({
+          disableLocalization: true,
           name: 'zipCode',
-          required: true,
-          type: 'text',
-        },
-        {
-          localized: true,
+        }),
+        rte1({
           name: 'city',
-          required: true,
-          type: 'text',
-        },
-        {
+        }),
+        rte1({
+          disableLocalization: true,
           name: 'phone',
-          required: false,
-          type: 'text',
-        },
-        {
+          notRequired: true,
+        }),
+        rte1({
+          disableLocalization: true,
           name: 'mail',
-          required: false,
-          type: 'email',
-        },
+          notRequired: true,
+        }),
       ],
       label: 'Kontakt',
       name: 'contact',

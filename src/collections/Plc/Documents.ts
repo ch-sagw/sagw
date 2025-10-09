@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload';
 import { versions } from '@/field-templates/versions';
+import { rte1 } from '@/field-templates/rte';
 
 export const Documents: CollectionConfig = {
   access: {
@@ -9,15 +10,12 @@ export const Documents: CollectionConfig = {
     group: 'Assets',
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'title',
-      required: true,
-      type: 'text',
-    },
+    }),
     {
       name: 'date',
-      required: true,
+      required: false,
       type: 'date',
     },
     {

@@ -2,7 +2,7 @@ import { Block } from 'payload';
 
 // Example: About SAGW -> Team
 
-export const ProjectOverviewBlock: Block = {
+export const ProjectOverviewBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -32,4 +32,4 @@ export const ProjectOverviewBlock: Block = {
     singular: 'Projects Overview (automatic)',
   },
   slug: 'projectsOverviewBlock',
-};
+} as const satisfies Block;
