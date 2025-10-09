@@ -21,6 +21,7 @@ NextJs:
 - sanitize form-inputs (in app)
 - generate sitemap
 - icons: make sure only the icons are in the dist bundle which are actually needed. same for logo component.
+- create revalidation server function, call it from afterChange hook accordingly
 
 Payload:
 --------
