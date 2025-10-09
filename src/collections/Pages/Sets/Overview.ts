@@ -8,13 +8,12 @@ import {
 } from '@/field-templates/adminTitle';
 import { hookSeoFallback } from '@/hooks-payload/seoFallback';
 import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superAdminOrTenantAdmin';
-import {
-  blocks, OVERVIEW_BLOCK_TYPES,
-} from '@/blocks';
+import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
 import { createSingleOverviewBlockFilter } from '@/utilities/blockFilters';
+import { validateSingleOverviewBlock } from '@/hooks-payload/allowSingleOverviewBlock/validateSingleOverviewBlock';
 
 const contentBlocks = [
   'textBlock',
@@ -79,22 +78,7 @@ export const OverviewPage: CollectionConfig = {
               label: 'Content',
               name: 'content',
               type: 'blocks',
-              validate: (value): true | string => {
-                if (!Array.isArray(value)) {
-                  return true;
-                }
-
-                const overviewBlockCount = value.filter((block) => block &&
-                  typeof block === 'object' &&
-                  'blockType' in block &&
-                  OVERVIEW_BLOCK_TYPES.includes(block.blockType as any)).length;
-
-                if (overviewBlockCount > 1) {
-                  return 'Only 1 overview block per page allowed';
-                }
-
-                return true;
-              },
+              validate: validateSingleOverviewBlock,
             },
           ],
           label: 'Content',
