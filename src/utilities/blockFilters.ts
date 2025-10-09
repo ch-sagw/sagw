@@ -6,7 +6,6 @@ export const createSingleOverviewBlockFilter = <T extends string>(
     siblingData,
   }: any): T[] | true => {
     try {
-      // Get content array, handle case where it doesn't exist or isn't an array
       const content = (siblingData as any)?.content;
 
       if (!content || !Array.isArray(content)) {
@@ -25,10 +24,9 @@ export const createSingleOverviewBlockFilter = <T extends string>(
       }
 
       // If any overview block exists, filter out ALL overview blocks
-      // This prevents adding any more overview blocks (even the same type)
+      // This prevents adding any more overview blocks
       return allBlockTypes.filter((blockType) => !OVERVIEW_BLOCK_TYPES.includes(blockType as any)) as T[];
     } catch (error) {
-      // If anything goes wrong, show all blocks to avoid breaking the form
       console.error('Error in createSingleOverviewBlockFilter:', error);
 
       return true;
