@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.16.0](https://github.com/ch-sagw/sagw/compare/v0.15.0...v0.16.0) (2025-10-09)
+
+
+### Features
+
+* disable next cache ([9a61805](https://github.com/ch-sagw/sagw/commit/9a61805d169c90db32d51b224a30c7672c37c026))
+* disable next cache ([#431](https://github.com/ch-sagw/sagw/issues/431)) ([9a61805](https://github.com/ch-sagw/sagw/commit/9a61805d169c90db32d51b224a30c7672c37c026))
+
+
+### Test
+
+* temporary disable tests for form-fields since they are too flaky ([9a61805](https://github.com/ch-sagw/sagw/commit/9a61805d169c90db32d51b224a30c7672c37c026))
+
 ## [0.15.0](https://github.com/ch-sagw/sagw/compare/v0.14.0...v0.15.0) (2025-10-09)
 
 
