@@ -202,7 +202,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       function: simpleRteConfig('Some function'),
       lastname: simpleRteConfig(`Lastname ${tenant.toUpperCase()}`),
       mail: simpleRteConfig('foo@bar.com'),
-      name: simpleRteConfig(`Name ${tenant.toUpperCase()}`),
       phone: simpleRteConfig('031 123 45 67'),
       team: [team],
       tenant: tenantId,
