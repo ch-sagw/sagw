@@ -34,7 +34,7 @@ Payload:
 - implement resend
 - for formfields: name field should have a custom validation regex (lowercase, no spaces, only dashes)
 - Header -> Navigation -> fine-grain "required": on level 1, linkTarget is not required, on level 2 it is. If level 1 has no sub-nav items, linkTarget is required.
-- BUG: with empty database or with initial seed: go to home, add downloads block, click document dropdown -> "Es ist ein fehler aufgetreten". SAME FOR IMAGE.
+- BUG: with empty database or with initial seed: go to home, add downloads block, click document dropdown -> "Es ist ein fehler aufgetreten". SAME FOR IMAGE. -> Github issue @ payload created
 
 Vercel:
 --------
@@ -58,12 +58,15 @@ Payload Config:
 - useMemo for rteToHtml conversion in prop -> see notification
 - useMemo for component -> see notification
 - home -> remove info text
-- only allow 1 overview block per page
+- 
 
 
 ---
 - e-mail placeholder wrong: shows placeholder from name
 - safari: on first focus/blur: placeholder and label visible
+- link config rework: we now have a new optional "description" on links. does not make sense in most places (e.g. navigation links etc.)
+- header: underline animation not shown on desktop
+- header resize issue: load on mobile, resize to desktop -> wrong height
 ---
 
 
