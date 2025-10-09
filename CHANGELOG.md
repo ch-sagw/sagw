@@ -1,5 +1,99 @@
 # Changelog
 
+## [0.15.0](https://github.com/ch-sagw/sagw/compare/v0.14.0...v0.15.0) (2025-10-09)
+
+
+### Chore
+
+* changing story names to PascalCase ([3e7c2c7](https://github.com/ch-sagw/sagw/commit/3e7c2c77e986f15d2c25e1fee7540a1da50c0998))
+* **deps-dev:** bump the development-dependencies group across 1 directory with 27 updates ([83f073d](https://github.com/ch-sagw/sagw/commit/83f073d0eb81eeab14f39e50c680fc54d7876ec1))
+* **deps-dev:** bump the development-dependencies group across 1 directory with 27 updates ([#412](https://github.com/ch-sagw/sagw/issues/412)) ([83f073d](https://github.com/ch-sagw/sagw/commit/83f073d0eb81eeab14f39e50c680fc54d7876ec1))
+* **deps:** bump the production-dependencies group across 1 directory with 16 updates ([28166bd](https://github.com/ch-sagw/sagw/commit/28166bd1899a378431cdaf698041fa7cc16a5c97))
+* **deps:** bump the production-dependencies group across 1 directory with 16 updates ([#409](https://github.com/ch-sagw/sagw/issues/409)) ([28166bd](https://github.com/ch-sagw/sagw/commit/28166bd1899a378431cdaf698041fa7cc16a5c97))
+* **fe:** remove obsolete rte base component ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+* renaming idx to id ([3e7c2c7](https://github.com/ch-sagw/sagw/commit/3e7c2c77e986f15d2c25e1fee7540a1da50c0998))
+* resolving merge conflict ([2c71a3b](https://github.com/ch-sagw/sagw/commit/2c71a3b744ec5674dd3cb9f1f6fb2acc978bb95a))
+
+
+### CI
+
+* additionally use list reporter ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* merge blob reports ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* migrate to blacksmith ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* run non-performance critical actions on github, and others on blacksmith to save minutes ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* shard be tests as well ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* shard tests on prod deployment as well ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+* shard tests to 4 shards ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* split fe/be tests (in regards of sharding) ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* upload reports only on failure ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+
+
+### Features
+
+* adding additional variants and styling ([3e7c2c7](https://github.com/ch-sagw/sagw/commit/3e7c2c77e986f15d2c25e1fee7540a1da50c0998))
+* adding additional variants and styling ([3e7c2c7](https://github.com/ch-sagw/sagw/commit/3e7c2c77e986f15d2c25e1fee7540a1da50c0998))
+* adding filter list component ([3e7c2c7](https://github.com/ch-sagw/sagw/commit/3e7c2c77e986f15d2c25e1fee7540a1da50c0998))
+* adding long nav item example text ([2c71a3b](https://github.com/ch-sagw/sagw/commit/2c71a3b744ec5674dd3cb9f1f6fb2acc978bb95a))
+* adding pr recommendations and additional improvements ([3e7c2c7](https://github.com/ch-sagw/sagw/commit/3e7c2c77e986f15d2c25e1fee7540a1da50c0998))
+* cms use rte1 everywhere ([#429](https://github.com/ch-sagw/sagw/issues/429)) ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+* fe component header ([#411](https://github.com/ch-sagw/sagw/issues/411)) ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* **header:** add color mode to header and all components ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* **header:** add footer variant ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* **header:** add header logo component ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* **header:** add hook to detect touch devices ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* **header:** add langnav component ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* **header:** add menu button ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* **header:** add metanav component ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* **header:** add NavigationInfoBlock component ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* **header:** add variant without metanav ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* **header:** basic navigation implementation for header and footer ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* **header:** implement focus trap for menu ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* **header:** implement lang navigation logic ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* **header:** integrate header into payload ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* **header:** make header sticky, add some sample content to work on scrolling ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* implement feedback from cms review ([3cfc8a5](https://github.com/ch-sagw/sagw/commit/3cfc8a5786b2ddbd460d4954dfcd72523992229f))
+* integrating fe filter component ([3e7c2c7](https://github.com/ch-sagw/sagw/commit/3e7c2c77e986f15d2c25e1fee7540a1da50c0998))
+* **payload:** add i18n globals ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+* **payload:** add nbsp button to rte1 and rte2 ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+* **payload:** add pages for impressum and data privacy ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+* **payload:** add rteToHtml converter, add SafeHtml component ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+* **payload:** automatically derivate fieled name from label ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+* **payload:** define blocks per collection page ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+* **payload:** ensuring only 1 overview block per page ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+* **payload:** migrate all text fields to rte1 ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+* **payload:** replace image/text teaser with generic teaser ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+* **payload:** use joins to show related pages ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+* **payload:** various improvments based on cms review ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+
+
+### Bug Fixes
+
+* **payload:** ensure unique name for all fields of a form ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+
+
+### Refactor
+
+* adding outline only on focus/hover ([3e7c2c7](https://github.com/ch-sagw/sagw/commit/3e7c2c77e986f15d2c25e1fee7540a1da50c0998))
+* renaming stories, visual fixes and new screenshots ([3e7c2c7](https://github.com/ch-sagw/sagw/commit/3e7c2c77e986f15d2c25e1fee7540a1da50c0998))
+
+
+### Style
+
+* adding visual fix for level 2 item on mobile ([2c71a3b](https://github.com/ch-sagw/sagw/commit/2c71a3b744ec5674dd3cb9f1f6fb2acc978bb95a))
+* potential solution for long sub nav entries ([2c71a3b](https://github.com/ch-sagw/sagw/commit/2c71a3b744ec5674dd3cb9f1f6fb2acc978bb95a))
+* resolving block-no-redundant-nested-style-rules occurances ([3e7c2c7](https://github.com/ch-sagw/sagw/commit/3e7c2c77e986f15d2c25e1fee7540a1da50c0998))
+
+
+### Test
+
+* adding new reference screenshots ([3e7c2c7](https://github.com/ch-sagw/sagw/commit/3e7c2c77e986f15d2c25e1fee7540a1da50c0998))
+* adding new reference screenshots ([3e7c2c7](https://github.com/ch-sagw/sagw/commit/3e7c2c77e986f15d2c25e1fee7540a1da50c0998))
+* adding new reference screenshots ([3e7c2c7](https://github.com/ch-sagw/sagw/commit/3e7c2c77e986f15d2c25e1fee7540a1da50c0998))
+* **header:** update fe screenshots, write header tests ([dd7531c](https://github.com/ch-sagw/sagw/commit/dd7531cc5ee25aff11c93335af5d6f61a94468bf))
+* **payload:** write test for fieldNameFromLabel ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+* **payload:** write test for overview blocks ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+* **payload:** write test for unique form names ([d185dd7](https://github.com/ch-sagw/sagw/commit/d185dd77b2e4565e4cfe03161b0cd3eabf2e2838))
+
 ## [0.14.0](https://github.com/ch-sagw/sagw/compare/v0.13.0...v0.14.0) (2025-09-23)
 
 
