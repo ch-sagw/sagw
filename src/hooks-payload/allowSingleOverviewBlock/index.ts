@@ -1,6 +1,6 @@
 import { OVERVIEW_BLOCK_TYPES } from '@/blocks';
 
-export const validateSingleOverviewBlock = (value: unknown): true | string => {
+export const allowSingleOverviewBlock = (value: unknown): true | string => {
   if (!Array.isArray(value)) {
     return true;
   }

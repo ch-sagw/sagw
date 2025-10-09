@@ -13,7 +13,7 @@ import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
 import { createSingleOverviewBlockFilter } from '@/utilities/blockFilters';
-import { validateSingleOverviewBlock } from '@/hooks-payload/allowSingleOverviewBlock/validateSingleOverviewBlock';
+import { allowSingleOverviewBlock } from '@/hooks-payload/allowSingleOverviewBlock';
 
 const contentBlocks = [
   'textBlock',
@@ -78,7 +78,7 @@ export const OverviewPage: CollectionConfig = {
               label: 'Content',
               name: 'content',
               type: 'blocks',
-              validate: validateSingleOverviewBlock,
+              validate: allowSingleOverviewBlock,
             },
           ],
           label: 'Content',
