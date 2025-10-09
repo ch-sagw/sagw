@@ -98,9 +98,12 @@ test.describe('forms', () => {
     await saveButton.click();
 
     // expect error
-    const error = await page.locator('.field-error');
+    const mainError = await page.getByText('The following field is invalid: Label');
+    const fieldError = await page.locator('.field-error');
 
-    await expect(error)
+    await expect(mainError)
+      .toBeVisible();
+    await expect(fieldError)
       .toHaveText('Duplicate label "label" is not allowed.');
   });
 });
