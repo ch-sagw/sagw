@@ -12,7 +12,8 @@ test.describe('forms', () => {
   }) => {
     // create a form
     await page.goto('http://localhost:3000/admin/collections/forms/create');
-    await page.waitForLoadState('networkidle');
+    await page.waitForSelector('#field-submitButtonLabel');
+    await page.waitForLoadState('domcontentloaded');
 
     // fill global fields
     const buttonLabel = await page.locator('#field-submitButtonLabel');
@@ -28,6 +29,10 @@ test.describe('forms', () => {
       exact: true,
     });
 
+    await addFieldButton.waitFor({
+      state: 'visible',
+    });
+
     await addFieldButton.click();
 
     const textBlock = await page.getByText('Text', {
@@ -35,6 +40,10 @@ test.describe('forms', () => {
     });
 
     await textBlock.click();
+
+    await addFieldButton.waitFor({
+      state: 'visible',
+    });
 
     await addFieldButton.click();
 
@@ -68,6 +77,13 @@ test.describe('forms', () => {
     const firstBlock = await page.locator('#fields-row-0');
     const secondBlock = await page.locator('#fields-row-1');
 
+    await firstBlock.waitFor({
+      state: 'visible',
+    });
+    await secondBlock.waitFor({
+      state: 'visible',
+    });
+
     const label1 = await firstBlock.locator('.ContentEditable__root')
       .nth(0);
     const placeholder1 = await firstBlock.getByLabel('Placeholder');
@@ -96,7 +112,9 @@ test.describe('forms', () => {
     });
 
     await saveButton.click();
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('networkidle', {
+      timeout: 10000,
+    });
 
     // expect error
     const mainError = await page.getByText('The following field is invalid: Label');

@@ -12,7 +12,6 @@ test.describe('forms', () => {
   }) => {
     // create a form
     await page.goto('http://localhost:3000/admin/collections/forms/create');
-    await page.waitForLoadState('networkidle');
 
     // fill global fields
     const title = await page.locator('.ContentEditable__root')
@@ -63,6 +62,10 @@ test.describe('forms', () => {
 
     const firstBlock = await page.locator('#fields-row-0');
 
+    await firstBlock.waitFor({
+      state: 'visible',
+    });
+
     const label1 = await firstBlock.locator('.ContentEditable__root')
       .nth(0);
     const placeholder1 = await firstBlock.getByLabel('Placeholder');
@@ -81,7 +84,9 @@ test.describe('forms', () => {
     // expect specific name derived from label
     await saveButton.click();
 
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('networkidle', {
+      timeout: 10000,
+    });
 
     const hiddenNameField = await firstBlock.locator('#field-fields__0__name');
 
