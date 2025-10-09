@@ -30,7 +30,7 @@ export const DownloadsBlock = {
     },
     {
       admin: {
-        condition: (_, siblingData) => siblingData.customOrAuto === 'custom',
+        condition: (_, siblingData): boolean => siblingData.customOrAuto === 'custom',
       },
       hasMany: true,
       label: 'Select documents to add',
@@ -44,7 +44,7 @@ export const DownloadsBlock = {
     },
     {
       admin: {
-        condition: (_, siblingData) => siblingData.customOrAuto === 'auto',
+        condition: (_, siblingData): boolean => siblingData.customOrAuto === 'auto',
       },
       hasMany: false,
       label: 'Select the project from which you want to show the downloads',
