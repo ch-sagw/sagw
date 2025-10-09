@@ -7,12 +7,6 @@
   color: var(--text-primary);
   text-wrap: pretty;
 
-  // rte configs
-  &.rte1 {
-    // border: 1px solid black;
-    color: inherit;
-  }
-
   &.rte2 {
     h2 {
       @include title-heading-3;
@@ -25,26 +19,12 @@
 
       margin-block-end: px-to-rem(var(--inside-elements-l));
 
-      &:is(h2 + h3) {
-        @include mq($from: large) {
-          background: deeppink;
-        }
-      }
-
       &:not(h2 + h3, :first-child) {
         margin-block-start: px-to-rem(var(--text-block-top));
 
         @include mq($from: large) {
-          margin-block-start: px-to-rem(calc(var(--text-block-top) / 2));
+          margin-block-start: px-to-rem(var(--inside-elements-m));
         }
-      }
-    }
-
-    h3,
-    h4,
-    h5 {
-      & + p {
-        margin-block-start: 0;
       }
     }
 
@@ -52,9 +32,16 @@
     h5 {
       @include title-heading-5;
 
+      margin-block-start: px-to-rem(var(--inside-elements-s));
+      margin-block-end: px-to-rem(var(--inside-elements-m));
+
       & + ul,
       & + ol {
-        margin-block-start: px-to-rem(var(--spacing-s), true);
+        margin-block-start: px-to-rem(var(--spacing-xs), true);
+      }
+
+      & + p {
+        margin-block-start: px-to-rem(var(--spacing-2xs), true);
       }
     }
 
@@ -63,25 +50,20 @@
     }
 
     p {
-      @include mq($to: large) {
-        margin-block: px-to-rem(var(--spacing-l));
-      }
-
-      &:first-of-type {
-        margin-block-start: 0;
-      }
-
-      & + h4,
-      & + h5 {
-        margin-block-start: px-to-rem(var(--inside-elements-m));
-      }
+      margin-block-start: 0;
+      margin-block-end: px-to-rem(var(--spacing-l));
     }
 
     // TODO
     // marker for li in ul? Figma example just copy paste or on purpose?
     ul,
     ol {
+      margin-block: 0;
       padding-inline-start: px-to-rem(40);
+
+      &:not(:last-child) {
+        margin-block-end: px-to-rem(var(--inside-elements-m));
+      }
 
       li {
         margin-block: px-to-rem(var(--spacing-2xs));
@@ -89,17 +71,42 @@
     }
 
     a {
+      display: inline-flex;
+      align-items: center;
       color: var(--interaction-primary);
       text-decoration: none;
       text-decoration-line: underline;
       text-underline-offset: px-to-rem(var(--spacing-2xs));
       text-decoration-thickness: px-to-rem(var(--border-width-l));
       text-decoration-color: currentcolor;
+
+      &:focus,
+      &:hover {
+        color: var(--interaction-primary-hover);
+      }
     }
 
     ::selection {
       background: var(--interaction-primary);
       color: var(--text-primary-inverted);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    ul,
+    ol,
+    p {
+      &:last-child {
+        margin-block-end: 0;
+      }
+
+      &:empty {
+        display: none;
+      }
     }
   }
 
