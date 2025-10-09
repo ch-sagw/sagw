@@ -79,7 +79,7 @@ export const OverviewPage: CollectionConfig = {
               label: 'Content',
               name: 'content',
               type: 'blocks',
-              validate: (value) => {
+              validate: (value): true | string => {
                 if (!Array.isArray(value)) {
                   return true;
                 }
