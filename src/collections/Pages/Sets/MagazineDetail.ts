@@ -12,7 +12,7 @@ import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
-import { rte2 } from '@/field-templates/rte';
+import { rte1 } from '@/field-templates/rte';
 
 export const MagazineDetailPage: CollectionConfig = {
   access: {
@@ -49,7 +49,7 @@ export const MagazineDetailPage: CollectionConfig = {
                   admin: {
                     description: 'This text will be used as text for the teasers on the overview page.',
                   },
-                  ...rte2({
+                  ...rte1({
                     name: 'teaserText',
                   }),
                 },

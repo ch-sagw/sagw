@@ -49,9 +49,6 @@ export const People: CollectionConfig = {
       name: 'phone',
       notRequired: true,
     }),
-    rte1({
-      name: 'name',
-    }),
     {
       name: 'image',
       relationTo: 'images',

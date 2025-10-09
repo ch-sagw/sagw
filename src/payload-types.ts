@@ -1183,7 +1183,21 @@ export interface InterfaceNewsTeasersBlock {
    * Do you want to add a link to the News overview page?
    */
   link?: ('no' | 'yes') | null;
-  linkText?: string | null;
+  linkText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1557,7 +1571,21 @@ export interface InterfacePublicationsTeasersBlock {
    * Do you want to add a link to the Publications overview page?
    */
   link?: ('no' | 'yes') | null;
-  linkText?: string | null;
+  linkText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1776,21 +1804,6 @@ export interface Person {
     };
     [k: string]: unknown;
   } | null;
-  name: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
   image?: (string | null) | Image;
   fullName?: string | null;
   updatedAt: string;
@@ -5755,7 +5768,6 @@ export interface PeopleSelect<T extends boolean = true> {
   function?: T;
   mail?: T;
   phone?: T;
-  name?: T;
   image?: T;
   fullName?: T;
   updatedAt?: T;

@@ -81,6 +81,8 @@ test.describe('forms', () => {
     // expect specific name derived from label
     await saveButton.click();
 
+    await page.waitForLoadState('networkidle');
+
     const hiddenNameField = await firstBlock.locator('#field-fields__0__name');
 
     await expect(hiddenNameField)

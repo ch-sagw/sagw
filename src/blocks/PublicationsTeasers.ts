@@ -33,10 +33,9 @@ export const PublicationsTeasersBlock = {
       admin: {
         condition: (_, siblingData): boolean => siblingData.link === 'yes',
       },
-      localized: true,
-      name: 'linkText',
-      required: true,
-      type: 'text',
+      ...rte1({
+        name: 'linkText',
+      }),
     },
     {
       admin: {

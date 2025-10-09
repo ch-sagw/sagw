@@ -96,6 +96,7 @@ test.describe('forms', () => {
     });
 
     await saveButton.click();
+    await page.waitForLoadState('networkidle');
 
     // expect error
     const mainError = await page.getByText('The following field is invalid: Label');
