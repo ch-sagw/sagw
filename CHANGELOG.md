@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.1](https://github.com/ch-sagw/sagw/compare/v0.16.0...v0.16.1) (2025-10-10)
+
+
+### Chore
+
+* migrate backup/restore to separate repo ([#441](https://github.com/ch-sagw/sagw/issues/441)) ([5ab3f30](https://github.com/ch-sagw/sagw/commit/5ab3f30e6772de707a05038d792e5ed429a90e30))
+
 ## [0.16.0](https://github.com/ch-sagw/sagw/compare/v0.15.0...v0.16.0) (2025-10-09)
 
 
