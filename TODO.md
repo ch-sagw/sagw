@@ -61,6 +61,7 @@ Payload Config:
 - only allow 1 overview block per page
 
 
+
 ---
 - e-mail placeholder wrong: shows placeholder from name
 - safari: on first focus/blur: placeholder and label visible
@@ -78,3 +79,10 @@ Misc:
 
 Testing:
 -------
+
+
+Backup Migration:
+-------
+- remove cron from vercel.json and from next-js route
+- remove env vars in local env files, on github and vercel
+- remove env vars from docs

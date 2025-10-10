@@ -1,20 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "bash vercel.sh",
-  "crons": [
-    {
-      "path": "/cron-jobs/cron-blob-backup",
-      "schedule": "0 1 * * *"
-    },
-    {
-      "path": "/cron-jobs/cron-db-backup",
-      "schedule": "0 2 * * *"
-    },
-    {
-      "path": "/cron-jobs/cron-cleanup-backups",
-      "schedule": "0 3 * * *"
-    }
-  ],
   "git": {
     "deploymentEnabled": {
       "main": false
