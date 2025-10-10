@@ -32,8 +32,6 @@ Payload:
 - implement draft preview: https://payloadcms.com/docs/admin/preview#draft-preview
 - implement document locking: https://payloadcms.com/docs/admin/locked-documents
 - implement resend
-- for formfields: name field should have a custom validation regex (lowercase, no spaces, only dashes)
-- Header -> Navigation -> fine-grain "required": on level 1, linkTarget is not required, on level 2 it is. If level 1 has no sub-nav items, linkTarget is required.
 - BUG: with empty database or with initial seed: go to home, add downloads block, click document dropdown -> "Es ist ein fehler aufgetreten". SAME FOR IMAGE. -> Github issue @ payload created
 
 Vercel:
@@ -51,23 +49,6 @@ Payload Config:
 - add descriptions to collections: what is this collection for?
 - care about redirects: check redirects-plugin and decide if we use it or create our own
 - add admin ui images for blocks: generic teaser, footnotes
-
-
----
-!!
-- useMemo for rteToHtml conversion in prop -> see notification
-- useMemo for component -> see notification
-- home -> remove info text
-- 
-
-
----
-- e-mail placeholder wrong: shows placeholder from name
-- safari: on first focus/blur: placeholder and label visible
-- link config rework: we now have a new optional "description" on links. does not make sense in most places (e.g. navigation links etc.)
-- header: underline animation not shown on desktop
-- header resize issue: load on mobile, resize to desktop -> wrong height
----
 
 
 Multitenant: (working with seed data)
