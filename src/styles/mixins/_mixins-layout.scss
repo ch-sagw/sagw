@@ -1,0 +1,83 @@
+@use "../utilities/utilities" as *;
+@use "../utilities/functions" as *;
+@use "../utilities/mediaqueries" as *;
+
+@mixin block-layout-sticky-title($variant: "grid") {
+  @include mq($to: large) {
+    display: flex;
+    flex-direction: column;
+    row-gap: px-to-rem(var(--section-inside-s));
+  }
+
+  @include mq($from: large) {
+    // TODO properly define grid column widths to match page layout
+    column-gap: px-to-rem(var(--grid-gutter));
+
+    > h2:first-child,
+    > h3:first-child {
+      position: sticky;
+
+      // TODO set --sticky-offset-top dynamically
+      top: px-to-rem(var(--sticky-offset-top, var(--spacing-l)));
+      bottom: 0;
+      align-self: flex-start;
+      scroll-margin-top: px-to-rem(var(--sticky-offset-top, var(--spacing-l)));
+      padding-inline-end: px-to-rem(var(--section-inside-s));
+      background: var(--background-sticky-cover, var(--background-page));
+    }
+  }
+
+  // Used if content of right column is within
+  // a wrapper element
+  @if $variant == "flex" {
+    @include mq($from: large) {
+      display: flex;
+      flex-direction: row;
+
+      > h2:first-child,
+      > h3:first-child {
+        flex: 0 0 25%;
+      }
+
+      > :not(:first-child) {
+        flex: 1;
+      }
+    }
+  }
+
+  @if $variant == "grid" {
+    @include mq($from: large) {
+      --heading-alignment-compensation: 5;
+
+      display: grid;
+      grid-template-columns: [sticky-title] 1fr [content] 3fr;
+
+      > h2:first-child,
+      > h3:first-child {
+        margin-bottom: -100%;
+      }
+
+      > :not(:first-child) {
+        grid-column: content;
+      }
+
+      // Vertically center the first line of the
+      // headings next to each other
+      h3:nth-child(2) {
+        margin-block-start: px-to-rem(var(--heading-alignment-compensation));
+      }
+    }
+  }
+}
+
+@mixin generic-block-padding {
+  padding-block-start: px-to-rem(var(--section-top));
+  padding-inline: px-to-rem(var(--grid-margin));
+  padding-block-end: px-to-rem(var(--section-bottom));
+}
+
+@mixin text-block-padding {
+  padding-block-start: px-to-rem(var(--text-block-top));
+  padding-inline: px-to-rem(var(--grid-margin));
+  padding-block-end: px-to-rem(var(--text-block-bottom));
+}

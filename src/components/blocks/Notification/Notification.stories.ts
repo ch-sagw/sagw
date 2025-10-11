@@ -4,7 +4,10 @@ import type {
 } from '@storybook/nextjs-vite';
 import { Notification } from '@/components/blocks/Notification/Notification';
 import { defaultDecorator } from '@/storybook-helpers';
-import { sampleRte3 } from '@/utilities/rteSampleContent';
+import {
+  rte2NotificationText,
+  rte2NotificationTextWithUl,
+} from '@/utilities/rteSampleContent';
 
 type NotificationProps = React.ComponentProps<typeof Notification>;
 
@@ -17,8 +20,6 @@ const meta: Meta<typeof Notification> = {
   component: Notification,
   decorators: [defaultDecorator],
   parameters: {
-
-    /* layout: 'centered', */
     controls: {
       exclude: [
         'id',
@@ -41,7 +42,14 @@ export const SampleNotification: StrictStory = {
   args: {
     blockName: 'foo',
     blockType: 'notificationBlock',
-    text: sampleRte3,
+    text: rte2NotificationText,
   },
 };
 
+export const SampleNotificationWithUl: StrictStory = {
+  args: {
+    blockName: 'foo',
+    blockType: 'notificationBlock',
+    text: rte2NotificationTextWithUl,
+  },
+};

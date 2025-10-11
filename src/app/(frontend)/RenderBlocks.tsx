@@ -95,7 +95,11 @@ export const RenderBlocks = ({
             if (blockType === 'textBlock') {
               return (
                 <div key={block.id || index}>
-                  <Rte {...block} />
+                  <Rte
+                    {...block}
+                    colorMode='white'
+                    stickyFirstTitle={true}
+                  />
                 </div>
               );
             }

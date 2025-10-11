@@ -6,9 +6,8 @@ import styles from '@/components/blocks/Accordion/Accordion.module.scss';
 import { Icon } from '@/icons';
 import { InterfaceAccordionBlock } from '@/payload-types';
 import { useExpandOnClick } from '@/hooks/useExpandOnClick';
-import {
-  rte3ToHtml, rteToHtml,
-} from '@/utilities/rteToHtml';
+import { rteToHtml } from '@/utilities/rteToHtml';
+import { Rte } from '@/components/blocks/Rte/Rte';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 
 export type InterfaceAccordionPropTypes = {} & InterfaceAccordionBlock;
@@ -106,11 +105,15 @@ export const Accordion = ({
                 inert={item.id !== activeElement}
                 data-testid='content'
               >
-                <SafeHtml
-                  as='div'
+                <div
                   className={styles.rte}
-                  html={rte3ToHtml(item.accordionContent)}
-                />
+                >
+                  <Rte
+                    colorMode={colorMode}
+                    stickyFirstTitle={false}
+                    text={item.accordionContent}
+                  />
+                </div>
               </section>
             </Fragment>
 
