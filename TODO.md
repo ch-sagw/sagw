@@ -21,6 +21,7 @@ NextJs:
 - sanitize form-inputs (in app)
 - generate sitemap
 - icons: make sure only the icons are in the dist bundle which are actually needed. same for logo component.
+- create revalidation server function, call it from afterChange hook accordingly
 
 Payload:
 --------
@@ -60,6 +61,7 @@ Payload Config:
 - only allow 1 overview block per page
 
 
+
 ---
 - e-mail placeholder wrong: shows placeholder from name
 - safari: on first focus/blur: placeholder and label visible
@@ -77,3 +79,10 @@ Misc:
 
 Testing:
 -------
+
+
+Backup Migration:
+-------
+- remove cron from vercel.json and from next-js route
+- remove env vars in local env files, on github and vercel
+- remove env vars from docs

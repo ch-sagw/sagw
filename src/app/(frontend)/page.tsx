@@ -8,6 +8,10 @@ import { getTenant } from '@/app/providers/TenantProvider.server';
 import { Header } from '@/components/global/Header/Header';
 import { ColorMode } from '@/components/base/types/colorMode';
 
+// TODO: properly invalidate cache via afterChange hook on collection level
+// and revalidatePath from next/cache
+export const revalidate = 0;
+
 export default async function HomePage({
   params,
 }: {
