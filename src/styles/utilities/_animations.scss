@@ -13,6 +13,7 @@
   transition-duration: var(--motion-speed-fast);
   transition-timing-function: var(--motion-ease-in-out);
   opacity: 0;
+  contain: layout;
 
   @include reduced-motion {
     transition: none;
