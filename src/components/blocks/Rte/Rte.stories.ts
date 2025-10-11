@@ -4,7 +4,7 @@ import type {
 } from '@storybook/nextjs-vite';
 import { Rte } from '@/components/blocks/Rte/Rte';
 import { defaultDecorator } from '@/storybook-helpers';
-import { sampleRte3 } from '@/utilities/rteSampleContent';
+import { rte3FullRange } from '@/utilities/rteSampleContent';
 
 type RteProps = React.ComponentProps<typeof Rte>;
 
@@ -29,7 +29,8 @@ export default meta;
 
 export const RteStory: StrictStory = {
   args: {
-    // blockType: 'textBlock',
-    text: sampleRte3,
+    colorMode: 'white',
+    stickyFirstTitle: true,
+    text: rte3FullRange,
   },
 };
