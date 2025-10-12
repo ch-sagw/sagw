@@ -169,6 +169,30 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     setDidScroll(scrollPosition > 50);
   }, [scrollPosition]);
 
+  // add mouse leave detection to reset hover state when mouse leaves header
+  useEffect(() => {
+    const handleMouseLeave = (): void => {
+      // Reset hover state when mouse leaves the header area
+      if (isHovering) {
+        setIsHovering(false);
+        setHoveredSection(null);
+        setInfoBlockContent(undefined);
+      }
+    };
+
+    const headerElement = headerRef.current;
+
+    if (headerElement) {
+      headerElement.addEventListener('mouseleave', handleMouseLeave);
+    }
+
+    return (): void => {
+      if (headerElement) {
+        headerElement.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
+  }, [isHovering]);
+
   // --- Callbacks
 
   const handleHoveredItem = (item: InterfaceHoveredItemCallbackType): void => {
@@ -190,11 +214,17 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
           text: rteToHtml(selectedSections[0].description),
           title: rteToHtml(selectedSections[0].navItemText),
         });
-
       }
-
     } else {
+      // Clear content immediately when leaving a navigation item
       setInfoBlockContent(undefined);
+
+      // Only collapse if we're not in mainNav section
+      // (to prevent flickering when moving between items)
+      if (hoveredSection !== 'mainNav') {
+        setIsHovering(false);
+        setHoveredSection(null);
+      }
 
       // on keyboard navigation, hide the menu
       if (isKeyboard && isHovering && hoveredSection === 'mainNav') {
