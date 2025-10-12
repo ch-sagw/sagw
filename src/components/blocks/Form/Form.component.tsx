@@ -169,6 +169,8 @@ export const FormComponent = ({
 
               if (serverState) {
                 checked = serverState === 'on';
+              } else if (field.defaultChecked) {
+                checked = field.defaultChecked;
               }
 
               return (

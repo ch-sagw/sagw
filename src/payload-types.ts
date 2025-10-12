@@ -1010,6 +1010,7 @@ export interface InterfaceCheckboxField {
     };
     [k: string]: unknown;
   } | null;
+  defaultChecked?: boolean | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'checkboxBlock';
@@ -6045,6 +6046,7 @@ export interface InterfaceCheckboxFieldSelect<T extends boolean = true> {
   fieldWidth?: T;
   required?: T;
   fieldError?: T;
+  defaultChecked?: T;
   id?: T;
   blockName?: T;
 }
