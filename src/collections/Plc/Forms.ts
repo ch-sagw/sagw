@@ -201,7 +201,7 @@ export const Forms: CollectionConfig = {
         },
         {
           admin: {
-            description: 'If enabled, we show a language selection for Germand and English.',
+            description: 'If enabled, we show a language selection for Germand and French.',
           },
           defaultValue: 'no',
           name: 'includeLanguageSelection',

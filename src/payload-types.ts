@@ -964,7 +964,7 @@ export interface Form {
      */
     actionText: string;
     /**
-     * If enabled, we show a language selection for Germand and English.
+     * If enabled, we show a language selection for Germand and French.
      */
     includeLanguageSelection?: ('no' | 'yes') | null;
   };

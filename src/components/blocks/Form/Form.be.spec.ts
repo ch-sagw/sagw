@@ -236,7 +236,9 @@ test.describe('Custom Form', () => {
     const nameField = await form.getByLabel('name');
     const textareaField = await form.getByLabel('kommentar');
     const checkboxField = await form.getByText('Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.');
+    const radioField = await form.getByText('Deutsch');
 
+    await radioField.click();
     await nameField.fill('name');
     await mailField.fill('mail@foo.bar');
     await textareaField.fill('textarea');
@@ -475,7 +477,9 @@ test.describe('Newsletter Form', () => {
     const mailField = await form.getByLabel('e-mail');
     const nameField = await form.getByLabel('name');
     const checkboxField = await form.getByText('Data privacy checkbox SAGW');
+    const radioField = await form.getByText('Deutsch');
 
+    await radioField.click();
     await nameField.fill('name');
     await mailField.fill('mail@foo.bar');
     await checkboxField.click();
