@@ -15,28 +15,33 @@ export const NavigationInfoBlock = ({
   text,
   className,
   colorMode,
-}: InterfaceNavigationInfoBlockPropTypes): React.JSX.Element => (
+}: InterfaceNavigationInfoBlockPropTypes): React.JSX.Element => {
+  // Create a key that changes when content changes to trigger re-render
+  const contentKey = `${title || ''}-${text || ''}`;
 
-  // Hidden for screenreaders. NavItems will contain this as hidden text.
-  <div
-    aria-hidden={true}
-    role='presentation'
-    className={`${styles.infoBlock} ${className} ${styles[colorMode]}`}
-  >
-    {title &&
-      <SafeHtml
-        as='p'
-        className={styles.title}
-        html={title}
-      />
-    }
+  return (
+    // Hidden for screenreaders. NavItems will contain this as hidden text.
+    <div
+      key={contentKey}
+      aria-hidden={true}
+      role='presentation'
+      className={`${styles.infoBlock} ${className} ${styles[colorMode]}`}
+    >
+      {title &&
+        <SafeHtml
+          as='p'
+          className={styles.title}
+          html={title}
+        />
+      }
 
-    {text &&
-      <SafeHtml
-        as='p'
-        className={styles.text}
-        html={text}
-      />
-    }
-  </div>
-);
+      {text &&
+        <SafeHtml
+          as='p'
+          className={styles.text}
+          html={text}
+        />
+      }
+    </div>
+  );
+};
