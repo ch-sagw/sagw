@@ -78,7 +78,7 @@ export const Radios = ({
       aria-invalid={Boolean(errorText)}
     >
       <SafeHtml
-        as='p'
+        as='div'
         className={styles.descriptionLabel}
         html={descriptionLabel}
       />
