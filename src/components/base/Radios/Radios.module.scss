@@ -43,7 +43,11 @@
   .descriptionLabel {
     width: 100%;
     color: var(--color-text);
-    margin: 0 0 px-to-rem(var(--spacing-m));
+    margin: px-to-rem(var(--spacing-s)) 0;
+
+    p {
+      margin: 0;
+    }
   }
 
   .radio {

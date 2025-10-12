@@ -86,3 +86,10 @@ Backup Migration:
 - remove cron from vercel.json and from next-js route
 - remove env vars in local env files, on github and vercel
 - remove env vars from docs
+
+
+--- RADIO
+- implement default checked for radio
+- implement default checked for checkbox
+- form block -> create tabs general&fields for all blocks
+- field width!!! make component flex in form component instead of radio
