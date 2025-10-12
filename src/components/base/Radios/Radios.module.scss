@@ -123,6 +123,10 @@
 
       &:after {
         background-color: var(--radio-color-checked);
+
+        @include forced-colors {
+          background-color: CanvasText;
+        }
       }
     }
   }
