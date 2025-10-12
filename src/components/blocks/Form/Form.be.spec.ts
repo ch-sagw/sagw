@@ -141,6 +141,45 @@ test.describe('Custom Form', () => {
       .not.toBeVisible();
   });
 
+  test('correctly validates radio', async ({
+    page,
+  }) => {
+    // go to home
+    await page.goto('http://localhost:3000/');
+    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+
+    const form = await page.locator('form')
+      .first();
+
+    const submit = await form.locator('button');
+
+    await submit.click();
+
+    await (await form.elementHandle())?.waitForElementState('stable');
+
+    // expect form error: required
+    const radioError = await form.getByText('Sie müssen eine Auswahl treffen', {
+      exact: true,
+    });
+
+    await expect(radioError)
+      .toBeVisible();
+
+    // fill valid values
+    const radioField = await form.getByText('Deutsch');
+
+    await radioField.click();
+
+    // expect no errors
+    await submit.click();
+
+    await (await form.elementHandle())?.waitForElementState('stable');
+
+    await expect(radioError)
+      .not.toBeVisible();
+  });
+
   test('fills correct values after validation errors', async ({
     page,
   }) => {
@@ -343,6 +382,45 @@ test.describe('Newsletter Form', () => {
     await (await form.elementHandle())?.waitForElementState('stable');
 
     await expect(checkboxError)
+      .not.toBeVisible();
+  });
+
+  test('correctly validates radio', async ({
+    page,
+  }) => {
+    // go to home
+    await page.goto('http://localhost:3000/');
+    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+
+    const form = await page.locator('form')
+      .nth(1);
+
+    const submit = await form.locator('button');
+
+    await submit.click();
+
+    await (await form.elementHandle())?.waitForElementState('stable');
+
+    // expect form error: required
+    const radioError = await form.getByText('Sie müssen eine Auswahl treffen', {
+      exact: true,
+    });
+
+    await expect(radioError)
+      .toBeVisible();
+
+    // fill valid values
+    const radioField = await form.getByText('Deutsch');
+
+    await radioField.click();
+
+    // expect no errors
+    await submit.click();
+
+    await (await form.elementHandle())?.waitForElementState('stable');
+
+    await expect(radioError)
       .not.toBeVisible();
   });
 

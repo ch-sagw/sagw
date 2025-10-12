@@ -479,7 +479,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
               value: 'deutsch',
             },
             {
-              defaultChecked: true,
               label: simpleRteConfig('Französisch'),
               value: 'french',
             },
