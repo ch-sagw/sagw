@@ -189,9 +189,7 @@ export const NavigationItem = ({
       level1AriaCurrent = true;
     }
   } else {
-    if (menuVisible) {
-      level1AriaCurrent = true;
-    }
+    level1AriaCurrent = undefined;
   }
 
   return (
