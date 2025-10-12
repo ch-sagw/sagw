@@ -107,6 +107,7 @@ const defaultFormConfig: FormProps = {
             value: 'deutsch',
           },
           {
+            defaultChecked: true,
             label: simpleRteConfig('Französisch'),
             value: 'french',
           },

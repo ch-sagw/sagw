@@ -198,6 +198,7 @@ export const FormComponent = ({
                   colorTheme={form.colorMode}
                   name={field.name}
                   items={field.items.map((item) => ({
+                    checked: item.defaultChecked ?? undefined,
                     label: rte3ToHtml(item.label),
                     value: item.value,
                   }))}
