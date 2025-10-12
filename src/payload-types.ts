@@ -1053,11 +1053,23 @@ export interface InterfaceRadioField {
     [k: string]: unknown;
   } | null;
   items: {
-    label: string;
-    /**
-     * lowercase, no spaces, no special characters
-     */
+    label: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
     value: string;
+    defaultChecked?: boolean | null;
     id?: string | null;
   }[];
   id?: string | null;
@@ -6051,6 +6063,7 @@ export interface InterfaceRadioFieldSelect<T extends boolean = true> {
     | {
         label?: T;
         value?: T;
+        defaultChecked?: T;
         id?: T;
       };
   id?: T;

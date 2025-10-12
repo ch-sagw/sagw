@@ -3,7 +3,8 @@ import { Block } from 'payload';
 import {
   formFieldCheckbox, formFieldError, formFieldName, formFieldWidth,
 } from '@/blocks/Form/DefaultFields';
-import { rte3 } from '@/field-templates/rte';
+import { rte1 } from '@/field-templates/rte';
+import { formFieldNameFromLabel } from '@/hooks-payload/formFieldNameFromLabel';
 
 // Only available on forms block
 
@@ -13,7 +14,7 @@ export const radioBlock = (): Block => ({
   },
   fields: [
     formFieldName,
-    rte3({
+    rte1({
       name: 'label',
     }),
     {
@@ -26,20 +27,32 @@ export const radioBlock = (): Block => ({
     formFieldError,
     {
       fields: [
-        {
-          localized: true,
+        rte1({
           name: 'label',
-          required: true,
-          type: 'text',
-        },
+        }),
         {
+          access: {
+            // visible in API
+            read: () => true,
+
+            // writable from hooks
+            update: () => true,
+          },
           admin: {
-            description: 'lowercase, no spaces, no special characters',
+            hidden: true,
+            readOnly: true,
+          },
+          hooks: {
+            beforeValidate: [formFieldNameFromLabel],
           },
           localized: true,
           name: 'value',
           required: true,
           type: 'text',
+        },
+        {
+          name: 'defaultChecked',
+          type: 'checkbox',
         },
       ],
       name: 'items',
