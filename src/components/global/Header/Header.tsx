@@ -215,12 +215,16 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     if (isHovering && visibility) {
       setHoveredSection('langNav');
 
-      setInfoBlockContent(visibility
-        ? {
-          text: rteToHtml(props.langnav.description),
-          title: rteToHtml(props.langnav.title),
-        }
-        : undefined);
+      setInfoBlockContent({
+        text: rteToHtml(props.langnav.description),
+        title: rteToHtml(props.langnav.title),
+      });
+    }
+
+    // Clear info block when leaving lang-nav, but only if we're not in mainNav
+    if (!visibility && hoveredSection !== 'mainNav') {
+      setInfoBlockContent(undefined);
+      setHoveredSection(null);
     }
 
     // on keyboard navigation, hide the menu
