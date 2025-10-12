@@ -524,6 +524,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           label: simpleRteConfig('E-Mail'),
           placeholder: 'Ihre E-Mail Adresse',
         },
+        includeLanguageSelection: 'no',
         name: {
           fieldError: simpleRteConfig('Bitte geben Sie Ihren Namen an.'),
           fieldWidth: 'half',

@@ -89,8 +89,4 @@ Backup Migration:
 
 
 --- RADIO
-- implement default checked for radio
-- implement default checked for checkbox
 - form block -> create tabs general&fields for all blocks
-- field width!!! make component flex in form component instead of radio
-- newsletter radios
