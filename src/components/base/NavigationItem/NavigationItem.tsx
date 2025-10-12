@@ -45,7 +45,7 @@ type InterfaceNavigationItemWithoutItems = {
   setExpanded?: never;
   onExpand?: never;
   colorMode: ColorMode;
-  hoveredItemCallback?: never;
+  hoveredItemCallback?: (item: string | undefined) => void;
   onHeightChange?: never;
 };
 
@@ -208,14 +208,26 @@ export const NavigationItem = ({
         ? undefined
         : (): void => {
           if (!footer) {
-            onMouseEnter();
+            if (items) {
+              // Items with children use the expand on hover logic
+              onMouseEnter();
+            } else if (hoveredItemCallback) {
+              // Items without children call the callback directly
+              hoveredItemCallback('hovered');
+            }
           }
         }}
       onMouseLeave={smallBreakpoint
         ? undefined
         : (): void => {
           if (!footer) {
-            onMouseLeave();
+            if (items) {
+              // Items with children use the expand on hover logic
+              onMouseLeave();
+            } else if (hoveredItemCallback) {
+              // Items without children call the callback directly
+              hoveredItemCallback(undefined);
+            }
           }
         }
       }

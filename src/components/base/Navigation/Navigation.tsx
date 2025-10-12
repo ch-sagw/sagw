@@ -19,6 +19,7 @@ export type InterfaceNavigationPropTypes = {
   colorMode: ColorMode;
   hoveredItemCallback?: (item: InterfaceHoveredItemCallbackType) => void;
   navMaxHeightCallback?: (maxHeight: number) => void;
+  onHoverItemWithoutChildren?: () => void;
 };
 
 // --- Component
@@ -30,6 +31,7 @@ export const Navigation = ({
   colorMode,
   hoveredItemCallback,
   navMaxHeightCallback,
+  onHoverItemWithoutChildren,
 }: InterfaceNavigationPropTypes): React.JSX.Element => {
 
   // --- State
@@ -122,6 +124,13 @@ export const Navigation = ({
                     : undefined,
                 }
                 : {
+                  hoveredItemCallback: (item: string | undefined): void => {
+                    // For items without children,
+                    // call the special callback to collapse header
+                    if (item === 'hovered' && onHoverItemWithoutChildren) {
+                      onHoverItemWithoutChildren();
+                    }
+                  },
                   link: section.link as NonNullable<typeof section.link>,
                 })}
             />

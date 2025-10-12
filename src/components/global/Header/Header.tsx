@@ -371,6 +371,12 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       className={styles.navigation}
       colorMode={renderColorMode()}
       hoveredItemCallback={handleHoveredItem}
+      onHoverItemWithoutChildren={() => {
+        // Collapse header when hovering over items without children
+        if (isHovering && hoveredSection === 'mainNav') {
+          setIsHovering(false);
+        }
+      }}
       navMaxHeightCallback={(maxHeight: number) => {
         if (maxHeight >= 0) {
           setNavMaxHeight(maxHeight);
