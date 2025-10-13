@@ -309,25 +309,29 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   const metanavRender = (): React.JSX.Element => {
     if (props.metanav.metaLinks && props.metanav.metaLinks?.length > 0) {
       return (
-        <Metanav
-          items={props.metanav.metaLinks?.map((item) => {
-            if (item.linkType === 'internal') {
-              return {
-                link: item.linkInternal?.internalLink || '',
-                target: '_self',
-                text: rteToHtml(item.linkInternal?.linkText),
-              };
-            }
+        <div className={`${styles.metanavWrapper} ${didScroll
+          ? styles.metanavHidden
+          : ''}`}>
+          <Metanav
+            items={props.metanav.metaLinks?.map((item) => {
+              if (item.linkType === 'internal') {
+                return {
+                  link: item.linkInternal?.internalLink || '',
+                  target: '_self',
+                  text: rteToHtml(item.linkInternal?.linkText),
+                };
+              }
 
-            return {
-              link: item.linkExternal?.externalLink || '',
-              target: '_blank',
-              text: rteToHtml(item.linkExternal?.externalLinkText),
-            };
-          }) || []}
-          className={styles.metanav}
-          colorMode={renderColorMode()}
-        />
+              return {
+                link: item.linkExternal?.externalLink || '',
+                target: '_blank',
+                text: rteToHtml(item.linkExternal?.externalLinkText),
+              };
+            }) || []}
+            className={styles.metanav}
+            colorMode={renderColorMode()}
+          />
+        </div>
       );
     }
 

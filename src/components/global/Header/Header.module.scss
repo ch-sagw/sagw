@@ -117,7 +117,17 @@
     }
   }
 
+  .metanavWrapper {
+    @include expandable-wrapper-visible;
+
+    &.metanavHidden {
+      @include expandable-wrapper;
+    }
+  }
+
   .metanav {
+    @include expandable-content;
+
     margin-block-end: px-to-rem(var(--spacing-2xl));
 
     @include mq($from: large) {
