@@ -76,3 +76,91 @@ test('hides menu', async ({
       fullPage: false,
     });
 });
+
+test('Correctly shows info text for navItem', async ({
+  page,
+}, workerInfo) => {
+
+  if (workerInfo.project.name === 'chromium-1280' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
+    await navigate(page, 'components-global-header--header-dark');
+
+    const elem = await page.getByTestId('header');
+
+    const level1Button = elem.getByTestId('navigationItem')
+      .last();
+
+    await level1Button.hover();
+
+    const infoText = elem.getByTestId('infoblock');
+
+    await expect(infoText)
+      .toBeVisible();
+  }
+
+});
+
+test('Correctly hides info text for navItem', async ({
+  page,
+}, workerInfo) => {
+  if (workerInfo.project.name === 'chromium-1280' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
+
+    await navigate(page, 'components-global-header--header-dark');
+
+    const elem = await page.getByTestId('header');
+
+    const level1Button = elem.getByTestId('navigationItem')
+      .last();
+
+    await level1Button.hover();
+
+    const infoText = elem.getByTestId('infoblock');
+
+    await expect(infoText)
+      .toBeVisible();
+    await page.mouse.move(100, 0);
+    await expect(infoText).not.toBeVisible();
+  }
+});
+
+test('Correctly shows info text for langNav', async ({
+  page,
+}, workerInfo) => {
+  if (workerInfo.project.name === 'chromium-1280' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
+
+    await navigate(page, 'components-global-header--header-dark');
+
+    const elem = await page.getByTestId('header');
+
+    const langNav = elem.getByTestId('langnav');
+
+    await langNav.hover();
+
+    const infoText = elem.getByTestId('infoblock');
+
+    await expect(infoText)
+      .toBeVisible();
+  }
+});
+
+test('Correctly hides info text for langNav', async ({
+  page,
+}, workerInfo) => {
+  if (workerInfo.project.name === 'chromium-1280' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
+
+    await navigate(page, 'components-global-header--header-dark');
+
+    const elem = await page.getByTestId('header');
+
+    const langNav = elem.getByTestId('langnav');
+
+    await langNav.hover();
+
+    const infoText = elem.getByTestId('infoblock');
+
+    await expect(infoText)
+      .toBeVisible();
+
+    await page.mouse.move(-100, 0);
+    await expect(infoText).not.toBeVisible();
+  }
+});

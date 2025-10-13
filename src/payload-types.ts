@@ -2065,7 +2065,6 @@ export interface InterfaceAccordionBlock {
     };
     [k: string]: unknown;
   };
-  titleLevel: '2' | '3' | '4' | '5';
   colorMode: 'white' | 'dark' | 'light';
   accordions: {
     accordionTitle: {
@@ -5150,7 +5149,6 @@ export interface OverviewPageSelect<T extends boolean = true> {
  */
 export interface InterfaceAccordionBlockSelect<T extends boolean = true> {
   title?: T;
-  titleLevel?: T;
   colorMode?: T;
   accordions?:
     | T
