@@ -26,6 +26,7 @@ export const NavigationInfoBlock = ({
       aria-hidden={true}
       role='presentation'
       className={`${styles.infoBlock} ${className} ${styles[colorMode]}`}
+      data-testid='infoblock'
     >
       {title &&
         <SafeHtml
