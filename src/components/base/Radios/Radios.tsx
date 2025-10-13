@@ -66,7 +66,7 @@ export const Radios = ({
   });
 
   return (
-    <div
+    <fieldset
       className={classes({
         colorTheme,
       })}
@@ -78,7 +78,7 @@ export const Radios = ({
       aria-invalid={Boolean(errorText)}
     >
       <SafeHtml
-        as='div'
+        as='legend'
         className={styles.descriptionLabel}
         html={descriptionLabel}
       />
@@ -116,6 +116,6 @@ export const Radios = ({
           colorMode={colorTheme}
         />
       }
-    </div>
+    </fieldset>
   );
 };

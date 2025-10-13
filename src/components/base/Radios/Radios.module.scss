@@ -10,7 +10,11 @@
 
   @include body-text-s;
 
+  appearance: none;
+  border: none;
   position: relative;
+  padding: 0;
+  margin: 0;
   width: 100%;
 
   @include mq($from: medium) {
@@ -43,7 +47,7 @@
   .descriptionLabel {
     width: 100%;
     color: var(--color-text);
-    margin: px-to-rem(var(--spacing-s)) 0;
+    padding: px-to-rem(var(--spacing-s)) 0;
 
     p {
       margin: 0;
@@ -56,9 +60,14 @@
 
     .input {
       appearance: none;
+      position: absolute;
+      outline: none;
 
       &:focus-visible ~ .label {
         @include focus-visible;
+
+        outline-offset: px-to-rem(calc(var(--spacing-2xs) / 2));
+        outline-color: var(--label-color);
       }
     }
 
