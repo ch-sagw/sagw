@@ -141,13 +141,23 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     setBodyFontSize(parseInt(bodyFontSizeDefinition[0], 10) || 16);
   }, []);
 
+  // reset navigation heights when breakpoint changes
+  useEffect(() => {
+    setNavMaxHeight(0);
+    setLangNavMaxHeight(0);
+  }, [breakpoint]);
+
   // set nav height
   useEffect(() => {
     if (!headerRef.current) {
       return;
     }
 
-    if (!smallBreakpoint) {
+    if (smallBreakpoint) {
+      // Reset heights when in small breakpoint
+      setHeaderNatualHeight(0);
+      setTotalHeaderHeight(0);
+    } else {
       const naturalHeight = headerRef.current.offsetHeight;
       const langOrNavMaxHeight = Math.max(navMaxHeight, langNavMaxHeight);
 
@@ -160,6 +170,9 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     props,
     smallBreakpoint,
     bodyFontSize,
+
+    // Add breakpoint to trigger recalculation on viewport changes
+    breakpoint,
   ]);
 
   // handle scroll
