@@ -172,6 +172,13 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
       if (isCurrentlyHidden) {
         wrapper.classList.remove(styles.metanavHidden);
+        // Force a synchronous layout recalculation
+        /* eslint-disable @typescript-eslint/no-unused-expressions */
+        /* eslint-disable no-unused-expressions */
+        wrapper.offsetHeight;
+        /* eslint-enable @typescript-eslint/no-unused-expressions */
+        /* eslint-enable no-unused-expressions */
+
         const height = wrapper.offsetHeight;
 
         wrapper.classList.add(styles.metanavHidden);
@@ -183,7 +190,17 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       }
     };
 
-    measureHeight();
+    // Use double RAF to ensure DOM is fully updated
+    const rafId1 = requestAnimationFrame(() => {
+      const rafId2 = requestAnimationFrame(measureHeight);
+
+      return rafId2;
+    });
+
+    // eslint-disable-next-line consistent-return
+    return (): void => {
+      cancelAnimationFrame(rafId1);
+    };
   }, [
     breakpoint,
     props.metanav,
@@ -196,14 +213,27 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       return;
     }
 
-    const logoRect = logoRef.current.getBoundingClientRect();
-    const newTopPositionRem = (logoRect.bottom + infoBlockMargin) / bodyFontSize;
+    if (!logoRef.current) {
+      return;
+    }
 
-    setInfoBlockTop(newTopPositionRem);
+    const logoRect = logoRef.current.getBoundingClientRect();
+    let topPosition = (logoRect.bottom + infoBlockMargin) / bodyFontSize;
+
+    // When scrolled, metanav is hidden, so logo moves up by metanavHeight
+    // Adjust the infoBlock position accordingly
+    if (didScroll && metanavHeight > 0) {
+      topPosition -= (metanavHeight / bodyFontSize);
+    }
+
+    setInfoBlockTop(topPosition);
   }, [
     smallBreakpoint,
     breakpoint,
     bodyFontSize,
+    didScroll,
+    infoBlockMargin,
+    metanavHeight,
   ]);
 
   // reset navigation heights when breakpoint changes
@@ -223,16 +253,37 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       setHeaderNatualHeight(0);
       setTotalHeaderHeight(0);
     } else {
+      if (!headerRef.current) {
+        return;
+      }
+
+      // Temporarily remove inline height to measure natural height
+      const currentInlineHeight = headerRef.current.style.height;
+
+      headerRef.current.style.height = 'auto';
+      // Force synchronous layout recalculation
+      /* eslint-disable @typescript-eslint/no-unused-expressions */
+      /* eslint-disable no-unused-expressions */
+      headerRef.current.offsetHeight;
+      /* eslint-enable @typescript-eslint/no-unused-expressions */
+      /* eslint-enable no-unused-expressions */
+
       const naturalHeight = headerRef.current.offsetHeight;
+
+      headerRef.current.style.height = currentInlineHeight;
+
       const langOrNavMaxHeight = Math.max(navMaxHeight, langNavMaxHeight);
 
       setHeaderNatualHeight(naturalHeight / bodyFontSize);
 
       if (didScroll) {
+        // When scrolled, metanav is hidden. Subtract its height
+        // from the calculation.
         const totalHeight = (naturalHeight + langOrNavMaxHeight - metanavHeight) / bodyFontSize;
 
         setTotalHeaderHeight(totalHeight);
       } else {
+        // When not scrolled, metanav is visible. Use full height.
         const totalHeight = (naturalHeight + langOrNavMaxHeight) / bodyFontSize;
 
         setTotalHeaderHeight(totalHeight);
