@@ -52,7 +52,6 @@
 
     @include mq($from: large) {
       align-items: baseline;
-      margin-block-start: px-to-rem(var(--spacing-l));
     }
 
     .logo {
