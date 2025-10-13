@@ -52,7 +52,6 @@
 
     @include mq($from: large) {
       align-items: baseline;
-      margin-block-start: px-to-rem(var(--spacing-l));
     }
 
     .logo {
@@ -72,6 +71,12 @@
     .menuButton {
       flex-shrink: 0;
       flex-grow: 0;
+    }
+  }
+
+  .metanavWrapper ~ .logoWrapper {
+    @include mq($from: large) {
+      margin-block-start: px-to-rem(var(--spacing-l));
     }
   }
 
