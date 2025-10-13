@@ -8,6 +8,7 @@ export type InterfaceNavigationInfoBlockPropTypes = {
   text?: string;
   className?: string;
   colorMode: ColorMode;
+  style?: React.CSSProperties;
 };
 
 export const NavigationInfoBlock = ({
@@ -15,6 +16,7 @@ export const NavigationInfoBlock = ({
   text,
   className,
   colorMode,
+  style,
 }: InterfaceNavigationInfoBlockPropTypes): React.JSX.Element => {
   // Create a key that changes when content changes to trigger re-render
   const contentKey = `${title || ''}-${text || ''}`;
@@ -27,6 +29,7 @@ export const NavigationInfoBlock = ({
       role='presentation'
       className={`${styles.infoBlock} ${className} ${styles[colorMode]}`}
       data-testid='infoblock'
+      style={style}
     >
       {title &&
         <SafeHtml

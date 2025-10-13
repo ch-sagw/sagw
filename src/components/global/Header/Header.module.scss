@@ -141,14 +141,11 @@
     position: absolute;
     width: px-to-rem(260);
     inset-inline-start: px-to-rem(var(--grid-margin));
-    inset-block-start: px-to-rem(210);
+
+    // top position is set dynamically in component
 
     @include mq($from: wide) {
       width: px-to-rem(400);
     }
-  }
-
-  .metanavWrapper.metanavHidden ~ .infoBlock {
-    inset-block-start: px-to-rem(155);
   }
 }

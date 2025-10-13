@@ -51,9 +51,12 @@ export type InterfaceHeaderPropTypes = {
 
 export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
+  const infoBlockMargin = 48;
+
   // --- Refs
 
   const headerRef = useRef<HTMLElement>(null);
+  const logoRef = useRef<HTMLAnchorElement>(null);
 
   // --- State
 
@@ -107,6 +110,12 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     setHoveredSection,
   ] = useState<'mainNav' | 'langNav' | null>(null);
 
+  // With default fallback value in rem (210px / 16px)
+  const [
+    infoBlockTop,
+    setInfoBlockTop,
+  ] = useState(13.125);
+
   // --- Hooks
 
   useScrollLock(mobileMenuOpen);
@@ -140,6 +149,22 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
     setBodyFontSize(parseInt(bodyFontSizeDefinition[0], 10) || 16);
   }, []);
+
+  // calculate infoBlock position
+  useEffect(() => {
+    if (!logoRef.current || smallBreakpoint || !headerRef.current) {
+      return;
+    }
+
+    const logoRect = logoRef.current.getBoundingClientRect();
+    const newTopPositionRem = (logoRect.bottom + infoBlockMargin) / bodyFontSize;
+
+    setInfoBlockTop(newTopPositionRem);
+  }, [
+    smallBreakpoint,
+    breakpoint,
+    bodyFontSize,
+  ]);
 
   // reset navigation heights when breakpoint changes
   useEffect(() => {
@@ -383,6 +408,9 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       colorMode={renderColorMode()}
       text={infoBlockContent?.text || ''}
       title={infoBlockContent?.title || ''}
+      style={{
+        top: `${infoBlockTop}rem`,
+      }}
     />
   );
 
@@ -444,6 +472,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
     return (
       <HeaderLogo
+        ref={logoRef}
         link={props.logoLink}
 
         // TODO: define in i18n in code
