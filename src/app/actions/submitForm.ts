@@ -79,6 +79,16 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
         shape[field.name] = z.string()
           .optional();
       }
+    } else if (field.blockType === 'radioBlock') {
+      if (field.required) {
+        shape[field.name] = z
+          .string()
+          .min(1, rteToHtml(field.fieldError) || '');
+      } else {
+        shape[field.name] = z.string()
+          .optional()
+          .or(z.literal(''));
+      }
     }
   }
 
@@ -94,6 +104,9 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       data[f.name] = val === null
         ? ''
         : val;
+    } else if (f.blockType === 'radioBlock') {
+      // Radio buttons return the selected value or null if none selected
+      data[f.name] = val || '';
     } else {
       data[f.name] = val;
     }

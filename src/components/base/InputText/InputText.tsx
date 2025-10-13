@@ -6,9 +6,9 @@ import React, {
 } from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/InputText/InputText.module.scss';
-import { Icon } from '@/icons';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
+import { FormError } from '@/components/base/FormError/FormError';
 
 export type BaseProps = {
   label: string;
@@ -115,20 +115,12 @@ export const InputText = ({
         html={label}
       />
 
-      {errorText &&
-        <span
-          className={styles.error}
-          id={`error-${inputId}`}
-        >
-          <Icon
-            name='warning'
-            className={styles.icon}
-          />
-          <SafeHtml
-            as='span'
-            html={errorText}
-          />
-        </span>
+      {Boolean(errorText) &&
+        <FormError
+          errorId={`error-${inputId}`}
+          errorText={errorText}
+          colorMode={colorMode}
+        />
       }
     </div >
   );

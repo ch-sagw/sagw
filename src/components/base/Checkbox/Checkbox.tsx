@@ -7,7 +7,8 @@ import { cva } from 'cva';
 import { Icon } from '@/icons';
 import styles from '@/components/base/Checkbox/Checkbox.module.scss';
 import { ColorMode } from '@/components/base/types/colorMode';
-import { SafeHtml } from '../SafeHtml/SafeHtml';
+import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
+import { FormError } from '@/components/base/FormError/FormError';
 
 export type InterfaceCheckboxPropTypes = {
   value: string;
@@ -101,20 +102,12 @@ export const Checkbox = ({
         />
       </label>
 
-      {errorText &&
-        <span
-          className={styles.error}
-          id={name}
-        >
-          <Icon
-            name='warning'
-            className={styles.errorIcon}
-          />
-          <SafeHtml
-            as='span'
-            html={errorText}
-          />
-        </span>
+      {Boolean(errorText) &&
+        <FormError
+          errorId={name}
+          errorText={errorText}
+          colorMode={colorMode}
+        />
       }
     </div>
   );

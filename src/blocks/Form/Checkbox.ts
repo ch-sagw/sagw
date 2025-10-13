@@ -24,6 +24,10 @@ export const checkboxBlock = (): Block => ({
       type: 'row',
     },
     formFieldError,
+    {
+      name: 'defaultChecked',
+      type: 'checkbox',
+    },
   ],
   interfaceName: 'InterfaceCheckboxField',
   labels: {

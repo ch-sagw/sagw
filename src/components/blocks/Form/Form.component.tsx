@@ -13,6 +13,7 @@ import {
 import { Button } from '@/components/base/Button/Button';
 
 import { Checkbox } from '@/components/base/Checkbox/Checkbox';
+import { Radios } from '@/components/base/Radios/Radios';
 
 import styles from '@/components/blocks/Form/Form.module.scss';
 import { ZodError } from 'zod';
@@ -168,6 +169,8 @@ export const FormComponent = ({
 
               if (serverState) {
                 checked = serverState === 'on';
+              } else if (field.defaultChecked) {
+                checked = field.defaultChecked;
               }
 
               return (
@@ -183,6 +186,26 @@ export const FormComponent = ({
                   checked={checked}
                   errorText={errors[field.name]?.join(', ') || ''}
                   colorMode={form.colorMode}
+                />
+              );
+            }
+
+            if (field.blockType === 'radioBlock') {
+              return (
+                <Radios
+                  key={i}
+                  className={fieldClasses({
+                    fieldWidth: field.fieldWidth,
+                  })}
+                  colorTheme={form.colorMode}
+                  name={field.name}
+                  items={field.items.map((item) => ({
+                    checked: item.defaultChecked ?? undefined,
+                    label: rte3ToHtml(item.label),
+                    value: item.value,
+                  }))}
+                  errorText={errors[field.name]?.join(', ') || ''}
+                  descriptionLabel={rte3ToHtml(field.label)}
                 />
               );
             }

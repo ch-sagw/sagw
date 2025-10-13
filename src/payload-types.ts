@@ -879,7 +879,15 @@ export interface Form {
       };
     };
   };
-  fields?: (InterfaceCheckboxField | InterfaceEmailField | InterfaceTextField | InterfaceTextareaField)[] | null;
+  fields?:
+    | (
+        | InterfaceCheckboxField
+        | InterfaceRadioField
+        | InterfaceEmailField
+        | InterfaceTextField
+        | InterfaceTextareaField
+      )[]
+    | null;
   newsletterFields?: {
     email: {
       label: {
@@ -955,6 +963,10 @@ export interface Form {
      * The action text to show at the bottom of the notification. e.g.: "Send verifiaction E-Mail again."
      */
     actionText: string;
+    /**
+     * If enabled, we show a language selection for Germand and French.
+     */
+    includeLanguageSelection?: ('no' | 'yes') | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -998,9 +1010,72 @@ export interface InterfaceCheckboxField {
     };
     [k: string]: unknown;
   } | null;
+  defaultChecked?: boolean | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'checkboxBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceRadioField".
+ */
+export interface InterfaceRadioField {
+  name: string;
+  label: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  fieldWidth: 'full' | 'half';
+  required?: boolean | null;
+  fieldError?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  items: {
+    label: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    value: string;
+    defaultChecked?: boolean | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'radioBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5928,6 +6003,7 @@ export interface FormsSelect<T extends boolean = true> {
     | T
     | {
         checkboxBlock?: T | InterfaceCheckboxFieldSelect<T>;
+        radioBlock?: T | InterfaceRadioFieldSelect<T>;
         emailBlock?: T | InterfaceEmailFieldSelect<T>;
         textBlockForm?: T | InterfaceTextFieldSelect<T>;
         textareaBlock?: T | InterfaceTextareaFieldSelect<T>;
@@ -5954,6 +6030,7 @@ export interface FormsSelect<T extends boolean = true> {
               fieldError?: T;
             };
         actionText?: T;
+        includeLanguageSelection?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -5969,6 +6046,28 @@ export interface InterfaceCheckboxFieldSelect<T extends boolean = true> {
   fieldWidth?: T;
   required?: T;
   fieldError?: T;
+  defaultChecked?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceRadioField_select".
+ */
+export interface InterfaceRadioFieldSelect<T extends boolean = true> {
+  name?: T;
+  label?: T;
+  fieldWidth?: T;
+  required?: T;
+  fieldError?: T;
+  items?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        defaultChecked?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
