@@ -124,6 +124,12 @@
     &.metanavHidden {
       @include expandable-wrapper;
     }
+
+    &:not(.metanavHidden) {
+      @include mq($from: large) {
+        margin-block-end: px-to-rem(var(--spacing-l));
+      }
+    }
   }
 
   .metanav {
@@ -132,7 +138,6 @@
     margin-block-end: px-to-rem(var(--spacing-2xl));
 
     @include mq($from: large) {
-      // margin-block-end: px-to-rem(var(--spacing-l));
       margin-block-end: 0;
     }
   }
