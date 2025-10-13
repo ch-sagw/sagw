@@ -57,6 +57,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
+  const metanavRef = useRef<HTMLDivElement>(null);
 
   // --- State
 
@@ -106,6 +107,11 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   ] = useState(16);
 
   const [
+    metanavHeight,
+    setMetanavHeight,
+  ] = useState(0);
+
+  const [
     hoveredSection,
     setHoveredSection,
   ] = useState<'mainNav' | 'langNav' | null>(null);
@@ -150,6 +156,40 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     setBodyFontSize(parseInt(bodyFontSizeDefinition[0], 10) || 16);
   }, []);
 
+  // measure metanav height
+  useEffect(() => {
+    if (smallBreakpoint) {
+      return;
+    }
+
+    const measureHeight = (): void => {
+      if (!metanavRef.current) {
+        return;
+      }
+
+      const wrapper = metanavRef.current;
+      const isCurrentlyHidden = wrapper.classList.contains(styles.metanavHidden);
+
+      if (isCurrentlyHidden) {
+        wrapper.classList.remove(styles.metanavHidden);
+        const height = wrapper.offsetHeight;
+
+        wrapper.classList.add(styles.metanavHidden);
+        setMetanavHeight(height);
+      } else {
+        const height = wrapper.offsetHeight;
+
+        setMetanavHeight(height);
+      }
+    };
+
+    measureHeight();
+  }, [
+    breakpoint,
+    props.metanav,
+    smallBreakpoint,
+  ]);
+
   // calculate infoBlock position
   useEffect(() => {
     if (!logoRef.current || smallBreakpoint || !headerRef.current) {
@@ -187,7 +227,16 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       const langOrNavMaxHeight = Math.max(navMaxHeight, langNavMaxHeight);
 
       setHeaderNatualHeight(naturalHeight / bodyFontSize);
-      setTotalHeaderHeight((naturalHeight + langOrNavMaxHeight) / bodyFontSize);
+
+      if (didScroll) {
+        const totalHeight = (naturalHeight + langOrNavMaxHeight - metanavHeight) / bodyFontSize;
+
+        setTotalHeaderHeight(totalHeight);
+      } else {
+        const totalHeight = (naturalHeight + langOrNavMaxHeight) / bodyFontSize;
+
+        setTotalHeaderHeight(totalHeight);
+      }
     }
   }, [
     navMaxHeight,
@@ -195,6 +244,8 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     props,
     smallBreakpoint,
     bodyFontSize,
+    didScroll,
+    metanavHeight,
 
     // Add breakpoint to trigger recalculation on viewport changes
     breakpoint,
@@ -334,9 +385,12 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   const metanavRender = (): React.JSX.Element => {
     if (props.metanav.metaLinks && props.metanav.metaLinks?.length > 0) {
       return (
-        <div className={`${styles.metanavWrapper} ${didScroll
-          ? styles.metanavHidden
-          : ''}`}>
+        <div
+          ref={metanavRef}
+          className={`${styles.metanavWrapper} ${didScroll
+            ? styles.metanavHidden
+            : ''}`}
+        >
           <Metanav
             items={props.metanav.metaLinks?.map((item) => {
               if (item.linkType === 'internal') {
