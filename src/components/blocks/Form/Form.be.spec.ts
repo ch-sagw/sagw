@@ -141,6 +141,45 @@ test.describe('Custom Form', () => {
       .not.toBeVisible();
   });
 
+  test('correctly validates radio', async ({
+    page,
+  }) => {
+    // go to home
+    await page.goto('http://localhost:3000/');
+    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+
+    const form = await page.locator('form')
+      .first();
+
+    const submit = await form.locator('button');
+
+    await submit.click();
+
+    await (await form.elementHandle())?.waitForElementState('stable');
+
+    // expect form error: required
+    const radioError = await form.getByText('Sie müssen eine Auswahl treffen', {
+      exact: true,
+    });
+
+    await expect(radioError)
+      .toBeVisible();
+
+    // fill valid values
+    const radioField = await form.getByText('Deutsch');
+
+    await radioField.click();
+
+    // expect no errors
+    await submit.click();
+
+    await (await form.elementHandle())?.waitForElementState('stable');
+
+    await expect(radioError)
+      .not.toBeVisible();
+  });
+
   test('fills correct values after validation errors', async ({
     page,
   }) => {
@@ -197,7 +236,9 @@ test.describe('Custom Form', () => {
     const nameField = await form.getByLabel('name');
     const textareaField = await form.getByLabel('kommentar');
     const checkboxField = await form.getByText('Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.');
+    const radioField = await form.getByText('Deutsch');
 
+    await radioField.click();
     await nameField.fill('name');
     await mailField.fill('mail@foo.bar');
     await textareaField.fill('textarea');
@@ -346,6 +387,45 @@ test.describe('Newsletter Form', () => {
       .not.toBeVisible();
   });
 
+  test('correctly validates radio', async ({
+    page,
+  }) => {
+    // go to home
+    await page.goto('http://localhost:3000/');
+    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+
+    const form = await page.locator('form')
+      .nth(1);
+
+    const submit = await form.locator('button');
+
+    await submit.click();
+
+    await (await form.elementHandle())?.waitForElementState('stable');
+
+    // expect form error: required
+    const radioError = await form.getByText('Sie müssen eine Auswahl treffen', {
+      exact: true,
+    });
+
+    await expect(radioError)
+      .toBeVisible();
+
+    // fill valid values
+    const radioField = await form.getByText('Deutsch');
+
+    await radioField.click();
+
+    // expect no errors
+    await submit.click();
+
+    await (await form.elementHandle())?.waitForElementState('stable');
+
+    await expect(radioError)
+      .not.toBeVisible();
+  });
+
   test('fills correct values after validation errors', async ({
     page,
   }) => {
@@ -397,7 +477,9 @@ test.describe('Newsletter Form', () => {
     const mailField = await form.getByLabel('e-mail');
     const nameField = await form.getByLabel('name');
     const checkboxField = await form.getByText('Data privacy checkbox SAGW');
+    const radioField = await form.getByText('Deutsch');
 
+    await radioField.click();
     await nameField.fill('name');
     await mailField.fill('mail@foo.bar');
     await checkboxField.click();

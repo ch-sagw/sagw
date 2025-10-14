@@ -1,0 +1,26 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+
+.error {
+  --color-error: var(--text-error);
+
+  &.dark {
+    --color-error: var(--text-error-inverted);
+  }
+
+  @include body-text-s;
+
+  color: var(--color-error);
+  display: flex;
+  align-items: center;
+  margin-block-start: px-to-rem(var(--spacing-xs));
+  width: 100%;
+
+  .icon {
+    flex-basis: px-to-rem(var(--spacing-m));
+    height: px-to-rem(var(--spacing-m));
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-inline-end: px-to-rem(var(--spacing-xs));
+  }
+}

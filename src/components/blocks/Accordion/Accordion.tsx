@@ -34,7 +34,6 @@ const accordionItemClasses = cva([styles.item], {
 export const Accordion = ({
   accordions,
   title,
-  titleLevel,
   colorMode,
 }: InterfaceAccordionBlock): React.JSX.Element => {
 
@@ -45,10 +44,6 @@ export const Accordion = ({
     toggleButtonAutofocus,
   } = useExpandOnClick();
 
-  const mainLevel = parseInt(titleLevel, 10);
-  const TitleElem: React.ElementType = `h${mainLevel}` as keyof React.JSX.IntrinsicElements;
-  const HeadingElem: React.ElementType = `h${mainLevel + 1}` as keyof React.JSX.IntrinsicElements;
-
   return (
     <div
       className={accordionClasses({
@@ -57,7 +52,7 @@ export const Accordion = ({
       data-testid='accordion'
     >
       <SafeHtml
-        as={TitleElem}
+        as='h2'
         className={styles.heading}
         html={rteToHtml(title)}
       />
@@ -71,7 +66,7 @@ export const Accordion = ({
             })}
           >
             <Fragment>
-              <HeadingElem className={styles.title}>
+              <h3 className={styles.title}>
                 <button
                   ref={(el) => {
                     buttonRefs.current[item.id || String(key)] = el;
@@ -95,7 +90,7 @@ export const Accordion = ({
                     className={styles.icon}
                   />
                 </button>
-              </HeadingElem>
+              </h3>
 
               <section
                 id={`accordion-section-${key}`}

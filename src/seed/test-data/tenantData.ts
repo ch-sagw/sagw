@@ -469,6 +469,24 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           name: 'checkbox-custom',
           required: true,
         },
+        {
+          blockType: 'radioBlock',
+          fieldError: simpleRteConfig('Sie müssen eine Auswahl treffen'),
+          fieldWidth: 'full',
+          items: [
+            {
+              label: simpleRteConfig('Deutsch'),
+              value: 'deutsch',
+            },
+            {
+              label: simpleRteConfig('Französisch'),
+              value: 'french',
+            },
+          ],
+          label: simpleRteConfig('In welcher Sprache möchten Sie den Newsletter erhalten?'),
+          name: 'language-select',
+          required: true,
+        },
       ],
       isNewsletterForm: 'custom',
       mailSubject: 'Form submission on SAGW',
@@ -505,6 +523,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           label: simpleRteConfig('E-Mail'),
           placeholder: 'Ihre E-Mail Adresse',
         },
+        includeLanguageSelection: 'yes',
         name: {
           fieldError: simpleRteConfig('Bitte geben Sie Ihren Namen an.'),
           fieldWidth: 'half',
