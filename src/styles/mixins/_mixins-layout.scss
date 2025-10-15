@@ -16,12 +16,9 @@
     > h3:first-child {
       position: sticky;
       will-change: transform;
-
-      // TODO set --sticky-offset-top dynamically
-      top: px-to-rem(var(--sticky-offset-top, var(--spacing-l)));
+      top: px-to-rem(calc(var(--sticky-offset-top) + var(--grid-gutter)));
       bottom: 0;
       align-self: flex-start;
-      scroll-margin-top: px-to-rem(var(--sticky-offset-top, var(--spacing-l)));
       background: var(--background-sticky-cover, var(--background-page));
     }
   }

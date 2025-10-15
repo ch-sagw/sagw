@@ -81,6 +81,7 @@
     --teaser-between-m: var(--spacing-4xl);
     --text-block-top: var(--spacing-4xl);
     --text-block-bottom: var(--spacing-4xl);
+    --sticky-offset-top: 124;
   }
 
   @include mq($from: ultra) {
