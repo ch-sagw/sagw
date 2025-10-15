@@ -6,7 +6,6 @@
 
 body {
   @include body-text-s;
-  @include font-smoothing;
 
   font-size: var(--font-size-base);
   background: var(--background-page);

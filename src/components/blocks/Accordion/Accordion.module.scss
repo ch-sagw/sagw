@@ -12,6 +12,10 @@
   --items-spacing: 0;
   --background-sticky-cover: var(--background-color);
 
+  &:not(.white) {
+    @include font-smoothing;
+  }
+
   &.light {
     --background-color: var(--background-light);
     --text-color: var(--text-primary);
