@@ -21,14 +21,20 @@ const meta: Meta<typeof FooterLogo> = {
     'visual:check',
     'a11y:check',
   ],
-  title: 'Components/base/FooterLogo',
+  title: 'Components/base/Footer/FooterLogo',
 };
 
 export default meta;
 
-export const SampleStory: StrictStory = {
+export const Logo: StrictStory = {
   args: {
-    context: 'sampleContext',
-    sampleProperty: 'some text',
+    link: '/',
+    linkText: 'Back to Homepage',
+  },
+  globals: {
+    backgrounds: {
+      value: 'dark',
+    },
   },
 };
+

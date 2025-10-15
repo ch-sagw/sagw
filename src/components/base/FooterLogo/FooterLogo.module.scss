@@ -1,7 +1,15 @@
-.baseStyle {
-  text-decoration: underline;
-}
+@use "../../../styles/utilities/functions" as *;
 
-.sampleContextStyle {
-  border: 1px solid black;
+.logo {
+  display: block;
+  height: px-to-rem(51);
+
+  svg {
+    height: 100%;
+    width: auto;
+
+    path {
+      fill: var(--white);
+    }
+  }
 }

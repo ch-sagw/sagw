@@ -1,28 +1,26 @@
-import React from 'react';
-import { cva } from 'cva';
+import React, { forwardRef } from 'react';
 import styles from '@/components/base/FooterLogo/FooterLogo.module.scss';
-import { InterfaceFooterLogo } from '@/payload-types';
+import SagwLogoForFg from '@/components/base/FooterLogo/sagwLogoForFg';
 
-export type InterfaceFooterLogoPropTypes = {
-  sampleProperty: string;
-  context: 'sampleContext'
-} & InterfaceFooterLogo;
+export interface InterfaceFooterLogoPropTypes {
+  className?: string;
+  link: string;
+  linkText: string;
+}
 
-const sampleClasses = cva([styles.baseStyle], {
-  variants: {
-    context: {
-      sampleContext: [styles.sampleContextStyle],
-    },
-  },
-});
+export const FooterLogo = forwardRef<HTMLAnchorElement, InterfaceFooterLogoPropTypes>(({
+  className,
+  link,
+  linkText,
+}, ref) => (
+  <a
+    ref={ref}
+    aria-label={linkText}
+    href={link}
+    className={`${styles.logo} ${className}`}
+  >
+    <SagwLogoForFg />
+  </a>
+));
 
-export const FooterLogo = ({
-  context,
-  sampleProperty,
-}: InterfaceFooterLogoPropTypes): React.JSX.Element => (
-  <div
-    className={sampleClasses({
-      context: context ?? undefined,
-    })}
-  >{sampleProperty}</div>
-);
+FooterLogo.displayName = 'FooterLogo';
