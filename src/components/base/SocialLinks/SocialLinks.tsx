@@ -1,28 +1,51 @@
 import React from 'react';
-import { cva } from 'cva';
 import styles from '@/components/base/SocialLinks/SocialLinks.module.scss';
-import { InterfaceSocialLinks } from '@/payload-types';
+import Facebook from '@/icons/social-media/facebook';
+import Instagram from '@/icons/social-media/instagram';
+import Linkedin from '@/icons/social-media/linkedin';
+import Twitter from '@/icons/social-media/x';
+
+interface InterfaceSocialLinkItem {
+  link: string;
+  text: string;
+  icon: 'linkedIn' | 'instagram' | 'facebook' | 'twitter';
+}
 
 export type InterfaceSocialLinksPropTypes = {
-  sampleProperty: string;
-  context: 'sampleContext'
-} & InterfaceSocialLinks;
-
-const sampleClasses = cva([styles.baseStyle], {
-  variants: {
-    context: {
-      sampleContext: [styles.sampleContextStyle],
-    },
-  },
-});
+  items: InterfaceSocialLinkItem[];
+};
 
 export const SocialLinks = ({
-  context,
-  sampleProperty,
+  items,
 }: InterfaceSocialLinksPropTypes): React.JSX.Element => (
-  <div
-    className={sampleClasses({
-      context: context ?? undefined,
-    })}
-  >{sampleProperty}</div>
+  <ul
+    className={styles.socialLinks}
+  >
+    {items.map((item, index) => (
+      <li
+        key={index}
+        className={styles.item}
+      >
+        <a
+          target='_blank'
+          href={item.link}
+          className={styles.link}
+        >
+          <span className={styles.text}>{item.text}</span>
+          {item.icon === 'facebook' &&
+            <Facebook />
+          }
+          {item.icon === 'instagram' &&
+            <Instagram />
+          }
+          {item.icon === 'linkedIn' &&
+            <Linkedin />
+          }
+          {item.icon === 'twitter' &&
+            <Twitter />
+          }
+        </a>
+      </li>
+    ))}
+  </ul>
 );

@@ -26,9 +26,34 @@ const meta: Meta<typeof SocialLinks> = {
 
 export default meta;
 
-export const SampleStory: StrictStory = {
+export const AllPlatforms: StrictStory = {
   args: {
-    context: 'sampleContext',
-    sampleProperty: 'some text',
+    items: [
+      {
+        icon: 'linkedIn',
+        link: 'https://www.foo.bar',
+        text: 'Link to social media profile of SAGW',
+      },
+      {
+        icon: 'facebook',
+        link: 'https://www.foo.bar',
+        text: 'Link to social media profile of SAGW',
+      },
+      {
+        icon: 'instagram',
+        link: 'https://www.foo.bar',
+        text: 'Link to social media profile of SAGW',
+      },
+      {
+        icon: 'twitter',
+        link: 'https://www.foo.bar',
+        text: 'Link to social media profile of SAGW',
+      },
+    ],
+  },
+  globals: {
+    backgrounds: {
+      value: 'dark',
+    },
   },
 };
