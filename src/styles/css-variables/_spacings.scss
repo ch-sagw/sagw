@@ -85,8 +85,9 @@
 
   @include mq($from: ultra) {
     --form-elements-between: var(--spacing-2xl);
-    --grid-gutter: 56;
-    --grid-margin: 56;
+
+    // --grid-gutter: 56;
+    // --grid-margin: 56;
     --hero-small: var(--spacing-7xl);
     --hero-big: var(--spacing-7xl);
     --image-top: var(--spacing-3xl);

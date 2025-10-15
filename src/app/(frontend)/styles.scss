@@ -18,12 +18,6 @@ img {
 }
 
 .home {
-  overflow: hidden;
-
-  @media (width > 400px) {
-    padding: 24px;
-  }
-
   .content {
     display: flex;
     flex-direction: column;

@@ -576,16 +576,18 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     const logoName = 'sagw' as keyof typeof Logos;
 
     return (
-      <HeaderLogo
-        ref={logoRef}
-        link={props.logoLink}
+      <div className={styles.logoWrapperInner}>
+        <HeaderLogo
+          ref={logoRef}
+          link={props.logoLink}
 
-        // TODO: define in i18n in code
-        linkText='Back to Homepage'
-        className={styles.logo}
-        name={logoName}
-        colorMode={renderColorMode()}
-      />
+          // TODO: define in i18n in code
+          linkText='Back to Homepage'
+          className={styles.logo}
+          name={logoName}
+          colorMode={renderColorMode()}
+        />
+      </div>
     );
   };
 
