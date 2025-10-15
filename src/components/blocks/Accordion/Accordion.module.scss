@@ -10,7 +10,6 @@
   @include generic-block-padding;
 
   --items-spacing: 0;
-  --background-sticky-cover: var(--background-color);
 
   &:not(.white) {
     @include font-smoothing;

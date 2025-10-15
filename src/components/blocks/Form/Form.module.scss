@@ -7,8 +7,6 @@
   @include block-layout-sticky-title("flex");
   @include generic-block-padding;
 
-  --background-sticky-cover: var(--background-color);
-
   background-color: var(--background-color);
 
   &.dark {

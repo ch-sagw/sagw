@@ -10,6 +10,8 @@
   }
 
   @include mq($from: large) {
+    --heading-alignment-compensation: 5;
+
     column-gap: px-to-rem(var(--grid-gutter));
 
     > h2:first-child,
@@ -19,7 +21,12 @@
       top: px-to-rem(calc(var(--sticky-offset-top) + var(--grid-gutter)));
       bottom: 0;
       align-self: flex-start;
-      background: var(--background-sticky-cover, var(--background-page));
+    }
+
+    // Vertically center the first line of the
+    // headings next to each other
+    h3:nth-child(2) {
+      margin-block-start: px-to-rem(var(--heading-alignment-compensation));
     }
   }
 
@@ -45,8 +52,6 @@
 
   @if $variant == "grid" {
     @include mq($from: large) {
-      --heading-alignment-compensation: 5;
-
       display: grid;
       grid-template-columns:
         [sticky-title] 3fr
@@ -62,12 +67,6 @@
 
       > :not(:first-child) {
         grid-column: content;
-      }
-
-      // Vertically center the first line of the
-      // headings next to each other
-      h3:nth-child(2) {
-        margin-block-start: px-to-rem(var(--heading-alignment-compensation));
       }
     }
 
