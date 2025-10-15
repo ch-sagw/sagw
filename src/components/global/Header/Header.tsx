@@ -190,17 +190,8 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       }
     };
 
-    // Use double RAF to ensure DOM is fully updated
-    const rafId1 = requestAnimationFrame(() => {
-      const rafId2 = requestAnimationFrame(measureHeight);
+    measureHeight();
 
-      return rafId2;
-    });
-
-    // eslint-disable-next-line consistent-return
-    return (): void => {
-      cancelAnimationFrame(rafId1);
-    };
   }, [
     breakpoint,
     props.metanav,
@@ -281,11 +272,13 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
         // from the calculation.
         const totalHeight = (naturalHeight + langOrNavMaxHeight - metanavHeight) / bodyFontSize;
 
+        setHeaderNatualHeight((naturalHeight - metanavHeight) / bodyFontSize);
         setTotalHeaderHeight(totalHeight);
       } else {
         // When not scrolled, metanav is visible. Use full height.
         const totalHeight = (naturalHeight + langOrNavMaxHeight) / bodyFontSize;
 
+        setHeaderNatualHeight(naturalHeight / bodyFontSize);
         setTotalHeaderHeight(totalHeight);
       }
     }
@@ -306,7 +299,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   useEffect(() => {
 
     // 0 would be too brutal
-    setDidScroll(scrollPosition > 50);
+    setDidScroll(scrollPosition > 0);
   }, [scrollPosition]);
 
   // add mouse leave detection to reset hover state when mouse leaves header
