@@ -104,12 +104,14 @@ export default async function HomePage({
         {...headerProps}
       />
 
-      <div className='home'>
-        <RenderBlocks
-          blocks={pageData.content}
-          tenantId={tenant}
-        />
-      </div>
+      <main>
+        <div className='home'>
+          <RenderBlocks
+            blocks={pageData.content}
+            tenantId={tenant}
+          />
+        </div>
+      </main>
     </Fragment>
   );
 }
