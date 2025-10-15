@@ -190,17 +190,8 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       }
     };
 
-    // Use double RAF to ensure DOM is fully updated
-    const rafId1 = requestAnimationFrame(() => {
-      const rafId2 = requestAnimationFrame(measureHeight);
+    measureHeight();
 
-      return rafId2;
-    });
-
-    // eslint-disable-next-line consistent-return
-    return (): void => {
-      cancelAnimationFrame(rafId1);
-    };
   }, [
     breakpoint,
     props.metanav,
