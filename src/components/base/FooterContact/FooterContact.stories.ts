@@ -21,7 +21,7 @@ const meta: Meta<typeof FooterContact> = {
     'visual:check',
     'a11y:check',
   ],
-  title: 'Components/base/FooterContact',
+  title: 'Components/base/Footer/FooterContact',
 };
 
 export default meta;

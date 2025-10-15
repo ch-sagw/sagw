@@ -21,7 +21,7 @@ const meta: Meta<typeof SocialLinks> = {
     'visual:check',
     'a11y:check',
   ],
-  title: 'Components/base/SocialLinks',
+  title: 'Components/base/Footer/SocialLinks',
 };
 
 export default meta;
