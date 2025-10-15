@@ -37,15 +37,11 @@
       > h3:first-child {
         flex: 0 0 33.3333%;
         padding-inline-end: calc(8.3333% + px-to-rem(var(--grid-gutter)));
-
-        // background: lime;
       }
 
       > :not(:first-child) {
         flex: 0 0 66.6666%;
         padding-inline-end: px-to-rem(var(--grid-gutter));
-
-        // background: deeppink;
       }
     }
   }
@@ -65,14 +61,10 @@
       > h3:first-child {
         grid-column: sticky-title;
         grid-row: 1 / span 5;
-
-        // background: lime;
       }
 
       > :not(:first-child) {
         grid-column: content;
-
-        // background: deeppink;
       }
 
       // Vertically center the first line of the
