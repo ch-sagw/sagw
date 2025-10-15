@@ -64,7 +64,6 @@ export const BackgroundWhite: StrictStory = {
     blockType: 'accordionBlock',
     colorMode: 'white',
     title: simpleRteConfig('Accordion title'),
-    titleLevel: '2',
   },
 };
 
@@ -74,7 +73,6 @@ export const BackgroundLight: StrictStory = {
     blockType: 'accordionBlock',
     colorMode: 'light',
     title: simpleRteConfig('Accordion title'),
-    titleLevel: '2',
   },
 };
 
@@ -84,6 +82,5 @@ export const BackgroundDark: StrictStory = {
     blockType: 'accordionBlock',
     colorMode: 'dark',
     title: simpleRteConfig('Accordion title'),
-    titleLevel: '2',
   },
 };
