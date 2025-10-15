@@ -1480,7 +1480,7 @@ export const rte3FullRange: InterfaceRte = {
             format: 0,
             mode: 'normal',
             style: '',
-            text: 'Ein neuer Name für den Preis und drei Preisträgerinnen das Wichtigste der Preisverleihung 2025 auf einen Blick. (h2)',
+            text: 'Ein neuer Name für den Preis und drei Preisträger&shy;innen das Wichtigste der Preisverleihung 2025 auf einen Blick. (h2)',
             type: 'text',
             version: 1,
           },
@@ -1617,34 +1617,6 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
-            children: [
-              {
-                detail: 0,
-                format: 0,
-                mode: 'normal',
-                style: '',
-                text: 'intensiveren Seeverkehrs',
-                type: 'text',
-                version: 1,
-              },
-            ],
-            direction: null,
-            fields: {
-              doc: {
-                label: 'Die Institute der SAGW',
-                relationTo: 'overviewPage',
-                value: '68e8eb5ffc7ff312cb7660d5',
-              },
-              linkType: 'internal',
-              newTab: false,
-            },
-            format: '',
-            id: '68ebf040218df5bfe69ada4e',
-            indent: 0,
-            type: 'link',
-            version: 3,
-          },
-          {
             detail: 0,
             format: 0,
             mode: 'normal',
@@ -1652,10 +1624,8 @@ export const rte3FullRange: InterfaceRte = {
             text: ' wurden die Dampfschiffe zum ',
             type: 'text',
             version: 1,
-
           },
           {
-
             detail: 0,
             format: 4,
             mode: 'normal',
@@ -1663,7 +1633,6 @@ export const rte3FullRange: InterfaceRte = {
             text: 'Schauplatz von ausgeprägten Hierarchien zwischen den Passagieren',
             type: 'text',
             version: 1,
-
           },
           {
             detail: 0,
@@ -1673,7 +1642,6 @@ export const rte3FullRange: InterfaceRte = {
             text: ' aus den Metropolen und den «Boys» aus Übersee. Das kollektive Porträt, das aus dem preisgekrönten Artikel hervorgeht, stellt das stereotype Bild des verweiblichten und unterwürfigen Arbeiters in Frage. Soubrier zeigt, wie durch die Anstellung sowohl Widerstand als auch Mobilität der «Boys» ermöglicht wurden. Die Bemühungen der Reederei, Einwegreisen zwischen Kolonien und Metropolen sowie Desertion, ',
             type: 'text',
             version: 1,
-
           },
           {
             children: [

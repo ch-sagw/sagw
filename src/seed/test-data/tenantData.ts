@@ -3,6 +3,7 @@
 import { Payload } from 'payload';
 
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { rte3FullRange } from '@/utilities/rteSampleContent';
 import { tenantRoles } from '@/collections/Plc/Users/roles';
 
 export const addDataForTenant = async (payload: Payload, tenant: string): Promise<void> => {
@@ -598,11 +599,11 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         // },
         {
           blockType: 'textBlock',
-          text: simpleRteConfig('Sample Rte Block Content 1.'),
+          text: rte3FullRange,
         },
         {
           blockType: 'textBlock',
-          text: simpleRteConfig('Sample Rte Block Content 2.'),
+          text: rte3FullRange,
         },
         // {
         //   accordions: [
