@@ -31,6 +31,7 @@ const fieldsSocialLink: Field[] = [
         value: 'twitter',
       },
     ],
+    required: true,
     type: 'select',
   },
 ];
@@ -45,68 +46,82 @@ export const Footer: CollectionConfig = {
   },
   fields: [
     fieldAdminTitleDefaultValue('Footer'),
-
-    rte1({
-      name: 'legal',
-    }),
-    rte1({
-      name: 'impressum',
-    }),
-    rte1({
-      disableLocalization: true,
-      name: 'copyright',
-    }),
-
     {
-      fields: [
-        rte1({
-          name: 'title',
-        }),
-        rte1({
-          disableLocalization: true,
-          name: 'address1',
-        }),
-        rte1({
-          disableLocalization: true,
-          name: 'address2',
-          notRequired: true,
-        }),
-        rte1({
-          disableLocalization: true,
-          name: 'poBox',
-          notRequired: true,
-        }),
-        rte1({
-          disableLocalization: true,
-          name: 'countryCode',
-        }),
-        rte1({
-          disableLocalization: true,
-          name: 'zipCode',
-        }),
-        rte1({
-          name: 'city',
-        }),
-        rte1({
-          disableLocalization: true,
-          name: 'phone',
-          notRequired: true,
-        }),
-        rte1({
-          disableLocalization: true,
-          name: 'mail',
-          notRequired: true,
-        }),
+      tabs: [
+        {
+          fields: [
+            rte1({
+              name: 'legal',
+            }),
+            rte1({
+              name: 'impressum',
+            }),
+            rte1({
+              disableLocalization: true,
+              name: 'copyright',
+            }),
+          ],
+          interfaceName: 'InterfaceFooterLegel',
+          name: 'legalLinks',
+        },
+        {
+          fields: [
+            rte1({
+              name: 'title',
+            }),
+            rte1({
+              disableLocalization: true,
+              name: 'address1',
+            }),
+            rte1({
+              disableLocalization: true,
+              name: 'address2',
+              notRequired: true,
+            }),
+            rte1({
+              disableLocalization: true,
+              name: 'poBox',
+              notRequired: true,
+            }),
+            rte1({
+              disableLocalization: true,
+              name: 'countryCode',
+            }),
+            rte1({
+              disableLocalization: true,
+              name: 'zipCode',
+            }),
+            rte1({
+              name: 'city',
+            }),
+            rte1({
+              disableLocalization: true,
+              name: 'phone',
+              notRequired: true,
+            }),
+            rte1({
+              disableLocalization: true,
+              name: 'mail',
+              notRequired: true,
+            }),
+          ],
+          interfaceName: 'InterfaceFooterContact',
+          name: 'contact',
+        },
+        {
+          fields: [
+            {
+              fields: fieldsSocialLink,
+              name: 'socialLinks',
+              required: false,
+              type: 'array',
+            },
+          ],
+          interfaceName: 'InterfaceFooterSocialLinks',
+          name: 'socialLinks',
+        },
       ],
-      label: 'Kontakt',
-      name: 'contact',
-      type: 'group',
-    },
-    {
-      fields: fieldsSocialLink,
-      name: 'socialLinks',
-      required: false,
-      type: 'array',
+      type: 'tabs',
     },
   ],
   labels: {
