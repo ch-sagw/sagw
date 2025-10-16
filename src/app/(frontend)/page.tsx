@@ -6,6 +6,7 @@ import { Config } from '@/payload-types';
 import { RenderBlocks } from '@/app/(frontend)/RenderBlocks';
 import { getTenant } from '@/app/providers/TenantProvider.server';
 import { Header } from '@/components/global/Header/Header';
+import { Footer } from '@/components/global/Footer/Footer';
 import { ColorMode } from '@/components/base/types/colorMode';
 
 // TODO: properly invalidate cache via afterChange hook on collection level
@@ -55,12 +56,29 @@ export default async function HomePage({
     },
   });
 
+  const footerData = await payload.find({
+    collection: 'footer',
+    depth: 1,
+    limit: 1,
+    locale: lang,
+    overrideAccess: false,
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
   if (!pagesData.docs || pagesData.docs.length < 1) {
     return <p>No pages data</p>;
   }
 
   if (!headerData.docs || headerData.docs.length < 1) {
     return <p>No header data </p>;
+  }
+
+  if (!footerData.docs || footerData.docs.length < 1) {
+    return <p>No footer data </p>;
   }
 
   const [pageData] = pagesData.docs;
@@ -83,6 +101,18 @@ export default async function HomePage({
     return <p>No metanav data in header data</p>;
   }
 
+  const footerContactData = footerData.docs[0].contact;
+
+  if (!footerContactData.title || !footerContactData.address1 || !footerContactData.countryCode || !footerContactData.zipCode || !footerContactData.city) {
+    return <p>Footer Contact data incomplete</p>;
+  }
+
+  const footerLegalData = footerData.docs[0].legal;
+
+  if (!footerLegalData.dataPrivacy || !footerLegalData.impressum || !footerLegalData.copyright) {
+    return <p>Footer Legal data incomplete</p>;
+  }
+
   const colorMode: ColorMode = 'dark';
 
   const headerProps = {
@@ -98,6 +128,20 @@ export default async function HomePage({
     navigation: navData,
   };
 
+  const footerProps = {
+    contact: footerContactData,
+    legal: footerLegalData,
+    metaNav: metanavData,
+    navigation: navData,
+    socialLinks: footerData.docs[0].socialLinks,
+
+    // TODO
+    structuredDataImage: 'https://www.sagw.ch/logo.svg',
+
+    // TODO
+    structuredDataUrl: 'https://www.sagw.ch',
+  };
+
   return (
     <Fragment>
       <Header
@@ -110,6 +154,10 @@ export default async function HomePage({
           tenantId={tenant}
         />
       </div>
+
+      <Footer
+        {...footerProps}
+      />
     </Fragment>
   );
 }

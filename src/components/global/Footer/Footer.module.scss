@@ -3,6 +3,7 @@
 @use "../../../styles/utilities/mediaqueries" as *;
 
 .footer {
+  background-color: var(--background-inverted);
   padding-block: px-to-rem(var(--spacing-4xl));
   padding-inline: px-to-rem(var(--spacing-l));
 

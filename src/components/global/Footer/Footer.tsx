@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/global/Footer/Footer.module.scss';
@@ -30,7 +32,7 @@ export type InterfaceFooterPropTypes = {
   legal: InterfaceFooterLegal;
   metaNav: InterfaceHeaderMetaNavigation;
   navigation: InterfaceHeaderNavigation;
-  socialLinks: InterfaceFooterSocialLinks;
+  socialLinks?: InterfaceFooterSocialLinks;
   structuredDataImage: string;
   structuredDataUrl: string;
   fg?: {
@@ -125,7 +127,7 @@ export const Footer = ({
   };
 
   const socialLinkProps: InterfaceSocialLinksPropTypes = {
-    items: socialLinks.items
+    items: socialLinks?.items
       ? socialLinks.items?.map((item) => ({
         icon: item.icon,
         link: item.externalLink,
