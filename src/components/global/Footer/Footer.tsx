@@ -1,4 +1,5 @@
 import React from 'react';
+import { cva } from 'cva';
 import styles from '@/components/global/Footer/Footer.module.scss';
 
 import {
@@ -48,6 +49,15 @@ export const Footer = ({
   structuredDataUrl,
   fg,
 }: InterfaceFooterPropTypes): React.JSX.Element => {
+  const footerClasses = cva([styles.footer], {
+    variants: {
+      fg: {
+        false: undefined,
+        true: [styles.fg],
+      },
+    },
+  });
+
   const contactProps = {
     address1: {
       plain: rte1ToPlaintext(contact.address1),
@@ -158,7 +168,9 @@ export const Footer = ({
 
   return (
     <footer
-      className={styles.footer}
+      className={footerClasses({
+        fg: Boolean(fg),
+      })}
     >
       <div className={styles.navWrapper}>
         <FooterContact
@@ -172,7 +184,7 @@ export const Footer = ({
         />
       </div>
 
-      <div className={styles.metaContent}>
+      <div className={styles.meta}>
         {fg &&
           <FooterLogo
             {...logoProps}
@@ -187,9 +199,7 @@ export const Footer = ({
           {...metanavProps}
           className={styles.metanav}
         />
-      </div>
 
-      <div className={styles.additionalContent}>
         <SafeHtml
           as='p'
           className={styles.copyright}
