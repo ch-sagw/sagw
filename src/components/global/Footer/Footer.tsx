@@ -140,7 +140,7 @@ export const Footer = ({
     colorMode: 'dark',
     footer: true,
     sections: navigation.navItems
-      .filter((navItem) => navItem.subNavItems)
+      .filter((navItem) => navItem.subNavItems && navItem.subNavItems.length > 0)
       .map((navItem, index) => ({
         colorMode: 'dark',
         expandableId: `expandable-id-${index}`,

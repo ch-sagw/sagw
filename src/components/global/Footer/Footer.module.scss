@@ -27,6 +27,11 @@
     @include mq($from: wide) {
       padding-block-end: px-to-rem(var(--spacing-4xl));
       margin-block-end: px-to-rem(var(--spacing-2xl));
+      row-gap: px-to-rem(var(--spacing-2xl));
+    }
+
+    @include mq($from: ultra) {
+      column-gap: px-to-rem(var(--spacing-6xl));
     }
 
     .contact {
