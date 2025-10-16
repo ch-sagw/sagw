@@ -27,10 +27,27 @@ const meta: Meta<typeof Rte> = {
 
 export default meta;
 
-export const RteStory: StrictStory = {
+export const RteWhite: StrictStory = {
   args: {
     colorMode: 'white',
     stickyFirstTitle: true,
     text: rte3FullRange,
   },
 };
+
+export const RteLight: StrictStory = {
+  args: {
+    colorMode: 'light',
+    stickyFirstTitle: true,
+    text: rte3FullRange,
+  },
+};
+
+export const RteDark: StrictStory = {
+  args: {
+    colorMode: 'dark',
+    stickyFirstTitle: true,
+    text: rte3FullRange,
+  },
+};
+
