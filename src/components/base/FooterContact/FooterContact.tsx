@@ -26,6 +26,7 @@ export type InterfaceFooterContactPropTypes = {
   poBox?: string;
   phone?: string;
   mail?: string;
+  className?: string;
 };
 
 const constructStructuredData = ({
@@ -82,10 +83,11 @@ export const FooterContact = (props: InterfaceFooterContactPropTypes): React.JSX
     poBox,
     phone,
     mail,
+    className,
   } = props;
 
   return (
-    <footer className={styles.footer}>
+    <div className={`${styles.footer} ${className}`}>
       <script
         type='application/ld+json'
         dangerouslySetInnerHTML={{
@@ -139,6 +141,6 @@ export const FooterContact = (props: InterfaceFooterContactPropTypes): React.JSX
           }
         </p>
       </div>
-    </footer>
+    </div>
   );
 };

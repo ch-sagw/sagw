@@ -31,4 +31,8 @@
   .item {
     flex: 1 1 0;
   }
+
+  @include mq($from: large) {
+    justify-content: space-between;
+  }
 }

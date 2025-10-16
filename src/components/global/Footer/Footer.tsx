@@ -127,30 +127,23 @@ export const Footer = ({
   const navigationProps: InterfaceNavigationPropTypes = {
     colorMode: 'dark',
     footer: true,
-    sections: navigation.navItems.map((navItem, index) => {
-      if (!navItem.subNavItems) {
-        return {
-          colorMode: 'dark',
-          footer: true,
-          link: navItem.navItemLink || '',
-          text: rteToHtml(navItem.navItemText),
-        };
-      }
-
-      return {
+    sections: navigation.navItems
+      .filter((navItem) => navItem.subNavItems)
+      .map((navItem, index) => ({
         colorMode: 'dark',
         expandableId: `expandable-id-${index}`,
         footer: true,
-        items: navItem.subNavItems.map((subnavItem) => ({
-          colorMode: 'dark',
-          footer: false,
-          link: subnavItem.navItemLink || '',
-          text: rteToHtml(subnavItem.navItemText),
-        })),
+        items: navItem.subNavItems
+          ? navItem.subNavItems.map((subnavItem) => ({
+            colorMode: 'dark',
+            footer: false,
+            link: subnavItem.navItemLink || '',
+            text: rteToHtml(subnavItem.navItemText),
+          }))
+          : [],
         setExpanded: undefined,
         text: rteToHtml(navItem.navItemText) || '',
-      };
-    }),
+      })),
   };
 
   const logoProps = {
@@ -164,25 +157,51 @@ export const Footer = ({
   }
 
   return (
-    <div
+    <footer
       className={styles.footer}
     >
-      <FooterContact {...contactProps} />
-      <Metanav {...metanavProps} />
-      <Metanav {...legalProps} />
+      <div className={styles.navWrapper}>
+        <FooterContact
+          {...contactProps}
+          className={styles.contact}
+        />
 
-      <SafeHtml
-        as='p'
-        html={rteToHtml(legal.copyright)}
-      />
+        <Navigation
+          {...navigationProps}
+          className={styles.navigation}
+        />
+      </div>
 
-      <SocialLinks {...socialLinkProps} />
+      <div className={styles.metaContent}>
+        {fg &&
+          <FooterLogo
+            {...logoProps}
+            className={styles.footerLogo}
+          />
+        }
+        <Metanav
+          {...legalProps}
+          className={styles.legal}
+        />
+        <Metanav
+          {...metanavProps}
+          className={styles.metanav}
+        />
+      </div>
 
-      <Navigation {...navigationProps} />
+      <div className={styles.additionalContent}>
+        <SafeHtml
+          as='p'
+          className={styles.copyright}
+          html={rteToHtml(legal.copyright)}
+        />
 
-      {fg &&
-        <FooterLogo {...logoProps} />
-      }
-    </div>
+        <SocialLinks
+          {...socialLinkProps}
+          className={styles.socialLinks}
+        />
+      </div>
+
+    </footer>
   );
 };

@@ -13,13 +13,15 @@ interface InterfaceSocialLinkItem {
 
 export type InterfaceSocialLinksPropTypes = {
   items: InterfaceSocialLinkItem[];
+  className?: string;
 };
 
 export const SocialLinks = ({
   items,
+  className,
 }: InterfaceSocialLinksPropTypes): React.JSX.Element => (
   <ul
-    className={styles.socialLinks}
+    className={`${styles.socialLinks} ${className}`}
   >
     {items.map((item, index) => (
       <li

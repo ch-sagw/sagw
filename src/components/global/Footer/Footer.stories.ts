@@ -3,7 +3,7 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import { Footer } from '@/components/global/Footer/Footer';
-import { defaultDecorator } from '@/storybook-helpers';
+import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import {
   defaultMetaNavItems, defaultNavItems,
 } from '@/components/global/Header/Header.sampleData';
@@ -19,13 +19,15 @@ type StrictStory = StoryObj<typeof Footer> & {
 const meta: Meta<typeof Footer> = {
   args: {},
   component: Footer,
-  decorators: [defaultDecorator],
+  decorators: [defaultDecoratorNoPadding],
   globals: {
     backgrounds: {
       value: 'dark',
     },
   },
-  parameters: {/* layout: 'centered', */ },
+  parameters: {
+    layout: 'fullscreen',
+  },
   tags: [
     'autodocs',
     'visual:check',

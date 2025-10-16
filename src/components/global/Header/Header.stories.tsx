@@ -22,7 +22,9 @@ const meta: Meta<typeof Header> = {
   args: {},
   component: Header,
   decorators: [defaultDecoratorNoPadding],
-  parameters: {/* layout: 'centered', */ },
+  parameters: {
+    layout: 'fullscreen',
+  },
   tags: [
     'autodocs',
     'visual:check',
@@ -84,9 +86,6 @@ export const HeaderLight: StrictStory = {
     ...defaultArgs,
     colorMode: 'light',
   },
-  parameters: {
-    layout: 'fullscreen',
-  },
   render: (args) => render(args),
 };
 
@@ -94,9 +93,6 @@ export const HeaderWhite: StrictStory = {
   args: {
     ...defaultArgs,
     colorMode: 'white',
-  },
-  parameters: {
-    layout: 'fullscreen',
   },
   render: (args) => render(args),
 };
@@ -107,9 +103,6 @@ export const HeaderWithoutMetanav: StrictStory = {
     metanav: {
       metaLinks: [],
     },
-  },
-  parameters: {
-    layout: 'fullscreen',
   },
   render: (args) => render(args),
 };
