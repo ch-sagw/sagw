@@ -1,56 +1,144 @@
 import React from 'react';
-import { cva } from 'cva';
 import styles from '@/components/base/FooterContact/FooterContact.module.scss';
-import { InterfaceFooterContact } from '@/payload-types';
+import type {
+  Organization, WithContext,
+} from 'schema-dts';
+import { SafeHtml } from '../SafeHtml/SafeHtml';
 
 export type InterfaceFooterContactPropTypes = {
-  context: 'sampleContext'
-} & InterfaceFooterContact;
+  title: {
+    plain: string;
+    rte: string;
+  };
+  address1: {
+    plain: string;
+    rte: string;
+  };
+  countryCode: string;
+  zip: string;
+  city: string;
+  url: string;
+  imageUrl: string;
+  address2?: {
+    plain: string;
+    rte: string;
+  };
+  poBox?: string;
+  phone?: string;
+  mail?: string;
+};
 
-const sampleClasses = cva([styles.baseStyle], {
-  variants: {
-    context: {
-      sampleContext: [styles.sampleContextStyle],
+const constructStructuredData = ({
+  title,
+  address1,
+  countryCode,
+  zip,
+  city,
+  url,
+  imageUrl,
+  address2,
+  poBox,
+  phone,
+  mail,
+}: InterfaceFooterContactPropTypes): WithContext<Organization> => {
+  let streetAddress = address1.plain;
+
+  if (address2?.plain) {
+    streetAddress += `, ${address2.plain}`;
+  }
+
+  if (poBox) {
+    streetAddress += `, ${poBox}`;
+  }
+
+  const data: WithContext<Organization> = {
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    'address': {
+      '@type': 'PostalAddress',
+      'addressCountry': countryCode,
+      'addressLocality': city,
+      'postalCode': zip,
+      streetAddress,
     },
-  },
-});
+    'email': mail ?? undefined,
+    'image': imageUrl,
+    'name': title.plain,
+    'telephone': phone || undefined,
+    url,
+  };
 
-export const FooterContact = ({
-  context,
-}: InterfaceFooterContactPropTypes): React.JSX.Element => (
-  <div
-    className={sampleClasses({
-      context: context ?? undefined,
-    })}
-    itemScope
-    itemType='https://schema.org/Organization'
-  >
-    {/* Name */}
-    <span itemProp='name'>
-      SAGW Schweizerische Akademie der Geistes- und Sozialwissenschaften
-    </span>
+  return data;
+};
 
-    {/* Address */}
-    <div itemProp='address' itemScope itemType='https://schema.org/PostalAddress'>
-      <span itemProp='streetAddress'>
-        Haus der Akademien<br />
-        Laupenstrasse 7<br />
-        Postfach
-      </span>
-      <span itemProp='postalCode'>3001</span>
-      <span itemProp='addressLocality'>Bern</span>
-      <span itemProp='addressCountry'>CH</span>
-    </div>
+export const FooterContact = (props: InterfaceFooterContactPropTypes): React.JSX.Element => {
+  const {
+    title,
+    address1,
+    countryCode,
+    zip,
+    city,
+    address2,
+    poBox,
+    phone,
+    mail,
+  } = props;
 
-    {/* Phone */}
-    <span itemProp='telephone'>+41 31 306 92 50</span>
+  return (
+    <footer className={styles.footer}>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          /* eslint-disable @typescript-eslint/naming-convention */
+          __html: JSON.stringify(constructStructuredData(props)),
+          /* eslint-enmdisable @typescript-eslint/naming-convention */
+        }}
+      />
+      <div
+        className={styles.content}
+      >
+        {/* Name */}
+        <SafeHtml
+          as='p'
+          className={styles.title}
+          html={title.rte}
+        />
 
-    {/* Mail */}
-    <span itemProp='email'>sagw@sagw.ch</span>
+        {/* Address */}
+        <p className={styles.address}>
+          <SafeHtml
+            as='span'
+            html={address1.rte}
+          />
 
-    {/* Logo */}
-    <span itemProp='image' content='https://sagw.ch/logo.svg' style={{
-      display: 'none',
-    }}>SAGW Logo</span>
-  </div>
-);
+          {address2 &&
+            <SafeHtml
+              as='span'
+              html={address2.rte}
+            />
+          }
+
+          {poBox &&
+            <span>{poBox}</span>
+          }
+
+          <SafeHtml
+            as='span'
+            html={`${countryCode}-${zip} ${city}`}
+          />
+        </p>
+
+        {/* Contact */}
+        <p className={styles.contact}>
+          {phone &&
+            <a href={`tel:${phone}`}>{phone}</a>
+          }
+
+          {mail &&
+            <a href={`mailto:${mail}`}>{mail}</a>
+          }
+        </p>
+      </div>
+    </footer>
+  );
+};
