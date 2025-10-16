@@ -1,0 +1,142 @@
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+
+.radios {
+  --radio-dimensions: 22;
+  --circle-dimensions: 16;
+  --label-gap: 20;
+
+  @include body-text-s;
+
+  appearance: none;
+  border: none;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+
+  @include mq($from: medium) {
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    column-gap: px-to-rem(var(--spacing-xl));
+  }
+
+  &.white,
+  &.light {
+    --label-color: var(--text-secondary);
+    --label-color-checked: var(--text-primary);
+    --radio-color: var(--icon-primary);
+    --radio-color-checked: var(--icon-primary);
+    --color-error: var(--text-error);
+    --color-text: var(--text-primary);
+  }
+
+  &.dark {
+    --label-color: var(--text-secondary-inverted);
+    --label-color-checked: var(--text-primary-inverted);
+    --radio-color: var(--icon-secondary-inverted);
+    --radio-color-checked: var(--icon-primary-inverted);
+    --color-error: var(--text-error-inverted);
+    --color-text: var(--text-primary-inverted);
+  }
+
+  .descriptionLabel {
+    width: 100%;
+    color: var(--color-text);
+    padding: px-to-rem(var(--spacing-s)) 0;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .radio {
+    display: flex;
+    align-items: center;
+
+    .input {
+      appearance: none;
+      position: absolute;
+      outline: none;
+
+      &:focus-visible ~ .label {
+        @include focus-visible;
+
+        outline-offset: px-to-rem(calc(var(--spacing-2xs) / 2));
+        outline-color: var(--label-color);
+      }
+    }
+
+    .label {
+      display: block;
+      position: relative;
+      flex: 1;
+      color: var(--label-color);
+      user-select: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      padding-block: px-to-rem(calc(var(--spacing-m) / 2));
+      padding-inline-start: px-to-rem(calc(var(--radio-dimensions) + var(--label-gap)));
+      line-height: px-to-rem(var(--radio-dimensions));
+      transition: color var(--motion-speed-fast) var(--motion-ease-in-out);
+
+      @include reduced-motion {
+        transition: none;
+      }
+
+      &:before {
+        content: "";
+        position: absolute;
+        inset-block-start: calc(50% - px-to-rem(var(--radio-dimensions)) / 2);
+        inset-inline-start: 0;
+        width: px-to-rem(var(--radio-dimensions));
+        height: px-to-rem(var(--radio-dimensions));
+        border: px-to-rem(var(--border-width-l)) solid var(--radio-color);
+        border-radius: 100%;
+        transition: border-color var(--motion-speed-fast) var(--motion-ease-in-out);
+
+        @include reduced-motion {
+          transition: none;
+        }
+      }
+
+      &:after {
+        $circleGap: calc((var(--radio-dimensions) - var(--circle-dimensions)) / 2 + var(--border-width-l));
+
+        content: "";
+        position: absolute;
+        inset-block-start: calc(50% - px-to-rem(var(--radio-dimensions)) / 2 + px-to-rem($circleGap));
+        inset-inline-start: px-to-rem($circleGap);
+        width: px-to-rem(calc(var(--radio-dimensions) - 2 * $circleGap));
+        height: px-to-rem(calc(var(--radio-dimensions) - 2 * $circleGap));
+        background-color: transparent;
+        border-radius: 100%;
+        transition: background-color var(--motion-speed-fast) var(--motion-ease-in-out);
+
+        @include reduced-motion {
+          transition: none;
+        }
+      }
+    }
+
+    .input:checked ~ .label {
+      color: var(--label-color-checked);
+
+      &:before {
+        border-color: var(--radio-color-checked);
+      }
+
+      &:after {
+        background-color: var(--radio-color-checked);
+
+        @include forced-colors {
+          background-color: CanvasText;
+        }
+      }
+    }
+  }
+}

@@ -96,6 +96,26 @@ const defaultFormConfig: FormProps = {
         placeholder: 'Ihr Kommentar',
         required: true,
       },
+      {
+        blockType: 'radioBlock',
+        fieldError: simpleRteConfig('Du musst eine Auswahl teffen'),
+        fieldWidth: 'full',
+        id: '65c6e2b6833c54485eb1b84csd',
+        items: [
+          {
+            label: simpleRteConfig('Deutsch'),
+            value: 'deutsch',
+          },
+          {
+            defaultChecked: true,
+            label: simpleRteConfig('Französisch'),
+            value: 'french',
+          },
+        ],
+        label: simpleRteConfig('In welcher Sprache möchten sie den Newsletter erhalten?'),
+        name: 'newsletterlanguage',
+        required: true,
+      },
     ],
     id: '68c6e2b6ec3710c8de69135e',
     isNewsletterForm: 'custom',
@@ -164,6 +184,11 @@ export const FormWhite: StrictStory = {
       colorMode: 'white',
     },
   },
+  globals: {
+    backgrounds: {
+      value: 'white',
+    },
+  },
 };
 
 export const FormLight: StrictStory = {
@@ -172,6 +197,11 @@ export const FormLight: StrictStory = {
     form: {
       ...(defaultFormConfig.form as Exclude<FormProps['form'], string | null | undefined>),
       colorMode: 'light',
+    },
+  },
+  globals: {
+    backgrounds: {
+      value: 'light',
     },
   },
 };
@@ -199,6 +229,7 @@ export const FieldErrors: StrictStory = {
       email: ['Error on email'],
       field1: ['Error on text field 1'],
       field2: ['Error on text field 2'],
+      newsletterlanguage: ['Error on radios'],
       textarea: ['Error on textarea'],
     },
   },

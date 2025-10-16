@@ -117,11 +117,27 @@
     }
   }
 
+  .metanavWrapper {
+    @include expandable-wrapper-visible;
+
+    &.metanavHidden {
+      @include expandable-wrapper;
+    }
+
+    &:not(.metanavHidden) {
+      @include mq($from: large) {
+        margin-block-end: px-to-rem(var(--spacing-l));
+      }
+    }
+  }
+
   .metanav {
+    @include expandable-content;
+
     margin-block-end: px-to-rem(var(--spacing-2xl));
 
     @include mq($from: large) {
-      margin-block-end: px-to-rem(var(--spacing-l));
+      margin-block-end: 0;
     }
   }
 
@@ -134,5 +150,9 @@
     @include mq($from: wide) {
       width: px-to-rem(400);
     }
+  }
+
+  .metanavWrapper.metanavHidden ~ .infoBlock {
+    inset-block-start: px-to-rem(155);
   }
 }

@@ -199,6 +199,24 @@ export const Forms: CollectionConfig = {
           required: true,
           type: 'text',
         },
+        {
+          admin: {
+            description: 'If enabled, we show a language selection for Germand and French.',
+          },
+          defaultValue: 'no',
+          name: 'includeLanguageSelection',
+          options: [
+            {
+              label: 'No',
+              value: 'no',
+            },
+            {
+              label: 'Yes',
+              value: 'yes',
+            },
+          ],
+          type: 'radio',
+        },
       ],
       name: 'newsletterFields',
       type: 'group',
