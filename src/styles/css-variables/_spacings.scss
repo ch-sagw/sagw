@@ -71,6 +71,7 @@
     --hero-big: var(--spacing-5xl);
     --image-top: var(--spacing-2xl);
     --image-bottom: var(--spacing-2xl);
+    --inside-elements-s: var(--spacing-m);
     --inside-elements-l: var(--spacing-xl);
     --section-top: var(--spacing-4xl);
     --section-bottom: var(--spacing-5xl);
@@ -80,12 +81,11 @@
     --teaser-between-m: var(--spacing-4xl);
     --text-block-top: var(--spacing-4xl);
     --text-block-bottom: var(--spacing-4xl);
+    --sticky-offset-top: 124;
   }
 
   @include mq($from: ultra) {
     --form-elements-between: var(--spacing-2xl);
-    --grid-gutter: 56;
-    --grid-margin: 56;
     --hero-small: var(--spacing-7xl);
     --hero-big: var(--spacing-7xl);
     --image-top: var(--spacing-3xl);
