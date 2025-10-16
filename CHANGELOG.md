@@ -1,5 +1,51 @@
 # Changelog
 
+## [0.17.0](https://github.com/ch-sagw/sagw/compare/v0.16.1...v0.17.0) (2025-10-16)
+
+
+### Chore
+
+* remove unneccessary raf ([f7603cd](https://github.com/ch-sagw/sagw/commit/f7603cdebbb2d3cb0be0d57791c1aa4cb3ae2f00))
+
+
+### Features
+
+* **be:** add radios to form component ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **be:** handle default checked for radio ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **be:** handle radio in submit form server action ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* changing notification to rte2 and adding styling and example content ([767c98e](https://github.com/ch-sagw/sagw/commit/767c98e7c5c2f5c75d31093db60b3590266e0f90))
+* **fe:** add form error component ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **fe:** add radio component ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **fe:** header, animate info block ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* **fe:** header, collapse header when hovering over level1 without children ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* **fe:** header, collapse metanav on scroll ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* **payload:** add config for radio buttons in form collection/blocks ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **payload:** derive radio value from label ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **payload:** implement default checked for checkbox ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **payload:** include language selection in newsletter form ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+
+
+### Bug Fixes
+
+* **fe:** header, make sure header height calculation works when changing viewports ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* **fe:** header, make sure langNav infoBlock disappears on blur ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* **fe:** header, various issues, prevent flickering after window blur/focus ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* fix scroll-lock on breakpoint change ([2bffb4a](https://github.com/ch-sagw/sagw/commit/2bffb4a88679bb7e87396d7e95295effe54fb0f3))
+* implement pr feedback ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **payload:** remove accordion title level ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* small issue about natural header height ([ac2d542](https://github.com/ch-sagw/sagw/commit/ac2d542bba27cc4151d91c5ca0194a46d5215514))
+
+
+### Style
+
+* use same font size base in globals and layout ([2bffb4a](https://github.com/ch-sagw/sagw/commit/2bffb4a88679bb7e87396d7e95295effe54fb0f3))
+
+
+### Test
+
+* add tests for infoblock ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* add tests for radio in forms ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+
 ## [0.16.1](https://github.com/ch-sagw/sagw/compare/v0.16.0...v0.16.1) (2025-10-10)
 
 
