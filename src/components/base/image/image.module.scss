@@ -1,7 +1,18 @@
-.baseStyle {
-  text-decoration: underline;
+.hero,
+.content,
+.contentFull {
+  aspect-ratio: 16 / 9;
 }
 
-.sampleContextStyle {
-  border: 1px solid black;
+.genericTeaser {
+  aspect-ratio: 4 / 3;
+}
+
+.portrait,
+.portraitCta {
+  aspect-ratio: 1 / 1;
+}
+
+.publicationTeaser {
+  aspect-ratio: 12 / 17;
 }
