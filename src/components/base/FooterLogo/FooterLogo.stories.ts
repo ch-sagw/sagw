@@ -29,7 +29,7 @@ export default meta;
 export const Logo: StrictStory = {
   args: {
     link: '/',
-    linkText: 'Back to Homepage',
+    linkText: 'Go to sagw.ch',
   },
   globals: {
     backgrounds: {

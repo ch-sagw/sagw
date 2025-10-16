@@ -3976,7 +3976,7 @@ export interface Footer {
   id: string;
   tenant?: (string | null) | Tenant;
   adminTitle?: string | null;
-  legalLinks: InterfaceFooterLegel;
+  legal: InterfaceFooterLegal;
   contact: InterfaceFooterContact;
   socialLinks?: InterfaceFooterSocialLinks;
   updatedAt: string;
@@ -3985,10 +3985,10 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceFooterLegel".
+ * via the `definition` "InterfaceFooterLegal".
  */
-export interface InterfaceFooterLegel {
-  legal: {
+export interface InterfaceFooterLegal {
+  dataPrivacy: {
     root: {
       type: string;
       children: {
@@ -4180,7 +4180,7 @@ export interface InterfaceFooterContact {
  * via the `definition` "InterfaceFooterSocialLinks".
  */
 export interface InterfaceFooterSocialLinks {
-  socialLinks?:
+  items?:
     | {
         description?: {
           root: {
@@ -6223,7 +6223,7 @@ export interface ConsentSelect<T extends boolean = true> {
 export interface FooterSelect<T extends boolean = true> {
   tenant?: T;
   adminTitle?: T;
-  legalLinks?: T | InterfaceFooterLegelSelect<T>;
+  legal?: T | InterfaceFooterLegalSelect<T>;
   contact?: T | InterfaceFooterContactSelect<T>;
   socialLinks?: T | InterfaceFooterSocialLinksSelect<T>;
   updatedAt?: T;
@@ -6232,10 +6232,10 @@ export interface FooterSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceFooterLegel_select".
+ * via the `definition` "InterfaceFooterLegal_select".
  */
-export interface InterfaceFooterLegelSelect<T extends boolean = true> {
-  legal?: T;
+export interface InterfaceFooterLegalSelect<T extends boolean = true> {
+  dataPrivacy?: T;
   impressum?: T;
   copyright?: T;
 }
@@ -6259,7 +6259,7 @@ export interface InterfaceFooterContactSelect<T extends boolean = true> {
  * via the `definition` "InterfaceFooterSocialLinks_select".
  */
 export interface InterfaceFooterSocialLinksSelect<T extends boolean = true> {
-  socialLinks?:
+  items?:
     | T
     | {
         description?: T;

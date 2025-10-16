@@ -51,7 +51,7 @@ export const Footer: CollectionConfig = {
         {
           fields: [
             rte1({
-              name: 'legal',
+              name: 'dataPrivacy',
             }),
             rte1({
               name: 'impressum',
@@ -61,8 +61,8 @@ export const Footer: CollectionConfig = {
               name: 'copyright',
             }),
           ],
-          interfaceName: 'InterfaceFooterLegel',
-          name: 'legalLinks',
+          interfaceName: 'InterfaceFooterLegal',
+          name: 'legal',
         },
         {
           fields: [
@@ -112,7 +112,7 @@ export const Footer: CollectionConfig = {
           fields: [
             {
               fields: fieldsSocialLink,
-              name: 'socialLinks',
+              name: 'items',
               required: false,
               type: 'array',
             },
