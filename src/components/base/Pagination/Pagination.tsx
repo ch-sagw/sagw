@@ -28,11 +28,11 @@ export const Pagination = ({
   const maxNumberOfButtons: Record<typeof bp, number> = {
     zero: 4,
     micro: 4,
-    small: 5,
-    medium: 7,
-    large: 9,
-    wide: 9,
-    ultra: 9,
+    small: 4,
+    medium: 6,
+    large: 5,
+    wide: 7,
+    ultra: 7,
   };
 
   const maxButtons = maxNumberOfButtons[bp];
