@@ -3,6 +3,7 @@ import { cva } from 'cva';
 import styles from '@/components/blocks/News/News.module.scss';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
+import { Pagination } from '@/components/base/Pagination/Pagination';
 
 interface InterfaceNewsItem {
   title: string;
@@ -24,10 +25,19 @@ interface InterfaceNewsTeaserPropTypes {
   }
 }
 
+interface InterfaceNewsOverviewPropTypes {
+  pagination: {
+    totalPages: number;
+    currentPage: number;
+    paginationTitle: string;
+  }
+}
+
 export type InterfaceNewsPropTypes =
-  | (InterfaceNewsBasePropTypes & {
-    type: 'overview';
-  })
+  | (InterfaceNewsBasePropTypes &
+    InterfaceNewsOverviewPropTypes & {
+      type: 'overview';
+    })
   | (InterfaceNewsBasePropTypes &
     InterfaceNewsTeaserPropTypes & {
       type: 'teaser';
@@ -96,6 +106,14 @@ export const News = (props: InterfaceNewsPropTypes): React.JSX.Element => {
           className={styles.allLink}
           text={props.allLink.text}
           iconInlineStart={'arrowRight' as keyof typeof Icon}
+        />
+      }
+
+      {type === 'overview' &&
+        <Pagination
+          totalPages={props.pagination.totalPages}
+          currentPage={props.pagination.currentPage}
+          paginationTitle={props.pagination.paginationTitle}
         />
       }
     </section>
