@@ -86,3 +86,16 @@
   padding-inline: px-to-rem(var(--grid-margin));
   padding-block-end: px-to-rem(var(--text-block-bottom));
 }
+
+@mixin generic-block-top-line {
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    inset-block-start: 0;
+    height: px-to-rem(var(--border-width-l));
+    inset-inline: px-to-rem(var(--grid-margin));
+    background-color: var(--border-primary);
+  }
+}
