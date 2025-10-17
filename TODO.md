@@ -33,9 +33,7 @@ Payload:
 - implement draft preview: https://payloadcms.com/docs/admin/preview#draft-preview
 - implement document locking: https://payloadcms.com/docs/admin/locked-documents
 - implement resend
-- for formfields: name field should have a custom validation regex (lowercase, no spaces, only dashes)
 - Header -> Navigation -> fine-grain "required": on level 1, linkTarget is not required, on level 2 it is. If level 1 has no sub-nav items, linkTarget is required.
-- BUG: with empty database or with initial seed: go to home, add downloads block, click document dropdown -> "Es ist ein fehler aufgetreten". SAME FOR IMAGE.
 
 Vercel:
 --------
@@ -53,10 +51,6 @@ Payload Config:
 - care about redirects: check redirects-plugin and decide if we use it or create our own
 - limit blocks on all pages
 - add admin ui images for blocks: generic teaser, footnotes
-
-Multitenant: (working with seed data)
---------
-- issue: on autologin, tenant-cookie is not set after login -> create github issue
 
 Misc:
 --------
