@@ -2,18 +2,18 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { NewsSection } from '@/components/base/NewsSection/NewsSection';
+import { News } from '@/components/blocks/News/News';
 import { defaultDecorator } from '@/storybook-helpers';
 
-type NewsSectionProps = React.ComponentProps<typeof NewsSection>;
+type NewsProps = React.ComponentProps<typeof News>;
 
-type StrictStory = StoryObj<typeof NewsSection> & {
-  args: NewsSectionProps;
+type StrictStory = StoryObj<typeof News> & {
+  args: NewsProps;
 };
 
-const meta: Meta<typeof NewsSection> = {
+const meta: Meta<typeof News> = {
   args: {},
-  component: NewsSection,
+  component: News,
   decorators: [defaultDecorator],
   parameters: {/* layout: 'centered', */ },
   tags: [
@@ -21,7 +21,7 @@ const meta: Meta<typeof NewsSection> = {
     'visual:check',
     'a11y:check',
   ],
-  title: 'Components/base/NewsSection',
+  title: 'Components/blocks/News',
 };
 
 export default meta;
@@ -53,6 +53,14 @@ export const NewsTeaser: StrictStory = {
       href: 'https://foo.bar',
       text: 'Alle News',
     },
+    items,
+    title: 'News',
+    type: 'teaser',
+  },
+};
+
+export const NewsTeaserWithoutLink: StrictStory = {
+  args: {
     items,
     title: 'News',
     type: 'teaser',
