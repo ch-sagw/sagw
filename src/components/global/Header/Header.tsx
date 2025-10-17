@@ -123,8 +123,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   ] = useState(13.125);
 
   // --- Hooks
-
-  useScrollLock(mobileMenuOpen);
   useFocusTrap({
     condition: mobileMenuOpen,
     focusTrapRootElement: headerRef.current?.querySelector<HTMLDivElement>('[data-header="focus-region"]'),
@@ -144,6 +142,8 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       setIsHovering(false);
     },
   });
+
+  useScrollLock(mobileMenuOpen && smallBreakpoint);
 
   // --- Effects
 
@@ -231,6 +231,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   useEffect(() => {
     setNavMaxHeight(0);
     setLangNavMaxHeight(0);
+    setMobileMenuOpen(false);
   }, [breakpoint]);
 
   // set nav height
@@ -569,16 +570,18 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     const logoName = 'sagw' as keyof typeof Logos;
 
     return (
-      <HeaderLogo
-        ref={logoRef}
-        link={props.logoLink}
+      <div className={styles.logoWrapperInner}>
+        <HeaderLogo
+          ref={logoRef}
+          link={props.logoLink}
 
-        // TODO: define in i18n in code
-        linkText='Back to Homepage'
-        className={styles.logo}
-        name={logoName}
-        colorMode={renderColorMode()}
-      />
+          // TODO: define in i18n in code
+          linkText='Back to Homepage'
+          className={styles.logo}
+          name={logoName}
+          colorMode={renderColorMode()}
+        />
+      </div>
     );
   };
 

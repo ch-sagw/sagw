@@ -23,11 +23,9 @@ export default async function RootLayout({
   return (
     <html className='theme-sagw' lang='en'>
       <body>
-        <main>
-          <TenantProvider tenant={tenant}>
-            {children}
-          </TenantProvider>
-        </main>
+        <TenantProvider tenant={tenant}>
+          {children}
+        </TenantProvider>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 @use "../utilities/functions" as *;
+@use "../utilities/utilities" as *;
 
 // Typo mixins
 @mixin body-text-s {
@@ -65,10 +66,13 @@
 }
 
 @mixin title-heading {
+  @include font-smoothing;
+
   font-family: var(--font-family-display);
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.009rem;
   line-height: 1.1;
+  margin: 0;
 }
 
 @mixin title-heading-1 {
@@ -116,4 +120,12 @@
   font-size: px-to-rem(var(--title-heading-section-size));
   line-height: 1.2;
   letter-spacing: 0.009rem;
+}
+
+@mixin link-text-underline {
+  text-decoration: none;
+  text-decoration-line: underline;
+  text-underline-offset: px-to-rem(var(--spacing-2xs));
+  text-decoration-thickness: px-to-rem(var(--border-width-l));
+  text-decoration-color: currentcolor;
 }
