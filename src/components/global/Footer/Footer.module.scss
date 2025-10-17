@@ -3,6 +3,12 @@
 @use "../../../styles/utilities/mediaqueries" as *;
 
 .footer {
+  // Some magic numbers 🤷‍♀️
+  $navWrapperSpacing: 56;
+  $contactMaxWidthWide: 420;
+  $contactMaxWidthUltra: 700;
+  $socialLinksNegativeSpacing: -14;
+
   background-color: var(--background-inverted);
   padding-block: px-to-rem(var(--spacing-4xl));
   padding-inline: px-to-rem(var(--spacing-l));
@@ -21,8 +27,8 @@
     align-items: baseline;
     column-gap: px-to-rem(var(--spacing-2xl));
     border-bottom: px-to-rem(var(--border-width-s)) solid var(--border-weak-inverted);
-    padding-block-end: px-to-rem(56);
-    margin-block-end: px-to-rem(56);
+    padding-block-end: px-to-rem($navWrapperSpacing);
+    margin-block-end: px-to-rem($navWrapperSpacing);
 
     @include mq($from: wide) {
       padding-block-end: px-to-rem(var(--spacing-4xl));
@@ -40,12 +46,12 @@
       margin-block-end: px-to-rem(var(--spacing-2xl));
 
       @include mq($from: wide) {
-        flex: px-to-rem(420) 0 1;
+        flex: px-to-rem($contactMaxWidthWide) 0 1;
         margin-block-end: 0;
       }
 
       @include mq($from: ultra) {
-        flex-basis: px-to-rem(700);
+        flex-basis: px-to-rem($contactMaxWidthUltra);
       }
     }
 
@@ -80,10 +86,10 @@
     }
 
     .socialLinks {
-      margin-inline-start: px-to-rem(-14);
+      margin-inline-start: px-to-rem($socialLinksNegativeSpacing);
 
       @include mq($from: large) {
-        margin: px-to-rem(var(--spacing-m)) px-to-rem(-14) 0;
+        margin: px-to-rem(var(--spacing-m)) px-to-rem($socialLinksNegativeSpacing) 0;
       }
     }
   }
