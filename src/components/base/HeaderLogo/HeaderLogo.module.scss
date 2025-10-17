@@ -1,5 +1,8 @@
+@use "../../../styles/utilities/functions" as *;
+
 .logo {
   display: block;
+  height: px-to-rem(48);
 
   svg {
     height: 100%;

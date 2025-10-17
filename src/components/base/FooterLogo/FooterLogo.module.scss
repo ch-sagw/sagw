@@ -1,0 +1,15 @@
+@use "../../../styles/utilities/functions" as *;
+
+.logo {
+  display: block;
+  height: px-to-rem(51);
+
+  svg {
+    height: 100%;
+    width: auto;
+
+    path {
+      fill: var(--white);
+    }
+  }
+}
