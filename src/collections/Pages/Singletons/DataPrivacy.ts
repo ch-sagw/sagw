@@ -32,7 +32,7 @@ export const DataPrivacyPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blocks: blocks(),
+              blocks: blocks(['textBlock']),
               label: 'Content',
               name: 'content',
               type: 'blocks',

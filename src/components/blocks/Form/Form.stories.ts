@@ -4,7 +4,8 @@ import type {
 } from '@storybook/nextjs-vite';
 import { FormComponent } from '@/components/blocks/Form/Form.component';
 import { defaultDecorator } from '@/storybook-helpers';
-import { sampleRtePrivacyCheckbox } from '@/components/base/Rte/Rte.sampleContent';
+import { sampleRtePrivacyCheckbox } from '@/utilities/rteSampleContent';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 type FormProps = React.ComponentProps<typeof FormComponent>;
 
@@ -39,27 +40,27 @@ const defaultFormConfig: FormProps = {
     fields: [
       {
         blockType: 'textBlockForm',
-        fieldError: 'Field error SAGW',
+        fieldError: simpleRteConfig('Field error SAGW'),
         fieldWidth: 'half',
         id: '68c6e2b6833c54485eb1b84c',
-        label: 'Text field label SAGW',
+        label: simpleRteConfig('Text field label SAGW'),
         name: 'field1',
         placeholder: 'Text field placeholder SAGW',
         required: true,
       },
       {
         blockType: 'textBlockForm',
-        fieldError: 'Field error SAGW',
+        fieldError: simpleRteConfig('Field error SAGW'),
         fieldWidth: 'half',
         id: '68c6e2b6833c54485eb1b84c',
-        label: 'Text field label SAGW',
+        label: simpleRteConfig('Text field label SAGW'),
         name: 'field2',
         placeholder: 'Text field placeholder SAGW',
         required: true,
       },
       {
         blockType: 'checkboxBlock',
-        fieldError: 'checkbox error',
+        fieldError: simpleRteConfig('checkbox error'),
         fieldWidth: 'half',
         id: '69c6e2b6833c54485eb1b84c',
         label: sampleRtePrivacyCheckbox,
@@ -68,7 +69,7 @@ const defaultFormConfig: FormProps = {
       },
       {
         blockType: 'checkboxBlock',
-        fieldError: 'checkbox error',
+        fieldError: simpleRteConfig('checkbox error'),
         fieldWidth: 'half',
         id: '67c6e2b6833c54485eb1b84c',
         label: sampleRtePrivacyCheckbox,
@@ -77,22 +78,42 @@ const defaultFormConfig: FormProps = {
       },
       {
         blockType: 'emailBlock',
-        fieldError: 'Geben Sie eine E-Mail Adresse an',
+        fieldError: simpleRteConfig('Geben Sie eine E-Mail Adresse an'),
         fieldWidth: 'half',
         id: '66c6e2b6833c54485eb1b84c',
-        label: 'E-Mail',
+        label: simpleRteConfig('E-Mail'),
         name: 'email',
         placeholder: 'Ihre E-Mail Adresse',
         required: true,
       },
       {
         blockType: 'textareaBlock',
-        fieldError: 'Geben Sie einen Kommentar an.',
+        fieldError: simpleRteConfig('Geben Sie einen Kommentar an.'),
         fieldWidth: 'full',
         id: '65c6e2b6833c54485eb1b84c',
-        label: 'Kommentar',
+        label: simpleRteConfig('Kommentar'),
         name: 'textarea',
         placeholder: 'Ihr Kommentar',
+        required: true,
+      },
+      {
+        blockType: 'radioBlock',
+        fieldError: simpleRteConfig('Du musst eine Auswahl teffen'),
+        fieldWidth: 'full',
+        id: '65c6e2b6833c54485eb1b84csd',
+        items: [
+          {
+            label: simpleRteConfig('Deutsch'),
+            value: 'deutsch',
+          },
+          {
+            defaultChecked: true,
+            label: simpleRteConfig('Französisch'),
+            value: 'french',
+          },
+        ],
+        label: simpleRteConfig('In welcher Sprache möchten sie den Newsletter erhalten?'),
+        name: 'newsletterlanguage',
         required: true,
       },
     ],
@@ -102,12 +123,12 @@ const defaultFormConfig: FormProps = {
       actionText: 'Erneut senden',
       email: {
         fieldWidth: 'full',
-        label: 'foo',
+        label: simpleRteConfig('foo'),
         placeholder: 'baz',
       },
       name: {
         fieldWidth: 'full',
-        label: 'foo',
+        label: simpleRteConfig('foo'),
         placeholder: 'baz',
       },
     },
@@ -120,11 +141,11 @@ const defaultFormConfig: FormProps = {
 
         link: {
           internalLink: '/',
-          linkText: 'foo',
+          linkText: simpleRteConfig('foo'),
         },
       },
-      text: 'submit error text',
-      title: 'submit error title',
+      text: simpleRteConfig('submit error text'),
+      title: simpleRteConfig('submit error title'),
     },
     submitSuccess: {
       optionalLink: {
@@ -132,15 +153,15 @@ const defaultFormConfig: FormProps = {
 
         link: {
           internalLink: '/',
-          linkText: 'foo',
+          linkText: simpleRteConfig('foo'),
         },
       },
-      text: 'submit success text',
-      title: 'submit success title',
+      text: simpleRteConfig('submit success text'),
+      title: simpleRteConfig('submit success title'),
     },
-    subtitle: 'Erhalten Sie Updates zu aktuellen Projekten, Artikel, Publikationen und Veranstaltungen',
+    subtitle: simpleRteConfig('Erhalten Sie Updates zu aktuellen Projekten, Artikel, Publikationen und Veranstaltungen'),
     tenant: '68c6e2b3ec3710c8de6912f8',
-    title: 'Form SAGW',
+    title: simpleRteConfig('Form SAGW'),
     titleLevel: '2',
     updatedAt: '2025-09-14T15:43:50.512Z',
   },
@@ -163,6 +184,11 @@ export const FormWhite: StrictStory = {
       colorMode: 'white',
     },
   },
+  globals: {
+    backgrounds: {
+      value: 'white',
+    },
+  },
 };
 
 export const FormLight: StrictStory = {
@@ -171,6 +197,11 @@ export const FormLight: StrictStory = {
     form: {
       ...(defaultFormConfig.form as Exclude<FormProps['form'], string | null | undefined>),
       colorMode: 'light',
+    },
+  },
+  globals: {
+    backgrounds: {
+      value: 'light',
     },
   },
 };
@@ -198,6 +229,7 @@ export const FieldErrors: StrictStory = {
       email: ['Error on email'],
       field1: ['Error on text field 1'],
       field2: ['Error on text field 2'],
+      newsletterlanguage: ['Error on radios'],
       textarea: ['Error on textarea'],
     },
   },

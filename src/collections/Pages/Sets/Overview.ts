@@ -12,6 +12,32 @@ import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
+import { createSingleOverviewBlockFilter } from '@/utilities/blockFilters';
+import { allowSingleOverviewBlock } from '@/hooks-payload/allowSingleOverviewBlock';
+
+const contentBlocks = [
+  'textBlock',
+  'accordionBlock',
+  'formBlock',
+  'ctaContactBlock',
+  'ctaLinkBlock',
+  'notificationBlock',
+  'networkTeasersBlock',
+  'genericTeasersBlock',
+  'projectsOverviewBlock',
+  'magazineOverviewBlock',
+  'publicationsOverviewBlock',
+  'eventsOverviewBlock',
+  'peopleOverviewBlock',
+  'newsOverviewBlock',
+  'institutesOverviewBlock',
+  'nationalDictionariesOverviewBlock',
+  'projectsTeasersBlock',
+  'eventsTeasersBlock',
+  'magazineTeasersBlock',
+  'newsTeasersBlock',
+  'publicationsTeasersBlock',
+] as const;
 
 export const OverviewPage: CollectionConfig = {
   access: {
@@ -46,10 +72,12 @@ export const OverviewPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blocks: blocks(),
+              blocks: blocks(contentBlocks),
+              filterOptions: createSingleOverviewBlockFilter(contentBlocks),
               label: 'Content',
               name: 'content',
               type: 'blocks',
+              validate: allowSingleOverviewBlock,
             },
           ],
           label: 'Content',

@@ -6,15 +6,14 @@ import React, {
 import { cva } from 'cva';
 import { Icon } from '@/icons';
 import styles from '@/components/base/Checkbox/Checkbox.module.scss';
-import {
-  InterfaceRtePropTypes, Rte,
-} from '@/components/base/Rte/Rte';
 import { ColorMode } from '@/components/base/types/colorMode';
+import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
+import { FormError } from '@/components/base/FormError/FormError';
 
 export type InterfaceCheckboxPropTypes = {
   value: string;
   name: string;
-  label: InterfaceRtePropTypes['text'];
+  label: string;
   checked: boolean;
   errorText: string;
   colorMode: ColorMode;
@@ -97,23 +96,18 @@ export const Checkbox = ({
         className={styles.label}
         data-testid='checkbox-label'
       >
-        <Rte
-          text={label}
-          rteConfig='rte3'
+        <SafeHtml
+          as='span'
+          html={label}
         />
       </label>
 
-      {errorText &&
-        <span
-          className={styles.error}
-          id={name}
-        >
-          <Icon
-            name='warning'
-            className={styles.errorIcon}
-          />
-          <span>{errorText}</span>
-        </span>
+      {Boolean(errorText) &&
+        <FormError
+          errorId={name}
+          errorText={errorText}
+          colorMode={colorMode}
+        />
       }
     </div>
   );

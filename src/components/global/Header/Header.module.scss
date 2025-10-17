@@ -31,6 +31,10 @@
     overflow-y: visible;
   }
 
+  &:not(.white) {
+    @include font-smoothing;
+  }
+
   &.dark {
     background-color: var(--background-inverted);
   }
@@ -52,6 +56,12 @@
 
     @include mq($from: large) {
       align-items: baseline;
+      column-gap: px-to-rem(var(--grid-gutter));
+    }
+
+    .logoWrapperInner {
+      flex: 0 0 33.3333%;
+      padding-inline-end: px-to-rem(var(--grid-gutter));
     }
 
     .logo {
@@ -90,6 +100,8 @@
     margin-block-end: px-to-rem(var(--margin-nav-bottom));
 
     @include mq($from: large) {
+      display: flex;
+      flex-grow: 1;
       margin-block-end: 0;
     }
   }
@@ -117,11 +129,27 @@
     }
   }
 
+  .metanavWrapper {
+    @include expandable-wrapper-visible;
+
+    &.metanavHidden {
+      @include expandable-wrapper;
+    }
+
+    &:not(.metanavHidden) {
+      @include mq($from: large) {
+        margin-block-end: px-to-rem(var(--spacing-l));
+      }
+    }
+  }
+
   .metanav {
+    @include expandable-content;
+
     margin-block-end: px-to-rem(var(--spacing-2xl));
 
     @include mq($from: large) {
-      margin-block-end: px-to-rem(var(--spacing-l));
+      margin-block-end: 0;
     }
   }
 
@@ -134,5 +162,9 @@
     @include mq($from: wide) {
       width: px-to-rem(400);
     }
+  }
+
+  .metanavWrapper.metanavHidden ~ .infoBlock {
+    inset-block-start: px-to-rem(155);
   }
 }

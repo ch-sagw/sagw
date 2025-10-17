@@ -191,7 +191,8 @@ test.describe('Tenants only show content from users tenant', () => {
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
     await page.waitForLoadState('networkidle');
 
-    const heroField = await page.locator('#field-hero .ContentEditable__root');
+    const heroField = await page.locator('#field-hero .ContentEditable__root')
+      .nth(0);
 
     await heroField.fill('Tenant Language test News Detail Page');
 

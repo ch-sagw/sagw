@@ -29,45 +29,61 @@ import { ProjectOverviewBlock } from '@/blocks/ProjectOverview';
 import { ProjectTeasersBlock } from '@/blocks/ProjectTeasers';
 import { FootnotesBlock } from '@/blocks/Footnotes';
 
-export const blocks = (exclude?: string[]): Block[] => {
-  const availableBlocks = [
-    TextBlock,
-    LinksBlock,
-    DownloadsBlock,
-    ImageBlock,
-    VideoBlock,
-    AccordionBlock,
-    FormBlock,
-    CtaContactBlock,
-    CtaLinkBlock,
-    HomeTeasersBlock,
-    NetworkTeasersBlock,
-    GenericTeasersBlock,
-    NotificationBlock,
-    BibliographicReferenceBlock,
-    FootnotesBlock,
+// Overview blocks. Group them, since we need to ensure 1 block
+// per page in the page collections.
+const overviewBlocks = [
+  MagazineOverviewBlock,
+  PublicationsOverviewBlock,
+  EventsOverviewBlock,
+  PeopleOverviewBlock,
+  NewsOverviewBlock,
+  NationalDictionariesOverviewBlock,
+  InstitutesOverviewBlock,
+  ProjectOverviewBlock,
+] as const;
 
-    // automatic overviews
-    MagazineOverviewBlock,
-    PublicationsOverviewBlock,
-    EventsOverviewBlock,
-    PeopleOverviewBlock,
-    NewsOverviewBlock,
-    NationalDictionariesOverviewBlock,
-    InstitutesOverviewBlock,
-    ProjectOverviewBlock,
+// Export overview block slugs for filtering
+export const OVERVIEW_BLOCK_TYPES = overviewBlocks.map((block) => block.slug) as readonly string[];
 
-    // automatic teasers
-    EventsTeasersBlock,
-    MagazineTeasersBlock,
-    NewsTeasersBlock,
-    PublicationsTeasersBlock,
-    ProjectTeasersBlock,
-  ];
+const availableBlocksConst = [
+  TextBlock,
+  LinksBlock,
+  DownloadsBlock,
+  ImageBlock,
+  VideoBlock,
+  AccordionBlock,
+  FormBlock,
+  CtaContactBlock,
+  CtaLinkBlock,
+  HomeTeasersBlock,
+  NetworkTeasersBlock,
+  GenericTeasersBlock,
+  NotificationBlock,
+  BibliographicReferenceBlock,
+  FootnotesBlock,
 
-  if (!exclude) {
+  // automatic overviews
+  ...overviewBlocks,
+
+  // automatic teasers
+  EventsTeasersBlock,
+  MagazineTeasersBlock,
+  NewsTeasersBlock,
+  PublicationsTeasersBlock,
+  ProjectTeasersBlock,
+] as const;
+
+export type BlockSlug = typeof availableBlocksConst[number]['slug'];
+
+export const blocks = <T extends readonly BlockSlug[] | undefined = readonly BlockSlug[] | undefined>(
+  include?: T,
+): Block[] => {
+
+  const availableBlocks: Block[] = [...availableBlocksConst];
+
+  if (!include || include.length === 0) {
     return availableBlocks;
   }
 
-  return availableBlocks.filter((block) => !exclude.includes(block.slug));
+  return availableBlocks.filter((block) => include.includes(block.slug as BlockSlug));
 };

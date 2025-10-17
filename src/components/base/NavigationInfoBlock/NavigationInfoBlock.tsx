@@ -1,12 +1,14 @@
 import React from 'react';
 import { ColorMode } from '@/components/base/types/colorMode';
 import styles from '@/components/base/NavigationInfoBlock/NavigationInfoBlock.module.scss';
+import { SafeHtml } from '../SafeHtml/SafeHtml';
 
 export type InterfaceNavigationInfoBlockPropTypes = {
   title?: string;
   text?: string;
   className?: string;
   colorMode: ColorMode;
+  style?: React.CSSProperties;
 };
 
 export const NavigationInfoBlock = ({
@@ -14,15 +16,36 @@ export const NavigationInfoBlock = ({
   text,
   className,
   colorMode,
-}: InterfaceNavigationInfoBlockPropTypes): React.JSX.Element => (
+  style,
+}: InterfaceNavigationInfoBlockPropTypes): React.JSX.Element => {
+  // Create a key that changes when content changes to trigger re-render
+  const contentKey = `${title || ''}-${text || ''}`;
 
-  // Hidden for screenreaders. NavItems will contain this as hidden text.
-  <div
-    aria-hidden={true}
-    role='presentation'
-    className={`${styles.infoBlock} ${className} ${styles[colorMode]}`}
-  >
-    <p className={styles.title}>{title}</p>
-    <p className={styles.text}>{text}</p>
-  </div>
-);
+  return (
+    // Hidden for screenreaders. NavItems will contain this as hidden text.
+    <div
+      key={contentKey}
+      aria-hidden={true}
+      role='presentation'
+      className={`${styles.infoBlock} ${className} ${styles[colorMode]}`}
+      data-testid='infoblock'
+      style={style}
+    >
+      {title &&
+        <SafeHtml
+          as='p'
+          className={styles.title}
+          html={title}
+        />
+      }
+
+      {text &&
+        <SafeHtml
+          as='p'
+          className={styles.text}
+          html={text}
+        />
+      }
+    </div>
+  );
+};

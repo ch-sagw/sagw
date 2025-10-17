@@ -1,12 +1,16 @@
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/mixins/mixins-layout" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 
 .formBlock {
-  padding: px-to-rem(var(--section-top)) px-to-rem(var(--grid-margin)) px-to-rem(var(--section-bottom));
+  @include block-layout-sticky-title("flex");
+  @include generic-block-padding;
+
+  background-color: var(--background-color);
 
   &.dark {
-    background-color: var(--background-cta);
+    --background-color: var(--background-cta);
 
     .title {
       color: var(--text-primary-inverted);
@@ -18,21 +22,26 @@
   }
 
   &.light {
-    background-color: var(--background-light);
+    --background-color: var(--background-light);
   }
 
   .title {
     @include title-heading-3;
 
     color: var(--text-primary);
-    margin: 0 0 px-to-rem(var(--section-inside-s));
   }
 
   .subtitle {
     @include body-text-xl;
 
-    margin-block-end: 0;
+    margin-block: 0;
     color: var(--text-secondary);
+  }
+
+  .contentColumn {
+    display: flex;
+    flex-direction: column;
+    row-gap: px-to-rem(var(--section-inside-s));
   }
 
   .form {
@@ -41,7 +50,6 @@
     column-gap: px-to-rem(var(--grid-gutter));
     row-gap: px-to-rem(var(--form-elements-between));
     width: 100%;
-    margin-block-start: px-to-rem(var(--section-inside-s));
   }
 
   .field {

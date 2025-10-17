@@ -1,5 +1,6 @@
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/utilities" as *;
 
 .infoBlock {
   --color-title: var(--text-primary-inverted);
@@ -13,6 +14,22 @@
 
   margin-block-end: px-to-rem(var(--spacing-l));
   margin-inline-end: px-to-rem(var(--spacing-2xl));
+  animation: fade-in var(--motion-speed-medium) var(--motion-ease-in-out);
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @include reduced-motion {
+    animation: none;
+    opacity: 1;
+  }
 
   .title {
     @include title-heading-4;

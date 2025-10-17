@@ -6,46 +6,35 @@ import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 
-import { rte3 } from '@/field-templates/rte';
+import {
+  rte1, rte3,
+} from '@/field-templates/rte';
 import { versions } from '@/field-templates/versions';
 
 const overlaySection: Field[] = [
-  {
-    localized: true,
+  rte1({
     name: 'title',
-    required: true,
-    type: 'text',
-  },
+  }),
   rte3({
     name: 'text',
-    required: true,
   }),
 ];
 
 const overlaySectionWithoutToggle: Field[] = [
   ...overlaySection,
-  {
-    localized: true,
+  rte1({
     name: 'toggleLabel',
-    required: true,
-    type: 'text',
-  },
+  }),
 ];
 
 const overlaySectionWithToggle: Field[] = [
   ...overlaySection,
-  {
-    localized: true,
+  rte1({
     name: 'toggleLabelOff',
-    required: true,
-    type: 'text',
-  },
-  {
-    localized: true,
+  }),
+  rte1({
     name: 'toggleLabelOn',
-    required: true,
-    type: 'text',
-  },
+  }),
   {
     defaultValue: 'on',
     name: 'toggleDefault',
@@ -79,34 +68,21 @@ export const Consent: CollectionConfig = {
         // Consent Banner
         {
           fields: [
-            {
-              localized: true,
+            rte1({
               name: 'title',
-              required: true,
-              type: 'text',
-            },
+            }),
             rte3({
               name: 'text',
-              required: true,
             }),
-            {
-              localized: true,
+            rte1({
               name: 'buttonAcceptAll',
-              required: true,
-              type: 'text',
-            },
-            {
-              localized: true,
+            }),
+            rte1({
               name: 'buttonCustomizeSelection',
-              required: true,
-              type: 'text',
-            },
-            {
-              localized: true,
+            }),
+            rte1({
               name: 'buttonDeclineAll',
-              required: true,
-              type: 'text',
-            },
+            }),
           ],
           label: 'Consent Banner',
           name: 'banner',
@@ -115,43 +91,30 @@ export const Consent: CollectionConfig = {
         // Consent Overlay
         {
           fields: [
-            {
-              localized: true,
+            rte1({
               name: 'title',
-              required: true,
-              type: 'text',
-            },
+            }),
             rte3({
               name: 'text',
-              required: true,
             }),
-            {
-              localized: true,
+            rte1({
               name: 'buttonAcceptAll',
-              required: true,
-              type: 'text',
-            },
-            {
-              localized: true,
+            }),
+            rte1({
               name: 'buttonAcceptSelection',
-              required: true,
-              type: 'text',
-            },
-
+            }),
             {
               fields: overlaySectionWithoutToggle,
               label: 'Necessary Cookies',
               name: 'necessaryCookies',
               type: 'group',
             },
-
             {
               fields: overlaySectionWithToggle,
               label: 'Analytics and Performance Cookies',
               name: 'analyticsPerformance',
               type: 'group',
             },
-
             {
               fields: overlaySectionWithToggle,
               label: 'External Content',

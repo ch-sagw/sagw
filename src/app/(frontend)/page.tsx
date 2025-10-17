@@ -8,6 +8,10 @@ import { getTenant } from '@/app/providers/TenantProvider.server';
 import { Header } from '@/components/global/Header/Header';
 import { ColorMode } from '@/components/base/types/colorMode';
 
+// TODO: properly invalidate cache via afterChange hook on collection level
+// and revalidatePath from next/cache
+export const revalidate = 0;
+
 export default async function HomePage({
   params,
 }: {
@@ -79,19 +83,12 @@ export default async function HomePage({
     return <p>No metanav data in header data</p>;
   }
 
-  const logoData = headerData.docs[0].logo;
-
-  if (!logoData) {
-    return <p>No logo data in header data</p>;
-  }
-
   const colorMode: ColorMode = 'dark';
 
   const headerProps = {
     colorMode,
     currentLang: 'de',
     langnav: langnavData,
-    logo: logoData,
     logoLink: '/',
     menuButton: {
       close: 'Close',
@@ -107,12 +104,14 @@ export default async function HomePage({
         {...headerProps}
       />
 
-      <div className='home'>
-        <RenderBlocks
-          blocks={pageData.content}
-          tenantId={tenant}
-        />
-      </div>
+      <main>
+        <div className='home'>
+          <RenderBlocks
+            blocks={pageData.content}
+            tenantId={tenant}
+          />
+        </div>
+      </main>
     </Fragment>
   );
 }

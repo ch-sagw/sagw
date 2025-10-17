@@ -101,7 +101,15 @@ export const PublicationDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blocks: blocks(),
+              blocks: blocks([
+                'textBlock',
+                'linksBlock',
+                'downloadsBlock',
+                'formBlock',
+                'bibliographicReferenceBlock',
+                'notificationBlock',
+                'publicationsTeasersBlock',
+              ]),
               label: 'Content',
               name: 'content',
               type: 'blocks',

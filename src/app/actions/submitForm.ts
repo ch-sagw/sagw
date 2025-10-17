@@ -5,6 +5,7 @@ import { hiddenFormDefinitionFieldName } from '@/components/blocks/Form/Form.con
 import { sendMail } from '@/mail/sendMail';
 import { subscribe } from '@/mail/subscribe';
 import { Form as InterfaceForm } from '@/payload-types';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
 type SubmitFormResult =
   | {
@@ -50,10 +51,10 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
     if (field.blockType === 'emailBlock') {
       if (field.required) {
         shape[field.name] = z
-          .email(field.fieldError || '');
+          .email(rteToHtml(field.fieldError) || '');
       } else {
         shape[field.name] = z
-          .email(field.fieldError || '')
+          .email(rteToHtml(field.fieldError) || '')
           .optional()
           .or(z.literal(''));
       }
@@ -61,7 +62,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       if (field.required) {
         shape[field.name] = z
           .string()
-          .min(1, field.fieldError || '');
+          .min(1, rteToHtml(field.fieldError) || '');
       } else {
         shape[field.name] = z.string()
           .optional()
@@ -72,11 +73,21 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
         shape[field.name] = z
           .string()
           .refine((val) => val === 'on', {
-            message: field.fieldError || '',
+            message: rteToHtml(field.fieldError) || '',
           });
       } else {
         shape[field.name] = z.string()
           .optional();
+      }
+    } else if (field.blockType === 'radioBlock') {
+      if (field.required) {
+        shape[field.name] = z
+          .string()
+          .min(1, rteToHtml(field.fieldError) || '');
+      } else {
+        shape[field.name] = z.string()
+          .optional()
+          .or(z.literal(''));
       }
     }
   }
@@ -93,6 +104,9 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       data[f.name] = val === null
         ? ''
         : val;
+    } else if (f.blockType === 'radioBlock') {
+      // Radio buttons return the selected value or null if none selected
+      data[f.name] = val || '';
     } else {
       data[f.name] = val;
     }

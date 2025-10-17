@@ -13,14 +13,17 @@ test.describe('Slug field', () => {
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
     await page.waitForLoadState('networkidle');
 
-    const heroField = await page.locator('#field-hero .ContentEditable__root');
-    const hyphenButton = await page.locator('#field-hero .toolbar-popup__button-softHyphenButton');
-    const superscriptButton = await page.locator('#field-hero .toolbar-popup__button-superscript');
-    const subscriptButton = await page.locator('#field-hero .toolbar-popup__button-subscript');
+    const heroField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
+      .nth(0);
+    const hyphenButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-softHyphenButton');
+    const nbspButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-nonBreakingSpaceButton');
+    const superscriptButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-superscript');
+    const subscriptButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-subscript');
 
     await heroField.fill('Sample Detail. Page. $name üöä');
 
     await hyphenButton.click();
+    await nbspButton.click();
     await heroField.pressSequentially('hyphen');
     await superscriptButton.click();
     await heroField.pressSequentially('sup');
@@ -50,7 +53,7 @@ test.describe('Slug field', () => {
     const slugField = await page.locator('#field-slug');
 
     await expect(slugField)
-      .toHaveValue('sample-detail-page-dollarname-uoahyphensupsub');
+      .toHaveValue('sample-detail-page-dollarname-uoa-hyphensupsub');
 
   });
 
@@ -60,9 +63,10 @@ test.describe('Slug field', () => {
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
     await page.waitForLoadState('networkidle');
 
-    const heroField = await page.locator('#field-hero .ContentEditable__root');
+    const heroField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
+      .nth(0);
 
-    await heroField.fill('Sample Detail. Page. $name üöähyphensupsub');
+    await heroField.fill('Sample Detail. Page. $name üöä hyphensupsub');
 
     // save
     const saveButton = await page.getByRole('button', {
@@ -71,7 +75,7 @@ test.describe('Slug field', () => {
 
     await saveButton.click();
 
-    const errorToast = await page.getByText('Slug "sample-detail-page-dollarname-uoahyphensupsub" already exists in this tenant');
+    const errorToast = await page.getByText('Slug "sample-detail-page-dollarname-uoa-hyphensupsub" already exists in this tenant');
 
     await expect(errorToast)
       .toBeVisible();
@@ -88,7 +92,8 @@ test.describe('Slug field', () => {
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
     await page.waitForLoadState('networkidle');
 
-    const heroField = await page.locator('#field-hero .ContentEditable__root');
+    const heroField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
+      .nth(0);
 
     await heroField.fill('Detail page title NOT-SAGW');
 

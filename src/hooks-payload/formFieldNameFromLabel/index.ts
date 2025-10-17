@@ -1,24 +1,17 @@
 import validator from 'validator';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
-import { Form as InterfaceForm } from '@/payload-types';
 
 export const formFieldNameFromLabel = ({
   siblingData,
 }: Partial<any>): string => {
-  if (!siblingData?.label) {
-    return '';
-  }
-
-  const formElement: NonNullable<NonNullable<InterfaceForm['fields']>>[number] = siblingData;
-
   let labelText;
 
-  if (formElement?.blockType === 'checkboxBlock') {
-    const lexical = formElement?.label;
+  if ('label' in siblingData && siblingData.label) {
+    labelText = rte1ToPlaintext(siblingData.label);
+  }
 
-    labelText = rte1ToPlaintext(lexical);
-  } else {
-    labelText = formElement.label;
+  if (!labelText) {
+    return '';
   }
 
   // Lowercase, trim, replace spaces with dashes

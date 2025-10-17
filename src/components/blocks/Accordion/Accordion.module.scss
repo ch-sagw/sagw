@@ -1,13 +1,19 @@
 @use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/mixins/mixins-layout" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/utilities/animations" as *;
 
 .expandableElement {
-  --items-spacing: 20;
+  @include block-layout-sticky-title("flex");
+  @include generic-block-padding;
 
-  width: 100%;
-  padding: px-to-rem(var(--section-top)) px-to-rem(var(--grid-margin)) px-to-rem(var(--section-bottom));
+  --items-spacing: 0;
+
+  &:not(.white) {
+    @include font-smoothing;
+  }
 
   &.light {
     --background-color: var(--background-light);
@@ -35,23 +41,24 @@
   .heading {
     @include title-heading-3;
 
-    margin-block-start: 0;
     color: var(--text-color);
   }
 
   .list {
     @include list-reset;
 
-    width: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     gap: px-to-rem(var(--items-spacing));
+    margin-block-start: px-to-rem(var(--spacing-xl), true);
+
+    @include mq($from: large) {
+      margin-block-start: px-to-rem(calc((var(--spacing-xl) - 6)), true);
+    }
   }
 
   .item {
-    @include list-reset;
-
     border-bottom: px-to-rem(var(--border-width-l)) solid var(--border-color);
 
     .title {
@@ -73,7 +80,7 @@
         margin-bottom: px-to-rem(calc(-1 * var(--border-width-l)));
         text-align: left;
 
-        .buttonText p {
+        .buttonText {
           text-decoration-line: underline;
           text-underline-offset: px-to-rem(var(--spacing-2xs));
           text-decoration-thickness: px-to-rem(var(--border-width-l));
@@ -95,7 +102,7 @@
         }
 
         @include hover-style {
-          &:not(:focus-visible) .buttonText p {
+          &:not(:focus-visible) .buttonText {
             text-decoration-color: var(--border-color);
           }
         }
@@ -123,14 +130,8 @@
     .rte {
       @include expandable-content;
 
-      :first-child {
-        padding-block-start: 0;
-        margin-block-start: 0;
-      }
-
-      :last-child {
-        padding-block-end: 0;
-        margin-block-end: 0;
+      a {
+        color: inherit;
       }
     }
 

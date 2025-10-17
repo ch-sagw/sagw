@@ -1,16 +1,6 @@
 import type { CollectionConfig } from 'payload';
 import { versions } from '@/field-templates/versions';
-
-export const memberTypeConfig = {
-  executiveBoard: {
-    label: 'Vorstand',
-    value: 'executiveBoard',
-  },
-  team: {
-    label: 'Team',
-    value: 'team',
-  },
-};
+import { rte1 } from '@/field-templates/rte';
 
 export const People: CollectionConfig = {
   access: {
@@ -28,43 +18,37 @@ export const People: CollectionConfig = {
       required: false,
       type: 'relationship',
     },
-    {
-      localized: true,
+
+    rte1({
       name: 'prefix',
-      required: false,
-      type: 'text',
-    },
-    {
+      notRequired: true,
+    }),
+    rte1({
+      disableLocalization: true,
       name: 'firstname',
-      required: true,
-      type: 'text',
-    },
-    {
+    }),
+    rte1({
+      disableLocalization: true,
       name: 'middleName',
-      required: false,
-      type: 'text',
-    },
-    {
+      notRequired: true,
+    }),
+    rte1({
+      disableLocalization: true,
       name: 'lastname',
-      required: true,
-      type: 'text',
-    },
-    {
-      localized: true,
+    }),
+    rte1({
       name: 'function',
-      required: false,
-      type: 'text',
-    },
-    {
+      notRequired: true,
+    }),
+    rte1({
+      disableLocalization: true,
       name: 'mail',
-      required: true,
-      type: 'email',
-    },
-    {
+    }),
+    rte1({
+      disableLocalization: true,
       name: 'phone',
-      required: false,
-      type: 'text',
-    },
+      notRequired: true,
+    }),
     {
       name: 'image',
       relationTo: 'images',

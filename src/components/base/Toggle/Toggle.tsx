@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from '@/components/base/Toggle/Toggle.module.scss';
+import { SafeHtml } from '../SafeHtml/SafeHtml';
 
 export type InterfaceTogglePropTypes = {
   labelOff: string;
@@ -47,8 +48,21 @@ export const Toggle = ({
         htmlFor={value}
       >
         <span className={styles.hiddenLabel}>{hiddenLabel}</span>
-        <span className={styles.labelOff} aria-hidden='true'>{labelOff}</span>
-        <span className={styles.labelOn} aria-hidden='true'>{labelOn}</span>
+
+        <SafeHtml
+          as='span'
+          className={styles.labelOff}
+          aria-hidden='true'
+          html={labelOff}
+        />
+
+        <SafeHtml
+          as='span'
+          className={styles.labelOn}
+          aria-hidden='true'
+          html={labelOn}
+        />
+
       </label>
     </div>
   );

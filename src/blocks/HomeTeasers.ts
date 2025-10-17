@@ -2,6 +2,7 @@ import {
   Block, Field,
 } from 'payload';
 import { fieldsLinkInternal } from '@/field-templates/links';
+import { rte1 } from '@/field-templates/rte';
 
 // Example: SAGW home only
 
@@ -12,28 +13,26 @@ const homeTeaserItem: Field[] = [
     required: true,
     type: 'text',
   },
-  {
-    localized: true,
+  rte1({
     name: 'title',
-    required: true,
-    type: 'text',
-  },
-  {
-    localized: true,
+  }),
+  rte1({
     name: 'text',
-    required: true,
-    type: 'textarea',
-  },
+  }),
   {
     name: 'icon',
     relationTo: 'svgs',
     required: true,
     type: 'relationship',
   },
-  ...fieldsLinkInternal,
+  {
+    fields: [...fieldsLinkInternal],
+    name: 'link',
+    type: 'group',
+  },
 ];
 
-export const HomeTeasersBlock: Block = {
+export const HomeTeasersBlock = {
   admin: {
     disableBlockName: true,
   },
@@ -51,4 +50,4 @@ export const HomeTeasersBlock: Block = {
     singular: 'Home Teasers',
   },
   slug: 'homeTeasersBlock',
-};
+} as const satisfies Block;

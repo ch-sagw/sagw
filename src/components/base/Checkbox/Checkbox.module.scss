@@ -52,6 +52,10 @@
     @include reduced-motion {
       transition: none;
     }
+
+    a {
+      color: inherit;
+    }
   }
 
   .icon {
@@ -91,22 +95,5 @@
 
   .input:checked ~ .icon path {
     opacity: 1;
-  }
-
-  .error {
-    @include body-text-s;
-
-    width: 100%;
-    color: var(--color-error);
-    display: flex;
-    align-items: center;
-
-    .errorIcon {
-      flex-basis: px-to-rem(var(--spacing-m));
-      height: px-to-rem(var(--spacing-m));
-      flex-grow: 0;
-      flex-shrink: 0;
-      margin-inline-end: px-to-rem(var(--spacing-xs));
-    }
   }
 }

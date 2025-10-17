@@ -1,25 +1,20 @@
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { Block } from 'payload';
+import { rte1 } from '@/field-templates/rte';
 
 // Example: Early Career Award
 
-export const CtaContactBlock: Block = {
+export const CtaContactBlock = {
   admin: {
     disableBlockName: true,
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'title',
-      required: true,
-      type: 'text',
-    },
-    {
-      localized: true,
+    }),
+    rte1({
       name: 'text',
-      required: true,
-      type: 'text',
-    },
+    }),
     fieldsColorMode({
       dark: true,
       light: true,
@@ -40,4 +35,4 @@ export const CtaContactBlock: Block = {
     singular: 'CTA Contact',
   },
   slug: 'ctaContactBlock',
-};
+} as const satisfies Block;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styles from '@/components/base/HeaderLogo/HeaderLogo.module.scss';
 import { ColorMode } from '@/components/base/types/colorMode';
 
@@ -16,17 +16,18 @@ export interface InterfaceHeaderLogoPropTypes {
   linkText: string;
 }
 
-export const HeaderLogo = ({
+export const HeaderLogo = forwardRef<HTMLAnchorElement, InterfaceHeaderLogoPropTypes>(({
   className,
   name,
   colorMode,
   link,
   linkText,
-}: InterfaceHeaderLogoPropTypes): React.JSX.Element => {
+}, ref) => {
   const IconComponent = Logos[name];
 
   return (
     <a
+      ref={ref}
       aria-label={linkText}
       href={link}
       className={`${styles.logo} ${styles[name]} ${className} ${styles[colorMode]}`}
@@ -34,4 +35,6 @@ export const HeaderLogo = ({
       <IconComponent />
     </a>
   );
-};
+});
+
+HeaderLogo.displayName = 'HeaderLogo';

@@ -1,18 +1,16 @@
+import { rte1 } from '@/field-templates/rte';
 import { Block } from 'payload';
 
 // Example: Activities
 
-export const EventsTeasersBlock: Block = {
+export const EventsTeasersBlock = {
   admin: {
     disableBlockName: true,
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'title',
-      required: true,
-      type: 'text',
-    },
+    }),
     {
       admin: {
         description: 'Do you want to add a link to the Events overview page?',
@@ -33,12 +31,11 @@ export const EventsTeasersBlock: Block = {
     },
     {
       admin: {
-        condition: (_, siblingData) => siblingData.link === 'yes',
+        condition: (_, siblingData): boolean => siblingData.link === 'yes',
       },
-      localized: true,
-      name: 'linkText',
-      required: true,
-      type: 'text',
+      ...rte1({
+        name: 'linkText',
+      }),
     },
     {
       admin: {
@@ -65,4 +62,4 @@ export const EventsTeasersBlock: Block = {
     singular: 'Events Teasers (automatic)',
   },
   slug: 'eventsTeasersBlock',
-};
+} as const satisfies Block;

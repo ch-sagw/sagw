@@ -2,10 +2,12 @@ import 'server-only';
 import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
 import {
-  InterfaceEmailField, Form as InterfaceForm, InterfaceFormBlock, InterfaceTextField,
+  InterfaceEmailField, Form as InterfaceForm, InterfaceFormBlock, InterfaceRadioField, InterfaceTextField,
 } from '@/payload-types';
 import { FormClient } from '@/components/blocks/Form/Form.client';
 import { Fragment } from 'react';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { i18nForm as internalI18nForm } from '@/i18n/content';
 
 type InterfaceFormServerPropTypes = {
   tenantId: string;
@@ -69,7 +71,7 @@ export const FormServer = async ({
       blockType: 'textBlockForm',
       fieldError: renderForm.newsletterFields?.name.fieldError,
       fieldWidth: 'half',
-      label: renderForm.newsletterFields?.name.label || '',
+      label: renderForm.newsletterFields?.name.label || simpleRteConfig(''),
       name: 'name',
       placeholder: renderForm.newsletterFields?.name.placeholder || '',
       required: true,
@@ -79,14 +81,42 @@ export const FormServer = async ({
       blockType: 'emailBlock',
       fieldError: renderForm.newsletterFields?.email.fieldError,
       fieldWidth: 'half',
-      label: renderForm.newsletterFields?.email.label || '',
+      label: renderForm.newsletterFields?.email.label || simpleRteConfig(''),
       name: 'email',
-      placeholder: renderForm.newsletterFields?.name.placeholder || '',
+      placeholder: renderForm.newsletterFields?.name.placeholder ||
+        '',
       required: true,
     };
 
     renderForm.fields?.push(emailField);
     renderForm.fields?.push(nameField);
+
+    // add language selection
+
+    // TODO: get language from root
+
+    if (renderForm.newsletterFields?.includeLanguageSelection === 'yes') {
+      const radioBlock: InterfaceRadioField = {
+        blockType: 'radioBlock',
+        fieldError: simpleRteConfig(internalI18nForm.newsletter.error.de),
+        fieldWidth: 'full',
+        items: [
+          {
+            label: simpleRteConfig(internalI18nForm.newsletter.languages.german.de),
+            value: 'german',
+          },
+          {
+            label: simpleRteConfig(internalI18nForm.newsletter.languages.french.de),
+            value: 'french',
+          },
+        ],
+        label: simpleRteConfig(internalI18nForm.newsletter.label.de),
+        name: 'language',
+        required: true,
+      };
+
+      renderForm.fields?.push(radioBlock);
+    }
   }
 
   // --- Privacy Checkbox

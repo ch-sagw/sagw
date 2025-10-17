@@ -77,5 +77,5 @@ export class NonBreakingSpaceNode extends DecoratorNode<JSX.Element> {
 // export converter
 
 export const nonBreakingSpaceJSXConverter = {
-  [nodeType]: (): string => ' ',
+  [nodeType]: (): string => '&nbsp;',
 };

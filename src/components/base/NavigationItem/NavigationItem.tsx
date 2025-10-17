@@ -12,6 +12,7 @@ import { useExpandOnHover } from '@/hooks/useExpandOnHover';
 import { useExpandOnClick } from '@/hooks/useExpandOnClick';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { measureElementHeight } from '@/components/helpers/elementHeight';
+import { SafeHtml } from '../SafeHtml/SafeHtml';
 
 // --- Interfaces
 
@@ -44,7 +45,7 @@ type InterfaceNavigationItemWithoutItems = {
   setExpanded?: never;
   onExpand?: never;
   colorMode: ColorMode;
-  hoveredItemCallback?: never;
+  hoveredItemCallback?: (item: string | undefined) => void;
   onHeightChange?: never;
 };
 
@@ -188,9 +189,7 @@ export const NavigationItem = ({
       level1AriaCurrent = true;
     }
   } else {
-    if (menuVisible) {
-      level1AriaCurrent = true;
-    }
+    level1AriaCurrent = undefined;
   }
 
   return (
@@ -209,14 +208,26 @@ export const NavigationItem = ({
         ? undefined
         : (): void => {
           if (!footer) {
-            onMouseEnter();
+            if (items) {
+              // Items with children use the expand on hover logic
+              onMouseEnter();
+            } else if (hoveredItemCallback) {
+              // Items without children call the callback directly
+              hoveredItemCallback('hovered');
+            }
           }
         }}
       onMouseLeave={smallBreakpoint
         ? undefined
         : (): void => {
           if (!footer) {
-            onMouseLeave();
+            if (items) {
+              // Items with children use the expand on hover logic
+              onMouseLeave();
+            } else if (hoveredItemCallback) {
+              // Items without children call the callback directly
+              hoveredItemCallback(undefined);
+            }
           }
         }
       }
@@ -241,7 +252,11 @@ export const NavigationItem = ({
 
         {/* In the footer large viewport we don't want buttons or links */}
         {items && (footer && !smallBreakpoint) &&
-          <p className={styles.footerColumnTitle}>{text}</p>
+          <SafeHtml
+            className={styles.footerColumnTitle}
+            as='p'
+            html={text}
+          />
         }
 
         {/* Render button */}

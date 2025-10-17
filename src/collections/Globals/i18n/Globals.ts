@@ -1,6 +1,8 @@
 import { CollectionConfig } from 'payload';
 import { versions } from '@/field-templates/versions';
-import { rte3 } from '@/field-templates/rte';
+import {
+  rte1, rte3,
+} from '@/field-templates/rte';
 
 export const I18nGlobals: CollectionConfig = {
   access: {
@@ -18,46 +20,37 @@ export const I18nGlobals: CollectionConfig = {
               admin: {
                 description: 'If you add a Download-Block, this will be used as a title',
               },
-              localized: true,
-              name: 'downloadTitle',
-              required: true,
-              type: 'text',
+              ...rte1({
+                name: 'downloadTitle',
+              }),
             },
             {
               admin: {
                 description: 'If you add a CTA-Contact-Block, this will be used as the button text',
               },
-              localized: true,
-              name: 'writeEmailButtonText',
-              required: true,
-              type: 'text',
+              ...rte1({
+                name: 'writeEmailButtonText',
+              }),
             },
             {
               admin: {
                 description: 'On magazine detail pages, we use this to show the "Copy Text" button',
               },
-              localized: true,
-              name: 'exportArticleButtonText',
-              required: true,
-              type: 'text',
+              ...rte1({
+                name: 'exportArticleButtonText',
+              }),
             },
           ],
           name: 'generic',
         },
         {
           fields: [
-            {
-              localized: true,
+            rte1({
               name: 'title',
-              required: true,
-              type: 'text',
-            },
-            {
-              localized: true,
+            }),
+            rte1({
               name: 'copyButtonText',
-              required: true,
-              type: 'text',
-            },
+            }),
           ],
           name: 'bibliographicReference',
         },
@@ -71,14 +64,10 @@ export const I18nGlobals: CollectionConfig = {
               fields: [
                 rte3({
                   name: 'dataPrivacyCheckboxText',
-                  required: true,
                 }),
-                {
-                  localized: true,
+                rte1({
                   name: 'errorMessage',
-                  required: true,
-                  type: 'text',
-                },
+                }),
               ],
               name: 'dataPrivacyCheckbox',
               type: 'group',

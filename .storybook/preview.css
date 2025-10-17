@@ -1,3 +1,9 @@
 .sb-show-main {
   transition: none !important;
 }
+
+/* Set sticky offset top 0 for
+ storybook preview */
+.sb-show-main {
+  --sticky-offset-top: 0;
+}

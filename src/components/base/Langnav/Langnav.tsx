@@ -123,6 +123,7 @@ export const Langnav = ({
 
   return (
     <div
+      data-testid='langnav'
       ref={rootRef}
       onBlur={(evt) => {
         if (!nonExpandableMenu) {

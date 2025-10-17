@@ -4,9 +4,11 @@ import React, { Fragment } from 'react';
 import { cva } from 'cva';
 import styles from '@/components/blocks/Accordion/Accordion.module.scss';
 import { Icon } from '@/icons';
-import { Rte } from '@/components/base/Rte/Rte';
 import { InterfaceAccordionBlock } from '@/payload-types';
 import { useExpandOnClick } from '@/hooks/useExpandOnClick';
+import { rteToHtml } from '@/utilities/rteToHtml';
+import { Rte } from '@/components/blocks/Rte/Rte';
+import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 
 export type InterfaceAccordionPropTypes = {} & InterfaceAccordionBlock;
 
@@ -32,7 +34,6 @@ const accordionItemClasses = cva([styles.item], {
 export const Accordion = ({
   accordions,
   title,
-  titleLevel,
   colorMode,
 }: InterfaceAccordionBlock): React.JSX.Element => {
 
@@ -43,10 +44,6 @@ export const Accordion = ({
     toggleButtonAutofocus,
   } = useExpandOnClick();
 
-  const mainLevel = parseInt(titleLevel, 10);
-  const TitleElem: React.ElementType = `h${mainLevel}` as keyof React.JSX.IntrinsicElements;
-  const HeadingElem: React.ElementType = `h${mainLevel + 1}` as keyof React.JSX.IntrinsicElements;
-
   return (
     <div
       className={accordionClasses({
@@ -54,12 +51,11 @@ export const Accordion = ({
       })}
       data-testid='accordion'
     >
-      <TitleElem className={styles.heading}>
-        <Rte
-          rteConfig='rte1'
-          text={title}
-        />
-      </TitleElem>
+      <SafeHtml
+        as='h2'
+        className={styles.heading}
+        html={rteToHtml(title)}
+      />
 
       <ul className={styles.list}>
         {accordions.map((item, key) => (
@@ -70,7 +66,7 @@ export const Accordion = ({
             })}
           >
             <Fragment>
-              <HeadingElem className={styles.title}>
+              <h3 className={styles.title}>
                 <button
                   ref={(el) => {
                     buttonRefs.current[item.id || String(key)] = el;
@@ -84,18 +80,17 @@ export const Accordion = ({
                   data-testid='button'
                   autoFocus={toggleButtonAutofocus}
                 >
-                  <span className={styles.buttonText}>
-                    <Rte
-                      rteConfig='rte1'
-                      text={item.accordionTitle}
-                    />
-                  </span>
+                  <SafeHtml
+                    as='span'
+                    className={styles.buttonText}
+                    html={rteToHtml(item.accordionTitle)}
+                  />
                   <Icon
                     name='plus'
                     className={styles.icon}
                   />
                 </button>
-              </HeadingElem>
+              </h3>
 
               <section
                 id={`accordion-section-${key}`}
@@ -105,11 +100,15 @@ export const Accordion = ({
                 inert={item.id !== activeElement}
                 data-testid='content'
               >
-                <Rte
+                <div
                   className={styles.rte}
-                  text={item.accordionContent}
-                  rteConfig='rte3'
-                />
+                >
+                  <Rte
+                    colorMode={colorMode}
+                    stickyFirstTitle={false}
+                    text={item.accordionContent}
+                  />
+                </div>
               </section>
             </Fragment>
 

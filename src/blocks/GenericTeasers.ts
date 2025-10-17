@@ -2,23 +2,19 @@ import {
   Block, Field,
 } from 'payload';
 import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
+import { rte1 } from '@/field-templates/rte';
 
 // Example: Early Career Award, Institutes Overview
 // Example: Magazine Detail
 
 const TeaserItem: Field[] = [
-  {
-    localized: true,
+  rte1({
     name: 'title',
-    required: true,
-    type: 'text',
-  },
-  {
-    localized: true,
+  }),
+  rte1({
     name: 'text',
-    required: false,
-    type: 'text',
-  },
+    notRequired: true,
+  }),
   {
     name: 'image',
     relationTo: [
@@ -31,23 +27,18 @@ const TeaserItem: Field[] = [
   ...fieldsLinkInternalOrExternal,
 ];
 
-export const GenericTeasersBlock: Block = {
+export const GenericTeasersBlock = {
   admin: {
     disableBlockName: true,
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'title',
-      required: true,
-      type: 'text',
-    },
-    {
-      localized: true,
+    }),
+    rte1({
       name: 'lead',
-      required: false,
-      type: 'text',
-    },
+      notRequired: true,
+    }),
     {
       admin: {
         description: 'Align Title & text horizontally or vertically',
@@ -81,4 +72,4 @@ export const GenericTeasersBlock: Block = {
     singular: 'Generic Teasers',
   },
   slug: 'genericTeasersBlock',
-};
+} as const satisfies Block;

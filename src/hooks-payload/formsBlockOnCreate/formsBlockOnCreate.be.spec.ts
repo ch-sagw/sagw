@@ -22,11 +22,11 @@ test.describe('news detail page', () => {
 
     // properly save page with valid values to not disturb other tests
 
-    const teaserInput = await page.getByRole('textbox', {
-      name: 'Teaser Text',
-    });
+    const teaserInput = await page.locator('.ContentEditable__root')
+      .nth(0);
 
-    const heroField = await page.locator('#field-hero .ContentEditable__root');
+    const heroField = await page.locator('.ContentEditable__root')
+      .nth(0);
     const dateField = await page.locator('#field-hero__date input');
 
     await teaserInput.fill('foo');

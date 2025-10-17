@@ -8,6 +8,7 @@ import styles from '@/components/base/Button/Button.module.scss';
 import { Icon } from '@/icons';
 import Link from 'next/link';
 import { ColorMode } from '@/components/base/types/colorMode';
+import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 
 type BaseWrapperProps = {
   ariaCurrent?: boolean;
@@ -77,7 +78,10 @@ const buttonLinkContent = ({
     {
       text && (
         <span className={styles.innerText}>
-          {text}
+          <SafeHtml
+            as='span'
+            html={text}
+          />
           <span className={styles.line}></span>
         </span>
       )

@@ -32,7 +32,16 @@ export const HomePage: CollectionConfig = {
 
             // Content Blocks
             {
-              blocks: blocks(),
+              blocks: blocks([
+                'textBlock',
+                'formBlock',
+                'homeTeasersBlock',
+                'projectsTeasersBlock',
+                'eventsTeasersBlock',
+                'magazineTeasersBlock',
+                'newsTeasersBlock',
+                'publicationsTeasersBlock',
+              ]),
               label: 'Content',
               name: 'content',
               type: 'blocks',

@@ -1,22 +1,20 @@
 import { Block } from 'payload';
-import { rte2 } from '@/field-templates/rte';
+import {
+  rte1, rte2,
+} from '@/field-templates/rte';
 
 // Example: Magazine detail page
 
-export const FootnotesBlock: Block = {
+export const FootnotesBlock = {
   admin: {
     disableBlockName: true,
   },
   fields: [
-    {
-      localized: true,
+    rte1({
       name: 'title',
-      required: true,
-      type: 'text',
-    },
+    }),
     rte2({
       name: 'text',
-      required: true,
     }),
   ],
   imageURL: '/admin-ui-images/notification.svg',
@@ -26,4 +24,4 @@ export const FootnotesBlock: Block = {
     singular: 'Footnote',
   },
   slug: 'footnoteBlock',
-};
+} as const satisfies Block;

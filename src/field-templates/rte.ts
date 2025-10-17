@@ -16,8 +16,8 @@ import {
 import { SoftHyphenFeature } from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.server';
 import { NonBreakingSpaceFeature } from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpace.server';
 import {
-  Field,
   FieldHook,
+  RichTextField,
 } from 'payload';
 import { JSDOM } from 'jsdom';
 import domPurify from 'dompurify';
@@ -129,18 +129,20 @@ const rte3Editor = lexicalEditor({
 
 interface InterfaceRteInputType {
   name: string;
-  required: boolean;
+  notRequired?: boolean;
+  disableLocalization?: boolean;
 }
 
 interface InterfaceRteInputTypeInternal {
   name: string;
-  required: boolean;
+  notRequired?: boolean;
   editor: LexicalRichTextAdapterProvider;
+  disableLocalization?: boolean;
 }
 
 const rte = ({
-  name, required, editor,
-}: InterfaceRteInputTypeInternal): Field => ({
+  name, notRequired, editor, disableLocalization,
+}: InterfaceRteInputTypeInternal): RichTextField => ({
   editor,
   hooks: {
     beforeValidate: [
@@ -149,32 +151,33 @@ const rte = ({
       }): FieldHook => sanitizeRichTextValue(value),
     ],
   },
-  localized: true,
+  localized: !disableLocalization,
   name,
-  required,
+  required: !notRequired,
   type: 'richText',
 });
 
 export const rte1 = ({
-  name, required,
-}: InterfaceRteInputType): Field => rte({
+  name, notRequired, disableLocalization,
+}: InterfaceRteInputType): RichTextField => rte({
+  disableLocalization,
   editor: rte1Editor,
   name,
-  required,
+  notRequired,
 });
 
 export const rte2 = ({
-  name, required,
-}: InterfaceRteInputType): Field => rte({
+  name, notRequired,
+}: InterfaceRteInputType): RichTextField => rte({
   editor: rte2Editor,
   name,
-  required,
+  notRequired,
 });
 
 export const rte3 = ({
-  name, required,
-}: InterfaceRteInputType): Field => rte({
+  name, notRequired,
+}: InterfaceRteInputType): RichTextField => rte({
   editor: rte3Editor,
   name,
-  required,
+  notRequired,
 });

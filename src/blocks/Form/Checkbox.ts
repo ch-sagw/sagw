@@ -15,7 +15,6 @@ export const checkboxBlock = (): Block => ({
     formFieldName,
     rte3({
       name: 'label',
-      required: true,
     }),
     {
       fields: [
@@ -25,6 +24,10 @@ export const checkboxBlock = (): Block => ({
       type: 'row',
     },
     formFieldError,
+    {
+      name: 'defaultChecked',
+      type: 'checkbox',
+    },
   ],
   interfaceName: 'InterfaceCheckboxField',
   labels: {

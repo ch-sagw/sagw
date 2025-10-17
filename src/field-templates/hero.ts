@@ -13,14 +13,17 @@ const colorMode = fieldsColorMode({
 
 const titleField = rte1({
   name: 'title',
-  required: true,
 });
 
-const leadField: Field = {
-  localized: true,
+const leadField: Field = rte1({
   name: 'lead',
-  required: false,
-  type: 'text',
+  notRequired: true,
+});
+
+const dateField: Field = {
+  name: 'date',
+  required: true,
+  type: 'date',
 };
 
 const generalProps: {
@@ -53,12 +56,9 @@ export const fieldsHeroHome: GroupField = {
       name: 'animated',
       type: 'checkbox',
     },
-    {
-      localized: true,
+    rte1({
       name: 'sideTitle',
-      required: true,
-      type: 'text',
-    },
+    }),
     fieldsLinkInternalWithToggle,
   ],
   interfaceName: 'InterfaceHeroFieldHome',
@@ -70,18 +70,10 @@ export const fieldsHeroMagazineDetail: GroupField = {
     titleField,
     leadField,
     colorMode,
-    {
-      localized: true,
+    rte1({
       name: 'author',
-      required: true,
-      type: 'text',
-    },
-    {
-      localized: true,
-      name: 'date',
-      required: true,
-      type: 'date',
-    },
+    }),
+    dateField,
   ],
   interfaceName: 'InterfaceHeroFieldMagazineDetail',
   ...generalProps,
@@ -92,11 +84,7 @@ export const fieldsHeroNewsDetail: GroupField = {
     titleField,
     leadField,
     colorMode,
-    {
-      name: 'date',
-      required: true,
-      type: 'date',
-    },
+    dateField,
   ],
   interfaceName: 'InterfaceHeroFieldNewsDetail',
   ...generalProps,

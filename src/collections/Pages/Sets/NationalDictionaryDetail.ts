@@ -10,6 +10,7 @@ import { hookSeoFallback } from '@/hooks-payload/seoFallback';
 import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superAdminOrTenantAdmin';
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
+import { rte1 } from '@/field-templates/rte';
 
 export const NationalDictionaryDetailPage: CollectionConfig = {
   access: {
@@ -47,10 +48,9 @@ export const NationalDictionaryDetailPage: CollectionConfig = {
                   admin: {
                     description: 'This text will be used for the teasers on the overview page.',
                   },
-                  localized: true,
-                  name: 'text',
-                  required: true,
-                  type: 'text',
+                  ...rte1({
+                    name: 'teaserText',
+                  }),
                 },
               ],
               label: 'Overview Page properties',
@@ -63,7 +63,11 @@ export const NationalDictionaryDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blocks: blocks(),
+              blocks: blocks([
+                'textBlock',
+                'linksBlock',
+                'notificationBlock',
+              ]),
               label: 'Content',
               name: 'content',
               type: 'blocks',
