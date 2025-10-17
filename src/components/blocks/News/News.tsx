@@ -30,6 +30,7 @@ interface InterfaceNewsOverviewPropTypes {
     totalPages: number;
     currentPage: number;
     paginationTitle: string;
+    onPageChange?: (page: number) => void;
   }
 }
 
@@ -114,6 +115,7 @@ export const News = (props: InterfaceNewsPropTypes): React.JSX.Element => {
           totalPages={props.pagination.totalPages}
           currentPage={props.pagination.currentPage}
           paginationTitle={props.pagination.paginationTitle}
+          onPageChange={props.pagination.onPageChange}
         />
       }
     </section>
