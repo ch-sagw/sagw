@@ -2,6 +2,7 @@
 @use "../../../styles/mixins/mixins-layout" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
 
 .news {
   @include block-layout-sticky-title("grid");
@@ -12,6 +13,12 @@
 
     background-color: var(--background-light);
     color: var(--text-primary);
+  }
+
+  &.overview {
+    @include mq($from: large) {
+      row-gap: px-to-rem(var(--section-inside-m));
+    }
   }
 
   .title {

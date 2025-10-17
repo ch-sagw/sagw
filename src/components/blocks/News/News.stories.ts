@@ -3,7 +3,7 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import { News } from '@/components/blocks/News/News';
-import { defaultDecorator } from '@/storybook-helpers';
+import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 
 type NewsProps = React.ComponentProps<typeof News>;
 
@@ -14,8 +14,10 @@ type StrictStory = StoryObj<typeof News> & {
 const meta: Meta<typeof News> = {
   args: {},
   component: News,
-  decorators: [defaultDecorator],
-  parameters: {/* layout: 'centered', */ },
+  decorators: [defaultDecoratorNoPadding],
+  parameters: {
+    layout: 'fullscreen',
+  },
   tags: [
     'autodocs',
     'visual:check',
@@ -75,6 +77,11 @@ export const NewsOverview: StrictStory = {
       ...items,
       items[0],
     ],
+    pagination: {
+      currentPage: 5,
+      paginationTitle: 'Pagination',
+      totalPages: 10,
+    },
     title: 'News',
     type: 'overview',
   },
