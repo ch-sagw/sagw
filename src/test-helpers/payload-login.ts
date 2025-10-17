@@ -7,5 +7,7 @@ export const beforeEachPayloadLogin = (): void => {
     await page.goto('http://localhost:3000/admin');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForLoadState('load');
+
+    await page.waitForFunction('document.cookie.includes(\'payload-tenant\')');
   });
 };
