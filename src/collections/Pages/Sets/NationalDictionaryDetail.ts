@@ -63,12 +63,11 @@ export const NationalDictionaryDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blockReferences: blocks([
+              blocks: blocks([
                 'textBlock',
                 'linksBlock',
                 'notificationBlock',
               ]),
-              blocks: [],
               label: 'Content',
               name: 'content',
               type: 'blocks',

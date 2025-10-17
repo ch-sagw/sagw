@@ -68,7 +68,7 @@ export const NewsDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blockReferences: blocks([
+              blocks: blocks([
                 'textBlock',
                 'linksBlock',
                 'downloadsBlock',
@@ -77,7 +77,6 @@ export const NewsDetailPage: CollectionConfig = {
                 'notificationBlock',
                 'newsTeasersBlock',
               ]),
-              blocks: [],
               label: 'Content',
               name: 'content',
               type: 'blocks',

@@ -46,7 +46,7 @@ export const DetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blockReferences: blocks([
+              blocks: blocks([
                 'textBlock',
                 'footnoteBlock',
                 'linksBlock',
@@ -60,7 +60,6 @@ export const DetailPage: CollectionConfig = {
                 'notificationBlock',
                 'genericTeasersBlock',
               ]),
-              blocks: [],
               label: 'Content',
               name: 'content',
               type: 'blocks',

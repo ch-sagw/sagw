@@ -32,7 +32,7 @@ export const HomePage: CollectionConfig = {
 
             // Content Blocks
             {
-              blockReferences: blocks([
+              blocks: blocks([
                 'textBlock',
                 'formBlock',
                 'homeTeasersBlock',
@@ -42,7 +42,6 @@ export const HomePage: CollectionConfig = {
                 'newsTeasersBlock',
                 'publicationsTeasersBlock',
               ]),
-              blocks: [],
               label: 'Content',
               name: 'content',
               type: 'blocks',
