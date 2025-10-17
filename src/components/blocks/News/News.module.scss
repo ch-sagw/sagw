@@ -3,7 +3,7 @@
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/utilities" as *;
 
-.newsSection {
+.news {
   @include block-layout-sticky-title("grid");
   @include generic-block-padding;
 

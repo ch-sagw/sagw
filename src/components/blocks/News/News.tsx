@@ -1,39 +1,39 @@
 import React from 'react';
 import { cva } from 'cva';
-import styles from '@/components/base/NewsSection/NewsSection.module.scss';
+import styles from '@/components/blocks/News/News.module.scss';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
 
-interface InterfaceNewsSectionItem {
+interface InterfaceNewsItem {
   title: string;
   text: string;
   date: string;
   link: string;
 }
 
-interface InterfaceNewsSectionBasePropTypes {
-  items: InterfaceNewsSectionItem[];
+interface InterfaceNewsBasePropTypes {
+  items: InterfaceNewsItem[];
   title: string;
   type: 'teaser' | 'overview';
 }
 
-interface InterfaceNewsSectionTeaserPropTypes {
-  allLink: {
+interface InterfaceNewsTeaserPropTypes {
+  allLink?: {
     text: string;
     href: string;
   }
 }
 
-export type InterfaceNewsSectionPropTypes =
-  | (InterfaceNewsSectionBasePropTypes & {
+export type InterfaceNewsPropTypes =
+  | (InterfaceNewsBasePropTypes & {
     type: 'overview';
   })
-  | (InterfaceNewsSectionBasePropTypes &
-    InterfaceNewsSectionTeaserPropTypes & {
+  | (InterfaceNewsBasePropTypes &
+    InterfaceNewsTeaserPropTypes & {
       type: 'teaser';
     });
 
-const sectionClasses = cva([styles.newsSection], {
+const sectionClasses = cva([styles.news], {
   variants: {
     type: {
       overview: [styles.overview],
@@ -42,7 +42,7 @@ const sectionClasses = cva([styles.newsSection], {
   },
 });
 
-export const NewsSection = (props: InterfaceNewsSectionPropTypes): React.JSX.Element => {
+export const News = (props: InterfaceNewsPropTypes): React.JSX.Element => {
   const {
     items,
     title,
@@ -87,7 +87,7 @@ export const NewsSection = (props: InterfaceNewsSectionPropTypes): React.JSX.Ele
         ))}
       </ul>
 
-      {type === 'teaser' &&
+      {type === 'teaser' && props.allLink &&
         <Button
           style='text'
           colorMode='light'
