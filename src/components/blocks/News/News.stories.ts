@@ -79,6 +79,9 @@ export const NewsOverview: StrictStory = {
     ],
     pagination: {
       currentPage: 5,
+      onPageChange: (page) => {
+        console.log('changed to page', page);
+      },
       paginationTitle: 'Pagination',
       totalPages: 10,
     },
