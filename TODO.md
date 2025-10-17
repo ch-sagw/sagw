@@ -1,7 +1,6 @@
 Backup / Restore:
 -----------------
 - test blob backup/restore with lots of large image files
-- adapt replicate task to also replicate blob to local
 
 Storybook:
 ----------
@@ -9,8 +8,6 @@ Storybook:
 Github:
 -------
 - add branch restrictions on main
-- add test sharding to deploy-prod.yml
-- add sharding for be tests as well
 
 Resend:
 -------
@@ -47,15 +44,10 @@ Payload Config:
 - set access control on all blocks/collections
 - layout fields in rows where appropriate. e.g. with link internal: the 3 fields can be in 1 row
 - show "published" column in collection overview
-- add descriptions to collections: what is this collection for?
 - care about redirects: check redirects-plugin and decide if we use it or create our own
-- limit blocks on all pages
 - add admin ui images for blocks: generic teaser, footnotes
 
 Misc:
 --------
 - update docs on env-vars
 - update docs on deployments
-
-Testing:
--------
