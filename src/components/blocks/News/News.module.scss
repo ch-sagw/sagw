@@ -16,8 +16,10 @@
   }
 
   &.overview {
-    @include mq($from: large) {
-      row-gap: px-to-rem(var(--section-inside-m));
+    .pagination {
+      @include mq($from: large) {
+        margin-block-start: px-to-rem(var(--section-inside-m));
+      }
     }
   }
 
