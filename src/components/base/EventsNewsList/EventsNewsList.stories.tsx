@@ -41,6 +41,7 @@ export const EventsNewsTeaser: StrictStory = {
       text: 'Alle News',
     },
     children: [newsListItem],
+    colorMode: 'light',
     title: 'News',
     type: 'teaser',
   },
@@ -49,6 +50,7 @@ export const EventsNewsTeaser: StrictStory = {
 export const EventsNewsTeaserWithoutLink: StrictStory = {
   args: {
     children: [newsListItem],
+    colorMode: 'light',
     title: 'News',
     type: 'teaser',
   },
@@ -57,6 +59,7 @@ export const EventsNewsTeaserWithoutLink: StrictStory = {
 export const EventsNewsOverview: StrictStory = {
   args: {
     children: [newsListItem],
+    colorMode: 'white',
     pagination: {
       currentPage: 5,
       onPageChange: (page) => {
