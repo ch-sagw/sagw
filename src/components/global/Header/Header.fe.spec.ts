@@ -10,6 +10,10 @@ test('transistions to white on scroll', async ({
   await navigate(page, 'components-global-header--header-dark');
   await page.evaluate(() => window.scrollBy(0, 250));
 
+  const elem = await page.getByTestId('header');
+
+  await (await elem.elementHandle())?.waitForElementState('stable');
+
   await expect(page)
     .toHaveScreenshot({
       animations: 'disabled',
