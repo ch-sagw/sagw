@@ -20,6 +20,7 @@ export const Pagination = ({
 }: InterfacePaginationPropTypes): React.JSX.Element => {
   const {
     measurements,
+    containerRef,
   } = usePaginationMeasurements();
 
   if (totalPages < 2) {
@@ -27,144 +28,50 @@ export const Pagination = ({
   }
 
   const getPagesWithoutFillers = (maxItems: number): number[] => {
-    if (maxItems === 1) {
-      return [currentPage];
+    const pages: number[] = [];
+
+    // For small screens, show a sliding window around current page
+    // Always try to show first and last if we have space
+    const canShowFirstAndLast = maxItems >= 4;
+
+    if (canShowFirstAndLast) {
+      // Show first page, pages around current, and last page
+      // Reserve 2 slots for first and last
+      const middleSlots = maxItems - 2;
+      const halfMiddle = Math.floor(middleSlots / 2);
+
+      let start = Math.max(2, currentPage - halfMiddle);
+      const end = Math.min(totalPages - 1, start + middleSlots - 1);
+
+      // Adjust if we hit boundaries
+      if (end === totalPages - 1) {
+        start = Math.max(2, end - middleSlots + 1);
+      }
+
+      pages.push(1);
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+      if (totalPages > 1) {
+        pages.push(totalPages);
+      }
+    } else {
+      // For very small screens, just show pages around current
+      const halfWindow = Math.floor(maxItems / 2);
+      let start = Math.max(1, currentPage - halfWindow);
+      const end = Math.min(totalPages, start + maxItems - 1);
+
+      // Adjust if we hit boundaries
+      if (end === totalPages) {
+        start = Math.max(1, end - maxItems + 1);
+      }
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
     }
 
-    if (maxItems === 2) {
-      // Show current and next page
-      if (currentPage < totalPages) {
-        return [
-          currentPage,
-          currentPage + 1,
-        ];
-      }
-
-      return [
-        currentPage - 1,
-        currentPage,
-      ];
-    }
-
-    if (maxItems === 3) {
-      // Show current, current+1, and last page
-      if (currentPage < totalPages) {
-        return [
-          currentPage,
-          currentPage + 1,
-          totalPages,
-        ];
-      }
-
-      return [
-        currentPage - 1,
-        currentPage,
-        totalPages,
-      ];
-    }
-
-    if (maxItems === 4) {
-      // Show current-1, current, current+1, and last page
-      if (currentPage > 1 && currentPage < totalPages) {
-        return [
-          currentPage - 1,
-          currentPage,
-          currentPage + 1,
-          totalPages,
-        ];
-      }
-      if (currentPage === 1) {
-        return [
-          currentPage,
-          currentPage + 1,
-          currentPage + 2,
-          totalPages,
-        ];
-      }
-
-      return [
-        currentPage - 2,
-        currentPage - 1,
-        currentPage,
-        totalPages,
-      ];
-    }
-
-    if (maxItems === 5) {
-      // Show first page, current-1, current, current+1, and last page
-      if (currentPage > 1 && currentPage < totalPages) {
-        return [
-          1,
-          currentPage - 1,
-          currentPage,
-          currentPage + 1,
-          totalPages,
-        ];
-      }
-      if (currentPage === 1) {
-        return [
-          1,
-          currentPage + 1,
-          currentPage + 2,
-          currentPage + 3,
-          totalPages,
-        ];
-      }
-
-      return [
-        1,
-        currentPage - 3,
-        currentPage - 1,
-        currentPage,
-        totalPages,
-      ];
-    }
-
-    if (maxItems === 6) {
-      // Show first page, current-1, current, current+1, current+2,
-      // and last page
-      if (currentPage > 1 && currentPage < totalPages - 1) {
-        return [
-          1,
-          currentPage - 1,
-          currentPage,
-          currentPage + 1,
-          currentPage + 2,
-          totalPages,
-        ];
-      }
-      if (currentPage === 1) {
-        return [
-          1,
-          currentPage + 1,
-          currentPage + 2,
-          currentPage + 3,
-          currentPage + 4,
-          totalPages,
-        ];
-      }
-      if (currentPage === totalPages) {
-        return [
-          1,
-          currentPage - 4,
-          currentPage - 2,
-          currentPage - 1,
-          currentPage,
-          totalPages,
-        ];
-      }
-
-      return [
-        1,
-        currentPage - 2,
-        currentPage - 1,
-        currentPage,
-        currentPage + 1,
-        totalPages,
-      ];
-    }
-
-    return [currentPage];
+    return pages;
   };
 
   const getPagesWithFillers = (maxItems: number): (number | 'filler')[] => {
@@ -246,6 +153,7 @@ export const Pagination = ({
 
   return (
     <nav
+      ref={containerRef}
       className={styles.pagination}
       aria-labelledby='pagination'
     >

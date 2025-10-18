@@ -1,12 +1,15 @@
-import {
-  useEffect, useState,
+import React, {
+  useEffect, useRef, useState,
 } from 'react';
 
 interface InterfacePaginationMeasurements {
   maxItems: number;
 }
 
-export const usePaginationMeasurements = () => {
+export const usePaginationMeasurements = (): {
+  containerRef: React.RefObject<HTMLElement | null>;
+  measurements: InterfacePaginationMeasurements;
+} => {
   const [
     measurements,
     setMeasurements,
@@ -14,47 +17,51 @@ export const usePaginationMeasurements = () => {
     maxItems: 7,
   });
 
+  const containerRef = useRef<HTMLElement>(null);
+
   useEffect(() => {
-    const calculateMaxItems = () => {
-      // Get viewport width
-      const viewportWidth = window.innerWidth;
+    const calculateMaxItems = (): void => {
+      if (!containerRef.current) {
+        return;
+      }
 
-      // Estimate item width based on CSS variables and viewport
-      // From the SCSS: --pagination-item-size: 56 (mobile), 64 (desktop)
-      const isMobile = viewportWidth < 768;
-      const itemSize = isMobile
-        ? 56
-        : 64;
+      const containerWidth = containerRef.current.offsetWidth;
+      const computedStyle = window.getComputedStyle(containerRef.current);
 
-      // Gap: --spacing-m (mobile), --spacing-l (desktop)
-      // Assuming these are around 16px and 24px respectively
-      const gapSize = isMobile
-        ? 16
-        : 24;
+      // Get item size from CSS variable
+      const itemSizeValue = computedStyle.getPropertyValue('--pagination-item-size');
+      const itemSize = itemSizeValue
+        ? parseFloat(itemSizeValue)
+        : 56;
+
+      // Get gap from CSS variable
+      const gapValue = computedStyle.getPropertyValue('--pagination-gap');
+      const gapSize = gapValue
+        ? parseFloat(gapValue)
+        : 16;
 
       // Calculate how many items can fit
-      // Account for some padding/margins (let's say 40px total)
-      const availableWidth = viewportWidth - 40;
-      const maxItems = Math.floor((availableWidth + gapSize) / (itemSize + gapSize));
+      const maxItems = Math.floor((containerWidth + gapSize) / (itemSize + gapSize));
 
-      // Ensure reasonable bounds
-      const clampedMaxItems = Math.max(3, Math.min(15, maxItems));
+      // Ensure no more than 10 items
+      const clampedMaxItems = Math.max(1, Math.min(10, maxItems));
 
       setMeasurements({
         maxItems: clampedMaxItems,
       });
     };
 
-    // Calculate on mount and resize
     calculateMaxItems();
+
     window.addEventListener('resize', calculateMaxItems);
 
-    return () => {
+    return (): void => {
       window.removeEventListener('resize', calculateMaxItems);
     };
   }, []);
 
   return {
+    containerRef,
     measurements,
   };
 };

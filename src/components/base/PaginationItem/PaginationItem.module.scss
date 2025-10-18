@@ -7,11 +7,10 @@
   @include button-text;
   @include button-reset;
 
-  --pagination-item-size: 56;
-
-  @include mq($from: medium) {
-    --pagination-item-size: 64;
-  }
+  // --pagination-item-size is set in Pagination.module.scss
+  // the reason being that we need to get the values of this scss variable
+  // via ref in useEffect hook. Since the ref points to the Pagination module,
+  // we need to keep it there.
 
   display: flex;
   align-items: center;
