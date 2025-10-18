@@ -10,6 +10,8 @@
   row-gap: px-to-rem(var(--inside-elements-s));
   align-items: start;
   grid-auto-columns: min-content;
+  padding-block: px-to-rem(var(--inside-elements-l));
+  border-block-end: px-to-rem(var(--border-width-l)) solid var(--border-primary);
 
   .link {
     display: contents;

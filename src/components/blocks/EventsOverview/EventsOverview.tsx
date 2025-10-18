@@ -3,30 +3,29 @@ import {
   EventsNewsList, InterfaceEventsNewsListPropTypes,
 } from '@/components/base/EventsNewsList/EventsNewsList';
 import {
-  InterfaceNewsListItemPropTypes, NewsListItem,
-} from '@/components/base/NewsListItem/NewsListItem';
+  EventsListItem, InterfaceEventsListItemPropTypes,
+} from '@/components/base/EventsListItem/EventsListItem';
 
-export type InterfaceNewsOverviewPropTypes = Omit<
+export type InterfaceEventsOverviewPropTypes = Omit<
   InterfaceEventsNewsListPropTypes,
   'children' | 'type' | 'colorMode'
 > & {
-  items: InterfaceNewsListItemPropTypes[];
+  items: InterfaceEventsListItemPropTypes[];
 };
 
-export const NewsOverview = ({
+export const EventsOverview = ({
   items, title, pagination,
-}: InterfaceNewsOverviewPropTypes): React.JSX.Element => (
+}: InterfaceEventsOverviewPropTypes): React.JSX.Element => (
   <EventsNewsList
-
     /* eslint-disable @typescript-eslint/no-non-null-assertion */
     pagination={pagination!}
     /* eslint-enable @typescript-eslint/no-non-null-assertion */
     type='overview'
-    title={title}
     colorMode='white'
+    title={title}
   >
     {items.map((item, key) => (
-      <NewsListItem
+      <EventsListItem
         key={key}
         {...item}
       />

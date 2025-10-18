@@ -69,3 +69,7 @@ Backup Migration:
 - remove cron from vercel.json and from next-js route
 - remove env vars in local env files, on github and vercel
 - remove env vars from docs
+
+
+QUESTIONS:
+- newsTeasers and eventsTeasers -> no option to choose color scheme?

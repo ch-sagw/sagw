@@ -3,27 +3,27 @@ import {
   EventsNewsList, InterfaceEventsNewsListPropTypes,
 } from '@/components/base/EventsNewsList/EventsNewsList';
 import {
-  InterfaceNewsListItemPropTypes, NewsListItem,
-} from '@/components/base/NewsListItem/NewsListItem';
+  EventsListItem, InterfaceEventsListItemPropTypes,
+} from '@/components/base/EventsListItem/EventsListItem';
 
-export type InterfaceNewsTeaserPropTypes = Omit<
+export type InterfaceEventsTeaserPropTypes = Omit<
   InterfaceEventsNewsListPropTypes,
   'children' | 'type' | 'colorMode'
 > & {
-  items: InterfaceNewsListItemPropTypes[];
+  items: InterfaceEventsListItemPropTypes[];
 };
 
-export const NewsTeaser = ({
+export const EventsTeaser = ({
   items, title, allLink,
-}: InterfaceNewsTeaserPropTypes): React.JSX.Element => (
+}: InterfaceEventsTeaserPropTypes): React.JSX.Element => (
   <EventsNewsList
+    colorMode='white'
     type='teaser'
-    colorMode='light'
     title={title}
     allLink={allLink}
   >
     {items.map((item, key) => (
-      <NewsListItem
+      <EventsListItem
         key={key}
         {...item}
       />

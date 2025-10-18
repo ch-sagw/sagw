@@ -33,7 +33,7 @@ export const Full: StrictStory = {
     language: 'Auf Deutsch',
     link: {
       href: 'https://foo.bar',
-      target: '_blank',
+      target: '_blank' as const,
     },
     location: 'ETH Zürich',
     pageLanguage: 'de',
@@ -50,7 +50,7 @@ export const InternalLink: StrictStory = {
     language: 'Auf Deutsch',
     link: {
       href: 'https://foo.bar',
-      target: '_self',
+      target: '_self' as const,
     },
     location: 'ETH Zürich',
     pageLanguage: 'de',
@@ -67,7 +67,7 @@ export const DateNotSameMonth: StrictStory = {
     language: 'Auf Deutsch',
     link: {
       href: 'https://foo.bar',
-      target: '_self',
+      target: '_self' as const,
     },
     location: 'ETH Zürich',
     pageLanguage: 'de',
@@ -84,7 +84,7 @@ export const DateNotSameYear: StrictStory = {
     language: 'Auf Deutsch',
     link: {
       href: 'https://foo.bar',
-      target: '_self',
+      target: '_self' as const,
     },
     location: 'ETH Zürich',
     pageLanguage: 'de',
@@ -101,7 +101,7 @@ export const NoTag: StrictStory = {
     language: 'Auf Deutsch',
     link: {
       href: 'https://foo.bar',
-      target: '_self',
+      target: '_self' as const,
     },
     location: 'ETH Zürich',
     pageLanguage: 'de',
@@ -115,7 +115,7 @@ export const Minimal: StrictStory = {
     dateStart: '2025-10-24T12:00:00.000Z',
     link: {
       href: 'https://foo.bar',
-      target: '_self',
+      target: '_self' as const,
     },
     pageLanguage: 'de',
     tag: 'Workshop',
@@ -128,7 +128,7 @@ export const MinimalWithoutTag: StrictStory = {
     dateStart: '2025-10-24T12:00:00.000Z',
     link: {
       href: 'https://foo.bar',
-      target: '_self',
+      target: '_self' as const,
     },
     pageLanguage: 'de',
     text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
