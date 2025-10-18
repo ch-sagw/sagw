@@ -87,7 +87,7 @@ export const Pagination = ({
     // We need:
     // 1 (first) + 1 (filler) + X (middle) + 1 (filler) + 1 (last) = maxItems
     // So X = maxItems - 4
-    const middlePages = maxItems - 4;
+    let middlePages = maxItems - 4;
 
     if (middlePages <= 0) {
       // Fallback if not enough space
@@ -103,11 +103,32 @@ export const Pagination = ({
     // Calculate the range around current page
     const halfMiddle = Math.floor(middlePages / 2);
     let start = Math.max(2, currentPage - halfMiddle);
-    const end = Math.min(totalPages - 1, start + middlePages - 1);
+    let end = Math.min(totalPages - 1, start + middlePages - 1);
 
     // Adjust if we hit the end boundary
     if (end === totalPages - 1) {
       start = Math.max(2, end - middlePages + 1);
+    }
+
+    // Check how many fillers we actually need
+    const needsFillerBefore = start > 2;
+    const needsFillerAfter = end < totalPages - 1;
+    const actualFillers = Number(needsFillerBefore) + Number(needsFillerAfter);
+
+    // If we only have 1 filler, we can fit 1 additional item
+    if (actualFillers === 1) {
+      middlePages += 1;
+
+      // Recalculate with the additional item
+      const halfMiddleNew = Math.floor(middlePages / 2);
+
+      start = Math.max(2, currentPage - halfMiddleNew);
+      end = Math.min(totalPages - 1, start + middlePages - 1);
+
+      // Adjust if we hit the end boundary
+      if (end === totalPages - 1) {
+        start = Math.max(2, end - middlePages + 1);
+      }
     }
 
     // Add filler before middle pages if needed
