@@ -32,6 +32,10 @@
   .list {
     @include list-reset;
 
+    @include mq($from: large) {
+      margin-block-start: px-to-rem(7);
+    }
+
     .item {
       padding-block: px-to-rem(var(--inside-elements-l));
       border-block-end: px-to-rem(var(--border-width-l)) solid var(--border-primary);
