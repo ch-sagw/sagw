@@ -7,7 +7,7 @@
   @include button-text;
   @include button-reset;
 
-  // --pagination-item-size is set in Pagination.module.scss
+  // --pagination-item-size is defined in Pagination.module.scss
   // the reason being that we need to get the values of this scss variable
   // via ref in useEffect hook. Since the ref points to the Pagination module,
   // we need to keep it there.
