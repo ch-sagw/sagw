@@ -11,8 +11,11 @@
   &.teaser {
     @include generic-block-top-line;
 
-    background-color: var(--background-light);
     color: var(--text-primary);
+
+    &.light {
+      background-color: var(--background-light);
+    }
   }
 
   &.overview {

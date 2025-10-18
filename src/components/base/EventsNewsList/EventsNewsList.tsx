@@ -4,10 +4,12 @@ import styles from '@/components/base/EventsNewsList/EventsNewsList.module.scss'
 import { Button } from '@/components/base/Button/Button';
 import { Pagination } from '@/components/base/Pagination/Pagination';
 import { Icon } from '@/icons';
+import { ColorMode } from '@/components/base/types/colorMode';
 
 interface InterfaceBaseProps {
   children: React.ReactNode;
   title: string;
+  colorMode: ColorMode;
 }
 
 interface InterfaceTeaserProps extends InterfaceBaseProps {
@@ -34,6 +36,11 @@ export type InterfaceEventsNewsListPropTypes = InterfaceTeaserProps | InterfaceO
 
 const sectionClasses = cva([styles.eventsNewsList], {
   variants: {
+    colorMode: {
+      dark: undefined,
+      light: [styles.light],
+      white: undefined,
+    },
     type: {
       overview: [styles.overview],
       teaser: [styles.teaser],
@@ -45,11 +52,13 @@ export const EventsNewsList = (props: InterfaceEventsNewsListPropTypes): React.J
   const {
     title,
     type,
+    colorMode,
   } = props;
 
   return (
     <section
       className={sectionClasses({
+        colorMode,
         type,
       })}
     >
@@ -62,7 +71,7 @@ export const EventsNewsList = (props: InterfaceEventsNewsListPropTypes): React.J
       {type === 'teaser' && props.allLink &&
         <Button
           style='text'
-          colorMode='light'
+          colorMode={colorMode}
           element='link'
           href={props.allLink.href}
           className={styles.allLink}
