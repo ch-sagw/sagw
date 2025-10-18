@@ -2,7 +2,7 @@ import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/NewsListItem/NewsListItem.module.scss';
 import { Icon } from '@/icons';
-import { SafeHtml } from '../SafeHtml/SafeHtml';
+import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 
 export type InterfaceNewsListItemPropTypes = {
   title: string;
