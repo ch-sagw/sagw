@@ -2,6 +2,7 @@ import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/NewsListItem/NewsListItem.module.scss';
 import { Icon } from '@/icons';
+import { SafeHtml } from '../SafeHtml/SafeHtml';
 
 export type InterfaceNewsListItemPropTypes = {
   title: string;
@@ -30,12 +31,18 @@ export const NewsListItem = ({
         className={styles.link}
       >
         <div className={styles.textContent}>
-          <span className={styles.itemTitle}>
-            {title}
-          </span>
-          <span className={styles.itemText}>
-            {text}
-          </span>
+          <SafeHtml
+            className={styles.itemTitle}
+            as='span'
+            html={title}
+          />
+
+          <SafeHtml
+            className={styles.itemText}
+            as='span'
+            html={text}
+          />
+
           <span className={styles.itemDate}>
             {date}
           </span>
