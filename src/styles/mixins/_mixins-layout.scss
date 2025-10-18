@@ -6,7 +6,7 @@
   @include mq($to: large) {
     display: flex;
     flex-direction: column;
-    row-gap: px-to-rem(var(--section-inside-m));
+    row-gap: px-to-rem(var(--section-inside-s));
   }
 
   @include mq($from: large) {

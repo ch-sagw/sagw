@@ -67,7 +67,10 @@ export const EventsListItem = ({
   });
 
   return (
-    <li className={itemClasses()}>
+    <li
+      className={itemClasses()}
+      data-testid='eventListItem'
+    >
       <a
         href={link.href}
         className={styles.link}

@@ -25,7 +25,10 @@ export const NewsListItem = ({
   ]);
 
   return (
-    <li className={itemClasses()}>
+    <li
+      className={itemClasses()}
+      data-testid='newsListItem'
+    >
       <a
         href={link}
         className={styles.link}
