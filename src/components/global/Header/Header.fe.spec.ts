@@ -21,6 +21,23 @@ test('transistions to white on scroll', async ({
     });
 });
 
+test('hides metanav on scroll', async ({
+  page,
+}, workerInfo) => {
+  await navigate(page, 'components-global-header--header-dark');
+  await page.evaluate(() => window.scrollBy(0, 250));
+
+  const elem = await page.getByTestId('header');
+
+  if (workerInfo.project.name === 'chromium-1280' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
+    const metanavElem = await elem.getByText('mySAGW');
+
+    await (await elem.elementHandle())?.waitForElementState('stable');
+
+    await expect(metanavElem).not.toBeInViewport();
+  }
+});
+
 test('opens menu', async ({
   page,
 }, workerInfo) => {
