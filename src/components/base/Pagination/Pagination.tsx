@@ -1,6 +1,7 @@
 'use client';
 
 import React, { Fragment } from 'react';
+import { cva } from 'cva';
 import styles from '@/components/base/Pagination/Pagination.module.scss';
 import { PaginationItem } from '../PaginationItem/PaginationItem';
 import { usePaginationMeasurements } from '@/hooks/usePaginationMeasurements';
@@ -10,6 +11,7 @@ export type InterfacePaginationPropTypes = {
   currentPage: number;
   onPageChange?: (page: number) => void;
   paginationTitle: string;
+  className?: string;
 };
 
 export const Pagination = ({
@@ -17,6 +19,7 @@ export const Pagination = ({
   totalPages,
   onPageChange,
   paginationTitle,
+  className,
 }: InterfacePaginationPropTypes): React.JSX.Element => {
   const {
     measurements,
@@ -151,10 +154,15 @@ export const Pagination = ({
 
   const pages = getPages();
 
+  const paginationClasses = cva([
+    styles.pagination,
+    className,
+  ]);
+
   return (
     <nav
       ref={containerRef}
-      className={styles.pagination}
+      className={paginationClasses()}
       aria-labelledby='pagination'
     >
       <h2

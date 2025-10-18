@@ -112,6 +112,7 @@ export const News = (props: InterfaceNewsPropTypes): React.JSX.Element => {
 
       {type === 'overview' &&
         <Pagination
+          className={styles.pagination}
           totalPages={props.pagination.totalPages}
           currentPage={props.pagination.currentPage}
           paginationTitle={props.pagination.paginationTitle}
