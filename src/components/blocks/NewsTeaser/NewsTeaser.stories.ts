@@ -2,18 +2,18 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { News } from '@/components/blocks/News/News';
+import { NewsTeaser } from '@/components/blocks/NewsTeaser/NewsTeaser';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 
-type NewsProps = React.ComponentProps<typeof News>;
+type NewsTeaserProps = React.ComponentProps<typeof NewsTeaser>;
 
-type StrictStory = StoryObj<typeof News> & {
-  args: NewsProps;
+type StrictStory = StoryObj<typeof NewsTeaser> & {
+  args: NewsTeaserProps;
 };
 
-const meta: Meta<typeof News> = {
+const meta: Meta<typeof NewsTeaser> = {
   args: {},
-  component: News,
+  component: NewsTeaser,
   decorators: [defaultDecoratorNoPadding],
   parameters: {
     layout: 'fullscreen',
@@ -23,7 +23,7 @@ const meta: Meta<typeof News> = {
     'visual:check',
     'a11y:check',
   ],
-  title: 'Components/blocks/News',
+  title: 'Components/blocks/NewsTeaser',
 };
 
 export default meta;
@@ -49,7 +49,7 @@ const items = [
   },
 ];
 
-export const NewsTeaser: StrictStory = {
+export const DefaultTeaser: StrictStory = {
   args: {
     allLink: {
       href: 'https://foo.bar',
@@ -57,35 +57,5 @@ export const NewsTeaser: StrictStory = {
     },
     items,
     title: 'News',
-    type: 'teaser',
-  },
-};
-
-export const NewsTeaserWithoutLink: StrictStory = {
-  args: {
-    items,
-    title: 'News',
-    type: 'teaser',
-  },
-};
-
-export const NewsOverview: StrictStory = {
-  args: {
-    items: [
-      ...items,
-      ...items,
-      ...items,
-      items[0],
-    ],
-    pagination: {
-      currentPage: 5,
-      onPageChange: (page) => {
-        console.log('changed to page', page);
-      },
-      paginationTitle: 'Pagination',
-      totalPages: 10,
-    },
-    title: 'News',
-    type: 'overview',
   },
 };
