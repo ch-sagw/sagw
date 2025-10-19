@@ -1,0 +1,41 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.item {
+  @include list-reset;
+
+  .link {
+    text-decoration: none;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: px-to-rem(var(--inside-elements-l));
+
+    .content {
+      flex: 1;
+
+      .title {
+        @include title-heading-4;
+
+        color: var(--text-primary);
+        display: block;
+        padding-block-end: px-to-rem(var(--inside-elements-s));
+      }
+
+      .text {
+        @include body-text-s;
+
+        color: var(--text-secondary);
+        display: block;
+      }
+    }
+
+    .icon {
+      color: var(--interaction-secondary);
+      flex: px-to-rem(var(--spacing-l)) 0 0;
+      height: px-to-rem(var(--spacing-l));
+    }
+  }
+}

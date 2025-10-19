@@ -48,6 +48,7 @@ try {
         // in the list-component anyway, and within the correct context.
         .exclude('[data-testid="eventListItem"]')
         .exclude('[data-testid="newsListItem"]')
+        .exclude('[data-testid="downloadLinkItem"]')
         .analyze();
 
       expect(accessibilityScanResults.violations)
