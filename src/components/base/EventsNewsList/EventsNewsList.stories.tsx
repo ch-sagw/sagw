@@ -5,6 +5,7 @@ import type {
 import { EventsNewsList } from '@/components/base/EventsNewsList/EventsNewsList';
 import { defaultDecorator } from '@/storybook-helpers';
 import { NewsListItem } from '../NewsListItem/NewsListItem';
+import { EventsListItem } from '../EventsListItem/EventsListItem';
 
 type EventsNewsListProps = React.ComponentProps<typeof EventsNewsList>;
 
@@ -34,7 +35,17 @@ const newsListItem = <NewsListItem
   title='SAGW verleiht Early Career Award 2025'
 />;
 
-export const EventsNewsTeaser: StrictStory = {
+const eventListItem = <EventsListItem
+  dateStart='2025-10-24T12:00:00.000Z'
+  link={{
+    href: 'https://foo.bar',
+    target: '_self' as const,
+  }}
+  pageLanguage='de'
+  text='SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem'
+/>;
+
+export const NewsTeaser: StrictStory = {
   args: {
     allLink: {
       href: 'https://foo.bar',
@@ -47,7 +58,20 @@ export const EventsNewsTeaser: StrictStory = {
   },
 };
 
-export const EventsNewsTeaserWithoutLink: StrictStory = {
+export const EventsTeaser: StrictStory = {
+  args: {
+    allLink: {
+      href: 'https://foo.bar',
+      text: 'Alle News',
+    },
+    children: [eventListItem],
+    colorMode: 'light',
+    title: 'News',
+    type: 'teaser',
+  },
+};
+
+export const NewsTeaserWithoutLink: StrictStory = {
   args: {
     children: [newsListItem],
     colorMode: 'light',
@@ -56,7 +80,7 @@ export const EventsNewsTeaserWithoutLink: StrictStory = {
   },
 };
 
-export const EventsNewsOverview: StrictStory = {
+export const NewsOverview: StrictStory = {
   args: {
     children: [newsListItem],
     colorMode: 'white',
