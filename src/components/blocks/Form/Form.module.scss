@@ -21,6 +21,10 @@
     }
   }
 
+  &:not(.dark) {
+    @include generic-block-top-line;
+  }
+
   &.light {
     --background-color: var(--background-light);
   }
