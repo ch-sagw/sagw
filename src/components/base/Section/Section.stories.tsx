@@ -26,11 +26,12 @@ const meta: Meta<typeof Section> = {
 
 export default meta;
 
-export const SampleStory: StrictStory = {
+export const DefaultSection: StrictStory = {
   args: {
     children: <p>some child content comes here...</p>,
     colorMode: 'light',
     showTopLine: true,
+    subtitle: 'Subtitle',
     title: 'Section title',
   },
 };

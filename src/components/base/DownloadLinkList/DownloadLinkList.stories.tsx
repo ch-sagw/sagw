@@ -59,6 +59,7 @@ export const DownloadList: StrictStory = {
       text: 'Alle Downloads',
     },
     children: [downloadItem],
+    subtitle: 'Dieser Artikel ist Teil von folgender Bulletin-Ausgabe',
     title: 'Downloads',
     type: 'download',
   },

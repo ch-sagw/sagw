@@ -2,7 +2,6 @@ import React from 'react';
 import styles from '@/components/base/DownloadLinkList/DownloadLinkList.module.scss';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
-import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { Section } from '@/components/base/Section/Section';
 
 interface InterfaceBaseProps {
@@ -40,17 +39,9 @@ export const DownloadLinkList = (props: InterfaceDownloadLinkListPropTypes): Rea
       className={styles.downloadLinkList}
       showTopLine={true}
       title={title}
+      subtitle={subtitle}
       colorMode='light'
     >
-
-      {subtitle &&
-        <SafeHtml
-          as='p'
-          className={styles.subtitle}
-          html={subtitle}
-        />
-      }
-
       <ul className={styles.list}>
         {props.children}
       </ul>

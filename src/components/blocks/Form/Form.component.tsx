@@ -21,7 +21,6 @@ import { ZodError } from 'zod';
 import {
   rte3ToHtml, rteToHtml,
 } from '@/utilities/rteToHtml';
-import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 
 const sectionClasses = cva([styles.formBlock], {
   variants: {
@@ -72,19 +71,10 @@ export const FormComponent = ({
     })}
     showTopLine={true}
     title={rteToHtml(form.title)}
+    subtitle={rteToHtml(form.subtitle)}
     colorMode={form.colorMode}
   >
-    <div
-      className={styles.contentColumn}
-    >
-      {form.subtitle &&
-        <SafeHtml
-          as='p'
-          className={styles.subtitle}
-          html={rteToHtml(form.subtitle)}
-        />
-      }
-
+    <div>
       {submitError &&
         <FormNotification
           actionText={form.isNewsletterForm === 'newsletter'

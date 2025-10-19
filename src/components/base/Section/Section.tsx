@@ -7,6 +7,7 @@ import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 export type InterfaceSectionPropTypes = {
   className?: string;
   title: string;
+  subtitle?: string;
   children: React.ReactNode;
   colorMode: ColorMode;
   showTopLine: boolean;
@@ -15,6 +16,7 @@ export type InterfaceSectionPropTypes = {
 export const Section = ({
   className,
   title,
+  subtitle,
   children,
   colorMode,
   showTopLine,
@@ -43,6 +45,14 @@ export const Section = ({
         className={styles.title}
         html={title}
       />
+
+      {subtitle &&
+        <SafeHtml
+          as='p'
+          className={styles.subtitle}
+          html={subtitle}
+        />
+      }
 
       {children}
 
