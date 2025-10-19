@@ -6,6 +6,7 @@ import { cva } from 'cva';
 import { Form as InterfaceForm } from '@/payload-types';
 import { hiddenFormDefinitionFieldName } from '@/components/blocks/Form/Form.config';
 import { FormNotification } from '@/components/base/FormNotification/FormNotification';
+import { Section } from '@/components/base/Section/Section';
 
 import {
   InputText, InterfaceInputTextPropTypes,
@@ -64,170 +65,161 @@ export const FormComponent = ({
   errors,
   submitError,
   submitSuccess,
-}: InterfaceFormClientPropTypes): React.JSX.Element => {
-
-  const TitleElem: React.ElementType = `h${form.titleLevel}`;
-
-  return (
-    <section
-      className={sectionClasses({
-        colorMode: form.colorMode,
-      })}
+}: InterfaceFormClientPropTypes): React.JSX.Element => (
+  <Section
+    className={sectionClasses({
+      colorMode: form.colorMode,
+    })}
+    showTopLine={true}
+    title={rteToHtml(form.title)}
+    colorMode={form.colorMode}
+  >
+    <div
+      className={styles.contentColumn}
     >
-      <SafeHtml
-        as={TitleElem}
-        className={styles.title}
-        html={rteToHtml(form.title)}
-      />
+      {form.subtitle &&
+        <SafeHtml
+          as='p'
+          className={styles.subtitle}
+          html={rteToHtml(form.subtitle)}
+        />
+      }
 
-      <div
-        className={styles.contentColumn}
-      >
-        {form.subtitle &&
-          <SafeHtml
-            as='p'
-            className={styles.subtitle}
-            html={rteToHtml(form.subtitle)}
-          />
-        }
-
-        {submitError &&
-          <FormNotification
-            actionText={form.isNewsletterForm === 'newsletter'
-              ? form.newsletterFields?.actionText || ''
-              : ''
-            }
-            autofocus={true}
-            colorMode={form.colorMode}
-            onAction={() => {
-
-              // TODO
-              console.log('todo');
-            }}
-            text={rteToHtml(form.submitError.text)}
-            title={rteToHtml(form.submitError.title)}
-            type='error'
-          />
-        }
-
-        {submitSuccess &&
-          <FormNotification
-            actionText={form.isNewsletterForm === 'newsletter'
-              ? form.newsletterFields?.actionText || ''
-              : ''
-            }
-            autofocus={true}
-            colorMode={form.colorMode}
+      {submitError &&
+        <FormNotification
+          actionText={form.isNewsletterForm === 'newsletter'
+            ? form.newsletterFields?.actionText || ''
+            : ''
+          }
+          autofocus={true}
+          colorMode={form.colorMode}
+          onAction={() => {
 
             // TODO
-            onAction={() => {
-              console.log('todo');
-            }}
-            text={rteToHtml(form.submitSuccess.text)}
-            title={rteToHtml(form.submitSuccess.title)}
-            type='success'
+            console.log('todo');
+          }}
+          text={rteToHtml(form.submitError.text)}
+          title={rteToHtml(form.submitError.title)}
+          type='error'
+        />
+      }
+
+      {submitSuccess &&
+        <FormNotification
+          actionText={form.isNewsletterForm === 'newsletter'
+            ? form.newsletterFields?.actionText || ''
+            : ''
+          }
+          autofocus={true}
+          colorMode={form.colorMode}
+
+          // TODO
+          onAction={() => {
+            console.log('todo');
+          }}
+          text={rteToHtml(form.submitSuccess.text)}
+          title={rteToHtml(form.submitSuccess.title)}
+          type='success'
+        />
+      }
+
+      {!submitSuccess &&
+        <form
+          action={action}
+          className={styles.form}
+          noValidate
+        >
+          <input type='hidden' name={hiddenFormDefinitionFieldName} value={JSON.stringify(form)} />
+
+          {form.fields?.map((field, i) => {
+            if (field.blockType === 'textBlockForm' || field.blockType === 'emailBlock' || field.blockType === 'textareaBlock') {
+              let fieldType: InterfaceInputTextPropTypes['type'];
+
+              if (field.blockType === 'textBlockForm' || field.blockType === 'emailBlock') {
+                fieldType = 'text';
+              } else {
+                fieldType = 'textarea';
+              }
+
+              return (
+                <InputText
+                  autofocus={field.name === firstErrorFieldName}
+                  className={fieldClasses({
+                    fieldWidth: field.fieldWidth,
+                  })}
+                  key={i}
+                  label={rteToHtml(field.label)}
+                  placeholder={field.placeholder}
+                  errorText={errors[field.name]?.join(', ') || ''}
+                  name={field.name}
+                  required={field.required || false}
+                  defaultValue={String(state?.values?.[field.name] ?? '')}
+                  type={fieldType}
+                  colorMode={form.colorMode}
+                />
+              );
+            }
+
+            if (field.blockType === 'checkboxBlock') {
+              let checked = false;
+              const serverState = state?.values?.[field.name];
+
+              if (serverState) {
+                checked = serverState === 'on';
+              } else if (field.defaultChecked) {
+                checked = field.defaultChecked;
+              }
+
+              return (
+                <Checkbox
+                  autofocus={field.name === firstErrorFieldName}
+                  key={i}
+                  className={fieldClasses({
+                    fieldWidth: field.fieldWidth,
+                  })}
+                  value='on'
+                  name={field.name}
+                  label={rte3ToHtml(field.label)}
+                  checked={checked}
+                  errorText={errors[field.name]?.join(', ') || ''}
+                  colorMode={form.colorMode}
+                />
+              );
+            }
+
+            if (field.blockType === 'radioBlock') {
+              return (
+                <Radios
+                  key={i}
+                  className={fieldClasses({
+                    fieldWidth: field.fieldWidth,
+                  })}
+                  colorTheme={form.colorMode}
+                  name={field.name}
+                  items={field.items.map((item) => ({
+                    checked: item.defaultChecked ?? undefined,
+                    label: rte3ToHtml(item.label),
+                    value: item.value,
+                  }))}
+                  errorText={errors[field.name]?.join(', ') || ''}
+                  descriptionLabel={rte3ToHtml(field.label)}
+                />
+              );
+            }
+
+            return <Fragment key={i}></Fragment>;
+          })}
+
+          <Button
+            element='button'
+            disabled={pending}
+            buttonType='submit'
+            colorMode={form.colorMode}
+            style='filled'
+            text={form.submitButtonLabel}
           />
-        }
-
-        {!submitSuccess &&
-          <form
-            action={action}
-            className={styles.form}
-            noValidate
-          >
-            <input type='hidden' name={hiddenFormDefinitionFieldName} value={JSON.stringify(form)} />
-
-            {form.fields?.map((field, i) => {
-              if (field.blockType === 'textBlockForm' || field.blockType === 'emailBlock' || field.blockType === 'textareaBlock') {
-                let fieldType: InterfaceInputTextPropTypes['type'];
-
-                if (field.blockType === 'textBlockForm' || field.blockType === 'emailBlock') {
-                  fieldType = 'text';
-                } else {
-                  fieldType = 'textarea';
-                }
-
-                return (
-                  <InputText
-                    autofocus={field.name === firstErrorFieldName}
-                    className={fieldClasses({
-                      fieldWidth: field.fieldWidth,
-                    })}
-                    key={i}
-                    label={rteToHtml(field.label)}
-                    placeholder={field.placeholder}
-                    errorText={errors[field.name]?.join(', ') || ''}
-                    name={field.name}
-                    required={field.required || false}
-                    defaultValue={String(state?.values?.[field.name] ?? '')}
-                    type={fieldType}
-                    colorMode={form.colorMode}
-                  />
-                );
-              }
-
-              if (field.blockType === 'checkboxBlock') {
-                let checked = false;
-                const serverState = state?.values?.[field.name];
-
-                if (serverState) {
-                  checked = serverState === 'on';
-                } else if (field.defaultChecked) {
-                  checked = field.defaultChecked;
-                }
-
-                return (
-                  <Checkbox
-                    autofocus={field.name === firstErrorFieldName}
-                    key={i}
-                    className={fieldClasses({
-                      fieldWidth: field.fieldWidth,
-                    })}
-                    value='on'
-                    name={field.name}
-                    label={rte3ToHtml(field.label)}
-                    checked={checked}
-                    errorText={errors[field.name]?.join(', ') || ''}
-                    colorMode={form.colorMode}
-                  />
-                );
-              }
-
-              if (field.blockType === 'radioBlock') {
-                return (
-                  <Radios
-                    key={i}
-                    className={fieldClasses({
-                      fieldWidth: field.fieldWidth,
-                    })}
-                    colorTheme={form.colorMode}
-                    name={field.name}
-                    items={field.items.map((item) => ({
-                      checked: item.defaultChecked ?? undefined,
-                      label: rte3ToHtml(item.label),
-                      value: item.value,
-                    }))}
-                    errorText={errors[field.name]?.join(', ') || ''}
-                    descriptionLabel={rte3ToHtml(field.label)}
-                  />
-                );
-              }
-
-              return <Fragment key={i}></Fragment>;
-            })}
-
-            <Button
-              element='button'
-              disabled={pending}
-              buttonType='submit'
-              colorMode={form.colorMode}
-              style='filled'
-              text={form.submitButtonLabel}
-            />
-          </form>
-        }
-      </div>
-      <span className={styles.line} />
-    </section >
-  );
-};
+        </form>
+      }
+    </div>
+  </Section >
+);

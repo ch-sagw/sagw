@@ -1,38 +1,14 @@
 @use "../../../styles/utilities/functions" as *;
-@use "../../../styles/mixins/mixins-layout" as *;
-@use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/utilities" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
 
 .eventsNewsList {
-  @include block-layout-sticky-title("grid");
-  @include generic-block-padding;
-
-  &.teaser {
-    color: var(--text-primary);
-    position: relative;
-
-    &.light {
-      background-color: var(--background-light);
-    }
-
-    .line {
-      @include generic-block-top-line("grid");
-    }
-  }
-
   &.overview {
     .pagination {
       @include mq($from: large) {
         margin-block-start: px-to-rem(var(--section-inside-m));
       }
     }
-  }
-
-  .title {
-    @include title-heading-3;
-
-    margin: 0;
   }
 
   .list {

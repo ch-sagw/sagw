@@ -4,39 +4,18 @@
 @use "../../../styles/mixins/mixins-typo" as *;
 
 .formBlock {
-  @include block-layout-sticky-title("flex");
-  @include generic-block-padding;
-
   background-color: var(--background-color);
 
   &.dark {
     --background-color: var(--background-cta);
-
-    .title {
-      color: var(--text-primary-inverted);
-    }
 
     .subtitle {
       color: var(--text-secondary-inverted);
     }
   }
 
-  &:not(.dark) {
-    position: relative;
-
-    .line {
-      @include generic-block-top-line("flex");
-    }
-  }
-
   &.light {
     --background-color: var(--background-light);
-  }
-
-  .title {
-    @include title-heading-3;
-
-    color: var(--text-primary);
   }
 
   .subtitle {

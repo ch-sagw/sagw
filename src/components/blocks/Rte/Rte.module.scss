@@ -159,7 +159,7 @@
    **/
   &.stickyFirstTitle {
     div {
-      @include block-layout-sticky-title("grid");
+      @include block-layout-sticky-title;
       @include text-block-padding;
 
       row-gap: unset;

@@ -18,6 +18,11 @@ const meta: Meta<typeof EventsTeaser> = {
   args: {},
   component: EventsTeaser,
   decorators: [defaultDecoratorNoPadding],
+  globals: {
+    backgrounds: {
+      value: 'white',
+    },
+  },
   parameters: {
     layout: 'fullscreen',
   },

@@ -46,40 +46,10 @@ export const Forms: CollectionConfig = {
     }),
 
     // title & subtitle
-    {
-      fields: [
-        rte1({
-          name: 'title',
-          notRequired: true,
-        }),
-        {
-          defaultValue: '2',
-          localized: true,
-          name: 'titleLevel',
-          options: [
-            {
-              label: '2',
-              value: '2',
-            },
-            {
-              label: '3',
-              value: '3',
-            },
-            {
-              label: '4',
-              value: '4',
-            },
-            {
-              label: '5',
-              value: '5',
-            },
-          ],
-          required: true,
-          type: 'radio',
-        },
-      ],
-      type: 'row',
-    },
+    rte1({
+      name: 'title',
+      notRequired: true,
+    }),
     rte1({
       name: 'subtitle',
       notRequired: true,
