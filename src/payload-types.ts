@@ -720,7 +720,6 @@ export interface Form {
     };
     [k: string]: unknown;
   } | null;
-  titleLevel: '2' | '3' | '4' | '5';
   subtitle?: {
     root: {
       type: string;
@@ -5955,7 +5954,6 @@ export interface FormsSelect<T extends boolean = true> {
   isNewsletterForm?: T;
   colorMode?: T;
   title?: T;
-  titleLevel?: T;
   subtitle?: T;
   submitButtonLabel?: T;
   recipientMail?: T;

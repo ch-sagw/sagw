@@ -1,0 +1,10 @@
+.ctaLink {
+  .button {
+    align-self: flex-start;
+    width: fit-content;
+
+    svg {
+      color: var(--interaction-secondary);
+    }
+  }
+}
