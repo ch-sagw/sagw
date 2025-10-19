@@ -50,13 +50,15 @@ export const Accordion = ({
       className={accordionClasses({
         colorMode,
       })}
-      data-testid='accordion'
       showTopLine={true}
       title={rteToHtml(title)}
       colorMode={colorMode}
     >
 
-      <ul className={styles.list}>
+      <ul
+        className={styles.list}
+        data-testid='accordion'
+      >
         {accordions.map((item, key) => (
           <li
             key={key}
