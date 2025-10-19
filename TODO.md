@@ -72,4 +72,4 @@ Backup Migration:
 
 
 QUESTIONS:
-- newsTeasers and eventsTeasers -> no option to choose color scheme?
+- newsTeasers, eventsTeasers, downloadBlock, linkBlock -> no option to choose color scheme?
