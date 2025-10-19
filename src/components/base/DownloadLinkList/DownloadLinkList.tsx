@@ -63,6 +63,8 @@ export const DownloadLinkList = (props: InterfaceDownloadLinkListPropTypes): Rea
           iconInlineStart={'arrowRight' as keyof typeof Icon}
         />
       }
+
+      <span className={styles.line} />
     </section>
   );
 };

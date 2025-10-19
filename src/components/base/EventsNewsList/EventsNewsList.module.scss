@@ -9,12 +9,15 @@
   @include generic-block-padding;
 
   &.teaser {
-    @include generic-block-top-line;
-
     color: var(--text-primary);
+    position: relative;
 
     &.light {
       background-color: var(--background-light);
+    }
+
+    .line {
+      @include generic-block-top-line("grid");
     }
   }
 

@@ -16,8 +16,6 @@
     --text-color: var(--text-primary);
     --border-color: var(--border-primary);
     --icon-color: var(--interaction-secondary);
-
-    @include generic-block-top-line;
   }
 
   &.white {
@@ -25,8 +23,6 @@
     --text-color: var(--text-primary);
     --border-color: var(--border-primary);
     --icon-color: var(--interaction-secondary);
-
-    @include generic-block-top-line;
   }
 
   &.dark {
@@ -34,6 +30,12 @@
     --text-color: var(--text-primary-inverted);
     --border-color: var(--border-secondary-inverted);
     --icon-color: var(--icon-error-inverted);
+  }
+
+  &:not(.dark) {
+    .line {
+      @include generic-block-top-line("flex");
+    }
   }
 
   background-color: var(--background-color);
