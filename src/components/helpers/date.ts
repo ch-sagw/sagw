@@ -34,6 +34,31 @@ export const formatDateToObject = ({
   };
 };
 
+interface InterfaceFormatDateToReadableStringProps {
+  dateString: string;
+  locale: string
+}
+
+export const formatDateToReadableString = ({
+  dateString,
+  locale,
+}: InterfaceFormatDateToReadableStringProps): string => {
+  const inputDate = new Date(dateString);
+
+  // Helper to format parts consistently
+  const formatDay = (date: Date): string => date.toLocaleString(locale, {
+    day: '2-digit',
+  });
+  const formatMonth = (date: Date): string => date.toLocaleString(locale, {
+    month: 'long',
+  });
+  const formatYear = (date: Date): string => date.toLocaleString(locale, {
+    year: 'numeric',
+  });
+
+  return `${formatDay(inputDate)}. ${formatMonth(inputDate)} ${formatYear(inputDate)}`;
+};
+
 interface InterfaceFormatDateRangeToReadableStringProps {
   startString: string;
   endString: string;
