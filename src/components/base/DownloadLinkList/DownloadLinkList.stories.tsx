@@ -4,7 +4,7 @@ import type {
 } from '@storybook/nextjs-vite';
 import { DownloadLinkList } from '@/components/base/DownloadLinkList/DownloadLinkList';
 import { defaultDecorator } from '@/storybook-helpers';
-import { DownloadLinkItem } from '../DownloadLinkItem/DownloadLinkItem';
+import { DownloadLinkItem } from '@/components/base/DownloadLinkItem/DownloadLinkItem';
 
 type DownloadLinkListProps = React.ComponentProps<typeof DownloadLinkList>;
 
