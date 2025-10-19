@@ -16,6 +16,8 @@
     --text-color: var(--text-primary);
     --border-color: var(--border-primary);
     --icon-color: var(--interaction-secondary);
+
+    @include generic-block-top-line;
   }
 
   &.white {
@@ -23,6 +25,8 @@
     --text-color: var(--text-primary);
     --border-color: var(--border-primary);
     --icon-color: var(--interaction-secondary);
+
+    @include generic-block-top-line;
   }
 
   &.dark {
