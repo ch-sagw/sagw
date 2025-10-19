@@ -91,6 +91,7 @@ export const FormComponent = ({
           text={rteToHtml(form.submitError.text)}
           title={rteToHtml(form.submitError.title)}
           type='error'
+          className={styles.errorNotification}
         />
       }
 

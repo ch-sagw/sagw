@@ -26,6 +26,10 @@
     width: 100%;
   }
 
+  .errorNotification {
+    margin-block-end: px-to-rem(var(--spacing-3xl));
+  }
+
   .field {
     &.half {
       flex-basis: 100%;

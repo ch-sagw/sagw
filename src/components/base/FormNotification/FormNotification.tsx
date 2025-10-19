@@ -13,6 +13,7 @@ type BaseNotification = {
   text: string;
   colorMode: ColorMode;
   autofocus?: boolean;
+  className?: string;
 };
 
 type ActionProps =
@@ -29,10 +30,14 @@ export const FormNotification = ({
   onAction,
   colorMode,
   autofocus,
+  className,
 }: InterfaceFormNotificationPropTypes): React.JSX.Element => {
   const elementRef = useRef<HTMLButtonElement | HTMLDivElement>(null);
   const notificationId = useId();
-  const sampleClasses = cva([styles.formNotification], {
+  const notifcationClasses = cva([
+    styles.formNotification,
+    className,
+  ], {
     variants: {
       action: {
         false: undefined,
@@ -67,7 +72,7 @@ export const FormNotification = ({
   return (
     <WrapperElem
       ref={elementRef as React.Ref<HTMLButtonElement & HTMLDivElement>}
-      className={sampleClasses({
+      className={notifcationClasses({
         action: Boolean(actionText),
         colorMode,
         type,
