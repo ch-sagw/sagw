@@ -73,6 +73,7 @@ export const EventsListItem = ({
     >
       <a
         href={link.href}
+        target={link.target}
         className={styles.link}
       >
 
