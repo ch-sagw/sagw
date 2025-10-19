@@ -505,7 +505,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       subtitle: simpleRteConfig(`Subtitle for contact Form ${tenant.toUpperCase()}`),
       tenant: tenantId,
       title: simpleRteConfig(`Contact Form ${tenant.toUpperCase()}`),
-      titleLevel: '2',
     },
   });
 
@@ -546,7 +545,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       subtitle: simpleRteConfig(`Subtitle for Newsletter Form ${tenant.toUpperCase()}`),
       tenant: tenantId,
       title: simpleRteConfig(`Newsletter Form ${tenant.toUpperCase()}`),
-      titleLevel: '2',
     },
   });
 
