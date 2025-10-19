@@ -4,8 +4,8 @@ import type {
 } from '@storybook/nextjs-vite';
 import { EventsNewsList } from '@/components/base/EventsNewsList/EventsNewsList';
 import { defaultDecorator } from '@/storybook-helpers';
-import { NewsListItem } from '../NewsListItem/NewsListItem';
-import { EventsListItem } from '../EventsListItem/EventsListItem';
+import { NewsListItem } from '@/components/base/NewsListItem/NewsListItem';
+import { EventsListItem } from '@/components/base/EventsListItem/EventsListItem';
 
 type EventsNewsListProps = React.ComponentProps<typeof EventsNewsList>;
 
