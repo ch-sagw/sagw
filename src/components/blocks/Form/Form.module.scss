@@ -14,14 +14,6 @@
     }
   }
 
-  &:not(.dark) {
-    position: relative;
-
-    .line {
-      @include generic-block-top-line("flex");
-    }
-  }
-
   &.light {
     --background-color: var(--background-light);
   }

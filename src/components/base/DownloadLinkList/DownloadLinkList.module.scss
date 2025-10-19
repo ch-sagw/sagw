@@ -1,27 +1,8 @@
 @use "../../../styles/utilities/functions" as *;
-@use "../../../styles/mixins/mixins-layout" as *;
-@use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/utilities" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
 
 .downloadLinkList {
-  @include block-layout-sticky-title("grid");
-  @include generic-block-padding;
-
-  color: var(--text-primary);
-  background-color: var(--background-light);
-  position: relative;
-
-  .line {
-    @include generic-block-top-line("grid");
-  }
-
-  .title {
-    @include title-heading-3;
-
-    margin: 0;
-  }
-
   .list {
     @include list-reset;
 

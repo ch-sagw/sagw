@@ -32,12 +32,6 @@
     --icon-color: var(--icon-error-inverted);
   }
 
-  &:not(.dark) {
-    .line {
-      @include generic-block-top-line("flex");
-    }
-  }
-
   background-color: var(--background-color);
 
   .list {

@@ -33,6 +33,7 @@ const newsListItem = <NewsListItem
   link='https://foo.bar'
   text='Vier Nachwuchsforschende werden für herausragende Beiträge in Geistes- und Sozialwissenschaften mit dem Early Career Award 2025 ausgezeichnet.'
   title='SAGW verleiht Early Career Award 2025'
+  key='some-key'
 />;
 
 const eventListItem = <EventsListItem
@@ -43,6 +44,7 @@ const eventListItem = <EventsListItem
   }}
   pageLanguage='de'
   text='SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem'
+  key='some-key'
 />;
 
 export const NewsTeaser: StrictStory = {
@@ -65,8 +67,8 @@ export const EventsTeaser: StrictStory = {
       text: 'Alle News',
     },
     children: [eventListItem],
-    colorMode: 'light',
-    title: 'News',
+    colorMode: 'white',
+    title: 'Events',
     type: 'teaser',
   },
 };

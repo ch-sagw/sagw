@@ -38,6 +38,7 @@ const downloadItem = <DownloadLinkItem
   size='248 KB'
   title='Reglement über die Gewährung von Reisekostenbeiträgen'
   type='download'
+  key='some-key'
 />;
 
 const linkItem = <DownloadLinkItem

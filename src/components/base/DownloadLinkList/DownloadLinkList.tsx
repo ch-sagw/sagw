@@ -3,6 +3,7 @@ import styles from '@/components/base/DownloadLinkList/DownloadLinkList.module.s
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
+import { Section } from '@/components/base/Section/Section';
 
 interface InterfaceBaseProps {
   children: React.ReactNode;
@@ -35,10 +36,12 @@ export const DownloadLinkList = (props: InterfaceDownloadLinkListPropTypes): Rea
   } = props;
 
   return (
-    <section
+    <Section
       className={styles.downloadLinkList}
+      showTopLine={true}
+      title={title}
+      colorMode='light'
     >
-      <h2 className={styles.title}>{title}</h2>
 
       {subtitle &&
         <SafeHtml
@@ -63,8 +66,6 @@ export const DownloadLinkList = (props: InterfaceDownloadLinkListPropTypes): Rea
           iconInlineStart={'arrowRight' as keyof typeof Icon}
         />
       }
-
-      <span className={styles.line} />
-    </section>
+    </Section>
   );
 };

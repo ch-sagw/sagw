@@ -5,6 +5,7 @@ import { Button } from '@/components/base/Button/Button';
 import { Pagination } from '@/components/base/Pagination/Pagination';
 import { Icon } from '@/icons';
 import { ColorMode } from '@/components/base/types/colorMode';
+import { Section } from '@/components/base/Section/Section';
 
 interface InterfaceBaseProps {
   children: React.ReactNode;
@@ -36,14 +37,9 @@ export type InterfaceEventsNewsListPropTypes = InterfaceTeaserProps | InterfaceO
 
 const sectionClasses = cva([styles.eventsNewsList], {
   variants: {
-    colorMode: {
-      dark: undefined,
-      light: [styles.light],
-      white: undefined,
-    },
     type: {
       overview: [styles.overview],
-      teaser: [styles.teaser],
+      teaser: undefined,
     },
   },
 });
@@ -56,13 +52,14 @@ export const EventsNewsList = (props: InterfaceEventsNewsListPropTypes): React.J
   } = props;
 
   return (
-    <section
+    <Section
       className={sectionClasses({
-        colorMode,
         type,
       })}
+      showTopLine={type === 'teaser'}
+      title={title}
+      colorMode={colorMode}
     >
-      <h2 className={styles.title}>{title}</h2>
 
       <ul className={styles.list}>
         {props.children}
@@ -89,7 +86,6 @@ export const EventsNewsList = (props: InterfaceEventsNewsListPropTypes): React.J
           onPageChange={props.pagination.onPageChange}
         />
       }
-      <span className={styles.line} />
-    </section>
+    </Section>
   );
 };
