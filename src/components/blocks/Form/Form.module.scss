@@ -22,7 +22,11 @@
   }
 
   &:not(.dark) {
-    @include generic-block-top-line;
+    position: relative;
+
+    .line {
+      @include generic-block-top-line("flex");
+    }
   }
 
   &.light {

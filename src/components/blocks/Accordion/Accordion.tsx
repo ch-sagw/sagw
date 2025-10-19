@@ -115,6 +115,7 @@ export const Accordion = ({
           </li>
         ))}
       </ul>
+      <span className={styles.line} />
     </div>
 
   );

@@ -227,6 +227,7 @@ export const FormComponent = ({
           </form>
         }
       </div>
+      <span className={styles.line} />
     </section >
   );
 };

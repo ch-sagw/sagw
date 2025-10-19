@@ -5,6 +5,9 @@
 .item {
   @include list-reset;
 
+  padding-block: px-to-rem(var(--inside-elements-l));
+  border-block-end: px-to-rem(var(--border-width-l)) solid var(--border-primary);
+
   .link {
     text-decoration: none;
     display: flex;

@@ -89,6 +89,7 @@ export const EventsNewsList = (props: InterfaceEventsNewsListPropTypes): React.J
           onPageChange={props.pagination.onPageChange}
         />
       }
+      <span className={styles.line} />
     </section>
   );
 };

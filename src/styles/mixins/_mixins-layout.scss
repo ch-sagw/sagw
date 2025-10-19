@@ -87,15 +87,31 @@
   padding-block-end: px-to-rem(var(--text-block-bottom));
 }
 
-@mixin generic-block-top-line {
-  position: relative;
+@mixin generic-block-top-line-for-flex {
+  position: absolute;
+  background-color: var(--border-primary);
+  inset-block-start: 0;
+  height: px-to-rem(var(--border-width-l));
+  inset-inline: px-to-rem(var(--grid-margin));
+}
 
-  &:before {
-    content: "";
-    position: absolute;
-    inset-block-start: 0;
-    height: px-to-rem(var(--border-width-l));
-    inset-inline: px-to-rem(var(--grid-margin));
-    background-color: var(--border-primary);
+@mixin generic-block-top-line($variant: "grid") {
+  @if $variant == "grid" {
+    @include mq($to: large) {
+      @include generic-block-top-line-for-flex;
+    }
+
+    @include mq($from: large) {
+      display: block;
+      grid-column: 1 / 4;
+      grid-row: 1;
+      margin-top: px-to-rem(calc(-1 * var(--section-top)));
+      height: px-to-rem(var(--border-width-l));
+      background-color: var(--border-primary);
+    }
+  }
+
+  @if $variant == "flex" {
+    @include generic-block-top-line-for-flex;
   }
 }

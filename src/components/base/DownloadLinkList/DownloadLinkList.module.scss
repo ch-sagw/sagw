@@ -7,10 +7,14 @@
 .downloadLinkList {
   @include block-layout-sticky-title("grid");
   @include generic-block-padding;
-  @include generic-block-top-line;
 
   color: var(--text-primary);
   background-color: var(--background-light);
+  position: relative;
+
+  .line {
+    @include generic-block-top-line("grid");
+  }
 
   .title {
     @include title-heading-3;
