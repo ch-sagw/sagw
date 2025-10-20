@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-  EventsNewsList, InterfaceEventsNewsListPropTypes,
-} from '@/components/base/EventsNewsList/EventsNewsList';
+  InterfaceTeaserLinkListPropTypes, TeaserLinkList,
+} from '@/components/base/TeaserLinkList/TeaserLinkList';
 import {
   InterfaceNewsListItemPropTypes, NewsListItem,
 } from '@/components/base/NewsListItem/NewsListItem';
 
 export type InterfaceNewsTeaserPropTypes = Omit<
-  InterfaceEventsNewsListPropTypes,
+  InterfaceTeaserLinkListPropTypes,
   'children' | 'type' | 'colorMode'
 > & {
   items: InterfaceNewsListItemPropTypes[];
@@ -16,8 +16,7 @@ export type InterfaceNewsTeaserPropTypes = Omit<
 export const NewsTeaser = ({
   items, title, allLink,
 }: InterfaceNewsTeaserPropTypes): React.JSX.Element => (
-  <EventsNewsList
-    type='teaser'
+  <TeaserLinkList
     colorMode='light'
     title={title}
     allLink={allLink}
@@ -28,5 +27,5 @@ export const NewsTeaser = ({
         {...item}
       />
     ))}
-  </EventsNewsList>
+  </TeaserLinkList>
 );

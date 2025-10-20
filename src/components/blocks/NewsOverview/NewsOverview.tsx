@@ -2,7 +2,7 @@ import React from 'react';
 import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
 
-import { EventsNewsList } from '@/components/base/EventsNewsList/EventsNewsList';
+import { EventsNewsOverview } from '@/components/base/EventsNewsOverview/EventsNewsOverview';
 import {
   InterfaceNewsListItemPropTypes, NewsListItem,
 } from '@/components/base/NewsListItem/NewsListItem';
@@ -18,6 +18,7 @@ export type InterfaceNewsOverviewPropTypes = {
 } & InterfaceNewsOverviewBlock;
 
 export const NewsOverview = async (props: InterfaceNewsOverviewPropTypes): Promise<React.JSX.Element> => {
+
   const payload = await getPayload({
     config: configPromise,
   });
@@ -57,8 +58,7 @@ export const NewsOverview = async (props: InterfaceNewsOverviewPropTypes): Promi
   });
 
   return (
-    <EventsNewsList
-      type='overview'
+    <EventsNewsOverview
       title={title}
       colorMode='white'
 
@@ -71,6 +71,6 @@ export const NewsOverview = async (props: InterfaceNewsOverviewPropTypes): Promi
           {...item}
         />
       ))}
-    </EventsNewsList>
+    </EventsNewsOverview>
   );
 };

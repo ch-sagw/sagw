@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { DownloadLinkList } from '@/components/base/DownloadLinkList/DownloadLinkList';
+import { TeaserLinkList } from '@/components/base/TeaserLinkList/TeaserLinkList';
 import {
   DownloadLinkItem, InterfaceDownloadLinkItemPropTypes,
 } from '@/components/base/DownloadLinkItem/DownloadLinkItem';
@@ -59,9 +59,9 @@ export const Links = (props: InterfaceLinksPropTypes): React.JSX.Element => {
   }
 
   return (
-    <DownloadLinkList
-      type='link'
+    <TeaserLinkList
       title={title}
+      colorMode='light'
     >
       {items.map((item, key) => {
         if (item) {
@@ -75,6 +75,6 @@ export const Links = (props: InterfaceLinksPropTypes): React.JSX.Element => {
 
         return undefined;
       })}
-    </DownloadLinkList>
+    </TeaserLinkList>
   );
 };

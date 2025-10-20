@@ -76,7 +76,7 @@ Backup Migration:
 - use : language: Config['locale']; in every block
 - pagination: focus first element after page switc
 - pagination: sort items
-- eventsNewsList -> make separate components for overview and teaser
+- pagination: scroll to top -> not to top, but to section top, so that nav stays collapsed
 
 QUESTIONS:
 - newsTeasers, eventsTeasers, downloadBlock, linkBlock -> no option to choose color scheme?

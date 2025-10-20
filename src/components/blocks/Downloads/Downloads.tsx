@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { DownloadLinkList } from '@/components/base/DownloadLinkList/DownloadLinkList';
+import { TeaserLinkList } from '@/components/base/TeaserLinkList/TeaserLinkList';
 import {
   DownloadLinkItem, InterfaceDownloadLinkItemPropTypes,
 } from '@/components/base/DownloadLinkItem/DownloadLinkItem';
@@ -91,14 +91,14 @@ export const Downloads = (props: InterfaceDownloadsPropTypes): React.JSX.Element
   }
 
   return (
-    <DownloadLinkList
-      type='download'
+    <TeaserLinkList
       title={title}
       subtitle={props.subtitle
         ? rteToHtml(props.subtitle)
         : undefined
       }
       allLink={allLink}
+      colorMode='light'
     >
       {returnDocumentItems.map((item, key) => {
         if (item) {
@@ -112,6 +112,6 @@ export const Downloads = (props: InterfaceDownloadsPropTypes): React.JSX.Element
 
         return undefined;
       })}
-    </DownloadLinkList>
+    </TeaserLinkList>
   );
 };
