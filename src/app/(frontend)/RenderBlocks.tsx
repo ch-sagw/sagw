@@ -32,10 +32,19 @@ import {
   InterfaceTextBlock,
   InterfaceVideoBlock,
 } from '@/payload-types';
+
+// helpers
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+
+// components
+import { Notification } from '@/components/blocks/Notification/Notification';
+import { Rte } from '@/components/blocks/Rte/Rte';
+import { Accordion } from '@/components/blocks/Accordion/Accordion';
+import { FormServer } from '@/components/blocks/Form/Form.server';
 import { Links } from '@/components/blocks/Links/Links';
 import { Downloads } from '@/components/blocks/Downloads/Downloads';
-import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { NewsOverview } from '@/components/blocks/NewsOverview/NewsOverview';
+import { EventsOverview } from '@/components/blocks/EventsOverview/EventsOverview';
 
 // helpers
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
