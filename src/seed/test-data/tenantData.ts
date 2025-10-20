@@ -851,50 +851,72 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
-  // event detail page (render detail Page)
-  await payload.create({
-    collection: 'eventDetailPage',
-    data: {
-      _status: 'published',
-      eventDetails: {
-        category: eventCategory.id,
-        date: '2025-08-31T12:00:00.000Z',
-        project: project.id,
-        title: simpleRteConfig(`Event 2 details title ${tenant.toUpperCase()} (render detail page)`),
+  // event detail pages (render detail Page)
+  await Promise.all(Array.from({
+    length: 12,
+  }, (_, i) => {
+    const index = i + 1;
+
+    return payload.create({
+      collection: 'eventDetailPage',
+      data: {
+        _status: 'published',
+        eventDetails: {
+          category: eventCategory.id,
+          date: `2025-08-${index < 10
+            ? `0${index}`
+            : index}T12:00:00.000Z`,
+          dateEnd: `2026-01-${index < 10
+            ? `0${index}`
+            : index}T12:00:00.000Z`,
+          language: simpleRteConfig('Deutsch'),
+          location: simpleRteConfig('ETH Zürich'),
+          project: project.id,
+          time: simpleRteConfig('10:00'),
+          title: simpleRteConfig(`Event ${index} details title ${tenant.toUpperCase()} (render detail page)`),
+        },
+        hero: {
+          colorMode: 'white',
+          lead: simpleRteConfig(`Event ${index} Detail Page Lead`),
+          title: simpleRteConfig(`Event ${index} detail page title ${tenant.toUpperCase()} (render detail page)`),
+        },
+        showDetailPage: 'true',
+        tenant: tenantId,
       },
-      hero: {
-        colorMode: 'white',
-        lead: simpleRteConfig('Event 2 Detail Page Lead'),
-        title: simpleRteConfig(`Event 2 detail page title ${tenant.toUpperCase()} (render detail page)`),
-      },
-      showDetailPage: 'true',
-      tenant: tenantId,
-    },
-  });
+    });
+  }));
 
   // event detail page (render link)
-  await payload.create({
-    collection: 'eventDetailPage',
-    data: {
-      _status: 'published',
-      eventDetails: {
-        category: eventCategory.id,
-        date: '2025-08-30T12:00:00.000Z',
-        project: project.id,
-        title: simpleRteConfig(`Event 1 detail title ${tenant.toUpperCase()} (render link)`),
+  await Promise.all(Array.from({
+    length: 12,
+  }, (_, i) => {
+    const index = 12 + i + 1;
+
+    return payload.create({
+      collection: 'eventDetailPage',
+      data: {
+        _status: 'published',
+        eventDetails: {
+          category: eventCategory.id,
+          date: `2025-08-${index < 10
+            ? `0${index}`
+            : index}T12:00:00.000Z`,
+          project: project.id,
+          title: simpleRteConfig(`Event ${index} detail title ${tenant.toUpperCase()} (render link)`),
+        },
+        hero: {
+          colorMode: 'white',
+          title: simpleRteConfig(`Event ${index} detail page title ${tenant.toUpperCase()} (render link)`),
+        },
+        link: {
+          externalLink: 'https://www.foo.bar',
+          externalLinkText: simpleRteConfig('External Link'),
+        },
+        showDetailPage: 'false',
+        tenant: tenantId,
       },
-      hero: {
-        colorMode: 'white',
-        title: simpleRteConfig(`Event 1 detail page title ${tenant.toUpperCase()} (render link)`),
-      },
-      link: {
-        externalLink: 'https://www.foo.bar',
-        externalLinkText: simpleRteConfig('External Link'),
-      },
-      showDetailPage: 'false',
-      tenant: tenantId,
-    },
-  });
+    });
+  }));
 
   // news detail pages
   await Promise.all(Array.from({

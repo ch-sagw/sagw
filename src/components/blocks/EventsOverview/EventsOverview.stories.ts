@@ -2,24 +2,24 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { EventsOverview } from '@/components/blocks/EventsOverview/EventsOverview';
+import { EventsOverviewComponent } from '@/components/blocks/EventsOverview/EventsOverview.component';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
-import {
-  DateNotSameMonth, DateNotSameYear, Full, InternalLink, Minimal, MinimalWithoutTag, NoTag,
-} from '@/components/base/EventsListItem/EventsListItem.stories';
 
-type EventsOverviewProps = React.ComponentProps<typeof EventsOverview>;
+type EventsOverviewProps = React.ComponentProps<typeof EventsOverviewComponent>;
 
-type StrictStory = StoryObj<typeof EventsOverview> & {
+type StrictStory = StoryObj<typeof EventsOverviewComponent> & {
   args: EventsOverviewProps;
 };
 
-const meta: Meta<typeof EventsOverview> = {
+const meta: Meta<typeof EventsOverviewComponent> = {
   args: {},
-  component: EventsOverview,
+  component: EventsOverviewComponent,
   decorators: [defaultDecoratorNoPadding],
   parameters: {
     layout: 'fullscreen',
+    nextjs: {
+      appDirectory: true,
+    },
   },
   tags: [
     'autodocs',
@@ -31,21 +31,145 @@ const meta: Meta<typeof EventsOverview> = {
 
 export default meta;
 
-export const DefaultOverview: StrictStory = {
+const Full = {
+  dateEnd: '2025-10-25T12:00:00.000Z',
+  dateStart: '2025-10-24T12:00:00.000Z',
+  language: 'Auf Deutsch',
+  link: {
+    href: 'https://foo.bar',
+    target: '_blank' as const,
+  },
+  location: 'ETH Zürich',
+  pageLanguage: 'de',
+  tag: 'Workshop',
+  text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
+  time: '18:30 Uhr',
+};
+
+const InternalLink = {
+  dateEnd: '2025-10-25T12:00:00.000Z',
+  dateStart: '2025-10-24T12:00:00.000Z',
+  language: 'Auf Deutsch',
+  link: {
+    href: 'https://foo.bar',
+    target: '_self' as const,
+  },
+  location: 'ETH Zürich',
+  pageLanguage: 'de',
+  tag: 'Workshop',
+  text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
+  time: '18:30 Uhr',
+};
+
+const DateNotSameMonth = {
+  dateEnd: '2025-11-25T12:00:00.000Z',
+  dateStart: '2025-10-24T12:00:00.000Z',
+  language: 'Auf Deutsch',
+  link: {
+    href: 'https://foo.bar',
+    target: '_self' as const,
+  },
+  location: 'ETH Zürich',
+  pageLanguage: 'de',
+  tag: 'Workshop',
+  text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
+  time: '18:30 Uhr',
+};
+
+const DateNotSameYear = {
+  dateEnd: '2026-01-25T12:00:00.000Z',
+  dateStart: '2025-10-24T12:00:00.000Z',
+  language: 'Auf Deutsch',
+  link: {
+    href: 'https://foo.bar',
+    target: '_self' as const,
+  },
+  location: 'ETH Zürich',
+  pageLanguage: 'de',
+  tag: 'Workshop',
+  text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
+  time: '18:30 Uhr',
+};
+
+const NoTag = {
+  dateEnd: '2025-10-25T12:00:00.000Z',
+  dateStart: '2025-10-24T12:00:00.000Z',
+  language: 'Auf Deutsch',
+  link: {
+    href: 'https://foo.bar',
+    target: '_self' as const,
+  },
+  location: 'ETH Zürich',
+  pageLanguage: 'de',
+  text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
+  time: '18:30 Uhr',
+};
+
+const Minimal = {
+  dateStart: '2025-10-24T12:00:00.000Z',
+  link: {
+    href: 'https://foo.bar',
+    target: '_self' as const,
+  },
+  pageLanguage: 'de',
+  tag: 'Workshop',
+  text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
+};
+
+const MinimalWithoutTag = {
+  dateStart: '2025-10-24T12:00:00.000Z',
+  link: {
+    href: 'https://foo.bar',
+    target: '_self' as const,
+  },
+  pageLanguage: 'de',
+  text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
+};
+
+export const LotsOfItems: StrictStory = {
   args: {
+    colorMode: 'white',
     items: [
-      DateNotSameMonth.args,
-      DateNotSameYear.args,
-      Full.args,
-      InternalLink.args,
-      Minimal.args,
-      MinimalWithoutTag.args,
-      NoTag.args,
-      DateNotSameMonth.args,
-      DateNotSameYear.args,
-      Full.args,
+      Full,
+      InternalLink,
+      DateNotSameMonth,
+      DateNotSameYear,
+      NoTag,
+      Minimal,
+      MinimalWithoutTag,
+      Full,
+      InternalLink,
+      DateNotSameMonth,
+      DateNotSameYear,
+      NoTag,
+      Minimal,
+      MinimalWithoutTag,
+      Full,
+      InternalLink,
+      DateNotSameMonth,
+      DateNotSameYear,
+      NoTag,
+      Minimal,
+      MinimalWithoutTag,
     ],
     paginationTitle: 'Pagination',
-    title: 'Events',
+    title: 'News',
+  },
+};
+
+export const FewItems: StrictStory = {
+  args: {
+    colorMode: 'white',
+    items: [
+      Full,
+      InternalLink,
+      DateNotSameMonth,
+      DateNotSameYear,
+      NoTag,
+      Minimal,
+      MinimalWithoutTag,
+    ],
+    paginationTitle: 'Pagination',
+    title: 'Latest News',
   },
 };
