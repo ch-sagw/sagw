@@ -1,0 +1,35 @@
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/functions" as *;
+
+.footer {
+  @include body-text-s;
+
+  color: var(--text-secondary-inverted);
+
+  .content {
+    .title {
+      color: var(--text-primary-inverted);
+      font-weight: var(--font-weight-medium);
+      margin: 0 0 px-to-rem(var(--spacing-xl));
+      text-wrap: pretty;
+    }
+
+    .address {
+      margin: 0 0 px-to-rem(var(--spacing-xl));
+
+      span {
+        display: block;
+      }
+    }
+
+    .contact {
+      margin: 0;
+
+      a {
+        display: block;
+        color: inherit;
+        text-decoration: none;
+      }
+    }
+  }
+}
