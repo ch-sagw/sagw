@@ -32,7 +32,24 @@
     flex: 1 1 0;
   }
 
-  @include mq($from: large) {
-    justify-content: space-between;
+  @include mq($from: large, $to: wide) {
+    flex-wrap: wrap;
+    column-gap: px-to-rem(calc(var(--grid-gutter) * 0.25));
+
+    > li {
+      flex: 1 1 calc(50% - px-to-rem(calc(var(--grid-gutter) * 0.125)));
+    }
+
+    > li:nth-child(n+3) {
+      margin-block-start: px-to-rem(var(--section-inside-s));
+    }
+  }
+
+  @include mq($from: wide) {
+    column-gap: px-to-rem(calc(var(--grid-gutter) * 0.75));
+
+    > li {
+      flex: 1 1 calc(25% - px-to-rem(calc(var(--grid-gutter) * 0.25)));
+    }
   }
 }

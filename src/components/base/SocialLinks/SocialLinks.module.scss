@@ -1,5 +1,6 @@
 @use "../../../styles/utilities/utilities" as *;
 @use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
 
 .socialLinks {
   @include list-reset;
@@ -8,6 +9,8 @@
   flex-wrap: wrap;
 
   .item {
+    align-content: center;
+
     .link {
       display: flex;
       align-items: center;
