@@ -2,10 +2,8 @@ import React from 'react';
 import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
 
-import { EventsNewsOverview } from '@/components/base/EventsNewsOverview/EventsNewsOverview';
-import {
-  InterfaceNewsListItemPropTypes, NewsListItem,
-} from '@/components/base/NewsListItem/NewsListItem';
+import { NewsOverviewComponent } from '@/components/blocks/NewsOverview/NewsOverview.component';
+import { InterfaceNewsListItemPropTypes } from '@/components/base/NewsListItem/NewsListItem';
 import {
   Config, InterfaceNewsOverviewBlock,
 } from '@/payload-types';
@@ -58,19 +56,11 @@ export const NewsOverview = async (props: InterfaceNewsOverviewPropTypes): Promi
   });
 
   return (
-    <EventsNewsOverview
+    <NewsOverviewComponent
       title={title}
-      colorMode='white'
-
-      // TODO: get from global i18n
       paginationTitle='Pagination'
-    >
-      {items.map((item, key) => (
-        <NewsListItem
-          key={key}
-          {...item}
-        />
-      ))}
-    </EventsNewsOverview>
+      colorMode='white'
+      items={items}
+    />
   );
 };

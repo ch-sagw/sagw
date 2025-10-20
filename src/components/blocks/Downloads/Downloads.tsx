@@ -86,6 +86,7 @@ export const Downloads = (props: InterfaceDownloadsPropTypes): React.JSX.Element
       });
     }
   });
+
   if (returnDocumentItems.length < 1) {
     return <Fragment></Fragment>;
   }
