@@ -89,18 +89,6 @@ export const NewsTeaser: StrictStory = {
   },
 };
 
-export const NewsTeaserWithoutLink: StrictStory = {
-  args: {
-    children: [
-      newsListItem,
-      newsListItem,
-      newsListItem,
-    ],
-    colorMode: 'light',
-    title: 'News',
-  },
-};
-
 export const EventsTeaser: StrictStory = {
   args: {
     allLink: {
@@ -119,28 +107,24 @@ export const EventsTeaser: StrictStory = {
 
 export const DownloadList: StrictStory = {
   args: {
-    allLink: {
-      href: 'https://foo.bar',
-      text: 'Alle Downloads',
-    },
-    children: [downloadItem],
+    children: [
+      downloadItem,
+      downloadItem,
+      downloadItem,
+    ],
     colorMode: 'light',
     subtitle: 'Dieser Artikel ist Teil von folgender Bulletin-Ausgabe',
     title: 'Downloads',
   },
 };
 
-export const DownloadListWithoutLink: StrictStory = {
-  args: {
-    children: [downloadItem],
-    colorMode: 'light',
-    title: 'Downloads',
-  },
-};
-
 export const LinkList: StrictStory = {
   args: {
-    children: [linkItem],
+    children: [
+      linkItem,
+      linkItem,
+      linkItem,
+    ],
     colorMode: 'light',
     title: 'Links',
   },
