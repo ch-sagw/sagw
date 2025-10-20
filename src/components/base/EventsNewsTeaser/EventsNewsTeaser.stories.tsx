@@ -2,20 +2,20 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { EventsNewsList } from '@/components/base/EventsNewsList/EventsNewsList';
+import { EventsNewsTeaser } from '@/components/base/EventsNewsTeaser/EventsNewsTeaser';
 import { defaultDecorator } from '@/storybook-helpers';
 import { NewsListItem } from '@/components/base/NewsListItem/NewsListItem';
 import { EventsListItem } from '@/components/base/EventsListItem/EventsListItem';
 
-type EventsNewsListProps = React.ComponentProps<typeof EventsNewsList>;
+type EventsNewsTeaserProps = React.ComponentProps<typeof EventsNewsTeaser>;
 
-type StrictStory = StoryObj<typeof EventsNewsList> & {
-  args: EventsNewsListProps;
+type StrictStory = StoryObj<typeof EventsNewsTeaser> & {
+  args: EventsNewsTeaserProps;
 };
 
-const meta: Meta<typeof EventsNewsList> = {
+const meta: Meta<typeof EventsNewsTeaser> = {
   args: {},
-  component: EventsNewsList,
+  component: EventsNewsTeaser,
   decorators: [defaultDecorator],
   parameters: {/* layout: 'centered', */ },
   tags: [
@@ -23,7 +23,7 @@ const meta: Meta<typeof EventsNewsList> = {
     'visual:check',
     'a11y:check',
   ],
-  title: 'Components/base/EventsNewsList',
+  title: 'Components/base/EventsNewsTeaser',
 };
 
 export default meta;
@@ -53,10 +53,25 @@ export const NewsTeaser: StrictStory = {
       href: 'https://foo.bar',
       text: 'Alle News',
     },
-    children: [newsListItem],
+    children: [
+      newsListItem,
+      newsListItem,
+      newsListItem,
+    ],
     colorMode: 'light',
     title: 'News',
-    type: 'teaser',
+  },
+};
+
+export const NewsTeaserWithoutLink: StrictStory = {
+  args: {
+    children: [
+      newsListItem,
+      newsListItem,
+      newsListItem,
+    ],
+    colorMode: 'light',
+    title: 'News',
   },
 };
 
@@ -66,35 +81,12 @@ export const EventsTeaser: StrictStory = {
       href: 'https://foo.bar',
       text: 'Alle News',
     },
-    children: [eventListItem],
+    children: [
+      eventListItem,
+      eventListItem,
+      eventListItem,
+    ],
     colorMode: 'white',
     title: 'Events',
-    type: 'teaser',
-  },
-};
-
-export const NewsTeaserWithoutLink: StrictStory = {
-  args: {
-    children: [newsListItem],
-    colorMode: 'light',
-    title: 'News',
-    type: 'teaser',
-  },
-};
-
-export const NewsOverview: StrictStory = {
-  args: {
-    children: [newsListItem],
-    colorMode: 'white',
-    pagination: {
-      currentPage: 5,
-      onPageChange: (page) => {
-        console.log('changed to page', page);
-      },
-      paginationTitle: 'Pagination',
-      totalPages: 10,
-    },
-    title: 'News',
-    type: 'overview',
   },
 };
