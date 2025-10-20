@@ -4,7 +4,7 @@ import type {
 } from '@storybook/nextjs-vite';
 import { Links } from '@/components/blocks/Links/Links';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
-import { LinkItem } from '@/components/base/DownloadLinkItem/DownloadLinkItem.stories';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 type LinksProps = React.ComponentProps<typeof Links>;
 
@@ -36,15 +36,31 @@ export default meta;
 
 export const LinksBlock: StrictStory = {
   args: {
-    allLink: {
-      href: 'https://foo.bar',
-      text: 'Alle Links',
-    },
-    items: [
-      LinkItem.args,
-      LinkItem.args,
-      LinkItem.args,
+    blockType: 'linksBlock',
+    links: [
+      {
+        linkExternal: {
+          description: simpleRteConfig('Offenes Repository für EU-finanzierte Forschungsergebnisse aus Horizon Europe, Euratom und früheren Rahmenprogrammen.'),
+          externalLink: 'https://foo.bar',
+          externalLinkText: simpleRteConfig('Artikel auf Zenodo'),
+        },
+        linkType: 'external',
+      },
+      {
+        linkInternal: {
+          internalLink: 'https://foo.bar',
+          linkText: simpleRteConfig('Artikel auf Zenodo'),
+        },
+        linkType: 'internal',
+      },
+      {
+        linkMail: {
+          email: 'foo@bar.com',
+          linkText: simpleRteConfig('Schreiben Sie eine E-Mail'),
+        },
+        linkType: 'mail',
+      },
     ],
-    title: 'Links',
+    title: simpleRteConfig('Links'),
   },
 };

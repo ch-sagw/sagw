@@ -24,7 +24,6 @@
 
         color: var(--text-primary);
         display: block;
-        padding-block-end: px-to-rem(var(--inside-elements-s));
       }
 
       .text {
@@ -32,6 +31,7 @@
 
         color: var(--text-secondary);
         display: block;
+        padding-block-start: px-to-rem(var(--inside-elements-s));
       }
     }
 

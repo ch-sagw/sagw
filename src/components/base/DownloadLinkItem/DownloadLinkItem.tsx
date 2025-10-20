@@ -12,22 +12,23 @@ interface InterfaceDownloadLinkItemBaseProps {
     href: string;
     target: '_self' | '_blank'
   },
-  pageLanguage: string;
 }
 
 interface InterfaceDownloadItem extends InterfaceDownloadLinkItemBaseProps {
   type: 'download';
   format: string;
   size: string;
+  pageLanguage: string;
   date?: string;
   text?: never;
 }
 
 interface InterfaceLinkItem extends InterfaceDownloadLinkItemBaseProps {
   type: 'link';
-  text: string;
+  text?: string;
   format?: never;
   size?: never;
+  pageLanguage?: never;
   date?: never;
 }
 
@@ -99,7 +100,7 @@ export const DownloadLinkItem = ({
           />
 
           {/* text */}
-          {type === 'link' &&
+          {type === 'link' && text &&
             <SafeHtml
               as='span'
               className={styles.text}

@@ -85,7 +85,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   });
 
   // add document
-  await payload.create({
+  const document = await payload.create({
     collection: 'documents',
     data: {
       _status: 'published',
@@ -97,7 +97,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   });
 
   // add zenodo document
-  await payload.create({
+  const zenodoDocument = await payload.create({
     collection: 'zenodoDocuments',
     data: {
       _status: 'published',
@@ -107,6 +107,12 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           id: 'someid',
           link: 'https://foo.bar',
           size: 0.26,
+        },
+        {
+          format: 'zip',
+          id: 'someotherid',
+          link: 'https://foo.bar',
+          size: 1.54,
         },
       ],
       publicationDate: '1919-05-01',
@@ -578,7 +584,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   // ############
 
   // create home
-  await payload.create({
+  const home = await payload.create({
     collection: 'homePage',
     data: {
       _status: 'published',
@@ -707,6 +713,62 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'detailPage',
     data: {
       _status: 'published',
+      content: [
+
+        // links block
+        {
+          blockType: 'linksBlock',
+          links: [
+            {
+              linkExternal: {
+                description: simpleRteConfig('Offenes Repository für EU-finanzierte Forschungsergebnisse aus Horizon Europe, Euratom und früheren Rahmenprogrammen.'),
+                externalLink: 'https://www.foo.bar',
+                externalLinkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'external',
+            },
+            {
+              linkInternal: {
+                internalLink: 'https://www.foo.bar',
+                linkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'internal',
+            },
+            {
+              linkMail: {
+                email: 'foo@bar.com',
+                linkText: simpleRteConfig('Schreiben Sie eine E-Mail'),
+              },
+              linkType: 'mail',
+            },
+          ],
+          title: simpleRteConfig('Links'),
+        },
+
+        // downloads block
+        {
+          blockType: 'downloadsBlock',
+          customOrAuto: 'custom',
+          downloads: [
+            {
+              relationTo: 'documents',
+              value: document.id,
+            },
+            {
+              relationTo: 'zenodoDocuments',
+              value: zenodoDocument.id,
+            },
+          ],
+          optionalLink: {
+            includeLink: true,
+            link: {
+              internalLink: `homePage/${home.id}`,
+              linkText: simpleRteConfig('Alle Downloads'),
+            },
+          },
+          subtitle: simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe'),
+        },
+      ],
       hero: {
         colorMode: 'white',
         lead: simpleRteConfig('Detail Page Lead'),

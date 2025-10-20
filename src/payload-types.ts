@@ -356,7 +356,7 @@ export interface InterfaceLinksBlock {
             };
             [k: string]: unknown;
           };
-          'E-Mail': string;
+          email: string;
         };
         id?: string | null;
       }[]
@@ -385,6 +385,42 @@ export interface InterfaceDownloadsBlock {
     };
     [k: string]: unknown;
   } | null;
+  optionalLink?: {
+    includeLink?: boolean | null;
+    link?: {
+      description?: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+      linkText: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      internalLink: string;
+    };
+  };
   customOrAuto: 'custom' | 'auto';
   downloads?:
     | (
@@ -2220,7 +2256,7 @@ export interface InterfaceCtaLinkBlock {
       };
       [k: string]: unknown;
     };
-    'E-Mail': string;
+    email: string;
   };
   id?: string | null;
   blockName?: string | null;
@@ -2624,7 +2660,7 @@ export interface InterfaceGenericTeasersBlock {
         };
         [k: string]: unknown;
       };
-      'E-Mail': string;
+      email: string;
     };
     id?: string | null;
   }[];
@@ -4409,7 +4445,7 @@ export interface InterfaceHeaderMetaNavigation {
             };
             [k: string]: unknown;
           };
-          'E-Mail': string;
+          email: string;
         };
         id?: string | null;
       }[]
@@ -5040,7 +5076,7 @@ export interface InterfaceLinksBlockSelect<T extends boolean = true> {
           | T
           | {
               linkText?: T;
-              'E-Mail'?: T;
+              email?: T;
             };
         id?: T;
       };
@@ -5053,6 +5089,18 @@ export interface InterfaceLinksBlockSelect<T extends boolean = true> {
  */
 export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
   subtitle?: T;
+  optionalLink?:
+    | T
+    | {
+        includeLink?: T;
+        link?:
+          | T
+          | {
+              description?: T;
+              linkText?: T;
+              internalLink?: T;
+            };
+      };
   customOrAuto?: T;
   downloads?: T;
   project?: T;
@@ -5197,7 +5245,7 @@ export interface InterfaceCtaLinkBlockSelect<T extends boolean = true> {
     | T
     | {
         linkText?: T;
-        'E-Mail'?: T;
+        email?: T;
       };
   id?: T;
   blockName?: T;
@@ -5266,7 +5314,7 @@ export interface InterfaceGenericTeasersBlockSelect<T extends boolean = true> {
           | T
           | {
               linkText?: T;
-              'E-Mail'?: T;
+              email?: T;
             };
         id?: T;
       };
@@ -6301,7 +6349,7 @@ export interface InterfaceHeaderMetaNavigationSelect<T extends boolean = true> {
           | T
           | {
               linkText?: T;
-              'E-Mail'?: T;
+              email?: T;
             };
         id?: T;
       };

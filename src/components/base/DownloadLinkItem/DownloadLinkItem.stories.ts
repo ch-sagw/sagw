@@ -37,8 +37,18 @@ export const LinkItem: StrictStory = {
       href: 'https://foo.bar',
       target: '_blank',
     },
-    pageLanguage: 'de',
     text: 'Offenes Repository für EU-finanzierte Forschungsergebnisse aus Horizon Europe, Euratom und früheren Rahmenprogrammen.',
+    title: 'Artikel auf Zenodo',
+    type: 'link',
+  },
+};
+
+export const LinkItemNoText: StrictStory = {
+  args: {
+    link: {
+      href: 'https://foo.bar',
+      target: '_blank',
+    },
     title: 'Artikel auf Zenodo',
     type: 'link',
   },

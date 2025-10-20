@@ -34,6 +34,9 @@ import {
   InterfaceTextBlock,
   InterfaceVideoBlock,
 } from '@/payload-types';
+import { Links } from '@/components/blocks/Links/Links';
+import { Downloads } from '@/components/blocks/Downloads/Downloads';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 interface InterfaceRenderBlocksProps {
   tenantId: string;
@@ -119,6 +122,30 @@ export const RenderBlocks = ({
               return (
                 <div key={block.id || index}>
                   <Accordion {...block} />
+                </div>
+              );
+            }
+
+            if (blockType === 'linksBlock') {
+              return (
+                <div key={block.id || index}>
+                  <Links {...block} />
+                </div>
+              );
+            }
+
+            if (blockType === 'downloadsBlock') {
+              return (
+                <div key={block.id || index}>
+                  <Downloads
+                    {...block}
+
+                    // TODO: get from global
+                    title={simpleRteConfig('Downloads')}
+
+                    // TODO: get from parent
+                    language='de'
+                  />
                 </div>
               );
             }
