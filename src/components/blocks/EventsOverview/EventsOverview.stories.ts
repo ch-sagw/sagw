@@ -45,14 +45,7 @@ export const DefaultOverview: StrictStory = {
       DateNotSameYear.args,
       Full.args,
     ],
-    pagination: {
-      currentPage: 5,
-      onPageChange: (page) => {
-        console.log('changed to page', page);
-      },
-      paginationTitle: 'Pagination',
-      totalPages: 10,
-    },
+    paginationTitle: 'Pagination',
     title: 'Events',
   },
 };
