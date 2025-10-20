@@ -11,6 +11,7 @@
       color: var(--text-primary-inverted);
       font-weight: var(--font-weight-medium);
       margin: 0 0 px-to-rem(var(--spacing-xl));
+      text-wrap: pretty;
     }
 
     .address {

@@ -113,7 +113,7 @@
 }
 
 .expandableMenu.footer {
-  --button-text-size: 15;
+  --button-text-size: var(--body-text-s-size);
 
   cursor: default;
 
@@ -133,7 +133,7 @@
       overflow: visible;
       transition: none;
       opacity: 1;
-      padding-block-start: 0;
+      padding-block: 0;
       margin-block-start: 0;
     }
   }
@@ -149,15 +149,18 @@
   }
 
   .item.item {
-    --button-padding-block-inner-text: 13;
+    --button-padding-block-inner-text: var(--body-text-s-size);
 
     transform: none;
     transition: none;
-    font-size: px-to-rem(15);
   }
 
   .footerColumnTitle {
     @include button-text;
+
+    @include mq($from: large) {
+      margin-block-start: 0;
+    }
 
     font-size: px-to-rem(var(--button-text-size));
     color: var(--text-primary-inverted);
