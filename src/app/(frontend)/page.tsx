@@ -109,6 +109,7 @@ export default async function HomePage({
           <RenderBlocks
             blocks={pageData.content}
             tenantId={tenant}
+            payload={payload}
           />
         </div>
       </main>

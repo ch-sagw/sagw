@@ -37,6 +37,7 @@ import {
 import { Links } from '@/components/blocks/Links/Links';
 import { Downloads } from '@/components/blocks/Downloads/Downloads';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { NewsOverview } from '@/components/blocks/NewsOverview/NewsOverview';
 
 interface InterfaceRenderBlocksProps {
   tenantId: string;
@@ -142,6 +143,20 @@ export const RenderBlocks = ({
 
                     // TODO: get from global
                     title={simpleRteConfig('Downloads')}
+
+                    // TODO: get from parent
+                    language='de'
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'newsOverviewBlock') {
+              return (
+                <div key={block.id || index}>
+                  <NewsOverview
+                    {...block}
+                    tenant={tenantId}
 
                     // TODO: get from parent
                     language='de'

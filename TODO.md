@@ -71,5 +71,12 @@ Backup Migration:
 - remove env vars from docs
 
 
+--------
+- in newsItem, downloadItem, eventItem, we do date conversion... do it on block level instead!
+- use : language: Config['locale']; in every block
+- pagination: focus first element after page switc
+- pagination: sort items
+- eventsNewsList -> make separate components for overview and teaser
+
 QUESTIONS:
 - newsTeasers, eventsTeasers, downloadBlock, linkBlock -> no option to choose color scheme?

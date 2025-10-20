@@ -792,6 +792,46 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
+  // create overview page with news overview block
+  await payload.create({
+    collection: 'overviewPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'newsOverviewBlock',
+          title: simpleRteConfig('All News'),
+        },
+      ],
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Overview Page Lead'),
+        title: simpleRteConfig(`Overview page with News Overview ${tenant.toUpperCase()}`),
+      },
+      tenant: tenantId,
+    },
+  });
+
+  // create overview page with events overview block
+  await payload.create({
+    collection: 'overviewPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'eventsOverviewBlock',
+          title: simpleRteConfig('All Events'),
+        },
+      ],
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Overview Page Lead'),
+        title: simpleRteConfig(`Overview page with Events Overview ${tenant.toUpperCase()}`),
+      },
+      tenant: tenantId,
+    },
+  });
+
   // create magazine detail page
   await payload.create({
     collection: 'magazineDetailPage',
@@ -820,32 +860,32 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         category: eventCategory.id,
         date: '2025-08-31T12:00:00.000Z',
         project: project.id,
-        title: simpleRteConfig(`Event details title ${tenant.toUpperCase()} (render detail page)`),
+        title: simpleRteConfig(`Event 2 details title ${tenant.toUpperCase()} (render detail page)`),
       },
       hero: {
         colorMode: 'white',
-        lead: simpleRteConfig('Event Detail Page Lead'),
-        title: simpleRteConfig(`Event detail page title ${tenant.toUpperCase()} (render detail page)`),
+        lead: simpleRteConfig('Event 2 Detail Page Lead'),
+        title: simpleRteConfig(`Event 2 detail page title ${tenant.toUpperCase()} (render detail page)`),
       },
       showDetailPage: 'true',
       tenant: tenantId,
     },
   });
 
-  // event detail page (render detail Page)
+  // event detail page (render link)
   await payload.create({
     collection: 'eventDetailPage',
     data: {
       _status: 'published',
       eventDetails: {
         category: eventCategory.id,
-        date: '2025-08-31T12:00:00.000Z',
+        date: '2025-08-30T12:00:00.000Z',
         project: project.id,
-        title: simpleRteConfig(`Event detail title ${tenant.toUpperCase()} (render link)`),
+        title: simpleRteConfig(`Event 1 detail title ${tenant.toUpperCase()} (render link)`),
       },
       hero: {
         colorMode: 'white',
-        title: simpleRteConfig(`Event detail page title ${tenant.toUpperCase()} (render link)`),
+        title: simpleRteConfig(`Event 1 detail page title ${tenant.toUpperCase()} (render link)`),
       },
       link: {
         externalLink: 'https://www.foo.bar',
@@ -856,24 +896,32 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
-  // news detail page
-  await payload.create({
-    collection: 'newsDetailPage',
-    data: {
-      _status: 'published',
-      hero: {
-        colorMode: 'white',
-        date: '2025-08-31T12:00:00.000Z',
-        lead: simpleRteConfig('News Detail Page Lead'),
-        title: simpleRteConfig(`News detail page title ${tenant.toUpperCase()}`),
+  // news detail pages
+  await Promise.all(Array.from({
+    length: 25,
+  }, (_, i) => {
+    const index = i + 1;
+
+    return payload.create({
+      collection: 'newsDetailPage',
+      data: {
+        _status: 'published',
+        hero: {
+          colorMode: 'white',
+          date: `2025-08-${index < 10
+            ? `0${index}`
+            : index}T12:00:00.000Z`,
+          lead: simpleRteConfig(`News ${index} Detail Page Lead`),
+          title: simpleRteConfig(`News ${index} detail page title ${tenant.toUpperCase()}`),
+        },
+        overviewPageProps: {
+          teaserText: simpleRteConfig(`Overview Teaser Text from News ${index}`),
+        },
+        project: project.id,
+        tenant: tenantId,
       },
-      overviewPageProps: {
-        teaserText: simpleRteConfig('Overview Teaser Text'),
-      },
-      project: project.id,
-      tenant: tenantId,
-    },
-  });
+    });
+  }));
 
   // publication detail page
   await payload.create({

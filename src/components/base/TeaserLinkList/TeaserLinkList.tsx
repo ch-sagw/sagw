@@ -1,13 +1,11 @@
-'use client';
-
 import React from 'react';
-import styles from '@/components/base/EventsNewsTeaser/EventsNewsTeaser.module.scss';
+import styles from '@/components/base/TeaserLinkList/TeaserLinkList.module.scss';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { Section } from '@/components/base/Section/Section';
 
-export type InterfaceEventsNewsTeaserPropTypes = {
+export type InterfaceTeaserLinkListPropTypes = {
   children: React.ReactNode;
   title: string;
   colorMode: ColorMode;
@@ -15,19 +13,23 @@ export type InterfaceEventsNewsTeaserPropTypes = {
     text: string;
     href: string;
   };
+  subtitle?: string;
 };
 
-export const EventsNewsTeaser = (props: InterfaceEventsNewsTeaserPropTypes): React.JSX.Element => {
+export const TeaserLinkList = (props: InterfaceTeaserLinkListPropTypes): React.JSX.Element => {
   const {
-    title,
+    allLink,
     colorMode,
+    subtitle,
+    title,
   } = props;
 
   return (
     <Section
-      className={styles.eventsNewsTeaser}
+      className={styles.teaserLinkList}
       showTopLine={true}
       title={title}
+      subtitle={subtitle}
       colorMode={colorMode}
     >
 
@@ -35,14 +37,14 @@ export const EventsNewsTeaser = (props: InterfaceEventsNewsTeaserPropTypes): Rea
         {props.children}
       </ul>
 
-      {props.allLink &&
+      {allLink &&
         <Button
           style='text'
           colorMode={colorMode}
           element='link'
-          href={props.allLink.href}
+          href={allLink.href}
           className={styles.allLink}
-          text={props.allLink.text}
+          text={allLink.text}
           iconInlineStart={'arrowRight' as keyof typeof Icon}
         />
       }
