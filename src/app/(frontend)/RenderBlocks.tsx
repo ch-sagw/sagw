@@ -35,6 +35,7 @@ import {
 import { Links } from '@/components/blocks/Links/Links';
 import { Downloads } from '@/components/blocks/Downloads/Downloads';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { NewsOverview } from '@/components/blocks/NewsOverview/NewsOverview';
 
 // helpers
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
