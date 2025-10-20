@@ -4,7 +4,6 @@ import type {
 } from '@storybook/nextjs-vite';
 import { NewsOverviewComponent } from '@/components/blocks/NewsOverview/NewsOverview.component';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
-import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 type NewsOverviewProps = React.ComponentProps<typeof NewsOverviewComponent>;
 
