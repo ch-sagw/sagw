@@ -39,7 +39,11 @@ export const EventsOverview = async (props: InterfaceEventsOverviewPropTypes): P
   const title = rteToHtml(props.title);
 
   const items = eventPages.docs.map((eventPage) => {
-    const category = eventPage.eventDetails.category as EventCategory;
+    let category;
+
+    if (eventPage.eventDetails.category) {
+      category = eventPage.eventDetails.category as EventCategory;
+    }
 
     // if page has a detail page
     let link = `/${eventPage.slug}`;
@@ -50,7 +54,9 @@ export const EventsOverview = async (props: InterfaceEventsOverviewPropTypes): P
     }
 
     const returnEventPage: InterfaceEventsListItemPropTypes = {
-      dateEnd: eventPage.eventDetails.dateEnd || eventPage.eventDetails.date,
+      dateEnd: eventPage.eventDetails.multipleDays
+        ? eventPage.eventDetails.dateEnd || eventPage.eventDetails.date
+        : eventPage.eventDetails.date,
       dateStart: eventPage.eventDetails.date,
       language: rteToHtml(eventPage.eventDetails.language),
       link: {
@@ -61,7 +67,9 @@ export const EventsOverview = async (props: InterfaceEventsOverviewPropTypes): P
       },
       location: rteToHtml(eventPage.eventDetails.location),
       pageLanguage: props.language,
-      tag: rteToHtml(category.eventCategory),
+      tag: category
+        ? rteToHtml(category.eventCategory)
+        : undefined,
       text: rteToHtml(eventPage.eventDetails.title),
       time: rteToHtml(eventPage.eventDetails.time),
     };
