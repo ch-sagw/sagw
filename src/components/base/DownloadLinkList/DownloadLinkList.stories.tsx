@@ -46,10 +46,10 @@ const linkItem = <DownloadLinkItem
     href: 'https://foo.bar',
     target: '_blank',
   }}
-  pageLanguage='de'
   text='Offenes Repository für EU-finanzierte Forschungsergebnisse aus Horizon Europe, Euratom und früheren Rahmenprogrammen.'
   title='Artikel auf Zenodo'
   type='link'
+  key='some-key'
 />;
 
 export const DownloadList: StrictStory = {

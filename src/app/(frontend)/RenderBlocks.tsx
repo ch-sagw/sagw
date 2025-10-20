@@ -32,6 +32,9 @@ import {
   InterfaceTextBlock,
   InterfaceVideoBlock,
 } from '@/payload-types';
+import { Links } from '@/components/blocks/Links/Links';
+import { Downloads } from '@/components/blocks/Downloads/Downloads';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 // helpers
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
