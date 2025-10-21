@@ -8,7 +8,7 @@ import React from 'react';
 
 export type InterfaceNewsOverviewComponentPropTypes = Omit<
   InterfaceTeaserLinkListPropTypes,
-  'children'
+  'children' | 'colorMode'
 > & {
   items: InterfaceNewsListItemPropTypes[]
 };

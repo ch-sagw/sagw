@@ -8,14 +8,14 @@ import React from 'react';
 
 export type InterfaceEventsOverviewComponentPropTypes = Omit<
   InterfaceTeaserLinkListPropTypes,
-  'children'
+  'children' | 'colorMode'
 > & {
   items: InterfaceEventsListItemPropTypes[]
 };
 
 export const EventsTeaserComponent = (props: InterfaceEventsOverviewComponentPropTypes): React.JSX.Element => (
   <TeaserLinkList
-    colorMode='light'
+    colorMode='white'
     title={props.title}
     allLink={props.allLink}
   >
