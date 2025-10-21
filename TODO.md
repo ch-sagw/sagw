@@ -77,6 +77,9 @@ Backup Migration:
 - pagination: focus first element after page switc
 - pagination: sort items
 - pagination: scroll to top -> not to top, but to section top, so that nav stays collapsed
+- add cta-block
+- stories: for teasers and overviews, we have a duplicate, almost same stories (on block level and on baese level)
+- thin out snapshots: either screenshot blocks or base components, not both
 
 QUESTIONS:
 - newsTeasers, eventsTeasers, downloadBlock, linkBlock -> no option to choose color scheme?
