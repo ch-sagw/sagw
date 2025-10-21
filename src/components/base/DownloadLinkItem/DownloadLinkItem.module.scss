@@ -16,6 +16,12 @@
     justify-content: space-between;
     gap: px-to-rem(var(--inside-elements-l));
 
+    &:focus-visible {
+      @include focus-visible;
+
+      outline-offset: px-to-rem(calc(var(--spacing-2xs) / 2));
+    }
+
     .content {
       flex: 1;
 

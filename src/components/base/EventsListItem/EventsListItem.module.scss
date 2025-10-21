@@ -3,18 +3,26 @@
 @use "../../../styles/utilities/utilities" as *;
 
 .item {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto 1fr;
-  column-gap: px-to-rem(var(--inside-elements-l));
-  row-gap: px-to-rem(var(--inside-elements-s));
-  align-items: start;
-  grid-auto-columns: min-content;
+  @include list-reset;
+
   padding-block: px-to-rem(var(--inside-elements-l));
   border-block-end: px-to-rem(var(--border-width-l)) solid var(--border-primary);
 
   .link {
-    display: contents;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    column-gap: px-to-rem(var(--inside-elements-l));
+    row-gap: px-to-rem(var(--inside-elements-s));
+    align-items: start;
+    grid-auto-columns: min-content;
+    text-decoration: none;
+
+    &:focus-visible {
+      @include focus-visible;
+
+      outline-offset: px-to-rem(calc(var(--spacing-2xs) / 2));
+    }
 
     .tag {
       grid-column: 2;
