@@ -2,27 +2,22 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { EventsTeaser } from '@/components/blocks/EventsTeaser/EventsTeaser';
+import { EventsTeaserComponent } from '@/components/blocks/EventsTeaser/EventsTeaser.component';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import {
   DateNotSameMonth, DateNotSameYear, Full,
 } from '@/components/base/EventsListItem/EventsListItem.stories';
 
-type EventsTeaserProps = React.ComponentProps<typeof EventsTeaser>;
+type EventsTeaserProps = React.ComponentProps<typeof EventsTeaserComponent>;
 
-type StrictStory = StoryObj<typeof EventsTeaser> & {
+type StrictStory = StoryObj<typeof EventsTeaserComponent> & {
   args: EventsTeaserProps;
 };
 
-const meta: Meta<typeof EventsTeaser> = {
+const meta: Meta<typeof EventsTeaserComponent> = {
   args: {},
-  component: EventsTeaser,
+  component: EventsTeaserComponent,
   decorators: [defaultDecoratorNoPadding],
-  globals: {
-    backgrounds: {
-      value: 'white',
-    },
-  },
   parameters: {
     layout: 'fullscreen',
   },
@@ -40,13 +35,13 @@ export const DefaultTeaser: StrictStory = {
   args: {
     allLink: {
       href: 'https://foo.bar',
-      text: 'Alle Events',
+      text: 'Alle News',
     },
     items: [
       DateNotSameMonth.args,
       DateNotSameYear.args,
       Full.args,
     ],
-    title: 'Events',
+    title: 'News',
   },
 };
