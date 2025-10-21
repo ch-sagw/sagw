@@ -72,8 +72,7 @@ export const OverviewPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blockReferences: blocks(contentBlocks),
-              blocks: [],
+              blocks: blocks(contentBlocks),
               filterOptions: createSingleOverviewBlockFilter(contentBlocks),
               label: 'Content',
               name: 'content',

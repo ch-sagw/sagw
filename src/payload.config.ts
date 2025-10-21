@@ -11,7 +11,6 @@ import sharp from 'sharp';
 
 import plugins from '@/plugins';
 import { collections } from '@/collections';
-import { blocks } from '@/blocks';
 import { Users } from '@/collections/Plc/Users';
 import { seedInitialUserAndTenant } from '@/seed/init';
 import { seedTestData } from '@/seed/test-data';
@@ -27,7 +26,7 @@ export default buildConfig({
         ? {
           email: process.env.PAYLOAD_INITIAL_USER_MAIL,
           password: process.env.PAYLOAD_INITIAL_PASSWORD,
-          prefillOnly: true,
+          prefillOnly: false,
         }
         : false,
     components: {
@@ -42,7 +41,6 @@ export default buildConfig({
     },
     user: Users.slug,
   },
-  blocks: blocks(),
   collections,
   db: mongooseAdapter({
     autoPluralization: false,
