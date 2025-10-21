@@ -24,7 +24,7 @@ const storiesIds = visualStories.map((item) => item.id);
 
 const snapshotFolder = `./src/automated-testing/${vrtConfig.snapshotFolder}`;
 
-const getOrphanedScreenshots = async (): Promise<string[]> => {
+const getOrphanedScreenshots = async (): Promise<void> => {
   try {
     const snapshotItems = await readdir(snapshotFolder);
     const snapshotFolders: string[] = [];
@@ -41,12 +41,8 @@ const getOrphanedScreenshots = async (): Promise<string[]> => {
     const orphanedFolders = snapshotFolders.filter((folder) => !storiesIds.includes(folder));
 
     console.log(orphanedFolders);
-
-    return orphanedFolders;
   } catch (error) {
     console.error('Error reading snapshot folder:', error);
-
-    return [];
   }
 };
 
