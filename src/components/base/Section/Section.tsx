@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/Section/Section.module.scss';
 import { ColorMode } from '@/components/base/types/colorMode';
@@ -13,14 +13,14 @@ export type InterfaceSectionPropTypes = {
   showTopLine: boolean;
 };
 
-export const Section = ({
+export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
   className,
   title,
   subtitle,
   children,
   colorMode,
   showTopLine,
-}: InterfaceSectionPropTypes): React.JSX.Element => {
+}, ref) => {
   const sectionClasses = cva([
     styles.section,
     className,
@@ -36,6 +36,7 @@ export const Section = ({
 
   return (
     <section
+      ref={ref}
       className={sectionClasses({
         colorMode,
       })}
@@ -61,4 +62,6 @@ export const Section = ({
       }
     </section>
   );
-};
+});
+
+Section.displayName = 'Section';

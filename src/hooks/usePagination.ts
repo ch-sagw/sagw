@@ -9,7 +9,7 @@ import {
 
 interface InterfaceUsePaginationOptions {
   items: ReactNode[] | ReactNode;
-  scrollToTop?: boolean;
+  scrollToElement?: React.RefObject<HTMLElement | null>;
 }
 
 interface InterfaceUsePaginationReturn {
@@ -22,7 +22,7 @@ interface InterfaceUsePaginationReturn {
 
 export const usePagination = ({
   items,
-  scrollToTop = true,
+  scrollToElement,
 }: InterfaceUsePaginationOptions): InterfaceUsePaginationReturn => {
   const router = useRouter();
   const pathname = usePathname();
@@ -80,10 +80,10 @@ export const usePagination = ({
       scroll: false,
     });
 
-    if (scrollToTop) {
-      window.scrollTo({
+    if (scrollToElement?.current) {
+      scrollToElement.current.scrollIntoView({
         behavior: 'smooth',
-        top: 0,
+        block: 'start',
       });
     }
   };

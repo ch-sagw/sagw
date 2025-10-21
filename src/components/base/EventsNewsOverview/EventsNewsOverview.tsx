@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import styles from '@/components/base/EventsNewsOverview/EventsNewsOverview.module.scss';
 import { Pagination } from '@/components/base/Pagination/Pagination';
 import { ColorMode } from '@/components/base/types/colorMode';
@@ -21,6 +21,8 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
     children,
   } = props;
 
+  const sectionRef = useRef<HTMLElement | null>(null);
+
   const {
     currentPage,
     totalPages,
@@ -28,10 +30,12 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
     handlePageChange,
   } = usePagination({
     items: children,
+    scrollToElement: sectionRef,
   });
 
   return (
     <Section
+      ref={sectionRef}
       className={styles.eventsNewsOverview}
       showTopLine={false}
       title={title}
