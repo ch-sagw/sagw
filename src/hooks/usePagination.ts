@@ -10,6 +10,7 @@ import {
 interface InterfaceUsePaginationOptions {
   items: ReactNode[] | ReactNode;
   scrollToElement?: React.RefObject<HTMLElement | null>;
+  focusFirstItem?: () => void;
 }
 
 interface InterfaceUsePaginationReturn {
@@ -23,6 +24,7 @@ interface InterfaceUsePaginationReturn {
 export const usePagination = ({
   items,
   scrollToElement,
+  focusFirstItem,
 }: InterfaceUsePaginationOptions): InterfaceUsePaginationReturn => {
   const router = useRouter();
   const pathname = usePathname();
@@ -85,6 +87,11 @@ export const usePagination = ({
         behavior: 'smooth',
         block: 'start',
       });
+    }
+
+    // Focus the first item after page change
+    if (focusFirstItem) {
+      focusFirstItem();
     }
   };
 

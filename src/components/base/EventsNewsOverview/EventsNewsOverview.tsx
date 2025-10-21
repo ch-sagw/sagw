@@ -22,6 +22,19 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
   } = props;
 
   const sectionRef = useRef<HTMLElement | null>(null);
+  const listRef = useRef<HTMLUListElement | null>(null);
+
+  const focusFirstItem = (): void => {
+    if (listRef.current) {
+      const firstLink = listRef.current.querySelector('a');
+
+      console.log(firstLink);
+
+      if (firstLink) {
+        firstLink.focus();
+      }
+    }
+  };
 
   const {
     currentPage,
@@ -29,6 +42,7 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
     currentItems,
     handlePageChange,
   } = usePagination({
+    focusFirstItem,
     items: children,
     scrollToElement: sectionRef,
   });
@@ -42,7 +56,7 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
       colorMode={colorMode}
     >
 
-      <ul className={styles.list}>
+      <ul ref={listRef} className={styles.list}>
         {currentItems}
       </ul>
 
