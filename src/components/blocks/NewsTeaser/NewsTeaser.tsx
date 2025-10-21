@@ -58,7 +58,6 @@ export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<R
   return (
 
     <NewsTeaserComponent
-      colorMode='light'
       title={title}
       allLink={allLink}
       items={items}

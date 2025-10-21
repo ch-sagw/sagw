@@ -58,7 +58,6 @@ export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promi
   return (
 
     <EventsTeaserComponent
-      colorMode='light'
       title={title}
       allLink={allLink}
       items={items}
