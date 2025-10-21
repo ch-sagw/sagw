@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.18.0](https://github.com/ch-sagw/sagw/compare/v0.17.0...v0.18.0) (2025-10-21)
+
+
+### Chore
+
+* **payload:** bump payload to 3.60.0 ([5a12dae](https://github.com/ch-sagw/sagw/commit/5a12daecd0c0c6c0ef84621efa0ad9a61ee0c992))
+
+
+### Features
+
+* **payload:** fully enable autologin again ([5a12dae](https://github.com/ch-sagw/sagw/commit/5a12daecd0c0c6c0ef84621efa0ad9a61ee0c992))
+
+
+### Test
+
+* **payload:** wait for tenant cookie to be set before each test ([5a12dae](https://github.com/ch-sagw/sagw/commit/5a12daecd0c0c6c0ef84621efa0ad9a61ee0c992))
+* remove login routine from test ([5a12dae](https://github.com/ch-sagw/sagw/commit/5a12daecd0c0c6c0ef84621efa0ad9a61ee0c992))
+
 ## [0.17.0](https://github.com/ch-sagw/sagw/compare/v0.16.1...v0.17.0) (2025-10-21)
 
 
