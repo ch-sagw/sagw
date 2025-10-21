@@ -45,6 +45,8 @@ import { Links } from '@/components/blocks/Links/Links';
 import { Downloads } from '@/components/blocks/Downloads/Downloads';
 import { NewsOverview } from '@/components/blocks/NewsOverview/NewsOverview';
 import { EventsOverview } from '@/components/blocks/EventsOverview/EventsOverview';
+import { NewsTeaser } from '@/components/blocks/NewsTeaser/NewsTeaser';
+import { EventsTeaser } from '@/components/blocks/EventsTeaser/EventsTeaser';
 
 // helpers
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';

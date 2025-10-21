@@ -55,6 +55,7 @@ export const DefaultTeaser: StrictStory = {
       href: 'https://foo.bar',
       text: 'Alle News',
     },
+    colorMode: 'light',
     items,
     title: 'News',
   },
