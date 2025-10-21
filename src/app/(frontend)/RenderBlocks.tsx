@@ -47,6 +47,7 @@ import { NewsOverview } from '@/components/blocks/NewsOverview/NewsOverview';
 import { EventsOverview } from '@/components/blocks/EventsOverview/EventsOverview';
 import { NewsTeaser } from '@/components/blocks/NewsTeaser/NewsTeaser';
 import { EventsTeaser } from '@/components/blocks/EventsTeaser/EventsTeaser';
+import { CtaLink } from '@/components/blocks/CtaLink/CtaLink';
 
 // helpers
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
