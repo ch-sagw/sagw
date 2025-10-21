@@ -31,6 +31,7 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
     currentItems,
     handlePageChange,
   } = usePagination({
+    focusFirstItem,
     items: children,
     listRef,
     sectionRef,
