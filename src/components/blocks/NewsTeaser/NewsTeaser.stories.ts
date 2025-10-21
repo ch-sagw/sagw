@@ -2,18 +2,18 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { NewsTeaser } from '@/components/blocks/NewsTeaser/NewsTeaser';
+import { NewsTeaserComponent } from '@/components/blocks/NewsTeaser/NewsTeaser.component';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 
-type NewsTeaserProps = React.ComponentProps<typeof NewsTeaser>;
+type NewsTeaserProps = React.ComponentProps<typeof NewsTeaserComponent>;
 
-type StrictStory = StoryObj<typeof NewsTeaser> & {
+type StrictStory = StoryObj<typeof NewsTeaserComponent> & {
   args: NewsTeaserProps;
 };
 
-const meta: Meta<typeof NewsTeaser> = {
+const meta: Meta<typeof NewsTeaserComponent> = {
   args: {},
-  component: NewsTeaser,
+  component: NewsTeaserComponent,
   decorators: [defaultDecoratorNoPadding],
   parameters: {
     layout: 'fullscreen',
@@ -55,6 +55,7 @@ export const DefaultTeaser: StrictStory = {
       href: 'https://foo.bar',
       text: 'Alle News',
     },
+    colorMode: 'light',
     items,
     title: 'News',
   },

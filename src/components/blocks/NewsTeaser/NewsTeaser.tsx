@@ -1,31 +1,68 @@
 import React from 'react';
-import {
-  InterfaceTeaserLinkListPropTypes, TeaserLinkList,
-} from '@/components/base/TeaserLinkList/TeaserLinkList';
-import {
-  InterfaceNewsListItemPropTypes, NewsListItem,
-} from '@/components/base/NewsListItem/NewsListItem';
+import { getPayload } from 'payload';
+import configPromise from '@/payload.config';
 
-export type InterfaceNewsTeaserPropTypes = Omit<
-  InterfaceTeaserLinkListPropTypes,
-  'children' | 'type' | 'colorMode'
-> & {
-  items: InterfaceNewsListItemPropTypes[];
+import { rteToHtml } from '@/utilities/rteToHtml';
+import {
+  Config,
+  InterfaceNewsTeasersBlock,
+} from '@/payload-types';
+import { NewsTeaserComponent } from '@/components/blocks/NewsTeaser/NewsTeaser.component';
+import { convertPayloadNewsPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
+
+type InterfaceNewsTeaserPropTypes = {
+  language: Config['locale'];
+  tenant: string;
+} & InterfaceNewsTeasersBlock;
+
+export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<React.JSX.Element> => {
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  // Get news data
+  const newsPages = await payload.find({
+    // TODO: get latest sorted by date
+
+    collection: 'newsDetailPage',
+    depth: 1,
+
+    // TODO: how many?
+    limit: 4,
+
+    locale: props.language,
+    overrideAccess: false,
+    pagination: false,
+    where: {
+      tenant: {
+        equals: props.tenant,
+      },
+    },
+  });
+
+  const title = rteToHtml(props.title);
+  let allLink;
+
+  if (props.link === 'yes' && props.linkText) {
+    allLink = {
+
+      // TODO
+      href: '/overview',
+
+      text: rteToHtml(props.linkText),
+    };
+  }
+
+  const items = convertPayloadNewsPagesToFeItems(newsPages, props.language);
+
+  return (
+
+    <NewsTeaserComponent
+      colorMode='light'
+      title={title}
+      allLink={allLink}
+      items={items}
+    />
+  );
+
 };
-
-export const NewsTeaser = ({
-  items, title, allLink,
-}: InterfaceNewsTeaserPropTypes): React.JSX.Element => (
-  <TeaserLinkList
-    colorMode='light'
-    title={title}
-    allLink={allLink}
-  >
-    {items.map((item, key) => (
-      <NewsListItem
-        key={key}
-        {...item}
-      />
-    ))}
-  </TeaserLinkList>
-);

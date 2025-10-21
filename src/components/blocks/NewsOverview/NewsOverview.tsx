@@ -3,14 +3,13 @@ import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
 
 import { NewsOverviewComponent } from '@/components/blocks/NewsOverview/NewsOverview.component';
-import { InterfaceNewsListItemPropTypes } from '@/components/base/NewsListItem/NewsListItem';
 import {
   Config, InterfaceNewsOverviewBlock,
 } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
-import { formatDateToReadableString } from '@/components/helpers/date';
+import { convertPayloadNewsPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
 
-export type InterfaceNewsOverviewPropTypes = {
+type InterfaceNewsOverviewPropTypes = {
   language: Config['locale'];
   tenant: string;
 } & InterfaceNewsOverviewBlock;
@@ -38,22 +37,7 @@ export const NewsOverview = async (props: InterfaceNewsOverviewPropTypes): Promi
 
   const title = rteToHtml(props.title);
 
-  const items = newsPages.docs.map((newsPage) => {
-    const returnNewsPage: InterfaceNewsListItemPropTypes = {
-      date: formatDateToReadableString({
-        dateString: newsPage.hero.date,
-        locale: props.language,
-      }),
-
-      // TODO
-      link: newsPage.slug || '',
-
-      text: rteToHtml(newsPage.overviewPageProps.teaserText),
-      title: rteToHtml(newsPage.hero.title),
-    };
-
-    return returnNewsPage;
-  });
+  const items = convertPayloadNewsPagesToFeItems(newsPages, props.language);
 
   return (
     <NewsOverviewComponent

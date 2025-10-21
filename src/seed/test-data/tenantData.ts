@@ -602,6 +602,14 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         //   text: simpleRteConfig('Sample notification text.'),
         // },
         {
+          blockType: 'eventsTeasersBlock',
+          title: simpleRteConfig('Events'),
+        },
+        {
+          blockType: 'newsTeasersBlock',
+          title: simpleRteConfig('News'),
+        },
+        {
           blockType: 'textBlock',
           text: rte3FullRange,
         },

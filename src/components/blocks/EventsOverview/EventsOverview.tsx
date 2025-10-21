@@ -3,11 +3,11 @@ import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
 
 import { EventsOverviewComponent } from '@/components/blocks/EventsOverview/EventsOverview.component';
-import { InterfaceEventsListItemPropTypes } from '@/components/base/EventsListItem/EventsListItem';
 import {
-  Config, EventCategory, InterfaceEventsOverviewBlock,
+  Config, InterfaceEventsOverviewBlock,
 } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
+import { convertPayloadEventPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
 
 export type InterfaceEventsOverviewPropTypes = {
   language: Config['locale'];
@@ -38,44 +38,7 @@ export const EventsOverview = async (props: InterfaceEventsOverviewPropTypes): P
 
   const title = rteToHtml(props.title);
 
-  const items = eventPages.docs.map((eventPage) => {
-    let category;
-
-    if (eventPage.eventDetails.category) {
-      category = eventPage.eventDetails.category as EventCategory;
-    }
-
-    // if page has a detail page
-    let link = `/${eventPage.slug}`;
-
-    // if page has no detail page
-    if (eventPage.showDetailPage === 'false') {
-      link = eventPage.link?.externalLink || '';
-    }
-
-    const returnEventPage: InterfaceEventsListItemPropTypes = {
-      dateEnd: eventPage.eventDetails.multipleDays
-        ? eventPage.eventDetails.dateEnd || eventPage.eventDetails.date
-        : eventPage.eventDetails.date,
-      dateStart: eventPage.eventDetails.date,
-      language: rteToHtml(eventPage.eventDetails.language),
-      link: {
-        href: link,
-        target: eventPage.showDetailPage === 'true'
-          ? '_self' as const
-          : '_blank' as const,
-      },
-      location: rteToHtml(eventPage.eventDetails.location),
-      pageLanguage: props.language,
-      tag: category
-        ? rteToHtml(category.eventCategory)
-        : undefined,
-      text: rteToHtml(eventPage.eventDetails.title),
-      time: rteToHtml(eventPage.eventDetails.time),
-    };
-
-    return returnEventPage;
-  });
+  const items = convertPayloadEventPagesToFeItems(eventPages, props.language);
 
   return (
     <EventsOverviewComponent

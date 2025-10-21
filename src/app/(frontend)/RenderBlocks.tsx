@@ -45,6 +45,8 @@ import { Links } from '@/components/blocks/Links/Links';
 import { Downloads } from '@/components/blocks/Downloads/Downloads';
 import { NewsOverview } from '@/components/blocks/NewsOverview/NewsOverview';
 import { EventsOverview } from '@/components/blocks/EventsOverview/EventsOverview';
+import { NewsTeaser } from '@/components/blocks/NewsTeaser/NewsTeaser';
+import { EventsTeaser } from '@/components/blocks/EventsTeaser/EventsTeaser';
 
 // blocks interface
 interface InterfaceRenderBlocksProps {
@@ -177,6 +179,34 @@ export const RenderBlocks = ({
               return (
                 <div key={block.id || index}>
                   <EventsOverview
+                    {...block}
+                    tenant={tenantId}
+
+                    // TODO: get from parent
+                    language='de'
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'newsTeasersBlock') {
+              return (
+                <div key={block.id || index}>
+                  <NewsTeaser
+                    {...block}
+                    tenant={tenantId}
+
+                    // TODO: get from parent
+                    language='de'
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'eventsTeasersBlock') {
+              return (
+                <div key={block.id || index}>
+                  <EventsTeaser
                     {...block}
                     tenant={tenantId}
 
