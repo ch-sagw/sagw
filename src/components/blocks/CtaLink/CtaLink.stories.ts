@@ -4,6 +4,7 @@ import type {
 } from '@storybook/nextjs-vite';
 import { CtaLink } from '@/components/blocks/CtaLink/CtaLink';
 import { defaultDecorator } from '@/storybook-helpers';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 type CtaLinkProps = React.ComponentProps<typeof CtaLink>;
 
@@ -28,26 +29,42 @@ export default meta;
 
 export const CtaInternalLink: StrictStory = {
   args: {
-    colorMode: 'dark',
-    link: {
-      href: 'https://foo.bar',
-      target: '_self',
-      text: 'Förderung beantragen',
+    blockType: 'ctaLinkBlock',
+    linkInternal: {
+      internalLink: 'detailPage/somePageid',
+      linkText: simpleRteConfig('Internal Link Text (internal)'),
     },
-    text: 'Jetzt Antrag für Reisebeiträge auf mySAGW stellen',
-    title: 'Förderung',
+    linkType: 'internal',
+    text: simpleRteConfig('CTA Link Block Text (internal)'),
+    title: simpleRteConfig('CTA Link Block Title (internal)'),
+
   },
 };
 
 export const CtaExternalLink: StrictStory = {
   args: {
-    colorMode: 'dark',
-    link: {
-      href: 'https://foo.bar',
-      target: '_blank',
-      text: 'Förderung beantragen',
+    blockType: 'ctaLinkBlock',
+    linkExternal: {
+      externalLink: 'https://www.foo.bar',
+      externalLinkText: simpleRteConfig('External Link Text (external)'),
     },
-    text: 'Jetzt Antrag für Reisebeiträge auf mySAGW stellen',
-    title: 'Förderung',
+    linkType: 'external',
+    text: simpleRteConfig('CTA Link Block Text (external)'),
+    title: simpleRteConfig('CTA Link Block Title (external)'),
+
+  },
+};
+
+export const CtaMailLink: StrictStory = {
+  args: {
+    blockType: 'ctaLinkBlock',
+    linkExternal: {
+      externalLink: 'https://www.foo.bar',
+      externalLinkText: simpleRteConfig('External Link Text (external)'),
+    },
+    linkType: 'external',
+    text: simpleRteConfig('CTA Link Block Text (external)'),
+    title: simpleRteConfig('CTA Link Block Title (external)'),
+
   },
 };

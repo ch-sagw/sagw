@@ -47,6 +47,7 @@ import { NewsOverview } from '@/components/blocks/NewsOverview/NewsOverview';
 import { EventsOverview } from '@/components/blocks/EventsOverview/EventsOverview';
 import { NewsTeaser } from '@/components/blocks/NewsTeaser/NewsTeaser';
 import { EventsTeaser } from '@/components/blocks/EventsTeaser/EventsTeaser';
+import { CtaLink } from '@/components/blocks/CtaLink/CtaLink';
 
 // blocks interface
 interface InterfaceRenderBlocksProps {
@@ -212,6 +213,16 @@ export const RenderBlocks = ({
 
                     // TODO: get from parent
                     language='de'
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'ctaLinkBlock') {
+              return (
+                <div key={block.id || index}>
+                  <CtaLink
+                    {...block}
                   />
                 </div>
               );

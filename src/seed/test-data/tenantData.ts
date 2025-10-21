@@ -717,7 +717,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   });
 
   // create detail page
-  await payload.create({
+  const detailPage = await payload.create({
     collection: 'detailPage',
     data: {
       _status: 'published',
@@ -791,6 +791,47 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'overviewPage',
     data: {
       _status: 'published',
+      content: [
+
+        // cta link block internal link
+        {
+          blockType: 'ctaLinkBlock',
+          linkInternal: {
+            internalLink: `detailPage/${detailPage.id}`,
+            linkText: simpleRteConfig('Internal Link Text (internal)'),
+          },
+          linkType: 'internal',
+          text: simpleRteConfig('CTA Link Block Text (internal)'),
+          title: simpleRteConfig('CTA Link Block Title (internal)'),
+
+        },
+
+        // cta link block external link
+        {
+          blockType: 'ctaLinkBlock',
+          linkExternal: {
+            externalLink: 'https://www.foo.bar',
+            externalLinkText: simpleRteConfig('External Link Text (external)'),
+          },
+          linkType: 'external',
+          text: simpleRteConfig('CTA Link Block Text (external)'),
+          title: simpleRteConfig('CTA Link Block Title (external)'),
+
+        },
+
+        // cta link block mail link
+        {
+          blockType: 'ctaLinkBlock',
+          linkMail: {
+            email: 'foo@bar.com',
+            linkText: simpleRteConfig('Mail link'),
+          },
+          linkType: 'mail',
+          text: simpleRteConfig('CTA Link Block Text (mail)'),
+          title: simpleRteConfig('CTA Link Block Title (mail)'),
+
+        },
+      ],
       hero: {
         colorMode: 'white',
         lead: simpleRteConfig('Overview Page Lead'),
