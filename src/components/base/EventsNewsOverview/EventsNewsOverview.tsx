@@ -37,11 +37,6 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
     userPaginatedRef,
   });
 
-  const handlePageChangeWithUserFlag = (page: number): void => {
-    userPaginatedRef.current = true;
-    handlePageChange(page);
-  };
-
   return (
     <Section
       ref={sectionRef}
@@ -60,7 +55,7 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
         totalPages={totalPages}
         currentPage={currentPage}
         paginationTitle={props.paginationTitle}
-        onPageChange={handlePageChangeWithUserFlag}
+        onPageChange={handlePageChange}
       />
     </Section>
   );

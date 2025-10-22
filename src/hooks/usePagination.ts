@@ -74,6 +74,11 @@ export const usePagination = ({
       return;
     }
 
+    // Set user paginated flag if userPaginatedRef is provided
+    if (userPaginatedRef) {
+      userPaginatedRef.current = true;
+    }
+
     setCurrentPage(page);
 
     // Update URL
