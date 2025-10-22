@@ -25,6 +25,7 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const listRef = useRef<HTMLUListElement | null>(null);
+  const userPaginatedRef = useRef(false);
 
   const {
     currentPage,
@@ -37,6 +38,10 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
 
   // scroll to top
   useEffect(() => {
+    if (!userPaginatedRef.current) {
+      return;
+    }
+
     if (!sectionRef.current) {
       return;
     }
@@ -54,10 +59,9 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
 
   // observe the page, as soon as the first link is in viewport, focus it
   useEffect(() => {
-
     let observer: IntersectionObserver | null = null;
 
-    if (listRef.current) {
+    if (userPaginatedRef.current && listRef.current) {
       const firstListItem = listRef.current.querySelector('li');
 
       if (firstListItem) {
@@ -95,6 +99,11 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
     };
   }, [currentItems]);
 
+  const handlePageChangeWithUserFlag = (page: number): void => {
+    userPaginatedRef.current = true;
+    handlePageChange(page);
+  };
+
   return (
     <Section
       ref={sectionRef}
@@ -113,7 +122,7 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
         totalPages={totalPages}
         currentPage={currentPage}
         paginationTitle={props.paginationTitle}
-        onPageChange={handlePageChange}
+        onPageChange={handlePageChangeWithUserFlag}
       />
     </Section>
   );
