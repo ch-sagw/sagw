@@ -46,14 +46,11 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
       return;
     }
 
-    const header = document.querySelector('header');
-    const headerHeight = header
-      ? header.getBoundingClientRect().height
-      : 0;
-
     window.scrollTo({
       behavior: 'smooth',
-      top: headerHeight,
+
+      // not 0 since otherwise the header would expand
+      top: 10,
     });
   }, [currentPage]);
 
