@@ -22,17 +22,15 @@ export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<R
 
   // Get news data
   const newsPages = await payload.find({
-    // TODO: get latest sorted by date
-
     collection: 'newsDetailPage',
     depth: 1,
 
     // TODO: how many?
     limit: 4,
-
     locale: props.language,
     overrideAccess: false,
     pagination: false,
+    sort: '-hero.date',
     where: {
       tenant: {
         equals: props.tenant,

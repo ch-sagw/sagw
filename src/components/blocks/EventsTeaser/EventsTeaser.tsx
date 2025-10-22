@@ -22,17 +22,15 @@ export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promi
 
   // Get events data
   const eventsPages = await payload.find({
-    // TODO: get latest sorted by date
-
     collection: 'eventDetailPage',
     depth: 1,
 
     // TODO: how many?
     limit: 4,
-
     locale: props.language,
     overrideAccess: false,
     pagination: false,
+    sort: '-eventDetails.date',
     where: {
       tenant: {
         equals: props.tenant,
