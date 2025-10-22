@@ -72,7 +72,6 @@ Backup Migration:
 
 
 --------
-- use : language: Config['locale']; in every block
 - pagination: sort items
 - stories: for teasers and overviews, we have a duplicate, almost same stories (on block level and on baese level)
 - thin out snapshots: either screenshot blocks or base components, not both

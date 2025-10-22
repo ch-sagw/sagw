@@ -15,8 +15,6 @@ const ctaLinkClasses = cva([
 ]);
 
 export const CtaLink = (props: InterfaceCtaLinkBlock): React.JSX.Element => {
-  console.log(props);
-
   const title = rteToHtml(props.title);
   const subtitle = rteToHtml(props.text);
 

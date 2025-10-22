@@ -60,8 +60,6 @@ export const Downloads = (props: InterfaceDownloadsPropTypes): React.JSX.Element
 
       // zenodo documents can have multiple files....
       documentItem.files.forEach((file, index) => {
-        console.log(file);
-
         let documentTitle = documentItem.title;
 
         if (documentItem.files.length > 1) {
