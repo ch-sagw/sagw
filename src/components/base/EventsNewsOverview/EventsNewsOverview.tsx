@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, {
+  useEffect, useRef, useState,
+} from 'react';
 import styles from '@/components/base/EventsNewsOverview/EventsNewsOverview.module.scss';
 import { Pagination } from '@/components/base/Pagination/Pagination';
 import { ColorMode } from '@/components/base/types/colorMode';
