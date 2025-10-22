@@ -72,9 +72,7 @@ Backup Migration:
 
 
 --------
-- in newsItem, downloadItem, eventItem, we do date conversion... do it on block level instead!
 - use : language: Config['locale']; in every block
-- pagination: focus first element after page switc
 - pagination: sort items
 - stories: for teasers and overviews, we have a duplicate, almost same stories (on block level and on baese level)
 - thin out snapshots: either screenshot blocks or base components, not both

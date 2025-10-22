@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, {
+  useEffect, useRef, useState,
+} from 'react';
 import styles from '@/components/base/EventsNewsOverview/EventsNewsOverview.module.scss';
 import { Pagination } from '@/components/base/Pagination/Pagination';
 import { ColorMode } from '@/components/base/types/colorMode';
@@ -23,18 +25,25 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const listRef = useRef<HTMLUListElement | null>(null);
+  const [
+    shouldFocusFirstItem,
+    setShouldFocusFirstItem,
+  ] = useState(false);
 
   const focusFirstItem = (): void => {
-    if (listRef.current) {
-      const firstLink = listRef.current.querySelector('a');
+    setShouldFocusFirstItem(true);
+  };
 
-      console.log(firstLink);
+  useEffect(() => {
+    if (shouldFocusFirstItem && listRef.current) {
+      const firstLink = listRef.current.querySelector('a');
 
       if (firstLink) {
         firstLink.focus();
       }
+      setShouldFocusFirstItem(false);
     }
-  };
+  }, [shouldFocusFirstItem]);
 
   const {
     currentPage,
