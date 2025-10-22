@@ -729,6 +729,20 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
+  // create draft detail page
+  await payload.create({
+    collection: 'detailPage',
+    data: {
+      _status: 'draft',
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('DRAFT Detail Page Lead'),
+        title: simpleRteConfig(`DRAFT Detail page title ${tenant.toUpperCase()}`),
+      },
+      tenant: tenantId,
+    },
+  });
+
   // create overview page
   await payload.create({
     collection: 'overviewPage',

@@ -32,6 +32,7 @@ Payload:
 - implement document locking: https://payloadcms.com/docs/admin/locked-documents
 - implement resend
 - Header -> Navigation -> fine-grain "required": on level 1, linkTarget is not required, on level 2 it is. If level 1 has no sub-nav items, linkTarget is required.
+- internal link chooser in overlay (rte) also shows draft documents!
 
 Vercel:
 --------
