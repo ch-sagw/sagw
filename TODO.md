@@ -1,7 +1,6 @@
 Backup / Restore:
 -----------------
 - test blob backup/restore with lots of large image files
-- adapt replicate task to also replicate blob to local
 
 Storybook:
 ----------
@@ -32,7 +31,7 @@ Payload:
 - implement draft preview: https://payloadcms.com/docs/admin/preview#draft-preview
 - implement document locking: https://payloadcms.com/docs/admin/locked-documents
 - implement resend
-- BUG: with empty database or with initial seed: go to home, add downloads block, click document dropdown -> "Es ist ein fehler aufgetreten". SAME FOR IMAGE. -> Github issue @ payload created
+- Header -> Navigation -> fine-grain "required": on level 1, linkTarget is not required, on level 2 it is. If level 1 has no sub-nav items, linkTarget is required.
 
 Vercel:
 --------
@@ -46,14 +45,8 @@ Payload Config:
 - set access control on all blocks/collections
 - layout fields in rows where appropriate. e.g. with link internal: the 3 fields can be in 1 row
 - show "published" column in collection overview
-- add descriptions to collections: what is this collection for?
 - care about redirects: check redirects-plugin and decide if we use it or create our own
 - add admin ui images for blocks: generic teaser, footnotes
-
-
-Multitenant: (working with seed data)
---------
-- issue: on autologin, tenant-cookie is not set after login -> create github issue
 
 Misc:
 --------

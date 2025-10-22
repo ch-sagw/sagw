@@ -271,19 +271,30 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     data: {
       _status: 'published',
       contact: {
-        address1: simpleRteConfig(`Address 1 ${tenant.toUpperCase()}`),
-        address2: simpleRteConfig(`Address 2 ${tenant.toUpperCase()}`),
-        city: simpleRteConfig(`City ${tenant.toUpperCase()}`),
-        countryCode: simpleRteConfig(`Country Code ${tenant.toUpperCase()}`),
-        mail: simpleRteConfig('foo@bar.baz'),
-        phone: simpleRteConfig('031 123 45 67'),
-        poBox: simpleRteConfig(`PoBox ${tenant.toUpperCase()}`),
-        title: simpleRteConfig(`Title ${tenant.toUpperCase()}`),
-        zipCode: simpleRteConfig(`Zip ${tenant.toUpperCase()}`),
+        address1: simpleRteConfig('Haus der Akademien'),
+        address2: simpleRteConfig('Laupenstrasse 7'),
+        city: simpleRteConfig('Bern'),
+        countryCode: simpleRteConfig('CH'),
+        mail: simpleRteConfig('sagw@sagw.ch'),
+        phone: simpleRteConfig('+41 31 306 92 50'),
+        poBox: simpleRteConfig('Postfach'),
+        title: simpleRteConfig('SAGW Schweizerische Akademie der Geistes- und Sozialwissenschaften'),
+        zipCode: simpleRteConfig('3001'),
       },
-      copyright: simpleRteConfig(`Copyright ${tenant.toUpperCase()}`),
-      impressum: simpleRteConfig(`Impressum ${tenant.toUpperCase()}`),
-      legal: simpleRteConfig(`Legal ${tenant.toUpperCase()}`),
+      legal: {
+        copyright: simpleRteConfig(`Copyright ${tenant.toUpperCase()}`),
+        dataPrivacy: simpleRteConfig(`Legal ${tenant.toUpperCase()}`),
+        impressum: simpleRteConfig(`Impressum ${tenant.toUpperCase()}`),
+      },
+      socialLinks: {
+        items: [
+          {
+            externalLink: 'https://www.foo.bar',
+            externalLinkText: simpleRteConfig('Visit us on Instagram'),
+            icon: 'instagram',
+          },
+        ],
+      },
       tenant: tenantId,
     },
   });

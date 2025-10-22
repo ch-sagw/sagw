@@ -134,8 +134,7 @@ export const Forms: CollectionConfig = {
       admin: {
         condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
       },
-      blockReferences: FormBlocks,
-      blocks: [],
+      blocks: FormBlocks,
       hooks: {
         beforeChange: [formEnsureUniqueName],
       },

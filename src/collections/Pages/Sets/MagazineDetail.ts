@@ -64,7 +64,7 @@ export const MagazineDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blockReferences: blocks([
+              blocks: blocks([
                 'textBlock',
                 'footnoteBlock',
                 'linksBlock',
@@ -73,7 +73,6 @@ export const MagazineDetailPage: CollectionConfig = {
                 'formBlock',
                 'notificationBlock',
               ]),
-              blocks: [],
               label: 'Content',
               name: 'content',
               type: 'blocks',

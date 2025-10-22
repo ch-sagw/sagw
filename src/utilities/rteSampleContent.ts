@@ -99,6 +99,7 @@ export const rte2NotificationText: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -164,6 +165,7 @@ export const rte2NotificationTextWithUl: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -208,6 +210,7 @@ export const rte2NotificationTextWithUl: InterfaceRte = {
       {
         children: [
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -227,6 +230,7 @@ export const rte2NotificationTextWithUl: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -246,6 +250,7 @@ export const rte2NotificationTextWithUl: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -265,6 +270,7 @@ export const rte2NotificationTextWithUl: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -284,6 +290,7 @@ export const rte2NotificationTextWithUl: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -424,6 +431,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -479,6 +487,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -739,6 +748,7 @@ export const rte3AccordionContent: InterfaceRte = {
       {
         children: [
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -776,6 +786,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -795,6 +806,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -814,6 +826,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -833,6 +846,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -870,6 +884,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -889,6 +904,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -908,6 +924,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -927,6 +944,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -964,6 +982,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -983,6 +1002,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -1002,6 +1022,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -1128,6 +1149,7 @@ export const rte3AccordionContent: InterfaceRte = {
       {
         children: [
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -1147,6 +1169,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -1166,6 +1189,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -1185,6 +1209,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -1204,6 +1229,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -1255,6 +1281,7 @@ export const rte3AccordionContent: InterfaceRte = {
       {
         children: [
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -1292,6 +1319,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -1311,6 +1339,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -1330,6 +1359,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -1349,6 +1379,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -1386,6 +1417,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -1405,6 +1437,7 @@ export const rte3AccordionContent: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -1644,6 +1677,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -1967,6 +2001,7 @@ export const rte3FullRange: InterfaceRte = {
       {
         children: [
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2004,6 +2039,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2023,7 +2059,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
-
+            checked: false,
             children: [
 
               {
@@ -2044,6 +2080,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2063,6 +2100,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2100,7 +2138,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
-
+            checked: false,
             children: [
 
               {
@@ -2121,6 +2159,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2140,6 +2179,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2159,6 +2199,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2196,6 +2237,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2215,6 +2257,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2234,6 +2277,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2388,6 +2432,7 @@ export const rte3FullRange: InterfaceRte = {
       {
         children: [
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2407,6 +2452,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2426,6 +2472,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2445,6 +2492,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2464,6 +2512,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2515,6 +2564,7 @@ export const rte3FullRange: InterfaceRte = {
       {
         children: [
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2552,6 +2602,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2571,7 +2622,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
-
+            checked: false,
             children: [
 
               {
@@ -2592,6 +2643,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2611,6 +2663,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2648,6 +2701,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
@@ -2667,6 +2721,7 @@ export const rte3FullRange: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
 
               {
@@ -2754,6 +2809,7 @@ export const sampleRtePrivacyCheckbox: InterfaceRte = {
             version: 1,
           },
           {
+            checked: false,
             children: [
               {
                 detail: 0,
