@@ -33,6 +33,7 @@ Payload:
 - implement resend
 - Header -> Navigation -> fine-grain "required": on level 1, linkTarget is not required, on level 2 it is. If level 1 has no sub-nav items, linkTarget is required.
 - internal link chooser in overlay (rte) also shows draft documents!
+- whenever we import configPromise (payload.config.ts), then the init method seems to run!! (this is where we seed data). This might have severe performance implications. find workaround!
 
 Vercel:
 --------

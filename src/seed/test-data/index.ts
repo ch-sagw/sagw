@@ -14,6 +14,11 @@ export const seedTestData = async (payload: Payload): Promise<void> => {
     return;
   }
 
+  // see comment in playwright be config
+  if (isPlaywright && process.env.DOSEED !== 'true') {
+    return;
+  }
+
   try {
     // delete all collections
     await deleteData(payload);
