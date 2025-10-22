@@ -50,8 +50,8 @@ export default defineConfig({
     env: {
 
       // issue: in some tests, we import payload config promise. on each,
-      // import, promise gets resolved thus the payload init methods get's,
-      // calles, and that's where we seed data. therefore we set this env.
+      // import, promise gets resolved thus the payload init methods gets
+      // called, and that's where we seed data. therefore we set this env.
       // this gets removed from env during tests. so we can use it to seed
       // only once.
       DOSEED: 'true',

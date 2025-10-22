@@ -53,7 +53,7 @@ test('throws error on invalid external url', async () => {
 
 });
 
-test('does not thorw an error on valid external url', async () => {
+test('does not throw an error on valid external url', async () => {
   const tenant = await getTenant();
   const payload = await getPayload({
     config: configPromise,
