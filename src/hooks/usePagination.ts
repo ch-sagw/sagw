@@ -9,8 +9,6 @@ import {
 
 interface InterfaceUsePaginationOptions {
   items: ReactNode[] | ReactNode;
-  scrollToElement?: React.RefObject<HTMLElement | null>;
-  focusFirstItem?: () => void;
 }
 
 interface InterfaceUsePaginationReturn {
@@ -23,8 +21,6 @@ interface InterfaceUsePaginationReturn {
 
 export const usePagination = ({
   items,
-  scrollToElement,
-  focusFirstItem,
 }: InterfaceUsePaginationOptions): InterfaceUsePaginationReturn => {
   const router = useRouter();
   const pathname = usePathname();
@@ -81,18 +77,6 @@ export const usePagination = ({
     router.replace(`${pathname}?${newParams.toString()}`, {
       scroll: false,
     });
-
-    if (scrollToElement?.current) {
-      scrollToElement.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    }
-
-    // Focus the first item after page change
-    if (focusFirstItem) {
-      focusFirstItem();
-    }
   };
 
   // On mount, ensure URL param matches internal state
