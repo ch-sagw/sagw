@@ -10,7 +10,14 @@ export const hookAdminTitle: CollectionBeforeValidateHook = ({
   // All hero field-templates have a title, so it's save to just take
   // the generic interface here
   const hero: InterfaceHeroField = data?.hero;
-  const lexical = hero?.title;
+  let lexical = hero?.title;
+
+  // but there are some exceptions
+  // event pages
+  if (!lexical) {
+    lexical = data?.eventDetails?.title;
+  }
+
   const dataString = rte1ToPlaintext(lexical);
 
   if (data) {
