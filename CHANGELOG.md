@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.18.1](https://github.com/ch-sagw/sagw/compare/v0.18.0...v0.18.1) (2025-10-22)
+
+
+### Bug Fixes
+
+* **payload:** fix admin title and slug for event detail page ([5ac47fe](https://github.com/ch-sagw/sagw/commit/5ac47fe809df53d37cb3cdb0f455aa84ed1a665e))
+* **payload:** only query published pages in internal link chooser ([5ac47fe](https://github.com/ch-sagw/sagw/commit/5ac47fe809df53d37cb3cdb0f455aa84ed1a665e))
+
+
+### Test
+
+* add test for admin title for event detail pages ([5ac47fe](https://github.com/ch-sagw/sagw/commit/5ac47fe809df53d37cb3cdb0f455aa84ed1a665e))
+* add test for correct url validation of external links ([5ac47fe](https://github.com/ch-sagw/sagw/commit/5ac47fe809df53d37cb3cdb0f455aa84ed1a665e))
+* add test to verify only published pages in link chooser ([5ac47fe](https://github.com/ch-sagw/sagw/commit/5ac47fe809df53d37cb3cdb0f455aa84ed1a665e))
+* make sure seed only runs on playwright init and not for individual tests ([5ac47fe](https://github.com/ch-sagw/sagw/commit/5ac47fe809df53d37cb3cdb0f455aa84ed1a665e))
+
 ## [0.18.0](https://github.com/ch-sagw/sagw/compare/v0.17.0...v0.18.0) (2025-10-21)
 
 
