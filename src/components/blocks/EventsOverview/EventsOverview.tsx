@@ -29,6 +29,7 @@ export const EventsOverview = async (props: InterfaceEventsOverviewPropTypes): P
     limit: 0,
     locale: props.language,
     pagination: false,
+    sort: '-eventDetails.date',
     where: {
       tenant: {
         equals: props.tenant,
