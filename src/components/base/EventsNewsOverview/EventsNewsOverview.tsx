@@ -1,8 +1,6 @@
 'use client';
 
-import React, {
-  useEffect, useRef,
-} from 'react';
+import React, { useRef } from 'react';
 import styles from '@/components/base/EventsNewsOverview/EventsNewsOverview.module.scss';
 import { Pagination } from '@/components/base/Pagination/Pagination';
 import { ColorMode } from '@/components/base/types/colorMode';
@@ -34,67 +32,10 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
     handlePageChange,
   } = usePagination({
     items: children,
+    listRef,
+    sectionRef,
+    userPaginatedRef,
   });
-
-  // scroll to top
-  useEffect(() => {
-    if (!userPaginatedRef.current) {
-      return;
-    }
-
-    if (!sectionRef.current) {
-      return;
-    }
-
-    window.scrollTo({
-      behavior: 'smooth',
-
-      // not 0 since otherwise the header would expand
-      top: 10,
-    });
-  }, [currentPage]);
-
-  // observe the page, as soon as the first link is in viewport, focus it
-  useEffect(() => {
-    let observer: IntersectionObserver | null = null;
-
-    if (userPaginatedRef.current && listRef.current) {
-      const firstListItem = listRef.current.querySelector('li');
-
-      if (firstListItem) {
-        observer = new IntersectionObserver((entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting && entry.intersectionRatio >= 0.9) {
-              const firstLink = firstListItem.querySelector('a') as HTMLElement | null;
-
-              if (firstLink) {
-                firstLink.focus({
-                  preventScroll: true,
-                });
-              }
-              observer?.disconnect();
-
-              return;
-            }
-          }
-        }, {
-          root: null,
-          rootMargin: '0px',
-          threshold: [
-            0.5,
-            0.75,
-            0.9,
-          ],
-        });
-
-        observer.observe(firstListItem);
-      }
-    }
-
-    return (): void => {
-      observer?.disconnect();
-    };
-  }, [currentItems]);
 
   const handlePageChangeWithUserFlag = (page: number): void => {
     userPaginatedRef.current = true;

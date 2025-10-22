@@ -9,6 +9,9 @@ import {
 
 interface InterfaceUsePaginationOptions {
   items: ReactNode[] | ReactNode;
+  listRef?: React.RefObject<HTMLUListElement | null>;
+  userPaginatedRef?: React.MutableRefObject<boolean>;
+  sectionRef?: React.RefObject<HTMLElement | null>;
 }
 
 interface InterfaceUsePaginationReturn {
@@ -21,6 +24,9 @@ interface InterfaceUsePaginationReturn {
 
 export const usePagination = ({
   items,
+  listRef,
+  userPaginatedRef,
+  sectionRef,
 }: InterfaceUsePaginationOptions): InterfaceUsePaginationReturn => {
   const router = useRouter();
   const pathname = usePathname();
@@ -90,6 +96,74 @@ export const usePagination = ({
     currentPage,
     searchParams,
     paramName,
+  ]);
+
+  // scroll to top
+  useEffect(() => {
+    if (!userPaginatedRef?.current) {
+      return;
+    }
+
+    if (!sectionRef?.current) {
+      return;
+    }
+
+    window.scrollTo({
+      behavior: 'smooth',
+
+      // not 0 since otherwise the header would expand
+      top: 10,
+    });
+  }, [
+    currentPage,
+    sectionRef,
+    userPaginatedRef,
+  ]);
+
+  // observe the page, as soon as the first link is in viewport, focus it
+  useEffect(() => {
+    let observer: IntersectionObserver | null = null;
+
+    if (userPaginatedRef?.current && listRef?.current) {
+      const firstListItem = listRef.current.querySelector('li');
+
+      if (firstListItem) {
+        observer = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.9) {
+              const firstLink = firstListItem.querySelector('a') as HTMLElement | null;
+
+              if (firstLink) {
+                firstLink.focus({
+                  preventScroll: true,
+                });
+              }
+              observer?.disconnect();
+
+              return;
+            }
+          }
+        }, {
+          root: null,
+          rootMargin: '0px',
+          threshold: [
+            0.5,
+            0.75,
+            0.9,
+          ],
+        });
+
+        observer.observe(firstListItem);
+      }
+    }
+
+    return (): void => {
+      observer?.disconnect();
+    };
+  }, [
+    currentItems,
+    listRef,
+    userPaginatedRef,
   ]);
 
   return {
