@@ -1,7 +1,7 @@
 'use client';
 
 import React, {
-  useEffect, useRef, useState,
+  useEffect, useRef,
 } from 'react';
 import styles from '@/components/base/EventsNewsOverview/EventsNewsOverview.module.scss';
 import { Pagination } from '@/components/base/Pagination/Pagination';
@@ -33,12 +33,71 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
     currentItems,
     handlePageChange,
   } = usePagination({
-    focusFirstItem,
     items: children,
     listRef,
     sectionRef,
     userPaginatedRef,
   });
+
+  // scroll to top
+  useEffect(() => {
+    if (!sectionRef.current) {
+      return;
+    }
+
+    const header = document.querySelector('header');
+    const headerHeight = header
+      ? header.getBoundingClientRect().height
+      : 0;
+
+    window.scrollTo({
+      behavior: 'smooth',
+      top: headerHeight,
+    });
+  }, [currentPage]);
+
+  // observe the page, as soon as the first link is in viewport, focus it
+  useEffect(() => {
+
+    let observer: IntersectionObserver | null = null;
+
+    if (listRef.current) {
+      const firstListItem = listRef.current.querySelector('li');
+
+      if (firstListItem) {
+        observer = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.9) {
+              const firstLink = firstListItem.querySelector('a') as HTMLElement | null;
+
+              if (firstLink) {
+                firstLink.focus({
+                  preventScroll: true,
+                });
+              }
+              observer?.disconnect();
+
+              return;
+            }
+          }
+        }, {
+          root: null,
+          rootMargin: '0px',
+          threshold: [
+            0.5,
+            0.75,
+            0.9,
+          ],
+        });
+
+        observer.observe(firstListItem);
+      }
+    }
+
+    return (): void => {
+      observer?.disconnect();
+    };
+  }, [currentItems]);
 
   return (
     <Section
