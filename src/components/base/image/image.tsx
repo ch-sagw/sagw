@@ -1,23 +1,10 @@
+/* eslint-disable */
+
 import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/image/image.module.scss';
-import Image from 'next/image';
-import { ImageVariant } from '@/components/base/types/imageVariant';
-
-export type InterfaceImagePropTypes = {
-  alt: string;
-  className?: string;
-  height: number;
-  loading: 'lazy' | 'eager';
-  performanceMark?: string;
-  placeholder?: string;
-  priority?: boolean;
-  sizes: string,
-  src: string;
-  style?: any;
-  variant: ImageVariant;
-  width: number;
-};
+import { InterfaceImagePropTypes } from '@/components/base/Image/Image.custom';
+import { portraitMarkup } from '@/components/base/Image/Image.configs';
 
 const classes = cva([styles.baseStyle], {
   variants: {
@@ -40,36 +27,24 @@ const onLoad = (performanceMark: string): void => {
 export const image = ({
   alt,
   className,
+  fetchPriority,
+  focalPointX,
+  focalPointY,
   height,
   performanceMark,
   sizes,
   src,
   width,
-}: InterfaceImagePropTypes): React.JSX.Element => {
+}: InterfaceImagePropTypes): React.JSX.Element => (
 
-  const test = 'test';
-
-  console.log(test);
-
-  return (
-    <Image
-      className={
-        classes({
-          className,
-        })
-      }
-      alt={alt}
-      height={height}
-      {...((performanceMark)
-        ? {
-          onLoad: () => onLoad(performanceMark),
-        }
-        : {}
-      )}
-      sizes={sizes}
-      src={src}
-      width={width}
-    />
-  );
-
-};
+  portraitMarkup({
+    alt: 'Test',
+    height: 600,
+    hostName: 'sagw-nu.gumlet.io',
+    loading: 'eager',
+    params: 'mode=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5',
+    src,
+    variant: 'portrait',
+    width: 600,
+  })
+);

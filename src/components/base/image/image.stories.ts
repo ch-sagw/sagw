@@ -2,7 +2,7 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { image } from '@/components/base/Image/image';
+import { image } from '@/components/base/Image/Image';
 import { defaultDecorator } from '@/storybook-helpers';
 
 type ImageProps = React.ComponentProps<typeof image>;
@@ -29,12 +29,12 @@ export default meta;
 export const Portrait: StrictStory = {
   args: {
     alt: 'Das Bild zeigt eine junge Frau, mit blonden schulterlangen Haaren und Brille',
-    height: 600,
+    focalPointX: 0.5,
+    focalPointY: 1,
+    height: 350,
     loading: 'eager',
     performanceMark: 'Portrait',
-    priority: true,
-    sizes: '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
-    src: './sample-images/csm_Stella_Noack_07d23c066a.jpg',
+    src: 'https://sagw-nu.gumlet.io/api/images/file/mbl_1_9417372470_920fe62811_o.jpg',
     variant: 'portrait',
     width: 600,
   },
