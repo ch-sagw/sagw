@@ -7,8 +7,12 @@ import { Config } from '@/payload-types';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { TenantProvider } from '@/app/providers/TenantProvider';
 import { getTenant } from '@/app/providers/TenantProvider.server';
-import { Header } from '@/components/global/Header/Header';
-import { Footer } from '@/components/global/Footer/Footer';
+import {
+  Header, InterfaceHeaderPropTypes,
+} from '@/components/global/Header/Header';
+import {
+  Footer, InterfaceFooterPropTypes,
+} from '@/components/global/Footer/Footer';
 
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -115,11 +119,15 @@ export default async function RootLayout({
 
   const colorMode: ColorMode = 'dark';
 
-  const headerProps = {
+  const headerProps: InterfaceHeaderPropTypes = {
     colorMode,
+
+    // TODO: get from parent
     currentLang: 'de',
     langnav: langnavData,
     logoLink: '/',
+
+    // TODO: get from global i18n
     menuButton: {
       close: 'Close',
       open: 'Open',
@@ -128,7 +136,7 @@ export default async function RootLayout({
     navigation: navData,
   };
 
-  const footerProps = {
+  const footerProps: InterfaceFooterPropTypes = {
     contact: footerContactData,
     legal: footerLegalData,
     metaNav: metanavData,
