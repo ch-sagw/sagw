@@ -1,5 +1,41 @@
 # Changelog
 
+## [0.19.0](https://github.com/ch-sagw/sagw/compare/v0.18.1...v0.19.0) (2025-10-23)
+
+
+### Features
+
+* **be:** add/integrate cta link block ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **be:** add/integrate events overview block ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **be:** add/integrate events teaser block ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **be:** add/integrate links block ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **be:** add/integrate news overview block ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **be:** add/integrate news teaser block ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **fe:** add cta link block ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **fe:** add download link item ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **fe:** add downloads block ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **fe:** add downloads block ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **fe:** add eventList item ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **fe:** add events news overview ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **fe:** add events overview block ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **fe:** add events teaser block ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **fe:** add links block ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **fe:** add news list item ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **fe:** add news overview block ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **fe:** add news teaser block ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **fe:** add section component ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+* **payload:** create overview pages, news pages, events pages to showcase new blocks ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+
+
+### Bug Fixes
+
+* **fe:** improve pagination display, make it dynamic ([15d4d17](https://github.com/ch-sagw/sagw/commit/15d4d17a50e79e01b0e7bc7d50fa036353ef959a))
+
+
+### Style
+
+* improve section stylings ([31de8c0](https://github.com/ch-sagw/sagw/commit/31de8c08ebd9c4207fac752331f2909e0ca632b4))
+
 ## [0.18.1](https://github.com/ch-sagw/sagw/compare/v0.18.0...v0.18.1) (2025-10-22)
 
 
