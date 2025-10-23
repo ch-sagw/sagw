@@ -55,12 +55,12 @@
 
       .largeDay {
         @include title-heading-3;
-
-        // width: 100%;
       }
 
       .largeMonthYear {
         @include label-text;
+
+        text-align: center;
       }
     }
 
