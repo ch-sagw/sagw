@@ -1,0 +1,61 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.item {
+  @include list-reset;
+
+  padding-block: px-to-rem(var(--inside-elements-l));
+  border-block-end: px-to-rem(var(--border-width-l)) solid var(--border-primary);
+
+  .link {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    gap: px-to-rem(var(--inside-elements-l));
+    color: inherit;
+
+    &:focus-visible {
+      @include focus-visible;
+
+      outline-offset: px-to-rem(calc(var(--spacing-2xs) / 2));
+    }
+
+    .textContent {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      flex: 1;
+      min-width: 0;
+      gap: px-to-rem(var(--inside-elements-m));
+
+      .itemTitle {
+        @include title-heading-4;
+
+        display: block;
+      }
+
+      .itemText {
+        @include body-text-m;
+
+        display: block;
+      }
+
+      .itemDate {
+        @include body-text-s;
+
+        display: block;
+        color: var(--text-secondary);
+      }
+    }
+
+    .itemIcon {
+      color: var(--interaction-secondary);
+      flex: px-to-rem(var(--spacing-l)) 0 0;
+      height: px-to-rem(var(--spacing-l));
+    }
+  }
+}

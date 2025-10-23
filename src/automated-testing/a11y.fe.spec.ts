@@ -43,6 +43,12 @@ try {
         page,
       })
         .include(`#${vrtConfig.testid}`)
+
+        // exclude these, since <li> is root is invalid. they will be tested
+        // in the list-component anyway, and within the correct context.
+        .exclude('[data-testid="eventListItem"]')
+        .exclude('[data-testid="newsListItem"]')
+        .exclude('[data-testid="downloadLinkItem"]')
         .analyze();
 
       expect(accessibilityScanResults.violations)

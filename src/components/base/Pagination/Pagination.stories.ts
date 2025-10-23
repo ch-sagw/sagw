@@ -3,7 +3,7 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import { Pagination } from '@/components/base/Pagination/Pagination';
-import { defaultDecorator } from '@/storybook-helpers';
+import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 
 type PaginationProps = React.ComponentProps<typeof Pagination>;
 
@@ -14,8 +14,10 @@ type StrictStory = StoryObj<typeof Pagination> & {
 const meta: Meta<typeof Pagination> = {
   args: {},
   component: Pagination,
-  decorators: [defaultDecorator],
-  parameters: {/* layout: 'centered', */ },
+  decorators: [defaultDecoratorNoPadding],
+  parameters: {
+    layout: 'fullscreen',
+  },
   tags: [
     'autodocs',
     'visual:check',
@@ -69,6 +71,14 @@ export const Pages10Active6: StrictStory = {
 export const Pages10Active7: StrictStory = {
   args: {
     currentPage: 7,
+    paginationTitle: 'Pagination',
+    totalPages: 10,
+  },
+};
+
+export const Pages10Active10: StrictStory = {
+  args: {
+    currentPage: 10,
     paginationTitle: 'Pagination',
     totalPages: 10,
   },

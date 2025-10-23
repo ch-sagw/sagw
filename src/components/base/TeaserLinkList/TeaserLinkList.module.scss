@@ -1,0 +1,29 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+
+.teaserLinkList {
+  .list {
+    @include list-reset;
+
+    @include mq($from: large) {
+      margin-block-start: px-to-rem(7);
+    }
+
+    li:first-of-type {
+      padding-block-start: 0;
+    }
+  }
+
+  .allLink {
+    padding-inline: 0;
+
+    @include mq($from: large) {
+      margin-block-start: px-to-rem(var(--section-inside-m));
+    }
+
+    svg {
+      color: var(--interaction-secondary);
+    }
+  }
+}

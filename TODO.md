@@ -54,3 +54,19 @@ Misc:
 --------
 - update docs on env-vars
 - update docs on deployments
+- stories: for teasers and overviews, we have a duplicate, almost same stories (on block level and on baese level)
+- thin out snapshots: either screenshot blocks or base components, not both
+
+Testing:
+-------
+
+
+Backup Migration:
+-------
+- remove cron from vercel.json and from next-js route
+- remove env vars in local env files, on github and vercel
+- remove env vars from docs
+
+QUESTIONS:
+-------
+- newsTeasers, eventsTeasers, downloadBlock, linkBlock -> no option to choose color scheme?

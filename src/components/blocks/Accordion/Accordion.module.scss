@@ -1,14 +1,10 @@
 @use "../../../styles/utilities/utilities" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
-@use "../../../styles/mixins/mixins-layout" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/utilities/animations" as *;
 
 .expandableElement {
-  @include block-layout-sticky-title("flex");
-  @include generic-block-padding;
-
   --items-spacing: 0;
 
   &:not(.white) {
@@ -37,12 +33,6 @@
   }
 
   background-color: var(--background-color);
-
-  .heading {
-    @include title-heading-3;
-
-    color: var(--text-color);
-  }
 
   .list {
     @include list-reset;

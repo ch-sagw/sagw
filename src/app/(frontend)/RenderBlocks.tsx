@@ -1,9 +1,7 @@
 import 'server-only';
 import React, { Fragment } from 'react';
-import { Notification } from '@/components/blocks/Notification/Notification';
-import { Rte } from '@/components/blocks/Rte/Rte';
-import { Accordion } from '@/components/blocks/Accordion/Accordion';
-import { FormServer } from '@/components/blocks/Form/Form.server';
+
+// payload types
 import {
   InterfaceAccordionBlock,
   InterfaceBibliographicReferenceBlock,
@@ -35,6 +33,23 @@ import {
   InterfaceVideoBlock,
 } from '@/payload-types';
 
+// helpers
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+
+// components
+import { Notification } from '@/components/blocks/Notification/Notification';
+import { Rte } from '@/components/blocks/Rte/Rte';
+import { Accordion } from '@/components/blocks/Accordion/Accordion';
+import { FormServer } from '@/components/blocks/Form/Form.server';
+import { Links } from '@/components/blocks/Links/Links';
+import { Downloads } from '@/components/blocks/Downloads/Downloads';
+import { NewsOverview } from '@/components/blocks/NewsOverview/NewsOverview';
+import { EventsOverview } from '@/components/blocks/EventsOverview/EventsOverview';
+import { NewsTeaser } from '@/components/blocks/NewsTeaser/NewsTeaser';
+import { EventsTeaser } from '@/components/blocks/EventsTeaser/EventsTeaser';
+import { CtaLink } from '@/components/blocks/CtaLink/CtaLink';
+
+// blocks interface
 interface InterfaceRenderBlocksProps {
   tenantId: string;
   blocks: (
@@ -119,6 +134,96 @@ export const RenderBlocks = ({
               return (
                 <div key={block.id || index}>
                   <Accordion {...block} />
+                </div>
+              );
+            }
+
+            if (blockType === 'linksBlock') {
+              return (
+                <div key={block.id || index}>
+                  <Links {...block} />
+                </div>
+              );
+            }
+
+            if (blockType === 'downloadsBlock') {
+              return (
+                <div key={block.id || index}>
+                  <Downloads
+                    {...block}
+
+                    // TODO: get from global
+                    title={simpleRteConfig('Downloads')}
+
+                    // TODO: get from parent
+                    language='de'
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'newsOverviewBlock') {
+              return (
+                <div key={block.id || index}>
+                  <NewsOverview
+                    {...block}
+                    tenant={tenantId}
+
+                    // TODO: get from parent
+                    language='de'
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'eventsOverviewBlock') {
+              return (
+                <div key={block.id || index}>
+                  <EventsOverview
+                    {...block}
+                    tenant={tenantId}
+
+                    // TODO: get from parent
+                    language='de'
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'newsTeasersBlock') {
+              return (
+                <div key={block.id || index}>
+                  <NewsTeaser
+                    {...block}
+                    tenant={tenantId}
+
+                    // TODO: get from parent
+                    language='de'
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'eventsTeasersBlock') {
+              return (
+                <div key={block.id || index}>
+                  <EventsTeaser
+                    {...block}
+                    tenant={tenantId}
+
+                    // TODO: get from parent
+                    language='de'
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'ctaLinkBlock') {
+              return (
+                <div key={block.id || index}>
+                  <CtaLink
+                    {...block}
+                  />
                 </div>
               );
             }

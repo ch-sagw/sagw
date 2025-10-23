@@ -3,6 +3,14 @@
 @use "../../../styles/utilities/utilities" as *;
 
 .pagination {
+  --pagination-gap: 24;
+  --pagination-item-size: 56;
+
+  @include mq($from: medium) {
+    --pagination-gap: 32;
+    --pagination-item-size: 64;
+  }
+
   .hiddenTitle {
     @include screen-reader-only;
   }
@@ -12,10 +20,6 @@
 
     display: flex;
     flex-wrap: wrap;
-    gap: px-to-rem(var(--spacing-m));
-
-    @include mq($from: medium) {
-      gap: px-to-rem(var(--spacing-l));
-    }
+    gap: px-to-rem(var(--pagination-gap));
   }
 }

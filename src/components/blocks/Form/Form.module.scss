@@ -4,17 +4,10 @@
 @use "../../../styles/mixins/mixins-typo" as *;
 
 .formBlock {
-  @include block-layout-sticky-title("flex");
-  @include generic-block-padding;
-
   background-color: var(--background-color);
 
   &.dark {
     --background-color: var(--background-cta);
-
-    .title {
-      color: var(--text-primary-inverted);
-    }
 
     .subtitle {
       color: var(--text-secondary-inverted);
@@ -25,31 +18,16 @@
     --background-color: var(--background-light);
   }
 
-  .title {
-    @include title-heading-3;
-
-    color: var(--text-primary);
-  }
-
-  .subtitle {
-    @include body-text-xl;
-
-    margin-block: 0;
-    color: var(--text-secondary);
-  }
-
-  .contentColumn {
-    display: flex;
-    flex-direction: column;
-    row-gap: px-to-rem(var(--section-inside-s));
-  }
-
   .form {
     display: flex;
     flex-wrap: wrap;
     column-gap: px-to-rem(var(--grid-gutter));
     row-gap: px-to-rem(var(--form-elements-between));
     width: 100%;
+  }
+
+  .errorNotification {
+    margin-block-end: px-to-rem(var(--spacing-3xl));
   }
 
   .field {

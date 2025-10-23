@@ -162,7 +162,6 @@ const defaultFormConfig: FormProps = {
     subtitle: simpleRteConfig('Erhalten Sie Updates zu aktuellen Projekten, Artikel, Publikationen und Veranstaltungen'),
     tenant: '68c6e2b3ec3710c8de6912f8',
     title: simpleRteConfig('Form SAGW'),
-    titleLevel: '2',
     updatedAt: '2025-09-14T15:43:50.512Z',
   },
   pending: false,
