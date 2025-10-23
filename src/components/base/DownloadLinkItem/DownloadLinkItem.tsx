@@ -4,6 +4,7 @@ import styles from '@/components/base/DownloadLinkItem/DownloadLinkItem.module.s
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { formatDateToReadableString } from '@/components/helpers/date';
 import { Icon } from '@/icons';
+import { i18nA11y as internalI18nA11y } from '@/i18n/content';
 
 interface InterfaceDownloadLinkItemBaseProps {
   className?: string;
@@ -73,10 +74,28 @@ export const DownloadLinkItem = ({
 
   let iconName = 'download';
 
+  let ariaLabelText = text;
+  let downloadText = '';
+
   if (type === 'link') {
     iconName = link.target === '_self'
       ? 'arrowRight'
       : 'externalLink';
+  } else {
+    downloadText = getDownloadText({
+      date,
+      format,
+      locale: pageLanguage,
+      size,
+    });
+    ariaLabelText = downloadText;
+  }
+
+  let ariaLabel = `${title}. ${ariaLabelText}.`;
+
+  if (link.target === '_blank') {
+    ariaLabel += `
+      ${internalI18nA11y.linkTarget[pageLanguage as keyof typeof internalI18nA11y.linkTarget]} ${internalI18nA11y.opensInNewWindow[pageLanguage as keyof typeof internalI18nA11y.linkTarget]}`;
   }
 
   return (
@@ -85,6 +104,7 @@ export const DownloadLinkItem = ({
       data-testid='downloadLinkItem'
     >
       <a
+        aria-label={ariaLabel}
         href={link.href}
         target={link.target}
         className={styles.link}
@@ -112,12 +132,7 @@ export const DownloadLinkItem = ({
             <SafeHtml
               as='span'
               className={styles.text}
-              html={getDownloadText({
-                date,
-                format,
-                locale: pageLanguage,
-                size,
-              })}
+              html={downloadText}
             />
           }
         </div>

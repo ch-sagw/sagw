@@ -9,6 +9,7 @@ import { Icon } from '@/icons';
 import Link from 'next/link';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
+import { i18nA11y as internalI18nA11y } from '@/i18n/content';
 
 type BaseWrapperProps = {
   ariaCurrent?: boolean;
@@ -22,6 +23,7 @@ type BaseWrapperProps = {
   onClick?: (e: React.PointerEvent<HTMLButtonElement>) => void;
   popOverTarget?: string;
   style: 'filled' | 'outlined' | 'text' | 'textSmall' | 'textBright' | 'buttonPlay' | 'socialLink';
+  pageLanguage: string;
   prefetch?: 'auto' | true | false | null;
   className?: string;
   isActive?: boolean;
@@ -61,7 +63,6 @@ export type InterfaceButtonPropTypes =
 // TODOs
 // - Integrate tracking events or necessary data attributes
 // - Add support for loading state
-// - Add support for visually hidden text for target _blank
 
 const buttonLinkContent = ({
   iconInlineStart,
@@ -109,6 +110,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     element,
     iconInlineEnd,
     iconInlineStart,
+    pageLanguage,
     popOverTarget,
     prefetch,
     style,
@@ -174,7 +176,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
         ? ariaLabel
         : text;
 
-      ariaLabelText += ' (link target opens in a new tab)';
+      ariaLabelText += `. ${internalI18nA11y.linkTarget[pageLanguage as keyof typeof internalI18nA11y.linkTarget]} ${internalI18nA11y.opensInNewWindow[pageLanguage as keyof typeof internalI18nA11y.linkTarget]}`;
     }
 
     return (

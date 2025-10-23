@@ -24,12 +24,15 @@ export const NewsListItem = ({
     className,
   ]);
 
+  const ariaLabel = `${title}. ${text}. ${date}`;
+
   return (
     <li
       className={itemClasses()}
       data-testid='newsListItem'
     >
       <a
+        aria-label={ariaLabel}
         href={link}
         className={styles.link}
       >

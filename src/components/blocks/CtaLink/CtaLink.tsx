@@ -7,14 +7,16 @@ import { Icon } from '@/icons';
 import { InterfaceCtaLinkBlock } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 
-export type InterfaceCtaLinkPropTypes = {} & InterfaceCtaLinkBlock;
+export type InterfaceCtaLinkPropTypes = {
+  language: string;
+} & InterfaceCtaLinkBlock;
 
 const ctaLinkClasses = cva([
   styles.ctaLink,
   styles.dark,
 ]);
 
-export const CtaLink = (props: InterfaceCtaLinkBlock): React.JSX.Element => {
+export const CtaLink = (props: InterfaceCtaLinkPropTypes): React.JSX.Element => {
   const title = rteToHtml(props.title);
   const subtitle = rteToHtml(props.text);
 
@@ -55,6 +57,7 @@ export const CtaLink = (props: InterfaceCtaLinkBlock): React.JSX.Element => {
           ? 'arrowRight' as keyof typeof Icon
           : 'externalLink' as keyof typeof Icon
         }
+        pageLanguage={props.language}
       />
     </Section>
   );

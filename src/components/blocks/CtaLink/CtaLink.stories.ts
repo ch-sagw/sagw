@@ -30,6 +30,7 @@ export default meta;
 export const CtaInternalLink: StrictStory = {
   args: {
     blockType: 'ctaLinkBlock',
+    language: 'de',
     linkInternal: {
       internalLink: 'detailPage/somePageid',
       linkText: simpleRteConfig('Internal Link Text (internal)'),
@@ -37,13 +38,13 @@ export const CtaInternalLink: StrictStory = {
     linkType: 'internal',
     text: simpleRteConfig('CTA Link Block Text (internal)'),
     title: simpleRteConfig('CTA Link Block Title (internal)'),
-
   },
 };
 
 export const CtaExternalLink: StrictStory = {
   args: {
     blockType: 'ctaLinkBlock',
+    language: 'de',
     linkExternal: {
       externalLink: 'https://www.foo.bar',
       externalLinkText: simpleRteConfig('External Link Text (external)'),
@@ -51,13 +52,13 @@ export const CtaExternalLink: StrictStory = {
     linkType: 'external',
     text: simpleRteConfig('CTA Link Block Text (external)'),
     title: simpleRteConfig('CTA Link Block Title (external)'),
-
   },
 };
 
 export const CtaMailLink: StrictStory = {
   args: {
     blockType: 'ctaLinkBlock',
+    language: 'de',
     linkExternal: {
       externalLink: 'https://www.foo.bar',
       externalLinkText: simpleRteConfig('External Link Text (external)'),
@@ -65,6 +66,5 @@ export const CtaMailLink: StrictStory = {
     linkType: 'external',
     text: simpleRteConfig('CTA Link Block Text (external)'),
     title: simpleRteConfig('CTA Link Block Title (external)'),
-
   },
 };

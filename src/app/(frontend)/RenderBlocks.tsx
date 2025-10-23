@@ -239,6 +239,9 @@ export const RenderBlocks = ({
                 <div key={block.id || index}>
                   <CtaLink
                     {...block}
+
+                    // TODO: get from parent
+                    language='de'
                   />
                 </div>
               );

@@ -7,6 +7,7 @@ import {
 } from '@/components/helpers/date';
 import { Tag } from '@/components/base/Tag/Tag';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
+import { i18nA11y as internalI18nA11y } from '@/i18n/content';
 
 export type InterfaceEventsListItemPropTypes = {
   text: string;
@@ -66,12 +67,22 @@ export const EventsListItem = ({
     locale: pageLanguage,
   });
 
+  let ariaLabel = `${tag
+    ? tag
+    : ''} ${text} ${subtitle}.`;
+
+  if (link.target === '_blank') {
+    ariaLabel += `
+      ${internalI18nA11y.linkTarget[pageLanguage as keyof typeof internalI18nA11y.linkTarget]} ${internalI18nA11y.opensInNewWindow[pageLanguage as keyof typeof internalI18nA11y.linkTarget]}`;
+  }
+
   return (
     <li
       className={itemClasses()}
       data-testid='eventListItem'
     >
       <a
+        aria-label={ariaLabel}
         href={link.href}
         target={link.target}
         className={styles.link}
