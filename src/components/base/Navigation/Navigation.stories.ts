@@ -3,7 +3,9 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import { Navigation } from '@/components/base/Navigation/Navigation';
-import { InterfaceNavigationItemPropTypes } from '../NavigationItem/NavigationItem';
+import {
+  InterfaceNavigationItemChild, InterfaceNavigationItemPropTypes,
+} from '../NavigationItem/NavigationItem';
 import { defaultDecorator } from '@/storybook-helpers';
 
 type NavigationProps = React.ComponentProps<typeof Navigation>;
@@ -27,51 +29,61 @@ const meta: Meta<typeof Navigation> = {
 
 export default meta;
 
-const items = [
+const items: InterfaceNavigationItemChild[] = [
   {
     link: 'foo',
+    pageLanguage: 'de',
     text: 'Übersicht',
   },
   {
     link: 'foo',
+    pageLanguage: 'de',
     text: 'Projekte',
   },
   {
     link: 'foo',
+    pageLanguage: 'de',
     text: 'Magazin',
   },
   {
     link: 'foo',
+    pageLanguage: 'de',
     text: 'Publikationen',
   },
   {
     link: 'foo',
+    pageLanguage: 'de',
     text: 'Veranstaltungen',
   },
   {
     link: 'foo',
+    pageLanguage: 'de',
     text: 'News',
   },
 ];
 
-const items2 = [
+const items2: InterfaceNavigationItemChild[] = [
   {
     link: 'foo',
+    pageLanguage: 'de',
     text: 'Pretty long Level 2 Nav Item Text to see how long texts work',
   },
   {
     link: 'foo',
+    pageLanguage: 'de',
     text: 'Projekte',
   },
 ];
 
-const items3 = [
+const items3: InterfaceNavigationItemChild[] = [
   {
     link: 'foo',
+    pageLanguage: 'de',
     text: 'Medium sized nav text',
   },
   {
     link: 'foo',
+    pageLanguage: 'de',
     text: 'Projekte',
   },
 ];
@@ -80,6 +92,7 @@ const headerSections: InterfaceNavigationItemPropTypes[] = [
   {
     colorMode: 'dark',
     link: 'foo',
+    pageLanguage: 'de',
     text: 'Home',
   },
   {
@@ -129,6 +142,7 @@ const footerSections: InterfaceNavigationItemPropTypes[] = [
     colorMode: 'dark',
     footer: true,
     link: 'foo',
+    pageLanguage: 'de',
     text: 'Home',
   },
   {
@@ -184,6 +198,7 @@ export const HeaderDark: StrictStory = {
     hoveredItemCallback: () => {
       console.log('some callback');
     },
+    pageLanguage: 'de',
     sections: headerSections,
   },
   globals: {
@@ -200,6 +215,7 @@ export const HeaderLight: StrictStory = {
     hoveredItemCallback: () => {
       console.log('some callback');
     },
+    pageLanguage: 'de',
     sections: headerSections,
   },
   globals: {
@@ -216,6 +232,7 @@ export const HeaderWhite: StrictStory = {
     hoveredItemCallback: () => {
       console.log('some callback');
     },
+    pageLanguage: 'de',
     sections: headerSections,
   },
   globals: {
@@ -229,6 +246,7 @@ export const Footer: StrictStory = {
   args: {
     colorMode: 'dark',
     footer: true,
+    pageLanguage: 'de',
     sections: footerSections,
   },
   globals: {

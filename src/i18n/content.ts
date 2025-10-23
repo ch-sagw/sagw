@@ -28,3 +28,18 @@ export const i18nForm = {
     },
   },
 };
+
+export const i18nA11y = {
+  linkTarget: {
+    de: 'Linkziel',
+    en: 'Link target',
+    fr: 'La cible du lien',
+    it: 'Il link',
+  },
+  opensInNewWindow: {
+    de: 'öffnet sich in einem neuen Fenster.',
+    en: 'opens in new window',
+    fr: 's\'ouvre dans une nouvelle fenêtre.',
+    it: 'si apre in una nuova finestra.',
+  },
+};

@@ -2,7 +2,7 @@
 @use "../utilities/functions" as *;
 @use "../utilities/mediaqueries" as *;
 
-@mixin block-layout-sticky-title($variant: "grid") {
+@mixin block-layout-sticky-title {
   @include mq($to: large) {
     display: flex;
     flex-direction: column;
@@ -12,6 +12,8 @@
   @include mq($from: large) {
     --heading-alignment-compensation: 5;
 
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
     column-gap: px-to-rem(var(--grid-gutter));
 
     > h2:first-child,
@@ -21,6 +23,8 @@
       top: px-to-rem(calc(var(--sticky-offset-top) + var(--grid-gutter)));
       bottom: 0;
       align-self: flex-start;
+      grid-row: 1 / span 5;
+      grid-column: 1 / 4;
     }
 
     // Vertically center the first line of the
@@ -28,49 +32,16 @@
     h3:nth-child(2) {
       margin-block-start: px-to-rem(var(--heading-alignment-compensation));
     }
-  }
 
-  // Used if content of right column is within
-  // a wrapper element
-  @if $variant == "flex" {
-    @include mq($from: large) {
-      display: flex;
-      flex-direction: row;
-
-      > h2:first-child,
-      > h3:first-child {
-        flex: 0 0 33.3333%;
-        padding-inline-end: calc(8.3333% + px-to-rem(var(--grid-gutter)));
-      }
-
-      > :not(:first-child) {
-        flex: 0 0 calc(66.6666% - px-to-rem(var(--grid-gutter)));
-      }
+    > :not(:first-child) {
+      grid-column: 5 / 13;
     }
   }
 
-  @if $variant == "grid" {
-    @include mq($from: large) {
-      display: grid;
-      grid-template-columns:
-        [sticky-title] 3fr
-        [gutter] 1fr
-        [content] 7fr
-        [gutter] 1fr;
-
-      > h2:first-child,
-      > h3:first-child {
-        grid-column: sticky-title;
-        grid-row: 1 / span 5;
-      }
-
-      > :not(:first-child) {
-        grid-column: content;
-      }
-    }
-
-    @include mq($from: ultra) {
-      grid-template-columns: [sticky-title] 3fr [gutter] 1fr [content] 6fr [gutter] 2fr;
+  @include mq($from: ultra) {
+    > h2:first-child,
+    > h3:first-child {
+      grid-column: 1 / 4;
     }
   }
 }
@@ -85,4 +56,21 @@
   padding-block-start: px-to-rem(var(--text-block-top));
   padding-inline: px-to-rem(var(--grid-margin));
   padding-block-end: px-to-rem(var(--text-block-bottom));
+}
+
+@mixin generic-block-top-line {
+  grid-column: 1 / 13;
+  background-color: var(--border-primary);
+  height: px-to-rem(var(--border-width-l));
+
+  @include mq($to: large) {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: px-to-rem(var(--grid-margin));
+  }
+
+  @include mq($from: large) {
+    grid-row: 1;
+    margin-top: px-to-rem(calc(-1 * var(--section-top)));
+  }
 }

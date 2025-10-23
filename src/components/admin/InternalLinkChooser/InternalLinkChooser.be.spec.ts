@@ -169,16 +169,13 @@ test.describe('Internal Link Chooser', () => {
     const link4 = await page.getByText('Magazine detail page title SAGW', {
       exact: true,
     });
-    const link5 = await page.getByText('Event detail page title SAGW (render link)', {
-      exact: true,
-    });
-    const link6 = await page.getByText('Event detail page title SAGW (render detail page)', {
+    const link6 = await page.getByText('Event 1 detail page title SAGW (render detail page)', {
       exact: true,
     });
     const link7 = await page.getByText('Detail page title SAGW', {
       exact: true,
     });
-    const link8 = await page.getByText('News detail page title SAGW', {
+    const link8 = await page.getByText('News 1 detail page title SAGW', {
       exact: true,
     });
     const link9 = await page.getByText('Publication detail page title SAGW', {
@@ -192,8 +189,6 @@ test.describe('Internal Link Chooser', () => {
     await expect(link3)
       .toBeVisible();
     await expect(link4)
-      .toBeVisible();
-    await expect(link5)
       .toBeVisible();
     await expect(link6)
       .toBeVisible();

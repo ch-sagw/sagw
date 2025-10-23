@@ -1,0 +1,63 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.item {
+  @include list-reset;
+
+  padding-block: px-to-rem(var(--inside-elements-l));
+  border-block-end: px-to-rem(var(--border-width-l)) solid var(--border-primary);
+
+  .link {
+    text-decoration: none;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: px-to-rem(var(--inside-elements-l));
+
+    &:focus-visible {
+      @include focus-visible;
+
+      outline-offset: px-to-rem(calc(var(--spacing-2xs) / 2));
+    }
+
+    &:hover,
+    &:focus {
+      .icon {
+        color: var(--interaction-secondary-hover);
+      }
+    }
+
+    &:hover {
+      .content .title {
+        @include link-text-underline;
+      }
+    }
+
+    .content {
+      flex: 1;
+
+      .title {
+        @include title-heading-4;
+
+        color: var(--text-primary);
+        display: block;
+      }
+
+      .text {
+        @include body-text-s;
+
+        color: var(--text-secondary);
+        display: block;
+        padding-block-start: px-to-rem(var(--inside-elements-s));
+      }
+    }
+
+    .icon {
+      color: var(--interaction-secondary);
+      flex: px-to-rem(var(--spacing-l)) 0 0;
+      height: px-to-rem(var(--spacing-l));
+    }
+  }
+}

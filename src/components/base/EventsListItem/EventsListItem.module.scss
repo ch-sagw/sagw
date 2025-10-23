@@ -1,0 +1,105 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.item {
+  @include list-reset;
+
+  padding-block: px-to-rem(var(--inside-elements-l));
+  border-block-end: px-to-rem(var(--border-width-l)) solid var(--border-primary);
+
+  .link {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    column-gap: px-to-rem(var(--inside-elements-l));
+    row-gap: px-to-rem(var(--inside-elements-s));
+    align-items: start;
+    grid-auto-columns: min-content;
+    text-decoration: none;
+
+    &:focus-visible {
+      @include focus-visible;
+
+      outline-offset: px-to-rem(calc(var(--spacing-2xs) / 2));
+    }
+
+    &:hover,
+    &:focus {
+      .textAndIconWrapper .itemIcon {
+        color: var(--interaction-secondary-hover);
+      }
+    }
+
+    &:hover {
+      .textContentTitle {
+        @include link-text-underline;
+      }
+    }
+
+    .tag {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: start;
+    }
+
+    .largeDate {
+      grid-column: 1;
+      grid-row: 2;
+      align-self: start;
+      color: var(--icon-primary);
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: column;
+      align-items: center;
+
+      .largeDay {
+        @include title-heading-3;
+      }
+
+      .largeMonthYear {
+        @include label-text;
+
+        text-align: center;
+      }
+    }
+
+    .textAndIconWrapper {
+      grid-column: 2;
+      grid-row: 2;
+      display: flex;
+      align-items: center;
+      column-gap: px-to-rem(var(--inside-elements-l));
+
+      .textContent {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+
+        .textContentTitle {
+          @include title-heading-4;
+
+          padding-block-end: px-to-rem(var(--inside-elements-m));
+          color: var(--text-primary);
+        }
+
+        .textContentText {
+          @include body-text-s;
+
+          color: var(--text-secondary);
+        }
+      }
+
+      .itemIcon {
+        grid-column: 3;
+        grid-row: 2;
+        justify-self: start;
+        align-self: center;
+        height: 1.5rem;
+        width: 1.5rem;
+        flex-shrink: 0;
+        color: var(--interaction-secondary);
+      }
+    }
+  }
+}

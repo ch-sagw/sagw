@@ -13,12 +13,14 @@ import { useExpandOnClick } from '@/hooks/useExpandOnClick';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { measureElementHeight } from '@/components/helpers/elementHeight';
 import { SafeHtml } from '../SafeHtml/SafeHtml';
+import { Config } from '@/payload-types';
 
 // --- Interfaces
 
-type InterfaceNavigationItemChild = {
+export type InterfaceNavigationItemChild = {
   text: string;
   link: string;
+  pageLanguage: Config['locale'];
 }
 
 type InterfaceNavigationItemWithItems = {
@@ -33,6 +35,7 @@ type InterfaceNavigationItemWithItems = {
   colorMode: ColorMode;
   hoveredItemCallback?: (item: string | undefined) => void;
   onHeightChange?: (id: string, height: number) => void;
+  pageLanguage?: never;
 };
 
 type InterfaceNavigationItemWithoutItems = {
@@ -47,6 +50,7 @@ type InterfaceNavigationItemWithoutItems = {
   colorMode: ColorMode;
   hoveredItemCallback?: (item: string | undefined) => void;
   onHeightChange?: never;
+  pageLanguage: Config['locale'];
 };
 
 export type InterfaceNavigationItemPropTypes =
@@ -91,6 +95,7 @@ export const NavigationItem = ({
   colorMode,
   hoveredItemCallback,
   onHeightChange,
+  pageLanguage,
 }: InterfaceNavigationItemPropTypes): React.JSX.Element => {
 
   // --- Refs
@@ -297,6 +302,7 @@ export const NavigationItem = ({
             element='link'
             href={link}
             className={styles.buttonLevel1}
+            pageLanguage={pageLanguage}
           />
         }
 
@@ -342,6 +348,7 @@ export const NavigationItem = ({
                 element='link'
                 href={child.link}
                 className={styles.item}
+                pageLanguage={child.pageLanguage}
               />
             </li>
           ))}

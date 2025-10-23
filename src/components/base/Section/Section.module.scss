@@ -1,0 +1,54 @@
+@use "../../../styles/mixins/mixins-layout" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/functions" as *;
+
+.section {
+  @include block-layout-sticky-title;
+  @include generic-block-padding;
+
+  --title-color: var(--text-primary);
+  --subtitle-color: var(--text-primary);
+
+  position: relative;
+
+  &.white {
+    background-color: var(--background-page);
+
+    // TODO add additional
+    // line variant
+
+    /* .line {
+      @include generic-block-top-line;
+    } */
+  }
+
+  &.light {
+    background-color: var(--background-light);
+  }
+
+  &.dark {
+    background-color: var(--background-cta);
+
+    --title-color: var(--text-primary-inverted);
+    --subtitle-color: var(--text-secondary-inverted);
+  }
+
+  .title {
+    @include title-heading-3;
+
+    color: var(--title-color);
+    margin: 0;
+  }
+
+  .subtitle {
+    @include body-text-xl;
+
+    color: var(--subtitle-color);
+    margin: 0;
+
+    @include mq($from: large) {
+      margin-block: 0 px-to-rem(var(--section-inside-s));
+    }
+  }
+}

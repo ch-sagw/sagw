@@ -2,7 +2,9 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { Footer } from '@/components/global/Footer/Footer';
+import {
+  Footer, InterfaceFooterPropTypes,
+} from '@/components/global/Footer/Footer';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import {
   defaultMetaNavItems, defaultNavItems,
@@ -89,13 +91,14 @@ const socialLinks: InterfaceFooterSocialLinks = {
   ],
 };
 
-const defaultArgs = {
+const defaultArgs: InterfaceFooterPropTypes = {
   contact,
   legal,
   metaNav: defaultMetaNavItems,
   navigation: {
     navItems: defaultNavItems,
   },
+  pageLanguage: 'de',
   socialLinks,
   structuredDataImage: 'www.sagw.ch/logo.svg',
   structuredDataUrl: 'https://www.sagw.ch',

@@ -57,32 +57,11 @@ export const fieldsMail: Field[] = [
   }),
   {
     localized: false,
-    name: 'E-Mail',
+    name: 'email',
     required: true,
     type: 'email',
   },
 ];
-
-export const fieldsLinkInternalWithToggle: Field = {
-  fields: [
-    {
-      defaultValue: false,
-      label: 'Include Link',
-      name: 'includeLink',
-      type: 'checkbox',
-    },
-    {
-      admin: {
-        condition: (_, siblingData) => siblingData?.includeLink === true,
-      },
-      fields: fieldsLinkInternal,
-      name: 'link',
-      type: 'group',
-    },
-  ],
-  name: 'optionalLink',
-  type: 'group',
-};
 
 export const fieldsLinkInternalOrExternal: Field[] = [
   {
@@ -133,3 +112,25 @@ export const fieldsLinkInternalOrExternal: Field[] = [
     type: 'group',
   },
 ];
+
+export const fieldsLinkInternalWithToggle: Field = {
+  fields: [
+    {
+      defaultValue: false,
+      label: 'Include Link',
+      name: 'includeLink',
+      type: 'checkbox',
+    },
+    {
+      admin: {
+        condition: (_, siblingData) => siblingData?.includeLink === true,
+      },
+      fields: fieldsLinkInternal,
+      name: 'link',
+      type: 'group',
+    },
+  ],
+  name: 'optionalLink',
+  type: 'group',
+};
+

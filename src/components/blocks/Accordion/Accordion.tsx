@@ -9,6 +9,7 @@ import { useExpandOnClick } from '@/hooks/useExpandOnClick';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { Rte } from '@/components/blocks/Rte/Rte';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
+import { Section } from '@/components/base/Section/Section';
 
 export type InterfaceAccordionPropTypes = {} & InterfaceAccordionBlock;
 
@@ -45,19 +46,19 @@ export const Accordion = ({
   } = useExpandOnClick();
 
   return (
-    <div
+    <Section
       className={accordionClasses({
         colorMode,
       })}
-      data-testid='accordion'
+      showTopLine={true}
+      title={rteToHtml(title)}
+      colorMode={colorMode}
     >
-      <SafeHtml
-        as='h2'
-        className={styles.heading}
-        html={rteToHtml(title)}
-      />
 
-      <ul className={styles.list}>
+      <ul
+        className={styles.list}
+        data-testid='accordion'
+      >
         {accordions.map((item, key) => (
           <li
             key={key}
@@ -115,7 +116,7 @@ export const Accordion = ({
           </li>
         ))}
       </ul>
-    </div>
+    </Section>
 
   );
 };

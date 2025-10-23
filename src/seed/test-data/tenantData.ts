@@ -85,7 +85,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   });
 
   // add document
-  await payload.create({
+  const document = await payload.create({
     collection: 'documents',
     data: {
       _status: 'published',
@@ -97,7 +97,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   });
 
   // add zenodo document
-  await payload.create({
+  const zenodoDocument = await payload.create({
     collection: 'zenodoDocuments',
     data: {
       _status: 'published',
@@ -107,6 +107,12 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           id: 'someid',
           link: 'https://foo.bar',
           size: 0.26,
+        },
+        {
+          format: 'zip',
+          id: 'someotherid',
+          link: 'https://foo.bar',
+          size: 1.54,
         },
       ],
       publicationDate: '1919-05-01',
@@ -516,7 +522,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       subtitle: simpleRteConfig(`Subtitle for contact Form ${tenant.toUpperCase()}`),
       tenant: tenantId,
       title: simpleRteConfig(`Contact Form ${tenant.toUpperCase()}`),
-      titleLevel: '2',
     },
   });
 
@@ -557,7 +562,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       subtitle: simpleRteConfig(`Subtitle for Newsletter Form ${tenant.toUpperCase()}`),
       tenant: tenantId,
       title: simpleRteConfig(`Newsletter Form ${tenant.toUpperCase()}`),
-      titleLevel: '2',
     },
   });
 
@@ -591,7 +595,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   // ############
 
   // create home
-  await payload.create({
+  const home = await payload.create({
     collection: 'homePage',
     data: {
       _status: 'published',
@@ -608,6 +612,14 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         //   blockType: 'notificationBlock',
         //   text: simpleRteConfig('Sample notification text.'),
         // },
+        {
+          blockType: 'eventsTeasersBlock',
+          title: simpleRteConfig('Events'),
+        },
+        {
+          blockType: 'newsTeasersBlock',
+          title: simpleRteConfig('News'),
+        },
         {
           blockType: 'textBlock',
           text: rte3FullRange,
@@ -716,10 +728,66 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   });
 
   // create detail page
-  await payload.create({
+  const detailPage = await payload.create({
     collection: 'detailPage',
     data: {
       _status: 'published',
+      content: [
+
+        // links block
+        {
+          blockType: 'linksBlock',
+          links: [
+            {
+              linkExternal: {
+                description: simpleRteConfig('Offenes Repository für EU-finanzierte Forschungsergebnisse aus Horizon Europe, Euratom und früheren Rahmenprogrammen.'),
+                externalLink: 'https://www.foo.bar',
+                externalLinkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'external',
+            },
+            {
+              linkInternal: {
+                internalLink: 'https://www.foo.bar',
+                linkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'internal',
+            },
+            {
+              linkMail: {
+                email: 'foo@bar.com',
+                linkText: simpleRteConfig('Schreiben Sie eine E-Mail'),
+              },
+              linkType: 'mail',
+            },
+          ],
+          title: simpleRteConfig('Links'),
+        },
+
+        // downloads block
+        {
+          blockType: 'downloadsBlock',
+          customOrAuto: 'custom',
+          downloads: [
+            {
+              relationTo: 'documents',
+              value: document.id,
+            },
+            {
+              relationTo: 'zenodoDocuments',
+              value: zenodoDocument.id,
+            },
+          ],
+          optionalLink: {
+            includeLink: true,
+            link: {
+              internalLink: `homePage/${home.id}`,
+              linkText: simpleRteConfig('Alle Downloads'),
+            },
+          },
+          subtitle: simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe'),
+        },
+      ],
       hero: {
         colorMode: 'white',
         lead: simpleRteConfig('Detail Page Lead'),
@@ -748,10 +816,91 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'overviewPage',
     data: {
       _status: 'published',
+      content: [
+
+        // cta link block internal link
+        {
+          blockType: 'ctaLinkBlock',
+          linkInternal: {
+            internalLink: `detailPage/${detailPage.id}`,
+            linkText: simpleRteConfig('Internal Link Text (internal)'),
+          },
+          linkType: 'internal',
+          text: simpleRteConfig('CTA Link Block Text (internal)'),
+          title: simpleRteConfig('CTA Link Block Title (internal)'),
+
+        },
+
+        // cta link block external link
+        {
+          blockType: 'ctaLinkBlock',
+          linkExternal: {
+            externalLink: 'https://www.foo.bar',
+            externalLinkText: simpleRteConfig('External Link Text (external)'),
+          },
+          linkType: 'external',
+          text: simpleRteConfig('CTA Link Block Text (external)'),
+          title: simpleRteConfig('CTA Link Block Title (external)'),
+
+        },
+
+        // cta link block mail link
+        {
+          blockType: 'ctaLinkBlock',
+          linkMail: {
+            email: 'foo@bar.com',
+            linkText: simpleRteConfig('Mail link'),
+          },
+          linkType: 'mail',
+          text: simpleRteConfig('CTA Link Block Text (mail)'),
+          title: simpleRteConfig('CTA Link Block Title (mail)'),
+
+        },
+      ],
       hero: {
         colorMode: 'white',
         lead: simpleRteConfig('Overview Page Lead'),
         title: simpleRteConfig(`Overview page title ${tenant.toUpperCase()}`),
+      },
+      tenant: tenantId,
+    },
+  });
+
+  // create overview page with news overview block
+  await payload.create({
+    collection: 'overviewPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'newsOverviewBlock',
+          title: simpleRteConfig('All News'),
+        },
+      ],
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Overview Page Lead'),
+        title: simpleRteConfig(`Overview page with News Overview ${tenant.toUpperCase()}`),
+      },
+      tenant: tenantId,
+    },
+  });
+
+  // create overview page with events overview block
+  await payload.create({
+    collection: 'overviewPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'eventsOverviewBlock',
+          title: simpleRteConfig('All Events'),
+        },
+      ],
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Overview Page Lead'),
+        title: simpleRteConfig(`Overview page with Events Overview ${tenant.toUpperCase()}`),
       },
       tenant: tenantId,
     },
@@ -776,69 +925,99 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
-  // event detail page (render detail Page)
-  await payload.create({
-    collection: 'eventDetailPage',
-    data: {
-      _status: 'published',
-      eventDetails: {
-        category: eventCategory.id,
-        date: '2025-08-31T12:00:00.000Z',
-        project: project.id,
-        title: simpleRteConfig(`Event details title ${tenant.toUpperCase()} (render detail page)`),
-      },
-      hero: {
-        colorMode: 'white',
-        lead: simpleRteConfig('Event Detail Page Lead'),
-        title: simpleRteConfig(`Event detail page title ${tenant.toUpperCase()} (render detail page)`),
-      },
-      showDetailPage: 'true',
-      tenant: tenantId,
-    },
-  });
+  // event detail pages (render detail Page)
+  await Promise.all(Array.from({
+    length: 12,
+  }, (_, i) => {
+    const index = i + 1;
 
-  // event detail page (render detail Page)
-  await payload.create({
-    collection: 'eventDetailPage',
-    data: {
-      _status: 'published',
-      eventDetails: {
-        category: eventCategory.id,
-        date: '2025-08-31T12:00:00.000Z',
-        project: project.id,
-        title: simpleRteConfig(`Event detail title ${tenant.toUpperCase()} (render link)`),
+    return payload.create({
+      collection: 'eventDetailPage',
+      data: {
+        _status: 'published',
+        eventDetails: {
+          category: eventCategory.id,
+          date: `2025-08-${index < 10
+            ? `0${index}`
+            : index}T12:00:00.000Z`,
+          dateEnd: `2026-01-${index < 10
+            ? `0${index}`
+            : index}T12:00:00.000Z`,
+          language: simpleRteConfig('Deutsch'),
+          location: simpleRteConfig('ETH Zürich'),
+          project: project.id,
+          time: simpleRteConfig('10:00'),
+          title: simpleRteConfig(`Event ${index} details title ${tenant.toUpperCase()} (render detail page)`),
+        },
+        hero: {
+          colorMode: 'white',
+          lead: simpleRteConfig(`Event ${index} Detail Page Lead`),
+          title: simpleRteConfig(`Event ${index} detail page title ${tenant.toUpperCase()} (render detail page)`),
+        },
+        showDetailPage: 'true',
+        tenant: tenantId,
       },
-      hero: {
-        colorMode: 'white',
-        title: simpleRteConfig(`Event detail page title ${tenant.toUpperCase()} (render link)`),
-      },
-      link: {
-        externalLink: 'https://www.foo.bar',
-        externalLinkText: simpleRteConfig('External Link'),
-      },
-      showDetailPage: 'false',
-      tenant: tenantId,
-    },
-  });
+    });
+  }));
 
-  // news detail page
-  await payload.create({
-    collection: 'newsDetailPage',
-    data: {
-      _status: 'published',
-      hero: {
-        colorMode: 'white',
-        date: '2025-08-31T12:00:00.000Z',
-        lead: simpleRteConfig('News Detail Page Lead'),
-        title: simpleRteConfig(`News detail page title ${tenant.toUpperCase()}`),
+  // event detail page (render link)
+  await Promise.all(Array.from({
+    length: 12,
+  }, (_, i) => {
+    const index = 12 + i + 1;
+
+    return payload.create({
+      collection: 'eventDetailPage',
+      data: {
+        _status: 'published',
+        eventDetails: {
+          category: eventCategory.id,
+          date: `2025-08-${index < 10
+            ? `0${index}`
+            : index}T12:00:00.000Z`,
+          project: project.id,
+          title: simpleRteConfig(`Event ${index} detail title ${tenant.toUpperCase()} (render link)`),
+        },
+        hero: {
+          colorMode: 'white',
+          title: simpleRteConfig(`Event ${index} detail page title ${tenant.toUpperCase()} (render link)`),
+        },
+        link: {
+          externalLink: 'https://www.foo.bar',
+          externalLinkText: simpleRteConfig('External Link'),
+        },
+        showDetailPage: 'false',
+        tenant: tenantId,
       },
-      overviewPageProps: {
-        teaserText: simpleRteConfig('Overview Teaser Text'),
+    });
+  }));
+
+  // news detail pages
+  await Promise.all(Array.from({
+    length: 25,
+  }, (_, i) => {
+    const index = i + 1;
+
+    return payload.create({
+      collection: 'newsDetailPage',
+      data: {
+        _status: 'published',
+        hero: {
+          colorMode: 'white',
+          date: `2025-08-${index < 10
+            ? `0${index}`
+            : index}T12:00:00.000Z`,
+          lead: simpleRteConfig(`News ${index} Detail Page Lead`),
+          title: simpleRteConfig(`News ${index} detail page title ${tenant.toUpperCase()}`),
+        },
+        overviewPageProps: {
+          teaserText: simpleRteConfig(`Overview Teaser Text from News ${index}`),
+        },
+        project: project.id,
+        tenant: tenantId,
       },
-      project: project.id,
-      tenant: tenantId,
-    },
-  });
+    });
+  }));
 
   // publication detail page
   await payload.create({
