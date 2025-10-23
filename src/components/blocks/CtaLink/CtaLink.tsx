@@ -4,11 +4,13 @@ import styles from '@/components/blocks/CtaLink/CtaLink.module.scss';
 import { Section } from '@/components/base/Section/Section';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
-import { InterfaceCtaLinkBlock } from '@/payload-types';
+import {
+  Config, InterfaceCtaLinkBlock,
+} from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 
 export type InterfaceCtaLinkPropTypes = {
-  language: string;
+  language: Config['locale'];
 } & InterfaceCtaLinkBlock;
 
 const ctaLinkClasses = cva([

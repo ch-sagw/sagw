@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { i18nA11y as internalI18nA11y } from '@/i18n/content';
+import { Config } from '@/payload-types';
 
 type BaseWrapperProps = {
   ariaCurrent?: boolean;
@@ -23,7 +24,7 @@ type BaseWrapperProps = {
   onClick?: (e: React.PointerEvent<HTMLButtonElement>) => void;
   popOverTarget?: string;
   style: 'filled' | 'outlined' | 'text' | 'textSmall' | 'textBright' | 'buttonPlay' | 'socialLink';
-  pageLanguage: string;
+  pageLanguage: Config['locale'];
   prefetch?: 'auto' | true | false | null;
   className?: string;
   isActive?: boolean;
