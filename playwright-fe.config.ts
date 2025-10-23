@@ -15,10 +15,6 @@ wide: 1280,
 ultra: 1600,
 */
 
-/*
-We're setting `fullPage: true` in the `.toHaveScreenshot` method, thus we can
-safely set browser heights to 0 to make sure our screenshot are not too tall.
-*/
 const projects = [
   // viewport small
   {
@@ -26,7 +22,7 @@ const projects = [
     use: {
       ...devices['Desktop Chrome'],
       viewport: {
-        height: 10,
+        height: 300,
         width: 400,
       },
     },
@@ -38,7 +34,7 @@ const projects = [
     use: {
       ...devices['Desktop Chrome'],
       viewport: {
-        height: 10,
+        height: 300,
         width: 700,
       },
     },
@@ -50,7 +46,7 @@ const projects = [
     use: {
       ...devices['Desktop Chrome'],
       viewport: {
-        height: 10,
+        height: 300,
         width: 1100,
       },
     },
@@ -62,7 +58,7 @@ const projects = [
     use: {
       ...devices['Desktop Chrome HiDPI'],
       viewport: {
-        height: 10,
+        height: 300,
         width: 1600,
       },
     },
@@ -74,7 +70,7 @@ const projects = [
     use: {
       ...devices['Desktop Firefox'],
       viewport: {
-        height: 10,
+        height: 300,
         width: 1100,
       },
     },
@@ -86,7 +82,7 @@ const projects = [
     use: {
       ...devices['Desktop Safari'],
       viewport: {
-        height: 10,
+        height: 300,
         width: 1100,
       },
 

@@ -17,7 +17,7 @@ test('transistions to white on scroll', async ({
   await expect(page)
     .toHaveScreenshot({
       animations: 'disabled',
-      fullPage: true,
+      fullPage: false,
     });
 });
 
@@ -61,7 +61,7 @@ test('opens menu', async ({
   await expect(page)
     .toHaveScreenshot({
       animations: 'disabled',
-      fullPage: true,
+      fullPage: false,
     });
 });
 
@@ -94,7 +94,7 @@ test('hides menu', async ({
   await expect(page)
     .toHaveScreenshot({
       animations: 'disabled',
-      fullPage: true,
+      fullPage: false,
     });
 });
 
