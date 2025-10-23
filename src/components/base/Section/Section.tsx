@@ -29,7 +29,7 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
       colorMode: {
         dark: [styles.dark],
         light: [styles.light],
-        white: undefined,
+        white: [styles.white],
       },
     },
   });
