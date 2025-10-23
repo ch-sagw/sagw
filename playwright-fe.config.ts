@@ -5,7 +5,7 @@ import {
 import { vrtConfig } from '@/automated-testing/config';
 
 const projects = [
-  // viewport micro
+  // viewport small
   {
     name: 'chromium-400',
     use: {
@@ -17,7 +17,7 @@ const projects = [
     },
   },
 
-  // viewport small
+  // viewport medium
   {
     name: 'chromium-700',
     use: {
@@ -29,34 +29,53 @@ const projects = [
     },
   },
 
-  // viewport medium
+  // viewport large
   {
-    name: 'chromium-800',
+    name: 'chromium-1100',
     use: {
       ...devices['Desktop Chrome'],
       viewport: {
         height: 480,
-        width: 800,
+        width: 1100,
       },
     },
   },
 
-  // default viewport
+  // viewport wide
   {
-    name: 'chromium-1280',
-    use: devices['Desktop Chrome HiDPI'],
+    name: 'chromium-1300',
+    use: {
+      ...devices['Desktop Chrome HiDPI'],
+      viewport: {
+        height: 480,
+        width: 1300,
+      },
+    },
   },
 
-  // desktop firefox
+  // desktop firefox viewport wide
   {
     name: 'firefox',
-    use: devices['Desktop Firefox'],
+    use: {
+      ...devices['Desktop Firefox'],
+      viewport: {
+        height: 480,
+        width: 1300,
+      },
+    },
   },
 
-  // desktop safari
+  // desktop safari viewport wide
   {
     name: 'webkit',
-    use: devices['Desktop Safari'],
+    use: {
+      ...devices['Desktop Safari'],
+      viewport: {
+        height: 480,
+        width: 1300,
+      },
+
+    },
   },
 
 ];
