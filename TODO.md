@@ -1,7 +1,6 @@
 Backup / Restore:
 -----------------
 - test blob backup/restore with lots of large image files
-- adapt replicate task to also replicate blob to local
 
 Storybook:
 ----------
@@ -32,7 +31,9 @@ Payload:
 - implement draft preview: https://payloadcms.com/docs/admin/preview#draft-preview
 - implement document locking: https://payloadcms.com/docs/admin/locked-documents
 - implement resend
-- BUG: with empty database or with initial seed: go to home, add downloads block, click document dropdown -> "Es ist ein fehler aufgetreten". SAME FOR IMAGE. -> Github issue @ payload created
+- Header -> Navigation -> fine-grain "required": on level 1, linkTarget is not required, on level 2 it is. If level 1 has no sub-nav items, linkTarget is required.
+- internal link chooser in overlay (rte) also shows draft documents!
+- whenever we import configPromise (payload.config.ts), then the init method seems to run!! (this is where we seed data). This might have severe performance implications. find workaround!
 
 Vercel:
 --------
@@ -46,26 +47,10 @@ Payload Config:
 - set access control on all blocks/collections
 - layout fields in rows where appropriate. e.g. with link internal: the 3 fields can be in 1 row
 - show "published" column in collection overview
-- add descriptions to collections: what is this collection for?
 - care about redirects: check redirects-plugin and decide if we use it or create our own
 - add admin ui images for blocks: generic teaser, footnotes
-
-
-Multitenant: (working with seed data)
---------
-- issue: on autologin, tenant-cookie is not set after login -> create github issue
 
 Misc:
 --------
 - update docs on env-vars
 - update docs on deployments
-
-Testing:
--------
-
-
-Backup Migration:
--------
-- remove cron from vercel.json and from next-js route
-- remove env vars in local env files, on github and vercel
-- remove env vars from docs

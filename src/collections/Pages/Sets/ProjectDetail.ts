@@ -63,7 +63,7 @@ export const ProjectDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blockReferences: blocks([
+              blocks: blocks([
                 'textBlock',
                 'linksBlock',
                 'downloadsBlock',
@@ -74,7 +74,6 @@ export const ProjectDetailPage: CollectionConfig = {
                 'newsTeasersBlock',
                 'publicationsTeasersBlock',
               ]),
-              blocks: [],
               label: 'Content',
               name: 'content',
               type: 'blocks',

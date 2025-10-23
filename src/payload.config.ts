@@ -11,7 +11,6 @@ import sharp from 'sharp';
 
 import plugins from '@/plugins';
 import { collections } from '@/collections';
-import { blocks } from '@/blocks';
 import { Users } from '@/collections/Plc/Users';
 import { seedInitialUserAndTenant } from '@/seed/init';
 import { seedTestData } from '@/seed/test-data';
@@ -27,7 +26,7 @@ export default buildConfig({
         ? {
           email: process.env.PAYLOAD_INITIAL_USER_MAIL,
           password: process.env.PAYLOAD_INITIAL_PASSWORD,
-          prefillOnly: true,
+          prefillOnly: false,
         }
         : false,
     components: {
@@ -42,7 +41,6 @@ export default buildConfig({
     },
     user: Users.slug,
   },
-  blocks: blocks(),
   collections,
   db: mongooseAdapter({
     autoPluralization: false,
@@ -117,8 +115,15 @@ export default buildConfig({
     ],
   },
   onInit: async (payload) => {
-    // on ENV seed, we seed test data. otherwise we seed initial user
-    // and tenant (if user and tenant collections are empty)
+    // on ENV seed or playwright, we seed test data. otherwise we seed initial
+    // user and tenant (if user and tenant collections are empty)
+
+    // TODO: this runs everytime we import config promise into another file
+    // this has negative impact on performance.
+    // -> solved for playwright tests (e.g. links.be.spec.ts imports the
+    // the config. we use an env variable in playwright be config as flag)
+    // -> NOT SOLVED FOR PAYLOAD APP: e.g. in events/news teasers and overviews,
+    // we import the config. find solution.
     if (process.env.ENV === 'seed' || process.env.ENV === 'playwright') {
       await seedTestData(payload);
     } else {

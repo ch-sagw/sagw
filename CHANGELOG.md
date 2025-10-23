@@ -1,5 +1,87 @@
 # Changelog
 
+## [0.18.1](https://github.com/ch-sagw/sagw/compare/v0.18.0...v0.18.1) (2025-10-22)
+
+
+### Bug Fixes
+
+* **payload:** fix admin title and slug for event detail page ([5ac47fe](https://github.com/ch-sagw/sagw/commit/5ac47fe809df53d37cb3cdb0f455aa84ed1a665e))
+* **payload:** only query published pages in internal link chooser ([5ac47fe](https://github.com/ch-sagw/sagw/commit/5ac47fe809df53d37cb3cdb0f455aa84ed1a665e))
+
+
+### Test
+
+* add test for admin title for event detail pages ([5ac47fe](https://github.com/ch-sagw/sagw/commit/5ac47fe809df53d37cb3cdb0f455aa84ed1a665e))
+* add test for correct url validation of external links ([5ac47fe](https://github.com/ch-sagw/sagw/commit/5ac47fe809df53d37cb3cdb0f455aa84ed1a665e))
+* add test to verify only published pages in link chooser ([5ac47fe](https://github.com/ch-sagw/sagw/commit/5ac47fe809df53d37cb3cdb0f455aa84ed1a665e))
+* make sure seed only runs on playwright init and not for individual tests ([5ac47fe](https://github.com/ch-sagw/sagw/commit/5ac47fe809df53d37cb3cdb0f455aa84ed1a665e))
+
+## [0.18.0](https://github.com/ch-sagw/sagw/compare/v0.17.0...v0.18.0) (2025-10-21)
+
+
+### Chore
+
+* **payload:** bump payload to 3.60.0 ([5a12dae](https://github.com/ch-sagw/sagw/commit/5a12daecd0c0c6c0ef84621efa0ad9a61ee0c992))
+
+
+### Features
+
+* **payload:** fully enable autologin again ([5a12dae](https://github.com/ch-sagw/sagw/commit/5a12daecd0c0c6c0ef84621efa0ad9a61ee0c992))
+
+
+### Test
+
+* **payload:** wait for tenant cookie to be set before each test ([5a12dae](https://github.com/ch-sagw/sagw/commit/5a12daecd0c0c6c0ef84621efa0ad9a61ee0c992))
+* remove login routine from test ([5a12dae](https://github.com/ch-sagw/sagw/commit/5a12daecd0c0c6c0ef84621efa0ad9a61ee0c992))
+
+## [0.17.0](https://github.com/ch-sagw/sagw/compare/v0.16.1...v0.17.0) (2025-10-21)
+
+
+### Chore
+
+* add empty component for footer ([80889b0](https://github.com/ch-sagw/sagw/commit/80889b0b3b7f07c3b9262d6ccb36aa12894b7c7a))
+* remove unneccessary raf ([f7603cd](https://github.com/ch-sagw/sagw/commit/f7603cdebbb2d3cb0be0d57791c1aa4cb3ae2f00))
+
+
+### Features
+
+* **be:** add radios to form component ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **be:** handle default checked for radio ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **be:** handle radio in submit form server action ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* changing notification to rte2 and adding styling and example content ([767c98e](https://github.com/ch-sagw/sagw/commit/767c98e7c5c2f5c75d31093db60b3590266e0f90))
+* **fe:** add form error component ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **fe:** add radio component ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **fe:** header, animate info block ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* **fe:** header, collapse header when hovering over level1 without children ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* **fe:** header, collapse metanav on scroll ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* **payload:** add config for radio buttons in form collection/blocks ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **payload:** derive radio value from label ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **payload:** implement default checked for checkbox ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **payload:** include language selection in newsletter form ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+
+
+### Bug Fixes
+
+* **fe:** header, make sure header height calculation works when changing viewports ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* **fe:** header, make sure langNav infoBlock disappears on blur ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* **fe:** header, various issues, prevent flickering after window blur/focus ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* fix scroll-lock on breakpoint change ([2bffb4a](https://github.com/ch-sagw/sagw/commit/2bffb4a88679bb7e87396d7e95295effe54fb0f3))
+* implement pr feedback ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+* **payload:** remove accordion title level ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* reset limit when fetching pages for link chooser ([#494](https://github.com/ch-sagw/sagw/issues/494)) ([55d029d](https://github.com/ch-sagw/sagw/commit/55d029dbdbd4dcad4b5362bd3b96ea8b4e9c4cff))
+* small issue about natural header height ([ac2d542](https://github.com/ch-sagw/sagw/commit/ac2d542bba27cc4151d91c5ca0194a46d5215514))
+
+
+### Style
+
+* use same font size base in globals and layout ([2bffb4a](https://github.com/ch-sagw/sagw/commit/2bffb4a88679bb7e87396d7e95295effe54fb0f3))
+
+
+### Test
+
+* add tests for infoblock ([b576520](https://github.com/ch-sagw/sagw/commit/b5765205f74a8fe1119d241bbcd01882c66b8fa4))
+* add tests for radio in forms ([be7f5af](https://github.com/ch-sagw/sagw/commit/be7f5afb93690e3348a93b1a3985551dabdd2fbd))
+
 ## [0.16.1](https://github.com/ch-sagw/sagw/compare/v0.16.0...v0.16.1) (2025-10-10)
 
 

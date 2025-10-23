@@ -232,4 +232,33 @@ test.describe('Internal Link Chooser', () => {
     await expect(link2)
       .not.toBeVisible();
   });
+
+  test('only shows published pages', async ({
+    page,
+  }) => {
+    await page.goto('http://localhost:3000/admin/collections/header');
+    await page.waitForLoadState('networkidle');
+
+    const navItem1 = await page.locator('#navigation-navItems-row-0');
+
+    const linkTargetInput = await navItem1.getByLabel('Link Target');
+
+    await (await linkTargetInput.elementHandle())?.waitForElementState('stable');
+
+    await linkTargetInput.click();
+
+    const draftPage = await page.getByText('Detail Page Lead', {
+      exact: true,
+    });
+
+    const publishedPage = await page.getByText('Overview page title SAGW', {
+      exact: true,
+    });
+
+    await expect(publishedPage)
+      .toBeVisible();
+
+    await expect(draftPage)
+      .not.toBeVisible();
+  });
 });

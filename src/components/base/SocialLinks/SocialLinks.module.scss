@@ -1,0 +1,50 @@
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+
+.socialLinks {
+  @include list-reset;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  .item {
+    align-content: center;
+
+    .link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: px-to-rem(var(--spacing-s));
+
+      .text {
+        @include screen-reader-only;
+      }
+
+      svg {
+        width: auto;
+        height: px-to-rem(var(--spacing-l));
+
+        path {
+          stroke: var(--text-secondary-inverted);
+          transition: stroke var(--motion-speed-very-fast) var(--motion-ease-in-out);
+        }
+      }
+
+      &:hover,
+      &:focus {
+        svg {
+          path {
+            stroke: var(--icon-primary-inverted);
+          }
+        }
+      }
+
+      &:focus-visible {
+        @include focus-visible;
+
+        outline-color: var(--border-secondary-inverted);
+      }
+    }
+  }
+}

@@ -51,7 +51,7 @@ const fetchPages = async ({
   }
 
   for await (const slug of slugs) {
-    const res = await fetch(`/api/${slug.slug}?where[tenant][equals]=${tenant}`);
+    const res = await fetch(`/api/${slug.slug}?where[tenant][equals]=${tenant}&where[_status][equals]=published&limit=0`);
     const json = await res.json();
     const groupOptions: Option[] = [];
 
