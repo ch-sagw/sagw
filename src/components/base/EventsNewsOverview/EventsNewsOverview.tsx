@@ -22,7 +22,7 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
   } = props;
 
   const sectionRef = useRef<HTMLElement | null>(null);
-  const listRef = useRef<HTMLUListElement | null>(null);
+  const listRef = useRef<HTMLOListElement | null>(null);
   const userPaginatedRef = useRef(false);
 
   const {
