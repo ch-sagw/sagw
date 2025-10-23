@@ -10,8 +10,18 @@
   --title-color: var(--text-primary);
   --subtitle-color: var(--text-primary);
 
-  background-color: var(--background-color);
   position: relative;
+
+  &.white {
+    background-color: var(--background-page);
+
+    // TODO add additional
+    // line variant
+
+    /* .line {
+      @include generic-block-top-line;
+    } */
+  }
 
   &.light {
     background-color: var(--background-light);
@@ -22,12 +32,6 @@
 
     --title-color: var(--text-primary-inverted);
     --subtitle-color: var(--text-secondary-inverted);
-  }
-
-  &:not(.dark) {
-    .line {
-      @include generic-block-top-line;
-    }
   }
 
   .title {

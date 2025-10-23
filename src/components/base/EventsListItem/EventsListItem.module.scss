@@ -24,6 +24,19 @@
       outline-offset: px-to-rem(calc(var(--spacing-2xs) / 2));
     }
 
+    &:hover,
+    &:focus {
+      .textAndIconWrapper .itemIcon {
+        color: var(--interaction-secondary-hover);
+      }
+    }
+
+    &:hover {
+      .textContentTitle {
+        @include link-text-underline;
+      }
+    }
+
     .tag {
       grid-column: 2;
       grid-row: 1;
@@ -42,12 +55,12 @@
 
       .largeDay {
         @include title-heading-3;
-
-        // width: 100%;
       }
 
       .largeMonthYear {
         @include label-text;
+
+        text-align: center;
       }
     }
 
@@ -61,6 +74,7 @@
       .textContent {
         display: flex;
         flex-direction: column;
+        flex-grow: 1;
 
         .textContentTitle {
           @include title-heading-4;

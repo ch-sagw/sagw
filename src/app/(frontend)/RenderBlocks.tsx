@@ -141,7 +141,12 @@ export const RenderBlocks = ({
             if (blockType === 'linksBlock') {
               return (
                 <div key={block.id || index}>
-                  <Links {...block} />
+                  <Links
+                    {...block}
+
+                    // TODO: get from parent
+                    pageLanguage='de'
+                  />
                 </div>
               );
             }
@@ -223,6 +228,9 @@ export const RenderBlocks = ({
                 <div key={block.id || index}>
                   <CtaLink
                     {...block}
+
+                    // TODO: get from parent
+                    language='de'
                   />
                 </div>
               );

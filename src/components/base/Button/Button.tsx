@@ -9,6 +9,8 @@ import { Icon } from '@/icons';
 import Link from 'next/link';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
+import { i18nA11y as internalI18nA11y } from '@/i18n/content';
+import { Config } from '@/payload-types';
 
 type BaseWrapperProps = {
   ariaCurrent?: boolean;
@@ -46,6 +48,7 @@ type LinkProps = BaseProps & {
   element: 'link';
   href: string;
   target?: '_blank';
+  pageLanguage: Config['locale'];
 };
 
 type ButtonPlayProps = ButtonProps & {
@@ -61,7 +64,6 @@ export type InterfaceButtonPropTypes =
 // TODOs
 // - Integrate tracking events or necessary data attributes
 // - Add support for loading state
-// - Add support for visually hidden text for target _blank
 
 const buttonLinkContent = ({
   iconInlineStart,
@@ -169,12 +171,15 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     let ariaLabelText = ariaLabel;
 
     if (target === '_blank') {
+      const {
+        pageLanguage,
+      } = props;
 
       ariaLabelText = ariaLabel
         ? ariaLabel
         : text;
 
-      ariaLabelText += ' (link target opens in a new tab)';
+      ariaLabelText += `. ${internalI18nA11y.linkTarget[pageLanguage as keyof typeof internalI18nA11y.linkTarget]} ${internalI18nA11y.opensInNewWindow[pageLanguage as keyof typeof internalI18nA11y.linkTarget]}`;
     }
 
     return (

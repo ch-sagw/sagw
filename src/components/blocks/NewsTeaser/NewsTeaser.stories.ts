@@ -56,6 +56,7 @@ export const DefaultTeaser: StrictStory = {
       text: 'Alle News',
     },
     items,
+    pageLanguage: 'de',
     title: 'News',
   },
 };

@@ -24,6 +24,19 @@
       outline-offset: px-to-rem(calc(var(--spacing-2xs) / 2));
     }
 
+    &:hover,
+    &:focus {
+      .itemIcon {
+        color: var(--interaction-secondary-hover);
+      }
+    }
+
+    &:hover {
+      .textContent .itemTitle {
+        @include link-text-underline;
+      }
+    }
+
     .textContent {
       display: flex;
       flex-direction: column;

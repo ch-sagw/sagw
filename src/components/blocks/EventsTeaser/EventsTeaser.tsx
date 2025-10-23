@@ -59,6 +59,7 @@ export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promi
       title={title}
       allLink={allLink}
       items={items}
+      pageLanguage={props.language}
     />
   );
 

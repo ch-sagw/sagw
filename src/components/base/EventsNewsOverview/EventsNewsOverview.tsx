@@ -22,7 +22,7 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
   } = props;
 
   const sectionRef = useRef<HTMLElement | null>(null);
-  const listRef = useRef<HTMLUListElement | null>(null);
+  const listRef = useRef<HTMLOListElement | null>(null);
   const userPaginatedRef = useRef(false);
 
   const {
@@ -46,9 +46,9 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
       colorMode={colorMode}
     >
 
-      <ul ref={listRef} className={styles.list}>
+      <ol ref={listRef} className={styles.list}>
         {currentItems}
-      </ul>
+      </ol>
 
       <Pagination
         className={styles.pagination}

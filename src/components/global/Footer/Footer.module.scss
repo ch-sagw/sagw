@@ -35,6 +35,8 @@
     margin-block-end: px-to-rem(var(--nav-wrapper-margin-block-end));
 
     @include mq($from: large) {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
       column-gap: px-to-rem(var(--grid-gutter));
       padding-block-end: px-to-rem(var(--section-inside-s));
     }
@@ -44,8 +46,7 @@
       flex-wrap: nowrap;
 
       @include mq($from: large) {
-        flex: 0 0 calc(33.3333%);
-        padding-inline-end: px-to-rem(var(--grid-gutter));
+        grid-column: 1 / 4;
       }
     }
 
@@ -53,7 +54,7 @@
       flex: 1;
 
       @include mq($from: large) {
-        font-size: px-to-rem(var(--body-text-s-size));
+        grid-column: 5 / 13;
       }
     }
   }
