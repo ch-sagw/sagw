@@ -22,6 +22,19 @@
       outline-offset: px-to-rem(calc(var(--spacing-2xs) / 2));
     }
 
+    &:hover,
+    &:focus {
+      .icon {
+        color: var(--interaction-secondary-hover);
+      }
+    }
+
+    &:hover {
+      .content .title {
+        @include link-text-underline;
+      }
+    }
+
     .content {
       flex: 1;
 
