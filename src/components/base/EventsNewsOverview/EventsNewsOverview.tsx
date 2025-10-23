@@ -46,9 +46,9 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
       colorMode={colorMode}
     >
 
-      <ul ref={listRef} className={styles.list}>
+      <ol ref={listRef} className={styles.list}>
         {currentItems}
-      </ul>
+      </ol>
 
       <Pagination
         className={styles.pagination}
