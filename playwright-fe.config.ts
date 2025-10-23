@@ -4,6 +4,21 @@ import {
 } from '@playwright/test';
 import { vrtConfig } from '@/automated-testing/config';
 
+// Project Breakpoints:
+/*
+zero: 0,
+micro: 320,
+small: 360,
+medium: 640,
+large: 1024,
+wide: 1280,
+ultra: 1600,
+*/
+
+/*
+We're setting `fullPage: true` in the `.toHaveScreenshot` method, thus we can
+safely set browser heights to 0 to make sure our screenshot are not too tall.
+*/
 const projects = [
   // viewport small
   {
@@ -11,7 +26,7 @@ const projects = [
     use: {
       ...devices['Desktop Chrome'],
       viewport: {
-        height: 480,
+        height: 0,
         width: 400,
       },
     },
@@ -23,7 +38,7 @@ const projects = [
     use: {
       ...devices['Desktop Chrome'],
       viewport: {
-        height: 480,
+        height: 0,
         width: 700,
       },
     },
@@ -35,44 +50,44 @@ const projects = [
     use: {
       ...devices['Desktop Chrome'],
       viewport: {
-        height: 480,
+        height: 0,
         width: 1100,
       },
     },
   },
 
-  // viewport wide
+  // viewport ultra
   {
-    name: 'chromium-1300',
+    name: 'chromium-1600',
     use: {
       ...devices['Desktop Chrome HiDPI'],
       viewport: {
-        height: 480,
-        width: 1300,
+        height: 0,
+        width: 1600,
       },
     },
   },
 
-  // desktop firefox viewport wide
+  // desktop firefox viewport large
   {
     name: 'firefox',
     use: {
       ...devices['Desktop Firefox'],
       viewport: {
-        height: 480,
-        width: 1300,
+        height: 0,
+        width: 1100,
       },
     },
   },
 
-  // desktop safari viewport wide
+  // desktop safari viewport large
   {
     name: 'webkit',
     use: {
       ...devices['Desktop Safari'],
       viewport: {
-        height: 480,
-        width: 1300,
+        height: 0,
+        width: 1100,
       },
 
     },
