@@ -49,22 +49,6 @@ import { NewsTeaser } from '@/components/blocks/NewsTeaser/NewsTeaser';
 import { EventsTeaser } from '@/components/blocks/EventsTeaser/EventsTeaser';
 import { CtaLink } from '@/components/blocks/CtaLink/CtaLink';
 
-// helpers
-import { simpleRteConfig } from '@/utilities/simpleRteConfig';
-
-// components
-import { Notification } from '@/components/blocks/Notification/Notification';
-import { Rte } from '@/components/blocks/Rte/Rte';
-import { Accordion } from '@/components/blocks/Accordion/Accordion';
-import { FormServer } from '@/components/blocks/Form/Form.server';
-import { Links } from '@/components/blocks/Links/Links';
-import { Downloads } from '@/components/blocks/Downloads/Downloads';
-import { NewsOverview } from '@/components/blocks/NewsOverview/NewsOverview';
-import { EventsOverview } from '@/components/blocks/EventsOverview/EventsOverview';
-import { NewsTeaser } from '@/components/blocks/NewsTeaser/NewsTeaser';
-import { EventsTeaser } from '@/components/blocks/EventsTeaser/EventsTeaser';
-import { CtaLink } from '@/components/blocks/CtaLink/CtaLink';
-
 // blocks interface
 interface InterfaceRenderBlocksProps {
   tenantId: string;
