@@ -12,13 +12,9 @@
   @include mq($from: large) {
     --heading-alignment-compensation: 5;
 
-    column-gap: px-to-rem(var(--grid-gutter));
     display: grid;
-    grid-template-columns:
-      [sticky-title] 3fr
-      [gutter] 1fr
-      [content] 7fr
-      [gutter] 1fr;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: px-to-rem(var(--grid-gutter));
 
     > h2:first-child,
     > h3:first-child {
@@ -27,8 +23,8 @@
       top: px-to-rem(calc(var(--sticky-offset-top) + var(--grid-gutter)));
       bottom: 0;
       align-self: flex-start;
-      grid-column: sticky-title;
       grid-row: 1 / span 5;
+      grid-column: 1 / 4;
     }
 
     // Vertically center the first line of the
@@ -38,12 +34,15 @@
     }
 
     > :not(:first-child) {
-      grid-column: content;
+      grid-column: 5 / 13;
     }
   }
 
   @include mq($from: ultra) {
-    grid-template-columns: [sticky-title] 3fr [gutter] 1fr [content] 6fr [gutter] 2fr;
+    > h2:first-child,
+    > h3:first-child {
+      grid-column: 1 / 4;
+    }
   }
 }
 
@@ -60,6 +59,7 @@
 }
 
 @mixin generic-block-top-line {
+  grid-column: 1 / 13;
   background-color: var(--border-primary);
   height: px-to-rem(var(--border-width-l));
 
@@ -70,7 +70,6 @@
   }
 
   @include mq($from: large) {
-    grid-column: 1 / 4;
     grid-row: 1;
     margin-top: px-to-rem(calc(-1 * var(--section-top)));
   }
