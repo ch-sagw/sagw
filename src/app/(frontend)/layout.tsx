@@ -141,6 +141,10 @@ export default async function RootLayout({
     legal: footerLegalData,
     metaNav: metanavData,
     navigation: navData,
+
+    // TODO: get from parent
+    pageLanguage: 'de',
+
     socialLinks: footerData.docs[0].socialLinks,
 
     // TODO

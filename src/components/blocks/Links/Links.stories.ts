@@ -61,6 +61,7 @@ export const LinksBlock: StrictStory = {
         linkType: 'mail',
       },
     ],
+    pageLanguage: 'de',
     title: simpleRteConfig('Links'),
   },
 };

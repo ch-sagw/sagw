@@ -25,6 +25,7 @@ import { useInputMethod } from '@/hooks/useInputMethod';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 
 import {
+  Config,
   InterfaceHeaderLanguageNavigation, InterfaceHeaderMetaNavigation, InterfaceHeaderNavigation,
 } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
@@ -43,7 +44,7 @@ export type InterfaceHeaderPropTypes = {
     open: string,
     close: string,
   };
-  currentLang: string;
+  currentLang: Config['locale'];
   logoLink: string;
 } & InterfaceHeaderPropTypesCms;
 
@@ -454,6 +455,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
             }) || []}
             className={styles.metanav}
             colorMode={renderColorMode()}
+            pageLanguage={props.currentLang}
           />
         </div>
       );
@@ -488,7 +490,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
           value: 'en',
         },
       ]}
-      currentLang=''
+      currentLang={props.currentLang}
       title={rteToHtml(props.langnav.title)}
       description={rteToHtml(props.langnav.description)}
       className={styles.langnav}
@@ -529,6 +531,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
               colorMode: props.colorMode,
               footer: false,
               link: subnavItem.navItemLink || '',
+              pageLanguage: props.currentLang,
               text: rteToHtml(subnavItem.navItemText),
             })),
             setExpanded: undefined,
@@ -541,6 +544,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
           colorMode: props.colorMode,
           footer: false,
           link: item.navItemLink || '',
+          pageLanguage: props.currentLang,
           text: rteToHtml(item.navItemText),
         };
 
@@ -560,6 +564,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
           setNavMaxHeight(maxHeight);
         }
       }}
+      pageLanguage={props.currentLang}
     />
   );
 

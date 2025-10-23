@@ -5,6 +5,7 @@ import { cva } from 'cva';
 import styles from '@/components/global/Footer/Footer.module.scss';
 
 import {
+  Config,
   InterfaceFooterContact,
   InterfaceFooterLegal,
   InterfaceFooterSocialLinks,
@@ -39,6 +40,7 @@ export type InterfaceFooterPropTypes = {
     sagwLink: string;
     sagwLinkText: string;
   }
+  pageLanguage: Config['locale'];
 };
 
 export const Footer = ({
@@ -50,6 +52,7 @@ export const Footer = ({
   structuredDataImage,
   structuredDataUrl,
   fg,
+  pageLanguage,
 }: InterfaceFooterPropTypes): React.JSX.Element => {
   const footerClasses = cva([styles.footer], {
     variants: {
@@ -108,6 +111,7 @@ export const Footer = ({
 
       })
       : [],
+    pageLanguage,
   };
 
   const legalProps: InterfaceMetanavPropTypes = {
@@ -124,6 +128,7 @@ export const Footer = ({
         text: rteToHtml(legal.impressum),
       },
     ],
+    pageLanguage,
   };
 
   const socialLinkProps: InterfaceSocialLinksPropTypes = {
@@ -139,6 +144,7 @@ export const Footer = ({
   const navigationProps: InterfaceNavigationPropTypes = {
     colorMode: 'dark',
     footer: true,
+    pageLanguage,
     sections: navigation.navItems
       .filter((navItem) => navItem.subNavItems && navItem.subNavItems.length > 0)
       .map((navItem, index) => ({
@@ -150,9 +156,11 @@ export const Footer = ({
             colorMode: 'dark',
             footer: false,
             link: subnavItem.navItemLink || '',
+            pageLanguage,
             text: rteToHtml(subnavItem.navItemText),
           }))
           : [],
+        pageLanguage: undefined,
         setExpanded: undefined,
         text: rteToHtml(navItem.navItemText) || '',
       })),

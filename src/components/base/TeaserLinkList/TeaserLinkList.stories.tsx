@@ -85,6 +85,7 @@ export const NewsTeaser: StrictStory = {
       newsListItem,
     ],
     colorMode: 'light',
+    pageLanguage: 'de',
     title: 'News',
   },
 };
@@ -101,6 +102,7 @@ export const EventsTeaser: StrictStory = {
       eventListItem,
     ],
     colorMode: 'white',
+    pageLanguage: 'de',
     title: 'Events',
   },
 };
@@ -113,6 +115,7 @@ export const DownloadList: StrictStory = {
       downloadItem,
     ],
     colorMode: 'light',
+    pageLanguage: 'de',
     subtitle: 'Dieser Artikel ist Teil von folgender Bulletin-Ausgabe',
     title: 'Downloads',
   },
@@ -126,6 +129,7 @@ export const LinkList: StrictStory = {
       linkItem,
     ],
     colorMode: 'light',
+    pageLanguage: 'de',
     title: 'Links',
   },
 };

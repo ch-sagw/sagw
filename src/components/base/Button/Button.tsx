@@ -24,7 +24,6 @@ type BaseWrapperProps = {
   onClick?: (e: React.PointerEvent<HTMLButtonElement>) => void;
   popOverTarget?: string;
   style: 'filled' | 'outlined' | 'text' | 'textSmall' | 'textBright' | 'buttonPlay' | 'socialLink';
-  pageLanguage: Config['locale'];
   prefetch?: 'auto' | true | false | null;
   className?: string;
   isActive?: boolean;
@@ -49,6 +48,7 @@ type LinkProps = BaseProps & {
   element: 'link';
   href: string;
   target?: '_blank';
+  pageLanguage: Config['locale'];
 };
 
 type ButtonPlayProps = ButtonProps & {
@@ -111,7 +111,6 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     element,
     iconInlineEnd,
     iconInlineStart,
-    pageLanguage,
     popOverTarget,
     prefetch,
     style,
@@ -172,6 +171,9 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     let ariaLabelText = ariaLabel;
 
     if (target === '_blank') {
+      const {
+        pageLanguage,
+      } = props;
 
       ariaLabelText = ariaLabel
         ? ariaLabel
