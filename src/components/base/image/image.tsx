@@ -1,50 +1,67 @@
-/* eslint-disable */
-
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { cva } from 'cva';
-import styles from '@/components/base/image/image.module.scss';
+import styles from '@/components/base/Image/Image.module.scss';
 import { InterfaceImagePropTypes } from '@/components/base/Image/Image.custom';
-import { portraitMarkup } from '@/components/base/Image/Image.configs';
+import {
+  getSizes,
+  getSrcSet,
+} from '@/components/base/Image/Image.configs';
 
-const classes = cva([styles.baseStyle], {
-  variants: {
-    usage: {
-      content: styles.content,
-      contentFull: styles.contentFull,
-      genericTeaser: styles.genericTeaser,
-      hero: styles.hero,
-      portrait: styles.portrait,
-      portraitCta: styles.portraitCTA,
-      publicationTeaser: styles.publicationTeaser,
-    },
-  },
-});
-
-const onLoad = (performanceMark: string): void => {
+/* const onLoad = (performanceMark: string): void => {
   performance.mark(performanceMark);
-};
+}; */
 
-export const image = ({
+export const Image = ({
   alt,
-  className,
-  fetchPriority,
   focalPointX,
   focalPointY,
   height,
-  performanceMark,
-  sizes,
+  loading,
   src,
+  variant,
   width,
-}: InterfaceImagePropTypes): React.JSX.Element => (
+}: InterfaceImagePropTypes): React.JSX.Element => {
+  const classes = cva([styles.image], {
+    variants: {
+      variant: {
+        content: [styles.content],
+        contentFull: [styles.contentFull],
+        genericTeaser: [styles.genericTeaser],
+        hero: [styles.hero],
+        portrait: [styles.portrait],
+        portraitCta: [styles.portraitCTA],
+        publicationTeaser: [styles.publicationTeaser],
+      },
+    },
+  });
 
-  portraitMarkup({
-    alt: 'Test',
-    height: 600,
-    hostName: 'sagw-nu.gumlet.io',
-    loading: 'eager',
-    params: 'mode=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5',
+  const params = `mode=crop&crop=focalpoint&fp-x=${focalPointX}&fp-y=${focalPointY}`;
+
+  const srcSet = getSrcSet({
+    params,
     src,
-    variant: 'portrait',
-    width: 600,
-  })
-);
+    variant,
+  });
+  const sizes = getSizes(variant);
+
+  const fetchPriority = loading === 'eager'
+    ? 'high'
+    : 'low';
+
+  return (
+    <img
+      alt={alt}
+      className={classes({
+        variant,
+      })}
+      fetchPriority={fetchPriority}
+      height={height}
+      loading={loading}
+      sizes={sizes}
+      src={src}
+      srcSet={srcSet}
+      width={width}
+    />
+  );
+};

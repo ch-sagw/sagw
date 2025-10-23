@@ -1,18 +1,20 @@
-.hero,
-.content,
-.contentFull {
-  aspect-ratio: 16 / 9;
-}
+.image {
+  &.hero,
+  &.content,
+  &.contentFull {
+    aspect-ratio: 16 / 9;
+  }
 
-.genericTeaser {
-  aspect-ratio: 4 / 3;
-}
+  &.genericTeaser {
+    aspect-ratio: 4 / 3;
+  }
 
-.portrait,
-.portraitCta {
-  aspect-ratio: 1 / 1;
-}
+  &.portrait,
+  &.portraitCta {
+    aspect-ratio: 1 / 1;
+  }
 
-.publicationTeaser {
-  aspect-ratio: 12 / 17;
+  &.publicationTeaser {
+    aspect-ratio: 12 / 17;
+  }
 }
