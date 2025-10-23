@@ -26,7 +26,7 @@ const projects = [
     use: {
       ...devices['Desktop Chrome'],
       viewport: {
-        height: 0,
+        height: 10,
         width: 400,
       },
     },
@@ -38,7 +38,7 @@ const projects = [
     use: {
       ...devices['Desktop Chrome'],
       viewport: {
-        height: 0,
+        height: 10,
         width: 700,
       },
     },
@@ -50,7 +50,7 @@ const projects = [
     use: {
       ...devices['Desktop Chrome'],
       viewport: {
-        height: 0,
+        height: 10,
         width: 1100,
       },
     },
@@ -62,7 +62,7 @@ const projects = [
     use: {
       ...devices['Desktop Chrome HiDPI'],
       viewport: {
-        height: 0,
+        height: 10,
         width: 1600,
       },
     },
@@ -74,7 +74,7 @@ const projects = [
     use: {
       ...devices['Desktop Firefox'],
       viewport: {
-        height: 0,
+        height: 10,
         width: 1100,
       },
     },
@@ -86,7 +86,7 @@ const projects = [
     use: {
       ...devices['Desktop Safari'],
       viewport: {
-        height: 0,
+        height: 10,
         width: 1100,
       },
 
