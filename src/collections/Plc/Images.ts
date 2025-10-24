@@ -6,6 +6,7 @@ export const Images: CollectionConfig = {
     read: () => true,
   },
   admin: {
+    description: 'Allowed image formats: png, jpg, jpeg, gif, webp, avif, tiff',
     group: 'Assets',
   },
   fields: [

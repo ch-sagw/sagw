@@ -131,6 +131,7 @@ interface InterfaceRteInputType {
   name: string;
   notRequired?: boolean;
   disableLocalization?: boolean;
+  adminDescription?: string;
 }
 
 interface InterfaceRteInputTypeInternal {
@@ -138,11 +139,15 @@ interface InterfaceRteInputTypeInternal {
   notRequired?: boolean;
   editor: LexicalRichTextAdapterProvider;
   disableLocalization?: boolean;
+  adminDescription?: string;
 }
 
 const rte = ({
-  name, notRequired, editor, disableLocalization,
+  name, notRequired, editor, disableLocalization, adminDescription,
 }: InterfaceRteInputTypeInternal): RichTextField => ({
+  admin: {
+    description: adminDescription,
+  },
   editor,
   hooks: {
     beforeValidate: [
@@ -158,8 +163,9 @@ const rte = ({
 });
 
 export const rte1 = ({
-  name, notRequired, disableLocalization,
+  name, notRequired, disableLocalization, adminDescription,
 }: InterfaceRteInputType): RichTextField => rte({
+  adminDescription,
   disableLocalization,
   editor: rte1Editor,
   name,

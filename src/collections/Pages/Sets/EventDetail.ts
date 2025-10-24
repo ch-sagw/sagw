@@ -2,7 +2,6 @@ import {
   CollectionConfig, Field,
 } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { fieldsHero } from '@/field-templates/hero';
 import { hookAdminTitle } from '@/hooks-payload/adminTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
@@ -17,30 +16,17 @@ import { hookSlug } from '@/hooks-payload/slug';
 import { rte1 } from '@/field-templates/rte';
 
 const fieldsForDetailPage: Field[] = [
-
   {
-    admin: {
-      condition: (_, siblingsData) => siblingsData.showDetailPage === 'true',
-    },
-    fields: [
-      // Hero
-      fieldsHero,
-
-      // Content Blocks
-      {
-        blocks: blocks([
-          'textBlock',
-          'linksBlock',
-          'downloadsBlock',
-          'formBlock',
-          'notificationBlock',
-        ]),
-        label: 'Content',
-        name: 'content',
-        type: 'blocks',
-      },
-    ],
-    type: 'group',
+    blocks: blocks([
+      'textBlock',
+      'ctaLinkBlock',
+      'downloadsBlock',
+      'formBlock',
+      'notificationBlock',
+    ]),
+    label: 'Content',
+    name: 'content',
+    type: 'blocks',
   },
 ];
 
@@ -49,7 +35,9 @@ const fieldsForNoDetailPage: Field[] = [
     admin: {
       condition: (_, siblingsData) => siblingsData.showDetailPage === 'false',
     },
-    fields: fieldsLinkExternal,
+    fields: fieldsLinkExternal({
+      hideLinkText: true,
+    }),
     name: 'link',
     type: 'group',
   },
@@ -92,10 +80,6 @@ export const EventDetailPage: CollectionConfig = {
                   name: 'language',
                   notRequired: true,
                 }),
-                rte1({
-                  name: 'time',
-                  notRequired: true,
-                }),
                 {
                   name: 'category',
                   relationTo: 'eventCategory',
@@ -106,6 +90,19 @@ export const EventDetailPage: CollectionConfig = {
                   relationTo: 'projects',
                   required: false,
                   type: 'relationship',
+                },
+                {
+                  admin: {
+                    date: {
+                      displayFormat: 'HH:mm',
+                      pickerAppearance: 'timeOnly',
+                      timeFormat: 'HH:mm',
+                      timeIntervals: 10,
+                    },
+                  },
+                  name: 'time',
+                  required: true,
+                  type: 'date',
                 },
                 {
                   name: 'date',

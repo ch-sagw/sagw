@@ -8,7 +8,23 @@ import { getTenant } from '@/app/providers/TenantProvider.server';
 
 // TODO: properly invalidate cache via afterChange hook on collection level
 // and revalidatePath from next/cache
+
 export const revalidate = 0;
+// export const dynamic = 'force-static';
+
+/*
+export const generateStaticParams = () => [
+  {
+    lang: 'en',
+  },
+  {
+    lang: 'de',
+  },
+  {
+    lang: 'fr',
+  },
+];
+*/
 
 export default async function HomePage({
   params,

@@ -20,7 +20,6 @@ const contentBlocks = [
   'accordionBlock',
   'formBlock',
   'ctaContactBlock',
-  'ctaLinkBlock',
   'notificationBlock',
   'networkTeasersBlock',
   'genericTeasersBlock',

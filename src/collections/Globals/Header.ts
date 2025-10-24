@@ -113,7 +113,7 @@ export const Header: CollectionConfig = {
         {
           fields: [
             {
-              fields: fieldsLinkInternalOrExternal,
+              fields: fieldsLinkInternalOrExternal({}),
               maxRows: 3,
               name: 'metaLinks',
               type: 'array',

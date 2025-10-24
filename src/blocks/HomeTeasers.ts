@@ -26,7 +26,7 @@ const homeTeaserItem: Field[] = [
     type: 'relationship',
   },
   {
-    fields: [...fieldsLinkInternal],
+    fields: [...fieldsLinkInternal({})],
     name: 'link',
     type: 'group',
   },

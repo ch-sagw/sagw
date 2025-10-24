@@ -22,7 +22,7 @@ export const ErrorPage: CollectionConfig = {
               name: 'homeButtonText',
             }),
 
-            // 404
+            // 400
             {
               fields: [
                 rte1({
@@ -32,8 +32,23 @@ export const ErrorPage: CollectionConfig = {
                   name: 'description',
                 }),
               ],
-              label: '404',
-              name: 'notFound',
+              label: '400',
+              name: 'error400',
+              type: 'group',
+            },
+
+            // 500
+            {
+              fields: [
+                rte1({
+                  name: 'title',
+                }),
+                rte1({
+                  name: 'description',
+                }),
+              ],
+              label: '500',
+              name: 'error500',
               type: 'group',
             },
           ],

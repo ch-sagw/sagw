@@ -54,7 +54,7 @@ export default buildConfig({
     defaultFromName: 'Payload CMS',
   }),
   i18n: {
-    fallbackLanguage: 'de',
+    fallbackLanguage: 'en',
     supportedLanguages: {
       de,
       en,

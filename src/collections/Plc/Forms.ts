@@ -104,7 +104,7 @@ export const Forms: CollectionConfig = {
             rte1({
               name: 'text',
             }),
-            fieldsLinkInternalWithToggle,
+            fieldsLinkInternalWithToggle({}),
           ],
           label: 'Submit Success',
           name: 'submitSuccess',
@@ -119,7 +119,7 @@ export const Forms: CollectionConfig = {
             rte1({
               name: 'text',
             }),
-            fieldsLinkInternalWithToggle,
+            fieldsLinkInternalWithToggle({}),
           ],
           label: 'Submit Error',
           name: 'submitError',

@@ -68,7 +68,7 @@ export const StatusMessage: CollectionConfig = {
     rte1({
       name: 'message',
     }),
-    fieldsLinkInternalWithToggle,
+    fieldsLinkInternalWithToggle({}),
     {
       admin: {
         description: 'Should the message be displayed on home only or everywhere?',

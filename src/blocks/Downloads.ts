@@ -13,7 +13,7 @@ export const DownloadsBlock = {
       name: 'subtitle',
       notRequired: true,
     }),
-    fieldsLinkInternalWithToggle,
+    fieldsLinkInternalWithToggle({}),
     {
       defaultValue: 'custom',
       name: 'customOrAuto',

@@ -949,11 +949,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           time: simpleRteConfig('10:00'),
           title: simpleRteConfig(`Event ${index} details title ${tenant.toUpperCase()} (render detail page)`),
         },
-        hero: {
-          colorMode: 'white',
-          lead: simpleRteConfig(`Event ${index} Detail Page Lead`),
-          title: simpleRteConfig(`Event ${index} detail page title ${tenant.toUpperCase()} (render detail page)`),
-        },
         showDetailPage: 'true',
         tenant: tenantId,
       },
@@ -977,10 +972,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
             : index}T12:00:00.000Z`,
           project: project.id,
           title: simpleRteConfig(`Event ${index} detail title ${tenant.toUpperCase()} (render link)`),
-        },
-        hero: {
-          colorMode: 'white',
-          title: simpleRteConfig(`Event ${index} detail page title ${tenant.toUpperCase()} (render link)`),
         },
         link: {
           externalLink: 'https://www.foo.bar',

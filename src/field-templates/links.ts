@@ -1,55 +1,79 @@
 import { Field } from 'payload';
 import { rte1 } from './rte';
 
-export const fieldsLinkInternal: Field[] = [
-  rte1({
-    name: 'description',
-    notRequired: true,
-  }),
-  rte1({
-    name: 'linkText',
-  }),
-  {
-    admin: {
-      components: {
-        Field: {
-          path: '@/components/admin/InternalLinkChooser/InternalLinkChooser',
+interface InterfaceLinkProps {
+  showDescription?: boolean;
+  hideLinkText?: boolean;
+  optional?: boolean;
+}
+
+export const fieldsLinkInternal = (props?: InterfaceLinkProps): Field[] => {
+  const linkFields: Field[] = [
+    rte1({
+      name: 'linkText',
+      notRequired: props?.optional,
+    }),
+    {
+      admin: {
+        components: {
+          Field: {
+            path: '@/components/admin/InternalLinkChooser/InternalLinkChooser',
+          },
         },
       },
+      name: 'internalLink',
+      required: !props?.optional,
+      type: 'text',
     },
-    name: 'internalLink',
-    required: true,
-    type: 'text',
-  },
-];
+  ];
 
-export const fieldsLinkExternal: Field[] = [
-  rte1({
-    name: 'description',
-    notRequired: true,
-  }),
-  rte1({
-    name: 'externalLinkText',
-  }),
-  {
-    name: 'externalLink',
-    required: true,
-    type: 'text',
-    validate: (value: unknown): true | string => {
-      if (typeof value !== 'string' || value.trim() === '') {
-        return 'External link is required.';
-      }
+  if (props?.showDescription) {
+    linkFields.unshift(rte1({
+      name: 'description',
+      notRequired: true,
+    }));
+  }
 
-      const pattern = /^(?:https?:\/\/)?(?:www\.)+[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$/u;
+  return linkFields;
+};
 
-      if (pattern.test(value)) {
-        return true;
-      }
+export const fieldsLinkExternal = (props?: InterfaceLinkProps): Field[] => {
+  const linkFields: Field[] = [
+    {
+      name: 'externalLink',
+      required: true,
+      type: 'text',
+      validate: (value: unknown): true | string => {
+        if (typeof value !== 'string' || value.trim() === '') {
+          return 'External link is required.';
+        }
 
-      return 'The URL has an invalid format. The URL must have a format like https://www.google.com or www.google.com.';
+        const pattern = /^(?:https?:\/\/)?(?:www\.)+[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$/u;
+
+        if (pattern.test(value)) {
+          return true;
+        }
+
+        return 'The URL has an invalid format. The URL must have a format like https://www.google.com or www.google.com.';
+      },
     },
-  },
-];
+  ];
+
+  if (!props?.hideLinkText) {
+    linkFields.unshift(rte1({
+      name: 'externalLinkText',
+    }));
+  }
+
+  if (props?.showDescription) {
+    linkFields.unshift(rte1({
+      name: 'description',
+      notRequired: true,
+    }));
+  }
+
+  return linkFields;
+};
 
 export const fieldsMail: Field[] = [
   rte1({
@@ -63,7 +87,7 @@ export const fieldsMail: Field[] = [
   },
 ];
 
-export const fieldsLinkInternalOrExternal: Field[] = [
+export const fieldsLinkInternalOrExternal = (props?: InterfaceLinkProps): Field[] => [
   {
     admin: {
       layout: 'horizontal',
@@ -91,7 +115,7 @@ export const fieldsLinkInternalOrExternal: Field[] = [
     admin: {
       condition: (data, siblingData) => siblingData.linkType === 'internal',
     },
-    fields: fieldsLinkInternal,
+    fields: fieldsLinkInternal(props),
     name: 'linkInternal',
     type: 'group',
   },
@@ -99,7 +123,7 @@ export const fieldsLinkInternalOrExternal: Field[] = [
     admin: {
       condition: (data, siblingData) => siblingData.linkType === 'external',
     },
-    fields: fieldsLinkExternal,
+    fields: fieldsLinkExternal(props),
     name: 'linkExternal',
     type: 'group',
   },
@@ -113,7 +137,7 @@ export const fieldsLinkInternalOrExternal: Field[] = [
   },
 ];
 
-export const fieldsLinkInternalWithToggle: Field = {
+export const fieldsLinkInternalWithToggle = (props?: InterfaceLinkProps): Field => ({
   fields: [
     {
       defaultValue: false,
@@ -125,12 +149,12 @@ export const fieldsLinkInternalWithToggle: Field = {
       admin: {
         condition: (_, siblingData) => siblingData?.includeLink === true,
       },
-      fields: fieldsLinkInternal,
+      fields: fieldsLinkInternal(props),
       name: 'link',
       type: 'group',
     },
   ],
   name: 'optionalLink',
   type: 'group',
-};
+});
 

@@ -38,6 +38,7 @@ export const ImageBlock = {
       notRequired: true,
     }),
     rte1({
+      adminDescription: 'The © will be added automatically in front of this text.',
       name: 'credits',
     }),
   ],

@@ -24,9 +24,7 @@ export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promi
   const eventsPages = await payload.find({
     collection: 'eventDetailPage',
     depth: 1,
-
-    // TODO: how many?
-    limit: 4,
+    limit: 3,
     locale: props.language,
     overrideAccess: false,
     pagination: false,

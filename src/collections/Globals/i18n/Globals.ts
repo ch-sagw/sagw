@@ -17,27 +17,33 @@ export const I18nGlobals: CollectionConfig = {
         {
           fields: [
             {
-              admin: {
-                description: 'If you add a Download-Block, this will be used as a title',
-              },
               ...rte1({
+                adminDescription: 'If you add a Download-Block, this will be used as a title',
                 name: 'downloadTitle',
               }),
             },
             {
-              admin: {
-                description: 'If you add a CTA-Contact-Block, this will be used as the button text',
-              },
               ...rte1({
+                adminDescription: 'If you add a Link-Block, this will be used as a title',
+                name: 'linksTitle',
+              }),
+            },
+            {
+              ...rte1({
+                adminDescription: 'If you add a CTA-Contact-Block, this will be used as the button text',
                 name: 'writeEmailButtonText',
               }),
             },
             {
-              admin: {
-                description: 'On magazine detail pages, we use this to show the "Copy Text" button',
-              },
               ...rte1({
+                adminDescription: 'On magazine detail pages, we use this to show the "Copy Text" button',
                 name: 'exportArticleButtonText',
+              }),
+            },
+            {
+              ...rte1({
+                adminDescription: 'On events, we use this to display the time. If you provide the value "Uhr", we display: "09:00 Uhr"',
+                name: 'time',
               }),
             },
           ],

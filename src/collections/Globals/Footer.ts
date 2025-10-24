@@ -10,7 +10,7 @@ import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
 
 const fieldsSocialLink: Field[] = [
-  ...fieldsLinkExternal,
+  ...fieldsLinkExternal({}),
   {
     name: 'icon',
     options: [

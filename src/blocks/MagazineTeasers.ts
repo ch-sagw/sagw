@@ -1,3 +1,5 @@
+import { alignementHorizontalVertical } from '@/field-templates/alignement';
+import { fieldsLinkInternal } from '@/field-templates/links';
 import { rte1 } from '@/field-templates/rte';
 import { Block } from 'payload';
 
@@ -9,7 +11,16 @@ export const MagazineTeasersBlock = {
   },
   fields: [
     rte1({
-      name: 'linkText',
+      name: 'title',
+      notRequired: true,
+    }),
+    rte1({
+      name: 'lead',
+      notRequired: true,
+    }),
+    alignementHorizontalVertical,
+    ...fieldsLinkInternal({
+      optional: true,
     }),
     {
       admin: {

@@ -49,6 +49,11 @@ export const PublicationDetailPage: CollectionConfig = {
                   required: true,
                   type: 'relationship',
                 },
+                {
+                  name: 'date',
+                  required: true,
+                  type: 'date',
+                },
               ],
               label: 'Overview Page properties',
               name: 'overviewPageProps',
@@ -66,7 +71,7 @@ export const PublicationDetailPage: CollectionConfig = {
                       },
                       name: 'topic',
                       relationTo: 'publicationTopics',
-                      required: true,
+                      required: false,
                       type: 'relationship',
                     },
                     {
@@ -75,7 +80,7 @@ export const PublicationDetailPage: CollectionConfig = {
                       },
                       name: 'type',
                       relationTo: 'publicationTypes',
-                      required: true,
+                      required: false,
                       type: 'relationship',
                     },
                     {

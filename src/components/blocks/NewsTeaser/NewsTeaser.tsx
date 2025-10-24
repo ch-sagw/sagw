@@ -24,9 +24,7 @@ export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<R
   const newsPages = await payload.find({
     collection: 'newsDetailPage',
     depth: 1,
-
-    // TODO: how many?
-    limit: 4,
+    limit: 3,
     locale: props.language,
     overrideAccess: false,
     pagination: false,
