@@ -36,6 +36,7 @@ Payload:
 - whenever we import configPromise (payload.config.ts), then the init method seems to run!! (this is where we seed data). This might have severe performance implications. find workaround!
 - request bloat internal link chooser: e.g. on header, if you have 7 nav items, the internal link chooser queries 7 times all collections!
 - Check be-tests after review3 adoptions
+- test: plc -> people -> beforeChange hook for full name
 
 Vercel:
 --------

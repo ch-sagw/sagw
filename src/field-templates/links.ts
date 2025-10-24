@@ -40,6 +40,7 @@ export const fieldsLinkInternal = (props?: InterfaceLinkProps): Field[] => {
 export const fieldsLinkExternal = (props?: InterfaceLinkProps): Field[] => {
   const linkFields: Field[] = [
     {
+      localized: true,
       name: 'externalLink',
       required: true,
       type: 'text',

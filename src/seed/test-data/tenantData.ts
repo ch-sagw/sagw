@@ -62,17 +62,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     filePath: `src/seed/test-data/assets/${tenant}.png`,
   });
 
-  // add svg
-  await payload.create({
-    collection: 'svgs',
-    data: {
-      _status: 'published',
-      name: `${tenant.toUpperCase()} SVG`,
-      tenant: tenantId,
-    },
-    filePath: `src/seed/test-data/assets/${tenant}.svg`,
-  });
-
   // add video
   await payload.create({
     collection: 'videos',

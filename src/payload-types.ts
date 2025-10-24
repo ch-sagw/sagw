@@ -82,7 +82,6 @@ export interface Config {
     projectDetailPage: ProjectDetailPage;
     images: Image;
     videos: Video;
-    svgs: Svg;
     networkCategories: NetworkCategory;
     documents: Document;
     zenodoDocuments: ZenodoDocument;
@@ -143,7 +142,6 @@ export interface Config {
     projectDetailPage: ProjectDetailPageSelect<false> | ProjectDetailPageSelect<true>;
     images: ImagesSelect<false> | ImagesSelect<true>;
     videos: VideosSelect<false> | VideosSelect<true>;
-    svgs: SvgsSelect<false> | SvgsSelect<true>;
     networkCategories: NetworkCategoriesSelect<false> | NetworkCategoriesSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     zenodoDocuments: ZenodoDocumentsSelect<false> | ZenodoDocumentsSelect<true>;
@@ -361,7 +359,7 @@ export interface InterfaceTextBlock {
  * via the `definition` "InterfaceFormBlock".
  */
 export interface InterfaceFormBlock {
-  form?: (string | null) | Form;
+  form: string | Form;
   id?: string | null;
   blockName?: string | null;
   blockType: 'formBlock';
@@ -886,7 +884,7 @@ export interface InterfaceHomeTeasersBlock {
           };
           [k: string]: unknown;
         };
-        icon: string | Svg;
+        icon: 'bar';
         link: {
           linkText: {
             root: {
@@ -911,27 +909,6 @@ export interface InterfaceHomeTeasersBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'homeTeasersBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "svgs".
- */
-export interface Svg {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2897,15 +2874,10 @@ export interface InterfaceGenericTeasersBlock {
       };
       [k: string]: unknown;
     } | null;
-    image?:
-      | ({
-          relationTo: 'images';
-          value: string | Image;
-        } | null)
-      | ({
-          relationTo: 'svgs';
-          value: string | Svg;
-        } | null);
+    image?: {
+      relationTo: 'images';
+      value: string | Image;
+    } | null;
     linkType: 'internal' | 'external' | 'mail';
     linkInternal?: {
       linkText: {
@@ -3206,7 +3178,10 @@ export interface DetailPage {
  * via the `definition` "InterfaceVideoBlock".
  */
 export interface InterfaceVideoBlock {
-  video: string | Video;
+  'video-de': string | Video;
+  'video-fr'?: (string | null) | Video;
+  'video-it'?: (string | null) | Video;
+  'video-en'?: (string | null) | Video;
   caption?: {
     root: {
       type: string;
@@ -4456,10 +4431,6 @@ export interface PayloadLockedDocument {
         value: string | Video;
       } | null)
     | ({
-        relationTo: 'svgs';
-        value: string | Svg;
-      } | null)
-    | ({
         relationTo: 'networkCategories';
         value: string | NetworkCategory;
       } | null)
@@ -5256,7 +5227,10 @@ export interface DetailPageSelect<T extends boolean = true> {
  * via the `definition` "InterfaceVideoBlock_select".
  */
 export interface InterfaceVideoBlockSelect<T extends boolean = true> {
-  video?: T;
+  'video-de'?: T;
+  'video-fr'?: T;
+  'video-it'?: T;
+  'video-en'?: T;
   caption?: T;
   credits?: T;
   stillImage?: T;
@@ -5604,26 +5578,6 @@ export interface ImagesSelect<T extends boolean = true> {
 export interface VideosSelect<T extends boolean = true> {
   tenant?: T;
   title?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "svgs_select".
- */
-export interface SvgsSelect<T extends boolean = true> {
-  tenant?: T;
-  name?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

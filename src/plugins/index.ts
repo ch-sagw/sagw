@@ -18,7 +18,6 @@ import type { Config } from '@/payload-types';
 import { isSuperAdmin } from '@/access/isSuperAdmin';
 import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
 import { tenantsCollections } from '@/collections';
-import { Svgs } from '@/collections/Plc/Svgs';
 
 import * as Sentry from '@sentry/nextjs';
 
@@ -50,7 +49,6 @@ const plugins: Plugin[] = [
       [Images.slug]: true,
       [Videos.slug]: true,
       [Documents.slug]: true,
-      [Svgs.slug]: true,
     },
     enabled: true,
     token: process.env.BLOB_READ_WRITE_TOKEN,

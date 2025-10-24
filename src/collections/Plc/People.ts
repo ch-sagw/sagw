@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload';
 import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
+import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 
 export const People: CollectionConfig = {
   access: {
@@ -65,7 +66,7 @@ export const People: CollectionConfig = {
             data,
           }): string => {
             if (data?.firstname && data?.lastname) {
-              return `${data.firstname} ${data.lastname}`;
+              return `${rte1ToPlaintext(data.firstname)} ${rte1ToPlaintext(data.lastname)}`;
             }
 
             return '';

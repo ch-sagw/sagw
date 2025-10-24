@@ -21,9 +21,14 @@ const homeTeaserItem: Field[] = [
   }),
   {
     name: 'icon',
-    relationTo: 'svgs',
+    options: [
+      {
+        label: 'foo',
+        value: 'bar',
+      },
+    ],
     required: true,
-    type: 'relationship',
+    type: 'select',
   },
   {
     fields: [...fieldsLinkInternal({})],

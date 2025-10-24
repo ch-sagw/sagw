@@ -18,10 +18,7 @@ const TeaserItem: Field[] = [
   }),
   {
     name: 'image',
-    relationTo: [
-      'images',
-      'svgs',
-    ],
+    relationTo: ['images'],
     required: false,
     type: 'relationship',
   },
