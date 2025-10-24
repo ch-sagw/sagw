@@ -4,59 +4,89 @@ import {
 } from '@playwright/test';
 import { vrtConfig } from '@/automated-testing/config';
 
+// Project Breakpoints:
+/*
+zero: 0,
+micro: 320,
+small: 360,
+medium: 640,
+large: 1024,
+wide: 1280,
+ultra: 1600,
+*/
+
 const projects = [
-  // viewport micro
+  // viewport small
   {
     name: 'chromium-400',
     use: {
       ...devices['Desktop Chrome'],
       viewport: {
-        height: 480,
+        height: 300,
         width: 400,
-      },
-    },
-  },
-
-  // viewport small
-  {
-    name: 'chromium-700',
-    use: {
-      ...devices['Desktop Chrome'],
-      viewport: {
-        height: 480,
-        width: 700,
       },
     },
   },
 
   // viewport medium
   {
-    name: 'chromium-800',
+    name: 'chromium-700',
     use: {
       ...devices['Desktop Chrome'],
       viewport: {
-        height: 480,
-        width: 800,
+        height: 300,
+        width: 700,
       },
     },
   },
 
-  // default viewport
+  // viewport large
   {
-    name: 'chromium-1280',
-    use: devices['Desktop Chrome HiDPI'],
+    name: 'chromium-1100',
+    use: {
+      ...devices['Desktop Chrome'],
+      viewport: {
+        height: 300,
+        width: 1100,
+      },
+    },
   },
 
-  // desktop firefox
+  // viewport ultra
+  {
+    name: 'chromium-1600',
+    use: {
+      ...devices['Desktop Chrome HiDPI'],
+      viewport: {
+        height: 300,
+        width: 1600,
+      },
+    },
+  },
+
+  // desktop firefox viewport large
   {
     name: 'firefox',
-    use: devices['Desktop Firefox'],
+    use: {
+      ...devices['Desktop Firefox'],
+      viewport: {
+        height: 300,
+        width: 1100,
+      },
+    },
   },
 
-  // desktop safari
+  // desktop safari viewport large
   {
     name: 'webkit',
-    use: devices['Desktop Safari'],
+    use: {
+      ...devices['Desktop Safari'],
+      viewport: {
+        height: 300,
+        width: 1280,
+      },
+
+    },
   },
 
 ];
