@@ -83,7 +83,7 @@ const projects = [
       ...devices['Desktop Safari'],
       viewport: {
         height: 300,
-        width: 1100,
+        width: 1280,
       },
 
     },
