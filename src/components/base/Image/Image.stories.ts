@@ -26,6 +26,62 @@ const meta: Meta<typeof Image> = {
 
 export default meta;
 
+export const ContentImage: StrictStory = {
+  args: {
+    alt: 'Das Bild zeigt eine junge Frau, mit blonden schulterlangen Haaren und Brille',
+    focalPointX: 0.5,
+    focalPointY: 0.5,
+    height: 450,
+    loading: 'lazy',
+    performanceMark: '',
+    src: 'https://sagw-nu.gumlet.io/api/images/file/mbl_1_9417372470_920fe62811_o.jpg',
+    variant: 'content',
+    width: 800,
+  },
+};
+
+export const ContentImageWide: StrictStory = {
+  args: {
+    alt: 'Das Bild zeigt eine junge Frau, mit blonden schulterlangen Haaren und Brille',
+    focalPointX: 0.5,
+    focalPointY: 0.5,
+    height: 450,
+    loading: 'lazy',
+    performanceMark: '',
+    src: 'https://sagw-nu.gumlet.io/api/images/file/mbl_1_9417372470_920fe62811_o.jpg',
+    variant: 'content',
+    width: 800,
+  },
+};
+
+export const GenericTeaser: StrictStory = {
+  args: {
+    alt: 'Das Bild zeigt eine junge Frau, mit blonden schulterlangen Haaren und Brille',
+    focalPointX: 0.5,
+    focalPointY: 0.5,
+    height: 450,
+    loading: 'lazy',
+    performanceMark: '',
+    src: 'https://sagw-nu.gumlet.io/api/images/file/mbl_1_9417372470_920fe62811_o.jpg',
+    variant: 'genericTeaser',
+    width: 600,
+  },
+};
+
+export const LogoTeaser: StrictStory = {
+  args: {
+    alt: 'Das Bild zeigt eine junge Frau, mit blonden schulterlangen Haaren und Brille',
+    focalPointX: 0.5,
+    focalPointY: 0.5,
+    height: 100,
+    loading: 'lazy',
+    performanceMark: '',
+    src: 'https://sagw-nu.gumlet.io/api/images/file/mbl_1_9417372470_920fe62811_o.jpg',
+    variant: 'logoTeaser',
+    width: 100,
+  },
+};
+
 export const MagazineHero: StrictStory = {
   args: {
     alt: 'Das Bild zeigt eine junge Frau, mit blonden schulterlangen Haaren und Brille',

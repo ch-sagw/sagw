@@ -3,6 +3,7 @@ export type ImageVariant =
     'contentFull' |
     'genericTeaser' |
     'hero' |
+    'logoTeaser' |
     'portrait' |
     'portraitCta' |
     'publicationTeaser';
