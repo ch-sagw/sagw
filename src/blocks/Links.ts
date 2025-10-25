@@ -13,6 +13,7 @@ export const LinksBlock = {
         showDescription: true,
       }),
       name: 'links',
+      required: true,
       type: 'array',
     },
   ],

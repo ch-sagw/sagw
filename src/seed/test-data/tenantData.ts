@@ -942,7 +942,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           language: simpleRteConfig('Deutsch'),
           location: simpleRteConfig('ETH Zürich'),
           project: project.id,
-          time: '10:00',
+          time: '2025-08-31T12:00:00.000Z',
           title: simpleRteConfig(`Event ${index} details title ${tenant.toUpperCase()} (render detail page)`),
         },
         showDetailPage: 'true',

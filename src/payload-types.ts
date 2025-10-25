@@ -1493,96 +1493,94 @@ export interface InterfaceHeroFieldMagazineDetail {
  * via the `definition` "InterfaceLinksBlock".
  */
 export interface InterfaceLinksBlock {
-  links?:
-    | {
-        linkType: 'internal' | 'external' | 'mail';
-        linkInternal?: {
-          description?: {
-            root: {
-              type: string;
-              children: {
-                type: any;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
+  links: {
+    linkType: 'internal' | 'external' | 'mail';
+    linkInternal?: {
+      description?: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
             [k: string]: unknown;
-          } | null;
-          linkText: {
-            root: {
-              type: string;
-              children: {
-                type: any;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          };
-          internalLink: string;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
         };
-        linkExternal?: {
-          description?: {
-            root: {
-              type: string;
-              children: {
-                type: any;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
+        [k: string]: unknown;
+      } | null;
+      linkText: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
             [k: string]: unknown;
-          } | null;
-          externalLinkText: {
-            root: {
-              type: string;
-              children: {
-                type: any;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          };
-          externalLink: string;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
         };
-        linkMail?: {
-          linkText: {
-            root: {
-              type: string;
-              children: {
-                type: any;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
+        [k: string]: unknown;
+      };
+      internalLink: string;
+    };
+    linkExternal?: {
+      description?: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
             [k: string]: unknown;
-          };
-          email: string;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
         };
-        id?: string | null;
-      }[]
-    | null;
+        [k: string]: unknown;
+      } | null;
+      externalLinkText: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      externalLink: string;
+    };
+    linkMail?: {
+      linkText: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      email: string;
+    };
+    id?: string | null;
+  }[];
   id?: string | null;
   blockName?: string | null;
   blockType: 'linksBlock';

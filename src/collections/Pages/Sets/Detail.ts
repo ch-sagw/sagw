@@ -13,6 +13,7 @@ import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
+import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 
 const contentBlocks = [
   'textBlock',
@@ -28,6 +29,13 @@ const contentBlocks = [
   'notificationBlock',
   'genericTeasersBlock',
 ] as const;
+
+type ContentBlock = typeof contentBlocks[number];
+
+const uniqueBlocks: ContentBlock[] = [
+  'downloadsBlock',
+  'linksBlock',
+];
 
 export const DetailPage: CollectionConfig = {
   access: {
@@ -65,14 +73,14 @@ export const DetailPage: CollectionConfig = {
               blocks: blocks(contentBlocks),
               filterOptions: excludeBlocksFilterSingle({
                 allBlockTypes: contentBlocks,
-                onlyAllowedOnceBlockTypes: [
-                  'downloadsBlock',
-                  'linksBlock',
-                ],
+                onlyAllowedOnceBlockTypes: uniqueBlocks,
               }),
               label: 'Content',
               name: 'content',
               type: 'blocks',
+              validate: validateUniqueBlocksSingle({
+                onlyAllowedOnceBlockTypes: uniqueBlocks,
+              }),
             },
           ],
           label: 'Content',

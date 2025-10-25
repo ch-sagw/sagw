@@ -15,6 +15,7 @@ import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
 import { rte1 } from '@/field-templates/rte';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
+import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 
 const contentBlocks = [
   'textBlock',
@@ -24,16 +25,23 @@ const contentBlocks = [
   'notificationBlock',
 ] as const;
 
+type ContentBlock = typeof contentBlocks[number];
+
+const uniqueBlocks: ContentBlock[] = ['downloadsBlock'];
+
 const fieldsForDetailPage: Field[] = [
   {
     blocks: blocks(contentBlocks),
     filterOptions: excludeBlocksFilterSingle({
       allBlockTypes: contentBlocks,
-      onlyAllowedOnceBlockTypes: ['downloadsBlock'],
+      onlyAllowedOnceBlockTypes: uniqueBlocks,
     }),
     label: 'Content',
     name: 'content',
     type: 'blocks',
+    validate: validateUniqueBlocksSingle({
+      onlyAllowedOnceBlockTypes: uniqueBlocks,
+    }),
   },
 ];
 

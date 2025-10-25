@@ -15,7 +15,7 @@ import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
 import { excludeBlocksFilterCumulative } from '@/utilities/blockFilters';
-import { allowSingleOverviewBlock } from '@/hooks-payload/allowSingleOverviewBlock';
+import { validateUniqueBlocksCumulative } from '@/hooks-payload/validateUniqueBlocks';
 
 const contentBlocks = [
   'textBlock',
@@ -81,7 +81,9 @@ export const OverviewPage: CollectionConfig = {
               label: 'Content',
               name: 'content',
               type: 'blocks',
-              validate: allowSingleOverviewBlock,
+              validate: validateUniqueBlocksCumulative({
+                onlyAllowedOnceBlockTypes: OVERVIEW_BLOCK_TYPES,
+              }),
             },
           ],
           label: 'Content',

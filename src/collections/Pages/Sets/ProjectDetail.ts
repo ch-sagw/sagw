@@ -12,6 +12,7 @@ import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
+import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 
 const contentBlocks = [
   'textBlock',
@@ -24,6 +25,13 @@ const contentBlocks = [
   'newsTeasersBlock',
   'publicationsTeasersBlock',
 ] as const;
+
+type ContentBlock = typeof contentBlocks[number];
+
+const uniqueBlocks: ContentBlock[] = [
+  'downloadsBlock',
+  'linksBlock',
+];
 
 export const ProjectDetailPage: CollectionConfig = {
   access: {
@@ -79,14 +87,14 @@ export const ProjectDetailPage: CollectionConfig = {
               blocks: blocks(contentBlocks),
               filterOptions: excludeBlocksFilterSingle({
                 allBlockTypes: contentBlocks,
-                onlyAllowedOnceBlockTypes: [
-                  'downloadsBlock',
-                  'linksBlock',
-                ],
+                onlyAllowedOnceBlockTypes: uniqueBlocks,
               }),
               label: 'Content',
               name: 'content',
               type: 'blocks',
+              validate: validateUniqueBlocksSingle({
+                onlyAllowedOnceBlockTypes: uniqueBlocks,
+              }),
             },
           ],
           label: 'Content',
