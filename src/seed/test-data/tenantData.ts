@@ -279,8 +279,19 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         items: [
           {
             externalLink: 'https://www.foo.bar',
-            externalLinkText: simpleRteConfig('Visit us on Instagram'),
             icon: 'instagram',
+          },
+          {
+            externalLink: 'https://www.foo.bar',
+            icon: 'facebook',
+          },
+          {
+            externalLink: 'https://www.foo.bar',
+            icon: 'twitter',
+          },
+          {
+            externalLink: 'https://www.foo.bar',
+            icon: 'linkedIn',
           },
         ],
       },
@@ -293,10 +304,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'header',
     data: {
       _status: 'published',
-      languageNavigation: {
-        description: simpleRteConfig('Die SAGW Webseite ist in vier Sprachen verfügbar'),
-        title: simpleRteConfig('Sprachen'),
-      },
       metanavigation: {
         metaLinks: [
           {
@@ -530,12 +537,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           placeholder: 'Ihre E-Mail Adresse',
         },
         includeLanguageSelection: 'yes',
-        name: {
-          fieldError: simpleRteConfig('Bitte geben Sie Ihren Namen an.'),
-          fieldWidth: 'half',
-          label: simpleRteConfig('Name'),
-          placeholder: 'Ihr Name',
-        },
       },
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: true,

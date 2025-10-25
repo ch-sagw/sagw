@@ -26,14 +26,13 @@ import { useFocusTrap } from '@/hooks/useFocusTrap';
 
 import {
   Config,
-  InterfaceHeaderLanguageNavigation, InterfaceHeaderMetaNavigation, InterfaceHeaderNavigation,
+  InterfaceHeaderMetaNavigation, InterfaceHeaderNavigation,
 } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 
 // --- Interfaces
 
 export type InterfaceHeaderPropTypesCms = {
-  langnav: InterfaceHeaderLanguageNavigation;
   metanav: InterfaceHeaderMetaNavigation;
   navigation: InterfaceHeaderNavigation;
 }
@@ -342,29 +341,44 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
         navItems,
       } = props.navigation;
 
+      const handleLeavingNav = (): void => {
+        // Clear content immediately when leaving a navigation item
+        setInfoBlockContent(undefined);
+
+        // Only collapse if we're not in mainNav section
+        // (to prevent flickering when moving between items)
+        if (hoveredSection !== 'mainNav') {
+          setIsHovering(false);
+          setHoveredSection(null);
+        }
+
+        // on keyboard navigation, hide the menu
+        if (isKeyboard && isHovering && hoveredSection === 'mainNav') {
+          setIsHovering(false);
+        }
+      };
+
       const selectedSections = navItems.filter((section) => section.id === selectedItem);
 
-      if (selectedSections.length > 0) {
-        setInfoBlockContent({
-          text: rteToHtml(selectedSections[0].description),
-          title: rteToHtml(selectedSections[0].navItemText),
-        });
-      }
-    } else {
-      // Clear content immediately when leaving a navigation item
-      setInfoBlockContent(undefined);
-
-      // Only collapse if we're not in mainNav section
-      // (to prevent flickering when moving between items)
-      if (hoveredSection !== 'mainNav') {
-        setIsHovering(false);
-        setHoveredSection(null);
+      if (selectedSections.length < 1) {
+        handleLeavingNav();
       }
 
-      // on keyboard navigation, hide the menu
-      if (isKeyboard && isHovering && hoveredSection === 'mainNav') {
-        setIsHovering(false);
+      const [selectedSection] = selectedSections;
+
+      if (selectedSection.subNavItems) {
+        if (selectedSection.subNavItems.length > 0) {
+          setInfoBlockContent({
+            text: rteToHtml(selectedSections[0].description),
+            title: rteToHtml(selectedSections[0].navItemText),
+          });
+
+          return;
+        }
       }
+
+      handleLeavingNav();
+
     }
   };
 
@@ -380,10 +394,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     if (isHovering && visibility) {
       setHoveredSection('langNav');
 
-      setInfoBlockContent({
-        text: rteToHtml(props.langnav.description),
-        title: rteToHtml(props.langnav.title),
-      });
+      setInfoBlockContent(undefined);
     }
 
     // Clear info block when leaving lang-nav, but only if we're not in mainNav
@@ -399,8 +410,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   }, [
     isHovering,
     smallBreakpoint,
-    props.langnav.description,
-    props.langnav.title,
     isKeyboard,
     hoveredSection,
   ]);
@@ -491,8 +500,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
         },
       ]}
       currentLang={props.currentLang}
-      title={rteToHtml(props.langnav.title)}
-      description={rteToHtml(props.langnav.description)}
       className={styles.langnav}
       colorMode={renderColorMode()}
       visibilityCallback={handleLangNavHover}

@@ -27,8 +27,8 @@ export type InterfaceLangnavPropTypes = {
   colorMode: ColorMode;
   visibilityCallback?: (visible: boolean) => void;
   onHeightChange?: (height: number) => void;
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
 };
 
 // --- Classes

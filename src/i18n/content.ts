@@ -42,4 +42,30 @@ export const i18nA11y = {
     fr: 's\'ouvre dans une nouvelle fenêtre.',
     it: 'si apre in una nuova finestra.',
   },
+  socialLinks: {
+    facebook: {
+      de: 'Folgen Sie uns auf Facebook',
+      en: 'Follow us on Facebook',
+      fr: 'Suivez-nous sur Facebook',
+      it: 'Seguici su Facebook',
+    },
+    instagram: {
+      de: 'Folgen Sie uns auf Instagram',
+      en: 'Follow us on Instagram',
+      fr: 'Suivez-nous sur Instagram',
+      it: 'Seguici su Instagram',
+    },
+    linkedIn: {
+      de: 'Folgen Sie uns auf linkedInt',
+      en: 'Follow us on linkedInt',
+      fr: 'Suivez-nous sur linkedInt',
+      it: 'Seguici su linkedInt',
+    },
+    twitter: {
+      de: 'Folgen Sie uns auf Twitter',
+      en: 'Follow us on Twitter',
+      fr: 'Suivez-nous sur Twitter',
+      it: 'Seguici su Twitter',
+    },
+  },
 };

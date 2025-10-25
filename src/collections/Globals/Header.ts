@@ -90,29 +90,6 @@ export const Header: CollectionConfig = {
         {
           fields: [
             {
-              admin: {
-                description: 'If the user hovers over the language selection, this is shown as a title in the Header',
-              },
-              ...rte1({
-                name: 'title',
-              }),
-            },
-            {
-              admin: {
-                description: 'If the user hovers over the language selection, this is shown as a description in the Header',
-              },
-              ...rte1({
-                name: 'description',
-              }),
-            },
-          ],
-          interfaceName: 'InterfaceHeaderLanguageNavigation',
-          label: 'Language Navigation',
-          name: 'languageNavigation',
-        },
-        {
-          fields: [
-            {
               fields: fieldsLinkInternalOrExternal({}),
               maxRows: 3,
               name: 'metaLinks',

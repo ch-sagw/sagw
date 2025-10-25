@@ -36,6 +36,7 @@ export const DownloadsBlock = {
       },
       hasMany: true,
       label: 'Select documents to add',
+      localized: true,
       name: 'downloads',
       relationTo: [
         'documents',

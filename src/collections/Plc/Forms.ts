@@ -2,7 +2,6 @@ import type { CollectionConfig } from 'payload';
 import { versions } from '@/field-templates/versions';
 import { FormBlocks } from '@/blocks/Form/index';
 import { emailBlock } from '@/blocks/Form/Email';
-import { textBlock } from '@/blocks/Form/Text';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { formEnsureUniqueName } from '@/hooks-payload/formEnsureUniqueName';
 import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
@@ -152,11 +151,6 @@ export const Forms: CollectionConfig = {
         {
           fields: emailBlock(true).fields,
           name: 'email',
-          type: 'group',
-        },
-        {
-          fields: textBlock(true).fields,
-          name: 'name',
           type: 'group',
         },
         {

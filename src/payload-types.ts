@@ -564,41 +564,6 @@ export interface Form {
         [k: string]: unknown;
       } | null;
     };
-    name: {
-      label: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
-      placeholder: string;
-      fieldWidth: 'full' | 'half';
-      required?: boolean | null;
-      fieldError?: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
-    };
     /**
      * The action text to show at the bottom of the notification. e.g.: "Send verifiaction E-Mail again."
      */
@@ -4076,21 +4041,6 @@ export interface InterfaceFooterContact {
 export interface InterfaceFooterSocialLinks {
   items?:
     | {
-        externalLinkText: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
         externalLink: string;
         icon: 'linkedIn' | 'instagram' | 'facebook' | 'twitter';
         id?: string | null;
@@ -4106,7 +4056,6 @@ export interface Header {
   tenant?: (string | null) | Tenant;
   adminTitle?: string | null;
   navigation: InterfaceHeaderNavigation;
-  languageNavigation: InterfaceHeaderLanguageNavigation;
   metanavigation?: InterfaceHeaderMetaNavigation;
   updatedAt: string;
   createdAt: string;
@@ -4172,42 +4121,6 @@ export interface InterfaceHeaderNavigation {
       | null;
     id?: string | null;
   }[];
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceHeaderLanguageNavigation".
- */
-export interface InterfaceHeaderLanguageNavigation {
-  title: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5852,15 +5765,6 @@ export interface FormsSelect<T extends boolean = true> {
               required?: T;
               fieldError?: T;
             };
-        name?:
-          | T
-          | {
-              label?: T;
-              placeholder?: T;
-              fieldWidth?: T;
-              required?: T;
-              fieldError?: T;
-            };
         actionText?: T;
         includeLanguageSelection?: T;
       };
@@ -6079,7 +5983,6 @@ export interface InterfaceFooterSocialLinksSelect<T extends boolean = true> {
   items?:
     | T
     | {
-        externalLinkText?: T;
         externalLink?: T;
         icon?: T;
         id?: T;
@@ -6093,7 +5996,6 @@ export interface HeaderSelect<T extends boolean = true> {
   tenant?: T;
   adminTitle?: T;
   navigation?: T | InterfaceHeaderNavigationSelect<T>;
-  languageNavigation?: T | InterfaceHeaderLanguageNavigationSelect<T>;
   metanavigation?: T | InterfaceHeaderMetaNavigationSelect<T>;
   updatedAt?: T;
   createdAt?: T;
@@ -6119,14 +6021,6 @@ export interface InterfaceHeaderNavigationSelect<T extends boolean = true> {
             };
         id?: T;
       };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceHeaderLanguageNavigation_select".
- */
-export interface InterfaceHeaderLanguageNavigationSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -40,6 +40,7 @@ Payload:
 - links block title: render from i18n
 - events time string: render "Uhr" from i18n
 - news/events teasers: make sure "Alle" link is rendered only if configured
+- translate tenantData
 
 Vercel:
 --------
