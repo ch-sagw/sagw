@@ -43,7 +43,7 @@ const overviewBlocks = [
 ] as const;
 
 // Export overview block slugs for filtering
-export const OVERVIEW_BLOCK_TYPES = overviewBlocks.map((block) => block.slug) as readonly string[];
+export const OVERVIEW_BLOCK_TYPES = overviewBlocks.map((block) => block.slug) as string[];
 
 const availableBlocksConst = [
   TextBlock,

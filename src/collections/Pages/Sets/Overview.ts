@@ -8,11 +8,13 @@ import {
 } from '@/field-templates/adminTitle';
 import { hookSeoFallback } from '@/hooks-payload/seoFallback';
 import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superAdminOrTenantAdmin';
-import { blocks } from '@/blocks';
+import {
+  blocks, OVERVIEW_BLOCK_TYPES,
+} from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
-import { createSingleOverviewBlockFilter } from '@/utilities/blockFilters';
+import { excludeBlocksFilterCumulative } from '@/utilities/blockFilters';
 import { allowSingleOverviewBlock } from '@/hooks-payload/allowSingleOverviewBlock';
 
 const contentBlocks = [
@@ -72,7 +74,10 @@ export const OverviewPage: CollectionConfig = {
             // Content Blocks
             {
               blocks: blocks(contentBlocks),
-              filterOptions: createSingleOverviewBlockFilter(contentBlocks),
+              filterOptions: excludeBlocksFilterCumulative({
+                allBlockTypes: contentBlocks,
+                onlyAllowedOnceBlockTypes: OVERVIEW_BLOCK_TYPES,
+              }),
               label: 'Content',
               name: 'content',
               type: 'blocks',

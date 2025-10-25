@@ -16,6 +16,7 @@ import {
 import { SoftHyphenFeature } from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.server';
 import { NonBreakingSpaceFeature } from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpace.server';
 import {
+  Condition,
   FieldHook,
   RichTextField,
 } from 'payload';
@@ -132,20 +133,18 @@ interface InterfaceRteInputType {
   notRequired?: boolean;
   disableLocalization?: boolean;
   adminDescription?: string;
+  adminCondition?: Condition<any, any> | undefined;
 }
 
-interface InterfaceRteInputTypeInternal {
-  name: string;
-  notRequired?: boolean;
+type InterfaceRteInputTypeInternal = {
   editor: LexicalRichTextAdapterProvider;
-  disableLocalization?: boolean;
-  adminDescription?: string;
-}
+} & InterfaceRteInputType;
 
 const rte = ({
-  name, notRequired, editor, disableLocalization, adminDescription,
+  name, notRequired, editor, disableLocalization, adminDescription, adminCondition,
 }: InterfaceRteInputTypeInternal): RichTextField => ({
   admin: {
+    condition: adminCondition,
     description: adminDescription,
   },
   editor,
@@ -163,8 +162,9 @@ const rte = ({
 });
 
 export const rte1 = ({
-  name, notRequired, disableLocalization, adminDescription,
+  name, notRequired, disableLocalization, adminDescription, adminCondition,
 }: InterfaceRteInputType): RichTextField => rte({
+  adminCondition,
   adminDescription,
   disableLocalization,
   editor: rte1Editor,

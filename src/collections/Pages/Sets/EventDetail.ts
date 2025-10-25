@@ -14,16 +14,23 @@ import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
 import { rte1 } from '@/field-templates/rte';
+import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
+
+const contentBlocks = [
+  'textBlock',
+  'ctaLinkBlock',
+  'downloadsBlock',
+  'formBlock',
+  'notificationBlock',
+] as const;
 
 const fieldsForDetailPage: Field[] = [
   {
-    blocks: blocks([
-      'textBlock',
-      'ctaLinkBlock',
-      'downloadsBlock',
-      'formBlock',
-      'notificationBlock',
-    ]),
+    blocks: blocks(contentBlocks),
+    filterOptions: excludeBlocksFilterSingle({
+      allBlockTypes: contentBlocks,
+      onlyAllowedOnceBlockTypes: ['downloadsBlock'],
+    }),
     label: 'Content',
     name: 'content',
     type: 'blocks',
@@ -101,7 +108,7 @@ export const EventDetailPage: CollectionConfig = {
                     },
                   },
                   name: 'time',
-                  required: true,
+                  required: false,
                   type: 'date',
                 },
                 {
@@ -116,7 +123,7 @@ export const EventDetailPage: CollectionConfig = {
                 },
                 {
                   admin: {
-                    condition: (data, siblingData) => siblingData.multipleDays,
+                    condition: (_, siblingData) => siblingData.multipleDays,
                   },
                   name: 'dateEnd',
                   required: true,

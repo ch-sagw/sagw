@@ -114,7 +114,7 @@ export const fieldsLinkInternalOrExternal = (props?: InterfaceLinkProps): Field[
   },
   {
     admin: {
-      condition: (data, siblingData) => siblingData.linkType === 'internal',
+      condition: (_, siblingData) => siblingData.linkType === 'internal',
     },
     fields: fieldsLinkInternal(props),
     name: 'linkInternal',
@@ -122,7 +122,7 @@ export const fieldsLinkInternalOrExternal = (props?: InterfaceLinkProps): Field[
   },
   {
     admin: {
-      condition: (data, siblingData) => siblingData.linkType === 'external',
+      condition: (_, siblingData) => siblingData.linkType === 'external',
     },
     fields: fieldsLinkExternal(props),
     name: 'linkExternal',

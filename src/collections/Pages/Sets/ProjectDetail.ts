@@ -11,6 +11,19 @@ import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superA
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
+import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
+
+const contentBlocks = [
+  'textBlock',
+  'linksBlock',
+  'downloadsBlock',
+  'formBlock',
+  'ctaContactBlock',
+  'notificationBlock',
+  'eventsTeasersBlock',
+  'newsTeasersBlock',
+  'publicationsTeasersBlock',
+] as const;
 
 export const ProjectDetailPage: CollectionConfig = {
   access: {
@@ -63,17 +76,14 @@ export const ProjectDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blocks: blocks([
-                'textBlock',
-                'linksBlock',
-                'downloadsBlock',
-                'formBlock',
-                'ctaContactBlock',
-                'notificationBlock',
-                'eventsTeasersBlock',
-                'newsTeasersBlock',
-                'publicationsTeasersBlock',
-              ]),
+              blocks: blocks(contentBlocks),
+              filterOptions: excludeBlocksFilterSingle({
+                allBlockTypes: contentBlocks,
+                onlyAllowedOnceBlockTypes: [
+                  'downloadsBlock',
+                  'linksBlock',
+                ],
+              }),
               label: 'Content',
               name: 'content',
               type: 'blocks',

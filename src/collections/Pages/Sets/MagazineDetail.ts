@@ -13,6 +13,17 @@ import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
 import { rte1 } from '@/field-templates/rte';
+import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
+
+const contentBlocks = [
+  'textBlock',
+  'footnoteBlock',
+  'linksBlock',
+  'downloadsBlock',
+  'imageBlock',
+  'formBlock',
+  'notificationBlock',
+] as const;
 
 export const MagazineDetailPage: CollectionConfig = {
   access: {
@@ -64,15 +75,14 @@ export const MagazineDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blocks: blocks([
-                'textBlock',
-                'footnoteBlock',
-                'linksBlock',
-                'downloadsBlock',
-                'imageBlock',
-                'formBlock',
-                'notificationBlock',
-              ]),
+              blocks: blocks(contentBlocks),
+              filterOptions: excludeBlocksFilterSingle({
+                allBlockTypes: contentBlocks,
+                onlyAllowedOnceBlockTypes: [
+                  'downloadsBlock',
+                  'linksBlock',
+                ],
+              }),
               label: 'Content',
               name: 'content',
               type: 'blocks',

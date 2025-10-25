@@ -37,6 +37,9 @@ Payload:
 - request bloat internal link chooser: e.g. on header, if you have 7 nav items, the internal link chooser queries 7 times all collections!
 - Check be-tests after review3 adoptions
 - test: plc -> people -> beforeChange hook for full name
+- links block title: render from i18n
+- events time string: render "Uhr" from i18n
+- news/events teasers: make sure "Alle" link is rendered only if configured
 
 Vercel:
 --------

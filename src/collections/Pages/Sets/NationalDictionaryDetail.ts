@@ -11,6 +11,13 @@ import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superA
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
+import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
+
+const contentBlocks = [
+  'textBlock',
+  'linksBlock',
+  'notificationBlock',
+] as const;
 
 export const NationalDictionaryDetailPage: CollectionConfig = {
   access: {
@@ -63,11 +70,14 @@ export const NationalDictionaryDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blocks: blocks([
-                'textBlock',
-                'linksBlock',
-                'notificationBlock',
-              ]),
+              blocks: blocks(contentBlocks),
+              filterOptions: excludeBlocksFilterSingle({
+                allBlockTypes: contentBlocks,
+                onlyAllowedOnceBlockTypes: [
+                  'downloadsBlock',
+                  'linksBlock',
+                ],
+              }),
               label: 'Content',
               name: 'content',
               type: 'blocks',

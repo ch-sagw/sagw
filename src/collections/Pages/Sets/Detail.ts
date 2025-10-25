@@ -12,6 +12,22 @@ import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
+import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
+
+const contentBlocks = [
+  'textBlock',
+  'footnoteBlock',
+  'linksBlock',
+  'downloadsBlock',
+  'imageBlock',
+  'videoBlock',
+  'accordionBlock',
+  'formBlock',
+  'ctaContactBlock',
+  'ctaLinkBlock',
+  'notificationBlock',
+  'genericTeasersBlock',
+] as const;
 
 export const DetailPage: CollectionConfig = {
   access: {
@@ -46,20 +62,14 @@ export const DetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blocks: blocks([
-                'textBlock',
-                'footnoteBlock',
-                'linksBlock',
-                'downloadsBlock',
-                'imageBlock',
-                'videoBlock',
-                'accordionBlock',
-                'formBlock',
-                'ctaContactBlock',
-                'ctaLinkBlock',
-                'notificationBlock',
-                'genericTeasersBlock',
-              ]),
+              blocks: blocks(contentBlocks),
+              filterOptions: excludeBlocksFilterSingle({
+                allBlockTypes: contentBlocks,
+                onlyAllowedOnceBlockTypes: [
+                  'downloadsBlock',
+                  'linksBlock',
+                ],
+              }),
               label: 'Content',
               name: 'content',
               type: 'blocks',

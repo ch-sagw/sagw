@@ -548,7 +548,7 @@ export interface Form {
       placeholder: string;
       fieldWidth: 'full' | 'half';
       required?: boolean | null;
-      fieldError: {
+      fieldError?: {
         root: {
           type: string;
           children: {
@@ -562,7 +562,7 @@ export interface Form {
           version: number;
         };
         [k: string]: unknown;
-      };
+      } | null;
     };
     name: {
       label: {
@@ -583,7 +583,7 @@ export interface Form {
       placeholder: string;
       fieldWidth: 'full' | 'half';
       required?: boolean | null;
-      fieldError: {
+      fieldError?: {
         root: {
           type: string;
           children: {
@@ -597,7 +597,7 @@ export interface Form {
           version: number;
         };
         [k: string]: unknown;
-      };
+      } | null;
     };
     /**
      * The action text to show at the bottom of the notification. e.g.: "Send verifiaction E-Mail again."
@@ -635,7 +635,7 @@ export interface InterfaceCheckboxField {
   };
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
-  fieldError: {
+  fieldError?: {
     root: {
       type: string;
       children: {
@@ -649,7 +649,7 @@ export interface InterfaceCheckboxField {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   defaultChecked?: boolean | null;
   id?: string | null;
   blockName?: string | null;
@@ -678,7 +678,7 @@ export interface InterfaceRadioField {
   };
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
-  fieldError: {
+  fieldError?: {
     root: {
       type: string;
       children: {
@@ -692,7 +692,7 @@ export interface InterfaceRadioField {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   items: {
     label: {
       root: {
@@ -741,7 +741,7 @@ export interface InterfaceEmailField {
   name: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
-  fieldError: {
+  fieldError?: {
     root: {
       type: string;
       children: {
@@ -755,7 +755,7 @@ export interface InterfaceEmailField {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'emailBlock';
@@ -784,7 +784,7 @@ export interface InterfaceTextField {
   name: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
-  fieldError: {
+  fieldError?: {
     root: {
       type: string;
       children: {
@@ -798,7 +798,7 @@ export interface InterfaceTextField {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'textBlockForm';
@@ -827,7 +827,7 @@ export interface InterfaceTextareaField {
   placeholder: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
-  fieldError: {
+  fieldError?: {
     root: {
       type: string;
       children: {
@@ -841,7 +841,7 @@ export interface InterfaceTextareaField {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'textareaBlock';
@@ -934,7 +934,7 @@ export interface InterfaceEventsTeasersBlock {
    * Do you want to add a link to the Events overview page? Note: This link will not be shown on project detail pages.
    */
   link?: ('no' | 'yes') | null;
-  linkText: {
+  linkText?: {
     root: {
       type: string;
       children: {
@@ -948,7 +948,7 @@ export interface InterfaceEventsTeasersBlock {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1038,7 +1038,10 @@ export interface InterfaceNewsTeasersBlock {
    * Do you want to add a link to the News overview page? Note: This link will not be shown on project detail pages.
    */
   link?: ('no' | 'yes') | null;
-  linkText: {
+  /**
+   * foo bar
+   */
+  linkText?: {
     root: {
       type: string;
       children: {
@@ -1052,7 +1055,7 @@ export interface InterfaceNewsTeasersBlock {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1082,7 +1085,7 @@ export interface InterfacePublicationsTeasersBlock {
    * Do you want to add a link to the Publications overview page? Note: This link will not be shown on project detail pages.
    */
   link?: ('no' | 'yes') | null;
-  linkText: {
+  linkText?: {
     root: {
       type: string;
       children: {
@@ -1096,7 +1099,7 @@ export interface InterfacePublicationsTeasersBlock {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1967,7 +1970,7 @@ export interface EventDetailPage {
     } | null;
     category?: (string | null) | EventCategory;
     project?: (string | null) | Project;
-    time: string;
+    time?: string | null;
     date: string;
     multipleDays?: boolean | null;
     dateEnd?: string | null;

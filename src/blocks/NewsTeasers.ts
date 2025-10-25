@@ -30,10 +30,9 @@ export const NewsTeasersBlock = {
       type: 'radio',
     },
     {
-      admin: {
-        condition: (_, siblingData): boolean => siblingData.link === 'yes',
-      },
       ...rte1({
+        adminCondition: (_, siblingData): boolean => siblingData.link === 'yes',
+        adminDescription: 'foo bar',
         name: 'linkText',
       }),
     },
