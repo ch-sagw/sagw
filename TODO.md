@@ -35,7 +35,6 @@ Payload:
 - internal link chooser in overlay (rte) also shows draft documents!
 - whenever we import configPromise (payload.config.ts), then the init method seems to run!! (this is where we seed data). This might have severe performance implications. find workaround!
 - request bloat internal link chooser: e.g. on header, if you have 7 nav items, the internal link chooser queries 7 times all collections!
-- Check be-tests after review3 adoptions
 - test: plc -> people -> beforeChange hook for full name
 - write convenience method to get global data from payload
 - implement generic gate: e.g. event overview / event teasers: if no items, don't render component.
@@ -47,7 +46,6 @@ Vercel:
 
 Payload Config:
 --------
-- implement hidden texts global config (for a11y)
 - in general, grant api read access to collections only if collection is published
 - set access control on all blocks/collections
 - layout fields in rows where appropriate. e.g. with link internal: the 3 fields can be in 1 row
@@ -64,13 +62,6 @@ Misc:
 
 Testing:
 -------
-
-
-Backup Migration:
--------
-- remove cron from vercel.json and from next-js route
-- remove env vars in local env files, on github and vercel
-- remove env vars from docs
 
 QUESTIONS:
 -------
