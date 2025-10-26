@@ -13,8 +13,9 @@ import {
 import {
   Footer, InterfaceFooterPropTypes,
 } from '@/components/global/Footer/Footer';
+import { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   description: 'A blank template using Payload in a Next.js app.',
   title: 'Payload Blank Template',
 };

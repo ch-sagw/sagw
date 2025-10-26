@@ -7,9 +7,11 @@ import {
   Config, InterfaceLinksBlock,
 } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
+import { InterfaceRte } from '@/components/base/types/rte';
 
 export type InterfaceLinksPropTypes = {
   pageLanguage: Config['locale'];
+  title: InterfaceRte;
 } & InterfaceLinksBlock;
 
 export const Links = (props: InterfaceLinksPropTypes): React.JSX.Element => {

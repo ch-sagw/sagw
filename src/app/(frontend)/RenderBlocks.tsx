@@ -3,6 +3,8 @@ import React, { Fragment } from 'react';
 
 // payload types
 import {
+  Config,
+  I18NGlobal,
   InterfaceAccordionBlock,
   InterfaceBibliographicReferenceBlock,
   InterfaceCtaContactBlock,
@@ -32,9 +34,6 @@ import {
   InterfaceTextBlock,
   InterfaceVideoBlock,
 } from '@/payload-types';
-
-// helpers
-import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 // components
 import { Notification } from '@/components/blocks/Notification/Notification';
@@ -82,11 +81,15 @@ interface InterfaceRenderBlocksProps {
     InterfaceTextBlock |
     InterfaceVideoBlock
   )[] | null | undefined;
+  i18n: I18NGlobal;
+  pageLanguage: Config['locale'];
 }
 
 export const RenderBlocks = ({
   blocks,
   tenantId,
+  i18n,
+  pageLanguage,
 }: InterfaceRenderBlocksProps): React.JSX.Element | null => {
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0;
 
@@ -123,7 +126,7 @@ export const RenderBlocks = ({
               return (
                 <div key={block.id || index}>
                   <FormServer
-                    tenantId={tenantId}
+                    globalI18n={i18n}
                     {...block}
                   />
                 </div>
@@ -143,9 +146,8 @@ export const RenderBlocks = ({
                 <div key={block.id || index}>
                   <Links
                     {...block}
-
-                    // TODO: get from parent
-                    pageLanguage='de'
+                    title={i18n.generic.linksTitle}
+                    pageLanguage={pageLanguage}
                   />
                 </div>
               );
@@ -156,12 +158,8 @@ export const RenderBlocks = ({
                 <div key={block.id || index}>
                   <Downloads
                     {...block}
-
-                    // TODO: get from global
-                    title={simpleRteConfig('Downloads')}
-
-                    // TODO: get from parent
-                    language='de'
+                    title={i18n.generic.downloadTitle}
+                    language={pageLanguage}
                   />
                 </div>
               );
@@ -173,9 +171,7 @@ export const RenderBlocks = ({
                   <NewsOverview
                     {...block}
                     tenant={tenantId}
-
-                    // TODO: get from parent
-                    language='de'
+                    language={pageLanguage}
                   />
                 </div>
               );
@@ -186,10 +182,9 @@ export const RenderBlocks = ({
                 <div key={block.id || index}>
                   <EventsOverview
                     {...block}
+                    globalI18n={i18n}
                     tenant={tenantId}
-
-                    // TODO: get from parent
-                    language='de'
+                    language={pageLanguage}
                   />
                 </div>
               );
@@ -201,9 +196,7 @@ export const RenderBlocks = ({
                   <NewsTeaser
                     {...block}
                     tenant={tenantId}
-
-                    // TODO: get from parent
-                    language='de'
+                    language={pageLanguage}
                   />
                 </div>
               );
@@ -214,10 +207,9 @@ export const RenderBlocks = ({
                 <div key={block.id || index}>
                   <EventsTeaser
                     {...block}
+                    globalI18n={i18n}
                     tenant={tenantId}
-
-                    // TODO: get from parent
-                    language='de'
+                    language={pageLanguage}
                   />
                 </div>
               );
@@ -228,9 +220,7 @@ export const RenderBlocks = ({
                 <div key={block.id || index}>
                   <CtaLink
                     {...block}
-
-                    // TODO: get from parent
-                    language='de'
+                    language={pageLanguage}
                   />
                 </div>
               );

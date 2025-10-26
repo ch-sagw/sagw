@@ -1,7 +1,6 @@
 import 'server-only';
-import { getPayload } from 'payload';
-import configPromise from '@/payload.config';
 import {
+  I18NGlobal,
   InterfaceEmailField, Form as InterfaceForm, InterfaceFormBlock, InterfaceRadioField,
 } from '@/payload-types';
 import { FormClient } from '@/components/blocks/Form/Form.client';
@@ -10,35 +9,15 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { i18nForm as internalI18nForm } from '@/i18n/content';
 
 type InterfaceFormServerPropTypes = {
-  tenantId: string;
+  globalI18n: I18NGlobal;
 } & InterfaceFormBlock;
 
-export const FormServer = async ({
-  tenantId,
+export const FormServer = ({
   form,
-}: InterfaceFormServerPropTypes): Promise<React.JSX.Element> => {
+  globalI18n,
+}: InterfaceFormServerPropTypes): React.JSX.Element => {
 
-  // --- get i18n global form data
-
-  const payload = await getPayload({
-    config: configPromise,
-  });
-
-  const i18nData = await payload.find({
-    collection: 'i18nGlobals',
-    depth: 1,
-    where: {
-      tenant: {
-        equals: tenantId,
-      },
-    },
-  });
-
-  if (!i18nData.docs || i18nData.docs.length < 1) {
-    return <p>No i18n data</p>;
-  }
-
-  const i18nForm = i18nData.docs[0].forms;
+  const i18nForm = globalI18n.forms;
 
   // --- Make sure form exists
 

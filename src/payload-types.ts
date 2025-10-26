@@ -3338,170 +3338,185 @@ export interface User {
 export interface I18NGlobal {
   id: string;
   tenant?: (string | null) | Tenant;
-  generic: {
-    /**
-     * If you add a Download-Block, this will be used as a title
-     */
-    downloadTitle: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    /**
-     * If you add a Link-Block, this will be used as a title
-     */
-    linksTitle: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    /**
-     * If you add a CTA-Contact-Block, this will be used as the button text
-     */
-    writeEmailButtonText: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    /**
-     * On magazine detail pages, we use this to show the "Copy Text" button
-     */
-    exportArticleButtonText: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    /**
-     * On events, we use this to display the time. If you provide the value "Uhr", we display: "09:00 Uhr"
-     */
-    time: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-  };
-  bibliographicReference: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    copyButtonText: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-  };
-  forms: {
-    /**
-     * You may show this text in a checkbox on forms.
-     */
-    dataPrivacyCheckbox: {
-      dataPrivacyCheckboxText: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
-      errorMessage: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
-    };
-  };
+  generic: InterfaceI18NGeneric;
+  bibliographicReference: InterfaceI18NBibliographicReference;
+  forms: InterfaceI18NForms;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nGeneric".
+ */
+export interface InterfaceI18NGeneric {
+  /**
+   * If you add a Download-Block, this will be used as a title
+   */
+  downloadTitle: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * If you add a Link-Block, this will be used as a title
+   */
+  linksTitle: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * If you add a CTA-Contact-Block, this will be used as the button text
+   */
+  writeEmailButtonText: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * On magazine detail pages, we use this to show the "Copy Text" button
+   */
+  exportArticleButtonText: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * On events, we use this to display the time. If you provide the value "Uhr", we display: "09:00 Uhr"
+   */
+  time: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nBibliographicReference".
+ */
+export interface InterfaceI18NBibliographicReference {
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  copyButtonText: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nForms".
+ */
+export interface InterfaceI18NForms {
+  /**
+   * You may show this text in a checkbox on forms.
+   */
+  dataPrivacyCheckbox: {
+    dataPrivacyCheckboxText: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    errorMessage: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5855,34 +5870,43 @@ export interface InterfaceTextareaFieldSelect<T extends boolean = true> {
  */
 export interface I18NGlobalsSelect<T extends boolean = true> {
   tenant?: T;
-  generic?:
-    | T
-    | {
-        downloadTitle?: T;
-        linksTitle?: T;
-        writeEmailButtonText?: T;
-        exportArticleButtonText?: T;
-        time?: T;
-      };
-  bibliographicReference?:
-    | T
-    | {
-        title?: T;
-        copyButtonText?: T;
-      };
-  forms?:
-    | T
-    | {
-        dataPrivacyCheckbox?:
-          | T
-          | {
-              dataPrivacyCheckboxText?: T;
-              errorMessage?: T;
-            };
-      };
+  generic?: T | InterfaceI18NGenericSelect<T>;
+  bibliographicReference?: T | InterfaceI18NBibliographicReferenceSelect<T>;
+  forms?: T | InterfaceI18NFormsSelect<T>;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nGeneric_select".
+ */
+export interface InterfaceI18NGenericSelect<T extends boolean = true> {
+  downloadTitle?: T;
+  linksTitle?: T;
+  writeEmailButtonText?: T;
+  exportArticleButtonText?: T;
+  time?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nBibliographicReference_select".
+ */
+export interface InterfaceI18NBibliographicReferenceSelect<T extends boolean = true> {
+  title?: T;
+  copyButtonText?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nForms_select".
+ */
+export interface InterfaceI18NFormsSelect<T extends boolean = true> {
+  dataPrivacyCheckbox?:
+    | T
+    | {
+        dataPrivacyCheckboxText?: T;
+        errorMessage?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

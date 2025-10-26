@@ -47,6 +47,7 @@ export const I18nGlobals: CollectionConfig = {
               }),
             },
           ],
+          interfaceName: 'InterfaceI18nGeneric',
           name: 'generic',
         },
         {
@@ -58,6 +59,7 @@ export const I18nGlobals: CollectionConfig = {
               name: 'copyButtonText',
             }),
           ],
+          interfaceName: 'InterfaceI18nBibliographicReference',
           name: 'bibliographicReference',
         },
         {
@@ -79,6 +81,7 @@ export const I18nGlobals: CollectionConfig = {
               type: 'group',
             },
           ],
+          interfaceName: 'InterfaceI18nForms',
           name: 'forms',
         },
       ],

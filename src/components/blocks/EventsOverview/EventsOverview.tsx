@@ -4,7 +4,7 @@ import configPromise from '@/payload.config';
 
 import { EventsOverviewComponent } from '@/components/blocks/EventsOverview/EventsOverview.component';
 import {
-  Config, InterfaceEventsOverviewBlock,
+  Config, I18NGlobal, InterfaceEventsOverviewBlock,
 } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { convertPayloadEventPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
@@ -12,6 +12,7 @@ import { convertPayloadEventPagesToFeItems } from '@/components/blocks/helpers/d
 export type InterfaceEventsOverviewPropTypes = {
   language: Config['locale'];
   tenant: string;
+  globalI18n: I18NGlobal;
 } & InterfaceEventsOverviewBlock;
 
 export const EventsOverview = async (props: InterfaceEventsOverviewPropTypes): Promise<React.JSX.Element> => {
@@ -39,7 +40,11 @@ export const EventsOverview = async (props: InterfaceEventsOverviewPropTypes): P
 
   const title = rteToHtml(props.title);
 
-  const items = convertPayloadEventPagesToFeItems(eventPages, props.language);
+  const items = convertPayloadEventPagesToFeItems({
+    globalI18n: props.globalI18n,
+    lang: props.language,
+    payloadPages: eventPages,
+  });
 
   return (
     <EventsOverviewComponent

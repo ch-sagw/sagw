@@ -5,6 +5,7 @@ import configPromise from '@/payload.config';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import {
   Config,
+  I18NGlobal,
   InterfaceEventsTeasersBlock,
 } from '@/payload-types';
 import { EventsTeaserComponent } from '@/components/blocks/EventsTeaser/EventsTeaser.component';
@@ -13,6 +14,7 @@ import { convertPayloadEventPagesToFeItems } from '@/components/blocks/helpers/d
 type InterfaceEventsTeaserPropTypes = {
   language: Config['locale'];
   tenant: string;
+  globalI18n: I18NGlobal;
 } & InterfaceEventsTeasersBlock;
 
 export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promise<React.JSX.Element> => {
@@ -26,7 +28,6 @@ export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promi
     depth: 1,
     limit: 3,
     locale: props.language,
-    overrideAccess: false,
     pagination: false,
     sort: '-eventDetails.date',
     where: {
@@ -49,7 +50,11 @@ export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promi
     };
   }
 
-  const items = convertPayloadEventPagesToFeItems(eventsPages, props.language);
+  const items = convertPayloadEventPagesToFeItems({
+    globalI18n: props.globalI18n,
+    lang: props.language,
+    payloadPages: eventsPages,
+  });
 
   return (
 
