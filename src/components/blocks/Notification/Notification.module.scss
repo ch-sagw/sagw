@@ -39,7 +39,10 @@
 
   a {
     @include link-text-underline;
+    @include inline-svg;
 
+    display: inline-flex;
+    align-items: center;
     color: var(--notification-link-color);
 
     &:focus,

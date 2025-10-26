@@ -121,6 +121,7 @@
   // --------
   a {
     @include link-text-underline;
+    @include inline-svg;
 
     display: inline-flex;
     align-items: center;
@@ -129,14 +130,6 @@
     &:focus,
     &:hover {
       color: var(--link-color-focus-hover, --interaction-primary-hover);
-    }
-
-    svg {
-      display: inline-block;
-      width: px-to-rem(var(--spacing-l));
-      height: 100%;
-      stroke: var(--interaction-secondary);
-      margin-inline-start: px-to-rem(var(--spacing-2xs));
     }
   }
 

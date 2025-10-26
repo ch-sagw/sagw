@@ -114,3 +114,16 @@
 @mixin font-smoothing-reset {
   -webkit-font-smoothing: subpixel-antialiased;
 }
+
+// ##############################
+// RTE
+// ##############################
+@mixin inline-svg {
+  svg {
+    display: inline-block;
+    width: px-to-rem(var(--spacing-l));
+    height: 100%;
+    stroke: var(--interaction-secondary);
+    margin-inline-start: px-to-rem(var(--spacing-2xs));
+  }
+}
