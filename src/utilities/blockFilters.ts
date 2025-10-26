@@ -1,8 +1,8 @@
 /*
 
 ------------------------------------------------------------------------------
-presence of 1 block of onlyAllowedOnceBlockTypes
-removes all onlyAllowedOnceBlockTypes
+presence of 1 block of onlyAllowedOnceBlockTypes removes all
+blocks of onlyAllowedOnceBlockTypes from return value.
 ------------------------------------------------------------------------------
 
 allBlockTypes: A, B, C, D, E, F
@@ -50,8 +50,8 @@ export const excludeBlocksFilterCumulative = <T extends string>(
 
 /*
 ------------------------------------------------------------------------------
-presence of 1 block of onlyAllowedOnceBlockTypes
-only removes that block from onlyAllowedOnceBlockTypes
+presence of 1 block of onlyAllowedOnceBlockTypes only removes that block from
+return value.
 ------------------------------------------------------------------------------
 
 allBlockTypes: A, B, C, D, E, F
