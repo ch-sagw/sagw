@@ -138,7 +138,7 @@ test('Correctly hides info text for navItem', async ({
 
     await expect(infoText)
       .toBeVisible();
-    await page.mouse.move(1050, 150);
+    await page.mouse.move(1150, 150);
     await expect(infoText)
       .not.toBeVisible();
   }
