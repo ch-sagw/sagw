@@ -192,7 +192,7 @@ test.describe('Tenants only show content from users tenant', () => {
     });
 
     const save = await page.getByRole('button', {
-      name: 'Speichern',
+      name: 'Save',
     });
 
     await save.click();
@@ -208,7 +208,7 @@ test.describe('Tenants only show content from users tenant', () => {
 
     // save
     const saveButton = await page.getByRole('button', {
-      name: 'Änderungen veröffentlichen',
+      name: 'Publish changes',
     });
 
     await saveButton.click();
@@ -218,7 +218,7 @@ test.describe('Tenants only show content from users tenant', () => {
 
     await closeToast.click();
 
-    const langSwitch = await page.getByLabel('Sprache');
+    const langSwitch = await page.getByLabel('Locale');
 
     await langSwitch.click({
       force: true,

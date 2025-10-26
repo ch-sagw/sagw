@@ -21,7 +21,7 @@ test.describe('Add Zenodo document', () => {
     zenodoInput = page.getByTestId('zenodo-input');
     zenodoButton = page.getByTestId('zenodo-button');
     saveButton = page.getByRole('button', {
-      name: 'Änderungen veröffentlichen',
+      name: 'Publish changes',
     });
     zenodoList = page.getByTestId('zenodo-list');
   });
@@ -59,7 +59,7 @@ test.describe('Add Zenodo document', () => {
   }) => {
     await saveButton.click();
 
-    const errorToast = await page.getByText('Die folgenden Felder sind nicht korrekt (4):');
+    const errorToast = await page.getByText('The following fields are invalid (4):');
 
     await expect(errorToast)
       .toBeVisible();
@@ -86,7 +86,7 @@ test.describe('Add Zenodo document', () => {
       .toBeVisible();
     await saveButton.click();
 
-    const successToast = await page.getByText('Erfolgreich aktualisiert.');
+    const successToast = await page.getByText('Updated successfully.');
 
     await expect(successToast)
       .toBeVisible();
@@ -103,7 +103,7 @@ test.describe('Add Zenodo document', () => {
       .toBeVisible();
     await saveButton.click();
 
-    const successToast = await page.getByText('Erfolgreich aktualisiert.');
+    const successToast = await page.getByText('Updated successfully.');
 
     await expect(successToast)
       .toBeVisible();

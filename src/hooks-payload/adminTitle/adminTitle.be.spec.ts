@@ -26,7 +26,7 @@ test.describe('adminTitle', () => {
 
     // save
     const saveButton = await page.getByRole('button', {
-      name: 'Änderungen veröffentlichen',
+      name: 'Publish changes',
     });
 
     await saveButton.click();
@@ -64,19 +64,15 @@ test.describe('adminTitle', () => {
       .first()
       .locator('.ContentEditable__root');
     const dateField = await page.locator('#field-eventDetails__date input');
-    const externalLinkText = await page.locator('#field-link .render-fields .rich-text-lexical')
-      .nth(1)
-      .locator('.ContentEditable__root');
     const externalLink = await page.locator('#field-link__externalLink');
 
     await eventTitle.fill('foo bar$ baz');
     await dateField.fill('2025-08-31');
-    await externalLinkText.fill('some event');
     await externalLink.fill('https://www.foo.bar');
 
     // save
     const saveButton = await page.getByRole('button', {
-      name: 'Änderungen veröffentlichen',
+      name: 'Publish changes',
     });
 
     await saveButton.click();
@@ -133,7 +129,7 @@ test.describe('adminTitle', () => {
 
     // save
     const saveButton = await page.getByRole('button', {
-      name: 'Änderungen veröffentlichen',
+      name: 'Publish changes',
     });
 
     await saveButton.click();
