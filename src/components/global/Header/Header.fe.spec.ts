@@ -140,6 +140,6 @@ test('Correctly hides info text for navItem', async ({
       .toBeVisible();
     await page.mouse.move(1050, 150);
     await expect(infoText)
-      .not.toBeInViewport();
+      .not.toBeVisible();
   }
 });
