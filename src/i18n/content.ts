@@ -56,10 +56,10 @@ export const i18nA11y = {
       it: 'Seguici su Instagram',
     },
     linkedIn: {
-      de: 'Folgen Sie uns auf linkedInt',
-      en: 'Follow us on linkedInt',
-      fr: 'Suivez-nous sur linkedInt',
-      it: 'Seguici su linkedInt',
+      de: 'Folgen Sie uns auf linkedIn',
+      en: 'Follow us on linkedIn',
+      fr: 'Suivez-nous sur linkedIn',
+      it: 'Seguici su linkedIn',
     },
     twitter: {
       de: 'Folgen Sie uns auf Twitter',
