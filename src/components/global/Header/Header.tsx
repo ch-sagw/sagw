@@ -330,55 +330,45 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   // --- Callbacks
 
   const handleHoveredItem = (item: InterfaceHoveredItemCallbackType): void => {
-
     const [selectedItem] = Object.keys(item);
 
     if (item[selectedItem]) {
       setIsHovering(true);
       setHoveredSection('mainNav');
-
       const {
         navItems,
       } = props.navigation;
 
-      const handleLeavingNav = (): void => {
-        // Clear content immediately when leaving a navigation item
-        setInfoBlockContent(undefined);
-
-        // Only collapse if we're not in mainNav section
-        // (to prevent flickering when moving between items)
-        if (hoveredSection !== 'mainNav') {
-          setIsHovering(false);
-          setHoveredSection(null);
-        }
-
-        // on keyboard navigation, hide the menu
-        if (isKeyboard && isHovering && hoveredSection === 'mainNav') {
-          setIsHovering(false);
-        }
-      };
-
       const selectedSections = navItems.filter((section) => section.id === selectedItem);
 
-      if (selectedSections.length < 1) {
-        handleLeavingNav();
-      }
+      if (selectedSections.length > 0) {
+        const [selectedSection] = selectedSections;
+        const {
+          subNavItems,
+        } = selectedSection;
 
-      const [selectedSection] = selectedSections;
-
-      if (selectedSection.subNavItems) {
-        if (selectedSection.subNavItems.length > 0) {
+        if (subNavItems && subNavItems.length > 0) {
           setInfoBlockContent({
             text: rteToHtml(selectedSections[0].description),
             title: rteToHtml(selectedSections[0].navItemText),
           });
-
-          return;
         }
       }
+    } else {
+      // Clear content immediately when leaving a navigation item
+      setInfoBlockContent(undefined);
 
-      handleLeavingNav();
+      // Only collapse if we're not in mainNav section
+      // (to prevent flickering when moving between items)
+      if (hoveredSection !== 'mainNav') {
+        setIsHovering(false);
+        setHoveredSection(null);
+      }
 
+      // on keyboard navigation, hide the menu
+      if (isKeyboard && isHovering && hoveredSection === 'mainNav') {
+        setIsHovering(false);
+      }
     }
   };
 

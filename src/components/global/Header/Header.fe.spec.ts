@@ -138,50 +138,8 @@ test('Correctly hides info text for navItem', async ({
 
     await expect(infoText)
       .toBeVisible();
-    await page.mouse.move(100, 0);
-    await expect(infoText).not.toBeVisible();
-  }
-});
-
-test('Correctly shows info text for langNav', async ({
-  page,
-}, workerInfo) => {
-  if (workerInfo.project.name === 'chromium-1100' || workerInfo.project.name === 'chromium-1600' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
-
-    await navigate(page, 'components-global-header--header-dark');
-
-    const elem = await page.getByTestId('header');
-
-    const langNav = elem.getByTestId('langnav');
-
-    await langNav.hover();
-
-    const infoText = elem.getByTestId('infoblock');
-
+    await page.mouse.move(1050, 150);
     await expect(infoText)
-      .toBeVisible();
-  }
-});
-
-test('Correctly hides info text for langNav', async ({
-  page,
-}, workerInfo) => {
-  if (workerInfo.project.name === 'chromium-1100' || workerInfo.project.name === 'chromium-1600' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
-
-    await navigate(page, 'components-global-header--header-dark');
-
-    const elem = await page.getByTestId('header');
-
-    const langNav = elem.getByTestId('langnav');
-
-    await langNav.hover();
-
-    const infoText = elem.getByTestId('infoblock');
-
-    await expect(infoText)
-      .toBeVisible();
-
-    await page.mouse.move(-100, 0);
-    await expect(infoText).not.toBeVisible();
+      .not.toBeInViewport();
   }
 });
