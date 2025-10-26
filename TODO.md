@@ -38,6 +38,7 @@ Payload:
 - test: plc -> people -> beforeChange hook for full name
 - write convenience method to get global data from payload
 - implement generic gate: e.g. event overview / event teasers: if no items, don't render component.
+- write test for external link icon in rte
 
 Vercel:
 --------

@@ -9,6 +9,7 @@ import {
   DefaultNodeTypes, SerializedLinkNode,
 } from '@payloadcms/richtext-lexical';
 import { SerializedParagraphNode } from '@payloadcms/richtext-lexical/lexical';
+import { externalLink } from '@/icons/ui/external-link';
 
 const internalDocToHref = ({
   linkNode,
@@ -73,6 +74,27 @@ const createHtmlConverters = ({
   return baseConverters;
 };
 
+// Add icons to existing links based on their target attribute
+const addIconsToLinks = (html: string): string => {
+  const linkRegex = /<a\s+(?<capGroup2>[^>]*?)>(?<capGroup1>.*?)<\/a>/giu;
+
+  return html.replace(linkRegex, (match, attributes, linkText) => {
+    // Extract target attribute
+    const targetMatch = attributes.match(/target\s*=\s*["'](?<capGroup1>[^"']*)["']/iu);
+    const target = targetMatch
+      ? targetMatch[1]
+      : '_self';
+
+    let iconContent = '';
+
+    if (target === '_blank') {
+      iconContent = externalLink;
+    }
+
+    return `<a ${attributes}>${linkText}${iconContent}</a>`;
+  });
+};
+
 interface InterfaceRteToHtmlProps {
   content: InterfaceRte | undefined | null;
   wrap?: boolean;
@@ -106,7 +128,9 @@ const rteToHtmlBase = ({
     disableContainer: true,
   });
 
-  return transformedData;
+  const dataWithLinks = addIconsToLinks(transformedData);
+
+  return dataWithLinks;
 };
 
 /*
