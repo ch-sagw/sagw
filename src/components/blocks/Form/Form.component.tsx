@@ -126,7 +126,10 @@ export const FormComponent = ({
             noValidate
           >
             <input type='hidden' name={hiddenFormDefinitionFieldName} value={JSON.stringify(form)} />
-            <input type='hidden' name={hiddenPageUrl} value={pathname.toString()} />
+            <input type='hidden' name={hiddenPageUrl} value={pathname
+              ? pathname.toString()
+              : ''
+            } />
 
             {form.fields?.map((field, i) => {
               if (field.blockType === 'textBlockForm' || field.blockType === 'emailBlock' || field.blockType === 'textareaBlock') {
