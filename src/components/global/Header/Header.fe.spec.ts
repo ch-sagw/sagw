@@ -29,7 +29,7 @@ test('hides metanav on scroll', async ({
 
   const elem = await page.getByTestId('header');
 
-  if (workerInfo.project.name === 'chromium-1280' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
+  if (workerInfo.project.name === 'chromium-1100' || workerInfo.project.name === 'chromium-1600' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
     const metanavElem = await elem.getByText('mySAGW');
 
     await (await elem.elementHandle())?.waitForElementState('stable');
@@ -45,7 +45,7 @@ test('opens menu', async ({
 
   const elem = await page.getByTestId('header');
 
-  if (workerInfo.project.name === 'chromium-400' || workerInfo.project.name === 'chromium-700' || workerInfo.project.name === 'chromium-800') {
+  if (workerInfo.project.name === 'chromium-400' || workerInfo.project.name === 'chromium-700') {
     const menuButton = elem.getByTestId('menuButton');
 
     await menuButton.click();
@@ -72,7 +72,7 @@ test('hides menu', async ({
 
   const elem = await page.getByTestId('header');
 
-  if (workerInfo.project.name === 'chromium-400' || workerInfo.project.name === 'chromium-700' || workerInfo.project.name === 'chromium-800') {
+  if (workerInfo.project.name === 'chromium-400' || workerInfo.project.name === 'chromium-700') {
     const menuButton = elem.getByTestId('menuButton');
 
     await menuButton.click();
@@ -102,7 +102,7 @@ test('Correctly shows info text for navItem', async ({
   page,
 }, workerInfo) => {
 
-  if (workerInfo.project.name === 'chromium-1280' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
+  if (workerInfo.project.name === 'chromium-1100' || workerInfo.project.name === 'chromium-1600' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
     await navigate(page, 'components-global-header--header-dark');
 
     const elem = await page.getByTestId('header');
@@ -123,7 +123,7 @@ test('Correctly shows info text for navItem', async ({
 test('Correctly hides info text for navItem', async ({
   page,
 }, workerInfo) => {
-  if (workerInfo.project.name === 'chromium-1280' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
+  if (workerInfo.project.name === 'chromium-1100' || workerInfo.project.name === 'chromium-1600' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
 
     await navigate(page, 'components-global-header--header-dark');
 
@@ -146,7 +146,7 @@ test('Correctly hides info text for navItem', async ({
 test('Correctly shows info text for langNav', async ({
   page,
 }, workerInfo) => {
-  if (workerInfo.project.name === 'chromium-1280' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
+  if (workerInfo.project.name === 'chromium-1100' || workerInfo.project.name === 'chromium-1600' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
 
     await navigate(page, 'components-global-header--header-dark');
 
@@ -166,7 +166,7 @@ test('Correctly shows info text for langNav', async ({
 test('Correctly hides info text for langNav', async ({
   page,
 }, workerInfo) => {
-  if (workerInfo.project.name === 'chromium-1280' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
+  if (workerInfo.project.name === 'chromium-1100' || workerInfo.project.name === 'chromium-1600' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
 
     await navigate(page, 'components-global-header--header-dark');
 
