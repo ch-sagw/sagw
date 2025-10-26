@@ -654,7 +654,7 @@ export const rte3AccordionContent: InterfaceRte = {
             format: 0,
             mode: 'normal',
             style: '',
-            text: 'wurden die Dampfschiffe zum Schauplatz von ausgeprägten Hierarchien zwischen den Passagieren aus den Metropolen und den «Boys» aus Übersee. Das kollektive Porträt, das aus dem preisgekrönten Artikel hervorgeht, stellt das stereotype Bild des verweiblichten und unterwürfigen Arbeiters in Frage. Soubrier zeigt, wie durch die Anstellung sowohl Widerstand als auch Mobilität der «Boys» ermöglicht wurden. Die Bemühungen der Reederei, Einwegreisen zwischen Kolonien und Metropolen sowie Desertion, Schmuggel oder die gewerkschaftliche Organisation zu unterbinden, blieben erfolglos. ',
+            text: 'wurden die Dampfschiffe zum Schauplatz von ausgeprägten Hierarchien zwischen den Passagieren aus den Metropolen und den "Boys" aus Übersee. Das kollektive Porträt, das aus dem preisgekrönten Artikel hervorgeht, stellt das stereotype Bild des verweiblichten und unterwürfigen Arbeiters in Frage. Soubrier zeigt, wie durch die Anstellung sowohl Widerstand als auch Mobilität der "Boys" ermöglicht wurden. Die Bemühungen der Reederei, Einwegreisen zwischen Kolonien und Metropolen sowie Desertion, Schmuggel oder die gewerkschaftliche Organisation zu unterbinden, blieben erfolglos. ',
             type: 'text',
             version: 1,
           },

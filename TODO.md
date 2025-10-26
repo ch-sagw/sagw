@@ -39,6 +39,7 @@ Payload:
 - write convenience method to get global data from payload
 - implement generic gate: e.g. event overview / event teasers: if no items, don't render component.
 - write test for external link icon in rte
+- write test for guillemets in rte
 
 Vercel:
 --------

@@ -95,6 +95,23 @@ const addIconsToLinks = (html: string): string => {
   });
 };
 
+// Convert quotes to guillemets
+const convertQuotesToGuillemets = (html: string): string => {
+  // Split HTML into tags and text content
+  const parts = html.split(/(?<capt1><[^>]*>)/u);
+
+  return parts.map((part) => {
+    // Only process text content (not HTML tags)
+    if (part.startsWith('<') && part.endsWith('>')) {
+      return part;
+    }
+
+    // Transform "text" to «text»
+    return part.replace(/"(?<capt1>[^"]+)"/gu, '«$1»');
+  })
+    .join('');
+};
+
 interface InterfaceRteToHtmlProps {
   content: InterfaceRte | undefined | null;
   wrap?: boolean;
@@ -129,8 +146,9 @@ const rteToHtmlBase = ({
   });
 
   const dataWithLinks = addIconsToLinks(transformedData);
+  const dataWithGuillemets = convertQuotesToGuillemets(dataWithLinks);
 
-  return dataWithLinks;
+  return dataWithGuillemets;
 };
 
 /*
