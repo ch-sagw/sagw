@@ -947,7 +947,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         ],
         eventDetails: {
           category: eventCategory.id,
-          date: `2025-08-${index < 10
+          date: `2030-08-${index < 10
             ? `0${index}`
             : index}T12:00:00.000Z`,
           dateEnd: `2026-01-${index < 10
@@ -977,7 +977,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         _status: 'published',
         eventDetails: {
           category: eventCategory.id,
-          date: `2025-08-${index < 10
+          date: `2030-08-${index < 10
             ? `0${index}`
             : index}T12:00:00.000Z`,
           project: project.id,

@@ -32,7 +32,7 @@ export const convertPayloadNewsPagesToFeItems = (payloadPages: PaginatedDocs<New
 };
 
 interface InterfaceConvertPayloadEventPagesProps {
-  payloadPages: PaginatedDocs<EventDetailPage>;
+  payloadPages: EventDetailPage[];
   lang: Config['locale'];
   globalI18n: I18NGlobal;
 }
@@ -40,7 +40,8 @@ interface InterfaceConvertPayloadEventPagesProps {
 export const convertPayloadEventPagesToFeItems = ({
   payloadPages, lang, globalI18n,
 }: InterfaceConvertPayloadEventPagesProps): InterfaceEventsListItemPropTypes[] => {
-  const items = payloadPages.docs.map((eventPage) => {
+
+  const items = payloadPages.map((eventPage) => {
     let category;
 
     if (eventPage.eventDetails.category) {

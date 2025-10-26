@@ -1,7 +1,4 @@
 import React from 'react';
-import { getPayload } from 'payload';
-import configPromise from '@/payload.config';
-
 import { rteToHtml } from '@/utilities/rteToHtml';
 import {
   Config,
@@ -10,6 +7,7 @@ import {
 } from '@/payload-types';
 import { EventsTeaserComponent } from '@/components/blocks/EventsTeaser/EventsTeaser.component';
 import { convertPayloadEventPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
+import { fetchEventDetailPages } from '@/data/fetch';
 
 type InterfaceEventsTeaserPropTypes = {
   language: Config['locale'];
@@ -18,23 +16,10 @@ type InterfaceEventsTeaserPropTypes = {
 } & InterfaceEventsTeasersBlock;
 
 export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promise<React.JSX.Element> => {
-  const payload = await getPayload({
-    config: configPromise,
-  });
-
-  // Get events data
-  const eventsPages = await payload.find({
-    collection: 'eventDetailPage',
-    depth: 1,
+  const pages = await fetchEventDetailPages({
+    language: props.language,
     limit: 3,
-    locale: props.language,
-    pagination: false,
-    sort: '-eventDetails.date',
-    where: {
-      tenant: {
-        equals: props.tenant,
-      },
-    },
+    tenant: props.tenant,
   });
 
   const title = rteToHtml(props.title);
@@ -53,7 +38,7 @@ export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promi
   const items = convertPayloadEventPagesToFeItems({
     globalI18n: props.globalI18n,
     lang: props.language,
-    payloadPages: eventsPages,
+    payloadPages: pages,
   });
 
   return (
