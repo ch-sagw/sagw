@@ -113,8 +113,8 @@ export interface Config {
       relatedDocuments: 'documents';
       relatedZenodoDocuments: 'zenodoDocuments';
     };
-    teams: {
-      relatedPeople: 'people';
+    people: {
+      relatedTeams: 'teams';
     };
     publicationTopics: {
       relatedPublicationPages: 'publicationDetailPage';
@@ -2333,7 +2333,6 @@ export interface InterfaceCtaContactBlock {
 export interface Person {
   id: string;
   tenant?: (string | null) | Tenant;
-  team?: (string | Team)[] | null;
   prefix?: {
     root: {
       type: string;
@@ -2441,6 +2440,11 @@ export interface Person {
   } | null;
   image?: (string | null) | Image;
   fullName?: string | null;
+  relatedTeams?: {
+    docs?: (string | Team)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -2469,11 +2473,7 @@ export interface Team {
     };
     [k: string]: unknown;
   };
-  relatedPeople?: {
-    docs?: (string | Person)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
+  people?: (string | Person)[] | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -5583,7 +5583,6 @@ export interface ProjectsSelect<T extends boolean = true> {
  */
 export interface PeopleSelect<T extends boolean = true> {
   tenant?: T;
-  team?: T;
   prefix?: T;
   firstname?: T;
   middleName?: T;
@@ -5593,6 +5592,7 @@ export interface PeopleSelect<T extends boolean = true> {
   phone?: T;
   image?: T;
   fullName?: T;
+  relatedTeams?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -5604,7 +5604,7 @@ export interface PeopleSelect<T extends boolean = true> {
 export interface TeamsSelect<T extends boolean = true> {
   tenant?: T;
   name?: T;
-  relatedPeople?: T;
+  people?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

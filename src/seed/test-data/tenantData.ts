@@ -174,23 +174,26 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'projects',
     data: {
       _status: 'published',
-      name: simpleRteConfig(`Project 1 ${tenant.toUpperCase()}`),
+      name: simpleRteConfig(`DE Project 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
+    locale: 'de',
   });
 
-  // create a team
-  const team = await payload.create({
-    collection: 'teams',
+  /*
+  await payload.update({
+    collection: 'projects',
     data: {
       _status: 'published',
-      name: simpleRteConfig(`Team 1 ${tenant.toUpperCase()}`),
-      tenant: tenantId,
+      name: simpleRteConfig(`EN Project 1 ${tenant.toUpperCase()}`),
     },
+    id: project.id,
+    locale: 'en',
   });
+  */
 
   // create person in people
-  await payload.create({
+  const person = await payload.create({
     collection: 'people',
     data: {
       _status: 'published',
@@ -199,7 +202,17 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       lastname: simpleRteConfig(`Lastname ${tenant.toUpperCase()}`),
       mail: simpleRteConfig('foo@bar.com'),
       phone: simpleRteConfig('031 123 45 67'),
-      team: [team],
+      tenant: tenantId,
+    },
+  });
+
+  // create a team
+  await payload.create({
+    collection: 'teams',
+    data: {
+      _status: 'published',
+      name: simpleRteConfig(`Team 1 ${tenant.toUpperCase()}`),
+      people: [person.id],
       tenant: tenantId,
     },
   });

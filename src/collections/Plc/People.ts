@@ -12,14 +12,6 @@ export const People: CollectionConfig = {
     useAsTitle: 'fullName',
   },
   fields: [
-    {
-      hasMany: true,
-      name: 'team',
-      relationTo: 'teams',
-      required: false,
-      type: 'relationship',
-    },
-
     rte1({
       name: 'prefix',
       notRequired: true,
@@ -75,6 +67,15 @@ export const People: CollectionConfig = {
       },
       name: 'fullName',
       type: 'text',
+    },
+    {
+      admin: {
+        allowCreate: false,
+      },
+      collection: 'teams',
+      name: 'relatedTeams',
+      on: 'people',
+      type: 'join',
     },
   ],
   labels: {

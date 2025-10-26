@@ -14,13 +14,10 @@ export const Teams: CollectionConfig = {
       name: 'name',
     }),
     {
-      admin: {
-        allowCreate: false,
-      },
-      collection: 'people',
-      name: 'relatedPeople',
-      on: 'team',
-      type: 'join',
+      hasMany: true,
+      name: 'people',
+      relationTo: 'people',
+      type: 'relationship',
     },
   ],
   slug: 'teams',
