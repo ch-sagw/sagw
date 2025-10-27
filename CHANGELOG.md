@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.21.0](https://github.com/ch-sagw/sagw/compare/sagw-v0.20.1...sagw-v0.21.0) (2025-10-27)
+
+
+### Features
+
+* add link to version in payoad ui ([8cb5f3b](https://github.com/ch-sagw/sagw/commit/8cb5f3b4bebbf87da21be0abac758bc92e795913))
+
+
+### Bug Fixes
+
+* remove package-name ([9bc5a17](https://github.com/ch-sagw/sagw/commit/9bc5a17fd083a62d9aaacd0247492a5ee6539c9c))
+
+
+### Style
+
+* remove underline ([97e14bf](https://github.com/ch-sagw/sagw/commit/97e14bfa2c02eff3f676e91d62a095b10b1c62b6))
+
 ## [0.20.1](https://github.com/ch-sagw/sagw/compare/sagw-v0.20.0...sagw-v0.20.1) (2025-10-27)
 
 
