@@ -1,0 +1,17 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/animations" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+
+.figure {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: px-to-rem(var(--grid-gutter));
+  row-gap: px-to-rem(var(--spacing-m));
+  background: lime;
+
+  figcaption {
+    @include body-text-s;
+  }
+}
