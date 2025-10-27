@@ -1,5 +1,69 @@
 import { InterfaceRte } from '@/components/base/types/rte';
 
+export const captionRte1: InterfaceRte = {
+  root: {
+    children: [
+      {
+        children: [
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Die Sozialen Medien haben Lesewelten für und von Leute(n) geschaffen, denen der klassische Literaturbetrieb zuvor keine Plattform bot. Nach Besucherrekorden im Vorjahr führte die Frankfurter Buchmesse 2024 eine neue Hallenebene ein, speziell für Trends wie New Adult, Romantasy oder Dark College.',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: null,
+        format: '',
+        indent: 0,
+        textFormat: 0,
+        textStyle: '',
+        type: 'paragraph',
+        version: 1,
+      },
+    ],
+    direction: null,
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+};
+
+export const creditsRte1: InterfaceRte = {
+  root: {
+    children: [
+      {
+        children: [
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Vorname, Nachname',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: null,
+        format: '',
+        indent: 0,
+        textFormat: 0,
+        textStyle: '',
+        type: 'paragraph',
+        version: 1,
+      },
+    ],
+    direction: null,
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+};
+
 export const sampleRte1: InterfaceRte = {
   root: {
     children: [
