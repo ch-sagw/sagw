@@ -32,7 +32,6 @@ export const NewsTeasersBlock = {
     {
       ...rte1({
         adminCondition: (_, siblingData): boolean => siblingData.link === 'yes',
-        adminDescription: 'foo bar',
         name: 'linkText',
       }),
     },

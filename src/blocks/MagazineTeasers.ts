@@ -12,7 +12,6 @@ export const MagazineTeasersBlock = {
   fields: [
     rte1({
       name: 'title',
-      notRequired: true,
     }),
     rte1({
       name: 'lead',

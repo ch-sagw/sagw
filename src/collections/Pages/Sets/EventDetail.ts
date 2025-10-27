@@ -31,17 +31,27 @@ const uniqueBlocks: ContentBlock[] = ['downloadsBlock'];
 
 const fieldsForDetailPage: Field[] = [
   {
-    blocks: blocks(contentBlocks),
-    filterOptions: excludeBlocksFilterSingle({
-      allBlockTypes: contentBlocks,
-      onlyAllowedOnceBlockTypes: uniqueBlocks,
-    }),
-    label: 'Content',
-    name: 'content',
-    type: 'blocks',
-    validate: validateUniqueBlocksSingle({
-      onlyAllowedOnceBlockTypes: uniqueBlocks,
-    }),
+    admin: {
+      condition: (_, siblingsData) => siblingsData.showDetailPage === 'true',
+    },
+    fields: [
+      {
+        blocks: blocks(contentBlocks),
+        filterOptions: excludeBlocksFilterSingle({
+          allBlockTypes: contentBlocks,
+          onlyAllowedOnceBlockTypes: uniqueBlocks,
+        }),
+        label: 'Content',
+        name: 'content',
+        type: 'blocks',
+        validate: validateUniqueBlocksSingle({
+          onlyAllowedOnceBlockTypes: uniqueBlocks,
+        }),
+      },
+    ],
+    label: '',
+    name: 'blocks',
+    type: 'group',
   },
 ];
 

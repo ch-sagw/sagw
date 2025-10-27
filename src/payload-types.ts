@@ -923,7 +923,7 @@ export interface InterfaceEventsTeasersBlock {
  * via the `definition` "InterfaceMagazineTeasersBlock".
  */
 export interface InterfaceMagazineTeasersBlock {
-  title?: {
+  title: {
     root: {
       type: string;
       children: {
@@ -937,7 +937,7 @@ export interface InterfaceMagazineTeasersBlock {
       version: number;
     };
     [k: string]: unknown;
-  } | null;
+  };
   lead?: {
     root: {
       type: string;
@@ -1002,9 +1002,6 @@ export interface InterfaceNewsTeasersBlock {
    * Do you want to add a link to the News overview page? Note: This link will not be shown on project detail pages.
    */
   link?: ('no' | 'yes') | null;
-  /**
-   * foo bar
-   */
   linkText?: {
     root: {
       type: string;
@@ -1074,7 +1071,7 @@ export interface InterfacePublicationsTeasersBlock {
  * via the `definition` "InterfaceProjectTeasersBlock".
  */
 export interface InterfaceProjectTeasersBlock {
-  title?: {
+  title: {
     root: {
       type: string;
       children: {
@@ -1088,7 +1085,7 @@ export interface InterfaceProjectTeasersBlock {
       version: number;
     };
     [k: string]: unknown;
-  } | null;
+  };
   lead?: {
     root: {
       type: string;
@@ -1937,15 +1934,17 @@ export interface EventDetailPage {
     dateEnd?: string | null;
   };
   showDetailPage?: ('true' | 'false') | null;
-  content?:
-    | (
-        | InterfaceTextBlock
-        | InterfaceDownloadsBlock
-        | InterfaceFormBlock
-        | InterfaceCtaLinkBlock
-        | InterfaceNotificationBlock
-      )[]
-    | null;
+  blocks?: {
+    content?:
+      | (
+          | InterfaceTextBlock
+          | InterfaceDownloadsBlock
+          | InterfaceFormBlock
+          | InterfaceCtaLinkBlock
+          | InterfaceNotificationBlock
+        )[]
+      | null;
+  };
   link?: {
     externalLink: string;
   };
@@ -5202,14 +5201,18 @@ export interface EventDetailPageSelect<T extends boolean = true> {
         dateEnd?: T;
       };
   showDetailPage?: T;
-  content?:
+  blocks?:
     | T
     | {
-        textBlock?: T | InterfaceTextBlockSelect<T>;
-        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
-        formBlock?: T | InterfaceFormBlockSelect<T>;
-        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
-        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        content?:
+          | T
+          | {
+              textBlock?: T | InterfaceTextBlockSelect<T>;
+              downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+              formBlock?: T | InterfaceFormBlockSelect<T>;
+              ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+              notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+            };
       };
   link?:
     | T
