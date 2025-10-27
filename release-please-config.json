@@ -61,7 +61,8 @@
   "pull-request-footer": "This is an official SAGW release.",
   "packages": {
     ".": {
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "package-name": "sagw"
     }
   }
 }

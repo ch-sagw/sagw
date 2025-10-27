@@ -1,6 +1,6 @@
 import { JSX } from 'react';
 import '@/components/admin/EnvIndicator/styles.scss';
-import releaseManifest from '../../../../release-please-manifest.json';
+import packageJson from '../../../../package.json';
 
 const EnvIndicator = (): JSX.Element => {
   const dbName = process.env.DATABASE_NAME;
@@ -24,7 +24,7 @@ const EnvIndicator = (): JSX.Element => {
       return (
         <p className='env'>
           You are on <span className='env-name'>{env}</span> environment.
-          Version: <span className='version'>{releaseManifest['.']}</span>
+          Version: <span className='version'>{packageJson.version}</span>
         </p>
       );
     }
