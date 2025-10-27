@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload';
-import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
 
 export const Documents: CollectionConfig = {
@@ -7,6 +6,7 @@ export const Documents: CollectionConfig = {
     read: () => true,
   },
   admin: {
+    description: 'Allowed formats: pdf',
     group: 'Assets',
   },
   fields: [
@@ -29,5 +29,4 @@ export const Documents: CollectionConfig = {
   upload: {
     mimeTypes: ['application/pdf'],
   },
-  versions,
 };

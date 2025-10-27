@@ -1142,7 +1142,6 @@ export interface Image {
   alt: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -1610,6 +1609,8 @@ export interface InterfaceDownloadsBlock {
   blockType: 'downloadsBlock';
 }
 /**
+ * Allowed formats: pdf
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "documents".
  */
@@ -1635,7 +1636,6 @@ export interface Document {
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -5489,7 +5489,6 @@ export interface ImagesSelect<T extends boolean = true> {
   alt?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
   url?: T;
   thumbnailURL?: T;
   filename?: T;
@@ -5542,7 +5541,6 @@ export interface DocumentsSelect<T extends boolean = true> {
   project?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
   url?: T;
   thumbnailURL?: T;
   filename?: T;
