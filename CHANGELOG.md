@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.1](https://github.com/ch-sagw/sagw/compare/v0.22.0...v0.22.1) (2025-10-27)
+
+
+### Chore
+
+* fix changelog manually after messing around and testing release-please ([a1fddb0](https://github.com/ch-sagw/sagw/commit/a1fddb0bd01495f589bdc004331c59647fdb9f89))
+
 ## [0.22.0](https://github.com/ch-sagw/sagw/compare/v0.21.0...v0.22.0) (2025-10-27)
 
 ### Bug fixes
