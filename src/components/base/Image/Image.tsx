@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React from 'react';
+import React, { useRef } from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/Image/Image.module.scss';
 import { InterfaceImagePropTypes } from '@/components/base/Image/Image.custom';
@@ -8,16 +8,13 @@ import {
   getSrcSet,
 } from '@/components/base/Image/Image.configs';
 
-/* const onLoad = (performanceMark: string): void => {
-  performance.mark(performanceMark);
-}; */
-
 export const Image = ({
   alt,
   focalPointX,
   focalPointY,
   height,
   loading,
+  performanceMark,
   src,
   variant,
   width,
@@ -37,6 +34,8 @@ export const Image = ({
     },
   });
 
+  const imgRef = useRef<HTMLImageElement>(null);
+
   const params = `mode=crop&crop=focalpoint&fp-x=${focalPointX}&fp-y=${focalPointY}`;
 
   const srcSet = getSrcSet({
@@ -45,6 +44,15 @@ export const Image = ({
     variant,
   });
   const sizes = getSizes(variant);
+
+  const handleOnLoad = (): void => {
+    if (imgRef.current) {
+      imgRef.current.classList.add(styles.loaded);
+    }
+    if (performanceMark) {
+      performance.mark(performanceMark);
+    }
+  };
 
   const fetchPriority = loading === 'eager'
     ? 'high'
@@ -59,6 +67,8 @@ export const Image = ({
       fetchPriority={fetchPriority}
       height={height}
       loading={loading}
+      onLoad={handleOnLoad}
+      ref={imgRef}
       sizes={sizes}
       src={src}
       srcSet={srcSet}

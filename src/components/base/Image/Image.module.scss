@@ -1,7 +1,11 @@
 .image {
+  contain: content;
+  opacity: 0;
+  transition: opacity var(--motion-speed-fast) var(--motion-ease-in);
+
   &.hero,
   &.content,
-  &.contentFull {
+  &.contentWide {
     aspect-ratio: 16 / 9;
   }
 
@@ -27,5 +31,9 @@
 
   &.publicationTeaser {
     aspect-ratio: 12 / 17;
+  }
+
+  &.loaded {
+    opacity: 0.999;
   }
 }
