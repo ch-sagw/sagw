@@ -1,8 +1,6 @@
 import type { CollectionConfig } from 'payload';
-import { versions } from '@/field-templates/versions';
 import { FormBlocks } from '@/blocks/Form/index';
 import { emailBlock } from '@/blocks/Form/Email';
-import { textBlock } from '@/blocks/Form/Text';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { formEnsureUniqueName } from '@/hooks-payload/formEnsureUniqueName';
 import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
@@ -104,7 +102,7 @@ export const Forms: CollectionConfig = {
             rte1({
               name: 'text',
             }),
-            fieldsLinkInternalWithToggle,
+            fieldsLinkInternalWithToggle({}),
           ],
           label: 'Submit Success',
           name: 'submitSuccess',
@@ -119,7 +117,7 @@ export const Forms: CollectionConfig = {
             rte1({
               name: 'text',
             }),
-            fieldsLinkInternalWithToggle,
+            fieldsLinkInternalWithToggle({}),
           ],
           label: 'Submit Error',
           name: 'submitError',
@@ -155,11 +153,6 @@ export const Forms: CollectionConfig = {
           type: 'group',
         },
         {
-          fields: textBlock(true).fields,
-          name: 'name',
-          type: 'group',
-        },
-        {
           admin: {
             description: 'The action text to show at the bottom of the notification. e.g.: "Send verifiaction E-Mail again."',
           },
@@ -192,5 +185,4 @@ export const Forms: CollectionConfig = {
     },
   ],
   slug: 'forms',
-  versions,
 };

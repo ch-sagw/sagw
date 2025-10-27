@@ -59,7 +59,7 @@ export const fieldsHeroHome: GroupField = {
     rte1({
       name: 'sideTitle',
     }),
-    fieldsLinkInternalWithToggle,
+    fieldsLinkInternalWithToggle({}),
   ],
   interfaceName: 'InterfaceHeroFieldHome',
   ...generalProps,

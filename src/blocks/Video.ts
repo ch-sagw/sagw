@@ -9,9 +9,27 @@ export const VideoBlock = {
   },
   fields: [
     {
-      name: 'video',
+      name: 'video-de',
       relationTo: 'videos',
       required: true,
+      type: 'relationship',
+    },
+    {
+      name: 'video-fr',
+      relationTo: 'videos',
+      required: false,
+      type: 'relationship',
+    },
+    {
+      name: 'video-it',
+      relationTo: 'videos',
+      required: false,
+      type: 'relationship',
+    },
+    {
+      name: 'video-en',
+      relationTo: 'videos',
+      required: false,
       type: 'relationship',
     },
     rte1({

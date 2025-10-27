@@ -1,32 +1,22 @@
 import {
   expect,
-  Locator, test,
+  test,
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 
 test.describe('Add Zenodo document', () => {
-  let zenodoInput: Locator;
-  let zenodoButton: Locator;
-  let saveButton: Locator;
-  let zenodoList: Locator;
-
   beforeEachPayloadLogin();
 
-  test.beforeEach(async ({
+  test('search and validate list items', async ({
     page,
   }) => {
     await page.goto('http://localhost:3000/admin/collections/zenodoDocuments/create');
     await page.waitForLoadState('networkidle');
 
-    zenodoInput = page.getByTestId('zenodo-input');
-    zenodoButton = page.getByTestId('zenodo-button');
-    saveButton = page.getByRole('button', {
-      name: 'Änderungen veröffentlichen',
-    });
-    zenodoList = page.getByTestId('zenodo-list');
-  });
+    const zenodoInput = page.getByTestId('zenodo-input');
+    const zenodoButton = page.getByTestId('zenodo-button');
+    const zenodoList = page.getByTestId('zenodo-list');
 
-  test('search and validate list items', async () => {
     await zenodoInput.fill('15126918');
     await zenodoButton.click();
 
@@ -41,7 +31,16 @@ test.describe('Add Zenodo document', () => {
       .toHaveText('https://zenodo.org/api/records/15126918/files/source_data.xlsx/content (xlsx, 0.04 MB)');
   });
 
-  test('results disappear after input change', async () => {
+  test('results disappear after input change', async ({
+    page,
+  }) => {
+    await page.goto('http://localhost:3000/admin/collections/zenodoDocuments/create');
+    await page.waitForLoadState('networkidle');
+
+    const zenodoInput = page.getByTestId('zenodo-input');
+    const zenodoButton = page.getByTestId('zenodo-button');
+    const zenodoList = page.getByTestId('zenodo-list');
+
     await zenodoInput.fill('15126918');
     await zenodoButton.click();
 
@@ -57,9 +56,16 @@ test.describe('Add Zenodo document', () => {
   test('validation error on invalid input', async ({
     page,
   }) => {
+    await page.goto('http://localhost:3000/admin/collections/zenodoDocuments/create');
+    await page.waitForLoadState('networkidle');
+
+    const saveButton = page.getByRole('button', {
+      name: 'Save',
+    });
+
     await saveButton.click();
 
-    const errorToast = await page.getByText('Die folgenden Felder sind nicht korrekt (4):');
+    const errorToast = await page.getByText('The following fields are invalid (4):');
 
     await expect(errorToast)
       .toBeVisible();
@@ -68,6 +74,12 @@ test.describe('Add Zenodo document', () => {
   test('validation error on existing zenodo id', async ({
     page,
   }) => {
+    await page.goto('http://localhost:3000/admin/collections/zenodoDocuments/create');
+    await page.waitForLoadState('networkidle');
+
+    const zenodoInput = page.getByTestId('zenodo-input');
+    const zenodoButton = page.getByTestId('zenodo-button');
+
     await zenodoInput.fill('1512691');
     await zenodoButton.click();
 
@@ -80,13 +92,23 @@ test.describe('Add Zenodo document', () => {
   test('sucessfull save on valid input', async ({
     page,
   }) => {
+    await page.goto('http://localhost:3000/admin/collections/zenodoDocuments/create');
+    await page.waitForLoadState('networkidle');
+
+    const zenodoInput = page.getByTestId('zenodo-input');
+    const zenodoButton = page.getByTestId('zenodo-button');
+    const saveButton = page.getByRole('button', {
+      name: 'Save',
+    });
+    const zenodoList = page.getByTestId('zenodo-list');
+
     await zenodoInput.fill('15126918');
     await zenodoButton.click();
     await expect(zenodoList)
       .toBeVisible();
     await saveButton.click();
 
-    const successToast = await page.getByText('Erfolgreich aktualisiert.');
+    const successToast = await page.getByText('Zenodo Document successfully created.');
 
     await expect(successToast)
       .toBeVisible();
@@ -95,6 +117,15 @@ test.describe('Add Zenodo document', () => {
   test('returns proper api response', async ({
     page,
   }) => {
+    await page.goto('http://localhost:3000/admin/collections/zenodoDocuments/create');
+    await page.waitForLoadState('networkidle');
+
+    const zenodoInput = page.getByTestId('zenodo-input');
+    const zenodoButton = page.getByTestId('zenodo-button');
+    const saveButton = page.getByRole('button', {
+      name: 'Save',
+    });
+    const zenodoList = page.getByTestId('zenodo-list');
 
     // add a new document
     await zenodoInput.fill('8888');
@@ -103,7 +134,7 @@ test.describe('Add Zenodo document', () => {
       .toBeVisible();
     await saveButton.click();
 
-    const successToast = await page.getByText('Erfolgreich aktualisiert.');
+    const successToast = await page.getByText('Zenodo Document successfully created.');
 
     await expect(successToast)
       .toBeVisible();

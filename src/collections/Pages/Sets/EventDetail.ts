@@ -2,7 +2,6 @@ import {
   CollectionConfig, Field,
 } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { fieldsHero } from '@/field-templates/hero';
 import { hookAdminTitle } from '@/hooks-payload/adminTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
@@ -15,31 +14,43 @@ import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
 import { rte1 } from '@/field-templates/rte';
+import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
+import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
+
+const contentBlocks = [
+  'textBlock',
+  'ctaLinkBlock',
+  'downloadsBlock',
+  'formBlock',
+  'notificationBlock',
+] as const;
+
+type ContentBlock = typeof contentBlocks[number];
+
+const uniqueBlocks: ContentBlock[] = ['downloadsBlock'];
 
 const fieldsForDetailPage: Field[] = [
-
   {
     admin: {
       condition: (_, siblingsData) => siblingsData.showDetailPage === 'true',
     },
     fields: [
-      // Hero
-      fieldsHero,
-
-      // Content Blocks
       {
-        blocks: blocks([
-          'textBlock',
-          'linksBlock',
-          'downloadsBlock',
-          'formBlock',
-          'notificationBlock',
-        ]),
+        blocks: blocks(contentBlocks),
+        filterOptions: excludeBlocksFilterSingle({
+          allBlockTypes: contentBlocks,
+          onlyAllowedOnceBlockTypes: uniqueBlocks,
+        }),
         label: 'Content',
         name: 'content',
         type: 'blocks',
+        validate: validateUniqueBlocksSingle({
+          onlyAllowedOnceBlockTypes: uniqueBlocks,
+        }),
       },
     ],
+    label: '',
+    name: 'blocks',
     type: 'group',
   },
 ];
@@ -49,7 +60,9 @@ const fieldsForNoDetailPage: Field[] = [
     admin: {
       condition: (_, siblingsData) => siblingsData.showDetailPage === 'false',
     },
-    fields: fieldsLinkExternal,
+    fields: fieldsLinkExternal({
+      hideLinkText: true,
+    }),
     name: 'link',
     type: 'group',
   },
@@ -92,10 +105,6 @@ export const EventDetailPage: CollectionConfig = {
                   name: 'language',
                   notRequired: true,
                 }),
-                rte1({
-                  name: 'time',
-                  notRequired: true,
-                }),
                 {
                   name: 'category',
                   relationTo: 'eventCategory',
@@ -106,6 +115,19 @@ export const EventDetailPage: CollectionConfig = {
                   relationTo: 'projects',
                   required: false,
                   type: 'relationship',
+                },
+                {
+                  admin: {
+                    date: {
+                      displayFormat: 'HH:mm',
+                      pickerAppearance: 'timeOnly',
+                      timeFormat: 'HH:mm',
+                      timeIntervals: 10,
+                    },
+                  },
+                  name: 'time',
+                  required: false,
+                  type: 'date',
                 },
                 {
                   name: 'date',
@@ -119,7 +141,7 @@ export const EventDetailPage: CollectionConfig = {
                 },
                 {
                   admin: {
-                    condition: (data, siblingData) => siblingData.multipleDays,
+                    condition: (_, siblingData) => siblingData.multipleDays,
                   },
                   name: 'dateEnd',
                   required: true,

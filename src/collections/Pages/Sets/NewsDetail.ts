@@ -13,6 +13,25 @@ import { hookFormsBlockOnCreate } from '@/hooks-payload/formsBlockOnCreate';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
 import { rte1 } from '@/field-templates/rte';
+import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
+import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
+
+const contentBlocks = [
+  'textBlock',
+  'linksBlock',
+  'downloadsBlock',
+  'imageBlock',
+  'formBlock',
+  'notificationBlock',
+  'newsTeasersBlock',
+] as const;
+
+type ContentBlock = typeof contentBlocks[number];
+
+const uniqueBlocks: ContentBlock[] = [
+  'downloadsBlock',
+  'linksBlock',
+];
 
 export const NewsDetailPage: CollectionConfig = {
   access: {
@@ -68,18 +87,17 @@ export const NewsDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blocks: blocks([
-                'textBlock',
-                'linksBlock',
-                'downloadsBlock',
-                'imageBlock',
-                'formBlock',
-                'notificationBlock',
-                'newsTeasersBlock',
-              ]),
+              blocks: blocks(contentBlocks),
+              filterOptions: excludeBlocksFilterSingle({
+                allBlockTypes: contentBlocks,
+                onlyAllowedOnceBlockTypes: uniqueBlocks,
+              }),
               label: 'Content',
               name: 'content',
               type: 'blocks',
+              validate: validateUniqueBlocksSingle({
+                onlyAllowedOnceBlockTypes: uniqueBlocks,
+              }),
             },
 
           ],

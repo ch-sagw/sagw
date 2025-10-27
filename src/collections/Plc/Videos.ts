@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload';
-import { versions } from '@/field-templates/versions';
 
 // TODO:
 // - discuss: subtitles
@@ -23,5 +22,4 @@ export const Videos: CollectionConfig = {
   upload: {
     mimeTypes: ['video/*'],
   },
-  versions,
 };

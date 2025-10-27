@@ -11,6 +11,25 @@ import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
+import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
+import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
+
+const contentBlocks = [
+  'textBlock',
+  'linksBlock',
+  'downloadsBlock',
+  'formBlock',
+  'bibliographicReferenceBlock',
+  'notificationBlock',
+  'publicationsTeasersBlock',
+] as const;
+
+type ContentBlock = typeof contentBlocks[number];
+
+const uniqueBlocks: ContentBlock[] = [
+  'downloadsBlock',
+  'linksBlock',
+];
 
 export const PublicationDetailPage: CollectionConfig = {
   access: {
@@ -49,6 +68,11 @@ export const PublicationDetailPage: CollectionConfig = {
                   required: true,
                   type: 'relationship',
                 },
+                {
+                  name: 'date',
+                  required: true,
+                  type: 'date',
+                },
               ],
               label: 'Overview Page properties',
               name: 'overviewPageProps',
@@ -66,7 +90,7 @@ export const PublicationDetailPage: CollectionConfig = {
                       },
                       name: 'topic',
                       relationTo: 'publicationTopics',
-                      required: true,
+                      required: false,
                       type: 'relationship',
                     },
                     {
@@ -75,7 +99,7 @@ export const PublicationDetailPage: CollectionConfig = {
                       },
                       name: 'type',
                       relationTo: 'publicationTypes',
-                      required: true,
+                      required: false,
                       type: 'relationship',
                     },
                     {
@@ -101,18 +125,17 @@ export const PublicationDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blocks: blocks([
-                'textBlock',
-                'linksBlock',
-                'downloadsBlock',
-                'formBlock',
-                'bibliographicReferenceBlock',
-                'notificationBlock',
-                'publicationsTeasersBlock',
-              ]),
+              blocks: blocks(contentBlocks),
+              filterOptions: excludeBlocksFilterSingle({
+                allBlockTypes: contentBlocks,
+                onlyAllowedOnceBlockTypes: uniqueBlocks,
+              }),
               label: 'Content',
               name: 'content',
               type: 'blocks',
+              validate: validateUniqueBlocksSingle({
+                onlyAllowedOnceBlockTypes: uniqueBlocks,
+              }),
             },
 
           ],

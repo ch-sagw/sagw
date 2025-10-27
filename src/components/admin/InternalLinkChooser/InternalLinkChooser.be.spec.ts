@@ -169,7 +169,7 @@ test.describe('Internal Link Chooser', () => {
     const link4 = await page.getByText('Magazine detail page title SAGW', {
       exact: true,
     });
-    const link6 = await page.getByText('Event 1 detail page title SAGW (render detail page)', {
+    const link6 = await page.getByText('Event 1 details title SAGW (render detail page)', {
       exact: true,
     });
     const link7 = await page.getByText('Detail page title SAGW', {

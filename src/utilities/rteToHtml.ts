@@ -3,12 +3,29 @@ import {
   convertLexicalToHTML, HTMLConvertersFunction,
   LinkHTMLConverter as linkHTMLConverter,
 } from '@payloadcms/richtext-lexical/html';
-import { softHyphenJSXConverter } from '@/components/admin/rte/features/SoftHyphen/SoftHyphenNode';
-import { nonBreakingSpaceJSXConverter } from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpaceNode';
+import {
+  SerializedSoftHyphenNode, softHyphenJSXConverter,
+} from '@/components/admin/rte/features/SoftHyphen/SoftHyphenNode';
+import {
+  nonBreakingSpaceJSXConverter, SerializedNonBreakingSpaceNode,
+} from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpaceNode';
 import {
   DefaultNodeTypes, SerializedLinkNode,
 } from '@payloadcms/richtext-lexical';
-import { SerializedParagraphNode } from '@payloadcms/richtext-lexical/lexical';
+import {
+  SerializedParagraphNode, SerializedTextNode,
+} from '@payloadcms/richtext-lexical/lexical';
+
+import { externalLink } from '@/icons/ui/external-link';
+
+// Union type for all possible lexical nodes
+type LexicalNode =
+  | SerializedTextNode
+  | SerializedLinkNode
+  | SerializedParagraphNode
+  | SerializedSoftHyphenNode
+  | SerializedNonBreakingSpaceNode
+  | { type: string; children?: LexicalNode[]; version: number; [key: string]: unknown };
 
 const internalDocToHref = ({
   linkNode,
@@ -73,6 +90,67 @@ const createHtmlConverters = ({
   return baseConverters;
 };
 
+// Recursively process lexical nodes to add icons to links
+// and convert quotes to guillemets
+const processLexicalNodes = (nodes: LexicalNode[]): LexicalNode[] => nodes.map((node) => {
+  // Process link nodes to add icons
+  if (node.type === 'link') {
+    const linkNode = node as SerializedLinkNode;
+    const processedChildren = processLexicalNodes(linkNode.children || []);
+    const hasExternalLink = linkNode.fields?.newTab === true;
+
+    // Add external link icon as a new text node if needed
+    if (hasExternalLink) {
+      const iconNode: SerializedTextNode = {
+        detail: 0,
+        format: 0,
+        mode: 'normal',
+        style: '',
+        text: externalLink,
+        type: 'text',
+        version: 1,
+      };
+
+      return {
+        ...linkNode,
+        children: [
+          ...processedChildren,
+          iconNode,
+        ],
+      };
+    }
+
+    return {
+      ...linkNode,
+      children: processedChildren,
+    };
+  }
+
+  // Process text nodes to convert quotes to guillemets
+  if (node.type === 'text') {
+    const textNode = node as SerializedTextNode;
+
+    if (textNode.text) {
+      return {
+        ...textNode,
+        text: textNode.text.replace(/"(?<capGroup1>[^"]+)"/gu, '«$1»'),
+      };
+    }
+
+    return textNode;
+  }
+
+  // Recursively process children for other node types
+  if ('children' in node && node.children) {
+    return {
+      ...node,
+      children: processLexicalNodes(node.children),
+    };
+  }
+
+  return node;
+});
+
 interface InterfaceRteToHtmlProps {
   content: InterfaceRte | undefined | null;
   wrap?: boolean;
@@ -96,13 +174,21 @@ const rteToHtmlBase = ({
     return '';
   }
 
+  // Process the lexical data structure to add icons and convert quotes
+  const processedContent: InterfaceRte = {
+    root: {
+      ...content.root,
+      children: processLexicalNodes(content.root.children) as any,
+    },
+  };
+
   const htmlConverters = wrap
     ? convertersWithWrap
     : convertersWithoutWrap;
 
   const transformedData = convertLexicalToHTML({
     converters: htmlConverters,
-    data: content,
+    data: processedContent,
     disableContainer: true,
   });
 

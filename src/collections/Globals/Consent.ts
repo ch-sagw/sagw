@@ -9,7 +9,6 @@ import {
 import {
   rte1, rte3,
 } from '@/field-templates/rte';
-import { versions } from '@/field-templates/versions';
 
 const overlaySection: Field[] = [
   rte1({
@@ -135,5 +134,4 @@ export const Consent: CollectionConfig = {
     singular: 'Consent',
   },
   slug: 'consent',
-  versions,
 };

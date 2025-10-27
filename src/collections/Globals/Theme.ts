@@ -3,7 +3,6 @@ import { CollectionConfig } from 'payload';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
-import { versions } from '@/field-templates/versions';
 
 export const Theme: CollectionConfig = {
   access: {
@@ -34,5 +33,4 @@ export const Theme: CollectionConfig = {
     singular: 'Theme',
   },
   slug: 'theme',
-  versions,
 };

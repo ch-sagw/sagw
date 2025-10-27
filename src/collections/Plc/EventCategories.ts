@@ -1,5 +1,4 @@
 import { CollectionConfig } from 'payload';
-import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
 
 export const EventCategories: CollectionConfig = {
@@ -23,5 +22,4 @@ export const EventCategories: CollectionConfig = {
     },
   ],
   slug: 'eventCategory',
-  versions,
 };

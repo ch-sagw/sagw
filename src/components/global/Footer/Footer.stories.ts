@@ -70,22 +70,18 @@ const socialLinks: InterfaceFooterSocialLinks = {
   items: [
     {
       externalLink: 'https://www.foo.bar',
-      externalLinkText: simpleRteConfig('Visit us on Instagram'),
       icon: 'instagram',
     },
     {
       externalLink: 'https://www.foo.bar',
-      externalLinkText: simpleRteConfig('Visit us on Twitter'),
       icon: 'twitter',
     },
     {
       externalLink: 'https://www.foo.bar',
-      externalLinkText: simpleRteConfig('Visit us on linkedIn'),
       icon: 'linkedIn',
     },
     {
       externalLink: 'https://www.foo.bar',
-      externalLinkText: simpleRteConfig('Visit us on Facebook'),
       icon: 'facebook',
     },
   ],

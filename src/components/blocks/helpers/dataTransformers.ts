@@ -1,9 +1,12 @@
 import { InterfaceEventsListItemPropTypes } from '@/components/base/EventsListItem/EventsListItem';
 import { InterfaceNewsListItemPropTypes } from '@/components/base/NewsListItem/NewsListItem';
-import { formatDateToReadableString } from '@/components/helpers/date';
 import {
-  Config, EventCategory, EventDetailPage, NewsDetailPage,
+  formatDateToReadableString, formatTime,
+} from '@/components/helpers/date';
+import {
+  Config, EventCategory, EventDetailPage, I18NGlobal, NewsDetailPage,
 } from '@/payload-types';
+import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { PaginatedDocs } from 'payload';
 
@@ -28,8 +31,17 @@ export const convertPayloadNewsPagesToFeItems = (payloadPages: PaginatedDocs<New
   return items;
 };
 
-export const convertPayloadEventPagesToFeItems = (payloadPages: PaginatedDocs<EventDetailPage>, lang: Config['locale']): InterfaceEventsListItemPropTypes[] => {
-  const items = payloadPages.docs.map((eventPage) => {
+interface InterfaceConvertPayloadEventPagesProps {
+  payloadPages: EventDetailPage[];
+  lang: Config['locale'];
+  globalI18n: I18NGlobal;
+}
+
+export const convertPayloadEventPagesToFeItems = ({
+  payloadPages, lang, globalI18n,
+}: InterfaceConvertPayloadEventPagesProps): InterfaceEventsListItemPropTypes[] => {
+
+  const items = payloadPages.map((eventPage) => {
     let category;
 
     if (eventPage.eventDetails.category) {
@@ -62,7 +74,12 @@ export const convertPayloadEventPagesToFeItems = (payloadPages: PaginatedDocs<Ev
         ? rteToHtml(category.eventCategory)
         : undefined,
       text: rteToHtml(eventPage.eventDetails.title),
-      time: rteToHtml(eventPage.eventDetails.time),
+      // time: eventPage.eventDetails.time,
+      time: eventPage.eventDetails.time
+        ? `${formatTime({
+          dateString: eventPage.eventDetails.time,
+        })} ${rte1ToPlaintext(globalI18n.generic.time)}`
+        : undefined,
     };
 
     return returnEventPage;

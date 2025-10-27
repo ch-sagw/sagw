@@ -1,5 +1,4 @@
 import { CollectionConfig } from 'payload';
-import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
 
 export const PublicationTypes: CollectionConfig = {
@@ -23,5 +22,4 @@ export const PublicationTypes: CollectionConfig = {
     },
   ],
   slug: 'publicationTypes',
-  versions,
 };

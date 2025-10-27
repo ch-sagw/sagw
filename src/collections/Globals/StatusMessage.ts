@@ -4,7 +4,6 @@ import { CollectionConfig } from 'payload';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
-import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
 
 export const StatusMessage: CollectionConfig = {
@@ -68,7 +67,7 @@ export const StatusMessage: CollectionConfig = {
     rte1({
       name: 'message',
     }),
-    fieldsLinkInternalWithToggle,
+    fieldsLinkInternalWithToggle({}),
     {
       admin: {
         description: 'Should the message be displayed on home only or everywhere?',
@@ -104,5 +103,4 @@ export const StatusMessage: CollectionConfig = {
     singular: 'Status Message',
   },
   slug: 'statusMessage',
-  versions,
 };

@@ -23,7 +23,7 @@ test.describe('Softhyphen', () => {
 
     // save
     const saveButton = await page.getByRole('button', {
-      name: 'Änderungen veröffentlichen',
+      name: 'Publish changes',
     });
 
     await saveButton.click();
