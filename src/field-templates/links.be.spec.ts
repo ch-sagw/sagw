@@ -33,7 +33,6 @@ test('throws error on invalid external url', async () => {
         },
         link: {
           externalLink: '.foo.bar',
-          externalLinkText: simpleRteConfig('External Link'),
         },
         showDetailPage: 'false',
         tenant,
@@ -77,7 +76,6 @@ test('does not throw an error on valid external url', async () => {
         },
         link: {
           externalLink: 'https://www.foo.bar',
-          externalLinkText: simpleRteConfig('External Link'),
         },
         showDetailPage: 'false',
         tenant,

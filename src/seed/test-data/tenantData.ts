@@ -55,7 +55,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const image = await payload.create({
     collection: 'images',
     data: {
-      _status: 'published',
       alt: `${tenant.toUpperCase} image`,
       tenant: tenantId,
     },
@@ -66,7 +65,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'videos',
     data: {
-      _status: 'published',
       tenant: tenantId,
       title: `video ${tenant}`,
     },
@@ -77,7 +75,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const document = await payload.create({
     collection: 'documents',
     data: {
-      _status: 'published',
       date: '2025-10-30',
       tenant: tenantId,
       title: simpleRteConfig(`${tenant.toUpperCase()} Document`),
@@ -89,7 +86,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const zenodoDocument = await payload.create({
     collection: 'zenodoDocuments',
     data: {
-      _status: 'published',
       files: [
         {
           format: 'pdf',
@@ -118,7 +114,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     await payload.create({
       collection: 'zenodoDocuments',
       data: {
-        _status: 'published',
         files: [
           {
             format: 'pdf',
@@ -143,7 +138,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const publicationTopic = await payload.create({
     collection: 'publicationTopics',
     data: {
-      _status: 'published',
       publicationTopic: simpleRteConfig(`Publication Topic 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
@@ -153,7 +147,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const publicationType = await payload.create({
     collection: 'publicationTypes',
     data: {
-      _status: 'published',
       publicationType: simpleRteConfig(`Publication Type 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
@@ -163,7 +156,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'networkCategories',
     data: {
-      _status: 'published',
       name: simpleRteConfig(`Network Category 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
@@ -173,30 +165,16 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const project = await payload.create({
     collection: 'projects',
     data: {
-      _status: 'published',
       name: simpleRteConfig(`DE Project 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
     locale: 'de',
   });
 
-  /*
-  await payload.update({
-    collection: 'projects',
-    data: {
-      _status: 'published',
-      name: simpleRteConfig(`EN Project 1 ${tenant.toUpperCase()}`),
-    },
-    id: project.id,
-    locale: 'en',
-  });
-  */
-
   // create person in people
   const person = await payload.create({
     collection: 'people',
     data: {
-      _status: 'published',
       firstname: simpleRteConfig(`Firstname ${tenant.toUpperCase()}`),
       function: simpleRteConfig('Some function'),
       lastname: simpleRteConfig(`Lastname ${tenant.toUpperCase()}`),
@@ -210,7 +188,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'teams',
     data: {
-      _status: 'published',
       name: simpleRteConfig(`Team 1 ${tenant.toUpperCase()}`),
       people: [person.id],
       tenant: tenantId,
@@ -221,7 +198,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const eventCategory = await payload.create({
     collection: 'eventCategory',
     data: {
-      _status: 'published',
       eventCategory: simpleRteConfig(`Event Category 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
@@ -231,7 +207,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'consent',
     data: {
-      _status: 'published',
       banner: {
         buttonAcceptAll: simpleRteConfig(`Accept all ${tenant.toUpperCase()}`),
         buttonCustomizeSelection: simpleRteConfig(`Customize ${tenant.toUpperCase()}`),
@@ -271,7 +246,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'footer',
     data: {
-      _status: 'published',
       contact: {
         address1: simpleRteConfig('Haus der Akademien'),
         address2: simpleRteConfig('Laupenstrasse 7'),
@@ -316,7 +290,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'header',
     data: {
-      _status: 'published',
       metanavigation: {
         metaLinks: [
           {
@@ -443,7 +416,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'statusMessage',
     data: {
-      _status: 'published',
       message: simpleRteConfig(`Status Message ${tenant.toUpperCase()}`),
       show: {
         display: 'hide',
@@ -538,7 +510,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const newsletterForm = await payload.create({
     collection: 'forms',
     data: {
-      _status: 'published',
       colorMode: 'dark',
       isNewsletterForm: 'newsletter',
       newsletterFields: {
@@ -572,7 +543,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'i18nGlobals',
     data: {
-      _status: 'published',
       bibliographicReference: {
         copyButtonText: simpleRteConfig('Copy button text'),
         title: simpleRteConfig('Title'),

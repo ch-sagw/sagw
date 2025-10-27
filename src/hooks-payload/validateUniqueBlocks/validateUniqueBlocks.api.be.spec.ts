@@ -20,9 +20,6 @@ test('allows 1 link and 1 downloads block via API', async () => {
     const document = await payload.create({
       collection: 'documents',
       data: {
-        /* eslint-disable @typescript-eslint/naming-convention */
-        _status: 'published',
-        /* eslint-enable @typescript-eslint/naming-convention */
         date: '2025-10-30',
         tenant,
         title: simpleRteConfig('Doc title'),
@@ -32,9 +29,6 @@ test('allows 1 link and 1 downloads block via API', async () => {
     const zenodo = await payload.create({
       collection: 'zenodoDocuments',
       data: {
-        /* eslint-disable @typescript-eslint/naming-convention */
-        _status: 'published',
-        /* eslint-enable @typescript-eslint/naming-convention */
         files: [
           {
             format: 'pdf',
@@ -149,9 +143,6 @@ test('errors with 2 links and 1 downloads block via API', async () => {
     const document = await payload.create({
       collection: 'documents',
       data: {
-        /* eslint-disable @typescript-eslint/naming-convention */
-        _status: 'published',
-        /* eslint-enable @typescript-eslint/naming-convention */
         date: '2025-10-30',
         tenant,
         title: simpleRteConfig('Doc title'),
@@ -161,9 +152,6 @@ test('errors with 2 links and 1 downloads block via API', async () => {
     const zenodo = await payload.create({
       collection: 'zenodoDocuments',
       data: {
-        /* eslint-disable @typescript-eslint/naming-convention */
-        _status: 'published',
-        /* eslint-enable @typescript-eslint/naming-convention */
         files: [
           {
             format: 'pdf',
@@ -306,9 +294,6 @@ test('errors with 1 link and 2 downloads block via API', async () => {
     const document = await payload.create({
       collection: 'documents',
       data: {
-        /* eslint-disable @typescript-eslint/naming-convention */
-        _status: 'published',
-        /* eslint-enable @typescript-eslint/naming-convention */
         date: '2025-10-30',
         tenant,
         title: simpleRteConfig('Doc title'),
@@ -318,9 +303,6 @@ test('errors with 1 link and 2 downloads block via API', async () => {
     const zenodo = await payload.create({
       collection: 'zenodoDocuments',
       data: {
-        /* eslint-disable @typescript-eslint/naming-convention */
-        _status: 'published',
-        /* eslint-enable @typescript-eslint/naming-convention */
         files: [
           {
             format: 'pdf',
