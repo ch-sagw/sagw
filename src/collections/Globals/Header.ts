@@ -6,7 +6,6 @@ import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
-import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
 
 const navLinkDefaultFields: Field[] = [
@@ -109,5 +108,4 @@ export const Header: CollectionConfig = {
     singular: 'Header',
   },
   slug: 'header',
-  versions,
 };

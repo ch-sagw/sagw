@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload';
-import { versions } from '@/field-templates/versions';
 import { FormBlocks } from '@/blocks/Form/index';
 import { emailBlock } from '@/blocks/Form/Email';
 import { fieldsColorMode } from '@/field-templates/colorMode';
@@ -186,5 +185,4 @@ export const Forms: CollectionConfig = {
     },
   ],
   slug: 'forms',
-  versions,
 };

@@ -1,5 +1,4 @@
 import { CollectionConfig } from 'payload';
-import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
 
 export const Teams: CollectionConfig = {
@@ -21,5 +20,4 @@ export const Teams: CollectionConfig = {
     },
   ],
   slug: 'teams',
-  versions,
 };

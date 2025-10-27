@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload';
-import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 
@@ -83,5 +82,4 @@ export const People: CollectionConfig = {
     singular: 'People',
   },
   slug: 'people',
-  versions,
 };

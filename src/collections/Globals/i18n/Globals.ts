@@ -1,5 +1,4 @@
 import { CollectionConfig } from 'payload';
-import { versions } from '@/field-templates/versions';
 import {
   rte1, rte3,
 } from '@/field-templates/rte';
@@ -89,5 +88,4 @@ export const I18nGlobals: CollectionConfig = {
     },
   ],
   slug: 'i18nGlobals',
-  versions,
 };
