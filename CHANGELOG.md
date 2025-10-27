@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.2](https://github.com/ch-sagw/sagw/compare/v0.22.1...v0.22.2) (2025-10-27)
+
+
+### Bug Fixes
+
+* wso to final test release workflow ([53ec5cd](https://github.com/ch-sagw/sagw/commit/53ec5cd427a76e4af9220438b731ad4375831fd5))
+
 ## [0.22.1](https://github.com/ch-sagw/sagw/compare/v0.22.0...v0.22.1) (2025-10-27)
 
 
