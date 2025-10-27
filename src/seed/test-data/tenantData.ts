@@ -430,7 +430,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const form = await payload.create({
     collection: 'forms',
     data: {
-      _status: 'published',
       colorMode: 'dark',
       fields: [
         {
