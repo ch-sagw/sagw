@@ -26,7 +26,6 @@ export const Images: CollectionConfig = {
       'image/gif',
       'image/webp',
       'image/avif',
-      'image/tiff',
     ],
   },
 };

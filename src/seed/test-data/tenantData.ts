@@ -873,47 +873,49 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       collection: 'eventDetailPage',
       data: {
         _status: 'published',
-        content: [
+        blocks: {
+          content: [
 
-          // cta link block internal link
-          {
-            blockType: 'ctaLinkBlock',
-            linkInternal: {
-              internalLink: `detailPage/${detailPage.id}`,
-              linkText: simpleRteConfig('Internal Link Text (internal)'),
+            // cta link block internal link
+            {
+              blockType: 'ctaLinkBlock',
+              linkInternal: {
+                internalLink: `detailPage/${detailPage.id}`,
+                linkText: simpleRteConfig('Internal Link Text (internal)'),
+              },
+              linkType: 'internal',
+              text: simpleRteConfig('CTA Link Block Text (internal)'),
+              title: simpleRteConfig('CTA Link Block Title (internal)'),
+
             },
-            linkType: 'internal',
-            text: simpleRteConfig('CTA Link Block Text (internal)'),
-            title: simpleRteConfig('CTA Link Block Title (internal)'),
 
-          },
+            // cta link block external link
+            {
+              blockType: 'ctaLinkBlock',
+              linkExternal: {
+                externalLink: 'https://www.foo.bar',
+                externalLinkText: simpleRteConfig('External Link Text (external)'),
+              },
+              linkType: 'external',
+              text: simpleRteConfig('CTA Link Block Text (external)'),
+              title: simpleRteConfig('CTA Link Block Title (external)'),
 
-          // cta link block external link
-          {
-            blockType: 'ctaLinkBlock',
-            linkExternal: {
-              externalLink: 'https://www.foo.bar',
-              externalLinkText: simpleRteConfig('External Link Text (external)'),
             },
-            linkType: 'external',
-            text: simpleRteConfig('CTA Link Block Text (external)'),
-            title: simpleRteConfig('CTA Link Block Title (external)'),
 
-          },
+            // cta link block mail link
+            {
+              blockType: 'ctaLinkBlock',
+              linkMail: {
+                email: 'foo@bar.com',
+                linkText: simpleRteConfig('Mail link'),
+              },
+              linkType: 'mail',
+              text: simpleRteConfig('CTA Link Block Text (mail)'),
+              title: simpleRteConfig('CTA Link Block Title (mail)'),
 
-          // cta link block mail link
-          {
-            blockType: 'ctaLinkBlock',
-            linkMail: {
-              email: 'foo@bar.com',
-              linkText: simpleRteConfig('Mail link'),
             },
-            linkType: 'mail',
-            text: simpleRteConfig('CTA Link Block Text (mail)'),
-            title: simpleRteConfig('CTA Link Block Title (mail)'),
-
-          },
-        ],
+          ],
+        },
         eventDetails: {
           category: eventCategory.id,
           date: `2030-08-${index < 10

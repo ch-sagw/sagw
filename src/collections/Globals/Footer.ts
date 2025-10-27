@@ -20,7 +20,7 @@ const fieldsSocialLink: Field[] = [
         value: 'linkedIn',
       },
       {
-        label: 'Intagram',
+        label: 'Instagram',
         value: 'instagram',
       },
       {

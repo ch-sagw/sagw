@@ -123,8 +123,7 @@
     @include link-text-underline;
     @include inline-svg;
 
-    display: inline-flex;
-    align-items: center;
+    display: inline;
     color: var(--link-color, --interaction-primary);
 
     &:focus,
