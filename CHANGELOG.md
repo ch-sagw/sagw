@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.20.1](https://github.com/ch-sagw/sagw/compare/sagw-v0.20.0...sagw-v0.20.1) (2025-10-27)
+
+
+### Bug Fixes
+
+* correctly ignore release-pleas branch ([001f3fc](https://github.com/ch-sagw/sagw/commit/001f3fc368f9f94e4dd4e551342554c605a223d9))
+* wso to trigger release ([5f0cb90](https://github.com/ch-sagw/sagw/commit/5f0cb908425a91b47716b4eb84aa69f1bc526346))
+
 ## [0.20.0](https://github.com/ch-sagw/sagw/compare/sagw-v0.19.0...sagw-v0.20.0) (2025-10-27)
 
 
