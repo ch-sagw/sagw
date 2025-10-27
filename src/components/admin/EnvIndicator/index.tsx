@@ -1,5 +1,5 @@
 import { JSX } from 'react';
-import './styles.scss';
+import '@/components/admin/EnvIndicator/styles.scss';
 import releaseManifest from '../../../../release-please-manifest.json';
 
 const EnvIndicator = (): JSX.Element => {
