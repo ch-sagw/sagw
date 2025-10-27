@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { EventsOverviewComponent } from '@/components/blocks/EventsOverview/EventsOverview.component';
 import {
   Config, I18NGlobal, InterfaceEventsOverviewBlock,
@@ -26,6 +26,10 @@ export const EventsOverview = async (props: InterfaceEventsOverviewPropTypes): P
     lang: props.language,
     payloadPages: pages,
   });
+
+  if (!items || items.length < 1) {
+    return <Fragment></Fragment>;
+  }
 
   return (
     <EventsOverviewComponent

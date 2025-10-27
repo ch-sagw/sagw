@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
 
@@ -50,6 +50,10 @@ export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<R
   }
 
   const items = convertPayloadNewsPagesToFeItems(newsPages, props.language);
+
+  if (!items || items.length < 1) {
+    return <Fragment></Fragment>;
+  }
 
   return (
 

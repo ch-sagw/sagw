@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
 
@@ -39,6 +39,10 @@ export const NewsOverview = async (props: InterfaceNewsOverviewPropTypes): Promi
   const title = rteToHtml(props.title);
 
   const items = convertPayloadNewsPagesToFeItems(newsPages, props.language);
+
+  if (!items || items.length < 1) {
+    return <Fragment></Fragment>;
+  }
 
   return (
     <NewsOverviewComponent

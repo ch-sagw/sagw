@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import {
   Config,
@@ -40,6 +40,10 @@ export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promi
     lang: props.language,
     payloadPages: pages,
   });
+
+  if (!items || items.length < 1) {
+    return <Fragment></Fragment>;
+  }
 
   return (
 
