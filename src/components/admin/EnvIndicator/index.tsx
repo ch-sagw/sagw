@@ -24,7 +24,7 @@ const EnvIndicator = (): JSX.Element => {
       return (
         <p className='env'>
           You are on <span className='env-name'>{env}</span> environment.
-          Version: <span className='version'>{packageJson.version}</span>
+          Version: <a target='_blank' href={`https://github.com/ch-sagw/sagw/releases/tag/v${packageJson.version}`}><span className='version'>{packageJson.version}</span></a>
         </p>
       );
     }
