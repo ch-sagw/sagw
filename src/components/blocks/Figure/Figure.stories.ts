@@ -4,7 +4,10 @@ import type {
 } from '@storybook/nextjs-vite';
 import { Figure } from '@/components/blocks/Figure/Figure';
 import { defaultDecorator } from '@/storybook-helpers';
-import { ContentImageWide } from '@/components/base/Image/Image.stories';
+import {
+  ContentImage,
+  ContentImageWide,
+} from '@/components/base/Image/Image.stories';
 import {
   captionRte1,
   creditsRte1,
@@ -20,7 +23,9 @@ const meta: Meta<typeof Figure> = {
   args: {},
   component: Figure,
   decorators: [defaultDecorator],
-  parameters: {/* layout: 'centered', */ },
+  parameters: {
+    layout: 'fullscreen',
+  },
   tags: [
     'autodocs',
     'visual:check',
@@ -37,5 +42,23 @@ export const ContentImageCentered: StrictStory = {
     caption: captionRte1,
     credits: creditsRte1,
     imageConfig: ContentImageWide.args,
+  },
+};
+
+export const ContentImageLeftAligned: StrictStory = {
+  args: {
+    alignment: 'left',
+    caption: captionRte1,
+    credits: creditsRte1,
+    imageConfig: ContentImage.args,
+  },
+};
+
+export const ContentImageRightAligned: StrictStory = {
+  args: {
+    alignment: 'right',
+    caption: captionRte1,
+    credits: creditsRte1,
+    imageConfig: ContentImage.args,
   },
 };

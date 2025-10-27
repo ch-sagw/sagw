@@ -31,7 +31,7 @@ export const Figure = ({
   imageConfig,
 }: InterfaceFigurePropTypes): React.JSX.Element => {
 
-  console.log(imageConfig);
+  console.log(alignment);
 
   return (
     <figure
@@ -53,14 +53,6 @@ export const Figure = ({
       <figcaption
         className={styles.figcaption}
       >
-        <span
-          className={styles.copyright}
-        >
-          ©<SafeHtml
-            as='span'
-            html={rteToHtml(credits)}
-          />
-        </span>
         {caption && (
           <SafeHtml
             as='span'
@@ -68,6 +60,14 @@ export const Figure = ({
             html={rteToHtml(caption)}
           />
         )}
+        <span
+          className={styles.credits}
+        >
+          ©<SafeHtml
+            as='span'
+            html={rteToHtml(credits)}
+          />
+        </span>
       </figcaption>
     </figure>
   );

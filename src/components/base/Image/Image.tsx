@@ -47,7 +47,11 @@ export const Image = ({
 
   const handleOnLoad = (): void => {
     if (imgRef.current) {
-      imgRef.current.classList.add(styles.loaded);
+      requestAnimationFrame(() => {
+        if (imgRef.current) {
+          imgRef.current.classList.add(styles.loaded);
+        }
+      });
     }
     if (performanceMark) {
       performance.mark(performanceMark);
