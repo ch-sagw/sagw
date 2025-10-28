@@ -28,7 +28,7 @@ const meta: Meta<typeof StatusMessage> = {
 export default meta;
 
 const defaultProps: StatusMessageProps = {
-  message: simpleRteConfig('Status Message Text'),
+  message: simpleRteConfig('Eigentlich undenkbar, aber trotzdem passiert. Bitte entschuldigen Sie die Unannehmlichkeiten und versuchen Sie es später erneut.'),
   optionalLink: {
     includeLink: true,
     link: {
@@ -41,7 +41,7 @@ const defaultProps: StatusMessageProps = {
     display: 'show',
   },
   showOnHomeOnly: false,
-  title: simpleRteConfig('Status Message Title'),
+  title: simpleRteConfig('Das System ist aktuell nicht verfügbar'),
   type: 'warn',
 };
 

@@ -3,40 +3,28 @@ import {
   Config, InterfaceStatusMessage,
 } from '@/payload-types';
 // import { Icon } from '@/icons';
+import { Notification } from '@/components/base/Notification/Notification';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
 export type InterfaceStatusMessagePropTypes = {
   pageLanguage: Config['locale'],
 } & InterfaceStatusMessage;
 
-export const StatusMessage = (props: InterfaceStatusMessagePropTypes): React.JSX.Element => {
-  console.log(props);
-
-  return (
-    <p>some content</p>
-  );
-
-};
-
-/*
 export const StatusMessage = ({
   type,
-  // title,
-  // message,
-  // optionalLink,
-  // pageLanguage,
-}: InterfaceStatusMessagePropTypes): React.JSX.Element => {
-  let iconName;
-
-  if (type === 'error') {
-    iconName = 'errorFilled' as keyof typeof Icon;
-  } else if (type === 'warn') {
-    iconName = 'warningFilled' as keyof typeof Icon;
-  } else if (type === 'success') {
-    iconName = 'checkmarkFilled' as keyof typeof Icon;
-  }
-
-  return (
-    <p>some content</p>
-  );
-};
-*/
+  title,
+  message,
+  optionalLink,
+  pageLanguage,
+}: InterfaceStatusMessagePropTypes): React.JSX.Element => (
+  <Notification
+    colorMode='light'
+    hideBorder={true}
+    type={type}
+    title={rteToHtml(title)}
+    text={rteToHtml(message)}
+    linkHref={optionalLink?.link?.internalLink || ''}
+    linkText={rteToHtml(optionalLink?.link?.linkText)}
+    pageLanguage={pageLanguage}
+  />
+);
