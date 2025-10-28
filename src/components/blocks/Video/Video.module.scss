@@ -1,0 +1,69 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/animations" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+
+.videoWrapper {
+  position: relative;
+}
+
+.videoWrapperInner {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  column-gap: px-to-rem(var(--grid-gutter));
+  width: 100%;
+  height: 100%;
+  padding-block: px-to-rem(var(--image-top));
+  padding-inline: px-to-rem(var(--grid-margin));
+}
+
+.videoContainer,
+.buttonWrapper {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  inset-block-start: px-to-rem(var(--image-top));
+  background: var(--background-video);
+  aspect-ratio: 16/9;
+  display: grid;
+  grid-column: 1 / calc(var(--grid-columns) + 1);
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonWrapper {
+  z-index: 2;
+}
+
+// Centered variant
+.videoWrapper.centered {
+  .videoContainer,
+  .buttonWrapper {
+    @include mq($from: large) {
+      grid-column: 2 / var(--grid-columns);
+    }
+  }
+}
+
+// Left aligned variant
+.videoWrapper.left {
+  .videoContainer,
+  .buttonWrapper {
+    @include mq($from: large) {
+      grid-column: 1 / 9;
+    }
+  }
+}
+
+// Right aligned variant
+.videoWrapper.right {
+  .videoContainer,
+  .buttonWrapper {
+    @include mq($from: large) {
+      grid-column: 5 / calc(var(--grid-columns) + 1);
+    }
+  }
+}
