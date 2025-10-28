@@ -31,6 +31,7 @@ const classes = cva([styles.videoWrapper], {
 export const Video = ({
   alignment,
   stillImage,
+  video,
 }: InterfaceVideoPropTypes): React.JSX.Element => {
 
   const playIcon = 'play' as keyof typeof Icon;
@@ -68,14 +69,22 @@ export const Video = ({
             style='buttonPlay'
             text=''
           />
+          <span
+            aria-hidden={true}
+            className={styles.duration}
+          >
+            {video.duration} Min
+          </span>
         </div>
       </div>
-      <Figure
-        alignment={stillImage.alignment}
-        caption={stillImage.caption}
-        credits={stillImage.credits}
-        imageConfig={stillImage.imageConfig}
-      />
+      <div className={styles.figureWrapper}>
+        <Figure
+          alignment={stillImage.alignment}
+          caption={stillImage.caption}
+          credits={stillImage.credits}
+          imageConfig={stillImage.imageConfig}
+        />
+      </div>
     </div>
   );
 };

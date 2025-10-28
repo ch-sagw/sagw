@@ -10,8 +10,8 @@
   grid-template-columns: repeat(var(--grid-columns), 1fr);
   column-gap: px-to-rem(var(--grid-gutter));
   row-gap: px-to-rem(var(--spacing-m));
-  padding-block: px-to-rem(var(--image-top));
-  padding-inline: px-to-rem(var(--grid-margin));
+  padding-block: px-to-rem(var(--figure-padding-block, --image-top));
+  padding-inline: px-to-rem(var(--figure-padding-inline, --grid-margin));
   margin: 0;
 
   img {

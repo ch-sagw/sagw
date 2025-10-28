@@ -36,7 +36,7 @@ export const VideoCentered: StrictStory = {
     alignment: ContentImageCentered.args.alignment,
     stillImage: ContentImageCentered.args,
     video: {
-      duration: '',
+      duration: '00:24',
       id: '',
       title: '',
     },
@@ -48,7 +48,7 @@ export const ContentVideoLeftAligned: StrictStory = {
     alignment: ContentImageLeftAligned.args.alignment,
     stillImage: ContentImageLeftAligned.args,
     video: {
-      duration: '',
+      duration: '03:18',
       id: '',
       title: '',
     },
@@ -60,7 +60,7 @@ export const ContentVideoRightAligned: StrictStory = {
     alignment: ContentImageRightAligned.args.alignment,
     stillImage: ContentImageRightAligned.args,
     video: {
-      duration: '',
+      duration: '02:34',
       id: '',
       title: '',
     },
