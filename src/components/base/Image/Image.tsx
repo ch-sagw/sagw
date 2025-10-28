@@ -46,13 +46,14 @@ export const Image = ({
   const sizes = getSizes(variant);
 
   const handleOnLoad = (): void => {
-    if (imgRef.current) {
+    const img = imgRef.current;
+
+    if (img) {
       requestAnimationFrame(() => {
-        if (imgRef.current) {
-          imgRef.current.classList.add(styles.loaded);
-        }
+        img.classList.add(styles.loaded);
       });
     }
+
     if (performanceMark) {
       performance.mark(performanceMark);
     }
