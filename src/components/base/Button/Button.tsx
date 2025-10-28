@@ -1,7 +1,7 @@
 'use client';
 
 import React, {
-  Fragment, useEffect, useRef,
+  forwardRef, Fragment, useEffect, useRef,
 } from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/Button/Button.module.scss';
@@ -98,7 +98,7 @@ const buttonLinkContent = ({
   </Fragment>
 );
 
-export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
+export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((props, ref) => {
   const {
     ariaControls,
     ariaCurrent,
@@ -120,11 +120,24 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     isActive,
   } = props;
 
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const internalButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Merge the internal and external refs
+  useEffect(() => {
+    if (!ref) {
+      return;
+    }
+
+    if (typeof ref === 'function') {
+      ref(internalButtonRef.current);
+    } else {
+      ref.current = internalButtonRef.current;
+    }
+  }, [ref]);
 
   useEffect(() => {
-    if (autoFocus && buttonRef.current) {
-      buttonRef.current.focus();
+    if (autoFocus && internalButtonRef.current) {
+      internalButtonRef.current.focus();
     }
   }, [autoFocus]);
 
@@ -214,7 +227,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     // Render a proper button
     return (
       <button
-        ref={buttonRef}
+        ref={internalButtonRef}
         aria-current={ariaCurrent}
         aria-controls={ariaControls}
         aria-label={ariaLabel}
@@ -247,4 +260,6 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
 
   return <Fragment />;
 
-};
+});
+
+Button.displayName = 'Button';
