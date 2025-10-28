@@ -1,3 +1,5 @@
+'use client';
+
 import React, {
   useEffect, useId, useRef,
 } from 'react';
@@ -144,7 +146,7 @@ export const Notification = ({
 
         <SafeHtml
           className={styles.text}
-          as='p'
+          as='div'
           html={text}
         />
 

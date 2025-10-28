@@ -3,7 +3,9 @@ import React from 'react';
 import './styles.scss';
 import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
-import { Config } from '@/payload-types';
+import {
+  Config, InterfaceStatusMessage,
+} from '@/payload-types';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { TenantProvider } from '@/app/providers/TenantProvider';
 import { getTenant } from '@/app/providers/TenantProvider.server';
@@ -13,6 +15,7 @@ import {
 import {
   Footer, InterfaceFooterPropTypes,
 } from '@/components/global/Footer/Footer';
+import { StatusMessage } from '@/components/global/StatusMessage/StatusMessage';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -148,6 +151,31 @@ export default async function RootLayout({
     structuredDataUrl: 'https://www.sagw.ch',
   };
 
+  const statusMessageDocs = await payload.find({
+    collection: 'statusMessage',
+    depth: 1,
+    limit: 1,
+    locale: lang,
+    overrideAccess: false,
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  const statusMessageContent: InterfaceStatusMessage | undefined =
+    statusMessageDocs.docs && statusMessageDocs.docs.length === 1
+      ? statusMessageDocs.docs[0].content
+      : undefined;
+
+  // TODO: check if current page is home
+  const currentRoutIsHomeRoute = true;
+
+  const shouldShowStatusMessage = statusMessageContent?.showOnHomeOnly
+    ? currentRoutIsHomeRoute
+    : true;
+
   return (
     <html className='theme-sagw' lang='en'>
       <body>
@@ -157,6 +185,15 @@ export default async function RootLayout({
         />
 
         <main>
+          {statusMessageContent && shouldShowStatusMessage &&
+            <StatusMessage
+              {...statusMessageContent}
+
+              // TODO: get from parent
+              pageLanguage='de'
+            />
+          }
+
           <TenantProvider tenant={tenant}>
             {children}
           </TenantProvider>
