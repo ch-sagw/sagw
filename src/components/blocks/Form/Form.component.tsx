@@ -6,7 +6,7 @@ import { Form as InterfaceForm } from '@/payload-types';
 import {
   hiddenFormDefinitionFieldName, hiddenPageUrl,
 } from '@/components/blocks/Form/Form.config';
-import { FormNotification } from '@/components/base/FormNotification/FormNotification';
+import { Notification } from '@/components/base/Notification/Notification';
 import { Section } from '@/components/base/Section/Section';
 
 import {
@@ -81,7 +81,7 @@ export const FormComponent = ({
     >
       <div>
         {submitError &&
-          <FormNotification
+          <Notification
             actionText={form.isNewsletterForm === 'newsletter'
               ? form.newsletterFields?.actionText || ''
               : ''
@@ -101,7 +101,7 @@ export const FormComponent = ({
         }
 
         {submitSuccess &&
-          <FormNotification
+          <Notification
             actionText={form.isNewsletterForm === 'newsletter'
               ? form.newsletterFields?.actionText || ''
               : ''

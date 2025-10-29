@@ -4196,6 +4196,15 @@ export interface StatusMessage {
   id: string;
   tenant?: (string | null) | Tenant;
   adminTitle?: string | null;
+  content: InterfaceStatusMessage;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceStatusMessage".
+ */
+export interface InterfaceStatusMessage {
   show: {
     /**
      * Show, hide or define date range when to show the message.
@@ -4260,8 +4269,6 @@ export interface StatusMessage {
    */
   showOnHomeOnly?: boolean | null;
   type: 'warn' | 'error' | 'success';
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6054,6 +6061,15 @@ export interface InterfaceHeaderMetaNavigationSelect<T extends boolean = true> {
 export interface StatusMessageSelect<T extends boolean = true> {
   tenant?: T;
   adminTitle?: T;
+  content?: T | InterfaceStatusMessageSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceStatusMessage_select".
+ */
+export interface InterfaceStatusMessageSelect<T extends boolean = true> {
   show?:
     | T
     | {
@@ -6076,8 +6092,6 @@ export interface StatusMessageSelect<T extends boolean = true> {
       };
   showOnHomeOnly?: T;
   type?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

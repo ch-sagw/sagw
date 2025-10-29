@@ -436,13 +436,23 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'statusMessage',
     data: {
-      message: simpleRteConfig(`Status Message ${tenant.toUpperCase()}`),
-      show: {
-        display: 'hide',
+      content: {
+        message: simpleRteConfig(`Eigentlich undenkbar, aber trotzdem passiert. Bitte entschuldigen Sie die Unannehmlichkeiten und versuchen Sie es später erneut. ${tenant.toUpperCase()}`),
+        optionalLink: {
+          includeLink: true,
+          link: {
+            internalLink: 'https://www.foo.bar',
+            linkText: simpleRteConfig('Some action link'),
+          },
+        },
+        show: {
+          display: 'show',
+        },
+        showOnHomeOnly: false,
+        title: simpleRteConfig(`Das System ist aktuell nicht verfügbar ${tenant.toUpperCase()}`),
+        type: 'warn',
       },
       tenant: tenantId,
-      title: simpleRteConfig(`Status Title ${tenant.toUpperCase()}`),
-      type: 'error',
     },
   });
 
