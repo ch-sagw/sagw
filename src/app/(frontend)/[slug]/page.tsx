@@ -127,7 +127,7 @@ export default async function DetailPage({
       <main>
         <div className='detail-page'>
           <RenderBlocks
-            blocks={pageData.content}
+            blocks={pageData.content || pageData.blocks.content}
             tenantId={tenant}
             pageLanguage={language}
             i18n={i18nData}
