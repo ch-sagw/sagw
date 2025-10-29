@@ -1,0 +1,53 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.consentBanner {
+  background-color: var(--background-light);
+  padding: px-to-rem(var(--inside-elements-m));
+
+  @include mq($from: large) {
+    padding: px-to-rem(var(--spacing-2xl));
+  }
+
+  @include mq($from: wide) {
+    padding: px-to-rem(var(56));
+  }
+
+  .title {
+    @include title-heading-4;
+
+    color: var(--text-primary);
+  }
+
+  .text {
+    padding-block: px-to-rem(var(--spacing-m)) px-to-rem(var(--spacing-xl));
+
+    @include mq($from: wide) {
+      padding-block-end: px-to-rem(var(--spacing-2xl));
+    }
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    row-gap: px-to-rem(var(--spacing-m));
+    column-gap: px-to-rem(var(--spacing-l));
+
+    @include mq($from: medium) {
+      flex-direction: row;
+    }
+
+    .buttonCustomize {
+      padding-inline: 0;
+      justify-content: center;
+    }
+
+    .button {
+      @include mq($to: large) {
+        justify-content: center;
+      }
+    }
+  }
+}
