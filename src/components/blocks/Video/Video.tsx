@@ -7,6 +7,7 @@ import {
 } from '@/components/blocks/Figure/Figure';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
+import { GumletPlayer } from '@gumlet/react-embed-player';
 
 export type InterfaceVideoPropTypes = {
   alignment: InterfaceFigurePropTypes['alignment'],
@@ -14,7 +15,7 @@ export type InterfaceVideoPropTypes = {
   video: {
     id: string,
     duration: string,
-    title: '',
+    title: string,
   }
 }
 
@@ -36,13 +37,17 @@ export const Video = ({
 
   const playIcon = 'play' as keyof typeof Icon;
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const playerRef = useRef(null);
+  const videoContainer = useRef<HTMLDivElement>(null);
 
   const loadVideo = (): void => {
-    const button = buttonRef.current;
+    // const button = buttonRef.current;
 
-    console.log('button');
-    console.log(button);
-    console.log(button?.getAttribute('aria-label'));
+    if (playerRef.current) {
+      playerRef.current.play();
+    }
+
+    videoContainer.current?.classList.remove(styles.paused);
   };
 
   return (
@@ -54,9 +59,41 @@ export const Video = ({
       <div
         className={styles.videoWrapperInner}
       >
-        <div className={styles.videoContainer}>
+        <div
+          className={
+            `${styles.videoContainer} 
+            ${styles.paused}`
+          }
+          ref={videoContainer}
+        >
+          <GumletPlayer
+            videoID={video.id}
+            title='Video'
+            ref={playerRef}
+            style={{
+              '--media-primary-color': 'deeppink!important',
+              '--media-range-bar-color': 'lime!important',
+              'aspectRatio': '16/9',
+              'height': '100%',
+              'position': 'relative',
+              'width': '100%',
+            }}
+            schemaOrgVideoObject={{
+              '@context': 'https://schema.org',
+              '@type': 'VideoObject',
+              'description': '',
+              'embedUrl': 'https://play.gumlet.io/embed/64bfb0913ed6e5096d66dc1e',
+              'name': 'Gumlet',
+            }}
+            autoplay={false}
+            preload={false}
+            muted={true}
+          />
         </div>
-        <div className={styles.buttonWrapper}>
+        <div
+          className={styles.buttonWrapper}
+          onClick={loadVideo}
+        >
           <Button
             ariaHasPopUp={false}
             ariaLabel='Video mit dem Titel die SAGW stellt sich vor laden und abspielen.'

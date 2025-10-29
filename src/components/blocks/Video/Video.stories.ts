@@ -37,8 +37,8 @@ export const VideoCentered: StrictStory = {
     stillImage: ContentImageCentered.args,
     video: {
       duration: '00:24',
-      id: '',
-      title: '',
+      id: '68f9e148609b9e4625b4278d',
+      title: 'Video Title',
     },
   },
 };
@@ -49,8 +49,8 @@ export const ContentVideoLeftAligned: StrictStory = {
     stillImage: ContentImageLeftAligned.args,
     video: {
       duration: '03:18',
-      id: '',
-      title: '',
+      id: '68f9e148609b9e4625b4278d',
+      title: 'Video Title',
     },
   },
 };
@@ -61,8 +61,8 @@ export const ContentVideoRightAligned: StrictStory = {
     stillImage: ContentImageRightAligned.args,
     video: {
       duration: '02:34',
-      id: '',
-      title: '',
+      id: '68f9e148609b9e4625b4278d',
+      title: 'Video Title',
     },
   },
 };
