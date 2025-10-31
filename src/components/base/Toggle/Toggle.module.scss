@@ -22,6 +22,7 @@
     $labelPaddingSmall: px-to-rem(var(--label-padding-to-end));
     $labelPaddingBig: px-to-rem(calc(var(--border-width) + var(--handle-dimensions) + var(--label-padding-to-toggle)));
 
+    cursor: pointer;
     position: absolute;
     -webkit-tap-highlight-color: transparent;
     box-sizing: border-box;
