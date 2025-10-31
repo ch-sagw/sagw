@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '@/components/global/ConsentBanner/ConsentBanner.module.scss';
+import styles from '@/components/base/ConsentBanner/ConsentBanner.module.scss';
 import { InterfaceConsentBanner } from '@/payload-types';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { rteToHtml } from '@/utilities/rteToHtml';

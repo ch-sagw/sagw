@@ -4,13 +4,14 @@
 @use "../../../styles/utilities/utilities" as *;
 
 .consentWrapper {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   border: none;
   background-color: var(--background-page-overly);
   align-items: center;
   justify-content: center;
   padding: 0;
+  position: relative;
 
   @include mq($from: medium) {
     padding: px-to-rem(var(--spacing-l));
@@ -21,7 +22,6 @@
   }
 
   .consentOverlay {
-    height: 100%;
     background-color: var(--background-page);
     color: var(--text-primary);
     padding: px-to-rem(var(--spacing-l));
