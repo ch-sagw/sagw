@@ -1,0 +1,128 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.consentWrapper {
+  width: 100vw;
+  height: 100vh;
+  border: none;
+  background-color: var(--background-page-overly);
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+
+  @include mq($from: medium) {
+    padding: px-to-rem(var(--spacing-l));
+  }
+
+  &.visible {
+    display: flex;
+  }
+
+  .consentOverlay {
+    height: 100%;
+    background-color: var(--background-page);
+    color: var(--text-primary);
+    padding: px-to-rem(var(--spacing-l));
+    max-width: px-to-rem(880);
+
+    @include mq($from: medium) {
+      height: fit-content;
+    }
+
+    @include mq($from: large) {
+      padding: px-to-rem(var(--spacing-2xl));
+    }
+
+    @include mq($from: wide) {
+      padding: px-to-rem(var(56));
+    }
+
+    .titleLine {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+
+      .title {
+        @include title-heading-3;
+      }
+
+      .closeButton {
+        @include button-reset;
+
+        // ensure 44px click area
+        padding: px-to-rem(calc((44 - var(--spacing-l)) / 2));
+        cursor: pointer;
+
+        svg {
+          width: px-to-rem(var(--spacing-l));
+          height: px-to-rem(var(--spacing-l));
+        }
+      }
+    }
+
+    .text {
+      @include body-text-m;
+
+      margin-block-end: px-to-rem(var(--spacing-2xl));
+    }
+
+    .sections {
+      .section {
+        border-block-end: px-to-rem(var(--border-width-l)) solid var(--border-primary);
+        padding-block: px-to-rem(var(--spacing-xl));
+
+        &:first-child {
+          padding-block-start: 0;
+        }
+
+        .sectionTitleLine {
+          display: flex;
+          flex-wrap: nowrap;
+          justify-content: space-between;
+          align-items: center;
+
+          .sectionTitle {
+            @include title-heading-4;
+          }
+
+          .sectionToggleLabel {
+            @include label-text;
+
+            color: var(--interaction-primary);
+          }
+        }
+
+        .sectionText {
+          @include body-text-m;
+
+          margin-block-end: 0;
+        }
+      }
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      row-gap: px-to-rem(var(--spacing-m));
+      margin-block-start: px-to-rem(var(--spacing-2xl));
+
+      @include mq($from: medium) {
+        flex-direction: row;
+        column-gap: px-to-rem(var(--spacing-l));
+      }
+
+      @include mq($from: wide) {
+        column-gap: px-to-rem(var(--spacing-xl));
+      }
+
+      .button {
+        @include mq($to: large) {
+          justify-content: center;
+        }
+      }
+    }
+  }
+}

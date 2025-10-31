@@ -30,7 +30,7 @@ const meta: Meta<typeof ConsentBanner> = {
 
 export default meta;
 
-export const SampleStory: StrictStory = {
+export const DefaultBanner: StrictStory = {
   args: {
     buttonAcceptAll: simpleRteConfig('Alle zulassen'),
     buttonCustomizeSelection: simpleRteConfig('Alle ablehnen'),

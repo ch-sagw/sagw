@@ -1,0 +1,57 @@
+import type {
+  Meta,
+  StoryObj,
+} from '@storybook/nextjs-vite';
+import { ConsentOverlay } from '@/components/global/ConsentOverlay/ConsentOverlay';
+import { defaultDecoratorNoPadding } from '@/storybook-helpers';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+
+type ConsentOverlayProps = React.ComponentProps<typeof ConsentOverlay>;
+
+type StrictStory = StoryObj<typeof ConsentOverlay> & {
+  args: ConsentOverlayProps;
+};
+
+const meta: Meta<typeof ConsentOverlay> = {
+  args: {},
+  component: ConsentOverlay,
+  decorators: [defaultDecoratorNoPadding],
+  parameters: {
+    layout: 'fullscreen',
+  },
+  tags: [
+    'autodocs',
+    'visual:check',
+    'a11y:check',
+  ],
+  title: 'Components/global/ConsentOverlay',
+};
+
+export default meta;
+
+export const DefaultOverlay: StrictStory = {
+  args: {
+    analyticsPerformance: {
+      text: simpleRteConfig('Diese Gruppe beinhaltet alle Cookies von Skripts für analytisches Tracking. Die Analysen helfen uns, die Nutzer*innenerfahrung der Website zu verbessern.'),
+      title: simpleRteConfig('Analytics und Performance'),
+      toggleLabelOff: simpleRteConfig('Aus'),
+      toggleLabelOn: simpleRteConfig('An'),
+    },
+    buttonAcceptAll: simpleRteConfig('Alle zulassen'),
+    buttonAcceptSelection: simpleRteConfig('Auswahl zulassen'),
+    externalContent: {
+      text: simpleRteConfig('Externe Inhalte umfassen Cookies, die von Drittanbietern gesetzt werden, damit wir auf unserer Website Inhalte von deren Plattform bereitstellen können (wie z.B. Videos oder Social Media Feeds).'),
+      title: simpleRteConfig('Externe Inhalte'),
+      toggleLabelOff: simpleRteConfig('Aus'),
+      toggleLabelOn: simpleRteConfig('An'),
+    },
+    necessaryCookies: {
+      text: simpleRteConfig('Diese Cookies sind notwendig für die grundlegenden Funktionen der Website. Ohne sie ist nicht gewährleistet, dass die Website einwandfrei funktioniert.'),
+      title: simpleRteConfig('Notwendige Cookies'),
+      toggleLabel: simpleRteConfig('Immer an'),
+    },
+    text: simpleRteConfig('Sie haben die volle Kontrolle über Ihre Privatsphäre und entscheiden selbst, welche Cookies wir verwenden dürfen und welche nicht.'),
+    title: simpleRteConfig('Cookies Einstellungen'),
+    visible: true,
+  },
+};

@@ -1,7 +1,6 @@
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
-@use "../../../styles/utilities/utilities" as *;
 
 .consentBanner {
   background-color: var(--background-light);
