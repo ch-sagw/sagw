@@ -3,6 +3,8 @@
 @use "../../../styles/utilities/mediaqueries" as *;
 
 .consentBanner {
+  --content-max-width: 1000;
+
   background-color: var(--background-light);
   padding: px-to-rem(var(--inside-elements-m));
 
@@ -18,10 +20,12 @@
     @include title-heading-4;
 
     color: var(--text-primary);
+    max-width: px-to-rem(var(--content-max-width));
   }
 
   .text {
     padding-block: px-to-rem(var(--spacing-m)) px-to-rem(var(--spacing-xl));
+    max-width: px-to-rem(var(--content-max-width));
 
     @include mq($from: wide) {
       padding-block-end: px-to-rem(var(--spacing-2xl));
