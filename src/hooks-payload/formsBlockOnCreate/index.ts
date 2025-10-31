@@ -23,10 +23,15 @@ export const hookFormsBlockOnCreate: CollectionBeforeValidateHook = ({
     const hasFormBlock = data?.content.some((block: Block) => block.slug === 'formBlock');
 
     if (!hasFormBlock) {
-      data?.content.push({
-        blockType: 'formBlock',
-        form: null,
-      });
+
+      // don't do it during seed. otherwise we get a validation error due
+      // to missing form relation which is empty at that point.
+      if (process.env.ENV !== 'seed' && process.env.ENV !== 'playwright') {
+        data?.content.push({
+          blockType: 'formBlock',
+          form: null,
+        });
+      }
     }
   }
 

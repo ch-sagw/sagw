@@ -7,7 +7,6 @@ import {
 } from '@/components/global/Header/Header';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import React, { Fragment } from 'react';
-import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
   defaultMetaNavItems, defaultNavItems,
 } from '@/components/global/Header/Header.sampleData';
@@ -57,10 +56,6 @@ const render = (args: Partial<InterfaceHeaderPropTypes> & InterfaceHeaderPropTyp
 const defaultArgs: InterfaceHeaderPropTypes = {
   colorMode: 'dark',
   currentLang: 'de',
-  langnav: {
-    description: simpleRteConfig('Die SAGW Webseite ist in vier Sprachen verfügbar'),
-    title: simpleRteConfig('Sprachen'),
-  },
   logoLink: '/',
   menuButton: {
     close: 'Schliessen',

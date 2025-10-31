@@ -102,3 +102,19 @@ export const formatDateRangeToReadableString = ({
   // e.g. 27. Oktober 2025 - 01. Januar 2026
   return `${formatDay(start)}. ${formatMonth(start)} ${formatYear(start)} - ${formatDay(end)}. ${formatMonth(end)} ${formatYear(end)}`;
 };
+
+interface InterfaceFormatTimeProps {
+  dateString: string;
+}
+
+export const formatTime = ({
+  dateString,
+}: InterfaceFormatTimeProps): string => {
+  const date = new Date(dateString);
+
+  return date.toLocaleTimeString('de-DE', {
+    hour: '2-digit',
+    hour12: false,
+    minute: '2-digit',
+  });
+};

@@ -1,5 +1,6 @@
 import { JSX } from 'react';
-import './styles.scss';
+import '@/components/admin/EnvIndicator/styles.scss';
+import packageJson from '../../../../package.json';
 
 const EnvIndicator = (): JSX.Element => {
   const dbName = process.env.DATABASE_NAME;
@@ -17,6 +18,17 @@ const EnvIndicator = (): JSX.Element => {
   }
 
   if (env) {
+    const shouldShowVersion = env === 'prod' || env === 'local';
+
+    if (shouldShowVersion) {
+      return (
+        <p className='env'>
+          You are on <span className='env-name'>{env}</span> environment.
+          Version: <a className='version' target='_blank' href={`https://github.com/ch-sagw/sagw/releases/tag/v${packageJson.version}`}><span>{packageJson.version}</span></a>
+        </p>
+      );
+    }
+
     return <p className='env'>You are on <span className='env-name'>{env}</span> environment.</p>;
   }
 

@@ -1,5 +1,6 @@
 import {
   CollectionBeforeValidateHook, ValidationError,
+  Where,
 } from 'payload';
 import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import { fieldSlugFieldName } from '@/field-templates/slug';
@@ -48,36 +49,42 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
 
   // try to find desired slug in collection items of current tenant
   if (desiredSlug) {
+    const searchConstraints: Where[] = [
+      {
+        tenant: {
+          in: tenant,
+        },
+      },
+      {
+        slug: {
+          equals: desiredSlug,
+        },
+      },
+      {
+        id: {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          not_equals: originalDoc.id,
+          /* eslint-enable @typescript-eslint/naming-convention */
+        },
+      },
+    ];
+
+    if ('_published' in collection) {
+      searchConstraints.push({
+
+        /* eslint-disable @typescript-eslint/naming-convention */
+        _status: {
+          equals: 'published',
+        },
+        /* eslint-enable @typescript-eslint/naming-convention */
+      });
+    }
+
     const existing = await req.payload.find({
       collection: collection.slug,
       limit: 1,
       where: {
-        and: [
-          {
-            tenant: {
-              in: tenant,
-            },
-          },
-          {
-            slug: {
-              equals: desiredSlug,
-            },
-          },
-          {
-            /* eslint-disable @typescript-eslint/naming-convention */
-            _status: {
-              equals: 'published',
-            },
-            /* eslint-enable @typescript-eslint/naming-convention */
-          },
-          {
-            id: {
-              /* eslint-disable @typescript-eslint/naming-convention */
-              not_equals: originalDoc.id,
-              /* eslint-enable @typescript-eslint/naming-convention */
-            },
-          },
-        ],
+        and: searchConstraints,
       },
     });
 

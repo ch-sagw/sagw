@@ -2,8 +2,18 @@
   & .env-name {
     font-weight: bold;
     padding: 0.2rem 0.5rem;
-    background-color: red;
+    background-color: rgb(117 0 0);
     color: white;
     border-radius: 0.2rem;
+  }
+
+  & .version {
+    font-weight: bold;
+    padding: 0.2rem 0.5rem;
+    background-color: #007acc;
+    color: white;
+    border-radius: 0.2rem;
+    margin-left: 0.5rem;
+    text-decoration: none;
   }
 }

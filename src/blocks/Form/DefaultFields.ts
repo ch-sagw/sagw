@@ -58,10 +58,8 @@ export const formFieldCheckbox: Field = {
 };
 
 export const formFieldError: Field = {
-  admin: {
-    condition: (_, siblingData) => siblingData.required === true,
-  },
   ...rte1({
+    adminCondition: (_, siblingData) => siblingData.required === true,
     name: 'fieldError',
   }),
 };

@@ -11,6 +11,18 @@ import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superA
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
+import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
+import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
+
+const contentBlocks = [
+  'textBlock',
+  'linksBlock',
+  'notificationBlock',
+] as const;
+
+type ContentBlock = typeof contentBlocks[number];
+
+const uniqueBlocks: ContentBlock[] = ['linksBlock'];
 
 export const InstituteDetailPage: CollectionConfig = {
   access: {
@@ -63,14 +75,17 @@ export const InstituteDetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blocks: blocks([
-                'textBlock',
-                'linksBlock',
-                'notificationBlock',
-              ]),
+              blocks: blocks(contentBlocks),
+              filterOptions: excludeBlocksFilterSingle({
+                allBlockTypes: contentBlocks,
+                onlyAllowedOnceBlockTypes: uniqueBlocks,
+              }),
               label: 'Content',
               name: 'content',
               type: 'blocks',
+              validate: validateUniqueBlocksSingle({
+                onlyAllowedOnceBlockTypes: uniqueBlocks,
+              }),
             },
           ],
           label: 'Content',

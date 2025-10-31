@@ -1,5 +1,4 @@
 import { CollectionConfig } from 'payload';
-import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
 
 export const Teams: CollectionConfig = {
@@ -14,15 +13,11 @@ export const Teams: CollectionConfig = {
       name: 'name',
     }),
     {
-      admin: {
-        allowCreate: false,
-      },
-      collection: 'people',
-      name: 'relatedPeople',
-      on: 'team',
-      type: 'join',
+      hasMany: true,
+      name: 'people',
+      relationTo: 'people',
+      type: 'relationship',
     },
   ],
   slug: 'teams',
-  versions,
 };

@@ -1,6 +1,5 @@
 import { Block } from 'payload';
 import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
-import { rte1 } from '@/field-templates/rte';
 
 // Example: Magazine Detail
 
@@ -9,12 +8,12 @@ export const LinksBlock = {
     disableBlockName: true,
   },
   fields: [
-    rte1({
-      name: 'title',
-    }),
     {
-      fields: fieldsLinkInternalOrExternal,
+      fields: fieldsLinkInternalOrExternal({
+        showDescription: true,
+      }),
       name: 'links',
+      required: true,
       type: 'array',
     },
   ],

@@ -13,7 +13,7 @@ export const DownloadsBlock = {
       name: 'subtitle',
       notRequired: true,
     }),
-    fieldsLinkInternalWithToggle,
+    fieldsLinkInternalWithToggle({}),
     {
       defaultValue: 'custom',
       name: 'customOrAuto',
@@ -36,6 +36,7 @@ export const DownloadsBlock = {
       },
       hasMany: true,
       label: 'Select documents to add',
+      localized: true,
       name: 'downloads',
       relationTo: [
         'documents',

@@ -2,7 +2,6 @@
 import { Users } from '@/collections/Plc/Users';
 import { Images } from '@/collections/Plc/Images';
 import { Videos } from '@/collections/Plc/Videos';
-import { Svgs } from '@/collections/Plc/Svgs';
 import { NetworkCategories } from '@/collections/Plc/NetworkCategories';
 import { Documents } from '@/collections/Plc/Documents';
 import { Projects } from '@/collections/Plc/Projects';
@@ -39,7 +38,6 @@ import { Theme } from '@/collections/Globals/Theme';
 export const plcCollections: CollectionConfig[] = [
   Images,
   Videos,
-  Svgs,
   NetworkCategories,
   Documents,
   ZenodoDocuments,

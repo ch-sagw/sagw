@@ -15,7 +15,7 @@ export const CtaLinkBlock = {
     rte1({
       name: 'text',
     }),
-    ...fieldsLinkInternalOrExternal,
+    ...fieldsLinkInternalOrExternal({}),
   ],
   imageURL: '/admin-ui-images/cta-link.svg',
   interfaceName: 'InterfaceCtaLinkBlock',

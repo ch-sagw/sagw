@@ -47,6 +47,26 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     });
   }
 
+  // create user for sagw
+  if (tenant === 'sagw') {
+    if (process.env.PAYLOAD_INITIAL_USER_SAGW_MAIL) {
+      await payload.create({
+        collection: 'users',
+        data: {
+          email: process.env.PAYLOAD_INITIAL_USER_SAGW_MAIL,
+          password: process.env.PAYLOAD_INITIAL_SAGW_PASSWORD,
+          tenants: [
+            {
+              roles: [tenantRoles.admin],
+              tenant: tenantId,
+            },
+          ],
+          username: 'Stella',
+        },
+      });
+    }
+  }
+
   // ############
   // Assets
   // ############
@@ -55,29 +75,16 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const image = await payload.create({
     collection: 'images',
     data: {
-      _status: 'published',
       alt: `${tenant.toUpperCase} image`,
       tenant: tenantId,
     },
     filePath: `src/seed/test-data/assets/${tenant}.png`,
   });
 
-  // add svg
-  await payload.create({
-    collection: 'svgs',
-    data: {
-      _status: 'published',
-      name: `${tenant.toUpperCase()} SVG`,
-      tenant: tenantId,
-    },
-    filePath: `src/seed/test-data/assets/${tenant}.svg`,
-  });
-
   // add video
   await payload.create({
     collection: 'videos',
     data: {
-      _status: 'published',
       tenant: tenantId,
       title: `video ${tenant}`,
     },
@@ -88,7 +95,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const document = await payload.create({
     collection: 'documents',
     data: {
-      _status: 'published',
       date: '2025-10-30',
       tenant: tenantId,
       title: simpleRteConfig(`${tenant.toUpperCase()} Document`),
@@ -100,7 +106,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const zenodoDocument = await payload.create({
     collection: 'zenodoDocuments',
     data: {
-      _status: 'published',
       files: [
         {
           format: 'pdf',
@@ -129,7 +134,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     await payload.create({
       collection: 'zenodoDocuments',
       data: {
-        _status: 'published',
         files: [
           {
             format: 'pdf',
@@ -154,7 +158,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const publicationTopic = await payload.create({
     collection: 'publicationTopics',
     data: {
-      _status: 'published',
       publicationTopic: simpleRteConfig(`Publication Topic 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
@@ -164,7 +167,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const publicationType = await payload.create({
     collection: 'publicationTypes',
     data: {
-      _status: 'published',
       publicationType: simpleRteConfig(`Publication Type 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
@@ -174,7 +176,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'networkCategories',
     data: {
-      _status: 'published',
       name: simpleRteConfig(`Network Category 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
@@ -184,33 +185,31 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const project = await payload.create({
     collection: 'projects',
     data: {
-      _status: 'published',
-      name: simpleRteConfig(`Project 1 ${tenant.toUpperCase()}`),
+      name: simpleRteConfig(`DE Project 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
-  });
-
-  // create a team
-  const team = await payload.create({
-    collection: 'teams',
-    data: {
-      _status: 'published',
-      name: simpleRteConfig(`Team 1 ${tenant.toUpperCase()}`),
-      tenant: tenantId,
-    },
+    locale: 'de',
   });
 
   // create person in people
-  await payload.create({
+  const person = await payload.create({
     collection: 'people',
     data: {
-      _status: 'published',
       firstname: simpleRteConfig(`Firstname ${tenant.toUpperCase()}`),
       function: simpleRteConfig('Some function'),
       lastname: simpleRteConfig(`Lastname ${tenant.toUpperCase()}`),
       mail: simpleRteConfig('foo@bar.com'),
       phone: simpleRteConfig('031 123 45 67'),
-      team: [team],
+      tenant: tenantId,
+    },
+  });
+
+  // create a team
+  await payload.create({
+    collection: 'teams',
+    data: {
+      name: simpleRteConfig(`Team 1 ${tenant.toUpperCase()}`),
+      people: [person.id],
       tenant: tenantId,
     },
   });
@@ -219,7 +218,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const eventCategory = await payload.create({
     collection: 'eventCategory',
     data: {
-      _status: 'published',
       eventCategory: simpleRteConfig(`Event Category 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
@@ -229,7 +227,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'consent',
     data: {
-      _status: 'published',
       banner: {
         buttonAcceptAll: simpleRteConfig(`Accept all ${tenant.toUpperCase()}`),
         buttonCustomizeSelection: simpleRteConfig(`Customize ${tenant.toUpperCase()}`),
@@ -269,7 +266,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'footer',
     data: {
-      _status: 'published',
       contact: {
         address1: simpleRteConfig('Haus der Akademien'),
         address2: simpleRteConfig('Laupenstrasse 7'),
@@ -290,8 +286,19 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         items: [
           {
             externalLink: 'https://www.foo.bar',
-            externalLinkText: simpleRteConfig('Visit us on Instagram'),
             icon: 'instagram',
+          },
+          {
+            externalLink: 'https://www.foo.bar',
+            icon: 'facebook',
+          },
+          {
+            externalLink: 'https://www.foo.bar',
+            icon: 'twitter',
+          },
+          {
+            externalLink: 'https://www.foo.bar',
+            icon: 'linkedIn',
           },
         ],
       },
@@ -303,11 +310,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'header',
     data: {
-      _status: 'published',
-      languageNavigation: {
-        description: simpleRteConfig('Die SAGW Webseite ist in vier Sprachen verfügbar'),
-        title: simpleRteConfig('Sprachen'),
-      },
       metanavigation: {
         metaLinks: [
           {
@@ -434,7 +436,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'statusMessage',
     data: {
-      _status: 'published',
       message: simpleRteConfig(`Status Message ${tenant.toUpperCase()}`),
       show: {
         display: 'hide',
@@ -449,7 +450,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const form = await payload.create({
     collection: 'forms',
     data: {
-      _status: 'published',
       colorMode: 'dark',
       fields: [
         {
@@ -529,7 +529,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const newsletterForm = await payload.create({
     collection: 'forms',
     data: {
-      _status: 'published',
       colorMode: 'dark',
       isNewsletterForm: 'newsletter',
       newsletterFields: {
@@ -541,12 +540,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           placeholder: 'Ihre E-Mail Adresse',
         },
         includeLanguageSelection: 'yes',
-        name: {
-          fieldError: simpleRteConfig('Bitte geben Sie Ihren Namen an.'),
-          fieldWidth: 'half',
-          label: simpleRteConfig('Name'),
-          placeholder: 'Ihr Name',
-        },
       },
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: true,
@@ -569,7 +562,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'i18nGlobals',
     data: {
-      _status: 'published',
       bibliographicReference: {
         copyButtonText: simpleRteConfig('Copy button text'),
         title: simpleRteConfig('Title'),
@@ -583,6 +575,8 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       generic: {
         downloadTitle: simpleRteConfig('Download title'),
         exportArticleButtonText: simpleRteConfig('Export article button text'),
+        linksTitle: simpleRteConfig('Links'),
+        time: simpleRteConfig('Uhr'),
         writeEmailButtonText: simpleRteConfig('Write email button text'),
       },
       tenant: tenantId,
@@ -614,10 +608,12 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         // },
         {
           blockType: 'eventsTeasersBlock',
+          linkText: simpleRteConfig('Alle events'),
           title: simpleRteConfig('Events'),
         },
         {
           blockType: 'newsTeasersBlock',
+          linkText: simpleRteConfig('Alle News'),
           title: simpleRteConfig('News'),
         },
         {
@@ -680,11 +676,15 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'errorPage',
     data: {
       _status: 'published',
-      homeButtonText: simpleRteConfig('Home Button Text'),
-      notFound: {
+      error400: {
         description: simpleRteConfig('Error description'),
         title: simpleRteConfig(`Not found title ${tenant.toUpperCase()}`),
       },
+      error500: {
+        description: simpleRteConfig('Error description'),
+        title: simpleRteConfig(`Not found title ${tenant.toUpperCase()}`),
+      },
+      homeButtonText: simpleRteConfig('Home Button Text'),
       tenant: tenantId,
     },
   });
@@ -761,7 +761,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
               linkType: 'mail',
             },
           ],
-          title: simpleRteConfig('Links'),
         },
 
         // downloads block
@@ -816,47 +815,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'overviewPage',
     data: {
       _status: 'published',
-      content: [
-
-        // cta link block internal link
-        {
-          blockType: 'ctaLinkBlock',
-          linkInternal: {
-            internalLink: `detailPage/${detailPage.id}`,
-            linkText: simpleRteConfig('Internal Link Text (internal)'),
-          },
-          linkType: 'internal',
-          text: simpleRteConfig('CTA Link Block Text (internal)'),
-          title: simpleRteConfig('CTA Link Block Title (internal)'),
-
-        },
-
-        // cta link block external link
-        {
-          blockType: 'ctaLinkBlock',
-          linkExternal: {
-            externalLink: 'https://www.foo.bar',
-            externalLinkText: simpleRteConfig('External Link Text (external)'),
-          },
-          linkType: 'external',
-          text: simpleRteConfig('CTA Link Block Text (external)'),
-          title: simpleRteConfig('CTA Link Block Title (external)'),
-
-        },
-
-        // cta link block mail link
-        {
-          blockType: 'ctaLinkBlock',
-          linkMail: {
-            email: 'foo@bar.com',
-            linkText: simpleRteConfig('Mail link'),
-          },
-          linkType: 'mail',
-          text: simpleRteConfig('CTA Link Block Text (mail)'),
-          title: simpleRteConfig('CTA Link Block Title (mail)'),
-
-        },
-      ],
       hero: {
         colorMode: 'white',
         lead: simpleRteConfig('Overview Page Lead'),
@@ -935,9 +893,52 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       collection: 'eventDetailPage',
       data: {
         _status: 'published',
+        blocks: {
+          content: [
+
+            // cta link block internal link
+            {
+              blockType: 'ctaLinkBlock',
+              linkInternal: {
+                internalLink: `detailPage/${detailPage.id}`,
+                linkText: simpleRteConfig('Internal Link Text (internal)'),
+              },
+              linkType: 'internal',
+              text: simpleRteConfig('CTA Link Block Text (internal)'),
+              title: simpleRteConfig('CTA Link Block Title (internal)'),
+
+            },
+
+            // cta link block external link
+            {
+              blockType: 'ctaLinkBlock',
+              linkExternal: {
+                externalLink: 'https://www.foo.bar',
+                externalLinkText: simpleRteConfig('External Link Text (external)'),
+              },
+              linkType: 'external',
+              text: simpleRteConfig('CTA Link Block Text (external)'),
+              title: simpleRteConfig('CTA Link Block Title (external)'),
+
+            },
+
+            // cta link block mail link
+            {
+              blockType: 'ctaLinkBlock',
+              linkMail: {
+                email: 'foo@bar.com',
+                linkText: simpleRteConfig('Mail link'),
+              },
+              linkType: 'mail',
+              text: simpleRteConfig('CTA Link Block Text (mail)'),
+              title: simpleRteConfig('CTA Link Block Title (mail)'),
+
+            },
+          ],
+        },
         eventDetails: {
           category: eventCategory.id,
-          date: `2025-08-${index < 10
+          date: `2030-08-${index < 10
             ? `0${index}`
             : index}T12:00:00.000Z`,
           dateEnd: `2026-01-${index < 10
@@ -946,13 +947,8 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           language: simpleRteConfig('Deutsch'),
           location: simpleRteConfig('ETH Zürich'),
           project: project.id,
-          time: simpleRteConfig('10:00'),
+          time: '2025-08-31T12:00:00.000Z',
           title: simpleRteConfig(`Event ${index} details title ${tenant.toUpperCase()} (render detail page)`),
-        },
-        hero: {
-          colorMode: 'white',
-          lead: simpleRteConfig(`Event ${index} Detail Page Lead`),
-          title: simpleRteConfig(`Event ${index} detail page title ${tenant.toUpperCase()} (render detail page)`),
         },
         showDetailPage: 'true',
         tenant: tenantId,
@@ -972,19 +968,14 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         _status: 'published',
         eventDetails: {
           category: eventCategory.id,
-          date: `2025-08-${index < 10
+          date: `2030-08-${index < 10
             ? `0${index}`
             : index}T12:00:00.000Z`,
           project: project.id,
           title: simpleRteConfig(`Event ${index} detail title ${tenant.toUpperCase()} (render link)`),
         },
-        hero: {
-          colorMode: 'white',
-          title: simpleRteConfig(`Event ${index} detail page title ${tenant.toUpperCase()} (render link)`),
-        },
         link: {
           externalLink: 'https://www.foo.bar',
-          externalLinkText: simpleRteConfig('External Link'),
         },
         showDetailPage: 'false',
         tenant: tenantId,
@@ -1034,6 +1025,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         title: simpleRteConfig(`Publication detail page title ${tenant.toUpperCase()}`),
       },
       overviewPageProps: {
+        date: '2025-08-31T12:00:00.000Z',
         image,
       },
       tenant: tenantId,

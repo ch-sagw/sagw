@@ -126,11 +126,6 @@ const defaultFormConfig: FormProps = {
         label: simpleRteConfig('foo'),
         placeholder: 'baz',
       },
-      name: {
-        fieldWidth: 'full',
-        label: simpleRteConfig('foo'),
-        placeholder: 'baz',
-      },
     },
     recipientMail: 'foo@bar.baz',
     showPrivacyCheckbox: true,

@@ -13,7 +13,7 @@ export const EventsTeasersBlock = {
     }),
     {
       admin: {
-        description: 'Do you want to add a link to the Events overview page?',
+        description: 'Do you want to add a link to the Events overview page? Note: This link will not be shown on project detail pages.',
       },
       defaultValue: 'no',
       name: 'link',
@@ -30,10 +30,8 @@ export const EventsTeasersBlock = {
       type: 'radio',
     },
     {
-      admin: {
-        condition: (_, siblingData): boolean => siblingData.link === 'yes',
-      },
       ...rte1({
+        adminCondition: (_, siblingData): boolean => siblingData.link === 'yes',
         name: 'linkText',
       }),
     },

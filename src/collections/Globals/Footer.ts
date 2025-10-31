@@ -6,11 +6,12 @@ import { fieldsLinkExternal } from '@/field-templates/links';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
-import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
 
 const fieldsSocialLink: Field[] = [
-  ...fieldsLinkExternal,
+  ...fieldsLinkExternal({
+    hideLinkText: true,
+  }),
   {
     name: 'icon',
     options: [
@@ -19,7 +20,7 @@ const fieldsSocialLink: Field[] = [
         value: 'linkedIn',
       },
       {
-        label: 'Intagram',
+        label: 'Instagram',
         value: 'instagram',
       },
       {
@@ -79,7 +80,7 @@ export const Footer: CollectionConfig = {
               notRequired: true,
             }),
             rte1({
-              disableLocalization: true,
+              disableLocalization: false,
               name: 'poBox',
               notRequired: true,
             }),
@@ -129,5 +130,4 @@ export const Footer: CollectionConfig = {
     singular: 'Footer',
   },
   slug: 'footer',
-  versions,
 };

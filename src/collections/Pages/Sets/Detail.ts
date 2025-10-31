@@ -12,6 +12,30 @@ import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
+import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
+import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
+
+const contentBlocks = [
+  'textBlock',
+  'footnoteBlock',
+  'linksBlock',
+  'downloadsBlock',
+  'imageBlock',
+  'videoBlock',
+  'accordionBlock',
+  'formBlock',
+  'ctaContactBlock',
+  'ctaLinkBlock',
+  'notificationBlock',
+  'genericTeasersBlock',
+] as const;
+
+type ContentBlock = typeof contentBlocks[number];
+
+const uniqueBlocks: ContentBlock[] = [
+  'downloadsBlock',
+  'linksBlock',
+];
 
 export const DetailPage: CollectionConfig = {
   access: {
@@ -46,23 +70,17 @@ export const DetailPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blocks: blocks([
-                'textBlock',
-                'footnoteBlock',
-                'linksBlock',
-                'downloadsBlock',
-                'imageBlock',
-                'videoBlock',
-                'accordionBlock',
-                'formBlock',
-                'ctaContactBlock',
-                'ctaLinkBlock',
-                'notificationBlock',
-                'genericTeasersBlock',
-              ]),
+              blocks: blocks(contentBlocks),
+              filterOptions: excludeBlocksFilterSingle({
+                allBlockTypes: contentBlocks,
+                onlyAllowedOnceBlockTypes: uniqueBlocks,
+              }),
               label: 'Content',
               name: 'content',
               type: 'blocks',
+              validate: validateUniqueBlocksSingle({
+                onlyAllowedOnceBlockTypes: uniqueBlocks,
+              }),
             },
           ],
           label: 'Content',

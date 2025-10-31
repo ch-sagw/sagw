@@ -82,7 +82,6 @@ export interface Config {
     projectDetailPage: ProjectDetailPage;
     images: Image;
     videos: Video;
-    svgs: Svg;
     networkCategories: NetworkCategory;
     documents: Document;
     zenodoDocuments: ZenodoDocument;
@@ -114,8 +113,8 @@ export interface Config {
       relatedDocuments: 'documents';
       relatedZenodoDocuments: 'zenodoDocuments';
     };
-    teams: {
-      relatedPeople: 'people';
+    people: {
+      relatedTeams: 'teams';
     };
     publicationTopics: {
       relatedPublicationPages: 'publicationDetailPage';
@@ -143,7 +142,6 @@ export interface Config {
     projectDetailPage: ProjectDetailPageSelect<false> | ProjectDetailPageSelect<true>;
     images: ImagesSelect<false> | ImagesSelect<true>;
     videos: VideosSelect<false> | VideosSelect<true>;
-    svgs: SvgsSelect<false> | SvgsSelect<true>;
     networkCategories: NetworkCategoriesSelect<false> | NetworkCategoriesSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     zenodoDocuments: ZenodoDocumentsSelect<false> | ZenodoDocumentsSelect<true>;
@@ -313,21 +311,6 @@ export interface InterfaceHeroFieldHome {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
-      description?: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
       linkText: {
         root: {
           type: string;
@@ -376,7 +359,7 @@ export interface InterfaceTextBlock {
  * via the `definition` "InterfaceFormBlock".
  */
 export interface InterfaceFormBlock {
-  form?: (string | null) | Form;
+  form: string | Form;
   id?: string | null;
   blockName?: string | null;
   blockType: 'formBlock';
@@ -464,21 +447,6 @@ export interface Form {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
-        description?: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
         linkText: {
           root: {
             type: string;
@@ -532,21 +500,6 @@ export interface Form {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
-        description?: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
         linkText: {
           root: {
             type: string;
@@ -611,41 +564,6 @@ export interface Form {
         [k: string]: unknown;
       } | null;
     };
-    name: {
-      label: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
-      placeholder: string;
-      fieldWidth: 'full' | 'half';
-      required?: boolean | null;
-      fieldError?: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
-    };
     /**
      * The action text to show at the bottom of the notification. e.g.: "Send verifiaction E-Mail again."
      */
@@ -657,7 +575,6 @@ export interface Form {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -931,23 +848,8 @@ export interface InterfaceHomeTeasersBlock {
           };
           [k: string]: unknown;
         };
-        icon: string | Svg;
+        icon: 'bar';
         link: {
-          description?: {
-            root: {
-              type: string;
-              children: {
-                type: any;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
           linkText: {
             root: {
               type: string;
@@ -974,27 +876,6 @@ export interface InterfaceHomeTeasersBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "svgs".
- */
-export interface Svg {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceEventsTeasersBlock".
  */
 export interface InterfaceEventsTeasersBlock {
@@ -1014,7 +895,7 @@ export interface InterfaceEventsTeasersBlock {
     [k: string]: unknown;
   };
   /**
-   * Do you want to add a link to the Events overview page?
+   * Do you want to add a link to the Events overview page? Note: This link will not be shown on project detail pages.
    */
   link?: ('no' | 'yes') | null;
   linkText?: {
@@ -1042,7 +923,7 @@ export interface InterfaceEventsTeasersBlock {
  * via the `definition` "InterfaceMagazineTeasersBlock".
  */
 export interface InterfaceMagazineTeasersBlock {
-  linkText: {
+  title: {
     root: {
       type: string;
       children: {
@@ -1057,6 +938,41 @@ export interface InterfaceMagazineTeasersBlock {
     };
     [k: string]: unknown;
   };
+  lead?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Align Title & text horizontally or vertically
+   */
+  alignement?: ('vertical' | 'horizontal') | null;
+  linkText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  internalLink?: string | null;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1083,7 +999,7 @@ export interface InterfaceNewsTeasersBlock {
     [k: string]: unknown;
   };
   /**
-   * Do you want to add a link to the News overview page?
+   * Do you want to add a link to the News overview page? Note: This link will not be shown on project detail pages.
    */
   link?: ('no' | 'yes') | null;
   linkText?: {
@@ -1127,7 +1043,7 @@ export interface InterfacePublicationsTeasersBlock {
     [k: string]: unknown;
   };
   /**
-   * Do you want to add a link to the Publications overview page?
+   * Do you want to add a link to the Publications overview page? Note: This link will not be shown on project detail pages.
    */
   link?: ('no' | 'yes') | null;
   linkText?: {
@@ -1155,7 +1071,7 @@ export interface InterfacePublicationsTeasersBlock {
  * via the `definition` "InterfaceProjectTeasersBlock".
  */
 export interface InterfaceProjectTeasersBlock {
-  linkText: {
+  title: {
     root: {
       type: string;
       children: {
@@ -1170,12 +1086,49 @@ export interface InterfaceProjectTeasersBlock {
     };
     [k: string]: unknown;
   };
+  lead?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Align Title & text horizontally or vertically
+   */
+  alignement?: ('vertical' | 'horizontal') | null;
+  linkText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  internalLink?: string | null;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'projectsTeasersBlock';
 }
 /**
+ * Allowed image formats: png, jpg, jpeg, gif, webp, avif, tiff
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "images".
  */
@@ -1185,7 +1138,6 @@ export interface Image {
   alt: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -1218,7 +1170,39 @@ export interface ErrorPage {
     };
     [k: string]: unknown;
   };
-  notFound: {
+  error400: {
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    description: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+  };
+  error500: {
     title: {
       root: {
         type: string;
@@ -1368,9 +1352,6 @@ export interface MagazineDetailPage {
    */
   slug?: string | null;
   overviewPageProps: {
-    /**
-     * This text will be used as text for the teasers on the overview page.
-     */
     teaserText: {
       root: {
         type: string;
@@ -1472,111 +1453,94 @@ export interface InterfaceHeroFieldMagazineDetail {
  * via the `definition` "InterfaceLinksBlock".
  */
 export interface InterfaceLinksBlock {
-  title: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
+  links: {
+    linkType: 'internal' | 'external' | 'mail';
+    linkInternal?: {
+      description?: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
         [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
+      } | null;
+      linkText: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      internalLink: string;
     };
-    [k: string]: unknown;
-  };
-  links?:
-    | {
-        linkType: 'internal' | 'external' | 'mail';
-        linkInternal?: {
-          description?: {
-            root: {
-              type: string;
-              children: {
-                type: any;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
+    linkExternal?: {
+      description?: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
             [k: string]: unknown;
-          } | null;
-          linkText: {
-            root: {
-              type: string;
-              children: {
-                type: any;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          };
-          internalLink: string;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
         };
-        linkExternal?: {
-          description?: {
-            root: {
-              type: string;
-              children: {
-                type: any;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
+        [k: string]: unknown;
+      } | null;
+      externalLinkText: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
             [k: string]: unknown;
-          } | null;
-          externalLinkText: {
-            root: {
-              type: string;
-              children: {
-                type: any;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          };
-          externalLink: string;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
         };
-        linkMail?: {
-          linkText: {
-            root: {
-              type: string;
-              children: {
-                type: any;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
+        [k: string]: unknown;
+      };
+      externalLink: string;
+    };
+    linkMail?: {
+      linkText: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
             [k: string]: unknown;
-          };
-          email: string;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
         };
-        id?: string | null;
-      }[]
-    | null;
+        [k: string]: unknown;
+      };
+      email: string;
+    };
+    id?: string | null;
+  }[];
   id?: string | null;
   blockName?: string | null;
   blockType: 'linksBlock';
@@ -1604,21 +1568,6 @@ export interface InterfaceDownloadsBlock {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
-      description?: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
       linkText: {
         root: {
           type: string;
@@ -1656,6 +1605,8 @@ export interface InterfaceDownloadsBlock {
   blockType: 'downloadsBlock';
 }
 /**
+ * Allowed formats: pdf
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "documents".
  */
@@ -1681,7 +1632,6 @@ export interface Document {
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -1748,7 +1698,6 @@ export interface Project {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1764,9 +1713,6 @@ export interface NewsDetailPage {
    */
   slug?: string | null;
   overviewPageProps: {
-    /**
-     * This text will be used as text for the teasers on the overview page.
-     */
     teaserText: {
       root: {
         type: string;
@@ -1871,6 +1817,9 @@ export interface InterfaceImageBlock {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * The © will be added automatically in front of this text.
+   */
   credits: {
     root: {
       type: string;
@@ -1977,69 +1926,26 @@ export interface EventDetailPage {
       };
       [k: string]: unknown;
     } | null;
-    time?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
     category?: (string | null) | EventCategory;
     project?: (string | null) | Project;
+    time?: string | null;
     date: string;
     multipleDays?: boolean | null;
     dateEnd?: string | null;
   };
   showDetailPage?: ('true' | 'false') | null;
-  hero: InterfaceHeroField;
-  content?:
-    | (
-        | InterfaceTextBlock
-        | InterfaceLinksBlock
-        | InterfaceDownloadsBlock
-        | InterfaceFormBlock
-        | InterfaceNotificationBlock
-      )[]
-    | null;
+  blocks?: {
+    content?:
+      | (
+          | InterfaceTextBlock
+          | InterfaceDownloadsBlock
+          | InterfaceFormBlock
+          | InterfaceCtaLinkBlock
+          | InterfaceNotificationBlock
+        )[]
+      | null;
+  };
   link?: {
-    description?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    externalLinkText: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
     externalLink: string;
   };
   meta?: {
@@ -2086,7 +1992,100 @@ export interface EventCategory {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceCtaLinkBlock".
+ */
+export interface InterfaceCtaLinkBlock {
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  text: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  linkType: 'internal' | 'external' | 'mail';
+  linkInternal?: {
+    linkText: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    internalLink: string;
+  };
+  linkExternal?: {
+    externalLinkText: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    externalLink: string;
+  };
+  linkMail?: {
+    linkText: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    email: string;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ctaLinkBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2106,10 +2105,11 @@ export interface PublicationDetailPage {
      * This image will be used for the teasers on the overview page.
      */
     image: string | Image;
+    date: string;
   };
-  categorization: {
-    topic: string | PublicationTopic;
-    type: string | PublicationType;
+  categorization?: {
+    topic?: (string | null) | PublicationTopic;
+    type?: (string | null) | PublicationType;
     project?: (string | null) | Project;
   };
   hero: InterfaceHeroField;
@@ -2168,7 +2168,6 @@ export interface PublicationTopic {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2199,7 +2198,6 @@ export interface PublicationType {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2236,9 +2234,6 @@ export interface ProjectDetailPage {
   adminTitle?: string | null;
   project: string | Project;
   overviewPageProps: {
-    /**
-     * This text will be used for the teasers on the overview page.
-     */
     teaserText: {
       root: {
         type: string;
@@ -2332,7 +2327,6 @@ export interface InterfaceCtaContactBlock {
 export interface Person {
   id: string;
   tenant?: (string | null) | Tenant;
-  team?: (string | Team)[] | null;
   prefix?: {
     root: {
       type: string;
@@ -2440,9 +2434,13 @@ export interface Person {
   } | null;
   image?: (string | null) | Image;
   fullName?: string | null;
+  relatedTeams?: {
+    docs?: (string | Team)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * You can assign People to teams.
@@ -2468,14 +2466,9 @@ export interface Team {
     };
     [k: string]: unknown;
   };
-  relatedPeople?: {
-    docs?: (string | Person)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
+  people?: (string | Person)[] | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2496,7 +2489,6 @@ export interface ZenodoDocument {
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2557,7 +2549,6 @@ export interface OverviewPage {
         | InterfaceAccordionBlock
         | InterfaceFormBlock
         | InterfaceCtaContactBlock
-        | InterfaceCtaLinkBlock
         | InterfaceNetworkTeasersBlock
         | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
@@ -2651,130 +2642,6 @@ export interface InterfaceAccordionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceCtaLinkBlock".
- */
-export interface InterfaceCtaLinkBlock {
-  title: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  text: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  linkType: 'internal' | 'external' | 'mail';
-  linkInternal?: {
-    description?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    linkText: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    internalLink: string;
-  };
-  linkExternal?: {
-    description?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    externalLinkText: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    externalLink: string;
-  };
-  linkMail?: {
-    linkText: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    email: string;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'ctaLinkBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceNetworkTeasersBlock".
  */
 export interface InterfaceNetworkTeasersBlock {
@@ -2860,21 +2727,6 @@ export interface InterfaceNetworkTeasersBlock {
       category: string | NetworkCategory;
       foundingYear?: number | null;
       image: string | Image;
-      description?: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
       externalLink: string;
       id?: string | null;
     }[];
@@ -2907,7 +2759,6 @@ export interface NetworkCategory {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2979,32 +2830,12 @@ export interface InterfaceGenericTeasersBlock {
       };
       [k: string]: unknown;
     } | null;
-    image?:
-      | ({
-          relationTo: 'images';
-          value: string | Image;
-        } | null)
-      | ({
-          relationTo: 'svgs';
-          value: string | Svg;
-        } | null);
+    image?: {
+      relationTo: 'images';
+      value: string | Image;
+    } | null;
     linkType: 'internal' | 'external' | 'mail';
     linkInternal?: {
-      description?: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
       linkText: {
         root: {
           type: string;
@@ -3023,21 +2854,6 @@ export interface InterfaceGenericTeasersBlock {
       internalLink: string;
     };
     linkExternal?: {
-      description?: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
       externalLinkText: {
         root: {
           type: string;
@@ -3213,9 +3029,6 @@ export interface InterfaceNewsOverviewBlock {
  * via the `definition` "InterfaceNationalDictionariesOverviewBlock".
  */
 export interface InterfaceNationalDictionariesOverviewBlock {
-  /**
-   * This will be used as "More info" text on the teasers
-   */
   moreInfoButtonText: {
     root: {
       type: string;
@@ -3241,9 +3054,6 @@ export interface InterfaceNationalDictionariesOverviewBlock {
  * via the `definition` "InterfaceInstitutesOverviewBlock".
  */
 export interface InterfaceInstitutesOverviewBlock {
-  /**
-   * This will be used as "More info" text on the teasers
-   */
   moreInfoButtonText: {
     root: {
       type: string;
@@ -3324,7 +3134,10 @@ export interface DetailPage {
  * via the `definition` "InterfaceVideoBlock".
  */
 export interface InterfaceVideoBlock {
-  video: string | Video;
+  'video-de': string | Video;
+  'video-fr'?: (string | null) | Video;
+  'video-it'?: (string | null) | Video;
+  'video-en'?: (string | null) | Video;
   caption?: {
     root: {
       type: string;
@@ -3370,7 +3183,6 @@ export interface Video {
   title: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -3395,9 +3207,6 @@ export interface NationalDictionaryDetailPage {
      * This image will be used for the teasers on the overview page.
      */
     image?: (string | null) | Image;
-    /**
-     * This text will be used for the teasers on the overview page.
-     */
     teaserText: {
       root: {
         type: string;
@@ -3445,9 +3254,6 @@ export interface InstituteDetailPage {
      * This image will be used for the teasers on the overview page.
      */
     image: string | Image;
-    /**
-     * This text will be used for the teasers on the overview page.
-     */
     teaserText: {
       root: {
         type: string;
@@ -3521,134 +3327,184 @@ export interface User {
 export interface I18NGlobal {
   id: string;
   tenant?: (string | null) | Tenant;
-  generic: {
-    /**
-     * If you add a Download-Block, this will be used as a title
-     */
-    downloadTitle: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    /**
-     * If you add a CTA-Contact-Block, this will be used as the button text
-     */
-    writeEmailButtonText: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    /**
-     * On magazine detail pages, we use this to show the "Copy Text" button
-     */
-    exportArticleButtonText: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-  };
-  bibliographicReference: {
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    copyButtonText: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-  };
-  forms: {
-    /**
-     * You may show this text in a checkbox on forms.
-     */
-    dataPrivacyCheckbox: {
-      dataPrivacyCheckboxText: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
-      errorMessage: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
-    };
-  };
+  generic: InterfaceI18NGeneric;
+  bibliographicReference: InterfaceI18NBibliographicReference;
+  forms: InterfaceI18NForms;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nGeneric".
+ */
+export interface InterfaceI18NGeneric {
+  /**
+   * If you add a Download-Block, this will be used as a title
+   */
+  downloadTitle: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * If you add a Link-Block, this will be used as a title
+   */
+  linksTitle: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * If you add a CTA-Contact-Block, this will be used as the button text
+   */
+  writeEmailButtonText: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * On magazine detail pages, we use this to show the "Copy Text" button
+   */
+  exportArticleButtonText: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * On events, we use this to display the time. If you provide the value "Uhr", we display: "09:00 Uhr"
+   */
+  time: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nBibliographicReference".
+ */
+export interface InterfaceI18NBibliographicReference {
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  copyButtonText: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nForms".
+ */
+export interface InterfaceI18NForms {
+  /**
+   * You may show this text in a checkbox on forms.
+   */
+  dataPrivacyCheckbox: {
+    dataPrivacyCheckboxText: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    errorMessage: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3972,7 +3828,6 @@ export interface Consent {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3987,7 +3842,6 @@ export interface Footer {
   socialLinks?: InterfaceFooterSocialLinks;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4188,36 +4042,6 @@ export interface InterfaceFooterContact {
 export interface InterfaceFooterSocialLinks {
   items?:
     | {
-        description?: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        externalLinkText: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
         externalLink: string;
         icon: 'linkedIn' | 'instagram' | 'facebook' | 'twitter';
         id?: string | null;
@@ -4233,11 +4057,9 @@ export interface Header {
   tenant?: (string | null) | Tenant;
   adminTitle?: string | null;
   navigation: InterfaceHeaderNavigation;
-  languageNavigation: InterfaceHeaderLanguageNavigation;
   metanavigation?: InterfaceHeaderMetaNavigation;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4245,9 +4067,6 @@ export interface Header {
  */
 export interface InterfaceHeaderNavigation {
   navItems: {
-    /**
-     * If the user hovers over this menu item in the navigation, this is shown as a description in the Header
-     */
     description?: {
       root: {
         type: string;
@@ -4305,48 +4124,6 @@ export interface InterfaceHeaderNavigation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceHeaderLanguageNavigation".
- */
-export interface InterfaceHeaderLanguageNavigation {
-  /**
-   * If the user hovers over the language selection, this is shown as a title in the Header
-   */
-  title: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  /**
-   * If the user hovers over the language selection, this is shown as a description in the Header
-   */
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceHeaderMetaNavigation".
  */
 export interface InterfaceHeaderMetaNavigation {
@@ -4354,21 +4131,6 @@ export interface InterfaceHeaderMetaNavigation {
     | {
         linkType: 'internal' | 'external' | 'mail';
         linkInternal?: {
-          description?: {
-            root: {
-              type: string;
-              children: {
-                type: any;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
           linkText: {
             root: {
               type: string;
@@ -4387,21 +4149,6 @@ export interface InterfaceHeaderMetaNavigation {
           internalLink: string;
         };
         linkExternal?: {
-          description?: {
-            root: {
-              type: string;
-              children: {
-                type: any;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
           externalLinkText: {
             root: {
               type: string;
@@ -4490,21 +4237,6 @@ export interface StatusMessage {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
-      description?: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
       linkText: {
         root: {
           type: string;
@@ -4530,7 +4262,6 @@ export interface StatusMessage {
   type: 'warn' | 'error' | 'success';
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4543,7 +4274,6 @@ export interface Theme {
   themeSelector: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4611,10 +4341,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'videos';
         value: string | Video;
-      } | null)
-    | ({
-        relationTo: 'svgs';
-        value: string | Svg;
       } | null)
     | ({
         relationTo: 'networkCategories';
@@ -4783,7 +4509,6 @@ export interface InterfaceHeroFieldHomeSelect<T extends boolean = true> {
         link?:
           | T
           | {
-              description?: T;
               linkText?: T;
               internalLink?: T;
             };
@@ -4822,7 +4547,6 @@ export interface InterfaceHomeTeasersBlockSelect<T extends boolean = true> {
         link?:
           | T
           | {
-              description?: T;
               linkText?: T;
               internalLink?: T;
             };
@@ -4848,7 +4572,11 @@ export interface InterfaceEventsTeasersBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceMagazineTeasersBlock_select".
  */
 export interface InterfaceMagazineTeasersBlockSelect<T extends boolean = true> {
+  title?: T;
+  lead?: T;
+  alignement?: T;
   linkText?: T;
+  internalLink?: T;
   message?: T;
   id?: T;
   blockName?: T;
@@ -4882,7 +4610,11 @@ export interface InterfacePublicationsTeasersBlockSelect<T extends boolean = tru
  * via the `definition` "InterfaceProjectTeasersBlock_select".
  */
 export interface InterfaceProjectTeasersBlockSelect<T extends boolean = true> {
+  title?: T;
+  lead?: T;
+  alignement?: T;
   linkText?: T;
+  internalLink?: T;
   message?: T;
   id?: T;
   blockName?: T;
@@ -4894,7 +4626,13 @@ export interface InterfaceProjectTeasersBlockSelect<T extends boolean = true> {
 export interface ErrorPageSelect<T extends boolean = true> {
   tenant?: T;
   homeButtonText?: T;
-  notFound?:
+  error400?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  error500?:
     | T
     | {
         title?: T;
@@ -5043,7 +4781,6 @@ export interface InterfaceHeroFieldMagazineDetailSelect<T extends boolean = true
  * via the `definition` "InterfaceLinksBlock_select".
  */
 export interface InterfaceLinksBlockSelect<T extends boolean = true> {
-  title?: T;
   links?:
     | T
     | {
@@ -5086,7 +4823,6 @@ export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
         link?:
           | T
           | {
-              description?: T;
               linkText?: T;
               internalLink?: T;
             };
@@ -5146,7 +4882,6 @@ export interface OverviewPageSelect<T extends boolean = true> {
         accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
         formBlock?: T | InterfaceFormBlockSelect<T>;
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
-        ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
         networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
         genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
@@ -5211,37 +4946,6 @@ export interface InterfaceCtaContactBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceCtaLinkBlock_select".
- */
-export interface InterfaceCtaLinkBlockSelect<T extends boolean = true> {
-  title?: T;
-  text?: T;
-  linkType?: T;
-  linkInternal?:
-    | T
-    | {
-        description?: T;
-        linkText?: T;
-        internalLink?: T;
-      };
-  linkExternal?:
-    | T
-    | {
-        description?: T;
-        externalLinkText?: T;
-        externalLink?: T;
-      };
-  linkMail?:
-    | T
-    | {
-        linkText?: T;
-        email?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceNetworkTeasersBlock_select".
  */
 export interface InterfaceNetworkTeasersBlockSelect<T extends boolean = true> {
@@ -5263,7 +4967,6 @@ export interface InterfaceNetworkTeasersBlockSelect<T extends boolean = true> {
               category?: T;
               foundingYear?: T;
               image?: T;
-              description?: T;
               externalLink?: T;
               id?: T;
             };
@@ -5289,14 +4992,12 @@ export interface InterfaceGenericTeasersBlockSelect<T extends boolean = true> {
         linkInternal?:
           | T
           | {
-              description?: T;
               linkText?: T;
               internalLink?: T;
             };
         linkExternal?:
           | T
           | {
-              description?: T;
               externalLinkText?: T;
               externalLink?: T;
             };
@@ -5438,10 +5139,42 @@ export interface DetailPageSelect<T extends boolean = true> {
  * via the `definition` "InterfaceVideoBlock_select".
  */
 export interface InterfaceVideoBlockSelect<T extends boolean = true> {
-  video?: T;
+  'video-de'?: T;
+  'video-fr'?: T;
+  'video-it'?: T;
+  'video-en'?: T;
   caption?: T;
   credits?: T;
   stillImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceCtaLinkBlock_select".
+ */
+export interface InterfaceCtaLinkBlockSelect<T extends boolean = true> {
+  title?: T;
+  text?: T;
+  linkType?: T;
+  linkInternal?:
+    | T
+    | {
+        linkText?: T;
+        internalLink?: T;
+      };
+  linkExternal?:
+    | T
+    | {
+        externalLinkText?: T;
+        externalLink?: T;
+      };
+  linkMail?:
+    | T
+    | {
+        linkText?: T;
+        email?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -5460,29 +5193,30 @@ export interface EventDetailPageSelect<T extends boolean = true> {
         title?: T;
         location?: T;
         language?: T;
-        time?: T;
         category?: T;
         project?: T;
+        time?: T;
         date?: T;
         multipleDays?: T;
         dateEnd?: T;
       };
   showDetailPage?: T;
-  hero?: T | InterfaceHeroFieldSelect<T>;
-  content?:
+  blocks?:
     | T
     | {
-        textBlock?: T | InterfaceTextBlockSelect<T>;
-        linksBlock?: T | InterfaceLinksBlockSelect<T>;
-        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
-        formBlock?: T | InterfaceFormBlockSelect<T>;
-        notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+        content?:
+          | T
+          | {
+              textBlock?: T | InterfaceTextBlockSelect<T>;
+              downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
+              formBlock?: T | InterfaceFormBlockSelect<T>;
+              ctaLinkBlock?: T | InterfaceCtaLinkBlockSelect<T>;
+              notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
+            };
       };
   link?:
     | T
     | {
-        description?: T;
-        externalLinkText?: T;
         externalLink?: T;
       };
   meta?:
@@ -5567,6 +5301,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
     | T
     | {
         image?: T;
+        date?: T;
       };
   categorization?:
     | T
@@ -5741,7 +5476,6 @@ export interface ImagesSelect<T extends boolean = true> {
   alt?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
   url?: T;
   thumbnailURL?: T;
   filename?: T;
@@ -5761,27 +5495,6 @@ export interface VideosSelect<T extends boolean = true> {
   title?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "svgs_select".
- */
-export interface SvgsSelect<T extends boolean = true> {
-  tenant?: T;
-  name?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
   url?: T;
   thumbnailURL?: T;
   filename?: T;
@@ -5801,7 +5514,6 @@ export interface NetworkCategoriesSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5814,7 +5526,6 @@ export interface DocumentsSelect<T extends boolean = true> {
   project?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
   url?: T;
   thumbnailURL?: T;
   filename?: T;
@@ -5845,7 +5556,6 @@ export interface ZenodoDocumentsSelect<T extends boolean = true> {
   project?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5862,7 +5572,6 @@ export interface ProjectsSelect<T extends boolean = true> {
   relatedZenodoDocuments?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5870,7 +5579,6 @@ export interface ProjectsSelect<T extends boolean = true> {
  */
 export interface PeopleSelect<T extends boolean = true> {
   tenant?: T;
-  team?: T;
   prefix?: T;
   firstname?: T;
   middleName?: T;
@@ -5880,9 +5588,9 @@ export interface PeopleSelect<T extends boolean = true> {
   phone?: T;
   image?: T;
   fullName?: T;
+  relatedTeams?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5891,10 +5599,9 @@ export interface PeopleSelect<T extends boolean = true> {
 export interface TeamsSelect<T extends boolean = true> {
   tenant?: T;
   name?: T;
-  relatedPeople?: T;
+  people?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5906,7 +5613,6 @@ export interface PublicationTopicsSelect<T extends boolean = true> {
   relatedPublicationPages?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5918,7 +5624,6 @@ export interface PublicationTypesSelect<T extends boolean = true> {
   relatedPublicationPages?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5930,7 +5635,6 @@ export interface EventCategorySelect<T extends boolean = true> {
   relatedEventPages?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6009,7 +5713,6 @@ export interface FormsSelect<T extends boolean = true> {
               link?:
                 | T
                 | {
-                    description?: T;
                     linkText?: T;
                     internalLink?: T;
                   };
@@ -6027,7 +5730,6 @@ export interface FormsSelect<T extends boolean = true> {
               link?:
                 | T
                 | {
-                    description?: T;
                     linkText?: T;
                     internalLink?: T;
                   };
@@ -6054,21 +5756,11 @@ export interface FormsSelect<T extends boolean = true> {
               required?: T;
               fieldError?: T;
             };
-        name?:
-          | T
-          | {
-              label?: T;
-              placeholder?: T;
-              fieldWidth?: T;
-              required?: T;
-              fieldError?: T;
-            };
         actionText?: T;
         includeLanguageSelection?: T;
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6153,32 +5845,42 @@ export interface InterfaceTextareaFieldSelect<T extends boolean = true> {
  */
 export interface I18NGlobalsSelect<T extends boolean = true> {
   tenant?: T;
-  generic?:
-    | T
-    | {
-        downloadTitle?: T;
-        writeEmailButtonText?: T;
-        exportArticleButtonText?: T;
-      };
-  bibliographicReference?:
-    | T
-    | {
-        title?: T;
-        copyButtonText?: T;
-      };
-  forms?:
-    | T
-    | {
-        dataPrivacyCheckbox?:
-          | T
-          | {
-              dataPrivacyCheckboxText?: T;
-              errorMessage?: T;
-            };
-      };
+  generic?: T | InterfaceI18NGenericSelect<T>;
+  bibliographicReference?: T | InterfaceI18NBibliographicReferenceSelect<T>;
+  forms?: T | InterfaceI18NFormsSelect<T>;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nGeneric_select".
+ */
+export interface InterfaceI18NGenericSelect<T extends boolean = true> {
+  downloadTitle?: T;
+  linksTitle?: T;
+  writeEmailButtonText?: T;
+  exportArticleButtonText?: T;
+  time?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nBibliographicReference_select".
+ */
+export interface InterfaceI18NBibliographicReferenceSelect<T extends boolean = true> {
+  title?: T;
+  copyButtonText?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nForms_select".
+ */
+export interface InterfaceI18NFormsSelect<T extends boolean = true> {
+  dataPrivacyCheckbox?:
+    | T
+    | {
+        dataPrivacyCheckboxText?: T;
+        errorMessage?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6231,7 +5933,6 @@ export interface ConsentSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6245,7 +5946,6 @@ export interface FooterSelect<T extends boolean = true> {
   socialLinks?: T | InterfaceFooterSocialLinksSelect<T>;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6279,8 +5979,6 @@ export interface InterfaceFooterSocialLinksSelect<T extends boolean = true> {
   items?:
     | T
     | {
-        description?: T;
-        externalLinkText?: T;
         externalLink?: T;
         icon?: T;
         id?: T;
@@ -6294,11 +5992,9 @@ export interface HeaderSelect<T extends boolean = true> {
   tenant?: T;
   adminTitle?: T;
   navigation?: T | InterfaceHeaderNavigationSelect<T>;
-  languageNavigation?: T | InterfaceHeaderLanguageNavigationSelect<T>;
   metanavigation?: T | InterfaceHeaderMetaNavigationSelect<T>;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6323,14 +6019,6 @@ export interface InterfaceHeaderNavigationSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceHeaderLanguageNavigation_select".
- */
-export interface InterfaceHeaderLanguageNavigationSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceHeaderMetaNavigation_select".
  */
 export interface InterfaceHeaderMetaNavigationSelect<T extends boolean = true> {
@@ -6341,14 +6029,12 @@ export interface InterfaceHeaderMetaNavigationSelect<T extends boolean = true> {
         linkInternal?:
           | T
           | {
-              description?: T;
               linkText?: T;
               internalLink?: T;
             };
         linkExternal?:
           | T
           | {
-              description?: T;
               externalLinkText?: T;
               externalLink?: T;
             };
@@ -6384,7 +6070,6 @@ export interface StatusMessageSelect<T extends boolean = true> {
         link?:
           | T
           | {
-              description?: T;
               linkText?: T;
               internalLink?: T;
             };
@@ -6393,7 +6078,6 @@ export interface StatusMessageSelect<T extends boolean = true> {
   type?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6405,7 +6089,6 @@ export interface ThemeSelect<T extends boolean = true> {
   themeSelector?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

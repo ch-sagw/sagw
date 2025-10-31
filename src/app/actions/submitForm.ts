@@ -1,11 +1,14 @@
 'use server';
 
 import { z } from 'zod';
-import { hiddenFormDefinitionFieldName } from '@/components/blocks/Form/Form.config';
+import {
+  hiddenFormDefinitionFieldName, hiddenPageUrl,
+} from '@/components/blocks/Form/Form.config';
 import { sendMail } from '@/mail/sendMail';
 import { subscribe } from '@/mail/subscribe';
 import { Form as InterfaceForm } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
+import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 
 type SubmitFormResult =
   | {
@@ -17,9 +20,17 @@ type SubmitFormResult =
       values?: Record<string, unknown>;
     };
 
-const generateMailContent = (formData: FormData, hiddenFormData: InterfaceForm): string => {
+const generateMailContent = (formData: FormData, hiddenFormData: InterfaceForm, hiddenUrl: string): string => {
   let mailContent = '';
 
+  // add url
+  mailContent += `URL: ${hiddenUrl}\n\n\n`;
+
+  // add title and subtitle
+  mailContent += `${rte1ToPlaintext(hiddenFormData.title)}\n`;
+  mailContent += `${rte1ToPlaintext(hiddenFormData.subtitle)}\n\n\n`;
+
+  // add field data
   hiddenFormData.fields?.forEach((field) => {
     const {
       name,
@@ -35,6 +46,7 @@ const generateMailContent = (formData: FormData, hiddenFormData: InterfaceForm):
 export const submitForm = async (prevState: any, formData: FormData): Promise<SubmitFormResult> => {
 
   const hiddenFormData: InterfaceForm = JSON.parse(formData.get(hiddenFormDefinitionFieldName) as string);
+  const hiddenUrl: string = formData.get(hiddenPageUrl) as string;
   const {
     fields,
   } = hiddenFormData;
@@ -133,7 +145,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
   // send mail or subscribe
   if (hiddenFormData.isNewsletterForm === 'custom') {
     const mailResult = await sendMail({
-      content: generateMailContent(formData, hiddenFormData),
+      content: generateMailContent(formData, hiddenFormData, hiddenUrl),
       from: process.env.MAIL_SENDER_ADDRESS,
       subject: hiddenFormData.mailSubject || '',
       to: hiddenFormData.recipientMail || '',

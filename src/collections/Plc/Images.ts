@@ -1,11 +1,11 @@
 import type { CollectionConfig } from 'payload';
-import { versions } from '@/field-templates/versions';
 
 export const Images: CollectionConfig = {
   access: {
     read: () => true,
   },
   admin: {
+    description: 'Allowed image formats: png, jpg, jpeg, gif, webp, avif, tiff',
     group: 'Assets',
   },
   fields: [
@@ -26,8 +26,6 @@ export const Images: CollectionConfig = {
       'image/gif',
       'image/webp',
       'image/avif',
-      'image/tiff',
     ],
   },
-  versions,
 };

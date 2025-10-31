@@ -13,8 +13,9 @@ import {
 import {
   Footer, InterfaceFooterPropTypes,
 } from '@/components/global/Footer/Footer';
+import { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   description: 'A blank template using Payload in a Next.js app.',
   title: 'Payload Blank Template',
 };
@@ -93,12 +94,6 @@ export default async function RootLayout({
     return <p>No nav items in header data</p>;
   }
 
-  const langnavData = headerData.docs[0].languageNavigation;
-
-  if (!langnavData || !langnavData.description || !langnavData.title) {
-    return <p>No lang nav data in header data</p>;
-  }
-
   const metanavData = headerData.docs[0].metanavigation;
 
   if (!metanavData?.metaLinks || metanavData.metaLinks.length < 1) {
@@ -124,7 +119,6 @@ export default async function RootLayout({
 
     // TODO: get from parent
     currentLang: 'de',
-    langnav: langnavData,
     logoLink: '/',
 
     // TODO: get from global i18n

@@ -30,6 +30,9 @@ export default async function DetailPage({
   const {
     slug, lang,
   } = await params;
+
+  const language = lang as Config['locale'] || 'de';
+
   const payload = await getPayload({
     config: configPromise,
   });
@@ -46,7 +49,7 @@ export default async function DetailPage({
         collection: collection as any,
         depth: 1,
         limit: 1,
-        locale: lang as Config['locale'],
+        locale: language,
         overrideAccess: false,
         where: {
           and: [
@@ -101,13 +104,33 @@ export default async function DetailPage({
     return <p>No page data</p>;
   }
 
+  // i18n
+
+  const i18nDataDocs = await payload.find({
+    collection: 'i18nGlobals',
+    depth: 1,
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (!i18nDataDocs.docs || i18nDataDocs.docs.length < 1) {
+    return <p>No i18n data</p>;
+  }
+
+  const [i18nData] = i18nDataDocs.docs;
+
   return (
     <Fragment>
       <main>
         <div className='detail-page'>
           <RenderBlocks
-            blocks={pageData.content}
+            blocks={pageData.content || pageData.blocks.content}
             tenantId={tenant}
+            pageLanguage={language}
+            i18n={i18nData}
           />
         </div>
       </main>
