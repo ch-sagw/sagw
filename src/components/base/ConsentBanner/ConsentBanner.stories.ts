@@ -25,7 +25,7 @@ const meta: Meta<typeof ConsentBanner> = {
     'visual:check',
     'a11y:check',
   ],
-  title: 'Components/base/ConsentBanner',
+  title: 'Components/base/Consent/ConsentBanner',
 };
 
 export default meta;

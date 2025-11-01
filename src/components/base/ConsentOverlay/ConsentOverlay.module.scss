@@ -4,17 +4,21 @@
 @use "../../../styles/utilities/utilities" as *;
 
 .consentWrapper {
-  width: 100%;
-  height: 100vh;
+  display: none;
   border: none;
   background-color: var(--background-page-overly);
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: 0;
-  position: relative;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
 
   @include mq($from: medium) {
-    padding: px-to-rem(var(--spacing-l));
+    padding-inline: px-to-rem(var(--spacing-l));
+    padding-block: px-to-rem(var(--spacing-l));
   }
 
   &.visible {
@@ -26,10 +30,7 @@
     color: var(--text-primary);
     padding: px-to-rem(var(--spacing-l));
     max-width: px-to-rem(880);
-
-    @include mq($from: medium) {
-      height: fit-content;
-    }
+    margin-block: auto;
 
     @include mq($from: large) {
       padding: px-to-rem(var(--spacing-2xl));

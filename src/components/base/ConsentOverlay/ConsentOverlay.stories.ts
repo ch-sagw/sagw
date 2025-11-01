@@ -24,7 +24,7 @@ const meta: Meta<typeof ConsentOverlay> = {
     'visual:check',
     'a11y:check',
   ],
-  title: 'Components/base/ConsentOverlay',
+  title: 'Components/base/Consent/ConsentOverlay',
 };
 
 export default meta;

@@ -5,8 +5,10 @@
 .consentBanner {
   --content-max-width: 1000;
 
+  position: absolute;
   background-color: var(--background-light);
   padding: px-to-rem(var(--inside-elements-m));
+  inset-inline: 0;
 
   @include mq($from: large) {
     padding: px-to-rem(var(--spacing-2xl));
