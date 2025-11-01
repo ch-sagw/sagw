@@ -3,7 +3,9 @@
 import { Payload } from 'payload';
 
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
-import { rte3FullRange } from '@/utilities/rteSampleContent';
+import {
+  rte3ConsentBannerText, rte3FullRange,
+} from '@/utilities/rteSampleContent';
 import { tenantRoles } from '@/collections/Plc/Users/roles';
 
 export const addDataForTenant = async (payload: Payload, tenant: string): Promise<void> => {
@@ -208,35 +210,34 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     collection: 'consent',
     data: {
       banner: {
-        buttonAcceptAll: simpleRteConfig(`Accept all ${tenant.toUpperCase()}`),
-        buttonCustomizeSelection: simpleRteConfig(`Customize ${tenant.toUpperCase()}`),
-        buttonDeclineAll: simpleRteConfig(`Decline ${tenant.toUpperCase()}`),
-        text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
-        title: simpleRteConfig(`Title ${tenant.toUpperCase()}`),
+        buttonAcceptAll: simpleRteConfig('Alle zulassen'),
+        buttonCustomizeSelection: simpleRteConfig('Alle ablehnen'),
+        buttonDeclineAll: simpleRteConfig('Auswahl anpassen'),
+        text: rte3ConsentBannerText,
+        title: simpleRteConfig('Diese Webseite verwendet Cookies'),
       },
       overlay: {
         analyticsPerformance: {
-          text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
-          title: simpleRteConfig(`Title ${tenant.toUpperCase()}`),
-          toggleLabelOff: simpleRteConfig(`Toggle Off ${tenant.toUpperCase()}`),
-          toggleLabelOn: simpleRteConfig(`Toggle On ${tenant.toUpperCase()}`),
+          text: simpleRteConfig('Diese Gruppe beinhaltet alle Cookies von Skripts für analytisches Tracking. Die Analysen helfen uns, die Nutzer*innenerfahrung der Website zu verbessern.'),
+          title: simpleRteConfig('Analytics und Performance'),
+          toggleLabelOff: simpleRteConfig('Aus'),
+          toggleLabelOn: simpleRteConfig('An'),
         },
-        buttonAcceptAll: simpleRteConfig(`Accept all ${tenant.toUpperCase()}`),
-        buttonAcceptSelection: simpleRteConfig(`Accept selection ${tenant.toUpperCase()}`),
+        buttonAcceptAll: simpleRteConfig('Alle zulassen'),
+        buttonAcceptSelection: simpleRteConfig('Auswahl zulassen'),
         externalContent: {
-          text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
-          title: simpleRteConfig(`Title ${tenant.toUpperCase()}`),
-          toggleLabelOff: simpleRteConfig(`Toggle off ${tenant.toUpperCase()}`),
-          toggleLabelOn: simpleRteConfig(`Toggle on ${tenant.toUpperCase()}`),
+          text: simpleRteConfig('Externe Inhalte umfassen Cookies, die von Drittanbietern gesetzt werden, damit wir auf unserer Website Inhalte von deren Plattform bereitstellen können (wie z.B. Videos oder Social Media Feeds).'),
+          title: simpleRteConfig('Externe Inhalte'),
+          toggleLabelOff: simpleRteConfig('Aus'),
+          toggleLabelOn: simpleRteConfig('An'),
         },
         necessaryCookies: {
-          text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
-          title: simpleRteConfig(`Title ${tenant.toUpperCase()}`),
-          toggleLabel: simpleRteConfig(`Toggle label ${tenant.toUpperCase()}`),
+          text: simpleRteConfig('Diese Cookies sind notwendig für die grundlegenden Funktionen der Website. Ohne sie ist nicht gewährleistet, dass die Website einwandfrei funktioniert.'),
+          title: simpleRteConfig('Notwendige Cookies'),
+          toggleLabel: simpleRteConfig('Immer an'),
         },
-        text: simpleRteConfig(`Text ${tenant.toUpperCase()}`),
-        title: simpleRteConfig(`Title ${tenant.toUpperCase()}`),
-
+        text: simpleRteConfig('Sie haben die volle Kontrolle über Ihre Privatsphäre und entscheiden selbst, welche Cookies wir verwenden dürfen und welche nicht.'),
+        title: simpleRteConfig('Cookies Einstellungen'),
       },
       tenant: tenantId,
     },
