@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '@/components/base/ConsentOverlay/ConsentOverlay.module.scss';
+import styles from '@/components/global/ConsentOverlay/ConsentOverlay.module.scss';
 import { cva } from 'cva';
 import { InterfaceConsentOverlay } from '@/payload-types';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';

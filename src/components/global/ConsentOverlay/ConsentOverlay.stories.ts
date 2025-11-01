@@ -2,7 +2,7 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { ConsentOverlay } from '@/components/base/ConsentOverlay/ConsentOverlay';
+import { ConsentOverlay } from '@/components/global/ConsentOverlay/ConsentOverlay';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
@@ -24,7 +24,7 @@ const meta: Meta<typeof ConsentOverlay> = {
     'visual:check',
     'a11y:check',
   ],
-  title: 'Components/base/Consent/ConsentOverlay',
+  title: 'Components/global/Consent/ConsentOverlay',
 };
 
 export default meta;

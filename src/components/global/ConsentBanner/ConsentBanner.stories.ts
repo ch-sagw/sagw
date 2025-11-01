@@ -2,7 +2,7 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { ConsentBanner } from '@/components/base/ConsentBanner/ConsentBanner';
+import { ConsentBanner } from '@/components/global/ConsentBanner/ConsentBanner';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { rte3ConsentBannerText } from '@/utilities/rteSampleContent';
@@ -25,7 +25,7 @@ const meta: Meta<typeof ConsentBanner> = {
     'visual:check',
     'a11y:check',
   ],
-  title: 'Components/base/Consent/ConsentBanner',
+  title: 'Components/global/Consent/ConsentBanner',
 };
 
 export default meta;
