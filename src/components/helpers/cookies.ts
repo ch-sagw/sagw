@@ -7,6 +7,8 @@ export interface InterfaceCookieConsent {
   version: string;
 }
 
+export const consentUpdatedEventName = 'consentUpdated';
+
 const CONSENT_COOKIE_NAME = 'cookie_consent';
 
 // 12 months
@@ -92,7 +94,7 @@ export const setCookieConsent = (consent: Omit<InterfaceCookieConsent, 'timestam
       : ''}`;
 
     // Dispatch custom event for other components to listen
-    window.dispatchEvent(new CustomEvent('consentUpdated', {
+    window.dispatchEvent(new CustomEvent(consentUpdatedEventName, {
       detail: fullConsent,
     }));
 

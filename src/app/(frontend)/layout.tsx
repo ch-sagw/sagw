@@ -14,6 +14,7 @@ import {
   Footer, InterfaceFooterPropTypes,
 } from '@/components/global/Footer/Footer';
 import { Metadata } from 'next';
+import { CookieConsent } from '@/components/global/CookieConsent/CookieConsent';
 
 export const metadata: Metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -112,6 +113,25 @@ export default async function RootLayout({
     return <p>Footer Legal data incomplete</p>;
   }
 
+  const consentCollectionData = await payload.find({
+    collection: 'consent',
+    depth: 1,
+    limit: 1,
+    locale: lang,
+    overrideAccess: false,
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (!consentCollectionData || consentCollectionData.docs.length !== 1) {
+    return <p>No consent Data</p>;
+  }
+
+  const [consentData] = consentCollectionData.docs;
+
   const colorMode: ColorMode = 'dark';
 
   const headerProps: InterfaceHeaderPropTypes = {
@@ -164,6 +184,11 @@ export default async function RootLayout({
 
         <Footer
           {...footerProps}
+        />
+
+        <CookieConsent
+          banner={consentData.banner}
+          overlay={consentData.overlay}
         />
 
       </body>

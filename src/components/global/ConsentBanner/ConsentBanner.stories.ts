@@ -21,7 +21,6 @@ const meta: Meta<typeof ConsentBanner> = {
     layout: 'fullscreen',
   },
   tags: [
-    'autodocs',
     'visual:check',
     'a11y:check',
   ],
@@ -33,9 +32,10 @@ export default meta;
 export const DefaultBanner: StrictStory = {
   args: {
     buttonAcceptAll: simpleRteConfig('Alle zulassen'),
-    buttonCustomizeSelection: simpleRteConfig('Alle ablehnen'),
-    buttonDeclineAll: simpleRteConfig('Auswahl anpassen'),
-    text: rte3ConsentBannerText,
+    buttonCustomizeSelection: simpleRteConfig('Auswahl anpassen'),
+    buttonDeclineAll: simpleRteConfig('Alle ablehnen'),
+    text: rte3ConsentBannerText('6901e41a205ce36d381c77e2'),
     title: simpleRteConfig('Diese Webseite verwendet Cookies'),
+    visible: true,
   },
 };

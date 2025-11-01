@@ -331,7 +331,7 @@ export const rte2NotificationTextWithUl: InterfaceRte = {
 /*
 RTE3 consent banner text
 */
-export const rte3ConsentBannerText: InterfaceRte = {
+export const rte3ConsentBannerText = (homeId: string): InterfaceRte => ({
   root: {
     children: [
       {
@@ -361,7 +361,7 @@ export const rte3ConsentBannerText: InterfaceRte = {
             fields: {
               doc: {
                 relationTo: 'homePage',
-                value: '6901e41a205ce36d381c77e2',
+                value: homeId,
               },
               linkType: 'internal',
               newTab: false,
@@ -397,7 +397,7 @@ export const rte3ConsentBannerText: InterfaceRte = {
     type: 'root',
     version: 1,
   },
-};
+});
 
 /*
 RTE3 accordion example content

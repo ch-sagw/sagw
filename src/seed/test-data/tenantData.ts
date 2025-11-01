@@ -205,44 +205,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
-  // add consent data
-  await payload.create({
-    collection: 'consent',
-    data: {
-      banner: {
-        buttonAcceptAll: simpleRteConfig('Alle zulassen'),
-        buttonCustomizeSelection: simpleRteConfig('Alle ablehnen'),
-        buttonDeclineAll: simpleRteConfig('Auswahl anpassen'),
-        text: rte3ConsentBannerText,
-        title: simpleRteConfig('Diese Webseite verwendet Cookies'),
-      },
-      overlay: {
-        analyticsPerformance: {
-          text: simpleRteConfig('Diese Gruppe beinhaltet alle Cookies von Skripts für analytisches Tracking. Die Analysen helfen uns, die Nutzer*innenerfahrung der Website zu verbessern.'),
-          title: simpleRteConfig('Analytics und Performance'),
-          toggleLabelOff: simpleRteConfig('Aus'),
-          toggleLabelOn: simpleRteConfig('An'),
-        },
-        buttonAcceptAll: simpleRteConfig('Alle zulassen'),
-        buttonAcceptSelection: simpleRteConfig('Auswahl zulassen'),
-        externalContent: {
-          text: simpleRteConfig('Externe Inhalte umfassen Cookies, die von Drittanbietern gesetzt werden, damit wir auf unserer Website Inhalte von deren Plattform bereitstellen können (wie z.B. Videos oder Social Media Feeds).'),
-          title: simpleRteConfig('Externe Inhalte'),
-          toggleLabelOff: simpleRteConfig('Aus'),
-          toggleLabelOn: simpleRteConfig('An'),
-        },
-        necessaryCookies: {
-          text: simpleRteConfig('Diese Cookies sind notwendig für die grundlegenden Funktionen der Website. Ohne sie ist nicht gewährleistet, dass die Website einwandfrei funktioniert.'),
-          title: simpleRteConfig('Notwendige Cookies'),
-          toggleLabel: simpleRteConfig('Immer an'),
-        },
-        text: simpleRteConfig('Sie haben die volle Kontrolle über Ihre Privatsphäre und entscheiden selbst, welche Cookies wir verwenden dürfen und welche nicht.'),
-        title: simpleRteConfig('Cookies Einstellungen'),
-      },
-      tenant: tenantId,
-    },
-  });
-
   // add footer data
   await payload.create({
     collection: 'footer',
@@ -1063,6 +1025,44 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         teaserText: simpleRteConfig('Project Teaser Text'),
       },
       project,
+      tenant: tenantId,
+    },
+  });
+
+  // add consent data
+  await payload.create({
+    collection: 'consent',
+    data: {
+      banner: {
+        buttonAcceptAll: simpleRteConfig('Alle zulassen'),
+        buttonCustomizeSelection: simpleRteConfig('Auswahl anpassen'),
+        buttonDeclineAll: simpleRteConfig('Alle ablehnen'),
+        text: rte3ConsentBannerText(home.id),
+        title: simpleRteConfig('Diese Webseite verwendet Cookies'),
+      },
+      overlay: {
+        analyticsPerformance: {
+          text: simpleRteConfig('Diese Gruppe beinhaltet alle Cookies von Skripts für analytisches Tracking. Die Analysen helfen uns, die Nutzer*innenerfahrung der Website zu verbessern.'),
+          title: simpleRteConfig('Analytics und Performance'),
+          toggleLabelOff: simpleRteConfig('Aus'),
+          toggleLabelOn: simpleRteConfig('An'),
+        },
+        buttonAcceptAll: simpleRteConfig('Alle zulassen'),
+        buttonAcceptSelection: simpleRteConfig('Auswahl zulassen'),
+        externalContent: {
+          text: simpleRteConfig('Externe Inhalte umfassen Cookies, die von Drittanbietern gesetzt werden, damit wir auf unserer Website Inhalte von deren Plattform bereitstellen können (wie z.B. Videos oder Social Media Feeds).'),
+          title: simpleRteConfig('Externe Inhalte'),
+          toggleLabelOff: simpleRteConfig('Aus'),
+          toggleLabelOn: simpleRteConfig('An'),
+        },
+        necessaryCookies: {
+          text: simpleRteConfig('Diese Cookies sind notwendig für die grundlegenden Funktionen der Website. Ohne sie ist nicht gewährleistet, dass die Website einwandfrei funktioniert.'),
+          title: simpleRteConfig('Notwendige Cookies'),
+          toggleLabel: simpleRteConfig('Immer an'),
+        },
+        text: simpleRteConfig('Sie haben die volle Kontrolle über Ihre Privatsphäre und entscheiden selbst, welche Cookies wir verwenden dürfen und welche nicht.'),
+        title: simpleRteConfig('Cookies Einstellungen'),
+      },
       tenant: tenantId,
     },
   });

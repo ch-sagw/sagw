@@ -20,7 +20,6 @@ const meta: Meta<typeof ConsentOverlay> = {
     layout: 'fullscreen',
   },
   tags: [
-    'autodocs',
     'visual:check',
     'a11y:check',
   ],
