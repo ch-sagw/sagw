@@ -1,4 +1,4 @@
-export const getSrcSet = ({
+export const getSrcAndSrcSet = ({
   params,
   src,
   variant,
@@ -6,15 +6,16 @@ export const getSrcSet = ({
   params: string;
   src: string;
   variant: string;
-}): string => {
-  let srcSet = '';
+}): object => {
+  let srcSetValue = '';
+  let srcValue = '';
 
   const nonRetinaQuality = 60;
   const retinaQuality = 30;
 
   switch (variant) {
     case 'content':
-      srcSet = `
+      srcSetValue = `
         ${src}?${params}&w=1250&h=703&dpr=2&q=${retinaQuality} 2500w,
         ${src}?${params}&w=1250&h=703&q=${nonRetinaQuality} 1250w,
         ${src}?${params}&w=1000&h=562&dpr=2&q=${retinaQuality} 2000w,
@@ -24,10 +25,12 @@ export const getSrcSet = ({
         ${src}?${params}&w=400&h=225&dpr=2&q=${retinaQuality} 800w,
         ${src}?${params}&w=400&h=225&q=${nonRetinaQuality} 400w,
       `;
+
+      srcValue = `${src}?${params}&w=1000&h=562&q=${nonRetinaQuality}`;
       break;
 
     case 'contentWide':
-      srcSet = `
+      srcSetValue = `
         ${src}?${params}&w=1250&h=703&dpr=2&q=${retinaQuality} 2500w,
         ${src}?${params}&w=1250&h=703&q=${nonRetinaQuality} 1250w,
         ${src}?${params}&w=1000&h=562&dpr=2&q=${retinaQuality} 2000w,
@@ -37,19 +40,23 @@ export const getSrcSet = ({
         ${src}?${params}&w=400&h=225&dpr=2&q=${retinaQuality} 800w,
         ${src}?${params}&w=400&h=225&q=${nonRetinaQuality} 400w,
       `;
+
+      srcValue = `${src}?${params}&w=1000&h=562&q=${nonRetinaQuality}`;
       break;
 
     case 'genericTeaser':
-      srcSet = `
+      srcSetValue = `
         ${src}?${params}&w=600&h=450&dpr=2&q=${retinaQuality} 1200w,
         ${src}?${params}&w=600&h=450&q=${nonRetinaQuality} 600w,
         ${src}?${params}&w=400&h=300&dpr=2&q=${retinaQuality} 800w,
         ${src}?${params}&w=400&h=300&q=${nonRetinaQuality} 400w,
       `;
+
+      srcValue = `${src}?${params}&w=600&h=450&q=${nonRetinaQuality}`;
       break;
 
     case 'hero':
-      srcSet = `
+      srcSetValue = `
         ${src}?${params}&w=2500&h=1406&q=${nonRetinaQuality} 2500w,
         ${src}?${params}&w=1600&h=900&q=${nonRetinaQuality} 1600w,
         ${src}?${params}&w=1000&h=562&dpr=2&q=${retinaQuality} 2000w,
@@ -59,26 +66,32 @@ export const getSrcSet = ({
         ${src}?${params}&w=400&h=225&dpr=2&q=${retinaQuality} 800w,
         ${src}?${params}&w=400&h=225&q=${nonRetinaQuality} 400w,
       `;
+
+      srcValue = `${src}?${params}&w=1000&h=562&q=${nonRetinaQuality}`;
       break;
 
     case 'logoTeaser':
-      srcSet = `
+      srcSetValue = `
         ${src}?${params}&w=100&h=100&dpr=2&q=${retinaQuality} 200w,
         ${src}?${params}&w=100&h=100&q=${nonRetinaQuality} 100w,
       `;
+
+      srcValue = `${src}?${params}&w=100&h=100&q=${nonRetinaQuality}`;
       break;
 
     case 'portrait':
-      srcSet = `
+      srcSetValue = `
         ${src}?${params}&w=600&h=600&dpr=2&q=${retinaQuality} 1200w,
         ${src}?${params}&w=400&h=400&dpr=2&q=${retinaQuality} 800w,
         ${src}?${params}&w=600&h=600&q=${nonRetinaQuality} 600w,
         ${src}?${params}&w=400&h=400&q=${nonRetinaQuality} 400w
       `;
+
+      srcValue = `${src}?${params}&w=600&h=600&q=${nonRetinaQuality}`;
       break;
 
     case 'portraitCta':
-      srcSet = `
+      srcSetValue = `
         ${src}?${params}&w=200&h=200&dpr=2&q=${retinaQuality} 400w,
         ${src}?${params}&w=100&h=100&dpr=2&q=${retinaQuality} 200w,
         ${src}?${params}&w=200&h=200&q=${nonRetinaQuality} 200w,
@@ -87,18 +100,22 @@ export const getSrcSet = ({
       break;
 
     case 'publicationTeaser':
-      srcSet = `
+      srcSetValue = `
         ${src}?${params}&w=80&h=114&dpr=2&q=${retinaQuality} 160w,
         ${src}?${params}&w=80&h=114&q=${nonRetinaQuality} 80w
       `;
+
+      srcValue = `${src}?${params}&w=80&h=114&q=${nonRetinaQuality}`;
       break;
 
     default:
-      console.log('Unknown variant. Using default settings.');
-    // Fallback logic for unknown variants
+      console.log('Unknown variant. Please choose an existing variant or add a new one');
   }
 
-  return srcSet.trim();
+  return {
+    src: srcValue,
+    srcSet: srcSetValue.trim(),
+  };
 
 };
 
@@ -168,8 +185,7 @@ export const getSizes = (variant: string): string => {
       break;
 
     default:
-      console.log('Unknown variant. Using default settings.');
-    // Fallback logic for unknown variants
+      console.log('Unknown variant. Please choose an existing variant or add a new one');
   }
 
   return sizes.trim();

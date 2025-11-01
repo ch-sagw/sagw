@@ -5,7 +5,7 @@ import styles from '@/components/base/Image/Image.module.scss';
 import { InterfaceImagePropTypes } from '@/components/base/Image/Image.custom';
 import {
   getSizes,
-  getSrcSet,
+  getSrcAndSrcSet,
 } from '@/components/base/Image/Image.configs';
 
 export const Image = ({
@@ -38,7 +38,7 @@ export const Image = ({
 
   const params = `mode=crop&crop=focalpoint&fp-x=${focalPointX}&fp-y=${focalPointY}`;
 
-  const srcSet = getSrcSet({
+  const srcAndSrcSet = getSrcAndSrcSet({
     params,
     src,
     variant,
@@ -75,8 +75,8 @@ export const Image = ({
       onLoad={handleOnLoad}
       ref={imgRef}
       sizes={sizes}
-      src={src}
-      srcSet={srcSet}
+      src={srcAndSrcSet.src}
+      srcSet={srcAndSrcSet.srcSet}
       width={width}
     />
   );
