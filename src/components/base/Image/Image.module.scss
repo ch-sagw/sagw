@@ -1,6 +1,6 @@
 .image {
   contain: content;
-  opacity: 0;
+  opacity: var(--initial-image-opacity, 0);
   transition: opacity var(--motion-speed-fast) var(--motion-ease-in);
 
   &.hero,
