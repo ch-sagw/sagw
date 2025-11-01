@@ -31,6 +31,8 @@ export const Figure = ({
   imageConfig,
 }: InterfaceFigurePropTypes): React.JSX.Element => {
 
+  // TODO
+  // Replace Payload URL with Gumlet URL
   console.log(alignment);
 
   return (
@@ -63,7 +65,7 @@ export const Figure = ({
         <span
           className={styles.credits}
         >
-          ©<SafeHtml
+          <SafeHtml
             as='span'
             html={rteToHtml(credits)}
           />

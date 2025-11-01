@@ -22,7 +22,8 @@
 }
 
 .videoContainer,
-.buttonWrapper {
+.buttonWrapper,
+.consentMessageWrapper {
   position: absolute;
   contain: layout;
   z-index: 1;
@@ -74,7 +75,8 @@
 // Centered variant
 .videoWrapper.centered {
   .videoContainer,
-  .buttonWrapper {
+  .buttonWrapper,
+  .consentMessageWrapper {
     @include mq($from: large) {
       grid-column: 2 / var(--grid-columns);
     }
@@ -84,7 +86,8 @@
 // Left aligned variant
 .videoWrapper.left {
   .videoContainer,
-  .buttonWrapper {
+  .buttonWrapper,
+  .consentMessageWrapper {
     @include mq($from: large) {
       grid-column: 1 / 9;
     }
@@ -94,9 +97,49 @@
 // Right aligned variant
 .videoWrapper.right {
   .videoContainer,
-  .buttonWrapper {
+  .buttonWrapper,
+  .consentMessageWrapper {
     @include mq($from: large) {
       grid-column: 5 / calc(var(--grid-columns) + 1);
     }
   }
+
+  .consentMessageWrapper {
+    @include mq($from: large) {
+      grid-column: 5 / calc(var(--grid-columns) + 1);
+    }
+  }
+}
+
+// Consent Message
+.consentMessageWrapper {
+  background: var(--background-video-no-consent);
+}
+
+.consentMessage {
+  @include font-smoothing;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: px-to-rem(var(--inside-elements-m));
+  padding-inline: px-to-rem(var(--grid-margin));
+  color: var(--text-primary-inverted);
+  text-align: center;
+
+  @include mq($from: large) {
+    padding-inline: px-to-rem(calc(var(--grid-margin) * 2));
+  }
+
+  button {
+    flex: 0 0 auto;
+  }
+}
+
+.consentMessageTitle {
+  @include title-heading-5;
+}
+
+.consentMessageText {
+  @include body-text-s;
 }

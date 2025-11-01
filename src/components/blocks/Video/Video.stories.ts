@@ -34,6 +34,8 @@ export default meta;
 export const VideoCentered: StrictStory = {
   args: {
     alignment: ContentImageCentered.args.alignment,
+    consent: true,
+    pageLanguage: 'de',
     stillImage: ContentImageCentered.args,
     video: {
       duration: '00:24',
@@ -46,6 +48,8 @@ export const VideoCentered: StrictStory = {
 export const ContentVideoLeftAligned: StrictStory = {
   args: {
     alignment: ContentImageLeftAligned.args.alignment,
+    consent: true,
+    pageLanguage: 'de',
     stillImage: ContentImageLeftAligned.args,
     video: {
       duration: '03:18',
@@ -58,6 +62,22 @@ export const ContentVideoLeftAligned: StrictStory = {
 export const ContentVideoRightAligned: StrictStory = {
   args: {
     alignment: ContentImageRightAligned.args.alignment,
+    consent: true,
+    pageLanguage: 'de',
+    stillImage: ContentImageRightAligned.args,
+    video: {
+      duration: '02:34',
+      id: '68f9e148609b9e4625b4278d',
+      title: 'Video Title',
+    },
+  },
+};
+
+export const ContentVideoRightAlignedNoConsent: StrictStory = {
+  args: {
+    alignment: ContentImageRightAligned.args.alignment,
+    consent: false,
+    pageLanguage: 'de',
     stillImage: ContentImageRightAligned.args,
     video: {
       duration: '02:34',
