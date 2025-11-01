@@ -69,3 +69,24 @@ export const i18nA11y = {
     },
   },
 };
+
+export const i18nConsent = {
+  buttonTextOpenCookieSettings: {
+    de: 'Cookie-Einstellungen',
+    en: 'Cookie-Settings',
+    fr: 'Cookie-Einstellungen (FR)',
+    it: 'Cookie-Einstellungen (IT)',
+  },
+  messageVideo: {
+    de: 'Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können.',
+    en: 'Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können. (EN)',
+    fr: 'Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können. (FR)',
+    it: 'Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können. (IT)',
+  },
+  titleExternalContent: {
+    de: 'Externer Inhalt',
+    en: 'External content',
+    fr: 'Contenu externe',
+    it: 'Ccontenuto esterno',
+  },
+};

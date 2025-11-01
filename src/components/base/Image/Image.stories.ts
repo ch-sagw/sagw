@@ -28,13 +28,13 @@ export default meta;
 
 export const ContentImage: StrictStory = {
   args: {
-    alt: 'Das Bild zeigt eine junge Frau, mit blonden schulterlangen Haaren und Brille',
+    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
     focalPointX: 0.5,
-    focalPointY: 0.5,
+    focalPointY: 0.45,
     height: 450,
     loading: 'lazy',
     performanceMark: '',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/mbl_1_9417372470_920fe62811_o.jpg',
+    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
     variant: 'content',
     width: 800,
   },
@@ -42,13 +42,13 @@ export const ContentImage: StrictStory = {
 
 export const ContentImageWide: StrictStory = {
   args: {
-    alt: 'Das Bild zeigt eine junge Frau, mit blonden schulterlangen Haaren und Brille',
+    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
     focalPointX: 0.5,
-    focalPointY: 0.5,
+    focalPointY: 0.45,
     height: 450,
     loading: 'lazy',
     performanceMark: '',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/mbl_1_9417372470_920fe62811_o.jpg',
+    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
     variant: 'content',
     width: 800,
   },
@@ -56,27 +56,27 @@ export const ContentImageWide: StrictStory = {
 
 export const GenericTeaser: StrictStory = {
   args: {
-    alt: 'Das Bild zeigt eine junge Frau, mit blonden schulterlangen Haaren und Brille',
+    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
     focalPointX: 0.5,
-    focalPointY: 0.5,
-    height: 450,
+    focalPointY: 0.45,
+    height: 300,
     loading: 'lazy',
     performanceMark: '',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/mbl_1_9417372470_920fe62811_o.jpg',
+    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
     variant: 'genericTeaser',
-    width: 600,
+    width: 400,
   },
 };
 
 export const LogoTeaser: StrictStory = {
   args: {
-    alt: 'Das Bild zeigt eine junge Frau, mit blonden schulterlangen Haaren und Brille',
+    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
     focalPointX: 0.5,
-    focalPointY: 0.5,
+    focalPointY: 0.45,
     height: 100,
     loading: 'lazy',
     performanceMark: '',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/mbl_1_9417372470_920fe62811_o.jpg',
+    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
     variant: 'logoTeaser',
     width: 100,
   },
@@ -84,13 +84,13 @@ export const LogoTeaser: StrictStory = {
 
 export const MagazineHero: StrictStory = {
   args: {
-    alt: 'Das Bild zeigt eine junge Frau, mit blonden schulterlangen Haaren und Brille',
+    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
     focalPointX: 0.5,
-    focalPointY: 0.5,
+    focalPointY: 0.45,
     height: 675,
     loading: 'eager',
     performanceMark: 'magazine-hero-teaser',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/mbl_1_9417372470_920fe62811_o.jpg',
+    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
     variant: 'hero',
     width: 1200,
   },
@@ -98,13 +98,13 @@ export const MagazineHero: StrictStory = {
 
 export const Portrait: StrictStory = {
   args: {
-    alt: 'Das Bild zeigt eine junge Frau, mit blonden schulterlangen Haaren und Brille',
+    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
     focalPointX: 0.5,
-    focalPointY: 0.5,
+    focalPointY: 0.45,
     height: 600,
     loading: 'eager',
     performanceMark: 'portrait',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/mbl_1_9417372470_920fe62811_o.jpg',
+    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
     variant: 'portrait',
     width: 600,
   },
@@ -112,13 +112,13 @@ export const Portrait: StrictStory = {
 
 export const PortraitCta: StrictStory = {
   args: {
-    alt: 'Das Bild zeigt eine junge Frau, mit blonden schulterlangen Haaren und Brille',
+    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
     focalPointX: 0.5,
-    focalPointY: 0.5,
+    focalPointY: 0.45,
     height: 200,
     loading: 'lazy',
     performanceMark: 'Portrait',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/mbl_1_9417372470_920fe62811_o.jpg',
+    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
     variant: 'portraitCta',
     width: 200,
   },
@@ -126,13 +126,13 @@ export const PortraitCta: StrictStory = {
 
 export const PublicationTeaser: StrictStory = {
   args: {
-    alt: 'Das Bild zeigt eine junge Frau, mit blonden schulterlangen Haaren und Brille',
+    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
     focalPointX: 0.5,
-    focalPointY: 0.5,
+    focalPointY: 0.45,
     height: 114,
     loading: 'lazy',
     performanceMark: '',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/mbl_1_9417372470_920fe62811_o.jpg',
+    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
     variant: 'publicationTeaser',
     width: 80,
   },
