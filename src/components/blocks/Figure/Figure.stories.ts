@@ -3,7 +3,7 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import { Figure } from '@/components/blocks/Figure/Figure';
-import { defaultDecorator } from '@/storybook-helpers';
+import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import {
   ContentImage,
   ContentImageWide,
@@ -22,7 +22,7 @@ type StrictStory = StoryObj<typeof Figure> & {
 const meta: Meta<typeof Figure> = {
   args: {},
   component: Figure,
-  decorators: [defaultDecorator],
+  decorators: [defaultDecoratorNoPadding],
   parameters: {
     layout: 'fullscreen',
   },

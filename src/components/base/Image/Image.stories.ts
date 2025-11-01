@@ -3,7 +3,7 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import { Image } from '@/components/base/Image/Image';
-import { defaultDecorator } from '@/storybook-helpers';
+import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 
 type ImageProps = React.ComponentProps<typeof Image>;
 
@@ -14,7 +14,7 @@ type StrictStory = StoryObj<typeof Image> & {
 const meta: Meta<typeof Image> = {
   args: {},
   component: Image,
-  decorators: [defaultDecorator],
+  decorators: [defaultDecoratorNoPadding],
   parameters: {/* layout: 'centered', */ },
   tags: [
     'autodocs',

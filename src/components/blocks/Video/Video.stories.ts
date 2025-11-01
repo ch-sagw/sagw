@@ -3,7 +3,7 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import { Video } from '@/components/blocks/Video/Video';
-import { defaultDecorator } from '@/storybook-helpers';
+import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import {
   ContentImageCentered,
   ContentImageLeftAligned,
@@ -19,7 +19,7 @@ type StrictStory = StoryObj<typeof Video> & {
 const meta: Meta<typeof Video> = {
   args: {},
   component: Video,
-  decorators: [defaultDecorator],
+  decorators: [defaultDecoratorNoPadding],
   parameters: {/* layout: 'centered', */ },
   tags: [
     'autodocs',
