@@ -27,12 +27,23 @@ visualStories.forEach((story) => {
 
     const head = await page.locator('head #addon-backgrounds-color');
     const body = page.locator('body');
+    const img = page.locator('img');
 
     await expect(body)
       .not.toHaveClass('sb-show-preparing-story');
 
     await expect(head)
       .toBeAttached();
+
+    // Check if image exists on page
+    if (await img.count() > 0) {
+      await img.scrollIntoViewIfNeeded();
+      await page.waitForFunction(() => {
+        const el = document.querySelector('img');
+
+        return el && el.complete && el.naturalWidth > 0;
+      });
+    }
 
     await expect(page)
       .toHaveScreenshot({
