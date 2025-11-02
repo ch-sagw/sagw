@@ -44,6 +44,8 @@ try {
       })
         .include(`#${vrtConfig.testid}`)
 
+        // exclude gumlet iframe player
+        .exclude('iframe')
         // exclude these, since <li> is root is invalid. they will be tested
         // in the list-component anyway, and within the correct context.
         .exclude('[data-testid="eventListItem"]')
