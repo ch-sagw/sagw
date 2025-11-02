@@ -97,6 +97,8 @@ export const getSrcAndSrcSet = ({
         ${src}?${params}&w=200&h=200&q=${nonRetinaQuality} 200w,
         ${src}?${params}&w=100&h=100&q=${nonRetinaQuality} 100w
       `;
+
+      srcValue = `${src}?${params}&w=200&h=200&q=${nonRetinaQuality}`;
       break;
 
     case 'publicationTeaser':
