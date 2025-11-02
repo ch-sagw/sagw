@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, {
+  Fragment, useEffect, useRef, useState,
+} from 'react';
 import styles from '@/components/global/ConsentBanner/ConsentBanner.module.scss';
-import { cva } from 'cva';
 import {
+  Config,
   InterfaceConsentBanner, InterfaceConsentOverlay,
 } from '@/payload-types';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
@@ -15,16 +17,8 @@ import { ConsentOverlay } from '../ConsentOverlay/ConsentOverlay';
 export type InterfaceConsentBannerPropTypes = {
   visible: boolean;
   overlay: InterfaceConsentOverlay;
+  pageLanguage: Config['locale'];
 } & InterfaceConsentBanner;
-
-const classes = cva([styles.consentBanner], {
-  variants: {
-    visible: {
-      false: [undefined],
-      true: [styles.visible],
-    },
-  },
-});
 
 export const ConsentBanner = ({
   title,
@@ -34,19 +28,24 @@ export const ConsentBanner = ({
   buttonDeclineAll,
   visible,
   overlay,
+  pageLanguage,
 }: InterfaceConsentBannerPropTypes): React.JSX.Element | null => {
-  const [
-    showSettings,
-    setShowSettings,
-  ] = useState(false);
+  const bannerDialogRef = useRef<HTMLDialogElement>(null);
+  const overlayDialogRef = useRef<HTMLDialogElement>(null);
   const [
     isProcessing,
     setIsProcessing,
   ] = useState(false);
 
-  if (!visible) {
-    return null;
-  }
+  useEffect(() => {
+    if (bannerDialogRef.current) {
+      if (visible) {
+        bannerDialogRef.current.showModal();
+      } else {
+        bannerDialogRef.current.close();
+      }
+    }
+  }, [visible]);
 
   const handleAcceptAll = (): void => {
     setIsProcessing(true);
@@ -57,6 +56,7 @@ export const ConsentBanner = ({
       external: true,
     });
     setIsProcessing(false);
+    bannerDialogRef.current?.close();
   };
 
   const handleRejectAll = (): void => {
@@ -68,71 +68,75 @@ export const ConsentBanner = ({
       external: false,
     });
     setIsProcessing(false);
+    bannerDialogRef.current?.close();
   };
 
-  if (showSettings) {
-    return (
-      // <CookieSettings
-      //   onBack={() => setShowSettings(false)}
-      //   onClose={() => setShowSettings(false)}
-      // />
-      <ConsentOverlay
-        {...overlay}
-        visible={true}
-      />
-    );
+  const handleCustomize = (): void => {
+    overlayDialogRef.current?.showModal();
+  };
+
+  if (!visible) {
+    return null;
   }
 
   return (
-    <section className={classes({
-      visible,
-    })}>
-      <SafeHtml
-        as='p'
-        className={styles.title}
-        html={rteToHtml(title)}
-      />
-      <Rte
-        className={styles.text}
-        text={text}
-        colorMode='light'
-        stickyFirstTitle={false}
-      />
-      <div className={styles.buttons}>
-        <Button
-          disabled={isProcessing}
-          className={styles.button}
-          element='button'
-          buttonType='button'
-          colorMode='light'
-          style='filled'
-          text={rteToHtml(buttonAcceptAll)}
-          onClick={handleAcceptAll}
+    <Fragment>
+      <dialog
+        ref={bannerDialogRef}
+        className={styles.consentBanner}
+      >
+        <SafeHtml
+          as='p'
+          className={styles.title}
+          html={rteToHtml(title)}
         />
+        <Rte
+          className={styles.text}
+          text={text}
+          colorMode='light'
+          stickyFirstTitle={false}
+        />
+        <div className={styles.buttons}>
+          <Button
+            disabled={isProcessing}
+            className={styles.button}
+            element='button'
+            buttonType='button'
+            colorMode='light'
+            style='filled'
+            text={rteToHtml(buttonAcceptAll)}
+            onClick={handleAcceptAll}
+          />
 
-        <Button
-          disabled={isProcessing}
-          className={styles.button}
-          element='button'
-          buttonType='button'
-          colorMode='light'
-          style='outlined'
-          text={rteToHtml(buttonDeclineAll)}
-          onClick={handleRejectAll}
-        />
+          <Button
+            disabled={isProcessing}
+            className={styles.button}
+            element='button'
+            buttonType='button'
+            colorMode='light'
+            style='outlined'
+            text={rteToHtml(buttonDeclineAll)}
+            onClick={handleRejectAll}
+          />
 
-        <Button
-          disabled={isProcessing}
-          className={styles.buttonCustomize}
-          element='button'
-          buttonType='button'
-          colorMode='light'
-          style='text'
-          text={rteToHtml(buttonCustomizeSelection)}
-          iconInlineStart={'config' as keyof typeof Icon}
-          onClick={() => setShowSettings(true)}
-        />
-      </div>
-    </section>
+          <Button
+            disabled={isProcessing}
+            className={styles.buttonCustomize}
+            element='button'
+            buttonType='button'
+            colorMode='light'
+            style='text'
+            text={rteToHtml(buttonCustomizeSelection)}
+            iconInlineStart={'config' as keyof typeof Icon}
+            onClick={handleCustomize}
+          />
+        </div>
+      </dialog>
+      <ConsentOverlay
+        ref={overlayDialogRef}
+        pageLanguage={pageLanguage}
+        {...overlay}
+      />
+    </Fragment>
   );
 };

@@ -5,19 +5,34 @@
 .consentBanner {
   --content-max-width: 1000;
 
+  border: none;
   border-block-start: px-to-rem(var(--border-width-l)) solid var(--border-primary);
-  position: absolute;
+  position: fixed;
   background-color: var(--background-light);
   padding: px-to-rem(var(--inside-elements-m));
   inset-inline: 0;
+  inset-block-start: auto;
   inset-block-end: 0;
+  width: 100%;
+  margin: 0;
+  max-width: none;
+  max-height: none;
+
+  // Only show when dialog is open
+  &[open] {
+    display: block;
+  }
+
+  &::backdrop {
+    background-color: var(--background-page-overly);
+  }
 
   @include mq($from: large) {
     padding: px-to-rem(var(--spacing-2xl));
   }
 
   @include mq($from: wide) {
-    padding: px-to-rem(var(56));
+    padding: px-to-rem(56);
   }
 
   .title {

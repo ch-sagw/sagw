@@ -49,8 +49,8 @@ export const DefaultOverlay: StrictStory = {
       title: simpleRteConfig('Notwendige Cookies'),
       toggleLabel: simpleRteConfig('Immer an'),
     },
+    pageLanguage: 'de',
     text: simpleRteConfig('Sie haben die volle Kontrolle über Ihre Privatsphäre und entscheiden selbst, welche Cookies wir verwenden dürfen und welche nicht.'),
     title: simpleRteConfig('Cookies Einstellungen'),
-    visible: true,
   },
 };

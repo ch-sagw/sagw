@@ -4,6 +4,7 @@ import React, {
   useEffect, useState,
 } from 'react';
 import {
+  Config,
   InterfaceConsentBanner, InterfaceConsentOverlay,
 } from '@/payload-types';
 import { ConsentBanner } from '@/components/global/ConsentBanner/ConsentBanner';
@@ -13,12 +14,14 @@ import {
 
 export type InterfaceCookieConsentPropTypes = {
   banner: InterfaceConsentBanner;
-  overlay: InterfaceConsentOverlay
+  overlay: InterfaceConsentOverlay;
+  pageLanguage: Config['locale'];
 };
 
 export const CookieConsent = ({
   banner,
   overlay,
+  pageLanguage,
 }: InterfaceCookieConsentPropTypes): React.JSX.Element | null => {
   const [
     showBanner,
@@ -57,6 +60,7 @@ export const CookieConsent = ({
       {...banner}
       visible={showBanner}
       overlay={overlay}
+      pageLanguage={pageLanguage}
     />
   );
 };

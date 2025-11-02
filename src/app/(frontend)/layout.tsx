@@ -189,6 +189,9 @@ export default async function RootLayout({
         <CookieConsent
           banner={consentData.banner}
           overlay={consentData.overlay}
+
+          // TODO: get from parent
+          pageLanguage='de'
         />
 
       </body>

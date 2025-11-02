@@ -1,37 +1,30 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styles from '@/components/global/ConsentOverlay/ConsentOverlay.module.scss';
-import { cva } from 'cva';
-import { InterfaceConsentOverlay } from '@/payload-types';
+import {
+  Config, InterfaceConsentOverlay,
+} from '@/payload-types';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { Button } from '@/components/base/Button/Button';
 import { Toggle } from '@/components/base/Toggle/Toggle';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { Icon } from '@/icons';
+import { i18nA11y } from '@/i18n/content';
 
 export type InterfaceConsentOverlayPropTypes = {
-  visible: boolean,
+  pageLanguage: Config['locale']
 } & InterfaceConsentOverlay;
 
-const classes = cva([styles.consentWrapper], {
-  variants: {
-    visible: {
-      false: [undefined],
-      true: [styles.visible],
-    },
-  },
-});
-
-export const ConsentOverlay = ({
+export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOverlayPropTypes>(({
   title,
   text,
   buttonAcceptAll,
   buttonAcceptSelection,
-  visible,
   necessaryCookies,
   analyticsPerformance,
   externalContent,
-}: InterfaceConsentOverlayPropTypes): React.JSX.Element => {
+  pageLanguage,
+}, ref): React.JSX.Element => {
   const sections = [
     {
       data: necessaryCookies,
@@ -47,10 +40,17 @@ export const ConsentOverlay = ({
     },
   ] as const;
 
+  const handleClose = (): void => {
+    if (typeof ref === 'object' && ref?.current) {
+      ref.current.close();
+    }
+  };
+
   return (
-    <dialog className={classes({
-      visible,
-    })}>
+    <dialog
+      ref={ref}
+      className={styles.consentWrapper}
+    >
       <div className={styles.consentOverlay}>
         <div className={styles.titleLine}>
           <SafeHtml
@@ -60,9 +60,8 @@ export const ConsentOverlay = ({
           />
           <button
             className={styles.closeButton}
-            onClick={() => {
-              console.log('clicked close');
-            }}
+            onClick={handleClose}
+            aria-label={i18nA11y.closeDialog[pageLanguage]}
           >
             <Icon name='close' />
           </button>
@@ -148,4 +147,6 @@ export const ConsentOverlay = ({
 
     </dialog>
   );
-};
+});
+
+ConsentOverlay.displayName = 'ConsentOverlay';
