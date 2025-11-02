@@ -14,7 +14,7 @@ import {
   Footer, InterfaceFooterPropTypes,
 } from '@/components/global/Footer/Footer';
 import { Metadata } from 'next';
-import { CookieConsent } from '@/components/global/CookieConsent/CookieConsent';
+import { ConsentBanner } from '@/components/global/ConsentBanner/ConsentBanner';
 
 export const metadata: Metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -186,8 +186,8 @@ export default async function RootLayout({
           {...footerProps}
         />
 
-        <CookieConsent
-          banner={consentData.banner}
+        <ConsentBanner
+          {...consentData.banner}
           overlay={consentData.overlay}
 
           // TODO: get from parent

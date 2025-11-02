@@ -1,3 +1,5 @@
+'use client';
+
 import React, {
   Fragment, useEffect, useRef, useState,
 } from 'react';
@@ -19,7 +21,6 @@ import { useScrollLock } from '@/hooks/useScrollLock';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 
 export type InterfaceConsentBannerPropTypes = {
-  visible: boolean;
   overlay: InterfaceConsentOverlay;
   pageLanguage: Config['locale'];
 } & InterfaceConsentBanner;
@@ -30,7 +31,6 @@ export const ConsentBanner = ({
   buttonAcceptAll,
   buttonCustomizeSelection,
   buttonDeclineAll,
-  visible,
   overlay,
   pageLanguage,
 }: InterfaceConsentBannerPropTypes): React.JSX.Element | null => {
@@ -87,7 +87,7 @@ export const ConsentBanner = ({
       return;
     }
 
-    if (visible && shouldShowBanner()) {
+    if (shouldShowBanner()) {
       dialog.showModal();
       dialog.classList.remove(styles.closing);
     } else {
@@ -95,16 +95,13 @@ export const ConsentBanner = ({
         closeBanner();
       }
     }
-  }, [
-    visible,
-    closeBanner,
-  ]);
+  }, [closeBanner]);
 
   // Track banner dialog open state
   useEffect(() => {
     const dialog = bannerDialogRef.current;
 
-    if (!dialog || !visible || !shouldShowBanner()) {
+    if (!dialog || !shouldShowBanner()) {
       return undefined;
     }
 
@@ -130,10 +127,10 @@ export const ConsentBanner = ({
       dialog.removeEventListener('close', handleClose);
       observer.disconnect();
     };
-  }, [visible]);
+  }, []);
 
   // scroll lock
-  useScrollLock(visible || isOverlayOpen);
+  useScrollLock(isOverlayOpen);
 
   // Trap focus
   useFocusTrap({
@@ -176,8 +173,7 @@ export const ConsentBanner = ({
   };
 
   // Keep dialog mounted during closing animation
-  // Banner should only show if shouldShowBanner is true
-  if ((!visible || !shouldShowBanner()) && !isClosing) {
+  if ((!shouldShowBanner()) && !isClosing) {
     return null;
   }
 
