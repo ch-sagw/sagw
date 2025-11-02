@@ -50,6 +50,9 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
     <dialog
       ref={ref}
       className={styles.consentWrapper}
+      // @ts-expect-error closedby is a valid HTML attribute but not yet in
+      // TypeScript types
+      closedby='closerequest'
     >
       <div className={styles.consentOverlay}>
         <div className={styles.titleLine}>
