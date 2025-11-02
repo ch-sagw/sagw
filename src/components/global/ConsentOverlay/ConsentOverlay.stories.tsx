@@ -1,7 +1,9 @@
+import React, { useEffect } from 'react';
 import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
+import type { PartialStoryFn } from 'storybook/internal/types';
 import { ConsentOverlay } from '@/components/global/ConsentOverlay/ConsentOverlay';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
@@ -12,10 +14,37 @@ type StrictStory = StoryObj<typeof ConsentOverlay> & {
   args: ConsentOverlayProps;
 };
 
+// Decorator to automatically open the dialog
+const autoOpenDecorator = (Story: PartialStoryFn): React.ReactElement => {
+  useEffect(() => {
+    const findAndOpenDialog = (): void => {
+      const dialog = document.querySelector('dialog[class*="consentWrapper"]') as HTMLDialogElement | null;
+
+      if (dialog && !dialog.open) {
+        dialog.showModal();
+      }
+    };
+
+    findAndOpenDialog();
+    const timer = setTimeout(findAndOpenDialog, 100);
+
+    return (): void => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  return (
+    <Story />
+  );
+};
+
 const meta: Meta<typeof ConsentOverlay> = {
   args: {},
   component: ConsentOverlay,
-  decorators: [defaultDecoratorNoPadding],
+  decorators: [
+    defaultDecoratorNoPadding,
+    autoOpenDecorator as never,
+  ],
   parameters: {
     layout: 'fullscreen',
   },
