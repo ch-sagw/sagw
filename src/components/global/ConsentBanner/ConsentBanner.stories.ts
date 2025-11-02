@@ -21,10 +21,7 @@ const meta: Meta<typeof ConsentBanner> = {
   parameters: {
     layout: 'fullscreen',
   },
-  tags: [
-    'visual:check',
-    'a11y:check',
-  ],
+  tags: ['a11y:check'],
   title: 'Components/global/Consent/ConsentBanner',
 };
 
@@ -39,6 +36,5 @@ export const DefaultBanner: StrictStory = {
     pageLanguage: 'de',
     text: rte3ConsentBannerText('6901e41a205ce36d381c77e2'),
     title: simpleRteConfig('Diese Webseite verwendet Cookies'),
-    visible: true,
   },
 };

@@ -1,9 +1,11 @@
+import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 import {
   expect,
   test,
 } from '@playwright/test';
 
 test.describe('Custom Form', () => {
+  beforeEachAcceptCookies();
   test('correctly validates email', async ({
     page,
   }) => {
@@ -259,6 +261,8 @@ test.describe('Custom Form', () => {
 });
 
 test.describe('Newsletter Form', () => {
+  beforeEachAcceptCookies();
+
   test('correctly validates email', async ({
     page,
   }) => {

@@ -14,7 +14,7 @@ import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
 import { Rte } from '@/components/blocks/Rte/Rte';
 import {
-  setCookieConsent, shouldShowBanner,
+  consentUpdatedEventName, setCookieConsent, shouldShowBanner,
 } from '@/components/helpers/cookies';
 import { ConsentOverlay } from '../ConsentOverlay/ConsentOverlay';
 import { useScrollLock } from '@/hooks/useScrollLock';
@@ -52,6 +52,26 @@ export const ConsentBanner = ({
     isClosing,
     setIsClosing,
   ] = useState(false);
+  const [
+    shouldShow,
+    setShouldShow,
+  ] = useState<boolean | null>(null);
+
+  // Check consent status on client side only
+  useEffect(() => {
+    setShouldShow(shouldShowBanner());
+
+    // Listen for consent updates
+    const handleConsentUpdate = (): void => {
+      setShouldShow(shouldShowBanner());
+    };
+
+    window.addEventListener(consentUpdatedEventName, handleConsentUpdate);
+
+    return (): void => {
+      window.removeEventListener(consentUpdatedEventName, handleConsentUpdate);
+    };
+  }, []);
 
   const closeBanner = React.useCallback((): void => {
     const dialog = bannerDialogRef.current;
@@ -83,11 +103,11 @@ export const ConsentBanner = ({
   useEffect(() => {
     const dialog = bannerDialogRef.current;
 
-    if (!dialog) {
+    if (!dialog || shouldShow === null) {
       return;
     }
 
-    if (shouldShowBanner()) {
+    if (shouldShow) {
       dialog.showModal();
       dialog.classList.remove(styles.closing);
     } else {
@@ -95,13 +115,16 @@ export const ConsentBanner = ({
         closeBanner();
       }
     }
-  }, [closeBanner]);
+  }, [
+    shouldShow,
+    closeBanner,
+  ]);
 
   // Track banner dialog open state
   useEffect(() => {
     const dialog = bannerDialogRef.current;
 
-    if (!dialog || !shouldShowBanner()) {
+    if (!dialog || !shouldShow) {
       return undefined;
     }
 
@@ -127,7 +150,7 @@ export const ConsentBanner = ({
       dialog.removeEventListener('close', handleClose);
       observer.disconnect();
     };
-  }, []);
+  }, [shouldShow]);
 
   // scroll lock
   useScrollLock(isOverlayOpen);
@@ -172,14 +195,23 @@ export const ConsentBanner = ({
     setIsOverlayOpen(false);
   };
 
-  // Keep dialog mounted during closing animation
-  if ((!shouldShowBanner()) && !isClosing) {
+  // Return null while checking consent (loading state) to prevent flash
+  if (shouldShow === null) {
+    return null;
+  }
+
+  // After checking consent, render if:
+  // - We should show the banner (no consent given), OR
+  // - We're closing (keep mounted during animation), OR
+  // - Overlay is open (keep mounted for overlay functionality)
+  if (!shouldShow && !isClosing && !isOverlayOpen) {
     return null;
   }
 
   return (
     <Fragment>
       <dialog
+        data-testid='consent-banner'
         ref={bannerDialogRef}
         className={styles.consentBanner}
         // @ts-expect-error closedby is a valid HTML attribute but not yet in

@@ -24,6 +24,8 @@ try {
     }, meta) => {
       await navigate(page, meta.title);
 
+      console.log('after');
+
       const elem = await page.getByTestId(vrtConfig.testid);
 
       await (await elem.elementHandle())?.waitForElementState('stable');

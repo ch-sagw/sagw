@@ -20,7 +20,7 @@ export const defaultDecoratorNoPadding = (Story: PartialStoryFn): ReactElement =
   <div
     style={{
       display: 'block',
-      padding: '0',
+      padding: '0.1px',
     }}
     data-testid={vrtConfig.testid}
     id={vrtConfig.testid}

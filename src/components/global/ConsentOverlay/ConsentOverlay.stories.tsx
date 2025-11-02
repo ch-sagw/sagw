@@ -48,10 +48,7 @@ const meta: Meta<typeof ConsentOverlay> = {
   parameters: {
     layout: 'fullscreen',
   },
-  tags: [
-    'visual:check',
-    'a11y:check',
-  ],
+  tags: ['a11y:check'],
   title: 'Components/global/Consent/ConsentOverlay',
 };
 

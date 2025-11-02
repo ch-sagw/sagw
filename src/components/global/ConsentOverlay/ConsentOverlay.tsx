@@ -189,6 +189,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
 
   return (
     <dialog
+      data-testid='consent-overlay'
       ref={ref}
       className={styles.consentWrapper}
       // @ts-expect-error closedby is a valid HTML attribute but not yet in
@@ -203,6 +204,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
             html={rteToHtml(title)}
           />
           <button
+            data-testid='consent-overlay-close'
             className={styles.closeButton}
             onClick={handleClose}
             aria-label={i18nA11y.closeDialog[pageLanguage]}
