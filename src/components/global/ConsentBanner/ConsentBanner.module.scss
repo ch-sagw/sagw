@@ -17,6 +17,7 @@
   margin: 0;
   max-width: none;
   max-height: none;
+  z-index: 998;
 
   &[open]:not(.closing) {
     display: block;
