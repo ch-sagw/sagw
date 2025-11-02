@@ -18,13 +18,23 @@
   max-width: none;
   max-height: none;
 
-  // Only show when dialog is open
-  &[open] {
+  &[open]:not(.closing) {
     display: block;
+    animation: slide-up-fade-in var(--motion-speed-very-fast) var(--motion-ease-in-out);
+  }
+
+  &.closing {
+    display: block;
+    animation: slide-down-fade-out var(--motion-speed-very-fast) var(--motion-ease-in-out);
   }
 
   &::backdrop {
     background-color: var(--background-page-overly);
+    animation: fade-in var(--motion-speed-very-fast) var(--motion-ease-in-out);
+  }
+
+  &.closing::backdrop {
+    animation: fade-out var(--motion-speed-very-fast) var(--motion-ease-in-out);
   }
 
   @include mq($from: large) {
@@ -71,5 +81,49 @@
         justify-content: center;
       }
     }
+  }
+}
+
+@keyframes slide-up-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-down-fade-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
   }
 }

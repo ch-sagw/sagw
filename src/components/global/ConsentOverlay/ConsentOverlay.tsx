@@ -60,7 +60,37 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
       return undefined;
     }
 
+    const animateClose = (): void => {
+      if (!dialog.open || dialog.classList.contains(styles.closing)) {
+        return;
+      }
+
+      dialog.classList.add(styles.closing);
+
+      const handleAnimationEnd = (): void => {
+        dialog.removeEventListener('animationend', handleAnimationEnd);
+        dialog.classList.remove(styles.closing);
+        setIsOpen(false);
+        onClose?.();
+        dialog.close();
+      };
+
+      dialog.addEventListener('animationend', handleAnimationEnd, {
+        once: true,
+      });
+    };
+
+    const handleCancel = (e: Event): void => {
+      // Prevent default close behavior and animate the dismissal
+      e.preventDefault();
+      animateClose();
+    };
+
     const handleClose = (): void => {
+      if (dialog.classList.contains(styles.closing)) {
+        return;
+      }
+
       setIsOpen(false);
       onClose?.();
     };
@@ -77,9 +107,11 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
       attributes: true,
     });
 
+    dialog.addEventListener('cancel', handleCancel);
     dialog.addEventListener('close', handleClose);
 
     return (): void => {
+      dialog.removeEventListener('cancel', handleCancel);
       dialog.removeEventListener('close', handleClose);
       observer.disconnect();
     };
@@ -98,9 +130,26 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
   });
 
   const handleClose = (): void => {
-    if (typeof ref === 'object' && ref?.current) {
-      ref.current.close();
+    const dialog = typeof ref === 'object' && ref?.current
+      ? ref.current
+      : null;
+
+    if (!dialog || !dialog.open) {
+      return;
     }
+
+    dialog.classList.add(styles.closing);
+
+    // Wait for animation to complete, then close
+    const handleAnimationEnd = (): void => {
+      dialog.removeEventListener('animationend', handleAnimationEnd);
+      dialog.classList.remove(styles.closing);
+      dialog.close();
+    };
+
+    dialog.addEventListener('animationend', handleAnimationEnd, {
+      once: true,
+    });
   };
 
   return (

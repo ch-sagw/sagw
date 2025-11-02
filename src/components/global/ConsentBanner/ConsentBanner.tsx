@@ -46,16 +46,57 @@ export const ConsentBanner = ({
     isBannerOpen,
     setIsBannerOpen,
   ] = useState(false);
+  const [
+    isClosing,
+    setIsClosing,
+  ] = useState(false);
+
+  const closeBannerWithAnimation = React.useCallback((): void => {
+    const dialog = bannerDialogRef.current;
+
+    if (!dialog || !dialog.open) {
+      return;
+    }
+
+    setIsClosing(true);
+
+    dialog.classList.add(styles.closing);
+
+    // Wait for animation to complete, then close
+    const handleAnimationEnd = (): void => {
+      dialog.removeEventListener('animationend', handleAnimationEnd);
+      dialog.classList.remove(styles.closing);
+      setIsClosing(false);
+
+      requestAnimationFrame(() => {
+        dialog.close();
+      });
+    };
+
+    dialog.addEventListener('animationend', handleAnimationEnd, {
+      once: true,
+    });
+  }, []);
 
   useEffect(() => {
-    if (bannerDialogRef.current) {
-      if (visible) {
-        bannerDialogRef.current.showModal();
-      } else {
-        bannerDialogRef.current.close();
+    const dialog = bannerDialogRef.current;
+
+    if (!dialog) {
+      return;
+    }
+
+    if (visible) {
+      dialog.showModal();
+      dialog.classList.remove(styles.closing);
+    } else {
+      if (dialog.open) {
+        closeBannerWithAnimation();
       }
     }
-  }, [visible]);
+  }, [
+    visible,
+    closeBannerWithAnimation,
+  ]);
 
   // Track banner dialog open state
   useEffect(() => {
@@ -108,7 +149,7 @@ export const ConsentBanner = ({
       external: true,
     });
     setIsProcessing(false);
-    bannerDialogRef.current?.close();
+    closeBannerWithAnimation();
   };
 
   const handleRejectAll = (): void => {
@@ -120,7 +161,7 @@ export const ConsentBanner = ({
       external: false,
     });
     setIsProcessing(false);
-    bannerDialogRef.current?.close();
+    closeBannerWithAnimation();
   };
 
   const handleCustomize = (): void => {
@@ -132,7 +173,8 @@ export const ConsentBanner = ({
     setIsOverlayOpen(false);
   };
 
-  if (!visible) {
+  // Keep dialog mounted during closing animation
+  if (!visible && !isClosing) {
     return null;
   }
 
