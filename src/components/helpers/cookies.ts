@@ -38,8 +38,7 @@ export const getCookieConsent = (): InterfaceCookieConsent | null => {
       typeof consent.essential !== 'boolean' ||
       typeof consent.analytics !== 'boolean' ||
       typeof consent.consentGiven !== 'boolean' ||
-      typeof consent.timestamp !== 'number' ||
-      typeof consent.version !== 'string'
+      typeof consent.timestamp !== 'number'
     ) {
       console.warn('Invalid cookie consent structure, resetting consent');
 

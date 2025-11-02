@@ -11,7 +11,9 @@ import { rteToHtml } from '@/utilities/rteToHtml';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
 import { Rte } from '@/components/blocks/Rte/Rte';
-import { setCookieConsent } from '@/components/helpers/cookies';
+import {
+  setCookieConsent, shouldShowBanner,
+} from '@/components/helpers/cookies';
 import { ConsentOverlay } from '../ConsentOverlay/ConsentOverlay';
 import { useScrollLock } from '@/hooks/useScrollLock';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
@@ -85,7 +87,7 @@ export const ConsentBanner = ({
       return;
     }
 
-    if (visible) {
+    if (visible && shouldShowBanner()) {
       dialog.showModal();
       dialog.classList.remove(styles.closing);
     } else {
@@ -102,7 +104,7 @@ export const ConsentBanner = ({
   useEffect(() => {
     const dialog = bannerDialogRef.current;
 
-    if (!dialog || !visible) {
+    if (!dialog || !visible || !shouldShowBanner()) {
       return undefined;
     }
 
@@ -174,7 +176,8 @@ export const ConsentBanner = ({
   };
 
   // Keep dialog mounted during closing animation
-  if (!visible && !isClosing) {
+  // Banner should only show if shouldShowBanner is true
+  if ((!visible || !shouldShowBanner()) && !isClosing) {
     return null;
   }
 
