@@ -143,6 +143,8 @@
 
     &:focus-visible {
       @include focus-visible;
+
+      outline-offset: px-to-rem(var(--spacing-2xs));
     }
   }
 }
