@@ -13,6 +13,8 @@ import { Icon } from '@/icons';
 import { Rte } from '@/components/blocks/Rte/Rte';
 import { setCookieConsent } from '@/components/helpers/cookies';
 import { ConsentOverlay } from '../ConsentOverlay/ConsentOverlay';
+import { useScrollLock } from '@/hooks/useScrollLock';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
 
 export type InterfaceConsentBannerPropTypes = {
   visible: boolean;
@@ -36,6 +38,14 @@ export const ConsentBanner = ({
     isProcessing,
     setIsProcessing,
   ] = useState(false);
+  const [
+    isOverlayOpen,
+    setIsOverlayOpen,
+  ] = useState(false);
+  const [
+    isBannerOpen,
+    setIsBannerOpen,
+  ] = useState(false);
 
   useEffect(() => {
     if (bannerDialogRef.current) {
@@ -46,6 +56,48 @@ export const ConsentBanner = ({
       }
     }
   }, [visible]);
+
+  // Track banner dialog open state
+  useEffect(() => {
+    const dialog = bannerDialogRef.current;
+
+    if (!dialog || !visible) {
+      return undefined;
+    }
+
+    setIsBannerOpen(dialog.open);
+
+    // watch for open attribute changes
+    const observer = new MutationObserver(() => {
+      setIsBannerOpen(dialog.open);
+    });
+
+    observer.observe(dialog, {
+      attributeFilter: ['open'],
+      attributes: true,
+    });
+
+    const handleClose = (): void => {
+      setIsBannerOpen(false);
+    };
+
+    dialog.addEventListener('close', handleClose);
+
+    return (): void => {
+      dialog.removeEventListener('close', handleClose);
+      observer.disconnect();
+    };
+  }, [visible]);
+
+  // scroll lock
+  useScrollLock(visible || isOverlayOpen);
+
+  // Trap focus
+  useFocusTrap({
+    condition: isBannerOpen,
+    focusTrapRootElement: bannerDialogRef.current ?? undefined,
+    ignoreElementsWithClasses: [],
+  });
 
   const handleAcceptAll = (): void => {
     setIsProcessing(true);
@@ -73,6 +125,11 @@ export const ConsentBanner = ({
 
   const handleCustomize = (): void => {
     overlayDialogRef.current?.showModal();
+    setIsOverlayOpen(true);
+  };
+
+  const handleOverlayClose = (): void => {
+    setIsOverlayOpen(false);
   };
 
   if (!visible) {
@@ -138,6 +195,7 @@ export const ConsentBanner = ({
       <ConsentOverlay
         ref={overlayDialogRef}
         pageLanguage={pageLanguage}
+        onClose={handleOverlayClose}
         {...overlay}
       />
     </Fragment>

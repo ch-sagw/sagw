@@ -1,4 +1,6 @@
-import React, { forwardRef } from 'react';
+import React, {
+  forwardRef, useEffect, useState,
+} from 'react';
 import styles from '@/components/global/ConsentOverlay/ConsentOverlay.module.scss';
 import {
   Config, InterfaceConsentOverlay,
@@ -10,9 +12,11 @@ import { Toggle } from '@/components/base/Toggle/Toggle';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { Icon } from '@/icons';
 import { i18nA11y } from '@/i18n/content';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
 
 export type InterfaceConsentOverlayPropTypes = {
-  pageLanguage: Config['locale']
+  pageLanguage: Config['locale'];
+  onClose?: () => void;
 } & InterfaceConsentOverlay;
 
 export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOverlayPropTypes>(({
@@ -24,7 +28,13 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
   analyticsPerformance,
   externalContent,
   pageLanguage,
+  onClose,
 }, ref): React.JSX.Element => {
+  const [
+    isOpen,
+    setIsOpen,
+  ] = useState(false);
+
   const sections = [
     {
       data: necessaryCookies,
@@ -39,6 +49,53 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
       key: 'external',
     },
   ] as const;
+
+  // Track dialog open state
+  useEffect(() => {
+    const dialog = typeof ref === 'object' && ref?.current
+      ? ref.current
+      : null;
+
+    if (!dialog) {
+      return undefined;
+    }
+
+    const handleClose = (): void => {
+      setIsOpen(false);
+      onClose?.();
+    };
+
+    setIsOpen(dialog.open);
+
+    // watch for open attribute changes
+    const observer = new MutationObserver(() => {
+      setIsOpen(dialog.open);
+    });
+
+    observer.observe(dialog, {
+      attributeFilter: ['open'],
+      attributes: true,
+    });
+
+    dialog.addEventListener('close', handleClose);
+
+    return (): void => {
+      dialog.removeEventListener('close', handleClose);
+      observer.disconnect();
+    };
+  }, [
+    ref,
+    onClose,
+  ]);
+
+  // Trap focus
+  useFocusTrap({
+    condition: isOpen,
+    focusTrapRootElement: typeof ref === 'object' && ref?.current
+      ? ref.current
+      : undefined,
+    ignoreElementsWithClasses: [],
+  });
 
   const handleClose = (): void => {
     if (typeof ref === 'object' && ref?.current) {
