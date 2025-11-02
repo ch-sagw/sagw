@@ -4,7 +4,6 @@ export interface InterfaceCookieConsent {
   external: boolean;
   consentGiven: boolean;
   timestamp: number;
-  version: string;
 }
 
 export const consentUpdatedEventName = 'consentUpdated';
@@ -13,7 +12,6 @@ const CONSENT_COOKIE_NAME = 'cookie_consent';
 
 // 12 months
 const CONSENT_DURATION = 12 * 30 * 24 * 60 * 60 * 1000;
-const CONSENT_VERSION = '1.0';
 
 export const getCookieConsent = (): InterfaceCookieConsent | null => {
   try {
@@ -68,13 +66,7 @@ export const hasValidConsent = (): boolean => {
     return false;
   }
 
-  return consent.version === CONSENT_VERSION;
-};
-
-export const shouldShowAnalytics = (): boolean => {
-  const consent = getCookieConsent();
-
-  return hasValidConsent() && consent?.analytics === true;
+  return true;
 };
 
 export const shouldShowBanner = (): boolean => !hasValidConsent();
@@ -84,7 +76,6 @@ export const setCookieConsent = (consent: Omit<InterfaceCookieConsent, 'timestam
     const fullConsent: InterfaceCookieConsent = {
       ...consent,
       timestamp: Date.now(),
-      version: CONSENT_VERSION,
     };
     const cookieValue = encodeURIComponent(JSON.stringify(fullConsent));
     const maxAge = CONSENT_DURATION / 1000;

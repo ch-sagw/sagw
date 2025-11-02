@@ -13,6 +13,7 @@ import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { Icon } from '@/icons';
 import { i18nA11y } from '@/i18n/content';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
+import { setCookieConsent } from '@/components/helpers/cookies';
 
 export type InterfaceConsentOverlayPropTypes = {
   pageLanguage: Config['locale'];
@@ -34,6 +35,14 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
     isOpen,
     setIsOpen,
   ] = useState(false);
+
+  const [
+    toggleStates,
+    setToggleStates,
+  ] = useState<Record<string, boolean>>({
+    analytics: true,
+    external: true,
+  });
 
   const sections = [
     {
@@ -152,6 +161,28 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
     });
   };
 
+  const handleAcceptSelection = (): void => {
+    setCookieConsent({
+      analytics: toggleStates.analytics,
+      consentGiven: true,
+      essential: true,
+      external: toggleStates.external,
+    });
+
+    handleClose();
+  };
+
+  const handleAcceptAll = (): void => {
+    setCookieConsent({
+      analytics: true,
+      consentGiven: true,
+      essential: true,
+      external: true,
+    });
+
+    handleClose();
+  };
+
   return (
     <dialog
       ref={ref}
@@ -210,7 +241,13 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
                     labelOn={rteToHtml(section.toggleLabelOn)}
                     value={key}
                     name={key}
-                    checked={true}
+                    checked={toggleStates[key]}
+                    onChange={(checked) => {
+                      setToggleStates((prev) => ({
+                        ...prev,
+                        [key]: checked,
+                      }));
+                    }}
                     hiddenLabel={rte1ToPlaintext(section.title)}
                   />
                 }
@@ -234,9 +271,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
             colorMode='light'
             style='filled'
             text={rteToHtml(buttonAcceptSelection)}
-            onClick={() => {
-              console.log('clicked: decline');
-            }}
+            onClick={handleAcceptSelection}
           />
 
           <Button
@@ -246,9 +281,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
             colorMode='light'
             style='outlined'
             text={rteToHtml(buttonAcceptAll)}
-            onClick={() => {
-              console.log('clicked: decline');
-            }}
+            onClick={handleAcceptAll}
           />
 
         </div>
