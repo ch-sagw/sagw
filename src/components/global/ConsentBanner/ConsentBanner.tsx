@@ -53,7 +53,7 @@ export const ConsentBanner = ({
     setIsClosing,
   ] = useState(false);
 
-  const closeBannerWithAnimation = React.useCallback((): void => {
+  const closeBanner = React.useCallback((): void => {
     const dialog = bannerDialogRef.current;
 
     if (!dialog || !dialog.open) {
@@ -92,12 +92,12 @@ export const ConsentBanner = ({
       dialog.classList.remove(styles.closing);
     } else {
       if (dialog.open) {
-        closeBannerWithAnimation();
+        closeBanner();
       }
     }
   }, [
     visible,
-    closeBannerWithAnimation,
+    closeBanner,
   ]);
 
   // Track banner dialog open state
@@ -151,7 +151,7 @@ export const ConsentBanner = ({
       external: true,
     });
     setIsProcessing(false);
-    closeBannerWithAnimation();
+    closeBanner();
   };
 
   const handleRejectAll = (): void => {
@@ -163,7 +163,7 @@ export const ConsentBanner = ({
       external: false,
     });
     setIsProcessing(false);
-    closeBannerWithAnimation();
+    closeBanner();
   };
 
   const handleCustomize = (): void => {
@@ -241,6 +241,7 @@ export const ConsentBanner = ({
         ref={overlayDialogRef}
         pageLanguage={pageLanguage}
         onClose={handleOverlayClose}
+        onConsentGiven={closeBanner}
         {...overlay}
       />
     </Fragment>

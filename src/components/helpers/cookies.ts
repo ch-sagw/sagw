@@ -88,7 +88,6 @@ export const setCookieConsent = (consent: Omit<InterfaceCookieConsent, 'timestam
       detail: fullConsent,
     }));
 
-    console.log('Cookie consent updated:', fullConsent);
   } catch (error) {
     console.error('Error setting cookie consent:', error);
   }

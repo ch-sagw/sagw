@@ -18,6 +18,7 @@ import { setCookieConsent } from '@/components/helpers/cookies';
 export type InterfaceConsentOverlayPropTypes = {
   pageLanguage: Config['locale'];
   onClose?: () => void;
+  onConsentGiven?: () => void;
 } & InterfaceConsentOverlay;
 
 export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOverlayPropTypes>(({
@@ -30,6 +31,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
   externalContent,
   pageLanguage,
   onClose,
+  onConsentGiven,
 }, ref): React.JSX.Element => {
   const [
     isOpen,
@@ -169,6 +171,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
       external: toggleStates.external,
     });
 
+    onConsentGiven?.();
     handleClose();
   };
 
@@ -180,6 +183,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
       external: true,
     });
 
+    onConsentGiven?.();
     handleClose();
   };
 
