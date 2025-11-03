@@ -47,6 +47,26 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     });
   }
 
+  // create user for sagw
+  if (tenant === 'sagw') {
+    if (process.env.PAYLOAD_INITIAL_USER_SAGW_MAIL) {
+      await payload.create({
+        collection: 'users',
+        data: {
+          email: process.env.PAYLOAD_INITIAL_USER_SAGW_MAIL,
+          password: process.env.PAYLOAD_INITIAL_SAGW_PASSWORD,
+          tenants: [
+            {
+              roles: [tenantRoles.admin],
+              tenant: tenantId,
+            },
+          ],
+          username: 'Stella',
+        },
+      });
+    }
+  }
+
   // ############
   // Assets
   // ############

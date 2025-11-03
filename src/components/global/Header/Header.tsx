@@ -352,6 +352,9 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
             text: rteToHtml(selectedSections[0].description),
             title: rteToHtml(selectedSections[0].navItemText),
           });
+        } else {
+          setIsHovering(false);
+          setHoveredSection(null);
         }
       }
     } else {

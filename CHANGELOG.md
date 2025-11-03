@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.22.3](https://github.com/ch-sagw/sagw/compare/v0.22.2...v0.22.3) (2025-10-29)
+
+
+### Documentation
+
+* take note of rte configs ([8483a2f](https://github.com/ch-sagw/sagw/commit/8483a2fea1930c32c1d988fdab00dd850532362f))
+
+
+### Bug Fixes
+
+* also render blocks.content of .content is not defined ([8483a2f](https://github.com/ch-sagw/sagw/commit/8483a2fea1930c32c1d988fdab00dd850532362f))
+* collapse header if hovered item has no subNavItems ([8483a2f](https://github.com/ch-sagw/sagw/commit/8483a2fea1930c32c1d988fdab00dd850532362f))
+
 ## [0.22.2](https://github.com/ch-sagw/sagw/compare/v0.22.1...v0.22.2) (2025-10-27)
 
 
