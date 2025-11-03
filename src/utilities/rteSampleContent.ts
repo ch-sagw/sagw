@@ -329,6 +329,77 @@ export const rte2NotificationTextWithUl: InterfaceRte = {
 };
 
 /*
+RTE3 consent banner text
+*/
+export const rte3ConsentBannerText = (homeId: string): InterfaceRte => ({
+  root: {
+    children: [
+      {
+        children: [
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Wir verwenden Cookies, um Ihnen ein optimales Erlebnis zu bieten. Besuchen Sie unsere ',
+            type: 'text',
+            version: 1,
+          },
+          {
+            children: [
+              {
+                detail: 0,
+                format: 0,
+                mode: 'normal',
+                style: '',
+                text: 'Datenschutzrichtlinien',
+                type: 'text',
+                version: 1,
+              },
+            ],
+            direction: null,
+            fields: {
+              doc: {
+                relationTo: 'homePage',
+                value: homeId,
+              },
+              linkType: 'internal',
+              newTab: false,
+            },
+            format: '',
+            id: '69020ff185a4c87a662e6fc5',
+            indent: 0,
+            type: 'link',
+            version: 3,
+          },
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: ' für weitere Details.',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        textFormat: 0,
+        textStyle: '',
+        type: 'paragraph',
+        version: 1,
+      },
+    ],
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+});
+
+/*
 RTE3 accordion example content
 */
 export const rte3AccordionContent: InterfaceRte = {

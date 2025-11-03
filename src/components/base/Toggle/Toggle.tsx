@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, {
+  useEffect, useState,
+} from 'react';
 import styles from '@/components/base/Toggle/Toggle.module.scss';
 import { SafeHtml } from '../SafeHtml/SafeHtml';
 
@@ -9,6 +11,7 @@ export type InterfaceTogglePropTypes = {
   name: string;
   checked: boolean;
   hiddenLabel: string;
+  onChange?: (checked: boolean) => void;
 };
 
 export const Toggle = ({
@@ -18,14 +21,22 @@ export const Toggle = ({
   name,
   checked,
   hiddenLabel,
+  onChange,
 }: InterfaceTogglePropTypes): React.JSX.Element => {
   const [
     checkedState,
     setCheckedState,
   ] = useState(checked);
 
+  useEffect(() => {
+    setCheckedState(checked);
+  }, [checked]);
+
   const onInputChange = (): void => {
-    setCheckedState(!checkedState);
+    const newChecked = !checkedState;
+
+    setCheckedState(newChecked);
+    onChange?.(newChecked);
   };
 
   return (

@@ -17,6 +17,7 @@ import {
 } from '@/components/global/Footer/Footer';
 import { StatusMessage } from '@/components/global/StatusMessage/StatusMessage';
 import { Metadata } from 'next';
+import { ConsentBanner } from '@/components/global/ConsentBanner/ConsentBanner';
 
 export const metadata: Metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -115,6 +116,25 @@ export default async function RootLayout({
     return <p>Footer Legal data incomplete</p>;
   }
 
+  const consentCollectionData = await payload.find({
+    collection: 'consent',
+    depth: 1,
+    limit: 1,
+    locale: lang,
+    overrideAccess: false,
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (!consentCollectionData || consentCollectionData.docs.length !== 1) {
+    return <p>No consent Data</p>;
+  }
+
+  const [consentData] = consentCollectionData.docs;
+
   const colorMode: ColorMode = 'dark';
 
   const headerProps: InterfaceHeaderPropTypes = {
@@ -134,6 +154,7 @@ export default async function RootLayout({
   };
 
   const footerProps: InterfaceFooterPropTypes = {
+    consentOverlay: consentData.overlay,
     contact: footerContactData,
     legal: footerLegalData,
     metaNav: metanavData,
@@ -202,6 +223,8 @@ export default async function RootLayout({
         <Footer
           {...footerProps}
         />
+
+        <ConsentBanner {...consentData.banner} />
 
       </body>
     </html >
