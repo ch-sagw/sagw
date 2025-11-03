@@ -1,29 +1,22 @@
 'use client';
 
 import React, {
-  Fragment, useEffect, useRef, useState,
+  useEffect, useRef, useState,
 } from 'react';
 import styles from '@/components/global/ConsentBanner/ConsentBanner.module.scss';
-import {
-  Config,
-  InterfaceConsentBanner, InterfaceConsentOverlay,
-} from '@/payload-types';
+import { InterfaceConsentBanner } from '@/payload-types';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
 import { Rte } from '@/components/blocks/Rte/Rte';
 import {
-  consentUpdatedEventName, setCookieConsent, shouldShowBanner,
+  consentUpdatedEventName, openConsentOverlayEventName, setCookieConsent, shouldShowBanner,
 } from '@/components/helpers/cookies';
-import { ConsentOverlay } from '../ConsentOverlay/ConsentOverlay';
-import { useScrollLock } from '@/hooks/useScrollLock';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
+import { useScrollLock } from '@/hooks/useScrollLock';
 
-export type InterfaceConsentBannerPropTypes = {
-  overlay: InterfaceConsentOverlay;
-  pageLanguage: Config['locale'];
-} & InterfaceConsentBanner;
+export type InterfaceConsentBannerPropTypes = {} & InterfaceConsentBanner;
 
 export const ConsentBanner = ({
   title,
@@ -31,18 +24,11 @@ export const ConsentBanner = ({
   buttonAcceptAll,
   buttonCustomizeSelection,
   buttonDeclineAll,
-  overlay,
-  pageLanguage,
 }: InterfaceConsentBannerPropTypes): React.JSX.Element | null => {
   const bannerDialogRef = useRef<HTMLDialogElement>(null);
-  const overlayDialogRef = useRef<HTMLDialogElement>(null);
   const [
     isProcessing,
     setIsProcessing,
-  ] = useState(false);
-  const [
-    isOverlayOpen,
-    setIsOverlayOpen,
   ] = useState(false);
   const [
     isBannerOpen,
@@ -152,8 +138,7 @@ export const ConsentBanner = ({
     };
   }, [shouldShow]);
 
-  // scroll lock
-  useScrollLock(isOverlayOpen);
+  useScrollLock(isBannerOpen);
 
   // Trap focus
   useFocusTrap({
@@ -187,12 +172,8 @@ export const ConsentBanner = ({
   };
 
   const handleCustomize = (): void => {
-    overlayDialogRef.current?.showModal();
-    setIsOverlayOpen(true);
-  };
-
-  const handleOverlayClose = (): void => {
-    setIsOverlayOpen(false);
+    // Dispatch event to open the consent overlay (handled by Footer)
+    window.dispatchEvent(new CustomEvent(openConsentOverlayEventName));
   };
 
   // Return null while checking consent (loading state) to prevent flash
@@ -202,76 +183,66 @@ export const ConsentBanner = ({
 
   // After checking consent, render if:
   // - We should show the banner (no consent given), OR
-  // - We're closing (keep mounted during animation), OR
-  // - Overlay is open (keep mounted for overlay functionality)
-  if (!shouldShow && !isClosing && !isOverlayOpen) {
+  // - We're closing (keep mounted during animation)
+  if (!shouldShow && !isClosing) {
     return null;
   }
 
   return (
-    <Fragment>
-      <dialog
-        data-testid='consent-banner'
-        ref={bannerDialogRef}
-        className={styles.consentBanner}
-        // @ts-expect-error closedby is a valid HTML attribute but not yet in
-        // TypeScript types
-        closedby='none'
-      >
-        <SafeHtml
-          as='p'
-          className={styles.title}
-          html={rteToHtml(title)}
-        />
-        <Rte
-          className={styles.text}
-          text={text}
-          colorMode='light'
-          stickyFirstTitle={false}
-        />
-        <div className={styles.buttons}>
-          <Button
-            disabled={isProcessing}
-            className={styles.button}
-            element='button'
-            buttonType='button'
-            colorMode='light'
-            style='filled'
-            text={rteToHtml(buttonAcceptAll)}
-            onClick={handleAcceptAll}
-          />
-
-          <Button
-            disabled={isProcessing}
-            className={styles.button}
-            element='button'
-            buttonType='button'
-            colorMode='light'
-            style='outlined'
-            text={rteToHtml(buttonDeclineAll)}
-            onClick={handleRejectAll}
-          />
-
-          <Button
-            disabled={isProcessing}
-            className={styles.buttonCustomize}
-            element='button'
-            buttonType='button'
-            colorMode='light'
-            style='text'
-            text={rteToHtml(buttonCustomizeSelection)}
-            iconInlineStart={'config' as keyof typeof Icon}
-            onClick={handleCustomize}
-          />
-        </div>
-      </dialog>
-      <ConsentOverlay
-        ref={overlayDialogRef}
-        pageLanguage={pageLanguage}
-        onClose={handleOverlayClose}
-        onConsentGiven={closeBanner}
-        {...overlay}
+    <dialog
+      data-testid='consent-banner'
+      ref={bannerDialogRef}
+      className={styles.consentBanner}
+      // @ts-expect-error closedby is a valid HTML attribute but not yet in
+      // TypeScript types
+      closedby='none'
+    >
+      <SafeHtml
+        as='p'
+        className={styles.title}
+        html={rteToHtml(title)}
       />
-    </Fragment>
+      <Rte
+        className={styles.text}
+        text={text}
+        colorMode='light'
+        stickyFirstTitle={false}
+      />
+      <div className={styles.buttons}>
+        <Button
+          disabled={isProcessing}
+          className={styles.button}
+          element='button'
+          buttonType='button'
+          colorMode='light'
+          style='filled'
+          text={rteToHtml(buttonAcceptAll)}
+          onClick={handleAcceptAll}
+        />
+
+        <Button
+          disabled={isProcessing}
+          className={styles.button}
+          element='button'
+          buttonType='button'
+          colorMode='light'
+          style='outlined'
+          text={rteToHtml(buttonDeclineAll)}
+          onClick={handleRejectAll}
+        />
+
+        <Button
+          disabled={isProcessing}
+          className={styles.buttonCustomize}
+          element='button'
+          buttonType='button'
+          colorMode='light'
+          style='text'
+          text={rteToHtml(buttonCustomizeSelection)}
+          iconInlineStart={'config' as keyof typeof Icon}
+          onClick={handleCustomize}
+        />
+      </div>
+    </dialog>
   );
 };

@@ -33,6 +33,7 @@ import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { i18nA11y } from '@/i18n/content';
 import { ConsentOverlay } from '../ConsentOverlay/ConsentOverlay';
 import { useScrollLock } from '@/hooks/useScrollLock';
+import { openConsentOverlayEventName } from '@/components/helpers/cookies';
 
 export type InterfaceFooterPropTypes = {
   contact: InterfaceFooterContact;
@@ -70,6 +71,20 @@ export const Footer = ({
 
   // scroll lock when overlay is open
   useScrollLock(isOverlayOpen);
+
+  // Listen for event to open overlay from ConsentBanner
+  React.useEffect(() => {
+    const handleOpenOverlay = (): void => {
+      overlayDialogRef.current?.showModal();
+      setIsOverlayOpen(true);
+    };
+
+    window.addEventListener(openConsentOverlayEventName, handleOpenOverlay);
+
+    return (): void => {
+      window.removeEventListener(openConsentOverlayEventName, handleOpenOverlay);
+    };
+  }, []);
 
   const footerClasses = cva([styles.footer], {
     variants: {

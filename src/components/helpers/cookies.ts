@@ -7,6 +7,7 @@ export interface InterfaceCookieConsent {
 }
 
 export const consentUpdatedEventName = 'consentUpdated';
+export const openConsentOverlayEventName = 'openConsentOverlay';
 
 const CONSENT_COOKIE_NAME = 'cookie_consent';
 

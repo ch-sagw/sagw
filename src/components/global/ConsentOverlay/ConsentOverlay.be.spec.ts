@@ -149,4 +149,25 @@ test.describe('Consent Overlay', () => {
       .not.toBeVisible();
   });
 
+  test('opens overlay from footer', async ({
+    page,
+  }) => {
+    await page.goto('http://localhost:3000/');
+    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+
+    const banner = await page.getByTestId('consent-banner');
+    const overlay = await page.getByTestId('consent-overlay');
+    const acceptAll = await banner.getByText('Alle zulassen');
+
+    await acceptAll.click();
+
+    const settings = await page.getByText('Cookie-Einstellungen');
+
+    await settings.click();
+
+    await expect(overlay)
+      .toBeVisible();
+  });
+
 });

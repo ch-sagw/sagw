@@ -187,13 +187,7 @@ export default async function RootLayout({
           {...footerProps}
         />
 
-        <ConsentBanner
-          {...consentData.banner}
-          overlay={consentData.overlay}
-
-          // TODO: get from parent
-          pageLanguage='de'
-        />
+        <ConsentBanner {...consentData.banner} />
 
       </body>
     </html >
