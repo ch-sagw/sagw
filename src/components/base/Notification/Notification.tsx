@@ -127,6 +127,10 @@ export const Notification = ({
         ? notificationId
         : undefined
       }
+      type={WrapperElem === 'button'
+        ? 'button'
+        : undefined
+      }
     >
       {iconName && !hideIcon &&
         <Icon

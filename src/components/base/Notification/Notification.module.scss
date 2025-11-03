@@ -35,6 +35,10 @@
 
   &.borderless {
     border: none;
+
+    @include forced-colors {
+      border: px-to-rem(var(--border-width-m)) solid CanvasText;
+    }
   }
 
   &.success.dark {
@@ -140,8 +144,10 @@
   }
 
   .bottomLink {
+    --line-cover-color: var(--color-background);
+
     color: var(--color-text);
-    margin: 0;
-    padding: px-to-rem(var(--padding-block-large)) 0 0;
+    margin-block-start: px-to-rem(var(--padding-block-large));
+    margin-inline-start: px-to-rem(var(--spacing-l), true);
   }
 }
