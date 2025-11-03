@@ -151,6 +151,7 @@ export default async function RootLayout({
   };
 
   const footerProps: InterfaceFooterPropTypes = {
+    consentOverlay: consentData.overlay,
     contact: footerContactData,
     legal: footerLegalData,
     metaNav: metanavData,
