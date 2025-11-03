@@ -190,6 +190,7 @@ export const ConsentBanner = ({
 
   return (
     <dialog
+      aria-labelledby='consent-banner-title'
       data-testid='consent-banner'
       ref={bannerDialogRef}
       className={styles.consentBanner}
@@ -201,6 +202,7 @@ export const ConsentBanner = ({
         as='p'
         className={styles.title}
         html={rteToHtml(title)}
+        id='consent-banner-title'
       />
       <Rte
         className={styles.text}
@@ -208,41 +210,48 @@ export const ConsentBanner = ({
         colorMode='light'
         stickyFirstTitle={false}
       />
-      <div className={styles.buttons}>
-        <Button
-          disabled={isProcessing}
-          className={styles.button}
-          element='button'
-          buttonType='button'
-          colorMode='light'
-          style='filled'
-          text={rteToHtml(buttonAcceptAll)}
-          onClick={handleAcceptAll}
-        />
+      <ul className={styles.buttons}>
+        <li>
+          <Button
+            disabled={isProcessing}
+            className={styles.button}
+            element='button'
+            buttonType='button'
+            colorMode='light'
+            style='filled'
+            text={rteToHtml(buttonAcceptAll)}
+            onClick={handleAcceptAll}
+          />
+        </li>
 
-        <Button
-          disabled={isProcessing}
-          className={styles.button}
-          element='button'
-          buttonType='button'
-          colorMode='light'
-          style='outlined'
-          text={rteToHtml(buttonDeclineAll)}
-          onClick={handleRejectAll}
-        />
+        <li>
+          <Button
+            disabled={isProcessing}
+            className={styles.button}
+            element='button'
+            buttonType='button'
+            colorMode='light'
+            style='outlined'
+            text={rteToHtml(buttonDeclineAll)}
+            onClick={handleRejectAll}
+          />
+        </li>
 
-        <Button
-          disabled={isProcessing}
-          className={styles.buttonCustomize}
-          element='button'
-          buttonType='button'
-          colorMode='light'
-          style='text'
-          text={rteToHtml(buttonCustomizeSelection)}
-          iconInlineStart={'config' as keyof typeof Icon}
-          onClick={handleCustomize}
-        />
-      </div>
+        <li>
+          <Button
+            ariaHasPopUp={true}
+            disabled={isProcessing}
+            className={styles.buttonCustomize}
+            element='button'
+            buttonType='button'
+            colorMode='light'
+            style='text'
+            text={rteToHtml(buttonCustomizeSelection)}
+            iconInlineStart={'config' as keyof typeof Icon}
+            onClick={handleCustomize}
+          />
+        </li>
+      </ul>
     </dialog>
   );
 };

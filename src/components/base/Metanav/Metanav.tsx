@@ -56,6 +56,7 @@ export const Metanav = ({
             colorMode={colorMode}
             element='button'
             onClick={item.clickCallback}
+            ariaHasPopUp={true}
           />
         }
       </li>

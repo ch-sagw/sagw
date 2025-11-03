@@ -55,6 +55,10 @@
       padding: px-to-rem(var(56));
     }
 
+    @include forced-colors {
+      border: px-to-rem(var(--border-width-l)) solid CanvasText;
+    }
+
     .titleLine {
       display: flex;
       flex-wrap: nowrap;
@@ -86,6 +90,8 @@
     }
 
     .sections {
+      @include list-reset;
+
       .section {
         border-block-end: px-to-rem(var(--border-width-l)) solid var(--border-primary);
         padding-block: px-to-rem(var(--spacing-xl));

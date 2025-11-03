@@ -1,6 +1,7 @@
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
 
 .consentBanner {
   --content-max-width: 1000;
@@ -46,6 +47,13 @@
     padding: px-to-rem(56);
   }
 
+  @include forced-colors {
+    width: calc(100% - px-to-rem(var(--spacing-xs)));
+    border: px-to-rem(var(--border-width-l)) solid CanvasText;
+    inset-inline: px-to-rem(var(--spacing-2xs));
+    inset-block-end: px-to-rem(var(--spacing-2xs));
+  }
+
   .title {
     @include title-heading-4;
 
@@ -63,6 +71,8 @@
   }
 
   .buttons {
+    @include list-reset;
+
     display: flex;
     flex-direction: column;
     row-gap: px-to-rem(var(--spacing-m));
@@ -70,6 +80,22 @@
 
     @include mq($from: medium) {
       flex-direction: row;
+    }
+
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      @include mq($to: large) {
+        button {
+          width: 100%;
+        }
+      }
+
+      @include mq($from: large) {
+        align-content: center;
+      }
     }
 
     .buttonCustomize {

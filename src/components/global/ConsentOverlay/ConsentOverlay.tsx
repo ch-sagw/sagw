@@ -42,8 +42,8 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
     toggleStates,
     setToggleStates,
   ] = useState<Record<string, boolean>>({
-    analytics: true,
-    external: true,
+    analytics: false,
+    external: false,
   });
 
   const sections = [
@@ -140,7 +140,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
     ignoreElementsWithClasses: [],
   });
 
-  const handleClose = (): void => {
+  const handleCloseAnimated = (): void => {
     const dialog = typeof ref === 'object' && ref?.current
       ? ref.current
       : null;
@@ -172,7 +172,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
     });
 
     onConsentGiven?.();
-    handleClose();
+    handleCloseAnimated();
   };
 
   const handleAcceptAll = (): void => {
@@ -184,7 +184,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
     });
 
     onConsentGiven?.();
-    handleClose();
+    handleCloseAnimated();
   };
 
   return (
@@ -199,6 +199,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
       <div className={styles.consentOverlay}>
         <div className={styles.titleLine}>
           <SafeHtml
+            id='consent-overlay-title'
             as='h2'
             className={styles.title}
             html={rteToHtml(title)}
@@ -206,7 +207,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
           <button
             data-testid='consent-overlay-close'
             className={styles.closeButton}
-            onClick={handleClose}
+            onClick={handleAcceptSelection}
             aria-label={i18nA11y.closeDialog[pageLanguage]}
           >
             <Icon name='close' />
@@ -218,11 +219,11 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
           html={rteToHtml(text)}
         />
 
-        <div className={styles.sections}>
+        <ul className={styles.sections}>
           {sections.map(({
             key, data: section,
           }) => (
-            <div
+            <li
               key={key}
               className={styles.section}
             >
@@ -265,9 +266,9 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
                 html={rteToHtml(section.text)}
               />
 
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
 
         <div className={styles.buttons}>
           <Button
