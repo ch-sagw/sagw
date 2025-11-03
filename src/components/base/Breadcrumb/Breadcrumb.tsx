@@ -1,0 +1,72 @@
+import React from 'react';
+import { cva } from 'cva';
+import styles from '@/components/base/Breadcrumb/Breadcrumb.module.scss';
+import { ColorMode } from '@/components/base/types/colorMode';
+import { Icon } from '@/icons';
+import { Button } from '@/components/base/Button/Button';
+import { Config } from '@/payload-types';
+
+interface InterfaceBreadcrumbItem {
+  link: string;
+  text: string;
+}
+
+export type InterfaceBreadcrumbPropTypes = {
+  colorMode: ColorMode;
+  items: InterfaceBreadcrumbItem[];
+  pageLanguage: Config['locale'];
+};
+
+export const Breadcrumb = ({
+  colorMode,
+  items,
+  pageLanguage,
+}: InterfaceBreadcrumbPropTypes): React.JSX.Element => {
+  const breadcrumbClasses = cva([styles.breadcrumb], {
+    variants: {
+      colorMode: {
+        dark: [styles.dark],
+        light: [styles.light],
+        white: [styles.white],
+      },
+    },
+  });
+
+  return (
+    <div
+      className={breadcrumbClasses({
+        colorMode,
+      })}
+    >
+      <Icon
+        name='arrowLeft'
+        className={styles.icon}
+      />
+      <div className={styles.content}>
+
+        {items.map((item, index) => (
+          <span
+            className={styles.item}
+            key={index}
+          >
+            {index !== 0 &&
+              <Icon
+                name='longDash'
+                className={styles.separatorIcon}
+              />
+            }
+            <Button
+              className={styles.link}
+              href={item.link}
+              colorMode={colorMode}
+              element='link'
+              text={item.text}
+              style='text'
+              pageLanguage={pageLanguage}
+            />
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+};
