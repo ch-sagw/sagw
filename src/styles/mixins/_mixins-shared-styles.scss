@@ -1,0 +1,23 @@
+@use "../utilities/functions" as *;
+@use "./mixins-typo" as *;
+@use "../utilities/utilities" as *;
+@use "../utilities/mediaqueries" as *;
+
+// ##############################
+// RTE
+// ##############################
+@mixin inline-svg {
+  svg {
+    display: inline-block;
+    width: px-to-rem(var(--spacing-l));
+    height: px-to-rem(var(--spacing-l));
+    stroke: var(--interaction-secondary);
+    margin-block-start: px-to-rem(-3);
+    margin-block-end: px-to-rem(-4);
+    margin-inline-start: px-to-rem(var(--spacing-2xs));
+
+    @include mq($to: large) {
+      margin-block-end: px-to-rem(-5);
+    }
+  }
+}

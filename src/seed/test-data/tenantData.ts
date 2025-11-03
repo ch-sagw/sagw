@@ -49,6 +49,26 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     });
   }
 
+  // create user for sagw
+  if (tenant === 'sagw') {
+    if (process.env.PAYLOAD_INITIAL_USER_SAGW_MAIL) {
+      await payload.create({
+        collection: 'users',
+        data: {
+          email: process.env.PAYLOAD_INITIAL_USER_SAGW_MAIL,
+          password: process.env.PAYLOAD_INITIAL_SAGW_PASSWORD,
+          tenants: [
+            {
+              roles: [tenantRoles.admin],
+              tenant: tenantId,
+            },
+          ],
+          username: 'Stella',
+        },
+      });
+    }
+  }
+
   // ############
   // Assets
   // ############
@@ -380,13 +400,23 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   await payload.create({
     collection: 'statusMessage',
     data: {
-      message: simpleRteConfig(`Status Message ${tenant.toUpperCase()}`),
-      show: {
-        display: 'hide',
+      content: {
+        message: simpleRteConfig(`Eigentlich undenkbar, aber trotzdem passiert. Bitte entschuldigen Sie die Unannehmlichkeiten und versuchen Sie es später erneut. ${tenant.toUpperCase()}`),
+        optionalLink: {
+          includeLink: true,
+          link: {
+            internalLink: 'https://www.foo.bar',
+            linkText: simpleRteConfig('Some action link'),
+          },
+        },
+        show: {
+          display: 'show',
+        },
+        showOnHomeOnly: false,
+        title: simpleRteConfig(`Das System ist aktuell nicht verfügbar ${tenant.toUpperCase()}`),
+        type: 'warn',
       },
       tenant: tenantId,
-      title: simpleRteConfig(`Status Title ${tenant.toUpperCase()}`),
-      type: 'error',
     },
   });
 
