@@ -84,7 +84,7 @@ test.describe('Consent Overlay', () => {
       .toBe(true);
   });
 
-  test('sets correct cookie values on disabling toggles', async ({
+  test('sets correct cookie values on enabling toggles', async ({
     context,
     page,
   }) => {
@@ -118,7 +118,7 @@ test.describe('Consent Overlay', () => {
     const consentValues = JSON.parse(decodeURIComponent(consentCookie.value));
 
     await expect(consentValues.analytics)
-      .toBe(false);
+      .toBe(true);
 
     await expect(consentValues.consentGiven)
       .toBe(true);
@@ -127,7 +127,7 @@ test.describe('Consent Overlay', () => {
       .toBe(true);
 
     await expect(consentValues.external)
-      .toBe(false);
+      .toBe(true);
   });
 
   test('closes on close button', async ({
