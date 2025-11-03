@@ -1,6 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, {
+  useRef, useState,
+} from 'react';
 import { cva } from 'cva';
 import styles from '@/components/global/Footer/Footer.module.scss';
 
@@ -30,6 +32,7 @@ import { rteToHtml } from '@/utilities/rteToHtml';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { i18nA11y } from '@/i18n/content';
 import { ConsentOverlay } from '../ConsentOverlay/ConsentOverlay';
+import { useScrollLock } from '@/hooks/useScrollLock';
 
 export type InterfaceFooterPropTypes = {
   contact: InterfaceFooterContact;
@@ -59,6 +62,15 @@ export const Footer = ({
   pageLanguage,
   consentOverlay,
 }: InterfaceFooterPropTypes): React.JSX.Element => {
+  const overlayDialogRef = useRef<HTMLDialogElement>(null);
+  const [
+    isOverlayOpen,
+    setIsOverlayOpen,
+  ] = useState(false);
+
+  // scroll lock when overlay is open
+  useScrollLock(isOverlayOpen);
+
   const footerClasses = cva([styles.footer], {
     variants: {
       fg: {
@@ -134,7 +146,8 @@ export const Footer = ({
       },
       {
         clickCallback: (): void => {
-          console.log('foo');
+          overlayDialogRef.current?.showModal();
+          setIsOverlayOpen(true);
         },
         text: rteToHtml(legal.cookieSettings),
       },
@@ -233,8 +246,12 @@ export const Footer = ({
         />
 
         <ConsentOverlay
+          ref={overlayDialogRef}
           {...consentOverlay}
           pageLanguage={pageLanguage}
+          onClose={(): void => {
+            setIsOverlayOpen(false);
+          }}
         />
       </div>
 
