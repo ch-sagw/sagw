@@ -15,14 +15,19 @@ export type InterfaceBreadcrumbPropTypes = {
   colorMode: ColorMode;
   items: InterfaceBreadcrumbItem[];
   pageLanguage: Config['locale'];
+  className?: string;
 };
 
 export const Breadcrumb = ({
   colorMode,
   items,
   pageLanguage,
+  className,
 }: InterfaceBreadcrumbPropTypes): React.JSX.Element => {
-  const breadcrumbClasses = cva([styles.breadcrumb], {
+  const breadcrumbClasses = cva([
+    styles.breadcrumb,
+    className,
+  ], {
     variants: {
       colorMode: {
         dark: [styles.dark],

@@ -1,7 +1,53 @@
-.baseStyle {
-  text-decoration: underline;
-}
+// @use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
 
-.sampleContextStyle {
-  border: 1px solid black;
+// @use "../../../styles/utilities/mediaqueries" as *;
+// @use "../../../styles/utilities/utilities" as *;
+
+.hero {
+  // &.dark {}
+
+  // &.light {}
+
+  // &.white {}
+
+  // .breadcrumb {}
+
+  .sideTitle {
+    @include title-heading-4;
+  }
+
+  // .tag {}
+
+  .title {
+    @include title-heading-1;
+  }
+
+  .lead {
+    @include body-text-lead;
+  }
+
+  .newsDate {
+    @include body-text-s;
+  }
+
+  .eventDetails {
+    @include body-text-s;
+  }
+
+  .magazineDetailExtras {
+    .authorDate {
+      .author {
+        @include body-text-m;
+      }
+
+      .date {
+        @include body-text-s;
+      }
+    }
+
+    // .exportButton {}
+  }
+
+  // .link {}
 }

@@ -90,6 +90,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
       {props.breadcrumb &&
         <Breadcrumb
           {...props.breadcrumb}
+          className={styles.breadcrumb}
         />
       }
 
@@ -98,6 +99,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
         <SafeHtml
           as='p'
           html={rteToHtml(props.sideTitle)}
+          className={styles.sideTitle}
         />
       }
 
@@ -106,6 +108,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
         <Tag
           text={props.tag}
           colorTheme='secondary'
+          className={styles.tag}
         />
       }
 
@@ -113,6 +116,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
       <SafeHtml
         as='h1'
         html={rteToHtml(props.title)}
+        className={styles.title}
       />
 
       {/* Lead */}
@@ -120,12 +124,13 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
         <SafeHtml
           as='p'
           html={rteToHtml(props.lead)}
+          className={styles.lead}
         />
       }
 
       {/* News detail: date */}
       {props.type === 'newsDetail' && props.date &&
-        <p>{formatDateToReadableString({
+        <p className={styles.newsDate}>{formatDateToReadableString({
           dateString: props.date,
           locale: props.pageLanguage,
         })}</p>
@@ -133,10 +138,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
 
       {/* Event detail: event detail summary */}
       {eventDetailsString &&
-        <SafeHtml
-          as='p'
-          html={eventDetailsString}
-        />
+        <p className={styles.eventDetails}>{eventDetailsString}</p>
       }
 
       {/* Magazine detail: author, date & export button */}
@@ -154,6 +156,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
             element='button'
             text={rteToHtml(props.exportArticleText)}
             colorMode={heroColorMode}
+            className={styles.exportButton}
             style='outlined'
             iconInlineStart={'exportIcon' as keyof typeof Icon}
             onClick={() => {
@@ -168,6 +171,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
       {/* Link */}
       {'optionalLink' in props && props.optionalLink && props.optionalLink.includeLink && props.optionalLink.link &&
         <Button
+          className={styles.link}
           element='link'
           href={props.optionalLink.link.internalLink}
           text={rteToHtml(props.optionalLink.link.linkText)}
