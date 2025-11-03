@@ -10,8 +10,13 @@ export type InterfaceMetanavItem = {
   target: '_self' | '_blank';
 }
 
+type InterfaceMetanavItemButton = {
+  text: string;
+  clickCallback: () => void;
+}
+
 export type InterfaceMetanavPropTypes = {
-  items: InterfaceMetanavItem[],
+  items: (InterfaceMetanavItem | InterfaceMetanavItemButton)[],
   className?: string,
   colorMode: ColorMode;
   pageLanguage: Config['locale'];
@@ -28,18 +33,31 @@ export const Metanav = ({
       <li
         key={key}
       >
-        <Button
-          className={styles.item}
-          text={item.text}
-          style='textSmall'
-          colorMode={colorMode}
-          element='link'
-          href={item.link}
-          pageLanguage={pageLanguage}
-          target={item.target === '_blank'
-            ? item.target
-            : undefined}
-        />
+        {'link' in item && 'target' in item &&
+          <Button
+            className={styles.item}
+            text={item.text}
+            style='textSmall'
+            colorMode={colorMode}
+            element='link'
+            href={item.link}
+            pageLanguage={pageLanguage}
+            target={item.target === '_blank'
+              ? item.target
+              : undefined}
+          />
+        }
+
+        {'clickCallback' in item &&
+          <Button
+            className={styles.item}
+            text={item.text}
+            style='textSmall'
+            colorMode={colorMode}
+            element='button'
+            onClick={item.clickCallback}
+          />
+        }
       </li>
     ))}
   </ul>

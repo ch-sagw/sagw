@@ -3888,6 +3888,21 @@ export interface InterfaceFooterLegal {
     };
     [k: string]: unknown;
   };
+  cookieSettings: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   copyright: {
     root: {
       type: string;
@@ -5970,6 +5985,7 @@ export interface FooterSelect<T extends boolean = true> {
 export interface InterfaceFooterLegalSelect<T extends boolean = true> {
   dataPrivacy?: T;
   impressum?: T;
+  cookieSettings?: T;
   copyright?: T;
 }
 /**

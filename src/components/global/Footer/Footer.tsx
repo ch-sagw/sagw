@@ -6,6 +6,7 @@ import styles from '@/components/global/Footer/Footer.module.scss';
 
 import {
   Config,
+  InterfaceConsentOverlay,
   InterfaceFooterContact,
   InterfaceFooterLegal,
   InterfaceFooterSocialLinks,
@@ -28,6 +29,7 @@ import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { i18nA11y } from '@/i18n/content';
+import { ConsentOverlay } from '../ConsentOverlay/ConsentOverlay';
 
 export type InterfaceFooterPropTypes = {
   contact: InterfaceFooterContact;
@@ -42,6 +44,7 @@ export type InterfaceFooterPropTypes = {
     sagwLinkText: string;
   }
   pageLanguage: Config['locale'];
+  consentOverlay: InterfaceConsentOverlay;
 };
 
 export const Footer = ({
@@ -54,6 +57,7 @@ export const Footer = ({
   structuredDataUrl,
   fg,
   pageLanguage,
+  consentOverlay,
 }: InterfaceFooterPropTypes): React.JSX.Element => {
   const footerClasses = cva([styles.footer], {
     variants: {
@@ -127,6 +131,12 @@ export const Footer = ({
         link: '',
         target: '_self',
         text: rteToHtml(legal.impressum),
+      },
+      {
+        clickCallback: (): void => {
+          console.log('foo');
+        },
+        text: rteToHtml(legal.cookieSettings),
       },
     ],
     pageLanguage,
@@ -220,6 +230,11 @@ export const Footer = ({
         <SocialLinks
           {...socialLinkProps}
           className={styles.socialLinks}
+        />
+
+        <ConsentOverlay
+          {...consentOverlay}
+          pageLanguage={pageLanguage}
         />
       </div>
 

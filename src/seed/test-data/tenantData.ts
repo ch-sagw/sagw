@@ -221,6 +221,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         zipCode: simpleRteConfig('3001'),
       },
       legal: {
+        cookieSettings: simpleRteConfig('Cookie-Einstellungen'),
         copyright: simpleRteConfig(`Copyright ${tenant.toUpperCase()}`),
         dataPrivacy: simpleRteConfig(`Legal ${tenant.toUpperCase()}`),
         impressum: simpleRteConfig(`Impressum ${tenant.toUpperCase()}`),

@@ -11,6 +11,7 @@ import {
 } from '@/components/global/Header/Header.sampleData';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { InterfaceFooterSocialLinks } from '@/payload-types';
+import { DefaultOverlay } from '@/components/global/ConsentOverlay/ConsentOverlay.stories';
 
 type FooterProps = React.ComponentProps<typeof Footer>;
 
@@ -41,6 +42,7 @@ const meta: Meta<typeof Footer> = {
 export default meta;
 
 const legal = {
+  cookieSettings: simpleRteConfig('Cookie-Einstellungen'),
   copyright: simpleRteConfig('© Schweizerische Akademie der Geistes- und Sozialwissenschaften SAGW 2025'),
   dataPrivacy: simpleRteConfig('Datenschutz'),
   impressum: simpleRteConfig('Impressum'),
@@ -88,6 +90,7 @@ const socialLinks: InterfaceFooterSocialLinks = {
 };
 
 const defaultArgs: InterfaceFooterPropTypes = {
+  consentOverlay: DefaultOverlay.args,
   contact,
   legal,
   metaNav: defaultMetaNavItems,
