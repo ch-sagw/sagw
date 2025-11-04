@@ -5,10 +5,22 @@
   align-items: center;
   column-gap: px-to-rem(var(--spacing-m));
 
+  &.dark {
+    --icon-color: var(--interaction-primary-inverted);
+  }
+
+  &.light {
+    --icon-color: var(--interaction-secondary);
+  }
+
+  &.white {
+    --icon-color: var(--interaction-secondary);
+  }
+
   .icon {
     width: px-to-rem(var(--spacing-m));
     height: px-to-rem(var(--spacing-m));
-    color: var(--interaction-secondary);
+    color: var(--icon-color);
   }
 
   .content {

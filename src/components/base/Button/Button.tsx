@@ -23,7 +23,7 @@ type BaseWrapperProps = {
   disabled?: boolean;
   onClick?: (e: React.PointerEvent<HTMLButtonElement>) => void;
   popOverTarget?: string;
-  style: 'filled' | 'outlined' | 'text' | 'textSmall' | 'textBright' | 'buttonPlay' | 'socialLink';
+  style: 'filled' | 'outlined' | 'text' | 'textSmall' | 'textBright' | 'buttonPlay' | 'socialLink' | 'icon';
   prefetch?: 'auto' | true | false | null;
   className?: string;
   isActive?: boolean;
@@ -35,6 +35,14 @@ type ContentProps = {
   element: 'button' | 'link';
   text: string;
 }
+
+type IconProps = BaseWrapperProps & {
+  icon: keyof typeof Icon | undefined;
+  element: 'button';
+  ariaLabel: string;
+  style: 'icon';
+  text?: never;
+};
 
 type BaseProps = BaseWrapperProps & ContentProps;
 
@@ -59,7 +67,8 @@ type ButtonPlayProps = ButtonProps & {
 export type InterfaceButtonPropTypes =
   | ButtonProps
   | LinkProps
-  | ButtonPlayProps;
+  | ButtonPlayProps
+  | IconProps;
 
 // TODOs
 // - Integrate tracking events or necessary data attributes

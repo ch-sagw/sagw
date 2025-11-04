@@ -3,7 +3,7 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import { Hero } from '@/components/global/Hero/Hero';
-import { defaultDecorator } from '@/storybook-helpers';
+import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 type HeroProps = React.ComponentProps<typeof Hero>;
@@ -15,8 +15,10 @@ type StrictStory = StoryObj<typeof Hero> & {
 const meta: Meta<typeof Hero> = {
   args: {},
   component: Hero,
-  decorators: [defaultDecorator],
-  parameters: {/* layout: 'centered', */ },
+  decorators: [defaultDecoratorNoPadding],
+  parameters: {
+    layout: 'fullscreen',
+  },
   tags: [
     'autodocs',
     'visual:check',
@@ -97,7 +99,7 @@ export const NewsDetail: StrictStory = {
 export const EventDetail: StrictStory = {
   args: {
     breadcrumb: {
-      colorMode: 'white',
+      colorMode: 'light',
       items: [
         {
           link: 'https://www.foo.bar',
@@ -110,7 +112,7 @@ export const EventDetail: StrictStory = {
       ],
       pageLanguage: 'de',
     },
-    colorMode: 'white',
+    colorMode: 'light',
     eventDetails: {
       dateEnd: '2025-09-01T12:00:00.000Z',
       dateStart: '2025-08-31T12:00:00.000Z',
