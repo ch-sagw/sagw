@@ -11,6 +11,18 @@ type StrictStory = StoryObj<typeof Image> & {
   args: ImageProps;
 };
 
+const defaultArgs: ImageProps = {
+  alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
+  focalPointX: 0.5,
+  focalPointY: 0.45,
+  height: 450,
+  loading: 'lazy',
+  performanceMark: '',
+  src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
+  variant: 'content',
+  width: 800,
+};
+
 const meta: Meta<typeof Image> = {
   args: {},
   component: Image,
@@ -28,28 +40,15 @@ export default meta;
 
 export const ContentImage: StrictStory = {
   args: {
-    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
-    focalPointX: 0.5,
-    focalPointY: 0.45,
-    height: 450,
-    loading: 'lazy',
-    performanceMark: '',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
-    variant: 'content',
-    width: 800,
+    ...defaultArgs,
   },
 };
 
-export const ContentImageWide: StrictStory = {
+export const ContentImageFull: StrictStory = {
   args: {
-    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
-    focalPointX: 0.5,
-    focalPointY: 0.45,
+    ...defaultArgs,
     height: 450,
-    loading: 'lazy',
-    performanceMark: '',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
-    variant: 'content',
+    variant: 'contentFull',
     width: 800,
   },
 };
@@ -70,13 +69,8 @@ export const GenericTeaser: StrictStory = {
 
 export const LogoTeaser: StrictStory = {
   args: {
-    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
-    focalPointX: 0.5,
-    focalPointY: 0.45,
+    ...defaultArgs,
     height: 100,
-    loading: 'lazy',
-    performanceMark: '',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
     variant: 'logoTeaser',
     width: 100,
   },
@@ -84,13 +78,10 @@ export const LogoTeaser: StrictStory = {
 
 export const MagazineHero: StrictStory = {
   args: {
-    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
-    focalPointX: 0.5,
-    focalPointY: 0.45,
+    ...defaultArgs,
     height: 675,
     loading: 'eager',
     performanceMark: 'magazine-hero-teaser',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
     variant: 'hero',
     width: 1200,
   },
@@ -98,13 +89,9 @@ export const MagazineHero: StrictStory = {
 
 export const Portrait: StrictStory = {
   args: {
-    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
-    focalPointX: 0.5,
-    focalPointY: 0.45,
+    ...defaultArgs,
     height: 400,
     loading: 'eager',
-    performanceMark: 'portrait',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
     variant: 'portrait',
     width: 400,
   },
@@ -112,13 +99,8 @@ export const Portrait: StrictStory = {
 
 export const PortraitCta: StrictStory = {
   args: {
-    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
-    focalPointX: 0.5,
-    focalPointY: 0.45,
+    ...defaultArgs,
     height: 200,
-    loading: 'lazy',
-    performanceMark: 'Portrait',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
     variant: 'portraitCta',
     width: 200,
   },
@@ -126,13 +108,8 @@ export const PortraitCta: StrictStory = {
 
 export const PublicationTeaser: StrictStory = {
   args: {
-    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
-    focalPointX: 0.5,
-    focalPointY: 0.45,
+    ...defaultArgs,
     height: 114,
-    loading: 'lazy',
-    performanceMark: '',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
     variant: 'publicationTeaser',
     width: 80,
   },

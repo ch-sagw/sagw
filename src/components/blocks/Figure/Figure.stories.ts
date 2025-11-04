@@ -6,7 +6,7 @@ import { Figure } from '@/components/blocks/Figure/Figure';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import {
   ContentImage,
-  ContentImageWide,
+  ContentImageFull,
 } from '@/components/base/Image/Image.stories';
 import {
   captionRte1,
@@ -41,7 +41,7 @@ export const ContentImageCentered: StrictStory = {
     alignment: 'centered',
     caption: captionRte1,
     credits: creditsRte1,
-    imageConfig: ContentImageWide.args,
+    imageConfig: ContentImageFull.args,
   },
 };
 
