@@ -42,7 +42,7 @@ export const Image = ({
     params,
     src,
     variant,
-  }) as { src: string; srcSet?: string };
+  }) as { src: string; srcSet: string };
   const sizes = getSizes(variant);
 
   const handleOnLoad = (): void => {
