@@ -45,6 +45,14 @@ export const Home: StrictStory = {
   },
 };
 
+export const HomeWithLead: StrictStory = {
+  args: {
+    ...Home.args,
+    lead: simpleRteConfig('Wir stärken die Geistes- und Sozialwissenschaften in der Schweiz - mit fundierter Förderung, interdisziplinären Netzwerken und sichtbaren Aktivitäten. Wir verbinden Menschen und Themen, die unsere Gesellschaft weiterbringen.'),
+    title: simpleRteConfig('Fördern, vernetzen, vermitteln'),
+  },
+};
+
 export const MagazineDetail: StrictStory = {
   args: {
     author: simpleRteConfig('Lea Haller'),
@@ -96,6 +104,13 @@ export const NewsDetail: StrictStory = {
   },
 };
 
+export const NewsDetailWithLead: StrictStory = {
+  args: {
+    ...NewsDetail.args,
+    lead: simpleRteConfig('Intelligenz und Dummheit sind als Konzepte eng miteinander verwoben. Als man die Vernunft als Motor des Fortschritts anzusehen begann, geriet auch die Dummheit verstärkt ins Visier. Dass sie bis heute nicht ausgerottet werden konnte, gehört zu den wohl grössten Kränkungen der Menschheit. Klar ist: Dumm sind in der Regel die anderen.'),
+  },
+};
+
 export const EventDetail: StrictStory = {
   args: {
     breadcrumb: {
@@ -123,5 +138,12 @@ export const EventDetail: StrictStory = {
     tag: 'Konferenz',
     title: simpleRteConfig('SGAS/SSEA & VAD Conference: African Perspectives on Global Transformations'),
     type: 'eventDetail',
+  },
+};
+
+export const EventDetailWithLead: StrictStory = {
+  args: {
+    ...EventDetail.args,
+    lead: simpleRteConfig('Intelligenz und Dummheit sind als Konzepte eng miteinander verwoben. Als man die Vernunft als Motor des Fortschritts anzusehen begann, geriet auch die Dummheit verstärkt ins Visier. Dass sie bis heute nicht ausgerottet werden konnte, gehört zu den wohl grössten Kränkungen der Menschheit. Klar ist: Dumm sind in der Regel die anderen.'),
   },
 };

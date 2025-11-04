@@ -134,6 +134,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
               : 'secondary'
             }
             className={styles.tag}
+            large={true}
           />
         }
 
