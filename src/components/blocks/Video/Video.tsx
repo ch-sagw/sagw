@@ -14,10 +14,14 @@ import { Icon } from '@/icons';
 import { GumletPlayer } from '@gumlet/react-embed-player';
 import { i18nConsent } from '@/i18n/content';
 import { Config } from '@/payload-types';
+import {
+  consentUpdatedEventName,
+  getCookieConsent,
+  openConsentOverlayEventName,
+} from '@/components/helpers/cookies';
 
 export type InterfaceVideoPropTypes = {
   alignment: InterfaceFigurePropTypes['alignment'],
-  consent: boolean,
   pageLanguage: Config['locale'],
   stillImage: InterfaceFigurePropTypes,
   video: {
@@ -39,7 +43,6 @@ const classes = cva([styles.videoWrapper], {
 
 export const Video = ({
   alignment,
-  consent,
   stillImage,
   pageLanguage,
   video,
@@ -47,29 +50,39 @@ export const Video = ({
 
   const [
     internalConsent,
-    setConsent,
+    setInternalConsent,
   ] = useState(false);
 
   useEffect(() => {
-    setConsent(consent);
-  }, [consent]);
+    const handleConsentUpdate = (): void => {
+      const cookieConsentObject = getCookieConsent();
+
+      setInternalConsent(Boolean(cookieConsentObject?.external));
+    };
+
+    handleConsentUpdate();
+
+    window.addEventListener(consentUpdatedEventName, handleConsentUpdate);
+
+    return (): void => {
+      window.removeEventListener(consentUpdatedEventName, handleConsentUpdate);
+    };
+  });
 
   const playIcon = 'play' as keyof typeof Icon;
   const buttonRef = useRef<HTMLButtonElement>(null);
   const buttonRefOpenCookieSettings = useRef<HTMLButtonElement>(null);
-  const playerRef = useRef(null);
+  const playerRef = useRef<any>(null);
   const videoContainer = useRef<HTMLDivElement>(null);
 
   const loadVideo = (): void => {
-    if (playerRef.current) {
-      playerRef.current.play();
-    }
+    playerRef.current?.play();
 
     videoContainer.current?.classList.remove(styles.paused);
   };
 
   const openCookieSettingsOverlay = (): void => {
-    console.log('TODO open Cookie settings overlay');
+    window.dispatchEvent(new Event(openConsentOverlayEventName));
   };
 
   return (

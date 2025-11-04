@@ -33,7 +33,7 @@ export const Figure = ({
 
   // TODO
   // Replace Payload URL with Gumlet URL
-  console.log(alignment);
+  console.log('TODO: Replace Payload URL with Gumlet URL dynamically');
 
   return (
     <figure
