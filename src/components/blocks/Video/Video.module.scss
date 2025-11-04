@@ -122,7 +122,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: px-to-rem(calc(var(--inside-elements-m) + 0.000001));
+  row-gap: px-to-rem(calc(var(--inside-elements-m) + 0.1));
   padding-inline: px-to-rem(var(--grid-margin));
   color: var(--text-primary-inverted);
   text-align: center;
