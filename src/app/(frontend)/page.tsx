@@ -2,8 +2,8 @@ import 'server-only';
 import React, { Fragment } from 'react';
 import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
-import { Config } from '@/payload-types';
 import { RenderBlocks } from '@/app/(frontend)/RenderBlocks';
+import { Hero } from '@/components/global/Hero/Hero';
 import { getTenant } from '@/app/providers/TenantProvider.server';
 
 // TODO: properly invalidate cache via afterChange hook on collection level
@@ -26,13 +26,12 @@ export const generateStaticParams = () => [
 ];
 */
 
-export default async function HomePage({
-  params,
-}: {
-  params: Promise<{ lang: string }>
-}): Promise<React.JSX.Element> {
+export default async function HomePage(): Promise<React.JSX.Element> {
 
-  const lang = (await params).lang as Config['locale'] || 'de';
+  // const lang = (await params).lang as Config['locale'] || 'de';
+
+  // TODO: get from parent
+  const lang = 'de';
   const payload = await getPayload({
     config: configPromise,
   });
@@ -85,6 +84,11 @@ export default async function HomePage({
   return (
     <Fragment>
       <div className='home'>
+        <Hero
+          {...pageData.hero}
+          pageLanguage={lang}
+          type='home'
+        />
         <RenderBlocks
           i18n={i18nData}
           blocks={pageData.content}
