@@ -2,8 +2,9 @@
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/mixins/mixins-shared-styles" as *;
 
-.formNotification.isButton {
+.notification.isButton {
   @include button-reset;
 
   display: block;
@@ -14,7 +15,7 @@
   }
 }
 
-.formNotification.formNotification {
+.notification.notification {
   text-align: left;
   background: var(--color-background);
   width: 100%;
@@ -26,6 +27,18 @@
 
   @include mq($from: large) {
     --padding-block-large: 48;
+  }
+
+  @include forced-colors {
+    border: px-to-rem(var(--border-width-m)) solid CanvasText;
+  }
+
+  &.borderless {
+    border: none;
+
+    @include forced-colors {
+      border: px-to-rem(var(--border-width-m)) solid CanvasText;
+    }
   }
 
   &.success.dark {
@@ -55,6 +68,15 @@
     --color-border: var(--border-negative);
   }
 
+  &.warn {
+    --color-background: var(--background-warning);
+    --color-title: var(--text-warning);
+    --color-text: var(--text-warning);
+    --color-button: var(--text-warning);
+    --color-icon: var(--text-warning);
+    --color-border: var(--border-negative);
+  }
+
   .icon {
     color: var(--color-icon);
     width: px-to-rem(var(--icon-dimensions));
@@ -79,6 +101,38 @@
 
     color: var(--color-text);
     margin: 0;
+
+    p {
+      margin-block-start: 0;
+
+      &:only-child {
+        margin: 0;
+      }
+    }
+
+    a {
+      @include link-text-underline;
+      @include inline-svg;
+
+      display: inline-flex;
+      align-items: center;
+      color: var(--notification-link-color);
+
+      &:focus,
+      &:hover {
+        --notification-link-color: var(--interaction-primary-hover);
+      }
+    }
+
+    ul,
+    ol {
+      margin-block: 0;
+      padding-inline-start: px-to-rem(var(--spacing-l));
+
+      &:not(:last-child) {
+        margin-block-end: px-to-rem(var(--inside-elements-m));
+      }
+    }
   }
 
   .button {
@@ -87,5 +141,13 @@
     color: var(--color-button);
     margin: 0;
     padding: px-to-rem(var(--padding-block-large)) 0 0;
+  }
+
+  .bottomLink {
+    --line-cover-color: var(--color-background);
+
+    color: var(--color-text);
+    margin-block-start: px-to-rem(var(--padding-block-large));
+    margin-inline-start: px-to-rem(var(--spacing-l), true);
   }
 }

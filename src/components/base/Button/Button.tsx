@@ -222,6 +222,7 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
   if (element === 'button') {
     const {
       ariaExpanded,
+      ariaHasPopUp,
     } = props;
 
     // Render a proper button
@@ -231,6 +232,7 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
         aria-current={ariaCurrent}
         aria-controls={ariaControls}
         aria-label={ariaLabel}
+        aria-haspopup={ariaHasPopUp}
         autoFocus={autoFocus}
         className={classes({
           colorMode,

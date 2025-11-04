@@ -1,0 +1,156 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.consentBanner {
+  --content-max-width: 1000;
+
+  border: none;
+  border-block-start: px-to-rem(var(--border-width-l)) solid var(--border-primary);
+  position: fixed;
+  background-color: var(--background-light);
+  padding: px-to-rem(var(--inside-elements-m));
+  inset-inline: 0;
+  inset-block-start: auto;
+  inset-block-end: 0;
+  width: 100%;
+  margin: 0;
+  max-width: none;
+  max-height: none;
+  z-index: 998;
+
+  &[open]:not(.closing) {
+    display: block;
+    animation: slide-up-fade-in var(--motion-speed-very-fast) var(--motion-ease-in-out);
+  }
+
+  &.closing {
+    display: block;
+    animation: slide-down-fade-out var(--motion-speed-very-fast) var(--motion-ease-in-out);
+  }
+
+  &::backdrop {
+    background-color: var(--background-page-overly);
+    animation: fade-in var(--motion-speed-very-fast) var(--motion-ease-in-out);
+  }
+
+  &.closing::backdrop {
+    animation: fade-out var(--motion-speed-very-fast) var(--motion-ease-in-out);
+  }
+
+  @include mq($from: large) {
+    padding: px-to-rem(var(--spacing-2xl));
+  }
+
+  @include mq($from: wide) {
+    padding: px-to-rem(56);
+  }
+
+  @include forced-colors {
+    width: calc(100% - px-to-rem(var(--spacing-xs)));
+    border: px-to-rem(var(--border-width-l)) solid CanvasText;
+    inset-inline: px-to-rem(var(--spacing-2xs));
+    inset-block-end: px-to-rem(var(--spacing-2xs));
+  }
+
+  .title {
+    @include title-heading-4;
+
+    color: var(--text-primary);
+    max-width: px-to-rem(var(--content-max-width));
+  }
+
+  .text {
+    padding-block: px-to-rem(var(--spacing-m)) px-to-rem(var(--spacing-xl));
+    max-width: px-to-rem(var(--content-max-width));
+
+    @include mq($from: wide) {
+      padding-block-end: px-to-rem(var(--spacing-2xl));
+    }
+  }
+
+  .buttons {
+    @include list-reset;
+
+    display: flex;
+    flex-direction: column;
+    row-gap: px-to-rem(var(--spacing-m));
+    column-gap: px-to-rem(var(--spacing-l));
+
+    @include mq($from: medium) {
+      flex-direction: row;
+    }
+
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      @include mq($to: large) {
+        button {
+          width: 100%;
+        }
+      }
+
+      @include mq($from: large) {
+        align-content: center;
+      }
+    }
+
+    .buttonCustomize {
+      padding-inline: 0;
+      justify-content: center;
+    }
+
+    .button {
+      @include mq($to: large) {
+        justify-content: center;
+      }
+    }
+  }
+}
+
+@keyframes slide-up-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-down-fade-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}

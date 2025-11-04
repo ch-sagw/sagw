@@ -12,14 +12,19 @@ export type InterfaceRtePropTypes = {
   colorMode: ColorMode,
   text: InterfaceRte,
   stickyFirstTitle: boolean;
+  className?: string;
 };
 
 export const Rte = ({
   colorMode,
   text,
   stickyFirstTitle,
+  className,
 }: InterfaceRtePropTypes): React.JSX.Element => {
-  const classes = cva([styles.rte], {
+  const classes = cva([
+    styles.rte,
+    className,
+  ], {
     variants: {
       colorMode: {
         dark: styles.dark,

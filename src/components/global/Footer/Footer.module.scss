@@ -180,7 +180,7 @@
 
   @include mq($from: large) {
     grid-template-columns:
-      [left-col] 3fr
+      [left-col] 5fr
       [gutter] 1fr
       [center-right-col] 5fr
       [right-col] 3fr;

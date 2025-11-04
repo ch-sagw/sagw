@@ -30,6 +30,12 @@ export const i18nForm = {
 };
 
 export const i18nA11y = {
+  closeDialog: {
+    de: 'Dialog schliessen',
+    en: 'Close dialog',
+    fr: 'Fermer le dialogue',
+    it: 'Chiudi finestra di dialogo',
+  },
   linkTarget: {
     de: 'Linkziel',
     en: 'Link target',
