@@ -101,12 +101,12 @@ export const Portrait: StrictStory = {
     alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
     focalPointX: 0.5,
     focalPointY: 0.45,
-    height: 600,
+    height: 400,
     loading: 'eager',
     performanceMark: 'portrait',
     src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
     variant: 'portrait',
-    width: 600,
+    width: 400,
   },
 };
 
