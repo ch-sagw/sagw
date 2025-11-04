@@ -36,13 +36,13 @@ export const Image = ({
 
   const imgRef = useRef<HTMLImageElement>(null);
 
-  const params = `mode=crop&crop=focalpoint&fp-x=${focalPointX}&fp-y=${focalPointY}`;
+  const params = `fm=auto&mode=crop&crop=focalpoint&fp-x=${focalPointX}&fp-y=${focalPointY}`;
 
   const srcAndSrcSet = getSrcAndSrcSet({
     params,
     src,
     variant,
-  });
+  }) as { src: string; srcSet?: string };
   const sizes = getSizes(variant);
 
   const handleOnLoad = (): void => {
