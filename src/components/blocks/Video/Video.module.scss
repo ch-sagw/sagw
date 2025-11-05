@@ -50,6 +50,17 @@
 .buttonWrapper {
   z-index: 2;
   background: var(--background-video);
+
+  button {
+    position: absolute;
+    inset-inline-start: 50%;
+    inset-block-start: 50%;
+    transform: translate3d(-50%, -50%, 0) scale(1);
+
+    &:not([disabled]):is(:hover, :focus) {
+      transform: translate3d(-50%, -50%, 0) scale(1.06);
+    }
+  }
 }
 
 .duration {
@@ -134,7 +145,7 @@
 
   button {
     flex: 0 0 auto;
-    min-height: px-to-rem(60);
+    border-width: px-to-rem(var(--border-width-s));
   }
 }
 
