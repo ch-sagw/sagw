@@ -145,6 +145,7 @@
 
   button {
     flex: 0 0 auto;
+    min-height: px-to-rem(62);
     border-width: px-to-rem(var(--border-width-s));
   }
 }
