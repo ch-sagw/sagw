@@ -111,7 +111,7 @@ export const getSrcAndSrcSet = ({
       break;
 
     default:
-      console.log('Unknown variant. Please choose an existing variant or add a new one');
+      console.log('Unknown variant (srcset). Please choose an existing variant or add a new one');
   }
 
   return {
@@ -143,7 +143,7 @@ export const getSizes = (variant: string): string => {
       `;
       break;
 
-    case 'contentWide':
+    case 'contentFull':
       sizes = `
         (min-width: 100rem) 2500px,
         (min-width: 80rem) 2000px,
@@ -187,7 +187,7 @@ export const getSizes = (variant: string): string => {
       break;
 
     default:
-      console.log('Unknown variant. Please choose an existing variant or add a new one');
+      console.log('Unknown variant (sizes). Please choose an existing variant or add a new one');
   }
 
   return sizes.trim();

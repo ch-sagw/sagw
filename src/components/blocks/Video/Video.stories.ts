@@ -31,12 +31,30 @@ const meta: Meta<typeof Video> = {
 
 export default meta;
 
+export const VideoCenteredWithoutConsentCheck: StrictStory = {
+  args: {
+    alignment: ContentImageCentered.args.alignment,
+    overrideConsent: true,
+    pageLanguage: 'de',
+    stillImage: ContentImageCentered.args,
+    video: {
+      caption: ContentImageCentered.args.caption,
+      credits: ContentImageCentered.args.credits,
+      duration: '00:24',
+      id: '68f9e148609b9e4625b4278d',
+      title: 'Video Title',
+    },
+  },
+};
+
 export const VideoCentered: StrictStory = {
   args: {
     alignment: ContentImageCentered.args.alignment,
     pageLanguage: 'de',
     stillImage: ContentImageCentered.args,
     video: {
+      caption: ContentImageCentered.args.caption,
+      credits: ContentImageCentered.args.credits,
       duration: '00:24',
       id: '68f9e148609b9e4625b4278d',
       title: 'Video Title',
@@ -50,6 +68,8 @@ export const ContentVideoLeftAligned: StrictStory = {
     pageLanguage: 'de',
     stillImage: ContentImageLeftAligned.args,
     video: {
+      caption: ContentImageCentered.args.caption,
+      credits: ContentImageCentered.args.credits,
       duration: '03:18',
       id: '68f9e148609b9e4625b4278d',
       title: 'Video Title',
@@ -63,6 +83,8 @@ export const ContentVideoRightAligned: StrictStory = {
     pageLanguage: 'de',
     stillImage: ContentImageRightAligned.args,
     video: {
+      caption: ContentImageCentered.args.caption,
+      credits: ContentImageCentered.args.credits,
       duration: '02:34',
       id: '68f9e148609b9e4625b4278d',
       title: 'Video Title',

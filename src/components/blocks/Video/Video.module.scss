@@ -114,6 +114,7 @@
 // Consent Message
 .consentMessageWrapper {
   background: var(--background-video-no-consent);
+  overflow: hidden;
 }
 
 .consentMessage {
@@ -133,6 +134,7 @@
 
   button {
     flex: 0 0 auto;
+    min-height: px-to-rem(60);
   }
 }
 

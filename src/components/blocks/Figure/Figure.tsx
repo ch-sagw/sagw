@@ -65,7 +65,7 @@ export const Figure = ({
         <span
           className={styles.credits}
         >
-          <SafeHtml
+          © <SafeHtml
             as='span'
             html={rteToHtml(credits)}
           />

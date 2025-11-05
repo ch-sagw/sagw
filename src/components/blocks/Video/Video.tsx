@@ -19,12 +19,16 @@ import {
   getCookieConsent,
   openConsentOverlayEventName,
 } from '@/components/helpers/cookies';
+import { InterfaceRte } from '@/components/base/types/rte';
 
 export type InterfaceVideoPropTypes = {
   alignment: InterfaceFigurePropTypes['alignment'],
+  overrideConsent?: boolean,
   pageLanguage: Config['locale'],
   stillImage: InterfaceFigurePropTypes,
   video: {
+    caption: InterfaceRte,
+    credits: InterfaceRte,
     id: string,
     duration: string,
     title: string,
@@ -43,6 +47,7 @@ const classes = cva([styles.videoWrapper], {
 
 export const Video = ({
   alignment,
+  overrideConsent,
   stillImage,
   pageLanguage,
   video,
@@ -94,7 +99,7 @@ export const Video = ({
       <div
         className={styles.videoWrapperInner}
       >
-        {internalConsent && (
+        {(internalConsent || overrideConsent) && (
           <div>
             <div
               className={`${styles.videoContainer} 
@@ -140,7 +145,7 @@ export const Video = ({
             </div>
           </div>
         )}
-        {!internalConsent && (
+        {(!internalConsent && !overrideConsent) && (
           <div
             className={styles.consentMessageWrapper}
           >
@@ -167,8 +172,8 @@ export const Video = ({
         <div className={styles.figureWrapper}>
           <Figure
             alignment={stillImage.alignment}
-            caption={stillImage.caption}
-            credits={stillImage.credits}
+            caption={video.caption}
+            credits={video.credits}
             imageConfig={stillImage.imageConfig}
           />
         </div>
