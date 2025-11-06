@@ -51,6 +51,11 @@
   // &.animated {}
 
   .leftColumn {
+    @include mq($from: large) {
+      grid-column: 1 / 4;
+      margin-block-end: 0;
+    }
+
     .breadcrumb {
       margin-block-end: px-to-rem(var(--hero-small));
     }
@@ -93,21 +98,21 @@
       @include body-text-s;
 
       color: var(--color-news-date);
-      margin-block-start: px-to-rem(var(--hero-small));
+      margin-block-start: px-to-rem(var(--section-inside-s));
     }
 
     .eventDetails {
       @include body-text-s;
 
       color: var(--color-event-details);
-      margin-block: px-to-rem(var(--hero-small)) 0;
+      margin-block: px-to-rem(var(--section-inside-s)) 0;
     }
 
     .magazineDetailExtras {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-block-start: px-to-rem(var(--hero-small));
+      margin-block-start: px-to-rem(var(--section-inside-s));
 
       .authorDate {
         display: flex;
@@ -146,7 +151,7 @@
 
     .link {
       padding-inline: 0;
-      margin-block-start: px-to-rem(var(--hero-small));
+      margin-block-start: px-to-rem(var(--section-inside-s));
     }
   }
 }
