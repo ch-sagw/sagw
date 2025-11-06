@@ -28,6 +28,25 @@ const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
     ? linkableSlugs.filter((p) => allowedCollectionSlugs.includes(p.slug))
     : linkableSlugs;
 
+  // Get field label:
+  // use explicit label if set, otherwise derive from field name
+  const fieldLabel = (field as any)?.label as string | undefined;
+  const fieldName = (field as any)?.name as string | undefined;
+
+  // If no explicit label, Payload's FieldLabel will auto-generate from
+  // field name but we can also derive it here for consistency
+  let resolvedLabel: string | undefined = fieldLabel;
+
+  if (!resolvedLabel && fieldName) {
+    const firstChar = fieldName.charAt(0)
+      .toUpperCase();
+    const restOfName = fieldName.slice(1);
+    const withSpaces = restOfName.replace(/(?<capGroup>[A-Z])/gu, ' $1');
+    const trimmed = withSpaces.trim();
+
+    resolvedLabel = firstChar + trimmed;
+  }
+
   return (
     <InternalLinkChooserClient
       collectionSlug={collectionSlug}
@@ -37,6 +56,7 @@ const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
       required={hasRequired(field)
         ? field.required ?? false
         : false}
+      label={resolvedLabel}
     />
   );
 };

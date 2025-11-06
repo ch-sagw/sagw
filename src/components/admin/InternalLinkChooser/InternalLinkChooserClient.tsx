@@ -25,6 +25,7 @@ interface InternalLinkChooserClientProps {
   collectionSlug: string;
   slugs: InterfaceSlug[];
   required: boolean;
+  label?: string;
 }
 
 interface InterfaceFetchPages {
@@ -90,6 +91,7 @@ const InternalLinkChooserClient = ({
   collectionSlug,
   slugs,
   required,
+  label,
 }: InternalLinkChooserClientProps): JSX.Element => {
 
   // hooks
@@ -152,7 +154,7 @@ const InternalLinkChooserClient = ({
     <div>
       <FieldLabel
         required={required}
-        label='Link Target'
+        label={label}
         htmlFor={`field-${path}`}
       />
       <Select
