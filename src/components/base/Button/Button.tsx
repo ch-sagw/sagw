@@ -218,6 +218,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
   if (element === 'button') {
     const {
       ariaExpanded,
+      ariaHasPopUp,
     } = props;
 
     // Render a proper button
@@ -227,6 +228,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
         aria-current={ariaCurrent}
         aria-controls={ariaControls}
         aria-label={ariaLabel}
+        aria-haspopup={ariaHasPopUp}
         autoFocus={autoFocus}
         className={classes({
           colorMode,

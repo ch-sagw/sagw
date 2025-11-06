@@ -1,0 +1,190 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.consentWrapper {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 999;
+
+  &[open]:not(.closing) {
+    display: flex;
+    animation: fade-in-overlay var(--motion-speed-very-fast) var(--motion-ease-in-out);
+  }
+
+  &.closing {
+    display: flex;
+    animation: fade-out-overlay var(--motion-speed-very-fast) var(--motion-ease-in-out);
+  }
+
+  @include mq($from: medium) {
+    padding-inline: px-to-rem(var(--spacing-l));
+    padding-block: px-to-rem(var(--spacing-l));
+  }
+
+  &::backdrop {
+    background-color: var(--background-page-overly);
+    animation: fade-in-backdrop var(--motion-speed-very-fast) var(--motion-ease-in-out);
+  }
+
+  &.closing::backdrop {
+    animation: fade-out-backdrop var(--motion-speed-very-fast) var(--motion-ease-in-out);
+  }
+
+  .consentOverlay {
+    background-color: var(--background-page);
+    color: var(--text-primary);
+    padding: px-to-rem(var(--spacing-l));
+    max-width: px-to-rem(880);
+    margin-block: auto;
+
+    @include mq($from: large) {
+      padding: px-to-rem(var(--spacing-2xl));
+    }
+
+    @include mq($from: wide) {
+      padding: px-to-rem(var(56));
+    }
+
+    @include forced-colors {
+      border: px-to-rem(var(--border-width-l)) solid CanvasText;
+    }
+
+    .titleLine {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+
+      .title {
+        @include title-heading-3;
+      }
+
+      .closeButton {
+        @include button-reset;
+
+        // ensure 44px click area
+        padding: px-to-rem(calc((44 - var(--spacing-l)) / 2));
+        cursor: pointer;
+
+        svg {
+          width: px-to-rem(var(--spacing-l));
+          height: px-to-rem(var(--spacing-l));
+        }
+      }
+    }
+
+    .text {
+      @include body-text-m;
+
+      margin-block-end: px-to-rem(var(--spacing-2xl));
+    }
+
+    .sections {
+      @include list-reset;
+
+      .section {
+        border-block-end: px-to-rem(var(--border-width-l)) solid var(--border-primary);
+        padding-block: px-to-rem(var(--spacing-xl));
+
+        &:first-child {
+          padding-block-start: 0;
+        }
+
+        .sectionTitleLine {
+          display: flex;
+          flex-wrap: nowrap;
+          justify-content: space-between;
+          align-items: center;
+
+          .sectionTitle {
+            @include title-heading-4;
+          }
+
+          .sectionToggleLabel {
+            @include label-text;
+
+            color: var(--interaction-primary);
+          }
+        }
+
+        .sectionText {
+          @include body-text-m;
+
+          margin-block-end: 0;
+        }
+      }
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      row-gap: px-to-rem(var(--spacing-m));
+      margin-block-start: px-to-rem(var(--spacing-2xl));
+
+      @include mq($from: medium) {
+        flex-direction: row;
+        column-gap: px-to-rem(var(--spacing-l));
+      }
+
+      @include mq($from: wide) {
+        column-gap: px-to-rem(var(--spacing-xl));
+      }
+
+      .button {
+        @include mq($to: large) {
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
+@keyframes fade-in-overlay {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-backdrop {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out-overlay {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out-backdrop {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}

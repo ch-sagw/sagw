@@ -83,6 +83,7 @@ export const Consent: CollectionConfig = {
               name: 'buttonDeclineAll',
             }),
           ],
+          interfaceName: 'InterfaceConsentBanner',
           label: 'Consent Banner',
           name: 'banner',
         },
@@ -122,6 +123,7 @@ export const Consent: CollectionConfig = {
             },
 
           ],
+          interfaceName: 'InterfaceConsentOverlay',
           label: 'Consent Overlay',
           name: 'overlay',
         },

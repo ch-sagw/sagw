@@ -58,6 +58,9 @@ export const Footer: CollectionConfig = {
               name: 'impressum',
             }),
             rte1({
+              name: 'cookieSettings',
+            }),
+            rte1({
               disableLocalization: true,
               name: 'copyright',
             }),

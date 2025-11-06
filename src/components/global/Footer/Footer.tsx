@@ -1,11 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, {
+  useRef, useState,
+} from 'react';
 import { cva } from 'cva';
 import styles from '@/components/global/Footer/Footer.module.scss';
 
 import {
   Config,
+  InterfaceConsentOverlay,
   InterfaceFooterContact,
   InterfaceFooterLegal,
   InterfaceFooterSocialLinks,
@@ -28,6 +31,9 @@ import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { i18nA11y } from '@/i18n/content';
+import { ConsentOverlay } from '../ConsentOverlay/ConsentOverlay';
+import { useScrollLock } from '@/hooks/useScrollLock';
+import { openConsentOverlayEventName } from '@/components/helpers/cookies';
 
 export type InterfaceFooterPropTypes = {
   contact: InterfaceFooterContact;
@@ -42,6 +48,7 @@ export type InterfaceFooterPropTypes = {
     sagwLinkText: string;
   }
   pageLanguage: Config['locale'];
+  consentOverlay: InterfaceConsentOverlay;
 };
 
 export const Footer = ({
@@ -54,7 +61,31 @@ export const Footer = ({
   structuredDataUrl,
   fg,
   pageLanguage,
+  consentOverlay,
 }: InterfaceFooterPropTypes): React.JSX.Element => {
+  const overlayDialogRef = useRef<HTMLDialogElement>(null);
+  const [
+    isOverlayOpen,
+    setIsOverlayOpen,
+  ] = useState(false);
+
+  // scroll lock when overlay is open
+  useScrollLock(isOverlayOpen);
+
+  // Listen for event to open overlay from ConsentBanner
+  React.useEffect(() => {
+    const handleOpenOverlay = (): void => {
+      overlayDialogRef.current?.showModal();
+      setIsOverlayOpen(true);
+    };
+
+    window.addEventListener(openConsentOverlayEventName, handleOpenOverlay);
+
+    return (): void => {
+      window.removeEventListener(openConsentOverlayEventName, handleOpenOverlay);
+    };
+  }, []);
+
   const footerClasses = cva([styles.footer], {
     variants: {
       fg: {
@@ -127,6 +158,13 @@ export const Footer = ({
         link: '',
         target: '_self',
         text: rteToHtml(legal.impressum),
+      },
+      {
+        clickCallback: (): void => {
+          overlayDialogRef.current?.showModal();
+          setIsOverlayOpen(true);
+        },
+        text: rteToHtml(legal.cookieSettings),
       },
     ],
     pageLanguage,
@@ -220,6 +258,15 @@ export const Footer = ({
         <SocialLinks
           {...socialLinkProps}
           className={styles.socialLinks}
+        />
+
+        <ConsentOverlay
+          ref={overlayDialogRef}
+          {...consentOverlay}
+          pageLanguage={pageLanguage}
+          onClose={(): void => {
+            setIsOverlayOpen(false);
+          }}
         />
       </div>
 
