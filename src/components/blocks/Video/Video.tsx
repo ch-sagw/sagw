@@ -11,13 +11,13 @@ import {
 } from '@/components/blocks/Figure/Figure';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
+import { VideoConsentMessage } from '@/components/base/VideoConsentMessage/VideoConsentMessage';
 import { GumletPlayer } from '@gumlet/react-embed-player';
-import { i18nConsent } from '@/i18n/content';
+import { i18nA11y } from '@/i18n/content';
 import { Config } from '@/payload-types';
 import {
   consentUpdatedEventName,
   getCookieConsent,
-  openConsentOverlayEventName,
 } from '@/components/helpers/cookies';
 import { InterfaceRte } from '@/components/base/types/rte';
 
@@ -76,7 +76,6 @@ export const Video = ({
 
   const playIcon = 'play' as keyof typeof Icon;
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const buttonRefOpenCookieSettings = useRef<HTMLButtonElement>(null);
   const playerRef = useRef<any>(null);
   const videoContainer = useRef<HTMLDivElement>(null);
 
@@ -86,9 +85,8 @@ export const Video = ({
     videoContainer.current?.classList.remove(styles.paused);
   };
 
-  const openCookieSettingsOverlay = (): void => {
-    window.dispatchEvent(new Event(openConsentOverlayEventName));
-  };
+  const playButtonText = i18nA11y.playVideoText[pageLanguage as keyof typeof i18nA11y.playVideoText]
+    .replace('{{title}}', video.title);
 
   return (
     <div
@@ -127,7 +125,7 @@ export const Video = ({
             >
               <Button
                 ariaHasPopUp={false}
-                ariaLabel='Video mit dem Titel die SAGW stellt sich vor laden und abspielen.'
+                ariaLabel={playButtonText}
                 buttonType='button'
                 colorMode='white'
                 element='button'
@@ -149,24 +147,9 @@ export const Video = ({
           <div
             className={styles.consentMessageWrapper}
           >
-            <div
-              className={styles.consentMessage}
-            >
-              <p className={styles.consentMessageTitle}>{i18nConsent.titleExternalContent[pageLanguage as keyof typeof i18nConsent.titleExternalContent]}</p>
-              <div className={styles.consentMessageText}>{i18nConsent.messageVideo[pageLanguage as keyof typeof i18nConsent.messageVideo]}</div>
-              <Button
-                ariaHasPopUp={true}
-                ariaLabel={i18nConsent.buttonTextOpenCookieSettings[pageLanguage as keyof typeof i18nConsent.buttonTextOpenCookieSettings]}
-                buttonType='button'
-                colorMode='dark'
-                element='button'
-                iconInlineStart={'config' as keyof typeof Icon}
-                onClick={openCookieSettingsOverlay}
-                ref={buttonRefOpenCookieSettings}
-                style='outlined'
-                text={i18nConsent.buttonTextOpenCookieSettings[pageLanguage as keyof typeof i18nConsent.buttonTextOpenCookieSettings]}
-              />
-            </div>
+            <VideoConsentMessage
+              pageLanguage={pageLanguage}
+            />
           </div>
         )}
         <div className={styles.figureWrapper}>

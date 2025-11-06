@@ -1,0 +1,33 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+
+.consentMessage {
+  @include font-smoothing;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: px-to-rem(calc(var(--inside-elements-m) + 0.1));
+  padding-inline: px-to-rem(var(--grid-margin));
+  color: var(--text-primary-inverted);
+  text-align: center;
+
+  @include mq($from: large) {
+    padding-inline: px-to-rem(calc(var(--grid-margin) * 2));
+  }
+
+  button {
+    min-height: px-to-rem(61);
+    border-width: px-to-rem(var(--border-width-s));
+  }
+}
+
+.consentMessageTitle {
+  @include title-heading-5;
+}
+
+.consentMessageText {
+  @include body-text-s;
+}

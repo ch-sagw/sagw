@@ -34,6 +34,7 @@
   grid-column: 1 / calc(var(--grid-columns) + 1);
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .videoContainer {
@@ -50,17 +51,6 @@
 .buttonWrapper {
   z-index: 2;
   background: var(--background-video);
-
-  button {
-    position: absolute;
-    inset-inline-start: 50%;
-    inset-block-start: 50%;
-    transform: translate3d(-50%, -50%, 0) scale(1);
-
-    &:not([disabled]):is(:hover, :focus) {
-      transform: translate3d(-50%, -50%, 0) scale(1.06);
-    }
-  }
 }
 
 .duration {
@@ -122,38 +112,8 @@
   }
 }
 
-// Consent Message
+// Consent Message Wrapper
 .consentMessageWrapper {
   background: var(--background-video-no-consent);
   overflow: hidden;
-}
-
-.consentMessage {
-  @include font-smoothing;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: px-to-rem(calc(var(--inside-elements-m) + 0.1));
-  padding-inline: px-to-rem(var(--grid-margin));
-  color: var(--text-primary-inverted);
-  text-align: center;
-
-  @include mq($from: large) {
-    padding-inline: px-to-rem(calc(var(--grid-margin) * 2));
-  }
-
-  button {
-    flex: 0 0 auto;
-    min-height: px-to-rem(62);
-    border-width: px-to-rem(var(--border-width-s));
-  }
-}
-
-.consentMessageTitle {
-  @include title-heading-5;
-}
-
-.consentMessageText {
-  @include body-text-s;
 }

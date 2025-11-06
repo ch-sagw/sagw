@@ -48,6 +48,12 @@ export const i18nA11y = {
     fr: 's\'ouvre dans une nouvelle fenêtre.',
     it: 'si apre in una nuova finestra.',
   },
+  playVideoText: {
+    de: 'Video mit dem Titel «{{title}}» laden und abspielen.',
+    en: 'Video mit dem Titel «{{title}}» laden und abspielen (EN).',
+    fr: 'Video mit dem Titel «{{title}}» laden und abspielen (FR).',
+    it: 'Video mit dem Titel «{{title}}» laden und abspielen (IT).',
+  },
   socialLinks: {
     facebook: {
       de: 'Folgen Sie uns auf Facebook',
