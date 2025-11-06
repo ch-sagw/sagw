@@ -47,10 +47,10 @@ export const Breadcrumb = ({
         name='arrowLeft'
         className={styles.icon}
       />
-      <div className={styles.content}>
+      <ul className={styles.content}>
 
         {items.map((item, index) => (
-          <span
+          <li
             className={styles.item}
             key={index}
           >
@@ -69,9 +69,9 @@ export const Breadcrumb = ({
               style='text'
               pageLanguage={pageLanguage}
             />
-          </span>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };
