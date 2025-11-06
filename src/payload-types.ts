@@ -3097,6 +3097,7 @@ export interface DetailPage {
    * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
    */
   slug?: string | null;
+  parentPage?: string | null;
   hero: InterfaceHeroField;
   content?:
     | (
@@ -5133,6 +5134,7 @@ export interface DetailPageSelect<T extends boolean = true> {
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
+  parentPage?: T;
   hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T

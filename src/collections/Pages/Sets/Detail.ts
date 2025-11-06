@@ -14,6 +14,7 @@ import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
+import { fieldParentSelector } from '@/field-templates/parentSelector';
 
 const contentBlocks = [
   'textBlock',
@@ -58,6 +59,9 @@ export const DetailPage: CollectionConfig = {
     fieldLinkablePage,
     fieldAdminTitle,
     fieldSlug,
+    fieldParentSelector({
+      parentCollections: ['detailPage'],
+    }),
     {
       tabs: [
 
