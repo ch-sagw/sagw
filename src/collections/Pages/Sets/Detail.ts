@@ -60,7 +60,11 @@ export const DetailPage: CollectionConfig = {
     fieldAdminTitle,
     fieldSlug,
     fieldParentSelector({
-      parentCollections: ['detailPage'],
+      parentCollections: [
+        'detailPage',
+        'overviewPage',
+        'homePage',
+      ],
     }),
     {
       tabs: [

@@ -1,7 +1,8 @@
 import { Field } from 'payload';
+import type { LinkableCollectionSlug } from '@/collections/Pages/pages';
 
 interface InterfaceParentSelectorProps {
-  parentCollections?: string[];
+  parentCollections?: LinkableCollectionSlug[];
 }
 
 export const fieldParentSelector = (props?: InterfaceParentSelectorProps): Field => {

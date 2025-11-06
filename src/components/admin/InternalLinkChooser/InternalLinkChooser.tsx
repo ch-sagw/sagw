@@ -3,7 +3,9 @@
 import { JSX } from 'react';
 import type { UIFieldServerProps } from 'payload';
 import InternalLinkChooserClient from './InternalLinkChooserClient';
-import { linkableSlugs } from '@/collections/Pages/pages';
+import {
+  type LinkableCollectionSlug, linkableSlugs,
+} from '@/collections/Pages/pages';
 
 type FieldWithRequired = {
   required?: boolean;
@@ -20,7 +22,7 @@ const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
   } = props;
 
   // Read optional list of allowed collection slugs attached on the field config
-  const allowedCollectionSlugs = (field as any)?.linkableCollections as string[] | undefined;
+  const allowedCollectionSlugs = (field as any)?.linkableCollections as LinkableCollectionSlug[] | undefined;
 
   const resolvedSlugs = Array.isArray(allowedCollectionSlugs) && allowedCollectionSlugs.length > 0
     ? linkableSlugs.filter((p) => allowedCollectionSlugs.includes(p.slug))
