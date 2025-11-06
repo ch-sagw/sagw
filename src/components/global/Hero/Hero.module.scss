@@ -67,7 +67,7 @@
       margin-block-end: px-to-rem(var(--hero-small));
 
       @include mq($from: large) {
-        margin-block-end: 0;
+        margin-block: px-to-rem(var(--spacing-s)) 0;
       }
     }
   }
@@ -80,6 +80,10 @@
 
     .tag {
       margin-block-end: px-to-rem(var(--inside-elements-m));
+
+      @include mq($from: large) {
+        margin-block-start: px-to-rem(var(--spacing-s));
+      }
     }
 
     .title {
