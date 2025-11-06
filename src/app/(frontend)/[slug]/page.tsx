@@ -14,6 +14,11 @@ import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 
 export const revalidate = 0;
 
+// TODO: refactor
+// - get DETAIL_PAGE_COLLECTIONS from autogeneratePagesIndex
+// - derive page types automatically
+// - find cleaner approach for heroProps definition
+
 // Define the DetailPage collections to search through
 const DETAIL_PAGE_COLLECTIONS = [
   'detailPage',
