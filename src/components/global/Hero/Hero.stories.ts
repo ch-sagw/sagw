@@ -5,6 +5,7 @@ import type {
 import { Hero } from '@/components/global/Hero/Hero';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { InterfaceBreadcrumbPropTypes } from '@/components/base/Breadcrumb/Breadcrumb';
 
 type HeroProps = React.ComponentProps<typeof Hero>;
 
@@ -28,6 +29,21 @@ const meta: Meta<typeof Hero> = {
 };
 
 export default meta;
+
+const breadcrumb: InterfaceBreadcrumbPropTypes = {
+  colorMode: 'light',
+  items: [
+    {
+      link: 'https://www.foo.bar',
+      text: 'Aktivitäten',
+    },
+    {
+      link: 'https://www.foo.bar',
+      text: 'Magazin',
+    },
+  ],
+  pageLanguage: 'de',
+};
 
 export const Home: StrictStory = {
   args: {
@@ -57,18 +73,8 @@ export const MagazineDetail: StrictStory = {
   args: {
     author: simpleRteConfig('Lea Haller'),
     breadcrumb: {
+      ...breadcrumb,
       colorMode: 'white',
-      items: [
-        {
-          link: 'https://www.foo.bar',
-          text: 'Aktivitäten',
-        },
-        {
-          link: 'https://www.foo.bar',
-          text: 'Magazin',
-        },
-      ],
-      pageLanguage: 'de',
     },
     colorMode: 'white',
     date: '2025-08-31T12:00:00.000Z',
@@ -83,18 +89,8 @@ export const MagazineDetail: StrictStory = {
 export const NewsDetail: StrictStory = {
   args: {
     breadcrumb: {
+      ...breadcrumb,
       colorMode: 'white',
-      items: [
-        {
-          link: 'https://www.foo.bar',
-          text: 'Aktivitäten',
-        },
-        {
-          link: 'https://www.foo.bar',
-          text: 'Magazin',
-        },
-      ],
-      pageLanguage: 'de',
     },
     colorMode: 'white',
     date: '2025-08-31T12:00:00.000Z',
@@ -114,18 +110,8 @@ export const NewsDetailWithLead: StrictStory = {
 export const EventDetail: StrictStory = {
   args: {
     breadcrumb: {
+      ...breadcrumb,
       colorMode: 'light',
-      items: [
-        {
-          link: 'https://www.foo.bar',
-          text: 'Aktivitäten',
-        },
-        {
-          link: 'https://www.foo.bar',
-          text: 'Magazin',
-        },
-      ],
-      pageLanguage: 'de',
     },
     colorMode: 'light',
     eventDetails: {
@@ -145,5 +131,19 @@ export const EventDetailWithLead: StrictStory = {
   args: {
     ...EventDetail.args,
     lead: simpleRteConfig('Intelligenz und Dummheit sind als Konzepte eng miteinander verwoben. Als man die Vernunft als Motor des Fortschritts anzusehen begann, geriet auch die Dummheit verstärkt ins Visier. Dass sie bis heute nicht ausgerottet werden konnte, gehört zu den wohl grössten Kränkungen der Menschheit. Klar ist: Dumm sind in der Regel die anderen.'),
+  },
+};
+
+export const Generic: StrictStory = {
+  args: {
+    breadcrumb: {
+      ...breadcrumb,
+      colorMode: 'light',
+    },
+    colorMode: 'light',
+    lead: simpleRteConfig('Intelligenz und Dummheit sind als Konzepte eng miteinander verwoben. Als man die Vernunft als Motor des Fortschritts anzusehen begann, geriet auch die Dummheit verstärkt ins Visier. Dass sie bis heute nicht ausgerottet werden konnte, gehört zu den wohl grössten Kränkungen der Menschheit. Klar ist: Dumm sind in der Regel die anderen.'),
+    pageLanguage: 'de',
+    title: simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, vernetzen Akteure und vermitteln Wissen.'),
+    type: 'generic',
   },
 };
