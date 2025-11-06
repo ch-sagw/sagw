@@ -42,7 +42,7 @@ type IconProps = BaseWrapperProps & {
   ariaLabel: string;
   style: 'icon';
   text?: never;
-};
+} & ContentProps;
 
 type BaseProps = BaseWrapperProps & ContentProps;
 
@@ -154,7 +154,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
       style: {
         buttonPlay: [styles.buttonPlay],
         filled: [styles.buttonFilled],
-        iconOnly: [styles.iconOnly],
+        icon: [styles.icon],
         outlined: [styles.buttonOutlined],
         socialLink: [styles.socialLink],
         text: [styles.buttonText],
