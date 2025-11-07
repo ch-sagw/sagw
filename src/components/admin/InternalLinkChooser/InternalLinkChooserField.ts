@@ -26,7 +26,7 @@ export const fieldInternalLinkChooser = (props: InterfaceFieldInternalLinkChoose
           hidden: true,
         },
         name: 'slug',
-        required: true,
+        required: !props?.optional,
         type: 'text',
       },
       {
@@ -34,7 +34,7 @@ export const fieldInternalLinkChooser = (props: InterfaceFieldInternalLinkChoose
           hidden: true,
         },
         name: 'documentId',
-        required: true,
+        required: !props?.optional,
         type: 'text',
       },
     ],
