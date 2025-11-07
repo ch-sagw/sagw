@@ -1,5 +1,7 @@
 import { Field } from 'payload';
 
+export const fieldBreadcrumbFieldName = 'breadcrumb';
+
 export const fieldBreadcrumb: Field = {
   admin: {
     position: 'sidebar',
@@ -24,8 +26,9 @@ export const fieldBreadcrumb: Field = {
       type: 'text',
     },
   ],
+  interfaceName: 'InterfaceBreadcrumb',
   minRows: 0,
-  name: 'breadcrumb',
+  name: fieldBreadcrumbFieldName,
   type: 'array',
 };
 

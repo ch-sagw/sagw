@@ -7,6 +7,18 @@
  */
 
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceBreadcrumb".
+ */
+export type InterfaceBreadcrumb =
+  | {
+      slug: string;
+      documentId: string;
+      name: string;
+      id?: string | null;
+    }[]
+  | null;
+/**
  * Supported timezones in IANA format.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3110,14 +3122,7 @@ export interface DetailPage {
    */
   navigationTitle?: string | null;
   parentPage?: InterfaceInternalLinkValue;
-  breadcrumb?:
-    | {
-        slug: string;
-        documentId: string;
-        name: string;
-        id?: string | null;
-      }[]
-    | null;
+  breadcrumb?: InterfaceBreadcrumb;
   hero: InterfaceHeroField;
   content?:
     | (
@@ -5164,14 +5169,7 @@ export interface DetailPageSelect<T extends boolean = true> {
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
-  breadcrumb?:
-    | T
-    | {
-        slug?: T;
-        documentId?: T;
-        name?: T;
-        id?: T;
-      };
+  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
@@ -5204,6 +5202,16 @@ export interface DetailPageSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceBreadcrumb_select".
+ */
+export interface InterfaceBreadcrumbSelect<T extends boolean = true> {
+  slug?: T;
+  documentId?: T;
+  name?: T;
+  id?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
