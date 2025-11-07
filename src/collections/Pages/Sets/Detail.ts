@@ -14,7 +14,15 @@ import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
-import { fieldParentSelector } from '@/field-templates/parentSelector';
+// import { fieldBreadcrumbs } from '@/field-templates/breadcrumbs';
+import { hookValidateParentCircularReference } from '@/hooks-payload/validateParentCircularReference';
+
+// import { hookGenerateBreadcrumbs }
+// from '@/hooks-payload/generateBreadcrumbs';
+// import { hookCascadeBreadcrumbUpdates } from
+// '@/hooks-payload/cascadeBreadcrumbUpdates';
+
+import { fieldInternalLinkChooser } from '@/components/admin/InternalLinkChooser/InternalLinkChooserField';
 
 const contentBlocks = [
   'textBlock',
@@ -59,12 +67,13 @@ export const DetailPage: CollectionConfig = {
     fieldLinkablePage,
     fieldAdminTitle,
     fieldSlug,
-    fieldParentSelector({
-      parentCollections: [
+    fieldInternalLinkChooser({
+      linkableCollections: [
         'detailPage',
         'overviewPage',
         'homePage',
       ],
+      name: 'parentPage',
     }),
     {
       tabs: [
@@ -101,10 +110,15 @@ export const DetailPage: CollectionConfig = {
     },
   ],
   hooks: {
-    beforeChange: [hookSeoFallback],
+    // afterChange: [hookCascadeBreadcrumbUpdates],
+    beforeChange: [
+      hookSeoFallback,
+      // hookGenerateBreadcrumbs,
+    ],
     beforeValidate: [
       hookAdminTitle,
       hookSlug,
+      hookValidateParentCircularReference,
     ],
   },
   labels: {
