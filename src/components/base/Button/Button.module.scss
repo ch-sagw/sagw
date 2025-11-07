@@ -149,6 +149,7 @@
 .buttonText {
   @include reduced-motion {
     --line-animation-duration: 0s;
+    --line-opacity-animation-duration: 0s;
   }
 
   @include forced-colors {
@@ -156,7 +157,8 @@
   }
 
   --button-icon-color: var(--interaction-secondary);
-  --line-animation-duration: var(--motion-speed-very-fast);
+  --line-animation-duration: 300ms;
+  --line-opacity-animation-duration: var(--motion-speed-very-fast);
   --line-cover-color: canvas;
   --button-color: var(--text-primary);
 
@@ -215,54 +217,55 @@
     display: inline-block;
     padding-block: px-to-rem(var(--button-padding-block-inner-text));
 
-    .line,
-    &:before,
     &:after {
-      position: absolute;
       content: "";
-      width: 100%;
-      height: px-to-rem(var(--border-width-l));
+      position: absolute;
       inset-inline: 0;
       inset-block-end: px-to-rem(var(--spacing-2xs));
+      width: 100%;
+      height: px-to-rem(var(--border-width-l));
       background: currentcolor;
-      transform: translateX(0);
+      transform: scaleX(0);
       transition:
-        transform var(--line-animation-duration)
-        var(--motion-ease-out);
-      pointer-events: none;
+        transform var(--line-animation-duration) var(--motion-ease-in-out),
+        opacity var(--line-opacity-animation-duration) var(--motion-ease-in-out);
+      transform-origin: left;
+      opacity: 0.5;
     }
+  }
 
-    .line {
-      background: var(--line-cover-color);
-      z-index: 2;
-    }
-
+  &:is(:hover, :focus-visible) .innerText {
     &:after {
-      z-index: 1;
+      transform-origin: left;
+      transform: scaleX(1);
+      opacity: 1;
+    }
+  }
 
-      @include forced-colors {
-        background: CanvasText;
+  &:not(:hover, :focus-visible) {
+    .innerText {
+      &:after {
+        transform-origin: right;
+        transform: scaleX(-0.1);
+        transition-timing-function: var(--motion-ease-in);
+        opacity: 0.5;
       }
     }
 
-    &:before {
-      background: var(--line-cover-color);
+    &[aria-current],
+    &.isActive {
+      .innerText {
+        &:after {
+          transform: scaleX(1);
+          transition: none;
+          opacity: 1;
+        }
+      }
     }
   }
 
   &[aria-current],
   &.isActive {
-    .innerText:before,
-    .innerText .line {
-      display: none;
-    }
-
-    .innerText:after {
-      @include forced-colors {
-        background: LinkText;
-      }
-    }
-
     &.dark {
       --button-color: var(--text-primary-inverted);
     }
