@@ -16,13 +16,12 @@ import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 // import { fieldBreadcrumbs } from '@/field-templates/breadcrumbs';
 import { hookValidateParentCircularReference } from '@/hooks-payload/validateParentCircularReference';
+import { fieldParentSelectorDetailPage } from '@/field-templates/parentSelector';
 
 // import { hookGenerateBreadcrumbs }
 // from '@/hooks-payload/generateBreadcrumbs';
 // import { hookCascadeBreadcrumbUpdates } from
 // '@/hooks-payload/cascadeBreadcrumbUpdates';
-
-import { fieldInternalLinkChooser } from '@/components/admin/InternalLinkChooser/InternalLinkChooserField';
 
 const contentBlocks = [
   'textBlock',
@@ -67,14 +66,7 @@ export const DetailPage: CollectionConfig = {
     fieldLinkablePage,
     fieldAdminTitle,
     fieldSlug,
-    fieldInternalLinkChooser({
-      linkableCollections: [
-        'detailPage',
-        'overviewPage',
-        'homePage',
-      ],
-      name: 'parentPage',
-    }),
+    fieldParentSelectorDetailPage,
     {
       tabs: [
 
