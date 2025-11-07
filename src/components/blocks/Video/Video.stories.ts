@@ -23,7 +23,6 @@ const meta: Meta<typeof Video> = {
   parameters: {/* layout: 'centered', */ },
   tags: [
     'autodocs',
-    'visual:check',
     'a11y:check',
   ],
   title: 'Components/blocks/Video',
