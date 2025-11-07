@@ -32,6 +32,16 @@
   list-style: none;
   margin: 0;
   padding: 0;
+
+  // add zero-width space */
+  // This re-enables proper output as list in
+  // Voice Over on iOS. Read more here
+  // https://gerardkcohen.me/writing/2017/voiceover-list-style-type.html
+  li {
+    &:before {
+      content: "\200B";
+    }
+  }
 }
 
 @mixin fieldset-reset {
