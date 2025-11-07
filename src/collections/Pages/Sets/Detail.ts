@@ -14,13 +14,11 @@ import { fieldSlug } from '@/field-templates/slug';
 import { hookSlug } from '@/hooks-payload/slug';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
-// import { fieldBreadcrumbs } from '@/field-templates/breadcrumbs';
+import { fieldBreadcrumb } from '@/field-templates/breadcrumb';
 import { hookValidateParentCircularReference } from '@/hooks-payload/validateParentCircularReference';
 import { fieldParentSelectorDetailPage } from '@/field-templates/parentSelector';
 import { fieldNavigationTitle } from '@/field-templates/navigationTitle';
-
-// import { hookGenerateBreadcrumbs }
-// from '@/hooks-payload/generateBreadcrumbs';
+import { hookGenerateBreadcrumbs } from '@/hooks-payload/generateBreadcrumbs';
 // import { hookCascadeBreadcrumbUpdates } from
 // '@/hooks-payload/cascadeBreadcrumbUpdates';
 
@@ -69,6 +67,7 @@ export const DetailPage: CollectionConfig = {
     fieldSlug,
     fieldNavigationTitle,
     fieldParentSelectorDetailPage,
+    fieldBreadcrumb,
     {
       tabs: [
 
@@ -105,14 +104,12 @@ export const DetailPage: CollectionConfig = {
   ],
   hooks: {
     // afterChange: [hookCascadeBreadcrumbUpdates],
-    beforeChange: [
-      hookSeoFallback,
-      // hookGenerateBreadcrumbs,
-    ],
+    beforeChange: [hookSeoFallback],
     beforeValidate: [
       hookAdminTitle,
       hookSlug,
       hookValidateParentCircularReference,
+      hookGenerateBreadcrumbs,
     ],
   },
   labels: {

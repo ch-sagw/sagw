@@ -980,7 +980,7 @@ export interface InterfaceMagazineTeasersBlock {
     };
     [k: string]: unknown;
   } | null;
-  internalLink: InterfaceInternalLinkValue;
+  internalLink?: InterfaceInternalLinkValue;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1128,7 +1128,7 @@ export interface InterfaceProjectTeasersBlock {
     };
     [k: string]: unknown;
   } | null;
-  internalLink: InterfaceInternalLinkValue;
+  internalLink?: InterfaceInternalLinkValue;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -3109,7 +3109,15 @@ export interface DetailPage {
    * Used as the title of this page in the breadcrumb.
    */
   navigationTitle?: string | null;
-  parentPage: InterfaceInternalLinkValue;
+  parentPage?: InterfaceInternalLinkValue;
+  breadcrumb?:
+    | {
+        slug: string;
+        documentId: string;
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
   hero: InterfaceHeroField;
   content?:
     | (
@@ -5156,6 +5164,14 @@ export interface DetailPageSelect<T extends boolean = true> {
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
+  breadcrumb?:
+    | T
+    | {
+        slug?: T;
+        documentId?: T;
+        name?: T;
+        id?: T;
+      };
   hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
