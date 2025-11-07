@@ -5,6 +5,8 @@ interface InterfaceFieldInternalLinkChooserProps {
   optional?: boolean;
   name: string;
   linkableCollections?: LinkableCollectionSlug[];
+  position?: 'sidebar' | undefined;
+  description?: string;
 }
 
 export const fieldInternalLinkChooser = (props: InterfaceFieldInternalLinkChooserProps): Field => {
@@ -15,6 +17,8 @@ export const fieldInternalLinkChooser = (props: InterfaceFieldInternalLinkChoose
           path: '@/components/admin/InternalLinkChooser/InternalLinkChooser',
         },
       },
+      description: props.description,
+      position: props.position,
     },
     fields: [
       {

@@ -17,6 +17,7 @@ import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks
 // import { fieldBreadcrumbs } from '@/field-templates/breadcrumbs';
 import { hookValidateParentCircularReference } from '@/hooks-payload/validateParentCircularReference';
 import { fieldParentSelectorDetailPage } from '@/field-templates/parentSelector';
+import { fieldNavigationTitle } from '@/field-templates/navigationTitle';
 
 // import { hookGenerateBreadcrumbs }
 // from '@/hooks-payload/generateBreadcrumbs';
@@ -66,6 +67,7 @@ export const DetailPage: CollectionConfig = {
     fieldLinkablePage,
     fieldAdminTitle,
     fieldSlug,
+    fieldNavigationTitle,
     fieldParentSelectorDetailPage,
     {
       tabs: [
