@@ -26,6 +26,7 @@ interface InternalLinkChooserClientProps {
   slugs: InterfaceSlug[];
   required: boolean;
   label?: string;
+  description?: string;
 }
 
 interface InterfaceFetchPages {
@@ -95,6 +96,7 @@ const InternalLinkChooserClient = ({
   slugs,
   required,
   label,
+  description,
 }: InternalLinkChooserClientProps): JSX.Element => {
 
   // hooks
@@ -231,6 +233,17 @@ const InternalLinkChooserClient = ({
         showError={showError}
         isClearable
       />
+
+      {description && (
+        <div style={{
+          color: 'var(--theme-elevation-400)',
+          fontSize: '13px',
+          marginBottom: '0.5rem',
+          marginTop: '5px',
+        }}>
+          {description}
+        </div>
+      )}
     </div>
   );
 };

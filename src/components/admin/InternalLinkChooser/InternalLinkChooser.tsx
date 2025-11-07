@@ -47,6 +47,9 @@ const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
     resolvedLabel = firstChar + trimmed;
   }
 
+  // Get field description from admin config
+  const fieldDescription = (field as any)?.admin?.description as string | undefined;
+
   return (
     <InternalLinkChooserClient
       collectionSlug={collectionSlug}
@@ -57,6 +60,7 @@ const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
         ? field.required ?? false
         : false}
       label={resolvedLabel}
+      description={fieldDescription}
     />
   );
 };
