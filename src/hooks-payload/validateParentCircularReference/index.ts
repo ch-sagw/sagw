@@ -63,6 +63,7 @@ export const hookValidateParentCircularReference: CollectionBeforeValidateHook =
   operation,
   originalDoc,
 }) => {
+
   // Only validate on create or update
   if (![
     'create',

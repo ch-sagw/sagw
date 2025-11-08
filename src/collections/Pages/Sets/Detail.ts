@@ -103,13 +103,19 @@ export const DetailPage: CollectionConfig = {
     },
   ],
   hooks: {
+    // execution order:
+    // 1. beforeValidate
+    // 2. beforeChange
+
     // afterChange: [hookCascadeBreadcrumbUpdates],
-    beforeChange: [hookSeoFallback],
+    beforeChange: [
+      hookSeoFallback,
+      hookGenerateBreadcrumbs,
+    ],
     beforeValidate: [
       hookAdminTitle,
       hookSlug,
       hookValidateParentCircularReference,
-      hookGenerateBreadcrumbs,
     ],
   },
   labels: {

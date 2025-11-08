@@ -4,6 +4,7 @@ export const fieldBreadcrumbFieldName = 'breadcrumb';
 
 export const fieldBreadcrumb: Field = {
   admin: {
+    hidden: true,
     position: 'sidebar',
     readOnly: true,
   },
