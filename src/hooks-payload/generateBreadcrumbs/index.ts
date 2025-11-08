@@ -1,7 +1,7 @@
 // Recursively build breadcrumbs by following the parent chain
 // Returns breadcrumbs in root-to-leaf order
 
-import { CollectionBeforeValidateHook } from 'payload';
+import { CollectionBeforeChangeHook } from 'payload';
 import { fieldSlugFieldName } from '@/field-templates/slug';
 import { fieldNavigationTitleFieldName } from '@/field-templates/navigationTitle';
 import { fieldParentSelectorFieldName } from '@/field-templates/parentSelector';
@@ -57,11 +57,10 @@ const buildBreadcrumbs = async (
   return breadcrumbs;
 };
 
-export const hookGenerateBreadcrumbs: CollectionBeforeValidateHook = async ({
+export const hookGenerateBreadcrumbs: CollectionBeforeChangeHook = async ({
   data,
   req,
   operation,
-  originalDoc,
 }) => {
   if (!data || !req?.payload) {
     return data;
@@ -74,13 +73,7 @@ export const hookGenerateBreadcrumbs: CollectionBeforeValidateHook = async ({
     return data;
   }
 
-  const originalParentRef = originalDoc[fieldParentSelectorFieldName] as InterfaceInternalLinkValue | undefined;
   const parentRef = data[fieldParentSelectorFieldName] as InterfaceInternalLinkValue | undefined;
-
-  if (originalParentRef?.documentId === parentRef?.documentId) {
-    return data;
-  }
-
   const breadcrumbs = await buildBreadcrumbs(req.payload, parentRef);
 
   return {
