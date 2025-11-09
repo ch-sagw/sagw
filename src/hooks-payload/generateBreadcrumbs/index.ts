@@ -65,8 +65,13 @@ export const hookGenerateBreadcrumbs: CollectionBeforeChangeHook = async ({
   data,
   req,
   operation,
+  originalDoc,
 }) => {
   if (!data || !req?.payload) {
+    return data;
+  }
+
+  if (data.parentPage.documentId === originalDoc.parentPage.documentId) {
     return data;
   }
 
