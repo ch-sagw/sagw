@@ -14,14 +14,21 @@ type LocalizedString = Partial<Record<Config['locale'], string>>;
 
 export const buildBreadcrumbs = async (
   payload: any,
-  parentRef: InterfaceInternalLinkValue | undefined,
+  parentRef: InterfaceInternalLinkValue | undefined | null | Record<string, never>,
   breadcrumbs: InterfaceBreadcrumb = [],
 ): Promise<InterfaceBreadcrumb> => {
-  if (!parentRef) {
+  // Handle null, undefined, or invalid parentRef
+  if (!parentRef || typeof parentRef !== 'object') {
     return breadcrumbs;
   }
 
-  if (!parentRef.slug || !parentRef.documentId) {
+  // Handle empty object {} - this means no parent is set
+  if (Object.keys(parentRef).length === 0) {
+    return breadcrumbs;
+  }
+
+  // Ensure parentRef has required properties (slug and documentId)
+  if (!('slug' in parentRef) || !('documentId' in parentRef) || !parentRef.slug || !parentRef.documentId) {
     return breadcrumbs;
   }
 
