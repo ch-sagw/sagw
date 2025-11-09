@@ -38,7 +38,6 @@ const updateChildBreadcrumbs = async (
     }
 
     // Build query for finding child pages
-    // parentPage is stored as an object with documentId and slug properties
     const query: any = {
       [`${fieldParentSelectorFieldName}.documentId`]: parentDocumentId,
     };
