@@ -57,21 +57,23 @@ const fetchPages = async ({
     const json = await res.json();
     const groupOptions: Option[] = [];
 
-    for (const doc of json.docs) {
-      let isNotCurrentPage = true;
+    if (json.docs) {
+      for (const doc of json.docs) {
+        let isNotCurrentPage = true;
 
-      if (currentId) {
-        isNotCurrentPage = `${slug.slug}/${doc.id}` !== `${collectionSlug}/${currentId}`;
-      }
+        if (currentId) {
+          isNotCurrentPage = `${slug.slug}/${doc.id}` !== `${collectionSlug}/${currentId}`;
+        }
 
-      if (collectionIsLinkablePage(doc) && isNotCurrentPage) {
-        groupOptions.push({
-          label: doc[fieldAdminTitleFieldName],
-          value: {
-            id: doc.id,
-            slug: slug.slug,
-          },
-        });
+        if (collectionIsLinkablePage(doc) && isNotCurrentPage) {
+          groupOptions.push({
+            label: doc[fieldAdminTitleFieldName],
+            value: {
+              id: doc.id,
+              slug: slug.slug,
+            },
+          });
+        }
       }
     }
 
