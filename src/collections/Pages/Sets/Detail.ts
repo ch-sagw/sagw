@@ -19,8 +19,7 @@ import { hookValidateParentCircularReference } from '@/hooks-payload/validatePar
 import { fieldParentSelectorDetailPage } from '@/field-templates/parentSelector';
 import { fieldNavigationTitle } from '@/field-templates/navigationTitle';
 import { hookGenerateBreadcrumbs } from '@/hooks-payload/generateBreadcrumbs';
-// import { hookCascadeBreadcrumbUpdates } from
-// '@/hooks-payload/cascadeBreadcrumbUpdates';
+import { hookCascadeBreadcrumbUpdates } from '@/hooks-payload/cascadeBreadcrumbUpdates';
 
 const contentBlocks = [
   'textBlock',
@@ -106,8 +105,9 @@ export const DetailPage: CollectionConfig = {
     // execution order:
     // 1. beforeValidate
     // 2. beforeChange
+    // 3. afterChange
 
-    // afterChange: [hookCascadeBreadcrumbUpdates],
+    afterChange: [hookCascadeBreadcrumbUpdates],
     beforeChange: [
       hookSeoFallback,
       hookGenerateBreadcrumbs,

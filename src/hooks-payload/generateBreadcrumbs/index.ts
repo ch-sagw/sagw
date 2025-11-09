@@ -12,7 +12,7 @@ import {
 
 type LocalizedString = Partial<Record<Config['locale'], string>>;
 
-const buildBreadcrumbs = async (
+export const buildBreadcrumbs = async (
   payload: any,
   parentRef: InterfaceInternalLinkValue | undefined,
   breadcrumbs: InterfaceBreadcrumb = [],
