@@ -14,6 +14,7 @@ export const fieldAdminTitle: Field = {
     hidden: true,
     readOnly: true,
   },
+  localized: true,
   name: fieldAdminTitleFieldName,
   type: 'text',
 };
