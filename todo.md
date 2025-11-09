@@ -1,0 +1,10 @@
+- write tests for circular reference
+- update seed data ( internal link is now {slug: ...., documentId: ....})
+- 1. make parent page optional. 2. beforeDelete: go through all pages that had this page as parent and remove the parentPage value
+- in all hooks etc.: only search within current tenant
+- generate breadcrumbs: if no parentPage is selected, return early
+- add breadcrumb and parent selector to all pages (currently only detail page)
+- set d2 as parent, save -> 2 breadcrumb items. change it to d1 -> still 2 items, but should only be 1
+- if navigation title is not found, use adminTitle as fallback.
+- if breadcrumb creation is not possible, remove the breadcrumb!
+- autosave disabled. on lang change, make save draft. otherwise, if i switch to italiano, add some text, switch to french, then italian text is gone.
