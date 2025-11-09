@@ -1,5 +1,5 @@
 // Recursively build breadcrumbs by following the parent chain
-// Returns breadcrumbs in root-to-leaf order
+// Returns breadcrumbs in root-to-leaf order with all locales
 
 import { CollectionBeforeChangeHook } from 'payload';
 import { fieldSlugFieldName } from '@/field-templates/slug';
@@ -34,15 +34,19 @@ const buildBreadcrumbs = async (
     });
 
     const parentSlugRaw = parentDoc[fieldSlugFieldName] as LocalizedString | undefined;
-    const parentSlug = parentSlugRaw?.de;
     const parentNavigationTitleRaw = parentDoc[fieldNavigationTitleFieldName] as LocalizedString | undefined;
-    const parentNavigationTitle = parentNavigationTitleRaw?.de;
 
-    if (parentSlug && parentNavigationTitle && parentRef.documentId) {
+    if (parentSlugRaw && parentNavigationTitleRaw && parentRef.documentId) {
       breadcrumbs?.unshift({
         documentId: parentRef.documentId,
-        name: parentNavigationTitle,
-        slug: parentSlug,
+        namede: parentNavigationTitleRaw.de || '',
+        nameen: parentNavigationTitleRaw.en || '',
+        namefr: parentNavigationTitleRaw.fr || '',
+        nameit: parentNavigationTitleRaw.it || '',
+        slugde: parentSlugRaw.de || '',
+        slugen: parentSlugRaw.en || '',
+        slugfr: parentSlugRaw.fr || '',
+        slugit: parentSlugRaw.it || '',
       });
 
       // Recursively get the parent's parent

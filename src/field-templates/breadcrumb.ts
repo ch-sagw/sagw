@@ -10,19 +10,47 @@ export const fieldBreadcrumb: Field = {
   },
   fields: [
     {
-      localized: true,
-      name: 'slug',
-      required: true,
-      type: 'text',
-    },
-    {
       name: 'documentId',
       required: true,
       type: 'text',
     },
     {
-      localized: true,
-      name: 'name',
+      name: 'namede',
+      required: true,
+      type: 'text',
+    },
+    {
+      name: 'namefr',
+      required: true,
+      type: 'text',
+    },
+    {
+      name: 'nameit',
+      required: true,
+      type: 'text',
+    },
+    {
+      name: 'nameen',
+      required: true,
+      type: 'text',
+    },
+    {
+      name: 'slugde',
+      required: true,
+      type: 'text',
+    },
+    {
+      name: 'slugfr',
+      required: true,
+      type: 'text',
+    },
+    {
+      name: 'slugit',
+      required: true,
+      type: 'text',
+    },
+    {
+      name: 'slugen',
       required: true,
       type: 'text',
     },
