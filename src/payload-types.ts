@@ -12,9 +12,15 @@
  */
 export type InterfaceBreadcrumb =
   | {
-      slug: string;
       documentId: string;
-      name: string;
+      namede: string;
+      namefr?: string | null;
+      nameit?: string | null;
+      nameen?: string | null;
+      slugde: string;
+      slugfr?: string | null;
+      slugit?: string | null;
+      slugen?: string | null;
       id?: string | null;
     }[]
   | null;
@@ -5208,9 +5214,15 @@ export interface DetailPageSelect<T extends boolean = true> {
  * via the `definition` "InterfaceBreadcrumb_select".
  */
 export interface InterfaceBreadcrumbSelect<T extends boolean = true> {
-  slug?: T;
   documentId?: T;
-  name?: T;
+  namede?: T;
+  namefr?: T;
+  nameit?: T;
+  nameen?: T;
+  slugde?: T;
+  slugfr?: T;
+  slugit?: T;
+  slugen?: T;
   id?: T;
 }
 /**

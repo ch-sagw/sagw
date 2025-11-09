@@ -21,17 +21,17 @@ export const fieldBreadcrumb: Field = {
     },
     {
       name: 'namefr',
-      required: true,
+      required: false,
       type: 'text',
     },
     {
       name: 'nameit',
-      required: true,
+      required: false,
       type: 'text',
     },
     {
       name: 'nameen',
-      required: true,
+      required: false,
       type: 'text',
     },
     {
@@ -41,17 +41,17 @@ export const fieldBreadcrumb: Field = {
     },
     {
       name: 'slugfr',
-      required: true,
+      required: false,
       type: 'text',
     },
     {
       name: 'slugit',
-      required: true,
+      required: false,
       type: 'text',
     },
     {
       name: 'slugen',
-      required: true,
+      required: false,
       type: 'text',
     },
   ],
