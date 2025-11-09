@@ -3124,7 +3124,7 @@ export interface DetailPage {
    */
   slug?: string | null;
   /**
-   * Used as the title of this page in the breadcrumb.
+   * Used as the title in the breadcrumb.
    */
   navigationTitle?: string | null;
   parentPage?: InterfaceInternalLinkValue;
