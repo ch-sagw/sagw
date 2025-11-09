@@ -7,6 +7,7 @@ import { fieldNavigationTitleFieldName } from '@/field-templates/navigationTitle
 import { fieldParentSelectorFieldName } from '@/field-templates/parentSelector';
 import { fieldBreadcrumbFieldName } from '@/field-templates/breadcrumb';
 import { buildBreadcrumbs } from '@/hooks-payload/generateBreadcrumbs';
+import { linkableSlugs } from '@/collections/Pages/pages';
 import {
   Config, InterfaceInternalLinkValue,
 } from '@/payload-types';
@@ -26,44 +27,51 @@ const updateChildBreadcrumbs = async (
   parentDocumentId: string,
   tenantId: string | undefined,
 ): Promise<void> => {
-  const whereClause: any = {
-    and: [
-      {
-        [fieldParentSelectorFieldName]: {
-          documentId: {
-            equals: parentDocumentId,
-          },
-        },
-      },
-    ],
-  };
+  const availableCollections = linkableSlugs.map((item) => item.slug);
 
-  if (tenantId) {
-    whereClause.and.push({
-      tenant: {
-        equals: tenantId,
-      },
-    });
-  }
+  // Find child pages in all linkable collections
+  const childPagesPromises = availableCollections.map(async (collectionSlug) => {
+    const dbCollection = payload.db.collections[collectionSlug];
 
-  const childPages = await payload.find({
-    collection: [
-      'detailPage',
-      'overviewPage',
-    ],
-    depth: 0,
-    limit: 0,
-    locale: 'all',
-    req,
-    where: whereClause,
+    if (!dbCollection) {
+      return [];
+    }
+
+    // Build query for finding child pages
+    // parentPage is stored as an object with documentId and slug properties
+    const query: any = {
+      [`${fieldParentSelectorFieldName}.documentId`]: parentDocumentId,
+    };
+
+    if (tenantId) {
+      query.tenant = tenantId;
+    }
+
+    const docs = await dbCollection.find(query)
+      .lean();
+
+    return docs.map((doc: any) => ({
+      ...doc,
+      /* eslint-disable @typescript-eslint/naming-convention */
+      _collection: collectionSlug,
+      /* eslint-enable @typescript-eslint/naming-convention */
+    }));
   });
 
-  if (childPages.docs.length === 0) {
+  const childPagesArrays = await Promise.all(childPagesPromises);
+  const childPages = childPagesArrays.flat();
+
+  if (childPages.length === 0) {
     return;
   }
 
-  const updatePromises = childPages.docs.map(async (childPage: any) => {
-    const childId = childPage.id;
+  const updatePromises = childPages.map(async (childPage: any) => {
+    const childId = childPage._id?.toString() || childPage.id?.toString();
+    const collectionSlug = childPage._collection;
+
+    if (!childId || !collectionSlug) {
+      return;
+    }
 
     if (cascadeProcessingSet.has(childId)) {
       return;
@@ -74,10 +82,10 @@ const updateChildBreadcrumbs = async (
       const parentRef = childPage[fieldParentSelectorFieldName] as InterfaceInternalLinkValue | undefined;
       const breadcrumbs = await buildBreadcrumbs(payload, parentRef);
 
-      const dbCollection = payload.db.collections['detailPage'];
+      const dbCollection = payload.db.collections[collectionSlug];
 
       if (!dbCollection) {
-        throw new Error('detailPage db collection not found');
+        throw new Error(`${collectionSlug} db collection not found`);
       }
 
       await dbCollection.findByIdAndUpdate(
