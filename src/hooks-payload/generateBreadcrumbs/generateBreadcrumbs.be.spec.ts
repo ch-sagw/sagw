@@ -334,3 +334,132 @@ test('Correctly sets breadcrumb if navigation Title is missing in cascade chain'
     .toEqual(0);
 
 });
+
+// Complex example with siblings
+// Generate 9 pages on 5 levels (each level has a and b).
+// Each page has to children (a and b). The b page links to the next level.
+// Expect: correct data in level 5b breadcrumb.
+test('Generates breadcrumb with siblings', async () => {
+  let level1: any;
+  let level2b: any;
+  let level3b: any;
+  let level4b: any;
+  let level5a: any;
+  let level5b: any;
+
+  try {
+    level1 = await generateOverviewPage({
+      navigationTitle: 'Level 1 Navigation Title',
+      title: `Level 1 ${(new Date())
+        .getTime()}`,
+    });
+
+    await generateDetailPage({
+      navigationTitle: 'Level 2a Navigation Title',
+      parentPage: {
+        documentId: level1.id,
+        slug: 'overviewPage',
+      },
+      title: `Level 2a ${(new Date())
+        .getTime()}`,
+    });
+
+    level2b = await generateDetailPage({
+      navigationTitle: 'Level 2b Navigation Title',
+      parentPage: {
+        documentId: level1.id,
+        slug: 'overviewPage',
+      },
+      title: `Level 2b ${(new Date())
+        .getTime()}`,
+    });
+
+    await generateDetailPage({
+      navigationTitle: 'Level 3a Navigation Title',
+      parentPage: {
+        documentId: level2b.id,
+        slug: 'detailPage',
+      },
+      title: `Level 3a ${(new Date())
+        .getTime()}`,
+    });
+
+    level3b = await generateDetailPage({
+      navigationTitle: 'Level 3b Navigation Title',
+      parentPage: {
+        documentId: level2b.id,
+        slug: 'detailPage',
+      },
+      title: `Level 3b ${(new Date())
+        .getTime()}`,
+    });
+
+    await generateDetailPage({
+      navigationTitle: 'Level 4a Navigation Title',
+      parentPage: {
+        documentId: level3b.id,
+        slug: 'detailPage',
+      },
+      title: `Level 4a ${(new Date())
+        .getTime()}`,
+    });
+
+    level4b = await generateDetailPage({
+      navigationTitle: 'Level 4b Navigation Title',
+      parentPage: {
+        documentId: level3b.id,
+        slug: 'detailPage',
+      },
+      title: `Level 4b ${(new Date())
+        .getTime()}`,
+    });
+
+    level5a = await generateDetailPage({
+      navigationTitle: 'Level 5a Navigation Title',
+      parentPage: {
+        documentId: level4b.id,
+        slug: 'detailPage',
+      },
+      title: `Level 5a ${(new Date())
+        .getTime()}`,
+    });
+
+    level5b = await generateDetailPage({
+      navigationTitle: 'Level 5b Navigation Title',
+      parentPage: {
+        documentId: level4b.id,
+        slug: 'detailPage',
+      },
+      title: `Level 5b ${(new Date())
+        .getTime()}`,
+    });
+
+  } catch (e) {
+    level5b = JSON.stringify(e);
+  }
+
+  await expect(level5b.breadcrumb[0].namede)
+    .toStrictEqual('Level 1 Navigation Title');
+
+  await expect(level5b.breadcrumb[1].namede)
+    .toStrictEqual('Level 2b Navigation Title');
+
+  await expect(level5b.breadcrumb[2].namede)
+    .toStrictEqual('Level 3b Navigation Title');
+
+  await expect(level5b.breadcrumb[3].namede)
+    .toStrictEqual('Level 4b Navigation Title');
+
+  await expect(level5a.breadcrumb[0].namede)
+    .toStrictEqual('Level 1 Navigation Title');
+
+  await expect(level5a.breadcrumb[1].namede)
+    .toStrictEqual('Level 2b Navigation Title');
+
+  await expect(level5a.breadcrumb[2].namede)
+    .toStrictEqual('Level 3b Navigation Title');
+
+  await expect(level5a.breadcrumb[3].namede)
+    .toStrictEqual('Level 4b Navigation Title');
+
+});
