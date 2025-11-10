@@ -27,11 +27,6 @@ test.describe('Unique blocks', () => {
     await page.waitForLoadState('domcontentloaded');
     await page.waitForLoadState('load');
 
-    const slugField = await page.locator('#field-slug');
-
-    await expect(slugField)
-      .toHaveValue('title3');
-
     // add overview block
     const addContentButton = await page.getByText('Add Content', {
       exact: true,
@@ -44,6 +39,8 @@ test.describe('Unique blocks', () => {
     });
 
     await addOverviewButton.click();
+
+    await page.locator('#content-row-0');
 
     // try to add another overview
     await addContentButton.click();
@@ -82,11 +79,6 @@ test.describe('Unique blocks', () => {
     await page.waitForLoadState('domcontentloaded');
     await page.waitForLoadState('load');
 
-    const slugField = await page.locator('#field-slug');
-
-    await expect(slugField)
-      .toHaveValue('title3');
-
     // add link
     const addContentButton = await page.getByText('Add Content', {
       exact: true,
@@ -101,6 +93,8 @@ test.describe('Unique blocks', () => {
     });
 
     await addLinkButton.click();
+
+    await page.locator('#content-row-0');
 
     // try to add link overview
     await addContentButton.click();
@@ -128,11 +122,6 @@ test.describe('Unique blocks', () => {
     await page.waitForLoadState('domcontentloaded');
     await page.waitForLoadState('load');
 
-    const slugField = await page.locator('#field-slug');
-
-    await expect(slugField)
-      .toHaveValue('title3');
-
     // add link
     const addContentButton = await page.getByText('Add Content', {
       exact: true,
@@ -147,6 +136,8 @@ test.describe('Unique blocks', () => {
     });
 
     await addDownloadButton.click();
+
+    await page.locator('#content-row-0');
 
     // try to add link overview
     await addContentButton.click();

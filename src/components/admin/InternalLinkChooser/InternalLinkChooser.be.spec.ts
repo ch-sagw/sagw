@@ -151,7 +151,7 @@ test.describe('Internal Link Chooser', () => {
 
     const navItem1 = await page.locator('#navigation-navItems-row-0');
 
-    const linkTargetInput = await navItem1.getByLabel('Link Target');
+    const linkTargetInput = await navItem1.getByLabel('Nav Item Link');
 
     await (await linkTargetInput.elementHandle())?.waitForElementState('stable');
 
@@ -209,7 +209,7 @@ test.describe('Internal Link Chooser', () => {
 
     const navItem1 = await page.locator('#navigation-navItems-row-0');
 
-    const linkTargetInput = await navItem1.getByLabel('Link Target');
+    const linkTargetInput = await navItem1.getByLabel('Nav Item Link');
 
     await (await linkTargetInput.elementHandle())?.waitForElementState('stable');
 
@@ -236,7 +236,7 @@ test.describe('Internal Link Chooser', () => {
 
     const navItem1 = await page.locator('#navigation-navItems-row-0');
 
-    const linkTargetInput = await navItem1.getByLabel('Link Target');
+    const linkTargetInput = await navItem1.getByLabel('Nav Item Link');
 
     await (await linkTargetInput.elementHandle())?.waitForElementState('stable');
 
