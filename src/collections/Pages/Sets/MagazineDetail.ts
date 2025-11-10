@@ -1,20 +1,15 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHeroMagazineDetail } from '@/field-templates/hero';
-import { hookAdminTitle } from '@/hooks-payload/adminTitle';
-import { fieldLinkablePage } from '@/field-templates/linkablePage';
-import {
-  fieldAdminTitle, fieldAdminTitleFieldName,
-} from '@/field-templates/adminTitle';
-import { hookSeoFallback } from '@/hooks-payload/seoFallback';
+import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superAdminOrTenantAdmin';
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
-import { fieldSlug } from '@/field-templates/slug';
-import { hookSlug } from '@/hooks-payload/slug';
 import { rte1 } from '@/field-templates/rte';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
+import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
+import { genericPageFields } from '@/field-templates/genericPageFields';
 
 const contentBlocks = [
   'textBlock',
@@ -51,9 +46,7 @@ export const MagazineDetailPage: CollectionConfig = {
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
-    fieldLinkablePage,
-    fieldAdminTitle,
-    fieldSlug,
+    ...genericPageFields(),
     {
       tabs: [
 
@@ -105,13 +98,7 @@ export const MagazineDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: {
-    beforeChange: [hookSeoFallback],
-    beforeValidate: [
-      hookAdminTitle,
-      hookSlug,
-    ],
-  },
+  hooks: genericPageHooks(),
   labels: {
     plural: 'Magazine Detail Pages',
     singular: 'Magazine Detail',
