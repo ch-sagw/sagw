@@ -39,7 +39,6 @@ const updateChildBreadcrumbs = async (
   parentDocumentId: string,
   tenantId: string | undefined,
   deletedDocumentIds?: Set<string>,
-  searchAllTenants = false,
 ): Promise<void> => {
   const availableCollections = linkableSlugs.map((item) => item.slug);
 
@@ -51,13 +50,15 @@ const updateChildBreadcrumbs = async (
       return [];
     }
 
+    if (!tenantId) {
+      return [];
+    }
+
     const query: any = {
       [`${fieldParentSelectorFieldName}.documentId`]: parentDocumentId,
     };
 
-    if (!searchAllTenants && tenantId) {
-      query.tenant = tenantId;
-    }
+    query.tenant = tenantId;
 
     const docs = await dbCollection.find(query)
       .lean();
@@ -154,7 +155,7 @@ const updateChildBreadcrumbs = async (
         },
       );
 
-      await updateChildBreadcrumbs(payload, req, childId, tenantId, deletedDocumentIds, searchAllTenants);
+      await updateChildBreadcrumbs(payload, req, childId, tenantId, deletedDocumentIds);
     } finally {
       cascadeProcessingSet.delete(childId);
     }
@@ -225,7 +226,7 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
 
       const unpublishedDocumentIds = new Set<string>([docId]);
 
-      await updateChildBreadcrumbs(req.payload, req, docId, tenantId, unpublishedDocumentIds, true);
+      await updateChildBreadcrumbs(req.payload, req, docId, tenantId, unpublishedDocumentIds);
     } finally {
       cascadeProcessingSet.delete(docId);
     }
@@ -277,7 +278,7 @@ export const hookCascadeBreadcrumbUpdatesOnDelete: CollectionAfterDeleteHook = a
 
     const deletedDocumentIds = new Set<string>([docId]);
 
-    await updateChildBreadcrumbs(req.payload, req, docId, tenantId, deletedDocumentIds, true);
+    await updateChildBreadcrumbs(req.payload, req, docId, tenantId, deletedDocumentIds);
   } finally {
     cascadeProcessingSet.delete(docId);
   }
