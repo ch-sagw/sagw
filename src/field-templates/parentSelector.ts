@@ -15,8 +15,15 @@ export const fieldParentSelector = (linkableCollections: CollectionSlug[] | unde
 
 export const fieldParentSelectorDetailPage: Field = fieldParentSelector([
   'detailPage',
+  'eventDetailPage',
+  'instituteDetailPage',
+  'magazineDetailPage',
+  'nationalDictionaryDetailPage',
+  'newsDetailPage',
   'overviewPage',
   'homePage',
+  'projectDetailPage',
+  'publicationDetailPage',
 ]);
 
 export const fieldParentSelectorOverviewPage: Field = fieldParentSelector([
