@@ -7,6 +7,7 @@ import {
 } from '@/field-templates/adminTitle';
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
+import { fieldNavigationTitle } from '@/field-templates/navigationTitle';
 
 export const HomePage: CollectionConfig = {
   access: {
@@ -22,6 +23,17 @@ export const HomePage: CollectionConfig = {
   fields: [
     fieldLinkablePage,
     fieldAdminTitleDefaultValue('Home Page'),
+    fieldNavigationTitle,
+    {
+      admin: {
+        hidden: true,
+        readOnly: true,
+      },
+      defaultValue: 'Home',
+      localized: true,
+      name: 'slug',
+      type: 'text',
+    },
     {
       tabs: [
 

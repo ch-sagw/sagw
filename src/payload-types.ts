@@ -223,6 +223,11 @@ export interface HomePage {
   tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
+  /**
+   * Used as the title in the breadcrumb.
+   */
+  navigationTitle?: string | null;
+  slug?: string | null;
   hero: InterfaceHeroFieldHome;
   content?:
     | (
@@ -4588,6 +4593,8 @@ export interface HomePageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  navigationTitle?: T;
+  slug?: T;
   hero?: T | InterfaceHeroFieldHomeSelect<T>;
   content?:
     | T
