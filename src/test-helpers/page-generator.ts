@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import { getPayload } from 'payload';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
@@ -38,6 +40,7 @@ const generatePage = async ({
   const document = await payload.create({
     collection: type,
     data: {
+      _status: 'published',
       hero: {
         colorMode: 'light',
         title: simpleRteConfig(title),
@@ -93,6 +96,7 @@ export const generateEventDetailPage = async (props: InterfacePageProps): Promis
   const document = await payload.create({
     collection: 'eventDetailPage',
     data: {
+      _status: 'published',
       eventDetails: {
         category: category.id,
         date: '2030-08-01T12:00:00.000Z',
@@ -135,6 +139,7 @@ export const generateInstituteDetailPage = async (props: InterfacePageProps): Pr
   const document = await payload.create({
     collection: 'instituteDetailPage',
     data: {
+      _status: 'published',
       hero: {
         colorMode: 'light',
         title: simpleRteConfig(props.title),
@@ -165,6 +170,7 @@ export const generateMagazineDetailPage = async (props: InterfacePageProps): Pro
   const document = await payload.create({
     collection: 'magazineDetailPage',
     data: {
+      _status: 'published',
       hero: {
         author: simpleRteConfig('author'),
         colorMode: 'light',
@@ -196,6 +202,7 @@ export const generateNationalDictionaryDetailPage = async (props: InterfacePageP
   const document = await payload.create({
     collection: 'nationalDictionaryDetailPage',
     data: {
+      _status: 'published',
       hero: {
         colorMode: 'light',
         title: simpleRteConfig(props.title),
@@ -225,6 +232,7 @@ export const generateNewsDetailPage = async (props: InterfacePageProps): Promise
   const document = await payload.create({
     collection: 'newsDetailPage',
     data: {
+      _status: 'published',
       hero: {
         colorMode: 'light',
         date: '2030-08-01T12:00:00.000Z',
@@ -265,6 +273,7 @@ export const generateProjectDetailPage = async (props: InterfacePageProps): Prom
   const document = await payload.create({
     collection: 'projectDetailPage',
     data: {
+      _status: 'published',
       hero: {
         colorMode: 'light',
         title: simpleRteConfig(props.title),
@@ -304,6 +313,7 @@ export const generatePublicationDetailPage = async (props: InterfacePageProps): 
   const document = await payload.create({
     collection: 'publicationDetailPage',
     data: {
+      _status: 'published',
       hero: {
         colorMode: 'light',
         title: simpleRteConfig(props.title),
