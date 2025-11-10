@@ -39,6 +39,7 @@
   // https://gerardkcohen.me/writing/2017/voiceover-list-style-type.html
   li {
     &:before {
+      position: absolute;
       content: "\200B";
     }
   }
