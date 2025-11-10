@@ -246,7 +246,7 @@
     .innerText {
       &:after {
         transform-origin: right;
-        transform: scaleX(-0.1);
+        transform: scaleX(0);
         transition-timing-function: var(--motion-ease-in);
         opacity: 0.5;
       }
