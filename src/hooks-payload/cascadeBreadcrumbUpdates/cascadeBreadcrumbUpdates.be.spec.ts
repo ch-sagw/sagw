@@ -185,7 +185,7 @@ test('Updates on slug change', async () => {
 // 1. Generate 4 levels of nested pages.
 // 2. Remove parentPage on level 2
 // Expect: 1 breadcrumb on level 3 and 2 breadcrumbs on level 4
-test('Updates on parentPage change', async () => {
+test('Updates on parentPage removal', async () => {
   const payload = await getPayload({
     config: configPromise,
   });
@@ -261,6 +261,98 @@ test('Updates on parentPage change', async () => {
     .toBe(1);
   await expect(level4Updated!.breadcrumb!.length)
     .toBe(2);
+
+});
+
+// 1. Generate 4 levels of nested pages.
+// 2. Set level 1 as parent of level 3
+// Expect: 1 breadcrumb on level 3 and 2 breadcrumbs on level 4
+// Expect: correct data on breadcrumb in level 3 and 4.
+test('Updates on parentPage update', async () => {
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  let level1: any;
+  let level2: any;
+  let level3: any;
+  let level4: any;
+
+  try {
+    level1 = await generateOverviewPage({
+      navigationTitle: 'Level 1 Navigation Title',
+      title: `Level 1 ${(new Date())
+        .getTime()}`,
+    });
+
+    level2 = await generateDetailPage({
+      navigationTitle: 'Level 2 Navigation Title',
+      parentPage: {
+        documentId: level1.id,
+        slug: 'overviewPage',
+      },
+      title: `Level 2 ${(new Date())
+        .getTime()}`,
+    });
+
+    level3 = await generateEventDetailPage({
+      navigationTitle: 'Level 3 Navigation Title',
+      parentPage: {
+        documentId: level2.id,
+        slug: 'detailPage',
+      },
+      title: `Level 3 ${(new Date())
+        .getTime()}`,
+    });
+
+    level4 = await generateInstituteDetailPage({
+      navigationTitle: 'Level 4 Navigation Title',
+      parentPage: {
+        documentId: level3.id,
+        slug: 'eventDetailPage',
+      },
+      title: `Level 4 ${(new Date())
+        .getTime()}`,
+    });
+
+    await payload.update({
+      collection: 'eventDetailPage',
+      data: {
+        parentPage: {
+          documentId: level1.id,
+          slug: 'overviewPage',
+        },
+      },
+      id: level3.id,
+    });
+
+  } catch (e) {
+    level4 = JSON.stringify(e);
+  }
+
+  const level3Updated = await payload.findByID({
+    collection: 'eventDetailPage',
+    id: level3.id,
+  });
+
+  const level4Updated = await payload.findByID({
+    collection: 'instituteDetailPage',
+    id: level4.id,
+  });
+
+  await expect(level3Updated!.breadcrumb!.length)
+    .toBe(1);
+  await expect(level4Updated!.breadcrumb!.length)
+    .toBe(2);
+
+  await expect(level3Updated!.breadcrumb![0].namede)
+    .toStrictEqual('Level 1 Navigation Title');
+
+  await expect(level4Updated!.breadcrumb![0].namede)
+    .toStrictEqual('Level 1 Navigation Title');
+
+  await expect(level4Updated!.breadcrumb![1].namede)
+    .toStrictEqual('Level 3 Navigation Title');
 
 });
 
