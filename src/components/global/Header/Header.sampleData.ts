@@ -1,4 +1,6 @@
-import { InterfaceHeaderMetaNavigation } from '@/payload-types';
+import {
+  InterfaceHeaderMetaNavigation, InterfaceHeaderNavigation,
+} from '@/payload-types';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 export const defaultMetaNavItems: InterfaceHeaderMetaNavigation = {
@@ -31,11 +33,14 @@ export const defaultMetaNavItems: InterfaceHeaderMetaNavigation = {
   ],
 };
 
-export const defaultNavItems = [
+export const defaultNavItems: InterfaceHeaderNavigation['navItems'] = [
   {
     description: simpleRteConfig(''),
     id: '68d9683b1eed56c026882f30',
-    navItemLink: '/',
+    navItemLink: {
+      documentId: '1234',
+      slug: 'some-slug',
+    },
     navItemText: simpleRteConfig('Home'),
   },
 
@@ -46,28 +51,43 @@ export const defaultNavItems = [
     subNavItems: [
       {
         id: '68d9683b1eed56c026882f31',
-        navItemLink: '/',
+        navItemLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         navItemText: simpleRteConfig('Übersicht'),
       },
       {
         id: '68d9683b1eed56c026882f32',
-        navItemLink: '/',
+        navItemLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         navItemText: simpleRteConfig('Institute'),
       },
       {
         id: '68d9683b1eed56c026882f33',
-        navItemLink: '/',
+        navItemLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         navItemText: simpleRteConfig('Editionen'),
       },
       {
         id: '68d9683b1eed56c026882f34',
-        navItemLink: '/',
+        navItemLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         navItemText: simpleRteConfig('Reisebeiträge'),
       },
 
       {
         id: '68d9683b1eed56c026882f35',
-        navItemLink: '/',
+        navItemLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         navItemText: simpleRteConfig('Early Career Award'),
       },
     ],
@@ -79,7 +99,10 @@ export const defaultNavItems = [
     subNavItems: [
       {
         id: '68d9683b1eed56c026882f37',
-        navItemLink: '/',
+        navItemLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         navItemText: simpleRteConfig('Fachgesellschaften'),
       },
     ],
@@ -91,27 +114,42 @@ export const defaultNavItems = [
     subNavItems: [
       {
         id: '68d9683b1eed56c026882f39',
-        navItemLink: '/',
+        navItemLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         navItemText: simpleRteConfig('Übersicht'),
       },
       {
         id: '68d9683b1eed56c026882f3a',
-        navItemLink: '/',
+        navItemLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         navItemText: simpleRteConfig('Magazin'),
       },
       {
         id: '68d9683b1eed56c026882f3b',
-        navItemLink: '/',
+        navItemLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         navItemText: simpleRteConfig('Publikationen'),
       },
       {
         id: '68d9683b1eed56c026882f3c',
-        navItemLink: '/',
+        navItemLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         navItemText: simpleRteConfig('Veranstaltungen'),
       },
       {
         id: '68d9683b1eed56c026882f3d',
-        navItemLink: '/',
+        navItemLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         navItemText: simpleRteConfig('News'),
       },
     ],
@@ -123,22 +161,34 @@ export const defaultNavItems = [
     subNavItems: [
       {
         id: '68d9683b1eed56c026882f3f',
-        navItemLink: '/',
+        navItemLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         navItemText: simpleRteConfig('Die SAGW'),
       },
       {
         id: '68d9683b1eed56c026882f40',
-        navItemLink: '/',
+        navItemLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         navItemText: simpleRteConfig('Team'),
       },
       {
         id: '68d9683b1eed56c026882f41',
-        navItemLink: '/',
+        navItemLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         navItemText: simpleRteConfig('Kontakt'),
       },
       {
         id: '68d9683b1eed56c026882f42',
-        navItemLink: '/',
+        navItemLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         navItemText: simpleRteConfig('Offene Stellen'),
       },
     ],
