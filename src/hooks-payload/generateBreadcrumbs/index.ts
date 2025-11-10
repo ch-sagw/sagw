@@ -78,10 +78,6 @@ export const hookGenerateBreadcrumbs: CollectionBeforeChangeHook = async ({
     return data;
   }
 
-  if (data.parentPage.documentId === originalDoc.parentPage.documentId) {
-    return data;
-  }
-
   if (![
     'create',
     'update',
@@ -89,12 +85,46 @@ export const hookGenerateBreadcrumbs: CollectionBeforeChangeHook = async ({
     return data;
   }
 
-  const parentRef = data[fieldParentSelectorFieldName] as InterfaceInternalLinkValue | undefined;
-  const breadcrumbs = await buildBreadcrumbs(req.payload, parentRef);
+  // Get parent IDs for comparison, handling empty objects, null, and undefined
+  const getParentDocumentId = (parent: any): string | undefined => {
+    if (!parent || typeof parent !== 'object') {
+      return undefined;
+    }
 
+    if (Object.keys(parent).length === 0) {
+      return undefined;
+    }
+
+    if ('documentId' in parent && parent.documentId) {
+      return String(parent.documentId);
+    }
+
+    return undefined;
+  };
+
+  const newParentId = getParentDocumentId(data[fieldParentSelectorFieldName]);
+  const oldParentId = getParentDocumentId(originalDoc?.[fieldParentSelectorFieldName]);
+  const hasBreadcrumbs = data[fieldBreadcrumbFieldName] && Array.isArray(data[fieldBreadcrumbFieldName]) && data[fieldBreadcrumbFieldName].length > 0;
+  const parentChanged = newParentId !== oldParentId;
+
+  if (!parentChanged && hasBreadcrumbs) {
+    return data;
+  }
+
+  if (newParentId || parentChanged) {
+    const parentRef = data[fieldParentSelectorFieldName] as InterfaceInternalLinkValue | undefined;
+    const breadcrumbs = await buildBreadcrumbs(req.payload, parentRef);
+
+    return {
+      ...data,
+      [fieldBreadcrumbFieldName]: breadcrumbs,
+    };
+  }
+
+  // No parent and no change - clear breadcrumbs
   return {
     ...data,
-    [fieldBreadcrumbFieldName]: breadcrumbs,
+    [fieldBreadcrumbFieldName]: [],
   };
 };
 

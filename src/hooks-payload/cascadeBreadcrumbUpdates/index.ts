@@ -1,5 +1,17 @@
+/*
+This hook handles changes regarding the following fields of a page:
+- parentPage
+- navigationTitle
+- slug
+
+Additionally, it handles publish/unpublish state and deletion of a page.
+
+It cascades these changes down the navigation tree by changing/regenarating
+the navigationTitle and parentPage field of direct and indirect children.
+*/
+
 import {
-  BasePayload, CollectionAfterChangeHook,
+  BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook,
   PayloadRequest,
 } from 'payload';
 import { fieldSlugFieldName } from '@/field-templates/slug';
@@ -26,6 +38,8 @@ const updateChildBreadcrumbs = async (
   req: PayloadRequest,
   parentDocumentId: string,
   tenantId: string | undefined,
+  deletedDocumentIds?: Set<string>,
+  searchAllTenants = false,
 ): Promise<void> => {
   const availableCollections = linkableSlugs.map((item) => item.slug);
 
@@ -37,12 +51,11 @@ const updateChildBreadcrumbs = async (
       return [];
     }
 
-    // Build query for finding child pages
     const query: any = {
       [`${fieldParentSelectorFieldName}.documentId`]: parentDocumentId,
     };
 
-    if (tenantId) {
+    if (!searchAllTenants && tenantId) {
       query.tenant = tenantId;
     }
 
@@ -78,28 +91,70 @@ const updateChildBreadcrumbs = async (
 
     try {
       cascadeProcessingSet.add(childId);
-      const parentRef = childPage[fieldParentSelectorFieldName] as InterfaceInternalLinkValue | undefined;
-      const breadcrumbs = await buildBreadcrumbs(payload, parentRef);
 
+      const childActualParentRef = childPage[fieldParentSelectorFieldName] as InterfaceInternalLinkValue | undefined | null | Record<string, never>;
+      let parentRef: InterfaceInternalLinkValue | undefined | null | Record<string, never>;
+      let shouldClearParentPage = false;
+
+      // Check if parent exists and is deleted
+      // First check if it's a valid object with documentId
+      if (
+        childActualParentRef &&
+        typeof childActualParentRef === 'object' &&
+        'documentId' in childActualParentRef &&
+        childActualParentRef.documentId &&
+        deletedDocumentIds?.has(childActualParentRef.documentId)
+      ) {
+        // Child's parent is deleted - clear the parentPage field entirely
+        shouldClearParentPage = true;
+
+        // No parent, so breadcrumbs will be empty
+        parentRef = undefined;
+      } else if (
+        childActualParentRef &&
+        typeof childActualParentRef === 'object' &&
+        'documentId' in childActualParentRef &&
+        'slug' in childActualParentRef &&
+        childActualParentRef.documentId &&
+        childActualParentRef.slug
+      ) {
+        // Child's parent is not deleted and is valid,
+        // use the child's actual parent reference
+        parentRef = childActualParentRef as InterfaceInternalLinkValue;
+      } else {
+        // No parent reference (null, undefined, or empty object {})
+        parentRef = undefined;
+      }
+
+      const breadcrumbs = await buildBreadcrumbs(payload, parentRef);
       const dbCollection = payload.db.collections[collectionSlug];
 
       if (!dbCollection) {
         throw new Error(`${collectionSlug} db collection not found`);
       }
 
+      // Build the update object
+      const updateData: any = {
+        [fieldBreadcrumbFieldName]: breadcrumbs,
+      };
+
+      // If parent is deleted, clear the parentPage field by setting it
+      // to an empty object
+      if (shouldClearParentPage) {
+        updateData[fieldParentSelectorFieldName] = {};
+      }
+
       await dbCollection.findByIdAndUpdate(
         childId,
         {
-          $set: {
-            [fieldBreadcrumbFieldName]: breadcrumbs,
-          },
+          $set: updateData,
         },
         {
           new: false,
         },
       );
 
-      await updateChildBreadcrumbs(payload, req, childId, tenantId);
+      await updateChildBreadcrumbs(payload, req, childId, tenantId, deletedDocumentIds, searchAllTenants);
     } finally {
       cascadeProcessingSet.delete(childId);
     }
@@ -112,7 +167,11 @@ const getParentId = (parent: any): string | undefined => {
   if (!parent) {
     return undefined;
   }
-  if (typeof parent === 'object' && 'documentId' in parent) {
+  // Handle empty object {} - treat as no parent
+  if (typeof parent === 'object' && Object.keys(parent).length === 0) {
+    return undefined;
+  }
+  if (typeof parent === 'object' && 'documentId' in parent && parent.documentId) {
     return parent.documentId;
   }
 
@@ -136,6 +195,13 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
     return doc;
   }
 
+  const oldStatus = previousDoc?._status;
+  const newStatus = doc._status;
+  const statusChanged = oldStatus !== newStatus;
+  const wasPublished = oldStatus === 'published';
+  const isUnpublished = newStatus === 'draft' || newStatus === null;
+  const isUnpublishing = wasPublished && isUnpublished;
+
   const oldSlug = previousDoc?.[fieldSlugFieldName];
   const oldNavigationTitle = previousDoc?.[fieldNavigationTitleFieldName];
   const oldParent = previousDoc?.[fieldParentSelectorFieldName];
@@ -146,10 +212,60 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
   const parentChanged = getParentId(oldParent) !== getParentId(doc[fieldParentSelectorFieldName]);
   const breadcrumbChanged = JSON.stringify(oldBreadcrumb) !== JSON.stringify(doc[fieldBreadcrumbFieldName]);
 
-  const onlyBreadcrumbChanged = breadcrumbChanged && !slugChanged && !navigationTitleChanged && !parentChanged;
+  const onlyBreadcrumbChanged = breadcrumbChanged && !slugChanged && !navigationTitleChanged && !parentChanged && !statusChanged;
 
-  if (onlyBreadcrumbChanged || (!slugChanged && !navigationTitleChanged && !parentChanged)) {
+  // unpublishing logic
+  if (isUnpublishing) {
+    const tenantId = typeof doc.tenant === 'string'
+      ? doc.tenant
+      : doc.tenant?.id;
+
+    try {
+      cascadeProcessingSet.add(docId);
+
+      const unpublishedDocumentIds = new Set<string>([docId]);
+
+      await updateChildBreadcrumbs(req.payload, req, docId, tenantId, unpublishedDocumentIds, true);
+    } finally {
+      cascadeProcessingSet.delete(docId);
+    }
+
     return doc;
+  }
+
+  // nothing changed, return
+  if (onlyBreadcrumbChanged || (!slugChanged && !navigationTitleChanged && !parentChanged && !statusChanged)) {
+    return doc;
+  }
+
+  const tenantId = typeof doc.tenant === 'string'
+    ? doc.tenant
+    : doc.tenant?.id;
+
+  // regular update logic
+  try {
+    cascadeProcessingSet.add(docId);
+    await updateChildBreadcrumbs(req.payload, req, docId, tenantId, undefined);
+  } finally {
+    cascadeProcessingSet.delete(docId);
+  }
+
+  return doc;
+};
+
+export const hookCascadeBreadcrumbUpdatesOnDelete: CollectionAfterDeleteHook = async ({
+  doc,
+  req,
+  id,
+}) => {
+  if (!doc || !req?.payload) {
+    return;
+  }
+
+  const docId = id?.toString() || doc.id?.toString();
+
+  if (!docId || cascadeProcessingSet.has(docId)) {
+    return;
   }
 
   const tenantId = typeof doc.tenant === 'string'
@@ -158,10 +274,11 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
 
   try {
     cascadeProcessingSet.add(docId);
-    await updateChildBreadcrumbs(req.payload, req, docId, tenantId);
+
+    const deletedDocumentIds = new Set<string>([docId]);
+
+    await updateChildBreadcrumbs(req.payload, req, docId, tenantId, deletedDocumentIds, true);
   } finally {
     cascadeProcessingSet.delete(docId);
   }
-
-  return doc;
 };
