@@ -12,6 +12,15 @@ import {
 
 type LocalizedString = Partial<Record<Config['locale'], string>>;
 
+const hasNonEmptyValue = (localizedString: LocalizedString | undefined): boolean => {
+  if (!localizedString || typeof localizedString !== 'object') {
+    return false;
+  }
+
+  return Object.values(localizedString)
+    .some((value) => value && value.trim().length > 0);
+};
+
 export const buildBreadcrumbs = async (
   payload: any,
   parentRef: InterfaceInternalLinkValue | undefined | null | Record<string, never>,
@@ -43,17 +52,17 @@ export const buildBreadcrumbs = async (
     const parentSlugRaw = parentDoc[fieldSlugFieldName] as LocalizedString | undefined;
     const parentNavigationTitleRaw = parentDoc[fieldNavigationTitleFieldName] as LocalizedString | undefined;
 
-    if (parentSlugRaw && parentNavigationTitleRaw && parentRef.documentId) {
+    if (hasNonEmptyValue(parentSlugRaw) && hasNonEmptyValue(parentNavigationTitleRaw) && parentRef.documentId) {
       breadcrumbs?.unshift({
         documentId: parentRef.documentId,
-        namede: parentNavigationTitleRaw.de || '',
-        nameen: parentNavigationTitleRaw.en || '',
-        namefr: parentNavigationTitleRaw.fr || '',
-        nameit: parentNavigationTitleRaw.it || '',
-        slugde: parentSlugRaw.de || '',
-        slugen: parentSlugRaw.en || '',
-        slugfr: parentSlugRaw.fr || '',
-        slugit: parentSlugRaw.it || '',
+        namede: parentNavigationTitleRaw?.de || '',
+        nameen: parentNavigationTitleRaw?.en || '',
+        namefr: parentNavigationTitleRaw?.fr || '',
+        nameit: parentNavigationTitleRaw?.it || '',
+        slugde: parentSlugRaw?.de || '',
+        slugen: parentSlugRaw?.en || '',
+        slugfr: parentSlugRaw?.fr || '',
+        slugit: parentSlugRaw?.it || '',
       });
 
       // Recursively get the parent's parent

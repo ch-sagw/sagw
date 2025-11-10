@@ -8,6 +8,8 @@ import {
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { fieldNavigationTitle } from '@/field-templates/navigationTitle';
+import { hookCascadeBreadcrumbUpdates } from '@/hooks-payload/cascadeBreadcrumbUpdates';
+import { hookGenerateBreadcrumbs } from '@/hooks-payload/generateBreadcrumbs';
 
 export const HomePage: CollectionConfig = {
   access: {
@@ -68,6 +70,11 @@ export const HomePage: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    afterChange: [hookCascadeBreadcrumbUpdates],
+
+    beforeChange: [hookGenerateBreadcrumbs],
+  },
   labels: {
     plural: 'Home',
     singular: 'Home',
