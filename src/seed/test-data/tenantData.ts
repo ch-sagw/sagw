@@ -303,31 +303,50 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         navItems: [
           {
             description: simpleRteConfig(''),
-            navItemLink: '/',
+            navItemLink: {
+              documentId: '12334',
+              slug: 'someSlug',
+            },
             navItemText: simpleRteConfig('Home'),
           },
           {
             description: simpleRteConfig('Förderung von langfristigen Forschungsinfrastrukturen'),
+            navItemLink: undefined,
             navItemText: simpleRteConfig('Förderung'),
             subNavItems: [
               {
-                navItemLink: '/',
+                navItemLink: {
+                  documentId: '12334',
+                  slug: 'someSlug',
+                },
                 navItemText: simpleRteConfig('Übersicht'),
               },
               {
-                navItemLink: '/',
+                navItemLink: {
+                  documentId: '12334',
+                  slug: 'someSlug',
+                },
                 navItemText: simpleRteConfig('Institute'),
               },
               {
-                navItemLink: '/',
+                navItemLink: {
+                  documentId: '12334',
+                  slug: 'someSlug',
+                },
                 navItemText: simpleRteConfig('Editionen'),
               },
               {
-                navItemLink: '/',
+                navItemLink: {
+                  documentId: '12334',
+                  slug: 'someSlug',
+                },
                 navItemText: simpleRteConfig('Reisebeiträge'),
               },
               {
-                navItemLink: '/',
+                navItemLink: {
+                  documentId: '12334',
+                  slug: 'someSlug',
+                },
                 navItemText: simpleRteConfig('Early Career Award'),
               },
             ],
@@ -337,7 +356,10 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
             navItemText: simpleRteConfig('Netzwerk'),
             subNavItems: [
               {
-                navItemLink: '/',
+                navItemLink: {
+                  documentId: '12334',
+                  slug: 'someSlug',
+                },
                 navItemText: simpleRteConfig('Fachgesellschaften'),
               },
             ],
@@ -347,23 +369,38 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
             navItemText: simpleRteConfig('Aktivitäten'),
             subNavItems: [
               {
-                navItemLink: '/',
+                navItemLink: {
+                  documentId: '12334',
+                  slug: 'someSlug',
+                },
                 navItemText: simpleRteConfig('Übersicht'),
               },
               {
-                navItemLink: '/',
+                navItemLink: {
+                  documentId: '12334',
+                  slug: 'someSlug',
+                },
                 navItemText: simpleRteConfig('Magazin'),
               },
               {
-                navItemLink: '/',
+                navItemLink: {
+                  documentId: '12334',
+                  slug: 'someSlug',
+                },
                 navItemText: simpleRteConfig('Publikationen'),
               },
               {
-                navItemLink: '/',
+                navItemLink: {
+                  documentId: '12334',
+                  slug: 'someSlug',
+                },
                 navItemText: simpleRteConfig('Veranstaltungen'),
               },
               {
-                navItemLink: '/',
+                navItemLink: {
+                  documentId: '12334',
+                  slug: 'someSlug',
+                },
                 navItemText: simpleRteConfig('News'),
               },
             ],
@@ -373,19 +410,31 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
             navItemText: simpleRteConfig('Über uns'),
             subNavItems: [
               {
-                navItemLink: '/',
+                navItemLink: {
+                  documentId: '12334',
+                  slug: 'someSlug',
+                },
                 navItemText: simpleRteConfig('Die SAGW'),
               },
               {
-                navItemLink: '/',
+                navItemLink: {
+                  documentId: '12334',
+                  slug: 'someSlug',
+                },
                 navItemText: simpleRteConfig('Team'),
               },
               {
-                navItemLink: '/',
+                navItemLink: {
+                  documentId: '12334',
+                  slug: 'someSlug',
+                },
                 navItemText: simpleRteConfig('Kontakt'),
               },
               {
-                navItemLink: '/',
+                navItemLink: {
+                  documentId: '12334',
+                  slug: 'someSlug',
+                },
                 navItemText: simpleRteConfig('Offene Stellen'),
               },
             ],
@@ -405,7 +454,10 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         optionalLink: {
           includeLink: true,
           link: {
-            internalLink: 'https://www.foo.bar',
+            internalLink: {
+              documentId: '12345',
+              slug: 'some-slug',
+            },
             linkText: simpleRteConfig('Some action link'),
           },
         },
@@ -722,7 +774,10 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
             },
             {
               linkInternal: {
-                internalLink: 'https://www.foo.bar',
+                internalLink: {
+                  documentId: '12345',
+                  slug: 'some-slug',
+                },
                 linkText: simpleRteConfig('Artikel auf Zenodo'),
               },
               linkType: 'internal',
@@ -754,7 +809,10 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           optionalLink: {
             includeLink: true,
             link: {
-              internalLink: `homePage/${home.id}`,
+              internalLink: {
+                documentId: home.id,
+                slug: 'some-slug',
+              },
               linkText: simpleRteConfig('Alle Downloads'),
             },
           },
@@ -874,7 +932,10 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
             {
               blockType: 'ctaLinkBlock',
               linkInternal: {
-                internalLink: `detailPage/${detailPage.id}`,
+                internalLink: {
+                  documentId: detailPage.id,
+                  slug: 'some-slug',
+                },
                 linkText: simpleRteConfig('Internal Link Text (internal)'),
               },
               linkType: 'internal',
