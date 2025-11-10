@@ -26,12 +26,12 @@ export const buildBreadcrumbs = async (
   parentRef: InterfaceInternalLinkValue | undefined | null | Record<string, never>,
   breadcrumbs: InterfaceBreadcrumb = [],
 ): Promise<InterfaceBreadcrumb> => {
-  // Handle null, undefined, or invalid parentRef
+  // Handle null, undefined, or invalid parentRef - we've reached the root
   if (!parentRef || typeof parentRef !== 'object') {
     return breadcrumbs;
   }
 
-  // Handle empty object {} - this means no parent is set
+  // Handle empty object - this means no parent is set (root)
   if (Object.keys(parentRef).length === 0) {
     return breadcrumbs;
   }
@@ -52,29 +52,75 @@ export const buildBreadcrumbs = async (
     const parentSlugRaw = parentDoc[fieldSlugFieldName] as LocalizedString | undefined;
     const parentNavigationTitleRaw = parentDoc[fieldNavigationTitleFieldName] as LocalizedString | undefined;
 
-    if (hasNonEmptyValue(parentSlugRaw) && hasNonEmptyValue(parentNavigationTitleRaw) && parentRef.documentId) {
-      breadcrumbs?.unshift({
-        documentId: parentRef.documentId,
-        namede: parentNavigationTitleRaw?.de || '',
-        nameen: parentNavigationTitleRaw?.en || '',
-        namefr: parentNavigationTitleRaw?.fr || '',
-        nameit: parentNavigationTitleRaw?.it || '',
-        slugde: parentSlugRaw?.de || '',
-        slugen: parentSlugRaw?.en || '',
-        slugfr: parentSlugRaw?.fr || '',
-        slugit: parentSlugRaw?.it || '',
-      });
-
-      // Recursively get the parent's parent
-      const parentParentRef = parentDoc[fieldParentSelectorFieldName] as InterfaceInternalLinkValue | undefined;
-
-      return buildBreadcrumbs(payload, parentParentRef, breadcrumbs);
+    // If current parent doesn't have navigationTitle, return empty array
+    // This breaks the chain - all descendants will have empty breadcrumbs
+    if (!hasNonEmptyValue(parentSlugRaw) || !hasNonEmptyValue(parentNavigationTitleRaw) || !parentRef.documentId) {
+      return [];
     }
+
+    // Current parent has navigationTitle, add it to breadcrumbs
+    const currentBreadcrumb = {
+      documentId: parentRef.documentId,
+      namede: parentNavigationTitleRaw?.de || '',
+      nameen: parentNavigationTitleRaw?.en || '',
+      namefr: parentNavigationTitleRaw?.fr || '',
+      nameit: parentNavigationTitleRaw?.it || '',
+      slugde: parentSlugRaw?.de || '',
+      slugen: parentSlugRaw?.en || '',
+      slugfr: parentSlugRaw?.fr || '',
+      slugit: parentSlugRaw?.it || '',
+    };
+
+    const breadcrumbsArray = Array.isArray(breadcrumbs)
+      ? breadcrumbs
+      : [];
+    const newBreadcrumbs = [
+      currentBreadcrumb,
+      ...breadcrumbsArray,
+    ];
+
+    // Recursively get the parent's parent
+    const parentParentRef = parentDoc[fieldParentSelectorFieldName] as InterfaceInternalLinkValue | undefined;
+
+    // Check if there's a parent to recurse to
+    const hasParent = parentParentRef &&
+      typeof parentParentRef === 'object' &&
+      Object.keys(parentParentRef).length > 0 &&
+      'slug' in parentParentRef &&
+      'documentId' in parentParentRef &&
+      parentParentRef.slug &&
+      parentParentRef.documentId;
+
+    if (!hasParent) {
+      // We've reached the root, return the breadcrumbs we've built
+      return newBreadcrumbs;
+    }
+
+    // Recurse to get ancestors
+    const ancestorBreadcrumbs = await buildBreadcrumbs(payload, parentParentRef, []);
+
+    // If ancestors returned empty array, that means we hit a missing
+    // navigationTitle up the chain
+    if (!ancestorBreadcrumbs || ancestorBreadcrumbs.length === 0) {
+      return [];
+    }
+
+    // Combine ancestor breadcrumbs with current breadcrumbs
+    const ancestorArray = Array.isArray(ancestorBreadcrumbs)
+      ? ancestorBreadcrumbs
+      : [];
+
+    return [
+      ...ancestorArray,
+      ...newBreadcrumbs,
+    ];
   } catch (error) {
     console.error('Error building breadcrumbs:', error);
   }
 
-  return breadcrumbs;
+  // If we couldn't fetch the parent or there was an error, return empty
+  // This ensures we don't have partial breadcrumbs
+  return [];
 };
 
 export const hookGenerateBreadcrumbs: CollectionBeforeChangeHook = async ({
