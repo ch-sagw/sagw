@@ -25,6 +25,10 @@
     flex-shrink: 0;
   }
 
+  .hiddenLabel {
+    @include screen-reader-only;
+  }
+
   .content {
     @include list-reset;
 

@@ -7,6 +7,7 @@
 .hero {
   background-color: var(--color-background);
   padding: px-to-rem(var(--hero-big)) px-to-rem(var(--grid-margin));
+  overflow-x: hidden;
 
   @include mq($from: large) {
     display: grid;
@@ -47,7 +48,12 @@
     --color-author-date: var(--text-secondary);
   }
 
-  // &.titleIndent {}
+  &.magazineDetail {
+    .title {
+      @include title-heading-article;
+    }
+  }
+
   // &.animated {}
 
   .leftColumn {
@@ -156,6 +162,16 @@
     .link {
       padding-inline: 0;
       margin-block-start: px-to-rem(var(--section-inside-s));
+    }
+  }
+
+  @include mq($from: wide) {
+    &.titleIndent {
+      .title {
+        display: block;
+        text-indent: px-to-rem(116);
+        margin-left: calc(-1 * px-to-rem(116));
+      }
     }
   }
 }

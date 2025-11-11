@@ -5,6 +5,7 @@ import { ColorMode } from '@/components/base/types/colorMode';
 import { Icon } from '@/icons';
 import { Button } from '@/components/base/Button/Button';
 import { Config } from '@/payload-types';
+import { i18nA11y } from '@/i18n/content';
 
 interface InterfaceBreadcrumbItem {
   link: string;
@@ -47,7 +48,14 @@ export const Breadcrumb = ({
         name='arrowLeft'
         className={styles.icon}
       />
-      <ul className={styles.content}>
+      <p
+        className={styles.hiddenLabel}
+        id='breadcrumb-label'
+      >{i18nA11y.breadcrumb[pageLanguage]}</p>
+      <ul
+        aria-labelledby='breadcrumb-label'
+        className={styles.content}
+      >
 
         {items.map((item, index) => (
           <li

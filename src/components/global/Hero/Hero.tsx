@@ -62,6 +62,10 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
         light: [styles.light],
         white: [styles.white],
       },
+      magazineDetail: {
+        false: undefined,
+        true: [styles.magazineDetail],
+      },
       titleIndent: {
         false: undefined,
         true: [styles.titleIndent],
@@ -101,6 +105,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
         ? props.animated
         : false,
       colorMode: heroColorMode,
+      magazineDetail: props.type === 'magazineDetail',
       titleIndent: props.type === 'magazineDetail',
     })}>
       {/* Left Column */}
