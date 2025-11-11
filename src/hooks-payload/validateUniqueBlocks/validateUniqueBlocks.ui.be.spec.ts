@@ -14,15 +14,6 @@ test.describe('Unique blocks', () => {
     await page.goto('http://localhost:3000/admin/collections/overviewPage/create');
     await page.waitForLoadState('networkidle');
 
-    // fill title
-    const heroBlock = await page.locator('#field-hero');
-
-    const titleField = await heroBlock.locator('.rich-text-lexical')
-      .nth(0)
-      .locator('.ContentEditable__root');
-
-    await titleField.fill('title3');
-
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForLoadState('load');
@@ -67,15 +58,6 @@ test.describe('Unique blocks', () => {
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
     await page.waitForLoadState('networkidle');
 
-    // fill title
-    const heroBlock = await page.locator('#field-hero');
-
-    const titleField = await heroBlock.locator('.rich-text-lexical')
-      .nth(0)
-      .locator('.ContentEditable__root');
-
-    await titleField.fill('title3');
-
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForLoadState('load');
@@ -110,15 +92,6 @@ test.describe('Unique blocks', () => {
     // create an overview page
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
     await page.waitForLoadState('networkidle');
-
-    // fill title
-    const heroBlock = await page.locator('#field-hero');
-
-    const titleField = await heroBlock.locator('.rich-text-lexical')
-      .nth(0)
-      .locator('.ContentEditable__root');
-
-    await titleField.fill('title3');
 
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
