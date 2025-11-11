@@ -14,7 +14,14 @@ export const useIsTouchDevice = (): boolean => {
       navigator.maxTouchPoints > 0 ||
       (navigator as any).msMaxTouchPoints > 0;
 
-    setIsTouch(checkTouch);
+    // Defer setState to avoid synchronous setState in effect
+    const rafId = requestAnimationFrame(() => {
+      setIsTouch(checkTouch);
+    });
+
+    return (): void => {
+      cancelAnimationFrame(rafId);
+    };
   }, []);
 
   return isTouch;
