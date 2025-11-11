@@ -142,18 +142,9 @@ export const ConsentBanner = ({
   useScrollLock(isBannerOpen);
 
   // Trap focus
-  const [
-    focusTrapRootEl,
-    setFocusTrapRootEl,
-  ] = useState<HTMLDialogElement | null>(null);
-
-  useEffect(() => {
-    setFocusTrapRootEl(bannerDialogRef.current);
-  }, [isBannerOpen]);
-
   useFocusTrap({
     condition: isBannerOpen,
-    focusTrapRootElement: focusTrapRootEl ?? undefined,
+    focusTrapRootRef: bannerDialogRef,
     ignoreElementsWithClasses: [],
   });
 

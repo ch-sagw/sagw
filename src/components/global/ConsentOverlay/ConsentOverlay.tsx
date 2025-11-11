@@ -106,7 +106,12 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
       onClose?.();
     };
 
-    setIsOpen(dialog.open);
+    // Defer initial state set to avoid synchronous setState in effect
+    const initialOpenState = dialog.open;
+
+    requestAnimationFrame(() => {
+      setIsOpen(initialOpenState);
+    });
 
     // watch for open attribute changes
     const observer = new MutationObserver(() => {
@@ -134,8 +139,8 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
   // Trap focus
   useFocusTrap({
     condition: isOpen,
-    focusTrapRootElement: typeof ref === 'object' && ref?.current
-      ? ref.current
+    focusTrapRootRef: typeof ref === 'object'
+      ? (ref as React.RefObject<HTMLDialogElement | null>)
       : undefined,
     ignoreElementsWithClasses: [],
   });
