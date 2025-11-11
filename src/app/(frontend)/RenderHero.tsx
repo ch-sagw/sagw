@@ -101,6 +101,9 @@ export const RenderHero = ({
     return undefined;
   }
 
+  // TODO: write generic url generator. it is more complicated than the current
+  // implementation. e.g: for each segment, we should fallback to `namede`
+  // and `slugde`.
   const breadcrumbItems: InterfaceBreadcrumbItem[] = (pageData.breadcrumb ?? []).reduce<InterfaceBreadcrumbItem[]>((acc, item) => {
     const nameKey = `name${language}`;
     const slugKey = `slug${language}`;
