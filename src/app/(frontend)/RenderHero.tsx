@@ -1,4 +1,7 @@
 import {
+  InterfaceBreadcrumbItem, InterfaceBreadcrumbPropTypes,
+} from '@/components/base/Breadcrumb/Breadcrumb';
+import {
   Hero, InterfaceHeroPropTypes,
 } from '@/components/global/Hero/Hero';
 import {
@@ -98,19 +101,31 @@ export const RenderHero = ({
     return undefined;
   }
 
+  const breadcrumbItems: InterfaceBreadcrumbItem[] = (pageData.breadcrumb ?? []).reduce<InterfaceBreadcrumbItem[]>((acc, item) => {
+    const nameKey = `name${language}`;
+    const slugKey = `slug${language}`;
+
+    if (nameKey in item && slugKey in item) {
+      const text = item[nameKey as keyof typeof item];
+      const link = item[slugKey as keyof typeof item];
+
+      console.log(link);
+
+      if (typeof text === 'string') {
+        acc.push({
+          link: '/',
+          text,
+        });
+      }
+    }
+
+    return acc;
+  }, []);
+
   // TODO
-  const sampleBreadcrumb = {
+  const breadcrumb: InterfaceBreadcrumbPropTypes = {
     colorMode: heroProps.colorMode,
-    items: [
-      {
-        link: '/',
-        text: 'Some nav level 1',
-      },
-      {
-        link: '/',
-        text: 'Some nav level 2',
-      },
-    ],
+    items: breadcrumbItems,
     pageLanguage: language,
   };
 
@@ -144,7 +159,7 @@ export const RenderHero = ({
         {...heroProps as InterfaceHeroField}
         pageLanguage={language}
         type='generic'
-        breadcrumb={sampleBreadcrumb}
+        breadcrumb={breadcrumb}
       />
     );
   }
