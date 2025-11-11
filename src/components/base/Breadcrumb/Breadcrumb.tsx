@@ -38,7 +38,7 @@ export const Breadcrumb = ({
     },
   });
 
-  if (!items) {
+  if (!items || items.length < 1) {
     return null;
   }
 
