@@ -39,3 +39,11 @@ export const TagSecondary: StrictStory = {
     text: 'Some text for the tag',
   },
 };
+
+export const TagLarge: StrictStory = {
+  args: {
+    colorTheme: 'primary',
+    large: true,
+    text: 'Some text for the tag',
+  },
+};

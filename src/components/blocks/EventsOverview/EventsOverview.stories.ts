@@ -4,6 +4,7 @@ import type {
 } from '@storybook/nextjs-vite';
 import { EventsOverviewComponent } from '@/components/blocks/EventsOverview/EventsOverview.component';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
+import { InterfaceEventsListItemPropTypes } from '@/components/base/EventsListItem/EventsListItem';
 
 type EventsOverviewProps = React.ComponentProps<typeof EventsOverviewComponent>;
 
@@ -31,7 +32,7 @@ const meta: Meta<typeof EventsOverviewComponent> = {
 
 export default meta;
 
-const Full = {
+const Full: InterfaceEventsListItemPropTypes = {
   dateEnd: '2025-10-25T12:00:00.000Z',
   dateStart: '2025-10-24T12:00:00.000Z',
   language: 'Auf Deutsch',
@@ -46,7 +47,7 @@ const Full = {
   time: '18:30 Uhr',
 };
 
-const InternalLink = {
+const InternalLink: InterfaceEventsListItemPropTypes = {
   dateEnd: '2025-10-25T12:00:00.000Z',
   dateStart: '2025-10-24T12:00:00.000Z',
   language: 'Auf Deutsch',
@@ -61,7 +62,7 @@ const InternalLink = {
   time: '18:30 Uhr',
 };
 
-const DateNotSameMonth = {
+const DateNotSameMonth: InterfaceEventsListItemPropTypes = {
   dateEnd: '2025-11-25T12:00:00.000Z',
   dateStart: '2025-10-24T12:00:00.000Z',
   language: 'Auf Deutsch',
@@ -76,7 +77,7 @@ const DateNotSameMonth = {
   time: '18:30 Uhr',
 };
 
-const DateNotSameYear = {
+const DateNotSameYear: InterfaceEventsListItemPropTypes = {
   dateEnd: '2026-01-25T12:00:00.000Z',
   dateStart: '2025-10-24T12:00:00.000Z',
   language: 'Auf Deutsch',
@@ -91,7 +92,7 @@ const DateNotSameYear = {
   time: '18:30 Uhr',
 };
 
-const NoTag = {
+const NoTag: InterfaceEventsListItemPropTypes = {
   dateEnd: '2025-10-25T12:00:00.000Z',
   dateStart: '2025-10-24T12:00:00.000Z',
   language: 'Auf Deutsch',
@@ -105,7 +106,7 @@ const NoTag = {
   time: '18:30 Uhr',
 };
 
-const Minimal = {
+const Minimal: InterfaceEventsListItemPropTypes = {
   dateStart: '2025-10-24T12:00:00.000Z',
   link: {
     href: 'https://foo.bar',
@@ -116,7 +117,7 @@ const Minimal = {
   text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
 };
 
-const MinimalWithoutTag = {
+const MinimalWithoutTag: InterfaceEventsListItemPropTypes = {
   dateStart: '2025-10-24T12:00:00.000Z',
   link: {
     href: 'https://foo.bar',
