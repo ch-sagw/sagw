@@ -41,6 +41,7 @@ test.describe('Unique blocks', () => {
     await addOverviewButton.click();
 
     await page.locator('#content-row-0');
+    await page.getByText('Placeholder: all magazine entries will be displayed as overview here.');
 
     // try to add another overview
     await addContentButton.click();
@@ -95,6 +96,7 @@ test.describe('Unique blocks', () => {
     await addLinkButton.click();
 
     await page.locator('#content-row-0');
+    await page.getByText('Link hinzufügen');
 
     // try to add link overview
     await addContentButton.click();
@@ -138,6 +140,7 @@ test.describe('Unique blocks', () => {
     await addDownloadButton.click();
 
     await page.locator('#content-row-0');
+    await page.getByText('Optional Link');
 
     // try to add link overview
     await addContentButton.click();
