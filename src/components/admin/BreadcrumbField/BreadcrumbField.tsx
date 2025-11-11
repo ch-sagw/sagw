@@ -66,9 +66,14 @@ const BreadcrumbField = (): JSX.Element | null => {
         border: '1px solid var(--theme-elevation-150)',
         borderRadius: 'var(--style-radius-s)',
         fontSize: '13px',
-        marginTop: 4,
         padding: '8px 15px',
       }}>{parts.join(' -> ')}</div>
+      <p style={{
+        color: 'var(--theme-elevation-400)',
+        fontSize: '13px',
+        marginBottom: '0.5rem',
+        marginTop: '5px',
+      }}>This is a preview of the breadcrumb as it would render in the frontend.</p>
     </div>
   );
 };
