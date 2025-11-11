@@ -18,27 +18,33 @@ const breakpointQueries: Record<BreakpointName, string> = {
 };
 
 export const useBreakpoint = (): BreakpointName => {
+  const getCurrent = (): BreakpointName => {
+    if (typeof window === 'undefined') {
+      return 'large';
+    }
+    for (const [
+      name,
+      query,
+    ] of Object.entries(breakpointQueries) as [BreakpointName, string][]) {
+      if (window.matchMedia(query).matches) {
+        return name;
+      }
+    }
+
+    return 'zero';
+  };
+
   const [
     breakpoint,
     setBreakpoint,
   ] = useState<BreakpointName>('large');
 
   useEffect(() => {
-    const getCurrent = (): BreakpointName => {
-      for (const [
-        name,
-        query,
-      ] of Object.entries(breakpointQueries) as [BreakpointName, string][]) {
-        if (window.matchMedia(query).matches) {
-          return name;
-        }
-      }
-
-      return 'zero';
-    };
-
-    // Set initial value on mount
-    setBreakpoint(getCurrent());
+    // Defer initial update to avoid synchronous setState in effect
+    const initial = getCurrent();
+    const rafId = window.requestAnimationFrame(() => {
+      setBreakpoint(initial);
+    });
 
     const mqls = Object.entries(breakpointQueries)
       .map(([
@@ -61,6 +67,7 @@ export const useBreakpoint = (): BreakpointName => {
       });
 
     return (): void => {
+      window.cancelAnimationFrame(rafId);
       mqls.forEach(({
         mql, listener,
       }) => mql.removeEventListener('change', listener));
