@@ -109,13 +109,28 @@ export const RenderHero = ({
       const text = item[nameKey as keyof typeof item];
       const link = item[slugKey as keyof typeof item];
 
-      console.log(link);
-
       if (typeof text === 'string') {
-        acc.push({
-          link: '/',
-          text,
-        });
+
+        // just for safety: remove leading and trailing slashes
+        const slugSegment = String(link ?? '')
+          .replace(/^\/+|\/+$/gu, '');
+
+        if (slugSegment.length > 0) {
+          const previousLink = acc.length > 0
+            ? acc[acc.length - 1].link
+            : '';
+
+          // just for safety: remove trailing slashes
+          const base = previousLink.replace(/\/+$/gu, '');
+          const nextLink = base.length > 0
+            ? `${base}/${slugSegment}`
+            : `/${slugSegment}`;
+
+          acc.push({
+            link: nextLink,
+            text,
+          });
+        }
       }
     }
 
