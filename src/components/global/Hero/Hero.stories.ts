@@ -50,7 +50,10 @@ export const Home: StrictStory = {
     optionalLink: {
       includeLink: true,
       link: {
-        internalLink: 'someId',
+        internalLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         linkText: simpleRteConfig('Über uns'),
       },
     },
