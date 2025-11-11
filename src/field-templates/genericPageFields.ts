@@ -13,4 +13,16 @@ export const genericPageFields = (): Field[] => ([
   fieldNavigationTitle,
   fieldParentSelectorDetailPage,
   fieldBreadcrumb,
+  {
+    admin: {
+      components: {
+        Field: {
+          path: '@/components/admin/BreadcrumbField/BreadcrumbField',
+        },
+      },
+      position: 'sidebar',
+    },
+    name: 'breadcrumbUI',
+    type: 'ui',
+  },
 ]);

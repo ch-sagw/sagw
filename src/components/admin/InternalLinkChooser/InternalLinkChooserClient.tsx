@@ -193,7 +193,9 @@ const InternalLinkChooserClient = ({
   });
 
   return (
-    <div>
+    <div style={{
+      marginBlockEnd: 'var(--spacing-field)',
+    }}>
       <FieldLabel
         required={required}
         label={label}
