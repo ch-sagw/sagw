@@ -16,6 +16,7 @@
     grid-template-columns: repeat(12, 1fr);
     column-gap: px-to-rem(var(--grid-gutter));
 
+    > .titleWithFilter:first-child,
     > h2:first-child,
     > h3:first-child {
       position: sticky;
