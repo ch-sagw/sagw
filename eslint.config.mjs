@@ -1,11 +1,13 @@
 import storybook from 'eslint-plugin-storybook';
-import { FlatCompat } from '@eslint/eslintrc';
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
+import nextTypeScript from 'eslint-config-next/typescript';
 import tsRules from './lint/ts-rules.mjs';
 import esRules from './lint/es-rules.mjs';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
-const compat = new FlatCompat({
-  baseDirectory: import.meta.dirname,
-});
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const eslintConfig = [
   {
@@ -24,12 +26,13 @@ const eslintConfig = [
       'storybook-static',
     ],
   },
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+  ...nextCoreWebVitals,
+  ...nextTypeScript,
   {
     languageOptions: {
       parserOptions: {
         projectService: true,
-        tsconfigRootDir: import.meta.dirname,
+        tsconfigRootDir: __dirname,
       },
     },
   },
