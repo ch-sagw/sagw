@@ -132,6 +132,7 @@
   display: inline-block;
 
   .filterSelect {
+    z-index: 1;
     transition: color var(--animation-duration) var(--motion-ease-out);
   }
 
@@ -177,7 +178,7 @@
     content: "";
     height: 100%;
     width: 100%;
-    z-index: -1;
+    z-index: 0;
     border-radius: px-to-rem(var(--spacing-l));
     background: var(--label-background);
   }
@@ -204,6 +205,7 @@
     width: px-to-rem(var(--icon-size));
     height: px-to-rem(var(--icon-size));
     z-index: 2;
+    pointer-events: none;
 
     path {
       @include forced-colors {
