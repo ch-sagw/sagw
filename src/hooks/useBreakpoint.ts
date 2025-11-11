@@ -1,5 +1,9 @@
 'use client';
 
+// TODO: layout shift due to hydration issue, because server side,
+// the breakpoint returns large. when hydrated on client in small
+// or medium vieport, we get a layout shift.
+
 import {
   useEffect, useState,
 } from 'react';
@@ -18,33 +22,31 @@ const breakpointQueries: Record<BreakpointName, string> = {
 };
 
 export const useBreakpoint = (): BreakpointName => {
-  const getCurrent = (): BreakpointName => {
-    if (typeof window === 'undefined') {
-      return 'large';
-    }
-    for (const [
-      name,
-      query,
-    ] of Object.entries(breakpointQueries) as [BreakpointName, string][]) {
-      if (window.matchMedia(query).matches) {
-        return name;
-      }
-    }
-
-    return 'zero';
-  };
-
   const [
     breakpoint,
     setBreakpoint,
   ] = useState<BreakpointName>('large');
 
   useEffect(() => {
-    // Defer initial update to avoid synchronous setState in effect
-    const initial = getCurrent();
-    const rafId = window.requestAnimationFrame(() => {
-      setBreakpoint(initial);
-    });
+    const getCurrent = (): BreakpointName => {
+      for (const [
+        name,
+        query,
+      ] of Object.entries(breakpointQueries) as [BreakpointName, string][]) {
+        if (window.matchMedia(query).matches) {
+          return name;
+        }
+      }
+
+      return 'zero';
+    };
+
+    // Set initial value on mount
+
+    // TODO: fix this linter
+    /* eslint-disable react-hooks/set-state-in-effect */
+    setBreakpoint(getCurrent());
+    /* eslint-enable react-hooks/set-state-in-effect */
 
     const mqls = Object.entries(breakpointQueries)
       .map(([
@@ -67,7 +69,6 @@ export const useBreakpoint = (): BreakpointName => {
       });
 
     return (): void => {
-      window.cancelAnimationFrame(rafId);
       mqls.forEach(({
         mql, listener,
       }) => mql.removeEventListener('change', listener));
