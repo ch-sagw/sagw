@@ -2,11 +2,14 @@
 
 import { JSX } from 'react';
 import { reduceFieldsToValues } from 'payload/shared';
-import { useAllFormFields } from '@payloadcms/ui';
+import {
+  useAllFormFields, useLocale,
+} from '@payloadcms/ui';
 
 const BreadcrumbField = (): JSX.Element | null => {
   const [formFields] = useAllFormFields();
   const formData = reduceFieldsToValues(formFields, true) as Record<string, unknown>;
+  const locale = useLocale();
 
   const crumbs = Array.isArray(formData?.breadcrumb)
     ? (formData.breadcrumb as Record<string, unknown>[])
@@ -16,12 +19,33 @@ const BreadcrumbField = (): JSX.Element | null => {
     return null;
   }
 
+  // determine current admin locale via Payload hook (fallback to 'de')
+  const [currentLocale] = ((locale?.code as string) || 'de').split('-');
+
+  const localeToNameField: Record<string, 'namede' | 'namefr' | 'nameit' | 'nameen'> = {
+    de: 'namede',
+    en: 'nameen',
+    fr: 'namefr',
+    it: 'nameit',
+  };
+
+  const preferredField = localeToNameField[currentLocale] ?? 'namede';
+  const fallbackOrder: ('namede' | 'namefr' | 'nameit' | 'nameen')[] = [
+    preferredField,
+    'namede',
+    'namefr',
+    'nameit',
+    'nameen',
+  ];
+
   const parts = crumbs
     .map((c) => {
-      const val = c?.namede;
+      const value = fallbackOrder
+        .map((key) => (c?.[key] as unknown))
+        .find((v) => typeof v === 'string' && v.trim().length > 0) as string | undefined;
 
-      return typeof val === 'string' && val.trim().length > 0
-        ? val.trim()
+      return value
+        ? value.trim()
         : null;
     })
     .filter((v): v is string => Boolean(v));
