@@ -7,6 +7,12 @@
 
   --spacing-block: 6;
 
+  &.large {
+    --spacing-block: 10;
+
+    @include label-text-large;
+  }
+
   display: inline-block;
   padding: px-to-rem(var(--spacing-2xs)) px-to-rem(var(--spacing-block));
 

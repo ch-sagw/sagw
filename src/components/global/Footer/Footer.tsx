@@ -69,6 +69,11 @@ export const Footer = ({
     setIsOverlayOpen,
   ] = useState(false);
 
+  // Aggregate copyright text with copyright sign and current year
+  const today = new Date();
+  const copyrightText = rteToHtml(legal.copyright);
+  const legalCopyrightText = `© ${copyrightText} ${today.getFullYear()}`;
+
   // scroll lock when overlay is open
   useScrollLock(isOverlayOpen);
 
@@ -256,7 +261,7 @@ export const Footer = ({
         <SafeHtml
           as='p'
           className={styles.copyright}
-          html={rteToHtml(legal.copyright)}
+          html={legalCopyrightText}
         />
 
         <SocialLinks
