@@ -2,94 +2,94 @@
 
 @layer theme {
   .theme-sagw {
-    @include theme-variables(sagw);
+    @include theme-variables("sagw");
   }
 
   .theme-amber {
-    @include theme-variables(amber);
+    @include theme-variables("amber");
   }
 
   .theme-blue {
-    @include theme-variables(blue);
+    @include theme-variables("blue");
   }
 
   .theme-cyan {
-    @include theme-variables(cyan);
+    @include theme-variables("cyan");
   }
 
   .theme-emerald {
-    @include theme-variables(emerald);
+    @include theme-variables("emerald");
   }
 
   .theme-fuchsia {
-    @include theme-variables(fuchsia);
+    @include theme-variables("fuchsia");
   }
 
   .theme-gray {
-    @include theme-variables(gray);
+    @include theme-variables("gray");
   }
 
   .theme-green {
-    @include theme-variables(green);
+    @include theme-variables("green");
   }
 
   .theme-indigo {
-    @include theme-variables(indigo);
+    @include theme-variables("indigo");
   }
 
   .theme-lime {
-    @include theme-variables(lime);
+    @include theme-variables("lime");
   }
 
   .theme-neutral {
-    @include theme-variables(neutral);
+    @include theme-variables("neutral");
   }
 
   .theme-orange {
-    @include theme-variables(orange);
+    @include theme-variables("orange");
   }
 
   .theme-pink {
-    @include theme-variables(pink);
+    @include theme-variables("pink");
   }
 
   .theme-purple {
-    @include theme-variables(purple);
+    @include theme-variables("purple");
   }
 
   .theme-red {
-    @include theme-variables(red);
+    @include theme-variables("red");
   }
 
   .theme-rose {
-    @include theme-variables(rose);
+    @include theme-variables("rose");
   }
 
   .theme-sky {
-    @include theme-variables(sky);
+    @include theme-variables("sky");
   }
 
   .theme-slate {
-    @include theme-variables(slate);
+    @include theme-variables("slate");
   }
 
   .theme-stone {
-    @include theme-variables(stone);
+    @include theme-variables("stone");
   }
 
   .theme-teal {
-    @include theme-variables(teal);
+    @include theme-variables("teal");
   }
 
   .theme-violet {
-    @include theme-variables(violet);
+    @include theme-variables("violet");
   }
 
   .theme-yellow {
-    @include theme-variables(yellow);
+    @include theme-variables("yellow");
   }
 
   .theme-zinc {
-    @include theme-variables(zinc);
+    @include theme-variables("zinc");
   }
 }

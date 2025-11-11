@@ -95,7 +95,7 @@
       pointer-events: none;
       inset-block-start: px-to-rem(var(--border-width));
       inset-inline-start: px-to-rem(var(--border-width));
-      background: var(--white);
+      background: rgb(var(--white));
       width: px-to-rem(var(--handle-dimensions));
       height: px-to-rem(var(--handle-dimensions));
       border-radius: 50%;

@@ -102,8 +102,6 @@
 
   // Lists
   // --------
-  // TODO marker for li in ul? Figma style just
-  // copy paste or on purpose?
   ul,
   ol {
     margin-block: 0;
@@ -115,6 +113,12 @@
 
     li {
       margin-block: px-to-rem(var(--spacing-2xs));
+    }
+  }
+
+  ul {
+    li {
+      list-style-type: square;
     }
   }
 

@@ -93,7 +93,6 @@ const buttonLinkContent = ({
             as='span'
             html={text}
           />
-          <span className={styles.line}></span>
         </span>
       )
     }
