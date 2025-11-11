@@ -31,7 +31,7 @@ export const HomePage: CollectionConfig = {
         hidden: true,
         readOnly: true,
       },
-      defaultValue: 'Home',
+      defaultValue: 'home',
       localized: true,
       name: 'slug',
       type: 'text',
