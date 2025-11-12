@@ -35,3 +35,12 @@ img {
     }
   }
 }
+
+// Adding divider lines or reducing block padding start
+// for consecutive sections
+div:has(section[class*="dark"]) + div:has(section[class*="dark"]),
+div:has(section[class*="light"]) + div:has(section[class*="light"]) {
+  section {
+    padding-block-start: 0;
+  }
+}

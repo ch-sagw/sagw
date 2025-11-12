@@ -41,12 +41,10 @@ export const ConsentBanner = ({
   const [
     shouldShow,
     setShouldShow,
-  ] = useState<boolean | null>(null);
+  ] = useState<boolean | null>(() => shouldShowBanner());
 
   // Check consent status on client side only
   useEffect(() => {
-    setShouldShow(shouldShowBanner());
-
     // Listen for consent updates
     const handleConsentUpdate = (): void => {
       setShouldShow(shouldShowBanner());
@@ -98,7 +96,10 @@ export const ConsentBanner = ({
       dialog.classList.remove(styles.closing);
     } else {
       if (dialog.open) {
-        closeBanner();
+        // Defer closeBanner to avoid synchronous setState in effect
+        requestAnimationFrame(() => {
+          closeBanner();
+        });
       }
     }
   }, [
@@ -143,7 +144,7 @@ export const ConsentBanner = ({
   // Trap focus
   useFocusTrap({
     condition: isBannerOpen,
-    focusTrapRootElement: bannerDialogRef.current ?? undefined,
+    focusTrapRootRef: bannerDialogRef,
     ignoreElementsWithClasses: [],
   });
 

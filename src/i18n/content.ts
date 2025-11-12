@@ -30,6 +30,12 @@ export const i18nForm = {
 };
 
 export const i18nA11y = {
+  breadcrumb: {
+    de: 'Zurücknavigieren in der Seitenstruktur',
+    en: 'Navigating back in the page structure',
+    fr: 'Revenir en arrière dans la structure du site',
+    it: 'Torna indietro nella struttura delle pagine',
+  },
   closeDialog: {
     de: 'Dialog schliessen',
     en: 'Close dialog',

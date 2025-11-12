@@ -1,5 +1,9 @@
 'use client';
 
+// TODO: layout shift due to hydration issue, because server side,
+// the breakpoint returns large. when hydrated on client in small
+// or medium vieport, we get a layout shift.
+
 import {
   useEffect, useState,
 } from 'react';
@@ -38,7 +42,11 @@ export const useBreakpoint = (): BreakpointName => {
     };
 
     // Set initial value on mount
+
+    // TODO: fix this linter
+    /* eslint-disable react-hooks/set-state-in-effect */
     setBreakpoint(getCurrent());
+    /* eslint-enable react-hooks/set-state-in-effect */
 
     const mqls = Object.entries(breakpointQueries)
       .map(([

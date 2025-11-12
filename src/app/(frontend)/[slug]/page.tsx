@@ -5,8 +5,14 @@ import configPromise from '@/payload.config';
 import { Config } from '@/payload-types';
 import { RenderBlocks } from '@/app/(frontend)/RenderBlocks';
 import { getTenant } from '@/app/providers/TenantProvider.server';
+import { RenderHero } from '@/app/(frontend)/RenderHero';
 
 export const revalidate = 0;
+
+// TODO: refactor
+// - get DETAIL_PAGE_COLLECTIONS from autogeneratePagesIndex
+// - derive page types automatically
+// - find cleaner approach for heroProps definition
 
 // Define the DetailPage collections to search through
 const DETAIL_PAGE_COLLECTIONS = [
@@ -50,7 +56,7 @@ export default async function DetailPage({
         depth: 1,
         limit: 1,
         locale: language,
-        overrideAccess: false,
+        // overrideAccess: false,
         where: {
           and: [
             {
@@ -85,22 +91,25 @@ export default async function DetailPage({
   const searchResults = await Promise.allSettled(searchPromises);
 
   let pageData = null;
+  let foundCollection: (typeof DETAIL_PAGE_COLLECTIONS)[number] | null = null;
 
   // Find the first successful result with data
   for (const searchResult of searchResults) {
     if (searchResult.status === 'fulfilled' && searchResult.value.success) {
       const {
+        collection,
         result,
       } = searchResult.value;
 
       if (result && result.docs && result.docs.length > 0) {
         [pageData] = result.docs;
+        foundCollection = collection;
         break;
       }
     }
   }
 
-  if (!pageData) {
+  if (!pageData || !foundCollection) {
     return <p>No page data</p>;
   }
 
@@ -122,16 +131,32 @@ export default async function DetailPage({
 
   const [i18nData] = i18nDataDocs.docs;
 
+  // Get content blocks - some pages have content, others have blocks.content
+  let contentBlocks = null;
+
+  if ('content' in pageData && pageData.content) {
+    contentBlocks = pageData.content;
+  } else if ('blocks' in pageData && pageData.blocks && 'content' in pageData.blocks) {
+    contentBlocks = pageData.blocks.content;
+  }
+
   return (
     <Fragment>
       <main>
         <div className='detail-page'>
-          <RenderBlocks
-            blocks={pageData.content || pageData.blocks.content}
-            tenantId={tenant}
-            pageLanguage={language}
-            i18n={i18nData}
+          <RenderHero
+            foundCollection={foundCollection}
+            pageData={pageData}
+            language={language}
           />
+          {contentBlocks && (
+            <RenderBlocks
+              blocks={contentBlocks}
+              tenantId={tenant}
+              pageLanguage={language}
+              i18n={i18nData}
+            />
+          )}
         </div>
       </main>
     </Fragment>

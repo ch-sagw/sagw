@@ -2,13 +2,15 @@ import { useEffect } from 'react';
 
 interface InterfaceUseFocusTrap {
   condition: boolean;
-  focusTrapRootElement: HTMLElement | null | undefined;
+  focusTrapRootElement?: HTMLElement | null | undefined;
+  focusTrapRootRef?: React.RefObject<HTMLElement | null | undefined>;
   ignoreElementsWithClasses: string[];
 }
 
 export const useFocusTrap = ({
   condition,
   focusTrapRootElement,
+  focusTrapRootRef,
   ignoreElementsWithClasses,
 }: InterfaceUseFocusTrap): void => {
 
@@ -17,12 +19,14 @@ export const useFocusTrap = ({
       return undefined;
     }
 
-    if (!focusTrapRootElement) {
+    const rootEl = focusTrapRootElement ?? focusTrapRootRef?.current ?? null;
+
+    if (!rootEl) {
       return undefined;
     }
 
     // Get focusable elements
-    const focusableElements = focusTrapRootElement.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+    const focusableElements = rootEl.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
 
     if (focusableElements.length === 0) {
       return undefined;
@@ -56,7 +60,7 @@ export const useFocusTrap = ({
     };
 
     loopTrap.addEventListener('focus', handleLoopFocus);
-    focusTrapRootElement.appendChild(loopTrap);
+    rootEl.appendChild(loopTrap);
 
     // Keyboard trap
     const handleKeyDown = (e: KeyboardEvent): void => {
@@ -77,17 +81,18 @@ export const useFocusTrap = ({
       }
     };
 
-    focusTrapRootElement.addEventListener('keydown', handleKeyDown);
+    rootEl.addEventListener('keydown', handleKeyDown);
 
     // Cleanup
     return (): void => {
       loopTrap.removeEventListener('focus', handleLoopFocus);
-      focusTrapRootElement.removeEventListener('keydown', handleKeyDown);
+      rootEl.removeEventListener('keydown', handleKeyDown);
       loopTrap.remove();
     };
   }, [
     condition,
     focusTrapRootElement,
+    focusTrapRootRef,
     ignoreElementsWithClasses,
   ]);
 

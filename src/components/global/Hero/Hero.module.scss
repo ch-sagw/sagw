@@ -1,0 +1,177 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+
+// @use "../../../styles/utilities/utilities" as *;
+
+.hero {
+  background-color: var(--color-background);
+  padding: px-to-rem(var(--hero-big)) px-to-rem(var(--grid-margin));
+  overflow-x: hidden;
+
+  @include mq($from: large) {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: px-to-rem(var(--grid-gutter));
+  }
+
+  &.dark {
+    --color-background: var(--background-inverted);
+    --color-title: var(--text-primary-inverted);
+    --color-lead: var(--text-secondary-inverted);
+    --color-event-details: var(--text-secondary-inverted);
+    --color-side-title: var(--text-primary-inverted);
+    --color-news-date: var(--text-secondary-inverted);
+    --color-author-name: var(--text-secondary-inverted);
+    --color-author-date: var(--text-secondary-inverted);
+  }
+
+  &.light {
+    --color-background: var(--background-light);
+    --color-title: var(--text-primary);
+    --color-lead: var(--text-primary);
+    --color-event-details: var(--text-secondary);
+    --color-side-title: var(--text-primary);
+    --color-news-date: var(--text-secondary);
+    --color-author-name: var(--text-primary);
+    --color-author-date: var(--text-secondary);
+  }
+
+  &.white {
+    --color-background: var(--background-page);
+    --color-title: var(--text-primary);
+    --color-lead: var(--text-primary);
+    --color-event-details: var(--text-secondary);
+    --color-side-title: var(--text-primary);
+    --color-news-date: var(--text-secondary);
+    --color-author-name: var(--text-primary);
+    --color-author-date: var(--text-secondary);
+  }
+
+  &.magazineDetail {
+    .title {
+      @include title-heading-article;
+    }
+  }
+
+  // &.animated {}
+
+  .leftColumn {
+    @include mq($from: large) {
+      grid-column: 1 / 4;
+      margin-block-end: 0;
+    }
+
+    .breadcrumb {
+      margin-block-end: px-to-rem(var(--hero-small));
+    }
+
+    .sideTitle {
+      @include title-heading-4;
+
+      color: var(--color-side-title);
+      margin-block-end: px-to-rem(var(--hero-small));
+
+      @include mq($from: large) {
+        margin-block: px-to-rem(var(--spacing-s)) 0;
+      }
+    }
+  }
+
+  .rightColumn {
+    @include mq($from: large) {
+      grid-column: 5 / 12;
+      margin-block-end: 0;
+    }
+
+    .tag {
+      margin-block-end: px-to-rem(var(--inside-elements-m));
+
+      @include mq($from: large) {
+        margin-block-start: px-to-rem(var(--spacing-s));
+      }
+    }
+
+    .title {
+      @include title-heading-1;
+
+      color: var(--color-title);
+    }
+
+    .lead {
+      @include body-text-lead;
+
+      color: var(--color-lead);
+    }
+
+    .newsDate {
+      @include body-text-s;
+
+      color: var(--color-news-date);
+      margin-block-start: px-to-rem(var(--section-inside-s));
+    }
+
+    .eventDetails {
+      @include body-text-s;
+
+      color: var(--color-event-details);
+      margin-block: px-to-rem(var(--section-inside-s)) 0;
+    }
+
+    .magazineDetailExtras {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-block-start: px-to-rem(var(--section-inside-s));
+
+      .authorDate {
+        display: flex;
+        flex-direction: column;
+        margin-block: 0;
+
+        .author {
+          @include body-text-m;
+
+          color: var(--color-author-name);
+        }
+
+        .date {
+          @include body-text-s;
+
+          color: var(--color-author-date);
+        }
+      }
+
+      .exportButtonLarge {
+        display: none;
+
+        @include mq($from: medium) {
+          display: flex;
+        }
+      }
+
+      .exportButtonSmall {
+        display: none;
+
+        @include mq($to: medium) {
+          display: flex;
+        }
+      }
+    }
+
+    .link {
+      padding-inline: 0;
+      margin-block-start: px-to-rem(var(--section-inside-s));
+    }
+  }
+
+  @include mq($from: wide) {
+    &.titleIndent {
+      .title {
+        display: block;
+        text-indent: px-to-rem(116);
+        margin-left: calc(-1 * px-to-rem(116));
+      }
+    }
+  }
+}

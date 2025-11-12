@@ -43,7 +43,7 @@ export default meta;
 
 const legal = {
   cookieSettings: simpleRteConfig('Cookie-Einstellungen'),
-  copyright: simpleRteConfig('© Schweizerische Akademie der Geistes- und Sozialwissenschaften SAGW 2025'),
+  copyright: simpleRteConfig('Schweizerische Akademie der Geistes- und Sozialwissenschaften SAGW'),
   dataPrivacy: simpleRteConfig('Datenschutz'),
   impressum: simpleRteConfig('Impressum'),
 };

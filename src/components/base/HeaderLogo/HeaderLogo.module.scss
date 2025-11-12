@@ -17,14 +17,14 @@
 
   &.dark {
     path {
-      fill: var(--white);
+      fill: rgb(var(--white));
     }
   }
 
   &.white,
   &.light {
     path {
-      fill: var(--black);
+      fill: rgb(var(--black));
     }
   }
 }
