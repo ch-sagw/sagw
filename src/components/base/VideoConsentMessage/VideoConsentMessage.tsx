@@ -34,7 +34,7 @@ export const VideoConsentMessage = ({
         iconInlineStart={'config' as keyof typeof Icon}
         onClick={openCookieSettingsOverlay}
         ref={buttonRefOpenCookieSettings}
-        style='outlined'
+        style='text'
         text={i18nConsent.buttonTextOpenCookieSettings[pageLanguage as keyof typeof i18nConsent.buttonTextOpenCookieSettings]}
       />
     </div>
