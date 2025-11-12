@@ -1,3 +1,5 @@
+'use client';
+
 import {
   InterfaceBreadcrumbItem, InterfaceBreadcrumbPropTypes,
 } from '@/components/base/Breadcrumb/Breadcrumb';
@@ -7,7 +9,8 @@ import {
 import {
   Config,
   EventCategory,
-  InterfaceHeroField, InterfaceHeroFieldMagazineDetail, InterfaceHeroFieldNewsDetail,
+  InterfaceHeroField,
+  InterfaceHeroFieldMagazineDetail, InterfaceHeroFieldNewsDetail, InterfaceI18NGeneric,
 } from '@/payload-types';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { CollectionSlug } from 'payload';
@@ -29,10 +32,12 @@ export const RenderHero = ({
   foundCollection,
   pageData,
   language,
+  i18nGeneric,
 }: {
   foundCollection: CollectionSlug;
   pageData: PageTypes | null;
   language: Config['locale']
+  i18nGeneric: InterfaceI18NGeneric;
 }): React.JSX.Element | undefined => {
 
   if (!pageData || !foundCollection) {
@@ -169,6 +174,7 @@ export const RenderHero = ({
         {...heroProps as InterfaceHeroFieldMagazineDetail}
         pageLanguage={language}
         type='magazineDetail'
+        exportArticleText={i18nGeneric.exportArticleButtonText}
       />
     );
   } else if (heroProps && heroType === 'generic') {
