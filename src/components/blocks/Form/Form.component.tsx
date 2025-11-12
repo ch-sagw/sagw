@@ -147,7 +147,7 @@ export const FormComponent = ({
                     className={fieldClasses({
                       fieldWidth: field.fieldWidth,
                     })}
-                    key={i}
+                    key={`${field.name}-${String(state?.values?.[field.name] ?? '')}`}
                     label={rteToHtml(field.label)}
                     placeholder={field.placeholder}
                     errorText={errors[field.name]?.join(', ') || ''}
@@ -173,7 +173,7 @@ export const FormComponent = ({
                 return (
                   <Checkbox
                     autofocus={field.name === firstErrorFieldName}
-                    key={i}
+                    key={`${field.name}-${serverState ?? ''}`}
                     className={fieldClasses({
                       fieldWidth: field.fieldWidth,
                     })}
@@ -188,19 +188,29 @@ export const FormComponent = ({
               }
 
               if (field.blockType === 'radioBlock') {
+                const selectedRadioValue = String(state?.values?.[field.name] ?? '');
+
                 return (
                   <Radios
-                    key={i}
+                    key={`${field.name}-${selectedRadioValue}`}
                     className={fieldClasses({
                       fieldWidth: field.fieldWidth,
                     })}
                     colorTheme={form.colorMode}
                     name={field.name}
-                    items={field.items.map((item) => ({
-                      checked: item.defaultChecked ?? undefined,
-                      label: rte3ToHtml(item.label),
-                      value: item.value,
-                    }))}
+                    items={field.items.map((item) => {
+                      const isSelectedFromServer = selectedRadioValue
+                        ? item.value === selectedRadioValue
+                        : false;
+
+                      return ({
+                        checked: isSelectedFromServer
+                          ? true
+                          : (item.defaultChecked ?? undefined),
+                        label: rte3ToHtml(item.label),
+                        value: item.value,
+                      });
+                    })}
                     errorText={errors[field.name]?.join(', ') || ''}
                     descriptionLabel={rte3ToHtml(field.label)}
                   />

@@ -57,9 +57,21 @@ export const usePagination = ({
 
   // Ensure page stays within range
   useEffect(() => {
+    let rafId: number | null = null;
+
     if (currentPage > totalPages && totalPages > 0) {
-      setCurrentPage(totalPages);
+      const nextPage = totalPages;
+
+      rafId = window.requestAnimationFrame(() => {
+        setCurrentPage(nextPage);
+      });
     }
+
+    return (): void => {
+      if (rafId !== null) {
+        window.cancelAnimationFrame(rafId);
+      }
+    };
   }, [
     totalPages,
     currentPage,
@@ -94,9 +106,21 @@ export const usePagination = ({
   useEffect(() => {
     const pageFromUrl = Number(searchParams.get(paramName));
 
+    let rafId: number | null = null;
+
     if (pageFromUrl && pageFromUrl !== currentPage) {
-      setCurrentPage(pageFromUrl);
+      const nextPage = pageFromUrl;
+
+      rafId = window.requestAnimationFrame(() => {
+        setCurrentPage(nextPage);
+      });
     }
+
+    return (): void => {
+      if (rafId !== null) {
+        window.cancelAnimationFrame(rafId);
+      }
+    };
   }, [
     currentPage,
     searchParams,
