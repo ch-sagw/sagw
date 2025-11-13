@@ -1,4 +1,6 @@
-import { rte2 } from '@/field-templates/rte';
+import {
+  rte1, rte2,
+} from '@/field-templates/rte';
 import { Block } from 'payload';
 
 // Example: Activities
