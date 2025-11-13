@@ -1,5 +1,5 @@
 import { Block } from 'payload';
-import { rte2 } from '@/field-templates/rte';
+import { rte3 } from '@/field-templates/rte';
 
 // Example: Publication Overview Page
 
@@ -16,7 +16,7 @@ export const NotificationBlock = {
       name: 'show',
       type: 'checkbox',
     },
-    rte2({
+    rte3({
       name: 'text',
     }),
   ],

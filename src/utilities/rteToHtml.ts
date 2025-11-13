@@ -203,8 +203,8 @@ But still, payload allows to add paragraphs in lexical field. We can't disable
 it unless we build a complete custom lexical implementation on ourselves.
 
 Solution:
-- For Rte1 and Rte2, we join the paragraph nodes and therefore removing them
-completely. This is done by setting `wrap: false`.
+- For Rte1, Rte2 and Rte3, we join the paragraph nodes and therefore removing
+them completely. This is done by setting `wrap: false`.
 - For Rte4, we want paragraphs, therefore we skip the join process. This is
 done by setting `wrap: true`.
 */

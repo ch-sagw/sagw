@@ -5,8 +5,8 @@ import type {
 import { Notification } from '@/components/blocks/Notification/Notification';
 import { defaultDecorator } from '@/storybook-helpers';
 import {
-  rte2NotificationText,
-  rte2NotificationTextWithUl,
+  rte3NotificationText,
+  rte3NotificationTextWithUl,
 } from '@/utilities/rteSampleContent';
 
 type NotificationProps = React.ComponentProps<typeof Notification>;
@@ -42,7 +42,7 @@ export const SampleNotification: StrictStory = {
   args: {
     blockName: 'foo',
     blockType: 'notificationBlock',
-    text: rte2NotificationText,
+    text: rte3NotificationText,
   },
 };
 
@@ -50,6 +50,6 @@ export const SampleNotificationWithUl: StrictStory = {
   args: {
     blockName: 'foo',
     blockType: 'notificationBlock',
-    text: rte2NotificationTextWithUl,
+    text: rte3NotificationTextWithUl,
   },
 };

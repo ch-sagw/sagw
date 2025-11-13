@@ -326,9 +326,9 @@ export const sampleRte1: InterfaceRte = {
 };
 
 /*
-RTE2 Example notification
+rte3 Example notification
 */
-export const rte2NotificationText: InterfaceRte = {
+export const rte3NotificationText: InterfaceRte = {
   root: {
     children: [
       {
@@ -394,7 +394,7 @@ export const rte2NotificationText: InterfaceRte = {
   },
 };
 
-export const rte2NotificationTextWithUl: InterfaceRte = {
+export const rte3NotificationTextWithUl: InterfaceRte = {
   root: {
     children: [
       {
