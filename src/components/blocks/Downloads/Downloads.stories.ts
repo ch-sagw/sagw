@@ -81,16 +81,6 @@ export const DownloadsBlock: StrictStory = {
       },
     ],
     language: 'de',
-    optionalLink: {
-      includeLink: true,
-      link: {
-        internalLink: {
-          documentId: '12345',
-          slug: 'some-slug',
-        },
-        linkText: simpleRteConfig('Alle Downloads'),
-      },
-    },
     subtitle: simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe'),
     title: simpleRteConfig('Downloads'),
   },

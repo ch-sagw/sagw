@@ -27,14 +27,9 @@ const fieldsNetworkItem: Field[] = [
     required: true,
     type: 'upload',
   },
-  ...fieldsLinkExternal({})
-    .filter((field) => {
-      if ('name' in field && field.name === 'externalLinkText') {
-        return false;
-      }
-
-      return true;
-    }),
+  ...fieldsLinkExternal({
+    hideLinkText: true,
+  }),
 ];
 
 export const NetworkTeasersBlock = {

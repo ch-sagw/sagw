@@ -25,6 +25,7 @@ type ContentBlock = typeof contentBlocks[number];
 const uniqueBlocks: ContentBlock[] = [
   'downloadsBlock',
   'linksBlock',
+  'newsTeasersBlock',
 ];
 
 export const NewsDetailPage: CollectionConfig = {

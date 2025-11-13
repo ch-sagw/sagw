@@ -62,15 +62,19 @@ export const ProjectDetailPage: CollectionConfig = {
             {
               fields: [
                 {
-                  admin: {
-                    description: 'This text will be used for the teasers on the overview page.',
-                  },
                   ...rte1({
+                    adminDescription: 'This text will be used as text for the teasers on the overview page and in teaser blocks.',
                     name: 'teaserText',
                   }),
                 },
+                {
+                  ...rte1({
+                    adminDescription: 'This text will be used as link-text for the teasers on the overview page and in teaser blocks.',
+                    name: 'linkText',
+                  }),
+                },
               ],
-              label: 'Overview Page properties',
+              label: 'Overview Page & Teaser Block properties',
               name: 'overviewPageProps',
               type: 'group',
             },

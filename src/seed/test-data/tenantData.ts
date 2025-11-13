@@ -566,6 +566,12 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           placeholder: 'Ihre E-Mail Adresse',
         },
         includeLanguageSelection: 'yes',
+        name: {
+          fieldError: simpleRteConfig('Bitte geben Sie Ihren Namen an.'),
+          fieldWidth: 'half',
+          label: simpleRteConfig('Name'),
+          placeholder: 'Ihr Name',
+        },
       },
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: true,
@@ -807,16 +813,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
               value: zenodoDocument.id,
             },
           ],
-          optionalLink: {
-            includeLink: true,
-            link: {
-              internalLink: {
-                documentId: home.id,
-                slug: 'some-slug',
-              },
-              linkText: simpleRteConfig('Alle Downloads'),
-            },
-          },
           subtitle: simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe'),
         },
       ],
@@ -1139,6 +1135,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       },
       navigationTitle: 'National Dictionary',
       overviewPageProps: {
+        linkText: simpleRteConfig('some text'),
         teaserText: simpleRteConfig('Project Teaser Text'),
       },
       project,

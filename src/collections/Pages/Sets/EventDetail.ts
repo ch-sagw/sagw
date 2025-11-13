@@ -115,7 +115,7 @@ export const EventDetailPage: CollectionConfig = {
                       displayFormat: 'HH:mm',
                       pickerAppearance: 'timeOnly',
                       timeFormat: 'HH:mm',
-                      timeIntervals: 10,
+                      timeIntervals: 5,
                     },
                   },
                   name: 'time',

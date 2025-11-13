@@ -2,6 +2,7 @@ import 'server-only';
 import {
   I18NGlobal,
   InterfaceEmailField, Form as InterfaceForm, InterfaceFormBlock, InterfaceRadioField,
+  InterfaceTextField,
 } from '@/payload-types';
 import { FormClient } from '@/components/blocks/Form/Form.client';
 import { Fragment } from 'react';
@@ -46,6 +47,16 @@ export const FormServer = ({
     to adapt the form render logic.
   */
   if (renderForm.isNewsletterForm === 'newsletter') {
+    const nameField: InterfaceTextField = {
+      blockType: 'textBlockForm',
+      fieldError: renderForm.newsletterFields?.name.fieldError,
+      fieldWidth: 'half',
+      label: renderForm.newsletterFields?.name.label || simpleRteConfig(''),
+      name: 'name',
+      placeholder: renderForm.newsletterFields?.name.placeholder || '',
+      required: true,
+    };
+
     const emailField: InterfaceEmailField = {
       blockType: 'emailBlock',
       fieldError: renderForm.newsletterFields?.email.fieldError,
@@ -58,6 +69,7 @@ export const FormServer = ({
     };
 
     renderForm.fields?.push(emailField);
+    renderForm.fields?.push(nameField);
 
     // add language selection
 

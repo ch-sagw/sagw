@@ -1,6 +1,5 @@
 import { Block } from 'payload';
 import { rte1 } from '@/field-templates/rte';
-import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
 
 // Example: Publication Detail
 
@@ -13,7 +12,6 @@ export const DownloadsBlock = {
       name: 'subtitle',
       notRequired: true,
     }),
-    fieldsLinkInternalWithToggle({}),
     {
       defaultValue: 'custom',
       name: 'customOrAuto',

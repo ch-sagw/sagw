@@ -42,7 +42,7 @@ export const fieldsLinkExternal = (props?: InterfaceLinkProps): Field[] => {
           return 'External link is required.';
         }
 
-        const pattern = /^(?:https?:\/\/)?(?:www\.)+[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$/u;
+        const pattern = /^(?:https?:\/\/)?(?:www\.)+[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?(?:[/?#].*)?$/u;
 
         if (pattern.test(value)) {
           return true;

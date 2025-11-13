@@ -33,6 +33,7 @@ const contentBlocks = [
   'magazineTeasersBlock',
   'newsTeasersBlock',
   'publicationsTeasersBlock',
+  'editionsOverview',
 ] as const;
 
 export const OverviewPage: CollectionConfig = {

@@ -19,8 +19,10 @@ const homeTeaserItem: Field[] = [
   rte1({
     name: 'text',
   }),
+
+  // TODO: add icon names as soon as we implemented the icons
   {
-    name: 'icon',
+    name: 'iconName',
     options: [
       {
         label: 'foo',
