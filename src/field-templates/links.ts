@@ -1,5 +1,6 @@
 import { Field } from 'payload';
 import { rte1 } from './rte';
+import { fieldInternalLinkChooser } from '@/components/admin/InternalLinkChooser/InternalLinkChooserField';
 
 interface InterfaceLinkProps {
   showDescription?: boolean;
@@ -13,18 +14,10 @@ export const fieldsLinkInternal = (props?: InterfaceLinkProps): Field[] => {
       name: 'linkText',
       notRequired: props?.optional,
     }),
-    {
-      admin: {
-        components: {
-          Field: {
-            path: '@/components/admin/InternalLinkChooser/InternalLinkChooser',
-          },
-        },
-      },
+    fieldInternalLinkChooser({
       name: 'internalLink',
-      required: !props?.optional,
-      type: 'text',
-    },
+      optional: props?.optional,
+    }),
   ];
 
   if (props?.showDescription) {

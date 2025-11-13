@@ -72,7 +72,10 @@ test('allows 1 link and 1 downloads block via API', async () => {
               },
               {
                 linkInternal: {
-                  internalLink: 'https://www.foo.bar',
+                  internalLink: {
+                    documentId: '12345',
+                    slug: 'some-slug',
+                  },
                   linkText: simpleRteConfig('Artikel auf Zenodo'),
                 },
                 linkType: 'internal',
@@ -104,7 +107,10 @@ test('allows 1 link and 1 downloads block via API', async () => {
             optionalLink: {
               includeLink: true,
               link: {
-                internalLink: 'homePage/someid',
+                internalLink: {
+                  documentId: '12345',
+                  slug: 'some-slug',
+                },
                 linkText: simpleRteConfig('Alle Downloads'),
               },
             },
@@ -194,7 +200,10 @@ test('errors with 2 links and 1 downloads block via API', async () => {
               },
               {
                 linkInternal: {
-                  internalLink: 'https://www.foo.bar',
+                  internalLink: {
+                    documentId: '12345',
+                    slug: 'some-slug',
+                  },
                   linkText: simpleRteConfig('Artikel auf Zenodo'),
                 },
                 linkType: 'internal',
@@ -221,7 +230,10 @@ test('errors with 2 links and 1 downloads block via API', async () => {
               },
               {
                 linkInternal: {
-                  internalLink: 'https://www.foo.bar',
+                  internalLink: {
+                    documentId: '12345',
+                    slug: 'some-slug',
+                  },
                   linkText: simpleRteConfig('Artikel auf Zenodo'),
                 },
                 linkType: 'internal',
@@ -253,7 +265,10 @@ test('errors with 2 links and 1 downloads block via API', async () => {
             optionalLink: {
               includeLink: true,
               link: {
-                internalLink: 'homePage/someid',
+                internalLink: {
+                  documentId: '12345',
+                  slug: 'some-slug',
+                },
                 linkText: simpleRteConfig('Alle Downloads'),
               },
             },
@@ -345,7 +360,10 @@ test('errors with 1 link and 2 downloads block via API', async () => {
               },
               {
                 linkInternal: {
-                  internalLink: 'https://www.foo.bar',
+                  internalLink: {
+                    documentId: '12345',
+                    slug: 'some-slug',
+                  },
                   linkText: simpleRteConfig('Artikel auf Zenodo'),
                 },
                 linkType: 'internal',
@@ -377,7 +395,10 @@ test('errors with 1 link and 2 downloads block via API', async () => {
             optionalLink: {
               includeLink: true,
               link: {
-                internalLink: 'homePage/someid',
+                internalLink: {
+                  documentId: '12345',
+                  slug: 'some-slug',
+                },
                 linkText: simpleRteConfig('Alle Downloads'),
               },
             },
@@ -399,7 +420,10 @@ test('errors with 1 link and 2 downloads block via API', async () => {
             optionalLink: {
               includeLink: true,
               link: {
-                internalLink: 'homePage/someid',
+                internalLink: {
+                  documentId: '12345',
+                  slug: 'some-slug',
+                },
                 linkText: simpleRteConfig('Alle Downloads'),
               },
             },

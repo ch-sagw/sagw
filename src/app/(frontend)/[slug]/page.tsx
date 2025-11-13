@@ -148,6 +148,7 @@ export default async function DetailPage({
             foundCollection={foundCollection}
             pageData={pageData}
             language={language}
+            i18nGeneric={i18nData.generic}
           />
           {contentBlocks && (
             <RenderBlocks

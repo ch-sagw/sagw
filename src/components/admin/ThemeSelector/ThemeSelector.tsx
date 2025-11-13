@@ -6,7 +6,7 @@ import { themes } from '@/components/admin/ThemeSelector/Themes';
 
 import ThemeSelector from '@/components/admin/ThemeSelector/ThemeSelectorClient';
 
-const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
+const ThemeSelectorComponent = (props: UIFieldServerProps): JSX.Element => {
   const {
     path,
   } = props;
@@ -19,4 +19,4 @@ const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
   );
 };
 
-export default InternalLinkChooser;
+export default ThemeSelectorComponent;

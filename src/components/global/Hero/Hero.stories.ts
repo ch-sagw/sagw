@@ -6,6 +6,7 @@ import { Hero } from '@/components/global/Hero/Hero';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { InterfaceBreadcrumbPropTypes } from '@/components/base/Breadcrumb/Breadcrumb';
+import { homeHeroTitle } from '@/utilities/rteSampleContent';
 
 type HeroProps = React.ComponentProps<typeof Hero>;
 
@@ -50,13 +51,16 @@ export const Home: StrictStory = {
     optionalLink: {
       includeLink: true,
       link: {
-        internalLink: 'someId',
+        internalLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
         linkText: simpleRteConfig('Über uns'),
       },
     },
     pageLanguage: 'de',
     sideTitle: simpleRteConfig('Die Schweizer Akademie der Geistes- und Sozialwissenschaften'),
-    title: simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, vernetzen Akteure und vermitteln Wissen.'),
+    title: homeHeroTitle,
     type: 'home',
   },
 };

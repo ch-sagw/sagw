@@ -2,10 +2,9 @@ import { IncomingCollectionVersions } from 'node_modules/payload/dist/versions/t
 
 export const versions: IncomingCollectionVersions = {
   drafts: {
-    autosave: {
-      interval: 1000,
-    },
+    autosave: false,
     schedulePublish: false,
+    validate: false,
   },
   maxPerDoc: 50,
 };

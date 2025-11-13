@@ -53,7 +53,7 @@ test.describe('Slug field', () => {
     const slugField = await page.locator('#field-slug');
 
     await expect(slugField)
-      .toHaveValue('sample-detail-page-dollarname-uoa-hyphensupsub');
+      .toHaveValue('sample-detail-page-dollarname-ueoeae-hyphensupsub');
 
   });
 
@@ -75,7 +75,7 @@ test.describe('Slug field', () => {
 
     await saveButton.click();
 
-    const errorToast = await page.getByText('Slug "sample-detail-page-dollarname-uoa-hyphensupsub" already exists in this tenant');
+    const errorToast = await page.getByText('Slug "sample-detail-page-dollarname-ueoeae-hyphensupsub" already exists in this tenant');
 
     await expect(errorToast)
       .toBeVisible();

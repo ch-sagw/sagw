@@ -444,7 +444,9 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
             items={props.metanav.metaLinks?.map((item) => {
               if (item.linkType === 'internal') {
                 return {
-                  link: item.linkInternal?.internalLink || '',
+
+                  // TODO: generate url
+                  link: item.linkInternal?.internalLink.slug || '',
                   target: '_self',
                   text: rteToHtml(item.linkInternal?.linkText),
                 };
@@ -531,7 +533,9 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
             items: item.subNavItems.map((subnavItem) => ({
               colorMode: props.colorMode,
               footer: false,
-              link: subnavItem.navItemLink || '',
+
+              // TODO: generate url
+              link: subnavItem.navItemLink?.slug || '',
               pageLanguage: props.currentLang,
               text: rteToHtml(subnavItem.navItemText),
             })),
@@ -544,7 +548,9 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
         return {
           colorMode: props.colorMode,
           footer: false,
-          link: item.navItemLink || '',
+
+          // TODO: generate url
+          link: item.navItemLink?.slug || '',
           pageLanguage: props.currentLang,
           text: rteToHtml(item.navItemText),
         };

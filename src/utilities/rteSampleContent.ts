@@ -1,5 +1,249 @@
 import { InterfaceRte } from '@/components/base/types/rte';
 
+export const homeHeroTitle: InterfaceRte = {
+  root: {
+
+    children: [
+
+      {
+
+        children: [
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Wir fördern lang',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'frist',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'ige Forsch',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'ungs',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'in',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'fra',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'struk',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'tur',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'en, ver',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'netzen Akt',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'eure und ver',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'mitt',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'eln Wi',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'ssen.',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        textFormat: 0,
+        textStyle: '',
+        type: 'paragraph',
+        version: 1,
+      },
+    ],
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+};
+
 export const sampleRte1: InterfaceRte = {
   root: {
     children: [

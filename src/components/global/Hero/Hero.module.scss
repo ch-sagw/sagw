@@ -48,12 +48,6 @@
     --color-author-date: var(--text-secondary);
   }
 
-  &.magazineDetail {
-    .title {
-      @include title-heading-article;
-    }
-  }
-
   // &.animated {}
 
   .leftColumn {
@@ -170,8 +164,13 @@
       .title {
         display: block;
         text-indent: px-to-rem(116);
-        margin-left: calc(-1 * px-to-rem(116));
       }
+    }
+  }
+
+  &.magazineDetail {
+    .title {
+      @include title-heading-article;
     }
   }
 }

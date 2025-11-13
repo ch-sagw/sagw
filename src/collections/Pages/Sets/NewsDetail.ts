@@ -1,20 +1,14 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHeroNewsDetail } from '@/field-templates/hero';
-import { fieldLinkablePage } from '@/field-templates/linkablePage';
-import { hookAdminTitle } from '@/hooks-payload/adminTitle';
-import {
-  fieldAdminTitle, fieldAdminTitleFieldName,
-} from '@/field-templates/adminTitle';
-import { hookSeoFallback } from '@/hooks-payload/seoFallback';
+import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
-import { hookFormsBlockOnCreate } from '@/hooks-payload/formsBlockOnCreate';
-import { fieldSlug } from '@/field-templates/slug';
-import { hookSlug } from '@/hooks-payload/slug';
 import { rte1 } from '@/field-templates/rte';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
+import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
+import { genericPageFields } from '@/field-templates/genericPageFields';
 
 const contentBlocks = [
   'textBlock',
@@ -48,9 +42,7 @@ export const NewsDetailPage: CollectionConfig = {
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
-    fieldLinkablePage,
-    fieldAdminTitle,
-    fieldSlug,
+    ...genericPageFields(),
     {
       tabs: [
 
@@ -110,14 +102,7 @@ export const NewsDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: {
-    beforeChange: [hookSeoFallback],
-    beforeValidate: [
-      hookAdminTitle,
-      hookFormsBlockOnCreate,
-      hookSlug,
-    ],
-  },
+  hooks: genericPageHooks(),
   labels: {
     plural: 'News Detail Pages',
     singular: 'News Detail',

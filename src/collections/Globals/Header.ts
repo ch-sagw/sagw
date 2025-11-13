@@ -7,22 +7,16 @@ import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 import { rte1 } from '@/field-templates/rte';
+import { fieldInternalLinkChooser } from '@/components/admin/InternalLinkChooser/InternalLinkChooserField';
 
 const navLinkDefaultFields: Field[] = [
   rte1({
     name: 'navItemText',
   }),
-  {
-    admin: {
-      components: {
-        Field: {
-          path: '@/components/admin/InternalLinkChooser/InternalLinkChooser',
-        },
-      },
-    },
+  fieldInternalLinkChooser({
     name: 'navItemLink',
-    type: 'text',
-  },
+    optional: true,
+  }),
 ];
 
 const navLinkLevel1: Field[] = [
