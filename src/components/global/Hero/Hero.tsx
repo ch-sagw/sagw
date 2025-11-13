@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/global/Hero/Hero.module.scss';

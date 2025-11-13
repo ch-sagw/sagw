@@ -7,9 +7,10 @@ import {
 } from '@/field-templates/adminTitle';
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
-import { fieldNavigationTitle } from '@/field-templates/navigationTitle';
 import { hookCascadeBreadcrumbUpdates } from '@/hooks-payload/cascadeBreadcrumbUpdates';
 import { hookGenerateBreadcrumbs } from '@/hooks-payload/generateBreadcrumbs';
+import { fieldNavigationTitleFieldName } from '@/field-templates/navigationTitle';
+import { i18nNavigation } from '@/i18n/content';
 
 export const HomePage: CollectionConfig = {
   access: {
@@ -25,7 +26,21 @@ export const HomePage: CollectionConfig = {
   fields: [
     fieldLinkablePage,
     fieldAdminTitleDefaultValue('Home Page'),
-    fieldNavigationTitle,
+    {
+      admin: {
+        hidden: true,
+        readOnly: true,
+      },
+      defaultValue: ({
+        locale,
+      }) => (locale
+        ? i18nNavigation.navigationTitleTranslations[locale]
+        : 'Home'),
+      localized: true,
+      name: fieldNavigationTitleFieldName,
+      required: true,
+      type: 'text',
+    },
     {
       admin: {
         hidden: true,

@@ -223,10 +223,7 @@ export interface HomePage {
   tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
-  /**
-   * Used as the title in the breadcrumb.
-   */
-  navigationTitle?: string | null;
+  navigationTitle: string;
   slug?: string | null;
   hero: InterfaceHeroFieldHome;
   content?:
