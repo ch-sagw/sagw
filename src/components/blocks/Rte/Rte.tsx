@@ -3,7 +3,7 @@ import { cva } from 'cva';
 import styles from '@/components/blocks/Rte/Rte.module.scss';
 import { InterfaceRte } from '@/components/base/types/rte';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
-import { rte3ToHtml } from '@/utilities/rteToHtml';
+import { rte4ToHtml } from '@/utilities/rteToHtml';
 import { ColorMode } from '@/components/base/types/colorMode';
 
 // We explicitly don't take InterfaceTextBlock, since we want explicit
@@ -46,7 +46,7 @@ export const Rte = ({
     } >
       <SafeHtml
         as='div'
-        html={rte3ToHtml(text)}
+        html={rte4ToHtml(text)}
       />
     </div >
   );

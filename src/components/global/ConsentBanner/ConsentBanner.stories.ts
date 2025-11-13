@@ -5,7 +5,7 @@ import type {
 import { ConsentBanner } from '@/components/global/ConsentBanner/ConsentBanner';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
-import { rte3ConsentBannerText } from '@/utilities/rteSampleContent';
+import { rte4ConsentBannerText } from '@/utilities/rteSampleContent';
 
 type ConsentBannerProps = React.ComponentProps<typeof ConsentBanner>;
 
@@ -31,7 +31,7 @@ export const DefaultBanner: StrictStory = {
     buttonAcceptAll: simpleRteConfig('Alle zulassen'),
     buttonCustomizeSelection: simpleRteConfig('Auswahl anpassen'),
     buttonDeclineAll: simpleRteConfig('Alle ablehnen'),
-    text: rte3ConsentBannerText('6901e41a205ce36d381c77e2'),
+    text: rte4ConsentBannerText('6901e41a205ce36d381c77e2'),
     title: simpleRteConfig('Diese Webseite verwendet Cookies'),
   },
 };

@@ -4,7 +4,7 @@ import { Payload } from 'payload';
 
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
-  rte3ConsentBannerText, rte3FullRange,
+  rte4ConsentBannerText, rte4FullRange,
 } from '@/utilities/rteSampleContent';
 import { tenantRoles } from '@/collections/Plc/Users/roles';
 
@@ -644,11 +644,11 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         },
         {
           blockType: 'textBlock',
-          text: rte3FullRange,
+          text: rte4FullRange,
         },
         {
           blockType: 'textBlock',
-          text: rte3FullRange,
+          text: rte4FullRange,
         },
         // {
         //   accordions: [
@@ -1154,7 +1154,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         buttonAcceptAll: simpleRteConfig('Alle zulassen'),
         buttonCustomizeSelection: simpleRteConfig('Auswahl anpassen'),
         buttonDeclineAll: simpleRteConfig('Alle ablehnen'),
-        text: rte3ConsentBannerText(home.id),
+        text: rte4ConsentBannerText(home.id),
         title: simpleRteConfig('Diese Webseite verwendet Cookies'),
       },
       overlay: {

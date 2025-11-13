@@ -1,5 +1,5 @@
 import { Block } from 'payload';
-import { rte3 } from '@/field-templates/rte';
+import { rte4 } from '@/field-templates/rte';
 
 // Example: Magazine Detail
 
@@ -8,7 +8,7 @@ export const TextBlock = {
     disableBlockName: true,
   },
   fields: [
-    rte3({
+    rte4({
       name: 'text',
     }),
   ],

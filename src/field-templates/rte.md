@@ -18,5 +18,6 @@ RTE3: (ehemals RTE2)
 - links
 
 RTE4: (ehemals RTE3)
-- RTE3 (ausser soft hyphen)
+- RTE3
+- soft hyphen
 - headings

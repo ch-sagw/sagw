@@ -97,7 +97,7 @@ const rte2Editor = lexicalEditor({
   ],
 });
 
-const rte3Editor = lexicalEditor({
+const rte4Editor = lexicalEditor({
   features: [
     FixedToolbarFeature(),
     BoldFeature(),
@@ -180,10 +180,10 @@ export const rte2 = ({
   notRequired,
 });
 
-export const rte3 = ({
+export const rte4 = ({
   name, notRequired,
 }: InterfaceRteInputType): RichTextField => rte({
-  editor: rte3Editor,
+  editor: rte4Editor,
   name,
   notRequired,
 });

@@ -196,7 +196,7 @@ const rteToHtmlBase = ({
 };
 
 /*
-Requirement: Rte3 is the only rte config which allows true paragraphing.
+Requirement: Rte4 is the only rte config which allows true paragraphing.
 
 Problem: e.g. input label text is rte1. Paragraphs don't make sense there.
 But still, payload allows to add paragraphs in lexical field. We can't disable
@@ -205,7 +205,7 @@ it unless we build a complete custom lexical implementation on ourselves.
 Solution:
 - For Rte1 and Rte2, we join the paragraph nodes and therefore removing them
 completely. This is done by setting `wrap: false`.
-- For Rte3, we want paragraphs, therefore we skip the join process. This is
+- For Rte4, we want paragraphs, therefore we skip the join process. This is
 done by setting `wrap: true`.
 */
 
@@ -214,7 +214,7 @@ export const rteToHtml = (content: InterfaceRte | undefined | null): string => r
   wrap: false,
 });
 
-export const rte3ToHtml = (content: InterfaceRte | undefined | null): string => rteToHtmlBase({
+export const rte4ToHtml = (content: InterfaceRte | undefined | null): string => rteToHtmlBase({
   content,
   wrap: true,
 });
