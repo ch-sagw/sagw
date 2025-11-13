@@ -1,14 +1,16 @@
-RTE1:
+# Richtext configurations
+
+## RTE1
 - subscript
 - superscript
 - soft hyphen
 - non-breaking space
 
-RTE2: (neu)
+## RTE2
 - RTE1
 - Italic
 
-RTE3: (ehemals RTE2)
+## RTE3
 - RTE2 (ausser soft hyphen)
 - bold
 - underline
@@ -17,7 +19,7 @@ RTE3: (ehemals RTE2)
 - ordered list
 - links
 
-RTE4: (ehemals RTE3)
+## RTE4
 - RTE3
 - soft hyphen
 - headings
