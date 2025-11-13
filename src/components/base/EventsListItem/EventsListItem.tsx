@@ -2,12 +2,12 @@ import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/EventsListItem/EventsListItem.module.scss';
 import { Icon } from '@/icons';
-import {
-  formatDateRangeToReadableString, formatDateToObject,
-} from '@/components/helpers/date';
+import { formatDateToObject } from '@/components/helpers/date';
 import { Tag } from '@/components/base/Tag/Tag';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { i18nA11y as internalI18nA11y } from '@/i18n/content';
+import { formatEventDetails } from '@/components/base/EventsListItem/helpers';
+import { Config } from '@/payload-types';
 
 export type InterfaceEventsListItemPropTypes = {
   text: string;
@@ -15,7 +15,7 @@ export type InterfaceEventsListItemPropTypes = {
     target: '_self' | '_blank';
     href: string;
   };
-  pageLanguage: string;
+  pageLanguage: Config['locale'];
   dateStart: string;
   dateEnd?: string;
   location?: string;
@@ -43,24 +43,14 @@ export const EventsListItem = ({
   ]);
 
   // Date - Time - Location - Language
-
-  let subtitle = formatDateRangeToReadableString({
-    endString: dateEnd || dateStart,
-    locale: pageLanguage,
-    startString: dateStart,
+  const subtitle = formatEventDetails({
+    dateEnd,
+    dateStart,
+    eventLocation: location,
+    language,
+    pageLanguage,
+    time,
   });
-
-  if (time) {
-    subtitle += ` — ${time}`;
-  }
-
-  if (location) {
-    subtitle += ` — ${location}`;
-  }
-
-  if (language) {
-    subtitle += ` — ${language}`;
-  }
 
   const startDateObject = formatDateToObject({
     dateString: dateStart,

@@ -60,6 +60,13 @@
   line-height: 1.2;
 }
 
+@mixin label-text-large {
+  font-family: var(--font-family-text);
+  font-weight: var(--font-weight-medium);
+  font-size: px-to-rem(var(--body-text-m-size));
+  line-height: 1.2;
+}
+
 @mixin navigation-text {
   font-family: var(--font-family-text);
   font-size: px-to-rem(var(--navigation-text-size));
