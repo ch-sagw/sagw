@@ -44,6 +44,7 @@
     "orphaned:screenshots": "tsx ./src/automated-testing/orphanedScreenshots.ts"
   },
   "dependencies": {
+    "@gumlet/react-embed-player": "^2.0.19",
     "@payloadcms/db-mongodb": "^3.60.0",
     "@payloadcms/email-resend": "^3.60.0",
     "@payloadcms/next": "^3.60.0",

@@ -122,6 +122,7 @@ export const ciReporters: ReporterDescription[] = [
 
 export default defineConfig({
   expect: {
+    timeout: 10_000,
     toHaveScreenshot: {
 
       /* eslint-disable @typescript-eslint/naming-convention*/

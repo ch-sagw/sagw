@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html.no-js {
+  --initial-image-opacity: 0;
+}
+
 body {
   @include body-text-s;
 

@@ -198,7 +198,23 @@ export default async function RootLayout({
     : true;
 
   return (
-    <html className='theme-sagw' lang='en'>
+    <html
+      className='theme-sagw no-js'
+      lang='en'
+    >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            __html: `
+              (function() {
+                var doc = document.documentElement;
+                doc.className = doc.className.replace(/\\bno-js\\b/, '') + ' js';
+              })();
+            `,
+          }}
+        />
+      </head>
       <body>
 
         <Header
