@@ -58,6 +58,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
   const metanavRef = useRef<HTMLDivElement>(null);
+  const focusRegionRef = useRef<HTMLDivElement>(null);
 
   // --- State
 
@@ -125,7 +126,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   // --- Hooks
   useFocusTrap({
     condition: mobileMenuOpen,
-    focusTrapRootElement: headerRef.current?.querySelector<HTMLDivElement>('[data-header="focus-region"]'),
+    focusTrapRootRef: focusRegionRef,
     ignoreElementsWithClasses: [styles.logo],
   });
 
@@ -636,7 +637,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     >
 
       {smallBreakpoint &&
-        <div data-header='focus-region'>
+        <div data-header='focus-region' ref={focusRegionRef}>
           <div className={styles.logoWrapper}>
             {headerLogoRender()}
             {menuButtonRender()}
