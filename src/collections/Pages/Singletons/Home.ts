@@ -38,7 +38,7 @@ export const HomePage: CollectionConfig = {
         : 'Home'),
       localized: true,
       name: fieldNavigationTitleFieldName,
-      required: true,
+      required: false,
       type: 'text',
     },
     {

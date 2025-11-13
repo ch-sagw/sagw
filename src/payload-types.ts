@@ -223,7 +223,7 @@ export interface HomePage {
   tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
-  navigationTitle: string;
+  navigationTitle?: string | null;
   slug?: string | null;
   hero: InterfaceHeroFieldHome;
   content?:
