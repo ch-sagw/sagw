@@ -1,5 +1,7 @@
 import { Field } from 'payload';
-import { rte1 } from './rte';
+import {
+  rte1, rte2,
+} from './rte';
 import { fieldInternalLinkChooser } from '@/components/admin/InternalLinkChooser/InternalLinkChooserField';
 
 interface InterfaceLinkProps {
@@ -10,7 +12,7 @@ interface InterfaceLinkProps {
 
 export const fieldsLinkInternal = (props?: InterfaceLinkProps): Field[] => {
   const linkFields: Field[] = [
-    rte1({
+    rte2({
       name: 'linkText',
       notRequired: props?.optional,
     }),
@@ -21,7 +23,7 @@ export const fieldsLinkInternal = (props?: InterfaceLinkProps): Field[] => {
   ];
 
   if (props?.showDescription) {
-    linkFields.unshift(rte1({
+    linkFields.unshift(rte2({
       name: 'description',
       notRequired: true,
     }));
@@ -54,13 +56,13 @@ export const fieldsLinkExternal = (props?: InterfaceLinkProps): Field[] => {
   ];
 
   if (!props?.hideLinkText) {
-    linkFields.unshift(rte1({
+    linkFields.unshift(rte2({
       name: 'externalLinkText',
     }));
   }
 
   if (props?.showDescription) {
-    linkFields.unshift(rte1({
+    linkFields.unshift(rte2({
       name: 'description',
       notRequired: true,
     }));

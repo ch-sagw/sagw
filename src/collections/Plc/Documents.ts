@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload';
-import { rte1 } from '@/field-templates/rte';
+import { rte2 } from '@/field-templates/rte';
 
 export const Documents: CollectionConfig = {
   access: {
@@ -10,7 +10,7 @@ export const Documents: CollectionConfig = {
     group: 'Assets',
   },
   fields: [
-    rte1({
+    rte2({
       name: 'title',
     }),
     {

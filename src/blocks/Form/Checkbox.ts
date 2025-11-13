@@ -3,7 +3,7 @@ import { Block } from 'payload';
 import {
   formFieldCheckbox, formFieldError, formFieldName, formFieldWidth,
 } from '@/blocks/Form/DefaultFields';
-import { rte4 } from '@/field-templates/rte';
+import { rte3 } from '@/field-templates/rte';
 
 // Only available on forms block
 
@@ -13,7 +13,7 @@ export const checkboxBlock = (): Block => ({
   },
   fields: [
     formFieldName,
-    rte4({
+    rte3({
       name: 'label',
     }),
     {

@@ -1,4 +1,6 @@
-import { rte1 } from '@/field-templates/rte';
+import {
+  rte1, rte2,
+} from '@/field-templates/rte';
 import { Block } from 'payload';
 
 // Example: Magazine Detail
@@ -32,7 +34,7 @@ export const VideoBlock = {
       required: false,
       type: 'relationship',
     },
-    rte1({
+    rte2({
       name: 'caption',
       notRequired: true,
     }),

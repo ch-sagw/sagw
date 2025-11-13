@@ -5,7 +5,7 @@ import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superAdminOrTenantAdmin';
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
-import { rte1 } from '@/field-templates/rte';
+import { rte2 } from '@/field-templates/rte';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
@@ -61,7 +61,7 @@ export const MagazineDetailPage: CollectionConfig = {
                   admin: {
                     description: 'This text will be used as text for the teasers on the overview page.',
                   },
-                  ...rte1({
+                  ...rte2({
                     name: 'teaserText',
                   }),
                 },

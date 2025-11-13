@@ -1,7 +1,9 @@
 import {
   Field, GroupField,
 } from 'payload';
-import { rte1 } from '@/field-templates/rte';
+import {
+  rte1, rte2,
+} from '@/field-templates/rte';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
 
@@ -11,11 +13,11 @@ const colorMode = fieldsColorMode({
   white: true,
 });
 
-const titleField = rte1({
+const titleField = rte2({
   name: 'title',
 });
 
-const leadField: Field = rte1({
+const leadField: Field = rte2({
   name: 'lead',
   notRequired: true,
 });

@@ -1,5 +1,5 @@
 import { Block } from 'payload';
-import { rte1 } from '@/field-templates/rte';
+import { rte2 } from '@/field-templates/rte';
 
 // Example: Publication Detail
 
@@ -8,7 +8,7 @@ export const DownloadsBlock = {
     disableBlockName: true,
   },
   fields: [
-    rte1({
+    rte2({
       name: 'subtitle',
       notRequired: true,
     }),

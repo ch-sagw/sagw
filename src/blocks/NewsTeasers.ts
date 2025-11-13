@@ -1,4 +1,4 @@
-import { rte1 } from '@/field-templates/rte';
+import { rte2 } from '@/field-templates/rte';
 import { Block } from 'payload';
 
 // Example: Activities
@@ -30,7 +30,7 @@ export const NewsTeasersBlock = {
       type: 'radio',
     },
     {
-      ...rte1({
+      ...rte2({
         adminCondition: (_, siblingData): boolean => siblingData.link === 'yes',
         name: 'linkText',
       }),
