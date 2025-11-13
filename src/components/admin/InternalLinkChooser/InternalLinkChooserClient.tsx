@@ -148,8 +148,17 @@ const InternalLinkChooserClient = ({
 
   useEffect(() => {
 
-    const loadOptions = async (tenant: string): Promise<void> => {
+    const loadOptions = async (tenant: string | null): Promise<void> => {
       setLoading(true);
+
+      if (!tenant || !collectionSlug) {
+        // If no tenant is selected, set loading to false and options to empty
+        setOptions([]);
+        setLoading(false);
+
+        return;
+      }
+
       const opts = await fetchPages({
         collectionSlug,
         currentId,
@@ -158,22 +167,14 @@ const InternalLinkChooserClient = ({
       });
 
       setOptions([...opts]);
-
       setLoading(false);
     };
 
     const selectedTenantID = tenantContext?.selectedTenantID;
 
-    if (selectedTenantID && collectionSlug) {
-      /* eslint-disable @typescript-eslint/no-floating-promises */
-      loadOptions(selectedTenantID as string);
-      /* eslint-enable @typescript-eslint/no-floating-promises */
-
-    } else {
-      // If no tenant is selected, set loading to false and options to empty
-      setLoading(false);
-      setOptions([]);
-    }
+    /* eslint-disable @typescript-eslint/no-floating-promises */
+    loadOptions(selectedTenantID as string | null);
+    /* eslint-enable @typescript-eslint/no-floating-promises */
   }, [
     collectionSlug,
     currentId,
