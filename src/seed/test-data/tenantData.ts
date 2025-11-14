@@ -17,9 +17,12 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
   const {
     payload,
-    tenant,
     tenantId,
   } = props;
+
+  const uppercaseTenant = props.tenant;
+
+  const tenant = uppercaseTenant.toLowerCase();
 
   // ############
   // Assets
