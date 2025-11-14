@@ -1,27 +1,26 @@
 import React from 'react';
-import styles from '@/components/base/PublicationTeaserItem/PublicationTeaserItem.module.scss';
+import styles from '@/components/base/PublicationsListItem/PublicationsListItem.module.scss';
 import { formatDateToReadableString } from '@/components/helpers/date';
 import { Tag } from '@/components/base/Tag/Tag';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 
-export type InterfacePublicationTeaserItemPropTypes = {
+export type InterfacePublicationsListItemPropTypes = {
   date: string,
-  image: string,
   tag?: string,
-  text: string,
+  title: string,
   link: {
     href: string,
   },
   pageLanguage: string,
 }
 
-export const PublicationTeaserItem = ({
+export const PublicationsListItem = ({
   date,
   link,
   pageLanguage,
   tag,
-  text,
-}: InterfacePublicationTeaserItemPropTypes): React.JSX.Element => {
+  title,
+}: InterfacePublicationsListItemPropTypes): React.JSX.Element => {
   const publicationDate = formatDateToReadableString({
     dateString: date,
     locale: pageLanguage,
@@ -31,7 +30,7 @@ export const PublicationTeaserItem = ({
 
   return (
     <li
-      className={styles.publicationTeaserItem}
+      className={styles.publicationsListItem}
     >
       <a
         aria-label={ariaLabel}
@@ -51,7 +50,7 @@ export const PublicationTeaserItem = ({
           <SafeHtml
             as='span'
             className={styles.textContentTitle}
-            html={text}
+            html={title}
           />
 
           <span className={styles.textContentDate}>

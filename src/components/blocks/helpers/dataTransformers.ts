@@ -1,14 +1,52 @@
+import { InterfacePublicationsListItemPropTypes } from '@/components/base/PublicationsListItem/PublicationsListItem';
 import { InterfaceEventsListItemPropTypes } from '@/components/base/EventsListItem/EventsListItem';
 import { InterfaceNewsListItemPropTypes } from '@/components/base/NewsListItem/NewsListItem';
 import {
   formatDateToReadableString, formatTime,
 } from '@/components/helpers/date';
 import {
-  Config, EventCategory, EventDetailPage, I18NGlobal, NewsDetailPage,
+  Config,
+  EventCategory,
+  EventDetailPage,
+  I18NGlobal,
+  NewsDetailPage,
+  PublicationDetailPage,
+  PublicationType,
 } from '@/payload-types';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { PaginatedDocs } from 'payload';
+
+export const convertPayloadPublicationPagesToFeItems = (payloadPages: PaginatedDocs<PublicationDetailPage>, lang: Config['locale']): InterfacePublicationsListItemPropTypes[] => {
+  const items = payloadPages.docs.map((publicationsPage) => {
+    let category;
+
+    if (publicationsPage.categorization?.type) {
+      category = publicationsPage.categorization.type as PublicationType;
+    }
+
+    const returnPublicationPage: InterfacePublicationsListItemPropTypes = {
+      date: formatDateToReadableString({
+        dateString: publicationsPage.overviewPageProps.date,
+        locale: lang,
+      }),
+      link: {
+        href: publicationsPage.slug || '',
+      },
+      pageLanguage: lang,
+      tag: category
+        ? rteToHtml(category.publicationType)
+        : undefined,
+
+      title: rteToHtml(publicationsPage.hero.title),
+    };
+
+    return returnPublicationPage;
+
+  });
+
+  return items;
+};
 
 export const convertPayloadNewsPagesToFeItems = (payloadPages: PaginatedDocs<NewsDetailPage>, lang: Config['locale']): InterfaceNewsListItemPropTypes[] => {
   const items = payloadPages.docs.map((newsPage) => {

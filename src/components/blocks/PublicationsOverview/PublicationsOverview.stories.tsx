@@ -3,7 +3,7 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import { PublicationsOverview } from '@/components/blocks/PublicationsOverview/PublicationsOverview';
-import { PublicationTeaserItem } from '@/components/base/PublicationTeaserItem/PublicationTeaserItem';
+import { PublicationsListItem } from '@/components/base/PublicationsListItem/PublicationsListItem';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 
 type PublicationsOverviewProps = React.ComponentProps<typeof PublicationsOverview>;
@@ -17,6 +17,7 @@ const meta: Meta<typeof PublicationsOverview> = {
   component: PublicationsOverview,
   decorators: [defaultDecoratorNoPadding],
   parameters: {
+    layout: 'fullscreen',
     nextjs: {
       appDirectory: true,
     },
@@ -36,20 +37,16 @@ export const Overview: StrictStory = {
     children: Array.from({
       length: 25,
     }, (_, index) => (
-      <PublicationTeaserItem
+      <PublicationsListItem
         date='2025-10-24T12:00:00.000Z'
-        image=''
         key={`event-${index}`}
         link={{
           href: 'https://foo.bar',
         }}
         pageLanguage='de'
         tag='Bulletin'
-        text='Das Paradox von sozialer Integration und Ausschluss im Schweizer Bildungswesen. Beiträge der Soziologie'
+        title='Das Paradox von sozialer Integration und Ausschluss im Schweizer Bildungswesen. Beiträge der Soziologie'
       />
     )),
-    colorMode: 'white',
-    paginationTitle: 'Pagination',
-    title: 'Publikationen',
   },
 };

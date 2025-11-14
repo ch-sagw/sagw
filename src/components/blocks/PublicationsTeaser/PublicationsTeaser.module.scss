@@ -1,7 +1,9 @@
-.baseStyle {
-  text-decoration: underline;
-}
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/mixins/mixins-shared-styles" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
 
-.sampleContextStyle {
-  border: 1px solid black;
+.publicationsList {
+  @include publication-list;
 }

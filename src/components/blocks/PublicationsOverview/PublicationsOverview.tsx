@@ -1,82 +1,53 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
-'use client';
-
-import React, { useRef } from 'react';
-import styles from '@/components/blocks/PublicationsOverview/PublicationsOverview.module.scss';
-import { Pagination } from '@/components/base/Pagination/Pagination';
-import { ColorMode } from '@/components/base/types/colorMode';
-import { Section } from '@/components/base/Section/Section';
-import { FilterList } from '@/components/base/FilterList/FilterList';
-import { PublicationOverviewFilters } from '@/components/base/FilterList/FilterList.stories';
-import { Notification } from '@/components/base/Notification/Notification';
-import { usePagination } from '@/hooks/usePagination';
+import React, { Fragment } from 'react';
+import { getPayload } from 'payload';
+import configPromise from '@/payload.config';
 import { rteToHtml } from '@/utilities/rteToHtml';
+import {
+  Config,
+  InterfacePublicationsOverviewBlock,
+} from '@/payload-types';
+import { PublicationsTeaserComponent } from '@/components/blocks/PublicationsTeaser/PublicationsTeaser.component';
+import { convertPayloadPublicationPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
 
-export type InterfacePublicationsOverviewPropTypes = {
-  children: React.ReactNode;
-  title: string;
-  colorMode: ColorMode;
-  paginationTitle: string;
-}
+export type InterfacePublicationsTeaserPropTypes = {
+  language: Config['locale'];
+  tenant: string;
+} & InterfacePublicationsOverviewBlock;
 
-export const PublicationsOverview = (props: InterfacePublicationsOverviewPropTypes): React.JSX.Element => {
-  const {
-    title,
-    colorMode,
-    children,
-  } = props;
-
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const listRef = useRef<HTMLOListElement | null>(null);
-  const userPaginatedRef = useRef(false);
-
-  const {
-    currentPage,
-    totalPages,
-    currentItems,
-    handlePageChange,
-  } = usePagination({
-    items: children,
-    listRef,
-    sectionRef,
-    userPaginatedRef,
+export const PublicationsOverview = async (props: InterfacePublicationsTeaserPropTypes): Promise<React.JSX.Element> => {
+  const payload = await getPayload({
+    config: configPromise,
   });
 
+  // Get publications data
+  const publicationPages = await payload.find({
+    collection: 'publicationDetailPage',
+    depth: 1,
+    limit: 0,
+    locale: props.language,
+    overrideAccess: false,
+    pagination: false,
+    sort: '-overviewPageProps.date',
+    where: {
+      tenant: {
+        equals: props.tenant,
+      },
+    },
+  });
+
+  const title = rteToHtml(props.title);
+
+  const items = convertPayloadPublicationPagesToFeItems(publicationPages, props.language);
+
+  if (!items || items.length < 1) {
+    return <Fragment></Fragment>;
+  }
+
   return (
-    <Section
-      ref={sectionRef}
-      className={styles.eventsNewsOverview}
-      filterListItems={PublicationOverviewFilters.args.filterListItems}
-      showTopLine={false}
+    <PublicationsTeaserComponent
       title={title}
-      colorMode={colorMode}
-    >
-      <Notification
-        actionText={undefined}
-        className={styles.notification}
-        colorMode={colorMode}
-        hideIcon={true}
-        onAction={undefined}
-        text='test'
-        title='test'
-        type='success'
-      />
-
-      <ol
-        className={styles.publicationsList}
-        ref={listRef}
-      >
-        {currentItems}
-      </ol>
-
-      <Pagination
-        className={styles.pagination}
-        totalPages={totalPages}
-        currentPage={currentPage}
-        paginationTitle={props.paginationTitle}
-        onPageChange={handlePageChange}
-      />
-    </Section>
+      items={items}
+      pageLanguage={props.language}
+    />
   );
 };
