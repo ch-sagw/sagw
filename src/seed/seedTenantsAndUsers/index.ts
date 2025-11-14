@@ -15,11 +15,11 @@ export const seedTenantsAndUsers = async (props: InterfaceSeedTenantsAndUsers): 
     payload: props.payload,
     tenants: [
       {
-        name: 'sagw',
+        name: 'SAGW',
         slug: 'sagw',
       },
       {
-        name: 'not-sagw',
+        name: 'NOT-SAGW',
         slug: 'not-sagw',
       },
     ],
@@ -29,8 +29,8 @@ export const seedTenantsAndUsers = async (props: InterfaceSeedTenantsAndUsers): 
     return [];
   }
 
-  const sagwTenant = tenants?.filter((tenant) => tenant.name === 'sagw');
-  const notSagwTenant = tenants?.filter((tenant) => tenant.name === 'not-sagw');
+  const sagwTenant = tenants?.filter((tenant) => tenant.slug === 'sagw');
+  const notSagwTenant = tenants?.filter((tenant) => tenant.slug === 'not-sagw');
 
   if (!(sagwTenant && sagwTenant.length === 1) || !(notSagwTenant && notSagwTenant.length === 1)) {
     return [];

@@ -36,8 +36,8 @@ export const seedTestData = async (payload: Payload): Promise<void> => {
       return;
     }
 
-    const tenantSagw = tenants.filter((tenant) => tenant.name === 'sagw');
-    const tenantNotSagw = tenants.filter((tenant) => tenant.name === 'not-sagw');
+    const tenantSagw = tenants.filter((tenant) => tenant.slug === 'sagw');
+    const tenantNotSagw = tenants.filter((tenant) => tenant.slug === 'not-sagw');
 
     if (!(tenantSagw && tenantSagw.length === 1) || !(tenantNotSagw && tenantNotSagw.length === 1)) {
       payload.logger.error('seed test data: error seeding test data');
