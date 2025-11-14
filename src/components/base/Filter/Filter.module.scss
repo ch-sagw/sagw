@@ -130,6 +130,8 @@
 
   position: relative;
   display: inline-block;
+  max-width: 100%;
+  min-width: 0;
 
   .filterSelect {
     z-index: 1;
@@ -241,5 +243,9 @@
 
   @include mq($from: small) {
     padding-block: px-to-rem(var(--spacing-s));
+  }
+
+  @include mq($from: large, $to: wide) {
+    width: 100%;
   }
 }
