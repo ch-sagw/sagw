@@ -44,8 +44,10 @@ import { Links } from '@/components/blocks/Links/Links';
 import { Downloads } from '@/components/blocks/Downloads/Downloads';
 import { NewsOverview } from '@/components/blocks/NewsOverview/NewsOverview';
 import { EventsOverview } from '@/components/blocks/EventsOverview/EventsOverview';
+import { PublicationsOverview } from '@/components/blocks/PublicationsOverview/PublicationsOverview';
 import { NewsTeaser } from '@/components/blocks/NewsTeaser/NewsTeaser';
 import { EventsTeaser } from '@/components/blocks/EventsTeaser/EventsTeaser';
+import { PublicationsTeaser } from '@/components/blocks/PublicationsTeaser/PublicationsTeaser';
 import { CtaLink } from '@/components/blocks/CtaLink/CtaLink';
 
 // blocks interface
@@ -190,6 +192,18 @@ export const RenderBlocks = ({
               );
             }
 
+            if (blockType === 'publicationsOverviewBlock') {
+              return (
+                <div key={block.id || index}>
+                  <PublicationsOverview
+                    {...block}
+                    tenant={tenantId}
+                    language={pageLanguage}
+                  />
+                </div>
+              );
+            }
+
             if (blockType === 'newsTeasersBlock') {
               return (
                 <div key={block.id || index}>
@@ -208,6 +222,18 @@ export const RenderBlocks = ({
                   <EventsTeaser
                     {...block}
                     globalI18n={i18n}
+                    tenant={tenantId}
+                    language={pageLanguage}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'publicationsTeasersBlock') {
+              return (
+                <div key={block.id || index}>
+                  <PublicationsTeaser
+                    {...block}
                     tenant={tenantId}
                     language={pageLanguage}
                   />
