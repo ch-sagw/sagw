@@ -17,7 +17,7 @@ import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { PaginatedDocs } from 'payload';
 
-export const convertPayloadPublicationPagesToFeItems = (payloadPages: PaginatedDocs<PublicationDetailPage>, lang: Config['locale']): InterfacePublicationsListItemPropTypes[] => {
+export const convertPayloadPublicationsPagesToFeItems = (payloadPages: PaginatedDocs<PublicationDetailPage>, lang: Config['locale']): InterfacePublicationsListItemPropTypes[] => {
   const items = payloadPages.docs.map((publicationsPage) => {
     let category;
 

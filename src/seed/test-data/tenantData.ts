@@ -643,6 +643,11 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           title: simpleRteConfig('News'),
         },
         {
+          blockType: 'publicationsTeasersBlock',
+          linkText: simpleRteConfig('Alle Publikationen'),
+          title: simpleRteConfig('Publikationen'),
+        },
+        {
           blockType: 'textBlock',
           text: rte3FullRange,
         },
@@ -880,6 +885,29 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     },
   });
 
+  // create overview page with publications overview block
+  const publicationsOverview = await payload.create({
+    collection: 'overviewPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'publicationsOverviewBlock',
+          filterTitleAllPublications: simpleRteConfig('All types'),
+          filterTitleAllTopics: simpleRteConfig('All topcis'),
+          title: simpleRteConfig('All Publications'),
+        },
+      ],
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Overview Page Lead'),
+        title: simpleRteConfig(`Overview page with Publications Overview ${tenant.toUpperCase()}`),
+      },
+      navigationTitle: 'Publications',
+      tenant: tenantId,
+    },
+  });
+
   // create overview page with events overview block
   const eventsOverview = await payload.create({
     collection: 'overviewPage',
@@ -1066,28 +1094,40 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
     });
   }));
 
-  // publication detail page
-  await payload.create({
-    collection: 'publicationDetailPage',
-    data: {
-      _status: 'published',
-      categorization: {
-        topic: publicationTopic.id,
-        type: publicationType.id,
+  // publications detail pages
+  await Promise.all(Array.from({
+    length: 25,
+  }, (_, i) => {
+    const index = i + 1;
+
+    return payload.create({
+      collection: 'publicationDetailPage',
+      data: {
+        _status: 'published',
+        categorization: {
+          topic: publicationTopic.id,
+          type: publicationType.id,
+        },
+        hero: {
+          colorMode: 'white',
+          lead: simpleRteConfig(`Publication ${index} Detail Page Lead`),
+          title: simpleRteConfig(`Publication ${index} detail page title ${tenant.toUpperCase()}`),
+        },
+        navigationTitle: 'Publications Page',
+        overviewPageProps: {
+          date: `2025-08-${index < 10
+            ? `0${index}`
+            : index}T12:00:00.000Z`,
+          image,
+        },
+        parentPage: {
+          documentId: publicationsOverview.id,
+          slug: 'overviewPage',
+        },
+        tenant: tenantId,
       },
-      hero: {
-        colorMode: 'white',
-        lead: simpleRteConfig('Publication Detail Page Lead'),
-        title: simpleRteConfig(`Publication detail page title ${tenant.toUpperCase()}`),
-      },
-      navigationTitle: 'Publication',
-      overviewPageProps: {
-        date: '2025-08-31T12:00:00.000Z',
-        image,
-      },
-      tenant: tenantId,
-    },
-  });
+    });
+  }));
 
   // institute detail page
   await payload.create({
