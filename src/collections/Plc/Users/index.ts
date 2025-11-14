@@ -33,12 +33,13 @@ const defaultTenantArrayField = tenantsArrayField({
           return true;
         },
       },
-      defaultValue: [tenantRoles.editor],
+      defaultValue: [tenantRoles.admin],
       hasMany: true,
       name: 'roles',
       options: [
         tenantRoles.admin,
-        tenantRoles.editor,
+        tenantRoles.editorMagazine,
+        tenantRoles.translator,
       ],
       required: true,
       type: 'select',

@@ -6,68 +6,20 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
   rte4ConsentBannerText, rte4FullRange,
 } from '@/utilities/rteSampleContent';
-import { tenantRoles } from '@/collections/Plc/Users/roles';
 
-export const addDataForTenant = async (payload: Payload, tenant: string): Promise<void> => {
+interface InterfaceAddDataForTenantProps {
+  payload: Payload;
+  tenant: string;
+  tenantId: string;
+}
 
-  // ############
-  // Tenant & User
-  // ############
+export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): Promise<void> => {
 
-  // create tenant
-  const tenantId = await payload.create({
-    collection: 'tenants',
-    data: {
-      languages: {
-        de: true,
-        en: true,
-        fr: true,
-        it: true,
-      },
-      name: tenant.toLocaleUpperCase(),
-      slug: tenant,
-    },
-  });
-
-  // create user
-  if (process.env.PAYLOAD_INITIAL_USER_MAIL) {
-    await payload.create({
-      collection: 'users',
-      data: {
-        email: tenant === 'sagw'
-          ? process.env.PAYLOAD_INITIAL_USER_MAIL
-          : `${tenant}@foo.bar`,
-        password: process.env.PAYLOAD_INITIAL_PASSWORD,
-        tenants: [
-          {
-            roles: [tenantRoles.admin],
-            tenant: tenantId,
-          },
-        ],
-        username: `${tenant}-admin`,
-      },
-    });
-  }
-
-  // create user for sagw
-  if (tenant === 'sagw') {
-    if (process.env.PAYLOAD_INITIAL_USER_SAGW_MAIL) {
-      await payload.create({
-        collection: 'users',
-        data: {
-          email: process.env.PAYLOAD_INITIAL_USER_SAGW_MAIL,
-          password: process.env.PAYLOAD_INITIAL_SAGW_PASSWORD,
-          tenants: [
-            {
-              roles: [tenantRoles.admin],
-              tenant: tenantId,
-            },
-          ],
-          username: 'Stella',
-        },
-      });
-    }
-  }
+  const {
+    payload,
+    tenant,
+    tenantId,
+  } = props;
 
   // ############
   // Assets

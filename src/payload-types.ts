@@ -3479,7 +3479,7 @@ export interface User {
   tenants?:
     | {
         tenant: string | Tenant;
-        roles: ('tenant-admin' | 'editor')[];
+        roles: ('tenant-admin' | 'editor-magazine' | 'translator')[];
         id?: string | null;
       }[]
     | null;

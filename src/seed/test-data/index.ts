@@ -1,6 +1,7 @@
 import { deleteData } from '@/seed/test-data/deleteData';
 import { addDataForTenant } from '@/seed/test-data/tenantData';
 import { Payload } from 'payload';
+import { seedTenantsAndUsers } from '@/seed/seedTenantsAndUsers/index';
 
 export const seedTestData = async (payload: Payload): Promise<void> => {
 
@@ -24,12 +25,42 @@ export const seedTestData = async (payload: Payload): Promise<void> => {
     await deleteData(payload);
     payload.logger.info('seed test data: collections & versions deleted');
 
+    // create tenants and users
+    const tenants = await seedTenantsAndUsers({
+      payload,
+    });
+
+    if (tenants.length !== 2) {
+      payload.logger.error('seed test data: error seeding test data');
+
+      return;
+    }
+
+    const tenantSagw = tenants.filter((tenant) => tenant.name === 'sagw');
+    const tenantNotSagw = tenants.filter((tenant) => tenant.name === 'not-sagw');
+
+    if (!(tenantSagw && tenantSagw.length === 1) || !(tenantNotSagw && tenantNotSagw.length === 1)) {
+      payload.logger.error('seed test data: error seeding test data');
+
+      return;
+    }
+
     // add data for tenant 1
-    await addDataForTenant(payload, 'sagw');
+    await addDataForTenant({
+      payload,
+      tenant: tenantSagw[0].name,
+      tenantId: tenantSagw[0].id,
+    });
+
     payload.logger.info('seed test data: added data for tenant 1');
 
     // add data for tenant 2
-    await addDataForTenant(payload, 'not-sagw');
+    await addDataForTenant({
+      payload,
+      tenant: tenantNotSagw[0].name,
+      tenantId: tenantNotSagw[0].id,
+    });
+
     payload.logger.info('seed test data: added data for tenant 2');
 
   } catch (e) {
