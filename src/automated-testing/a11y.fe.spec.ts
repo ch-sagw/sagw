@@ -49,7 +49,7 @@ try {
         .exclude('[data-testid="eventListItem"]')
         .exclude('[data-testid="newsListItem"]')
         .exclude('[data-testid="downloadLinkItem"]')
-        .exclude('[data-testid="publicationTeaserItem"]')
+        .exclude('[data-testid="publicationListItem"]')
         .analyze();
 
       expect(accessibilityScanResults.violations)
