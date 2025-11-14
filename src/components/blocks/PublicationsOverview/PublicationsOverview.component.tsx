@@ -1,33 +1,33 @@
-/* eslint-disable max-len */
-/*
-
 import React from 'react';
 import {
-    PublicationsOverview, InterfacePublicationsOverviewPropTypes,
+  InterfacePublicationsOverviewPropTypes,
+  PublicationsOverview,
 } from '@/components/base/PublicationsOverview/PublicationsOverview';
 import {
-    InterfaceNewsListItemPropTypes, NewsListItem,
-} from '@/components/base/NewsListItem/NewsListItem';
+  InterfacePublicationsListItemPropTypes,
+  PublicationsListItem,
+} from '@/components/base/PublicationsListItem/PublicationsListItem';
 
-export type InterfaceNewsOverviewComponentPropTypes = Omit<
-    InterfaceEventsNewsOverviewPropTypes,
+export type InterfacePublicationsOverviewComponentPropTypes = Omit<
+    InterfacePublicationsOverviewPropTypes,
     'children'
 > & {
-    items: InterfaceNewsListItemPropTypes[]
+    items: InterfacePublicationsListItemPropTypes[]
 };
 
-export const NewsOverviewComponent = (props: InterfaceNewsOverviewComponentPropTypes): React.JSX.Element => (
-    <EventsNewsOverview
-        title={props.title}
-        colorMode='white'
-        paginationTitle={props.paginationTitle}
-    >
-        {props.items.map((item, key) => (
-            <NewsListItem
-                key={key}
-                {...item}
-            />
-        ))}
-    </EventsNewsOverview>
+export const PublicationsOverviewComponent = (props: InterfacePublicationsOverviewComponentPropTypes): React.JSX.Element => (
+  <PublicationsOverview
+    title={props.title}
+    colorMode='white'
+    filters={props.filters}
+    notification={props.notification}
+    paginationTitle={props.paginationTitle}
+  >
+    {props.items.map((item, key) => (
+      <PublicationsListItem
+        key={key}
+        {...item}
+      />
+    ))}
+  </PublicationsOverview>
 );
-*/

@@ -1,29 +1,30 @@
 import React, { Fragment } from 'react';
 import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
-import { rteToHtml } from '@/utilities/rteToHtml';
-import {
-  Config,
-  InterfacePublicationsOverviewBlock,
-} from '@/payload-types';
-import { PublicationsTeaserComponent } from '@/components/blocks/PublicationsTeaser/PublicationsTeaser.component';
-import { convertPayloadPublicationPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
 
-export type InterfacePublicationsTeaserPropTypes = {
+import { PublicationsOverviewComponent } from '@/components/blocks/PublicationsOverview/PublicationsOverview.component';
+import {
+  Config, InterfacePublicationsOverviewBlock,
+} from '@/payload-types';
+import { rteToHtml } from '@/utilities/rteToHtml';
+import { convertPayloadPublicationsPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
+
+type InterfaceNewsOverviewPropTypes = {
   language: Config['locale'];
   tenant: string;
 } & InterfacePublicationsOverviewBlock;
 
-export const PublicationsOverview = async (props: InterfacePublicationsTeaserPropTypes): Promise<React.JSX.Element> => {
+export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes): Promise<React.JSX.Element> => {
+
   const payload = await getPayload({
     config: configPromise,
   });
 
-  // Get publications data
+  // Get news pages data
   const publicationPages = await payload.find({
     collection: 'publicationDetailPage',
     depth: 1,
-    limit: 0,
+    limit: 4,
     locale: props.language,
     overrideAccess: false,
     pagination: false,
@@ -37,17 +38,22 @@ export const PublicationsOverview = async (props: InterfacePublicationsTeaserPro
 
   const title = rteToHtml(props.title);
 
-  const items = convertPayloadPublicationPagesToFeItems(publicationPages, props.language);
+  const items = convertPayloadPublicationsPagesToFeItems(publicationPages, props.language);
 
   if (!items || items.length < 1) {
     return <Fragment></Fragment>;
   }
 
   return (
-    <PublicationsTeaserComponent
-      title={title}
+    <PublicationsOverviewComponent
+      colorMode='white'
       items={items}
-      pageLanguage={props.language}
+      notification={{
+        text: 'Das ist ein Test',
+        title: '',
+      }}
+      paginationTitle='Pagination'
+      title={title}
     />
   );
 };
