@@ -7,8 +7,15 @@ import {
   InterfaceFilterPropTypes,
 } from '@/components/base/Filter/Filter';
 
+interface InterfaceFilterListItem {
+  filterItems: InterfaceFilterPropTypes['filterItems'];
+  labelText: InterfaceFilterPropTypes['labelText'];
+  name: InterfaceFilterPropTypes['name'];
+  type: InterfaceFilterPropTypes['type'];
+}
+
 export type InterfaceFilterListPropTypes = {
-  filterListItems: any;
+  filterListItems: InterfaceFilterListItem[];
   onValueChange?: (selectedValue: string) => void;
 }
 
