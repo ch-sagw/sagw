@@ -3,13 +3,19 @@ import { cva } from 'cva';
 import styles from '@/components/base/Section/Section.module.scss';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
-import { FilterList } from '@/components/base/FilterList/FilterList';
+import {
+  FilterList,
+  InterfaceFilterListPropTypes,
+} from '@/components/base/FilterList/FilterList';
 
 export type InterfaceSectionPropTypes = {
   className?: string;
   title: string;
   subtitle?: string;
-  filterListItems?: typeof FilterList;
+  filters?: {
+    filterListItems: InterfaceFilterListPropTypes['filterListItems'],
+    onValueChange?: InterfaceFilterListPropTypes['onValueChange'],
+  };
   children: React.ReactNode;
   colorMode: ColorMode;
   showTopLine: boolean;
@@ -19,7 +25,7 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
   className,
   title,
   subtitle,
-  filterListItems,
+  filters,
   children,
   colorMode,
   showTopLine,
@@ -44,7 +50,7 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
         colorMode,
       })}
     >
-      {filterListItems
+      {filters
         ? <div className={styles.titleWithFilter}>
           <SafeHtml
             as='h2'
@@ -52,7 +58,7 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
             html={title}
           />
           <FilterList
-            filterListItems={filterListItems}
+            filterListItems={filters.filterListItems}
           />
         </div>
         : <SafeHtml
