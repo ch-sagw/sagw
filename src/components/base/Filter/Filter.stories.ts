@@ -144,7 +144,7 @@ export const StaticSelect: StrictStory = {
     filterItems: [
       {
         checked: true,
-        label: 'All publication types',
+        label: 'All types',
         value: 'all',
       },
       {
@@ -185,7 +185,7 @@ export const StaticSelectWithAmounts: StrictStory = {
       {
         amount: 112,
         checked: true,
-        label: 'All publication types',
+        label: 'All types',
         value: 'all',
       },
       {
