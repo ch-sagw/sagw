@@ -31,6 +31,7 @@ export const PublicationsListItem = ({
   return (
     <li
       className={styles.publicationsListItem}
+      data-testid='publicationListItem'
     >
       <a
         aria-label={ariaLabel}
