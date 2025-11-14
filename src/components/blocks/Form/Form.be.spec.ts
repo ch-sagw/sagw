@@ -248,8 +248,6 @@ test.describe('Custom Form', () => {
 
     await submit.click();
 
-    await (await form.elementHandle())?.waitForElementState('stable');
-
     // expect success message
     const notification = page.getByText('Submit title success SAGW', {
       exact: true,
@@ -489,8 +487,6 @@ test.describe('Newsletter Form', () => {
     await checkboxField.click();
 
     await submit.click();
-
-    await (await form.elementHandle())?.waitForElementState('stable');
 
     // expect success message
     const notification = page.getByText('Newsletter Submit title success SAGW', {

@@ -195,8 +195,6 @@ export const ConsentBanner = ({
       data-testid='consent-banner'
       ref={bannerDialogRef}
       className={styles.consentBanner}
-      // @ts-expect-error closedby is a valid HTML attribute but not yet in
-      // TypeScript types
       closedby='none'
     >
       <SafeHtml
