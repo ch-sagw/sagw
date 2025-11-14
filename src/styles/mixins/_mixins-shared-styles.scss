@@ -31,13 +31,12 @@
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: px-to-rem(var(--grid-gutter));
-  background: orange;
 
   @include mq($from: medium) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  li {
-    background: lime;
+  @include mq($from: large, $to: wide) {
+    grid-template-columns: repeat(1, 1fr);
   }
 }
