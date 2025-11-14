@@ -7,14 +7,14 @@ import { Button } from '@/components/base/Button/Button';
 import { Config } from '@/payload-types';
 import { i18nA11y } from '@/i18n/content';
 
-interface InterfaceBreadcrumbItem {
+export interface InterfaceBreadcrumbItem {
   link: string;
   text: string;
 }
 
 export type InterfaceBreadcrumbPropTypes = {
   colorMode: ColorMode;
-  items: InterfaceBreadcrumbItem[];
+  items: InterfaceBreadcrumbItem[] | undefined;
   pageLanguage: Config['locale'];
   className?: string;
 };
@@ -24,7 +24,7 @@ export const Breadcrumb = ({
   items,
   pageLanguage,
   className,
-}: InterfaceBreadcrumbPropTypes): React.JSX.Element => {
+}: InterfaceBreadcrumbPropTypes): React.JSX.Element | null => {
   const breadcrumbClasses = cva([
     styles.breadcrumb,
     className,
@@ -37,6 +37,10 @@ export const Breadcrumb = ({
       },
     },
   });
+
+  if (!items || items.length < 1) {
+    return null;
+  }
 
   return (
     <div

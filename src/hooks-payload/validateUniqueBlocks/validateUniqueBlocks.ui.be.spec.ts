@@ -14,23 +14,9 @@ test.describe('Unique blocks', () => {
     await page.goto('http://localhost:3000/admin/collections/overviewPage/create');
     await page.waitForLoadState('networkidle');
 
-    // fill title
-    const heroBlock = await page.locator('#field-hero');
-
-    const titleField = await heroBlock.locator('.rich-text-lexical')
-      .nth(0)
-      .locator('.ContentEditable__root');
-
-    await titleField.fill('title3');
-
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForLoadState('load');
-
-    const slugField = await page.locator('#field-slug');
-
-    await expect(slugField)
-      .toHaveValue('title3');
 
     // add overview block
     const addContentButton = await page.getByText('Add Content', {
@@ -44,6 +30,9 @@ test.describe('Unique blocks', () => {
     });
 
     await addOverviewButton.click();
+
+    await page.locator('#content-row-0');
+    await page.getByText('Placeholder: all magazine entries will be displayed as overview here.');
 
     // try to add another overview
     await addContentButton.click();
@@ -69,23 +58,9 @@ test.describe('Unique blocks', () => {
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
     await page.waitForLoadState('networkidle');
 
-    // fill title
-    const heroBlock = await page.locator('#field-hero');
-
-    const titleField = await heroBlock.locator('.rich-text-lexical')
-      .nth(0)
-      .locator('.ContentEditable__root');
-
-    await titleField.fill('title3');
-
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForLoadState('load');
-
-    const slugField = await page.locator('#field-slug');
-
-    await expect(slugField)
-      .toHaveValue('title3');
 
     // add link
     const addContentButton = await page.getByText('Add Content', {
@@ -102,6 +77,9 @@ test.describe('Unique blocks', () => {
 
     await addLinkButton.click();
 
+    await page.locator('#content-row-0');
+    await page.getByText('Link hinzufügen');
+
     // try to add link overview
     await addContentButton.click();
 
@@ -115,23 +93,9 @@ test.describe('Unique blocks', () => {
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
     await page.waitForLoadState('networkidle');
 
-    // fill title
-    const heroBlock = await page.locator('#field-hero');
-
-    const titleField = await heroBlock.locator('.rich-text-lexical')
-      .nth(0)
-      .locator('.ContentEditable__root');
-
-    await titleField.fill('title3');
-
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForLoadState('load');
-
-    const slugField = await page.locator('#field-slug');
-
-    await expect(slugField)
-      .toHaveValue('title3');
 
     // add link
     const addContentButton = await page.getByText('Add Content', {
@@ -147,6 +111,9 @@ test.describe('Unique blocks', () => {
     });
 
     await addDownloadButton.click();
+
+    await page.locator('#content-row-0');
+    await page.getByText('Optional Link');
 
     // try to add link overview
     await addContentButton.click();

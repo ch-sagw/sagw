@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/global/Hero/Hero.module.scss';
@@ -214,7 +216,9 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
           <Button
             className={styles.link}
             element='link'
-            href={props.optionalLink.link.internalLink}
+
+            // TODO: generate url
+            href={props.optionalLink.link.internalLink.slug}
             text={rteToHtml(props.optionalLink.link.linkText)}
             colorMode={heroColorMode}
             style='text'

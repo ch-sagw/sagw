@@ -18,7 +18,7 @@ test.describe('seoFallback', () => {
     const teaserInput = await page.locator('.ContentEditable__root')
       .nth(0);
     const heroField = await page.locator('.ContentEditable__root')
-      .nth(0);
+      .nth(1);
     const dateField = await page.locator('#field-hero__date input');
 
     await teaserInput.fill('foo');

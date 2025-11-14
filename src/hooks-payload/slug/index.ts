@@ -47,6 +47,12 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
     trim: true,
   });
 
+  slugify.extend({
+    ä: 'ae',
+    ö: 'oe',
+    ü: 'ue',
+  });
+
   // try to find desired slug in collection items of current tenant
   if (desiredSlug) {
     const searchConstraints: Where[] = [

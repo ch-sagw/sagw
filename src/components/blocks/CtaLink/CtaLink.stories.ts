@@ -32,7 +32,10 @@ export const CtaInternalLink: StrictStory = {
     blockType: 'ctaLinkBlock',
     language: 'de',
     linkInternal: {
-      internalLink: 'detailPage/somePageid',
+      internalLink: {
+        documentId: '1234',
+        slug: 'some-slug',
+      },
       linkText: simpleRteConfig('Internal Link Text (internal)'),
     },
     linkType: 'internal',

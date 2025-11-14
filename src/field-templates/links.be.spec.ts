@@ -27,10 +27,6 @@ test('throws error on invalid external url', async () => {
           date: '2025-08-31T12:00:00.000Z',
           title: simpleRteConfig('some title'),
         },
-        hero: {
-          colorMode: 'white',
-          title: simpleRteConfig('some title'),
-        },
         link: {
           externalLink: '.foo.bar',
         },
@@ -68,10 +64,6 @@ test('does not throw an error on valid external url', async () => {
         _status: 'published',
         eventDetails: {
           date: '2025-08-31T12:00:00.000Z',
-          title: simpleRteConfig('some title'),
-        },
-        hero: {
-          colorMode: 'white',
           title: simpleRteConfig('some title'),
         },
         link: {

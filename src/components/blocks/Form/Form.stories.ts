@@ -135,7 +135,10 @@ const defaultFormConfig: FormProps = {
         includeLink: false,
 
         link: {
-          internalLink: '/',
+          internalLink: {
+            documentId: '12345',
+            slug: 'some-slug',
+          },
           linkText: simpleRteConfig('foo'),
         },
       },
@@ -147,7 +150,10 @@ const defaultFormConfig: FormProps = {
         includeLink: false,
 
         link: {
-          internalLink: '/',
+          internalLink: {
+            documentId: '12345',
+            slug: 'some-slug',
+          },
           linkText: simpleRteConfig('foo'),
         },
       },

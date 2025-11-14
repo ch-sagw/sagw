@@ -22,7 +22,9 @@ export const Downloads = (props: InterfaceDownloadsPropTypes): React.JSX.Element
 
   if (props.optionalLink && props.optionalLink.includeLink && props.optionalLink.link) {
     allLink = {
-      href: props.optionalLink.link.internalLink,
+
+      // TODO: generate url
+      href: props.optionalLink.link.internalLink.slug,
       text: rteToHtml(props.optionalLink.link.linkText),
     };
   }

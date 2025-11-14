@@ -84,7 +84,10 @@ export const DownloadsBlock: StrictStory = {
     optionalLink: {
       includeLink: true,
       link: {
-        internalLink: 'homePage/somepageid',
+        internalLink: {
+          documentId: '12345',
+          slug: 'some-slug',
+        },
         linkText: simpleRteConfig('Alle Downloads'),
       },
     },
