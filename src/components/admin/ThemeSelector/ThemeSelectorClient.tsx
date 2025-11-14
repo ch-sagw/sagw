@@ -18,7 +18,7 @@ interface InterfaceThemeSelectorClientProps {
   path: string;
 }
 
-const InternalLinkChooserClient = ({
+const ThemeSelectorClient = ({
   options,
   path,
 }: InterfaceThemeSelectorClientProps): JSX.Element => {
@@ -106,4 +106,4 @@ const InternalLinkChooserClient = ({
   );
 };
 
-export default InternalLinkChooserClient;
+export default ThemeSelectorClient;

@@ -20,8 +20,8 @@ export const hookAdminTitle: CollectionBeforeValidateHook = ({
 
   const dataString = rte1ToPlaintext(lexical);
 
-  if (data) {
-    data[fieldAdminTitleFieldName] = dataString;
+  if (data && dataString) {
+    data[fieldAdminTitleFieldName] = dataString.trim();
   }
 
   return data;

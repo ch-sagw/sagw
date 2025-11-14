@@ -32,7 +32,10 @@ const defaultProps: StatusMessageProps = {
   optionalLink: {
     includeLink: true,
     link: {
-      internalLink: 'https://www.foo.bar',
+      internalLink: {
+        documentId: '12345',
+        slug: 'some-slug',
+      },
       linkText: simpleRteConfig('Some action link'),
     },
   },

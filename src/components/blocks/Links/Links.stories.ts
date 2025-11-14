@@ -48,7 +48,10 @@ export const LinksBlock: StrictStory = {
       },
       {
         linkInternal: {
-          internalLink: 'https://foo.bar',
+          internalLink: {
+            documentId: '12345',
+            slug: 'some-slug',
+          },
           linkText: simpleRteConfig('Artikel auf Zenodo'),
         },
         linkType: 'internal',

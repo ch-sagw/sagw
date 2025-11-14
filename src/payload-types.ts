@@ -7,6 +7,24 @@
  */
 
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceBreadcrumb".
+ */
+export type InterfaceBreadcrumb =
+  | {
+      documentId: string;
+      namede: string;
+      namefr?: string | null;
+      nameit?: string | null;
+      nameen?: string | null;
+      slugde: string;
+      slugfr?: string | null;
+      slugit?: string | null;
+      slugen?: string | null;
+      id?: string | null;
+    }[]
+  | null;
+/**
  * Supported timezones in IANA format.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -207,6 +225,8 @@ export interface HomePage {
   tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
+  navigationTitle?: string | null;
+  slug?: string | null;
   hero: InterfaceHeroFieldHome;
   content?:
     | (
@@ -328,9 +348,17 @@ export interface InterfaceHeroFieldHome {
         };
         [k: string]: unknown;
       };
-      internalLink: string;
+      internalLink: InterfaceInternalLinkValue;
     };
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceInternalLinkValue".
+ */
+export interface InterfaceInternalLinkValue {
+  slug: string;
+  documentId: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -464,7 +492,7 @@ export interface Form {
           };
           [k: string]: unknown;
         };
-        internalLink: string;
+        internalLink: InterfaceInternalLinkValue;
       };
     };
   };
@@ -517,7 +545,7 @@ export interface Form {
           };
           [k: string]: unknown;
         };
-        internalLink: string;
+        internalLink: InterfaceInternalLinkValue;
       };
     };
   };
@@ -867,7 +895,7 @@ export interface InterfaceHomeTeasersBlock {
             };
             [k: string]: unknown;
           };
-          internalLink: string;
+          internalLink: InterfaceInternalLinkValue;
         };
         id?: string | null;
       }[]
@@ -974,7 +1002,7 @@ export interface InterfaceMagazineTeasersBlock {
     };
     [k: string]: unknown;
   } | null;
-  internalLink?: string | null;
+  internalLink?: InterfaceInternalLinkValue;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1122,7 +1150,7 @@ export interface InterfaceProjectTeasersBlock {
     };
     [k: string]: unknown;
   } | null;
-  internalLink?: string | null;
+  internalLink?: InterfaceInternalLinkValue;
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1353,6 +1381,12 @@ export interface MagazineDetailPage {
    * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
    */
   slug?: string | null;
+  /**
+   * Used as the title in the breadcrumb.
+   */
+  navigationTitle?: string | null;
+  parentPage?: InterfaceInternalLinkValue;
+  breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     teaserText: {
       root: {
@@ -1488,7 +1522,7 @@ export interface InterfaceLinksBlock {
         };
         [k: string]: unknown;
       };
-      internalLink: string;
+      internalLink: InterfaceInternalLinkValue;
     };
     linkExternal?: {
       description?: {
@@ -1585,7 +1619,7 @@ export interface InterfaceDownloadsBlock {
         };
         [k: string]: unknown;
       };
-      internalLink: string;
+      internalLink: InterfaceInternalLinkValue;
     };
   };
   customOrAuto: 'custom' | 'auto';
@@ -1714,6 +1748,12 @@ export interface NewsDetailPage {
    * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
    */
   slug?: string | null;
+  /**
+   * Used as the title in the breadcrumb.
+   */
+  navigationTitle?: string | null;
+  parentPage?: InterfaceInternalLinkValue;
+  breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     teaserText: {
       root: {
@@ -1882,6 +1922,12 @@ export interface EventDetailPage {
    * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
    */
   slug?: string | null;
+  /**
+   * Used as the title in the breadcrumb.
+   */
+  navigationTitle?: string | null;
+  parentPage?: InterfaceInternalLinkValue;
+  breadcrumb?: InterfaceBreadcrumb;
   eventDetails: {
     title: {
       root: {
@@ -2047,7 +2093,7 @@ export interface InterfaceCtaLinkBlock {
       };
       [k: string]: unknown;
     };
-    internalLink: string;
+    internalLink: InterfaceInternalLinkValue;
   };
   linkExternal?: {
     externalLinkText: {
@@ -2102,6 +2148,12 @@ export interface PublicationDetailPage {
    * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
    */
   slug?: string | null;
+  /**
+   * Used as the title in the breadcrumb.
+   */
+  navigationTitle?: string | null;
+  parentPage?: InterfaceInternalLinkValue;
+  breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
      * This image will be used for the teasers on the overview page.
@@ -2234,6 +2286,16 @@ export interface ProjectDetailPage {
   tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
+  /**
+   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   */
+  slug?: string | null;
+  /**
+   * Used as the title in the breadcrumb.
+   */
+  navigationTitle?: string | null;
+  parentPage?: InterfaceInternalLinkValue;
+  breadcrumb?: InterfaceBreadcrumb;
   project: string | Project;
   overviewPageProps: {
     teaserText: {
@@ -2544,6 +2606,12 @@ export interface OverviewPage {
    * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
    */
   slug?: string | null;
+  /**
+   * Used as the title in the breadcrumb.
+   */
+  navigationTitle?: string | null;
+  parentPage?: InterfaceInternalLinkValue;
+  breadcrumb?: InterfaceBreadcrumb;
   hero: InterfaceHeroField;
   content?:
     | (
@@ -2853,7 +2921,7 @@ export interface InterfaceGenericTeasersBlock {
         };
         [k: string]: unknown;
       };
-      internalLink: string;
+      internalLink: InterfaceInternalLinkValue;
     };
     linkExternal?: {
       externalLinkText: {
@@ -3099,6 +3167,12 @@ export interface DetailPage {
    * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
    */
   slug?: string | null;
+  /**
+   * Used as the title in the breadcrumb.
+   */
+  navigationTitle?: string | null;
+  parentPage?: InterfaceInternalLinkValue;
+  breadcrumb?: InterfaceBreadcrumb;
   hero: InterfaceHeroField;
   content?:
     | (
@@ -3204,6 +3278,16 @@ export interface NationalDictionaryDetailPage {
   tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
+  /**
+   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   */
+  slug?: string | null;
+  /**
+   * Used as the title in the breadcrumb.
+   */
+  navigationTitle?: string | null;
+  parentPage?: InterfaceInternalLinkValue;
+  breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
      * This image will be used for the teasers on the overview page.
@@ -3251,6 +3335,16 @@ export interface InstituteDetailPage {
   tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
+  /**
+   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   */
+  slug?: string | null;
+  /**
+   * Used as the title in the breadcrumb.
+   */
+  navigationTitle?: string | null;
+  parentPage?: InterfaceInternalLinkValue;
+  breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
      * This image will be used for the teasers on the overview page.
@@ -4124,7 +4218,7 @@ export interface InterfaceHeaderNavigation {
       };
       [k: string]: unknown;
     };
-    navItemLink?: string | null;
+    navItemLink?: InterfaceInternalLinkValue;
     subNavItems?:
       | {
           navItemText: {
@@ -4142,7 +4236,7 @@ export interface InterfaceHeaderNavigation {
             };
             [k: string]: unknown;
           };
-          navItemLink?: string | null;
+          navItemLink?: InterfaceInternalLinkValue;
           id?: string | null;
         }[]
       | null;
@@ -4173,7 +4267,7 @@ export interface InterfaceHeaderMetaNavigation {
             };
             [k: string]: unknown;
           };
-          internalLink: string;
+          internalLink: InterfaceInternalLinkValue;
         };
         linkExternal?: {
           externalLinkText: {
@@ -4288,7 +4382,7 @@ export interface InterfaceStatusMessage {
         };
         [k: string]: unknown;
       };
-      internalLink: string;
+      internalLink: InterfaceInternalLinkValue;
     };
   };
   /**
@@ -4515,6 +4609,8 @@ export interface HomePageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  navigationTitle?: T;
+  slug?: T;
   hero?: T | InterfaceHeroFieldHomeSelect<T>;
   content?:
     | T
@@ -4561,9 +4657,17 @@ export interface InterfaceHeroFieldHomeSelect<T extends boolean = true> {
           | T
           | {
               linkText?: T;
-              internalLink?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
             };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceInternalLinkValue_select".
+ */
+export interface InterfaceInternalLinkValueSelect<T extends boolean = true> {
+  slug?: T;
+  documentId?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4599,7 +4703,7 @@ export interface InterfaceHomeTeasersBlockSelect<T extends boolean = true> {
           | T
           | {
               linkText?: T;
-              internalLink?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
             };
         id?: T;
       };
@@ -4627,7 +4731,7 @@ export interface InterfaceMagazineTeasersBlockSelect<T extends boolean = true> {
   lead?: T;
   alignement?: T;
   linkText?: T;
-  internalLink?: T;
+  internalLink?: T | InterfaceInternalLinkValueSelect<T>;
   message?: T;
   id?: T;
   blockName?: T;
@@ -4665,7 +4769,7 @@ export interface InterfaceProjectTeasersBlockSelect<T extends boolean = true> {
   lead?: T;
   alignement?: T;
   linkText?: T;
-  internalLink?: T;
+  internalLink?: T | InterfaceInternalLinkValueSelect<T>;
   message?: T;
   id?: T;
   blockName?: T;
@@ -4783,6 +4887,9 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
+  navigationTitle?: T;
+  parentPage?: T | InterfaceInternalLinkValueSelect<T>;
+  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   overviewPageProps?:
     | T
     | {
@@ -4818,6 +4925,22 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceBreadcrumb_select".
+ */
+export interface InterfaceBreadcrumbSelect<T extends boolean = true> {
+  documentId?: T;
+  namede?: T;
+  namefr?: T;
+  nameit?: T;
+  nameen?: T;
+  slugde?: T;
+  slugfr?: T;
+  slugit?: T;
+  slugen?: T;
+  id?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InterfaceHeroFieldMagazineDetail_select".
  */
 export interface InterfaceHeroFieldMagazineDetailSelect<T extends boolean = true> {
@@ -4841,7 +4964,7 @@ export interface InterfaceLinksBlockSelect<T extends boolean = true> {
           | {
               description?: T;
               linkText?: T;
-              internalLink?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
             };
         linkExternal?:
           | T
@@ -4875,7 +4998,7 @@ export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
           | T
           | {
               linkText?: T;
-              internalLink?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
             };
       };
   customOrAuto?: T;
@@ -4925,6 +5048,9 @@ export interface OverviewPageSelect<T extends boolean = true> {
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
+  navigationTitle?: T;
+  parentPage?: T | InterfaceInternalLinkValueSelect<T>;
+  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
@@ -5044,7 +5170,7 @@ export interface InterfaceGenericTeasersBlockSelect<T extends boolean = true> {
           | T
           | {
               linkText?: T;
-              internalLink?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
             };
         linkExternal?:
           | T
@@ -5152,6 +5278,9 @@ export interface DetailPageSelect<T extends boolean = true> {
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
+  navigationTitle?: T;
+  parentPage?: T | InterfaceInternalLinkValueSelect<T>;
+  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
@@ -5212,7 +5341,7 @@ export interface InterfaceCtaLinkBlockSelect<T extends boolean = true> {
     | T
     | {
         linkText?: T;
-        internalLink?: T;
+        internalLink?: T | InterfaceInternalLinkValueSelect<T>;
       };
   linkExternal?:
     | T
@@ -5238,6 +5367,9 @@ export interface EventDetailPageSelect<T extends boolean = true> {
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
+  navigationTitle?: T;
+  parentPage?: T | InterfaceInternalLinkValueSelect<T>;
+  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   eventDetails?:
     | T
     | {
@@ -5295,6 +5427,9 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
+  navigationTitle?: T;
+  parentPage?: T | InterfaceInternalLinkValueSelect<T>;
+  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   overviewPageProps?:
     | T
     | {
@@ -5348,6 +5483,9 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
   isLinkable?: T;
   adminTitle?: T;
   slug?: T;
+  navigationTitle?: T;
+  parentPage?: T | InterfaceInternalLinkValueSelect<T>;
+  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   overviewPageProps?:
     | T
     | {
@@ -5406,6 +5544,10 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  slug?: T;
+  navigationTitle?: T;
+  parentPage?: T | InterfaceInternalLinkValueSelect<T>;
+  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   overviewPageProps?:
     | T
     | {
@@ -5444,6 +5586,10 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  slug?: T;
+  navigationTitle?: T;
+  parentPage?: T | InterfaceInternalLinkValueSelect<T>;
+  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   overviewPageProps?:
     | T
     | {
@@ -5482,6 +5628,10 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  slug?: T;
+  navigationTitle?: T;
+  parentPage?: T | InterfaceInternalLinkValueSelect<T>;
+  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   project?: T;
   overviewPageProps?:
     | T
@@ -5765,7 +5915,7 @@ export interface FormsSelect<T extends boolean = true> {
                 | T
                 | {
                     linkText?: T;
-                    internalLink?: T;
+                    internalLink?: T | InterfaceInternalLinkValueSelect<T>;
                   };
             };
       };
@@ -5782,7 +5932,7 @@ export interface FormsSelect<T extends boolean = true> {
                 | T
                 | {
                     linkText?: T;
-                    internalLink?: T;
+                    internalLink?: T | InterfaceInternalLinkValueSelect<T>;
                   };
             };
       };
@@ -6064,12 +6214,12 @@ export interface InterfaceHeaderNavigationSelect<T extends boolean = true> {
     | {
         description?: T;
         navItemText?: T;
-        navItemLink?: T;
+        navItemLink?: T | InterfaceInternalLinkValueSelect<T>;
         subNavItems?:
           | T
           | {
               navItemText?: T;
-              navItemLink?: T;
+              navItemLink?: T | InterfaceInternalLinkValueSelect<T>;
               id?: T;
             };
         id?: T;
@@ -6088,7 +6238,7 @@ export interface InterfaceHeaderMetaNavigationSelect<T extends boolean = true> {
           | T
           | {
               linkText?: T;
-              internalLink?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
             };
         linkExternal?:
           | T
@@ -6138,7 +6288,7 @@ export interface InterfaceStatusMessageSelect<T extends boolean = true> {
           | T
           | {
               linkText?: T;
-              internalLink?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
             };
       };
   showOnHomeOnly?: T;

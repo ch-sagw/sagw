@@ -52,7 +52,9 @@ export const StatusMessage = ({
       type={type}
       title={rteToHtml(title)}
       text={rteToHtml(message)}
-      linkHref={optionalLink?.link?.internalLink || ''}
+
+      // TODO: generate url
+      linkHref={optionalLink?.link?.internalLink.slug || ''}
       linkText={rteToHtml(optionalLink?.link?.linkText)}
       pageLanguage={pageLanguage}
     />
