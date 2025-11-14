@@ -1,6 +1,6 @@
 import { Block } from 'payload';
 import {
-  rte1, rte2,
+  rte1, rte3,
 } from '@/field-templates/rte';
 
 // Example: Magazine detail page
@@ -13,7 +13,7 @@ export const FootnotesBlock = {
     rte1({
       name: 'title',
     }),
-    rte2({
+    rte3({
       name: 'text',
     }),
   ],

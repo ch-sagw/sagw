@@ -5,7 +5,9 @@ import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superAdminOrTenantAdmin';
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
-import { rte1 } from '@/field-templates/rte';
+import {
+  rte1, rte2,
+} from '@/field-templates/rte';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
@@ -62,15 +64,19 @@ export const ProjectDetailPage: CollectionConfig = {
             {
               fields: [
                 {
-                  admin: {
-                    description: 'This text will be used for the teasers on the overview page.',
-                  },
                   ...rte1({
+                    adminDescription: 'This text will be used as text for the teasers on the overview page and in teaser blocks.',
                     name: 'teaserText',
                   }),
                 },
+                {
+                  ...rte2({
+                    adminDescription: 'This text will be used as link-text for the teasers on the overview page and in teaser blocks.',
+                    name: 'linkText',
+                  }),
+                },
               ],
-              label: 'Overview Page properties',
+              label: 'Overview Page & Teaser Block properties',
               name: 'overviewPageProps',
               type: 'group',
             },

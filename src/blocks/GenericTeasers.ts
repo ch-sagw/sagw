@@ -2,7 +2,9 @@ import {
   Block, Field,
 } from 'payload';
 import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
-import { rte1 } from '@/field-templates/rte';
+import {
+  rte1, rte2,
+} from '@/field-templates/rte';
 import { alignementHorizontalVertical } from '@/field-templates/alignement';
 
 // Example: Early Career Award, Institutes Overview
@@ -12,7 +14,7 @@ const TeaserItem: Field[] = [
   rte1({
     name: 'title',
   }),
-  rte1({
+  rte2({
     name: 'text',
     notRequired: true,
   }),

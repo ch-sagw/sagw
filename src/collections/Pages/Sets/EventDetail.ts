@@ -6,7 +6,9 @@ import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import { blocks } from '@/blocks';
 import { fieldsLinkExternal } from '@/field-templates/links';
 import { versions } from '@/field-templates/versions';
-import { rte1 } from '@/field-templates/rte';
+import {
+  rte1, rte2,
+} from '@/field-templates/rte';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
@@ -87,7 +89,7 @@ export const EventDetailPage: CollectionConfig = {
           fields: [
             {
               fields: [
-                rte1({
+                rte2({
                   name: 'title',
                 }),
                 rte1({
@@ -115,7 +117,7 @@ export const EventDetailPage: CollectionConfig = {
                       displayFormat: 'HH:mm',
                       pickerAppearance: 'timeOnly',
                       timeFormat: 'HH:mm',
-                      timeIntervals: 10,
+                      timeIntervals: 5,
                     },
                   },
                   name: 'time',

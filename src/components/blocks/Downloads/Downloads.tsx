@@ -18,16 +18,6 @@ export type InterfaceDownloadsPropTypes = {
 
 export const Downloads = (props: InterfaceDownloadsPropTypes): React.JSX.Element => {
   const title = rteToHtml(props.title);
-  let allLink;
-
-  if (props.optionalLink && props.optionalLink.includeLink && props.optionalLink.link) {
-    allLink = {
-
-      // TODO: generate url
-      href: props.optionalLink.link.internalLink.slug,
-      text: rteToHtml(props.optionalLink.link.linkText),
-    };
-  }
 
   const returnDocumentItems: InterfaceDownloadLinkItemPropTypes[] = [];
 
@@ -99,7 +89,6 @@ export const Downloads = (props: InterfaceDownloadsPropTypes): React.JSX.Element
         ? rteToHtml(props.subtitle)
         : undefined
       }
-      allLink={allLink}
       colorMode='light'
       pageLanguage={props.language}
     >

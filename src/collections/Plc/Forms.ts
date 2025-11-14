@@ -4,7 +4,10 @@ import { emailBlock } from '@/blocks/Form/Email';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { formEnsureUniqueName } from '@/hooks-payload/formEnsureUniqueName';
 import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
-import { rte1 } from '@/field-templates/rte';
+import {
+  rte1, rte2,
+} from '@/field-templates/rte';
+import { textBlock } from '@/blocks/Form/Text';
 
 export const Forms: CollectionConfig = {
   access: {
@@ -48,7 +51,7 @@ export const Forms: CollectionConfig = {
       name: 'title',
       notRequired: true,
     }),
-    rte1({
+    rte2({
       name: 'subtitle',
       notRequired: true,
     }),
@@ -150,6 +153,11 @@ export const Forms: CollectionConfig = {
         {
           fields: emailBlock(true).fields,
           name: 'email',
+          type: 'group',
+        },
+        {
+          fields: textBlock(true).fields,
+          name: 'name',
           type: 'group',
         },
         {

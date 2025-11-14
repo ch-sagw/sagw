@@ -2,7 +2,9 @@ import {
   Block, Field,
 } from 'payload';
 import { fieldsLinkExternal } from '@/field-templates/links';
-import { rte1 } from '@/field-templates/rte';
+import {
+  rte1, rte2,
+} from '@/field-templates/rte';
 
 // Example: Network
 
@@ -27,14 +29,9 @@ const fieldsNetworkItem: Field[] = [
     required: true,
     type: 'upload',
   },
-  ...fieldsLinkExternal({})
-    .filter((field) => {
-      if ('name' in field && field.name === 'externalLinkText') {
-        return false;
-      }
-
-      return true;
-    }),
+  ...fieldsLinkExternal({
+    hideLinkText: true,
+  }),
 ];
 
 export const NetworkTeasersBlock = {
@@ -64,7 +61,7 @@ export const NetworkTeasersBlock = {
           name: 'foundingYearText',
           notRequired: true,
         }),
-        rte1({
+        rte2({
           name: 'linkText',
         }),
         {
