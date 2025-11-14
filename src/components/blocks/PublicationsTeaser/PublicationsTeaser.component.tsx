@@ -1,12 +1,10 @@
-/* eslint-disable indent */
-
 import {
-    InterfacePublicationsListItemPropTypes,
-    PublicationsListItem,
+  InterfacePublicationsListItemPropTypes,
+  PublicationsListItem,
 } from '@/components/base/PublicationsListItem/PublicationsListItem';
 import {
-    InterfaceTeaserLinkListPropTypes,
-    TeaserLinkList,
+  InterfaceTeaserLinkListPropTypes,
+  TeaserLinkList,
 } from '@/components/base/TeaserLinkList/TeaserLinkList';
 import { Config } from '@/payload-types';
 import React from 'react';
@@ -20,19 +18,19 @@ export type InterfacePublicationsOverviewComponentPropTypes = Omit<
 };
 
 export const PublicationsTeaserComponent = (props: InterfacePublicationsOverviewComponentPropTypes): React.JSX.Element => (
-    <TeaserLinkList
-        allLink={props.allLink}
-        colorMode='white'
-        style='publications'
-        title={props.title}
-        pageLanguage={props.pageLanguage}
-    >
-        {props.items.map((item, key) => (
-            <PublicationsListItem
-                key={key}
-                {...item}
-            />
-        ))}
-    </TeaserLinkList>
+  <TeaserLinkList
+    allLink={props.allLink}
+    colorMode='white'
+    style='publications'
+    title={props.title}
+    pageLanguage={props.pageLanguage}
+  >
+    {props.items.map((item, key) => (
+      <PublicationsListItem
+        key={key}
+        {...item}
+      />
+    ))}
+  </TeaserLinkList>
 );
 

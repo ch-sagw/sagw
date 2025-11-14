@@ -45,6 +45,6 @@ export const DefaultTeaser: StrictStory = {
       Full.args,
     ],
     pageLanguage: 'de',
-    title: 'Publikationen',
+    title: 'Weitere Publikationen',
   },
 };

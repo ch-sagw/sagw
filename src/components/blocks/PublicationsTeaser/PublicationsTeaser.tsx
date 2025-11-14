@@ -7,7 +7,7 @@ import {
   InterfacePublicationsTeasersBlock,
 } from '@/payload-types';
 import { PublicationsTeaserComponent } from '@/components/blocks/PublicationsTeaser/PublicationsTeaser.component';
-import { convertPayloadPublicationPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
+import { convertPayloadPublicationsPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
 
 export type InterfacePublicationsTeaserPropTypes = {
   language: Config['locale'];
@@ -48,7 +48,7 @@ export const PublicationsTeaser = async (props: InterfacePublicationsTeaserPropT
     };
   }
 
-  const items = convertPayloadPublicationPagesToFeItems(publicationPages, props.language);
+  const items = convertPayloadPublicationsPagesToFeItems(publicationPages, props.language);
 
   if (!items || items.length < 1) {
     return <Fragment></Fragment>;
