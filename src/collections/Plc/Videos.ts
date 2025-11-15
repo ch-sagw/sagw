@@ -1,12 +1,11 @@
 import type { CollectionConfig } from 'payload';
+import { assetsAccess } from '@/access/assets';
 
 // TODO:
 // - discuss: subtitles
 
 export const Videos: CollectionConfig = {
-  access: {
-    read: () => true,
-  },
+  access: assetsAccess,
   admin: {
     group: 'Assets',
   },

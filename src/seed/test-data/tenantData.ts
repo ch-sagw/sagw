@@ -32,7 +32,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   const image = await payload.create({
     collection: 'images',
     data: {
-      alt: `${tenant.toUpperCase} image`,
+      alt: `${tenant.toUpperCase()} image`,
       tenant: tenantId,
     },
     filePath: `src/seed/test-data/assets/${tenant}.png`,
