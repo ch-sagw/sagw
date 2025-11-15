@@ -35,6 +35,11 @@ const getRequestedTenant = (req: PayloadRequest): string => {
 };
 
 const hasAccessOnRole = (req: PayloadRequest, role: TenantRole): boolean => {
+
+  if (!req.user) {
+    return false;
+  }
+
   // get all tenants on which this user has the requested role
   const roleTenantAccessIDs = getUserTenantIDs(req.user, role);
 
@@ -55,14 +60,19 @@ export const isSagwTenant = async (req: PayloadRequest): Promise<boolean> => {
     return false;
   }
 
-  const requestedTenant = await req.payload.findByID({
-    collection: 'tenants',
-    id: requestedTenantId,
-  });
+  try {
+    const requestedTenant = await req.payload.findByID({
+      collection: 'tenants',
+      id: requestedTenantId,
+    });
 
-  const tenantName = requestedTenant.name.toLowerCase();
+    const tenantName = requestedTenant.name.toLowerCase();
 
-  return tenantName === 'sagw';
+    return tenantName === 'sagw';
+  } catch {
+    return false;
+  }
+
 };
 
 // ########################################################################
