@@ -57,9 +57,20 @@ const accessPageDelete = ({
   req,
 }: InterfaceAccessParam): AccessResult => isSuperAdmin(req) || isTenantAdmin(req);
 
+const accessMagazineDetailPageDelete = ({
+  req,
+}: InterfaceAccessParam): AccessResult => isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req);
+
 export const pageAccess = {
   create: accessPageCreate,
   delete: accessPageDelete,
+  read: accessPageRead,
+  update: accessPageUpdate,
+};
+
+export const pageAccessMagazineDetail = {
+  create: accessPageCreate,
+  delete: accessMagazineDetailPageDelete,
   read: accessPageRead,
   update: accessPageUpdate,
 };
