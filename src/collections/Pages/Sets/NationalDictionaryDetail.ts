@@ -9,7 +9,7 @@ import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
 import { genericPageFields } from '@/field-templates/genericPageFields';
-import { pageAccess } from '@/access/pages';
+import { pageAccessNationalDictionary } from '@/access/pages';
 
 const contentBlocks = [
   'textBlock',
@@ -22,7 +22,7 @@ type ContentBlock = typeof contentBlocks[number];
 const uniqueBlocks: ContentBlock[] = ['linksBlock'];
 
 export const NationalDictionaryDetailPage: CollectionConfig = {
-  access: pageAccess,
+  access: pageAccessNationalDictionary,
   admin: {
     group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,
