@@ -6,6 +6,7 @@ import {
 } from '@/field-templates/rte';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
+import { fieldAccessHeroAnimation } from '@/access/fields/hero';
 
 const colorMode = fieldsColorMode({
   dark: true,
@@ -53,7 +54,7 @@ export const fieldsHeroHome: GroupField = {
     titleField,
     leadField,
     {
-      // TODO: enable for SAGW only
+      access: fieldAccessHeroAnimation,
       defaultValue: true,
       name: 'animated',
       type: 'checkbox',

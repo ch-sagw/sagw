@@ -48,8 +48,7 @@ const hasAccessOnRole = (req: PayloadRequest, role: TenantRole): boolean => {
   return false;
 };
 
-/*
-const isSagwTenant = async (req: PayloadRequest): Promise<boolean> => {
+export const isSagwTenant = async (req: PayloadRequest): Promise<boolean> => {
   const requestedTenantId = getRequestedTenant(req);
 
   if (!requestedTenantId) {
@@ -65,7 +64,6 @@ const isSagwTenant = async (req: PayloadRequest): Promise<boolean> => {
 
   return tenantName === 'sagw';
 };
-*/
 
 // ########################################################################
 // User roles checks
