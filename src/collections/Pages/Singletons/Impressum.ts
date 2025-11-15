@@ -7,14 +7,10 @@ import {
 } from '@/field-templates/adminTitle';
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
+import { pageAccess } from '@/access/pages';
 
 export const ImpressumPage: CollectionConfig = {
-  access: {
-    create: (): boolean => true,
-    delete: (): boolean => true,
-    read: (): boolean => true,
-    update: (): boolean => true,
-  },
+  access: pageAccess,
   admin: {
     group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,

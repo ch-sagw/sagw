@@ -2,7 +2,6 @@ import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHeroMagazineDetail } from '@/field-templates/hero';
 import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
-import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superAdminOrTenantAdmin';
 import { blocks } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { rte2 } from '@/field-templates/rte';
@@ -10,6 +9,7 @@ import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
 import { genericPageFields } from '@/field-templates/genericPageFields';
+import { pageAccess } from '@/access/pages';
 
 const contentBlocks = [
   'textBlock',
@@ -29,12 +29,7 @@ const uniqueBlocks: ContentBlock[] = [
 ];
 
 export const MagazineDetailPage: CollectionConfig = {
-  access: {
-    create: superAdminOrTenantAdminAccess,
-    delete: superAdminOrTenantAdminAccess,
-    read: () => true,
-    update: superAdminOrTenantAdminAccess,
-  },
+  access: pageAccess,
   admin: {
     defaultColumns: [
       'adminTitle',

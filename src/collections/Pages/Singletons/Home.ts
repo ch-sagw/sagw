@@ -11,14 +11,10 @@ import { hookCascadeBreadcrumbUpdates } from '@/hooks-payload/cascadeBreadcrumbU
 import { hookGenerateBreadcrumbs } from '@/hooks-payload/generateBreadcrumbs';
 import { fieldNavigationTitleFieldName } from '@/field-templates/navigationTitle';
 import { i18nNavigation } from '@/i18n/content';
+import { pageAccess } from '@/access/pages';
 
 export const HomePage: CollectionConfig = {
-  access: {
-    create: (): boolean => true,
-    delete: (): boolean => true,
-    read: (): boolean => true,
-    update: (): boolean => true,
-  },
+  access: pageAccess,
   admin: {
     group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,

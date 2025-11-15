@@ -42,6 +42,11 @@ const accessPageUpdate = ({
 
   if (isTranslator(req)) {
     // only allow saving drafts, but don't allow publishing a page
+    if (req.data?._status === 'published') {
+      return false;
+    }
+
+    return true;
   }
 
   return false;

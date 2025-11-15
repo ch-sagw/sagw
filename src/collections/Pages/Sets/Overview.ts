@@ -2,7 +2,6 @@ import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
-import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superAdminOrTenantAdmin';
 import {
   blocks, OVERVIEW_BLOCK_TYPES,
 } from '@/blocks';
@@ -11,6 +10,7 @@ import { excludeBlocksFilterCumulative } from '@/utilities/blockFilters';
 import { validateUniqueBlocksCumulative } from '@/hooks-payload/validateUniqueBlocks';
 import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
 import { genericPageFields } from '@/field-templates/genericPageFields';
+import { pageAccess } from '@/access/pages';
 
 const contentBlocks = [
   'textBlock',
@@ -37,12 +37,7 @@ const contentBlocks = [
 ] as const;
 
 export const OverviewPage: CollectionConfig = {
-  access: {
-    create: superAdminOrTenantAdminAccess,
-    delete: superAdminOrTenantAdminAccess,
-    read: () => true,
-    update: superAdminOrTenantAdminAccess,
-  },
+  access: pageAccess,
   admin: {
     defaultColumns: [
       'adminTitle',

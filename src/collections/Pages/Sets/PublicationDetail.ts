@@ -8,6 +8,7 @@ import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
 import { genericPageFields } from '@/field-templates/genericPageFields';
+import { pageAccess } from '@/access/pages';
 
 const contentBlocks = [
   'textBlock',
@@ -27,9 +28,7 @@ const uniqueBlocks: ContentBlock[] = [
 ];
 
 export const PublicationDetailPage: CollectionConfig = {
-  access: {
-    read: (): boolean => true,
-  },
+  access: pageAccess,
   admin: {
     defaultColumns: [
       'adminTitle',
