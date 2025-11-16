@@ -1,3 +1,4 @@
+import { fieldAccessMeta } from '@/access/fields/meta';
 import {
   MetaDescriptionField,
   MetaImageField,
@@ -6,6 +7,7 @@ import {
 import { Tab } from 'payload';
 
 export const fieldsTabMeta: Tab = {
+  access: fieldAccessMeta,
   fields: [
     {
       fields: [

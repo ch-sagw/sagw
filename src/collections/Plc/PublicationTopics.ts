@@ -1,7 +1,9 @@
 import { CollectionConfig } from 'payload';
 import { rte1 } from '@/field-templates/rte';
+import { globalContentAccessGeneric } from '@/access/globalContent';
 
 export const PublicationTopics: CollectionConfig = {
+  access: globalContentAccessGeneric,
   admin: {
     defaultColumns: ['publicationTopic'],
     group: 'Global Content',
