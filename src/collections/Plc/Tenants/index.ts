@@ -21,11 +21,18 @@ export const Tenants: CollectionConfig = {
   fields: [
     {
       access: fieldsAccess,
-      localized: true,
+      localized: false,
       name: 'name',
       required: true,
       type: 'text',
       unique: true,
+    },
+    {
+      access: fieldsAccess,
+      localized: true,
+      name: 'title',
+      required: true,
+      type: 'text',
     },
     {
       access: fieldsAccess,
