@@ -3,7 +3,9 @@
 // ########################################################################
 
 import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
-import { PayloadRequest } from 'payload';
+import {
+  ClientUser, PayloadRequest,
+} from 'payload';
 import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
 import { getCollectionIDType } from '@/utilities/getCollectionIdType';
 
@@ -39,6 +41,33 @@ export const getRequestedTenant = (req: PayloadRequest): string => {
   );
 
   return requestedTenant || tenantFromCookie;
+};
+
+const hasSuperOrTenantAdminRole = (user: ClientUser): boolean => {
+
+  if (!user) {
+    return false;
+  }
+
+  const superAdmin = Boolean(user.roles?.includes(userRoles.admin));
+
+  if (superAdmin) {
+    return true;
+  }
+
+  if ('tenants' in user) {
+    const hasAdminRole = user.tenants.filter((tenant: any) => {
+      if ('roles' in tenant) {
+        return tenant.roles.includes(tenantRoles.admin);
+      }
+
+      return false;
+    });
+
+    return hasAdminRole.length > 0;
+  }
+
+  return false;
 };
 
 const hasAccessOnRole = (req: PayloadRequest, role: TenantRole): boolean => {
@@ -86,21 +115,20 @@ export const isSagwTenant = async (req: PayloadRequest): Promise<boolean> => {
 // User roles checks
 // ########################################################################
 const isUserRoleAdmin = (req: PayloadRequest): boolean => Boolean(req.user?.roles?.includes(userRoles.admin));
-
 const isUserRolelUser = (req: PayloadRequest): boolean => Boolean(req.user?.roles?.includes(userRoles.user));
 
 // ########################################################################
 // combined roles checks
 // ########################################################################
-
-// checked
 export const isSuperAdmin = (req: PayloadRequest): boolean => isUserRoleAdmin(req);
-
-// todo
 export const isTenantAdmin = (req: PayloadRequest): boolean => isUserRolelUser(req) && hasAccessOnRole(req, 'tenant-admin');
-
-// todo
 export const isMagazineEditor = (req: PayloadRequest): boolean => isUserRolelUser(req) && hasAccessOnRole(req, 'editor-magazine');
-
-// todo
 export const isTranslator = (req: PayloadRequest): boolean => isUserRolelUser(req) && hasAccessOnRole(req, 'translator');
+
+// ########################################################################
+// display helpers
+// ########################################################################
+
+// check for super-admin or tenant-admin while taking user as input param
+// useful for usage in: admin -> hidden (on fields or collections)
+export const isSuperOrTenantAdmin = (user: ClientUser): boolean => hasSuperOrTenantAdminRole(user);
