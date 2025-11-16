@@ -1,18 +1,19 @@
 import type { CollectionConfig } from 'payload';
 import { ensureUniqueUsername } from '@/collections/Plc/Users/hooks/ensureUniqueUsername';
-import { isSuperAdmin } from '@/access/isSuperAdmin';
 import { setCookieBasedOnDomain } from '@/collections/Plc/Users/hooks/setCookieBasedOnDomain';
 import { tenantsArrayField } from '@payloadcms/plugin-multi-tenant/fields';
 import {
   tenantRoles, userRoles,
 } from '@/collections/Plc/Users/roles';
-import { usersAccess } from '@/access/users';
+import {
+  usersAccess, usersAccessWithoutSelf,
+} from '@/access/users';
 
 const defaultTenantArrayField = tenantsArrayField({
-  arrayFieldAccess: usersAccess,
+  arrayFieldAccess: usersAccessWithoutSelf,
   rowFields: [
     {
-      access: usersAccess,
+      access: usersAccessWithoutSelf,
       defaultValue: [tenantRoles.admin],
       hasMany: true,
       name: 'roles',
@@ -25,7 +26,7 @@ const defaultTenantArrayField = tenantsArrayField({
       type: 'select',
     },
   ],
-  tenantFieldAccess: usersAccess,
+  tenantFieldAccess: usersAccessWithoutSelf,
   tenantsArrayFieldName: 'tenants',
   tenantsArrayTenantFieldName: 'tenant',
   tenantsCollectionSlug: 'tenants',
@@ -40,33 +41,13 @@ export const Users: CollectionConfig = {
   auth: true,
   fields: [
     {
-      access: {
-        read: () => false,
-        update: ({
-          req, id,
-        }): boolean => {
-          const {
-            user,
-          } = req;
-
-          if (!user) {
-            return false;
-          }
-
-          if (id === user.id) {
-            // Allow user to update their own password
-            return true;
-          }
-
-          return isSuperAdmin(user);
-        },
-      },
+      access: usersAccess,
       hidden: true,
       name: 'password',
       type: 'text',
     },
     {
-      access: usersAccess,
+      access: usersAccessWithoutSelf,
       admin: {
         position: 'sidebar',
       },

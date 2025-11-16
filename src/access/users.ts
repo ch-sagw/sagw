@@ -30,13 +30,15 @@ const updateAccess = ({
   });
 
   if (accessingSelf) {
-    console.log(req.data);
-
     return true;
   }
 
   return false;
 };
+
+const updateAccessWithoutSelf = ({
+  req,
+}: AccessArgs): boolean => isSuperAdmin(req);
 
 const deleteAccess = ({
   req,
@@ -60,6 +62,10 @@ const readAccess = ({
   return isSuperAdmin(req);
 };
 
+const readAccessWithoutSelf = ({
+  req,
+}: AccessArgs): boolean => isSuperAdmin(req);
+
 // General User Access
 
 export const usersAccess = {
@@ -67,4 +73,11 @@ export const usersAccess = {
   delete: deleteAccess,
   read: readAccess,
   update: updateAccess,
+};
+
+export const usersAccessWithoutSelf = {
+  create: createAccess,
+  delete: deleteAccess,
+  read: readAccessWithoutSelf,
+  update: updateAccessWithoutSelf,
 };
