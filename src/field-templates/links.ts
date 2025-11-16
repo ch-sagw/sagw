@@ -3,6 +3,7 @@ import {
   rte1, rte2,
 } from './rte';
 import { fieldInternalLinkChooser } from '@/components/admin/InternalLinkChooser/InternalLinkChooserField';
+import { fieldAccessLocalizableField } from '@/access/fields/localizedFields';
 
 interface InterfaceLinkProps {
   showDescription?: boolean;
@@ -136,6 +137,7 @@ export const fieldsLinkInternalOrExternal = (props?: InterfaceLinkProps): Field[
 export const fieldsLinkInternalWithToggle = (props?: InterfaceLinkProps): Field => ({
   fields: [
     {
+      access: fieldAccessLocalizableField,
       defaultValue: false,
       label: 'Include Link',
       name: 'includeLink',
