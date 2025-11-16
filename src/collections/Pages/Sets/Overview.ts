@@ -3,7 +3,7 @@ import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import {
-  blocks, OVERVIEW_BLOCK_TYPES,
+  blocks, BlockSlug, OVERVIEW_BLOCK_TYPES,
 } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { excludeBlocksFilterCumulative } from '@/utilities/blockFilters';
@@ -11,6 +11,7 @@ import { validateUniqueBlocksCumulative } from '@/hooks-payload/validateUniqueBl
 import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
 import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccess } from '@/access/pages';
+import { sagwOnlyBlocks } from '@/access/blocks';
 
 const contentBlocks = [
   'textBlock',
@@ -34,7 +35,7 @@ const contentBlocks = [
   'newsTeasersBlock',
   'publicationsTeasersBlock',
   'editionsOverview',
-] as const;
+] as BlockSlug[];
 
 export const OverviewPage: CollectionConfig = {
   access: pageAccess,
@@ -63,10 +64,28 @@ export const OverviewPage: CollectionConfig = {
             // Content Blocks
             {
               blocks: blocks(contentBlocks),
-              filterOptions: excludeBlocksFilterCumulative({
-                allBlockTypes: contentBlocks,
-                onlyAllowedOnceBlockTypes: OVERVIEW_BLOCK_TYPES,
-              }),
+              filterOptions: async ({
+                siblingData,
+                req,
+              }): Promise<BlockSlug[]> => {
+                const onlyOnceBlockFilter = excludeBlocksFilterCumulative({
+                  allBlockTypes: contentBlocks,
+                  onlyAllowedOnceBlockTypes: OVERVIEW_BLOCK_TYPES,
+                })({
+                  siblingData,
+                });
+
+                const showBlocks = await sagwOnlyBlocks({
+                  allBlocks: onlyOnceBlockFilter,
+                  req,
+                  restrictedBlocks: [
+                    'nationalDictionariesOverviewBlock',
+                    'institutesOverviewBlock',
+                  ],
+                });
+
+                return showBlocks;
+              },
               label: 'Content',
               name: 'content',
               type: 'blocks',

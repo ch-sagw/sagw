@@ -23,12 +23,12 @@ export const excludeBlocksFilterCumulative = <T extends string>(
   },
 ) => ({
     siblingData,
-  }: any): T[] | true => {
+  }: any): T[] => {
     try {
       const content = (siblingData as any)?.content;
 
       if (!content || !Array.isArray(content)) {
-        return true;
+        return allBlockTypes as T[];
       }
 
       const hasAllowedOnceBlockTypes = content.some((block: any) => block &&
@@ -37,14 +37,14 @@ export const excludeBlocksFilterCumulative = <T extends string>(
         onlyAllowedOnceBlockTypes.includes(block.blockType as any));
 
       if (!hasAllowedOnceBlockTypes) {
-        return true;
+        return allBlockTypes as T[];
       }
 
       return allBlockTypes.filter((blockType) => !onlyAllowedOnceBlockTypes.includes(blockType as any)) as T[];
     } catch (error) {
       console.error('Error in excludeBlocksFilterCumulative:', error);
 
-      return true;
+      return allBlockTypes as T[];
     }
   };
 
@@ -77,7 +77,7 @@ export const excludeBlocksFilterSingle = <T extends string>(
       const content = siblingData?.content;
 
       if (!content || !Array.isArray(content)) {
-        return true;
+        return allBlockTypes as T[];
       }
 
       const foundBlocks: string[] = [];
@@ -96,7 +96,7 @@ export const excludeBlocksFilterSingle = <T extends string>(
     } catch (error) {
       console.error('Error in excludeBlocksFilterSingle:', error);
 
-      return true;
+      return allBlockTypes as T[];
     }
   };
 
