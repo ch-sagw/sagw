@@ -2,27 +2,24 @@ import {
   isMagazineEditor, isSagwTenant, isSuperAdmin, isTenantAdmin,
 } from '@/collections/Plc/Users/roles';
 import {
-  AccessResult, PayloadRequest,
+  AccessArgs,
+  AccessResult,
 } from 'payload';
-
-interface InterfaceAccessParam {
-  req: PayloadRequest;
-}
 
 // -> sagw-admin, tenant-admin and magazine-editor
 const accessGenericNoTranslator = ({
   req,
-}: InterfaceAccessParam): AccessResult => isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req);
+}: AccessArgs): AccessResult => isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req);
 
 // -> sagw-admin, tenant-admin
 const accessGenericNoTranslatorNoEditor = ({
   req,
-}: InterfaceAccessParam): AccessResult => isSuperAdmin(req) || isTenantAdmin(req);
+}: AccessArgs): AccessResult => isSuperAdmin(req) || isTenantAdmin(req);
 
 // -> sagw-admin, tenant-admin (non-sagw only)
 const accessGlobalContentTheme = async ({
   req,
-}: InterfaceAccessParam): Promise<AccessResult> => {
+}: AccessArgs): Promise<AccessResult> => {
   if (isSuperAdmin(req)) {
     return true;
   }

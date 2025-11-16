@@ -1,7 +1,4 @@
 import type { CollectionConfig } from 'payload';
-import { createAccess } from '@/collections/Plc/Users/access/create';
-import { readAccess } from '@/collections/Plc/Users/access/read';
-import { updateAndDeleteAccess } from '@/collections/Plc/Users/access/updateAndDelete';
 import { ensureUniqueUsername } from '@/collections/Plc/Users/hooks/ensureUniqueUsername';
 import { isSuperAdmin } from '@/access/isSuperAdmin';
 import { setCookieBasedOnDomain } from '@/collections/Plc/Users/hooks/setCookieBasedOnDomain';
@@ -9,30 +6,13 @@ import { tenantsArrayField } from '@payloadcms/plugin-multi-tenant/fields';
 import {
   tenantRoles, userRoles,
 } from '@/collections/Plc/Users/roles';
+import { usersAccess } from '@/access/users';
 
 const defaultTenantArrayField = tenantsArrayField({
-  arrayFieldAccess: {},
+  arrayFieldAccess: usersAccess,
   rowFields: [
     {
-      access: {
-        update: ({
-          req,
-        }): boolean => {
-          const {
-            user,
-          } = req;
-
-          if (!user) {
-            return false;
-          }
-
-          if (isSuperAdmin(user)) {
-            return true;
-          }
-
-          return true;
-        },
-      },
+      access: usersAccess,
       defaultValue: [tenantRoles.admin],
       hasMany: true,
       name: 'roles',
@@ -45,19 +25,14 @@ const defaultTenantArrayField = tenantsArrayField({
       type: 'select',
     },
   ],
-  tenantFieldAccess: {},
+  tenantFieldAccess: usersAccess,
   tenantsArrayFieldName: 'tenants',
   tenantsArrayTenantFieldName: 'tenant',
   tenantsCollectionSlug: 'tenants',
 });
 
 export const Users: CollectionConfig = {
-  access: {
-    create: createAccess,
-    delete: updateAndDeleteAccess,
-    read: readAccess,
-    update: updateAndDeleteAccess,
-  },
+  access: usersAccess,
   admin: {
     group: 'Org',
     useAsTitle: 'email',
@@ -91,11 +66,7 @@ export const Users: CollectionConfig = {
       type: 'text',
     },
     {
-      access: {
-        update: ({
-          req,
-        }) => isSuperAdmin(req.user),
-      },
+      access: usersAccess,
       admin: {
         position: 'sidebar',
       },

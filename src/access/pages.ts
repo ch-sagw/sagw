@@ -3,12 +3,9 @@ import {
   isTranslator,
 } from '@/collections/Plc/Users/roles';
 import {
-  AccessResult, PayloadRequest,
+  AccessArgs,
+  AccessResult,
 } from 'payload';
-
-interface InterfaceAccessParam {
-  req: PayloadRequest;
-}
 
 // ########################################################################
 // Create access
@@ -17,12 +14,12 @@ interface InterfaceAccessParam {
 // -> Only super-admin, sagw-admin, fg-admin and magazine editors can create
 const accessGenericCreate = ({
   req,
-}: InterfaceAccessParam): AccessResult => isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req);
+}: AccessArgs): AccessResult => isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req);
 
 // -> Only super-admin, sagw-admin and magazine editor can create
 const accessSagwOnlyCreate = async ({
   req,
-}: InterfaceAccessParam): Promise<AccessResult> => {
+}: AccessArgs): Promise<AccessResult> => {
   if (isSuperAdmin(req) || isMagazineEditor(req)) {
     return true;
   }
@@ -40,7 +37,7 @@ const accessSagwOnlyCreate = async ({
 // -> non-authenticated users can only read published documents.
 const accessGenericRead = ({
   req,
-}: InterfaceAccessParam): AccessResult => {
+}: AccessArgs): AccessResult => {
   if (isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req) || isTranslator(req)) {
     return true;
   }
@@ -59,7 +56,7 @@ const accessGenericRead = ({
 
 const accessSagwOnlyRead = async ({
   req,
-}: InterfaceAccessParam): Promise<AccessResult> => {
+}: AccessArgs): Promise<AccessResult> => {
   if (isSuperAdmin(req) || isMagazineEditor(req) || isTranslator(req)) {
     return true;
   }
@@ -77,7 +74,7 @@ const accessSagwOnlyRead = async ({
 // -> translators can update and save-draft only
 const accessGenericUpdate = ({
   req,
-}: InterfaceAccessParam): AccessResult => {
+}: AccessArgs): AccessResult => {
   if (isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req)) {
     return true;
   }
@@ -100,7 +97,7 @@ const accessGenericUpdate = ({
 // -> translators can update and save-draft only
 const accessSagwOnlyUpdate = async ({
   req,
-}: InterfaceAccessParam): Promise<AccessResult> => {
+}: AccessArgs): Promise<AccessResult> => {
   if (isSuperAdmin(req)) {
     return true;
   }
@@ -131,14 +128,14 @@ const accessSagwOnlyUpdate = async ({
 // -> Only super-admin, sagw-admin and fg-admin can delete
 const accessGenericDelete = ({
   req,
-}: InterfaceAccessParam): AccessResult => isSuperAdmin(req) || isTenantAdmin(req);
+}: AccessArgs): AccessResult => isSuperAdmin(req) || isTenantAdmin(req);
 
 // -> Only super-admin, sagw-admin and magazine editor can delete
 const accessSagwOnlyDelete = accessSagwOnlyCreate;
 
 const accessMagazineDetailPageDelete = ({
   req,
-}: InterfaceAccessParam): AccessResult => isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req);
+}: AccessArgs): AccessResult => isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req);
 
 // ########################################################################
 // Page Access Models

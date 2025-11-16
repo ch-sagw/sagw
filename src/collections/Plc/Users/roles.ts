@@ -5,6 +5,7 @@
 import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
 import { PayloadRequest } from 'payload';
 import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
+import { getCollectionIDType } from '@/utilities/getCollectionIdType';
 
 export const userRoles = {
   admin: 'super-admin',
@@ -25,11 +26,17 @@ export type TenantRole = typeof tenantRoles[keyof typeof tenantRoles];
 // Helpers
 // ########################################################################
 
-const getRequestedTenant = (req: PayloadRequest): string => {
+export const getRequestedTenant = (req: PayloadRequest): string => {
 
   // req.data.tenant might be empty. in this case we get tenant from cookie
   const requestedTenant = req?.data?.tenant;
-  const tenantFromCookie = getTenantFromCookie(req?.headers, req.payload.db.defaultIDType);
+  const tenantFromCookie = getTenantFromCookie(
+    req.headers,
+    getCollectionIDType({
+      collectionSlug: 'tenants',
+      payload: req.payload,
+    }),
+  );
 
   return requestedTenant || tenantFromCookie;
 };

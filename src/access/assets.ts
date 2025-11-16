@@ -2,17 +2,14 @@ import {
   isMagazineEditor, isSuperAdmin, isTenantAdmin,
 } from '@/collections/Plc/Users/roles';
 import {
-  AccessResult, PayloadRequest,
+  AccessArgs,
+  AccessResult,
 } from 'payload';
-
-interface InterfaceAccessParam {
-  req: PayloadRequest;
-}
 
 // -> Only super-admin, sagw-admin, fg-admin and magazine editors
 const accessGeneric = ({
   req,
-}: InterfaceAccessParam): AccessResult => isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req);
+}: AccessArgs): AccessResult => isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req);
 
 export const assetsAccess = {
   create: accessGeneric,
