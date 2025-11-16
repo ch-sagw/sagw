@@ -36,6 +36,7 @@ export const seedTenants = async (props: InterfaceSeedTenantsProps): Promise<Ten
           domain: `${tenant.slug}.localhost`,
           name: tenant.name,
           slug: tenant.slug,
+          title: tenant.name,
         },
       }));
     });
