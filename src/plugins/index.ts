@@ -15,11 +15,11 @@ import { Videos } from '@/collections/Plc/Videos';
 import { Documents } from '@/collections/Plc/Documents';
 import { getServerSideURL } from '@/utilities/getUrl';
 import type { Config } from '@/payload-types';
-import { isSuperAdmin } from '@/access/isSuperAdmin';
-import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
 import { tenantsCollections } from '@/collections';
 
 import * as Sentry from '@sentry/nextjs';
+import { tenantsAccess } from '@/access/tenants';
+import { userIsSuperAdmin } from '@/collections/Plc/Users/roles';
 
 const generateTitle: GenerateTitle = ({
   doc,
@@ -86,23 +86,12 @@ const plugins: Plugin[] = [
     cleanupAfterTenantDelete: false,
     collections: tenantsCollections,
     tenantField: {
-      access: {
-        read: () => true,
-        update: ({
-          req,
-        }) => {
-          if (isSuperAdmin(req.user)) {
-            return true;
-          }
-
-          return getUserTenantIDs(req.user).length > 0;
-        },
-      },
+      access: tenantsAccess,
     },
     tenantsArrayField: {
       includeDefaultField: false,
     },
-    userHasAccessToAllTenants: (user) => isSuperAdmin(user),
+    userHasAccessToAllTenants: (user) => userIsSuperAdmin(user),
   }),
 
 ];

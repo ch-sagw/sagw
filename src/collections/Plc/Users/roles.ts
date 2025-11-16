@@ -8,6 +8,7 @@ import {
 } from 'payload';
 import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
 import { getCollectionIDType } from '@/utilities/getCollectionIdType';
+import { User } from '@/payload-types';
 
 export const userRoles = {
   admin: 'super-admin',
@@ -132,3 +133,10 @@ export const isTranslator = (req: PayloadRequest): boolean => isUserRolelUser(re
 // check for super-admin or tenant-admin while taking user as input param
 // useful for usage in: admin -> hidden (on fields or collections)
 export const isSuperOrTenantAdmin = (user: ClientUser): boolean => hasSuperOrTenantAdminRole(user);
+export const userIsSuperAdmin = (user: User): boolean => {
+  if (!user) {
+    return false;
+  }
+
+  return Boolean(user.roles?.includes(userRoles.admin));
+};
