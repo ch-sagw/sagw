@@ -5,13 +5,18 @@ import {
 } from '@/collections/Plc/Users/roles';
 import { PayloadRequest } from 'payload';
 
-interface InterfaceAccessParam {
+interface InterfaceSagwOnlyBlocksProps {
   req: PayloadRequest;
   allBlocks: BlockSlug[];
   restrictedBlocks: BlockSlug[];
 }
 
-export const sagwOnlyBlocks = async (props: InterfaceAccessParam): Promise<BlockSlug[]> => {
+interface InterfaceAllBlocksButTranslatorProps {
+  req: PayloadRequest;
+  allBlocks: BlockSlug[];
+}
+
+export const sagwOnlyBlocks = async (props: InterfaceSagwOnlyBlocksProps): Promise<BlockSlug[]> => {
   if (isTranslator(props.req)) {
     return [];
   }
@@ -29,4 +34,12 @@ export const sagwOnlyBlocks = async (props: InterfaceAccessParam): Promise<Block
   }
 
   return props.allBlocks.filter((item) => !props.restrictedBlocks.includes(item));
+};
+
+export const allBlocksButTranslator = (props: InterfaceAllBlocksButTranslatorProps): BlockSlug[] => {
+  if (isTranslator(props.req)) {
+    return [];
+  }
+
+  return props.allBlocks;
 };

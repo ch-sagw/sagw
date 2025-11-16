@@ -13,7 +13,7 @@ import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccess } from '@/access/pages';
 import { sagwOnlyBlocks } from '@/access/blocks';
 
-const contentBlocks = [
+const contentBlocks: BlockSlug[] = [
   'textBlock',
   'accordionBlock',
   'formBlock',
@@ -35,7 +35,7 @@ const contentBlocks = [
   'newsTeasersBlock',
   'publicationsTeasersBlock',
   'editionsOverview',
-] as BlockSlug[];
+];
 
 export const OverviewPage: CollectionConfig = {
   access: pageAccess,

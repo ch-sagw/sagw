@@ -9,6 +9,7 @@ import { hookAdminTitle } from '@/hooks-payload/adminTitle';
 import {
   CollectionAfterChangeHook, CollectionAfterDeleteHook, CollectionBeforeChangeHook, CollectionBeforeValidateHook,
 } from 'payload';
+import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 
 interface InterfaceGenericPageHooks {
   afterChange?: CollectionAfterChangeHook[];
@@ -43,5 +44,6 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
     hookSlug,
     hookValidateParentCircularReference,
     ...(additionalHooks?.beforeValidate ?? []),
+    hookPreventBlockStructureChangesForTranslators(),
   ],
 });

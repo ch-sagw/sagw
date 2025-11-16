@@ -15,6 +15,7 @@ import { fieldNavigationTitleFieldName } from '@/field-templates/navigationTitle
 import { i18nNavigation } from '@/i18n/content';
 import { pageAccess } from '@/access/pages';
 import { sagwOnlyBlocks } from '@/access/blocks';
+import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 
 const homeBlocks: BlockSlug[] = [
   'textBlock',
@@ -99,8 +100,8 @@ export const HomePage: CollectionConfig = {
   ],
   hooks: {
     afterChange: [hookCascadeBreadcrumbUpdates],
-
     beforeChange: [hookGenerateBreadcrumbs],
+    beforeValidate: [hookPreventBlockStructureChangesForTranslators()],
   },
   labels: {
     plural: 'Home',

@@ -5,9 +5,15 @@ import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
-import { blocks } from '@/blocks';
+import {
+  blocks, BlockSlug,
+} from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { pageAccess } from '@/access/pages';
+import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
+import { allBlocksButTranslator } from '@/access/blocks';
+
+const contentBlocks: BlockSlug[] = ['textBlock'];
 
 export const DataPrivacyPage: CollectionConfig = {
   access: pageAccess,
@@ -28,7 +34,13 @@ export const DataPrivacyPage: CollectionConfig = {
 
             // Content Blocks
             {
-              blocks: blocks(['textBlock']),
+              blocks: blocks(contentBlocks),
+              filterOptions: ({
+                req,
+              }): BlockSlug[] => allBlocksButTranslator({
+                allBlocks: contentBlocks,
+                req,
+              }),
               label: 'Content',
               name: 'content',
               type: 'blocks',
@@ -43,6 +55,9 @@ export const DataPrivacyPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    beforeValidate: [hookPreventBlockStructureChangesForTranslators()],
+  },
   labels: {
     plural: 'Data Privacy',
     singular: 'Data Privacy',

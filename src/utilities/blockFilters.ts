@@ -72,7 +72,7 @@ export const excludeBlocksFilterSingle = <T extends string>(
   },
 ) => ({
     siblingData,
-  }: any): T[] | true => {
+  }: any): T[] => {
     try {
       const content = siblingData?.content;
 
