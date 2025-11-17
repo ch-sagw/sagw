@@ -32,15 +32,18 @@ export const People: CollectionConfig = {
       name: 'function',
       notRequired: true,
     }),
-    rte1({
-      disableLocalization: true,
+    {
+      localized: false,
       name: 'mail',
-    }),
-    rte1({
-      disableLocalization: true,
+      required: true,
+      type: 'text',
+    },
+    {
+      localized: false,
       name: 'phone',
-      notRequired: true,
-    }),
+      required: false,
+      type: 'text',
+    },
     {
       name: 'image',
       relationTo: 'images',

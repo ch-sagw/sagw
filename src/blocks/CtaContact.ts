@@ -21,7 +21,7 @@ export const CtaContactBlock = {
       white: true,
     }),
     {
-      hasMany: false,
+      hasMany: true,
       name: 'contact',
       relationTo: 'people',
       required: true,
