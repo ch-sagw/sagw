@@ -7,6 +7,21 @@ export const i18nNavigation = {
   },
 };
 
+export const i18nPublicationFilters = {
+  publicationTopicsLabel: {
+    de: 'Publikationsthema',
+    en: 'Publikationsthema (EN)',
+    fr: 'Publikationsthema (FR)',
+    it: 'Publikationsthema (IT)',
+  },
+  publicationTypesLabel: {
+    de: 'Publikationstyp',
+    en: 'Publikationstyp (EN)',
+    fr: 'Publikationstyp (FR)',
+    it: 'Publikationstyp (IT)',
+  },
+};
+
 export const i18nForm = {
   newsletter: {
     error: {

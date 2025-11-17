@@ -156,23 +156,39 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   // Global Content
   // ############
 
-  // create publication topic
-  const publicationTopic = await payload.create({
+  // create publication topics
+  const publicationTopics = [
+    'Jahresbericht',
+    'Magazin',
+    'Studien und Berichte',
+    'Factsheets',
+    'Akademiereferate',
+  ];
+
+  const addedPublicationTopics = await Promise.all(publicationTopics.map((publicationTopic) => payload.create({
     collection: 'publicationTopics',
     data: {
-      publicationTopic: simpleRteConfig(`Publication Topic 1 ${tenant.toUpperCase()}`),
+      publicationTopic: simpleRteConfig(publicationTopic),
       tenant: tenantId,
     },
-  });
+  })));
 
-  // create publication type
-  const publicationType = await payload.create({
+  // create publication types
+  const publicationTypes = [
+    'Wissenschaftsbetrieb',
+    'Kultur und Gesellschaft',
+    'Demografischer Wandel',
+    'Bildung',
+    'Nachhaltigkeit',
+  ];
+
+  const addedPublicationTypes = await Promise.all(publicationTypes.map((publicationType) => payload.create({
     collection: 'publicationTypes',
     data: {
-      publicationType: simpleRteConfig(`Publication Type 1 ${tenant.toUpperCase()}`),
+      publicationType: simpleRteConfig(publicationType),
       tenant: tenantId,
     },
-  });
+  })));
 
   // create network category
   await payload.create({
@@ -893,8 +909,8 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       content: [
         {
           blockType: 'publicationsOverviewBlock',
-          filterTitleAllPublications: simpleRteConfig('All types'),
-          filterTitleAllTopics: simpleRteConfig('All topcis'),
+          filterTitleAllPublications: simpleRteConfig('Alle Publikationen'),
+          filterTitleAllTopics: simpleRteConfig('Alle Themen'),
           title: simpleRteConfig('All Publications'),
         },
       ],
@@ -1105,8 +1121,8 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       data: {
         _status: 'published',
         categorization: {
-          topic: publicationTopic.id,
-          type: publicationType.id,
+          topic: addedPublicationTopics[0].id,
+          type: addedPublicationTypes[0].id,
         },
         hero: {
           colorMode: 'white',

@@ -11,6 +11,7 @@ import {
   I18NGlobal,
   NewsDetailPage,
   PublicationDetailPage,
+  PublicationTopic,
   PublicationType,
 } from '@/payload-types';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
@@ -46,6 +47,36 @@ export const convertPayloadPublicationsPagesToFeItems = (payloadPages: Paginated
   });
 
   return items;
+};
+
+export const preparePublicationTypesFilterItems = (publicationTypes: PaginatedDocs<PublicationType>) => {
+  const publicationTypeItems: string[] = [];
+
+  publicationTypes.docs.forEach((publicationTypeItem) => {
+    const pubType: any = publicationTypeItem.publicationType;
+    const text = pubType?.root?.children?.[0]?.children?.[0]?.text;
+
+    if (typeof text === 'string') {
+      publicationTypeItems.push(text);
+    }
+  });
+
+  return publicationTypeItems;
+};
+
+export const preparePublicationTopicsFilterItems = (publicationTopics: PaginatedDocs<PublicationTopic>) => {
+  const publicationTopicItems: string[] = [];
+
+  publicationTopics.docs.forEach((publicationTopicItem) => {
+    const pubType: any = publicationTopicItem.publicationTopic;
+    const text = pubType?.root?.children?.[0]?.children?.[0]?.text;
+
+    if (typeof text === 'string') {
+      publicationTopicItems.push(text);
+    }
+  });
+
+  return publicationTopicItems;
 };
 
 export const convertPayloadNewsPagesToFeItems = (payloadPages: PaginatedDocs<NewsDetailPage>, lang: Config['locale']): InterfaceNewsListItemPropTypes[] => {
