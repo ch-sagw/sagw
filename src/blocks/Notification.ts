@@ -1,5 +1,6 @@
 import { Block } from 'payload';
 import { rte3 } from '@/field-templates/rte';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 // Example: Publication Overview Page
 
@@ -9,6 +10,7 @@ export const NotificationBlock = {
   },
   fields: [
     {
+      access: fieldAccessNonLocalizableField,
       admin: {
         description: 'If disabled, the notification will not be shown.',
       },

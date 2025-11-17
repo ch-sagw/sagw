@@ -78,6 +78,7 @@ export const fieldsMail: Field[] = [
     name: 'linkText',
   }),
   {
+    access: fieldAccessNonLocalizableField,
     localized: false,
     name: 'email',
     required: true,
@@ -87,6 +88,7 @@ export const fieldsMail: Field[] = [
 
 export const fieldsLinkInternalOrExternal = (props?: InterfaceLinkProps): Field[] => [
   {
+    access: fieldAccessNonLocalizableField,
     admin: {
       layout: 'horizontal',
     },
