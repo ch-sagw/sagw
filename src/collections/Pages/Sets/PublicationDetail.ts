@@ -12,6 +12,7 @@ import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
 import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccess } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -53,6 +54,7 @@ export const PublicationDetailPage: CollectionConfig = {
             {
               fields: [
                 {
+                  access: fieldAccessNonLocalizableField,
                   admin: {
                     description: 'This image will be used for the teasers on the overview page.',
                   },
@@ -62,6 +64,7 @@ export const PublicationDetailPage: CollectionConfig = {
                   type: 'relationship',
                 },
                 {
+                  access: fieldAccessNonLocalizableField,
                   name: 'date',
                   required: true,
                   type: 'date',
@@ -78,6 +81,7 @@ export const PublicationDetailPage: CollectionConfig = {
                 {
                   fields: [
                     {
+                      access: fieldAccessNonLocalizableField,
                       admin: {
                         width: '33.33%',
                       },
@@ -87,6 +91,7 @@ export const PublicationDetailPage: CollectionConfig = {
                       type: 'relationship',
                     },
                     {
+                      access: fieldAccessNonLocalizableField,
                       admin: {
                         width: '33.33%',
                       },
@@ -96,6 +101,7 @@ export const PublicationDetailPage: CollectionConfig = {
                       type: 'relationship',
                     },
                     {
+                      access: fieldAccessNonLocalizableField,
                       admin: {
                         width: '33.33%',
                       },

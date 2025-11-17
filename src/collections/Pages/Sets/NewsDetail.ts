@@ -13,6 +13,7 @@ import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
 import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccess } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -72,6 +73,7 @@ export const NewsDetailPage: CollectionConfig = {
             fieldsHeroNewsDetail,
 
             {
+              access: fieldAccessNonLocalizableField,
               name: 'project',
               relationTo: 'projects',
               required: false,

@@ -15,6 +15,7 @@ import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
 import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccess } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -50,6 +51,7 @@ export const ProjectDetailPage: CollectionConfig = {
 
             // project relation
             {
+              access: fieldAccessNonLocalizableField,
               name: 'project',
               relationTo: 'projects',
               required: true,

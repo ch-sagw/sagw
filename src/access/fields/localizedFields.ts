@@ -11,7 +11,7 @@ const accessFieldLocalizableDefault = ({
   req,
 }: InterfaceAccessParam): boolean => isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req);
 
-export const fieldAccessLocalizableField = {
+export const fieldAccessNonLocalizableField = {
   create: accessFieldLocalizableDefault,
   read: (): boolean => true,
   update: accessFieldLocalizableDefault,

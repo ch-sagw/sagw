@@ -13,6 +13,7 @@ import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
 import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccessInstituteDetail } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -40,6 +41,7 @@ export const InstituteDetailPage: CollectionConfig = {
             {
               fields: [
                 {
+                  access: fieldAccessNonLocalizableField,
                   admin: {
                     description: 'This image will be used for the teasers on the overview page.',
                   },

@@ -17,6 +17,7 @@ import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
 import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccess } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -114,17 +115,20 @@ export const EventDetailPage: CollectionConfig = {
                   notRequired: true,
                 }),
                 {
+                  access: fieldAccessNonLocalizableField,
                   name: 'category',
                   relationTo: 'eventCategory',
                   type: 'relationship',
                 },
                 {
+                  access: fieldAccessNonLocalizableField,
                   name: 'project',
                   relationTo: 'projects',
                   required: false,
                   type: 'relationship',
                 },
                 {
+                  access: fieldAccessNonLocalizableField,
                   admin: {
                     date: {
                       displayFormat: 'HH:mm',
@@ -138,16 +142,19 @@ export const EventDetailPage: CollectionConfig = {
                   type: 'date',
                 },
                 {
+                  access: fieldAccessNonLocalizableField,
                   name: 'date',
                   required: true,
                   type: 'date',
                 },
                 {
+                  access: fieldAccessNonLocalizableField,
                   defaultValue: false,
                   name: 'multipleDays',
                   type: 'checkbox',
                 },
                 {
+                  access: fieldAccessNonLocalizableField,
                   admin: {
                     condition: (_, siblingData) => siblingData.multipleDays,
                   },
@@ -160,6 +167,7 @@ export const EventDetailPage: CollectionConfig = {
               type: 'group',
             },
             {
+              access: fieldAccessNonLocalizableField,
               defaultValue: 'false',
               label: 'Do you want to have a detail page for this event or should the event link to an external page?',
               name: 'showDetailPage',

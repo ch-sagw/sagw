@@ -7,6 +7,7 @@ import {
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
 import { fieldAccessHeroAnimation } from '@/access/fields/hero';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 const colorMode = fieldsColorMode({
   dark: true,
@@ -24,6 +25,7 @@ const leadField: Field = rte2({
 });
 
 const dateField: Field = {
+  access: fieldAccessNonLocalizableField,
   name: 'date',
   required: true,
   type: 'date',
