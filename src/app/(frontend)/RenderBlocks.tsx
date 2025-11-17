@@ -47,6 +47,7 @@ import { EventsOverview } from '@/components/blocks/EventsOverview/EventsOvervie
 import { NewsTeaser } from '@/components/blocks/NewsTeaser/NewsTeaser';
 import { EventsTeaser } from '@/components/blocks/EventsTeaser/EventsTeaser';
 import { CtaLink } from '@/components/blocks/CtaLink/CtaLink';
+import { CtaContact } from '@/components/blocks/CtaContact/CtaContact';
 
 // blocks interface
 interface InterfaceRenderBlocksProps {
@@ -221,6 +222,18 @@ export const RenderBlocks = ({
                   <CtaLink
                     {...block}
                     language={pageLanguage}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'ctaContactBlock') {
+              return (
+                <div key={block.id || index}>
+                  <CtaContact
+                    {...block}
+                    pageLanguage={pageLanguage}
+                    buttonText={i18n.generic.writeEmailButtonText}
                   />
                 </div>
               );
