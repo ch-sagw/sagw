@@ -69,6 +69,7 @@ export const NetworkTeasersBlock = {
           name: 'linkText',
         }),
         {
+          access: fieldAccessNonLocalizableField,
           fields: fieldsNetworkItem,
           label: 'Network items',
           name: 'items',

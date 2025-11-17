@@ -5,6 +5,7 @@ import {
   rte1, rte4,
 } from '@/field-templates/rte';
 import { fieldsColorMode } from '@/field-templates/colorMode';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 // Example: Promotion page
 
@@ -36,6 +37,7 @@ export const AccordionBlock = {
       white: true,
     }),
     {
+      access: fieldAccessNonLocalizableField,
       fields: AccordionItem,
       name: 'accordions',
       required: true,

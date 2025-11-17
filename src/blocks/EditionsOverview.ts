@@ -3,6 +3,7 @@ import {
 } from 'payload';
 import { fieldsLinkExternal } from '@/field-templates/links';
 import { rte1 } from '@/field-templates/rte';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 // Example: Editions Overview
 
@@ -26,6 +27,7 @@ export const EditionsOverviewBlock = {
     {
       fields: [
         {
+          access: fieldAccessNonLocalizableField,
           fields: editionItem,
           label: 'Edition items',
           name: 'items',

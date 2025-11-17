@@ -47,6 +47,7 @@ export const HomeTeasersBlock = {
   },
   fields: [
     {
+      access: fieldAccessNonLocalizableField,
       fields: homeTeaserItem,
       name: 'homeTeasers',
       type: 'array',

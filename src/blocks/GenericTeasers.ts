@@ -43,6 +43,7 @@ export const GenericTeasersBlock = {
     }),
     alignementHorizontalVertical,
     {
+      access: fieldAccessNonLocalizableField,
       fields: TeaserItem,
       name: 'teasers',
       required: true,
