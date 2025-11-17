@@ -21,14 +21,14 @@ const dirname = path.dirname(filename);
 
 export default buildConfig({
   admin: {
-    // autoLogin:
-    //   process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true'
-    //     ? {
-    //       email: process.env.USER_SAGW_ADMIN_MAIL,
-    //       password: process.env.USER_SAGW_ADMIN_PASS,
-    //       prefillOnly: false,
-    //     }
-    //     : false,
+    autoLogin:
+      process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true'
+        ? {
+          email: process.env.USER_SAGW_ADMIN_MAIL,
+          password: process.env.USER_SAGW_ADMIN_PASS,
+          prefillOnly: false,
+        }
+        : false,
     components: {
       beforeDashboard: ['@/components/admin/EnvIndicator'],
       graphics: {

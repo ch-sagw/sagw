@@ -1,4 +1,6 @@
 
+// TODO: remove test from sagw and add it to non-sagw tenant
+
 import {
   expect,
   test,
