@@ -1,3 +1,5 @@
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import { fieldAccessMeta } from '@/access/fields/meta';
 import {
   MetaDescriptionField,
   MetaImageField,
@@ -6,10 +8,12 @@ import {
 import { Tab } from 'payload';
 
 export const fieldsTabMeta: Tab = {
+  access: fieldAccessMeta,
   fields: [
     {
       fields: [
         {
+          access: fieldAccessNonLocalizableField,
           defaultValue: true,
           label: 'Index for crawlers',
           name: 'index',
@@ -21,6 +25,7 @@ export const fieldsTabMeta: Tab = {
         }),
         MetaImageField({
           overrides: {
+            access: fieldAccessNonLocalizableField,
             localized: false,
           },
           relationTo: 'images',

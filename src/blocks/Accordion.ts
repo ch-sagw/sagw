@@ -2,9 +2,10 @@ import {
   Block, Field,
 } from 'payload';
 import {
-  rte1, rte3,
+  rte1, rte4,
 } from '@/field-templates/rte';
 import { fieldsColorMode } from '@/field-templates/colorMode';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 // Example: Promotion page
 
@@ -12,7 +13,7 @@ const AccordionItem: Field[] = [
   rte1({
     name: 'accordionTitle',
   }),
-  rte3({
+  rte4({
     name: 'accordionContent',
   }),
 ];
@@ -36,6 +37,7 @@ export const AccordionBlock = {
       white: true,
     }),
     {
+      access: fieldAccessNonLocalizableField,
       fields: AccordionItem,
       name: 'accordions',
       required: true,

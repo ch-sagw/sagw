@@ -4,70 +4,25 @@ import { Payload } from 'payload';
 
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
-  rte3ConsentBannerText, rte3FullRange,
+  rte4ConsentBannerText, rte4FullRange,
 } from '@/utilities/rteSampleContent';
-import { tenantRoles } from '@/collections/Plc/Users/roles';
 
-export const addDataForTenant = async (payload: Payload, tenant: string): Promise<void> => {
+interface InterfaceAddDataForTenantProps {
+  payload: Payload;
+  tenant: string;
+  tenantId: string;
+}
 
-  // ############
-  // Tenant & User
-  // ############
+export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): Promise<void> => {
 
-  // create tenant
-  const tenantId = await payload.create({
-    collection: 'tenants',
-    data: {
-      languages: {
-        de: true,
-        en: true,
-        fr: true,
-        it: true,
-      },
-      name: tenant.toLocaleUpperCase(),
-      slug: tenant,
-    },
-  });
+  const {
+    payload,
+    tenantId,
+  } = props;
 
-  // create user
-  if (process.env.PAYLOAD_INITIAL_USER_MAIL) {
-    await payload.create({
-      collection: 'users',
-      data: {
-        email: tenant === 'sagw'
-          ? process.env.PAYLOAD_INITIAL_USER_MAIL
-          : `${tenant}@foo.bar`,
-        password: process.env.PAYLOAD_INITIAL_PASSWORD,
-        tenants: [
-          {
-            roles: [tenantRoles.admin],
-            tenant: tenantId,
-          },
-        ],
-        username: `${tenant}-admin`,
-      },
-    });
-  }
+  const uppercaseTenant = props.tenant;
 
-  // create user for sagw
-  if (tenant === 'sagw') {
-    if (process.env.PAYLOAD_INITIAL_USER_SAGW_MAIL) {
-      await payload.create({
-        collection: 'users',
-        data: {
-          email: process.env.PAYLOAD_INITIAL_USER_SAGW_MAIL,
-          password: process.env.PAYLOAD_INITIAL_SAGW_PASSWORD,
-          tenants: [
-            {
-              roles: [tenantRoles.admin],
-              tenant: tenantId,
-            },
-          ],
-          username: 'Stella',
-        },
-      });
-    }
-  }
+  const tenant = uppercaseTenant.toLowerCase();
 
   // ############
   // Assets
@@ -77,7 +32,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
   const image = await payload.create({
     collection: 'images',
     data: {
-      alt: `${tenant.toUpperCase} image`,
+      alt: `${tenant.toUpperCase()} image`,
       tenant: tenantId,
     },
     filePath: `src/seed/test-data/assets/${tenant}.png`,
@@ -582,6 +537,12 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
           placeholder: 'Ihre E-Mail Adresse',
         },
         includeLanguageSelection: 'yes',
+        name: {
+          fieldError: simpleRteConfig('Bitte geben Sie Ihren Namen an.'),
+          fieldWidth: 'half',
+          label: simpleRteConfig('Name'),
+          placeholder: 'Ihr Name',
+        },
       },
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: true,
@@ -665,11 +626,11 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         },
         {
           blockType: 'textBlock',
-          text: rte3FullRange,
+          text: rte4FullRange,
         },
         {
           blockType: 'textBlock',
-          text: rte3FullRange,
+          text: rte4FullRange,
         },
         // {
         //   accordions: [
@@ -828,16 +789,6 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
               value: zenodoDocument.id,
             },
           ],
-          optionalLink: {
-            includeLink: true,
-            link: {
-              internalLink: {
-                documentId: home.id,
-                slug: 'some-slug',
-              },
-              linkText: simpleRteConfig('Alle Downloads'),
-            },
-          },
           subtitle: simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe'),
         },
       ],
@@ -1195,6 +1146,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
       },
       navigationTitle: 'National Dictionary',
       overviewPageProps: {
+        linkText: simpleRteConfig('some text'),
         teaserText: simpleRteConfig('Project Teaser Text'),
       },
       project,
@@ -1210,7 +1162,7 @@ export const addDataForTenant = async (payload: Payload, tenant: string): Promis
         buttonAcceptAll: simpleRteConfig('Alle zulassen'),
         buttonCustomizeSelection: simpleRteConfig('Auswahl anpassen'),
         buttonDeclineAll: simpleRteConfig('Alle ablehnen'),
-        text: rte3ConsentBannerText(home.id),
+        text: rte4ConsentBannerText(home.id),
         title: simpleRteConfig('Diese Webseite verwendet Cookies'),
       },
       overlay: {

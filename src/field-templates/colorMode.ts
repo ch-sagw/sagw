@@ -1,3 +1,4 @@
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 import {
   Field, Option,
 } from 'payload';
@@ -37,6 +38,7 @@ export const fieldsColorMode = ({
   }
 
   return {
+    access: fieldAccessNonLocalizableField,
     defaultValue: 'white',
     label: 'Color Mode',
     name: 'colorMode',

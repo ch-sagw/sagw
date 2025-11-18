@@ -1,9 +1,8 @@
 import type { CollectionConfig } from 'payload';
+import { assetsAccess } from '@/access/assets';
 
 export const Images: CollectionConfig = {
-  access: {
-    read: () => true,
-  },
+  access: assetsAccess,
   admin: {
     description: 'Allowed image formats: png, jpg, jpeg, gif, webp, avif, tiff',
     group: 'Assets',

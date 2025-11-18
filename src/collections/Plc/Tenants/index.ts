@@ -1,17 +1,11 @@
 import type { CollectionConfig } from 'payload';
-
-import { isSuperAdminAccess } from '@/access/isSuperAdmin';
-import { updateAndDeleteAccess } from '@/collections/Plc/Tenants/access/updateAndDelete';
+import {
+  fieldsAccess, languageAccess, tenantsAccess,
+} from '@/access/tenants';
+import { isSuperOrTenantAdmin } from '../Users/roles';
 
 export const Tenants: CollectionConfig = {
-  access: {
-    create: isSuperAdminAccess,
-    delete: updateAndDeleteAccess,
-    read: ({
-      req,
-    }) => Boolean(req.user),
-    update: updateAndDeleteAccess,
-  },
+  access: tenantsAccess,
   admin: {
     defaultColumns: [
       'name',
@@ -19,17 +13,29 @@ export const Tenants: CollectionConfig = {
       'slug',
     ],
     group: 'Org',
+    hidden: ({
+      user,
+    }): boolean => !isSuperOrTenantAdmin(user),
     useAsTitle: 'name',
   },
   fields: [
     {
-      localized: true,
+      access: fieldsAccess,
+      localized: false,
       name: 'name',
       required: true,
       type: 'text',
       unique: true,
     },
     {
+      access: fieldsAccess,
+      localized: true,
+      name: 'title',
+      required: true,
+      type: 'text',
+    },
+    {
+      access: fieldsAccess,
       admin: {
         description: 'Used for domain-based tenant handling',
       },
@@ -38,6 +44,7 @@ export const Tenants: CollectionConfig = {
       unique: true,
     },
     {
+      access: fieldsAccess,
       admin: {
         description: 'Used for url paths, example: /tenant-slug/page-slug',
       },
@@ -51,21 +58,25 @@ export const Tenants: CollectionConfig = {
     {
       fields: [
         {
+          access: languageAccess,
           defaultValue: true,
           name: 'de',
           type: 'checkbox',
         },
         {
+          access: languageAccess,
           defaultValue: true,
           name: 'fr',
           type: 'checkbox',
         },
         {
+          access: languageAccess,
           defaultValue: true,
           name: 'it',
           type: 'checkbox',
         },
         {
+          access: languageAccess,
           defaultValue: true,
           name: 'en',
           type: 'checkbox',

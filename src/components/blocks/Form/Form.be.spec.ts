@@ -248,8 +248,6 @@ test.describe('Custom Form', () => {
 
     await submit.click();
 
-    await (await form.elementHandle())?.waitForElementState('stable');
-
     // expect success message
     const notification = page.getByText('Submit title success SAGW', {
       exact: true,
@@ -309,6 +307,47 @@ test.describe('Newsletter Form', () => {
 
     await expect(mailError)
       .not.toBeVisible();
+  });
+
+  test('correctly validates text', async ({
+    page,
+  }) => {
+    // go to home
+    await page.goto('http://localhost:3000/');
+    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+
+    const form = await page.locator('form')
+      .nth(1);
+
+    const submit = await form.locator('button');
+
+    await submit.click();
+
+    await (await form.elementHandle())?.waitForElementState('stable');
+
+    // expect form error: required
+
+    const nameError = await form.getByText('Bitte geben Sie Ihren Namen an.', {
+      exact: true,
+    });
+
+    await expect(nameError)
+      .toBeVisible();
+
+    // fill valid value
+    const nameField = await form.getByLabel('name');
+
+    await nameField.fill('name');
+
+    // expect no error
+    await submit.click();
+
+    await (await form.elementHandle())?.waitForElementState('stable');
+
+    await expect(nameError)
+      .not.toBeVisible();
+
   });
 
   test('correctly validates checkbox', async ({
@@ -403,8 +442,10 @@ test.describe('Newsletter Form', () => {
     const submit = await form.locator('button');
 
     const mailField = await form.getByLabel('e-mail');
+    const nameField = await form.getByLabel('name');
     const checkboxField = await form.locator('input[type="checkbox"]');
 
+    await nameField.fill('testname');
     await mailField.fill('testmail');
     await checkboxField.click({
       force: true,
@@ -415,6 +456,8 @@ test.describe('Newsletter Form', () => {
 
     await (await form.elementHandle())?.waitForElementState('stable');
 
+    await expect(nameField)
+      .toHaveValue('testname');
     await expect(mailField)
       .toHaveValue('testmail');
     await expect(checkboxField)
@@ -434,16 +477,16 @@ test.describe('Newsletter Form', () => {
     const submit = await form.locator('button');
 
     const mailField = await form.getByLabel('e-mail');
+    const nameField = await form.getByLabel('name');
     const checkboxField = await form.getByText('Data privacy checkbox SAGW');
     const radioField = await form.getByText('Deutsch');
 
     await radioField.click();
     await mailField.fill('mail@foo.bar');
+    await nameField.fill('name');
     await checkboxField.click();
 
     await submit.click();
-
-    await (await form.elementHandle())?.waitForElementState('stable');
 
     // expect success message
     const notification = page.getByText('Newsletter Submit title success SAGW', {

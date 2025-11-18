@@ -26,7 +26,6 @@ export const NewsOverview = async (props: InterfaceNewsOverviewPropTypes): Promi
     depth: 1,
     limit: 0,
     locale: props.language,
-    overrideAccess: false,
     pagination: false,
     sort: '-hero.date',
     where: {

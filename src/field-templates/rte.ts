@@ -80,6 +80,17 @@ const rte1Editor = lexicalEditor({
 const rte2Editor = lexicalEditor({
   features: [
     FixedToolbarFeature(),
+    ItalicFeature(),
+    SubscriptFeature(),
+    SuperscriptFeature(),
+    SoftHyphenFeature(),
+    NonBreakingSpaceFeature(),
+  ],
+});
+
+const rte3Editor = lexicalEditor({
+  features: [
+    FixedToolbarFeature(),
     BoldFeature(),
     ItalicFeature(),
     UnderlineFeature(),
@@ -97,7 +108,7 @@ const rte2Editor = lexicalEditor({
   ],
 });
 
-const rte3Editor = lexicalEditor({
+const rte4Editor = lexicalEditor({
   features: [
     FixedToolbarFeature(),
     BoldFeature(),
@@ -173,8 +184,11 @@ export const rte1 = ({
 });
 
 export const rte2 = ({
-  name, notRequired,
+  name, notRequired, disableLocalization, adminDescription, adminCondition,
 }: InterfaceRteInputType): RichTextField => rte({
+  adminCondition,
+  adminDescription,
+  disableLocalization,
   editor: rte2Editor,
   name,
   notRequired,
@@ -184,6 +198,14 @@ export const rte3 = ({
   name, notRequired,
 }: InterfaceRteInputType): RichTextField => rte({
   editor: rte3Editor,
+  name,
+  notRequired,
+});
+
+export const rte4 = ({
+  name, notRequired,
+}: InterfaceRteInputType): RichTextField => rte({
+  editor: rte4Editor,
   name,
   notRequired,
 });

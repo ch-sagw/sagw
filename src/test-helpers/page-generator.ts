@@ -280,6 +280,7 @@ export const generateProjectDetailPage = async (props: InterfacePageProps): Prom
       },
       navigationTitle: props.navigationTitle,
       overviewPageProps: {
+        linkText: simpleRteConfig('some text'),
         teaserText: simpleRteConfig('some text'),
       },
       parentPage: props.parentPage,

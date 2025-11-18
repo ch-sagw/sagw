@@ -8,6 +8,7 @@ import {
 } from '@/field-templates/adminTitle';
 import { rte1 } from '@/field-templates/rte';
 import { fieldInternalLinkChooser } from '@/components/admin/InternalLinkChooser/InternalLinkChooserField';
+import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
 
 const navLinkDefaultFields: Field[] = [
   rte1({
@@ -45,9 +46,7 @@ const navLinkLevel2: Field[] = [
 ];
 
 export const Header: CollectionConfig = {
-  access: {
-    read: (): boolean => true,
-  },
+  access: globalContentAccessNoTranslatorNoEditor,
   admin: {
     group: 'Global Content',
     useAsTitle: fieldAdminTitleFieldName,

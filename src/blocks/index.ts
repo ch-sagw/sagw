@@ -28,6 +28,7 @@ import { InstitutesOverviewBlock } from '@/blocks/InstitutesOverview';
 import { ProjectOverviewBlock } from '@/blocks/ProjectOverview';
 import { ProjectTeasersBlock } from '@/blocks/ProjectTeasers';
 import { FootnotesBlock } from '@/blocks/Footnotes';
+import { EditionsOverviewBlock } from './EditionsOverview';
 
 // Overview blocks. Group them, since we need to ensure 1 block
 // per page in the page collections.
@@ -40,6 +41,7 @@ const overviewBlocks = [
   NationalDictionariesOverviewBlock,
   InstitutesOverviewBlock,
   ProjectOverviewBlock,
+  EditionsOverviewBlock,
 ] as const;
 
 // Export overview block slugs for filtering

@@ -326,9 +326,9 @@ export const sampleRte1: InterfaceRte = {
 };
 
 /*
-RTE2 Example notification
+rte3 Example notification
 */
-export const rte2NotificationText: InterfaceRte = {
+export const rte3NotificationText: InterfaceRte = {
   root: {
     children: [
       {
@@ -394,7 +394,7 @@ export const rte2NotificationText: InterfaceRte = {
   },
 };
 
-export const rte2NotificationTextWithUl: InterfaceRte = {
+export const rte3NotificationTextWithUl: InterfaceRte = {
   root: {
     children: [
       {
@@ -573,9 +573,9 @@ export const rte2NotificationTextWithUl: InterfaceRte = {
 };
 
 /*
-RTE3 consent banner text
+RTE4 consent banner text
 */
-export const rte3ConsentBannerText = (homeId: string): InterfaceRte => ({
+export const rte4ConsentBannerText = (homeId: string): InterfaceRte => ({
   root: {
     children: [
       {
@@ -644,9 +644,9 @@ export const rte3ConsentBannerText = (homeId: string): InterfaceRte => ({
 });
 
 /*
-RTE3 accordion example content
+RTE4 accordion example content
 */
-export const rte3AccordionContent: InterfaceRte = {
+export const rte4AccordionContent: InterfaceRte = {
   root: {
     children: [
       {
@@ -1811,14 +1811,14 @@ export const rte3AccordionContent: InterfaceRte = {
 };
 
 /*
-RTE3 e.g. magazine detail
+RTE4 e.g. magazine detail
 
 Showing many potential combinations of elements
-within RTE3 config. Multiple headline levels after
+within RTE4 config. Multiple headline levels after
 each other, internal and external links, ol, ul,
 strikethrough, underline, bold, italic
 */
-export const rte3FullRange: InterfaceRte = {
+export const rte4FullRange: InterfaceRte = {
   root: {
     children: [
       {

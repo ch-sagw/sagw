@@ -3,6 +3,8 @@ import {
   test,
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
+import configPromise from '@/payload.config';
+import { getPayload } from 'payload';
 
 test.describe('seoFallback', () => {
   beforeEachPayloadLogin();
@@ -10,6 +12,9 @@ test.describe('seoFallback', () => {
   test('page inherits seo from home', async ({
     page,
   }) => {
+    const payload = await getPayload({
+      config: configPromise,
+    });
 
     // create a news detail page
     await page.goto('http://localhost:3000/admin/collections/newsDetailPage/create');
@@ -44,24 +49,33 @@ test.describe('seoFallback', () => {
     });
 
     // fetch sagw image
-    const imageResponse = await fetch('http://localhost:3000/api/images?where[alt][equals]=SAGW%20image');
-    const image = await imageResponse.json();
+    const imageResponse = await payload.find({
+      collection: 'images',
+      where: {
+        alt: {
+          equals: 'SAGW image',
+        },
+      },
+    });
 
     // test api response
     const url = page.url();
     const parts = url.split('/');
     const id = parts[parts.length - 1];
-    const res = await fetch(`http://localhost:3000/api/newsDetailPage/${id}`);
-    const newsPage = await res.json();
 
-    await expect(newsPage.meta.seo.title)
+    const newsPage = await payload.findByID({
+      collection: 'newsDetailPage',
+      id,
+    });
+
+    await expect(newsPage?.meta?.seo?.title)
       .toBe('SEO Title SAGW');
 
-    await expect(newsPage.meta.seo.description)
+    await expect(newsPage?.meta?.seo?.description)
       .toBe('SEO Description SAGW');
 
-    await expect(newsPage.meta.seo.image[0].id)
-      .toBe(image.id);
+    await expect(newsPage?.meta?.seo?.image)
+      .toBe(imageResponse.docs[0].id);
 
   });
 });

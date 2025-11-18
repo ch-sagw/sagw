@@ -56,7 +56,6 @@ export default async function DetailPage({
         depth: 1,
         limit: 1,
         locale: language,
-        // overrideAccess: false,
         where: {
           and: [
             {

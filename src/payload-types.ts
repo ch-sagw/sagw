@@ -118,6 +118,7 @@ export interface Config {
     header: Header;
     statusMessage: StatusMessage;
     theme: Theme;
+    'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -178,6 +179,7 @@ export interface Config {
     header: HeaderSelect<false> | HeaderSelect<true>;
     statusMessage: StatusMessageSelect<false> | StatusMessageSelect<true>;
     theme: ThemeSelect<false> | ThemeSelect<true>;
+    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -260,6 +262,7 @@ export interface HomePage {
 export interface Tenant {
   id: string;
   name: string;
+  title: string;
   /**
    * Used for domain-based tenant handling
    */
@@ -592,6 +595,41 @@ export interface Form {
         [k: string]: unknown;
       } | null;
     };
+    name: {
+      label: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      placeholder: string;
+      fieldWidth: 'full' | 'half';
+      required?: boolean | null;
+      fieldError?: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+    };
     /**
      * The action text to show at the bottom of the notification. e.g.: "Send verifiaction E-Mail again."
      */
@@ -876,7 +914,7 @@ export interface InterfaceHomeTeasersBlock {
           };
           [k: string]: unknown;
         };
-        icon: 'bar';
+        iconName: 'bar';
         link: {
           linkText: {
             root: {
@@ -1599,27 +1637,6 @@ export interface InterfaceDownloadsBlock {
     };
     [k: string]: unknown;
   } | null;
-  optionalLink?: {
-    includeLink?: boolean | null;
-    link?: {
-      linkText: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
-      internalLink: InterfaceInternalLinkValue;
-    };
-  };
   customOrAuto: 'custom' | 'auto';
   downloads?:
     | (
@@ -2296,7 +2313,28 @@ export interface ProjectDetailPage {
   breadcrumb?: InterfaceBreadcrumb;
   project: string | Project;
   overviewPageProps: {
+    /**
+     * This text will be used as text for the teasers on the overview page and in teaser blocks.
+     */
     teaserText: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    /**
+     * This text will be used as link-text for the teasers on the overview page and in teaser blocks.
+     */
+    linkText: {
       root: {
         type: string;
         children: {
@@ -2628,6 +2666,7 @@ export interface OverviewPage {
         | InterfaceNationalDictionariesOverviewBlock
         | InterfaceInstitutesOverviewBlock
         | InterfaceProjectOverviewBlock
+        | InterfaceEditionsOverviewBlock
         | InterfaceEventsTeasersBlock
         | InterfaceMagazineTeasersBlock
         | InterfaceNewsTeasersBlock
@@ -3154,6 +3193,51 @@ export interface InterfaceProjectOverviewBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceEditionsOverviewBlock".
+ */
+export interface InterfaceEditionsOverviewBlock {
+  items: {
+    items: {
+      title: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      text: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      externalLink: string;
+      id?: string | null;
+    }[];
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'editionsOverview';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "detailPage".
  */
 export interface DetailPage {
@@ -3227,6 +3311,9 @@ export interface InterfaceVideoBlock {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * The © will be added automatically in front of this text.
+   */
   credits: {
     root: {
       type: string;
@@ -3393,7 +3480,7 @@ export interface User {
   tenants?:
     | {
         tenant: string | Tenant;
-        roles: ('tenant-admin' | 'editor')[];
+        roles: ('tenant-admin' | 'editor-magazine' | 'translator')[];
         id?: string | null;
       }[]
     | null;
@@ -4403,6 +4490,23 @@ export interface Theme {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv".
+ */
+export interface PayloadKv {
+  id: string;
+  key: string;
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -4679,7 +4783,7 @@ export interface InterfaceHomeTeasersBlockSelect<T extends boolean = true> {
         category?: T;
         title?: T;
         text?: T;
-        icon?: T;
+        iconName?: T;
         link?:
           | T
           | {
@@ -4971,17 +5075,6 @@ export interface InterfaceLinksBlockSelect<T extends boolean = true> {
  */
 export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
   subtitle?: T;
-  optionalLink?:
-    | T
-    | {
-        includeLink?: T;
-        link?:
-          | T
-          | {
-              linkText?: T;
-              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
-            };
-      };
   customOrAuto?: T;
   downloads?: T;
   project?: T;
@@ -5051,6 +5144,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
         nationalDictionariesOverviewBlock?: T | InterfaceNationalDictionariesOverviewBlockSelect<T>;
         institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
         projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
+        editionsOverview?: T | InterfaceEditionsOverviewBlockSelect<T>;
         eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
         magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
         newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
@@ -5247,6 +5341,26 @@ export interface InterfaceInstitutesOverviewBlockSelect<T extends boolean = true
  */
 export interface InterfaceProjectOverviewBlockSelect<T extends boolean = true> {
   message?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceEditionsOverviewBlock_select".
+ */
+export interface InterfaceEditionsOverviewBlockSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        items?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              externalLink?: T;
+              id?: T;
+            };
+      };
   id?: T;
   blockName?: T;
 }
@@ -5618,6 +5732,7 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
     | T
     | {
         teaserText?: T;
+        linkText?: T;
       };
   hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
@@ -5824,6 +5939,7 @@ export interface EventCategorySelect<T extends boolean = true> {
  */
 export interface TenantsSelect<T extends boolean = true> {
   name?: T;
+  title?: T;
   domain?: T;
   slug?: T;
   languages?:
@@ -5930,6 +6046,15 @@ export interface FormsSelect<T extends boolean = true> {
     | T
     | {
         email?:
+          | T
+          | {
+              label?: T;
+              placeholder?: T;
+              fieldWidth?: T;
+              required?: T;
+              fieldError?: T;
+            };
+        name?:
           | T
           | {
               label?: T;
@@ -6285,6 +6410,14 @@ export interface ThemeSelect<T extends boolean = true> {
   themeSelector?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv_select".
+ */
+export interface PayloadKvSelect<T extends boolean = true> {
+  key?: T;
+  data?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
