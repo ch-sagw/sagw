@@ -1,20 +1,20 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
-import { hookAdminTitle } from '@/hooks-payload/adminTitle';
-import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import {
-  fieldAdminTitle, fieldAdminTitleFieldName,
-} from '@/field-templates/adminTitle';
-import { hookSeoFallback } from '@/hooks-payload/seoFallback';
-import { blocks } from '@/blocks';
+  blocks, BlockSlug,
+} from '@/blocks';
 import { versions } from '@/field-templates/versions';
-import { fieldSlug } from '@/field-templates/slug';
-import { hookSlug } from '@/hooks-payload/slug';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
+import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
+import { genericPageFields } from '@/field-templates/genericPageFields';
+import { pageAccess } from '@/access/pages';
+import { allBlocksButTranslator } from '@/access/blocks';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
-const contentBlocks = [
+const contentBlocks: BlockSlug[] = [
   'textBlock',
   'linksBlock',
   'downloadsBlock',
@@ -22,19 +22,15 @@ const contentBlocks = [
   'bibliographicReferenceBlock',
   'notificationBlock',
   'publicationsTeasersBlock',
-] as const;
+];
 
-type ContentBlock = typeof contentBlocks[number];
-
-const uniqueBlocks: ContentBlock[] = [
+const uniqueBlocks: BlockSlug[] = [
   'downloadsBlock',
   'linksBlock',
 ];
 
 export const PublicationDetailPage: CollectionConfig = {
-  access: {
-    read: (): boolean => true,
-  },
+  access: pageAccess,
   admin: {
     defaultColumns: [
       'adminTitle',
@@ -46,9 +42,7 @@ export const PublicationDetailPage: CollectionConfig = {
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
-    fieldLinkablePage,
-    fieldAdminTitle,
-    fieldSlug,
+    ...genericPageFields(),
     {
       tabs: [
 
@@ -60,6 +54,7 @@ export const PublicationDetailPage: CollectionConfig = {
             {
               fields: [
                 {
+                  access: fieldAccessNonLocalizableField,
                   admin: {
                     description: 'This image will be used for the teasers on the overview page.',
                   },
@@ -69,6 +64,7 @@ export const PublicationDetailPage: CollectionConfig = {
                   type: 'relationship',
                 },
                 {
+                  access: fieldAccessNonLocalizableField,
                   name: 'date',
                   required: true,
                   type: 'date',
@@ -85,6 +81,7 @@ export const PublicationDetailPage: CollectionConfig = {
                 {
                   fields: [
                     {
+                      access: fieldAccessNonLocalizableField,
                       admin: {
                         width: '33.33%',
                       },
@@ -94,6 +91,7 @@ export const PublicationDetailPage: CollectionConfig = {
                       type: 'relationship',
                     },
                     {
+                      access: fieldAccessNonLocalizableField,
                       admin: {
                         width: '33.33%',
                       },
@@ -103,6 +101,7 @@ export const PublicationDetailPage: CollectionConfig = {
                       type: 'relationship',
                     },
                     {
+                      access: fieldAccessNonLocalizableField,
                       admin: {
                         width: '33.33%',
                       },
@@ -126,10 +125,21 @@ export const PublicationDetailPage: CollectionConfig = {
             // Content Blocks
             {
               blocks: blocks(contentBlocks),
-              filterOptions: excludeBlocksFilterSingle({
-                allBlockTypes: contentBlocks,
-                onlyAllowedOnceBlockTypes: uniqueBlocks,
-              }),
+              filterOptions: ({
+                siblingData, req,
+              }): BlockSlug[] => {
+                const onlyOnceBlockFilter = excludeBlocksFilterSingle({
+                  allBlockTypes: contentBlocks,
+                  onlyAllowedOnceBlockTypes: uniqueBlocks,
+                })({
+                  siblingData,
+                });
+
+                return allBlocksButTranslator({
+                  allBlocks: onlyOnceBlockFilter,
+                  req,
+                });
+              },
               label: 'Content',
               name: 'content',
               type: 'blocks',
@@ -148,13 +158,7 @@ export const PublicationDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: {
-    beforeChange: [hookSeoFallback],
-    beforeValidate: [
-      hookAdminTitle,
-      hookSlug,
-    ],
-  },
+  hooks: genericPageHooks(),
   labels: {
     plural: 'Publication Detail Pages',
     singular: 'Publication Detail',

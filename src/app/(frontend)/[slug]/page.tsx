@@ -56,7 +56,6 @@ export default async function DetailPage({
         depth: 1,
         limit: 1,
         locale: language,
-        // overrideAccess: false,
         where: {
           and: [
             {
@@ -148,6 +147,7 @@ export default async function DetailPage({
             foundCollection={foundCollection}
             pageData={pageData}
             language={language}
+            i18nGeneric={i18nData.generic}
           />
           {contentBlocks && (
             <RenderBlocks

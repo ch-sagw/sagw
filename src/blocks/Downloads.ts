@@ -1,6 +1,6 @@
 import { Block } from 'payload';
-import { rte1 } from '@/field-templates/rte';
-import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
+import { rte2 } from '@/field-templates/rte';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 // Example: Publication Detail
 
@@ -9,12 +9,12 @@ export const DownloadsBlock = {
     disableBlockName: true,
   },
   fields: [
-    rte1({
+    rte2({
       name: 'subtitle',
       notRequired: true,
     }),
-    fieldsLinkInternalWithToggle({}),
     {
+      access: fieldAccessNonLocalizableField,
       defaultValue: 'custom',
       name: 'customOrAuto',
       options: [
@@ -31,6 +31,7 @@ export const DownloadsBlock = {
       type: 'radio',
     },
     {
+      access: fieldAccessNonLocalizableField,
       admin: {
         condition: (_, siblingData): boolean => siblingData.customOrAuto === 'custom',
       },
@@ -46,6 +47,7 @@ export const DownloadsBlock = {
       type: 'relationship',
     },
     {
+      access: fieldAccessNonLocalizableField,
       admin: {
         condition: (_, siblingData): boolean => siblingData.customOrAuto === 'auto',
       },

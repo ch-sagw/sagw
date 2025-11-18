@@ -1,3 +1,4 @@
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 import { Block } from 'payload';
 
 // Example: Activities
@@ -8,6 +9,7 @@ export const FormBlock = {
   },
   fields: [
     {
+      access: fieldAccessNonLocalizableField,
       hasMany: false,
       name: 'form',
       relationTo: 'forms',

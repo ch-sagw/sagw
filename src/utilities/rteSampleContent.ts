@@ -64,6 +64,250 @@ export const creditsRte1: InterfaceRte = {
   },
 };
 
+export const homeHeroTitle: InterfaceRte = {
+  root: {
+
+    children: [
+
+      {
+
+        children: [
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'Wir fördern lang',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'frist',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'ige Forsch',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'ungs',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'in',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'fra',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'struk',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'tur',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'en, ver',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'netzen Akt',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'eure und ver',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'mitt',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'eln Wi',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: '­',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'ssen.',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        textFormat: 0,
+        textStyle: '',
+        type: 'paragraph',
+        version: 1,
+      },
+    ],
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+};
+
 export const sampleRte1: InterfaceRte = {
   root: {
     children: [
@@ -146,9 +390,9 @@ export const sampleRte1: InterfaceRte = {
 };
 
 /*
-RTE2 Example notification
+rte3 Example notification
 */
-export const rte2NotificationText: InterfaceRte = {
+export const rte3NotificationText: InterfaceRte = {
   root: {
     children: [
       {
@@ -214,7 +458,7 @@ export const rte2NotificationText: InterfaceRte = {
   },
 };
 
-export const rte2NotificationTextWithUl: InterfaceRte = {
+export const rte3NotificationTextWithUl: InterfaceRte = {
   root: {
     children: [
       {
@@ -393,9 +637,9 @@ export const rte2NotificationTextWithUl: InterfaceRte = {
 };
 
 /*
-RTE3 consent banner text
+RTE4 consent banner text
 */
-export const rte3ConsentBannerText = (homeId: string): InterfaceRte => ({
+export const rte4ConsentBannerText = (homeId: string): InterfaceRte => ({
   root: {
     children: [
       {
@@ -464,9 +708,9 @@ export const rte3ConsentBannerText = (homeId: string): InterfaceRte => ({
 });
 
 /*
-RTE3 accordion example content
+RTE4 accordion example content
 */
-export const rte3AccordionContent: InterfaceRte = {
+export const rte4AccordionContent: InterfaceRte = {
   root: {
     children: [
       {
@@ -1631,14 +1875,14 @@ export const rte3AccordionContent: InterfaceRte = {
 };
 
 /*
-RTE3 e.g. magazine detail
+RTE4 e.g. magazine detail
 
 Showing many potential combinations of elements
-within RTE3 config. Multiple headline levels after
+within RTE4 config. Multiple headline levels after
 each other, internal and external links, ol, ul,
 strikethrough, underline, bold, italic
 */
-export const rte3FullRange: InterfaceRte = {
+export const rte4FullRange: InterfaceRte = {
   root: {
     children: [
       {

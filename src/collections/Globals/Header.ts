@@ -7,22 +7,17 @@ import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 import { rte1 } from '@/field-templates/rte';
+import { fieldInternalLinkChooser } from '@/components/admin/InternalLinkChooser/InternalLinkChooserField';
+import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
 
 const navLinkDefaultFields: Field[] = [
   rte1({
     name: 'navItemText',
   }),
-  {
-    admin: {
-      components: {
-        Field: {
-          path: '@/components/admin/InternalLinkChooser/InternalLinkChooser',
-        },
-      },
-    },
+  fieldInternalLinkChooser({
     name: 'navItemLink',
-    type: 'text',
-  },
+    optional: true,
+  }),
 ];
 
 const navLinkLevel1: Field[] = [
@@ -51,9 +46,7 @@ const navLinkLevel2: Field[] = [
 ];
 
 export const Header: CollectionConfig = {
-  access: {
-    read: (): boolean => true,
-  },
+  access: globalContentAccessNoTranslatorNoEditor,
   admin: {
     group: 'Global Content',
     useAsTitle: fieldAdminTitleFieldName,

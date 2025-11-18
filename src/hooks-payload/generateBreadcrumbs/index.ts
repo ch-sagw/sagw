@@ -1,0 +1,185 @@
+// Recursively build breadcrumbs by following the parent chain
+// Returns breadcrumbs in root-to-leaf order with all locales
+
+import { CollectionBeforeChangeHook } from 'payload';
+import { fieldSlugFieldName } from '@/field-templates/slug';
+import { fieldNavigationTitleFieldName } from '@/field-templates/navigationTitle';
+import { fieldParentSelectorFieldName } from '@/field-templates/parentSelector';
+import { fieldBreadcrumbFieldName } from '@/field-templates/breadcrumb';
+import {
+  Config, InterfaceBreadcrumb, InterfaceInternalLinkValue,
+} from '@/payload-types';
+
+type LocalizedString = Partial<Record<Config['locale'], string>>;
+
+const hasNonEmptyValue = (localizedString: LocalizedString | undefined): boolean => {
+  if (!localizedString || typeof localizedString !== 'object') {
+    return false;
+  }
+
+  return Object.values(localizedString)
+    .some((value) => value && value.trim().length > 0);
+};
+
+export const buildBreadcrumbs = async (
+  payload: any,
+  parentRef: InterfaceInternalLinkValue | undefined | null | Record<string, never>,
+  breadcrumbs: InterfaceBreadcrumb = [],
+): Promise<InterfaceBreadcrumb> => {
+  // Handle null, undefined, or invalid parentRef - we've reached the root
+  if (!parentRef || typeof parentRef !== 'object') {
+    return breadcrumbs;
+  }
+
+  // Handle empty object - this means no parent is set (root)
+  if (Object.keys(parentRef).length === 0) {
+    return breadcrumbs;
+  }
+
+  // Ensure parentRef has required properties (slug and documentId)
+  if (!('slug' in parentRef) || !('documentId' in parentRef) || !parentRef.slug || !parentRef.documentId) {
+    return breadcrumbs;
+  }
+
+  try {
+    const parentDoc = await payload.findByID({
+      collection: parentRef.slug,
+      depth: 0,
+      id: parentRef.documentId,
+      locale: 'all',
+    });
+
+    const parentSlugRaw = parentDoc[fieldSlugFieldName] as LocalizedString | undefined;
+    const parentNavigationTitleRaw = parentDoc[fieldNavigationTitleFieldName] as LocalizedString | undefined;
+
+    // If current parent doesn't have navigationTitle, return empty array
+    // This breaks the chain - all descendants will have empty breadcrumbs
+    if (!hasNonEmptyValue(parentSlugRaw) || !hasNonEmptyValue(parentNavigationTitleRaw) || !parentRef.documentId) {
+      return [];
+    }
+
+    // Current parent has navigationTitle, add it to breadcrumbs
+    const currentBreadcrumb = {
+      documentId: parentRef.documentId,
+      namede: parentNavigationTitleRaw?.de || '',
+      nameen: parentNavigationTitleRaw?.en || '',
+      namefr: parentNavigationTitleRaw?.fr || '',
+      nameit: parentNavigationTitleRaw?.it || '',
+      slugde: parentSlugRaw?.de || '',
+      slugen: parentSlugRaw?.en || '',
+      slugfr: parentSlugRaw?.fr || '',
+      slugit: parentSlugRaw?.it || '',
+    };
+
+    const breadcrumbsArray = Array.isArray(breadcrumbs)
+      ? breadcrumbs
+      : [];
+    const newBreadcrumbs = [
+      currentBreadcrumb,
+      ...breadcrumbsArray,
+    ];
+
+    // Recursively get the parent's parent
+    const parentParentRef = parentDoc[fieldParentSelectorFieldName] as InterfaceInternalLinkValue | undefined;
+
+    // Check if there's a parent to recurse to
+    const hasParent = parentParentRef &&
+      typeof parentParentRef === 'object' &&
+      Object.keys(parentParentRef).length > 0 &&
+      'slug' in parentParentRef &&
+      'documentId' in parentParentRef &&
+      parentParentRef.slug &&
+      parentParentRef.documentId;
+
+    if (!hasParent) {
+      // We've reached the root, return the breadcrumbs we've built
+      return newBreadcrumbs;
+    }
+
+    // Recurse to get ancestors
+    const ancestorBreadcrumbs = await buildBreadcrumbs(payload, parentParentRef, []);
+
+    // If ancestors returned empty array, that means we hit a missing
+    // navigationTitle up the chain
+    if (!ancestorBreadcrumbs || ancestorBreadcrumbs.length === 0) {
+      return [];
+    }
+
+    // Combine ancestor breadcrumbs with current breadcrumbs
+    const ancestorArray = Array.isArray(ancestorBreadcrumbs)
+      ? ancestorBreadcrumbs
+      : [];
+
+    return [
+      ...ancestorArray,
+      ...newBreadcrumbs,
+    ];
+  } catch (error) {
+    console.error('Error building breadcrumbs:', error);
+  }
+
+  // If we couldn't fetch the parent or there was an error, return empty
+  // This ensures we don't have partial breadcrumbs
+  return [];
+};
+
+export const hookGenerateBreadcrumbs: CollectionBeforeChangeHook = async ({
+  data,
+  req,
+  operation,
+  originalDoc,
+}) => {
+  if (!data || !req?.payload) {
+    return data;
+  }
+
+  if (![
+    'create',
+    'update',
+  ].includes(operation)) {
+    return data;
+  }
+
+  // Get parent IDs for comparison, handling empty objects, null, and undefined
+  const getParentDocumentId = (parent: any): string | undefined => {
+    if (!parent || typeof parent !== 'object') {
+      return undefined;
+    }
+
+    if (Object.keys(parent).length === 0) {
+      return undefined;
+    }
+
+    if ('documentId' in parent && parent.documentId) {
+      return String(parent.documentId);
+    }
+
+    return undefined;
+  };
+
+  const newParentId = getParentDocumentId(data[fieldParentSelectorFieldName]);
+  const oldParentId = getParentDocumentId(originalDoc?.[fieldParentSelectorFieldName]);
+  const hasBreadcrumbs = data[fieldBreadcrumbFieldName] && Array.isArray(data[fieldBreadcrumbFieldName]) && data[fieldBreadcrumbFieldName].length > 0;
+  const parentChanged = newParentId !== oldParentId;
+
+  if (!parentChanged && hasBreadcrumbs) {
+    return data;
+  }
+
+  if (newParentId || parentChanged) {
+    const parentRef = data[fieldParentSelectorFieldName] as InterfaceInternalLinkValue | undefined;
+    const breadcrumbs = await buildBreadcrumbs(req.payload, parentRef);
+
+    return {
+      ...data,
+      [fieldBreadcrumbFieldName]: breadcrumbs,
+    };
+  }
+
+  // No parent and no change - clear breadcrumbs
+  return {
+    ...data,
+    [fieldBreadcrumbFieldName]: [],
+  };
+};
+

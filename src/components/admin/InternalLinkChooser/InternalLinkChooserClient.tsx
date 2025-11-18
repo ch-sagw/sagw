@@ -25,6 +25,9 @@ interface InternalLinkChooserClientProps {
   collectionSlug: string;
   slugs: InterfaceSlug[];
   required: boolean;
+  label?: string;
+  description?: string;
+  readOnly?: boolean;
 }
 
 interface InterfaceFetchPages {
@@ -55,18 +58,23 @@ const fetchPages = async ({
     const json = await res.json();
     const groupOptions: Option[] = [];
 
-    for (const doc of json.docs) {
-      let isNotCurrentPage = true;
+    if (json.docs) {
+      for (const doc of json.docs) {
+        let isNotCurrentPage = true;
 
-      if (currentId) {
-        isNotCurrentPage = `${slug.slug}/${doc.id}` !== `${collectionSlug}/${currentId}`;
-      }
+        if (currentId) {
+          isNotCurrentPage = `${slug.slug}/${doc.id}` !== `${collectionSlug}/${currentId}`;
+        }
 
-      if (collectionIsLinkablePage(doc) && isNotCurrentPage) {
-        groupOptions.push({
-          label: doc[fieldAdminTitleFieldName],
-          value: `${slug.slug}/${doc.id}`,
-        });
+        if (collectionIsLinkablePage(doc) && isNotCurrentPage) {
+          groupOptions.push({
+            label: doc[fieldAdminTitleFieldName],
+            value: {
+              id: doc.id,
+              slug: slug.slug,
+            },
+          });
+        }
       }
     }
 
@@ -90,16 +98,40 @@ const InternalLinkChooserClient = ({
   collectionSlug,
   slugs,
   required,
+  label,
+  description,
+  readOnly = false,
 }: InternalLinkChooserClientProps): JSX.Element => {
 
   // hooks
+  // For group fields, use nested paths
+  const {
+    value: slugValue,
+    setValue: setSlugValue,
+  } = useField<string | null>({
+    path: `${path}.slug`,
+  });
 
   const {
-    value, setValue,
-    showError,
+    value: idValue,
+    setValue: setIdValue,
   } = useField<string | null>({
+    path: `${path}.documentId`,
+  });
+
+  const {
+    showError,
+  } = useField({
     path,
   });
+
+  // Combine slug and documentId into object
+  const value = (slugValue && idValue)
+    ? {
+      id: idValue,
+      slug: slugValue,
+    }
+    : null;
 
   // state
 
@@ -118,8 +150,17 @@ const InternalLinkChooserClient = ({
 
   useEffect(() => {
 
-    const loadOptions = async (tenant: string): Promise<void> => {
+    const loadOptions = async (tenant: string | null): Promise<void> => {
       setLoading(true);
+
+      if (!tenant || !collectionSlug) {
+        // If no tenant is selected, set loading to false and options to empty
+        setOptions([]);
+        setLoading(false);
+
+        return;
+      }
+
       const opts = await fetchPages({
         collectionSlug,
         currentId,
@@ -128,31 +169,39 @@ const InternalLinkChooserClient = ({
       });
 
       setOptions([...opts]);
-
       setLoading(false);
     };
 
-    if (tenantContext.selectedTenantID && collectionSlug) {
-      /* eslint-disable @typescript-eslint/no-floating-promises */
-      loadOptions(tenantContext.selectedTenantID as string);
-      /* eslint-enable @typescript-eslint/no-floating-promises */
+    const selectedTenantID = tenantContext?.selectedTenantID;
 
-    }
+    /* eslint-disable @typescript-eslint/no-floating-promises */
+    loadOptions(selectedTenantID as string | null);
+    /* eslint-enable @typescript-eslint/no-floating-promises */
   }, [
     collectionSlug,
     currentId,
     slugs,
-    tenantContext.selectedTenantID,
+    tenantContext?.selectedTenantID,
   ]);
 
   const flatOptions = options.flatMap((group) => group.options);
-  const selectedOption = flatOptions.find((opt) => opt.value === value);
+
+  // Find matching option by comparing slug and id
+  const selectedOption = flatOptions.find((opt) => {
+    if (typeof opt.value === 'object' && opt.value !== null && 'slug' in opt.value && 'id' in opt.value) {
+      return opt.value.slug === value?.slug && opt.value.id === value?.id;
+    }
+
+    return false;
+  });
 
   return (
-    <div>
+    <div style={{
+      marginBlockEnd: 'var(--spacing-field)',
+    }}>
       <FieldLabel
         required={required}
-        label='Link Target'
+        label={label}
         htmlFor={`field-${path}`}
       />
       <Select
@@ -160,16 +209,53 @@ const InternalLinkChooserClient = ({
         value={selectedOption}
         isLoading={loading}
         inputId={`field-${path}`}
+        disabled={readOnly}
+        getOptionValue={(option: Option) => {
+          // Return a unique string identifier for React Select's internal use
+          if (typeof option.value === 'object' && option.value !== null && 'slug' in option.value && 'id' in option.value) {
+            return `${option.value.slug}/${option.value.id}`;
+          }
+
+          return String(option.value);
+        }}
         onChange={(newValue) => {
+          if (readOnly) {
+            return;
+          }
+
           if (!newValue || Array.isArray(newValue)) {
-            setValue(null);
+            setSlugValue(null);
+            setIdValue(null);
           } else {
-            setValue(newValue.value as string);
+            const valueObj = newValue.value as { slug: string; id: string } | string;
+
+            if (typeof valueObj === 'object' && valueObj !== null && 'slug' in valueObj && 'id' in valueObj) {
+              const slug = String(valueObj.slug || '');
+              const id = String(valueObj.id || '');
+
+              // Set nested fields separately for group fields
+              setIdValue(id);
+              setSlugValue(slug);
+            } else {
+              setSlugValue(null);
+              setIdValue(null);
+            }
           }
         }}
         showError={showError}
         isClearable
       />
+
+      {description && (
+        <div style={{
+          color: 'var(--theme-elevation-400)',
+          fontSize: '13px',
+          marginBottom: '0.5rem',
+          marginTop: '5px',
+        }}>
+          {description}
+        </div>
+      )}
     </div>
   );
 };

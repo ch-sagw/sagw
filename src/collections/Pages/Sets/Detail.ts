@@ -1,21 +1,19 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
-import { hookAdminTitle } from '@/hooks-payload/adminTitle';
-import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import {
-  fieldAdminTitle, fieldAdminTitleFieldName,
-} from '@/field-templates/adminTitle';
-import { hookSeoFallback } from '@/hooks-payload/seoFallback';
-import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superAdminOrTenantAdmin';
-import { blocks } from '@/blocks';
+  blocks, BlockSlug,
+} from '@/blocks';
 import { versions } from '@/field-templates/versions';
-import { fieldSlug } from '@/field-templates/slug';
-import { hookSlug } from '@/hooks-payload/slug';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
+import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
+import { genericPageFields } from '@/field-templates/genericPageFields';
+import { pageAccess } from '@/access/pages';
+import { allBlocksButTranslator } from '@/access/blocks';
 
-const contentBlocks = [
+const contentBlocks: BlockSlug[] = [
   'textBlock',
   'footnoteBlock',
   'linksBlock',
@@ -28,22 +26,15 @@ const contentBlocks = [
   'ctaLinkBlock',
   'notificationBlock',
   'genericTeasersBlock',
-] as const;
+];
 
-type ContentBlock = typeof contentBlocks[number];
-
-const uniqueBlocks: ContentBlock[] = [
+const uniqueBlocks: BlockSlug[] = [
   'downloadsBlock',
   'linksBlock',
 ];
 
 export const DetailPage: CollectionConfig = {
-  access: {
-    create: superAdminOrTenantAdminAccess,
-    delete: superAdminOrTenantAdminAccess,
-    read: () => true,
-    update: superAdminOrTenantAdminAccess,
-  },
+  access: pageAccess,
   admin: {
     defaultColumns: [
       'adminTitle',
@@ -55,9 +46,7 @@ export const DetailPage: CollectionConfig = {
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
-    fieldLinkablePage,
-    fieldAdminTitle,
-    fieldSlug,
+    ...genericPageFields(),
     {
       tabs: [
 
@@ -71,10 +60,21 @@ export const DetailPage: CollectionConfig = {
             // Content Blocks
             {
               blocks: blocks(contentBlocks),
-              filterOptions: excludeBlocksFilterSingle({
-                allBlockTypes: contentBlocks,
-                onlyAllowedOnceBlockTypes: uniqueBlocks,
-              }),
+              filterOptions: ({
+                siblingData, req,
+              }): BlockSlug[] => {
+                const onlyOnceBlockFilter = excludeBlocksFilterSingle({
+                  allBlockTypes: contentBlocks,
+                  onlyAllowedOnceBlockTypes: uniqueBlocks,
+                })({
+                  siblingData,
+                });
+
+                return allBlocksButTranslator({
+                  allBlocks: onlyOnceBlockFilter,
+                  req,
+                });
+              },
               label: 'Content',
               name: 'content',
               type: 'blocks',
@@ -92,13 +92,7 @@ export const DetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: {
-    beforeChange: [hookSeoFallback],
-    beforeValidate: [
-      hookAdminTitle,
-      hookSlug,
-    ],
-  },
+  hooks: genericPageHooks(),
   labels: {
     plural: 'Detail Pages',
     singular: 'Detail Page',

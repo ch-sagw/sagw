@@ -1,6 +1,8 @@
 import { alignementHorizontalVertical } from '@/field-templates/alignement';
 import { fieldsLinkInternal } from '@/field-templates/links';
-import { rte1 } from '@/field-templates/rte';
+import {
+  rte1, rte2,
+} from '@/field-templates/rte';
 import { Block } from 'payload';
 
 // Example: Activities
@@ -13,7 +15,7 @@ export const MagazineTeasersBlock = {
     rte1({
       name: 'title',
     }),
-    rte1({
+    rte2({
       name: 'lead',
       notRequired: true,
     }),

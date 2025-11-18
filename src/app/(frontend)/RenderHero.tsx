@@ -1,10 +1,16 @@
+'use client';
+
+import {
+  InterfaceBreadcrumbItem, InterfaceBreadcrumbPropTypes,
+} from '@/components/base/Breadcrumb/Breadcrumb';
 import {
   Hero, InterfaceHeroPropTypes,
 } from '@/components/global/Hero/Hero';
 import {
   Config,
   EventCategory,
-  InterfaceHeroField, InterfaceHeroFieldMagazineDetail, InterfaceHeroFieldNewsDetail,
+  InterfaceHeroField,
+  InterfaceHeroFieldMagazineDetail, InterfaceHeroFieldNewsDetail, InterfaceI18NGeneric,
 } from '@/payload-types';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { CollectionSlug } from 'payload';
@@ -26,10 +32,12 @@ export const RenderHero = ({
   foundCollection,
   pageData,
   language,
+  i18nGeneric,
 }: {
   foundCollection: CollectionSlug;
   pageData: PageTypes | null;
   language: Config['locale']
+  i18nGeneric: InterfaceI18NGeneric;
 }): React.JSX.Element | undefined => {
 
   if (!pageData || !foundCollection) {
@@ -98,19 +106,49 @@ export const RenderHero = ({
     return undefined;
   }
 
+  // TODO: write generic url generator. it is more complicated than the current
+  // implementation. e.g: for each segment, we should fallback to `namede`
+  // and `slugde`.
+  const breadcrumbItems: InterfaceBreadcrumbItem[] = (pageData.breadcrumb ?? []).reduce<InterfaceBreadcrumbItem[]>((acc, item) => {
+    const nameKey = `name${language}`;
+    const slugKey = `slug${language}`;
+
+    if (nameKey in item && slugKey in item) {
+      const text = item[nameKey as keyof typeof item];
+      const link = item[slugKey as keyof typeof item];
+
+      if (typeof text === 'string') {
+
+        // just for safety: remove leading and trailing slashes
+        const slugSegment = String(link ?? '')
+          .replace(/^\/+|\/+$/gu, '');
+
+        if (slugSegment.length > 0) {
+          const previousLink = acc.length > 0
+            ? acc[acc.length - 1].link
+            : '';
+
+          // just for safety: remove trailing slashes
+          const base = previousLink.replace(/\/+$/gu, '');
+          const nextLink = base.length > 0
+            ? `${base}/${slugSegment}`
+            : `/${slugSegment}`;
+
+          acc.push({
+            link: nextLink,
+            text,
+          });
+        }
+      }
+    }
+
+    return acc;
+  }, []);
+
   // TODO
-  const sampleBreadcrumb = {
+  const breadcrumb: InterfaceBreadcrumbPropTypes = {
     colorMode: heroProps.colorMode,
-    items: [
-      {
-        link: '/',
-        text: 'Some nav level 1',
-      },
-      {
-        link: '/',
-        text: 'Some nav level 2',
-      },
-    ],
+    items: breadcrumbItems,
     pageLanguage: language,
   };
 
@@ -136,6 +174,7 @@ export const RenderHero = ({
         {...heroProps as InterfaceHeroFieldMagazineDetail}
         pageLanguage={language}
         type='magazineDetail'
+        exportArticleText={i18nGeneric.exportArticleButtonText}
       />
     );
   } else if (heroProps && heroType === 'generic') {
@@ -144,7 +183,7 @@ export const RenderHero = ({
         {...heroProps as InterfaceHeroField}
         pageLanguage={language}
         type='generic'
-        breadcrumb={sampleBreadcrumb}
+        breadcrumb={breadcrumb}
       />
     );
   }

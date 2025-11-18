@@ -1,22 +1,21 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHeroNewsDetail } from '@/field-templates/hero';
-import { fieldLinkablePage } from '@/field-templates/linkablePage';
-import { hookAdminTitle } from '@/hooks-payload/adminTitle';
+import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import {
-  fieldAdminTitle, fieldAdminTitleFieldName,
-} from '@/field-templates/adminTitle';
-import { hookSeoFallback } from '@/hooks-payload/seoFallback';
-import { blocks } from '@/blocks';
+  blocks, BlockSlug,
+} from '@/blocks';
 import { versions } from '@/field-templates/versions';
-import { hookFormsBlockOnCreate } from '@/hooks-payload/formsBlockOnCreate';
-import { fieldSlug } from '@/field-templates/slug';
-import { hookSlug } from '@/hooks-payload/slug';
-import { rte1 } from '@/field-templates/rte';
+import { rte2 } from '@/field-templates/rte';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
+import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
+import { genericPageFields } from '@/field-templates/genericPageFields';
+import { pageAccess } from '@/access/pages';
+import { allBlocksButTranslator } from '@/access/blocks';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
-const contentBlocks = [
+const contentBlocks: BlockSlug[] = [
   'textBlock',
   'linksBlock',
   'downloadsBlock',
@@ -24,19 +23,16 @@ const contentBlocks = [
   'formBlock',
   'notificationBlock',
   'newsTeasersBlock',
-] as const;
+];
 
-type ContentBlock = typeof contentBlocks[number];
-
-const uniqueBlocks: ContentBlock[] = [
+const uniqueBlocks: BlockSlug[] = [
   'downloadsBlock',
   'linksBlock',
+  'newsTeasersBlock',
 ];
 
 export const NewsDetailPage: CollectionConfig = {
-  access: {
-    read: (): boolean => true,
-  },
+  access: pageAccess,
   admin: {
     defaultColumns: [
       'adminTitle',
@@ -48,9 +44,7 @@ export const NewsDetailPage: CollectionConfig = {
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
-    fieldLinkablePage,
-    fieldAdminTitle,
-    fieldSlug,
+    ...genericPageFields(),
     {
       tabs: [
 
@@ -65,7 +59,7 @@ export const NewsDetailPage: CollectionConfig = {
                   admin: {
                     description: 'This text will be used as text for the teasers on the overview page.',
                   },
-                  ...rte1({
+                  ...rte2({
                     name: 'teaserText',
                   }),
                 },
@@ -79,6 +73,7 @@ export const NewsDetailPage: CollectionConfig = {
             fieldsHeroNewsDetail,
 
             {
+              access: fieldAccessNonLocalizableField,
               name: 'project',
               relationTo: 'projects',
               required: false,
@@ -88,10 +83,21 @@ export const NewsDetailPage: CollectionConfig = {
             // Content Blocks
             {
               blocks: blocks(contentBlocks),
-              filterOptions: excludeBlocksFilterSingle({
-                allBlockTypes: contentBlocks,
-                onlyAllowedOnceBlockTypes: uniqueBlocks,
-              }),
+              filterOptions: ({
+                siblingData, req,
+              }): BlockSlug[] => {
+                const onlyOnceBlockFilter = excludeBlocksFilterSingle({
+                  allBlockTypes: contentBlocks,
+                  onlyAllowedOnceBlockTypes: uniqueBlocks,
+                })({
+                  siblingData,
+                });
+
+                return allBlocksButTranslator({
+                  allBlocks: onlyOnceBlockFilter,
+                  req,
+                });
+              },
               label: 'Content',
               name: 'content',
               type: 'blocks',
@@ -110,14 +116,7 @@ export const NewsDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: {
-    beforeChange: [hookSeoFallback],
-    beforeValidate: [
-      hookAdminTitle,
-      hookFormsBlockOnCreate,
-      hookSlug,
-    ],
-  },
+  hooks: genericPageHooks(),
   labels: {
     plural: 'News Detail Pages',
     singular: 'News Detail',

@@ -139,7 +139,9 @@ export const Footer = ({
         }
 
         const navItem: InterfaceMetanavItem = {
-          link: item.linkInternal?.internalLink || '',
+
+          // TODO: generate url
+          link: item.linkInternal?.internalLink.slug || '',
           target: '_blank',
           text: rteToHtml(item.linkInternal?.linkText),
         };
@@ -199,7 +201,9 @@ export const Footer = ({
           ? navItem.subNavItems.map((subnavItem) => ({
             colorMode: 'dark',
             footer: false,
-            link: subnavItem.navItemLink || '',
+
+            // TODO: generate url
+            link: subnavItem.navItemLink?.slug || '',
             pageLanguage,
             text: rteToHtml(subnavItem.navItemText),
           }))

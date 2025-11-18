@@ -3,11 +3,10 @@ import { CollectionConfig } from 'payload';
 import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
+import { globalContentAccessTheme } from '@/access/globalContent';
 
 export const Theme: CollectionConfig = {
-  access: {
-    read: (): boolean => true,
-  },
+  access: globalContentAccessTheme,
   admin: {
     group: 'Global Content',
     useAsTitle: fieldAdminTitleFieldName,

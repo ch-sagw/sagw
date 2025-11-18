@@ -126,6 +126,11 @@ const defaultFormConfig: FormProps = {
         label: simpleRteConfig('foo'),
         placeholder: 'baz',
       },
+      name: {
+        fieldWidth: 'full',
+        label: simpleRteConfig('foo'),
+        placeholder: 'baz',
+      },
     },
     recipientMail: 'foo@bar.baz',
     showPrivacyCheckbox: true,
@@ -135,7 +140,10 @@ const defaultFormConfig: FormProps = {
         includeLink: false,
 
         link: {
-          internalLink: '/',
+          internalLink: {
+            documentId: '12345',
+            slug: 'some-slug',
+          },
           linkText: simpleRteConfig('foo'),
         },
       },
@@ -147,7 +155,10 @@ const defaultFormConfig: FormProps = {
         includeLink: false,
 
         link: {
-          internalLink: '/',
+          internalLink: {
+            documentId: '12345',
+            slug: 'some-slug',
+          },
           linkText: simpleRteConfig('foo'),
         },
       },

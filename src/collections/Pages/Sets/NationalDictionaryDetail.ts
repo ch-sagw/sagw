@@ -1,43 +1,36 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
-import { hookAdminTitle } from '@/hooks-payload/adminTitle';
-import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import {
-  fieldAdminTitle, fieldAdminTitleFieldName,
-} from '@/field-templates/adminTitle';
-import { hookSeoFallback } from '@/hooks-payload/seoFallback';
-import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superAdminOrTenantAdmin';
-import { blocks } from '@/blocks';
+  blocks, BlockSlug,
+} from '@/blocks';
 import { versions } from '@/field-templates/versions';
-import { rte1 } from '@/field-templates/rte';
+import { rte2 } from '@/field-templates/rte';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
+import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
+import { genericPageFields } from '@/field-templates/genericPageFields';
+import { pageAccessNationalDictionary } from '@/access/pages';
+import { allBlocksButTranslator } from '@/access/blocks';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
-const contentBlocks = [
+const contentBlocks: BlockSlug[] = [
   'textBlock',
   'linksBlock',
   'notificationBlock',
-] as const;
+];
 
-type ContentBlock = typeof contentBlocks[number];
-
-const uniqueBlocks: ContentBlock[] = ['linksBlock'];
+const uniqueBlocks: BlockSlug[] = ['linksBlock'];
 
 export const NationalDictionaryDetailPage: CollectionConfig = {
-  access: {
-    create: superAdminOrTenantAdminAccess,
-    delete: superAdminOrTenantAdminAccess,
-    read: () => true,
-    update: superAdminOrTenantAdminAccess,
-  },
+  access: pageAccessNationalDictionary,
   admin: {
     group: 'Pages',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
-    fieldLinkablePage,
-    fieldAdminTitle,
+    ...genericPageFields(),
     {
       tabs: [
 
@@ -48,6 +41,7 @@ export const NationalDictionaryDetailPage: CollectionConfig = {
             {
               fields: [
                 {
+                  access: fieldAccessNonLocalizableField,
                   admin: {
                     description: 'This image will be used for the teasers on the overview page.',
                   },
@@ -60,7 +54,7 @@ export const NationalDictionaryDetailPage: CollectionConfig = {
                   admin: {
                     description: 'This text will be used for the teasers on the overview page.',
                   },
-                  ...rte1({
+                  ...rte2({
                     name: 'teaserText',
                   }),
                 },
@@ -76,10 +70,21 @@ export const NationalDictionaryDetailPage: CollectionConfig = {
             // Content Blocks
             {
               blocks: blocks(contentBlocks),
-              filterOptions: excludeBlocksFilterSingle({
-                allBlockTypes: contentBlocks,
-                onlyAllowedOnceBlockTypes: uniqueBlocks,
-              }),
+              filterOptions: ({
+                siblingData, req,
+              }): BlockSlug[] => {
+                const onlyOnceBlockFilter = excludeBlocksFilterSingle({
+                  allBlockTypes: contentBlocks,
+                  onlyAllowedOnceBlockTypes: uniqueBlocks,
+                })({
+                  siblingData,
+                });
+
+                return allBlocksButTranslator({
+                  allBlocks: onlyOnceBlockFilter,
+                  req,
+                });
+              },
               label: 'Content',
               name: 'content',
               type: 'blocks',
@@ -97,10 +102,7 @@ export const NationalDictionaryDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: {
-    beforeChange: [hookSeoFallback],
-    beforeValidate: [hookAdminTitle],
-  },
+  hooks: genericPageHooks(),
   labels: {
     plural: 'National Dictionary Detail Pages',
     singular: 'National Dictionary Detail Page',

@@ -1,3 +1,12 @@
+export const i18nNavigation = {
+  navigationTitleTranslations: {
+    de: 'Home',
+    en: 'Home',
+    fr: 'Home',
+    it: 'Home',
+  },
+};
+
 export const i18nForm = {
   newsletter: {
     error: {

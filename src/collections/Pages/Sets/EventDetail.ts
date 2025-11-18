@@ -2,28 +2,30 @@ import {
   CollectionConfig, Field,
 } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { hookAdminTitle } from '@/hooks-payload/adminTitle';
-import { fieldLinkablePage } from '@/field-templates/linkablePage';
+import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import {
-  fieldAdminTitle, fieldAdminTitleFieldName,
-} from '@/field-templates/adminTitle';
-import { hookSeoFallback } from '@/hooks-payload/seoFallback';
-import { blocks } from '@/blocks';
+  blocks, BlockSlug,
+} from '@/blocks';
 import { fieldsLinkExternal } from '@/field-templates/links';
 import { versions } from '@/field-templates/versions';
-import { fieldSlug } from '@/field-templates/slug';
-import { hookSlug } from '@/hooks-payload/slug';
-import { rte1 } from '@/field-templates/rte';
+import {
+  rte1, rte2,
+} from '@/field-templates/rte';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
+import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
+import { genericPageFields } from '@/field-templates/genericPageFields';
+import { pageAccess } from '@/access/pages';
+import { allBlocksButTranslator } from '@/access/blocks';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
-const contentBlocks = [
+const contentBlocks: BlockSlug[] = [
   'textBlock',
   'ctaLinkBlock',
   'downloadsBlock',
   'formBlock',
   'notificationBlock',
-] as const;
+];
 
 type ContentBlock = typeof contentBlocks[number];
 
@@ -37,10 +39,21 @@ const fieldsForDetailPage: Field[] = [
     fields: [
       {
         blocks: blocks(contentBlocks),
-        filterOptions: excludeBlocksFilterSingle({
-          allBlockTypes: contentBlocks,
-          onlyAllowedOnceBlockTypes: uniqueBlocks,
-        }),
+        filterOptions: ({
+          siblingData, req,
+        }): BlockSlug[] => {
+          const onlyOnceBlockFilter = excludeBlocksFilterSingle({
+            allBlockTypes: contentBlocks,
+            onlyAllowedOnceBlockTypes: uniqueBlocks,
+          })({
+            siblingData,
+          });
+
+          return allBlocksButTranslator({
+            allBlocks: onlyOnceBlockFilter,
+            req,
+          });
+        },
         label: 'Content',
         name: 'content',
         type: 'blocks',
@@ -69,9 +82,7 @@ const fieldsForNoDetailPage: Field[] = [
 ];
 
 export const EventDetailPage: CollectionConfig = {
-  access: {
-    read: (): boolean => true,
-  },
+  access: pageAccess,
   admin: {
     defaultColumns: [
       'adminTitle',
@@ -83,9 +94,7 @@ export const EventDetailPage: CollectionConfig = {
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
-    fieldLinkablePage,
-    fieldAdminTitle,
-    fieldSlug,
+    ...genericPageFields(),
     {
       tabs: [
 
@@ -94,7 +103,7 @@ export const EventDetailPage: CollectionConfig = {
           fields: [
             {
               fields: [
-                rte1({
+                rte2({
                   name: 'title',
                 }),
                 rte1({
@@ -106,23 +115,26 @@ export const EventDetailPage: CollectionConfig = {
                   notRequired: true,
                 }),
                 {
+                  access: fieldAccessNonLocalizableField,
                   name: 'category',
                   relationTo: 'eventCategory',
                   type: 'relationship',
                 },
                 {
+                  access: fieldAccessNonLocalizableField,
                   name: 'project',
                   relationTo: 'projects',
                   required: false,
                   type: 'relationship',
                 },
                 {
+                  access: fieldAccessNonLocalizableField,
                   admin: {
                     date: {
                       displayFormat: 'HH:mm',
                       pickerAppearance: 'timeOnly',
                       timeFormat: 'HH:mm',
-                      timeIntervals: 10,
+                      timeIntervals: 5,
                     },
                   },
                   name: 'time',
@@ -130,16 +142,19 @@ export const EventDetailPage: CollectionConfig = {
                   type: 'date',
                 },
                 {
+                  access: fieldAccessNonLocalizableField,
                   name: 'date',
                   required: true,
                   type: 'date',
                 },
                 {
+                  access: fieldAccessNonLocalizableField,
                   defaultValue: false,
                   name: 'multipleDays',
                   type: 'checkbox',
                 },
                 {
+                  access: fieldAccessNonLocalizableField,
                   admin: {
                     condition: (_, siblingData) => siblingData.multipleDays,
                   },
@@ -152,6 +167,7 @@ export const EventDetailPage: CollectionConfig = {
               type: 'group',
             },
             {
+              access: fieldAccessNonLocalizableField,
               defaultValue: 'false',
               label: 'Do you want to have a detail page for this event or should the event link to an external page?',
               name: 'showDetailPage',
@@ -180,13 +196,7 @@ export const EventDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: {
-    beforeChange: [hookSeoFallback],
-    beforeValidate: [
-      hookAdminTitle,
-      hookSlug,
-    ],
-  },
+  hooks: genericPageHooks(),
   labels: {
     plural: 'Event Detail Pages',
     singular: 'Event Detail Detail',
