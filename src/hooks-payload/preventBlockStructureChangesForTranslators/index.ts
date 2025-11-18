@@ -27,7 +27,11 @@ export const hookPreventBlockStructureChangesForTranslators = (): CollectionBefo
 
   // all blocks are inside the content field, except for the event detail page
   if (!newBlocks || newBlocks.length < 1) {
-    newBlocks = data?.['blocks'][fieldName];
+    if (data?.['blocks']) {
+      newBlocks = data?.['blocks'][fieldName];
+    } else {
+      return data;
+    }
   }
 
   let originalBlocks = originalDoc?.[fieldName];
