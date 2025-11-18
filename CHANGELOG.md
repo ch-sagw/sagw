@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.23.1](https://github.com/ch-sagw/sagw/compare/v0.23.0...v0.23.1) (2025-11-18)
+
+
+### Bug Fixes
+
+* manually bump vercel dep ([a40277d](https://github.com/ch-sagw/sagw/commit/a40277db7d78684efc386267b6d93f41daeee07e))
+* revert jsdom to version 27.0.0 ([bddcc83](https://github.com/ch-sagw/sagw/commit/bddcc83f409da9cc42b2d78de78778c3bf6e6c8e))
+
 ## [0.23.0](https://github.com/ch-sagw/sagw/compare/v0.22.3...v0.23.0) (2025-11-18)
 
 
