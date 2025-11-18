@@ -12,13 +12,9 @@ Förderung -> project teaser -> no padding
   @include list-reset;
 
   // double specifity to overwrite button style
-  &.teaser:is(:hover, :focus-visible) .linkText:after {
+  &.teaser:is(:hover) .linkText:after,
+  &.teaser .wrapper:is(:focus-visible) .linkText:after {
     @include button-line-hover;
-  }
-
-  // double specifity to overwrite button style
-  &.teaser:not(:hover, :focus-visible) .linkText:after {
-    @include button-line-blur;
   }
 
   &.border {

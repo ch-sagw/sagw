@@ -233,7 +233,10 @@
   &:not(:hover, :focus-visible) {
     .innerText {
       &:after {
-        @include button-line-blur;
+        transform-origin: right;
+        transform: scaleX(0);
+        transition-timing-function: var(--motion-ease-in);
+        opacity: 0.5;
       }
     }
 
