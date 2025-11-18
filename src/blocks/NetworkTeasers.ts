@@ -5,6 +5,7 @@ import { fieldsLinkExternal } from '@/field-templates/links';
 import {
   rte1, rte2,
 } from '@/field-templates/rte';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 // Example: Network
 
@@ -13,17 +14,20 @@ const fieldsNetworkItem: Field[] = [
     name: 'title',
   }),
   {
+    access: fieldAccessNonLocalizableField,
     name: 'category',
     relationTo: 'networkCategories',
     required: true,
     type: 'relationship',
   },
   {
+    access: fieldAccessNonLocalizableField,
     name: 'foundingYear',
     required: false,
     type: 'number',
   },
   {
+    access: fieldAccessNonLocalizableField,
     name: 'image',
     relationTo: 'images',
     required: true,
@@ -65,6 +69,7 @@ export const NetworkTeasersBlock = {
           name: 'linkText',
         }),
         {
+          access: fieldAccessNonLocalizableField,
           fields: fieldsNetworkItem,
           label: 'Network items',
           name: 'items',

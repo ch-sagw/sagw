@@ -7,6 +7,7 @@ import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 import { rte1 } from '@/field-templates/rte';
+import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
 
 const fieldsSocialLink: Field[] = [
   ...fieldsLinkExternal({
@@ -38,9 +39,7 @@ const fieldsSocialLink: Field[] = [
 ];
 
 export const Footer: CollectionConfig = {
-  access: {
-    read: (): boolean => true,
-  },
+  access: globalContentAccessNoTranslatorNoEditor,
   admin: {
     group: 'Global Content',
     useAsTitle: fieldAdminTitleFieldName,

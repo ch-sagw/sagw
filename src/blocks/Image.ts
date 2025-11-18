@@ -1,3 +1,4 @@
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 import {
   rte1, rte2,
 } from '@/field-templates/rte';
@@ -11,6 +12,7 @@ export const ImageBlock = {
   },
   fields: [
     {
+      access: fieldAccessNonLocalizableField,
       defaultValue: 'center',
       name: 'alignement',
       options: [
@@ -30,6 +32,7 @@ export const ImageBlock = {
       type: 'select',
     },
     {
+      access: fieldAccessNonLocalizableField,
       name: 'image',
       relationTo: 'images',
       required: true,

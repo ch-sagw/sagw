@@ -26,7 +26,6 @@ export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<R
     depth: 1,
     limit: 3,
     locale: props.language,
-    overrideAccess: false,
     pagination: false,
     sort: '-hero.date',
     where: {

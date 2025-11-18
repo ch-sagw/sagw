@@ -1,6 +1,8 @@
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 import { Field } from 'payload';
 
 export const alignementHorizontalVertical: Field = ({
+  access: fieldAccessNonLocalizableField,
   admin: {
     description: 'Align Title & text horizontally or vertically',
   },

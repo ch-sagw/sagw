@@ -12,8 +12,8 @@ import sharp from 'sharp';
 import plugins from '@/plugins';
 import { collections } from '@/collections';
 import { Users } from '@/collections/Plc/Users';
-import { seedInitialUserAndTenant } from '@/seed/init';
 import { seedTestData } from '@/seed/test-data';
+import { seedTenantsAndUsers } from '@/seed/seedTenantsAndUsers/index';
 import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
 
 const filename = fileURLToPath(import.meta.url);
@@ -24,8 +24,8 @@ export default buildConfig({
     autoLogin:
       process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true'
         ? {
-          email: process.env.PAYLOAD_INITIAL_USER_MAIL,
-          password: process.env.PAYLOAD_INITIAL_PASSWORD,
+          email: process.env.USER_SAGW_ADMIN_MAIL,
+          password: process.env.USER_SAGW_ADMIN_PASS,
           prefillOnly: false,
         }
         : false,
@@ -127,7 +127,9 @@ export default buildConfig({
     if (process.env.ENV === 'seed' || process.env.ENV === 'playwright') {
       await seedTestData(payload);
     } else {
-      await seedInitialUserAndTenant(payload);
+      await seedTenantsAndUsers({
+        payload,
+      });
     }
   },
   plugins,

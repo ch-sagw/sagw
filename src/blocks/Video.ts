@@ -1,3 +1,4 @@
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 import {
   rte1, rte2,
 } from '@/field-templates/rte';
@@ -11,24 +12,28 @@ export const VideoBlock = {
   },
   fields: [
     {
+      access: fieldAccessNonLocalizableField,
       name: 'video-de',
       relationTo: 'videos',
       required: true,
       type: 'relationship',
     },
     {
+      access: fieldAccessNonLocalizableField,
       name: 'video-fr',
       relationTo: 'videos',
       required: false,
       type: 'relationship',
     },
     {
+      access: fieldAccessNonLocalizableField,
       name: 'video-it',
       relationTo: 'videos',
       required: false,
       type: 'relationship',
     },
     {
+      access: fieldAccessNonLocalizableField,
       name: 'video-en',
       relationTo: 'videos',
       required: false,
@@ -43,6 +48,7 @@ export const VideoBlock = {
       name: 'credits',
     }),
     {
+      access: fieldAccessNonLocalizableField,
       name: 'stillImage',
       relationTo: 'images',
       required: true,

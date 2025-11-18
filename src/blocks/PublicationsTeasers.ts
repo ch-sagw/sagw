@@ -1,3 +1,4 @@
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 import {
   rte1, rte2,
 } from '@/field-templates/rte';
@@ -14,6 +15,7 @@ export const PublicationsTeasersBlock = {
       name: 'title',
     }),
     {
+      access: fieldAccessNonLocalizableField,
       admin: {
         description: 'Do you want to add a link to the Publications overview page? Note: This link will not be shown on project detail pages.',
       },

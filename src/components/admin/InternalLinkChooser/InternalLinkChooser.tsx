@@ -6,6 +6,7 @@ import InternalLinkChooserClient from './InternalLinkChooserClient';
 import {
   type LinkableCollectionSlug, linkableSlugs,
 } from '@/collections/Pages/pages';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 type FieldWithRequired = {
   required?: boolean;
@@ -19,7 +20,17 @@ const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
     id,
     path,
     field,
+    req,
   } = props;
+
+  // Check access control
+  const hasUpdateAccess = req && fieldAccessNonLocalizableField.update
+    ? fieldAccessNonLocalizableField.update({
+      req,
+    })
+    : true;
+
+  const isReadOnly = !hasUpdateAccess;
 
   // Read optional list of allowed collection slugs attached on the field config
   const allowedCollectionSlugs = (field as any)?.linkableCollections as LinkableCollectionSlug[] | undefined;
@@ -61,6 +72,7 @@ const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
         : false}
       label={resolvedLabel}
       description={fieldDescription}
+      readOnly={isReadOnly}
     />
   );
 };

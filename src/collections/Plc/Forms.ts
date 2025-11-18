@@ -8,11 +8,10 @@ import {
   rte1, rte2,
 } from '@/field-templates/rte';
 import { textBlock } from '@/blocks/Form/Text';
+import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
 
 export const Forms: CollectionConfig = {
-  access: {
-    read: () => true,
-  },
+  access: globalContentAccessNoTranslatorNoEditor,
   admin: {
     group: 'Global Content',
     useAsTitle: 'title',

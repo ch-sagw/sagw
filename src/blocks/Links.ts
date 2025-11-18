@@ -1,5 +1,6 @@
 import { Block } from 'payload';
 import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 // Example: Magazine Detail
 
@@ -9,6 +10,7 @@ export const LinksBlock = {
   },
   fields: [
     {
+      access: fieldAccessNonLocalizableField,
       fields: fieldsLinkInternalOrExternal({
         showDescription: true,
       }),

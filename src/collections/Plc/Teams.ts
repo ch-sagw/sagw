@@ -1,7 +1,9 @@
 import { CollectionConfig } from 'payload';
 import { rte1 } from '@/field-templates/rte';
+import { globalContentAccessGeneric } from '@/access/globalContent';
 
 export const Teams: CollectionConfig = {
+  access: globalContentAccessGeneric,
   admin: {
     defaultColumns: ['name'],
     description: 'You can assign People to teams.',

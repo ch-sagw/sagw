@@ -46,7 +46,6 @@ export default async function RootLayout({
     depth: 1,
     limit: 1,
     locale: lang,
-    overrideAccess: false,
     where: {
       tenant: {
         equals: tenant,
@@ -63,7 +62,6 @@ export default async function RootLayout({
     depth: 1,
     limit: 1,
     locale: lang,
-    overrideAccess: false,
     where: {
       tenant: {
         equals: tenant,
@@ -76,7 +74,6 @@ export default async function RootLayout({
     depth: 1,
     limit: 1,
     locale: lang,
-    overrideAccess: false,
     where: {
       tenant: {
         equals: tenant,
@@ -121,7 +118,6 @@ export default async function RootLayout({
     depth: 1,
     limit: 1,
     locale: lang,
-    overrideAccess: false,
     where: {
       tenant: {
         equals: tenant,
@@ -177,7 +173,6 @@ export default async function RootLayout({
     depth: 1,
     limit: 1,
     locale: lang,
-    overrideAccess: false,
     where: {
       tenant: {
         equals: tenant,

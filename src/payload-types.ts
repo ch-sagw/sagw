@@ -262,6 +262,7 @@ export interface HomePage {
 export interface Tenant {
   id: string;
   name: string;
+  title: string;
   /**
    * Used for domain-based tenant handling
    */
@@ -3479,7 +3480,7 @@ export interface User {
   tenants?:
     | {
         tenant: string | Tenant;
-        roles: ('tenant-admin' | 'editor')[];
+        roles: ('tenant-admin' | 'editor-magazine' | 'translator')[];
         id?: string | null;
       }[]
     | null;
@@ -5938,6 +5939,7 @@ export interface EventCategorySelect<T extends boolean = true> {
  */
 export interface TenantsSelect<T extends boolean = true> {
   name?: T;
+  title?: T;
   domain?: T;
   slug?: T;
   languages?:
