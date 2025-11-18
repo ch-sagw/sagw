@@ -1,0 +1,65 @@
+/*
+Förderung -> project teaser -> no padding
+*/
+
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/mixins/mixins-shared-styles" as *;
+
+.teaser {
+  @include list-reset;
+
+  // double specifity to overwrite button style
+  &.teaser:is(:hover, :focus-visible) .linkText:after {
+    @include button-line-hover;
+  }
+
+  // double specifity to overwrite button style
+  &.teaser:not(:hover, :focus-visible) .linkText:after {
+    @include button-line-blur;
+  }
+
+  &.border {
+    .image,
+    .logo {
+      border: px-to-rem(var(--border-width-s)) solid var(--border-weak);
+    }
+  }
+
+  .link {
+    padding: 0;
+
+    svg {
+      color: var(--interaction-secondary);
+    }
+  }
+
+  &.linkIconNeutral {
+    .link {
+      svg {
+        color: var(--icon-primary);
+      }
+    }
+  }
+
+  .wrapper {
+    text-decoration: none;
+    color: var(--text-primary);
+
+    .title {
+      @include title-heading-4;
+    }
+
+    .text {
+      @include body-text-m;
+
+      margin: 0;
+    }
+
+    // .logo {}
+
+    // .image {}
+  }
+}
