@@ -32,8 +32,9 @@ type BaseWrapperProps = {
 type ContentProps = {
   iconInlineStart?: keyof typeof Icon | undefined;
   iconInlineEnd?: keyof typeof Icon | undefined;
-  element: 'button' | 'link';
+  element: 'button' | 'link' | 'text';
   text: string;
+  classNameLinkText?: string;
 }
 
 type IconProps = BaseWrapperProps & {
@@ -59,6 +60,10 @@ type LinkProps = BaseProps & {
   pageLanguage: Config['locale'];
 };
 
+type TextProps = BaseProps & {
+  element: 'text';
+};
+
 type ButtonPlayProps = ButtonProps & {
   style: 'buttonPlay';
   ariaLabel: '';
@@ -68,7 +73,8 @@ export type InterfaceButtonPropTypes =
   | ButtonProps
   | LinkProps
   | ButtonPlayProps
-  | IconProps;
+  | IconProps
+  | TextProps;
 
 // TODOs
 // - Integrate tracking events or necessary data attributes
@@ -79,6 +85,7 @@ const buttonLinkContent = ({
   text,
   iconInlineEnd,
   element,
+  classNameLinkText,
 }: ContentProps): React.JSX.Element => (
   <Fragment>
     {iconInlineStart && (
@@ -88,7 +95,10 @@ const buttonLinkContent = ({
     )}
     {
       text && (
-        <span className={styles.innerText}>
+        <span className={[
+          styles.innerText,
+          classNameLinkText,
+        ].join(' ')}>
           <SafeHtml
             as='span'
             html={text}
@@ -125,6 +135,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     text,
     onClick,
     className,
+    classNameLinkText,
     isActive,
   } = props;
 
@@ -252,6 +263,30 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
           text,
         })}
       </button>
+    );
+  }
+
+  // Render text only. Applicable in e.g. in teaser elements where the
+  // link is on the wrapper element.
+  if (element === 'text') {
+
+    return (
+      <span
+        className={classes({
+          colorMode,
+          isActive,
+          style,
+        })}
+        data-testid='link'
+      >
+        {buttonLinkContent({
+          classNameLinkText,
+          element: 'link',
+          iconInlineEnd,
+          iconInlineStart,
+          text,
+        })}
+      </span>
     );
   }
 
