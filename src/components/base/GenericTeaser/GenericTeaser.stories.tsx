@@ -4,6 +4,7 @@ import type {
 } from '@storybook/nextjs-vite';
 import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
 import { defaultDecorator } from '@/storybook-helpers';
+import React from 'react';
 
 type GenericTeaserProps = React.ComponentProps<typeof GenericTeaser>;
 
@@ -24,6 +25,14 @@ const meta: Meta<typeof GenericTeaser> = {
   title: 'Components/base/GenericTeaser',
 };
 
+const customRender = (args: GenericTeaserProps): React.JSX.Element => (
+  <div style={{
+    maxWidth: '570px',
+  }}>
+    <GenericTeaser {...args} />
+  </div>
+);
+
 export default meta;
 
 export const Institute: StrictStory = {
@@ -42,6 +51,7 @@ export const Institute: StrictStory = {
     texts: ['Die Forschungsstelle Dodis ist das unabhängige Kompetenzzentrum für die Geschichte der schweizerischen Aussenpolitik und der internationalen Beziehungen der Schweiz.'],
     title: 'Diplomatische Dokumente der Schweiz',
   },
+  render: customRender,
 };
 
 export const Network: StrictStory = {
