@@ -10,7 +10,8 @@ export type InterfaceSectionPropTypes = {
   subtitle?: string;
   children: React.ReactNode;
   colorMode: ColorMode;
-  showTopLine: boolean;
+  showTopLine?: boolean;
+  fullBleed?: boolean;
 };
 
 export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
@@ -20,6 +21,7 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
   children,
   colorMode,
   showTopLine,
+  fullBleed,
 }, ref) => {
   const sectionClasses = cva([
     styles.section,
@@ -31,6 +33,10 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
         light: [styles.light],
         white: [styles.white],
       },
+      fullBleed: {
+        false: undefined,
+        true: [styles.fullBleed],
+      },
     },
   });
 
@@ -39,6 +45,7 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
       ref={ref}
       className={sectionClasses({
         colorMode,
+        fullBleed,
       })}
     >
       <SafeHtml
