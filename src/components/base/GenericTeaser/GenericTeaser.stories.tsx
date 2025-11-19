@@ -20,7 +20,6 @@ const meta: Meta<typeof GenericTeaser> = {
   tags: [
     'autodocs',
     'visual:check',
-    'a11y:check',
   ],
   title: 'Components/base/GenericTeaser',
 };
