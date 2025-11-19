@@ -47,6 +47,9 @@ import { EventsOverview } from '@/components/blocks/EventsOverview/EventsOvervie
 import { NewsTeaser } from '@/components/blocks/NewsTeaser/NewsTeaser';
 import { EventsTeaser } from '@/components/blocks/EventsTeaser/EventsTeaser';
 import { CtaLink } from '@/components/blocks/CtaLink/CtaLink';
+import { GenericTeaser } from '@/components/blocks/GenericTeaser/GenericTeaser';
+import { MagazineTeaser } from '@/components/blocks/MagazineTeaser/MagazineTeaser';
+import { ProjectsTeaser } from '@/components/blocks/ProjectsTeaser/ProjectsTeaser';
 
 // blocks interface
 interface InterfaceRenderBlocksProps {
@@ -221,6 +224,40 @@ export const RenderBlocks = ({
                   <CtaLink
                     {...block}
                     language={pageLanguage}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'projectsTeasersBlock') {
+              return (
+                <div key={block.id || index}>
+                  <ProjectsTeaser
+                    {...block}
+                    language={pageLanguage}
+                    tenant={tenantId}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'magazineTeasersBlock') {
+              return (
+                <div key={block.id || index}>
+                  <MagazineTeaser
+                    {...block}
+                    language={pageLanguage}
+                    tenant={tenantId}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'genericTeasersBlock') {
+              return (
+                <div key={block.id || index}>
+                  <GenericTeaser
+                    {...block}
                   />
                 </div>
               );
