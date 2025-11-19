@@ -852,25 +852,119 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     },
   });
 
-  // create magazine detail page
+  // create overview page with teasers
   await payload.create({
-    collection: 'magazineDetailPage',
+    collection: 'overviewPage',
     data: {
       _status: 'published',
+      content: [
+        // generic teaser
+        {
+          alignement: 'vertical',
+          blockType: 'genericTeasersBlock',
+          lead: simpleRteConfig('Lead'),
+          teasers: [
+            {
+              image: {
+                relationTo: 'images',
+                value: image.id,
+              },
+              linkExternal: {
+                externalLink: 'https://www.foo.bar',
+                externalLinkText: simpleRteConfig('Link'),
+              },
+              linkType: 'external',
+              text: simpleRteConfig('Generic Teaser text'),
+              title: simpleRteConfig('Generic Teaser 1'),
+            },
+            {
+              image: {
+                relationTo: 'images',
+                value: image.id,
+              },
+              linkExternal: {
+                externalLink: 'https://www.foo.bar',
+                externalLinkText: simpleRteConfig('Link'),
+              },
+              linkType: 'external',
+              text: simpleRteConfig('Generic Teaser text'),
+              title: simpleRteConfig('Generic Teaser 2'),
+            },
+          ],
+          title: simpleRteConfig('Generic Teaser'),
+        },
+
+        // projects teaser
+        {
+          alignement: 'vertical',
+          blockType: 'projectsTeasersBlock',
+          internalLink: {
+            documentId: eventsOverview.id,
+            slug: 'overviewPage',
+          },
+          lead: simpleRteConfig('Lead'),
+          linkText: simpleRteConfig('Link'),
+          title: simpleRteConfig('Project Teaser'),
+        },
+
+        // publications teaser
+        {
+          blockType: 'publicationsTeasersBlock',
+          link: 'yes',
+          linkText: simpleRteConfig('Link'),
+          title: simpleRteConfig('Project Teaser'),
+        },
+
+        // magazine teaser
+        {
+          alignement: 'vertical',
+          blockType: 'magazineTeasersBlock',
+          internalLink: {
+            documentId: eventsOverview.id,
+            slug: 'overviewPage',
+          },
+          lead: simpleRteConfig('Lead'),
+          linkText: simpleRteConfig('Link'),
+          title: simpleRteConfig('Project Teaser'),
+        },
+      ],
       hero: {
-        author: simpleRteConfig('Author'),
         colorMode: 'white',
-        date: '2025-08-31T12:00:00.000Z',
-        lead: simpleRteConfig('Magazine Detail Page Lead'),
-        title: simpleRteConfig(`Magazine detail page title ${tenant.toUpperCase()}`),
+        lead: simpleRteConfig('Lead'),
+        title: simpleRteConfig(`Overview page with Teasers ${tenant.toUpperCase()}`),
       },
-      navigationTitle: 'Article',
-      overviewPageProps: {
-        teaserText: simpleRteConfig('Magazine Detail Teaser Text'),
-      },
+      navigationTitle: 'Teasers Overview',
       tenant: tenantId,
     },
   });
+
+  // create magazine detail pages
+  await Promise.all(Array.from({
+    length: 12,
+  }, (_, i) => {
+    const index = i + 1;
+
+    return payload.create({
+      collection: 'magazineDetailPage',
+      data: {
+        _status: 'published',
+        hero: {
+          author: simpleRteConfig('Author'),
+          colorMode: 'white',
+          date: `2030-08-${index < 10
+            ? `0${index}`
+            : index}T12:00:00.000Z`,
+          lead: simpleRteConfig('Magazine Detail Page Lead'),
+          title: simpleRteConfig(`Magazine detail page ${index} ${tenant.toUpperCase()}`),
+        },
+        navigationTitle: `Article ${index}`,
+        overviewPageProps: {
+          teaserText: simpleRteConfig('Magazine Detail Teaser Text'),
+        },
+        tenant: tenantId,
+      },
+    });
+  }));
 
   // event detail pages (render detail Page)
   await Promise.all(Array.from({
@@ -1017,28 +1111,34 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     });
   }));
 
-  // publication detail page
-  await payload.create({
-    collection: 'publicationDetailPage',
-    data: {
-      _status: 'published',
-      categorization: {
-        topic: publicationTopic.id,
-        type: publicationType.id,
+  // publication detail pages
+  await Promise.all(Array.from({
+    length: 12,
+  }, (_, i) => {
+    const index = i + 1;
+
+    return payload.create({
+      collection: 'publicationDetailPage',
+      data: {
+        _status: 'published',
+        categorization: {
+          topic: publicationTopic.id,
+          type: publicationType.id,
+        },
+        hero: {
+          colorMode: 'white',
+          lead: simpleRteConfig('Publication Detail Page Lead'),
+          title: simpleRteConfig(`Publication detail page ${index} ${tenant.toUpperCase()}`),
+        },
+        navigationTitle: `Publication ${index}`,
+        overviewPageProps: {
+          date: '2025-08-31T12:00:00.000Z',
+          image,
+        },
+        tenant: tenantId,
       },
-      hero: {
-        colorMode: 'white',
-        lead: simpleRteConfig('Publication Detail Page Lead'),
-        title: simpleRteConfig(`Publication detail page title ${tenant.toUpperCase()}`),
-      },
-      navigationTitle: 'Publication',
-      overviewPageProps: {
-        date: '2025-08-31T12:00:00.000Z',
-        image,
-      },
-      tenant: tenantId,
-    },
-  });
+    });
+  }));
 
   // institute detail page
   await payload.create({
@@ -1078,25 +1178,31 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     },
   });
 
-  // project detail page
-  await payload.create({
-    collection: 'projectDetailPage',
-    data: {
-      _status: 'published',
-      hero: {
-        colorMode: 'white',
-        lead: simpleRteConfig('Project Detail Page Lead'),
-        title: simpleRteConfig(`Project detail page title ${tenant.toUpperCase()}`),
+  // project detail pages
+  await Promise.all(Array.from({
+    length: 12,
+  }, (_, i) => {
+    const index = i + 1;
+
+    return payload.create({
+      collection: 'projectDetailPage',
+      data: {
+        _status: 'published',
+        hero: {
+          colorMode: 'white',
+          lead: simpleRteConfig('Project Detail Page Lead'),
+          title: simpleRteConfig(`Project detail page ${index} ${tenant.toUpperCase()}`),
+        },
+        navigationTitle: `Project Detail ${index}`,
+        overviewPageProps: {
+          linkText: simpleRteConfig('some text'),
+          teaserText: simpleRteConfig('Project Teaser Text'),
+        },
+        project,
+        tenant: tenantId,
       },
-      navigationTitle: 'National Dictionary',
-      overviewPageProps: {
-        linkText: simpleRteConfig('some text'),
-        teaserText: simpleRteConfig('Project Teaser Text'),
-      },
-      project,
-      tenant: tenantId,
-    },
-  });
+    });
+  }));
 
   // add consent data
   await payload.create({
