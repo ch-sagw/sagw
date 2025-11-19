@@ -1,10 +1,12 @@
 import {
   Config, EventDetailPage,
+  MagazineDetailPage,
+  ProjectDetailPage,
 } from '@/payload-types';
 import configPromise from '@/payload.config';
 import { getPayload } from 'payload';
 
-interface InterfaceFetchEventDetailPagesProps {
+interface InterfaceFetchDetailPagesProps {
   limit?: number;
   language: Config['locale'],
   tenant: string,
@@ -14,7 +16,7 @@ export const fetchEventDetailPages = async ({
   limit,
   language,
   tenant,
-}: InterfaceFetchEventDetailPagesProps): Promise<EventDetailPage[]> => {
+}: InterfaceFetchDetailPagesProps): Promise<EventDetailPage[]> => {
 
   const payload = await getPayload({
     config: configPromise,
@@ -54,4 +56,58 @@ export const fetchEventDetailPages = async ({
   }
 
   return filteredDocs;
+};
+
+export const fetchProjectDetailPages = async ({
+  limit,
+  language,
+  tenant,
+}: InterfaceFetchDetailPagesProps): Promise<ProjectDetailPage[]> => {
+
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  const projectPages = await payload.find({
+    collection: 'projectDetailPage',
+    depth: 0,
+    limit,
+    locale: language,
+    pagination: false,
+    sort: 'createdAt',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  return projectPages.docs;
+};
+
+export const fetchMagazineDetailPages = async ({
+  limit,
+  language,
+  tenant,
+}: InterfaceFetchDetailPagesProps): Promise<MagazineDetailPage[]> => {
+
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  const magazinePages = await payload.find({
+    collection: 'magazineDetailPage',
+    depth: 0,
+    limit,
+    locale: language,
+    pagination: false,
+    sort: 'createdAt',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  return magazinePages.docs;
 };
