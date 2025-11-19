@@ -130,7 +130,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   });
 
   // create network category
-  await payload.create({
+  const networkCategory = await payload.create({
     collection: 'networkCategories',
     data: {
       name: simpleRteConfig(`Network Category 1 ${tenant.toUpperCase()}`),
@@ -162,7 +162,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   });
 
   // create a team
-  await payload.create({
+  const team = await payload.create({
     collection: 'teams',
     data: {
       name: simpleRteConfig(`Team 1 ${tenant.toUpperCase()}`),
@@ -824,7 +824,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       hero: {
         colorMode: 'white',
         lead: simpleRteConfig('Overview Page Lead'),
-        title: simpleRteConfig(`Overview page with News Overview ${tenant.toUpperCase()}`),
+        title: simpleRteConfig(`News Overview ${tenant.toUpperCase()}`),
       },
       navigationTitle: 'News',
       tenant: tenantId,
@@ -845,9 +845,200 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       hero: {
         colorMode: 'white',
         lead: simpleRteConfig('Overview Page Lead'),
-        title: simpleRteConfig(`Overview page with Events Overview ${tenant.toUpperCase()}`),
+        title: simpleRteConfig(`Events Overview ${tenant.toUpperCase()}`),
       },
       navigationTitle: 'Events',
+      tenant: tenantId,
+    },
+  });
+
+  // create overview page with editions overview block
+  await payload.create({
+    collection: 'overviewPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'editionsOverview',
+          items: {
+            items: [
+              {
+                externalLink: 'https://www.foo.bar',
+                text: simpleRteConfig('Editions text'),
+                title: simpleRteConfig('Edition 1'),
+              },
+              {
+                externalLink: 'https://www.foo.bar',
+                text: simpleRteConfig('Editions text'),
+                title: simpleRteConfig('Edition 2'),
+              },
+              {
+                externalLink: 'https://www.foo.bar',
+                text: simpleRteConfig('Editions text'),
+                title: simpleRteConfig('Edition 3'),
+              },
+              {
+                externalLink: 'https://www.foo.bar',
+                text: simpleRteConfig('Editions text'),
+                title: simpleRteConfig('Edition 4'),
+              },
+            ],
+          },
+        },
+      ],
+      hero: {
+        colorMode: 'light',
+        title: simpleRteConfig('Editions overview'),
+      },
+      navigationTitle: 'Editionen',
+      tenant: tenantId,
+    },
+  });
+
+  // create overview page with institutes overview block
+  await payload.create({
+    collection: 'overviewPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'institutesOverviewBlock',
+          moreInfoButtonText: simpleRteConfig('Mehr erfahren'),
+        },
+      ],
+      hero: {
+        colorMode: 'light',
+        title: simpleRteConfig('Institutes overview'),
+      },
+      navigationTitle: 'Institutes',
+      tenant: tenantId,
+    },
+  });
+
+  // create overview page with magazine overview block
+  await payload.create({
+    collection: 'overviewPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'magazineOverviewBlock',
+        },
+      ],
+      hero: {
+        colorMode: 'light',
+        title: simpleRteConfig('Magazine overview'),
+      },
+      navigationTitle: 'Magazine overview',
+      tenant: tenantId,
+    },
+  });
+
+  // create overview page with National Dictionary overview block
+  await payload.create({
+    collection: 'overviewPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'nationalDictionariesOverviewBlock',
+          moreInfoButtonText: simpleRteConfig('Weitere Informationen'),
+        },
+      ],
+      hero: {
+        colorMode: 'light',
+        title: simpleRteConfig('National Dictionaries overview'),
+      },
+      navigationTitle: 'National Dictionaries overview',
+      tenant: tenantId,
+    },
+  });
+
+  // create overview page with Network teasers overview block
+  await payload.create({
+    collection: 'overviewPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'networkTeasersBlock',
+          filter: {
+            allCheckboxText: simpleRteConfig('Alle'),
+            title: simpleRteConfig('Filter'),
+          },
+          items: {
+            foundingYearText: simpleRteConfig('Gründungsjahr'),
+            items: [
+              {
+                category: networkCategory.id,
+                externalLink: 'https://www.foo.bar',
+                foundingYear: 1983,
+                image: image.id,
+                title: simpleRteConfig('Network item 1'),
+              },
+              {
+                category: networkCategory.id,
+                externalLink: 'https://www.foo.bar',
+                foundingYear: 1983,
+                image: image.id,
+                title: simpleRteConfig('Network item 2'),
+              },
+              {
+                category: networkCategory.id,
+                externalLink: 'https://www.foo.bar',
+                foundingYear: 1983,
+                image: image.id,
+                title: simpleRteConfig('Network item 3'),
+              },
+            ],
+            linkText: simpleRteConfig('Öffnen'),
+          },
+        },
+      ],
+      hero: {
+        colorMode: 'light',
+        title: simpleRteConfig('Network overview'),
+      },
+      navigationTitle: 'Network overview',
+      tenant: tenantId,
+    },
+  });
+
+  // create overview page with People overview block
+  await payload.create({
+    collection: 'overviewPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'peopleOverviewBlock',
+          teams: team.id,
+        },
+      ],
+      hero: {
+        colorMode: 'light',
+        title: simpleRteConfig('People overview'),
+      },
+      navigationTitle: 'People overview',
+      tenant: tenantId,
+    },
+  });
+
+  // create overview page with Projects overview block
+  await payload.create({
+    collection: 'overviewPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'projectsOverviewBlock',
+        },
+      ],
+      hero: {
+        colorMode: 'light',
+        title: simpleRteConfig('Projects overview'),
+      },
+      navigationTitle: 'Projects overview',
       tenant: tenantId,
     },
   });
@@ -927,42 +1118,6 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           linkText: simpleRteConfig('Link'),
           title: simpleRteConfig('Magazine Teaser'),
         },
-
-        // network teaser
-        // {
-        //   blockType: 'networkTeasersBlock',
-        //   filter: {
-        //     allCheckboxText: simpleRteConfig('Alle'),
-        //     title: simpleRteConfig('Filter'),
-        //   },
-        //   items: {
-        //     foundingYearText: simpleRteConfig('Gründungsjahr'),
-        //     items: [
-        //       {
-        //         category: networkCategory.id,
-        //         externalLink: 'https://www.foo.bar',
-        //         foundingYear: 1983,
-        //         image: image.id,
-        //         title: simpleRteConfig('Network item 1'),
-        //       },
-        //       {
-        //         category: networkCategory.id,
-        //         externalLink: 'https://www.foo.bar',
-        //         foundingYear: 1983,
-        //         image: image.id,
-        //         title: simpleRteConfig('Network item 2'),
-        //       },
-        //       {
-        //         category: networkCategory.id,
-        //         externalLink: 'https://www.foo.bar',
-        //         foundingYear: 1983,
-        //         image: image.id,
-        //         title: simpleRteConfig('Network item 3'),
-        //       },
-        //     ],
-        //     linkText: simpleRteConfig('Öffnen'),
-        //   },
-        // },
       ],
       hero: {
         colorMode: 'white',
