@@ -216,6 +216,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
         prefetch={prefetch}
       >
         {buttonLinkContent({
+          classNameLinkText,
           element: 'link',
           iconInlineEnd,
           iconInlineStart,
@@ -257,6 +258,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
         }
 
         {buttonLinkContent({
+          classNameLinkText,
           element: 'button',
           iconInlineEnd,
           iconInlineStart,

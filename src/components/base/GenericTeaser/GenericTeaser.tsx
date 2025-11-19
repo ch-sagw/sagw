@@ -18,8 +18,7 @@ export type InterfaceBaseTeaserProps = {
   texts?: string[];
   links: InterfaceLink[];
   pageLanguage: Config['locale'];
-  border?: boolean;
-  linkIconNeutralColor?: boolean;
+  type: 'institute' | 'network' | 'project' | 'magazine' | 'people' | 'generic';
 };
 
 // Image and logo both are optional. But as soon as image is set,
@@ -28,19 +27,6 @@ type InterfaceGenericTeaserPropTypes =
   | (InterfaceBaseTeaserProps & { image?: string; logo?: never })
   | (InterfaceBaseTeaserProps & { logo?: string; image?: never })
   | (InterfaceBaseTeaserProps & { image?: undefined; logo?: undefined });
-
-const teaserClasses = cva([styles.teaser], {
-  variants: {
-    border: {
-      false: undefined,
-      true: [styles.border],
-    },
-    linkIconNeutralColor: {
-      false: undefined,
-      true: [styles.linkIconNeutral],
-    },
-  },
-});
 
 const renderLink = ({
   link,
@@ -91,6 +77,7 @@ const renderLink = ({
   return (
     <Button
       className={styles.link}
+      classNameLinkText={styles.linkText}
       key={key}
       element='link'
       href={link.href}
@@ -111,14 +98,17 @@ export const GenericTeaser = ({
   title,
   texts,
   links,
-  border,
   image,
   logo,
   pageLanguage,
-  linkIconNeutralColor,
+  type,
 }: InterfaceGenericTeaserPropTypes): React.JSX.Element => {
   let WrapperElement: keyof React.JSX.IntrinsicElements = 'div';
   let linkTarget;
+  const teaserClasses = cva([
+    styles.teaser,
+    styles[type],
+  ]);
 
   if (links && links.length === 1) {
     const [link] = links;
@@ -129,10 +119,7 @@ export const GenericTeaser = ({
 
   return (
     <li
-      className={teaserClasses({
-        border,
-        linkIconNeutralColor,
-      })}
+      className={teaserClasses()}
     >
       <WrapperElement
         href={linkTarget}

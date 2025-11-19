@@ -37,8 +37,6 @@ export default meta;
 
 export const Institute: StrictStory = {
   args: {
-    border: true,
-    linkIconNeutralColor: true,
     links: [
       {
         href: 'https://www.foo.bar',
@@ -50,6 +48,7 @@ export const Institute: StrictStory = {
     pageLanguage: 'de',
     texts: ['Die Forschungsstelle Dodis ist das unabhängige Kompetenzzentrum für die Geschichte der schweizerischen Aussenpolitik und der internationalen Beziehungen der Schweiz.'],
     title: 'Diplomatische Dokumente der Schweiz',
+    type: 'institute',
   },
   render: customRender,
 };
@@ -67,7 +66,9 @@ export const Network: StrictStory = {
     pageLanguage: 'de',
     texts: ['Gründungsjahr: 1907'],
     title: 'Archäologie Schweiz',
+    type: 'network',
   },
+  render: customRender,
 };
 
 export const Project: StrictStory = {
@@ -82,7 +83,9 @@ export const Project: StrictStory = {
     pageLanguage: 'de',
     texts: ['Ab 2021 hat die Akademie zudem die Förderzuständigkeit für acht längerfristige Editionen vom SNF übernommen.'],
     title: 'Plattform Ageing Society',
+    type: 'project',
   },
+  render: customRender,
 };
 
 export const Magazine: StrictStory = {
@@ -96,7 +99,9 @@ export const Magazine: StrictStory = {
     pageLanguage: 'de',
     texts: ['Zur Kultur der Bookishness in der Erlebnisgesellschaft'],
     title: 'The Mobility Imperative in Academia',
+    type: 'magazine',
   },
+  render: customRender,
 };
 
 export const People: StrictStory = {
@@ -120,5 +125,25 @@ export const People: StrictStory = {
       'Mitglied Geschäftsleitung',
     ],
     title: 'Dr. Lea Haller',
+    type: 'people',
   },
+  render: customRender,
+};
+
+export const Generic: StrictStory = {
+  args: {
+    image: 'some-image.jpg',
+    links: [
+      {
+        href: 'https://www.foo.bar',
+        text: 'Mehr erfahren',
+        type: 'internal',
+      },
+    ],
+    pageLanguage: 'de',
+    texts: ['Die Forschungsstelle Dodis ist das unabhängige Kompetenzzentrum für die Geschichte der schweizerischen Aussenpolitik und der internationalen Beziehungen der Schweiz.'],
+    title: 'Diplomatische Dokumente der Schweiz',
+    type: 'generic',
+  },
+  render: customRender,
 };
