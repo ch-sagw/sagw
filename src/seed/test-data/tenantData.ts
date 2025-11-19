@@ -908,12 +908,12 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         },
 
         // publications teaser
-        {
-          blockType: 'publicationsTeasersBlock',
-          link: 'yes',
-          linkText: simpleRteConfig('Link'),
-          title: simpleRteConfig('Project Teaser'),
-        },
+        // {
+        //   blockType: 'publicationsTeasersBlock',
+        //   link: 'yes',
+        //   linkText: simpleRteConfig('Link'),
+        //   title: simpleRteConfig('Project Teaser'),
+        // },
 
         // magazine teaser
         {
@@ -927,6 +927,42 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           linkText: simpleRteConfig('Link'),
           title: simpleRteConfig('Project Teaser'),
         },
+
+        // network teaser
+        // {
+        //   blockType: 'networkTeasersBlock',
+        //   filter: {
+        //     allCheckboxText: simpleRteConfig('Alle'),
+        //     title: simpleRteConfig('Filter'),
+        //   },
+        //   items: {
+        //     foundingYearText: simpleRteConfig('Gründungsjahr'),
+        //     items: [
+        //       {
+        //         category: networkCategory.id,
+        //         externalLink: 'https://www.foo.bar',
+        //         foundingYear: 1983,
+        //         image: image.id,
+        //         title: simpleRteConfig('Network item 1'),
+        //       },
+        //       {
+        //         category: networkCategory.id,
+        //         externalLink: 'https://www.foo.bar',
+        //         foundingYear: 1983,
+        //         image: image.id,
+        //         title: simpleRteConfig('Network item 2'),
+        //       },
+        //       {
+        //         category: networkCategory.id,
+        //         externalLink: 'https://www.foo.bar',
+        //         foundingYear: 1983,
+        //         image: image.id,
+        //         title: simpleRteConfig('Network item 3'),
+        //       },
+        //     ],
+        //     linkText: simpleRteConfig('Öffnen'),
+        //   },
+        // },
       ],
       hero: {
         colorMode: 'white',
