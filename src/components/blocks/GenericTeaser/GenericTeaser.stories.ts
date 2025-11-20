@@ -41,17 +41,26 @@ const teaserBlock: InterfaceGenericTeasersBlock['teasers'][number] = {
   title: simpleRteConfig('Plattform Ageing Society'),
 };
 
-export const GenericTeasers: StrictStory = {
+const defaultArgs: GenericTeaserProps = {
+  alignement: 'horizontal',
+  blockType: 'genericTeasersBlock',
+  lead: simpleRteConfig('Projekte mit gesellschaftlicher Relevanz an der Schnittstelle von Wissenschaft und Öffentlichkeit.'),
+  pageLanguage: 'de',
+  teasers: [
+    teaserBlock,
+    teaserBlock,
+    teaserBlock,
+  ],
+  title: simpleRteConfig('Aktuelle Projekte'),
+};
+
+export const Horizontal: StrictStory = {
+  args: defaultArgs,
+};
+
+export const Vertical: StrictStory = {
   args: {
-    alignement: 'horizontal',
-    blockType: 'genericTeasersBlock',
-    lead: simpleRteConfig('Projekte mit gesellschaftlicher Relevanz an der Schnittstelle von Wissenschaft und Öffentlichkeit.'),
-    pageLanguage: 'de',
-    teasers: [
-      teaserBlock,
-      teaserBlock,
-      teaserBlock,
-    ],
-    title: simpleRteConfig('Aktuelle Projekte'),
+    ...defaultArgs,
+    alignement: 'vertical',
   },
 };
