@@ -91,15 +91,22 @@ export const Video = ({
     };
   });
 
+  // Paused state
+  const [
+    paused,
+    setPaused,
+  ] = useState(true);
+
+  // Element references
   const playIcon = 'play' as keyof typeof Icon;
-  const buttonRef = useRef<HTMLButtonElement>(null);
   const playerRef = useRef<any>(null);
   const videoContainer = useRef<HTMLDivElement>(null);
 
+  // Load video and remove paused state
   const loadVideo = (): void => {
     playerRef.current?.play();
 
-    videoContainer.current?.classList.remove(styles.paused);
+    setPaused(false);
   };
 
   const playButtonText = i18nA11y.playVideoText[pageLanguage]
@@ -118,7 +125,10 @@ export const Video = ({
           <div>
             <div
               className={`${styles.videoContainer} 
-                ${styles.paused}`}
+                ${paused
+            ? styles.paused
+            : ''
+          }`}
               ref={videoContainer}
             >
               <GumletPlayer
@@ -148,7 +158,6 @@ export const Video = ({
                 element='button'
                 iconInlineStart={playIcon}
                 onClick={loadVideo}
-                ref={buttonRef}
                 style='buttonPlay'
                 text=''
               />
