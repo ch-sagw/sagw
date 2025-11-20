@@ -244,9 +244,10 @@ export const RenderBlocks = ({
               return (
                 <div key={block.id || index}>
                   <Video
-                    {...block}
+                    {...(block as any)}
                     pageLanguage={pageLanguage}
                     stillImageHost={process.env.GUMLET_URL ?? ''}
+                    stillImage={(block as InterfaceVideoBlock).stillImage as any}
                   />
                 </div>
               );
