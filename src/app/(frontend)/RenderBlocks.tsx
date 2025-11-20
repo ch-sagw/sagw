@@ -283,6 +283,7 @@ export const RenderBlocks = ({
                 <div key={block.id || index}>
                   <NetworkTeaser
                     {...block}
+                    pageLanguage={pageLanguage}
                   />
                 </div>
               );

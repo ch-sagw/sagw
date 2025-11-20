@@ -73,5 +73,6 @@ export const NetworkTeasers: StrictStory = {
       ],
       linkText: simpleRteConfig('Öffnen'),
     },
+    pageLanguage: 'de',
   },
 };

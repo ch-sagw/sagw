@@ -5,9 +5,9 @@ import React, {
 } from 'react';
 import styles from '@/components/blocks/NetworkTeaser/NetworkTeaser.module.scss';
 import {
+  Config,
   InterfaceNetworkTeasersBlock, NetworkCategory,
 } from '@/payload-types';
-import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import {
   Filter, InterfaceFilterItem,
@@ -17,8 +17,11 @@ import slugify from 'slugify';
 import { Section } from '@/components/base/Section/Section';
 import { Pagination } from '@/components/base/Pagination/Pagination';
 import { usePagination } from '@/hooks/usePagination';
+import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
 
-export type InterfaceNetworkTeaserPropTypes = {} & InterfaceNetworkTeasersBlock;
+export type InterfaceNetworkTeaserPropTypes = {
+  pageLanguage: Config['locale'];
+} & InterfaceNetworkTeasersBlock;
 
 const allValue = 'all';
 
@@ -57,6 +60,7 @@ const getUniqueCategoriesOfItems = (items: InterfaceNetworkTeasersBlock['items']
 export const NetworkTeaser = ({
   filter,
   items,
+  pageLanguage,
 }: InterfaceNetworkTeaserPropTypes): React.JSX.Element => {
   const filterItems = getUniqueCategoriesOfItems(items, rte1ToPlaintext(filter.allCheckboxText));
   const plainTitle = rte1ToPlaintext(filter.title);
@@ -92,13 +96,31 @@ export const NetworkTeaser = ({
     selectedCategory,
   ]);
 
-  const renderedItems = useMemo(() => filteredNetworkItems.map((item, key) => (
-    <SafeHtml
-      key={key}
-      as='li'
-      html={rteToHtml(item.title)}
+  const renderedItems = useMemo(() => filteredNetworkItems.map((item) => (
+    <GenericTeaser
+      className={styles.item}
+      key={item.id}
+      title={rteToHtml(item.title)}
+      texts={[`${rteToHtml(items.foundingYearText)} :${item.foundingYear}`]}
+      image={typeof item.image === 'string'
+        ? item.image
+        : item.image.id}
+      links={[
+        {
+          href: item.externalLink,
+          text: rteToHtml(items.linkText),
+          type: 'external',
+        },
+      ]}
+      pageLanguage={pageLanguage}
+      type='network'
     />
-  )), [filteredNetworkItems]);
+  )), [
+    filteredNetworkItems,
+    items.foundingYearText,
+    items.linkText,
+    pageLanguage,
+  ]);
 
   const {
     currentPage,
@@ -114,46 +136,43 @@ export const NetworkTeaser = ({
 
   const handleFilterChange = (value: string): void => {
     setSelectedCategory(value);
-
-    // ensure resetting pagination does not trigger scroll/focus behavior
-    userPaginatedRef.current = false;
     handlePageChange(1);
-    userPaginatedRef.current = false;
   };
 
   return (
-    <div
-      className={styles.projectTeser}
-    >
-      <Section
-        title={rteToHtml(filter.title)}
-        colorMode='white'
-        additionalStickyContent={
-          <Filter
-            type='transformativeSelect'
-            labelText={plainTitle}
-            name={filterName}
-            filterItems={filterItems}
-            className={styles.filter}
-            onValueChangeAction={handleFilterChange}
-          />
-        }
-      >
-        <ul ref={listRef}>
-          {currentItems}
-        </ul>
-
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-
-          // TODO
-          paginationTitle='Pagination'
+    <Section
+      title={rteToHtml(filter.title)}
+      colorMode='white'
+      ref={sectionRef}
+      additionalStickyContent={filterItems.length > 2
+        ? <Filter
+          type='transformativeSelect'
+          labelText={plainTitle}
+          name={filterName}
+          filterItems={filterItems}
+          className={styles.filter}
+          onValueChangeAction={handleFilterChange}
         />
+        : undefined
+      }
+    >
+      <ul
+        ref={listRef}
+        className={styles.list}
+      >
+        {currentItems}
+      </ul>
 
-      </Section>
+      <Pagination
+        className={styles.pagination}
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
 
-    </div>
+        // TODO
+        paginationTitle='Pagination'
+      />
+
+    </Section>
   );
 };

@@ -66,3 +66,29 @@
     width: calc(33.33% - px-to-rem(104) * 2 / 3);
   }
 }
+
+@mixin full-bleed-teaser-list-ultra {
+  @include full-bleed-teaser-list;
+
+  @include mq($from: large) {
+    column-gap: px-to-rem(var(--spacing-4xl));
+    row-gap: px-to-rem(var(--spacing-4xl));
+  }
+
+  @include mq($from: ultra) {
+    column-gap: px-to-rem(104);
+    row-gap: px-to-rem(var(--spacing-5xl));
+  }
+}
+
+@mixin full-bleed-teaser-item-ultra {
+  width: 100%;
+
+  @include mq($from: medium) {
+    width: calc(50% - px-to-rem(var(--spacing-4xl)) / 2);
+  }
+
+  @include mq($from: ultra) {
+    width: calc(33.33% - px-to-rem(104) * 2 / 3);
+  }
+}

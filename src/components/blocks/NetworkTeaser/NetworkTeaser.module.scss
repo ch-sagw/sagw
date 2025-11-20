@@ -1,5 +1,18 @@
 @use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-shared-styles" as *;
 
 .filter {
   margin-top: px-to-rem(var(--section-inside-s));
+}
+
+.list {
+  @include full-bleed-teaser-list-ultra;
+}
+
+.item {
+  @include full-bleed-teaser-item-ultra;
+}
+
+.pagination {
+  padding-inline: px-to-rem(var(--grid-margin));
 }
