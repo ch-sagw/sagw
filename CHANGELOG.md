@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.0](https://github.com/ch-sagw/sagw/compare/v0.23.1...v0.24.0) (2025-11-20)
+
+
+### Features
+
+* **fe:** add generic teaser component ([e8effcd](https://github.com/ch-sagw/sagw/commit/e8effcd651fa956f005cd110cef7d0159282a7d9))
+
 ## [0.23.1](https://github.com/ch-sagw/sagw/compare/v0.23.0...v0.23.1) (2025-11-18)
 
 
