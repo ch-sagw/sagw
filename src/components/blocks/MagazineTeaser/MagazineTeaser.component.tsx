@@ -1,16 +1,45 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styles from '@/components/blocks/MagazineTeaser/MagazineTeaser.module.scss';
 import {
+  Config,
   InterfaceMagazineTeasersBlock,
   MagazineDetailPage,
 } from '@/payload-types';
-import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { Section } from '@/components/base/Section/Section';
+import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
+import { Button } from '@/components/base/Button/Button';
+import { Icon } from '@/icons';
 
 export type InterfaceMagazineTeaserComponentPropTypes = {
   pages: MagazineDetailPage[];
+  pageLanguage: Config['locale'];
 } & InterfaceMagazineTeasersBlock;
+
+const getFirstImageIdOfPage = (page: MagazineDetailPage): string => {
+  if (!page.content) {
+    return '';
+  }
+  const imageBlocks = page.content.filter((block) => block.blockType === 'imageBlock');
+
+  if (imageBlocks.length < 1) {
+    return '';
+  }
+
+  if (!imageBlocks[0].image) {
+    return '';
+  }
+
+  if (typeof imageBlocks[0].image === 'object') {
+    if (imageBlocks[0].image.id) {
+      return imageBlocks[0].image.id;
+    }
+  } else {
+    return imageBlocks[0].image;
+  }
+
+  return '';
+};
 
 export const MagazineTeaserComponent = ({
   title,
@@ -19,31 +48,53 @@ export const MagazineTeaserComponent = ({
   linkText,
   internalLink,
   pages,
+  pageLanguage,
 }: InterfaceMagazineTeaserComponentPropTypes): React.JSX.Element => (
-  <Section
-    className={styles.projectTeser}
-    title={rteToHtml(title)}
-    subtitle={rteToHtml(lead)}
-    colorMode='white'
-    fullBleed={alignement === 'vertical'}
-  >
+  <Fragment>
+    <Section
+      className={styles.section}
+      title={rteToHtml(title)}
+      subtitle={rteToHtml(lead)}
+      colorMode='white'
+      fullBleed={alignement === 'vertical'}
+    >
+      {linkText && internalLink &&
+        <Button
+          className={styles.link}
+          element='link'
+          style='text'
+          colorMode='white'
+          text={rteToHtml(linkText)}
+          pageLanguage={pageLanguage}
+          iconInlineStart={'arrowRight' as keyof typeof Icon}
+          isActive={true}
 
-    {/* TODO */}
-    <SafeHtml
-      as='p'
-      html={rteToHtml(linkText)}
-    />
+          // TODO: generate proper url
+          href={`${internalLink.slug}/${internalLink.documentId}`}
+        />
+      }
+    </Section>
 
-    {/* TODO: get 1st image of magazine detail page */}
+    <ul className={styles.list}>
+      {pages.map((item) => (
+        <GenericTeaser
+          className={styles.item}
+          key={item.id}
+          title={rteToHtml(item.hero.title)}
+          texts={[rteToHtml(item.overviewPageProps.teaserText)]}
+          type='magazine'
+          pageLanguage={pageLanguage}
+          image={getFirstImageIdOfPage(item)}
 
-    <p>{internalLink?.slug}, {internalLink?.documentId}</p>
-
-    {pages.map((page) => (
-      <SafeHtml
-        key={page.id}
-        as='p'
-        html={rteToHtml(page.hero.title)}
-      />
-    ))}
-  </Section>
+          // TODO: generate proper url
+          links={[
+            {
+              href: `${item.slug}/${item.id}`,
+              type: 'internal',
+            },
+          ]}
+        />
+      ))}
+    </ul>
+  </Fragment>
 );

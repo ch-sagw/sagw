@@ -29,7 +29,7 @@ export const GenericTeaser = ({
     />
 
     <ul className={styles.list}>
-      {teasers.map((item, key) => {
+      {teasers.map((item) => {
         let href;
         let text;
 
@@ -53,7 +53,7 @@ export const GenericTeaser = ({
         return (
           <TeaserBaseComponent
             className={styles.item}
-            key={key}
+            key={item.id}
             title={rteToHtml(item.title)}
             texts={[rteToHtml(item.text)]}
             links={[

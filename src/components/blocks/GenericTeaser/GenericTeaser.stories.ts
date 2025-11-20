@@ -3,7 +3,7 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import { GenericTeaser } from '@/components/blocks/GenericTeaser/GenericTeaser';
-import { defaultDecorator } from '@/storybook-helpers';
+import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { InterfaceGenericTeasersBlock } from '@/payload-types';
 
@@ -16,7 +16,7 @@ type StrictStory = StoryObj<typeof GenericTeaser> & {
 const meta: Meta<typeof GenericTeaser> = {
   args: {},
   component: GenericTeaser,
-  decorators: [defaultDecorator],
+  decorators: [defaultDecoratorNoPadding],
   parameters: {/* layout: 'centered', */ },
   tags: [
     'autodocs',
@@ -29,6 +29,7 @@ const meta: Meta<typeof GenericTeaser> = {
 export default meta;
 
 const teaserBlock: InterfaceGenericTeasersBlock['teasers'][number] = {
+  id: '1',
   linkInternal: {
     internalLink: {
       documentId: '1234',
@@ -47,9 +48,18 @@ const defaultArgs: GenericTeaserProps = {
   lead: simpleRteConfig('Projekte mit gesellschaftlicher Relevanz an der Schnittstelle von Wissenschaft und Öffentlichkeit.'),
   pageLanguage: 'de',
   teasers: [
-    teaserBlock,
-    teaserBlock,
-    teaserBlock,
+    {
+      ...teaserBlock,
+      id: '1',
+    },
+    {
+      ...teaserBlock,
+      id: '2',
+    },
+    {
+      ...teaserBlock,
+      id: '3',
+    },
   ],
   title: simpleRteConfig('Aktuelle Projekte'),
 };

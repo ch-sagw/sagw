@@ -3,7 +3,7 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import { MagazineTeaserComponent } from '@/components/blocks/MagazineTeaser/MagazineTeaser.component';
-import { defaultDecorator } from '@/storybook-helpers';
+import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { MagazineDetailPage } from '@/payload-types';
 
@@ -16,7 +16,7 @@ type StrictStory = StoryObj<typeof MagazineTeaserComponent> & {
 const meta: Meta<typeof MagazineTeaserComponent> = {
   args: {},
   component: MagazineTeaserComponent,
-  decorators: [defaultDecorator],
+  decorators: [defaultDecoratorNoPadding],
   parameters: {/* layout: 'centered', */ },
   tags: [
     'autodocs',
@@ -29,6 +29,14 @@ const meta: Meta<typeof MagazineTeaserComponent> = {
 export default meta;
 
 const samplePage: MagazineDetailPage = {
+  content: [
+    {
+      alignement: 'center',
+      blockType: 'imageBlock',
+      credits: simpleRteConfig('some credits'),
+      image: 'someid',
+    },
+  ],
   createdAt: '2025-11-19T11:29:09.521Z',
   hero: {
     author: simpleRteConfig('Author'),
@@ -46,34 +54,44 @@ const samplePage: MagazineDetailPage = {
   updatedAt: '2025-11-19T11:29:09.521Z',
 };
 
-export const MagazineTeaser: StrictStory = {
-  args: {
-    alignement: 'horizontal',
-    blockType: 'magazineTeasersBlock',
-    internalLink: {
-      documentId: '1234',
-      slug: 'projectDetailPage',
+const defaultArgs: MagazineTeaserProps = {
+  alignement: 'horizontal',
+  blockType: 'magazineTeasersBlock',
+  internalLink: {
+    documentId: '1234',
+    slug: 'projectDetailPage',
+  },
+  lead: simpleRteConfig('Ausgewählte Artikel aus dem SAGW-Bulletin vertiefen aktuelle Themen aus den Geistes- und Sozialwissenschaften.'),
+  linkText: simpleRteConfig('Alle Artikel anzeigen'),
+  pageLanguage: 'de',
+  pages: [
+    {
+      ...samplePage,
+      id: '1',
     },
-    lead: simpleRteConfig('Ausgewählte Artikel aus dem SAGW-Bulletin vertiefen aktuelle Themen aus den Geistes- und Sozialwissenschaften.'),
-    linkText: simpleRteConfig('Alle Artikel anzeigen'),
-    pages: [
-      {
-        ...samplePage,
-        id: '1',
-      },
-      {
-        ...samplePage,
-        id: '2',
-      },
-      {
-        ...samplePage,
-        id: '3',
-      },
-      {
-        ...samplePage,
-        id: '4',
-      },
-    ],
-    title: simpleRteConfig('Magazin'),
+    {
+      ...samplePage,
+      id: '2',
+    },
+    {
+      ...samplePage,
+      id: '3',
+    },
+    {
+      ...samplePage,
+      id: '4',
+    },
+  ],
+  title: simpleRteConfig('Magazin'),
+};
+
+export const Horizontal: StrictStory = {
+  args: defaultArgs,
+};
+
+export const Vertical: StrictStory = {
+  args: {
+    ...defaultArgs,
+    alignement: 'vertical',
   },
 };

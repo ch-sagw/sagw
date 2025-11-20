@@ -19,7 +19,7 @@ export type InterfaceBaseTeaserProps = {
   links: InterfaceLink[];
   pageLanguage: Config['locale'];
   type: 'institute' | 'network' | 'project' | 'magazine' | 'people' | 'generic';
-  className: string;
+  className?: string;
 };
 
 // Image and logo both are optional. But as soon as image is set,

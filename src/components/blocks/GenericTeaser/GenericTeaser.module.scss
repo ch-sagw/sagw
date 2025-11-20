@@ -1,7 +1,4 @@
-@use "../../../styles/mixins/mixins-layout" as *;
-@use "../../../styles/utilities/utilities" as *;
-@use "../../../styles/utilities/functions" as *;
-@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/mixins/mixins-shared-styles" as *;
 
 .section.section {
   padding-block-end: 0;
@@ -12,33 +9,9 @@
 }
 
 .list {
-  @include list-reset;
-  @include generic-block-padding;
-
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: px-to-rem(var(--spacing-2xl));
-  row-gap: px-to-rem(var(--spacing-3xl));
-
-  @include mq($from: medium) {
-    column-gap: px-to-rem(var(--spacing-4xl));
-    row-gap: px-to-rem(var(--spacing-4xl));
-  }
-
-  @include mq($from: large) {
-    column-gap: px-to-rem(104);
-    row-gap: px-to-rem(var(--spacing-5xl));
-  }
+  @include full-bleed-teaser-list;
 }
 
 .item {
-  width: 100%;
-
-  @include mq($from: medium) {
-    width: calc(50% - px-to-rem(var(--spacing-4xl)) / 2);
-  }
-
-  @include mq($from: large) {
-    width: calc(33.33% - px-to-rem(104) * 2 / 3);
-  }
+  @include full-bleed-teaser-item;
 }

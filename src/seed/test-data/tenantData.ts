@@ -1186,6 +1186,14 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       collection: 'magazineDetailPage',
       data: {
         _status: 'published',
+        content: [
+          {
+            alignement: 'center',
+            blockType: 'imageBlock',
+            credits: simpleRteConfig('some credits'),
+            image: image.id,
+          },
+        ],
         hero: {
           author: simpleRteConfig('Author'),
           colorMode: 'white',

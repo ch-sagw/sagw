@@ -27,6 +27,7 @@ export const MagazineTeaser = async (props: InterfaceMagazineTeaserPropTypes): P
     <MagazineTeaserComponent
       {...restProps}
       pages={pages}
+      pageLanguage={language}
     />
   );
 };
