@@ -50,6 +50,7 @@ import { CtaLink } from '@/components/blocks/CtaLink/CtaLink';
 import { GenericTeaser } from '@/components/blocks/GenericTeaser/GenericTeaser';
 import { MagazineTeaser } from '@/components/blocks/MagazineTeaser/MagazineTeaser';
 import { ProjectsTeaser } from '@/components/blocks/ProjectsTeaser/ProjectsTeaser';
+import { NetworkTeaser } from '@/components/blocks/NetworkTeaser/NetworkTeaser';
 
 // blocks interface
 interface InterfaceRenderBlocksProps {
@@ -257,6 +258,16 @@ export const RenderBlocks = ({
               return (
                 <div key={block.id || index}>
                   <GenericTeaser
+                    {...block}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'networkTeasersBlock') {
+              return (
+                <div key={block.id || index}>
+                  <NetworkTeaser
                     {...block}
                   />
                 </div>

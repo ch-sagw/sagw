@@ -129,11 +129,27 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     },
   });
 
-  // create network category
-  const networkCategory = await payload.create({
+  // create network categories
+  const networkCategory1 = await payload.create({
     collection: 'networkCategories',
     data: {
       name: simpleRteConfig(`Network Category 1 ${tenant.toUpperCase()}`),
+      tenant: tenantId,
+    },
+  });
+
+  const networkCategory2 = await payload.create({
+    collection: 'networkCategories',
+    data: {
+      name: simpleRteConfig(`Network Category 2 ${tenant.toUpperCase()}`),
+      tenant: tenantId,
+    },
+  });
+
+  const networkCategory3 = await payload.create({
+    collection: 'networkCategories',
+    data: {
+      name: simpleRteConfig(`Network Category 3 ${tenant.toUpperCase()}`),
       tenant: tenantId,
     },
   });
@@ -963,32 +979,53 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         {
           blockType: 'networkTeasersBlock',
           filter: {
-            allCheckboxText: simpleRteConfig('Alle'),
-            title: simpleRteConfig('Filter'),
+            allCheckboxText: simpleRteConfig('Alle Fachgesellschaften'),
+            title: simpleRteConfig('Fachgesellschaften'),
           },
           items: {
             foundingYearText: simpleRteConfig('Gründungsjahr'),
             items: [
               {
-                category: networkCategory.id,
+                category: networkCategory1.id,
                 externalLink: 'https://www.foo.bar',
                 foundingYear: 1983,
                 image: image.id,
                 title: simpleRteConfig('Network item 1'),
               },
               {
-                category: networkCategory.id,
+                category: networkCategory2.id,
                 externalLink: 'https://www.foo.bar',
                 foundingYear: 1983,
                 image: image.id,
                 title: simpleRteConfig('Network item 2'),
               },
               {
-                category: networkCategory.id,
+                category: networkCategory3.id,
                 externalLink: 'https://www.foo.bar',
                 foundingYear: 1983,
                 image: image.id,
                 title: simpleRteConfig('Network item 3'),
+              },
+              {
+                category: networkCategory1.id,
+                externalLink: 'https://www.foo.bar',
+                foundingYear: 1983,
+                image: image.id,
+                title: simpleRteConfig('Network item 4'),
+              },
+              {
+                category: networkCategory2.id,
+                externalLink: 'https://www.foo.bar',
+                foundingYear: 1983,
+                image: image.id,
+                title: simpleRteConfig('Network item 5'),
+              },
+              {
+                category: networkCategory3.id,
+                externalLink: 'https://www.foo.bar',
+                foundingYear: 1983,
+                image: image.id,
+                title: simpleRteConfig('Network item 6'),
               },
             ],
             linkText: simpleRteConfig('Öffnen'),

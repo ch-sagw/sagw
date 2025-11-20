@@ -5,7 +5,7 @@ import { cva } from 'cva';
 import styles from '@/components/base/Filter/Filter.module.scss';
 import { Icon } from '@/icons';
 
-interface InterfaceFilterItem {
+export interface InterfaceFilterItem {
   amount?: number;
   checked?: boolean;
   label?: string;
@@ -18,16 +18,8 @@ export type InterfaceFilterPropTypes = {
   name: string;
   type: 'staticSelect' | 'transformativeSelect'
   onValueChange?: (selectedValue: string) => void;
+  className?: string;
 };
-
-const classes = cva([styles.filter], {
-  variants: {
-    type: {
-      staticSelect: [styles.filterStaticSelect],
-      transformativeSelect: [styles.filterTransformativeSelect],
-    },
-  },
-});
 
 export const Filter = ({
   filterItems,
@@ -35,8 +27,21 @@ export const Filter = ({
   name,
   type,
   onValueChange,
+  className,
 }: InterfaceFilterPropTypes): React.JSX.Element => {
   const [initiallySelectedItem] = filterItems.filter((item) => item.checked);
+
+  const classes = cva([
+    styles.filter,
+    className,
+  ], {
+    variants: {
+      type: {
+        staticSelect: [styles.filterStaticSelect],
+        transformativeSelect: [styles.filterTransformativeSelect],
+      },
+    },
+  });
 
   const [
     selectedItem,
