@@ -3292,6 +3292,7 @@ export interface DetailPage {
  * via the `definition` "InterfaceVideoBlock".
  */
 export interface InterfaceVideoBlock {
+  alignment?: ('left' | 'center' | 'right') | null;
   'video-de': string | Video;
   'video-fr'?: (string | null) | Video;
   'video-it'?: (string | null) | Video;
@@ -5414,6 +5415,7 @@ export interface DetailPageSelect<T extends boolean = true> {
  * via the `definition` "InterfaceVideoBlock_select".
  */
 export interface InterfaceVideoBlockSelect<T extends boolean = true> {
+  alignment?: T;
   'video-de'?: T;
   'video-fr'?: T;
   'video-it'?: T;
