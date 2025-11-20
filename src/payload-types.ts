@@ -2415,7 +2415,7 @@ export interface InterfaceCtaContactBlock {
     [k: string]: unknown;
   };
   colorMode: 'white' | 'dark' | 'light';
-  contact: string | Person;
+  contact: (string | Person)[];
   id?: string | null;
   blockName?: string | null;
   blockType: 'ctaContactBlock';
@@ -2502,36 +2502,8 @@ export interface Person {
     };
     [k: string]: unknown;
   } | null;
-  mail: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  phone?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  mail: string;
+  phone?: string | null;
   image?: (string | null) | Image;
   fullName?: string | null;
   relatedTeams?: {
