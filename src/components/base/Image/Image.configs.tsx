@@ -1,3 +1,6 @@
+import { breakpoints } from '@/styles/css-variables/breakpoints';
+import { ImageVariant } from '@/components/base/types/imageVariant';
+
 export const getSrcAndSrcSet = ({
   params,
   src,
@@ -5,8 +8,11 @@ export const getSrcAndSrcSet = ({
 }: {
   params: string;
   src: string;
-  variant: string;
-}): object => {
+  variant: ImageVariant;
+}): {
+  src: string;
+  srcSet: string;
+} => {
   let srcSetValue = '';
   let srcValue = '';
 
@@ -124,6 +130,18 @@ export const getSrcAndSrcSet = ({
 export const getSizes = (variant: string): string => {
   let sizes = '';
 
+  const baseFontSize = 16;
+  const breakPointsInPx = breakpoints;
+
+  const breakPointsInRem = Object.fromEntries(Object.entries(breakPointsInPx)
+    .map(([
+      key,
+      val,
+    ]) => [
+      key,
+      `${val / baseFontSize}rem`,
+    ])) as { [K in keyof typeof breakPointsInPx]: string };
+
   /*
     100rem = 1600px (ultra)
     80rem = 1280px (wide)
@@ -135,37 +153,37 @@ export const getSizes = (variant: string): string => {
   switch (variant) {
     case 'content':
       sizes = `
-        (min-width: 100rem) 2500px,
-        (min-width: 80rem) 2000px,
-        (min-width: 40rem) 1000px,
-        (min-width: 22.5rem) 600px,
+        (min-width: ${breakPointsInRem.ultra}) 2500px,
+        (min-width: ${breakPointsInRem.wide}) 2000px,
+        (min-width: ${breakPointsInRem.medium}) 1000px,
+        (min-width: ${breakPointsInRem.micro}) 600px,
         400px
       `;
       break;
 
     case 'contentFull':
       sizes = `
-        (min-width: 100rem) 2500px,
-        (min-width: 80rem) 2000px,
-        (min-width: 40rem) 1000px,
-        (min-width: 22.5rem) 600px,
+        (min-width: ${breakPointsInRem.ultra}) 2500px,
+        (min-width: ${breakPointsInRem.wide}) 2000px,
+        (min-width: ${breakPointsInRem.medium}) 1000px,
+        (min-width: ${breakPointsInRem.micro}) 600px,
         400px
       `;
       break;
 
     case 'hero':
       sizes = `
-        (min-width: 100rem) 2500px,
-        (min-width: 80rem) 1600px,
-        (min-width: 40rem) 1000px,
-        (min-width: 22.5rem) 600px,
+        (min-width: ${breakPointsInRem.ultra}) 2500px,
+        (min-width: ${breakPointsInRem.wide}) 1600px,
+        (min-width: ${breakPointsInRem.medium}) 1000px,
+        (min-width: ${breakPointsInRem.micro}) 600px,
         400px
       `;
       break;
 
     case 'genericTeaser':
       sizes = `
-        (min-width: 100rem) 600px,
+        (min-width: ${breakPointsInRem.ultra}) 600px,
         400px
       `;
       break;
@@ -175,11 +193,11 @@ export const getSizes = (variant: string): string => {
       break;
 
     case 'portrait':
-      sizes = '(min-width: 64rem) 600px, 400px';
+      sizes = `(min-width: ${breakPointsInRem.large}) 600px, 400px`;
       break;
 
     case 'portraitCta':
-      sizes = '(min-width: 64rem) 200px, 100px';
+      sizes = `(min-width: ${breakPointsInRem.large}) 200px, 100px`;
       break;
 
     case 'publicationTeaser':
