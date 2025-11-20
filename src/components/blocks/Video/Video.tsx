@@ -1,3 +1,6 @@
+
+'use client';
+
 import React, {
   useEffect,
   useRef,
@@ -5,40 +8,35 @@ import React, {
 } from 'react';
 import { cva } from 'cva';
 import styles from '@/components/blocks/Video/Video.module.scss';
-import {
-  Figure,
-  InterfaceFigurePropTypes,
-} from '@/components/blocks/Figure/Figure';
+import { ImageBlock } from '@/components/blocks/Image/Image';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
 import { VideoConsentMessage } from '@/components/base/VideoConsentMessage/VideoConsentMessage';
 import { GumletPlayer } from '@gumlet/react-embed-player';
 import { i18nA11y } from '@/i18n/content';
-import { Config } from '@/payload-types';
+import {
+  Config,
+  Image as InterfaceImage,
+  Video as InterfaceVideo,
+  InterfaceVideoBlock,
+} from '@/payload-types';
+
 import {
   consentUpdatedEventName,
   getCookieConsent,
 } from '@/components/helpers/cookies';
-import { InterfaceRte } from '@/components/base/types/rte';
 
 export type InterfaceVideoPropTypes = {
-  alignment: InterfaceFigurePropTypes['alignment'],
-  overrideConsent?: boolean,
+  duration?: string,
+  stillImage: InterfaceImage,
+  stillImageHost: string,
   pageLanguage: Config['locale'],
-  stillImage: InterfaceFigurePropTypes,
-  video: {
-    caption: InterfaceRte,
-    credits: InterfaceRte,
-    id: string,
-    duration: string,
-    title: string,
-  }
-}
+} & InterfaceVideoBlock;
 
 const classes = cva([styles.videoWrapper], {
   variants: {
     alignment: {
-      centered: [styles.centered],
+      center: [styles.centered],
       left: [styles.left],
       right: [styles.right],
     },
@@ -47,12 +45,31 @@ const classes = cva([styles.videoWrapper], {
 
 export const Video = ({
   alignment,
-  overrideConsent,
-  stillImage,
+  caption,
+  credits,
+  duration,
   pageLanguage,
-  video,
+  stillImage,
+  stillImageHost,
+  'video-de': videoDe,
+  'video-en': videoEn,
+  'video-fr': videoFr,
+  'video-it': videoIt,
 }: InterfaceVideoPropTypes): React.JSX.Element => {
 
+  // Select correct video source for the current language
+  // if available and fall back to german if there is no
+  // language specific variant set.
+  const videos = {
+    'video-de': videoDe,
+    'video-en': videoEn,
+    'video-fr': videoFr,
+    'video-it': videoIt,
+  };
+
+  const video = (videos[`video-${pageLanguage}`] ?? videos['video-de']) as InterfaceVideo;
+
+  // Handle consent state -> Show/Hide consent message
   const [
     internalConsent,
     setInternalConsent,
@@ -85,7 +102,7 @@ export const Video = ({
     videoContainer.current?.classList.remove(styles.paused);
   };
 
-  const playButtonText = i18nA11y.playVideoText[pageLanguage as keyof typeof i18nA11y.playVideoText]
+  const playButtonText = i18nA11y.playVideoText[pageLanguage]
     .replace('{{title}}', video.title);
 
   return (
@@ -97,7 +114,7 @@ export const Video = ({
       <div
         className={styles.videoWrapperInner}
       >
-        {(internalConsent || overrideConsent) && (
+        {(internalConsent) && (
           <div>
             <div
               className={`${styles.videoContainer} 
@@ -133,17 +150,19 @@ export const Video = ({
                 onClick={loadVideo}
                 ref={buttonRef}
                 style='buttonPlay'
-                text='' />
+                text=''
+              />
+
               <span
                 aria-hidden={true}
                 className={styles.duration}
               >
-                {video.duration} Min
+                {duration} Min
               </span>
             </div>
           </div>
         )}
-        {(!internalConsent && !overrideConsent) && (
+        {(!internalConsent) && (
           <div
             className={styles.consentMessageWrapper}
           >
@@ -153,11 +172,13 @@ export const Video = ({
           </div>
         )}
         <div className={styles.figureWrapper}>
-          <Figure
-            alignment={stillImage.alignment}
-            caption={video.caption}
-            credits={video.credits}
-            imageConfig={stillImage.imageConfig}
+          <ImageBlock
+            blockType={'imageBlock'}
+            alignment={alignment}
+            caption={caption}
+            credits={credits}
+            host={stillImageHost}
+            image={stillImage}
           />
         </div>
       </div>

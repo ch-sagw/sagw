@@ -14,6 +14,9 @@
   z-index: 1;
   padding-block: px-to-rem(var(--image-top));
   padding-inline: px-to-rem(var(--grid-margin));
+
+  --figure-padding-block: 0;
+  --figure-padding-inline: 0;
 }
 
 .figureWrapper,
@@ -71,17 +74,6 @@
   grid-template-columns: subgrid;
 
   --figure-padding-inline: 0;
-}
-
-// Centered variant
-.videoWrapper.centered {
-  .videoContainer,
-  .buttonWrapper,
-  .consentMessageWrapper {
-    @include mq($from: large) {
-      grid-column: 2 / var(--grid-columns);
-    }
-  }
 }
 
 // Left aligned variant

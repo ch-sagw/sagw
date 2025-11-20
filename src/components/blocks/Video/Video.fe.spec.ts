@@ -7,7 +7,7 @@ import { navigate } from '@/automated-testing/helpers';
 test('expect screenshot', async ({
   page,
 }) => {
-  await navigate(page, 'components-blocks-video--video-centered-without-consent-check');
+  await navigate(page, 'components-blocks-video--video-centered');
 
   const viewport = page.viewportSize();
 
@@ -15,7 +15,6 @@ test('expect screenshot', async ({
 
   // Check if image exists on page
   if (await img.count() > 0) {
-    await img.scrollIntoViewIfNeeded();
     await page.waitForFunction(() => {
       const el = document.querySelector('img');
 
