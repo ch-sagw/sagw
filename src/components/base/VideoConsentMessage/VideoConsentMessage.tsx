@@ -1,4 +1,3 @@
-import React, { useRef } from 'react';
 import styles from '@/components/base/VideoConsentMessage/VideoConsentMessage.module.scss';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
@@ -13,8 +12,6 @@ export type InterfaceVideoConsentMessagePropTypes = {
 export const VideoConsentMessage = ({
   pageLanguage,
 }: InterfaceVideoConsentMessagePropTypes): React.JSX.Element => {
-  const buttonRefOpenCookieSettings = useRef<HTMLButtonElement>(null);
-
   const openCookieSettingsOverlay = (): void => {
     window.dispatchEvent(new Event(openConsentOverlayEventName));
   };
@@ -23,19 +20,18 @@ export const VideoConsentMessage = ({
     <div
       className={styles.consentMessage}
     >
-      <p className={styles.consentMessageTitle}>{i18nConsent.titleExternalContent[pageLanguage as keyof typeof i18nConsent.titleExternalContent]}</p>
-      <div className={styles.consentMessageText}>{i18nConsent.messageVideo[pageLanguage as keyof typeof i18nConsent.messageVideo]}</div>
+      <p className={styles.consentMessageTitle}>{i18nConsent.titleExternalContent[pageLanguage]}</p>
+      <div className={styles.consentMessageText}>{i18nConsent.messageVideo[pageLanguage]}</div>
       <Button
         ariaHasPopUp={true}
-        ariaLabel={i18nConsent.buttonTextOpenCookieSettings[pageLanguage as keyof typeof i18nConsent.buttonTextOpenCookieSettings]}
+        ariaLabel={i18nConsent.buttonTextOpenCookieSettings[pageLanguage]}
         buttonType='button'
         colorMode='dark'
         element='button'
         iconInlineStart={'config' as keyof typeof Icon}
         onClick={openCookieSettingsOverlay}
-        ref={buttonRefOpenCookieSettings}
         style='text'
-        text={i18nConsent.buttonTextOpenCookieSettings[pageLanguage as keyof typeof i18nConsent.buttonTextOpenCookieSettings]}
+        text={i18nConsent.buttonTextOpenCookieSettings[pageLanguage]}
       />
     </div>
   );
