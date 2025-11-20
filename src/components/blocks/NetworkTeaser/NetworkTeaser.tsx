@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, {
+  useMemo, useRef, useState,
+} from 'react';
 import styles from '@/components/blocks/NetworkTeaser/NetworkTeaser.module.scss';
 import {
   InterfaceNetworkTeasersBlock, NetworkCategory,
@@ -68,13 +70,35 @@ export const NetworkTeaser = ({
   const listRef = useRef<HTMLOListElement | null>(null);
   const userPaginatedRef = useRef(false);
 
-  const allItems = items.items.map((item, key) => (
+  const [
+    selectedCategory,
+    setSelectedCategory,
+  ] = useState<string>(allValue);
+
+  const filteredNetworkItems = useMemo(() => {
+    if (selectedCategory === allValue) {
+      return items.items;
+    }
+
+    return items.items.filter((item) => {
+      if (typeof item.category === 'object' && item.category !== null) {
+        return item.category.id === selectedCategory;
+      }
+
+      return false;
+    });
+  }, [
+    items.items,
+    selectedCategory,
+  ]);
+
+  const renderedItems = useMemo(() => filteredNetworkItems.map((item, key) => (
     <SafeHtml
       key={key}
       as='li'
       html={rteToHtml(item.title)}
     />
-  ));
+  )), [filteredNetworkItems]);
 
   const {
     currentPage,
@@ -82,11 +106,20 @@ export const NetworkTeaser = ({
     currentItems,
     handlePageChange,
   } = usePagination({
-    items: allItems,
+    items: renderedItems,
     listRef,
     sectionRef,
     userPaginatedRef,
   });
+
+  const handleFilterChange = (value: string): void => {
+    setSelectedCategory(value);
+
+    // ensure resetting pagination does not trigger scroll/focus behavior
+    userPaginatedRef.current = false;
+    handlePageChange(1);
+    userPaginatedRef.current = false;
+  };
 
   return (
     <div
@@ -102,10 +135,11 @@ export const NetworkTeaser = ({
             name={filterName}
             filterItems={filterItems}
             className={styles.filter}
+            onValueChangeAction={handleFilterChange}
           />
         }
       >
-        <ul>
+        <ul ref={listRef}>
           {currentItems}
         </ul>
 
