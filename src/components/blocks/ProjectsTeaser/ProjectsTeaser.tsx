@@ -27,6 +27,7 @@ export const ProjectsTeaser = async (props: InterfaceProjectsTeaserPropTypes): P
     <ProjectsTeaserComponent
       {...restProps}
       pages={pages}
+      pageLanguage={language}
     />
   );
 };

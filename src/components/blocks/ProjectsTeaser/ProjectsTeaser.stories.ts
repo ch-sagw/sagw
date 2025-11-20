@@ -46,34 +46,44 @@ const meta: Meta<typeof ProjectsTeaserComponent> = {
 
 export default meta;
 
-export const ProjectTeaser: StrictStory = {
-  args: {
-    alignement: 'horizontal',
-    blockType: 'projectsTeasersBlock',
-    internalLink: {
-      documentId: '1',
-      slug: 'OverviewPage',
+const defaultArgs: ProjectsTeaserProps = {
+  alignement: 'horizontal',
+  blockType: 'projectsTeasersBlock',
+  internalLink: {
+    documentId: '1',
+    slug: 'OverviewPage',
+  },
+  lead: simpleRteConfig('Projekte mit gesellschaftlicher Relevanz an der Schnittstelle von Wissenschaft und Öffentlichkeit.'),
+  linkText: simpleRteConfig('Alle Projekte'),
+  pageLanguage: 'de',
+  pages: [
+    {
+      ...teaserBlock,
+      id: '1',
     },
-    lead: simpleRteConfig('Projekte mit gesellschaftlicher Relevanz an der Schnittstelle von Wissenschaft und Öffentlichkeit.'),
-    linkText: simpleRteConfig('Zum Projekt'),
-    pages: [
-      {
-        ...teaserBlock,
-        id: '1',
-      },
-      {
-        ...teaserBlock,
-        id: '1',
-      },
-      {
-        ...teaserBlock,
-        id: '1',
-      },
-      {
-        ...teaserBlock,
-        id: '1',
-      },
-    ],
-    title: simpleRteConfig('Aktuelle Projekte'),
+    {
+      ...teaserBlock,
+      id: '2',
+    },
+    {
+      ...teaserBlock,
+      id: '3',
+    },
+    {
+      ...teaserBlock,
+      id: '4',
+    },
+  ],
+  title: simpleRteConfig('Aktuelle Projekte'),
+};
+
+export const Horizontal: StrictStory = {
+  args: defaultArgs,
+};
+
+export const Vertical: StrictStory = {
+  args: {
+    ...defaultArgs,
+    alignement: 'vertical',
   },
 };
