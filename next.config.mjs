@@ -15,7 +15,6 @@ const NEXT_PUBLIC_SERVER_URL = process.env.URL ||
 const nextConfig = {
   devIndicators: false,
   images: {
-    formats: ['image/avif'],
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL].map((item) => {
         const url = new URL(item);
