@@ -18,6 +18,7 @@ import {
 import { StatusMessage } from '@/components/global/StatusMessage/StatusMessage';
 import { Metadata } from 'next';
 import { ConsentBanner } from '@/components/global/ConsentBanner/ConsentBanner';
+import { NoJsScript } from '@/components/helpers/noJsScript';
 
 export const metadata: Metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -197,19 +198,7 @@ export default async function RootLayout({
       className='theme-sagw no-js'
       lang='en'
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            __html: `
-              (function() {
-                var doc = document.documentElement;
-                doc.className = doc.className.replace(/\\bno-js\\b/, '') + ' js';
-              })();
-            `,
-          }}
-        />
-      </head>
+      <NoJsScript />
       <body>
 
         <Header

@@ -4,8 +4,8 @@
   box-sizing: border-box;
 }
 
-html.no-js {
-  --initial-image-opacity: 0;
+html.no-js figure > div:first-child img {
+  display: none;
 }
 
 body {

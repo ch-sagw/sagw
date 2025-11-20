@@ -1,6 +1,5 @@
 .image {
-  contain: content;
-  opacity: var(--initial-image-opacity, 0);
+  opacity: 0;
   transition: opacity var(--motion-speed-fast) var(--motion-ease-in);
 
   &.hero,
@@ -33,7 +32,8 @@
     aspect-ratio: 12 / 17;
   }
 
+  noscript &,
   &.loaded {
-    opacity: 0.999;
+    opacity: 1;
   }
 }
