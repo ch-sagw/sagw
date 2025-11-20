@@ -1,11 +1,10 @@
 import type { CollectionConfig } from 'payload';
 import { rte1 } from '@/field-templates/rte';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
+import { globalContentAccessGeneric } from '@/access/globalContent';
 
 export const People: CollectionConfig = {
-  access: {
-    read: () => true,
-  },
+  access: globalContentAccessGeneric,
   admin: {
     group: 'Global Content',
     useAsTitle: 'fullName',

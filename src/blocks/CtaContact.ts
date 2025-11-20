@@ -1,6 +1,7 @@
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { Block } from 'payload';
 import { rte1 } from '@/field-templates/rte';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 // Example: Early Career Award
 
@@ -21,6 +22,7 @@ export const CtaContactBlock = {
       white: true,
     }),
     {
+      access: fieldAccessNonLocalizableField,
       hasMany: true,
       name: 'contact',
       relationTo: 'people',

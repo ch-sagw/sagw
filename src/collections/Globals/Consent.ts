@@ -9,6 +9,7 @@ import {
 import {
   rte1, rte4,
 } from '@/field-templates/rte';
+import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
 
 const overlaySection: Field[] = [
   rte1({
@@ -52,9 +53,7 @@ const overlaySectionWithToggle: Field[] = [
 ];
 
 export const Consent: CollectionConfig = {
-  access: {
-    read: (): boolean => true,
-  },
+  access: globalContentAccessNoTranslatorNoEditor,
   admin: {
     group: 'Global Content',
     useAsTitle: fieldAdminTitleFieldName,

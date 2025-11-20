@@ -1,7 +1,9 @@
 import { CollectionConfig } from 'payload';
 import { rte1 } from '@/field-templates/rte';
+import { globalContentAccessGeneric } from '@/access/globalContent';
 
 export const Projects: CollectionConfig = {
+  access: globalContentAccessGeneric,
   admin: {
     defaultColumns: ['name'],
     description: 'You can assign NewsDetail Pages, Event Detail Pages and Documents to a project. Then you could add a Downloads block to a page an tell it to list all downloads related to a project.',

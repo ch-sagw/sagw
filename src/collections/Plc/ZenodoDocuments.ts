@@ -1,9 +1,8 @@
 import type { CollectionConfig } from 'payload';
+import { assetsAccess } from '@/access/assets';
 
 export const ZenodoDocuments: CollectionConfig = {
-  access: {
-    read: () => true,
-  },
+  access: assetsAccess,
   admin: {
     defaultColumns: [
       'title',

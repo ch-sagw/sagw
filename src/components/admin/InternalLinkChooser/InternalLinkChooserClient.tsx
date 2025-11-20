@@ -27,6 +27,7 @@ interface InternalLinkChooserClientProps {
   required: boolean;
   label?: string;
   description?: string;
+  readOnly?: boolean;
 }
 
 interface InterfaceFetchPages {
@@ -99,6 +100,7 @@ const InternalLinkChooserClient = ({
   required,
   label,
   description,
+  readOnly = false,
 }: InternalLinkChooserClientProps): JSX.Element => {
 
   // hooks
@@ -207,6 +209,7 @@ const InternalLinkChooserClient = ({
         value={selectedOption}
         isLoading={loading}
         inputId={`field-${path}`}
+        disabled={readOnly}
         getOptionValue={(option: Option) => {
           // Return a unique string identifier for React Select's internal use
           if (typeof option.value === 'object' && option.value !== null && 'slug' in option.value && 'id' in option.value) {
@@ -216,6 +219,10 @@ const InternalLinkChooserClient = ({
           return String(option.value);
         }}
         onChange={(newValue) => {
+          if (readOnly) {
+            return;
+          }
+
           if (!newValue || Array.isArray(newValue)) {
             setSlugValue(null);
             setIdValue(null);

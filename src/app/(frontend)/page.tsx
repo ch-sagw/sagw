@@ -49,7 +49,6 @@ export default async function HomePage(): Promise<React.JSX.Element> {
     depth: 1,
     limit: 1,
     locale: lang,
-    overrideAccess: false,
     where: {
       tenant: {
         equals: tenant,

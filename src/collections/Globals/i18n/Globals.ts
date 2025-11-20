@@ -2,11 +2,10 @@ import { CollectionConfig } from 'payload';
 import {
   rte1, rte4,
 } from '@/field-templates/rte';
+import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
 
 export const I18nGlobals: CollectionConfig = {
-  access: {
-    read: (): boolean => true,
-  },
+  access: globalContentAccessNoTranslatorNoEditor,
   admin: {
     group: 'i18n',
   },

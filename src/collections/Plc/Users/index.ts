@@ -1,62 +1,39 @@
 import type { CollectionConfig } from 'payload';
-import { createAccess } from '@/collections/Plc/Users/access/create';
-import { readAccess } from '@/collections/Plc/Users/access/read';
-import { updateAndDeleteAccess } from '@/collections/Plc/Users/access/updateAndDelete';
 import { ensureUniqueUsername } from '@/collections/Plc/Users/hooks/ensureUniqueUsername';
-import { isSuperAdmin } from '@/access/isSuperAdmin';
 import { setCookieBasedOnDomain } from '@/collections/Plc/Users/hooks/setCookieBasedOnDomain';
 import { tenantsArrayField } from '@payloadcms/plugin-multi-tenant/fields';
 import {
   tenantRoles, userRoles,
 } from '@/collections/Plc/Users/roles';
+import {
+  usersAccess, usersAccessWithoutSelf,
+} from '@/access/users';
 
 const defaultTenantArrayField = tenantsArrayField({
-  arrayFieldAccess: {},
+  arrayFieldAccess: usersAccessWithoutSelf,
   rowFields: [
     {
-      access: {
-        update: ({
-          req,
-        }): boolean => {
-          const {
-            user,
-          } = req;
-
-          if (!user) {
-            return false;
-          }
-
-          if (isSuperAdmin(user)) {
-            return true;
-          }
-
-          return true;
-        },
-      },
-      defaultValue: [tenantRoles.editor],
+      access: usersAccessWithoutSelf,
+      defaultValue: [tenantRoles.admin],
       hasMany: true,
       name: 'roles',
       options: [
         tenantRoles.admin,
-        tenantRoles.editor,
+        tenantRoles.editorMagazine,
+        tenantRoles.translator,
       ],
       required: true,
       type: 'select',
     },
   ],
-  tenantFieldAccess: {},
+  tenantFieldAccess: usersAccessWithoutSelf,
   tenantsArrayFieldName: 'tenants',
   tenantsArrayTenantFieldName: 'tenant',
   tenantsCollectionSlug: 'tenants',
 });
 
 export const Users: CollectionConfig = {
-  access: {
-    create: createAccess,
-    delete: updateAndDeleteAccess,
-    read: readAccess,
-    update: updateAndDeleteAccess,
-  },
+  access: usersAccess,
   admin: {
     group: 'Org',
     useAsTitle: 'email',
@@ -64,37 +41,13 @@ export const Users: CollectionConfig = {
   auth: true,
   fields: [
     {
-      access: {
-        read: () => false,
-        update: ({
-          req, id,
-        }): boolean => {
-          const {
-            user,
-          } = req;
-
-          if (!user) {
-            return false;
-          }
-
-          if (id === user.id) {
-            // Allow user to update their own password
-            return true;
-          }
-
-          return isSuperAdmin(user);
-        },
-      },
+      access: usersAccess,
       hidden: true,
       name: 'password',
       type: 'text',
     },
     {
-      access: {
-        update: ({
-          req,
-        }) => isSuperAdmin(req.user),
-      },
+      access: usersAccessWithoutSelf,
       admin: {
         position: 'sidebar',
       },

@@ -3,6 +3,7 @@ import {
 } from 'payload';
 import { fieldsLinkInternal } from '@/field-templates/links';
 import { rte1 } from '@/field-templates/rte';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 // Example: SAGW home only
 
@@ -22,6 +23,7 @@ const homeTeaserItem: Field[] = [
 
   // TODO: add icon names as soon as we implemented the icons
   {
+    access: fieldAccessNonLocalizableField,
     name: 'iconName',
     options: [
       {
@@ -45,6 +47,7 @@ export const HomeTeasersBlock = {
   },
   fields: [
     {
+      access: fieldAccessNonLocalizableField,
       fields: homeTeaserItem,
       name: 'homeTeasers',
       type: 'array',

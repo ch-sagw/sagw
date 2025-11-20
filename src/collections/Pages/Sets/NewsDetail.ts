@@ -2,15 +2,20 @@ import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHeroNewsDetail } from '@/field-templates/hero';
 import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
-import { blocks } from '@/blocks';
+import {
+  blocks, BlockSlug,
+} from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { rte2 } from '@/field-templates/rte';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
 import { genericPageFields } from '@/field-templates/genericPageFields';
+import { pageAccess } from '@/access/pages';
+import { allBlocksButTranslator } from '@/access/blocks';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
-const contentBlocks = [
+const contentBlocks: BlockSlug[] = [
   'textBlock',
   'linksBlock',
   'downloadsBlock',
@@ -18,20 +23,16 @@ const contentBlocks = [
   'formBlock',
   'notificationBlock',
   'newsTeasersBlock',
-] as const;
+];
 
-type ContentBlock = typeof contentBlocks[number];
-
-const uniqueBlocks: ContentBlock[] = [
+const uniqueBlocks: BlockSlug[] = [
   'downloadsBlock',
   'linksBlock',
   'newsTeasersBlock',
 ];
 
 export const NewsDetailPage: CollectionConfig = {
-  access: {
-    read: (): boolean => true,
-  },
+  access: pageAccess,
   admin: {
     defaultColumns: [
       'adminTitle',
@@ -72,6 +73,7 @@ export const NewsDetailPage: CollectionConfig = {
             fieldsHeroNewsDetail,
 
             {
+              access: fieldAccessNonLocalizableField,
               name: 'project',
               relationTo: 'projects',
               required: false,
@@ -81,10 +83,21 @@ export const NewsDetailPage: CollectionConfig = {
             // Content Blocks
             {
               blocks: blocks(contentBlocks),
-              filterOptions: excludeBlocksFilterSingle({
-                allBlockTypes: contentBlocks,
-                onlyAllowedOnceBlockTypes: uniqueBlocks,
-              }),
+              filterOptions: ({
+                siblingData, req,
+              }): BlockSlug[] => {
+                const onlyOnceBlockFilter = excludeBlocksFilterSingle({
+                  allBlockTypes: contentBlocks,
+                  onlyAllowedOnceBlockTypes: uniqueBlocks,
+                })({
+                  siblingData,
+                });
+
+                return allBlocksButTranslator({
+                  allBlocks: onlyOnceBlockFilter,
+                  req,
+                });
+              },
               label: 'Content',
               name: 'content',
               type: 'blocks',

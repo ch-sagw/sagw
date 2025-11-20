@@ -2,6 +2,7 @@
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/mixins/mixins-shared-styles" as *;
 
 .button {
   @include button-text;
@@ -176,17 +177,6 @@
     }
   }
 
-  &:not([disabled]):is(:hover, :focus) .innerText:before {
-    transform: translateX(100%);
-    transition-timing-function: var(--motion-ease-in);
-    z-index: 2;
-  }
-
-  &:not([disabled]):is(:hover, :focus) .innerText .line {
-    transform: translateX(-100%);
-    transition-duration: 0s;
-  }
-
   &:not([disabled]):is(:hover, :focus) .innerText:after {
     opacity: 1;
 
@@ -236,9 +226,7 @@
 
   &:is(:hover, :focus-visible) .innerText {
     &:after {
-      transform-origin: left;
-      transform: scaleX(1);
-      opacity: 1;
+      @include button-line-hover;
     }
   }
 

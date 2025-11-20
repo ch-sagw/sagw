@@ -6,6 +6,8 @@ import {
 } from '@/field-templates/rte';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
+import { fieldAccessHeroAnimation } from '@/access/fields/hero';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 const colorMode = fieldsColorMode({
   dark: true,
@@ -23,6 +25,7 @@ const leadField: Field = rte2({
 });
 
 const dateField: Field = {
+  access: fieldAccessNonLocalizableField,
   name: 'date',
   required: true,
   type: 'date',
@@ -53,7 +56,7 @@ export const fieldsHeroHome: GroupField = {
     titleField,
     leadField,
     {
-      // TODO: enable for SAGW only
+      access: fieldAccessHeroAnimation,
       defaultValue: true,
       name: 'animated',
       type: 'checkbox',

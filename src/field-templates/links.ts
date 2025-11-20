@@ -3,6 +3,7 @@ import {
   rte1, rte2,
 } from './rte';
 import { fieldInternalLinkChooser } from '@/components/admin/InternalLinkChooser/InternalLinkChooserField';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 interface InterfaceLinkProps {
   showDescription?: boolean;
@@ -35,6 +36,7 @@ export const fieldsLinkInternal = (props?: InterfaceLinkProps): Field[] => {
 export const fieldsLinkExternal = (props?: InterfaceLinkProps): Field[] => {
   const linkFields: Field[] = [
     {
+      access: fieldAccessNonLocalizableField,
       localized: true,
       name: 'externalLink',
       required: true,
@@ -76,6 +78,7 @@ export const fieldsMail: Field[] = [
     name: 'linkText',
   }),
   {
+    access: fieldAccessNonLocalizableField,
     localized: false,
     name: 'email',
     required: true,
@@ -85,6 +88,7 @@ export const fieldsMail: Field[] = [
 
 export const fieldsLinkInternalOrExternal = (props?: InterfaceLinkProps): Field[] => [
   {
+    access: fieldAccessNonLocalizableField,
     admin: {
       layout: 'horizontal',
     },
@@ -136,6 +140,7 @@ export const fieldsLinkInternalOrExternal = (props?: InterfaceLinkProps): Field[
 export const fieldsLinkInternalWithToggle = (props?: InterfaceLinkProps): Field => ({
   fields: [
     {
+      access: fieldAccessNonLocalizableField,
       defaultValue: false,
       label: 'Include Link',
       name: 'includeLink',

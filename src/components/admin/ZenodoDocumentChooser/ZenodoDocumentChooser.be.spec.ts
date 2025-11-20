@@ -3,6 +3,8 @@ import {
   test,
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
+import configPromise from '@/payload.config';
+import { getPayload } from 'payload';
 
 test.describe('Add Zenodo document', () => {
   beforeEachPayloadLogin();
@@ -117,6 +119,10 @@ test.describe('Add Zenodo document', () => {
   test('returns proper api response', async ({
     page,
   }) => {
+    const payload = await getPayload({
+      config: configPromise,
+    });
+
     await page.goto('http://localhost:3000/admin/collections/zenodoDocuments/create');
     await page.waitForLoadState('networkidle');
 
@@ -140,13 +146,19 @@ test.describe('Add Zenodo document', () => {
       .toBeVisible();
 
     // test the return value of the payload api
-    const res = await fetch('http://localhost:3000/api/zenodoDocuments?where[zenodoId][equals]=8888');
-    const json = await res.json();
+    const res = await payload.find({
+      collection: 'zenodoDocuments',
+      where: {
+        zenodoId: {
+          equals: 8888,
+        },
+      },
+    });
 
-    await expect(json.docs.length)
+    await expect(res.docs.length)
       .toEqual(1);
 
-    const [doc] = json.docs;
+    const [doc] = res.docs;
 
     await expect(doc.zenodoId)
       .toEqual('8888');

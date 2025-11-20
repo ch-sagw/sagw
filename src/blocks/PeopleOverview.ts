@@ -1,3 +1,4 @@
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 import { Block } from 'payload';
 
 // Example: About SAGW -> Team
@@ -16,6 +17,7 @@ export const PeopleOverviewBlock = {
       type: 'text',
     },
     {
+      access: fieldAccessNonLocalizableField,
       admin: {
         description: 'Which team members do you want to display in the overview?',
       },
