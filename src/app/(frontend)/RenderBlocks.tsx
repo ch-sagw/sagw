@@ -272,6 +272,7 @@ export const RenderBlocks = ({
                 <div key={block.id || index}>
                   <GenericTeaser
                     {...block}
+                    pageLanguage={pageLanguage}
                   />
                 </div>
               );

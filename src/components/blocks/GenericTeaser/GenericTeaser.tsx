@@ -1,51 +1,73 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styles from '@/components/blocks/GenericTeaser/GenericTeaser.module.scss';
-import { InterfaceGenericTeasersBlock } from '@/payload-types';
-import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
+import {
+  Config, InterfaceGenericTeasersBlock,
+} from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { Section } from '@/components/base/Section/Section';
+import { GenericTeaser as TeaserBaseComponent } from '@/components/base/GenericTeaser/GenericTeaser';
+import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 
-export type InterfaceGenericTeaserPropTypes = {} & InterfaceGenericTeasersBlock;
+export type InterfaceGenericTeaserPropTypes = {
+  pageLanguage: Config['locale'];
+} & InterfaceGenericTeasersBlock;
 
 export const GenericTeaser = ({
   title,
   lead,
   alignement,
   teasers,
+  pageLanguage,
 }: InterfaceGenericTeaserPropTypes): React.JSX.Element => (
+  <Fragment>
+    <Section
+      className={styles.section}
+      title={rteToHtml(title)}
+      subtitle={rteToHtml(lead)}
+      colorMode='white'
+      fullBleed={alignement === 'vertical'}
+    />
 
-  <Section
-    className={styles.projectTeser}
-    title={rteToHtml(title)}
-    subtitle={rteToHtml(lead)}
-    colorMode='white'
-    fullBleed={alignement === 'vertical'}
-  >
+    <ul className={styles.list}>
+      {teasers.map((item, key) => {
+        let href;
+        let text;
 
-    {/* TODO */}
-    {teasers.map((item, key) => (
-      <div key={key}>
-        <SafeHtml
-          as='p'
-          html={rteToHtml(item.title)}
-        />
+        if (item.linkType === 'external' && item.linkExternal) {
+          href = item.linkExternal.externalLink;
+          text = rte1ToPlaintext(item.linkExternal?.externalLinkText);
+        } else if (item.linkType === 'internal' && item.linkInternal) {
 
-        <SafeHtml
-          as='p'
-          html={rteToHtml(item.text)}
-        />
+          // TODO: construct internal link
+          href = item.linkInternal.internalLink.documentId;
+          text = rte1ToPlaintext(item.linkInternal?.linkText);
+        } else if (item.linkType === 'mail' && item.linkMail) {
+          href = item.linkMail?.email;
+          text = rte1ToPlaintext(item.linkMail?.linkText);
+        }
 
-        <p>{item.image?.relationTo}</p>
+        if (!href || !text) {
+          return undefined;
+        }
 
-        <p>{item.linkType}</p>
-
-        <SafeHtml
-          as='p'
-          html={rteToHtml(item.linkExternal?.externalLinkText)}
-        />
-
-        <p>{item.linkExternal?.externalLink}</p>
-      </div>
-    ))}
-  </Section>
+        return (
+          <TeaserBaseComponent
+            className={styles.item}
+            key={key}
+            title={rteToHtml(item.title)}
+            texts={[rteToHtml(item.text)]}
+            links={[
+              {
+                href,
+                text,
+                type: item.linkType,
+              },
+            ]}
+            pageLanguage={pageLanguage}
+            type='generic'
+          />
+        );
+      })}
+    </ul>
+  </Fragment>
 );

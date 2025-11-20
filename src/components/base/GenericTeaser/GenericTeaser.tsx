@@ -19,6 +19,7 @@ export type InterfaceBaseTeaserProps = {
   links: InterfaceLink[];
   pageLanguage: Config['locale'];
   type: 'institute' | 'network' | 'project' | 'magazine' | 'people' | 'generic';
+  className: string;
 };
 
 // Image and logo both are optional. But as soon as image is set,
@@ -102,6 +103,7 @@ export const GenericTeaser = ({
   logo,
   pageLanguage,
   type,
+  className,
 }: InterfaceGenericTeaserPropTypes): React.JSX.Element => {
   let WrapperElement: keyof React.JSX.IntrinsicElements = 'div';
   let linkTarget;
@@ -109,6 +111,7 @@ export const GenericTeaser = ({
   const teaserClasses = cva([
     styles.teaser,
     styles[type],
+    className,
   ]);
 
   if (links && links.length === 1) {

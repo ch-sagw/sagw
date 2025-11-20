@@ -8,7 +8,7 @@ export type InterfaceSectionPropTypes = {
   className?: string;
   title: string;
   subtitle?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   colorMode: ColorMode;
   showTopLine?: boolean;
   fullBleed?: boolean;
