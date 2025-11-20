@@ -171,8 +171,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       firstname: simpleRteConfig(`Firstname ${tenant.toUpperCase()}`),
       function: simpleRteConfig('Some function'),
       lastname: simpleRteConfig(`Lastname ${tenant.toUpperCase()}`),
-      mail: simpleRteConfig('foo@bar.com'),
-      phone: simpleRteConfig('031 123 45 67'),
+      mail: 'foo@bar.com',
+      phone: '031 123 45 67',
       tenant: tenantId,
     },
   });
@@ -785,6 +785,16 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
             },
           ],
           subtitle: simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe'),
+        },
+
+        // cta contact
+        {
+          blockType: 'ctaContactBlock',
+          colorMode: 'dark',
+          contact: [person.id],
+          text: simpleRteConfig('Haben Sie Fragen? Dann melden Sie sich gerne bei uns.'),
+          title: simpleRteConfig('Kontakt'),
+
         },
       ],
       hero: {

@@ -21,3 +21,12 @@
     }
   }
 }
+
+// ##############################
+// BUTTON LINE ANIMATION
+// ##############################
+@mixin button-line-hover {
+  transform-origin: left;
+  transform: scaleX(1);
+  opacity: 1;
+}

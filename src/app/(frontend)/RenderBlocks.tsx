@@ -51,6 +51,7 @@ import { GenericTeaser } from '@/components/blocks/GenericTeaser/GenericTeaser';
 import { MagazineTeaser } from '@/components/blocks/MagazineTeaser/MagazineTeaser';
 import { ProjectsTeaser } from '@/components/blocks/ProjectsTeaser/ProjectsTeaser';
 import { NetworkTeaser } from '@/components/blocks/NetworkTeaser/NetworkTeaser';
+import { CtaContact } from '@/components/blocks/CtaContact/CtaContact';
 
 // blocks interface
 interface InterfaceRenderBlocksProps {
@@ -225,6 +226,18 @@ export const RenderBlocks = ({
                   <CtaLink
                     {...block}
                     language={pageLanguage}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'ctaContactBlock') {
+              return (
+                <div key={block.id || index}>
+                  <CtaContact
+                    {...block}
+                    pageLanguage={pageLanguage}
+                    buttonText={i18n.generic.writeEmailButtonText}
                   />
                 </div>
               );
