@@ -143,11 +143,12 @@ Förderung -> project teaser -> no padding
     margin-block: 0 px-to-rem(var(--spacing-s));
   }
 
-  .text {
+  .text:last-of-type {
     margin-block: 0 px-to-rem(var(--spacing-l));
   }
 
   .link {
+    display: flex;
     margin-block: 0 px-to-rem(var(--spacing-m));
 
     &:last-of-type {

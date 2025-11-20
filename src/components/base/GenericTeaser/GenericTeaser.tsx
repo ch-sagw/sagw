@@ -105,6 +105,7 @@ export const GenericTeaser = ({
 }: InterfaceGenericTeaserPropTypes): React.JSX.Element => {
   let WrapperElement: keyof React.JSX.IntrinsicElements = 'div';
   let linkTarget;
+  let target;
   const teaserClasses = cva([
     styles.teaser,
     styles[type],
@@ -115,6 +116,10 @@ export const GenericTeaser = ({
 
     WrapperElement = 'a';
     linkTarget = link.href;
+
+    if (link.type === 'external') {
+      target = '_blank';
+    }
   }
 
   return (
@@ -124,6 +129,10 @@ export const GenericTeaser = ({
       <WrapperElement
         href={linkTarget}
         className={styles.wrapper}
+        target={target}
+
+      // TODO
+      // aria-label
       >
         {logo &&
           <div className={styles.logo}>logo placeholder</div>
