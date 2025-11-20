@@ -37,11 +37,18 @@ visualStories.forEach((story) => {
 
     // Check if image exists on page
     if (await img.count() > 0) {
-      await img.scrollIntoViewIfNeeded();
       await page.waitForFunction(() => {
-        const el = document.querySelector('img');
+        const elements = document.querySelectorAll('img');
 
-        return el && el.complete && el.naturalWidth > 0;
+        for (let i = 0; i < elements.length; i++) {
+          const el = elements[i];
+
+          if (!el || !el.complete || el.naturalWidth <= 0) {
+            return false;
+          }
+        }
+
+        return true;
       });
     }
 
