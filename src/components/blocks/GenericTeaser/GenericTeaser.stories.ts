@@ -34,24 +34,22 @@ const teaserBlock: InterfaceGenericTeasersBlock['teasers'][number] = {
       documentId: '1234',
       slug: 'projectDetailPage',
     },
-    linkText: simpleRteConfig('Zu den Instituten.'),
+    linkText: simpleRteConfig('Zum Projekt'),
   },
   linkType: 'internal',
-  text: simpleRteConfig('Fünf langfristige Forschungsinfrastrukturen führt die SAGW in Eigenregie und hat die Förderverantwortung.'),
-  title: simpleRteConfig('Institute'),
+  text: simpleRteConfig('Ab 2021 hat die Akademie zudem die Förderzuständigkeit für acht längerfristige Editionen vom SNF übernommen. '),
+  title: simpleRteConfig('Plattform Ageing Society'),
 };
 
 export const GenericTeasers: StrictStory = {
   args: {
     alignement: 'horizontal',
     blockType: 'genericTeasersBlock',
-    lead: simpleRteConfig('Die SAGW ist eine der wichtigsten Trägerinnen von langfristigen Forschungsinfrastrukturen in der Schweiz.'),
+    lead: simpleRteConfig('Projekte mit gesellschaftlicher Relevanz an der Schnittstelle von Wissenschaft und Öffentlichkeit.'),
     teasers: [
       teaserBlock,
       teaserBlock,
-      teaserBlock,
-      teaserBlock,
     ],
-    title: simpleRteConfig('Unsere Forschungsinfrastrukturen'),
+    title: simpleRteConfig('Aktuelle Projekte'),
   },
 };
