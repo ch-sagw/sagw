@@ -15,7 +15,12 @@ const meta: Meta<typeof GenericOverview> = {
   args: {},
   component: GenericOverview,
   decorators: [defaultDecorator],
-  parameters: {/* layout: 'centered', */ },
+  parameters: {
+    layout: 'fullscreen',
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   tags: [
     'autodocs',
     'visual:check',
@@ -26,9 +31,14 @@ const meta: Meta<typeof GenericOverview> = {
 
 export default meta;
 
-export const SampleStory: StrictStory = {
+export const Overview: StrictStory = {
   args: {
-    context: 'sampleContext',
-    sampleProperty: 'some text',
+    children: Array.from({
+      length: 25,
+    }, (_, index) => (
+      <p key={index}>Random content {index}</p>
+    )),
+    language: 'de',
+    showPagination: true,
   },
 };
