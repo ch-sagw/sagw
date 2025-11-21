@@ -168,9 +168,7 @@ export const NetworkTeaser = ({
         totalPages={totalPages}
         currentPage={currentPage}
         onPageChange={handlePageChange}
-
-        // TODO
-        paginationTitle='Pagination'
+        language={pageLanguage}
       />
 
     </Section>

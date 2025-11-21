@@ -5,19 +5,21 @@ import {
 import {
   EventsListItem, InterfaceEventsListItemPropTypes,
 } from '@/components/base/EventsListItem/EventsListItem';
+import { Config } from '@/payload-types';
 
 export type InterfaceEventsOverviewComponentPropTypes = Omit<
   InterfaceEventsNewsOverviewPropTypes,
   'children'
 > & {
-  items: InterfaceEventsListItemPropTypes[]
+  items: InterfaceEventsListItemPropTypes[];
+  pageLanguage: Config['locale'];
 };
 
 export const EventsOverviewComponent = (props: InterfaceEventsOverviewComponentPropTypes): React.JSX.Element => (
   <EventsNewsOverview
     title={props.title}
     colorMode='white'
-    paginationTitle={props.paginationTitle}
+    pageLanguage={props.pageLanguage}
   >
     {props.items.map((item, key) => (
       <EventsListItem

@@ -172,24 +172,33 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   });
 
   // create person in people
-  const person = await payload.create({
-    collection: 'people',
-    data: {
-      firstname: simpleRteConfig(`Firstname ${tenant.toUpperCase()}`),
-      function: simpleRteConfig('Some function'),
-      lastname: simpleRteConfig(`Lastname ${tenant.toUpperCase()}`),
-      mail: 'foo@bar.com',
-      phone: '031 123 45 67',
-      tenant: tenantId,
-    },
-  });
+  const people = await Promise.all(Array.from({
+    length: 12,
+  }, (_, i) => {
+    const index = i + 1;
+
+    return payload.create({
+      collection: 'people',
+      data: {
+        firstname: simpleRteConfig(`Firstname ${index} ${tenant.toUpperCase()}`),
+        function: simpleRteConfig('Some function'),
+        image,
+        lastname: simpleRteConfig(`Lastname ${index} ${tenant.toUpperCase()}`),
+        mail: 'foo@bar.com',
+        phone: '031 123 45 67',
+        tenant: tenantId,
+      },
+    });
+  }));
+
+  const [person] = people;
 
   // create a team
   const team = await payload.create({
     collection: 'teams',
     data: {
       name: simpleRteConfig(`Team 1 ${tenant.toUpperCase()}`),
-      people: [person.id],
+      people: people.map((item) => item.id),
       tenant: tenantId,
     },
   });
@@ -894,28 +903,17 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         {
           blockType: 'editionsOverview',
           items: {
-            items: [
-              {
+            items: Array.from({
+              length: 22,
+            }, (_, i) => {
+              const index = i + 1;
+
+              return {
                 externalLink: 'https://www.foo.bar',
                 text: simpleRteConfig('Editions text'),
-                title: simpleRteConfig('Edition 1'),
-              },
-              {
-                externalLink: 'https://www.foo.bar',
-                text: simpleRteConfig('Editions text'),
-                title: simpleRteConfig('Edition 2'),
-              },
-              {
-                externalLink: 'https://www.foo.bar',
-                text: simpleRteConfig('Editions text'),
-                title: simpleRteConfig('Edition 3'),
-              },
-              {
-                externalLink: 'https://www.foo.bar',
-                text: simpleRteConfig('Editions text'),
-                title: simpleRteConfig('Edition 4'),
-              },
-            ],
+                title: simpleRteConfig(`Edition ${index}`),
+              };
+            }),
           },
         },
       ],
@@ -1369,42 +1367,54 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   }));
 
   // institute detail page
-  await payload.create({
-    collection: 'instituteDetailPage',
-    data: {
-      _status: 'published',
-      hero: {
-        colorMode: 'white',
-        lead: simpleRteConfig('Institute Detail Page Lead'),
-        title: simpleRteConfig(`Institute detail page title ${tenant.toUpperCase()}`),
+  await Promise.all(Array.from({
+    length: 12,
+  }, (_, i) => {
+    const index = i + 1;
+
+    return payload.create({
+      collection: 'instituteDetailPage',
+      data: {
+        _status: 'published',
+        hero: {
+          colorMode: 'white',
+          lead: simpleRteConfig('Institute Detail Page Lead'),
+          title: simpleRteConfig(`Institute detail page title ${index} ${tenant.toUpperCase()}`),
+        },
+        navigationTitle: 'Institute',
+        overviewPageProps: {
+          image,
+          teaserText: simpleRteConfig(`Institute Teaser Text ${index}`),
+        },
+        tenant: tenantId,
       },
-      navigationTitle: 'Institute',
-      overviewPageProps: {
-        image,
-        teaserText: simpleRteConfig('Institute Teaser Text'),
-      },
-      tenant: tenantId,
-    },
-  });
+    });
+  }));
 
   // national dictionary detail page
-  await payload.create({
-    collection: 'nationalDictionaryDetailPage',
-    data: {
-      _status: 'published',
-      hero: {
-        colorMode: 'white',
-        lead: simpleRteConfig('National Dictionary Detail Page Lead'),
-        title: simpleRteConfig(`National Dictionary detail page title ${tenant.toUpperCase()}`),
+  await Promise.all(Array.from({
+    length: 12,
+  }, (_, i) => {
+    const index = i + 1;
+
+    return payload.create({
+      collection: 'nationalDictionaryDetailPage',
+      data: {
+        _status: 'published',
+        hero: {
+          colorMode: 'white',
+          lead: simpleRteConfig('National Dictionary Detail Page Lead'),
+          title: simpleRteConfig(`National Dictionary detail page ${index} title ${tenant.toUpperCase()}`),
+        },
+        navigationTitle: 'National Dictionary Detail',
+        overviewPageProps: {
+          image,
+          teaserText: simpleRteConfig('National Dictionary Teaser Text'),
+        },
+        tenant: tenantId,
       },
-      navigationTitle: 'National Dictionary Detail',
-      overviewPageProps: {
-        image,
-        teaserText: simpleRteConfig('National Dictionary Teaser Text'),
-      },
-      tenant: tenantId,
-    },
-  });
+    });
+  }));
 
   // project detail pages
   await Promise.all(Array.from({

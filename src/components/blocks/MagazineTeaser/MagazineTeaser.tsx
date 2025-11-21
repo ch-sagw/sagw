@@ -1,8 +1,9 @@
 import React from 'react';
 import {
   Config, InterfaceMagazineTeasersBlock,
+  MagazineDetailPage,
 } from '@/payload-types';
-import { fetchMagazineDetailPages } from '@/data/fetch';
+import { fetchDetailPages } from '@/data/fetch';
 import { MagazineTeaserComponent } from './MagazineTeaser.component';
 
 export type InterfaceMagazineTeaserPropTypes = {
@@ -17,11 +18,13 @@ export const MagazineTeaser = async (props: InterfaceMagazineTeaserPropTypes): P
     ...restProps
   } = props;
 
-  const pages = await fetchMagazineDetailPages({
+  const pages = await fetchDetailPages({
+    collection: 'magazineDetailPage',
     language,
     limit: 4,
+    sort: 'createdAt',
     tenant,
-  });
+  }) as MagazineDetailPage[];
 
   return (
     <MagazineTeaserComponent

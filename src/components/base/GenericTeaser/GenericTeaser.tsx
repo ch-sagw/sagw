@@ -7,7 +7,7 @@ import { Config } from '@/payload-types';
 import { Icon } from '@/icons';
 
 type InterfaceLinkType = 'internal' | 'external' | 'mail' | 'phone';
-interface InterfaceLink {
+export interface InterfaceGenericTeaserLink {
   text?: string;
   href: string;
   type?: InterfaceLinkType;
@@ -16,7 +16,7 @@ interface InterfaceLink {
 export type InterfaceBaseTeaserProps = {
   title: string;
   texts?: string[];
-  links: InterfaceLink[];
+  links: InterfaceGenericTeaserLink[];
   pageLanguage: Config['locale'];
   type: 'institute' | 'network' | 'project' | 'magazine' | 'people' | 'generic';
   className?: string;
@@ -35,7 +35,7 @@ const renderLink = ({
   lang,
   wrapper,
 }: {
-  link: InterfaceLink;
+  link: InterfaceGenericTeaserLink;
   key: number;
   lang: Config['locale'];
   wrapper: string;

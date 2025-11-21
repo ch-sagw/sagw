@@ -1,8 +1,9 @@
 import React from 'react';
 import {
   Config, InterfaceProjectTeasersBlock,
+  ProjectDetailPage,
 } from '@/payload-types';
-import { fetchProjectDetailPages } from '@/data/fetch';
+import { fetchDetailPages } from '@/data/fetch';
 import { ProjectsTeaserComponent } from './ProjectsTeaser.component';
 
 export type InterfaceProjectsTeaserPropTypes = {
@@ -17,11 +18,13 @@ export const ProjectsTeaser = async (props: InterfaceProjectsTeaserPropTypes): P
     ...restProps
   } = props;
 
-  const pages = await fetchProjectDetailPages({
+  const pages = await fetchDetailPages({
+    collection: 'projectDetailPage',
     language,
     limit: 3,
+    sort: 'createdAt',
     tenant,
-  });
+  }) as ProjectDetailPage[];
 
   return (
     <ProjectsTeaserComponent

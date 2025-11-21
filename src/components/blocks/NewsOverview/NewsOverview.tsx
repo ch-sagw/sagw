@@ -46,9 +46,7 @@ export const NewsOverview = async (props: InterfaceNewsOverviewPropTypes): Promi
   return (
     <NewsOverviewComponent
       title={title}
-
-      // TODO
-      paginationTitle='Pagination'
+      pageLanguage={props.language}
       colorMode='white'
       items={items}
     />

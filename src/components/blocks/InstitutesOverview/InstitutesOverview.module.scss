@@ -1,7 +1,5 @@
-.baseStyle {
-  text-decoration: underline;
-}
+@use "../../../styles/mixins/mixins-shared-styles" as *;
 
-.sampleContextStyle {
-  border: 1px solid black;
+.item {
+  @include full-bleed-teaser-item;
 }

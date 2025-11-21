@@ -1,12 +1,18 @@
 import {
   Config, EventDetailPage,
-  MagazineDetailPage,
-  ProjectDetailPage,
+  Team,
 } from '@/payload-types';
 import configPromise from '@/payload.config';
-import { getPayload } from 'payload';
+import {
+  CollectionSlug, DataFromCollectionSlug, getPayload,
+  Sort,
+} from 'payload';
 
-interface InterfaceFetchDetailPagesProps {
+// #########################################################################
+// Event Detail pages
+// #########################################################################
+
+interface InterfaceFetchEventDetailPagesProps {
   limit?: number;
   language: Config['locale'],
   tenant: string,
@@ -16,7 +22,7 @@ export const fetchEventDetailPages = async ({
   limit,
   language,
   tenant,
-}: InterfaceFetchDetailPagesProps): Promise<EventDetailPage[]> => {
+}: InterfaceFetchEventDetailPagesProps): Promise<EventDetailPage[]> => {
 
   const payload = await getPayload({
     config: configPromise,
@@ -58,50 +64,37 @@ export const fetchEventDetailPages = async ({
   return filteredDocs;
 };
 
-export const fetchProjectDetailPages = async ({
+// #########################################################################
+// Generic Detail Pages
+// #########################################################################
+
+interface InterfaceFetchDetailPagesProps {
+  limit?: number;
+  language: Config['locale'],
+  tenant: string,
+  collection: CollectionSlug;
+  sort: Sort,
+}
+
+export const fetchDetailPages = async ({
   limit,
   language,
   tenant,
-}: InterfaceFetchDetailPagesProps): Promise<ProjectDetailPage[]> => {
-
-  const payload = await getPayload({
-    config: configPromise,
-  });
-
-  const projectPages = await payload.find({
-    collection: 'projectDetailPage',
-    depth: 0,
-    limit,
-    locale: language,
-    pagination: false,
-    sort: 'createdAt',
-    where: {
-      tenant: {
-        equals: tenant,
-      },
-    },
-  });
-
-  return projectPages.docs;
-};
-
-export const fetchMagazineDetailPages = async ({
-  limit,
-  language,
-  tenant,
-}: InterfaceFetchDetailPagesProps): Promise<MagazineDetailPage[]> => {
+  collection,
+  sort,
+}: InterfaceFetchDetailPagesProps): Promise<DataFromCollectionSlug<CollectionSlug>[]> => {
 
   const payload = await getPayload({
     config: configPromise,
   });
 
   const magazinePages = await payload.find({
-    collection: 'magazineDetailPage',
+    collection,
     depth: 0,
     limit,
     locale: language,
     pagination: false,
-    sort: 'createdAt',
+    sort,
     where: {
       tenant: {
         equals: tenant,
@@ -110,4 +103,50 @@ export const fetchMagazineDetailPages = async ({
   });
 
   return magazinePages.docs;
+};
+
+// #########################################################################
+// Teams / People
+// #########################################################################
+
+interface InterfaceFetchPeopleProps {
+  team: string | Team;
+  language: Config['locale'];
+}
+
+export const fetchTeam = async ({
+  team,
+  language,
+}: InterfaceFetchPeopleProps): Promise<Team | undefined> => {
+  let teamId;
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  // if team is an object, we can get people from that. if not, we need
+  // to fetch the team first
+  if (typeof team === 'object') {
+    teamId = team.id;
+  } else {
+    teamId = team;
+  }
+
+  if (!teamId) {
+    return undefined;
+  }
+
+  // collect promises for fetching people
+  const fetchedTeam = await payload.findByID({
+    collection: 'teams',
+    depth: 1,
+    id: teamId,
+    locale: language,
+  });
+
+  if (typeof fetchedTeam === 'object') {
+    return fetchedTeam as Team;
+  }
+
+  return undefined;
+
 };

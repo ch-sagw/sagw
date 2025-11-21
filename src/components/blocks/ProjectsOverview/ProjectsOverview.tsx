@@ -1,28 +1,59 @@
 import React from 'react';
-import { cva } from 'cva';
+import {
+  Config, InterfaceProjectOverviewBlock,
+  ProjectDetailPage,
+} from '@/payload-types';
+import { fetchDetailPages } from '@/data/fetch';
+import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
+import { GenericOverview } from '@/components/base/GenericOverview/GenericOverview';
 import styles from '@/components/blocks/ProjectsOverview/ProjectsOverview.module.scss';
-// import { InterfaceProjectsOverview } from '@/payload-types';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
 export type InterfaceProjectsOverviewPropTypes = {
-  sampleProperty: string;
-  context: 'sampleContext'
-} & any;
+  language: Config['locale'];
+  tenant: string;
+} & InterfaceProjectOverviewBlock;
 
-const sampleClasses = cva([styles.baseStyle], {
-  variants: {
-    context: {
-      sampleContext: [styles.sampleContextStyle],
-    },
-  },
-});
+export const ProjectsOverview = async (props: InterfaceProjectsOverviewPropTypes): Promise<React.JSX.Element> => {
+  const {
+    language,
+    tenant,
+  } = props;
 
-export const ProjectsOverview = ({
-  context,
-  sampleProperty,
-}: InterfaceProjectsOverviewPropTypes): React.JSX.Element => (
-  <div
-    className={sampleClasses({
-      context: context ?? undefined,
-    })}
-  >{sampleProperty}</div>
-);
+  const pages = await fetchDetailPages({
+    collection: 'projectDetailPage',
+    language,
+    limit: 0,
+    sort: 'createdAt',
+    tenant,
+  }) as ProjectDetailPage[];
+
+  const allItems = pages.map((item) => (
+    <GenericTeaser
+      className={styles.item}
+      key={item.id}
+      title={rteToHtml(item.hero.title)}
+      texts={[rteToHtml(item.overviewPageProps.teaserText)]}
+      links={[
+        {
+
+          // TODO: generate proper url
+          href: `${item.slug}/${item.id}`,
+          text: rteToHtml(item.overviewPageProps.linkText),
+          type: 'internal',
+        },
+      ]}
+      pageLanguage={language}
+      type='project'
+    />
+  ));
+
+  return (
+    <GenericOverview
+      showPagination={true}
+      language={language}
+    >
+      {allItems}
+    </GenericOverview>
+  );
+};
