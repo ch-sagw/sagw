@@ -23,7 +23,7 @@ export const CtaContactBlock = {
     }),
     {
       access: fieldAccessNonLocalizableField,
-      hasMany: false,
+      hasMany: true,
       name: 'contact',
       relationTo: 'people',
       required: true,

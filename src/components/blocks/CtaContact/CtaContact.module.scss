@@ -1,0 +1,92 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/mixins/mixins-layout" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+
+.ctaContactBlock {
+  --detail-color: var(--text-primary-inverted);
+
+  &.white,
+  &.light {
+    --detail-color: var(--text-primary);
+  }
+
+  .list {
+    @include list-reset;
+
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: px-to-rem(var(--spacing-l));
+    row-gap: px-to-rem(var(--spacing-2xl));
+
+    @include mq($from: large) {
+      column-gap: px-to-rem(var(--spacing-2xl));
+      row-gap: px-to-rem(var(--spacing-4xl));
+    }
+
+    @include mq($from: ultra) {
+      column-gap: px-to-rem(56);
+    }
+
+    .item {
+      display: block;
+      width: 100%;
+
+      @include mq($from: large) {
+        flex: 1;
+      }
+
+      .person {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: px-to-rem(var(--spacing-l));
+
+        @include mq($from: large) {
+          gap: px-to-rem(var(--spacing-xl));
+        }
+
+        .image {
+          flex-shrink: 0;
+          width: px-to-rem(100);
+          height: px-to-rem(100);
+          border-radius: 100%;
+          background-color: gray;
+
+          @include mq($from: ultra) {
+            width: px-to-rem(160);
+            height: px-to-rem(160);
+          }
+        }
+
+        .personDetails {
+          color: var(--detail-color);
+
+          .name {
+            @include title-heading-4;
+
+            margin: 0;
+          }
+
+          .function {
+            @include body-text-m;
+
+            margin: px-to-rem(var(--spacing-2xs)) 0 0;
+          }
+
+          .phone {
+            @include body-text-m;
+
+            margin: px-to-rem(var(--spacing-m)) 0 0;
+          }
+        }
+      }
+
+      .button {
+        margin-block-start: px-to-rem(var(--inside-elements-l));
+      }
+    }
+  }
+}

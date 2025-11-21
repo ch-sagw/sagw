@@ -244,6 +244,16 @@ export const ButtonLinkTextCurrent: StrictStory = {
   },
 };
 
+export const ButtonLinkTextRenderTextElement: StrictStory = {
+  args: {
+    colorMode: 'white',
+    element: 'text',
+    iconInlineStart: 'config' as keyof typeof Icon,
+    style: 'text',
+    text: 'Auswahl anpassen',
+  },
+};
+
 export const ButtonLinkSocial: StrictStory = {
   args: {
     ariaLabel: 'Die SAGW auf Linkedin',
