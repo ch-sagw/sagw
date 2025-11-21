@@ -4,6 +4,7 @@ import type {
 } from '@storybook/nextjs-vite';
 import { EditionsOverview } from '@/components/blocks/EditionsOverview/EditionsOverview';
 import { defaultDecorator } from '@/storybook-helpers';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 type EditionsOverviewProps = React.ComponentProps<typeof EditionsOverview>;
 
@@ -15,7 +16,12 @@ const meta: Meta<typeof EditionsOverview> = {
   args: {},
   component: EditionsOverview,
   decorators: [defaultDecorator],
-  parameters: {/* layout: 'centered', */ },
+  parameters: {
+    layout: 'fullscreen',
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   tags: [
     'autodocs',
     'visual:check',
@@ -26,9 +32,22 @@ const meta: Meta<typeof EditionsOverview> = {
 
 export default meta;
 
-export const SampleStory: StrictStory = {
+export const Overview: StrictStory = {
   args: {
-    context: 'sampleContext',
-    sampleProperty: 'some text',
+    blockType: 'editionsOverview',
+    items: {
+      items: Array.from({
+        length: 22,
+      }, (_, i) => {
+        const index = i + 1;
+
+        return {
+          externalLink: 'https://www.foo.bar',
+          text: simpleRteConfig('Editions text'),
+          title: simpleRteConfig(`Edition ${index}`),
+        };
+      }),
+    },
+    language: 'de',
   },
 };

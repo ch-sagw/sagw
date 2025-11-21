@@ -4,10 +4,7 @@ import {
   NationalDictionaryDetailPage,
 } from '@/payload-types';
 import { fetchDetailPages } from '@/data/fetch';
-import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
-import { GenericOverview } from '@/components/base/GenericOverview/GenericOverview';
-import styles from '@/components/blocks/NationalDictionariesOverview/NationalDictionariesOverview.module.scss';
-import { rteToHtml } from '@/utilities/rteToHtml';
+import { NationalDictionaryOverviewComponent } from '@/components/blocks/NationalDictionariesOverview/NationalDictionariesOverview.component';
 
 export type InterfaceNationalDictionariesOverviewPropTypes = {
   language: Config['locale'];
@@ -18,7 +15,7 @@ export const NationalDictionariesOverview = async (props: InterfaceNationalDicti
   const {
     language,
     tenant,
-    moreInfoButtonText,
+    ...restProps
   } = props;
 
   const pages = await fetchDetailPages({
@@ -29,32 +26,11 @@ export const NationalDictionariesOverview = async (props: InterfaceNationalDicti
     tenant,
   }) as NationalDictionaryDetailPage[];
 
-  const allItems = pages.map((item) => (
-    <GenericTeaser
-      className={styles.item}
-      key={item.id}
-      title={rteToHtml(item.hero.title)}
-      texts={[rteToHtml(item.overviewPageProps.teaserText)]}
-      links={[
-        {
-
-          // TODO: generate proper url
-          href: `${item.slug}/${item.id}`,
-          text: rteToHtml(moreInfoButtonText),
-          type: 'internal',
-        },
-      ]}
-      pageLanguage={language}
-      type='generic'
-    />
-  ));
-
   return (
-    <GenericOverview
-      showPagination={true}
-      language={language}
-    >
-      {allItems}
-    </GenericOverview>
+    <NationalDictionaryOverviewComponent
+      pageLanguage={language}
+      pages={pages}
+      {...restProps}
+    />
   );
 };

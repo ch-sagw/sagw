@@ -4,10 +4,7 @@ import {
   ProjectDetailPage,
 } from '@/payload-types';
 import { fetchDetailPages } from '@/data/fetch';
-import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
-import { GenericOverview } from '@/components/base/GenericOverview/GenericOverview';
-import styles from '@/components/blocks/ProjectsOverview/ProjectsOverview.module.scss';
-import { rteToHtml } from '@/utilities/rteToHtml';
+import { ProjectOverviewComponent } from '@/components/blocks/ProjectsOverview/ProjectsOverview.component';
 
 export type InterfaceProjectsOverviewPropTypes = {
   language: Config['locale'];
@@ -18,6 +15,7 @@ export const ProjectsOverview = async (props: InterfaceProjectsOverviewPropTypes
   const {
     language,
     tenant,
+    ...restProps
   } = props;
 
   const pages = await fetchDetailPages({
@@ -28,32 +26,11 @@ export const ProjectsOverview = async (props: InterfaceProjectsOverviewPropTypes
     tenant,
   }) as ProjectDetailPage[];
 
-  const allItems = pages.map((item) => (
-    <GenericTeaser
-      className={styles.item}
-      key={item.id}
-      title={rteToHtml(item.hero.title)}
-      texts={[rteToHtml(item.overviewPageProps.teaserText)]}
-      links={[
-        {
-
-          // TODO: generate proper url
-          href: `${item.slug}/${item.id}`,
-          text: rteToHtml(item.overviewPageProps.linkText),
-          type: 'internal',
-        },
-      ]}
-      pageLanguage={language}
-      type='project'
-    />
-  ));
-
   return (
-    <GenericOverview
-      showPagination={true}
-      language={language}
-    >
-      {allItems}
-    </GenericOverview>
+    <ProjectOverviewComponent
+      pages={pages}
+      pageLanguage={language}
+      {...restProps}
+    />
   );
 };

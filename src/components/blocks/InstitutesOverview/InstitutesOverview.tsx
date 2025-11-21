@@ -3,10 +3,7 @@ import {
   Config, InstituteDetailPage, InterfaceInstitutesOverviewBlock,
 } from '@/payload-types';
 import { fetchDetailPages } from '@/data/fetch';
-import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
-import { GenericOverview } from '@/components/base/GenericOverview/GenericOverview';
-import styles from '@/components/blocks/InstitutesOverview/InstitutesOverview.module.scss';
-import { rteToHtml } from '@/utilities/rteToHtml';
+import { InstituteOverviewComponent } from '@/components/blocks/InstitutesOverview/InstitutesOverview.componet';
 
 export type InterfaceInstitutesOverviewPropTypes = {
   language: Config['locale'];
@@ -17,7 +14,7 @@ export const InstitutesOverview = async (props: InterfaceInstitutesOverviewPropT
   const {
     language,
     tenant,
-    moreInfoButtonText,
+    ...restProps
   } = props;
 
   const pages = await fetchDetailPages({
@@ -28,37 +25,12 @@ export const InstitutesOverview = async (props: InterfaceInstitutesOverviewPropT
     tenant,
   }) as InstituteDetailPage[];
 
-  const allItems = pages.map((item) => (
-    <GenericTeaser
-      className={styles.item}
-      key={item.id}
-      title={rteToHtml(item.hero.title)}
-      texts={[rteToHtml(item.overviewPageProps.teaserText)]}
-      links={[
-        {
-
-          // TODO: generate proper url
-          href: `${item.slug}/${item.id}`,
-          text: rteToHtml(moreInfoButtonText),
-          type: 'internal',
-        },
-      ]}
-      image={typeof item.overviewPageProps.image === 'object'
-        ? item.overviewPageProps.image.id
-        : item.overviewPageProps.image
-      }
-      pageLanguage={language}
-      type='institute'
-    />
-  ));
-
   return (
-    <GenericOverview
-      showPagination={true}
+    <InstituteOverviewComponent
+      pages={pages}
       language={language}
-    >
-      {allItems}
-    </GenericOverview>
+      {...restProps}
+    />
   );
 
 };
