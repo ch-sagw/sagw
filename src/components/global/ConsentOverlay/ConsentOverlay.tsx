@@ -13,7 +13,10 @@ import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { Icon } from '@/icons';
 import { i18nA11y } from '@/i18n/content';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
-import { setCookieConsent } from '@/components/helpers/cookies';
+import {
+  getCookieConsent,
+  setCookieConsent,
+} from '@/components/helpers/cookies';
 
 export type InterfaceConsentOverlayPropTypes = {
   pageLanguage: Config['locale'];
@@ -34,17 +37,17 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
   onConsentGiven,
 }, ref): React.JSX.Element => {
   const [
-    isOpen,
-    setIsOpen,
-  ] = useState(false);
-
-  const [
     toggleStates,
     setToggleStates,
   ] = useState<Record<string, boolean>>({
     analytics: false,
     external: false,
   });
+
+  const [
+    isOpen,
+    setIsOpen,
+  ] = useState(false);
 
   const sections = [
     {
@@ -70,6 +73,15 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
     if (!dialog) {
       return undefined;
     }
+
+    const storedConsent = getCookieConsent();
+
+    queueMicrotask(() => {
+      setToggleStates({
+        analytics: storedConsent?.analytics ?? false,
+        external: storedConsent?.external ?? false,
+      });
+    });
 
     const animateClose = (): void => {
       if (!dialog.open || dialog.classList.contains(styles.closing)) {

@@ -14,7 +14,7 @@ export const ImageBlock = {
     {
       access: fieldAccessNonLocalizableField,
       defaultValue: 'center',
-      name: 'alignement',
+      name: 'alignment',
       options: [
         {
           label: 'Links',

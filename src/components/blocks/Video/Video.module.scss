@@ -1,0 +1,111 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/animations" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+
+.videoWrapper {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  grid-row: 1;
+  column-gap: px-to-rem(var(--grid-gutter));
+  z-index: 1;
+  padding-block: px-to-rem(var(--image-top));
+  padding-inline: px-to-rem(var(--grid-margin));
+
+  --figure-padding-block: 0;
+  --figure-padding-inline: 0;
+}
+
+.figureWrapper,
+.videoWrapperInner {
+  grid-column: 1 / calc(var(--grid-columns) + 1);
+}
+
+.videoContainer,
+.buttonWrapper,
+.consentMessageWrapper {
+  position: absolute;
+  contain: layout;
+  z-index: 1;
+  inset: 0;
+  inset-block-start: px-to-rem(var(--image-top));
+  aspect-ratio: 16/9;
+  display: grid;
+  grid-column: 1 / calc(var(--grid-columns) + 1);
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.videoContainer {
+  opacity: 1;
+  z-index: 4;
+  transition: opacity var(--motion-speed-fast) var(--motion-ease-in);
+}
+
+.videoContainer.paused {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.buttonWrapper {
+  z-index: 2;
+  background: var(--background-video);
+}
+
+.duration {
+  @include label-text;
+  @include font-smoothing;
+
+  position: absolute;
+  z-index: 3;
+  inset-inline-end: px-to-rem(var(--inside-elements-m));
+  inset-block-end: px-to-rem(var(--inside-elements-m));
+  display: inline-block;
+  padding: px-to-rem(calc(var(--spacing-2xs) / 2)) px-to-rem(var(--spacing-2xs));
+  background: var(--background-inverted);
+  color: var(--text-secondary-inverted);
+}
+
+.figureWrapper {
+  grid-template-columns: subgrid;
+
+  --figure-padding-inline: 0;
+}
+
+// Left aligned variant
+.videoWrapper.left {
+  .videoContainer,
+  .buttonWrapper,
+  .consentMessageWrapper {
+    @include mq($from: large) {
+      grid-column: 1 / 9;
+    }
+  }
+}
+
+// Right aligned variant
+.videoWrapper.right {
+  .videoContainer,
+  .buttonWrapper,
+  .consentMessageWrapper {
+    @include mq($from: large) {
+      grid-column: 5 / calc(var(--grid-columns) + 1);
+    }
+  }
+
+  .consentMessageWrapper {
+    @include mq($from: large) {
+      grid-column: 5 / calc(var(--grid-columns) + 1);
+    }
+  }
+}
+
+// Consent Message Wrapper
+.consentMessageWrapper {
+  background: var(--background-video-no-consent);
+  overflow: hidden;
+}

@@ -13,6 +13,26 @@ export const VideoBlock = {
   fields: [
     {
       access: fieldAccessNonLocalizableField,
+      defaultValue: 'center',
+      name: 'alignment',
+      options: [
+        {
+          label: 'Links',
+          value: 'left',
+        },
+        {
+          label: 'Mitte',
+          value: 'center',
+        },
+        {
+          label: 'Rechts',
+          value: 'right',
+        },
+      ],
+      type: 'select',
+    },
+    {
+      access: fieldAccessNonLocalizableField,
       name: 'video-de',
       relationTo: 'videos',
       required: true,
