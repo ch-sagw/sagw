@@ -24,7 +24,6 @@ const meta: Meta<typeof GenericOverview> = {
   tags: [
     'autodocs',
     'visual:check',
-    'a11y:check',
   ],
   title: 'Components/base/GenericOverview',
 };

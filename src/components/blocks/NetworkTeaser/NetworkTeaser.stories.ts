@@ -24,7 +24,8 @@ const meta: Meta<typeof NetworkTeaser> = {
   },
   tags: [
     'autodocs',
-    'visual:check',
+    // TODO: enable after image is integrated
+    // 'visual:check',
     'a11y:check',
   ],
   title: 'Components/blocks/NetworkTeaser',
