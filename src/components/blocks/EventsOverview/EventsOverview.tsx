@@ -34,10 +34,7 @@ export const EventsOverview = async (props: InterfaceEventsOverviewPropTypes): P
   return (
     <EventsOverviewComponent
       title={title}
-
-      // TODO
-      paginationTitle='Pagination'
-
+      pageLanguage={props.language}
       colorMode='white'
       items={items}
     />

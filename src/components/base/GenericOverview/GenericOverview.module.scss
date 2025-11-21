@@ -1,0 +1,18 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-shared-styles" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+
+.list {
+  @include full-bleed-teaser-list;
+
+  padding-block-end: px-to-rem(var(--section-inside-s));
+}
+
+.pagination {
+  padding-inline: px-to-rem(var(--grid-margin));
+  margin-block-end: px-to-rem(var(--section-inside-l));
+
+  @include mq($from: ultra) {
+    justify-self: center;
+  }
+}

@@ -7,6 +7,15 @@ export const i18nNavigation = {
   },
 };
 
+export const i18nPagination = {
+  hiddenPaginationTitle: {
+    de: 'Paginierung',
+    en: 'Pagination',
+    fr: 'Pagination',
+    it: 'Impaginazione',
+  },
+};
+
 export const i18nForm = {
   newsletter: {
     error: {

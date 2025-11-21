@@ -17,7 +17,7 @@ export const NewsOverviewComponent = (props: InterfaceNewsOverviewComponentPropT
   <EventsNewsOverview
     title={props.title}
     colorMode='white'
-    paginationTitle={props.paginationTitle}
+    pageLanguage={props.pageLanguage}
   >
     {props.items.map((item, key) => (
       <NewsListItem

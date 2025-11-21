@@ -31,7 +31,7 @@ export default meta;
 export const Pages5: StrictStory = {
   args: {
     currentPage: 1,
-    paginationTitle: 'Pagination',
+    language: 'de',
     totalPages: 5,
   },
 };
@@ -39,7 +39,7 @@ export const Pages5: StrictStory = {
 export const Pages10: StrictStory = {
   args: {
     currentPage: 1,
-    paginationTitle: 'Pagination',
+    language: 'de',
     totalPages: 10,
   },
 };
@@ -47,7 +47,7 @@ export const Pages10: StrictStory = {
 export const Pages20: StrictStory = {
   args: {
     currentPage: 1,
-    paginationTitle: 'Pagination',
+    language: 'de',
     totalPages: 20,
   },
 };
@@ -55,7 +55,7 @@ export const Pages20: StrictStory = {
 export const Pages10Active5: StrictStory = {
   args: {
     currentPage: 5,
-    paginationTitle: 'Pagination',
+    language: 'de',
     totalPages: 10,
   },
 };
@@ -63,7 +63,7 @@ export const Pages10Active5: StrictStory = {
 export const Pages10Active6: StrictStory = {
   args: {
     currentPage: 6,
-    paginationTitle: 'Pagination',
+    language: 'de',
     totalPages: 10,
   },
 };
@@ -71,7 +71,7 @@ export const Pages10Active6: StrictStory = {
 export const Pages10Active7: StrictStory = {
   args: {
     currentPage: 7,
-    paginationTitle: 'Pagination',
+    language: 'de',
     totalPages: 10,
   },
 };
@@ -79,7 +79,7 @@ export const Pages10Active7: StrictStory = {
 export const Pages10Active10: StrictStory = {
   args: {
     currentPage: 10,
-    paginationTitle: 'Pagination',
+    language: 'de',
     totalPages: 10,
   },
 };

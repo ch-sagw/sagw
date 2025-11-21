@@ -5,21 +5,23 @@ import { cva } from 'cva';
 import styles from '@/components/base/Pagination/Pagination.module.scss';
 import { PaginationItem } from '../PaginationItem/PaginationItem';
 import { usePaginationMeasurements } from '@/hooks/usePaginationMeasurements';
+import { i18nPagination } from '@/i18n/content';
+import { Config } from '@/payload-types';
 
 export type InterfacePaginationPropTypes = {
   totalPages: number;
   currentPage: number;
   onPageChange?: (page: number) => void;
-  paginationTitle: string;
   className?: string;
+  language: Config['locale']
 };
 
 export const Pagination = ({
   currentPage,
   totalPages,
   onPageChange,
-  paginationTitle,
   className,
+  language,
 }: InterfacePaginationPropTypes): React.JSX.Element => {
   const {
     measurements,
@@ -190,7 +192,7 @@ export const Pagination = ({
         id='pagination'
         className={styles.hiddenTitle}
       >
-        {paginationTitle}
+        {i18nPagination.hiddenPaginationTitle[language]}
       </h2>
 
       <ol className={styles.list}>

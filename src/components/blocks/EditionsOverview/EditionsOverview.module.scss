@@ -1,0 +1,5 @@
+@use "../../../styles/mixins/mixins-shared-styles" as *;
+
+.item {
+  @include full-bleed-teaser-item;
+}

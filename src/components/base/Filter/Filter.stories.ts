@@ -13,7 +13,7 @@ type StrictStory = StoryObj<typeof Filter> & {
 
 const meta: Meta<typeof Filter> = {
   argTypes: {
-    onValueChange: {
+    onValueChangeAction: {
       action: 'value changed',
     },
   },

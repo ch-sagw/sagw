@@ -4,7 +4,10 @@
 @use "../../../styles/utilities/functions" as *;
 
 .section {
-  @include block-layout-sticky-title;
+  &:not(.fullBleed) {
+    @include block-layout-sticky-title;
+  }
+
   @include generic-block-padding;
 
   --title-color: var(--text-primary);

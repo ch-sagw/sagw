@@ -5,7 +5,7 @@ import { cva } from 'cva';
 import styles from '@/components/base/Filter/Filter.module.scss';
 import { Icon } from '@/icons';
 
-interface InterfaceFilterItem {
+export interface InterfaceFilterItem {
   amount?: number;
   checked?: boolean;
   label?: string;
@@ -17,26 +17,31 @@ export type InterfaceFilterPropTypes = {
   labelText: string;
   name: string;
   type: 'staticSelect' | 'transformativeSelect'
-  onValueChange?: (selectedValue: string) => void;
+  onValueChangeAction?: (selectedValue: string) => void;
+  className?: string;
 };
-
-const classes = cva([styles.filter], {
-  variants: {
-    type: {
-      staticSelect: [styles.filterStaticSelect],
-      transformativeSelect: [styles.filterTransformativeSelect],
-    },
-  },
-});
 
 export const Filter = ({
   filterItems,
   labelText,
   name,
   type,
-  onValueChange,
+  onValueChangeAction,
+  className,
 }: InterfaceFilterPropTypes): React.JSX.Element => {
   const [initiallySelectedItem] = filterItems.filter((item) => item.checked);
+
+  const classes = cva([
+    styles.filter,
+    className,
+  ], {
+    variants: {
+      type: {
+        staticSelect: [styles.filterStaticSelect],
+        transformativeSelect: [styles.filterTransformativeSelect],
+      },
+    },
+  });
 
   const [
     selectedItem,
@@ -45,7 +50,7 @@ export const Filter = ({
 
   const handleChange = (value: string): void => {
     setSelectedItem(value);
-    onValueChange?.(value);
+    onValueChangeAction?.(value);
   };
 
   return (
@@ -109,7 +114,7 @@ export const Filter = ({
             className={styles.filterSelect}
             data-testid='filter-select'
             name={name}
-            onChange={(evt) => onValueChange?.(evt.target.value)}
+            onChange={(evt) => onValueChangeAction?.(evt.target.value)}
           >
             {filterItems.map((item: any, id: number) => (
               <option key={id} value={item.value ?? item}>

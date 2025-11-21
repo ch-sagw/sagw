@@ -44,7 +44,7 @@ export const LotsOfItems: StrictStory = {
     items: Array.from({
       length: 25,
     }, () => newsItem),
-    paginationTitle: 'Pagination',
+    pageLanguage: 'de',
     title: 'News',
   },
 };
@@ -55,7 +55,7 @@ export const FewItems: StrictStory = {
     items: Array.from({
       length: 6,
     }, () => newsItem),
-    paginationTitle: 'Pagination',
+    pageLanguage: 'de',
     title: 'Latest News',
   },
 };

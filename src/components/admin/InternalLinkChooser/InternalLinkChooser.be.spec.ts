@@ -166,7 +166,7 @@ test.describe('Internal Link Chooser', () => {
     const link3 = await page.getByText('Detail page title SAGW', {
       exact: true,
     });
-    const link4 = await page.getByText('Magazine detail page title SAGW', {
+    const link4 = await page.getByText('Magazine detail page 1 SAGW', {
       exact: true,
     });
     const link6 = await page.getByText('Event 1 details title SAGW (render detail page)', {
@@ -178,7 +178,7 @@ test.describe('Internal Link Chooser', () => {
     const link8 = await page.getByText('News 1 detail page title SAGW', {
       exact: true,
     });
-    const link9 = await page.getByText('Publication detail page title SAGW', {
+    const link9 = await page.getByText('Publication detail page 1 SAGW', {
       exact: true,
     });
 
