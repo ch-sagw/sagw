@@ -125,3 +125,42 @@ test('does not throw an error on valid external url with path segment', async ()
     .toStrictEqual('https://www.foo.bar/baz');
 
 });
+
+test('does not throw an error on valid external without www', async () => {
+  const tenant = await getTenant();
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  let result: EventDetailPage | undefined;
+
+  try {
+    /* eslint-disable @typescript-eslint/naming-convention */
+    const createEventResult = await payload.create({
+      collection: 'eventDetailPage',
+      data: {
+        _status: 'published',
+        eventDetails: {
+          date: '2025-07-31T12:00:00.000Z',
+          title: simpleRteConfig('some title 2'),
+        },
+        link: {
+          externalLink: 'https://foo.bar',
+        },
+        showDetailPage: 'false',
+        tenant,
+      },
+    });
+
+    result = createEventResult;
+    /* eslint-enable @typescript-eslint/naming-convention */
+  } catch {
+    result = undefined;
+  }
+
+  const linkResult = result?.link?.externalLink;
+
+  await expect(linkResult)
+    .toStrictEqual('https://foo.bar');
+
+});
