@@ -38,6 +38,11 @@ export const fetchEventDetailPages = async ({
     pagination: false,
     sort: 'eventDetails.date',
     where: {
+      /* eslint-disable @typescript-eslint/naming-convention */
+      _status: {
+      /* eslint-enable @typescript-eslint/naming-convention */
+        equals: 'published',
+      },
       tenant: {
         equals: tenant,
       },
@@ -96,6 +101,11 @@ export const fetchDetailPages = async ({
     pagination: false,
     sort,
     where: {
+      /* eslint-disable @typescript-eslint/naming-convention */
+      _status: {
+      /* eslint-enable @typescript-eslint/naming-convention */
+        equals: 'published',
+      },
       tenant: {
         equals: tenant,
       },
