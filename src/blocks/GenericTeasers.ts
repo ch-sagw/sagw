@@ -45,6 +45,7 @@ export const GenericTeasersBlock = {
     {
       access: fieldAccessNonLocalizableField,
       fields: TeaserItem,
+      maxRows: 3,
       name: 'teasers',
       required: true,
       type: 'array',
