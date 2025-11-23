@@ -17,6 +17,7 @@ import { SoftHyphenFeature } from '@/components/admin/rte/features/SoftHyphen/So
 import { NonBreakingSpaceFeature } from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpace.server';
 import {
   Condition,
+  FieldBase,
   FieldHook,
   RichTextField,
 } from 'payload';
@@ -147,6 +148,7 @@ interface InterfaceRteInputType {
   disableLocalization?: boolean;
   adminDescription?: string;
   adminCondition?: Condition<any, any> | undefined;
+  access?: FieldBase['access'];
 }
 
 type InterfaceRteInputTypeInternal = {
@@ -154,8 +156,11 @@ type InterfaceRteInputTypeInternal = {
 } & InterfaceRteInputType;
 
 const rte = ({
-  name, notRequired, editor, disableLocalization, adminDescription, adminCondition,
+  name, notRequired, editor, disableLocalization, adminDescription, adminCondition, access,
 }: InterfaceRteInputTypeInternal): RichTextField => ({
+  access: access
+    ? access
+    : undefined,
   admin: {
     condition: adminCondition,
     description: adminDescription,
@@ -175,8 +180,9 @@ const rte = ({
 });
 
 export const rte1 = ({
-  name, notRequired, disableLocalization, adminDescription, adminCondition,
+  name, notRequired, disableLocalization, adminDescription, adminCondition, access,
 }: InterfaceRteInputType): RichTextField => rte({
+  access,
   adminCondition,
   adminDescription,
   disableLocalization,
@@ -186,8 +192,9 @@ export const rte1 = ({
 });
 
 export const rte2 = ({
-  name, notRequired, disableLocalization, adminDescription, adminCondition,
+  name, notRequired, disableLocalization, adminDescription, adminCondition, access,
 }: InterfaceRteInputType): RichTextField => rte({
+  access,
   adminCondition,
   adminDescription,
   disableLocalization,
@@ -197,16 +204,18 @@ export const rte2 = ({
 });
 
 export const rte3 = ({
-  name, notRequired,
+  name, notRequired, access,
 }: InterfaceRteInputType): RichTextField => rte({
+  access,
   editor: rte3Editor,
   name,
   notRequired,
 });
 
 export const rte4 = ({
-  name, notRequired,
+  name, notRequired, access,
 }: InterfaceRteInputType): RichTextField => rte({
+  access,
   editor: rte4Editor,
   name,
   notRequired,

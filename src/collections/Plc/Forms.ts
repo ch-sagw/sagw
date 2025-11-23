@@ -8,18 +8,22 @@ import {
   rte1, rte2,
 } from '@/field-templates/rte';
 import { textBlock } from '@/blocks/Form/Text';
-import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
+import { globalContentAccessGeneric } from '@/access/globalContent';
+import { fieldAccessAdminsOnly } from '@/access/fields/localizedFields';
+import { isSuperOrTenantAdmin } from '@/collections/Plc/Users/roles';
 
 export const Forms: CollectionConfig = {
-  access: globalContentAccessNoTranslatorNoEditor,
+  access: globalContentAccessGeneric,
   admin: {
     group: 'Global Content',
+    hidden: (req) => !isSuperOrTenantAdmin(req.user),
     useAsTitle: 'title',
   },
   fields: [
 
     // newsletter or custom form
     {
+      access: fieldAccessAdminsOnly,
       admin: {
         description: 'A newsletter form has a fixed set of fields. Custom form can be build with any combination of fields as you like.',
       },
@@ -40,6 +44,7 @@ export const Forms: CollectionConfig = {
 
     // color mode
     fieldsColorMode({
+      adminOnly: true,
       dark: true,
       light: true,
       white: true,
@@ -47,16 +52,19 @@ export const Forms: CollectionConfig = {
 
     // title & subtitle
     rte1({
+      access: fieldAccessAdminsOnly,
       name: 'title',
       notRequired: true,
     }),
     rte2({
+      access: fieldAccessAdminsOnly,
       name: 'subtitle',
       notRequired: true,
     }),
 
     // submit button
     {
+      access: fieldAccessAdminsOnly,
       localized: true,
       name: 'submitButtonLabel',
       required: true,
@@ -65,6 +73,7 @@ export const Forms: CollectionConfig = {
 
     // recipient
     {
+      access: fieldAccessAdminsOnly,
       admin: {
         condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
       },
@@ -75,6 +84,7 @@ export const Forms: CollectionConfig = {
 
     // Mail subject
     {
+      access: fieldAccessAdminsOnly,
       admin: {
         condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
       },
@@ -85,6 +95,7 @@ export const Forms: CollectionConfig = {
 
     // privacy checkbox
     {
+      access: fieldAccessAdminsOnly,
       admin: {
         description: 'If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".',
       },
@@ -97,6 +108,7 @@ export const Forms: CollectionConfig = {
     {
       fields: [
         {
+          access: fieldAccessAdminsOnly,
           fields: [
             rte1({
               name: 'title',
@@ -112,6 +124,7 @@ export const Forms: CollectionConfig = {
         },
 
         {
+          access: fieldAccessAdminsOnly,
           fields: [
             rte1({
               name: 'title',
@@ -131,6 +144,7 @@ export const Forms: CollectionConfig = {
 
     // custom form fields
     {
+      access: fieldAccessAdminsOnly,
       admin: {
         condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
       },
@@ -145,6 +159,7 @@ export const Forms: CollectionConfig = {
 
     // newsletter form fields
     {
+      access: fieldAccessAdminsOnly,
       admin: {
         condition: (_, siblingData) => siblingData.isNewsletterForm === 'newsletter',
       },

@@ -92,6 +92,7 @@ export const OverviewPage: CollectionConfig = {
                   restrictedBlocks: [
                     'nationalDictionariesOverviewBlock',
                     'institutesOverviewBlock',
+                    'editionsOverview',
                   ],
                 });
 
