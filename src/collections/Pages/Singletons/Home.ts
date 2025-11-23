@@ -18,6 +18,7 @@ import { sagwOnlyBlocks } from '@/access/blocks';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
+import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 
 const homeBlocks: BlockSlug[] = [
   'textBlock',
@@ -122,7 +123,10 @@ export const HomePage: CollectionConfig = {
   ],
   hooks: {
     afterChange: [hookCascadeBreadcrumbUpdates],
-    beforeChange: [hookGenerateBreadcrumbs],
+    beforeChange: [
+      hookPreventBulkPublishForTranslators,
+      hookGenerateBreadcrumbs,
+    ],
     beforeValidate: [hookPreventBlockStructureChangesForTranslators()],
   },
   labels: {

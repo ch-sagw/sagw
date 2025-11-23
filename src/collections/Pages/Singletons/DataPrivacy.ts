@@ -12,6 +12,7 @@ import { versions } from '@/field-templates/versions';
 import { pageAccess } from '@/access/pages';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { allBlocksButTranslator } from '@/access/blocks';
+import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
 
@@ -56,6 +57,7 @@ export const DataPrivacyPage: CollectionConfig = {
     },
   ],
   hooks: {
+    beforeChange: [hookPreventBulkPublishForTranslators],
     beforeValidate: [hookPreventBlockStructureChangesForTranslators()],
   },
   labels: {

@@ -10,6 +10,7 @@ import {
   CollectionAfterChangeHook, CollectionAfterDeleteHook, CollectionBeforeChangeHook, CollectionBeforeValidateHook,
 } from 'payload';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
+import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 
 interface InterfaceGenericPageHooks {
   afterChange?: CollectionAfterChangeHook[];
@@ -33,6 +34,7 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
 
   // 2.
   beforeChange: [
+    hookPreventBulkPublishForTranslators,
     hookSeoFallback,
     hookGenerateBreadcrumbs,
     ...(additionalHooks?.beforeChange ?? []),
