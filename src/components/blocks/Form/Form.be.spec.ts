@@ -328,7 +328,7 @@ test.describe('Newsletter Form', () => {
 
     // expect form error: required
 
-    const nameError = await form.getByText('Bitte geben Sie Ihren Namen an.', {
+    const nameError = await form.getByText('Bitte geben Sie Ihren Vornamen an.', {
       exact: true,
     });
 
@@ -336,7 +336,7 @@ test.describe('Newsletter Form', () => {
       .toBeVisible();
 
     // fill valid value
-    const nameField = await form.getByLabel('name');
+    const nameField = await form.getByLabel('Vorname');
 
     await nameField.fill('name');
 
@@ -442,10 +442,12 @@ test.describe('Newsletter Form', () => {
     const submit = await form.locator('button');
 
     const mailField = await form.getByLabel('e-mail');
-    const nameField = await form.getByLabel('name');
+    const nameField = await form.getByLabel('Vorname');
+    const lastNameField = await form.getByLabel('Nachname');
     const checkboxField = await form.locator('input[type="checkbox"]');
 
-    await nameField.fill('testname');
+    await nameField.fill('firstname');
+    await lastNameField.fill('lastname');
     await mailField.fill('testmail');
     await checkboxField.click({
       force: true,
@@ -457,7 +459,9 @@ test.describe('Newsletter Form', () => {
     await (await form.elementHandle())?.waitForElementState('stable');
 
     await expect(nameField)
-      .toHaveValue('testname');
+      .toHaveValue('firstname');
+    await expect(lastNameField)
+      .toHaveValue('lastname');
     await expect(mailField)
       .toHaveValue('testmail');
     await expect(checkboxField)
@@ -477,13 +481,15 @@ test.describe('Newsletter Form', () => {
     const submit = await form.locator('button');
 
     const mailField = await form.getByLabel('e-mail');
-    const nameField = await form.getByLabel('name');
+    const nameField = await form.getByLabel('Vorname');
+    const lastNameField = await form.getByLabel('Nachname');
     const checkboxField = await form.getByText('Data privacy checkbox SAGW');
     const radioField = await form.getByText('Deutsch');
 
     await radioField.click();
     await mailField.fill('mail@foo.bar');
     await nameField.fill('name');
+    await lastNameField.fill('nachname');
     await checkboxField.click();
 
     await submit.click();
