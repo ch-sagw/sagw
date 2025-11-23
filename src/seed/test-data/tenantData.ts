@@ -266,7 +266,10 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           },
           {
             description: simpleRteConfig('Förderung von langfristigen Forschungsinfrastrukturen'),
-            navItemLink: undefined,
+            navItemLink: {
+              documentId: 'some-id',
+              slug: 'detailPage',
+            },
             navItemText: simpleRteConfig('Förderung'),
             subNavItems: [
               {
@@ -308,6 +311,10 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           },
           {
             description: simpleRteConfig('Unsere 63 Fachgesellschaften unter einem Dach'),
+            navItemLink: {
+              documentId: 'some-id',
+              slug: 'detailPage',
+            },
             navItemText: simpleRteConfig('Netzwerk'),
             subNavItems: [
               {
@@ -321,6 +328,10 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           },
           {
             description: simpleRteConfig('Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft'),
+            navItemLink: {
+              documentId: 'some-id',
+              slug: 'detailPage',
+            },
             navItemText: simpleRteConfig('Aktivitäten'),
             subNavItems: [
               {
@@ -362,6 +373,10 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           },
           {
             description: simpleRteConfig('Alles Wissenswertes über die SAGW'),
+            navItemLink: {
+              documentId: 'some-id',
+              slug: 'detailPage',
+            },
             navItemText: simpleRteConfig('Über uns'),
             subNavItems: [
               {

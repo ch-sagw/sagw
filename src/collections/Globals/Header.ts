@@ -16,7 +16,6 @@ const navLinkDefaultFields: Field[] = [
   }),
   fieldInternalLinkChooser({
     name: 'navItemLink',
-    optional: true,
   }),
 ];
 
