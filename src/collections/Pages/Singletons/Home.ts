@@ -16,10 +16,21 @@ import { i18nNavigation } from '@/i18n/content';
 import { pageAccess } from '@/access/pages';
 import { sagwOnlyBlocks } from '@/access/blocks';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
+import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
+import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 
 const homeBlocks: BlockSlug[] = [
   'textBlock',
   'formBlock',
+  'homeTeasersBlock',
+  'projectsTeasersBlock',
+  'eventsTeasersBlock',
+  'magazineTeasersBlock',
+  'newsTeasersBlock',
+  'publicationsTeasersBlock',
+];
+
+const uniqueBlocks: BlockSlug[] = [
   'homeTeasersBlock',
   'projectsTeasersBlock',
   'eventsTeasersBlock',
@@ -75,9 +86,17 @@ export const HomePage: CollectionConfig = {
               blocks: blocks(homeBlocks),
               filterOptions: async ({
                 req,
+                siblingData,
               }): Promise<BlockSlug[]> => {
+                const onlyOnceBlockFilter = excludeBlocksFilterSingle({
+                  allBlockTypes: JSON.parse(JSON.stringify(homeBlocks)),
+                  onlyAllowedOnceBlockTypes: JSON.parse(JSON.stringify(uniqueBlocks)),
+                })({
+                  siblingData,
+                });
+
                 const showBlocks = await sagwOnlyBlocks({
-                  allBlocks: homeBlocks,
+                  allBlocks: onlyOnceBlockFilter,
                   req,
                   restrictedBlocks: ['homeTeasersBlock'],
                 });
@@ -87,6 +106,9 @@ export const HomePage: CollectionConfig = {
               label: 'Content',
               name: 'content',
               type: 'blocks',
+              validate: validateUniqueBlocksSingle({
+                onlyAllowedOnceBlockTypes: uniqueBlocks,
+              }),
             },
           ],
           label: 'Content',

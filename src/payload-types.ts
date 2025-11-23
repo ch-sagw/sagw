@@ -2627,7 +2627,6 @@ export interface OverviewPage {
         | InterfaceAccordionBlock
         | InterfaceFormBlock
         | InterfaceCtaContactBlock
-        | InterfaceNetworkTeasersBlock
         | InterfaceGenericTeasersBlock
         | InterfaceNotificationBlock
         | InterfaceMagazineOverviewBlock
@@ -2639,6 +2638,7 @@ export interface OverviewPage {
         | InterfaceInstitutesOverviewBlock
         | InterfaceProjectOverviewBlock
         | InterfaceEditionsOverviewBlock
+        | InterfaceNetworkTeasersBlock
         | InterfaceEventsTeasersBlock
         | InterfaceMagazineTeasersBlock
         | InterfaceNewsTeasersBlock
@@ -2718,126 +2718,6 @@ export interface InterfaceAccordionBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'accordionBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceNetworkTeasersBlock".
- */
-export interface InterfaceNetworkTeasersBlock {
-  filter: {
-    allCheckboxText: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    title: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-  };
-  items: {
-    foundingYearText?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    linkText: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    items: {
-      title: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
-      category: string | NetworkCategory;
-      foundingYear?: number | null;
-      image: string | Image;
-      externalLink: string;
-      id?: string | null;
-    }[];
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'networkTeasersBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "networkCategories".
- */
-export interface NetworkCategory {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  name: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3207,6 +3087,126 @@ export interface InterfaceEditionsOverviewBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'editionsOverview';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNetworkTeasersBlock".
+ */
+export interface InterfaceNetworkTeasersBlock {
+  filter: {
+    allCheckboxText: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    title: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+  };
+  items: {
+    foundingYearText?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    linkText: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    items: {
+      title: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      category: string | NetworkCategory;
+      foundingYear?: number | null;
+      image: string | Image;
+      externalLink: string;
+      id?: string | null;
+    }[];
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'networkTeasersBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "networkCategories".
+ */
+export interface NetworkCategory {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  name: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5105,7 +5105,6 @@ export interface OverviewPageSelect<T extends boolean = true> {
         accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
         formBlock?: T | InterfaceFormBlockSelect<T>;
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;
-        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
         genericTeasersBlock?: T | InterfaceGenericTeasersBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         magazineOverviewBlock?: T | InterfaceMagazineOverviewBlockSelect<T>;
@@ -5117,6 +5116,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
         institutesOverviewBlock?: T | InterfaceInstitutesOverviewBlockSelect<T>;
         projectsOverviewBlock?: T | InterfaceProjectOverviewBlockSelect<T>;
         editionsOverview?: T | InterfaceEditionsOverviewBlockSelect<T>;
+        networkTeasersBlock?: T | InterfaceNetworkTeasersBlockSelect<T>;
         eventsTeasersBlock?: T | InterfaceEventsTeasersBlockSelect<T>;
         magazineTeasersBlock?: T | InterfaceMagazineTeasersBlockSelect<T>;
         newsTeasersBlock?: T | InterfaceNewsTeasersBlockSelect<T>;
@@ -5165,36 +5165,6 @@ export interface InterfaceCtaContactBlockSelect<T extends boolean = true> {
   text?: T;
   colorMode?: T;
   contact?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceNetworkTeasersBlock_select".
- */
-export interface InterfaceNetworkTeasersBlockSelect<T extends boolean = true> {
-  filter?:
-    | T
-    | {
-        allCheckboxText?: T;
-        title?: T;
-      };
-  items?:
-    | T
-    | {
-        foundingYearText?: T;
-        linkText?: T;
-        items?:
-          | T
-          | {
-              title?: T;
-              category?: T;
-              foundingYear?: T;
-              image?: T;
-              externalLink?: T;
-              id?: T;
-            };
-      };
   id?: T;
   blockName?: T;
 }
@@ -5329,6 +5299,36 @@ export interface InterfaceEditionsOverviewBlockSelect<T extends boolean = true> 
           | {
               title?: T;
               text?: T;
+              externalLink?: T;
+              id?: T;
+            };
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceNetworkTeasersBlock_select".
+ */
+export interface InterfaceNetworkTeasersBlockSelect<T extends boolean = true> {
+  filter?:
+    | T
+    | {
+        allCheckboxText?: T;
+        title?: T;
+      };
+  items?:
+    | T
+    | {
+        foundingYearText?: T;
+        linkText?: T;
+        items?:
+          | T
+          | {
+              title?: T;
+              category?: T;
+              foundingYear?: T;
+              image?: T;
               externalLink?: T;
               id?: T;
             };
