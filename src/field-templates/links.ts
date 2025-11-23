@@ -13,7 +13,7 @@ interface InterfaceLinkProps {
 
 export const fieldsLinkInternal = (props?: InterfaceLinkProps): Field[] => {
   const linkFields: Field[] = [
-    rte2({
+    rte1({
       name: 'linkText',
       notRequired: props?.optional,
     }),
@@ -58,7 +58,7 @@ export const fieldsLinkExternal = (props?: InterfaceLinkProps): Field[] => {
   ];
 
   if (!props?.hideLinkText) {
-    linkFields.unshift(rte2({
+    linkFields.unshift(rte1({
       name: 'externalLinkText',
     }));
   }

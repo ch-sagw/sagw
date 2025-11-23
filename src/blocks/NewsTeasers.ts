@@ -1,7 +1,5 @@
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
-import {
-  rte1, rte2,
-} from '@/field-templates/rte';
+import { rte1 } from '@/field-templates/rte';
 import { Block } from 'payload';
 
 // Example: Activities
@@ -34,7 +32,7 @@ export const NewsTeasersBlock = {
       type: 'radio',
     },
     {
-      ...rte2({
+      ...rte1({
         adminCondition: (_, siblingData): boolean => siblingData.link === 'yes',
         name: 'linkText',
       }),

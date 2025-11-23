@@ -7,7 +7,7 @@ import {
 } from '@/field-templates/adminTitle';
 
 import {
-  rte1, rte4,
+  rte1, rte3,
 } from '@/field-templates/rte';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
 
@@ -15,7 +15,7 @@ const overlaySection: Field[] = [
   rte1({
     name: 'title',
   }),
-  rte4({
+  rte3({
     name: 'text',
   }),
 ];
@@ -69,7 +69,7 @@ export const Consent: CollectionConfig = {
             rte1({
               name: 'title',
             }),
-            rte4({
+            rte3({
               name: 'text',
             }),
             rte1({
@@ -93,7 +93,7 @@ export const Consent: CollectionConfig = {
             rte1({
               name: 'title',
             }),
-            rte4({
+            rte3({
               name: 'text',
             }),
             rte1({

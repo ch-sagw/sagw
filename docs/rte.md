@@ -21,7 +21,7 @@ Sample usage:
 
 ## RTE3
 
-- RTE2 (ausser soft hyphen)
+- RTE2
 - bold
 - underline
 - strikethrough

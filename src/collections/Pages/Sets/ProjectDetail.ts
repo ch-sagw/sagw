@@ -65,13 +65,13 @@ export const ProjectDetailPage: CollectionConfig = {
             {
               fields: [
                 {
-                  ...rte1({
+                  ...rte2({
                     adminDescription: 'This text will be used as text for the teasers on the overview page and in teaser blocks.',
                     name: 'teaserText',
                   }),
                 },
                 {
-                  ...rte2({
+                  ...rte1({
                     adminDescription: 'This text will be used as link-text for the teasers on the overview page and in teaser blocks.',
                     name: 'linkText',
                   }),

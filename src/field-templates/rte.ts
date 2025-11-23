@@ -104,6 +104,7 @@ const rte3Editor = lexicalEditor({
       enabledCollections: linkableSlugs.map((slug) => slug.slug),
       maxDepth: 1,
     }),
+    SoftHyphenFeature(),
     NonBreakingSpaceFeature(),
   ],
 });
@@ -133,6 +134,7 @@ const rte4Editor = lexicalEditor({
       enabledCollections: linkableSlugs.map((slug) => slug.slug),
       maxDepth: 1,
     }),
+    SoftHyphenFeature(),
     NonBreakingSpaceFeature(),
   ],
 });

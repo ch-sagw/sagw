@@ -37,7 +37,7 @@ export const GenericTeasersBlock = {
     rte1({
       name: 'title',
     }),
-    rte1({
+    rte2({
       name: 'lead',
       notRequired: true,
     }),
