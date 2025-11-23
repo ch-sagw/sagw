@@ -156,7 +156,12 @@ export const Forms: CollectionConfig = {
         },
         {
           fields: textBlock(true).fields,
-          name: 'name',
+          name: 'firstName',
+          type: 'group',
+        },
+        {
+          fields: textBlock(true).fields,
+          name: 'lastName',
           type: 'group',
         },
         {

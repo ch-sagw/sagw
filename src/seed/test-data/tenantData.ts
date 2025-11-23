@@ -531,16 +531,22 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         actionText: 'Erneut senden',
         email: {
           fieldError: simpleRteConfig('Bitte geben Sie die E-Mail Adresse an.'),
-          fieldWidth: 'half',
+          fieldWidth: 'full',
           label: simpleRteConfig('E-Mail'),
           placeholder: 'Ihre E-Mail Adresse',
         },
-        includeLanguageSelection: 'yes',
-        name: {
-          fieldError: simpleRteConfig('Bitte geben Sie Ihren Namen an.'),
+        firstName: {
+          fieldError: simpleRteConfig('Bitte geben Sie Ihren Vornamen an.'),
           fieldWidth: 'half',
-          label: simpleRteConfig('Name'),
-          placeholder: 'Ihr Name',
+          label: simpleRteConfig('Vorname'),
+          placeholder: 'Ihr Vorname',
+        },
+        includeLanguageSelection: 'yes',
+        lastName: {
+          fieldError: simpleRteConfig('Bitte geben Sie Ihren Nachnamen an.'),
+          fieldWidth: 'half',
+          label: simpleRteConfig('Nachname'),
+          placeholder: 'Ihr Nachname',
         },
       },
       recipientMail: 'delivered@resend.dev',

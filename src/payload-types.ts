@@ -595,7 +595,42 @@ export interface Form {
         [k: string]: unknown;
       } | null;
     };
-    name: {
+    firstName: {
+      label: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      placeholder: string;
+      fieldWidth: 'full' | 'half';
+      required?: boolean | null;
+      fieldError?: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+    };
+    lastName: {
       label: {
         root: {
           type: string;
@@ -6026,7 +6061,16 @@ export interface FormsSelect<T extends boolean = true> {
               required?: T;
               fieldError?: T;
             };
-        name?:
+        firstName?:
+          | T
+          | {
+              label?: T;
+              placeholder?: T;
+              fieldWidth?: T;
+              required?: T;
+              fieldError?: T;
+            };
+        lastName?:
           | T
           | {
               label?: T;
