@@ -31,7 +31,7 @@ export const singletonSlugs: InterfaceSlug[] = [
     exportName: 'DataPrivacyPage',
     fileName: 'DataPrivacy',
     folderName: 'Singletons',
-    linkable: false,
+    linkable: true,
     slug: 'dataPrivacyPage',
   },
   {
@@ -39,7 +39,7 @@ export const singletonSlugs: InterfaceSlug[] = [
     exportName: 'ImpressumPage',
     fileName: 'Impressum',
     folderName: 'Singletons',
-    linkable: false,
+    linkable: true,
     slug: 'impressumPage',
   },
 ];
