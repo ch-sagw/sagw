@@ -4310,7 +4310,7 @@ export interface InterfaceHeaderNavigation {
       };
       [k: string]: unknown;
     };
-    navItemLink: InterfaceInternalLinkValue;
+    navItemLink?: InterfaceInternalLinkValue;
     subNavItems?:
       | {
           navItemText: {
@@ -4328,7 +4328,7 @@ export interface InterfaceHeaderNavigation {
             };
             [k: string]: unknown;
           };
-          navItemLink: InterfaceInternalLinkValue;
+          navItemLink?: InterfaceInternalLinkValue;
           id?: string | null;
         }[]
       | null;
