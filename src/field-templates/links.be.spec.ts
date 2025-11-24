@@ -32,8 +32,11 @@ test('throws error on invalid external url', async () => {
           externalLink: '.foo.bar',
         },
         showDetailPage: 'false',
+        slug: `${(new Date())
+          .toString()} - 1`,
         tenant,
       },
+      draft: false,
     });
 
     result = createEventResult;
@@ -72,8 +75,11 @@ test('does not throw an error on valid external url', async () => {
           externalLink: 'https://www.foo.bar',
         },
         showDetailPage: 'false',
+        slug: `${(new Date())
+          .toString()} - 2`,
         tenant,
       },
+      draft: false,
     });
 
     result = createEventResult;
@@ -112,8 +118,11 @@ test('does not throw an error on valid external url with path segment', async ()
           externalLink: 'https://www.foo.bar/baz',
         },
         showDetailPage: 'false',
+        slug: `${(new Date())
+          .toString()} - 3`,
         tenant,
       },
+      draft: false,
     });
 
     result = createEventResult;
@@ -152,8 +161,11 @@ test('does not throw an error on valid external without www', async () => {
           externalLink: 'https://foo.bar',
         },
         showDetailPage: 'false',
+        slug: `${(new Date())
+          .toString()} - 2`,
         tenant,
       },
+      draft: false,
     });
 
     result = createEventResult;

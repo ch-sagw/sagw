@@ -112,8 +112,10 @@ test('allows 1 link and 1 downloads block via API', async () => {
           lead: simpleRteConfig('Detail Page Lead'),
           title: simpleRteConfig(`Detail page title ${(new Date())} - 1`),
         },
+        slug: `detail-page-title-${(new Date())}-1`,
         tenant: await getTenant(),
       },
+      draft: false,
     });
 
     result = createDetailPageResult;
@@ -260,8 +262,10 @@ test('errors with 2 links and 1 downloads block via API', async () => {
           lead: simpleRteConfig('Detail Page Lead'),
           title: simpleRteConfig(`Detail page title ${(new Date())} - 2`),
         },
+        slug: `detail-page-title-${(new Date())}-2`,
         tenant: await getTenant(),
       },
+      draft: false,
     });
 
     result = createDetailPageResult;
@@ -395,6 +399,7 @@ test('errors with 1 link and 2 downloads block via API', async () => {
           lead: simpleRteConfig('Detail Page Lead'),
           title: simpleRteConfig(`Detail page title ${(new Date())} - 3`),
         },
+        slug: `detail-page-title-${(new Date())}-3`,
         tenant: await getTenant(),
       },
     });
@@ -436,6 +441,7 @@ test('allows 1 overview block via API', async () => {
           lead: simpleRteConfig('Overview Page Lead'),
           title: simpleRteConfig(`Overview page title ${new Date()} - 1`),
         },
+        slug: `overview-page-title-${(new Date())}-1`,
         tenant: await getTenant(),
       },
     });
@@ -477,6 +483,7 @@ test('errors with 2 overview blocks via API', async () => {
           lead: simpleRteConfig('Overview Page Lead'),
           title: simpleRteConfig(`Overview page title ${new Date()} - 2`),
         },
+        slug: `overview-page-title-${(new Date())}-2`,
         tenant: await getTenant(),
       },
     });
@@ -534,6 +541,7 @@ test('allows 1 same teaser block via API', async () => {
           lead: simpleRteConfig('Overview Page Lead'),
           title: simpleRteConfig(`Overview page title ${new Date()} - 3`),
         },
+        slug: `overview-page-title-${(new Date())}-3`,
         tenant: await getTenant(),
       },
     });
@@ -577,6 +585,7 @@ test('errors with 2 same teasers blocks via API', async () => {
           lead: simpleRteConfig('Overview Page Lead'),
           title: simpleRteConfig(`Overview page title ${new Date()} - 4`),
         },
+        slug: `overview-page-title-${(new Date())}-4`,
         tenant: await getTenant(),
       },
     });
