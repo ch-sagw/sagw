@@ -2,9 +2,13 @@ import {
   CollectionBeforeValidateHook, ValidationError,
   Where,
 } from 'payload';
-import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
-import { fieldSlugFieldName } from '@/field-templates/slug';
 import slugify from 'slugify';
+
+/**
+ * - Ensure unuqie slug in same tenant
+ * - slugify slug (authors may edit the slug after generation... we need to
+ * validate)
+ */
 
 export const hookSlug: CollectionBeforeValidateHook = async ({
   data,
@@ -27,25 +31,17 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
     return dataParam;
   }
 
-  const adminTitle = data[fieldAdminTitleFieldName];
-
-  if (!adminTitle) {
-    dataParam[fieldSlugFieldName] = data.id;
-
-    return dataParam;
-  }
-
   const tenant = dataParam.tenant || req.user?.tenants;
 
   if (!tenant) {
     return dataParam;
   }
 
-  const desiredSlug = slugify(adminTitle, {
-    lower: true,
-    strict: true,
-    trim: true,
-  });
+  if (!dataParam.slug) {
+    return dataParam;
+  }
+
+  // in case author changed the slug manually, slugify it
 
   slugify.extend({
     ä: 'ae',
@@ -53,63 +49,67 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
     ü: 'ue',
   });
 
-  // try to find desired slug in collection items of current tenant
-  if (desiredSlug) {
-    const searchConstraints: Where[] = [
-      {
-        tenant: {
-          in: tenant,
-        },
-      },
-      {
-        slug: {
-          equals: desiredSlug,
-        },
-      },
-      {
-        id: {
-          /* eslint-disable @typescript-eslint/naming-convention */
-          not_equals: originalDoc.id,
-          /* eslint-enable @typescript-eslint/naming-convention */
-        },
-      },
-    ];
+  const desiredSlug = slugify(dataParam['slug'], {
+    lower: true,
+    strict: true,
+    trim: true,
+  });
 
-    if ('_published' in collection) {
-      searchConstraints.push({
+  dataParam['slug'] = desiredSlug;
 
+  // try to find slug in collection items of current tenant
+
+  const searchConstraints: Where[] = [
+    {
+      tenant: {
+        in: tenant,
+      },
+    },
+    {
+      slug: {
+        equals: dataParam.slug,
+      },
+    },
+    {
+      id: {
         /* eslint-disable @typescript-eslint/naming-convention */
-        _status: {
-          equals: 'published',
-        },
+        not_equals: originalDoc.id,
         /* eslint-enable @typescript-eslint/naming-convention */
-      });
-    }
-
-    const existing = await req.payload.find({
-      collection: collection.slug,
-      limit: 1,
-      where: {
-        and: searchConstraints,
       },
+    },
+  ];
+
+  if ('_published' in collection) {
+    searchConstraints.push({
+
+      /* eslint-disable @typescript-eslint/naming-convention */
+      _status: {
+        equals: 'published',
+      },
+      /* eslint-enable @typescript-eslint/naming-convention */
     });
+  }
 
-    if (existing.docs.length > 0) {
+  const existing = await req.payload.find({
+    collection: collection.slug,
+    limit: 1,
+    where: {
+      and: searchConstraints,
+    },
+  });
 
-      throw new ValidationError({
-        errors: [
-          {
-            label: 'slug',
-            message: `Slug "${desiredSlug}" already exists in this tenant`,
-            path: 'slug',
-          },
-        ],
-        global: `Slug "${desiredSlug}" already exists in this tenant`,
-      });
-    } else if (desiredSlug) {
+  if (existing.docs.length > 0) {
 
-      dataParam[fieldSlugFieldName] = desiredSlug;
-    }
+    throw new ValidationError({
+      errors: [
+        {
+          label: 'slug',
+          message: `Slug "${dataParam.slug}" already exists in this tenant`,
+          path: 'slug',
+        },
+      ],
+      global: `Slug "${dataParam.slug}" already exists in this tenant`,
+    });
   }
 
   return dataParam;

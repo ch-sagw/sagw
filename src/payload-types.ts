@@ -1449,9 +1449,10 @@ export interface MagazineDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
-  slug?: string | null;
+  generateSlug?: boolean | null;
+  slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
@@ -1795,9 +1796,10 @@ export interface NewsDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
-  slug?: string | null;
+  generateSlug?: boolean | null;
+  slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
@@ -1969,9 +1971,10 @@ export interface EventDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
-  slug?: string | null;
+  generateSlug?: boolean | null;
+  slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
@@ -2195,9 +2198,10 @@ export interface PublicationDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
-  slug?: string | null;
+  generateSlug?: boolean | null;
+  slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
@@ -2337,9 +2341,10 @@ export interface ProjectDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
-  slug?: string | null;
+  generateSlug?: boolean | null;
+  slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
@@ -2646,9 +2651,10 @@ export interface OverviewPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
-  slug?: string | null;
+  generateSlug?: boolean | null;
+  slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
@@ -3253,9 +3259,10 @@ export interface DetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
-  slug?: string | null;
+  generateSlug?: boolean | null;
+  slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
@@ -3371,9 +3378,10 @@ export interface NationalDictionaryDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
-  slug?: string | null;
+  generateSlug?: boolean | null;
+  slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
@@ -3428,9 +3436,10 @@ export interface InstituteDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * The slug is visible in the url for this page, example: https://sagw.ch/detailPage/here-comes-the-slug . This value is automatically defined by the hero title.
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
-  slug?: string | null;
+  generateSlug?: boolean | null;
+  slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
@@ -4978,6 +4987,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  generateSlug?: T;
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
@@ -5128,6 +5138,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  generateSlug?: T;
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
@@ -5379,6 +5390,7 @@ export interface DetailPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  generateSlug?: T;
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
@@ -5468,6 +5480,7 @@ export interface EventDetailPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  generateSlug?: T;
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
@@ -5528,6 +5541,7 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  generateSlug?: T;
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
@@ -5584,6 +5598,7 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  generateSlug?: T;
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
@@ -5646,6 +5661,7 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  generateSlug?: T;
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
@@ -5688,6 +5704,7 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  generateSlug?: T;
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
@@ -5730,6 +5747,7 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  generateSlug?: T;
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
