@@ -11,6 +11,7 @@ export const ZenodoDocuments: CollectionConfig = {
       'files',
     ],
     group: 'Assets',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: 'title',
   },
   fields: [

@@ -25,7 +25,8 @@ test('throws error on invalid external url', async () => {
         _status: 'published',
         eventDetails: {
           date: '2025-08-31T12:00:00.000Z',
-          title: simpleRteConfig('some title'),
+          title: simpleRteConfig(`${(new Date())
+            .toString()} - 1`),
         },
         link: {
           externalLink: '.foo.bar',
@@ -64,7 +65,8 @@ test('does not throw an error on valid external url', async () => {
         _status: 'published',
         eventDetails: {
           date: '2025-08-31T12:00:00.000Z',
-          title: simpleRteConfig('some title'),
+          title: simpleRteConfig(`${(new Date())
+            .toString()} - 2`),
         },
         link: {
           externalLink: 'https://www.foo.bar',
@@ -103,7 +105,8 @@ test('does not throw an error on valid external url with path segment', async ()
         _status: 'published',
         eventDetails: {
           date: '2025-07-31T12:00:00.000Z',
-          title: simpleRteConfig('some title 2'),
+          title: simpleRteConfig(`${(new Date())
+            .toString()} - 3`),
         },
         link: {
           externalLink: 'https://www.foo.bar/baz',
@@ -142,7 +145,8 @@ test('does not throw an error on valid external without www', async () => {
         _status: 'published',
         eventDetails: {
           date: '2025-07-31T12:00:00.000Z',
-          title: simpleRteConfig('some title 2'),
+          title: simpleRteConfig(`${(new Date())
+            .toString()} - 4`),
         },
         link: {
           externalLink: 'https://foo.bar',
@@ -153,6 +157,8 @@ test('does not throw an error on valid external without www', async () => {
     });
 
     result = createEventResult;
+    console.log(result);
+
     /* eslint-enable @typescript-eslint/naming-convention */
   } catch {
     result = undefined;

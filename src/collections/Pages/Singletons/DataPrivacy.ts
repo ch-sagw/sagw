@@ -20,6 +20,7 @@ export const DataPrivacyPage: CollectionConfig = {
   access: pageAccess,
   admin: {
     group: 'Pages',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [

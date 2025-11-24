@@ -17,6 +17,7 @@ export const Forms: CollectionConfig = {
   admin: {
     group: 'Global Content',
     hidden: (req) => !isSuperOrTenantAdmin(req.user),
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: 'title',
   },
   fields: [

@@ -10,6 +10,7 @@ export const ErrorPage: CollectionConfig = {
   access: pageAccess,
   admin: {
     group: 'Pages',
+    hideAPIURL: process.env.ENV === 'prod',
   },
   fields: [
     {

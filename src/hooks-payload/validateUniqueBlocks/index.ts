@@ -114,9 +114,23 @@ export const validateUniqueBlocksCumulativeAndSingle = ({
 }: {
   singleBlockTypes: BlockSlug[];
   cumulativeBlockTypes: BlockSlug[];
-}) => (value: unknown): true | string => validateUniqueBlocksCumulative({
-  onlyAllowedOnceBlockTypes: cumulativeBlockTypes,
-})(value) && validateUniqueBlocksSingle({
-  onlyAllowedOnceBlockTypes: singleBlockTypes,
-})(value);
+}) => (value: unknown): true | string => {
+  const cumulative = validateUniqueBlocksCumulative({
+    onlyAllowedOnceBlockTypes: cumulativeBlockTypes,
+  })(value);
+
+  if (typeof cumulative === 'string') {
+    return cumulative;
+  }
+
+  const single = validateUniqueBlocksSingle({
+    onlyAllowedOnceBlockTypes: singleBlockTypes,
+  })(value);
+
+  if (typeof single === 'string') {
+    return single;
+  }
+
+  return true;
+};
 

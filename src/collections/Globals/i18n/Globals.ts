@@ -8,6 +8,7 @@ export const I18nGlobals: CollectionConfig = {
   access: globalContentAccessNoTranslatorNoEditor,
   admin: {
     group: 'i18n',
+    hideAPIURL: process.env.ENV === 'prod',
   },
   fields: [
     {

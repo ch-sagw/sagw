@@ -49,6 +49,7 @@ export const Header: CollectionConfig = {
   access: globalContentAccessNoTranslatorNoEditor,
   admin: {
     group: 'Global Content',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [

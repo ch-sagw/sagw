@@ -9,6 +9,7 @@ export const Theme: CollectionConfig = {
   access: globalContentAccessTheme,
   admin: {
     group: 'Global Content',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [

@@ -58,6 +58,7 @@ export const OverviewPage: CollectionConfig = {
       '_status',
     ],
     group: 'Pages',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
