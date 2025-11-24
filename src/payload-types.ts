@@ -995,25 +995,27 @@ export interface InterfaceEventsTeasersBlock {
     };
     [k: string]: unknown;
   };
-  /**
-   * Do you want to add a link to the Events overview page? Note: This link will not be shown on project detail pages.
-   */
-  link?: ('no' | 'yes') | null;
-  linkText?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
+  optionalLink?: {
+    includeLink?: boolean | null;
+    link?: {
+      linkText: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
         [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
+      };
+      internalLink: InterfaceInternalLinkValue;
     };
-    [k: string]: unknown;
-  } | null;
+  };
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1058,22 +1060,27 @@ export interface InterfaceMagazineTeasersBlock {
    * Align Title & text horizontally or vertically
    */
   alignement?: ('vertical' | 'horizontal') | null;
-  linkText?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
+  optionalLink?: {
+    includeLink?: boolean | null;
+    link?: {
+      linkText: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
         [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
+      };
+      internalLink: InterfaceInternalLinkValue;
     };
-    [k: string]: unknown;
-  } | null;
-  internalLink?: InterfaceInternalLinkValue;
+  };
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1099,25 +1106,27 @@ export interface InterfaceNewsTeasersBlock {
     };
     [k: string]: unknown;
   };
-  /**
-   * Do you want to add a link to the News overview page? Note: This link will not be shown on project detail pages.
-   */
-  link?: ('no' | 'yes') | null;
-  linkText?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
+  optionalLink?: {
+    includeLink?: boolean | null;
+    link?: {
+      linkText: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
         [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
+      };
+      internalLink: InterfaceInternalLinkValue;
     };
-    [k: string]: unknown;
-  } | null;
+  };
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1143,25 +1152,27 @@ export interface InterfacePublicationsTeasersBlock {
     };
     [k: string]: unknown;
   };
-  /**
-   * Do you want to add a link to the Publications overview page? Note: This link will not be shown on project detail pages.
-   */
-  link?: ('no' | 'yes') | null;
-  linkText?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
+  optionalLink?: {
+    includeLink?: boolean | null;
+    link?: {
+      linkText: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
         [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
+      };
+      internalLink: InterfaceInternalLinkValue;
     };
-    [k: string]: unknown;
-  } | null;
+  };
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1206,22 +1217,27 @@ export interface InterfaceProjectTeasersBlock {
    * Align Title & text horizontally or vertically
    */
   alignement?: ('vertical' | 'horizontal') | null;
-  linkText?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
+  optionalLink?: {
+    includeLink?: boolean | null;
+    link?: {
+      linkText: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
         [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
+      };
+      internalLink: InterfaceInternalLinkValue;
     };
-    [k: string]: unknown;
-  } | null;
-  internalLink?: InterfaceInternalLinkValue;
+  };
   message?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -4817,8 +4833,17 @@ export interface InterfaceHomeTeasersBlockSelect<T extends boolean = true> {
  */
 export interface InterfaceEventsTeasersBlockSelect<T extends boolean = true> {
   title?: T;
-  link?: T;
-  linkText?: T;
+  optionalLink?:
+    | T
+    | {
+        includeLink?: T;
+        link?:
+          | T
+          | {
+              linkText?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
+            };
+      };
   message?: T;
   id?: T;
   blockName?: T;
@@ -4831,8 +4856,17 @@ export interface InterfaceMagazineTeasersBlockSelect<T extends boolean = true> {
   title?: T;
   lead?: T;
   alignement?: T;
-  linkText?: T;
-  internalLink?: T | InterfaceInternalLinkValueSelect<T>;
+  optionalLink?:
+    | T
+    | {
+        includeLink?: T;
+        link?:
+          | T
+          | {
+              linkText?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
+            };
+      };
   message?: T;
   id?: T;
   blockName?: T;
@@ -4843,8 +4877,17 @@ export interface InterfaceMagazineTeasersBlockSelect<T extends boolean = true> {
  */
 export interface InterfaceNewsTeasersBlockSelect<T extends boolean = true> {
   title?: T;
-  link?: T;
-  linkText?: T;
+  optionalLink?:
+    | T
+    | {
+        includeLink?: T;
+        link?:
+          | T
+          | {
+              linkText?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
+            };
+      };
   message?: T;
   id?: T;
   blockName?: T;
@@ -4855,8 +4898,17 @@ export interface InterfaceNewsTeasersBlockSelect<T extends boolean = true> {
  */
 export interface InterfacePublicationsTeasersBlockSelect<T extends boolean = true> {
   title?: T;
-  link?: T;
-  linkText?: T;
+  optionalLink?:
+    | T
+    | {
+        includeLink?: T;
+        link?:
+          | T
+          | {
+              linkText?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
+            };
+      };
   message?: T;
   id?: T;
   blockName?: T;
@@ -4869,8 +4921,17 @@ export interface InterfaceProjectTeasersBlockSelect<T extends boolean = true> {
   title?: T;
   lead?: T;
   alignement?: T;
-  linkText?: T;
-  internalLink?: T | InterfaceInternalLinkValueSelect<T>;
+  optionalLink?:
+    | T
+    | {
+        includeLink?: T;
+        link?:
+          | T
+          | {
+              linkText?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
+            };
+      };
   message?: T;
   id?: T;
   blockName?: T;

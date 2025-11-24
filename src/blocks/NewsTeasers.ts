@@ -1,4 +1,4 @@
-import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
 import { rte1 } from '@/field-templates/rte';
 import { Block } from 'payload';
 
@@ -12,31 +12,7 @@ export const NewsTeasersBlock = {
     rte1({
       name: 'title',
     }),
-    {
-      access: fieldAccessNonLocalizableField,
-      admin: {
-        description: 'Do you want to add a link to the News overview page? Note: This link will not be shown on project detail pages.',
-      },
-      defaultValue: 'no',
-      name: 'link',
-      options: [
-        {
-          label: 'No',
-          value: 'no',
-        },
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-      ],
-      type: 'radio',
-    },
-    {
-      ...rte1({
-        adminCondition: (_, siblingData): boolean => siblingData.link === 'yes',
-        name: 'linkText',
-      }),
-    },
+    fieldsLinkInternalWithToggle(),
     {
       admin: {
         hidden: true,

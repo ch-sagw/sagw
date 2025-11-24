@@ -1,5 +1,5 @@
 import { alignementHorizontalVertical } from '@/field-templates/alignement';
-import { fieldsLinkInternal } from '@/field-templates/links';
+import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
 import {
   rte1, rte2,
 } from '@/field-templates/rte';
@@ -20,9 +20,7 @@ export const MagazineTeasersBlock = {
       notRequired: true,
     }),
     alignementHorizontalVertical,
-    ...fieldsLinkInternal({
-      optional: true,
-    }),
+    fieldsLinkInternalWithToggle(),
     {
       admin: {
         hidden: true,
