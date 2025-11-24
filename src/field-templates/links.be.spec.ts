@@ -162,14 +162,13 @@ test('does not throw an error on valid external without www', async () => {
         },
         showDetailPage: 'false',
         slug: `${(new Date())
-          .toString()} - 2`,
+          .toString()} - 4`,
         tenant,
       },
       draft: false,
     });
 
     result = createEventResult;
-    console.log(result);
 
     /* eslint-enable @typescript-eslint/naming-convention */
   } catch {
