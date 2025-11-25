@@ -26,6 +26,9 @@ export const EditionsOverviewBlock = {
   fields: [
     {
       fields: [
+        rte2({
+          name: 'linkText',
+        }),
         {
           access: fieldAccessNonLocalizableField,
           fields: editionItem,
