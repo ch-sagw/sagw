@@ -1,5 +1,43 @@
 # Changelog
 
+## [0.24.0](https://github.com/ch-sagw/sagw/compare/v0.23.1...v0.24.0) (2025-11-25)
+
+
+### Features
+
+* **be:** add editions overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add institutes overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add magazine overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add magazine teaser ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add national dictionaries overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add network teaser ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add people overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add projects overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add projects teaser ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add editions overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add generic overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add generic teaser ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add generic teaser component ([e8effcd](https://github.com/ch-sagw/sagw/commit/e8effcd651fa956f005cd110cef7d0159282a7d9))
+* **fe:** add institutes overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add magazine overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add magazine teaser ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add national dictionaries overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add network teaser ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add people overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add projects overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add projects teaser ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+
+
+### Bug Fixes
+
+* **be:** adoptions regarding access model review ([bc1a95a](https://github.com/ch-sagw/sagw/commit/bc1a95ad4a3d86f578ad90fd1a60db8129079d3b))
+* **be:** adoptions regarding cms3 review ([bc1a95a](https://github.com/ch-sagw/sagw/commit/bc1a95ad4a3d86f578ad90fd1a60db8129079d3b))
+
+
+### Test
+
+* **be:** add accessive automated tests for access model ([bc1a95a](https://github.com/ch-sagw/sagw/commit/bc1a95ad4a3d86f578ad90fd1a60db8129079d3b))
+
 ## [0.23.1](https://github.com/ch-sagw/sagw/compare/v0.23.0...v0.23.1) (2025-11-18)
 
 
