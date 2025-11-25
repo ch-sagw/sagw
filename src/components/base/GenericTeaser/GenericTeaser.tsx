@@ -7,7 +7,7 @@ import { Config } from '@/payload-types';
 import { Icon } from '@/icons';
 
 type InterfaceLinkType = 'internal' | 'external' | 'mail' | 'phone';
-interface InterfaceLink {
+export interface InterfaceGenericTeaserLink {
   text?: string;
   href: string;
   type?: InterfaceLinkType;
@@ -16,9 +16,10 @@ interface InterfaceLink {
 export type InterfaceBaseTeaserProps = {
   title: string;
   texts?: string[];
-  links: InterfaceLink[];
+  links: InterfaceGenericTeaserLink[];
   pageLanguage: Config['locale'];
   type: 'institute' | 'network' | 'project' | 'magazine' | 'people' | 'generic';
+  className?: string;
 };
 
 // Image and logo both are optional. But as soon as image is set,
@@ -34,7 +35,7 @@ const renderLink = ({
   lang,
   wrapper,
 }: {
-  link: InterfaceLink;
+  link: InterfaceGenericTeaserLink;
   key: number;
   lang: Config['locale'];
   wrapper: string;
@@ -102,6 +103,7 @@ export const GenericTeaser = ({
   logo,
   pageLanguage,
   type,
+  className,
 }: InterfaceGenericTeaserPropTypes): React.JSX.Element => {
   let WrapperElement: keyof React.JSX.IntrinsicElements = 'div';
   let linkTarget;
@@ -109,6 +111,7 @@ export const GenericTeaser = ({
   const teaserClasses = cva([
     styles.teaser,
     styles[type],
+    className,
   ]);
 
   if (links && links.length === 1) {
@@ -143,7 +146,7 @@ export const GenericTeaser = ({
         }
 
         <SafeHtml
-          as='p'
+          as='h3'
           html={title}
           className={styles.title}
         />

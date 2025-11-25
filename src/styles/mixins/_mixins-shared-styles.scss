@@ -2,6 +2,7 @@
 @use "./mixins-typo" as *;
 @use "../utilities/utilities" as *;
 @use "../utilities/mediaqueries" as *;
+@use "./mixins-layout" as *;
 
 // ##############################
 // RTE
@@ -29,4 +30,75 @@
   transform-origin: left;
   transform: scaleX(1);
   opacity: 1;
+}
+
+// ##############################
+// FULL BLEED TEASERS (e.g. magazine & generic)
+// ##############################
+@mixin full-bleed-teaser-list {
+  @include list-reset;
+  @include generic-block-padding;
+
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: px-to-rem(var(--grid-gutter));
+  row-gap: px-to-rem(var(--spacing-3xl));
+
+  @include mq($from: medium) {
+    row-gap: px-to-rem(var(--spacing-4xl));
+  }
+}
+
+@mixin full-bleed-teaser-item {
+  grid-column: span 12;
+
+  @include mq($from: medium) {
+    grid-column: span 6;
+  }
+
+  @include mq($from: large) {
+    grid-column: span 4;
+  }
+
+  @include mq($from: ultra) {
+    grid-column: span 3;
+  }
+}
+
+@mixin full-bleed-teaser-list-ultra {
+  @include list-reset;
+
+  padding-block-end: px-to-rem(var(--section-bottom));
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: px-to-rem(var(--grid-gutter));
+  row-gap: px-to-rem(var(--spacing-3xl));
+
+  @include mq($from: medium) {
+    row-gap: px-to-rem(var(--spacing-4xl));
+  }
+
+  @include mq($from: wide) {
+    grid-template-columns: repeat(9, 1fr);
+  }
+}
+
+@mixin full-bleed-teaser-item-ultra {
+  grid-column: span 12;
+
+  @include mq($from: medium) {
+    grid-column: span 6;
+  }
+
+  @include mq($from: 800) {
+    grid-column: span 4;
+  }
+
+  @include mq($from: large) {
+    grid-column: span 6;
+  }
+
+  @include mq($from: wide) {
+    grid-column: span 3;
+  }
 }

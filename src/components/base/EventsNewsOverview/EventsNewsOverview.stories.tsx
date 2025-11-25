@@ -46,7 +46,7 @@ export const NewsOverview: StrictStory = {
       />
     )),
     colorMode: 'white',
-    paginationTitle: 'Pagination',
+    pageLanguage: 'de',
     title: 'News',
   },
 };
@@ -68,7 +68,7 @@ export const EventsOverview: StrictStory = {
       />
     )),
     colorMode: 'white',
-    paginationTitle: 'Pagination',
+    pageLanguage: 'de',
     title: 'Events',
   },
 };
