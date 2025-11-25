@@ -497,11 +497,11 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       },
       submitSuccess: {
         text: simpleRteConfig('Submit text success'),
-        title: simpleRteConfig('Submit title success'),
+        title: simpleRteConfig(`Submit title success ${tenant.toUpperCase()}`),
       },
       subtitle: simpleRteConfig('Subtitle for contact Form'),
       tenant: tenantId,
-      title: simpleRteConfig('Contact Form'),
+      title: simpleRteConfig(`Contact Form ${tenant.toUpperCase()}`),
     },
   });
 
