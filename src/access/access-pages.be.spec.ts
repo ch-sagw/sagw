@@ -213,7 +213,7 @@ test.describe('can create pages', () => {
           },
           navigationTitle: 'Detail Page',
           slug: `detail-page-title-${(new Date()
-            .toString())}`,
+            .toString())}1`,
           tenant,
         },
         draft: false,
@@ -252,7 +252,7 @@ test.describe('can create pages', () => {
           },
           navigationTitle: 'Detail Page',
           slug: `detail-page-title-${(new Date()
-            .toString())}`,
+            .toString())}2`,
           tenant,
         },
         draft: false,
@@ -291,7 +291,7 @@ test.describe('can create pages', () => {
           },
           navigationTitle: 'Detail Page',
           slug: `detail-page-title-${(new Date()
-            .toString())}`,
+            .toString())}3`,
           tenant,
         },
         draft: false,

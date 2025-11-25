@@ -4,6 +4,9 @@ import {
   test,
 } from '@playwright/test';
 import { explicitRoleLogin } from '@/test-helpers/payload-login';
+import { extendExpect } from '@/access/test/extendExpect';
+
+extendExpect(expect);
 
 test.describe('can not create tenants', () => {
   test('sagw admin', async () => {
@@ -538,5 +541,130 @@ test.describe('can not delete users', () => {
     }).rejects.toMatchObject({
       status: 403,
     });
+  });
+});
+
+test.describe('can create tenants', () => {
+  test('super admin', async () => {
+    await expect(async () => {
+      const {
+        tenant,
+        payload,
+        user,
+      } = await explicitRoleLogin('super-admin');
+
+      await payload.create({
+        collection: 'tenants',
+        data: {
+          domain: 'testTenant',
+          name: 'testTenant',
+          slug: 'testTenant',
+          title: 'testTenant',
+        },
+        overrideAccess: false,
+        req: {
+          data: {
+            tenant,
+          },
+          user,
+        },
+      });
+    })
+      .notRejects();
+
+  });
+});
+
+test.describe('can delete tenants', () => {
+  test('super admin', async () => {
+    await expect(async () => {
+      const {
+        tenant,
+        payload,
+        user,
+      } = await explicitRoleLogin('super-admin');
+
+      await payload.delete({
+        collection: 'tenants',
+        overrideAccess: false,
+        req: {
+          data: {
+            tenant,
+          },
+          user,
+        },
+        where: {
+          title: {
+            equals: 'testTenant',
+          },
+        },
+      });
+    })
+      .notRejects();
+  });
+});
+
+test.describe('can create users', () => {
+  test('super admin', async () => {
+    await expect(async () => {
+      const {
+        tenant,
+        payload,
+        user,
+      } = await explicitRoleLogin('super-admin');
+
+      await payload.create({
+        collection: 'users',
+        data: {
+          email: 'testuser@foo.bar',
+          password: '1234',
+          roles: ['global-user'],
+          username: 'testuser',
+        },
+        overrideAccess: false,
+        req: {
+          data: {
+            tenant,
+          },
+          user,
+        },
+      });
+    })
+      .notRejects();
+  });
+});
+
+test.describe('can delete users', () => {
+  test('super admin', async () => {
+    await expect(async () => {
+      const {
+        tenant,
+        payload,
+        user,
+      } = await explicitRoleLogin('super-admin');
+
+      // get translator user
+      const translator = await payload.find({
+        collection: 'users',
+        where: {
+          email: {
+            equals: 'testuser@foo.bar',
+          },
+        },
+      });
+
+      await payload.delete({
+        collection: 'users',
+        id: translator.docs[0].id,
+        overrideAccess: false,
+        req: {
+          data: {
+            tenant,
+          },
+          user,
+        },
+      });
+    })
+      .notRejects();
   });
 });

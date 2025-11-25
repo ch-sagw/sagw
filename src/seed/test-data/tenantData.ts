@@ -492,16 +492,16 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       showPrivacyCheckbox: false,
       submitButtonLabel: 'Abschicken',
       submitError: {
-        text: simpleRteConfig(`Submit text error ${tenant.toUpperCase()}`),
-        title: simpleRteConfig(`Submit title error ${tenant.toUpperCase()}`),
+        text: simpleRteConfig('Submit text error'),
+        title: simpleRteConfig('Submit title error'),
       },
       submitSuccess: {
-        text: simpleRteConfig(`Submit text success ${tenant.toUpperCase()}`),
-        title: simpleRteConfig(`Submit title success ${tenant.toUpperCase()}`),
+        text: simpleRteConfig('Submit text success'),
+        title: simpleRteConfig('Submit title success'),
       },
-      subtitle: simpleRteConfig(`Subtitle for contact Form ${tenant.toUpperCase()}`),
+      subtitle: simpleRteConfig('Subtitle for contact Form'),
       tenant: tenantId,
-      title: simpleRteConfig(`Contact Form ${tenant.toUpperCase()}`),
+      title: simpleRteConfig('Contact Form'),
     },
   });
 
