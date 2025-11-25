@@ -1,15 +1,39 @@
-import { Field } from 'payload';
+import {
+  Field, slugField,
+  TextField,
+} from 'payload';
 import { fieldParentSelectorDetailPage } from '@/field-templates/parentSelector';
 import { fieldBreadcrumb } from '@/field-templates/breadcrumb';
 import { fieldNavigationTitle } from '@/field-templates/navigationTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
-import { fieldSlug } from '@/field-templates/slug';
-import { fieldAdminTitle } from '@/field-templates/adminTitle';
+import {
+  fieldAdminTitle, fieldAdminTitleFieldName,
+} from '@/field-templates/adminTitle';
+import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 export const genericPageFields = (): Field[] => ([
   fieldLinkablePage,
   fieldAdminTitle,
-  fieldSlug,
+  slugField({
+    fieldToUse: fieldAdminTitleFieldName,
+    localized: true,
+    overrides: (defaultField) => {
+      defaultField.fields.forEach((field) => {
+        if ('name' in field && field.name === 'slug') {
+          const customSlugField = field as TextField;
+
+          customSlugField.access = fieldAccessNonLocalizableField;
+
+          /* eslint-disable no-param-reassign */
+          field = customSlugField;
+          /* eslint-enable no-param-reassign */
+        }
+
+      });
+
+      return defaultField;
+    },
+  }),
   fieldNavigationTitle,
   fieldParentSelectorDetailPage,
   fieldBreadcrumb,

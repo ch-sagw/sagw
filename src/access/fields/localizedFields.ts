@@ -7,6 +7,10 @@ interface InterfaceAccessParam {
   req: PayloadRequest;
 }
 
+const accessFieldLocalizableAdminsOnly = ({
+  req,
+}: InterfaceAccessParam): boolean => isSuperAdmin(req) || isTenantAdmin(req);
+
 const accessFieldLocalizableDefault = ({
   req,
 }: InterfaceAccessParam): boolean => isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req);
@@ -15,4 +19,10 @@ export const fieldAccessNonLocalizableField = {
   create: accessFieldLocalizableDefault,
   read: (): boolean => true,
   update: accessFieldLocalizableDefault,
+};
+
+export const fieldAccessAdminsOnly = {
+  create: accessFieldLocalizableAdminsOnly,
+  read: (): boolean => true,
+  update: accessFieldLocalizableAdminsOnly,
 };

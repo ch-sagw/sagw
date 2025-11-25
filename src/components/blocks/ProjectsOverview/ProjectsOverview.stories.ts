@@ -52,6 +52,7 @@ const pages: ProjectDetailPage[] = Array.from({
       teaserText: simpleRteConfig('Project Teaser Text'),
     },
     project: '1',
+    slug: 'slug',
     tenant: '1',
     updatedAt: '2025-10-20T12:50:57.693Z',
   });

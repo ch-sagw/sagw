@@ -13,7 +13,6 @@ import {
   generateInstituteDetailPage,
   generateOverviewPage,
 } from '@/test-helpers/page-generator';
-import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 // 1. Generate 4 levels of nested pages.
 // 2. Change navigation title on level 2.
@@ -107,7 +106,7 @@ test('Updates on slug change', async () => {
   let level2: any;
   let level3: any;
   let level4: any;
-  const newTitle = `New Title Level 2 ${(new Date())
+  const newSlug = `new-slug-level2-${(new Date())
     .getTime()}`;
 
   try {
@@ -150,9 +149,7 @@ test('Updates on slug change', async () => {
     await payload.update({
       collection: 'detailPage',
       data: {
-        hero: {
-          title: simpleRteConfig(newTitle),
-        },
+        slug: newSlug,
       },
       id: level2.id,
     });
@@ -171,14 +168,11 @@ test('Updates on slug change', async () => {
     id: level4.id,
   });
 
-  const expectNewTitle = newTitle.toLowerCase()
-    .replaceAll(' ', '-');
-
   await expect(level3Updated!.breadcrumb![1].slugde)
-    .toStrictEqual(expectNewTitle);
+    .toStrictEqual(newSlug);
 
   await expect(level4Updated!.breadcrumb![1].slugde)
-    .toStrictEqual(expectNewTitle);
+    .toStrictEqual(newSlug);
 
 });
 

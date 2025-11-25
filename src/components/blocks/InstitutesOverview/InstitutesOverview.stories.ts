@@ -52,6 +52,7 @@ const pages: InstituteDetailPage[] = Array.from({
       image: 'some-image',
       teaserText: simpleRteConfig(`Institute Teaser Text ${index}`),
     },
+    slug: 'slug',
     tenant: '1',
     updatedAt: '2025-10-20T12:50:57.693Z',
   });

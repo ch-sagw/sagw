@@ -1,6 +1,6 @@
 {
   "name": "sagw",
-  "version": "0.23.1",
+  "version": "0.24.0",
   "description": "Codebase for SAGW websites.",
   "author": "Vorhall KlG <info@vorhall.com> (https://vorhall.com)",
   "license": "MIT",
@@ -41,7 +41,8 @@
     "lint": "npm run lint:js && npm run lint:scss",
     "commitlint": "commitlint --edit",
     "prepare": "husky",
-    "orphaned:screenshots": "tsx ./src/automated-testing/orphanedScreenshots.ts"
+    "orphaned:screenshots": "tsx ./src/automated-testing/orphanedScreenshots.ts",
+    "type-check": "tsc"
   },
   "dependencies": {
     "@gumlet/react-embed-player": "^2.0.19",

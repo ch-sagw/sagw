@@ -126,7 +126,12 @@ const defaultFormConfig: FormProps = {
         label: simpleRteConfig('foo'),
         placeholder: 'baz',
       },
-      name: {
+      firstName: {
+        fieldWidth: 'full',
+        label: simpleRteConfig('foo'),
+        placeholder: 'baz',
+      },
+      lastName: {
         fieldWidth: 'full',
         label: simpleRteConfig('foo'),
         placeholder: 'baz',

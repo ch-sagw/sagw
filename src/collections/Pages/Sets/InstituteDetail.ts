@@ -27,6 +27,7 @@ export const InstituteDetailPage: CollectionConfig = {
   access: pageAccessInstituteDetail,
   admin: {
     group: 'Pages',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [

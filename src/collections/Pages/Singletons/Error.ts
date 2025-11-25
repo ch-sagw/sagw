@@ -4,11 +4,13 @@ import { hookSeoFallback } from '@/hooks-payload/seoFallback';
 import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
 import { pageAccess } from '@/access/pages';
+import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 
 export const ErrorPage: CollectionConfig = {
   access: pageAccess,
   admin: {
     group: 'Pages',
+    hideAPIURL: process.env.ENV === 'prod',
   },
   fields: [
     {
@@ -61,7 +63,10 @@ export const ErrorPage: CollectionConfig = {
     },
   ],
   hooks: {
-    beforeChange: [hookSeoFallback],
+    beforeChange: [
+      hookSeoFallback,
+      hookPreventBulkPublishForTranslators,
+    ],
   },
   labels: {
     plural: 'Error Page',

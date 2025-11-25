@@ -47,20 +47,30 @@ export const FormServer = ({
     to adapt the form render logic.
   */
   if (renderForm.isNewsletterForm === 'newsletter') {
-    const nameField: InterfaceTextField = {
+    const firstnameField: InterfaceTextField = {
       blockType: 'textBlockForm',
-      fieldError: renderForm.newsletterFields?.name.fieldError,
+      fieldError: renderForm.newsletterFields?.firstName.fieldError,
       fieldWidth: 'half',
-      label: renderForm.newsletterFields?.name.label || simpleRteConfig(''),
-      name: 'name',
-      placeholder: renderForm.newsletterFields?.name.placeholder || '',
+      label: renderForm.newsletterFields?.firstName.label || simpleRteConfig(''),
+      name: 'firstname',
+      placeholder: renderForm.newsletterFields?.firstName.placeholder || '',
+      required: true,
+    };
+
+    const lastnameField: InterfaceTextField = {
+      blockType: 'textBlockForm',
+      fieldError: renderForm.newsletterFields?.lastName.fieldError,
+      fieldWidth: 'half',
+      label: renderForm.newsletterFields?.lastName.label || simpleRteConfig(''),
+      name: 'lastname',
+      placeholder: renderForm.newsletterFields?.lastName.placeholder || '',
       required: true,
     };
 
     const emailField: InterfaceEmailField = {
       blockType: 'emailBlock',
       fieldError: renderForm.newsletterFields?.email.fieldError,
-      fieldWidth: 'half',
+      fieldWidth: 'full',
       label: renderForm.newsletterFields?.email.label || simpleRteConfig(''),
       name: 'email',
       placeholder: renderForm.newsletterFields?.email.placeholder ||
@@ -68,8 +78,9 @@ export const FormServer = ({
       required: true,
     };
 
+    renderForm.fields?.push(firstnameField);
+    renderForm.fields?.push(lastnameField);
     renderForm.fields?.push(emailField);
-    renderForm.fields?.push(nameField);
 
     // add language selection
 

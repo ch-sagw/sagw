@@ -36,6 +36,7 @@ export const Users: CollectionConfig = {
   access: usersAccess,
   admin: {
     group: 'Org',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: 'email',
   },
   auth: true,

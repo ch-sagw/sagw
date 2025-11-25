@@ -38,13 +38,13 @@ export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<R
   const title = rteToHtml(props.title);
   let allLink;
 
-  if (props.link === 'yes' && props.linkText) {
+  if (props.optionalLink?.includeLink && props.optionalLink.link?.linkText) {
     allLink = {
 
       // TODO
       href: '/overview',
 
-      text: rteToHtml(props.linkText),
+      text: rteToHtml(props.optionalLink.link?.linkText),
     };
   }
 

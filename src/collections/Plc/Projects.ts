@@ -8,6 +8,7 @@ export const Projects: CollectionConfig = {
     defaultColumns: ['name'],
     description: 'You can assign NewsDetail Pages, Event Detail Pages and Documents to a project. Then you could add a Downloads block to a page an tell it to list all downloads related to a project.',
     group: 'Global Content',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: 'name',
   },
   fields: [

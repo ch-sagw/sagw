@@ -14,7 +14,6 @@ import {
   BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook,
   PayloadRequest,
 } from 'payload';
-import { fieldSlugFieldName } from '@/field-templates/slug';
 import { fieldNavigationTitleFieldName } from '@/field-templates/navigationTitle';
 import { fieldParentSelectorFieldName } from '@/field-templates/parentSelector';
 import { fieldBreadcrumbFieldName } from '@/field-templates/breadcrumb';
@@ -203,12 +202,12 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
   const isUnpublished = newStatus === 'draft' || newStatus === null;
   const isUnpublishing = wasPublished && isUnpublished;
 
-  const oldSlug = previousDoc?.[fieldSlugFieldName];
+  const oldSlug = previousDoc?.['slug'];
   const oldNavigationTitle = previousDoc?.[fieldNavigationTitleFieldName];
   const oldParent = previousDoc?.[fieldParentSelectorFieldName];
   const oldBreadcrumb = previousDoc?.[fieldBreadcrumbFieldName];
 
-  const slugChanged = hasLocalizedStringChanged(oldSlug, doc[fieldSlugFieldName]);
+  const slugChanged = hasLocalizedStringChanged(oldSlug, doc['slug']);
   const navigationTitleChanged = hasLocalizedStringChanged(oldNavigationTitle, doc[fieldNavigationTitleFieldName]);
   const parentChanged = getParentId(oldParent) !== getParentId(doc[fieldParentSelectorFieldName]);
   const breadcrumbChanged = JSON.stringify(oldBreadcrumb) !== JSON.stringify(doc[fieldBreadcrumbFieldName]);

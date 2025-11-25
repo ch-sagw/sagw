@@ -2,7 +2,6 @@
 // Returns breadcrumbs in root-to-leaf order with all locales
 
 import { CollectionBeforeChangeHook } from 'payload';
-import { fieldSlugFieldName } from '@/field-templates/slug';
 import { fieldNavigationTitleFieldName } from '@/field-templates/navigationTitle';
 import { fieldParentSelectorFieldName } from '@/field-templates/parentSelector';
 import { fieldBreadcrumbFieldName } from '@/field-templates/breadcrumb';
@@ -49,7 +48,7 @@ export const buildBreadcrumbs = async (
       locale: 'all',
     });
 
-    const parentSlugRaw = parentDoc[fieldSlugFieldName] as LocalizedString | undefined;
+    const parentSlugRaw = parentDoc['slug'] as LocalizedString | undefined;
     const parentNavigationTitleRaw = parentDoc[fieldNavigationTitleFieldName] as LocalizedString | undefined;
 
     // If current parent doesn't have navigationTitle, return empty array

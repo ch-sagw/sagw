@@ -12,6 +12,7 @@ import { versions } from '@/field-templates/versions';
 import { pageAccess } from '@/access/pages';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { allBlocksButTranslator } from '@/access/blocks';
+import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
 
@@ -19,6 +20,7 @@ export const DataPrivacyPage: CollectionConfig = {
   access: pageAccess,
   admin: {
     group: 'Pages',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
@@ -56,6 +58,7 @@ export const DataPrivacyPage: CollectionConfig = {
     },
   ],
   hooks: {
+    beforeChange: [hookPreventBulkPublishForTranslators],
     beforeValidate: [hookPreventBlockStructureChangesForTranslators()],
   },
   labels: {

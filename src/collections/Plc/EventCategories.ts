@@ -7,6 +7,7 @@ export const EventCategories: CollectionConfig = {
   admin: {
     defaultColumns: ['eventCategory'],
     group: 'Global Content',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: 'eventCategory',
   },
   fields: [

@@ -13,6 +13,7 @@ export const Images: CollectionConfig = {
       renditions again, it is best to not compress the image too much before
       you upload it.`,
     group: 'Assets',
+    hideAPIURL: process.env.ENV === 'prod',
   },
   fields: [
     {
