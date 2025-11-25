@@ -20,10 +20,10 @@ export const beforeEachPayloadLogin = (): void => {
 interface InterfaceExplicitRoleLoginReturn {
   payload: Payload;
   user: User & { collection: 'users'; };
-  tenant: string;
+  tenant?: string;
 }
 
-export const explicitRoleLogin = async (type: 'sagw-admin' | 'fg-admin' | 'editor' | 'translator'): Promise<InterfaceExplicitRoleLoginReturn> => {
+export const explicitRoleLogin = async (type: 'super-admin' | 'sagw-admin' | 'fg-admin' | 'editor' | 'translator'): Promise<InterfaceExplicitRoleLoginReturn> => {
   const payload = await getPayload({
     config: configPromise,
   });
@@ -31,7 +31,10 @@ export const explicitRoleLogin = async (type: 'sagw-admin' | 'fg-admin' | 'edito
   let email;
   let password;
 
-  if (type === 'sagw-admin') {
+  if (type === 'super-admin') {
+    email = process.env.USER_SUPER_ADMIN_MAIL;
+    password = process.env.USER_SUPER_ADMIN_PASS;
+  } else if (type === 'sagw-admin') {
     email = process.env.USER_SAGW_ADMIN_MAIL;
     password = process.env.USER_SAGW_ADMIN_PASS;
   } else if (type === 'fg-admin') {
@@ -59,10 +62,14 @@ export const explicitRoleLogin = async (type: 'sagw-admin' | 'fg-admin' | 'edito
     },
   });
 
-  const tenant = user.tenants?.[0]?.tenant;
+  let tenant;
 
-  if (!tenant || typeof tenant !== 'string') {
-    throw new Error('User has no tenant');
+  if (type !== 'super-admin') {
+    tenant = user.tenants?.[0]?.tenant;
+
+    if (!tenant || typeof tenant !== 'string') {
+      throw new Error('User has no tenant');
+    }
   }
 
   return {
