@@ -298,7 +298,6 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           },
           {
             description: simpleRteConfig('Förderung von langfristigen Forschungsinfrastrukturen'),
-            navItemLink: undefined,
             navItemText: simpleRteConfig('Förderung'),
             subNavItems: [
               {
@@ -525,14 +524,14 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       showPrivacyCheckbox: false,
       submitButtonLabel: 'Abschicken',
       submitError: {
-        text: simpleRteConfig(`Submit text error ${tenant.toUpperCase()}`),
-        title: simpleRteConfig(`Submit title error ${tenant.toUpperCase()}`),
+        text: simpleRteConfig('Submit text error'),
+        title: simpleRteConfig('Submit title error'),
       },
       submitSuccess: {
-        text: simpleRteConfig(`Submit text success ${tenant.toUpperCase()}`),
+        text: simpleRteConfig('Submit text success'),
         title: simpleRteConfig(`Submit title success ${tenant.toUpperCase()}`),
       },
-      subtitle: simpleRteConfig(`Subtitle for contact Form ${tenant.toUpperCase()}`),
+      subtitle: simpleRteConfig('Subtitle for contact Form'),
       tenant: tenantId,
       title: simpleRteConfig(`Contact Form ${tenant.toUpperCase()}`),
     },
@@ -548,16 +547,22 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         actionText: 'Erneut senden',
         email: {
           fieldError: simpleRteConfig('Bitte geben Sie die E-Mail Adresse an.'),
-          fieldWidth: 'half',
+          fieldWidth: 'full',
           label: simpleRteConfig('E-Mail'),
           placeholder: 'Ihre E-Mail Adresse',
         },
-        includeLanguageSelection: 'yes',
-        name: {
-          fieldError: simpleRteConfig('Bitte geben Sie Ihren Namen an.'),
+        firstName: {
+          fieldError: simpleRteConfig('Bitte geben Sie Ihren Vornamen an.'),
           fieldWidth: 'half',
-          label: simpleRteConfig('Name'),
-          placeholder: 'Ihr Name',
+          label: simpleRteConfig('Vorname'),
+          placeholder: 'Ihr Vorname',
+        },
+        includeLanguageSelection: 'yes',
+        lastName: {
+          fieldError: simpleRteConfig('Bitte geben Sie Ihren Nachnamen an.'),
+          fieldWidth: 'half',
+          label: simpleRteConfig('Nachname'),
+          placeholder: 'Ihr Nachname',
         },
       },
       recipientMail: 'delivered@resend.dev',
@@ -627,12 +632,10 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         // },
         {
           blockType: 'eventsTeasersBlock',
-          linkText: simpleRteConfig('Alle events'),
           title: simpleRteConfig('Events'),
         },
         {
           blockType: 'newsTeasersBlock',
-          linkText: simpleRteConfig('Alle News'),
           title: simpleRteConfig('News'),
         },
         {
@@ -819,8 +822,10 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         title: simpleRteConfig(`Detail page title ${tenant.toUpperCase()}`),
       },
       navigationTitle: 'Detail Page',
+      slug: `detail-page-title-${tenant.toLocaleLowerCase()}`,
       tenant: tenantId,
     },
+    draft: false,
   });
 
   // create draft detail page
@@ -833,8 +838,10 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         lead: simpleRteConfig('DRAFT Detail Page Lead'),
         title: simpleRteConfig(`DRAFT Detail page title ${tenant.toUpperCase()}`),
       },
+      slug: `draft-detail-page-title-${tenant.toLocaleLowerCase()}`,
       tenant: tenantId,
     },
+    draft: true,
   });
 
   // create overview page
@@ -847,9 +854,11 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         lead: simpleRteConfig('Overview Page Lead'),
         title: simpleRteConfig(`Overview page title ${tenant.toUpperCase()}`),
       },
-      navigationTitle: 'Overview Page',
+      navigationTitle: `Overview page title ${tenant.toUpperCase()}`,
+      slug: `overview-page-title-${tenant.toLowerCase()}`,
       tenant: tenantId,
     },
+    draft: false,
   });
 
   // create overview page with news overview block
@@ -869,8 +878,10 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         title: simpleRteConfig(`News Overview ${tenant.toUpperCase()}`),
       },
       navigationTitle: 'News',
+      slug: `overview-page-with-news-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
     },
+    draft: false,
   });
 
   // create overview page with events overview block
@@ -890,8 +901,10 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         title: simpleRteConfig(`Events Overview ${tenant.toUpperCase()}`),
       },
       navigationTitle: 'Events',
+      slug: `overview-page-with-events-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
     },
+    draft: false,
   });
 
   // create overview page with editions overview block
@@ -914,6 +927,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
                 title: simpleRteConfig(`Edition ${index}`),
               };
             }),
+            linkText: simpleRteConfig('foo'),
           },
         },
       ],
@@ -922,6 +936,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         title: simpleRteConfig('Editions overview'),
       },
       navigationTitle: 'Editionen',
+      slug: `editions-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
     },
   });
@@ -942,6 +957,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         title: simpleRteConfig('Institutes overview'),
       },
       navigationTitle: 'Institutes',
+      slug: `institutes-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
     },
   });
@@ -961,6 +977,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         title: simpleRteConfig('Magazine overview'),
       },
       navigationTitle: 'Magazine overview',
+      slug: `magazine-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
     },
   });
@@ -981,6 +998,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         title: simpleRteConfig('National Dictionaries overview'),
       },
       navigationTitle: 'National Dictionaries overview',
+      slug: `national-dictionaries-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
     },
   });
@@ -1027,6 +1045,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         title: simpleRteConfig('Network overview'),
       },
       navigationTitle: 'Network overview',
+      slug: `network-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
     },
   });
@@ -1047,6 +1066,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         title: simpleRteConfig('People overview'),
       },
       navigationTitle: 'People overview',
+      slug: `people-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
     },
   });
@@ -1066,6 +1086,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         title: simpleRteConfig('Projects overview'),
       },
       navigationTitle: 'Projects overview',
+      slug: `projects-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
     },
   });
@@ -1116,12 +1137,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         {
           alignement: 'vertical',
           blockType: 'projectsTeasersBlock',
-          internalLink: {
-            documentId: eventsOverview.id,
-            slug: 'overviewPage',
-          },
           lead: simpleRteConfig('Lead'),
-          linkText: simpleRteConfig('Link'),
           title: simpleRteConfig('Project Teaser'),
         },
 
@@ -1137,12 +1153,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         {
           alignement: 'horizontal',
           blockType: 'magazineTeasersBlock',
-          internalLink: {
-            documentId: eventsOverview.id,
-            slug: 'overviewPage',
-          },
           lead: simpleRteConfig('Lead'),
-          linkText: simpleRteConfig('Link'),
           title: simpleRteConfig('Magazine Teaser'),
         },
       ],
@@ -1152,8 +1163,10 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         title: simpleRteConfig(`Overview page with Teasers ${tenant.toUpperCase()}`),
       },
       navigationTitle: 'Teasers Overview',
+      slug: `teasers-overview-page-${tenant.toLowerCase()}`,
       tenant: tenantId,
     },
+    draft: false,
   });
 
   // create magazine detail pages
@@ -1187,6 +1200,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         overviewPageProps: {
           teaserText: simpleRteConfig('Magazine Detail Teaser Text'),
         },
+        slug: `magazine-detail-page-${tenant.toLowerCase()}-${index}`,
         tenant: tenantId,
       },
     });
@@ -1268,8 +1282,10 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           slug: 'overviewPage',
         },
         showDetailPage: 'true',
+        slug: `event-${index}-details-title-${tenant.toLocaleLowerCase()}-render-detail-page`,
         tenant: tenantId,
       },
+      draft: false,
     });
   }));
 
@@ -1300,8 +1316,10 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           slug: 'overviewPage',
         },
         showDetailPage: 'false',
+        slug: `event-${index}-details-title-${tenant.toLocaleLowerCase()}-render-link`,
         tenant: tenantId,
       },
+      draft: false,
     });
   }));
 
@@ -1332,8 +1350,10 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           slug: 'overviewPage',
         },
         project: project.id,
+        slug: `news-${index}-detail-page-title-${tenant.toLowerCase()}`,
         tenant: tenantId,
       },
+      draft: false,
     });
   }));
 
@@ -1361,6 +1381,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           date: '2025-08-31T12:00:00.000Z',
           image,
         },
+        slug: `publication-detail-page-title-${tenant.toLowerCase()}-${index}`,
         tenant: tenantId,
       },
     });
@@ -1386,6 +1407,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           image,
           teaserText: simpleRteConfig(`Institute Teaser Text ${index}`),
         },
+        slug: `institute-detail-page-title-${tenant.toUpperCase()}-${index}`,
         tenant: tenantId,
       },
     });
@@ -1406,11 +1428,12 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           lead: simpleRteConfig('National Dictionary Detail Page Lead'),
           title: simpleRteConfig(`National Dictionary detail page ${index} title ${tenant.toUpperCase()}`),
         },
-        navigationTitle: 'National Dictionary Detail',
+        navigationTitle: `National Dictionary Detail ${index}`,
         overviewPageProps: {
           image,
           teaserText: simpleRteConfig('National Dictionary Teaser Text'),
         },
+        slug: `national-dictionary-detail-${index}-${tenant.toLowerCase()}`,
         tenant: tenantId,
       },
     });
@@ -1437,6 +1460,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           teaserText: simpleRteConfig('Project Teaser Text'),
         },
         project,
+        slug: `project-detail-page-title${tenant.toLowerCase()}-${index}`,
         tenant: tenantId,
       },
     });

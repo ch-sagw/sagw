@@ -46,7 +46,7 @@ test.describe('NonBreakingSpace', () => {
   });
 
   test('has correct api payload', async () => {
-    const detailPagesRes = await fetch('http://localhost:3000/api/detailPage?where[slug][equals]=detailpagetitle-non-breaking-space-bar');
+    const detailPagesRes = await fetch('http://localhost:3000/api/detailPage?where[slug][equals]=detailpagetitle-non-breaking-spacebar');
     const detailPagesData = await detailPagesRes.json();
 
     await expect(detailPagesData.docs.length)

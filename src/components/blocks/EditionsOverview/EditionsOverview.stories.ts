@@ -47,6 +47,7 @@ export const Overview: StrictStory = {
           title: simpleRteConfig(`Edition ${index}`),
         };
       }),
+      linkText: simpleRteConfig('some link'),
     },
     language: 'de',
   },

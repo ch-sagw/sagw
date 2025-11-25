@@ -41,6 +41,7 @@ export const NewsDetailPage: CollectionConfig = {
       '_status',
     ],
     group: 'Pages',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [

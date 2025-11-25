@@ -41,7 +41,8 @@
     "lint": "npm run lint:js && npm run lint:scss",
     "commitlint": "commitlint --edit",
     "prepare": "husky",
-    "orphaned:screenshots": "tsx ./src/automated-testing/orphanedScreenshots.ts"
+    "orphaned:screenshots": "tsx ./src/automated-testing/orphanedScreenshots.ts",
+    "type-check": "tsc"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "^3.64.0",

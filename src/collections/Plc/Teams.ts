@@ -8,6 +8,7 @@ export const Teams: CollectionConfig = {
     defaultColumns: ['name'],
     description: 'You can assign People to teams.',
     group: 'Global Content',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: 'name',
   },
   fields: [

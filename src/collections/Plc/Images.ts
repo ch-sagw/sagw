@@ -6,6 +6,7 @@ export const Images: CollectionConfig = {
   admin: {
     description: 'Allowed image formats: png, jpg, jpeg, gif, webp, avif, tiff',
     group: 'Assets',
+    hideAPIURL: process.env.ENV === 'prod',
   },
   fields: [
     {

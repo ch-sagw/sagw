@@ -53,7 +53,7 @@ test.describe('Slug field', () => {
     const slugField = await page.locator('#field-slug');
 
     await expect(slugField)
-      .toHaveValue('sample-detail-page-dollarname-ueoeae-hyphensupsub');
+      .toHaveValue('sample-detail-page-name-hyphensupsub');
 
   });
 
@@ -66,16 +66,21 @@ test.describe('Slug field', () => {
     const heroField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
       .nth(0);
 
-    await heroField.fill('Sample Detail. Page. $name üöä hyphensupsub');
+    await heroField.fill('sample-detail-page-name-hyphensupsub');
 
     // save
     const saveButton = await page.getByRole('button', {
       name: 'Publish changes',
     });
 
+    const slugInput = await page.locator('#field-slug');
+
+    await expect(slugInput)
+      .toHaveValue('sample-detail-page-name-hyphensupsub');
+
     await saveButton.click();
 
-    const errorToast = await page.getByText('Slug "sample-detail-page-dollarname-ueoeae-hyphensupsub" already exists in this tenant');
+    const errorToast = await page.getByText('The following field is invalid: slug');
 
     await expect(errorToast)
       .toBeVisible();
@@ -101,6 +106,11 @@ test.describe('Slug field', () => {
     const saveButton = await page.getByRole('button', {
       name: 'Publish changes',
     });
+
+    const slugInput = await page.locator('#field-slug');
+
+    await expect(slugInput)
+      .toHaveValue('detail-page-title-not-sagw');
 
     await saveButton.click();
 

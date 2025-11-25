@@ -7,6 +7,7 @@ export const People: CollectionConfig = {
   access: globalContentAccessGeneric,
   admin: {
     group: 'Global Content',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: 'fullName',
   },
   fields: [

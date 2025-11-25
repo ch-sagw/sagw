@@ -42,10 +42,11 @@ const overviewBlocks = [
   InstitutesOverviewBlock,
   ProjectOverviewBlock,
   EditionsOverviewBlock,
+  NetworkTeasersBlock,
 ] as const;
 
 // Export overview block slugs for filtering
-export const OVERVIEW_BLOCK_TYPES = overviewBlocks.map((block) => block.slug) as string[];
+export const OVERVIEW_BLOCK_TYPES = overviewBlocks.map((block) => block.slug) as BlockSlug[];
 
 const availableBlocksConst = [
   TextBlock,
@@ -58,7 +59,6 @@ const availableBlocksConst = [
   CtaContactBlock,
   CtaLinkBlock,
   HomeTeasersBlock,
-  NetworkTeasersBlock,
   GenericTeasersBlock,
   NotificationBlock,
   BibliographicReferenceBlock,

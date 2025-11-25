@@ -7,6 +7,7 @@ export const PublicationTopics: CollectionConfig = {
   admin: {
     defaultColumns: ['publicationTopic'],
     group: 'Global Content',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: 'publicationTopic',
   },
   fields: [

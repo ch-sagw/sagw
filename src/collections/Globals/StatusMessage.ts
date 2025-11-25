@@ -11,6 +11,7 @@ export const StatusMessage: CollectionConfig = {
   access: globalContentAccessGeneric,
   admin: {
     group: 'Global Content',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [

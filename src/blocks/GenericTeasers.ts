@@ -37,7 +37,7 @@ export const GenericTeasersBlock = {
     rte1({
       name: 'title',
     }),
-    rte1({
+    rte2({
       name: 'lead',
       notRequired: true,
     }),
@@ -45,6 +45,7 @@ export const GenericTeasersBlock = {
     {
       access: fieldAccessNonLocalizableField,
       fields: TeaserItem,
+      maxRows: 3,
       name: 'teasers',
       required: true,
       type: 'array',

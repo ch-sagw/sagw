@@ -2,16 +2,16 @@ import {
   Block, Field,
 } from 'payload';
 import { fieldsLinkExternal } from '@/field-templates/links';
-import { rte1 } from '@/field-templates/rte';
+import { rte2 } from '@/field-templates/rte';
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 // Example: Editions Overview
 
 const editionItem: Field[] = [
-  rte1({
+  rte2({
     name: 'title',
   }),
-  rte1({
+  rte2({
     name: 'text',
   }),
   ...fieldsLinkExternal({
@@ -26,6 +26,9 @@ export const EditionsOverviewBlock = {
   fields: [
     {
       fields: [
+        rte2({
+          name: 'linkText',
+        }),
         {
           access: fieldAccessNonLocalizableField,
           fields: editionItem,

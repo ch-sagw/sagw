@@ -21,8 +21,7 @@ export const MagazineTeaserComponent = ({
   title,
   lead,
   alignement,
-  linkText,
-  internalLink,
+  optionalLink,
   pages,
   pageLanguage,
 }: InterfaceMagazineTeaserComponentPropTypes): React.JSX.Element => (
@@ -34,19 +33,19 @@ export const MagazineTeaserComponent = ({
       colorMode='white'
       fullBleed={alignement === 'vertical'}
     >
-      {linkText && internalLink &&
+      {optionalLink && optionalLink.includeLink && optionalLink.link?.internalLink && optionalLink.link?.linkText &&
         <Button
           className={styles.link}
           element='link'
           style='text'
           colorMode='white'
-          text={rteToHtml(linkText)}
+          text={rteToHtml(optionalLink.link?.linkText)}
           pageLanguage={pageLanguage}
           iconInlineStart={'arrowRight' as keyof typeof Icon}
           isActive={true}
 
           // TODO: generate proper url
-          href={`${internalLink.slug}/${internalLink.documentId}`}
+          href={`${optionalLink.link?.internalLink.slug}/${optionalLink.link?.internalLink.documentId}`}
         />
       }
     </Section>

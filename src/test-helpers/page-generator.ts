@@ -10,6 +10,7 @@ import {
 
 import configPromise from '@/payload.config';
 import { getTenant } from '@/app/providers/TenantProvider.server';
+import slugify from 'slugify';
 
 interface InterfacePageProps {
   title: string;
@@ -47,8 +48,14 @@ const generatePage = async ({
       },
       navigationTitle,
       parentPage,
+      slug: slugify(title, {
+        lower: true,
+        strict: true,
+        trim: true,
+      }),
       tenant,
     },
+    draft: false,
   });
 
   return document;
@@ -110,8 +117,14 @@ export const generateEventDetailPage = async (props: InterfacePageProps): Promis
       navigationTitle: props.navigationTitle,
       parentPage: props.parentPage,
       showDetailPage: 'true',
+      slug: slugify(props.title, {
+        lower: true,
+        strict: true,
+        trim: true,
+      }),
       tenant,
     },
+    draft: false,
   });
 
   return document;
@@ -150,8 +163,14 @@ export const generateInstituteDetailPage = async (props: InterfacePageProps): Pr
         teaserText: simpleRteConfig('some text'),
       },
       parentPage: props.parentPage,
+      slug: slugify(props.title, {
+        lower: true,
+        strict: true,
+        trim: true,
+      }),
       tenant,
     },
+    draft: false,
   });
 
   return document;
@@ -182,8 +201,14 @@ export const generateMagazineDetailPage = async (props: InterfacePageProps): Pro
         teaserText: simpleRteConfig('some text'),
       },
       parentPage: props.parentPage,
+      slug: slugify(props.title, {
+        lower: true,
+        strict: true,
+        trim: true,
+      }),
       tenant,
     },
+    draft: false,
   });
 
   return document;
@@ -212,8 +237,14 @@ export const generateNationalDictionaryDetailPage = async (props: InterfacePageP
         teaserText: simpleRteConfig('some text'),
       },
       parentPage: props.parentPage,
+      slug: slugify(props.title, {
+        lower: true,
+        strict: true,
+        trim: true,
+      }),
       tenant,
     },
+    draft: false,
   });
 
   return document;
@@ -243,8 +274,14 @@ export const generateNewsDetailPage = async (props: InterfacePageProps): Promise
         teaserText: simpleRteConfig('some text'),
       },
       parentPage: props.parentPage,
+      slug: slugify(props.title, {
+        lower: true,
+        strict: true,
+        trim: true,
+      }),
       tenant,
     },
+    draft: false,
   });
 
   return document;
@@ -285,8 +322,14 @@ export const generateProjectDetailPage = async (props: InterfacePageProps): Prom
       },
       parentPage: props.parentPage,
       project: project.id,
+      slug: slugify(props.title, {
+        lower: true,
+        strict: true,
+        trim: true,
+      }),
       tenant,
     },
+    draft: false,
   });
 
   return document;
@@ -325,8 +368,14 @@ export const generatePublicationDetailPage = async (props: InterfacePageProps): 
         image: image.id,
       },
       parentPage: props.parentPage,
+      slug: slugify(props.title, {
+        lower: true,
+        strict: true,
+        trim: true,
+      }),
       tenant,
     },
+    draft: false,
   });
 
   return document;
