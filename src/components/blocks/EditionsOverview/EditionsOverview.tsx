@@ -25,6 +25,7 @@ export const EditionsOverview = ({
       links={[
         {
           href: item.externalLink,
+          text: rteToHtml(items.linkText),
           type: 'external',
         },
       ]}
