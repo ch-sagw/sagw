@@ -397,7 +397,7 @@ test.describe('can publish pages', () => {
           },
           navigationTitle: 'Detail Page',
           slug: `detail-page-title-${(new Date())
-            .toString()}1`,
+            .toString()}41`,
           tenant,
         },
         overrideAccess: false,
@@ -457,7 +457,7 @@ test.describe('can publish pages', () => {
           },
           navigationTitle: 'Detail Page',
           slug: `detail-page-title-${(new Date())
-            .toString()}2`,
+            .toString()}42`,
           tenant,
         },
         overrideAccess: false,
@@ -510,7 +510,7 @@ test.describe('can publish pages', () => {
           },
           navigationTitle: 'Detail Page',
           slug: `detail-page-title-${(new Date())
-            .toString()}3`,
+            .toString()}43`,
           tenant,
         },
         overrideAccess: false,
