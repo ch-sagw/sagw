@@ -30,4 +30,6 @@
 
 .consentMessageText {
   @include body-text-s;
+
+  text-wrap: pretty;
 }

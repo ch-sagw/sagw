@@ -5,10 +5,7 @@ import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { Image } from '@/components/base/Image/Image';
 
-import {
-  Image as InterfaceImage,
-  InterfaceImageBlock,
-} from '@/payload-types';
+import { InterfaceImageBlock } from '@/payload-types';
 
 const classes = cva([styles.figure], {
   variants: {
@@ -20,26 +17,17 @@ const classes = cva([styles.figure], {
   },
 });
 
-export type InterfaceImageBlockPropTypes = {
-  host: string;
-  image: InterfaceImage;
-} & InterfaceImageBlock;
-
 export const ImageBlock = ({
   alignment,
   caption,
   credits,
   image,
-  host,
-}: InterfaceImageBlockPropTypes): React.JSX.Element => {
+}: InterfaceImageBlock): React.JSX.Element | undefined => {
 
-  if (!host) {
-    throw new Error('ImageBlock component requires a valid host prop');
+  // only handle objects
+  if (typeof image !== 'object') {
+    return undefined;
   }
-
-  const focalPointX = (image.focalX ?? 50) / 100;
-  const focalPointY = (image.focalY ?? 50) / 100;
-  const imageUrl = host + image.url;
 
   return (
     <figure
@@ -52,11 +40,12 @@ export const ImageBlock = ({
           ? (
             <Image
               alt={image.alt}
-              focalPointX={focalPointX}
-              focalPointY={focalPointY}
+              filename={image.filename ?? ''}
+              focalX={image.focalX ?? undefined}
+              focalY={image.focalY ?? undefined}
               height={450}
               loading='lazy'
-              src={imageUrl}
+              url={image.url}
               variant='content'
               width={800}
             />

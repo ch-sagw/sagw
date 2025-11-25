@@ -13,12 +13,13 @@ type StrictStory = StoryObj<typeof Image> & {
 
 const defaultArgs: ImageProps = {
   alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
-  focalPointX: 0.5,
-  focalPointY: 0.45,
+  filename: '20071445109_e1a2b79633_6k.jpg',
+  focalX: 50,
+  focalY: 45,
   height: 450,
   loading: 'lazy',
   performanceMark: '',
-  src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
+  url: '/api/images/file/20071445109_e1a2b79633_6k.jpg',
   variant: 'content',
   width: 800,
 };
@@ -55,13 +56,8 @@ export const ContentImageFull: StrictStory = {
 
 export const GenericTeaser: StrictStory = {
   args: {
-    alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
-    focalPointX: 0.5,
-    focalPointY: 0.45,
+    ...defaultArgs,
     height: 300,
-    loading: 'lazy',
-    performanceMark: '',
-    src: 'https://sagw-nu.gumlet.io/api/images/file/20071445109_e1a2b79633_6k.jpg',
     variant: 'genericTeaser',
     width: 400,
   },

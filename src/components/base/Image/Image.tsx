@@ -2,9 +2,8 @@
 'use client';
 
 import React, {
-  useCallback,
-  useEffect,
   useRef,
+  useState,
 } from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/Image/Image.module.scss';
@@ -17,43 +16,49 @@ import { ImageVariant } from '@/components/base/types/imageVariant';
 export type InterfaceImagePropTypes = {
   alt: string;
   classes?: string;
-  focalPointX: number,
-  focalPointY: number,
+  filename: string,
+  focalX?: number,
+  focalY?: number,
   height: number;
   loading: 'lazy' | 'eager';
   params?: string,
   performanceMark?: string;
   priority?: boolean;
-  src: string;
+  url: string;
   variant: ImageVariant;
   width: number;
 };
 
 export const Image = ({
   alt,
-  focalPointX,
-  focalPointY,
+  filename,
+  focalX,
+  focalY,
   height,
   loading,
   performanceMark,
-  src,
+  url,
   variant,
   width,
 }: InterfaceImagePropTypes): React.JSX.Element => {
-  const classes = cva([styles.image], {
-    variants: {
-      variant: {
-        content: [styles.content],
-        contentFull: [styles.contentFull],
-        genericTeaser: [styles.genericTeaser],
-        hero: [styles.hero],
-        logoTeaser: [styles.logoTeaser],
-        portrait: [styles.portrait],
-        portraitCta: [styles.portraitCta],
-        publicationTeaser: [styles.publicationTeaser],
-      },
-    },
-  });
+  const [
+    loaded,
+    setLoaded,
+  ] = useState(false);
+
+  const focalPointX = (focalX ?? 50) / 100;
+  const focalPointY = (focalY ?? 50) / 100;
+
+  const host = process.env.NEXT_PUBLIC_GUMLET_URL ?? '';
+
+  let src = host + url;
+
+  // Since sagw-blob-local is not mapped to
+  // a vercel subdomain, we directly access
+  // the file without additional file path.
+  if (process.env.NODE_ENV === 'development') {
+    src = `${host}/${filename}`;
+  }
 
   const params = `fm=auto&mode=crop&crop=focalpoint&fp-x=${focalPointX}&fp-y=${focalPointY}`;
 
@@ -69,31 +74,11 @@ export const Image = ({
   // and performance mark, if defined
   const imgRef = useRef<HTMLImageElement | null>(null);
 
-  const markLoaded = useCallback((): void => {
+  const handleLoad = (): void => {
     if (!imgRef.current) {
       return;
     }
 
-    const img = imgRef.current;
-
-    requestAnimationFrame(() => {
-      if (!img) {
-        return;
-      }
-
-      img.classList.add(styles.loaded);
-
-      if (performanceMark) {
-        performance.mark(performanceMark);
-      }
-    });
-  }, [performanceMark]);
-
-  const handleLoad = (): void => {
-    markLoaded();
-  };
-
-  useEffect(() => {
     const img = imgRef.current;
 
     if (!img) {
@@ -101,15 +86,37 @@ export const Image = ({
     }
 
     if (img.complete && img.naturalWidth !== 0) {
-      setTimeout(() => {
-        markLoaded();
-      }, 300);
+      setLoaded(true);
+
+      if (performanceMark) {
+        performance.mark(performanceMark);
+      }
     }
-  }, [markLoaded]);
+  };
 
   const fetchPriority = loading === 'eager'
     ? 'high'
     : 'low';
+
+  const classes = cva([
+    styles.image,
+    loaded
+      ? styles.loaded
+      : undefined,
+  ], {
+    variants: {
+      variant: {
+        content: [styles.content],
+        contentFull: [styles.contentFull],
+        genericTeaser: [styles.genericTeaser],
+        hero: [styles.hero],
+        logoTeaser: [styles.logoTeaser],
+        portrait: [styles.portrait],
+        portraitCta: [styles.portraitCta],
+        publicationTeaser: [styles.publicationTeaser],
+      },
+    },
+  });
 
   return (
     <>
