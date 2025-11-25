@@ -1,4 +1,9 @@
 import { test } from '@playwright/test';
+import {
+  getPayload, Payload,
+} from 'payload';
+import configPromise from '@/payload.config';
+import { User } from '@/payload-types';
 
 export const beforeEachPayloadLogin = (): void => {
   test.beforeEach(async ({
@@ -10,4 +15,59 @@ export const beforeEachPayloadLogin = (): void => {
 
     await page.waitForFunction('document.cookie.includes(\'payload-tenant\')');
   });
+};
+
+interface InterfaceExplicitRoleLoginReturn {
+  payload: Payload;
+  user: User & { collection: 'users'; };
+  tenant: string;
+}
+
+export const explicitRoleLogin = async (type: 'sagw-admin' | 'fg-admin' | 'editor' | 'translator'): Promise<InterfaceExplicitRoleLoginReturn> => {
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  let email;
+  let password;
+
+  if (type === 'sagw-admin') {
+    email = process.env.USER_SAGW_ADMIN_MAIL;
+    password = process.env.USER_SAGW_ADMIN_PASS;
+  } else if (type === 'fg-admin') {
+    email = process.env.USER_FG_ADMIN_MAIL;
+    password = process.env.USER_FG_ADMIN_PASS;
+  } else if (type === 'editor') {
+    email = process.env.USER_MAGAZINE_EDITOR_MAIL;
+    password = process.env.USER_MAGAZINE_EDITOR_PASS;
+  } else if (type === 'translator') {
+    email = process.env.USER_TRANSLATOR_MAIL;
+    password = process.env.USER_TRANSLATOR_PASS;
+  }
+
+  if (!email || !password) {
+    throw new Error('No login credentials');
+  }
+
+  const {
+    user,
+  } = await payload.login({
+    collection: 'users',
+    data: {
+      email,
+      password,
+    },
+  });
+
+  const tenant = user.tenants?.[0]?.tenant;
+
+  if (!tenant || typeof tenant !== 'string') {
+    throw new Error('User has no tenant');
+  }
+
+  return {
+    payload,
+    tenant,
+    user,
+  };
 };
