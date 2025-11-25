@@ -17,7 +17,8 @@
     column-gap: px-to-rem(var(--grid-gutter));
 
     > h2:first-child,
-    > h3:first-child {
+    > h3:first-child,
+    .additionalStickyContent {
       position: sticky;
       will-change: transform;
       top: px-to-rem(calc(var(--sticky-offset-top) + var(--grid-gutter)));

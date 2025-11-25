@@ -156,10 +156,20 @@ test.describe('Tenants only show content from users tenant', () => {
     await page.goto('http://localhost:3000/admin/collections/publicationDetailPage');
     await page.waitForLoadState('networkidle');
 
-    const expectedPublication = await page.getByText('Publication detail page title SAGW', {
+    // show all entries
+    const perPageButton = await page.locator('.page-controls .per-page');
+
+    await perPageButton.click();
+
+    const entries100 = await page.locator('.page-controls .popup__content')
+      .getByText('100');
+
+    await entries100.click();
+
+    const expectedPublication = await page.getByText('Publication detail page 1 SAGW', {
       exact: true,
     });
-    const notExpectedPublication = await page.getByText('Publication detail page title NOTSAGW', {
+    const notExpectedPublication = await page.getByText('Publication detail page 1 NOTSAGW', {
       exact: true,
     });
 

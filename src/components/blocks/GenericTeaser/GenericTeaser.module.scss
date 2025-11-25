@@ -1,0 +1,13 @@
+@use "../../../styles/mixins/mixins-shared-styles" as *;
+
+.section.section {
+  padding-block-end: 0;
+}
+
+.list {
+  @include full-bleed-teaser-list;
+}
+
+.item {
+  @include full-bleed-teaser-item;
+}
