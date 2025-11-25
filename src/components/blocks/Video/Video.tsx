@@ -16,7 +16,6 @@ import { GumletPlayer } from '@gumlet/react-embed-player';
 import { i18nA11y } from '@/i18n/content';
 import {
   Config,
-  Image as InterfaceImage,
   Video as InterfaceVideo,
   InterfaceVideoBlock,
 } from '@/payload-types';
@@ -28,8 +27,6 @@ import {
 
 export type InterfaceVideoPropTypes = {
   duration?: string,
-  stillImage: InterfaceImage,
-  stillImageHost: string,
   pageLanguage: Config['locale'],
 } & InterfaceVideoBlock;
 
@@ -50,7 +47,6 @@ export const Video = ({
   duration,
   pageLanguage,
   stillImage,
-  stillImageHost,
   'video-de': videoDe,
   'video-en': videoEn,
   'video-fr': videoFr,
@@ -186,7 +182,6 @@ export const Video = ({
             alignment={alignment}
             caption={caption}
             credits={credits}
-            host={stillImageHost}
             image={stillImage}
           />
         </div>

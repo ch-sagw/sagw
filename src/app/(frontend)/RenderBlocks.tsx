@@ -247,7 +247,6 @@ export const RenderBlocks = ({
                   <ImageBlock
                     {...block}
                     image={(block as InterfaceImageBlock).image as any}
-                    host={process.env.GUMLET_URL ?? ''}
                   />
                 </div>
               );
@@ -259,7 +258,6 @@ export const RenderBlocks = ({
                   <Video
                     {...(block as any)}
                     pageLanguage={pageLanguage}
-                    stillImageHost={process.env.GUMLET_URL ?? ''}
                     stillImage={(block as InterfaceVideoBlock).stillImage as any}
                   />
                 </div>
