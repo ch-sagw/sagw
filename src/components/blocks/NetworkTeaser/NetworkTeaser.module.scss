@@ -12,7 +12,3 @@
 .item {
   @include full-bleed-teaser-item-ultra;
 }
-
-.pagination {
-  padding-inline: px-to-rem(var(--grid-margin));
-}

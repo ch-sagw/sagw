@@ -146,7 +146,7 @@ export const GenericTeaser = ({
         }
 
         <SafeHtml
-          as='p'
+          as='h3'
           html={title}
           className={styles.title}
         />

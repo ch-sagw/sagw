@@ -45,7 +45,7 @@ $mq-media-type: all !default;
   // From: this breakpoint (inclusive)
   @if $from {
     @if meta.type-of($from) == number {
-      $min-width: mq-px2rem($from);
+      $min-width: mq-px2rem($from, 0);
     } @else {
       $min-width: mq-px2rem(mq-get-breakpoint-width($from, $breakpoints), 0);
     }
@@ -54,7 +54,7 @@ $mq-media-type: all !default;
   // Until: that breakpoint (exclusive)
   @if $to {
     @if meta.type-of($to) == number {
-      $max-width: mq-px2rem($to);
+      $max-width: mq-px2rem($to, -1);
     } @else {
       $max-width: mq-px2rem(mq-get-breakpoint-width($to, $breakpoints), -1);
     }
