@@ -3338,7 +3338,7 @@ test.describe('can create forms', () => {
           ],
           isNewsletterForm: 'custom',
           mailSubject: 'Form submission on SAGW',
-          recipientMail: 'delivered@resend.dev',
+          recipientMail: 'foo@bar.com',
           showPrivacyCheckbox: false,
           submitButtonLabel: 'Abschicken',
           submitError: {
@@ -3391,7 +3391,7 @@ test.describe('can create forms', () => {
           ],
           isNewsletterForm: 'custom',
           mailSubject: 'Form submission on SAGW',
-          recipientMail: 'delivered@resend.dev',
+          recipientMail: 'foo@bar.com',
           showPrivacyCheckbox: false,
           submitButtonLabel: 'Abschicken',
           submitError: {
@@ -3507,6 +3507,9 @@ test.describe('can delete forms', () => {
       const foundItems = await payload.find({
         collection: 'forms',
         where: {
+          recipientMail: {
+            equals: 'foo@bar.com',
+          },
           tenant: {
             equals: tenant,
           },
@@ -3540,6 +3543,9 @@ test.describe('can delete forms', () => {
       const foundItems = await payload.find({
         collection: 'forms',
         where: {
+          recipientMail: {
+            equals: 'foo@bar.com',
+          },
           tenant: {
             equals: tenant,
           },
