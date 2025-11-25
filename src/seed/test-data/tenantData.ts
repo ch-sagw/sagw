@@ -854,7 +854,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         lead: simpleRteConfig('Overview Page Lead'),
         title: simpleRteConfig(`Overview page title ${tenant.toUpperCase()}`),
       },
-      navigationTitle: 'Overview Page',
+      navigationTitle: `Overview page title ${tenant.toUpperCase()}`,
       slug: `overview-page-title-${tenant.toLowerCase()}`,
       tenant: tenantId,
     },
