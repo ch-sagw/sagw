@@ -50,6 +50,7 @@ const samplePage: MagazineDetailPage = {
   overviewPageProps: {
     teaserText: simpleRteConfig('Zur Kultur der Bookishness in der Erlebnisgesellschaft'),
   },
+  slug: 'slug',
   tenant: '1',
   updatedAt: '2025-11-19T11:29:09.521Z',
 };
@@ -57,12 +58,17 @@ const samplePage: MagazineDetailPage = {
 const defaultArgs: MagazineTeaserProps = {
   alignement: 'horizontal',
   blockType: 'magazineTeasersBlock',
-  internalLink: {
-    documentId: '1234',
-    slug: 'projectDetailPage',
-  },
   lead: simpleRteConfig('Ausgewählte Artikel aus dem SAGW-Bulletin vertiefen aktuelle Themen aus den Geistes- und Sozialwissenschaften.'),
-  linkText: simpleRteConfig('Alle Artikel anzeigen'),
+  optionalLink: {
+    includeLink: true,
+    link: {
+      internalLink: {
+        documentId: '1234',
+        slug: 'projectDetailPage',
+      },
+      linkText: simpleRteConfig('Alle Artikel anzeigen'),
+    },
+  },
   pageLanguage: 'de',
   pages: [
     {

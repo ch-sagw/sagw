@@ -27,6 +27,7 @@ const teaserBlock: ProjectDetailPage = {
     teaserText: simpleRteConfig('Ab 2021 hat die Akademie zudem die Förderzuständigkeit für acht längerfristige Editionen vom SNF übernommen. '),
   },
   project: '1',
+  slug: 'slug',
   tenant: '1',
   updatedAt: '2025-11-19T11:29:09.521Z',
 };
@@ -49,12 +50,17 @@ export default meta;
 const defaultArgs: ProjectsTeaserProps = {
   alignement: 'horizontal',
   blockType: 'projectsTeasersBlock',
-  internalLink: {
-    documentId: '1',
-    slug: 'OverviewPage',
-  },
   lead: simpleRteConfig('Projekte mit gesellschaftlicher Relevanz an der Schnittstelle von Wissenschaft und Öffentlichkeit.'),
-  linkText: simpleRteConfig('Alle Projekte'),
+  optionalLink: {
+    includeLink: true,
+    link: {
+      internalLink: {
+        documentId: '1234',
+        slug: 'projectDetailPage',
+      },
+      linkText: simpleRteConfig('Alle Artikel anzeigen'),
+    },
+  },
   pageLanguage: 'de',
   pages: [
     {
