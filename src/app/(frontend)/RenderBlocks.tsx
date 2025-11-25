@@ -10,6 +10,7 @@ import {
   InterfaceCtaContactBlock,
   InterfaceCtaLinkBlock,
   InterfaceDownloadsBlock,
+  InterfaceEditionsOverviewBlock,
   InterfaceEventsOverviewBlock,
   InterfaceEventsTeasersBlock,
   InterfaceFootnotesBlock,
@@ -47,7 +48,17 @@ import { EventsOverview } from '@/components/blocks/EventsOverview/EventsOvervie
 import { NewsTeaser } from '@/components/blocks/NewsTeaser/NewsTeaser';
 import { EventsTeaser } from '@/components/blocks/EventsTeaser/EventsTeaser';
 import { CtaLink } from '@/components/blocks/CtaLink/CtaLink';
+import { GenericTeaser } from '@/components/blocks/GenericTeaser/GenericTeaser';
+import { MagazineTeaser } from '@/components/blocks/MagazineTeaser/MagazineTeaser';
+import { ProjectsTeaser } from '@/components/blocks/ProjectsTeaser/ProjectsTeaser';
+import { NetworkTeaser } from '@/components/blocks/NetworkTeaser/NetworkTeaser';
 import { CtaContact } from '@/components/blocks/CtaContact/CtaContact';
+import { PeopleOverview } from '@/components/blocks/PeopleOverview/PeopleOverview';
+import { InstitutesOverview } from '@/components/blocks/InstitutesOverview/InstitutesOverview';
+import { MagazineOverview } from '@/components/blocks/MagazineOverview/MagazineOverview';
+import { NationalDictionariesOverview } from '@/components/blocks/NationalDictionariesOverview/NationalDictionariesOverview';
+import { ProjectsOverview } from '@/components/blocks/ProjectsOverview/ProjectsOverview';
+import { EditionsOverview } from '@/components/blocks/EditionsOverview/EditionsOverview';
 
 // blocks interface
 interface InterfaceRenderBlocksProps {
@@ -80,7 +91,8 @@ interface InterfaceRenderBlocksProps {
     InterfacePublicationsOverviewBlock |
     InterfacePublicationsTeasersBlock |
     InterfaceTextBlock |
-    InterfaceVideoBlock
+    InterfaceVideoBlock |
+    InterfaceEditionsOverviewBlock
   )[] | null | undefined;
   i18n: I18NGlobal;
   pageLanguage: Config['locale'];
@@ -234,6 +246,122 @@ export const RenderBlocks = ({
                     {...block}
                     pageLanguage={pageLanguage}
                     buttonText={i18n.generic.writeEmailButtonText}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'projectsTeasersBlock') {
+              return (
+                <div key={block.id || index}>
+                  <ProjectsTeaser
+                    {...block}
+                    language={pageLanguage}
+                    tenant={tenantId}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'magazineTeasersBlock') {
+              return (
+                <div key={block.id || index}>
+                  <MagazineTeaser
+                    {...block}
+                    language={pageLanguage}
+                    tenant={tenantId}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'genericTeasersBlock') {
+              return (
+                <div key={block.id || index}>
+                  <GenericTeaser
+                    {...block}
+                    pageLanguage={pageLanguage}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'networkTeasersBlock') {
+              return (
+                <div key={block.id || index}>
+                  <NetworkTeaser
+                    {...block}
+                    pageLanguage={pageLanguage}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'peopleOverviewBlock') {
+              return (
+                <div key={block.id || index}>
+                  <PeopleOverview
+                    {...block}
+                    language={pageLanguage}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'institutesOverviewBlock') {
+              return (
+                <div key={block.id || index}>
+                  <InstitutesOverview
+                    {...block}
+                    language={pageLanguage}
+                    tenant={tenantId}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'magazineOverviewBlock') {
+              return (
+                <div key={block.id || index}>
+                  <MagazineOverview
+                    {...block}
+                    language={pageLanguage}
+                    tenant={tenantId}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'nationalDictionariesOverviewBlock') {
+              return (
+                <div key={block.id || index}>
+                  <NationalDictionariesOverview
+                    {...block}
+                    language={pageLanguage}
+                    tenant={tenantId}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'projectsOverviewBlock') {
+              return (
+                <div key={block.id || index}>
+                  <ProjectsOverview
+                    {...block}
+                    language={pageLanguage}
+                    tenant={tenantId}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'editionsOverview') {
+              return (
+                <div key={block.id || index}>
+                  <EditionsOverview
+                    {...block}
+                    language={pageLanguage}
                   />
                 </div>
               );
