@@ -56,7 +56,8 @@ export const Image = ({
   // Since sagw-blob-local is not mapped to
   // a vercel subdomain, we directly access
   // the file without additional file path.
-  if (process.env.NODE_ENV === 'development') {
+
+  if (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview') {
     src = `${host}/${filename}`;
   }
 
