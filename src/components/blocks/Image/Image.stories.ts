@@ -36,7 +36,7 @@ const imageConfig = {
   filename: '20071445109_e1a2b79633_6k.jpg',
   filesize: 6792756,
   focalX: 55,
-  focalY: 38,
+  focalY: 45,
   height: 4219,
   id: '691d93e9d438ebb73a571f86',
   mimeType: 'image/jpeg',

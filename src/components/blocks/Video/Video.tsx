@@ -8,7 +8,9 @@ import React, {
 } from 'react';
 import { cva } from 'cva';
 import styles from '@/components/blocks/Video/Video.module.scss';
-import { ImageBlock } from '@/components/blocks/Image/Image';
+import { rteToHtml } from '@/utilities/rteToHtml';
+import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
+import { Image } from '@/components/base/Image/Image';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
 import { VideoConsentMessage } from '@/components/base/VideoConsentMessage/VideoConsentMessage';
@@ -51,7 +53,7 @@ export const Video = ({
   'video-en': videoEn,
   'video-fr': videoFr,
   'video-it': videoIt,
-}: InterfaceVideoPropTypes): React.JSX.Element => {
+}: InterfaceVideoPropTypes): React.JSX.Element | undefined => {
 
   // Select correct video source for the current language
   // if available and fall back to german if there is no
@@ -109,7 +111,7 @@ export const Video = ({
     .replace('{{title}}', video.title);
 
   return (
-    <div
+    <figure
       className={classes({
         alignment,
       })}
@@ -176,16 +178,44 @@ export const Video = ({
             />
           </div>
         )}
-        <div className={styles.figureWrapper}>
-          <ImageBlock
-            blockType={'imageBlock'}
-            alignment={alignment}
-            caption={caption}
-            credits={credits}
-            image={stillImage}
-          />
+        <div className={styles.stillImageWrapper}>
+          {typeof stillImage === 'object' && stillImage.url
+            ? (
+              <Image
+                alt={stillImage.alt}
+                filename={stillImage.filename ?? ''}
+                focalX={stillImage.focalX ?? undefined}
+                focalY={stillImage.focalY ?? undefined}
+                height={450}
+                loading='lazy'
+                url={stillImage.url}
+                variant='content'
+                width={800}
+              />
+            )
+            : null
+          }
         </div>
       </div>
-    </div>
+      <figcaption
+        className={styles.figcaption}
+      >
+        {caption && (
+          <SafeHtml
+            as='span'
+            className={styles.caption}
+            html={rteToHtml(caption)}
+          />
+        )}
+        <span
+          className={styles.credits}
+        >
+              © <SafeHtml
+            as='span'
+            html={rteToHtml(credits)}
+          />
+        </span>
+      </figcaption>
+    </figure>
   );
 };

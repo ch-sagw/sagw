@@ -6,10 +6,14 @@ import type {
 import { Video } from '@/components/blocks/Video/Video';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import {
-  ContentImageCentered,
-  ContentImageLeftAligned,
-  ContentImageRightAligned,
-} from '@/components/blocks/Image/Image.stories';
+  ContentImage,
+  ContentImageFull,
+} from '@/components/base/Image/Image.stories';
+
+import {
+  captionRte1,
+  creditsRte1,
+} from '@/utilities/rteSampleContent';
 
 type VideoProps = React.ComponentProps<typeof Video>;
 
@@ -91,11 +95,16 @@ export const VideoCenteredWithoutConsentCheck: StrictStory = {
   args: {
     'alignment': 'center',
     'blockType': 'videoBlock',
-    'caption': ContentImageCentered.args.caption,
-    'credits': ContentImageCentered.args.credits,
+    'caption': captionRte1,
+    'credits': creditsRte1,
     'duration': '00:24',
     'pageLanguage': 'de',
-    'stillImage': ContentImageCentered.args.image,
+    'stillImage': {
+      ...ContentImageFull.args,
+      createdAt: '2025-11-19T09:54:49.430Z',
+      id: '691d93e9d438ebb73a571f86',
+      updatedAt: '2025-11-19T09:54:49.431Z',
+    },
     'video-de': videoData.de,
     'video-en': videoData.en,
     'video-fr': videoData.fr,
@@ -108,11 +117,16 @@ export const VideoCentered: StrictStory = {
   args: {
     'alignment': 'center',
     'blockType': 'videoBlock',
-    'caption': ContentImageCentered.args.caption,
-    'credits': ContentImageCentered.args.credits,
+    'caption': captionRte1,
+    'credits': creditsRte1,
     'duration': '00:24',
     'pageLanguage': 'de',
-    'stillImage': ContentImageCentered.args.image,
+    'stillImage': {
+      ...ContentImageFull.args,
+      createdAt: '2025-11-19T09:54:49.430Z',
+      id: '691d93e9d438ebb73a571f86',
+      updatedAt: '2025-11-19T09:54:49.431Z',
+    },
     'video-de': videoData.de,
     'video-en': videoData.en,
     'video-fr': videoData.fr,
@@ -125,11 +139,16 @@ export const ContentVideoLeftAligned: StrictStory = {
   args: {
     'alignment': 'left',
     'blockType': 'videoBlock',
-    'caption': ContentImageLeftAligned.args.caption,
-    'credits': ContentImageLeftAligned.args.credits,
+    'caption': captionRte1,
+    'credits': creditsRte1,
     'duration': '03:18',
     'pageLanguage': 'de',
-    'stillImage': ContentImageLeftAligned.args.image,
+    'stillImage': {
+      ...ContentImage.args,
+      createdAt: '2025-11-19T09:54:49.430Z',
+      id: '691d93e9d438ebb73a571f86',
+      updatedAt: '2025-11-19T09:54:49.431Z',
+    },
     'video-de': videoData.de,
     'video-en': videoData.en,
     'video-fr': videoData.fr,
@@ -142,11 +161,16 @@ export const ContentVideoRightAligned: StrictStory = {
   args: {
     'alignment': 'right',
     'blockType': 'videoBlock',
-    'caption': ContentImageRightAligned.args.caption,
-    'credits': ContentImageRightAligned.args.credits,
+    'caption': captionRte1,
+    'credits': creditsRte1,
     'duration': '02:34',
     'pageLanguage': 'de',
-    'stillImage': ContentImageRightAligned.args.image,
+    'stillImage': {
+      ...ContentImage.args,
+      createdAt: '2025-11-19T09:54:49.430Z',
+      id: '691d93e9d438ebb73a571f86',
+      updatedAt: '2025-11-19T09:54:49.431Z',
+    },
     'video-de': videoData.de,
     'video-en': videoData.en,
     'video-fr': videoData.fr,
