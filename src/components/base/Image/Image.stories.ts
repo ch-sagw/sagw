@@ -19,7 +19,7 @@ const defaultArgs: ImageProps = {
   height: 450,
   loading: 'lazy',
   performanceMark: '',
-  url: '/api/images/file/20071445109_e1a2b79633_6k.jpg',
+  url: '/20071445109_e1a2b79633_6k.jpg',
   variant: 'content',
   width: 800,
 };

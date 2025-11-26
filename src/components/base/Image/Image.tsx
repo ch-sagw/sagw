@@ -16,7 +16,6 @@ import { ImageVariant } from '@/components/base/types/imageVariant';
 export type InterfaceImagePropTypes = {
   alt: string;
   classes?: string;
-  filename: string,
   focalX?: number,
   focalY?: number,
   height: number;
@@ -31,7 +30,6 @@ export type InterfaceImagePropTypes = {
 
 export const Image = ({
   alt,
-  filename,
   focalX,
   focalY,
   height,
@@ -51,17 +49,7 @@ export const Image = ({
 
   const host = process.env.NEXT_PUBLIC_GUMLET_URL ?? '';
 
-  let src = host + url;
-
-  // Since sagw-blob-local is not mapped to
-  // a vercel subdomain, we directly access
-  // the file without additional file path.
-
-  const nodeEnv = process.env.NODE_ENV as string;
-
-  if (nodeEnv === 'development' || process.env.CI) {
-    src = `${host}/${filename}`;
-  }
+  const src = host + url;
 
   const params = `fm=auto&mode=crop&crop=focalpoint&fp-x=${focalPointX}&fp-y=${focalPointY}`;
 

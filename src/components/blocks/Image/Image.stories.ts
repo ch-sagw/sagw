@@ -43,7 +43,7 @@ const imageConfig = {
   tenant: '691c60693bd37d7912b4feb8',
   thumbnailURL: null,
   updatedAt: '2025-11-19T09:54:49.431Z',
-  url: '/api/images/file/20071445109_e1a2b79633_6k.jpg',
+  url: '/20071445109_e1a2b79633_6k.jpg',
   width: 5742,
 };
 
