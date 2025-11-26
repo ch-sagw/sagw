@@ -15,7 +15,7 @@ const defaultArgs: ImageProps = {
   alt: 'Astronaut Robert L. Stewart, mission specialist, participates in a extravehicular activity (EVA), a few meters away from the cabin of the Space Shuttle Challenger.',
   filename: '20071445109_e1a2b79633_6k.jpg',
   focalX: 50,
-  focalY: 38,
+  focalY: 45,
   height: 450,
   loading: 'lazy',
   performanceMark: '',
