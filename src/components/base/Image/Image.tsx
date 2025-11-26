@@ -57,7 +57,12 @@ export const Image = ({
   // a vercel subdomain, we directly access
   // the file without additional file path.
 
-  if (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview') {
+  const nodeEnv = process.env.NODE_ENV as string;
+
+  console.log('NODE ENV:', nodeEnv);
+  console.log('HOST:', host);
+
+  if (nodeEnv === 'development') {
     src = `${host}/${filename}`;
   }
 
