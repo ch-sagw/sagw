@@ -4,7 +4,8 @@
   --background-page: rgb(var(--white));
   --background-page-overly: #1e324199;
   --background-positive: var(--sky-100);
-  --background-video: rgb(var(--black) / 40%);
+  --background-video: rgb(30 50 65 / 40%); // 30 50 65 represents --primary-blue-dark (#1E3241) in rgb
+  --background-video-no-consent: rgb(30 50 65 / 80%);
   --background-warning: var(--orange-100);
   --border-image: rgb(var(--black) / 4%);
   --border-negative: var(--red-200);

@@ -1244,7 +1244,14 @@ export interface InterfaceProjectTeasersBlock {
   blockType: 'projectsTeasersBlock';
 }
 /**
- * Allowed image formats: png, jpg, jpeg, gif, webp, avif, tiff
+ *
+ *       We are using an image optimization service to transform your image
+ *       into all required renditions (image sizes). Please ensure
+ *       that the dimensions of the uploaded image does not exceed 4000 pixels
+ *       in either direction. Allowed image formats are «png, jpg, jpeg, gif,
+ *       webp, avif». Since the optimization service will compress the
+ *       renditions again, it is best to not compress the image too much before
+ *       you upload it.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "images".
@@ -1910,7 +1917,7 @@ export interface InterfaceHeroFieldNewsDetail {
  * via the `definition` "InterfaceImageBlock".
  */
 export interface InterfaceImageBlock {
-  alignement?: ('left' | 'center' | 'right') | null;
+  alignment?: ('left' | 'center' | 'right') | null;
   image: string | Image;
   caption?: {
     root: {
@@ -3337,6 +3344,7 @@ export interface DetailPage {
  * via the `definition` "InterfaceVideoBlock".
  */
 export interface InterfaceVideoBlock {
+  alignment?: ('left' | 'center' | 'right') | null;
   'video-de': string | Video;
   'video-fr'?: (string | null) | Video;
   'video-it'?: (string | null) | Video;
@@ -5179,7 +5187,7 @@ export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceImageBlock_select".
  */
 export interface InterfaceImageBlockSelect<T extends boolean = true> {
-  alignement?: T;
+  alignment?: T;
   image?: T;
   caption?: T;
   credits?: T;
@@ -5510,6 +5518,7 @@ export interface DetailPageSelect<T extends boolean = true> {
  * via the `definition` "InterfaceVideoBlock_select".
  */
 export interface InterfaceVideoBlockSelect<T extends boolean = true> {
+  alignment?: T;
   'video-de'?: T;
   'video-fr'?: T;
   'video-it'?: T;

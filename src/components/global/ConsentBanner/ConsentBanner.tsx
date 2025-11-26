@@ -98,6 +98,7 @@ export const ConsentBanner = ({
       if (dialog.open) {
         // Defer closeBanner to avoid synchronous setState in effect
         requestAnimationFrame(() => {
+          setIsBannerOpen(false);
           closeBanner();
         });
       }

@@ -45,6 +45,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@gumlet/react-embed-player": "^2.0.19",
     "@payloadcms/db-mongodb": "^3.64.0",
     "@payloadcms/email-resend": "^3.64.0",
     "@payloadcms/next": "^3.64.0",

@@ -31,7 +31,7 @@ export default meta;
 const samplePage: MagazineDetailPage = {
   content: [
     {
-      alignement: 'center',
+      alignment: 'center',
       blockType: 'imageBlock',
       credits: simpleRteConfig('some credits'),
       image: 'someid',
