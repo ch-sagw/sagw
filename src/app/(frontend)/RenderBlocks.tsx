@@ -246,7 +246,6 @@ export const RenderBlocks = ({
                 <div key={block.id || index}>
                   <ImageBlock
                     {...block}
-                    image={(block as InterfaceImageBlock).image as any}
                   />
                 </div>
               );
@@ -256,9 +255,8 @@ export const RenderBlocks = ({
               return (
                 <div key={block.id || index}>
                   <Video
-                    {...(block as any)}
+                    {...block}
                     pageLanguage={pageLanguage}
-                    stillImage={(block as InterfaceVideoBlock).stillImage as any}
                   />
                 </div>
               );
