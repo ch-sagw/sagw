@@ -59,10 +59,7 @@ export const Image = ({
 
   const nodeEnv = process.env.NODE_ENV as string;
 
-  console.log('NODE ENV:', nodeEnv);
-  console.log('HOST:', host);
-
-  if (nodeEnv === 'development') {
+  if (nodeEnv === 'development' || process.env.CI) {
     src = `${host}/${filename}`;
   }
 
