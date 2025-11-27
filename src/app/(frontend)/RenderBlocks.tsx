@@ -59,6 +59,7 @@ import { MagazineOverview } from '@/components/blocks/MagazineOverview/MagazineO
 import { NationalDictionariesOverview } from '@/components/blocks/NationalDictionariesOverview/NationalDictionariesOverview';
 import { ProjectsOverview } from '@/components/blocks/ProjectsOverview/ProjectsOverview';
 import { EditionsOverview } from '@/components/blocks/EditionsOverview/EditionsOverview';
+import { Footnote } from '@/components/blocks/Footnote/Footnote';
 
 // blocks interface
 interface InterfaceRenderBlocksProps {
@@ -362,6 +363,16 @@ export const RenderBlocks = ({
                   <EditionsOverview
                     {...block}
                     language={pageLanguage}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'footnoteBlock') {
+              return (
+                <div key={block.id || index}>
+                  <Footnote
+                    {...block}
                   />
                 </div>
               );

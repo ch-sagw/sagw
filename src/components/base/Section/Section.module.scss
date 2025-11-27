@@ -4,8 +4,12 @@
 @use "../../../styles/utilities/functions" as *;
 
 .section {
-  &:not(.fullBleed) {
+  &:not(.fullBleed, .noTitle) {
     @include block-layout-sticky-title;
+  }
+
+  &.noTitle {
+    @include block-layout-section;
   }
 
   @include generic-block-padding;

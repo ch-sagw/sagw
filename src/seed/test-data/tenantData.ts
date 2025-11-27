@@ -5,6 +5,7 @@ import { Payload } from 'payload';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
   rte4ConsentBannerText, rte4FullRange,
+  sampleFootnoteContent,
 } from '@/utilities/rteSampleContent';
 import { InterfaceNetworkTeaserPropTypes } from '@/components/blocks/NetworkTeaser/NetworkTeaser';
 
@@ -1185,6 +1186,11 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
             blockType: 'imageBlock',
             credits: simpleRteConfig('some credits'),
             image: image.id,
+          },
+          {
+            blockType: 'footnoteBlock',
+            text: sampleFootnoteContent,
+            title: simpleRteConfig('Footnote'),
           },
         ],
         hero: {
