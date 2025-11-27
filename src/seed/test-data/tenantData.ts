@@ -564,6 +564,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           label: simpleRteConfig('Nachname'),
           placeholder: 'Ihr Nachname',
         },
+        newsletterList: 'List',
       },
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: true,

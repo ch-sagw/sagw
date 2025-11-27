@@ -1,11 +1,14 @@
 'use server';
 
+import 'server-only';
 import { z } from 'zod';
 import {
   hiddenFormDefinitionFieldName, hiddenPageUrl,
 } from '@/components/blocks/Form/Form.config';
 import { sendMail } from '@/mail/sendMail';
-import { subscribe } from '@/mail/subscribe';
+import {
+  resubscribe, subscribe,
+} from '@/mail/subscribe';
 import { Form as InterfaceForm } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
@@ -158,12 +161,33 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       };
     }
   } else {
+    if (!hiddenFormData.newsletterFields?.newsletterList) {
+      return {
+        success: false,
+        values: data,
+      };
+    }
+
     const subscribeResult = await subscribe({
       email: formData.get(newsletterFieldNames.email),
       firstname: formData.get(newsletterFieldNames.firstname),
       language: formData.get(newsletterFieldNames.language),
       lastname: formData.get(newsletterFieldNames.lastname),
+      listName: hiddenFormData.newsletterFields?.newsletterList,
     });
+
+    if (subscribeResult.status === 'pendingVerification') {
+      const resubscribeResult = await resubscribe({
+        email: formData.get(newsletterFieldNames.email),
+        firstname: formData.get(newsletterFieldNames.firstname),
+        language: formData.get(newsletterFieldNames.language),
+        lastname: formData.get(newsletterFieldNames.lastname),
+        listName: hiddenFormData.newsletterFields?.newsletterList,
+      });
+
+      console.log('resubscribe ####################');
+      console.log(resubscribeResult);
+    }
 
     if (subscribeResult) {
       return {

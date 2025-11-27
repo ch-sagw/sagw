@@ -560,6 +560,10 @@ export interface Form {
       )[]
     | null;
   newsletterFields?: {
+    /**
+     * This value must match with the name of the Newsletter List from MailXpert
+     */
+    newsletterList: string;
     email: {
       label: {
         root: {
@@ -6147,6 +6151,7 @@ export interface FormsSelect<T extends boolean = true> {
   newsletterFields?:
     | T
     | {
+        newsletterList?: T;
         email?:
           | T
           | {

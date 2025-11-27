@@ -136,6 +136,7 @@ const defaultFormConfig: FormProps = {
         label: simpleRteConfig('foo'),
         placeholder: 'baz',
       },
+      newsletterList: 'List',
     },
     recipientMail: 'foo@bar.baz',
     showPrivacyCheckbox: true,

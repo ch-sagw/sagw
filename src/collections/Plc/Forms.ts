@@ -166,6 +166,15 @@ export const Forms: CollectionConfig = {
       },
       fields: [
         {
+          admin: {
+            description: 'This value must match with the name of the Newsletter List from MailXpert',
+          },
+          localized: false,
+          name: 'newsletterList',
+          required: true,
+          type: 'text',
+        },
+        {
           fields: emailBlock(true).fields,
           name: 'email',
           type: 'group',
