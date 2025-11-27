@@ -1377,6 +1377,12 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           topic: publicationTopic.id,
           type: publicationType.id,
         },
+        content: [
+          {
+            blockType: 'bibliographicReferenceBlock',
+            text: simpleRteConfig('Duchêne, Cédric, Marieke Heers and Laura Bernardi (2025): All-day childcare and schooling. A survey of parental attitudes in Switzerland, ed. by the Swiss Academy of Humanities and Social Sciences (Swiss Academies Reports 20,1). https://doi.org/10.5281/zenodo.14283689'),
+          },
+        ],
         hero: {
           colorMode: 'white',
           lead: simpleRteConfig('Publication Detail Page Lead'),

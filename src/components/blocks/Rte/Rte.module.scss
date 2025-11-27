@@ -1,5 +1,35 @@
 @use "../../../styles/mixins/mixins-rte" as *;
+@use "../../../styles/mixins/mixins-layout" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
 
 .rte {
-  @include rte-text;
+  .text {
+    @include rte-text;
+  }
+
+  /**
+    RTE Variant where first heading is placed
+    in the left column, starting from large
+    viewport on. (e.g. magazine detail)
+   **/
+  &.stickyFirstTitle {
+    .text {
+      @include block-layout-sticky-title;
+      @include text-block-padding;
+
+      @include mq($from: large) {
+        > :not(:first-child) {
+          grid-column: 5 / 12;
+        }
+      }
+
+      @include mq($from: ultra) {
+        > :not(:first-child) {
+          grid-column: 5 / 11;
+        }
+      }
+
+      row-gap: unset;
+    }
+  }
 }

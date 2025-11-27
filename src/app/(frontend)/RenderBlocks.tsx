@@ -60,6 +60,7 @@ import { NationalDictionariesOverview } from '@/components/blocks/NationalDictio
 import { ProjectsOverview } from '@/components/blocks/ProjectsOverview/ProjectsOverview';
 import { EditionsOverview } from '@/components/blocks/EditionsOverview/EditionsOverview';
 import { Footnote } from '@/components/blocks/Footnote/Footnote';
+import { BibliographicReference } from '@/components/blocks/BibliographicReference/BibliographicReference';
 
 // blocks interface
 interface InterfaceRenderBlocksProps {
@@ -373,6 +374,18 @@ export const RenderBlocks = ({
                 <div key={block.id || index}>
                   <Footnote
                     {...block}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'bibliographicReferenceBlock') {
+              return (
+                <div key={block.id || index}>
+                  <BibliographicReference
+                    {...block}
+                    title={i18n.bibliographicReference.title}
+                    buttonText={i18n.bibliographicReference.copyButtonText}
                   />
                 </div>
               );
