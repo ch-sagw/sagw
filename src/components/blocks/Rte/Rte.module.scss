@@ -1,8 +1,49 @@
 @use "../../../styles/mixins/mixins-rte" as *;
 @use "../../../styles/mixins/mixins-layout" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
 
 .rte {
+  background-color: var(--background-color);
+  color: var(--text-color, var(--text-primary));
+  text-wrap: pretty;
+
+  &:not(.white) {
+    @include font-smoothing;
+  }
+
+  &.light {
+    --background-color: var(--background-light);
+    --text-color: var(--text-primary);
+
+    ::selection {
+      background: var(--interaction-primary);
+      color: var(--text-primary-inverted);
+    }
+  }
+
+  &.white {
+    --background-color: var(--background-page);
+    --text-color: var(--text-primary);
+
+    ::selection {
+      background: var(--interaction-primary);
+      color: var(--text-primary-inverted);
+    }
+  }
+
+  &.dark {
+    --background-color: var(--background-cta);
+    --text-color: var(--text-primary-inverted);
+    --link-color: var(--text-color);
+    --link-color-focus-hover: var(--text-color);
+
+    ::selection {
+      background: var(--text-primary-inverted);
+      color: var(--interaction-primary);
+    }
+  }
+
   .text {
     @include rte-text;
   }

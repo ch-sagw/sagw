@@ -8,46 +8,6 @@
 @mixin rte-text {
   @include body-text-m;
 
-  background-color: var(--background-color);
-  color: var(--text-color, var(--text-primary));
-  text-wrap: pretty;
-
-  &:not(.white) {
-    @include font-smoothing;
-  }
-
-  &.light {
-    --background-color: var(--background-light);
-    --text-color: var(--text-primary);
-
-    ::selection {
-      background: var(--interaction-primary);
-      color: var(--text-primary-inverted);
-    }
-  }
-
-  &.white {
-    --background-color: var(--background-page);
-    --text-color: var(--text-primary);
-
-    ::selection {
-      background: var(--interaction-primary);
-      color: var(--text-primary-inverted);
-    }
-  }
-
-  &.dark {
-    --background-color: var(--background-cta);
-    --text-color: var(--text-primary-inverted);
-    --link-color: var(--text-color);
-    --link-color-focus-hover: var(--text-color);
-
-    ::selection {
-      background: var(--text-primary-inverted);
-      color: var(--interaction-primary);
-    }
-  }
-
   // Headings
   // --------
   h2 {
