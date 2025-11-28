@@ -16,6 +16,7 @@ import { ImageVariant } from '@/components/base/types/imageVariant';
 export type InterfaceImagePropTypes = {
   alt: string;
   classes?: string;
+  filename: string,
   focalX?: number,
   focalY?: number,
   height: number;
