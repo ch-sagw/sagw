@@ -21,7 +21,6 @@
   --body-text-m-line-height: 1.5;
 
   // Responsive font sizes
-  --body-text-xs-size: var(--font-size-xxs);
   --body-text-s-size: var(--font-size-xs);
   --body-text-m-size: var(--font-size-m);
   --body-text-l-size: var(--font-size-l);
@@ -41,7 +40,6 @@
   --title-heading-section-size: var(--font-size-m);
 
   @include mq($from: medium) {
-    --body-text-xs-size: var(--font-size-xs);
     --body-text-s-size: var(--font-size-s);
     --body-text-m-size: var(--font-size-l);
     --body-text-l-size: var(--font-size-xl);
@@ -61,7 +59,6 @@
   }
 
   @include mq($from: ultra) {
-    --body-text-xs-size: var(--font-size-s);
     --body-text-s-size: var(--font-size-m);
     --body-text-m-size: var(--font-size-xl);
     --body-text-l-size: var(--font-size-2xl);
