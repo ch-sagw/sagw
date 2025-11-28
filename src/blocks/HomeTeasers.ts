@@ -3,21 +3,26 @@ import {
 } from 'payload';
 import { fieldsLinkInternal } from '@/field-templates/links';
 import { rte1 } from '@/field-templates/rte';
-import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import {
+  fieldAccessLocalizableField, fieldAccessNonLocalizableField,
+} from '@/access/fields/localizedFields';
 
 // Example: SAGW home only
 
 const homeTeaserItem: Field[] = [
   {
+    access: fieldAccessLocalizableField,
     localized: true,
     name: 'category',
     required: true,
     type: 'text',
   },
   rte1({
+    access: fieldAccessLocalizableField,
     name: 'title',
   }),
   rte1({
+    access: fieldAccessLocalizableField,
     name: 'text',
   }),
 

@@ -3,15 +3,19 @@ import {
 } from 'payload';
 import { fieldsLinkExternal } from '@/field-templates/links';
 import { rte2 } from '@/field-templates/rte';
-import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import {
+  fieldAccessLocalizableField, fieldAccessNonLocalizableField,
+} from '@/access/fields/localizedFields';
 
 // Example: Editions Overview
 
 const editionItem: Field[] = [
   rte2({
+    access: fieldAccessLocalizableField,
     name: 'title',
   }),
   rte2({
+    access: fieldAccessLocalizableField,
     name: 'text',
   }),
   ...fieldsLinkExternal({
