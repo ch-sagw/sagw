@@ -5,12 +5,15 @@ import { fieldsLinkExternal } from '@/field-templates/links';
 import {
   rte1, rte2,
 } from '@/field-templates/rte';
-import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import {
+  fieldAccessLocalizableField, fieldAccessNonLocalizableField,
+} from '@/access/fields/localizedFields';
 
 // Example: Network
 
 const fieldsNetworkItem: Field[] = [
   rte1({
+    access: fieldAccessLocalizableField,
     name: 'title',
   }),
   {

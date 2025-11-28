@@ -2,7 +2,7 @@
 @use "../utilities/functions" as *;
 @use "../utilities/mediaqueries" as *;
 
-@mixin block-layout-sticky-title {
+@mixin block-layout-section {
   @include mq($to: large) {
     display: flex;
     flex-direction: column;
@@ -10,11 +10,25 @@
   }
 
   @include mq($from: large) {
-    --heading-alignment-compensation: 5;
-
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     column-gap: px-to-rem(var(--grid-gutter));
+
+    * {
+      grid-column: 5 / 13;
+    }
+  }
+}
+
+@mixin block-layout-sticky-title {
+  @include block-layout-section;
+
+  @include mq($from: large) {
+    --heading-alignment-compensation: 5;
+
+    * {
+      grid-column: unset;
+    }
 
     > h2:first-child,
     > h3:first-child,

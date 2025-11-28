@@ -5,15 +5,19 @@ import {
   rte1, rte4,
 } from '@/field-templates/rte';
 import { fieldsColorMode } from '@/field-templates/colorMode';
-import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import {
+  fieldAccessLocalizableField, fieldAccessNonLocalizableField,
+} from '@/access/fields/localizedFields';
 
 // Example: Promotion page
 
 const AccordionItem: Field[] = [
   rte1({
+    access: fieldAccessLocalizableField,
     name: 'accordionTitle',
   }),
   rte4({
+    access: fieldAccessLocalizableField,
     name: 'accordionContent',
   }),
 ];
@@ -26,6 +30,7 @@ export const AccordionBlock = {
     {
       fields: [
         rte1({
+          access: fieldAccessLocalizableField,
           name: 'title',
         }),
       ],

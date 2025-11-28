@@ -5,6 +5,7 @@ import { Payload } from 'payload';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
   rte4ConsentBannerText, rte4FullRange,
+  sampleFootnoteContent,
 } from '@/utilities/rteSampleContent';
 import { InterfaceNetworkTeaserPropTypes } from '@/components/blocks/NetworkTeaser/NetworkTeaser';
 
@@ -1186,6 +1187,11 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
             credits: simpleRteConfig('some credits'),
             image: image.id,
           },
+          {
+            blockType: 'footnoteBlock',
+            text: sampleFootnoteContent,
+            title: simpleRteConfig('Footnote'),
+          },
         ],
         hero: {
           author: simpleRteConfig('Author'),
@@ -1371,6 +1377,12 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           topic: publicationTopic.id,
           type: publicationType.id,
         },
+        content: [
+          {
+            blockType: 'bibliographicReferenceBlock',
+            text: simpleRteConfig('Duchêne, Cédric, Marieke Heers and Laura Bernardi (2025): All-day childcare and schooling. A survey of parental attitudes in Switzerland, ed. by the Swiss Academy of Humanities and Social Sciences (Swiss Academies Reports 20,1). https://doi.org/10.5281/zenodo.14283689'),
+          },
+        ],
         hero: {
           colorMode: 'white',
           lead: simpleRteConfig('Publication Detail Page Lead'),

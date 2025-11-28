@@ -6,7 +6,7 @@ import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 
 export type InterfaceSectionPropTypes = {
   className?: string;
-  title: string;
+  title?: string;
   subtitle?: string;
   children?: React.ReactNode;
   colorMode: ColorMode;
@@ -39,6 +39,10 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
         false: undefined,
         true: [styles.fullBleed],
       },
+      title: {
+        false: [styles.noTitle],
+        true: undefined,
+      },
     },
   });
 
@@ -48,9 +52,10 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
       className={sectionClasses({
         colorMode,
         fullBleed,
+        title: title !== undefined,
       })}
     >
-      {!additionalStickyContent &&
+      {!additionalStickyContent && title &&
         <SafeHtml
           as='h2'
           className={styles.title}
@@ -58,7 +63,7 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
         />
       }
 
-      {additionalStickyContent &&
+      {additionalStickyContent && title &&
         <div className={styles.additionalStickyContent}>
           <SafeHtml
             as='h2'
