@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.25.0](https://github.com/ch-sagw/sagw/compare/v0.24.0...v0.25.0) (2025-11-28)
+
+
+### Features
+
+* **be:** add bibliographic reference component ([71c315f](https://github.com/ch-sagw/sagw/commit/71c315fc75c639c1c7f68b8babd6544d316b4d4b))
+* **be:** add footnote component ([71c315f](https://github.com/ch-sagw/sagw/commit/71c315fc75c639c1c7f68b8babd6544d316b4d4b))
+* **fe:** add bibliographic reference component ([71c315f](https://github.com/ch-sagw/sagw/commit/71c315fc75c639c1c7f68b8babd6544d316b4d4b))
+* **fe:** add footnote component ([71c315f](https://github.com/ch-sagw/sagw/commit/71c315fc75c639c1c7f68b8babd6544d316b4d4b))
+
+
+### Bug Fixes
+
+* **payload:** fix translator access rights ([71c315f](https://github.com/ch-sagw/sagw/commit/71c315fc75c639c1c7f68b8babd6544d316b4d4b))
+
 ## [0.24.0](https://github.com/ch-sagw/sagw/compare/v0.23.1...v0.24.0) (2025-11-25)
 
 
