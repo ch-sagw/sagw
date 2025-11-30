@@ -155,6 +155,10 @@ export default async function DetailPage({
               tenantId={tenant}
               pageLanguage={language}
               i18n={i18nData}
+              sourcePage={{
+                collectionSlug: foundCollection,
+                id: pageData.id,
+              }}
             />
           )}
         </div>

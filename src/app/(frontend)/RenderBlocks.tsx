@@ -61,6 +61,12 @@ import { ProjectsOverview } from '@/components/blocks/ProjectsOverview/ProjectsO
 import { EditionsOverview } from '@/components/blocks/EditionsOverview/EditionsOverview';
 import { Footnote } from '@/components/blocks/Footnote/Footnote';
 import { BibliographicReference } from '@/components/blocks/BibliographicReference/BibliographicReference';
+import { CollectionSlug } from 'payload';
+
+export interface InterfaceSourcePage {
+  collectionSlug: CollectionSlug;
+  id: string;
+}
 
 // blocks interface
 interface InterfaceRenderBlocksProps {
@@ -98,6 +104,7 @@ interface InterfaceRenderBlocksProps {
   )[] | null | undefined;
   i18n: I18NGlobal;
   pageLanguage: Config['locale'];
+  sourcePage: InterfaceSourcePage;
 }
 
 export const RenderBlocks = ({
@@ -105,6 +112,7 @@ export const RenderBlocks = ({
   tenantId,
   i18n,
   pageLanguage,
+  sourcePage,
 }: InterfaceRenderBlocksProps): React.JSX.Element | null => {
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0;
 
@@ -212,6 +220,7 @@ export const RenderBlocks = ({
                     {...block}
                     tenant={tenantId}
                     language={pageLanguage}
+                    sourcePage={sourcePage}
                   />
                 </div>
               );
