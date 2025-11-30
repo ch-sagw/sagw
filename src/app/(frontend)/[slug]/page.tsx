@@ -6,6 +6,7 @@ import { Config } from '@/payload-types';
 import { RenderBlocks } from '@/app/(frontend)/RenderBlocks';
 import { getTenant } from '@/app/providers/TenantProvider.server';
 import { RenderHero } from '@/app/(frontend)/RenderHero';
+import { RenderStatusMessage } from '@/app/(frontend)/RenderStatusMessage';
 
 export const revalidate = 0;
 
@@ -148,6 +149,11 @@ export default async function DetailPage({
             pageData={pageData}
             language={language}
             i18nGeneric={i18nData.generic}
+          />
+          <RenderStatusMessage
+            language={language}
+            tenant={tenant}
+            isHome={false}
           />
           {contentBlocks && (
             <RenderBlocks

@@ -5,6 +5,7 @@ import configPromise from '@/payload.config';
 import { RenderBlocks } from '@/app/(frontend)/RenderBlocks';
 import { Hero } from '@/components/global/Hero/Hero';
 import { getTenant } from '@/app/providers/TenantProvider.server';
+import { RenderStatusMessage } from '@/app/(frontend)/RenderStatusMessage';
 
 // TODO: properly invalidate cache via afterChange hook on collection level
 // and revalidatePath from next/cache
@@ -88,11 +89,20 @@ export default async function HomePage(): Promise<React.JSX.Element> {
           pageLanguage={lang}
           type='home'
         />
+        <RenderStatusMessage
+          language={lang}
+          tenant={tenant}
+          isHome={true}
+        />
         <RenderBlocks
           i18n={i18nData}
           blocks={pageData.content}
           tenantId={tenant}
           pageLanguage={lang}
+          sourcePage={{
+            collectionSlug: 'homePage',
+            id: pageData.id,
+          }}
         />
       </div>
     </Fragment>
