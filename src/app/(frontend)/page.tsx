@@ -29,8 +29,6 @@ export const generateStaticParams = () => [
 
 export default async function HomePage(): Promise<React.JSX.Element> {
 
-  // const lang = (await params).lang as Config['locale'] || 'de';
-
   // TODO: get from parent
   const lang = 'de';
   const payload = await getPayload({
