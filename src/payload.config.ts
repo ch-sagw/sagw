@@ -140,8 +140,10 @@ export default buildConfig({
   },
   upload: {
     limits: {
-      // 50MB, written in bytes
-      fileSize: 50000000,
+      // seems not to work. we limit it via validation hook in the
+      // corresponding collections. We leave the limit here for safety,
+      // not to have potential limits up the chain.
+      fileSize: 10 * 1000 * 1000,
     },
   },
 });
