@@ -15,11 +15,11 @@ export const seedTenantsAndUsers = async (props: InterfaceSeedTenantsAndUsers): 
     payload: props.payload,
     tenants: [
       {
-        name: 'SAGW',
+        name: 'sagw',
         slug: 'sagw',
       },
       {
-        name: 'NOT-SAGW',
+        name: 'not-sagw',
         slug: 'not-sagw',
       },
     ],
