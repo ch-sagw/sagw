@@ -47,6 +47,7 @@ export const Rte = ({
       <SafeHtml
         as='div'
         html={rte4ToHtml(text)}
+        className={styles.text}
       />
     </div >
   );

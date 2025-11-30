@@ -3,7 +3,9 @@ import {
   rte1, rte2,
 } from './rte';
 import { fieldInternalLinkChooser } from '@/components/admin/InternalLinkChooser/InternalLinkChooserField';
-import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import {
+  fieldAccessLocalizableField, fieldAccessNonLocalizableField,
+} from '@/access/fields/localizedFields';
 
 interface InterfaceLinkProps {
   showDescription?: boolean;
@@ -14,6 +16,7 @@ interface InterfaceLinkProps {
 export const fieldsLinkInternal = (props?: InterfaceLinkProps): Field[] => {
   const linkFields: Field[] = [
     rte1({
+      access: fieldAccessLocalizableField,
       name: 'linkText',
       notRequired: props?.optional,
     }),
@@ -25,6 +28,7 @@ export const fieldsLinkInternal = (props?: InterfaceLinkProps): Field[] => {
 
   if (props?.showDescription) {
     linkFields.unshift(rte2({
+      access: fieldAccessLocalizableField,
       name: 'description',
       notRequired: true,
     }));
@@ -59,12 +63,14 @@ export const fieldsLinkExternal = (props?: InterfaceLinkProps): Field[] => {
 
   if (!props?.hideLinkText) {
     linkFields.unshift(rte1({
+      access: fieldAccessLocalizableField,
       name: 'externalLinkText',
     }));
   }
 
   if (props?.showDescription) {
     linkFields.unshift(rte2({
+      access: fieldAccessLocalizableField,
       name: 'description',
       notRequired: true,
     }));
@@ -75,6 +81,7 @@ export const fieldsLinkExternal = (props?: InterfaceLinkProps): Field[] => {
 
 export const fieldsMail: Field[] = [
   rte1({
+    access: fieldAccessLocalizableField,
     name: 'linkText',
   }),
   {

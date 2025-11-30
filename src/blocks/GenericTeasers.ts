@@ -6,16 +6,20 @@ import {
   rte1, rte2,
 } from '@/field-templates/rte';
 import { alignementHorizontalVertical } from '@/field-templates/alignement';
-import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import {
+  fieldAccessLocalizableField, fieldAccessNonLocalizableField,
+} from '@/access/fields/localizedFields';
 
 // Example: Early Career Award, Institutes Overview
 // Example: Magazine Detail
 
 const TeaserItem: Field[] = [
   rte1({
+    access: fieldAccessLocalizableField,
     name: 'title',
   }),
   rte2({
+    access: fieldAccessLocalizableField,
     name: 'text',
     notRequired: true,
   }),
