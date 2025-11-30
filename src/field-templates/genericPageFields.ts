@@ -22,13 +22,14 @@ export const genericPageFields = (): Field[] => ([
         if ('name' in field && field.name === 'slug') {
           const customSlugField = field as TextField;
 
+          customSlugField.unique = false;
+          customSlugField.index = false;
           customSlugField.access = fieldAccessNonLocalizableField;
 
           /* eslint-disable no-param-reassign */
           field = customSlugField;
           /* eslint-enable no-param-reassign */
         }
-
       });
 
       return defaultField;

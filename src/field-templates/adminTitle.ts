@@ -4,10 +4,7 @@ export const fieldAdminTitleFieldName = 'adminTitle';
 
 export const fieldAdminTitle: Field = {
   access: {
-    // visible in API
     read: () => true,
-
-    // writable from hooks
     update: () => true,
   },
   admin: {
@@ -17,6 +14,7 @@ export const fieldAdminTitle: Field = {
   localized: true,
   name: fieldAdminTitleFieldName,
   type: 'text',
+  unique: false,
 };
 
 export const fieldAdminTitleDefaultValue = (defaultValue: string): Field => ({
