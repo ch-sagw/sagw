@@ -42,7 +42,6 @@ export default async function HomePage(): Promise<React.JSX.Element> {
   }
 
   // page data
-
   const pagesData = await payload.find({
     collection: 'homePage',
     depth: 1,
