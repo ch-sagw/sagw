@@ -525,6 +525,7 @@ test('allows 1 same teaser block via API', async () => {
           },
           {
             blockType: 'newsTeasersBlock',
+            colorMode: 'white',
             title: simpleRteConfig('random title'),
           },
           {
@@ -640,6 +641,7 @@ test('home allows 1 teaser block via API', async () => {
           },
           {
             blockType: 'newsTeasersBlock',
+            colorMode: 'white',
             title: simpleRteConfig('random title'),
           },
           {
