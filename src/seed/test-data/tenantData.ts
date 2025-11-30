@@ -637,6 +637,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         },
         {
           blockType: 'newsTeasersBlock',
+          colorMode: 'light',
           title: simpleRteConfig('News'),
         },
         {

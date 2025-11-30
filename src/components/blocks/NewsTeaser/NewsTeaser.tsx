@@ -61,6 +61,7 @@ export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<R
       allLink={allLink}
       items={items}
       pageLanguage={props.language}
+      colorMode={props.colorMode}
     />
   );
 
