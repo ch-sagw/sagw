@@ -120,6 +120,7 @@ export const RenderBlocks = ({
     return (
       <Fragment>
         {blocks.map((block, index) => {
+          const key = block.id || index.toString();
           const {
             blockType,
           } = block;
@@ -127,276 +128,257 @@ export const RenderBlocks = ({
           if (blockType) {
             if (blockType === 'notificationBlock') {
               return (
-                <div key={block.id || index}>
-                  <Notification {...block} />
-                </div>
+                <Notification
+                  key={key}
+                  {...block}
+                />
               );
             }
 
             if (blockType === 'textBlock') {
               return (
-                <div key={block.id || index}>
-                  <Rte
-                    {...block}
-                    colorMode='white'
-                    stickyFirstTitle={true}
-                  />
-                </div>
+                <Rte
+                  {...block}
+                  colorMode='white'
+                  stickyFirstTitle={true}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'formBlock') {
               return (
-                <div key={block.id || index}>
-                  <FormServer
-                    globalI18n={i18n}
-                    {...block}
-                  />
-                </div>
+                <FormServer
+                  {...block}
+                  globalI18n={i18n}
+                  key={key}
+                />
+
               );
             }
 
             if (blockType === 'accordionBlock') {
               return (
-                <div key={block.id || index}>
-                  <Accordion {...block} />
-                </div>
+                <Accordion
+                  {...block}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'linksBlock') {
               return (
-                <div key={block.id || index}>
-                  <Links
-                    {...block}
-                    title={i18n.generic.linksTitle}
-                    pageLanguage={pageLanguage}
-                  />
-                </div>
+                <Links
+                  {...block}
+                  title={i18n.generic.linksTitle}
+                  pageLanguage={pageLanguage}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'downloadsBlock') {
               return (
-                <div key={block.id || index}>
-                  <Downloads
-                    {...block}
-                    title={i18n.generic.downloadTitle}
-                    language={pageLanguage}
-                  />
-                </div>
+                <Downloads
+                  {...block}
+                  title={i18n.generic.downloadTitle}
+                  language={pageLanguage}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'newsOverviewBlock') {
               return (
-                <div key={block.id || index}>
-                  <NewsOverview
-                    {...block}
-                    tenant={tenantId}
-                    language={pageLanguage}
-                  />
-                </div>
+                <NewsOverview
+                  {...block}
+                  tenant={tenantId}
+                  language={pageLanguage}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'eventsOverviewBlock') {
               return (
-                <div key={block.id || index}>
-                  <EventsOverview
-                    {...block}
-                    globalI18n={i18n}
-                    tenant={tenantId}
-                    language={pageLanguage}
-                  />
-                </div>
+                <EventsOverview
+                  {...block}
+                  globalI18n={i18n}
+                  tenant={tenantId}
+                  language={pageLanguage}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'newsTeasersBlock') {
               return (
-                <div key={block.id || index}>
-                  <NewsTeaser
-                    {...block}
-                    tenant={tenantId}
-                    language={pageLanguage}
-                    sourcePage={sourcePage}
-                  />
-                </div>
+                <NewsTeaser
+                  {...block}
+                  tenant={tenantId}
+                  language={pageLanguage}
+                  sourcePage={sourcePage}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'eventsTeasersBlock') {
               return (
-                <div key={block.id || index}>
-                  <EventsTeaser
-                    {...block}
-                    globalI18n={i18n}
-                    tenant={tenantId}
-                    language={pageLanguage}
-                  />
-                </div>
+                <EventsTeaser
+                  {...block}
+                  globalI18n={i18n}
+                  tenant={tenantId}
+                  language={pageLanguage}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'ctaLinkBlock') {
               return (
-                <div key={block.id || index}>
-                  <CtaLink
-                    {...block}
-                    language={pageLanguage}
-                  />
-                </div>
+                <CtaLink
+                  {...block}
+                  language={pageLanguage}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'ctaContactBlock') {
               return (
-                <div key={block.id || index}>
-                  <CtaContact
-                    {...block}
-                    pageLanguage={pageLanguage}
-                    buttonText={i18n.generic.writeEmailButtonText}
-                  />
-                </div>
+                <CtaContact
+                  {...block}
+                  pageLanguage={pageLanguage}
+                  buttonText={i18n.generic.writeEmailButtonText}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'projectsTeasersBlock') {
               return (
-                <div key={block.id || index}>
-                  <ProjectsTeaser
-                    {...block}
-                    language={pageLanguage}
-                    tenant={tenantId}
-                  />
-                </div>
+                <ProjectsTeaser
+                  {...block}
+                  language={pageLanguage}
+                  tenant={tenantId}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'magazineTeasersBlock') {
               return (
-                <div key={block.id || index}>
-                  <MagazineTeaser
-                    {...block}
-                    language={pageLanguage}
-                    tenant={tenantId}
-                  />
-                </div>
+                <MagazineTeaser
+                  {...block}
+                  language={pageLanguage}
+                  tenant={tenantId}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'genericTeasersBlock') {
               return (
-                <div key={block.id || index}>
-                  <GenericTeaser
-                    {...block}
-                    pageLanguage={pageLanguage}
-                  />
-                </div>
+                <GenericTeaser
+                  {...block}
+                  pageLanguage={pageLanguage}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'networkTeasersBlock') {
               return (
-                <div key={block.id || index}>
-                  <NetworkTeaser
-                    {...block}
-                    pageLanguage={pageLanguage}
-                  />
-                </div>
+                <NetworkTeaser
+                  {...block}
+                  pageLanguage={pageLanguage}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'peopleOverviewBlock') {
               return (
-                <div key={block.id || index}>
-                  <PeopleOverview
-                    {...block}
-                    language={pageLanguage}
-                  />
-                </div>
+                <PeopleOverview
+                  {...block}
+                  language={pageLanguage}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'institutesOverviewBlock') {
               return (
-                <div key={block.id || index}>
-                  <InstitutesOverview
-                    {...block}
-                    language={pageLanguage}
-                    tenant={tenantId}
-                  />
-                </div>
+                <InstitutesOverview
+                  {...block}
+                  language={pageLanguage}
+                  tenant={tenantId}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'magazineOverviewBlock') {
               return (
-                <div key={block.id || index}>
-                  <MagazineOverview
-                    {...block}
-                    language={pageLanguage}
-                    tenant={tenantId}
-                  />
-                </div>
+                <MagazineOverview
+                  {...block}
+                  language={pageLanguage}
+                  tenant={tenantId}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'nationalDictionariesOverviewBlock') {
               return (
-                <div key={block.id || index}>
-                  <NationalDictionariesOverview
-                    {...block}
-                    language={pageLanguage}
-                    tenant={tenantId}
-                  />
-                </div>
+                <NationalDictionariesOverview
+                  {...block}
+                  language={pageLanguage}
+                  tenant={tenantId}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'projectsOverviewBlock') {
               return (
-                <div key={block.id || index}>
-                  <ProjectsOverview
-                    {...block}
-                    language={pageLanguage}
-                    tenant={tenantId}
-                  />
-                </div>
+                <ProjectsOverview
+                  {...block}
+                  language={pageLanguage}
+                  tenant={tenantId}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'editionsOverview') {
               return (
-                <div key={block.id || index}>
-                  <EditionsOverview
-                    {...block}
-                    language={pageLanguage}
-                  />
-                </div>
+                <EditionsOverview
+                  {...block}
+                  language={pageLanguage}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'footnoteBlock') {
               return (
-                <div key={block.id || index}>
-                  <Footnote
-                    {...block}
-                  />
-                </div>
+                <Footnote
+                  {...block}
+                  key={key}
+                />
               );
             }
 
             if (blockType === 'bibliographicReferenceBlock') {
               return (
-                <div key={block.id || index}>
-                  <BibliographicReference
-                    {...block}
-                    title={i18n.bibliographicReference.title}
-                    buttonText={i18n.bibliographicReference.copyButtonText}
-                  />
-                </div>
+                <BibliographicReference
+                  {...block}
+                  title={i18n.bibliographicReference.title}
+                  buttonText={i18n.bibliographicReference.copyButtonText}
+                  key={key}
+                />
               );
             }
           }
