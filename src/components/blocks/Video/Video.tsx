@@ -16,8 +16,8 @@ import { Icon } from '@/icons';
 import { VideoConsentMessage } from '@/components/base/VideoConsentMessage/VideoConsentMessage';
 import { GumletPlayer } from '@gumlet/react-embed-player';
 import { i18nA11y } from '@/i18n/content';
+import { useLocale } from 'next-intl';
 import {
-  Config,
   Video as InterfaceVideo,
   InterfaceVideoBlock,
 } from '@/payload-types';
@@ -26,10 +26,10 @@ import {
   consentUpdatedEventName,
   getCookieConsent,
 } from '@/components/helpers/cookies';
+import { TypedLocale } from 'payload';
 
 export type InterfaceVideoPropTypes = {
   duration?: string,
-  pageLanguage: Config['locale'],
 } & InterfaceVideoBlock;
 
 const classes = cva([styles.videoWrapper], {
@@ -47,13 +47,13 @@ export const Video = ({
   caption,
   credits,
   duration,
-  pageLanguage,
   stillImage,
   'video-de': videoDe,
   'video-en': videoEn,
   'video-fr': videoFr,
   'video-it': videoIt,
 }: InterfaceVideoPropTypes): React.JSX.Element | undefined => {
+  const locale = useLocale() as TypedLocale;
 
   // Select correct video source for the current language
   // if available and fall back to german if there is no
@@ -65,7 +65,7 @@ export const Video = ({
     'video-it': videoIt,
   };
 
-  const video = (videos[`video-${pageLanguage}`] ?? videos['video-de']) as InterfaceVideo;
+  const video = (videos[`video-${locale}`] ?? videos['video-de']) as InterfaceVideo;
 
   // Handle consent state -> Show/Hide consent message
   const [
@@ -107,8 +107,12 @@ export const Video = ({
     setPaused(false);
   };
 
-  const playButtonText = i18nA11y.playVideoText[pageLanguage]
+  const playButtonText = i18nA11y.playVideoText[locale]
     .replace('{{title}}', video.title);
+
+  const pausedClass = paused
+    ? styles.paused
+    : '';
 
   return (
     <figure
@@ -123,10 +127,7 @@ export const Video = ({
           <div>
             <div
               className={`${styles.videoContainer} 
-                ${paused
-            ? styles.paused
-            : ''
-          }`}
+                ${pausedClass}`}
               ref={videoContainer}
             >
               <GumletPlayer
@@ -173,9 +174,7 @@ export const Video = ({
           <div
             className={styles.consentMessageWrapper}
           >
-            <VideoConsentMessage
-              pageLanguage={pageLanguage}
-            />
+            <VideoConsentMessage />
           </div>
         )}
         <div className={styles.stillImageWrapper}>
@@ -210,7 +209,7 @@ export const Video = ({
         <span
           className={styles.credits}
         >
-              © <SafeHtml
+          © <SafeHtml
             as='span'
             html={rteToHtml(credits)}
           />
