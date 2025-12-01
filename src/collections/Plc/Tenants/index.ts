@@ -16,6 +16,7 @@ export const Tenants: CollectionConfig = {
     hidden: ({
       user,
     }): boolean => !isSuperOrTenantAdmin(user),
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: 'name',
   },
   fields: [

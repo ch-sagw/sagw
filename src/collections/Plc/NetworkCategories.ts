@@ -6,6 +6,7 @@ export const NetworkCategories: CollectionConfig = {
   access: globalContentAccessGeneric,
   admin: {
     group: 'Global Content',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: 'name',
   },
   fields: [

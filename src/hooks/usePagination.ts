@@ -137,11 +137,11 @@ export const usePagination = ({
       return;
     }
 
+    const elementTop = sectionRef.current.getBoundingClientRect().top + window.scrollY;
+
     window.scrollTo({
       behavior: 'smooth',
-
-      // not 0 since otherwise the header would expand
-      top: 10,
+      top: elementTop,
     });
   }, [
     currentPage,

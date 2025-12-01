@@ -1,4 +1,6 @@
-import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import {
+  fieldAccessAdminsOnly, fieldAccessNonLocalizableField,
+} from '@/access/fields/localizedFields';
 import {
   Field, Option,
 } from 'payload';
@@ -7,12 +9,14 @@ interface InterfaceFieldsColorMode {
   white: boolean;
   light: boolean;
   dark: boolean;
+  adminOnly?: boolean;
 }
 
 export const fieldsColorMode = ({
   white,
   light,
   dark,
+  adminOnly,
 }: InterfaceFieldsColorMode): Field => {
   const options: Option[] = [];
 
@@ -38,7 +42,9 @@ export const fieldsColorMode = ({
   }
 
   return {
-    access: fieldAccessNonLocalizableField,
+    access: adminOnly
+      ? fieldAccessAdminsOnly
+      : fieldAccessNonLocalizableField,
     defaultValue: 'white',
     label: 'Color Mode',
     name: 'colorMode',

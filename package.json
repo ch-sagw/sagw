@@ -1,6 +1,6 @@
 {
   "name": "sagw",
-  "version": "0.22.3",
+  "version": "0.24.0",
   "description": "Codebase for SAGW websites.",
   "author": "Vorhall KlG <info@vorhall.com> (https://vorhall.com)",
   "license": "MIT",
@@ -41,9 +41,11 @@
     "lint": "npm run lint:js && npm run lint:scss",
     "commitlint": "commitlint --edit",
     "prepare": "husky",
-    "orphaned:screenshots": "tsx ./src/automated-testing/orphanedScreenshots.ts"
+    "orphaned:screenshots": "tsx ./src/automated-testing/orphanedScreenshots.ts",
+    "type-check": "tsc"
   },
   "dependencies": {
+    "@gumlet/react-embed-player": "^2.0.19",
     "@payloadcms/db-mongodb": "^3.64.0",
     "@payloadcms/email-resend": "^3.64.0",
     "@payloadcms/next": "^3.64.0",
@@ -56,7 +58,7 @@
     "cross-env": "^10.0.0",
     "dompurify": "^3.3.0",
     "graphql": "^16.12.0",
-    "jsdom": "^27.2.0",
+    "jsdom": "^27.0.0",
     "next": "^15.4.7",
     "payload": "^3.64.0",
     "react": "19.2.0",
@@ -101,7 +103,7 @@
     "ts-morph": "^27.0.2",
     "tsx": "^4.20.6",
     "typescript": "5.9.3",
-    "vercel": "^48.9.0",
+    "vercel": "^48.10.3",
     "vite": "^7.2.2"
   },
   "engines": {

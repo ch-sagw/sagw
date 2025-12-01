@@ -8,6 +8,7 @@ export const Videos: CollectionConfig = {
   access: assetsAccess,
   admin: {
     group: 'Assets',
+    hideAPIURL: process.env.ENV === 'prod',
   },
   fields: [
     {

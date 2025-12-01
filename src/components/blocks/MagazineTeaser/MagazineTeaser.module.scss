@@ -1,0 +1,21 @@
+@use "../../../styles/mixins/mixins-shared-styles" as *;
+
+.section.section {
+  padding-block-end: 0;
+
+  .link {
+    padding-inline: 0;
+
+    svg {
+      color: var(--interaction-secondary);
+    }
+  }
+}
+
+.list {
+  @include full-bleed-teaser-list;
+}
+
+.item {
+  @include full-bleed-teaser-item;
+}

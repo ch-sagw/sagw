@@ -7,6 +7,7 @@ export const People: CollectionConfig = {
   access: globalContentAccessGeneric,
   admin: {
     group: 'Global Content',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: 'fullName',
   },
   fields: [
@@ -31,15 +32,18 @@ export const People: CollectionConfig = {
       name: 'function',
       notRequired: true,
     }),
-    rte1({
-      disableLocalization: true,
+    {
+      localized: false,
       name: 'mail',
-    }),
-    rte1({
-      disableLocalization: true,
+      required: true,
+      type: 'text',
+    },
+    {
+      localized: false,
       name: 'phone',
-      notRequired: true,
-    }),
+      required: false,
+      type: 'text',
+    },
     {
       name: 'image',
       relationTo: 'images',

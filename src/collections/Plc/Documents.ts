@@ -7,6 +7,7 @@ export const Documents: CollectionConfig = {
   admin: {
     description: 'Allowed formats: pdf',
     group: 'Assets',
+    hideAPIURL: process.env.ENV === 'prod',
   },
   fields: [
     rte2({

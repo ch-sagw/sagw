@@ -6,8 +6,10 @@ import {
   blocks, BlockSlug, OVERVIEW_BLOCK_TYPES,
 } from '@/blocks';
 import { versions } from '@/field-templates/versions';
-import { excludeBlocksFilterCumulative } from '@/utilities/blockFilters';
-import { validateUniqueBlocksCumulative } from '@/hooks-payload/validateUniqueBlocks';
+import {
+  excludeBlocksFilterCumulative, excludeBlocksFilterSingle,
+} from '@/utilities/blockFilters';
+import { validateUniqueBlocksCumulativeAndSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
 import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccess } from '@/access/pages';
@@ -37,6 +39,15 @@ const contentBlocks: BlockSlug[] = [
   'editionsOverview',
 ];
 
+const uniqueBlocks: BlockSlug[] = [
+  'genericTeasersBlock',
+  'projectsTeasersBlock',
+  'eventsTeasersBlock',
+  'magazineTeasersBlock',
+  'newsTeasersBlock',
+  'publicationsTeasersBlock',
+];
+
 export const OverviewPage: CollectionConfig = {
   access: pageAccess,
   admin: {
@@ -47,6 +58,7 @@ export const OverviewPage: CollectionConfig = {
       '_status',
     ],
     group: 'Pages',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
@@ -68,7 +80,7 @@ export const OverviewPage: CollectionConfig = {
                 siblingData,
                 req,
               }): Promise<BlockSlug[]> => {
-                const onlyOnceBlockFilter = excludeBlocksFilterCumulative({
+                const onlyOnceBlockFilterCumulative = excludeBlocksFilterCumulative({
                   allBlockTypes: contentBlocks,
                   onlyAllowedOnceBlockTypes: OVERVIEW_BLOCK_TYPES,
                 })({
@@ -76,21 +88,30 @@ export const OverviewPage: CollectionConfig = {
                 });
 
                 const showBlocks = await sagwOnlyBlocks({
-                  allBlocks: onlyOnceBlockFilter,
+                  allBlocks: onlyOnceBlockFilterCumulative,
                   req,
                   restrictedBlocks: [
                     'nationalDictionariesOverviewBlock',
                     'institutesOverviewBlock',
+                    'editionsOverview',
                   ],
                 });
 
-                return showBlocks;
+                const onlyOnceBlockFilterSingle = excludeBlocksFilterSingle({
+                  allBlockTypes: showBlocks,
+                  onlyAllowedOnceBlockTypes: uniqueBlocks,
+                })({
+                  siblingData,
+                });
+
+                return onlyOnceBlockFilterSingle;
               },
               label: 'Content',
               name: 'content',
               type: 'blocks',
-              validate: validateUniqueBlocksCumulative({
-                onlyAllowedOnceBlockTypes: OVERVIEW_BLOCK_TYPES,
+              validate: validateUniqueBlocksCumulativeAndSingle({
+                cumulativeBlockTypes: OVERVIEW_BLOCK_TYPES,
+                singleBlockTypes: uniqueBlocks,
               }),
             },
           ],

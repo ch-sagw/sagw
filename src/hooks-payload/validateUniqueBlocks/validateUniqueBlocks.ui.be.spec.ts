@@ -121,4 +121,39 @@ test.describe('Unique blocks', () => {
     await expect(addDownloadButton).not.toBeVisible();
   });
 
+  test('only allows 1 teaser block per page in Admin UI', async ({
+    page,
+  }) => {
+    // create an overview page
+    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
+    await page.waitForLoadState('networkidle');
+
+    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForLoadState('load');
+
+    // add link
+    const addContentButton = await page.getByText('Add Content', {
+      exact: true,
+    });
+
+    await addContentButton.click();
+
+    const drawer = await page.locator('.drawer__content');
+
+    const addDownloadButton = await drawer.getByText('Generic Teasers', {
+      exact: true,
+    });
+
+    await addDownloadButton.click();
+
+    await page.locator('#content-row-0');
+    await page.getByText('Optional Link');
+
+    // try to add link overview
+    await addContentButton.click();
+
+    await expect(addDownloadButton).not.toBeVisible();
+  });
 });
+

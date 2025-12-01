@@ -18,6 +18,7 @@ import {
 import { StatusMessage } from '@/components/global/StatusMessage/StatusMessage';
 import { Metadata } from 'next';
 import { ConsentBanner } from '@/components/global/ConsentBanner/ConsentBanner';
+import { NoJsScript } from '@/components/helpers/noJsScript';
 
 export const metadata: Metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -193,7 +194,11 @@ export default async function RootLayout({
     : true;
 
   return (
-    <html className='theme-sagw' lang='en'>
+    <html
+      className='theme-sagw no-js'
+      lang='en'
+    >
+      <NoJsScript />
       <body>
 
         <Header

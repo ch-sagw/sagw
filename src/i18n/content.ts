@@ -7,6 +7,15 @@ export const i18nNavigation = {
   },
 };
 
+export const i18nPagination = {
+  hiddenPaginationTitle: {
+    de: 'Paginierung',
+    en: 'Pagination',
+    fr: 'Pagination',
+    it: 'Impaginazione',
+  },
+};
+
 export const i18nPublicationFilters = {
   publicationTopicsLabel: {
     de: 'Publikationsthema',
@@ -78,6 +87,12 @@ export const i18nA11y = {
     fr: 's\'ouvre dans une nouvelle fenêtre.',
     it: 'si apre in una nuova finestra.',
   },
+  playVideoText: {
+    de: 'Video mit dem Titel «{{title}}» laden und abspielen.',
+    en: 'Video mit dem Titel «{{title}}» laden und abspielen (EN).',
+    fr: 'Video mit dem Titel «{{title}}» laden und abspielen (FR).',
+    it: 'Video mit dem Titel «{{title}}» laden und abspielen (IT).',
+  },
   socialLinks: {
     facebook: {
       de: 'Folgen Sie uns auf Facebook',
@@ -103,5 +118,26 @@ export const i18nA11y = {
       fr: 'Suivez-nous sur Twitter',
       it: 'Seguici su Twitter',
     },
+  },
+};
+
+export const i18nConsent = {
+  buttonTextOpenCookieSettings: {
+    de: 'Cookie-Einstellungen',
+    en: 'Cookie-Settings',
+    fr: 'Cookie-Einstellungen (FR)',
+    it: 'Cookie-Einstellungen (IT)',
+  },
+  messageVideo: {
+    de: 'Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können.',
+    en: 'Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können. (EN)',
+    fr: 'Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können. (FR)',
+    it: 'Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können. (IT)',
+  },
+  titleExternalContent: {
+    de: 'Externer Inhalt',
+    en: 'External content',
+    fr: 'Contenu externe',
+    it: 'Ccontenuto esterno',
   },
 };

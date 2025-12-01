@@ -1,7 +1,7 @@
 'use client';
 
 import React, {
-  Fragment, useEffect, useRef,
+  forwardRef, Fragment, useEffect, useRef,
 } from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/Button/Button.module.scss';
@@ -32,8 +32,9 @@ type BaseWrapperProps = {
 type ContentProps = {
   iconInlineStart?: keyof typeof Icon | undefined;
   iconInlineEnd?: keyof typeof Icon | undefined;
-  element: 'button' | 'link';
+  element: 'button' | 'link' | 'text';
   text: string;
+  classNameLinkText?: string;
 }
 
 type IconProps = BaseWrapperProps & {
@@ -59,6 +60,10 @@ type LinkProps = BaseProps & {
   pageLanguage: Config['locale'];
 };
 
+type TextProps = BaseProps & {
+  element: 'text';
+};
+
 type ButtonPlayProps = ButtonProps & {
   style: 'buttonPlay';
   ariaLabel: '';
@@ -68,7 +73,8 @@ export type InterfaceButtonPropTypes =
   | ButtonProps
   | LinkProps
   | ButtonPlayProps
-  | IconProps;
+  | IconProps
+  | TextProps;
 
 // TODOs
 // - Integrate tracking events or necessary data attributes
@@ -79,6 +85,7 @@ const buttonLinkContent = ({
   text,
   iconInlineEnd,
   element,
+  classNameLinkText,
 }: ContentProps): React.JSX.Element => (
   <Fragment>
     {iconInlineStart && (
@@ -88,7 +95,10 @@ const buttonLinkContent = ({
     )}
     {
       text && (
-        <span className={styles.innerText}>
+        <span className={[
+          styles.innerText,
+          classNameLinkText,
+        ].join(' ')}>
           <SafeHtml
             as='span'
             html={text}
@@ -106,7 +116,7 @@ const buttonLinkContent = ({
   </Fragment>
 );
 
-export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
+export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((props, ref) => {
   const {
     ariaControls,
     ariaCurrent,
@@ -125,14 +135,28 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     text,
     onClick,
     className,
+    classNameLinkText,
     isActive,
   } = props;
 
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const internalButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Merge the internal and external refs
+  useEffect(() => {
+    if (!ref) {
+      return;
+    }
+
+    if (typeof ref === 'function') {
+      ref(internalButtonRef.current);
+    } else {
+      ref.current = internalButtonRef.current;
+    }
+  }, [ref]);
 
   useEffect(() => {
-    if (autoFocus && buttonRef.current) {
-      buttonRef.current.focus();
+    if (autoFocus && internalButtonRef.current) {
+      internalButtonRef.current.focus();
     }
   }, [autoFocus]);
 
@@ -205,6 +229,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
         prefetch={prefetch}
       >
         {buttonLinkContent({
+          classNameLinkText,
           element: 'link',
           iconInlineEnd,
           iconInlineStart,
@@ -223,7 +248,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     // Render a proper button
     return (
       <button
-        ref={buttonRef}
+        ref={internalButtonRef}
         aria-current={ariaCurrent}
         aria-controls={ariaControls}
         aria-label={ariaLabel}
@@ -246,6 +271,7 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
         }
 
         {buttonLinkContent({
+          classNameLinkText,
           element: 'button',
           iconInlineEnd,
           iconInlineStart,
@@ -255,6 +281,32 @@ export const Button = (props: InterfaceButtonPropTypes): React.JSX.Element => {
     );
   }
 
+  // Render text only. Applicable in e.g. in teaser elements where the
+  // link is on the wrapper element.
+  if (element === 'text') {
+
+    return (
+      <span
+        className={classes({
+          colorMode,
+          isActive,
+          style,
+        })}
+        data-testid='link'
+      >
+        {buttonLinkContent({
+          classNameLinkText,
+          element: 'link',
+          iconInlineEnd,
+          iconInlineStart,
+          text,
+        })}
+      </span>
+    );
+  }
+
   return <Fragment />;
 
-};
+});
+
+Button.displayName = 'Button';

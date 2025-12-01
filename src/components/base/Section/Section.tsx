@@ -3,32 +3,27 @@ import { cva } from 'cva';
 import styles from '@/components/base/Section/Section.module.scss';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
-import {
-  FilterList,
-  InterfaceFilterListPropTypes,
-} from '@/components/base/FilterList/FilterList';
 
 export type InterfaceSectionPropTypes = {
   className?: string;
-  title: string;
+  title?: string;
   subtitle?: string;
-  filters?: {
-    filterListItems: InterfaceFilterListPropTypes['filterListItems'],
-    onValueChange?: InterfaceFilterListPropTypes['onValueChange'],
-  };
-  children: React.ReactNode;
+  children?: React.ReactNode;
   colorMode: ColorMode;
-  showTopLine: boolean;
+  showTopLine?: boolean;
+  fullBleed?: boolean;
+  additionalStickyContent?: React.ReactNode;
 };
 
 export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
   className,
   title,
   subtitle,
-  filters,
   children,
   colorMode,
   showTopLine,
+  fullBleed,
+  additionalStickyContent,
 }, ref) => {
   const sectionClasses = cva([
     styles.section,
@@ -40,6 +35,14 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
         light: [styles.light],
         white: [styles.white],
       },
+      fullBleed: {
+        false: undefined,
+        true: [styles.fullBleed],
+      },
+      title: {
+        false: [styles.noTitle],
+        true: undefined,
+      },
     },
   });
 
@@ -48,24 +51,27 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
       ref={ref}
       className={sectionClasses({
         colorMode,
+        fullBleed,
+        title: title !== undefined,
       })}
     >
-      {filters
-        ? <div className={styles.titleWithFilter}>
+      {!additionalStickyContent && title &&
+        <SafeHtml
+          as='h2'
+          className={styles.title}
+          html={title}
+        />
+      }
+
+      {additionalStickyContent && title &&
+        <div className={styles.additionalStickyContent}>
           <SafeHtml
             as='h2'
             className={styles.title}
             html={title}
           />
-          <FilterList
-            filterListItems={filters.filterListItems}
-          />
+          {additionalStickyContent}
         </div>
-        : <SafeHtml
-          as='h2'
-          className={styles.title}
-          html={title}
-        />
       }
 
       {subtitle &&

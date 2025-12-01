@@ -6,6 +6,8 @@ To prevent this behaviour for blocks which are allowed only once, we use this
 validation hook.
 */
 
+import { BlockSlug } from '@/blocks';
+
 /*
 
 CUMULATIVE:
@@ -21,7 +23,7 @@ invalid, if value contains A, B, C, D, E.
 export const validateUniqueBlocksCumulative = ({
   onlyAllowedOnceBlockTypes,
 }: {
-  onlyAllowedOnceBlockTypes: string[];
+  onlyAllowedOnceBlockTypes: BlockSlug[];
 }) => (value: unknown): true | string => {
   if (!Array.isArray(value)) {
     return true;
@@ -67,13 +69,13 @@ invalid, if value contains A, B, C, D, E, F, D.
 export const validateUniqueBlocksSingle = ({
   onlyAllowedOnceBlockTypes,
 }: {
-  onlyAllowedOnceBlockTypes: string[];
+  onlyAllowedOnceBlockTypes: BlockSlug[];
 }) => (value: unknown): true | string => {
   if (!Array.isArray(value)) {
     return true;
   }
 
-  const nonUniqueBlockTypes: string[] = [];
+  const nonUniqueBlockTypes: BlockSlug[] = [];
 
   onlyAllowedOnceBlockTypes.forEach((onlyAllowedOnceBlockType) => {
     const onlyAllowedOnceBlockCount = value.filter((block) => {
@@ -101,6 +103,32 @@ export const validateUniqueBlocksSingle = ({
     // payload error in this case? (block-level validation error message)
 
     return `Only 1 ${nonUniqueBlockTypes[0]} is allowed`;
+  }
+
+  return true;
+};
+
+export const validateUniqueBlocksCumulativeAndSingle = ({
+  singleBlockTypes,
+  cumulativeBlockTypes,
+}: {
+  singleBlockTypes: BlockSlug[];
+  cumulativeBlockTypes: BlockSlug[];
+}) => (value: unknown): true | string => {
+  const cumulative = validateUniqueBlocksCumulative({
+    onlyAllowedOnceBlockTypes: cumulativeBlockTypes,
+  })(value);
+
+  if (typeof cumulative === 'string') {
+    return cumulative;
+  }
+
+  const single = validateUniqueBlocksSingle({
+    onlyAllowedOnceBlockTypes: singleBlockTypes,
+  })(value);
+
+  if (typeof single === 'string') {
+    return single;
   }
 
   return true;

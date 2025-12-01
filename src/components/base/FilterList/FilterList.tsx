@@ -40,7 +40,7 @@ export const FilterList = ({
           labelText={filter.labelText}
           name={filter.name}
           type={filter.type}
-          onValueChange={onValueChange}
+          onValueChangeAction={onValueChange}
         />
       </li>
     ))}

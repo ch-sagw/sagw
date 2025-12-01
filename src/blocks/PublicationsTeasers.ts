@@ -1,7 +1,5 @@
-import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
-import {
-  rte1, rte2,
-} from '@/field-templates/rte';
+import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
+import { rte1 } from '@/field-templates/rte';
 import { Block } from 'payload';
 
 // Example: Activities
@@ -14,31 +12,7 @@ export const PublicationsTeasersBlock = {
     rte1({
       name: 'title',
     }),
-    {
-      access: fieldAccessNonLocalizableField,
-      admin: {
-        description: 'Do you want to add a link to the Publications overview page? Note: This link will not be shown on project detail pages.',
-      },
-      defaultValue: 'no',
-      name: 'link',
-      options: [
-        {
-          label: 'No',
-          value: 'no',
-        },
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-      ],
-      type: 'radio',
-    },
-    {
-      ...rte2({
-        adminCondition: (_, siblingData): boolean => siblingData.link === 'yes',
-        name: 'linkText',
-      }),
-    },
+    fieldsLinkInternalWithToggle(),
     {
       admin: {
         hidden: true,

@@ -1,5 +1,6 @@
 import type { AccessArgs } from 'payload';
 import {
+  isMagazineEditor,
   isSuperAdmin, isTenantAdmin,
 } from '@/collections/Plc/Users/roles';
 
@@ -13,8 +14,14 @@ const superAdminAccess = ({
   req,
 }: AccessArgs): boolean => isSuperAdmin(req);
 
+// Allow super-admin, tenant-admin, and magazine-editor to set tenant field
+// This matches the roles that can create pages
+const tenantFieldCreateAccess = ({
+  req,
+}: AccessArgs): boolean => isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req);
+
 export const tenantsAccess = {
-  create: superAdminAccess,
+  create: tenantFieldCreateAccess,
   delete: superAdminAccess,
   read: allAccess,
   update: allAccess,

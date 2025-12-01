@@ -42,6 +42,7 @@
     ".next/types/**/*.ts",
     "lint/*.mjs",
     ".storybook/*.ts",
+    ".storybook/*.tsx",
     ".lintstagedrc.js",
     "convenience/generate-component/index.ts"
   ],

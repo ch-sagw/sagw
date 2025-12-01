@@ -153,7 +153,7 @@ export const LotsOfItems: StrictStory = {
       Minimal,
       MinimalWithoutTag,
     ],
-    paginationTitle: 'Pagination',
+    pageLanguage: 'de',
     title: 'News',
   },
 };
@@ -170,7 +170,7 @@ export const FewItems: StrictStory = {
       Minimal,
       MinimalWithoutTag,
     ],
-    paginationTitle: 'Pagination',
+    pageLanguage: 'de',
     title: 'Latest News',
   },
 };

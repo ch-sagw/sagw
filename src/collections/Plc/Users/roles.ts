@@ -122,9 +122,9 @@ const isUserRolelUser = (req: PayloadRequest): boolean => Boolean(req.user?.role
 // combined roles checks
 // ########################################################################
 export const isSuperAdmin = (req: PayloadRequest): boolean => isUserRoleAdmin(req);
-export const isTenantAdmin = (req: PayloadRequest): boolean => isUserRolelUser(req) && hasAccessOnRole(req, 'tenant-admin');
-export const isMagazineEditor = (req: PayloadRequest): boolean => isUserRolelUser(req) && hasAccessOnRole(req, 'editor-magazine');
-export const isTranslator = (req: PayloadRequest): boolean => isUserRolelUser(req) && hasAccessOnRole(req, 'translator');
+export const isTenantAdmin = (req: PayloadRequest): boolean => isUserRolelUser(req) && hasAccessOnRole(req, tenantRoles.admin);
+export const isMagazineEditor = (req: PayloadRequest): boolean => isUserRolelUser(req) && hasAccessOnRole(req, tenantRoles.editorMagazine);
+export const isTranslator = (req: PayloadRequest): boolean => isUserRolelUser(req) && hasAccessOnRole(req, tenantRoles.translator);
 
 // ########################################################################
 // display helpers

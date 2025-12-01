@@ -1,8 +1,16 @@
 import {
   Config, EventDetailPage,
+  Team,
 } from '@/payload-types';
 import configPromise from '@/payload.config';
-import { getPayload } from 'payload';
+import {
+  CollectionSlug, DataFromCollectionSlug, getPayload,
+  Sort,
+} from 'payload';
+
+// #########################################################################
+// Event Detail pages
+// #########################################################################
 
 interface InterfaceFetchEventDetailPagesProps {
   limit?: number;
@@ -30,6 +38,11 @@ export const fetchEventDetailPages = async ({
     pagination: false,
     sort: 'eventDetails.date',
     where: {
+      /* eslint-disable @typescript-eslint/naming-convention */
+      _status: {
+      /* eslint-enable @typescript-eslint/naming-convention */
+        equals: 'published',
+      },
       tenant: {
         equals: tenant,
       },
@@ -54,4 +67,96 @@ export const fetchEventDetailPages = async ({
   }
 
   return filteredDocs;
+};
+
+// #########################################################################
+// Generic Detail Pages
+// #########################################################################
+
+interface InterfaceFetchDetailPagesProps {
+  limit?: number;
+  language: Config['locale'],
+  tenant: string,
+  collection: CollectionSlug;
+  sort: Sort,
+}
+
+export const fetchDetailPages = async ({
+  limit,
+  language,
+  tenant,
+  collection,
+  sort,
+}: InterfaceFetchDetailPagesProps): Promise<DataFromCollectionSlug<CollectionSlug>[]> => {
+
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  const magazinePages = await payload.find({
+    collection,
+    depth: 0,
+    limit,
+    locale: language,
+    pagination: false,
+    sort,
+    where: {
+      /* eslint-disable @typescript-eslint/naming-convention */
+      _status: {
+      /* eslint-enable @typescript-eslint/naming-convention */
+        equals: 'published',
+      },
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  return magazinePages.docs;
+};
+
+// #########################################################################
+// Teams / People
+// #########################################################################
+
+interface InterfaceFetchPeopleProps {
+  team: string | Team;
+  language: Config['locale'];
+}
+
+export const fetchTeam = async ({
+  team,
+  language,
+}: InterfaceFetchPeopleProps): Promise<Team | undefined> => {
+  let teamId;
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  // if team is an object, we can get people from that. if not, we need
+  // to fetch the team first
+  if (typeof team === 'object') {
+    teamId = team.id;
+  } else {
+    teamId = team;
+  }
+
+  if (!teamId) {
+    return undefined;
+  }
+
+  // collect promises for fetching people
+  const fetchedTeam = await payload.findByID({
+    collection: 'teams',
+    depth: 1,
+    id: teamId,
+    locale: language,
+  });
+
+  if (typeof fetchedTeam === 'object') {
+    return fetchedTeam as Team;
+  }
+
+  return undefined;
+
 };

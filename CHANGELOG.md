@@ -1,5 +1,121 @@
 # Changelog
 
+## [0.24.0](https://github.com/ch-sagw/sagw/compare/v0.23.1...v0.24.0) (2025-11-25)
+
+
+### Features
+
+* **be:** add editions overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add institutes overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add magazine overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add magazine teaser ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add national dictionaries overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add network teaser ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add people overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add projects overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **be:** add projects teaser ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add editions overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add generic overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add generic teaser ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add generic teaser component ([e8effcd](https://github.com/ch-sagw/sagw/commit/e8effcd651fa956f005cd110cef7d0159282a7d9))
+* **fe:** add institutes overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add magazine overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add magazine teaser ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add national dictionaries overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add network teaser ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add people overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add projects overview ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+* **fe:** add projects teaser ([4f7c0c0](https://github.com/ch-sagw/sagw/commit/4f7c0c01de571933a1c46d4b8b8c8fe4363e784e))
+
+
+### Bug Fixes
+
+* **be:** adoptions regarding access model review ([bc1a95a](https://github.com/ch-sagw/sagw/commit/bc1a95ad4a3d86f578ad90fd1a60db8129079d3b))
+* **be:** adoptions regarding cms3 review ([bc1a95a](https://github.com/ch-sagw/sagw/commit/bc1a95ad4a3d86f578ad90fd1a60db8129079d3b))
+
+
+### Test
+
+* **be:** add accessive automated tests for access model ([bc1a95a](https://github.com/ch-sagw/sagw/commit/bc1a95ad4a3d86f578ad90fd1a60db8129079d3b))
+
+## [0.23.1](https://github.com/ch-sagw/sagw/compare/v0.23.0...v0.23.1) (2025-11-18)
+
+
+### Bug Fixes
+
+* manually bump vercel dep ([a40277d](https://github.com/ch-sagw/sagw/commit/a40277db7d78684efc386267b6d93f41daeee07e))
+* revert jsdom to version 27.0.0 ([bddcc83](https://github.com/ch-sagw/sagw/commit/bddcc83f409da9cc42b2d78de78778c3bf6e6c8e))
+
+## [0.23.0](https://github.com/ch-sagw/sagw/compare/v0.22.3...v0.23.0) (2025-11-18)
+
+
+### Chore
+
+* **deps-dev:** bump the development-dependencies group across 1 directory with 18 updates ([f015d7f](https://github.com/ch-sagw/sagw/commit/f015d7f81337ab2972f2cf2284691e93e68ace15))
+* **deps-dev:** bump the development-dependencies group across 1 directory with 18 updates ([#554](https://github.com/ch-sagw/sagw/issues/554)) ([f015d7f](https://github.com/ch-sagw/sagw/commit/f015d7f81337ab2972f2cf2284691e93e68ace15))
+* **deps:** bump the production-dependencies group across 1 directory with 20 updates ([#579](https://github.com/ch-sagw/sagw/issues/579)) ([9fe1d9a](https://github.com/ch-sagw/sagw/commit/9fe1d9a123296509ff9cd520fb898aac5005d7fa))
+
+
+### Documentation
+
+* add docs for navigation structure ([a83a2c4](https://github.com/ch-sagw/sagw/commit/a83a2c4c526937f355b1b281347f0d7c1a424f01))
+
+
+### Features
+
+* adding copyright sign and year to copyright text ([4f183c5](https://github.com/ch-sagw/sagw/commit/4f183c5b30d66a62e8ba07e43a7333b445e8c00d))
+* **be:** add cookie-settings link to footer ([09a61c3](https://github.com/ch-sagw/sagw/commit/09a61c32fdb1f0ef4f8dcb26dc31ea2e90a2ebeb))
+* **be:** add hero component ([c7486c2](https://github.com/ch-sagw/sagw/commit/c7486c20cdb9a3d29d881a83697fbde19139efb5))
+* **be:** create users with all possible roles in seed ([26e266d](https://github.com/ch-sagw/sagw/commit/26e266ddcbb53dd1f2f019aef9f9f64c3954b00a))
+* **be:** implement access control for assets ([26e266d](https://github.com/ch-sagw/sagw/commit/26e266ddcbb53dd1f2f019aef9f9f64c3954b00a))
+* **be:** implement access control for global and 18n content ([26e266d](https://github.com/ch-sagw/sagw/commit/26e266ddcbb53dd1f2f019aef9f9f64c3954b00a))
+* **be:** implement access control for hero animation field ([26e266d](https://github.com/ch-sagw/sagw/commit/26e266ddcbb53dd1f2f019aef9f9f64c3954b00a))
+* **be:** implement access control for tenants ([26e266d](https://github.com/ch-sagw/sagw/commit/26e266ddcbb53dd1f2f019aef9f9f64c3954b00a))
+* **be:** implement access control for translator role ([26e266d](https://github.com/ch-sagw/sagw/commit/26e266ddcbb53dd1f2f019aef9f9f64c3954b00a))
+* **be:** implement block level access control ([26e266d](https://github.com/ch-sagw/sagw/commit/26e266ddcbb53dd1f2f019aef9f9f64c3954b00a))
+* **be:** implement page level access control ([26e266d](https://github.com/ch-sagw/sagw/commit/26e266ddcbb53dd1f2f019aef9f9f64c3954b00a))
+* **be:** implement status message in backend ([4e248b9](https://github.com/ch-sagw/sagw/commit/4e248b9a46c9cbb368ac046a84d25f2494888097))
+* **be:** implement users access control ([26e266d](https://github.com/ch-sagw/sagw/commit/26e266ddcbb53dd1f2f019aef9f9f64c3954b00a))
+* **be:** integrate consent banner and overlay into backend ([09a61c3](https://github.com/ch-sagw/sagw/commit/09a61c32fdb1f0ef4f8dcb26dc31ea2e90a2ebeb))
+* **fe:** add breadcrumb component ([c7486c2](https://github.com/ch-sagw/sagw/commit/c7486c20cdb9a3d29d881a83697fbde19139efb5))
+* **fe:** add component for consent banner ([09a61c3](https://github.com/ch-sagw/sagw/commit/09a61c32fdb1f0ef4f8dcb26dc31ea2e90a2ebeb))
+* **fe:** add component for consent overlay ([09a61c3](https://github.com/ch-sagw/sagw/commit/09a61c32fdb1f0ef4f8dcb26dc31ea2e90a2ebeb))
+* **fe:** add cookie-settings link to footer ([09a61c3](https://github.com/ch-sagw/sagw/commit/09a61c32fdb1f0ef4f8dcb26dc31ea2e90a2ebeb))
+* **fe:** add hero component ([c7486c2](https://github.com/ch-sagw/sagw/commit/c7486c20cdb9a3d29d881a83697fbde19139efb5))
+* **fe:** implement status message in frontend ([4e248b9](https://github.com/ch-sagw/sagw/commit/4e248b9a46c9cbb368ac046a84d25f2494888097))
+* setting voice over list workaround to position absolute ([3db1584](https://github.com/ch-sagw/sagw/commit/3db1584e8baef31e2398ac966aa8dd02250f2d8b))
+* use rte2 where appropriate ([a83a2c4](https://github.com/ch-sagw/sagw/commit/a83a2c4c526937f355b1b281347f0d7c1a424f01))
+
+
+### Bug Fixes
+
+* adoptions regarding cms3 review ([a83a2c4](https://github.com/ch-sagw/sagw/commit/a83a2c4c526937f355b1b281347f0d7c1a424f01))
+* migrate rte2 to rte3 and add new rte2 config ([a83a2c4](https://github.com/ch-sagw/sagw/commit/a83a2c4c526937f355b1b281347f0d7c1a424f01))
+* migrate rte3 to rte4 ([a83a2c4](https://github.com/ch-sagw/sagw/commit/a83a2c4c526937f355b1b281347f0d7c1a424f01))
+
+
+### Refactor
+
+* replacing line animation for text links ([3db1584](https://github.com/ch-sagw/sagw/commit/3db1584e8baef31e2398ac966aa8dd02250f2d8b))
+
+
+### Style
+
+* changin rte ul list style type to square ([3db1584](https://github.com/ch-sagw/sagw/commit/3db1584e8baef31e2398ac966aa8dd02250f2d8b))
+* fixing issue with css color vars and theme mixins ([3db1584](https://github.com/ch-sagw/sagw/commit/3db1584e8baef31e2398ac966aa8dd02250f2d8b))
+* fixing tiny issue with link line animation ([3db1584](https://github.com/ch-sagw/sagw/commit/3db1584e8baef31e2398ac966aa8dd02250f2d8b))
+* fixing voice over output of li elements with list-style: none ([3db1584](https://github.com/ch-sagw/sagw/commit/3db1584e8baef31e2398ac966aa8dd02250f2d8b))
+* modify order and alignment of footer elements ([4f183c5](https://github.com/ch-sagw/sagw/commit/4f183c5b30d66a62e8ba07e43a7333b445e8c00d))
+* removing padding block start for consecutive sections of same style ([3db1584](https://github.com/ch-sagw/sagw/commit/3db1584e8baef31e2398ac966aa8dd02250f2d8b))
+
+
+### Test
+
+* add test for url validation with path segment ([a83a2c4](https://github.com/ch-sagw/sagw/commit/a83a2c4c526937f355b1b281347f0d7c1a424f01))
+* adding new reference screenshots ([3db1584](https://github.com/ch-sagw/sagw/commit/3db1584e8baef31e2398ac966aa8dd02250f2d8b))
+* adding new reference screenshots ([4f183c5](https://github.com/ch-sagw/sagw/commit/4f183c5b30d66a62e8ba07e43a7333b445e8c00d))
+* write be and fe tests for consent overlay and banner ([09a61c3](https://github.com/ch-sagw/sagw/commit/09a61c32fdb1f0ef4f8dcb26dc31ea2e90a2ebeb))
+
 ## [0.22.3](https://github.com/ch-sagw/sagw/compare/v0.22.2...v0.22.3) (2025-10-29)
 
 

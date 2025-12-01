@@ -13,40 +13,40 @@ D, E, F
 
 */
 
-export const excludeBlocksFilterCumulative = <T extends string>(
-  {
-    allBlockTypes,
-    onlyAllowedOnceBlockTypes,
-  }: {
-    allBlockTypes: readonly T[];
-    onlyAllowedOnceBlockTypes: string[];
-  },
-) => ({
-    siblingData,
-  }: any): T[] => {
-    try {
-      const content = (siblingData as any)?.content;
+import { BlockSlug } from '@/blocks';
 
-      if (!content || !Array.isArray(content)) {
-        return allBlockTypes as T[];
-      }
+export const excludeBlocksFilterCumulative = ({
+  allBlockTypes,
+  onlyAllowedOnceBlockTypes,
+}: {
+    allBlockTypes: BlockSlug[];
+    onlyAllowedOnceBlockTypes: BlockSlug[];
+  }) => ({
+  siblingData,
+}: any): BlockSlug[] => {
+  try {
+    const content = siblingData?.content;
 
-      const hasAllowedOnceBlockTypes = content.some((block: any) => block &&
+    if (!content || !Array.isArray(content)) {
+      return allBlockTypes;
+    }
+
+    const hasAllowedOnceBlockTypes = content.some((block) => block &&
         typeof block === 'object' &&
         'blockType' in block &&
-        onlyAllowedOnceBlockTypes.includes(block.blockType as any));
+        onlyAllowedOnceBlockTypes.includes(block.blockType));
 
-      if (!hasAllowedOnceBlockTypes) {
-        return allBlockTypes as T[];
-      }
-
-      return allBlockTypes.filter((blockType) => !onlyAllowedOnceBlockTypes.includes(blockType as any)) as T[];
-    } catch (error) {
-      console.error('Error in excludeBlocksFilterCumulative:', error);
-
-      return allBlockTypes as T[];
+    if (!hasAllowedOnceBlockTypes) {
+      return allBlockTypes;
     }
-  };
+
+    return allBlockTypes.filter((blockType) => !onlyAllowedOnceBlockTypes.includes(blockType));
+  } catch (error) {
+    console.error('Error in excludeBlocksFilterCumulative:', error);
+
+    return allBlockTypes;
+  }
+};
 
 /*
 ------------------------------------------------------------------------------
@@ -62,41 +62,39 @@ B, C, D, E, F
 
 */
 
-export const excludeBlocksFilterSingle = <T extends string>(
-  {
-    allBlockTypes,
-    onlyAllowedOnceBlockTypes,
-  }: {
-    allBlockTypes: readonly T[];
-    onlyAllowedOnceBlockTypes: string[];
-  },
-) => ({
-    siblingData,
-  }: any): T[] => {
-    try {
-      const content = siblingData?.content;
+export const excludeBlocksFilterSingle = ({
+  allBlockTypes,
+  onlyAllowedOnceBlockTypes,
+}: {
+    allBlockTypes: BlockSlug[];
+    onlyAllowedOnceBlockTypes: BlockSlug[];
+  }) => ({
+  siblingData,
+}: any): BlockSlug[] => {
+  try {
+    const content = siblingData?.content;
 
-      if (!content || !Array.isArray(content)) {
-        return allBlockTypes as T[];
-      }
-
-      const foundBlocks: string[] = [];
-
-      onlyAllowedOnceBlockTypes.forEach((blockType) => {
-        content.forEach((block: any) => {
-          if (block && typeof block === 'object' && 'blockType' in block) {
-            if (block.blockType === blockType) {
-              foundBlocks.push(block.blockType);
-            }
-          }
-        });
-      });
-
-      return allBlockTypes.filter((blockType) => !foundBlocks.includes(blockType as any)) as T[];
-    } catch (error) {
-      console.error('Error in excludeBlocksFilterSingle:', error);
-
-      return allBlockTypes as T[];
+    if (!content || !Array.isArray(content)) {
+      return allBlockTypes as BlockSlug[];
     }
-  };
+
+    const foundBlocks: BlockSlug[] = [];
+
+    onlyAllowedOnceBlockTypes.forEach((blockType) => {
+      content.forEach((block) => {
+        if (block && typeof block === 'object' && 'blockType' in block) {
+          if (block.blockType === blockType) {
+            foundBlocks.push(block.blockType);
+          }
+        }
+      });
+    });
+
+    return allBlockTypes.filter((blockType) => !foundBlocks.includes(blockType));
+  } catch (error) {
+    console.error('Error in excludeBlocksFilterSingle:', error);
+
+    return allBlockTypes;
+  }
+};
 

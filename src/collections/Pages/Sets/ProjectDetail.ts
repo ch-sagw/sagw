@@ -32,12 +32,16 @@ const contentBlocks: BlockSlug[] = [
 const uniqueBlocks: BlockSlug[] = [
   'downloadsBlock',
   'linksBlock',
+  'eventsTeasersBlock',
+  'newsTeasersBlock',
+  'publicationsTeasersBlock',
 ];
 
 export const ProjectDetailPage: CollectionConfig = {
   access: pageAccess,
   admin: {
     group: 'Pages',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
@@ -62,13 +66,13 @@ export const ProjectDetailPage: CollectionConfig = {
             {
               fields: [
                 {
-                  ...rte1({
+                  ...rte2({
                     adminDescription: 'This text will be used as text for the teasers on the overview page and in teaser blocks.',
                     name: 'teaserText',
                   }),
                 },
                 {
-                  ...rte2({
+                  ...rte1({
                     adminDescription: 'This text will be used as link-text for the teasers on the overview page and in teaser blocks.',
                     name: 'linkText',
                   }),

@@ -27,6 +27,7 @@ const contentBlocks: BlockSlug[] = [
 const uniqueBlocks: BlockSlug[] = [
   'downloadsBlock',
   'linksBlock',
+  'publicationsTeasersBlock',
 ];
 
 export const PublicationDetailPage: CollectionConfig = {
@@ -39,6 +40,7 @@ export const PublicationDetailPage: CollectionConfig = {
       '_status',
     ],
     group: 'Pages',
+    hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
