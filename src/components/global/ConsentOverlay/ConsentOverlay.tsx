@@ -2,9 +2,7 @@ import React, {
   forwardRef, useEffect, useState,
 } from 'react';
 import styles from '@/components/global/ConsentOverlay/ConsentOverlay.module.scss';
-import {
-  Config, InterfaceConsentOverlay,
-} from '@/payload-types';
+import { InterfaceConsentOverlay } from '@/payload-types';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { Button } from '@/components/base/Button/Button';
@@ -14,9 +12,10 @@ import { Icon } from '@/icons';
 import { i18nA11y } from '@/i18n/content';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { setCookieConsent } from '@/components/helpers/cookies';
+import { useLocale } from 'next-intl';
+import { TypedLocale } from 'payload';
 
 export type InterfaceConsentOverlayPropTypes = {
-  pageLanguage: Config['locale'];
   onClose?: () => void;
   onConsentGiven?: () => void;
 } & InterfaceConsentOverlay;
@@ -29,10 +28,10 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
   necessaryCookies,
   analyticsPerformance,
   externalContent,
-  pageLanguage,
   onClose,
   onConsentGiven,
 }, ref): React.JSX.Element => {
+  const locale = useLocale() as TypedLocale;
   const [
     isOpen,
     setIsOpen,
@@ -211,7 +210,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
             data-testid='consent-overlay-close'
             className={styles.closeButton}
             onClick={handleAcceptSelection}
-            aria-label={i18nA11y.closeDialog[pageLanguage]}
+            aria-label={i18nA11y.closeDialog[locale]}
           >
             <Icon name='close' />
           </button>

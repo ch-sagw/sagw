@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import styles from '@/components/blocks/ProjectsTeaser/ProjectsTeaser.module.scss';
 import {
-  Config,
   InterfaceProjectTeasersBlock,
   ProjectDetailPage,
 } from '@/payload-types';
@@ -13,7 +12,6 @@ import { Icon } from '@/icons';
 
 export type InterfaceProjectsTeaserPropTypes = {
   pages: ProjectDetailPage[];
-  pageLanguage: Config['locale'];
 } & InterfaceProjectTeasersBlock;
 
 export const ProjectsTeaserComponent = ({
@@ -22,7 +20,6 @@ export const ProjectsTeaserComponent = ({
   alignement,
   optionalLink,
   pages,
-  pageLanguage,
 }: InterfaceProjectsTeaserPropTypes): React.JSX.Element => (
   <Fragment>
     <Section
@@ -39,7 +36,6 @@ export const ProjectsTeaserComponent = ({
           style='text'
           colorMode='white'
           text={rteToHtml(optionalLink.link?.linkText)}
-          pageLanguage={pageLanguage}
           iconInlineStart={'arrowRight' as keyof typeof Icon}
           isActive={true}
           prefetch={true}
@@ -66,7 +62,6 @@ export const ProjectsTeaserComponent = ({
               type: 'internal',
             },
           ]}
-          pageLanguage={pageLanguage}
           type='generic'
         />
       ))}

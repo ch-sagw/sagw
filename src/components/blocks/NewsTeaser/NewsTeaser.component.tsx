@@ -5,7 +5,6 @@ import {
   InterfaceTeaserLinkListPropTypes, TeaserLinkList,
 } from '@/components/base/TeaserLinkList/TeaserLinkList';
 import { ColorMode } from '@/components/base/types/colorMode';
-import { Config } from '@/payload-types';
 import React from 'react';
 
 export type InterfaceNewsOverviewComponentPropTypes = Omit<
@@ -13,13 +12,11 @@ export type InterfaceNewsOverviewComponentPropTypes = Omit<
   'children' | 'colorMode'
 > & {
   items: InterfaceNewsListItemPropTypes[];
-  pageLanguage: Config['locale'];
   colorMode: ColorMode;
 };
 
 export const NewsTeaserComponent = (props: InterfaceNewsOverviewComponentPropTypes): React.JSX.Element => (
   <TeaserLinkList
-    pageLanguage={props.pageLanguage}
     colorMode={props.colorMode}
     title={props.title}
     allLink={props.allLink}

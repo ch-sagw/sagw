@@ -28,7 +28,6 @@ const eventListItem = <EventsListItem
     href: 'https://foo.bar',
     target: '_self' as const,
   }}
-  pageLanguage='de'
   text='SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem'
   key='some-key'
 />;
@@ -40,7 +39,6 @@ const downloadItem = <DownloadLinkItem
     href: 'https://foo.bar',
     target: '_blank',
   }}
-  pageLanguage='de'
   size='248 KB'
   title='Reglement über die Gewährung von Reisekostenbeiträgen'
   type='download'
@@ -85,7 +83,6 @@ export const NewsTeaser: StrictStory = {
       newsListItem,
     ],
     colorMode: 'light',
-    pageLanguage: 'de',
     title: 'News',
   },
 };
@@ -102,7 +99,6 @@ export const EventsTeaser: StrictStory = {
       eventListItem,
     ],
     colorMode: 'white',
-    pageLanguage: 'de',
     title: 'Events',
   },
 };
@@ -115,7 +111,6 @@ export const DownloadList: StrictStory = {
       downloadItem,
     ],
     colorMode: 'light',
-    pageLanguage: 'de',
     subtitle: 'Dieser Artikel ist Teil von folgender Bulletin-Ausgabe',
     title: 'Downloads',
   },
@@ -129,7 +124,6 @@ export const LinkList: StrictStory = {
       linkItem,
     ],
     colorMode: 'light',
-    pageLanguage: 'de',
     title: 'Links',
   },
 };

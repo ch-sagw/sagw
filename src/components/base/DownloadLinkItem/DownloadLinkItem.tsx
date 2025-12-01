@@ -6,6 +6,8 @@ import { formatDateToReadableString } from '@/components/helpers/date';
 import { Icon } from '@/icons';
 import { i18nA11y as internalI18nA11y } from '@/i18n/content';
 import Link from 'next/link';
+import { useLocale } from 'next-intl';
+import { TypedLocale } from 'payload';
 
 interface InterfaceDownloadLinkItemBaseProps {
   className?: string;
@@ -20,7 +22,6 @@ interface InterfaceDownloadItem extends InterfaceDownloadLinkItemBaseProps {
   type: 'download';
   format: string;
   size: string;
-  pageLanguage: string;
   date?: string;
   text?: never;
 }
@@ -30,7 +31,6 @@ interface InterfaceLinkItem extends InterfaceDownloadLinkItemBaseProps {
   text?: string;
   format?: never;
   size?: never;
-  pageLanguage?: never;
   date?: never;
 }
 
@@ -66,8 +66,8 @@ export const DownloadLinkItem = ({
   format,
   size,
   date,
-  pageLanguage,
 }: InterfaceDownloadLinkItemPropTypes): React.JSX.Element => {
+  const locale = useLocale() as TypedLocale;
   const itemClasses = cva([
     styles.item,
     className,
@@ -86,7 +86,7 @@ export const DownloadLinkItem = ({
     downloadText = getDownloadText({
       date,
       format,
-      locale: pageLanguage,
+      locale,
       size,
     });
     ariaLabelText = downloadText;
@@ -96,7 +96,7 @@ export const DownloadLinkItem = ({
 
   if (link.target === '_blank') {
     ariaLabel += `
-      ${internalI18nA11y.linkTarget[pageLanguage as keyof typeof internalI18nA11y.linkTarget]} ${internalI18nA11y.opensInNewWindow[pageLanguage as keyof typeof internalI18nA11y.linkTarget]}`;
+      ${internalI18nA11y.linkTarget[locale]} ${internalI18nA11y.opensInNewWindow[locale]}`;
   }
 
   return (

@@ -46,7 +46,6 @@ export const NewsOverview: StrictStory = {
       />
     )),
     colorMode: 'white',
-    pageLanguage: 'de',
     title: 'News',
   },
 };
@@ -62,13 +61,11 @@ export const EventsOverview: StrictStory = {
           href: 'https://foo.bar',
           target: '_self' as const,
         }}
-        pageLanguage='de'
         text='SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem'
         key={`event-${index}`}
       />
     )),
     colorMode: 'white',
-    pageLanguage: 'de',
     title: 'Events',
   },
 };

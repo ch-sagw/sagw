@@ -4,7 +4,6 @@ import Link from 'next/link';
 import styles from '@/components/base/GenericTeaser/GenericTeaser.module.scss';
 import { SafeHtml } from '../SafeHtml/SafeHtml';
 import { Button } from '../Button/Button';
-import { Config } from '@/payload-types';
 import { Icon } from '@/icons';
 
 type InterfaceLinkType = 'internal' | 'external' | 'mail' | 'phone';
@@ -18,7 +17,6 @@ export type InterfaceBaseTeaserProps = {
   title: string;
   texts?: string[];
   links: InterfaceGenericTeaserLink[];
-  pageLanguage: Config['locale'];
   type: 'institute' | 'network' | 'project' | 'magazine' | 'people' | 'generic';
   className?: string;
 };
@@ -33,12 +31,10 @@ type InterfaceGenericTeaserPropTypes =
 const renderLink = ({
   link,
   key,
-  lang,
   wrapper,
 }: {
   link: InterfaceGenericTeaserLink;
   key: number;
-  lang: Config['locale'];
   wrapper: string;
 }): React.JSX.Element | undefined => {
 
@@ -86,7 +82,6 @@ const renderLink = ({
       colorMode='light'
       style='text'
       text={link.text}
-      pageLanguage={lang}
       prefetch={true}
       iconInlineStart={icon
         ? icon as keyof typeof Icon
@@ -103,7 +98,6 @@ export const GenericTeaser = ({
   links,
   image,
   logo,
-  pageLanguage,
   type,
   className,
 }: InterfaceGenericTeaserPropTypes): React.JSX.Element => {
@@ -152,7 +146,6 @@ export const GenericTeaser = ({
       {links &&
         links.map((wrapperLink, key) => renderLink({
           key,
-          lang: pageLanguage,
           link: wrapperLink,
           wrapper: shouldWrapInLink
             ? 'a'

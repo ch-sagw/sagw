@@ -1,29 +1,31 @@
 import React, { Fragment } from 'react';
 import { EventsOverviewComponent } from '@/components/blocks/EventsOverview/EventsOverview.component';
 import {
-  Config, I18NGlobal, InterfaceEventsOverviewBlock,
+  I18NGlobal, InterfaceEventsOverviewBlock,
 } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { convertPayloadEventPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
 import { fetchEventDetailPages } from '@/data/fetch';
+import { getLocale } from 'next-intl/server';
+import { TypedLocale } from 'payload';
 
 export type InterfaceEventsOverviewPropTypes = {
-  language: Config['locale'];
   tenant: string;
   globalI18n: I18NGlobal;
 } & InterfaceEventsOverviewBlock;
 
 export const EventsOverview = async (props: InterfaceEventsOverviewPropTypes): Promise<React.JSX.Element> => {
+  const locale = (await getLocale()) as TypedLocale;
   const title = rteToHtml(props.title);
   const pages = await fetchEventDetailPages({
-    language: props.language,
+    language: locale,
     limit: 0,
     tenant: props.tenant,
   });
 
   const items = convertPayloadEventPagesToFeItems({
     globalI18n: props.globalI18n,
-    lang: props.language,
+    lang: locale,
     payloadPages: pages,
   });
 
@@ -34,7 +36,6 @@ export const EventsOverview = async (props: InterfaceEventsOverviewPropTypes): P
   return (
     <EventsOverviewComponent
       title={title}
-      pageLanguage={props.language}
       colorMode='white'
       items={items}
     />

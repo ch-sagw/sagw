@@ -80,7 +80,6 @@ export const DownloadsBlock: StrictStory = {
         },
       },
     ],
-    language: 'de',
     subtitle: simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe'),
     title: simpleRteConfig('Downloads'),
   },
@@ -91,7 +90,6 @@ export const DownloadsBlockWithoutLinkAndSubtitle: StrictStory = {
     blockType: 'downloadsBlock',
     customOrAuto: 'custom',
     downloads: DownloadsBlock.args.downloads,
-    language: 'de',
     title: simpleRteConfig('Downloads'),
   },
 };

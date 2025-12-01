@@ -61,7 +61,6 @@ const defaultArgs: ProjectsTeaserProps = {
       linkText: simpleRteConfig('Alle Artikel anzeigen'),
     },
   },
-  pageLanguage: 'de',
   pages: [
     {
       ...teaserBlock,

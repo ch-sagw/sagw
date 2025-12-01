@@ -1,25 +1,23 @@
 import React, { Fragment } from 'react';
 import {
-  getPayload, Where,
+  getPayload, TypedLocale, Where,
 } from 'payload';
 import configPromise from '@/payload.config';
 
 import { rteToHtml } from '@/utilities/rteToHtml';
-import {
-  Config,
-  InterfaceNewsTeasersBlock,
-} from '@/payload-types';
+import { InterfaceNewsTeasersBlock } from '@/payload-types';
 import { NewsTeaserComponent } from '@/components/blocks/NewsTeaser/NewsTeaser.component';
 import { convertPayloadNewsPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
 import { InterfaceSourcePage } from '@/app/(frontend)/RenderBlocks';
+import { getLocale } from 'next-intl/server';
 
 type InterfaceNewsTeaserPropTypes = {
-  language: Config['locale'];
   tenant: string;
   sourcePage: InterfaceSourcePage
 } & InterfaceNewsTeasersBlock;
 
 export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<React.JSX.Element> => {
+  const locale = (await getLocale()) as TypedLocale;
   const payload = await getPayload({
     config: configPromise,
   });
@@ -45,7 +43,7 @@ export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<R
     collection: 'newsDetailPage',
     depth: 1,
     limit: 3,
-    locale: props.language,
+    locale,
     pagination: false,
     sort: '-hero.date',
     where: queryRestraints,
@@ -64,7 +62,7 @@ export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<R
     };
   }
 
-  const items = convertPayloadNewsPagesToFeItems(newsPages, props.language);
+  const items = convertPayloadNewsPagesToFeItems(newsPages, locale);
 
   if (!items || items.length < 1) {
     return <Fragment></Fragment>;
@@ -76,7 +74,6 @@ export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<R
       title={title}
       allLink={allLink}
       items={items}
-      pageLanguage={props.language}
       colorMode={props.colorMode}
     />
   );

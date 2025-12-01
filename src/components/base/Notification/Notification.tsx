@@ -9,7 +9,6 @@ import styles from '@/components/base/Notification/Notification.module.scss';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { SafeHtml } from '../SafeHtml/SafeHtml';
 import { Button } from '@/components/base/Button/Button';
-import { Config } from '@/payload-types';
 
 type BaseNotification = {
   type: 'success' | 'error' | 'warn';
@@ -36,12 +35,10 @@ type LinkProps =
   | {
     linkHref: string;
     linkText: string;
-    pageLanguage: Config['locale'];
   }
   | {
     linkHref?: undefined;
     linkText?: undefined;
-    pageLanguage?: undefined;
   }
 
 export type InterfaceNotificationPropTypes = BaseNotification & ActionProps & LinkProps;
@@ -58,7 +55,6 @@ export const Notification = ({
   hideBorder,
   linkHref,
   linkText,
-  pageLanguage,
   hideIcon,
 }: InterfaceNotificationPropTypes): React.JSX.Element => {
   const elementRef = useRef<HTMLButtonElement | HTMLDivElement>(null);
@@ -162,7 +158,7 @@ export const Notification = ({
           />
         }
 
-        {(!actionText && (linkHref && linkText && pageLanguage)) &&
+        {(!actionText && (linkHref && linkText)) &&
           <Button
             className={styles.bottomLink}
             element='link'
@@ -170,7 +166,6 @@ export const Notification = ({
             colorMode='white'
             style='text'
             text={linkText}
-            pageLanguage={pageLanguage}
             iconInlineStart={'arrowRight' as keyof typeof Icon}
             prefetch={true}
           />

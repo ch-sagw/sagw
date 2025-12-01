@@ -6,13 +6,11 @@ import { Pagination } from '@/components/base/Pagination/Pagination';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { Section } from '@/components/base/Section/Section';
 import { usePagination } from '@/hooks/usePagination';
-import { Config } from '@/payload-types';
 
 export type InterfaceEventsNewsOverviewPropTypes = {
   children: React.ReactNode;
   title: string;
   colorMode: ColorMode;
-  pageLanguage: Config['locale'];
 }
 
 export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes): React.JSX.Element => {
@@ -20,7 +18,6 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
     title,
     colorMode,
     children,
-    pageLanguage,
   } = props;
 
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -56,7 +53,6 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
         className={styles.pagination}
         totalPages={totalPages}
         currentPage={currentPage}
-        language={pageLanguage}
         onPageChange={handlePageChange}
       />
     </Section>

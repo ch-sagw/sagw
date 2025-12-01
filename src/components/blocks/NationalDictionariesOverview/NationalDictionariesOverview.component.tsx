@@ -2,7 +2,7 @@
 
 import styles from '@/components/blocks/NationalDictionariesOverview/NationalDictionariesOverview.module.scss';
 import {
-  Config, InterfaceNationalDictionariesOverviewBlock, NationalDictionaryDetailPage,
+  InterfaceNationalDictionariesOverviewBlock, NationalDictionaryDetailPage,
 } from '@/payload-types';
 import React from 'react';
 import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
@@ -11,12 +11,10 @@ import { GenericOverview } from '@/components/base/GenericOverview/GenericOvervi
 
 export type InterfaceNationalDictionaryOverviewComponentPropTypes = {
   pages: NationalDictionaryDetailPage[];
-  pageLanguage: Config['locale'];
 } & InterfaceNationalDictionariesOverviewBlock;
 
 export const NationalDictionaryOverviewComponent = ({
   pages,
-  pageLanguage,
   moreInfoButtonText,
 }: InterfaceNationalDictionaryOverviewComponentPropTypes): React.JSX.Element => {
   const allItems = pages.map((item) => (
@@ -34,7 +32,6 @@ export const NationalDictionaryOverviewComponent = ({
           type: 'internal',
         },
       ]}
-      pageLanguage={pageLanguage}
       type='generic'
     />
   ));
@@ -42,7 +39,6 @@ export const NationalDictionaryOverviewComponent = ({
   return (
     <GenericOverview
       showPagination={true}
-      language={pageLanguage}
     >
       {allItems}
     </GenericOverview>

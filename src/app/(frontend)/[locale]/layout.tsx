@@ -1,9 +1,10 @@
 import 'server-only';
 import React from 'react';
-import './styles.scss';
-import { getPayload } from 'payload';
+import '../styles.scss';
+import {
+  getPayload, TypedLocale,
+} from 'payload';
 import configPromise from '@/payload.config';
-import { Config } from '@/payload-types';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { TenantProvider } from '@/app/providers/TenantProvider';
 import { getTenant } from '@/app/providers/TenantProvider.server';
@@ -15,6 +16,19 @@ import {
 } from '@/components/global/Footer/Footer';
 import { Metadata } from 'next';
 import { ConsentBanner } from '@/components/global/ConsentBanner/ConsentBanner';
+import {
+  hasLocale, NextIntlClientProvider,
+} from 'next-intl';
+import { routing } from '@/i18n/routing';
+import { notFound } from 'next/navigation';
+import { setRequestLocale } from 'next-intl/server';
+
+type InterfaceRootLayoutProps = {
+  children: React.ReactNode
+  params: Promise<{
+    locale: TypedLocale
+  }>
+}
 
 export const metadata: Metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -24,11 +38,18 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
   params,
-}: {
-  children: React.ReactElement;
-  params: Promise<{ lang: string }>
-}): Promise<React.JSX.Element> {
-  const lang = (await params).lang as Config['locale'];
+}: InterfaceRootLayoutProps): Promise<React.JSX.Element> {
+
+  const {
+    locale,
+  } = await params;
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
+  setRequestLocale(locale);
+
   const tenant = await getTenant();
   const payload = await getPayload({
     config: configPromise,
@@ -42,7 +63,7 @@ export default async function RootLayout({
     collection: 'homePage',
     depth: 1,
     limit: 1,
-    locale: lang,
+    locale,
     where: {
       tenant: {
         equals: tenant,
@@ -58,7 +79,7 @@ export default async function RootLayout({
     collection: 'header',
     depth: 1,
     limit: 1,
-    locale: lang,
+    locale,
     where: {
       tenant: {
         equals: tenant,
@@ -70,7 +91,7 @@ export default async function RootLayout({
     collection: 'footer',
     depth: 1,
     limit: 1,
-    locale: lang,
+    locale,
     where: {
       tenant: {
         equals: tenant,
@@ -114,7 +135,7 @@ export default async function RootLayout({
     collection: 'consent',
     depth: 1,
     limit: 1,
-    locale: lang,
+    locale,
     where: {
       tenant: {
         equals: tenant,
@@ -132,9 +153,6 @@ export default async function RootLayout({
 
   const headerProps: InterfaceHeaderPropTypes = {
     colorMode,
-
-    // TODO: get from parent
-    currentLang: 'de',
     logoLink: '/',
 
     // TODO: get from global i18n
@@ -152,10 +170,6 @@ export default async function RootLayout({
     legal: footerLegalData,
     metaNav: metanavData,
     navigation: navData,
-
-    // TODO: get from parent
-    pageLanguage: 'de',
-
     socialLinks: footerData.docs[0].socialLinks,
 
     // TODO
@@ -168,22 +182,24 @@ export default async function RootLayout({
   return (
     <html className='theme-sagw' lang='en'>
       <body>
+        <NextIntlClientProvider>
 
-        <Header
-          {...headerProps}
-        />
+          <Header
+            {...headerProps}
+          />
 
-        <main>
-          <TenantProvider tenant={tenant}>
-            {children}
-          </TenantProvider>
-        </main>
+          <main>
+            <TenantProvider tenant={tenant}>
+              {children}
+            </TenantProvider>
+          </main>
 
-        <Footer
-          {...footerProps}
-        />
+          <Footer
+            {...footerProps}
+          />
 
-        <ConsentBanner {...consentData.banner} />
+          <ConsentBanner {...consentData.banner} />
+        </NextIntlClientProvider>
 
       </body>
     </html >
