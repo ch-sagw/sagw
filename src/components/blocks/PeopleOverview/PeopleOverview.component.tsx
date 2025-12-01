@@ -50,10 +50,7 @@ export const PeopleOverviewComponent = ({
         className={styles.item}
         key={item.id}
         title={item.fullName}
-        texts={[
-          rteToHtml(team.name),
-          rteToHtml(item.function),
-        ]}
+        texts={[rteToHtml(team.name)]}
         links={links}
         pageLanguage={language}
         type='people'

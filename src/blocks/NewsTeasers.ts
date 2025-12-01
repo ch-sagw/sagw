@@ -1,3 +1,4 @@
+import { fieldsColorMode } from '@/field-templates/colorMode';
 import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
 import { rte1 } from '@/field-templates/rte';
 import { Block } from 'payload';
@@ -9,6 +10,11 @@ export const NewsTeasersBlock = {
     disableBlockName: true,
   },
   fields: [
+    fieldsColorMode({
+      dark: false,
+      light: true,
+      white: true,
+    }),
     rte1({
       name: 'title',
     }),

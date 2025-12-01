@@ -1091,6 +1091,7 @@ export interface InterfaceMagazineTeasersBlock {
  * via the `definition` "InterfaceNewsTeasersBlock".
  */
 export interface InterfaceNewsTeasersBlock {
+  colorMode: 'white' | 'light';
   title: {
     root: {
       type: string;
@@ -4899,6 +4900,7 @@ export interface InterfaceMagazineTeasersBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceNewsTeasersBlock_select".
  */
 export interface InterfaceNewsTeasersBlockSelect<T extends boolean = true> {
+  colorMode?: T;
   title?: T;
   optionalLink?:
     | T

@@ -40,8 +40,8 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
     toggleStates,
     setToggleStates,
   ] = useState<Record<string, boolean>>({
-    analytics: false,
-    external: false,
+    analytics: analyticsPerformance.toggleDefault === 'on',
+    external: externalContent.toggleDefault === 'on',
   });
 
   const [
