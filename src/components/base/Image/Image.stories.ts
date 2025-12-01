@@ -19,7 +19,9 @@ const defaultArgs: ImageProps = {
   height: 450,
   loading: 'lazy',
   performanceMark: '',
-  url: '/20071445109_e1a2b79633_6k.jpg',
+  // The url value coming from Payload will not contain the hostname.
+  // It is added here for Storybook only.
+  url: 'https://sagw-nu-localhost.gumlet.io/20071445109_e1a2b79633_6k.jpg',
   variant: 'content',
   width: 800,
 };
