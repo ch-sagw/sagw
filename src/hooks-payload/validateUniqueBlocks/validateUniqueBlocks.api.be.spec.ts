@@ -615,7 +615,8 @@ test('home allows 1 teaser block via API', async () => {
     const tenant = await payload.create({
       collection: 'tenants',
       data: {
-        name: `${new Date()}`,
+        name: `${(new Date())
+          .getTime()}`,
         slug: `${new Date()}`,
         title: `${new Date()}`,
       },
