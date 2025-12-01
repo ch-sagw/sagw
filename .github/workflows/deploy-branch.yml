@@ -58,7 +58,6 @@ jobs:
       - name: Test FE
         run: npm run test:fe:native:shard
         env:
-          NEXT_PUBLIC_GUMLET_URL: ${{ secrets.NEXT_PUBLIC_GUMLET_URL }}
           SHARD_INDEX: ${{ matrix.shardIndex }}
           SHARD_TOTAL: ${{ matrix.shardTotal }}
       - name: Upload blob report
