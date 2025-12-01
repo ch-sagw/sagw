@@ -22,6 +22,7 @@ import {
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
+import { NoJsScript } from '@/components/helpers/noJsScript';
 
 type InterfaceRootLayoutProps = {
   children: React.ReactNode
@@ -180,7 +181,11 @@ export default async function RootLayout({
   };
 
   return (
-    <html className='theme-sagw' lang='en'>
+    <html
+      className='theme-sagw no-js'
+      lang='en'
+    >
+      <NoJsScript />
       <body>
         <NextIntlClientProvider>
 
