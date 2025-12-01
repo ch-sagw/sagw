@@ -9,9 +9,7 @@ import { Icon } from '@/icons';
 import Link from 'next/link';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
-import { i18nA11y as internalI18nA11y } from '@/i18n/content';
-import { useLocale } from 'next-intl';
-import { TypedLocale } from 'payload';
+import { useTranslations } from 'next-intl';
 
 type BaseWrapperProps = {
   ariaCurrent?: boolean;
@@ -139,7 +137,7 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
     isActive,
   } = props;
 
-  const locale = useLocale() as TypedLocale;
+  const internalI18nA11y = useTranslations('i18nA11y');
   const internalButtonRef = useRef<HTMLButtonElement>(null);
 
   // Merge the internal and external refs
@@ -208,7 +206,7 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
         ? ariaLabel
         : text;
 
-      ariaLabelText += `. ${internalI18nA11y.linkTarget[locale]} ${internalI18nA11y.opensInNewWindow[locale]}`;
+      ariaLabelText += `. ${internalI18nA11y('linkTarget')} ${internalI18nA11y('opensInNewWindow')}`;
     }
 
     return (

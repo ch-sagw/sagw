@@ -1,5 +1,36 @@
 {
-  "HomePage": {
-    "title": "Hallo welt!"
+  "i18nNavigation": {
+    "navigationTitleTranslation": "Home DE"
+  },
+  "i18nPagination": {
+    "hiddenPaginationTitle": "Paginierung"
+  },
+  "i18nForm": {
+    "newsletter": {
+      "error": "Sie müssen eine Auswahl treffen",
+      "label": "In welcher Sprache möchten Sie den Newsletter abonnieren?",
+      "languages": {
+        "french": "Französisch",
+        "german": "Deutsch"
+      }
+    }
+  },
+  "i18nA11y": {
+    "breadcrumb": "Zurücknavigieren in der Seitenstruktur",
+    "closeDialog": "Dialog schliessen",
+    "linkTarget": "Linkziel",
+    "opensInNewWindow": "öffnet sich in einem neuen Fenster.",
+    "playVideoText": "Video mit dem Titel «{{title}}» laden und abspielen.",
+    "socialLinks": {
+      "facebook": "Folgen Sie uns auf Facebook",
+      "instagram": "Folgen Sie uns auf Instagram",
+      "linkedIn": "Folgen Sie uns auf linkedIn",
+      "twitter": "Folgen Sie uns auf Twitter"
+    }
+  },
+  "i18nConsent": {
+    "buttonTextOpenCookieSettings": "Cookie-Einstellungen",
+    "messageVideo": "Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können.",
+    "titleExternalContent": "Externer Inhalt"
   }
 }

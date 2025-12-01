@@ -28,12 +28,10 @@ import {
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
-import { i18nA11y } from '@/i18n/content';
 import { ConsentOverlay } from '../ConsentOverlay/ConsentOverlay';
 import { useScrollLock } from '@/hooks/useScrollLock';
 import { openConsentOverlayEventName } from '@/components/helpers/cookies';
-import { useLocale } from 'next-intl';
-import { TypedLocale } from 'payload';
+import { useTranslations } from 'next-intl';
 
 export type InterfaceFooterPropTypes = {
   contact: InterfaceFooterContact;
@@ -61,7 +59,7 @@ export const Footer = ({
   fg,
   consentOverlay,
 }: InterfaceFooterPropTypes): React.JSX.Element => {
-  const locale = useLocale() as TypedLocale;
+  const i18nA11y = useTranslations('i18nA11y');
   const overlayDialogRef = useRef<HTMLDialogElement>(null);
   const [
     isOverlayOpen,
@@ -179,7 +177,7 @@ export const Footer = ({
       ? socialLinks.items?.map((item) => ({
         icon: item.icon,
         link: item.externalLink,
-        text: i18nA11y.socialLinks[item.icon][locale],
+        text: i18nA11y(`socialLinks.${item.icon}`),
       }))
       : [],
   };

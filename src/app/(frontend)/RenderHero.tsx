@@ -17,7 +17,7 @@ import {
   CollectionSlug, TypedLocale,
 } from 'payload';
 import React from 'react';
-import { i18nNavigation } from '@/i18n/content';
+import { useTranslations } from 'next-intl';
 
 // Union type of all detail page data types
 type PageTypes =
@@ -44,6 +44,7 @@ export const RenderHero = ({
   locale,
   i18nGeneric,
 }: InterfaceRenderHero): React.JSX.Element | undefined => {
+  const i18nNavigation = useTranslations('i18nNavigation');
 
   if (!pageData || !foundCollection) {
     return <p>No page data</p>;
@@ -154,7 +155,7 @@ export const RenderHero = ({
     breadcrumbItems = [
       {
         link: '/',
-        text: i18nNavigation.navigationTitleTranslations[locale],
+        text: i18nNavigation('navigationTitleTranslation'),
       },
     ];
   }

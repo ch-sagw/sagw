@@ -7,9 +7,7 @@ import {
 import { FormClient } from '@/components/blocks/Form/Form.client';
 import { Fragment } from 'react';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
-import { i18nForm as internalI18nForm } from '@/i18n/content';
-import { getLocale } from 'next-intl/server';
-import { TypedLocale } from 'payload';
+import { getTranslations } from 'next-intl/server';
 
 type InterfaceFormServerPropTypes = {
   globalI18n: I18NGlobal;
@@ -20,8 +18,8 @@ export const FormServer = async ({
   globalI18n,
 }: InterfaceFormServerPropTypes): Promise<React.JSX.Element> => {
 
-  const locale = (await getLocale()) as TypedLocale;
   const i18nForm = globalI18n.forms;
+  const internalI18nForm = await getTranslations('i18nForm');
 
   // --- Make sure form exists
 
@@ -87,24 +85,22 @@ export const FormServer = async ({
 
     // add language selection
 
-    // TODO: get language from root
-
     if (renderForm.newsletterFields?.includeLanguageSelection === 'yes') {
       const radioBlock: InterfaceRadioField = {
         blockType: 'radioBlock',
-        fieldError: simpleRteConfig(internalI18nForm.newsletter.error[locale]),
+        fieldError: simpleRteConfig(internalI18nForm('newsletter.error')),
         fieldWidth: 'full',
         items: [
           {
-            label: simpleRteConfig(internalI18nForm.newsletter.languages.german[locale]),
+            label: simpleRteConfig(internalI18nForm('newsletter.languages.german')),
             value: 'german',
           },
           {
-            label: simpleRteConfig(internalI18nForm.newsletter.languages.french[locale]),
+            label: simpleRteConfig(internalI18nForm('newsletter.languages.french')),
             value: 'french',
           },
         ],
-        label: simpleRteConfig(internalI18nForm.newsletter.label[locale]),
+        label: simpleRteConfig(internalI18nForm('newsletter.label')),
         name: 'language',
         required: true,
       };

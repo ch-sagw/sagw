@@ -5,10 +5,11 @@ import { Icon } from '@/icons';
 import { formatDateToObject } from '@/components/helpers/date';
 import { Tag } from '@/components/base/Tag/Tag';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
-import { i18nA11y as internalI18nA11y } from '@/i18n/content';
 import { formatEventDetails } from '@/components/base/EventsListItem/helpers';
 import Link from 'next/link';
-import { useLocale } from 'next-intl';
+import {
+  useLocale, useTranslations,
+} from 'next-intl';
 import { TypedLocale } from 'payload';
 
 export type InterfaceEventsListItemPropTypes = {
@@ -38,6 +39,7 @@ export const EventsListItem = ({
   className,
 }: InterfaceEventsListItemPropTypes): React.JSX.Element => {
   const locale = useLocale() as TypedLocale;
+  const internalI18nA11y = useTranslations('i18nA11y');
   const itemClasses = cva([
     styles.item,
     className,
@@ -64,7 +66,7 @@ export const EventsListItem = ({
 
   if (link.target === '_blank') {
     ariaLabel += `
-      ${internalI18nA11y.linkTarget[locale]} ${internalI18nA11y.opensInNewWindow[locale]}`;
+      ${internalI18nA11y('linkTarget')} ${internalI18nA11y('opensInNewWindow')}`;
   }
 
   return (

@@ -15,8 +15,9 @@ import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
 import { VideoConsentMessage } from '@/components/base/VideoConsentMessage/VideoConsentMessage';
 import { GumletPlayer } from '@gumlet/react-embed-player';
-import { i18nA11y } from '@/i18n/content';
-import { useLocale } from 'next-intl';
+import {
+  useLocale, useTranslations,
+} from 'next-intl';
 import {
   Video as InterfaceVideo,
   InterfaceVideoBlock,
@@ -54,6 +55,7 @@ export const Video = ({
   'video-it': videoIt,
 }: InterfaceVideoPropTypes): React.JSX.Element | undefined => {
   const locale = useLocale() as TypedLocale;
+  const i18nA11y = useTranslations('i18nA11y');
 
   // Select correct video source for the current language
   // if available and fall back to german if there is no
@@ -107,7 +109,7 @@ export const Video = ({
     setPaused(false);
   };
 
-  const playButtonText = i18nA11y.playVideoText[locale]
+  const playButtonText = i18nA11y('playVideoText')
     .replace('{{title}}', video.title);
 
   const pausedClass = paused
