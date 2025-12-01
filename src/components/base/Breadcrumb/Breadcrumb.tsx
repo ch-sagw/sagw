@@ -80,6 +80,7 @@ export const Breadcrumb = ({
               text={item.text}
               style='text'
               pageLanguage={pageLanguage}
+              prefetch={true}
             />
           </li>
         ))}

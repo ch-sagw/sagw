@@ -42,6 +42,7 @@ export const ProjectsTeaserComponent = ({
           pageLanguage={pageLanguage}
           iconInlineStart={'arrowRight' as keyof typeof Icon}
           isActive={true}
+          prefetch={true}
 
           // TODO: generate proper url
           href={`${optionalLink.link?.internalLink.slug}/${optionalLink.link?.internalLink.documentId}`}

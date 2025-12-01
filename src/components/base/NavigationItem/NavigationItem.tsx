@@ -303,6 +303,7 @@ export const NavigationItem = ({
             href={link}
             className={styles.buttonLevel1}
             pageLanguage={pageLanguage}
+            prefetch={true}
           />
         }
 
@@ -349,6 +350,7 @@ export const NavigationItem = ({
                 href={child.link}
                 className={styles.item}
                 pageLanguage={child.pageLanguage}
+                prefetch={true}
               />
             </li>
           ))}

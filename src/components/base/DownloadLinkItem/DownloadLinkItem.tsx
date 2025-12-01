@@ -5,6 +5,7 @@ import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { formatDateToReadableString } from '@/components/helpers/date';
 import { Icon } from '@/icons';
 import { i18nA11y as internalI18nA11y } from '@/i18n/content';
+import Link from 'next/link';
 
 interface InterfaceDownloadLinkItemBaseProps {
   className?: string;
@@ -103,11 +104,12 @@ export const DownloadLinkItem = ({
       className={itemClasses()}
       data-testid='downloadLinkItem'
     >
-      <a
+      <Link
         aria-label={ariaLabel}
         href={link.href}
         target={link.target}
         className={styles.link}
+        prefetch={true}
       >
 
         <div className={styles.content}>
@@ -143,7 +145,7 @@ export const DownloadLinkItem = ({
           name={iconName as keyof typeof Icon}
         />
 
-      </a>
+      </Link>
     </li>
   );
 };

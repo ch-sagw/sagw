@@ -8,6 +8,7 @@ import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { i18nA11y as internalI18nA11y } from '@/i18n/content';
 import { formatEventDetails } from '@/components/base/EventsListItem/helpers';
 import { Config } from '@/payload-types';
+import Link from 'next/link';
 
 export type InterfaceEventsListItemPropTypes = {
   text: string;
@@ -71,7 +72,8 @@ export const EventsListItem = ({
       className={itemClasses()}
       data-testid='eventListItem'
     >
-      <a
+      <Link
+        prefetch={true}
         aria-label={ariaLabel}
         href={link.href}
         target={link.target}
@@ -124,7 +126,7 @@ export const EventsListItem = ({
             className={styles.itemIcon}
           />
         </div>
-      </a>
+      </Link>
     </li >
   );
 };

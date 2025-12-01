@@ -225,6 +225,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
             pageLanguage={props.pageLanguage}
             iconInlineEnd={'arrowRight' as keyof typeof Icon}
             ariaCurrent={true}
+            prefetch={true}
           />
         }
       </div>

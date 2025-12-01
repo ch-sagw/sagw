@@ -1,5 +1,6 @@
 import React from 'react';
 import { cva } from 'cva';
+import Link from 'next/link';
 import styles from '@/components/base/GenericTeaser/GenericTeaser.module.scss';
 import { SafeHtml } from '../SafeHtml/SafeHtml';
 import { Button } from '../Button/Button';
@@ -86,6 +87,7 @@ const renderLink = ({
       style='text'
       text={link.text}
       pageLanguage={lang}
+      prefetch={true}
       iconInlineStart={icon
         ? icon as keyof typeof Icon
         : undefined
@@ -105,72 +107,85 @@ export const GenericTeaser = ({
   type,
   className,
 }: InterfaceGenericTeaserPropTypes): React.JSX.Element => {
-  let WrapperElement: keyof React.JSX.IntrinsicElements = 'div';
-  let linkTarget;
-  let target;
   const teaserClasses = cva([
     styles.teaser,
     styles[type],
     className,
   ]);
 
-  if (links && links.length === 1) {
-    const [link] = links;
+  const shouldWrapInLink = links && links.length === 1;
+  const link = shouldWrapInLink
+    ? links[0]
+    : null;
+  const linkTarget = link?.href;
+  const target = link?.type === 'external'
+    ? '_blank'
+    : undefined;
 
-    WrapperElement = 'a';
-    linkTarget = link.href;
+  const wrapperContent = (
+    <>
+      {logo &&
+        <div className={styles.logo}>logo placeholder</div>
+      }
 
-    if (link.type === 'external') {
-      target = '_blank';
-    }
-  }
+      {image &&
+        <div className={styles.image}>image placeholder</div>
+      }
+
+      <SafeHtml
+        as='h3'
+        html={title}
+        className={styles.title}
+      />
+
+      {texts &&
+        texts.map((text, key) => (
+          <SafeHtml
+            key={key}
+            as='p'
+            html={text}
+            className={styles.text}
+          />
+        ))
+      }
+
+      {links &&
+        links.map((wrapperLink, key) => renderLink({
+          key,
+          lang: pageLanguage,
+          link: wrapperLink,
+          wrapper: shouldWrapInLink
+            ? 'a'
+            : 'div',
+        }))
+      }
+    </>
+  );
 
   return (
     <li
       className={teaserClasses()}
     >
-      <WrapperElement
-        href={linkTarget}
-        className={styles.wrapper}
-        target={target}
-
-      // TODO
-      // aria-label
-      >
-        {logo &&
-          <div className={styles.logo}>logo placeholder</div>
-        }
-
-        {image &&
-          <div className={styles.image}>image placeholder</div>
-        }
-
-        <SafeHtml
-          as='h3'
-          html={title}
-          className={styles.title}
-        />
-
-        {texts &&
-          texts.map((text, key) => (
-            <SafeHtml
-              key={key}
-              as='p'
-              html={text}
-              className={styles.text}
-            />
-          ))
-        }
-
-        {links &&
-          links.map((link, key) => renderLink({
-            key,
-            lang: pageLanguage,
-            link,
-            wrapper: WrapperElement,
-          }))
-        }
-      </WrapperElement>
+      {shouldWrapInLink && linkTarget
+        ? (
+          <Link
+            href={linkTarget}
+            className={styles.wrapper}
+            target={target}
+            prefetch={true}
+          // TODO
+          // aria-label
+          >
+            {wrapperContent}
+          </Link>
+        )
+        : (
+          <div
+            className={styles.wrapper}
+          >
+            {wrapperContent}
+          </div>
+        )}
     </li>
   );
 };

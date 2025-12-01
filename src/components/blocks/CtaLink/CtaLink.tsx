@@ -62,6 +62,7 @@ export const CtaLink = (props: InterfaceCtaLinkPropTypes): React.JSX.Element => 
           : 'externalLink' as keyof typeof Icon
         }
         pageLanguage={props.language}
+        prefetch={true}
       />
     </Section>
   );

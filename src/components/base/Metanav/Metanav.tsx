@@ -42,6 +42,7 @@ export const Metanav = ({
             element='link'
             href={item.link}
             pageLanguage={pageLanguage}
+            prefetch={true}
             target={item.target === '_blank'
               ? item.target
               : undefined}

@@ -172,6 +172,7 @@ export const Notification = ({
             text={linkText}
             pageLanguage={pageLanguage}
             iconInlineStart={'arrowRight' as keyof typeof Icon}
+            prefetch={true}
           />
         }
       </div>

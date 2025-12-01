@@ -50,6 +50,7 @@ export const TeaserLinkList = (props: InterfaceTeaserLinkListPropTypes): React.J
           text={allLink.text}
           iconInlineStart={'arrowRight' as keyof typeof Icon}
           pageLanguage={pageLanguage}
+          prefetch={true}
         />
       }
 
