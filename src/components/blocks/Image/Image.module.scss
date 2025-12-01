@@ -1,0 +1,120 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/animations" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+
+.figure {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  column-gap: px-to-rem(var(--grid-gutter));
+  row-gap: px-to-rem(var(--spacing-m));
+  padding-block: px-to-rem(var(--figure-padding-block, var(--image-top)));
+  padding-inline: px-to-rem(var(--figure-padding-inline, var(--grid-margin)));
+  margin: 0;
+
+  .imageWrapper {
+    grid-column: 1 / calc(var(--grid-columns) + 1);
+    aspect-ratio: 16 / 9;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  figcaption {
+    @include body-text-s;
+
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / calc(var(--grid-columns) + 1);
+    row-gap: px-to-rem(var(--spacing-m));
+    text-wrap: pretty;
+  }
+
+  .credits {
+    grid-column: 1 / calc(var(--grid-columns) + 1);
+    color: var(--text-secondary);
+  }
+
+  .caption {
+    grid-column: 1 / calc(var(--grid-columns) + 1);
+  }
+
+  // Centered image
+  &.center {
+    .imageWrapper {
+      @include mq($from: large) {
+        grid-column: 2 / var(--grid-columns);
+      }
+    }
+
+    figcaption {
+      grid-row: 2;
+
+      @include mq($from: large) {
+        grid-column: 2 / var(--grid-columns);
+      }
+    }
+
+    .credits {
+      &:not(:only-child) {
+        @include mq($from: large) {
+          grid-row: 1;
+          grid-column: 1 / 4;
+        }
+      }
+    }
+
+    .caption {
+      @include mq($from: large) {
+        grid-column: 4 / var(--grid-columns);
+      }
+    }
+  }
+
+  // Shared styles for Left and right
+  // aligned image variant
+  &.left,
+  &.right {
+    figcaption {
+      @include mq($from: large) {
+        display: flex;
+        flex-direction: column;
+        row-gap: px-to-rem(var(--spacing-xl));
+      }
+    }
+  }
+
+  // Left aligned image variant
+  &.left {
+    .imageWrapper {
+      @include mq($from: large) {
+        grid-column: 1 / 9;
+      }
+    }
+
+    figcaption {
+      @include mq($from: large) {
+        grid-column: 9 / var(--grid-columns);
+      }
+    }
+  }
+
+  // Right aligned image variant
+  &.right {
+    .imageWrapper {
+      @include mq($from: large) {
+        grid-column: 5 / calc(var(--grid-columns) + 1);
+      }
+    }
+
+    figcaption {
+      @include mq($from: large) {
+        grid-column: 1 / 5;
+      }
+    }
+  }
+}

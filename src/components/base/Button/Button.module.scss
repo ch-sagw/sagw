@@ -296,12 +296,19 @@
   border: px-to-rem(var(--border-width-l)) solid var(--icon-primary-inverted);
   border-radius: 60%;
   transition: transform var(--motion-speed-fast) var(--motion-ease-in);
+  transform: scale(1);
+  will-change: scale;
+  backface-visibility: hidden;
 
   @include forced-colors {
     border-color: CanvasText;
   }
 
   .iconStart {
+    svg path {
+      stroke: none;
+    }
+
     * {
       --button-icon-color: var(--icon-primary-inverted);
 
@@ -311,7 +318,6 @@
 
       @include forced-colors {
         fill: CanvasText;
-        stroke: none;
       }
     }
   }

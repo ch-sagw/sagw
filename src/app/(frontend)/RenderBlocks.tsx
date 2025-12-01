@@ -41,6 +41,8 @@ import { Notification } from '@/components/blocks/Notification/Notification';
 import { Rte } from '@/components/blocks/Rte/Rte';
 import { Accordion } from '@/components/blocks/Accordion/Accordion';
 import { FormServer } from '@/components/blocks/Form/Form.server';
+import { ImageBlock } from '@/components/blocks/Image/Image';
+import { Video } from '@/components/blocks/Video/Video';
 import { Links } from '@/components/blocks/Links/Links';
 import { Downloads } from '@/components/blocks/Downloads/Downloads';
 import { NewsOverview } from '@/components/blocks/NewsOverview/NewsOverview';
@@ -236,6 +238,27 @@ export const RenderBlocks = ({
                   <CtaLink
                     {...block}
                     language={pageLanguage}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'imageBlock') {
+              return (
+                <div key={block.id || index}>
+                  <ImageBlock
+                    {...block}
+                  />
+                </div>
+              );
+            }
+
+            if (blockType === 'videoBlock') {
+              return (
+                <div key={block.id || index}>
+                  <Video
+                    {...block}
+                    pageLanguage={pageLanguage}
                   />
                 </div>
               );

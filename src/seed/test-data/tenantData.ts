@@ -1182,7 +1182,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         _status: 'published',
         content: [
           {
-            alignement: 'center',
+            alignment: 'center',
             blockType: 'imageBlock',
             credits: simpleRteConfig('some credits'),
             image: image.id,
