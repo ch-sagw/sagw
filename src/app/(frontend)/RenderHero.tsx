@@ -15,6 +15,7 @@ import {
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { CollectionSlug } from 'payload';
 import React from 'react';
+import { i18nNavigation } from '@/i18n/content';
 
 // Union type of all detail page data types
 type PageTypes =
@@ -109,7 +110,7 @@ export const RenderHero = ({
   // TODO: write generic url generator. it is more complicated than the current
   // implementation. e.g: for each segment, we should fallback to `namede`
   // and `slugde`.
-  const breadcrumbItems: InterfaceBreadcrumbItem[] = (pageData.breadcrumb ?? []).reduce<InterfaceBreadcrumbItem[]>((acc, item) => {
+  let breadcrumbItems: InterfaceBreadcrumbItem[] = (pageData.breadcrumb ?? []).reduce<InterfaceBreadcrumbItem[]>((acc, item) => {
     const nameKey = `name${language}`;
     const slugKey = `slug${language}`;
 
@@ -144,6 +145,15 @@ export const RenderHero = ({
 
     return acc;
   }, []);
+
+  if (breadcrumbItems.length === 0) {
+    breadcrumbItems = [
+      {
+        link: '/',
+        text: i18nNavigation.navigationTitleTranslations[language],
+      },
+    ];
+  }
 
   // TODO
   const breadcrumb: InterfaceBreadcrumbPropTypes = {
