@@ -10,7 +10,7 @@ test.describe('Custom Form', () => {
     page,
   }) => {
     // go to home
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -58,7 +58,7 @@ test.describe('Custom Form', () => {
     page,
   }) => {
     // go to home
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -108,7 +108,7 @@ test.describe('Custom Form', () => {
     page,
   }) => {
     // go to home
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -147,7 +147,7 @@ test.describe('Custom Form', () => {
     page,
   }) => {
     // go to home
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -186,7 +186,7 @@ test.describe('Custom Form', () => {
     page,
   }) => {
     // go to home
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -226,7 +226,7 @@ test.describe('Custom Form', () => {
     page,
   }) => {
     // go to home
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -265,7 +265,7 @@ test.describe('Newsletter Form', () => {
     page,
   }) => {
     // go to home
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -313,7 +313,7 @@ test.describe('Newsletter Form', () => {
     page,
   }) => {
     // go to home
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -354,7 +354,7 @@ test.describe('Newsletter Form', () => {
     page,
   }) => {
     // go to home
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -393,7 +393,7 @@ test.describe('Newsletter Form', () => {
     page,
   }) => {
     // go to home
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -432,7 +432,7 @@ test.describe('Newsletter Form', () => {
     page,
   }) => {
     // go to home
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -472,7 +472,7 @@ test.describe('Newsletter Form', () => {
     page,
   }) => {
     // go to home
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 

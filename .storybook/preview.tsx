@@ -9,7 +9,7 @@ const preview: Preview = {
   decorators: [
     (Story): JSX.Element => (
       <NextIntlClientProvider
-        locale='en'
+        locale='de'
         messages={defaultMessages}
       // ... potentially other config
       >
