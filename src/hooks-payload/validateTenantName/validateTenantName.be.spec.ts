@@ -2,28 +2,16 @@ import {
   expect,
   test,
 } from '@playwright/test';
-import { getPayload } from 'payload';
-import configPromise from '@/payload.config';
 import { extendExpect } from '@/access/test/extendExpect';
+import { generateTenant } from '@/test-helpers/tenant-generator';
 
 extendExpect(expect);
 
-test('throws validation error on malformed tenantn name', async () => {
+test('throws validation error on malformed tenant name', async () => {
   await expect(async () => {
-    const payload = await getPayload({
-      config: configPromise,
-    });
-
-    await payload.create({
-      collection: 'tenants',
-      data: {
-        name: `${(new Date())
-          .getTime()}-$4`,
-        slug: `${new Date()}`,
-        title: `${new Date()}`,
-      },
-      draft: false,
-      overrideAccess: true,
+    await generateTenant({
+      name: `${(new Date())
+        .getTime()}-$a`,
     });
 
   }).rejects.toMatchObject({
