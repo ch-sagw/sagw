@@ -4,8 +4,7 @@ import styles from '@/components/base/Breadcrumb/Breadcrumb.module.scss';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { Icon } from '@/icons';
 import { Button } from '@/components/base/Button/Button';
-import { Config } from '@/payload-types';
-import { i18nA11y } from '@/i18n/content';
+import { useTranslations } from 'next-intl';
 
 export interface InterfaceBreadcrumbItem {
   link: string;
@@ -15,16 +14,16 @@ export interface InterfaceBreadcrumbItem {
 export type InterfaceBreadcrumbPropTypes = {
   colorMode: ColorMode;
   items: InterfaceBreadcrumbItem[] | undefined;
-  pageLanguage: Config['locale'];
   className?: string;
 };
 
 export const Breadcrumb = ({
   colorMode,
   items,
-  pageLanguage,
   className,
 }: InterfaceBreadcrumbPropTypes): React.JSX.Element | null => {
+  const i18nA11y = useTranslations('a11y');
+
   const breadcrumbClasses = cva([
     styles.breadcrumb,
     className,
@@ -55,7 +54,7 @@ export const Breadcrumb = ({
       <p
         className={styles.hiddenLabel}
         id='breadcrumb-label'
-      >{i18nA11y.breadcrumb[pageLanguage]}</p>
+      >{i18nA11y('breadcrumb')}</p>
       <ul
         aria-labelledby='breadcrumb-label'
         className={styles.content}
@@ -79,7 +78,7 @@ export const Breadcrumb = ({
               element='link'
               text={item.text}
               style='text'
-              pageLanguage={pageLanguage}
+              prefetch={true}
             />
           </li>
         ))}

@@ -2,7 +2,7 @@ import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/blocks/CtaContact/CtaContact.module.scss';
 import {
-  Config, InterfaceCtaContactBlock, Person,
+  InterfaceCtaContactBlock, Person,
 } from '@/payload-types';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { rteToHtml } from '@/utilities/rteToHtml';
@@ -16,7 +16,6 @@ import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 
 export type InterfaceCtaContactPropTypes = {
   buttonText: InterfaceRte;
-  pageLanguage: Config['locale'];
 } & InterfaceCtaContactBlock;
 
 const ctaClasses = cva([styles.ctaContactBlock], {
@@ -55,7 +54,6 @@ export const CtaContact = ({
   colorMode,
   contact,
   buttonText,
-  pageLanguage,
 }: InterfaceCtaContactPropTypes): React.JSX.Element => {
   const typedContacts = contact.filter((item) => typeof item === 'object' && item !== null && 'mail' in item);
 
@@ -115,7 +113,6 @@ export const CtaContact = ({
               element='link'
               style='filled'
               href='mailto:'
-              pageLanguage={pageLanguage}
               className={styles.button}
             />
           </ChildElem>

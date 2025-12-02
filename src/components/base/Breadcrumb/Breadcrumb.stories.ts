@@ -35,7 +35,6 @@ export const OneItem: StrictStory = {
         text: 'Home',
       },
     ],
-    pageLanguage: 'de',
   },
 };
 
@@ -52,6 +51,5 @@ export const TwoItems: StrictStory = {
         text: 'Aktivitäten',
       },
     ],
-    pageLanguage: 'de',
   },
 };

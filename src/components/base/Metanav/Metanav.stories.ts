@@ -49,7 +49,6 @@ export const MetanavDark: StrictStory = {
   args: {
     colorMode: 'dark',
     items,
-    pageLanguage: 'de',
   },
   globals: {
     backgrounds: {
@@ -62,7 +61,6 @@ export const MetanavLight: StrictStory = {
   args: {
     colorMode: 'light',
     items,
-    pageLanguage: 'de',
   },
   globals: {
     backgrounds: {
@@ -75,7 +73,6 @@ export const MetanavWhite: StrictStory = {
   args: {
     colorMode: 'white',
     items,
-    pageLanguage: 'de',
   },
   globals: {
     backgrounds: {

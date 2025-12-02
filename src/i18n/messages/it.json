@@ -1,0 +1,36 @@
+{
+  "navigation": {
+    "navigationTitle": "Home IT"
+  },
+  "pagination": {
+    "hiddenPaginationTitle": "Impaginazione"
+  },
+  "form": {
+    "newsletter": {
+      "error": "Devi fare una selezione",
+      "label": "In quale lingua desideri iscriverti alla newsletter?",
+      "languages": {
+        "french": "Francese",
+        "german": "Tedesco"
+      }
+    }
+  },
+  "a11y": {
+    "breadcrumb": "Torna indietro nella struttura delle pagine",
+    "closeDialog": "Chiudi finestra di dialogo",
+    "linkTarget": "Il link",
+    "opensInNewWindow": "si apre in una nuova finestra.",
+    "playVideoText": "Video mit dem Titel «{{title}}» laden und abspielen (IT).",
+    "socialLinks": {
+      "facebook": "Seguici su Facebook",
+      "instagram": "Seguici su Instagram",
+      "linkedIn": "Seguici su linkedIn",
+      "twitter": "Seguici su Twitter"
+    }
+  },
+  "consent": {
+    "buttonTextOpenCookieSettings": "Cookie-Einstellungen (IT)",
+    "messageVideo": "Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können. (IT)",
+    "titleExternalContent": "Ccontenuto esterno"
+  }
+}

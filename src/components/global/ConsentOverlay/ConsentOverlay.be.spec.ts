@@ -8,7 +8,7 @@ test.describe('Consent Overlay', () => {
   test('has focus inside initially', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -26,7 +26,7 @@ test.describe('Consent Overlay', () => {
   test('locks focus inside', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -51,7 +51,7 @@ test.describe('Consent Overlay', () => {
     context,
     page,
   }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -88,7 +88,7 @@ test.describe('Consent Overlay', () => {
     context,
     page,
   }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -133,7 +133,7 @@ test.describe('Consent Overlay', () => {
   test('closes on close button', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -152,7 +152,7 @@ test.describe('Consent Overlay', () => {
   test('opens overlay from footer', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 

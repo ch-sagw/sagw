@@ -13,8 +13,11 @@ import {
   InterfaceHeroFieldMagazineDetail, InterfaceHeroFieldNewsDetail, InterfaceI18NGeneric,
 } from '@/payload-types';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
-import { CollectionSlug } from 'payload';
+import {
+  CollectionSlug, TypedLocale,
+} from 'payload';
 import React from 'react';
+import { useTranslations } from 'next-intl';
 
 // Union type of all detail page data types
 type PageTypes =
@@ -28,24 +31,27 @@ type PageTypes =
   | Config['collections']['magazineDetailPage']
   | Config['collections']['nationalDictionaryDetailPage'];
 
+interface InterfaceRenderHero {
+  foundCollection: CollectionSlug;
+  pageData: PageTypes | null;
+  locale: TypedLocale;
+  i18nGeneric: InterfaceI18NGeneric;
+}
+
 export const RenderHero = ({
   foundCollection,
   pageData,
-  language,
+  locale,
   i18nGeneric,
-}: {
-  foundCollection: CollectionSlug;
-  pageData: PageTypes | null;
-  language: Config['locale']
-  i18nGeneric: InterfaceI18NGeneric;
-}): React.JSX.Element | undefined => {
+}: InterfaceRenderHero): React.JSX.Element | undefined => {
+  const i18nNavigation = useTranslations('navigation');
 
   if (!pageData || !foundCollection) {
     return <p>No page data</p>;
   }
 
   let heroType: InterfaceHeroPropTypes['type'];
-  let heroProps: InterfaceHeroField | InterfaceHeroFieldNewsDetail | InterfaceHeroFieldMagazineDetail | Omit<Extract<InterfaceHeroPropTypes, { type: 'eventDetail' }>, 'type' | 'pageLanguage'> | null = null;
+  let heroProps: InterfaceHeroField | InterfaceHeroFieldNewsDetail | InterfaceHeroFieldMagazineDetail | Omit<Extract<InterfaceHeroPropTypes, { type: 'eventDetail' }>, 'type'> | null = null;
 
   // Handle different collection types and extract hero data
   if (foundCollection === 'eventDetailPage') {
@@ -109,9 +115,9 @@ export const RenderHero = ({
   // TODO: write generic url generator. it is more complicated than the current
   // implementation. e.g: for each segment, we should fallback to `namede`
   // and `slugde`.
-  const breadcrumbItems: InterfaceBreadcrumbItem[] = (pageData.breadcrumb ?? []).reduce<InterfaceBreadcrumbItem[]>((acc, item) => {
-    const nameKey = `name${language}`;
-    const slugKey = `slug${language}`;
+  let breadcrumbItems: InterfaceBreadcrumbItem[] = (pageData.breadcrumb ?? []).reduce<InterfaceBreadcrumbItem[]>((acc, item) => {
+    const nameKey = `name${locale}`;
+    const slugKey = `slug${locale}`;
 
     if (nameKey in item && slugKey in item) {
       const text = item[nameKey as keyof typeof item];
@@ -145,18 +151,25 @@ export const RenderHero = ({
     return acc;
   }, []);
 
+  if (breadcrumbItems.length === 0) {
+    breadcrumbItems = [
+      {
+        link: '/',
+        text: i18nNavigation('navigationTitle'),
+      },
+    ];
+  }
+
   // TODO
   const breadcrumb: InterfaceBreadcrumbPropTypes = {
     colorMode: heroProps.colorMode,
     items: breadcrumbItems,
-    pageLanguage: language,
   };
 
   if (heroProps && heroType === 'eventDetail') {
     return (
       <Hero
-        {...heroProps as Omit<Extract<InterfaceHeroPropTypes, { type: 'eventDetail' }>, 'type' | 'pageLanguage'>}
-        pageLanguage={language}
+        {...heroProps as Omit<Extract<InterfaceHeroPropTypes, { type: 'eventDetail' }>, 'type'>}
         type='eventDetail'
       />
     );
@@ -164,7 +177,6 @@ export const RenderHero = ({
     return (
       <Hero
         {...heroProps as InterfaceHeroFieldNewsDetail}
-        pageLanguage={language}
         type='newsDetail'
       />
     );
@@ -172,7 +184,6 @@ export const RenderHero = ({
     return (
       <Hero
         {...heroProps as InterfaceHeroFieldMagazineDetail}
-        pageLanguage={language}
         type='magazineDetail'
         exportArticleText={i18nGeneric.exportArticleButtonText}
       />
@@ -181,7 +192,6 @@ export const RenderHero = ({
     return (
       <Hero
         {...heroProps as InterfaceHeroField}
-        pageLanguage={language}
         type='generic'
         breadcrumb={breadcrumb}
       />

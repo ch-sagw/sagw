@@ -1,6 +1,8 @@
+import { Locale } from 'next-intl';
+
 interface InterfaceFormatDateToObjectProps {
   dateString: string;
-  locale: string;
+  locale: Locale;
 }
 
 interface InterfaceFormatDateToObjectResponse {

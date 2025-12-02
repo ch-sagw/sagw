@@ -89,7 +89,6 @@ export const WithLink: StrictStory = {
     linkHref: 'https://www.foo.bar',
     linkText: 'Some link text',
     onAction: undefined,
-    pageLanguage: 'de',
     type: 'warn',
   },
 };

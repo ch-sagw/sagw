@@ -30,7 +30,6 @@ export default meta;
 export const CtaInternalLink: StrictStory = {
   args: {
     blockType: 'ctaLinkBlock',
-    language: 'de',
     linkInternal: {
       internalLink: {
         documentId: '1234',
@@ -47,7 +46,6 @@ export const CtaInternalLink: StrictStory = {
 export const CtaExternalLink: StrictStory = {
   args: {
     blockType: 'ctaLinkBlock',
-    language: 'de',
     linkExternal: {
       externalLink: 'https://www.foo.bar',
       externalLinkText: simpleRteConfig('External Link Text (external)'),
@@ -61,7 +59,6 @@ export const CtaExternalLink: StrictStory = {
 export const CtaMailLink: StrictStory = {
   args: {
     blockType: 'ctaLinkBlock',
-    language: 'de',
     linkExternal: {
       externalLink: 'https://www.foo.bar',
       externalLinkText: simpleRteConfig('External Link Text (external)'),

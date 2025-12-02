@@ -1,26 +1,27 @@
 import React from 'react';
 import {
-  Config, InterfaceMagazineTeasersBlock,
+  InterfaceMagazineTeasersBlock,
   MagazineDetailPage,
 } from '@/payload-types';
 import { fetchDetailPages } from '@/data/fetch';
 import { MagazineTeaserComponent } from './MagazineTeaser.component';
+import { getLocale } from 'next-intl/server';
+import { TypedLocale } from 'payload';
 
 export type InterfaceMagazineTeaserPropTypes = {
-  language: Config['locale'];
   tenant: string;
 } & InterfaceMagazineTeasersBlock;
 
 export const MagazineTeaser = async (props: InterfaceMagazineTeaserPropTypes): Promise<React.JSX.Element> => {
+  const locale = (await getLocale()) as TypedLocale;
   const {
-    language,
     tenant,
     ...restProps
   } = props;
 
   const pages = await fetchDetailPages({
     collection: 'magazineDetailPage',
-    language,
+    language: locale,
     limit: 4,
     sort: 'createdAt',
     tenant,
@@ -30,7 +31,6 @@ export const MagazineTeaser = async (props: InterfaceMagazineTeaserPropTypes): P
     <MagazineTeaserComponent
       {...restProps}
       pages={pages}
-      pageLanguage={language}
     />
   );
 };

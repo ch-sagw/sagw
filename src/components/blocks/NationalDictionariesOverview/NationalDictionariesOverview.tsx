@@ -1,26 +1,27 @@
 import React from 'react';
 import {
-  Config, InterfaceNationalDictionariesOverviewBlock,
+  InterfaceNationalDictionariesOverviewBlock,
   NationalDictionaryDetailPage,
 } from '@/payload-types';
 import { fetchDetailPages } from '@/data/fetch';
 import { NationalDictionaryOverviewComponent } from '@/components/blocks/NationalDictionariesOverview/NationalDictionariesOverview.component';
+import { getLocale } from 'next-intl/server';
+import { TypedLocale } from 'payload';
 
 export type InterfaceNationalDictionariesOverviewPropTypes = {
-  language: Config['locale'];
   tenant: string;
 } & InterfaceNationalDictionariesOverviewBlock;
 
 export const NationalDictionariesOverview = async (props: InterfaceNationalDictionariesOverviewPropTypes): Promise<React.JSX.Element> => {
+  const locale = (await getLocale()) as TypedLocale;
   const {
-    language,
     tenant,
     ...restProps
   } = props;
 
   const pages = await fetchDetailPages({
     collection: 'nationalDictionaryDetailPage',
-    language,
+    language: locale,
     limit: 0,
     sort: 'createdAt',
     tenant,
@@ -28,7 +29,6 @@ export const NationalDictionariesOverview = async (props: InterfaceNationalDicti
 
   return (
     <NationalDictionaryOverviewComponent
-      pageLanguage={language}
       pages={pages}
       {...restProps}
     />

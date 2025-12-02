@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import styles from '@/components/blocks/MagazineTeaser/MagazineTeaser.module.scss';
 import {
-  Config,
   InterfaceMagazineTeasersBlock,
   MagazineDetailPage,
 } from '@/payload-types';
@@ -14,7 +13,6 @@ import { getFirstImageIdOfMagazinePage } from '@/components/helpers/magazineImag
 
 export type InterfaceMagazineTeaserComponentPropTypes = {
   pages: MagazineDetailPage[];
-  pageLanguage: Config['locale'];
 } & InterfaceMagazineTeasersBlock;
 
 export const MagazineTeaserComponent = ({
@@ -23,7 +21,6 @@ export const MagazineTeaserComponent = ({
   alignement,
   optionalLink,
   pages,
-  pageLanguage,
 }: InterfaceMagazineTeaserComponentPropTypes): React.JSX.Element => (
   <Fragment>
     <Section
@@ -40,9 +37,9 @@ export const MagazineTeaserComponent = ({
           style='text'
           colorMode='white'
           text={rteToHtml(optionalLink.link?.linkText)}
-          pageLanguage={pageLanguage}
           iconInlineStart={'arrowRight' as keyof typeof Icon}
           isActive={true}
+          prefetch={true}
 
           // TODO: generate proper url
           href={`${optionalLink.link?.internalLink.slug}/${optionalLink.link?.internalLink.documentId}`}
@@ -58,7 +55,6 @@ export const MagazineTeaserComponent = ({
           title={rteToHtml(item.hero.title)}
           texts={[rteToHtml(item.overviewPageProps.teaserText)]}
           type='magazine'
-          pageLanguage={pageLanguage}
           image={getFirstImageIdOfMagazinePage(item)}
 
           // TODO: generate proper url

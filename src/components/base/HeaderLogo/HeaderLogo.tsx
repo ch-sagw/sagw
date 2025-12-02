@@ -3,6 +3,7 @@ import styles from '@/components/base/HeaderLogo/HeaderLogo.module.scss';
 import { ColorMode } from '@/components/base/types/colorMode';
 
 import sagw from '@/components/base/HeaderLogo/logos/sagw';
+import Link from 'next/link';
 
 export const Logos = {
   sagw,
@@ -26,14 +27,15 @@ export const HeaderLogo = forwardRef<HTMLAnchorElement, InterfaceHeaderLogoPropT
   const IconComponent = Logos[name];
 
   return (
-    <a
+    <Link
       ref={ref}
       aria-label={linkText}
       href={link}
       className={`${styles.logo} ${styles[name]} ${className} ${styles[colorMode]}`}
+      prefetch={true}
     >
       <IconComponent />
-    </a>
+    </Link>
   );
 });
 

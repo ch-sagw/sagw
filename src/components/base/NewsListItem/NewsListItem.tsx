@@ -3,6 +3,7 @@ import { cva } from 'cva';
 import styles from '@/components/base/NewsListItem/NewsListItem.module.scss';
 import { Icon } from '@/icons';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
+import Link from 'next/link';
 
 export type InterfaceNewsListItemPropTypes = {
   title: string;
@@ -31,10 +32,11 @@ export const NewsListItem = ({
       className={itemClasses()}
       data-testid='newsListItem'
     >
-      <a
+      <Link
         aria-label={ariaLabel}
         href={link}
         className={styles.link}
+        prefetch={true}
       >
         <div className={styles.textContent}>
           <SafeHtml
@@ -57,7 +59,7 @@ export const NewsListItem = ({
           name='arrowRight'
           className={styles.itemIcon}
         />
-      </a>
+      </Link>
     </li>
   );
 };

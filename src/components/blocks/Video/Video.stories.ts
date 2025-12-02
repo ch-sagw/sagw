@@ -98,7 +98,6 @@ export const VideoCenteredWithoutConsentCheck: StrictStory = {
     'caption': captionRte1,
     'credits': creditsRte1,
     'duration': '00:24',
-    'pageLanguage': 'de',
     'stillImage': {
       ...ContentImageFull.args,
       createdAt: '2025-11-19T09:54:49.430Z',
@@ -120,7 +119,6 @@ export const VideoCentered: StrictStory = {
     'caption': captionRte1,
     'credits': creditsRte1,
     'duration': '00:24',
-    'pageLanguage': 'de',
     'stillImage': {
       ...ContentImageFull.args,
       createdAt: '2025-11-19T09:54:49.430Z',
@@ -142,7 +140,6 @@ export const ContentVideoLeftAligned: StrictStory = {
     'caption': captionRte1,
     'credits': creditsRte1,
     'duration': '03:18',
-    'pageLanguage': 'de',
     'stillImage': {
       ...ContentImage.args,
       createdAt: '2025-11-19T09:54:49.430Z',
@@ -164,7 +161,6 @@ export const ContentVideoRightAligned: StrictStory = {
     'caption': captionRte1,
     'credits': creditsRte1,
     'duration': '02:34',
-    'pageLanguage': 'de',
     'stillImage': {
       ...ContentImage.args,
       createdAt: '2025-11-19T09:54:49.430Z',
