@@ -25,7 +25,7 @@ const linkField = fieldInternalLinkChooser({
   optional: false,
 });
 
-const navLinkLevel1LinkField = (() => ({
+const navLinkLevel1LinkField = ((): Field => ({
   ...linkField,
   admin: {
     ...linkField.admin,
