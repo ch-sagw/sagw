@@ -7,7 +7,7 @@ test.describe('Consent Banner', () => {
   test('shows banner if no consent was given', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -30,7 +30,7 @@ test.describe('Consent Banner', () => {
       },
     ]);
 
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -44,7 +44,7 @@ test.describe('Consent Banner', () => {
     context,
     page,
   }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -79,7 +79,7 @@ test.describe('Consent Banner', () => {
     context,
     page,
   }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -113,7 +113,7 @@ test.describe('Consent Banner', () => {
   test('has focus inside initially', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -127,7 +127,7 @@ test.describe('Consent Banner', () => {
   test('locks focus inside', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
@@ -146,7 +146,7 @@ test.describe('Consent Banner', () => {
   test('opens overlay', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 

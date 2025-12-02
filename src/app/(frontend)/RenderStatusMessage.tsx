@@ -1,23 +1,23 @@
 import 'server-only';
 import React from 'react';
 import './styles.scss';
-import { getPayload } from 'payload';
-import configPromise from '@/payload.config';
 import {
-  Config, InterfaceStatusMessage,
-} from '@/payload-types';
+  getPayload, TypedLocale,
+} from 'payload';
+import configPromise from '@/payload.config';
+import { InterfaceStatusMessage } from '@/payload-types';
 import { StatusMessage } from '@/components/global/StatusMessage/StatusMessage';
 
 interface InterfaceRenderStatusMessage {
-  language: Config['locale'];
   tenant: string;
   isHome: boolean;
+  locale: TypedLocale;
 }
 
 export const RenderStatusMessage = async ({
-  language,
   tenant,
   isHome,
+  locale,
 }: InterfaceRenderStatusMessage): Promise<React.JSX.Element | undefined> => {
   const payload = await getPayload({
     config: configPromise,
@@ -27,7 +27,7 @@ export const RenderStatusMessage = async ({
     collection: 'statusMessage',
     depth: 1,
     limit: 1,
-    locale: language,
+    locale,
     where: {
       tenant: {
         equals: tenant,
@@ -51,7 +51,6 @@ export const RenderStatusMessage = async ({
   return (
     <StatusMessage
       {...statusMessageContent}
-      pageLanguage={language}
     />
   );
 };

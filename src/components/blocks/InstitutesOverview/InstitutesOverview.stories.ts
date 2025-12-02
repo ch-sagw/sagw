@@ -61,7 +61,6 @@ const pages: InstituteDetailPage[] = Array.from({
 export const SampleStory: StrictStory = {
   args: {
     blockType: 'institutesOverviewBlock',
-    language: 'de',
     moreInfoButtonText: simpleRteConfig('Mehr erfahren'),
     pages,
   },

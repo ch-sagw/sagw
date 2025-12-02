@@ -4,7 +4,6 @@ import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { Section } from '@/components/base/Section/Section';
-import { Config } from '@/payload-types';
 
 export type InterfaceTeaserLinkListPropTypes = {
   children: React.ReactNode;
@@ -15,7 +14,6 @@ export type InterfaceTeaserLinkListPropTypes = {
     href: string;
   };
   subtitle?: string;
-  pageLanguage: Config['locale'];
 };
 
 export const TeaserLinkList = (props: InterfaceTeaserLinkListPropTypes): React.JSX.Element => {
@@ -24,7 +22,6 @@ export const TeaserLinkList = (props: InterfaceTeaserLinkListPropTypes): React.J
     colorMode,
     subtitle,
     title,
-    pageLanguage,
   } = props;
 
   return (
@@ -49,7 +46,7 @@ export const TeaserLinkList = (props: InterfaceTeaserLinkListPropTypes): React.J
           className={styles.allLink}
           text={allLink.text}
           iconInlineStart={'arrowRight' as keyof typeof Icon}
-          pageLanguage={pageLanguage}
+          prefetch={true}
         />
       }
 

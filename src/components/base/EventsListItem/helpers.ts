@@ -1,11 +1,11 @@
 import { formatDateRangeToReadableString } from '@/components/helpers/date';
-import { Config } from '@/payload-types';
+import { Locale } from 'next-intl';
 
 interface InterfaceFormatEventDetailsProps {
   dateStart: string;
   dateEnd?: string;
   language?: string;
-  pageLanguage: Config['locale'],
+  pageLanguage: Locale,
   time?: string;
   eventLocation?: string;
 }

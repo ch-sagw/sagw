@@ -3,14 +3,11 @@ import { TeaserLinkList } from '@/components/base/TeaserLinkList/TeaserLinkList'
 import {
   DownloadLinkItem, InterfaceDownloadLinkItemPropTypes,
 } from '@/components/base/DownloadLinkItem/DownloadLinkItem';
-import {
-  Config, InterfaceLinksBlock,
-} from '@/payload-types';
+import { InterfaceLinksBlock } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { InterfaceRte } from '@/components/base/types/rte';
 
 export type InterfaceLinksPropTypes = {
-  pageLanguage: Config['locale'];
   title: InterfaceRte;
 } & InterfaceLinksBlock;
 
@@ -68,7 +65,6 @@ export const Links = (props: InterfaceLinksPropTypes): React.JSX.Element => {
 
   return (
     <TeaserLinkList
-      pageLanguage={props.pageLanguage}
       title={title}
       colorMode='light'
     >

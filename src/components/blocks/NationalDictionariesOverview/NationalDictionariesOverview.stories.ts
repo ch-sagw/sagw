@@ -61,7 +61,6 @@ export const SampleStory: StrictStory = {
   args: {
     blockType: 'nationalDictionariesOverviewBlock',
     moreInfoButtonText: simpleRteConfig('Weitere Informationen'),
-    pageLanguage: 'de',
     pages,
   },
 };

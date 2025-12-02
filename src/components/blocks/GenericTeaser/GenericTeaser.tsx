@@ -1,23 +1,18 @@
 import React, { Fragment } from 'react';
 import styles from '@/components/blocks/GenericTeaser/GenericTeaser.module.scss';
-import {
-  Config, InterfaceGenericTeasersBlock,
-} from '@/payload-types';
+import { InterfaceGenericTeasersBlock } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { Section } from '@/components/base/Section/Section';
 import { GenericTeaser as TeaserBaseComponent } from '@/components/base/GenericTeaser/GenericTeaser';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 
-export type InterfaceGenericTeaserPropTypes = {
-  pageLanguage: Config['locale'];
-} & InterfaceGenericTeasersBlock;
+export type InterfaceGenericTeaserPropTypes = {} & InterfaceGenericTeasersBlock;
 
 export const GenericTeaser = ({
   title,
   lead,
   alignement,
   teasers,
-  pageLanguage,
 }: InterfaceGenericTeaserPropTypes): React.JSX.Element => (
   <Fragment>
     <Section
@@ -63,7 +58,6 @@ export const GenericTeaser = ({
                 type: item.linkType,
               },
             ]}
-            pageLanguage={pageLanguage}
             type='generic'
           />
         );

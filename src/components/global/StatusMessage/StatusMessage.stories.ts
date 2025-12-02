@@ -39,7 +39,6 @@ const defaultProps: StatusMessageProps = {
       linkText: simpleRteConfig('Some action link'),
     },
   },
-  pageLanguage: 'de',
   show: {
     display: 'show',
   },

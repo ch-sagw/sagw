@@ -46,7 +46,6 @@ const defaultArgs: GenericTeaserProps = {
   alignement: 'horizontal',
   blockType: 'genericTeasersBlock',
   lead: simpleRteConfig('Projekte mit gesellschaftlicher Relevanz an der Schnittstelle von Wissenschaft und Öffentlichkeit.'),
-  pageLanguage: 'de',
   teasers: [
     {
       ...teaserBlock,

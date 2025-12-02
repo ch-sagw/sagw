@@ -67,7 +67,6 @@ const team: Team = {
 
 export const SampleStory: StrictStory = {
   args: {
-    language: 'de',
     people,
     team,
   },

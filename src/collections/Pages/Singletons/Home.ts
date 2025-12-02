@@ -12,13 +12,13 @@ import { versions } from '@/field-templates/versions';
 import { hookCascadeBreadcrumbUpdates } from '@/hooks-payload/cascadeBreadcrumbUpdates';
 import { hookGenerateBreadcrumbs } from '@/hooks-payload/generateBreadcrumbs';
 import { fieldNavigationTitleFieldName } from '@/field-templates/navigationTitle';
-import { i18nNavigation } from '@/i18n/content';
 import { pageAccess } from '@/access/pages';
 import { sagwOnlyBlocks } from '@/access/blocks';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
+import { getTranslations } from 'next-intl/server';
 
 const homeBlocks: BlockSlug[] = [
   'textBlock',
@@ -55,11 +55,23 @@ export const HomePage: CollectionConfig = {
         hidden: true,
         readOnly: true,
       },
-      defaultValue: ({
+      defaultValue: async ({
         locale,
-      }) => (locale
-        ? i18nNavigation.navigationTitleTranslations[locale]
-        : 'Home'),
+      }): Promise<string> => {
+        let homeString = 'Home';
+
+        if (locale) {
+          const i18nNavigation = await getTranslations({
+            locale,
+            namespace: 'navigation',
+          });
+
+          homeString = i18nNavigation('navigationTitle');
+        }
+
+        return homeString;
+
+      },
       localized: true,
       name: fieldNavigationTitleFieldName,
       required: false,

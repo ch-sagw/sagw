@@ -3,6 +3,7 @@ import { withSentryConfig } from '@sentry/nextjs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { withPayload } from '@payloadcms/next/withPayload';
+import createNextIntlPlugin from 'next-intl/plugin';
 
 const rootFileName = fileURLToPath(import.meta.url);
 const rootDirName = path.dirname(rootFileName);
@@ -40,7 +41,7 @@ const configWithPayload = withPayload(nextConfig, {
   devBundleServerPackages: false,
 });
 
-export default withSentryConfig(configWithPayload, {
+const configWithSentry = withSentryConfig(configWithPayload, {
   authToken: process.env.SENTRY_AUTH_TOKEN,
   automaticVercelMonitors: true,
   disableLogger: true,
@@ -50,3 +51,7 @@ export default withSentryConfig(configWithPayload, {
   tunnelRoute: '/monitoring',
   widenClientFileUpload: true,
 });
+
+const withNextIntl = createNextIntlPlugin();
+
+export default withNextIntl(configWithSentry);

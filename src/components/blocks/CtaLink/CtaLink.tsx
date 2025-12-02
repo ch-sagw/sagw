@@ -4,14 +4,10 @@ import styles from '@/components/blocks/CtaLink/CtaLink.module.scss';
 import { Section } from '@/components/base/Section/Section';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
-import {
-  Config, InterfaceCtaLinkBlock,
-} from '@/payload-types';
+import { InterfaceCtaLinkBlock } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 
-export type InterfaceCtaLinkPropTypes = {
-  language: Config['locale'];
-} & InterfaceCtaLinkBlock;
+export type InterfaceCtaLinkPropTypes = {} & InterfaceCtaLinkBlock;
 
 const ctaLinkClasses = cva([
   styles.ctaLink,
@@ -61,7 +57,7 @@ export const CtaLink = (props: InterfaceCtaLinkPropTypes): React.JSX.Element => 
           ? 'arrowRight' as keyof typeof Icon
           : 'externalLink' as keyof typeof Icon
         }
-        pageLanguage={props.language}
+        prefetch={true}
       />
     </Section>
   );

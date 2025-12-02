@@ -659,6 +659,7 @@ test('home allows 1 teaser block via API', async () => {
           sideTitle: simpleRteConfig('Side title'),
           title: simpleRteConfig(`Overview page title ${new Date()} - 3`),
         },
+        navigationTitle: 'Home',
         tenant: tenant.id,
       },
     });

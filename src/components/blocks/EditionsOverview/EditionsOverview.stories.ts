@@ -49,6 +49,5 @@ export const Overview: StrictStory = {
       }),
       linkText: simpleRteConfig('some link'),
     },
-    language: 'de',
   },
 };

@@ -69,7 +69,6 @@ const defaultArgs: MagazineTeaserProps = {
       linkText: simpleRteConfig('Alle Artikel anzeigen'),
     },
   },
-  pageLanguage: 'de',
   pages: [
     {
       ...samplePage,

@@ -5,7 +5,6 @@ import React, {
 } from 'react';
 import styles from '@/components/blocks/NetworkTeaser/NetworkTeaser.module.scss';
 import {
-  Config,
   InterfaceNetworkTeasersBlock, NetworkCategory,
 } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
@@ -19,9 +18,7 @@ import { Pagination } from '@/components/base/Pagination/Pagination';
 import { usePagination } from '@/hooks/usePagination';
 import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
 
-export type InterfaceNetworkTeaserPropTypes = {
-  pageLanguage: Config['locale'];
-} & InterfaceNetworkTeasersBlock;
+export type InterfaceNetworkTeaserPropTypes = {} & InterfaceNetworkTeasersBlock;
 
 const allValue = 'all';
 
@@ -60,7 +57,6 @@ const getUniqueCategoriesOfItems = (items: InterfaceNetworkTeasersBlock['items']
 export const NetworkTeaser = ({
   filter,
   items,
-  pageLanguage,
 }: InterfaceNetworkTeaserPropTypes): React.JSX.Element => {
   const filterItems = getUniqueCategoriesOfItems(items, rte1ToPlaintext(filter.allCheckboxText));
   const plainTitle = rte1ToPlaintext(filter.title);
@@ -112,14 +108,12 @@ export const NetworkTeaser = ({
           type: 'external',
         },
       ]}
-      pageLanguage={pageLanguage}
       type='network'
     />
   )), [
     filteredNetworkItems,
     items.foundingYearText,
     items.linkText,
-    pageLanguage,
   ]);
 
   const {
@@ -168,7 +162,6 @@ export const NetworkTeaser = ({
         totalPages={totalPages}
         currentPage={currentPage}
         onPageChange={handlePageChange}
-        language={pageLanguage}
       />
 
     </Section>
