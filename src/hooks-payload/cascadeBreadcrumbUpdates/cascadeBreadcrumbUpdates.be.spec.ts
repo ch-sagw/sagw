@@ -218,7 +218,7 @@ test('Updates on slug change', async () => {
 
 // 1. Generate 4 levels of nested pages.
 // 2. Remove parentPage on level 2
-// Expect: 1 breadcrumb on level 3 and 2 breadcrumbs on level 4
+// Expect: 0 breadcrumbs on level 3 and 4
 test('Updates on parentPage removal', async () => {
   const payload = await getPayload({
     config: configPromise,
@@ -311,9 +311,9 @@ test('Updates on parentPage removal', async () => {
   });
 
   await expect(level3Updated!.breadcrumb!.length)
-    .toBe(1);
+    .toBe(0);
   await expect(level4Updated!.breadcrumb!.length)
-    .toBe(2);
+    .toBe(0);
 
 });
 
@@ -436,7 +436,7 @@ test('Updates on parentPage update', async () => {
 
 // 1. Generate 4 levels of nested pages.
 // 2. Delete level 2 page
-// Expect: 0 breadcrumb on level 3 and 1 breadcrumbs on level 4
+// Expect: 0 breadcrumb on level 3 and 4
 test('Updates on page deletion', async () => {
   const payload = await getPayload({
     config: configPromise,
@@ -525,13 +525,13 @@ test('Updates on page deletion', async () => {
   await expect(level3Updated!.breadcrumb!.length)
     .toBe(0);
   await expect(level4Updated!.breadcrumb!.length)
-    .toBe(1);
+    .toBe(0);
 
 });
 
 // 1. Generate 4 levels of nested pages.
 // 2. Unpublish level 2 page
-// Expect: 0 breadcrumb on level 3 and 1 breadcrumbs on level 4
+// Expect: 0 breadcrumb on level 3 and 4
 test('Updates on unpublishing a page', async () => {
   const payload = await getPayload({
     config: configPromise,
@@ -623,6 +623,118 @@ test('Updates on unpublishing a page', async () => {
   await expect(level3Updated!.breadcrumb!.length)
     .toBe(0);
   await expect(level4Updated!.breadcrumb!.length)
-    .toBe(1);
+    .toBe(0);
+
+});
+
+// 1. Generate 4 levels of nested pages.
+// 2. Unpublish home
+// Expect: 0 breadcrumb on level 1, 2, 3 and 4
+test('Updates on unpublishing home', async () => {
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  let level1: any;
+  let level2: any;
+  let level3: any;
+  let level4: any;
+
+  try {
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}-tenant-7`,
+    });
+
+    const home = await generateHomePage({
+      sideTitle: 'Home side title',
+      tenant: tenant.id,
+      title: 'Home title',
+    });
+
+    level1 = await generateOverviewPage({
+      navigationTitle: 'Level 1 Navigation Title',
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      tenant: tenant.id,
+      title: `Level 1 ${(new Date())
+        .getTime()}`,
+    });
+
+    level2 = await generateDetailPage({
+      navigationTitle: 'Level 2 Navigation Title',
+      parentPage: {
+        documentId: level1.id,
+        slug: 'overviewPage',
+      },
+      tenant: tenant.id,
+      title: `Level 2 ${(new Date())
+        .getTime()}`,
+    });
+
+    level3 = await generateEventDetailPage({
+      navigationTitle: 'Level 3 Navigation Title',
+      parentPage: {
+        documentId: level2.id,
+        slug: 'detailPage',
+      },
+      tenant: tenant.id,
+      title: `Level 3 ${(new Date())
+        .getTime()}`,
+    });
+
+    level4 = await generateInstituteDetailPage({
+      navigationTitle: 'Level 4 Navigation Title',
+      parentPage: {
+        documentId: level3.id,
+        slug: 'eventDetailPage',
+      },
+      tenant: tenant.id,
+      title: `Level 4 ${(new Date())
+        .getTime()}`,
+    });
+
+    await payload.update({
+      collection: 'homePage',
+      data: {
+        _status: 'draft',
+      },
+      id: home.id,
+    });
+
+  } catch (e) {
+    level4 = JSON.stringify(e);
+  }
+
+  const level1Updated = await payload.findByID({
+    collection: 'overviewPage',
+    id: level1.id,
+  });
+
+  const level2Updated = await payload.findByID({
+    collection: 'detailPage',
+    id: level2.id,
+  });
+
+  const level3Updated = await payload.findByID({
+    collection: 'eventDetailPage',
+    id: level3.id,
+  });
+
+  const level4Updated = await payload.findByID({
+    collection: 'instituteDetailPage',
+    id: level4.id,
+  });
+
+  await expect(level1Updated!.breadcrumb!.length)
+    .toBe(0);
+  await expect(level2Updated!.breadcrumb!.length)
+    .toBe(0);
+  await expect(level3Updated!.breadcrumb!.length)
+    .toBe(0);
+  await expect(level4Updated!.breadcrumb!.length)
+    .toBe(0);
 
 });
