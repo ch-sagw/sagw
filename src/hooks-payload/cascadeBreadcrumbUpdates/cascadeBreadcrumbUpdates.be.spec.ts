@@ -10,9 +10,11 @@ import {
 import {
   generateDetailPage,
   generateEventDetailPage,
+  generateHomePage,
   generateInstituteDetailPage,
   generateOverviewPage,
 } from '@/test-helpers/page-generator';
+import { generateTenant } from '@/test-helpers/tenant-generator';
 
 // 1. Generate 4 levels of nested pages.
 // 2. Change navigation title on level 2.
@@ -28,8 +30,24 @@ test('Updates on navigationTitle change', async () => {
   let level4: any;
 
   try {
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}-tenant-1`,
+    });
+
+    const home = await generateHomePage({
+      sideTitle: 'Home side title',
+      tenant: tenant.id,
+      title: 'Home title',
+    });
+
     level1 = await generateOverviewPage({
       navigationTitle: 'Level 1 Navigation Title',
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      tenant: tenant.id,
       title: `Level 1 ${(new Date())
         .getTime()}`,
     });
@@ -40,6 +58,7 @@ test('Updates on navigationTitle change', async () => {
         documentId: level1.id,
         slug: 'overviewPage',
       },
+      tenant: tenant.id,
       title: `Level 2 ${(new Date())
         .getTime()}`,
     });
@@ -50,6 +69,7 @@ test('Updates on navigationTitle change', async () => {
         documentId: level2.id,
         slug: 'detailPage',
       },
+      tenant: tenant.id,
       title: `Level 3 ${(new Date())
         .getTime()}`,
     });
@@ -60,6 +80,7 @@ test('Updates on navigationTitle change', async () => {
         documentId: level3.id,
         slug: 'eventDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 4 ${(new Date())
         .getTime()}`,
     });
@@ -86,10 +107,10 @@ test('Updates on navigationTitle change', async () => {
     id: level4.id,
   });
 
-  await expect(level3Updated!.breadcrumb![1].namede)
+  await expect(level3Updated!.breadcrumb![2].namede)
     .toStrictEqual('New Level 2 Navigation Title');
 
-  await expect(level4Updated!.breadcrumb![1].namede)
+  await expect(level4Updated!.breadcrumb![2].namede)
     .toStrictEqual('New Level 2 Navigation Title');
 
 });
@@ -110,8 +131,24 @@ test('Updates on slug change', async () => {
     .getTime()}`;
 
   try {
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}-tenant-2`,
+    });
+
+    const home = await generateHomePage({
+      sideTitle: 'Home side title',
+      tenant: tenant.id,
+      title: 'Home title',
+    });
+
     level1 = await generateOverviewPage({
       navigationTitle: 'Level 1 Navigation Title',
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      tenant: tenant.id,
       title: `Level 1 ${(new Date())
         .getTime()}`,
     });
@@ -122,6 +159,7 @@ test('Updates on slug change', async () => {
         documentId: level1.id,
         slug: 'overviewPage',
       },
+      tenant: tenant.id,
       title: `Level 2 ${(new Date())
         .getTime()}`,
     });
@@ -132,6 +170,7 @@ test('Updates on slug change', async () => {
         documentId: level2.id,
         slug: 'detailPage',
       },
+      tenant: tenant.id,
       title: `Level 3 ${(new Date())
         .getTime()}`,
     });
@@ -142,6 +181,7 @@ test('Updates on slug change', async () => {
         documentId: level3.id,
         slug: 'eventDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 4 ${(new Date())
         .getTime()}`,
     });
@@ -168,10 +208,10 @@ test('Updates on slug change', async () => {
     id: level4.id,
   });
 
-  await expect(level3Updated!.breadcrumb![1].slugde)
+  await expect(level3Updated!.breadcrumb![2].slugde)
     .toStrictEqual(newSlug);
 
-  await expect(level4Updated!.breadcrumb![1].slugde)
+  await expect(level4Updated!.breadcrumb![2].slugde)
     .toStrictEqual(newSlug);
 
 });
@@ -190,8 +230,24 @@ test('Updates on parentPage removal', async () => {
   let level4: any;
 
   try {
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}-tenant-3`,
+    });
+
+    const home = await generateHomePage({
+      sideTitle: 'Home side title',
+      tenant: tenant.id,
+      title: 'Home title',
+    });
+
     level1 = await generateOverviewPage({
       navigationTitle: 'Level 1 Navigation Title',
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      tenant: tenant.id,
       title: `Level 1 ${(new Date())
         .getTime()}`,
     });
@@ -202,6 +258,7 @@ test('Updates on parentPage removal', async () => {
         documentId: level1.id,
         slug: 'overviewPage',
       },
+      tenant: tenant.id,
       title: `Level 2 ${(new Date())
         .getTime()}`,
     });
@@ -212,6 +269,7 @@ test('Updates on parentPage removal', async () => {
         documentId: level2.id,
         slug: 'detailPage',
       },
+      tenant: tenant.id,
       title: `Level 3 ${(new Date())
         .getTime()}`,
     });
@@ -222,6 +280,7 @@ test('Updates on parentPage removal', async () => {
         documentId: level3.id,
         slug: 'eventDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 4 ${(new Date())
         .getTime()}`,
     });
@@ -273,8 +332,24 @@ test('Updates on parentPage update', async () => {
   let level4: any;
 
   try {
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}-tenant-4`,
+    });
+
+    const home = await generateHomePage({
+      sideTitle: 'Home side title',
+      tenant: tenant.id,
+      title: 'Home title',
+    });
+
     level1 = await generateOverviewPage({
       navigationTitle: 'Level 1 Navigation Title',
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      tenant: tenant.id,
       title: `Level 1 ${(new Date())
         .getTime()}`,
     });
@@ -285,6 +360,7 @@ test('Updates on parentPage update', async () => {
         documentId: level1.id,
         slug: 'overviewPage',
       },
+      tenant: tenant.id,
       title: `Level 2 ${(new Date())
         .getTime()}`,
     });
@@ -295,6 +371,7 @@ test('Updates on parentPage update', async () => {
         documentId: level2.id,
         slug: 'detailPage',
       },
+      tenant: tenant.id,
       title: `Level 3 ${(new Date())
         .getTime()}`,
     });
@@ -305,6 +382,7 @@ test('Updates on parentPage update', async () => {
         documentId: level3.id,
         slug: 'eventDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 4 ${(new Date())
         .getTime()}`,
     });
@@ -335,17 +413,23 @@ test('Updates on parentPage update', async () => {
   });
 
   await expect(level3Updated!.breadcrumb!.length)
-    .toBe(1);
-  await expect(level4Updated!.breadcrumb!.length)
     .toBe(2);
+  await expect(level4Updated!.breadcrumb!.length)
+    .toBe(3);
 
   await expect(level3Updated!.breadcrumb![0].namede)
+    .toStrictEqual('Home');
+
+  await expect(level3Updated!.breadcrumb![1].namede)
     .toStrictEqual('Level 1 Navigation Title');
 
   await expect(level4Updated!.breadcrumb![0].namede)
-    .toStrictEqual('Level 1 Navigation Title');
+    .toStrictEqual('Home');
 
   await expect(level4Updated!.breadcrumb![1].namede)
+    .toStrictEqual('Level 1 Navigation Title');
+
+  await expect(level4Updated!.breadcrumb![2].namede)
     .toStrictEqual('Level 3 Navigation Title');
 
 });
@@ -364,8 +448,24 @@ test('Updates on page deletion', async () => {
   let level4: any;
 
   try {
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}-tenant-5`,
+    });
+
+    const home = await generateHomePage({
+      sideTitle: 'Home side title',
+      tenant: tenant.id,
+      title: 'Home title',
+    });
+
     level1 = await generateOverviewPage({
       navigationTitle: 'Level 1 Navigation Title',
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      tenant: tenant.id,
       title: `Level 1 ${(new Date())
         .getTime()}`,
     });
@@ -376,6 +476,7 @@ test('Updates on page deletion', async () => {
         documentId: level1.id,
         slug: 'overviewPage',
       },
+      tenant: tenant.id,
       title: `Level 2 ${(new Date())
         .getTime()}`,
     });
@@ -386,6 +487,7 @@ test('Updates on page deletion', async () => {
         documentId: level2.id,
         slug: 'detailPage',
       },
+      tenant: tenant.id,
       title: `Level 3 ${(new Date())
         .getTime()}`,
     });
@@ -396,6 +498,7 @@ test('Updates on page deletion', async () => {
         documentId: level3.id,
         slug: 'eventDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 4 ${(new Date())
         .getTime()}`,
     });
@@ -440,8 +543,24 @@ test('Updates on unpublishing a page', async () => {
   let level4: any;
 
   try {
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}-tenant-6`,
+    });
+
+    const home = await generateHomePage({
+      sideTitle: 'Home side title',
+      tenant: tenant.id,
+      title: 'Home title',
+    });
+
     level1 = await generateOverviewPage({
       navigationTitle: 'Level 1 Navigation Title',
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      tenant: tenant.id,
       title: `Level 1 ${(new Date())
         .getTime()}`,
     });
@@ -452,6 +571,7 @@ test('Updates on unpublishing a page', async () => {
         documentId: level1.id,
         slug: 'overviewPage',
       },
+      tenant: tenant.id,
       title: `Level 2 ${(new Date())
         .getTime()}`,
     });
@@ -462,6 +582,7 @@ test('Updates on unpublishing a page', async () => {
         documentId: level2.id,
         slug: 'detailPage',
       },
+      tenant: tenant.id,
       title: `Level 3 ${(new Date())
         .getTime()}`,
     });
@@ -472,6 +593,7 @@ test('Updates on unpublishing a page', async () => {
         documentId: level3.id,
         slug: 'eventDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 4 ${(new Date())
         .getTime()}`,
     });

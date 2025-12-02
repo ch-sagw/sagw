@@ -5,6 +5,7 @@ import {
 import {
   generateDetailPage,
   generateEventDetailPage,
+  generateHomePage,
   generateInstituteDetailPage,
   generateMagazineDetailPage,
   generateNationalDictionaryDetailPage,
@@ -13,6 +14,7 @@ import {
   generateProjectDetailPage,
   generatePublicationDetailPage,
 } from '@/test-helpers/page-generator';
+import { generateTenant } from '@/test-helpers/tenant-generator';
 
 // Generate 9 levels of nested pages.
 // Expect: correct data in level 9 breadcrumb.
@@ -28,8 +30,24 @@ test('Generates breadcrumb', async () => {
   let level8: any;
 
   try {
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}-tenant-1`,
+    });
+
+    const home = await generateHomePage({
+      sideTitle: 'Home side title',
+      tenant: tenant.id,
+      title: 'Home title',
+    });
+
     level1 = await generateOverviewPage({
       navigationTitle: 'Level 1 Navigation Title',
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      tenant: tenant.id,
       title: `Level 1 ${(new Date())
         .getTime()}`,
     });
@@ -40,6 +58,7 @@ test('Generates breadcrumb', async () => {
         documentId: level1.id,
         slug: 'overviewPage',
       },
+      tenant: tenant.id,
       title: `Level 2 ${(new Date())
         .getTime()}`,
     });
@@ -50,6 +69,7 @@ test('Generates breadcrumb', async () => {
         documentId: level2.id,
         slug: 'detailPage',
       },
+      tenant: tenant.id,
       title: `Level 3 ${(new Date())
         .getTime()}`,
     });
@@ -60,6 +80,7 @@ test('Generates breadcrumb', async () => {
         documentId: level3.id,
         slug: 'eventDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 4 ${(new Date())
         .getTime()}`,
     });
@@ -70,6 +91,7 @@ test('Generates breadcrumb', async () => {
         documentId: level4.id,
         slug: 'instituteDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 5 ${(new Date())
         .getTime()}`,
     });
@@ -80,6 +102,7 @@ test('Generates breadcrumb', async () => {
         documentId: level5.id,
         slug: 'magazineDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 6 ${(new Date())
         .getTime()}`,
     });
@@ -90,6 +113,7 @@ test('Generates breadcrumb', async () => {
         documentId: level6.id,
         slug: 'nationalDictionaryDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 7 ${(new Date())
         .getTime()}`,
     });
@@ -100,6 +124,7 @@ test('Generates breadcrumb', async () => {
         documentId: level7.id,
         slug: 'newsDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 8 ${(new Date())
         .getTime()}`,
     });
@@ -110,6 +135,7 @@ test('Generates breadcrumb', async () => {
         documentId: level8.id,
         slug: 'projectDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 9 ${(new Date())
         .getTime()}`,
     });
@@ -123,52 +149,58 @@ test('Generates breadcrumb', async () => {
   } = result;
 
   await expect(breadcrumb.length)
-    .toEqual(8);
+    .toEqual(9);
 
   await expect(breadcrumb[0].namede)
-    .toStrictEqual('Level 1 Navigation Title');
+    .toStrictEqual('Home');
 
   await expect(breadcrumb[1].namede)
-    .toStrictEqual('Level 2 Navigation Title');
+    .toStrictEqual('Level 1 Navigation Title');
 
   await expect(breadcrumb[2].namede)
-    .toStrictEqual('Level 3 Navigation Title');
+    .toStrictEqual('Level 2 Navigation Title');
 
   await expect(breadcrumb[3].namede)
-    .toStrictEqual('Level 4 Navigation Title');
+    .toStrictEqual('Level 3 Navigation Title');
 
   await expect(breadcrumb[4].namede)
-    .toStrictEqual('Level 5 Navigation Title');
+    .toStrictEqual('Level 4 Navigation Title');
 
   await expect(breadcrumb[5].namede)
-    .toStrictEqual('Level 6 Navigation Title');
+    .toStrictEqual('Level 5 Navigation Title');
 
   await expect(breadcrumb[6].namede)
-    .toStrictEqual('Level 7 Navigation Title');
+    .toStrictEqual('Level 6 Navigation Title');
 
   await expect(breadcrumb[7].namede)
+    .toStrictEqual('Level 7 Navigation Title');
+
+  await expect(breadcrumb[8].namede)
     .toStrictEqual('Level 8 Navigation Title');
 
   await expect(breadcrumb[0].slugde)
-    .toStrictEqual(level1.slug);
+    .toStrictEqual('home');
   await expect(breadcrumb[1].slugde)
-    .toStrictEqual(level2.slug);
+    .toStrictEqual(level1.slug);
   await expect(breadcrumb[2].slugde)
-    .toStrictEqual(level3.slug);
+    .toStrictEqual(level2.slug);
   await expect(breadcrumb[3].slugde)
-    .toStrictEqual(level4.slug);
+    .toStrictEqual(level3.slug);
   await expect(breadcrumb[4].slugde)
-    .toStrictEqual(level5.slug);
+    .toStrictEqual(level4.slug);
   await expect(breadcrumb[5].slugde)
-    .toStrictEqual(level6.slug);
+    .toStrictEqual(level5.slug);
   await expect(breadcrumb[6].slugde)
-    .toStrictEqual(level7.slug);
+    .toStrictEqual(level6.slug);
   await expect(breadcrumb[7].slugde)
+    .toStrictEqual(level7.slug);
+  await expect(breadcrumb[8].slugde)
     .toStrictEqual(level8.slug);
 
 });
 
 // Generate 3 pages. Level 1 and 2 are connected with parentPage selector.
+// Home is set as parent of level 1.
 // Level 3 is not connected.
 // Expect: Level 2 to have 1 breadcrumb
 // Expect: Level 3 to have 0 breadcrumb
@@ -177,8 +209,24 @@ test('Does not generate breadcrumb if parent page is not set', async () => {
   let level2: any;
 
   try {
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}-tenant-2`,
+    });
+
+    const home = await generateHomePage({
+      sideTitle: 'Home side title',
+      tenant: tenant.id,
+      title: 'Home title',
+    });
+
     const level1 = await generateOverviewPage({
       navigationTitle: 'Level 1 Navigation Title',
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      tenant: tenant.id,
       title: `Level 1 ${(new Date())
         .getTime()}`,
     });
@@ -189,12 +237,14 @@ test('Does not generate breadcrumb if parent page is not set', async () => {
         documentId: level1.id,
         slug: 'overviewPage',
       },
+      tenant: tenant.id,
       title: `Level 2 ${(new Date())
         .getTime()}`,
     });
 
     result = await generatePublicationDetailPage({
       navigationTitle: 'Level 3 Navigation Title',
+      tenant: tenant.id,
       title: `Level 3 ${(new Date())
         .getTime()}`,
     });
@@ -204,7 +254,62 @@ test('Does not generate breadcrumb if parent page is not set', async () => {
   }
 
   await expect(level2.breadcrumb.length)
-    .toEqual(1);
+    .toEqual(2);
+
+  await expect(result.breadcrumb.length)
+    .toEqual(0);
+
+});
+
+// Generate 3 pages. Level 1 and 2 are connected with parentPage selector.
+// Home is not set as parent of level 1.
+// Expect: Level 2 to have 1 breadcrumb
+// Expect: Level 3 to have 0 breadcrumb
+test('Does not generate breadcrumb if home page is not parent', async () => {
+  let result: any;
+  let level1: any;
+  let level2: any;
+
+  try {
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}-tenant-21`,
+    });
+
+    level1 = await generateOverviewPage({
+      navigationTitle: 'Level 1 Navigation Title',
+      tenant: tenant.id,
+      title: `Level 1 ${(new Date())
+        .getTime()}`,
+    });
+
+    level2 = await generateDetailPage({
+      navigationTitle: 'Level 2 Navigation Title',
+      parentPage: {
+        documentId: level1.id,
+        slug: 'overviewPage',
+      },
+      tenant: tenant.id,
+      title: `Level 2 ${(new Date())
+        .getTime()}`,
+    });
+
+    result = await generatePublicationDetailPage({
+      navigationTitle: 'Level 3 Navigation Title',
+      tenant: tenant.id,
+      title: `Level 3 ${(new Date())
+        .getTime()}`,
+    });
+
+  } catch (e) {
+    result = JSON.stringify(e);
+  }
+
+  await expect(level1.breadcrumb.length)
+    .toEqual(0);
+
+  await expect(level2.breadcrumb.length)
+    .toEqual(0);
 
   await expect(result.breadcrumb.length)
     .toEqual(0);
@@ -227,8 +332,24 @@ test('Correctly sets breadcrumb if navigation Title is missing in cascade chain'
   let level9: any;
 
   try {
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}-tenant-3`,
+    });
+
+    const home = await generateHomePage({
+      sideTitle: 'Home side title',
+      tenant: tenant.id,
+      title: 'Home title',
+    });
+
     level1 = await generateOverviewPage({
       navigationTitle: 'Level 1 Navigation Title',
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      tenant: tenant.id,
       title: `Level 1 ${(new Date())
         .getTime()}`,
     });
@@ -239,6 +360,7 @@ test('Correctly sets breadcrumb if navigation Title is missing in cascade chain'
         documentId: level1.id,
         slug: 'overviewPage',
       },
+      tenant: tenant.id,
       title: `Level 2 ${(new Date())
         .getTime()}`,
     });
@@ -249,6 +371,7 @@ test('Correctly sets breadcrumb if navigation Title is missing in cascade chain'
         documentId: level2.id,
         slug: 'detailPage',
       },
+      tenant: tenant.id,
       title: `Level 3 ${(new Date())
         .getTime()}`,
     });
@@ -259,6 +382,7 @@ test('Correctly sets breadcrumb if navigation Title is missing in cascade chain'
         documentId: level3.id,
         slug: 'eventDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 4 ${(new Date())
         .getTime()}`,
     });
@@ -268,6 +392,7 @@ test('Correctly sets breadcrumb if navigation Title is missing in cascade chain'
         documentId: level4.id,
         slug: 'instituteDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 5 ${(new Date())
         .getTime()}`,
     });
@@ -278,6 +403,7 @@ test('Correctly sets breadcrumb if navigation Title is missing in cascade chain'
         documentId: level5.id,
         slug: 'magazineDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 6 ${(new Date())
         .getTime()}`,
     });
@@ -288,6 +414,7 @@ test('Correctly sets breadcrumb if navigation Title is missing in cascade chain'
         documentId: level6.id,
         slug: 'nationalDictionaryDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 7 ${(new Date())
         .getTime()}`,
     });
@@ -298,6 +425,7 @@ test('Correctly sets breadcrumb if navigation Title is missing in cascade chain'
         documentId: level7.id,
         slug: 'newsDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 8 ${(new Date())
         .getTime()}`,
     });
@@ -308,6 +436,7 @@ test('Correctly sets breadcrumb if navigation Title is missing in cascade chain'
         documentId: level8.id,
         slug: 'projectDetailPage',
       },
+      tenant: tenant.id,
       title: `Level 9 ${(new Date())
         .getTime()}`,
     });
@@ -316,14 +445,16 @@ test('Correctly sets breadcrumb if navigation Title is missing in cascade chain'
     level9 = JSON.stringify(e);
   }
 
-  await expect(level2.breadcrumb.length)
+  await expect(level1.breadcrumb.length)
     .toEqual(1);
-  await expect(level3.breadcrumb.length)
+  await expect(level2.breadcrumb.length)
     .toEqual(2);
-  await expect(level4.breadcrumb.length)
+  await expect(level3.breadcrumb.length)
     .toEqual(3);
-  await expect(level5.breadcrumb.length)
+  await expect(level4.breadcrumb.length)
     .toEqual(4);
+  await expect(level5.breadcrumb.length)
+    .toEqual(5);
   await expect(level6.breadcrumb.length)
     .toEqual(0);
   await expect(level7.breadcrumb.length)
@@ -337,10 +468,9 @@ test('Correctly sets breadcrumb if navigation Title is missing in cascade chain'
 
 // Complex example with siblings
 // Generate 9 pages on 5 levels (each level has a and b).
-// Each page has to children (a and b). The b page links to the next level.
+// Each page has two children (a and b). The b page links to the next level.
 // Expect: correct data in level 5b breadcrumb.
 test('Generates breadcrumb with siblings', async () => {
-  let level1: any;
   let level2b: any;
   let level3b: any;
   let level4b: any;
@@ -348,18 +478,24 @@ test('Generates breadcrumb with siblings', async () => {
   let level5b: any;
 
   try {
-    level1 = await generateOverviewPage({
-      navigationTitle: 'Level 1 Navigation Title',
-      title: `Level 1 ${(new Date())
-        .getTime()}`,
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}-tenant-3`,
+    });
+
+    const home = await generateHomePage({
+      sideTitle: 'Home side title',
+      tenant: tenant.id,
+      title: 'Home title',
     });
 
     await generateDetailPage({
       navigationTitle: 'Level 2a Navigation Title',
       parentPage: {
-        documentId: level1.id,
-        slug: 'overviewPage',
+        documentId: home.id,
+        slug: 'homePage',
       },
+      tenant: tenant.id,
       title: `Level 2a ${(new Date())
         .getTime()}`,
     });
@@ -367,9 +503,10 @@ test('Generates breadcrumb with siblings', async () => {
     level2b = await generateDetailPage({
       navigationTitle: 'Level 2b Navigation Title',
       parentPage: {
-        documentId: level1.id,
-        slug: 'overviewPage',
+        documentId: home.id,
+        slug: 'homePage',
       },
+      tenant: tenant.id,
       title: `Level 2b ${(new Date())
         .getTime()}`,
     });
@@ -380,6 +517,7 @@ test('Generates breadcrumb with siblings', async () => {
         documentId: level2b.id,
         slug: 'detailPage',
       },
+      tenant: tenant.id,
       title: `Level 3a ${(new Date())
         .getTime()}`,
     });
@@ -390,6 +528,7 @@ test('Generates breadcrumb with siblings', async () => {
         documentId: level2b.id,
         slug: 'detailPage',
       },
+      tenant: tenant.id,
       title: `Level 3b ${(new Date())
         .getTime()}`,
     });
@@ -400,6 +539,7 @@ test('Generates breadcrumb with siblings', async () => {
         documentId: level3b.id,
         slug: 'detailPage',
       },
+      tenant: tenant.id,
       title: `Level 4a ${(new Date())
         .getTime()}`,
     });
@@ -410,6 +550,7 @@ test('Generates breadcrumb with siblings', async () => {
         documentId: level3b.id,
         slug: 'detailPage',
       },
+      tenant: tenant.id,
       title: `Level 4b ${(new Date())
         .getTime()}`,
     });
@@ -420,6 +561,7 @@ test('Generates breadcrumb with siblings', async () => {
         documentId: level4b.id,
         slug: 'detailPage',
       },
+      tenant: tenant.id,
       title: `Level 5a ${(new Date())
         .getTime()}`,
     });
@@ -430,6 +572,7 @@ test('Generates breadcrumb with siblings', async () => {
         documentId: level4b.id,
         slug: 'detailPage',
       },
+      tenant: tenant.id,
       title: `Level 5b ${(new Date())
         .getTime()}`,
     });
@@ -439,7 +582,7 @@ test('Generates breadcrumb with siblings', async () => {
   }
 
   await expect(level5b.breadcrumb[0].namede)
-    .toStrictEqual('Level 1 Navigation Title');
+    .toStrictEqual('Home');
 
   await expect(level5b.breadcrumb[1].namede)
     .toStrictEqual('Level 2b Navigation Title');
@@ -451,7 +594,7 @@ test('Generates breadcrumb with siblings', async () => {
     .toStrictEqual('Level 4b Navigation Title');
 
   await expect(level5a.breadcrumb[0].namede)
-    .toStrictEqual('Level 1 Navigation Title');
+    .toStrictEqual('Home');
 
   await expect(level5a.breadcrumb[1].namede)
     .toStrictEqual('Level 2b Navigation Title');
