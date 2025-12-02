@@ -11,44 +11,69 @@ export const People: CollectionConfig = {
     useAsTitle: 'fullName',
   },
   fields: [
-    rte1({
-      name: 'prefix',
-      notRequired: true,
-    }),
-    rte1({
-      disableLocalization: true,
-      name: 'firstname',
-    }),
-    rte1({
-      disableLocalization: true,
-      name: 'middleName',
-      notRequired: true,
-    }),
-    rte1({
-      disableLocalization: true,
-      name: 'lastname',
-    }),
-    rte1({
-      name: 'function',
-      notRequired: true,
-    }),
     {
-      localized: false,
-      name: 'mail',
-      required: true,
-      type: 'text',
+      admin: {
+        width: '33.33%',
+      },
+      fields: [
+        rte1({
+          disableLocalization: true,
+          name: 'firstname',
+        }),
+        rte1({
+          disableLocalization: true,
+          name: 'middleName',
+          notRequired: true,
+        }),
+        rte1({
+          disableLocalization: true,
+          name: 'lastname',
+        }),
+      ],
+      type: 'row',
     },
     {
-      localized: false,
-      name: 'phone',
-      required: false,
-      type: 'text',
+      admin: {
+        width: '50%',
+      },
+      fields: [
+        rte1({
+          name: 'prefix',
+          notRequired: true,
+        }),
+        rte1({
+          name: 'function',
+          notRequired: true,
+        }),
+      ],
+      type: 'row',
     },
     {
-      name: 'image',
-      relationTo: 'images',
-      required: false,
-      type: 'relationship',
+      admin: {
+        width: '33.33%',
+      },
+      fields: [
+
+        {
+          localized: false,
+          name: 'mail',
+          required: true,
+          type: 'text',
+        },
+        {
+          localized: false,
+          name: 'phone',
+          required: false,
+          type: 'text',
+        },
+        {
+          name: 'image',
+          relationTo: 'images',
+          required: false,
+          type: 'relationship',
+        },
+      ],
+      type: 'row',
     },
     {
       admin: {

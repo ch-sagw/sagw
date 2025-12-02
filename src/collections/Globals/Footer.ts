@@ -82,32 +82,56 @@ export const Footer: CollectionConfig = {
               name: 'address2',
               notRequired: true,
             }),
-            rte1({
-              disableLocalization: false,
-              name: 'poBox',
-              notRequired: true,
-            }),
-            rte1({
-              disableLocalization: true,
-              name: 'countryCode',
-            }),
-            rte1({
-              disableLocalization: true,
-              name: 'zipCode',
-            }),
-            rte1({
-              name: 'city',
-            }),
-            rte1({
-              disableLocalization: true,
-              name: 'phone',
-              notRequired: true,
-            }),
-            rte1({
-              disableLocalization: true,
-              name: 'mail',
-              notRequired: true,
-            }),
+            {
+              admin: {
+                width: '50%',
+              },
+              fields: [
+                rte1({
+                  disableLocalization: false,
+                  name: 'poBox',
+                  notRequired: true,
+                }),
+                rte1({
+                  disableLocalization: true,
+                  name: 'countryCode',
+                }),
+              ],
+              type: 'row',
+            },
+            {
+              admin: {
+                width: '50%',
+              },
+              fields: [
+                rte1({
+                  disableLocalization: true,
+                  name: 'zipCode',
+                }),
+                rte1({
+                  name: 'city',
+                }),
+              ],
+              type: 'row',
+            },
+            {
+              admin: {
+                width: '50%',
+              },
+              fields: [
+                rte1({
+                  disableLocalization: true,
+                  name: 'phone',
+                  notRequired: true,
+                }),
+                rte1({
+                  disableLocalization: true,
+                  name: 'mail',
+                  notRequired: true,
+                }),
+              ],
+              type: 'row',
+            },
           ],
           interfaceName: 'InterfaceFooterContact',
           name: 'contact',

@@ -43,6 +43,66 @@ export const Forms: CollectionConfig = {
       type: 'radio',
     },
 
+    // title & subtitle
+    {
+      admin: {
+        width: '50%',
+      },
+      fields: [
+        rte1({
+          access: fieldAccessAdminsOnly,
+          name: 'title',
+          notRequired: true,
+        }),
+        rte2({
+          access: fieldAccessAdminsOnly,
+          name: 'subtitle',
+          notRequired: true,
+        }),
+      ],
+      type: 'row',
+    },
+
+    {
+      admin: {
+        width: '33.33%',
+      },
+      fields: [
+
+        // submit button
+        {
+          access: fieldAccessAdminsOnly,
+          localized: true,
+          name: 'submitButtonLabel',
+          required: true,
+          type: 'text',
+        },
+
+        // recipient
+        {
+          access: fieldAccessAdminsOnly,
+          admin: {
+            condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
+          },
+          name: 'recipientMail',
+          required: true,
+          type: 'email',
+        },
+
+        // Mail subject
+        {
+          access: fieldAccessAdminsOnly,
+          admin: {
+            condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
+          },
+          name: 'mailSubject',
+          required: true,
+          type: 'text',
+        },
+      ],
+      type: 'row',
+    },
+
     // color mode
     fieldsColorMode({
       adminOnly: true,
@@ -50,49 +110,6 @@ export const Forms: CollectionConfig = {
       light: true,
       white: true,
     }),
-
-    // title & subtitle
-    rte1({
-      access: fieldAccessAdminsOnly,
-      name: 'title',
-      notRequired: true,
-    }),
-    rte2({
-      access: fieldAccessAdminsOnly,
-      name: 'subtitle',
-      notRequired: true,
-    }),
-
-    // submit button
-    {
-      access: fieldAccessAdminsOnly,
-      localized: true,
-      name: 'submitButtonLabel',
-      required: true,
-      type: 'text',
-    },
-
-    // recipient
-    {
-      access: fieldAccessAdminsOnly,
-      admin: {
-        condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
-      },
-      name: 'recipientMail',
-      required: true,
-      type: 'email',
-    },
-
-    // Mail subject
-    {
-      access: fieldAccessAdminsOnly,
-      admin: {
-        condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
-      },
-      name: 'mailSubject',
-      required: true,
-      type: 'text',
-    },
 
     // privacy checkbox
     {
@@ -111,12 +128,21 @@ export const Forms: CollectionConfig = {
         {
           access: fieldAccessAdminsOnly,
           fields: [
-            rte1({
-              name: 'title',
-            }),
-            rte1({
-              name: 'text',
-            }),
+            {
+              admin: {
+                width: '50%',
+              },
+              fields: [
+                rte1({
+                  name: 'title',
+                }),
+                rte1({
+                  name: 'text',
+                }),
+
+              ],
+              type: 'row',
+            },
             fieldsLinkInternalWithToggle({}),
           ],
           label: 'Submit Success',
@@ -127,12 +153,20 @@ export const Forms: CollectionConfig = {
         {
           access: fieldAccessAdminsOnly,
           fields: [
-            rte1({
-              name: 'title',
-            }),
-            rte1({
-              name: 'text',
-            }),
+            {
+              admin: {
+                width: '50%',
+              },
+              fields: [
+                rte1({
+                  name: 'title',
+                }),
+                rte1({
+                  name: 'text',
+                }),
+              ],
+              type: 'row',
+            },
             fieldsLinkInternalWithToggle({}),
           ],
           label: 'Submit Error',

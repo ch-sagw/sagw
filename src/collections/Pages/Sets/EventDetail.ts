@@ -116,37 +116,53 @@ export const EventDetailPage: CollectionConfig = {
                   notRequired: true,
                 }),
                 {
-                  access: fieldAccessNonLocalizableField,
-                  name: 'category',
-                  relationTo: 'eventCategory',
-                  type: 'relationship',
-                },
-                {
-                  access: fieldAccessNonLocalizableField,
-                  name: 'project',
-                  relationTo: 'projects',
-                  required: false,
-                  type: 'relationship',
-                },
-                {
-                  access: fieldAccessNonLocalizableField,
                   admin: {
-                    date: {
-                      displayFormat: 'HH:mm',
-                      pickerAppearance: 'timeOnly',
-                      timeFormat: 'HH:mm',
-                      timeIntervals: 5,
-                    },
+                    width: '50%',
                   },
-                  name: 'time',
-                  required: false,
-                  type: 'date',
+                  fields: [
+                    {
+                      access: fieldAccessNonLocalizableField,
+                      name: 'category',
+                      relationTo: 'eventCategory',
+                      type: 'relationship',
+                    },
+                    {
+                      access: fieldAccessNonLocalizableField,
+                      name: 'project',
+                      relationTo: 'projects',
+                      required: false,
+                      type: 'relationship',
+                    },
+                  ],
+                  type: 'row',
                 },
                 {
-                  access: fieldAccessNonLocalizableField,
-                  name: 'date',
-                  required: true,
-                  type: 'date',
+                  admin: {
+                    width: '50%',
+                  },
+                  fields: [
+                    {
+                      access: fieldAccessNonLocalizableField,
+                      name: 'date',
+                      required: true,
+                      type: 'date',
+                    },
+                    {
+                      access: fieldAccessNonLocalizableField,
+                      admin: {
+                        date: {
+                          displayFormat: 'HH:mm',
+                          pickerAppearance: 'timeOnly',
+                          timeFormat: 'HH:mm',
+                          timeIntervals: 5,
+                        },
+                      },
+                      name: 'time',
+                      required: false,
+                      type: 'date',
+                    },
+                  ],
+                  type: 'row',
                 },
                 {
                   access: fieldAccessNonLocalizableField,
