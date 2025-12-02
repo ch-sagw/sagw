@@ -10,31 +10,39 @@ import { rte1 } from '@/field-templates/rte';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
 
 const fieldsSocialLink: Field[] = [
-  ...fieldsLinkExternal({
-    hideLinkText: true,
-  }),
   {
-    name: 'icon',
-    options: [
+    admin: {
+      width: '50%',
+    },
+    fields: [
+      ...fieldsLinkExternal({
+        hideLinkText: true,
+      }),
       {
-        label: 'LinkedIn',
-        value: 'linkedIn',
-      },
-      {
-        label: 'Instagram',
-        value: 'instagram',
-      },
-      {
-        label: 'Facebook',
-        value: 'facebook',
-      },
-      {
-        label: 'X (Twitter)',
-        value: 'twitter',
+        name: 'icon',
+        options: [
+          {
+            label: 'LinkedIn',
+            value: 'linkedIn',
+          },
+          {
+            label: 'Instagram',
+            value: 'instagram',
+          },
+          {
+            label: 'Facebook',
+            value: 'facebook',
+          },
+          {
+            label: 'X (Twitter)',
+            value: 'twitter',
+          },
+        ],
+        required: true,
+        type: 'select',
       },
     ],
-    required: true,
-    type: 'select',
+    type: 'row',
   },
 ];
 

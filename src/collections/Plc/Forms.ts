@@ -21,230 +21,248 @@ export const Forms: CollectionConfig = {
     useAsTitle: 'title',
   },
   fields: [
-
-    // newsletter or custom form
     {
-      access: fieldAccessAdminsOnly,
-      admin: {
-        description: 'A newsletter form has a fixed set of fields. Custom form can be build with any combination of fields as you like.',
-      },
-      defaultValue: 'custom',
-      name: 'isNewsletterForm',
-      options: [
+      tabs: [
         {
-          label: 'Custom Form',
-          value: 'custom',
-        },
-        {
-          label: 'Newsletter Form',
-          value: 'newsletter',
-        },
-      ],
-      type: 'radio',
-    },
-
-    // title & subtitle
-    {
-      admin: {
-        width: '50%',
-      },
-      fields: [
-        rte1({
-          access: fieldAccessAdminsOnly,
-          name: 'title',
-          notRequired: true,
-        }),
-        rte2({
-          access: fieldAccessAdminsOnly,
-          name: 'subtitle',
-          notRequired: true,
-        }),
-      ],
-      type: 'row',
-    },
-
-    {
-      admin: {
-        width: '33.33%',
-      },
-      fields: [
-
-        // submit button
-        {
-          access: fieldAccessAdminsOnly,
-          localized: true,
-          name: 'submitButtonLabel',
-          required: true,
-          type: 'text',
-        },
-
-        // recipient
-        {
-          access: fieldAccessAdminsOnly,
-          admin: {
-            condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
-          },
-          name: 'recipientMail',
-          required: true,
-          type: 'email',
-        },
-
-        // Mail subject
-        {
-          access: fieldAccessAdminsOnly,
-          admin: {
-            condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
-          },
-          name: 'mailSubject',
-          required: true,
-          type: 'text',
-        },
-      ],
-      type: 'row',
-    },
-
-    // color mode
-    fieldsColorMode({
-      adminOnly: true,
-      dark: true,
-      light: true,
-      white: true,
-    }),
-
-    // privacy checkbox
-    {
-      access: fieldAccessAdminsOnly,
-      admin: {
-        description: 'If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".',
-      },
-      defaultValue: true,
-      name: 'showPrivacyCheckbox',
-      type: 'checkbox',
-    },
-
-    // error/success for custom form
-    {
-      fields: [
-        {
-          access: fieldAccessAdminsOnly,
           fields: [
+            // newsletter or custom form
+            {
+              access: fieldAccessAdminsOnly,
+              admin: {
+                description: 'A newsletter form has a fixed set of fields. Custom form can be build with any combination of fields as you like.',
+              },
+              defaultValue: 'custom',
+              name: 'isNewsletterForm',
+              options: [
+                {
+                  label: 'Custom Form',
+                  value: 'custom',
+                },
+                {
+                  label: 'Newsletter Form',
+                  value: 'newsletter',
+                },
+              ],
+              type: 'radio',
+            },
+
+            // title & subtitle
             {
               admin: {
                 width: '50%',
               },
               fields: [
                 rte1({
+                  access: fieldAccessAdminsOnly,
                   name: 'title',
+                  notRequired: true,
                 }),
-                rte1({
-                  name: 'text',
+                rte2({
+                  access: fieldAccessAdminsOnly,
+                  name: 'subtitle',
+                  notRequired: true,
                 }),
-
               ],
               type: 'row',
             },
-            fieldsLinkInternalWithToggle({}),
-          ],
-          label: 'Submit Success',
-          name: 'submitSuccess',
-          type: 'group',
-        },
 
-        {
-          access: fieldAccessAdminsOnly,
-          fields: [
             {
               admin: {
-                width: '50%',
+                width: '33.33%',
               },
               fields: [
-                rte1({
-                  name: 'title',
-                }),
-                rte1({
-                  name: 'text',
-                }),
+
+                // submit button
+                {
+                  access: fieldAccessAdminsOnly,
+                  localized: true,
+                  name: 'submitButtonLabel',
+                  required: true,
+                  type: 'text',
+                },
+
+                // recipient
+                {
+                  access: fieldAccessAdminsOnly,
+                  admin: {
+                    condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
+                  },
+                  name: 'recipientMail',
+                  required: true,
+                  type: 'email',
+                },
+
+                // Mail subject
+                {
+                  access: fieldAccessAdminsOnly,
+                  admin: {
+                    condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
+                  },
+                  name: 'mailSubject',
+                  required: true,
+                  type: 'text',
+                },
               ],
               type: 'row',
             },
-            fieldsLinkInternalWithToggle({}),
-          ],
-          label: 'Submit Error',
-          name: 'submitError',
-          type: 'group',
-        },
-      ],
-      type: 'group',
-    },
 
-    // custom form fields
-    {
-      access: fieldAccessAdminsOnly,
-      admin: {
-        condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
-      },
-      blocks: FormBlocks,
-      hooks: {
-        beforeChange: [formEnsureUniqueName],
-      },
-      name: 'fields',
-      required: true,
-      type: 'blocks',
-    },
+            // color mode
+            fieldsColorMode({
+              adminOnly: true,
+              dark: true,
+              light: true,
+              white: true,
+            }),
 
-    // newsletter form fields
-    {
-      access: fieldAccessAdminsOnly,
-      admin: {
-        condition: (_, siblingData) => siblingData.isNewsletterForm === 'newsletter',
-      },
-      fields: [
-        {
-          fields: emailBlock(true).fields,
-          name: 'email',
-          type: 'group',
-        },
-        {
-          fields: textBlock(true).fields,
-          name: 'firstName',
-          type: 'group',
-        },
-        {
-          fields: textBlock(true).fields,
-          name: 'lastName',
-          type: 'group',
-        },
-        {
-          admin: {
-            description: 'The action text to show at the bottom of the notification. e.g.: "Send verifiaction E-Mail again."',
-          },
-          localized: true,
-          name: 'actionText',
-          required: true,
-          type: 'text',
-        },
-        {
-          admin: {
-            description: 'If enabled, we show a language selection for Germand and French.',
-          },
-          defaultValue: 'no',
-          name: 'includeLanguageSelection',
-          options: [
+            // privacy checkbox
             {
-              label: 'No',
-              value: 'no',
-            },
-            {
-              label: 'Yes',
-              value: 'yes',
+              access: fieldAccessAdminsOnly,
+              admin: {
+                description: 'If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".',
+              },
+              defaultValue: true,
+              name: 'showPrivacyCheckbox',
+              type: 'checkbox',
             },
           ],
-          type: 'radio',
+          label: 'General',
+        },
+        {
+          fields: [
+            // error/success for custom form
+            {
+              fields: [
+                {
+                  access: fieldAccessAdminsOnly,
+                  fields: [
+                    {
+                      admin: {
+                        width: '50%',
+                      },
+                      fields: [
+                        rte1({
+                          name: 'title',
+                        }),
+                        rte1({
+                          name: 'text',
+                        }),
+
+                      ],
+                      type: 'row',
+                    },
+                    fieldsLinkInternalWithToggle({}),
+                  ],
+                  label: 'Submit Success',
+                  name: 'submitSuccess',
+                  type: 'group',
+                },
+
+                {
+                  access: fieldAccessAdminsOnly,
+                  fields: [
+                    {
+                      admin: {
+                        width: '50%',
+                      },
+                      fields: [
+                        rte1({
+                          name: 'title',
+                        }),
+                        rte1({
+                          name: 'text',
+                        }),
+                      ],
+                      type: 'row',
+                    },
+                    fieldsLinkInternalWithToggle({}),
+                  ],
+                  label: 'Submit Error',
+                  name: 'submitError',
+                  type: 'group',
+                },
+              ],
+              type: 'group',
+            },
+          ],
+          label: 'Notifications',
+        },
+        {
+          fields: [
+            // custom form fields
+            {
+              access: fieldAccessAdminsOnly,
+              admin: {
+                condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
+              },
+              blocks: FormBlocks,
+              hooks: {
+                beforeChange: [formEnsureUniqueName],
+              },
+              name: 'fields',
+              required: true,
+              type: 'blocks',
+            },
+
+            // newsletter form fields
+            {
+              access: fieldAccessAdminsOnly,
+              admin: {
+                condition: (_, siblingData) => siblingData.isNewsletterForm === 'newsletter',
+              },
+              fields: [
+                {
+                  fields: emailBlock(true).fields,
+                  name: 'email',
+                  type: 'group',
+                },
+                {
+                  fields: textBlock(true).fields,
+                  name: 'firstName',
+                  type: 'group',
+                },
+                {
+                  fields: textBlock(true).fields,
+                  name: 'lastName',
+                  type: 'group',
+                },
+                {
+                  admin: {
+                    description: 'The action text to show at the bottom of the notification. e.g.: "Send verifiaction E-Mail again."',
+                  },
+                  localized: true,
+                  name: 'actionText',
+                  required: true,
+                  type: 'text',
+                },
+                {
+                  admin: {
+                    description: 'If enabled, we show a language selection for Germand and French.',
+                  },
+                  defaultValue: 'no',
+                  name: 'includeLanguageSelection',
+                  options: [
+                    {
+                      label: 'No',
+                      value: 'no',
+                    },
+                    {
+                      label: 'Yes',
+                      value: 'yes',
+                    },
+                  ],
+                  type: 'radio',
+                },
+              ],
+              name: 'newsletterFields',
+              type: 'group',
+            },
+          ],
+          label: 'Fields',
         },
       ],
-      name: 'newsletterFields',
-      type: 'group',
+      type: 'tabs',
     },
+
   ],
   slug: 'forms',
 };
