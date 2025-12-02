@@ -19,7 +19,7 @@ export const FormServer = async ({
 }: InterfaceFormServerPropTypes): Promise<React.JSX.Element> => {
 
   const i18nForm = globalI18n.forms;
-  const internalI18nForm = await getTranslations('i18nForm');
+  const internalI18nForm = await getTranslations('form');
 
   // --- Make sure form exists
 

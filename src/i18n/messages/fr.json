@@ -1,11 +1,11 @@
 {
-  "i18nNavigation": {
-    "navigationTitleTranslation": "Home FR"
+  "navigation": {
+    "navigationTitle": "Home FR"
   },
-  "i18nPagination": {
+  "pagination": {
     "hiddenPaginationTitle": "Pagination"
   },
-  "i18nForm": {
+  "form": {
     "newsletter": {
       "error": "Vous devez faire une sélection",
       "label": "Dans quelle langue souhaitez-vous vous abonner à la newsletter ?",
@@ -15,7 +15,7 @@
       }
     }
   },
-  "i18nA11y": {
+  "a11y": {
     "breadcrumb": "Revenir en arrière dans la structure du site",
     "closeDialog": "Fermer le dialogue",
     "linkTarget": "La cible du lien",
@@ -28,7 +28,7 @@
       "twitter": "Suivez-nous sur Twitter"
     }
   },
-  "i18nConsent": {
+  "consent": {
     "buttonTextOpenCookieSettings": "Cookie-Einstellungen (FR)",
     "messageVideo": "Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können. (FR)",
     "titleExternalContent": "Contenu externe"

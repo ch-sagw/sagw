@@ -55,7 +55,7 @@ export const Video = ({
   'video-it': videoIt,
 }: InterfaceVideoPropTypes): React.JSX.Element | undefined => {
   const locale = useLocale() as TypedLocale;
-  const i18nA11y = useTranslations('i18nA11y');
+  const i18nA11y = useTranslations('a11y');
 
   // Select correct video source for the current language
   // if available and fall back to german if there is no

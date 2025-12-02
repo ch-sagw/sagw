@@ -1,11 +1,11 @@
 {
-  "i18nNavigation": {
-    "navigationTitleTranslation": "Home DE"
+  "navigation": {
+    "navigationTitle": "Home DE"
   },
-  "i18nPagination": {
+  "pagination": {
     "hiddenPaginationTitle": "Paginierung"
   },
-  "i18nForm": {
+  "form": {
     "newsletter": {
       "error": "Sie müssen eine Auswahl treffen",
       "label": "In welcher Sprache möchten Sie den Newsletter abonnieren?",
@@ -15,7 +15,7 @@
       }
     }
   },
-  "i18nA11y": {
+  "a11y": {
     "breadcrumb": "Zurücknavigieren in der Seitenstruktur",
     "closeDialog": "Dialog schliessen",
     "linkTarget": "Linkziel",
@@ -28,7 +28,7 @@
       "twitter": "Folgen Sie uns auf Twitter"
     }
   },
-  "i18nConsent": {
+  "consent": {
     "buttonTextOpenCookieSettings": "Cookie-Einstellungen",
     "messageVideo": "Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können.",
     "titleExternalContent": "Externer Inhalt"

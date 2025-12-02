@@ -20,7 +20,7 @@ export const Pagination = ({
   onPageChange,
   className,
 }: InterfacePaginationPropTypes): React.JSX.Element => {
-  const i18nPagination = useTranslations('i18nPagination');
+  const i18nPagination = useTranslations('pagination');
   const {
     measurements,
     containerRef,

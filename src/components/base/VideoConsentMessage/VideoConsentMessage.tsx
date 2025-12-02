@@ -5,7 +5,7 @@ import { openConsentOverlayEventName } from '@/components/helpers/cookies';
 import { useTranslations } from 'next-intl';
 
 export const VideoConsentMessage = (): React.JSX.Element => {
-  const i18nConsent = useTranslations('i18nConsent');
+  const i18nConsent = useTranslations('consent');
   const openCookieSettingsOverlay = (): void => {
     window.dispatchEvent(new Event(openConsentOverlayEventName));
   };

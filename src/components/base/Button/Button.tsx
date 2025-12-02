@@ -137,7 +137,7 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
     isActive,
   } = props;
 
-  const internalI18nA11y = useTranslations('i18nA11y');
+  const internalI18nA11y = useTranslations('a11y');
   const internalButtonRef = useRef<HTMLButtonElement>(null);
 
   // Merge the internal and external refs

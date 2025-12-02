@@ -44,7 +44,7 @@ export const RenderHero = ({
   locale,
   i18nGeneric,
 }: InterfaceRenderHero): React.JSX.Element | undefined => {
-  const i18nNavigation = useTranslations('i18nNavigation');
+  const i18nNavigation = useTranslations('navigation');
 
   if (!pageData || !foundCollection) {
     return <p>No page data</p>;
@@ -155,7 +155,7 @@ export const RenderHero = ({
     breadcrumbItems = [
       {
         link: '/',
-        text: i18nNavigation('navigationTitleTranslation'),
+        text: i18nNavigation('navigationTitle'),
       },
     ];
   }

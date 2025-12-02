@@ -32,7 +32,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
   onClose,
   onConsentGiven,
 }, ref): React.JSX.Element => {
-  const i18nA11y = useTranslations('i18nA11y');
+  const i18nA11y = useTranslations('a11y');
   const [
     toggleStates,
     setToggleStates,
