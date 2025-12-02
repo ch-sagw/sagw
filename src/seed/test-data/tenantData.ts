@@ -114,6 +114,13 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // ############
 
   // create publication topics
+  const publicationTopics = [
+    'Akademiereferate',
+    'Factsheets',
+    'Jahresbericht',
+    'Magazin',
+    'Studien und Berichte',
+  ];
 
   const addedPublicationTopics = await Promise.all(publicationTopics.map((publicationTopic) => payload.create({
     collection: 'publicationTopics',

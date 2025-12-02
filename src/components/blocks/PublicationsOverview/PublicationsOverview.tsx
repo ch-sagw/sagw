@@ -14,6 +14,7 @@ import {
   preparePublicationTypesFilterItems,
 } from '@/components/blocks/helpers/dataTransformers';
 import { i18nPublicationFilters } from '@/i18n/content';
+import { InterfaceImagePropTypes } from '@/components/base/Image/Image';
 
 import { InterfaceFilterListPropTypes } from '@/components/base/FilterList/FilterList';
 
@@ -71,7 +72,7 @@ export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes
     config: configPromise,
   });
 
-  // Get news pages data
+  // Get publication detail pages data
   const publicationPages = await payload.find({
     collection: 'publicationDetailPage',
     depth: 1,
@@ -86,6 +87,50 @@ export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes
       },
     },
   });
+
+  const publications = publicationPages.docs;
+
+  // Get image ids of fetched publicationPages
+  const publicationPagesImageIds = publications
+    .map((p) => p.overviewPageProps?.image)
+    .filter(Boolean);
+
+  const uniqueImageIds = [...new Set(publicationPagesImageIds)];
+
+  // Get all imageData
+  const imageData = await payload.find({
+    collection: 'images',
+    limit: uniqueImageIds.length,
+    where: {
+      id: {
+        in: uniqueImageIds,
+      },
+    },
+  });
+
+  const imagesById: Record<string, InterfaceImagePropTypes | undefined> = {};
+
+  imageData.docs
+    .forEach((img) => {
+      const imageWithDefaults = {
+        ...img,
+        loading: 'lazy',
+        variant: 'publicationTeaser',
+      } as InterfaceImagePropTypes;
+
+      imagesById[img.id] = imageWithDefaults;
+    });
+
+  const collectPublicationImages = (
+    pages: typeof publications,
+    imagesMap: Record<string, InterfaceImagePropTypes | undefined>,
+  ): (InterfaceImagePropTypes)[] => pages.map((page) => {
+    const imageId = page?.overviewPageProps?.image as string;
+
+    return imagesMap[imageId] as InterfaceImagePropTypes;
+  });
+
+  const publicationImages = collectPublicationImages(publications, imagesById);
 
   const publicationTypes = await payload.find({
     collection: 'publicationTypes',
@@ -112,7 +157,7 @@ export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes
   const title = rteToHtml(props.title);
 
   // Prepare Publication items
-  const items = convertPayloadPublicationsPagesToFeItems(publicationPages, props.language);
+  const items = convertPayloadPublicationsPagesToFeItems(publicationPages, publicationImages, props.language);
 
   // Prepare Publication Types filter items
   const filterTitleAllTypes = rte1ToPlaintext(props.filterTitleAllPublications);
@@ -126,16 +171,11 @@ export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes
 
   filterTitlesPublicationTopics.unshift(filterTitleAllTopics);
 
-  console.log(filterTitlesPublicationTypes);
-  console.log(filterTitlesPublicationTopics);
-
   const filters = preparePublicationsOverviewFilters({
     language: props.language,
     topics: filterTitlesPublicationTopics,
     types: filterTitlesPublicationTypes,
   });
-
-  console.log(filters);
 
   if (!items || items.length < 1) {
     return <Fragment></Fragment>;

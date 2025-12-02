@@ -31,6 +31,7 @@ export type InterfaceImagePropTypes = {
 
 export const Image = ({
   alt,
+  filename,
   focalX,
   focalY,
   height,
@@ -50,7 +51,11 @@ export const Image = ({
 
   const host = process.env.NEXT_PUBLIC_GUMLET_URL ?? '';
 
-  const src = host + url;
+  let src = host + url;
+
+  if (process.env.NEXT_PUBLIC_GUMLET_URL?.indexOf('localhost') !== -1) {
+    src = `${host}/${filename}`;
+  }
 
   const params = `fm=auto&mode=crop&crop=focalpoint&fp-x=${focalPointX}&fp-y=${focalPointY}`;
 

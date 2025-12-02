@@ -1,6 +1,7 @@
 import { InterfacePublicationsListItemPropTypes } from '@/components/base/PublicationsListItem/PublicationsListItem';
 import { InterfaceEventsListItemPropTypes } from '@/components/base/EventsListItem/EventsListItem';
 import { InterfaceNewsListItemPropTypes } from '@/components/base/NewsListItem/NewsListItem';
+import { InterfaceImagePropTypes } from '@/components/base/Image/Image';
 import {
   formatDateToReadableString, formatTime,
 } from '@/components/helpers/date';
@@ -18,7 +19,11 @@ import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { PaginatedDocs } from 'payload';
 
-export const convertPayloadPublicationsPagesToFeItems = (payloadPages: PaginatedDocs<PublicationDetailPage>, lang: Config['locale']): InterfacePublicationsListItemPropTypes[] => {
+export const convertPayloadPublicationsPagesToFeItems = (
+  payloadPages: PaginatedDocs<PublicationDetailPage>,
+  publicationImages: InterfaceImagePropTypes[],
+  lang: Config['locale'],
+): InterfacePublicationsListItemPropTypes[] => {
   const items = payloadPages.docs.map((publicationsPage) => {
     let category;
 
@@ -26,11 +31,15 @@ export const convertPayloadPublicationsPagesToFeItems = (payloadPages: Paginated
       category = publicationsPage.categorization.type as PublicationType;
     }
 
+    const index = payloadPages.docs.indexOf(publicationsPage);
+    const publicationImage = publicationImages[index];
+
     const returnPublicationPage: InterfacePublicationsListItemPropTypes = {
       date: formatDateToReadableString({
         dateString: publicationsPage.overviewPageProps.date,
         locale: lang,
       }),
+      image: publicationImage,
       link: {
         href: publicationsPage.slug || '',
       },

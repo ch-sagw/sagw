@@ -3,9 +3,14 @@ import styles from '@/components/base/PublicationsListItem/PublicationsListItem.
 import { formatDateToReadableString } from '@/components/helpers/date';
 import { Tag } from '@/components/base/Tag/Tag';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
+import {
+  Image,
+  InterfaceImagePropTypes,
+} from '@/components/base/Image/Image';
 
 export type InterfacePublicationsListItemPropTypes = {
   date: string,
+  image: InterfaceImagePropTypes,
   tag?: string,
   title: string,
   link: {
@@ -16,6 +21,7 @@ export type InterfacePublicationsListItemPropTypes = {
 
 export const PublicationsListItem = ({
   date,
+  image,
   link,
   pageLanguage,
   tag,
@@ -38,7 +44,19 @@ export const PublicationsListItem = ({
         href={link.href}
         className={styles.link}
       >
-        <span className={styles.image}></span>
+        <span className={styles.image}>
+          <Image
+            alt={image.alt}
+            filename={image.filename ?? ''}
+            focalX={image.focalX ?? undefined}
+            focalY={image.focalY ?? undefined}
+            height={170}
+            loading={image.loading}
+            url={image.url}
+            variant={image.variant}
+            width={120}
+          />
+        </span>
         <span className={styles.textContent}>
           {tag &&
             <Tag
