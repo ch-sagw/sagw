@@ -525,6 +525,7 @@ test('allows 1 same teaser block via API', async () => {
           },
           {
             blockType: 'newsTeasersBlock',
+            colorMode: 'white',
             title: simpleRteConfig('random title'),
           },
           {
@@ -614,7 +615,8 @@ test('home allows 1 teaser block via API', async () => {
     const tenant = await payload.create({
       collection: 'tenants',
       data: {
-        name: `${new Date()}`,
+        name: `${(new Date())
+          .getTime()}`,
         slug: `${new Date()}`,
         title: `${new Date()}`,
       },
@@ -640,6 +642,7 @@ test('home allows 1 teaser block via API', async () => {
           },
           {
             blockType: 'newsTeasersBlock',
+            colorMode: 'white',
             title: simpleRteConfig('random title'),
           },
           {
@@ -656,6 +659,7 @@ test('home allows 1 teaser block via API', async () => {
           sideTitle: simpleRteConfig('Side title'),
           title: simpleRteConfig(`Overview page title ${new Date()} - 3`),
         },
+        navigationTitle: 'Home',
         tenant: tenant.id,
       },
     });

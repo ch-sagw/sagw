@@ -20,11 +20,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   const {
     payload,
     tenantId,
+    tenant,
   } = props;
-
-  const uppercaseTenant = props.tenant;
-
-  const tenant = uppercaseTenant.toLowerCase();
 
   // ############
   // Assets
@@ -653,6 +650,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         },
         {
           blockType: 'newsTeasersBlock',
+          colorMode: 'light',
           title: simpleRteConfig('News'),
         },
         {
@@ -1541,6 +1539,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         analyticsPerformance: {
           text: simpleRteConfig('Diese Gruppe beinhaltet alle Cookies von Skripts für analytisches Tracking. Die Analysen helfen uns, die Nutzer*innenerfahrung der Website zu verbessern.'),
           title: simpleRteConfig('Analytics und Performance'),
+          toggleDefault: 'off',
           toggleLabelOff: simpleRteConfig('Aus'),
           toggleLabelOn: simpleRteConfig('An'),
         },
@@ -1549,6 +1548,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         externalContent: {
           text: simpleRteConfig('Externe Inhalte umfassen Cookies, die von Drittanbietern gesetzt werden, damit wir auf unserer Website Inhalte von deren Plattform bereitstellen können (wie z.B. Videos oder Social Media Feeds).'),
           title: simpleRteConfig('Externe Inhalte'),
+          toggleDefault: 'off',
           toggleLabelOff: simpleRteConfig('Aus'),
           toggleLabelOn: simpleRteConfig('An'),
         },

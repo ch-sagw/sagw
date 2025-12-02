@@ -1,25 +1,26 @@
 import React from 'react';
 import {
-  Config, InstituteDetailPage, InterfaceInstitutesOverviewBlock,
+  InstituteDetailPage, InterfaceInstitutesOverviewBlock,
 } from '@/payload-types';
 import { fetchDetailPages } from '@/data/fetch';
 import { InstituteOverviewComponent } from '@/components/blocks/InstitutesOverview/InstitutesOverview.componet';
+import { getLocale } from 'next-intl/server';
+import { TypedLocale } from 'payload';
 
 export type InterfaceInstitutesOverviewPropTypes = {
-  language: Config['locale'];
   tenant: string;
 } & InterfaceInstitutesOverviewBlock;
 
 export const InstitutesOverview = async (props: InterfaceInstitutesOverviewPropTypes): Promise<React.JSX.Element> => {
+  const locale = (await getLocale()) as TypedLocale;
   const {
-    language,
     tenant,
     ...restProps
   } = props;
 
   const pages = await fetchDetailPages({
     collection: 'instituteDetailPage',
-    language,
+    language: locale,
     limit: 0,
     sort: 'createdAt',
     tenant,
@@ -28,7 +29,6 @@ export const InstitutesOverview = async (props: InterfaceInstitutesOverviewPropT
   return (
     <InstituteOverviewComponent
       pages={pages}
-      language={language}
       {...restProps}
     />
   );

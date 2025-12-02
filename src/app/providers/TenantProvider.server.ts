@@ -12,7 +12,7 @@ export const getTenant = async (): Promise<string | null> => {
     where: {
       name: {
         // TODO: infer tenant from url
-        equals: 'SAGW',
+        equals: 'sagw',
       },
     },
   });

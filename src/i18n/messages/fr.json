@@ -1,0 +1,40 @@
+{
+  "navigation": {
+    "navigationTitle": "Home FR"
+  },
+  "pagination": {
+    "hiddenPaginationTitle": "Pagination"
+  },
+  "form": {
+    "newsletter": {
+      "error": "Vous devez faire une sélection",
+      "label": "Dans quelle langue souhaitez-vous vous abonner à la newsletter ?",
+      "languages": {
+        "french": "Français",
+        "german": "Allemand"
+      }
+    }
+  },
+  "a11y": {
+    "breadcrumb": "Revenir en arrière dans la structure du site",
+    "closeDialog": "Fermer le dialogue",
+    "linkTarget": "La cible du lien",
+    "opensInNewWindow": "s'ouvre dans une nouvelle fenêtre.",
+    "playVideoText": "Video mit dem Titel «{{title}}» laden und abspielen (FR).",
+    "socialLinks": {
+      "facebook": "Suivez-nous sur Facebook",
+      "instagram": "Suivez-nous sur Instagram",
+      "linkedIn": "Suivez-nous sur linkedIn",
+      "twitter": "Suivez-nous sur Twitter"
+    }
+  },
+  "consent": {
+    "buttonTextOpenCookieSettings": "Cookie-Einstellungen (FR)",
+    "messageVideo": "Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können. (FR)",
+    "titleExternalContent": "Contenu externe"
+  },
+  "publicationFilters": {
+    "publicationTopicsLabel": "Publikationsthema FR",
+    "publicationTypesLabel": "Publikationstyp FR"
+  }
+}

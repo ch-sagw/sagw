@@ -1,23 +1,24 @@
 import React, { Fragment } from 'react';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import {
-  Config,
   I18NGlobal,
   InterfaceEventsTeasersBlock,
 } from '@/payload-types';
 import { EventsTeaserComponent } from '@/components/blocks/EventsTeaser/EventsTeaser.component';
 import { convertPayloadEventPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
 import { fetchEventDetailPages } from '@/data/fetch';
+import { getLocale } from 'next-intl/server';
+import { TypedLocale } from 'payload';
 
 type InterfaceEventsTeaserPropTypes = {
-  language: Config['locale'];
   tenant: string;
   globalI18n: I18NGlobal;
 } & InterfaceEventsTeasersBlock;
 
 export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promise<React.JSX.Element> => {
+  const locale = (await getLocale()) as TypedLocale;
   const pages = await fetchEventDetailPages({
-    language: props.language,
+    language: locale,
     limit: 3,
     tenant: props.tenant,
   });
@@ -37,7 +38,7 @@ export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promi
 
   const items = convertPayloadEventPagesToFeItems({
     globalI18n: props.globalI18n,
-    lang: props.language,
+    lang: locale,
     payloadPages: pages,
   });
 
@@ -51,7 +52,6 @@ export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promi
       title={title}
       allLink={allLink}
       items={items}
-      pageLanguage={props.language}
     />
   );
 

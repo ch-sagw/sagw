@@ -116,7 +116,7 @@ interface InterfaceConvertPayloadEventPagesProps {
 }
 
 export const convertPayloadEventPagesToFeItems = ({
-  payloadPages, lang, globalI18n,
+  payloadPages, globalI18n,
 }: InterfaceConvertPayloadEventPagesProps): InterfaceEventsListItemPropTypes[] => {
 
   const items = payloadPages.map((eventPage) => {
@@ -147,7 +147,6 @@ export const convertPayloadEventPagesToFeItems = ({
           : '_blank' as const,
       },
       location: rteToHtml(eventPage.eventDetails.location),
-      pageLanguage: lang,
       tag: category
         ? rteToHtml(category.eventCategory)
         : undefined,

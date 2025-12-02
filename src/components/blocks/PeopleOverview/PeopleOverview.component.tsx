@@ -1,7 +1,7 @@
 'use client';
 
 import {
-  Config, Person, Team,
+  Person, Team,
 } from '@/payload-types';
 import React from 'react';
 import styles from '@/components/blocks/PeopleOverview/PeopleOverview.module.scss';
@@ -14,13 +14,11 @@ import { GenericOverview } from '@/components/base/GenericOverview/GenericOvervi
 export type InterfacePeopleOverviewComponentPropTypes = {
   team: Team;
   people: Person[];
-  language: Config['locale'];
 };
 
 export const PeopleOverviewComponent = ({
   team,
   people,
-  language,
 }: InterfacePeopleOverviewComponentPropTypes): React.JSX.Element => {
   const allItems = people.map((item) => {
     if (!item.fullName) {
@@ -50,12 +48,8 @@ export const PeopleOverviewComponent = ({
         className={styles.item}
         key={item.id}
         title={item.fullName}
-        texts={[
-          rteToHtml(team.name),
-          rteToHtml(item.function),
-        ]}
+        texts={[rteToHtml(team.name)]}
         links={links}
-        pageLanguage={language}
         type='people'
         image={typeof item.image === 'object'
           ? item.image?.id
@@ -68,7 +62,6 @@ export const PeopleOverviewComponent = ({
   return (
     <GenericOverview
       showPagination={false}
-      language={language}
     >
       {allItems}
     </GenericOverview>

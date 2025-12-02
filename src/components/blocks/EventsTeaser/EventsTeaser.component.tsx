@@ -4,7 +4,6 @@ import {
 import {
   InterfaceTeaserLinkListPropTypes, TeaserLinkList,
 } from '@/components/base/TeaserLinkList/TeaserLinkList';
-import { Config } from '@/payload-types';
 import React from 'react';
 
 export type InterfaceEventsOverviewComponentPropTypes = Omit<
@@ -12,7 +11,6 @@ export type InterfaceEventsOverviewComponentPropTypes = Omit<
   'children' | 'colorMode'
 > & {
   items: InterfaceEventsListItemPropTypes[];
-  pageLanguage: Config['locale'];
 };
 
 export const EventsTeaserComponent = (props: InterfaceEventsOverviewComponentPropTypes): React.JSX.Element => (
@@ -20,7 +18,6 @@ export const EventsTeaserComponent = (props: InterfaceEventsOverviewComponentPro
     colorMode='white'
     title={props.title}
     allLink={props.allLink}
-    pageLanguage={props.pageLanguage}
   >
     {props.items.map((item, key) => (
       <EventsListItem

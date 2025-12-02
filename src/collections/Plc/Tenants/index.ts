@@ -1,8 +1,9 @@
-import type { CollectionConfig } from 'payload';
+import { type CollectionConfig } from 'payload';
 import {
   fieldsAccess, languageAccess, tenantsAccess,
 } from '@/access/tenants';
 import { isSuperOrTenantAdmin } from '../Users/roles';
+import { validateTenantName } from '@/hooks-payload/validateTenantName';
 
 export const Tenants: CollectionConfig = {
   access: tenantsAccess,
@@ -22,6 +23,9 @@ export const Tenants: CollectionConfig = {
   fields: [
     {
       access: fieldsAccess,
+      hooks: {
+        beforeValidate: [validateTenantName],
+      },
       localized: false,
       name: 'name',
       required: true,

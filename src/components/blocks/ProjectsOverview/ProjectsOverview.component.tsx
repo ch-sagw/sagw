@@ -1,7 +1,7 @@
 'use client';
 
 import {
-  Config, InterfaceProjectOverviewBlock, ProjectDetailPage,
+  InterfaceProjectOverviewBlock, ProjectDetailPage,
 } from '@/payload-types';
 import React from 'react';
 import styles from '@/components/blocks/ProjectsOverview/ProjectsOverview.module.scss';
@@ -11,12 +11,10 @@ import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
 
 export type InterfaceProjectsOverviewComponentPropTypes = {
   pages: ProjectDetailPage[];
-  pageLanguage: Config['locale'];
 } & InterfaceProjectOverviewBlock;
 
 export const ProjectOverviewComponent = ({
   pages,
-  pageLanguage,
 }: InterfaceProjectsOverviewComponentPropTypes): React.JSX.Element => {
   const allItems = pages.map((item) => (
     <GenericTeaser
@@ -33,7 +31,6 @@ export const ProjectOverviewComponent = ({
           type: 'internal',
         },
       ]}
-      pageLanguage={pageLanguage}
       type='project'
     />
   ));
@@ -41,7 +38,6 @@ export const ProjectOverviewComponent = ({
   return (
     <GenericOverview
       showPagination={true}
-      language={pageLanguage}
     >
       {allItems}
     </GenericOverview>

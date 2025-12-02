@@ -556,10 +556,10 @@ test.describe('can create tenants', () => {
       await payload.create({
         collection: 'tenants',
         data: {
-          domain: 'testTenant',
-          name: 'testTenant',
-          slug: 'testTenant',
-          title: 'testTenant',
+          domain: 'testtenant',
+          name: 'testtenant',
+          slug: 'testtenant',
+          title: 'testtenant',
         },
         overrideAccess: false,
         req: {

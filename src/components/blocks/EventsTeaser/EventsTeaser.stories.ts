@@ -42,7 +42,6 @@ export const DefaultTeaser: StrictStory = {
       DateNotSameYear.args,
       Full.args,
     ],
-    pageLanguage: 'de',
     title: 'News',
   },
 };

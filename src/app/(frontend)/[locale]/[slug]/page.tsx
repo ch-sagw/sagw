@@ -1,11 +1,20 @@
 import 'server-only';
 import React, { Fragment } from 'react';
-import { getPayload } from 'payload';
+import {
+  getPayload, TypedLocale,
+} from 'payload';
 import configPromise from '@/payload.config';
-import { Config } from '@/payload-types';
 import { RenderBlocks } from '@/app/(frontend)/RenderBlocks';
 import { getTenant } from '@/app/providers/TenantProvider.server';
 import { RenderHero } from '@/app/(frontend)/RenderHero';
+import { RenderStatusMessage } from '@/app/(frontend)/RenderStatusMessage';
+
+type InterfacePageProps = {
+  params: Promise<{
+    locale: TypedLocale
+    slug: string;
+  }>;
+}
 
 export const revalidate = 0;
 
@@ -29,15 +38,11 @@ const DETAIL_PAGE_COLLECTIONS = [
 
 export default async function DetailPage({
   params,
-}: {
-  params: Promise<{ slug: string; lang: string }>
-}): Promise<React.JSX.Element> {
+}: InterfacePageProps): Promise<React.JSX.Element> {
 
   const {
-    slug, lang,
+    slug, locale,
   } = await params;
-
-  const language = lang as Config['locale'] || 'de';
 
   const payload = await getPayload({
     config: configPromise,
@@ -55,7 +60,7 @@ export default async function DetailPage({
         collection: collection as any,
         depth: 1,
         limit: 1,
-        locale: language,
+        locale,
         where: {
           and: [
             {
@@ -146,15 +151,24 @@ export default async function DetailPage({
           <RenderHero
             foundCollection={foundCollection}
             pageData={pageData}
-            language={language}
             i18nGeneric={i18nData.generic}
+            locale={locale}
+          />
+          <RenderStatusMessage
+            tenant={tenant}
+            isHome={false}
+            locale={locale}
           />
           {contentBlocks && (
             <RenderBlocks
               blocks={contentBlocks}
               tenantId={tenant}
-              pageLanguage={language}
               i18n={i18nData}
+              sourcePage={{
+                collectionSlug: foundCollection,
+                id: pageData.id,
+              }}
+              locale={locale}
             />
           )}
         </div>

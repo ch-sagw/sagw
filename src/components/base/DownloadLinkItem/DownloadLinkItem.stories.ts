@@ -62,7 +62,6 @@ export const DownloadItem: StrictStory = {
       href: 'https://foo.bar',
       target: '_blank',
     },
-    pageLanguage: 'de',
     size: '248 KB',
     title: 'Reglement über die Gewährung von Reisekostenbeiträgen',
     type: 'download',
