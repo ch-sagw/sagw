@@ -3,7 +3,8 @@
 import { getPayload } from 'payload';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
-  DetailPage, EventDetailPage, HomePage, InstituteDetailPage, MagazineDetailPage, NationalDictionaryDetailPage, NewsDetailPage, OverviewPage,
+  Config as ConfigFromTypes, DetailPage, EventDetailPage, HomePage, InstituteDetailPage, MagazineDetailPage, NationalDictionaryDetailPage, NewsDetailPage,
+  OverviewPage,
   ProjectDetailPage,
   PublicationDetailPage,
 } from '@/payload-types';
@@ -20,6 +21,7 @@ interface InterfacePageProps {
     documentId: string;
   };
   tenant?: string;
+  locale?: ConfigFromTypes['locale'];
 }
 
 const generatePage = async ({
@@ -28,6 +30,7 @@ const generatePage = async ({
   parentPage,
   type,
   tenant: propsTenant,
+  locale,
 }: {
   type: 'overviewPage' | 'detailPage';
 } & InterfacePageProps): Promise<OverviewPage | DetailPage> => {
@@ -65,6 +68,7 @@ const generatePage = async ({
       tenant,
     },
     draft: false,
+    locale: locale || 'de',
   });
 
   return document;
@@ -75,12 +79,14 @@ interface InterfaceGenerateHomePageProps {
   navigationTitle?: string;
   sideTitle: string;
   tenant: string;
+  locale?: ConfigFromTypes['locale'];
 }
 
 export const generateHomePage = async ({
   title,
   sideTitle,
   tenant,
+  locale,
 }: InterfaceGenerateHomePageProps): Promise<HomePage> => {
   const payload = await getPayload({
     config: configPromise,
@@ -95,6 +101,7 @@ export const generateHomePage = async ({
       },
       tenant,
     },
+    locale: locale || 'de',
   });
 
   return homePage;
@@ -135,7 +142,7 @@ export const generateEventDetailPage = async (props: InterfacePageProps): Promis
         .getTime()}`),
       tenant,
     },
-    locale: 'de',
+    locale: props.locale || 'de',
   });
 
   const category = await payload.create({
@@ -145,6 +152,7 @@ export const generateEventDetailPage = async (props: InterfacePageProps): Promis
         .getTime()}`),
       tenant,
     },
+    locale: props.locale || 'de',
   });
 
   const document = await payload.create({
@@ -172,6 +180,7 @@ export const generateEventDetailPage = async (props: InterfacePageProps): Promis
       tenant,
     },
     draft: false,
+    locale: props.locale || 'de',
   });
 
   return document;
@@ -202,6 +211,7 @@ export const generateInstituteDetailPage = async (props: InterfacePageProps): Pr
       tenant,
     },
     filePath: 'src/seed/test-data/assets/sagw.png',
+    locale: props.locale || 'de',
   });
 
   const document = await payload.create({
@@ -226,6 +236,7 @@ export const generateInstituteDetailPage = async (props: InterfacePageProps): Pr
       tenant,
     },
     draft: false,
+    locale: props.locale || 'de',
   });
 
   return document;
@@ -272,6 +283,7 @@ export const generateMagazineDetailPage = async (props: InterfacePageProps): Pro
       tenant,
     },
     draft: false,
+    locale: props.locale || 'de',
   });
 
   return document;
@@ -316,6 +328,7 @@ export const generateNationalDictionaryDetailPage = async (props: InterfacePageP
       tenant,
     },
     draft: false,
+    locale: props.locale || 'de',
   });
 
   return document;
@@ -361,6 +374,7 @@ export const generateNewsDetailPage = async (props: InterfacePageProps): Promise
       tenant,
     },
     draft: false,
+    locale: props.locale || 'de',
   });
 
   return document;
@@ -417,6 +431,7 @@ export const generateProjectDetailPage = async (props: InterfacePageProps): Prom
       tenant,
     },
     draft: false,
+    locale: props.locale || 'de',
   });
 
   return document;
@@ -471,6 +486,7 @@ export const generatePublicationDetailPage = async (props: InterfacePageProps): 
       tenant,
     },
     draft: false,
+    locale: props.locale || 'de',
   });
 
   return document;

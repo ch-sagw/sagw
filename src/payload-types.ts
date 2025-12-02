@@ -13,11 +13,11 @@
 export type InterfaceBreadcrumb =
   | {
       documentId: string;
-      namede: string;
+      namede?: string | null;
       namefr?: string | null;
       nameit?: string | null;
       nameen?: string | null;
-      slugde: string;
+      slugde?: string | null;
       slugfr?: string | null;
       slugit?: string | null;
       slugen?: string | null;

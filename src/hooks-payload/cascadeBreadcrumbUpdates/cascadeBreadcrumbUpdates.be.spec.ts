@@ -116,6 +116,111 @@ test('Updates on navigationTitle change', async () => {
 });
 
 // 1. Generate 4 levels of nested pages.
+// 2. Change navigation title on level 2.
+// Expect: correct data in level 3 and 4 breadcrumb.
+test('Updates on navigationTitle change in french', async () => {
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  let level1: any;
+  let level2: any;
+  let level3: any;
+  let level4: any;
+
+  try {
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}-tenant-11`,
+    });
+
+    const home = await generateHomePage({
+      locale: 'fr',
+      sideTitle: 'Home side title',
+      tenant: tenant.id,
+      title: 'Home title',
+    });
+
+    level1 = await generateOverviewPage({
+      locale: 'fr',
+      navigationTitle: 'Level 1 Navigation Title',
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      tenant: tenant.id,
+      title: `Level 1 ${(new Date())
+        .getTime()}`,
+    });
+
+    level2 = await generateDetailPage({
+      locale: 'fr',
+      navigationTitle: 'Level 2 Navigation Title',
+      parentPage: {
+        documentId: level1.id,
+        slug: 'overviewPage',
+      },
+      tenant: tenant.id,
+      title: `Level 2 ${(new Date())
+        .getTime()}`,
+    });
+
+    level3 = await generateEventDetailPage({
+      locale: 'fr',
+      navigationTitle: 'Level 3 Navigation Title',
+      parentPage: {
+        documentId: level2.id,
+        slug: 'detailPage',
+      },
+      tenant: tenant.id,
+      title: `Level 3 ${(new Date())
+        .getTime()}`,
+    });
+
+    level4 = await generateInstituteDetailPage({
+      locale: 'fr',
+      navigationTitle: 'Level 4 Navigation Title',
+      parentPage: {
+        documentId: level3.id,
+        slug: 'eventDetailPage',
+      },
+      tenant: tenant.id,
+      title: `Level 4 ${(new Date())
+        .getTime()}`,
+    });
+
+    await payload.update({
+      collection: 'detailPage',
+      data: {
+        navigationTitle: 'New Level 2 Navigation Title',
+      },
+      id: level2.id,
+      locale: 'fr',
+    });
+
+  } catch (e) {
+    level4 = JSON.stringify(e);
+  }
+
+  const level3Updated = await payload.findByID({
+    collection: 'eventDetailPage',
+    id: level3.id,
+  });
+
+  const level4Updated = await payload.findByID({
+    collection: 'instituteDetailPage',
+    id: level4.id,
+  });
+
+  await expect(level3Updated!.breadcrumb![2].namefr)
+    .toStrictEqual('New Level 2 Navigation Title');
+
+  await expect(level4Updated!.breadcrumb![2].namefr)
+    .toStrictEqual('New Level 2 Navigation Title');
+
+});
+
+// 1. Generate 4 levels of nested pages.
 // 2. Change slug on level 2.
 // Expect: correct data in level 3 and 4 breadcrumb.
 test('Updates on slug change', async () => {
@@ -212,6 +317,113 @@ test('Updates on slug change', async () => {
     .toStrictEqual(newSlug);
 
   await expect(level4Updated!.breadcrumb![2].slugde)
+    .toStrictEqual(newSlug);
+
+});
+
+// 1. Generate 4 levels of nested pages.
+// 2. Change slug on level 2.
+// Expect: correct data in level 3 and 4 breadcrumb.
+test('Updates on slug change in french', async () => {
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  let level1: any;
+  let level2: any;
+  let level3: any;
+  let level4: any;
+  const newSlug = `new-slug-level2-${(new Date())
+    .getTime()}`;
+
+  try {
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}-tenant-2`,
+    });
+
+    const home = await generateHomePage({
+      locale: 'fr',
+      sideTitle: 'Home side title',
+      tenant: tenant.id,
+      title: 'Home title',
+    });
+
+    level1 = await generateOverviewPage({
+      locale: 'fr',
+      navigationTitle: 'Level 1 Navigation Title',
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      tenant: tenant.id,
+      title: `Level 1 ${(new Date())
+        .getTime()}`,
+    });
+
+    level2 = await generateDetailPage({
+      locale: 'fr',
+      navigationTitle: 'Level 2 Navigation Title',
+      parentPage: {
+        documentId: level1.id,
+        slug: 'overviewPage',
+      },
+      tenant: tenant.id,
+      title: `Level 2 ${(new Date())
+        .getTime()}`,
+    });
+
+    level3 = await generateEventDetailPage({
+      locale: 'fr',
+      navigationTitle: 'Level 3 Navigation Title',
+      parentPage: {
+        documentId: level2.id,
+        slug: 'detailPage',
+      },
+      tenant: tenant.id,
+      title: `Level 3 ${(new Date())
+        .getTime()}`,
+    });
+
+    level4 = await generateInstituteDetailPage({
+      locale: 'fr',
+      navigationTitle: 'Level 4 Navigation Title',
+      parentPage: {
+        documentId: level3.id,
+        slug: 'eventDetailPage',
+      },
+      tenant: tenant.id,
+      title: `Level 4 ${(new Date())
+        .getTime()}`,
+    });
+
+    await payload.update({
+      collection: 'detailPage',
+      data: {
+        slug: newSlug,
+      },
+      id: level2.id,
+      locale: 'fr',
+    });
+
+  } catch (e) {
+    level4 = JSON.stringify(e);
+  }
+
+  const level3Updated = await payload.findByID({
+    collection: 'eventDetailPage',
+    id: level3.id,
+  });
+
+  const level4Updated = await payload.findByID({
+    collection: 'instituteDetailPage',
+    id: level4.id,
+  });
+
+  await expect(level3Updated!.breadcrumb![2].slugfr)
+    .toStrictEqual(newSlug);
+
+  await expect(level4Updated!.breadcrumb![2].slugfr)
     .toStrictEqual(newSlug);
 
 });
