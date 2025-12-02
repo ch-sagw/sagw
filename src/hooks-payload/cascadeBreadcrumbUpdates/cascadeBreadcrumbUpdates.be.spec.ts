@@ -95,7 +95,7 @@ test('Updates on navigationTitle change', async () => {
 });
 
 // 1. Generate 4 levels of nested pages.
-// 2. Change hero title on level 2 (thus the slug also changes).
+// 2. Change slug on level 2.
 // Expect: correct data in level 3 and 4 breadcrumb.
 test('Updates on slug change', async () => {
   const payload = await getPayload({
