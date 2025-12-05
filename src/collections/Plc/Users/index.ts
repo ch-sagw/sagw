@@ -6,14 +6,14 @@ import {
   tenantRoles, userRoles,
 } from '@/collections/Plc/Users/roles';
 import {
-  usersAccess, usersAccessWithoutSelf,
+  usersAccess, usersFieldAccess, usersFieldAccessWithoutSelf,
 } from '@/access/users';
 
 const defaultTenantArrayField = tenantsArrayField({
-  arrayFieldAccess: usersAccessWithoutSelf,
+  arrayFieldAccess: usersFieldAccessWithoutSelf,
   rowFields: [
     {
-      access: usersAccessWithoutSelf,
+      access: usersFieldAccessWithoutSelf,
       defaultValue: [tenantRoles.admin],
       hasMany: true,
       name: 'roles',
@@ -26,7 +26,7 @@ const defaultTenantArrayField = tenantsArrayField({
       type: 'select',
     },
   ],
-  tenantFieldAccess: usersAccessWithoutSelf,
+  tenantFieldAccess: usersFieldAccessWithoutSelf,
   tenantsArrayFieldName: 'tenants',
   tenantsArrayTenantFieldName: 'tenant',
   tenantsCollectionSlug: 'tenants',
@@ -42,13 +42,13 @@ export const Users: CollectionConfig = {
   auth: true,
   fields: [
     {
-      access: usersAccess,
+      access: usersFieldAccess,
       hidden: true,
       name: 'password',
       type: 'text',
     },
     {
-      access: usersAccessWithoutSelf,
+      access: usersFieldAccessWithoutSelf,
       admin: {
         position: 'sidebar',
       },
