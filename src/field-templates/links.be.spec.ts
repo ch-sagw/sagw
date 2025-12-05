@@ -47,7 +47,7 @@ test('throws error on invalid external url', async () => {
 
   /* eslint-disable no-useless-escape */
   await expect(result)
-    .toStrictEqual('{\"data\":{\"collection\":\"eventDetailPage\",\"errors\":[{\"label\":\"Content > Link > External Link\",\"message\":\"The URL has an invalid format. The URL must have a format like https://www.google.com, https://google.com, or www.google.com.\",\"path\":\"link.externalLink\"}]},\"isOperational\":true,\"isPublic\":false,\"status\":400,\"name\":\"ValidationError\"}');
+    .toStrictEqual('{\"data\":{\"collection\":\"eventDetailPage\",\"errors\":[{\"label\":\"Content > Link > External Link\",\"message\":\"The URL has an invalid format. The URL must have a format like https://www.google.com, https://google.com, or www.google.com.\",\"path\":\"link.externalLink\"}]},\"isOperational\":true,\"isPublic\":true,\"status\":400,\"name\":\"ValidationError\"}');
   /* eslint-enable no-useless-escape */
 
 });
