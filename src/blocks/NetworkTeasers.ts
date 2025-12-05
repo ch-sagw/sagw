@@ -17,17 +17,25 @@ const fieldsNetworkItem: Field[] = [
     name: 'title',
   }),
   {
-    access: fieldAccessNonLocalizableField,
-    name: 'category',
-    relationTo: 'networkCategories',
-    required: true,
-    type: 'relationship',
-  },
-  {
-    access: fieldAccessNonLocalizableField,
-    name: 'foundingYear',
-    required: false,
-    type: 'number',
+    admin: {
+      width: '50%',
+    },
+    fields: [
+      {
+        access: fieldAccessNonLocalizableField,
+        name: 'category',
+        relationTo: 'networkCategories',
+        required: true,
+        type: 'relationship',
+      },
+      {
+        access: fieldAccessNonLocalizableField,
+        name: 'foundingYear',
+        required: false,
+        type: 'number',
+      },
+    ],
+    type: 'row',
   },
   {
     access: fieldAccessNonLocalizableField,

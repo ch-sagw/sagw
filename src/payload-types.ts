@@ -919,6 +919,7 @@ export interface InterfaceHomeTeasersBlock {
   homeTeasers?:
     | {
         category: string;
+        iconName: 'bar';
         title: {
           root: {
             type: string;
@@ -949,7 +950,6 @@ export interface InterfaceHomeTeasersBlock {
           };
           [k: string]: unknown;
         };
-        iconName: 'bar';
         link: {
           linkText: {
             root: {
@@ -4837,9 +4837,9 @@ export interface InterfaceHomeTeasersBlockSelect<T extends boolean = true> {
     | T
     | {
         category?: T;
+        iconName?: T;
         title?: T;
         text?: T;
-        iconName?: T;
         link?:
           | T
           | {
