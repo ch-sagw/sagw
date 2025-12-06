@@ -21,26 +21,45 @@ const navLinkDefaultFields: Field[] = [
       }),
       fieldInternalLinkChooser({
         name: 'navItemLink',
-        optional: true,
+        optional: false,
       }),
     ],
     type: 'row',
   },
 ];
 
+const linkField = fieldInternalLinkChooser({
+  name: 'navItemLink',
+  optional: false,
+});
+
+const navLinkLevel1LinkField = ((): Field => ({
+  ...linkField,
+  admin: {
+    ...linkField.admin,
+    condition: (_, siblingData) => {
+      // Show the field only if there are no sub-nav items
+      const hasSubNavItems = Array.isArray(siblingData?.subNavItems) && siblingData.subNavItems.length > 0;
+
+      return !hasSubNavItems;
+    },
+  },
+} as Field))();
+
 const navLinkLevel1: Field[] = [
   {
     fields: [
       {
-        admin: {
-          description: 'If the user hovers over this menu item in the navigation, this is shown as a description in the Header',
-        },
         ...rte1({
+          adminDescription: 'If the user hovers over this menu item in the navigation, this is shown as a description in the Header',
           name: 'description',
           notRequired: true,
         }),
       },
-      ...navLinkDefaultFields,
+      rte1({
+        name: 'navItemText',
+      }),
+      navLinkLevel1LinkField,
     ],
     type: 'group',
   },

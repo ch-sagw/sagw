@@ -103,7 +103,7 @@ const updateChildBreadcrumbs = async (
         typeof childActualParentRef === 'object' &&
         'documentId' in childActualParentRef &&
         childActualParentRef.documentId &&
-        deletedDocumentIds?.has(childActualParentRef.documentId)
+        deletedDocumentIds?.has(String(childActualParentRef.documentId))
       ) {
         // Child's parent is deleted - clear the parentPage field entirely
         shouldClearParentPage = true;
@@ -126,7 +126,7 @@ const updateChildBreadcrumbs = async (
         parentRef = undefined;
       }
 
-      const breadcrumbs = await buildBreadcrumbs(payload, parentRef);
+      const breadcrumbs = await buildBreadcrumbs(payload, parentRef, [], deletedDocumentIds);
       const dbCollection = payload.db.collections[collectionSlug];
 
       if (!dbCollection) {
@@ -202,6 +202,12 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
   const isUnpublished = newStatus === 'draft' || newStatus === null;
   const isUnpublishing = wasPublished && isUnpublished;
 
+  // For local API: if status is draft/null and it's an update operation,
+  // always cascade to children (treat as unpublishing)
+  // This handles the case where local API doesn't provide correct previousDoc
+  // We cascade if: status is draft AND it's an update (not create)
+  const shouldCascadeOnDraft = operation === 'update' && isUnpublished;
+
   const oldSlug = previousDoc?.['slug'];
   const oldNavigationTitle = previousDoc?.[fieldNavigationTitleFieldName];
   const oldParent = previousDoc?.[fieldParentSelectorFieldName];
@@ -214,8 +220,8 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
 
   const onlyBreadcrumbChanged = breadcrumbChanged && !slugChanged && !navigationTitleChanged && !parentChanged && !statusChanged;
 
-  // unpublishing logic
-  if (isUnpublishing) {
+  // unpublishing logic - also handle local API case where status is draft
+  if (isUnpublishing || shouldCascadeOnDraft) {
     const tenantId = typeof doc.tenant === 'string'
       ? doc.tenant
       : doc.tenant?.id;
@@ -223,7 +229,7 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
     try {
       cascadeProcessingSet.add(docId);
 
-      const unpublishedDocumentIds = new Set<string>([docId]);
+      const unpublishedDocumentIds = new Set<string>([String(docId)]);
 
       await updateChildBreadcrumbs(req.payload, req, docId, tenantId, unpublishedDocumentIds);
     } finally {
@@ -275,7 +281,7 @@ export const hookCascadeBreadcrumbUpdatesOnDelete: CollectionAfterDeleteHook = a
   try {
     cascadeProcessingSet.add(docId);
 
-    const deletedDocumentIds = new Set<string>([docId]);
+    const deletedDocumentIds = new Set<string>([String(docId)]);
 
     await updateChildBreadcrumbs(req.payload, req, docId, tenantId, deletedDocumentIds);
   } finally {

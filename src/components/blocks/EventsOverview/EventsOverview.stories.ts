@@ -41,7 +41,6 @@ const Full: InterfaceEventsListItemPropTypes = {
     target: '_blank' as const,
   },
   location: 'ETH Zürich',
-  pageLanguage: 'de',
   tag: 'Workshop',
   text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
   time: '18:30 Uhr',
@@ -56,7 +55,6 @@ const InternalLink: InterfaceEventsListItemPropTypes = {
     target: '_self' as const,
   },
   location: 'ETH Zürich',
-  pageLanguage: 'de',
   tag: 'Workshop',
   text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
   time: '18:30 Uhr',
@@ -71,7 +69,6 @@ const DateNotSameMonth: InterfaceEventsListItemPropTypes = {
     target: '_self' as const,
   },
   location: 'ETH Zürich',
-  pageLanguage: 'de',
   tag: 'Workshop',
   text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
   time: '18:30 Uhr',
@@ -86,7 +83,6 @@ const DateNotSameYear: InterfaceEventsListItemPropTypes = {
     target: '_self' as const,
   },
   location: 'ETH Zürich',
-  pageLanguage: 'de',
   tag: 'Workshop',
   text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
   time: '18:30 Uhr',
@@ -101,7 +97,6 @@ const NoTag: InterfaceEventsListItemPropTypes = {
     target: '_self' as const,
   },
   location: 'ETH Zürich',
-  pageLanguage: 'de',
   text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
   time: '18:30 Uhr',
 };
@@ -112,7 +107,6 @@ const Minimal: InterfaceEventsListItemPropTypes = {
     href: 'https://foo.bar',
     target: '_self' as const,
   },
-  pageLanguage: 'de',
   tag: 'Workshop',
   text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
 };
@@ -123,7 +117,6 @@ const MinimalWithoutTag: InterfaceEventsListItemPropTypes = {
     href: 'https://foo.bar',
     target: '_self' as const,
   },
-  pageLanguage: 'de',
   text: 'SSH Energy Workshop 2025: Sozial- und Geisteswissenschaften im Energiesystem',
 };
 
@@ -153,7 +146,6 @@ export const LotsOfItems: StrictStory = {
       Minimal,
       MinimalWithoutTag,
     ],
-    pageLanguage: 'de',
     title: 'News',
   },
 };
@@ -170,7 +162,6 @@ export const FewItems: StrictStory = {
       Minimal,
       MinimalWithoutTag,
     ],
-    pageLanguage: 'de',
     title: 'Latest News',
   },
 };

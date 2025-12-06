@@ -1,9 +1,10 @@
 import 'server-only';
 import React from 'react';
-import './styles.scss';
-import { getPayload } from 'payload';
+import '../styles.scss';
+import {
+  getPayload, TypedLocale,
+} from 'payload';
 import configPromise from '@/payload.config';
-import { Config } from '@/payload-types';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { TenantProvider } from '@/app/providers/TenantProvider';
 import { getTenant } from '@/app/providers/TenantProvider.server';
@@ -15,7 +16,20 @@ import {
 } from '@/components/global/Footer/Footer';
 import { Metadata } from 'next';
 import { ConsentBanner } from '@/components/global/ConsentBanner/ConsentBanner';
+import {
+  hasLocale, NextIntlClientProvider,
+} from 'next-intl';
+import { routing } from '@/i18n/routing';
+import { notFound } from 'next/navigation';
+import { setRequestLocale } from 'next-intl/server';
 import { NoJsScript } from '@/components/helpers/noJsScript';
+
+type InterfaceRootLayoutProps = {
+  children: React.ReactNode
+  params: Promise<{
+    locale: string
+  }>
+}
 
 export const metadata: Metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -25,25 +39,57 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
   params,
-}: {
-  children: React.ReactElement;
-  params: Promise<{ lang: string }>
-}): Promise<React.JSX.Element> {
-  const lang = (await params).lang as Config['locale'];
-  const tenant = await getTenant();
+}: InterfaceRootLayoutProps): Promise<React.JSX.Element> {
   const payload = await getPayload({
     config: configPromise,
   });
+
+  const {
+    locale: localeString,
+  } = await params;
+
+  // Validate and assert locale type
+  const locale = localeString as TypedLocale;
+
+  // get tenant id
+
+  const tenant = await getTenant();
 
   if (!tenant) {
     return <p>No tenant data</p>;
   }
 
+  // get tenant data
+
+  const fullTenant = await payload.findByID({
+    collection: 'tenants',
+    id: tenant,
+  });
+
+  // We need to consider admin disabling/enabling languages in the
+  // tenant config in payload
+
+  const tenantLanguages = fullTenant.languages;
+  let availableLangauges = routing.locales as TypedLocale[];
+
+  if (tenantLanguages !== undefined) {
+    availableLangauges = (routing.locales.filter((routingLocale) => tenantLanguages[routingLocale as keyof typeof tenantLanguages])) as TypedLocale[];
+  }
+
+  // If requested local is not configured, return error
+  if (!hasLocale(availableLangauges, locale)) {
+    notFound();
+  }
+
+  // define locale for provider
+  setRequestLocale(locale);
+
+  // get pages data
   const pagesData = await payload.find({
     collection: 'homePage',
     depth: 1,
     limit: 1,
-    locale: lang,
+    locale,
     where: {
       tenant: {
         equals: tenant,
@@ -55,23 +101,12 @@ export default async function RootLayout({
     return <p>No pages data</p>;
   }
 
+  // get header data
   const headerData = await payload.find({
     collection: 'header',
     depth: 1,
     limit: 1,
-    locale: lang,
-    where: {
-      tenant: {
-        equals: tenant,
-      },
-    },
-  });
-
-  const footerData = await payload.find({
-    collection: 'footer',
-    depth: 1,
-    limit: 1,
-    locale: lang,
+    locale,
     where: {
       tenant: {
         equals: tenant,
@@ -83,39 +118,57 @@ export default async function RootLayout({
     return <p>No header data </p>;
   }
 
+  // get footer data
+  const footerData = await payload.find({
+    collection: 'footer',
+    depth: 1,
+    limit: 1,
+    locale,
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
   if (!footerData.docs || footerData.docs.length < 1) {
     return <p>No footer data </p>;
   }
 
+  // get nav data
   const navData = headerData.docs[0].navigation;
 
   if (!navData || navData.navItems.length < 1) {
     return <p>No nav items in header data</p>;
   }
 
+  // get metanav data
   const metanavData = headerData.docs[0].metanavigation;
 
   if (!metanavData?.metaLinks || metanavData.metaLinks.length < 1) {
     return <p>No metanav data in header data</p>;
   }
 
+  // get footer contact data
   const footerContactData = footerData.docs[0].contact;
 
   if (!footerContactData.title || !footerContactData.address1 || !footerContactData.countryCode || !footerContactData.zipCode || !footerContactData.city) {
     return <p>Footer Contact data incomplete</p>;
   }
 
+  // get footer legal data
   const footerLegalData = footerData.docs[0].legal;
 
   if (!footerLegalData.dataPrivacy || !footerLegalData.impressum || !footerLegalData.copyright) {
     return <p>Footer Legal data incomplete</p>;
   }
 
+  // get consent data
   const consentCollectionData = await payload.find({
     collection: 'consent',
     depth: 1,
     limit: 1,
-    locale: lang,
+    locale,
     where: {
       tenant: {
         equals: tenant,
@@ -133,9 +186,6 @@ export default async function RootLayout({
 
   const headerProps: InterfaceHeaderPropTypes = {
     colorMode,
-
-    // TODO: get from parent
-    currentLang: 'de',
     logoLink: '/',
 
     // TODO: get from global i18n
@@ -153,10 +203,6 @@ export default async function RootLayout({
     legal: footerLegalData,
     metaNav: metanavData,
     navigation: navData,
-
-    // TODO: get from parent
-    pageLanguage: 'de',
-
     socialLinks: footerData.docs[0].socialLinks,
 
     // TODO
@@ -169,26 +215,28 @@ export default async function RootLayout({
   return (
     <html
       className='theme-sagw no-js'
-      lang='en'
+      lang={locale}
     >
       <NoJsScript />
       <body>
+        <NextIntlClientProvider>
 
-        <Header
-          {...headerProps}
-        />
+          <Header
+            {...headerProps}
+          />
 
-        <main>
-          <TenantProvider tenant={tenant}>
-            {children}
-          </TenantProvider>
-        </main>
+          <main>
+            <TenantProvider tenant={tenant}>
+              {children}
+            </TenantProvider>
+          </main>
 
-        <Footer
-          {...footerProps}
-        />
+          <Footer
+            {...footerProps}
+          />
 
-        <ConsentBanner {...consentData.banner} />
+          <ConsentBanner {...consentData.banner} />
+        </NextIntlClientProvider>
 
       </body>
     </html >

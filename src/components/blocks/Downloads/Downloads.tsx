@@ -4,7 +4,6 @@ import {
   DownloadLinkItem, InterfaceDownloadLinkItemPropTypes,
 } from '@/components/base/DownloadLinkItem/DownloadLinkItem';
 import {
-  Config,
   Document, InterfaceDownloadsBlock,
   ZenodoDocument,
 } from '@/payload-types';
@@ -13,7 +12,6 @@ import { rteToHtml } from '@/utilities/rteToHtml';
 
 export type InterfaceDownloadsPropTypes = {
   title: InterfaceRte;
-  language: Config['locale'];
 } & InterfaceDownloadsBlock;
 
 export const Downloads = (props: InterfaceDownloadsPropTypes): React.JSX.Element => {
@@ -41,7 +39,6 @@ export const Downloads = (props: InterfaceDownloadsPropTypes): React.JSX.Element
           href: documentItem.url || '',
           target: '_blank' as const,
         },
-        pageLanguage: props.language,
         size: `${fileSize}KB`,
         title: rteToHtml(documentItem.title),
         type: 'download' as const,
@@ -67,7 +64,6 @@ export const Downloads = (props: InterfaceDownloadsPropTypes): React.JSX.Element
             href: file.link || 'foo',
             target: '_blank' as const,
           },
-          pageLanguage: props.language,
           size: `${file.size}KB`,
           title: documentTitle,
           type: 'download' as const,
@@ -90,7 +86,6 @@ export const Downloads = (props: InterfaceDownloadsPropTypes): React.JSX.Element
         : undefined
       }
       colorMode='light'
-      pageLanguage={props.language}
     >
       {returnDocumentItems.map((item, key) => {
         if (item) {

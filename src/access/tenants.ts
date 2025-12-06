@@ -1,42 +1,53 @@
-import type { AccessArgs } from 'payload';
+import { PayloadRequest } from 'payload';
 import {
   isMagazineEditor,
   isSuperAdmin, isTenantAdmin,
 } from '@/collections/Plc/Users/roles';
 
+interface InterfaceAccessParam {
+  req: PayloadRequest;
+  id?: string | number;
+}
+
 const allAccess = (): boolean => true;
-
-const adminAccess = ({
-  req,
-}: AccessArgs): boolean => isSuperAdmin(req) || isTenantAdmin(req);
-
-const superAdminAccess = ({
-  req,
-}: AccessArgs): boolean => isSuperAdmin(req);
 
 // Allow super-admin, tenant-admin, and magazine-editor to set tenant field
 // This matches the roles that can create pages
 const tenantFieldCreateAccess = ({
   req,
-}: AccessArgs): boolean => isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req);
+}: { req: PayloadRequest }): boolean => isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req);
+
+const tenantFieldDeleteAccess = ({
+  req,
+}: { req: PayloadRequest }): boolean => isSuperAdmin(req);
 
 export const tenantsAccess = {
   create: tenantFieldCreateAccess,
-  delete: superAdminAccess,
+  delete: tenantFieldDeleteAccess,
   read: allAccess,
   update: allAccess,
 };
 
+// Field access functions use InterfaceAccessParam
+// (req and optional id) instead of AccessArgs
+const fieldSuperAdminAccess = ({
+  req,
+}: InterfaceAccessParam): boolean => isSuperAdmin(req);
+
+const fieldAdminAccess = ({
+  req,
+}: InterfaceAccessParam): boolean => isSuperAdmin(req) || isTenantAdmin(req);
+
 export const fieldsAccess = {
-  create: superAdminAccess,
-  delete: superAdminAccess,
+  create: fieldSuperAdminAccess,
+  delete: fieldSuperAdminAccess,
   read: allAccess,
-  update: superAdminAccess,
+  update: fieldSuperAdminAccess,
 };
 
 export const languageAccess = {
-  create: superAdminAccess,
-  delete: superAdminAccess,
+  create: fieldSuperAdminAccess,
+  delete: fieldSuperAdminAccess,
   read: allAccess,
-  update: adminAccess,
+  update: fieldAdminAccess,
 };

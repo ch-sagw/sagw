@@ -55,7 +55,6 @@ const render = (args: Partial<InterfaceHeaderPropTypes> & InterfaceHeaderPropTyp
 
 const defaultArgs: InterfaceHeaderPropTypes = {
   colorMode: 'dark',
-  currentLang: 'de',
   logoLink: '/',
   menuButton: {
     close: 'Schliessen',

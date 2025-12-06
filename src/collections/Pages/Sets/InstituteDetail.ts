@@ -52,10 +52,8 @@ export const InstituteDetailPage: CollectionConfig = {
                   type: 'relationship',
                 },
                 {
-                  admin: {
-                    description: 'This text will be used for the teasers on the overview page.',
-                  },
                   ...rte2({
+                    adminDescription: 'This text will be used for the teasers on the overview page.',
                     name: 'teaserText',
                   }),
                 },

@@ -31,32 +31,26 @@ export default meta;
 const items: InterfaceNavigationItemChild[] = [
   {
     link: 'foo',
-    pageLanguage: 'de',
     text: 'Übersicht',
   },
   {
     link: 'foo',
-    pageLanguage: 'de',
     text: 'Projekte',
   },
   {
     link: 'foo',
-    pageLanguage: 'de',
     text: 'Magazin',
   },
   {
     link: 'foo',
-    pageLanguage: 'de',
     text: 'Publikationen',
   },
   {
     link: 'foo',
-    pageLanguage: 'de',
     text: 'Veranstaltungen',
   },
   {
     link: 'foo',
-    pageLanguage: 'de',
     text: 'News',
   },
 ];
@@ -119,7 +113,6 @@ export const WithoutChildren: StrictStory = {
   args: {
     colorMode: 'dark',
     link: 'foo',
-    pageLanguage: 'de',
     text: 'Förderung',
   },
   globals: {

@@ -4,7 +4,6 @@ import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/global/Hero/Hero.module.scss';
 import {
-  Config,
   InterfaceHeroField, InterfaceHeroFieldHome, InterfaceHeroFieldMagazineDetail, InterfaceHeroFieldNewsDetail,
 } from '@/payload-types';
 import {
@@ -20,10 +19,10 @@ import { Icon } from '@/icons';
 import { formatEventDetails } from '@/components/base/EventsListItem/helpers';
 import { formatDateToReadableString } from '@/components/helpers/date';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
+import { useLocale } from 'next-intl';
 
 type BaseHeroProps = {
   breadcrumb?: InterfaceBreadcrumbPropTypes;
-  pageLanguage: Config['locale'];
 };
 
 export type InterfaceHeroPropTypes =
@@ -53,6 +52,7 @@ export type InterfaceHeroPropTypes =
   } & InterfaceHeroField);
 
 export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
+  const locale = useLocale();
   const heroClasses = cva([styles.hero], {
     variants: {
       animated: {
@@ -91,7 +91,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
       dateStart: props.eventDetails.dateStart,
       eventLocation: props.eventDetails.eventLocation,
       language: props.eventDetails.language,
-      pageLanguage: props.pageLanguage,
+      pageLanguage: locale,
       time: props.eventDetails.time,
     });
   }
@@ -165,7 +165,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
         {props.type === 'newsDetail' && props.date &&
           <p className={styles.newsDate}>{formatDateToReadableString({
             dateString: props.date,
-            locale: props.pageLanguage,
+            locale,
           })}</p>
         }
 
@@ -185,7 +185,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
               />
               <span className={styles.date}>{formatDateToReadableString({
                 dateString: props.date,
-                locale: props.pageLanguage,
+                locale,
               })}</span>
             </p>
             <Button
@@ -222,9 +222,9 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
             text={rteToHtml(props.optionalLink.link.linkText)}
             colorMode={heroColorMode}
             style='text'
-            pageLanguage={props.pageLanguage}
             iconInlineEnd={'arrowRight' as keyof typeof Icon}
             ariaCurrent={true}
+            prefetch={true}
           />
         }
       </div>
