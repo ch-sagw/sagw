@@ -54,6 +54,8 @@ test.describe('Custom Form', () => {
       exact: true,
     });
 
+    await (await mailField.elementHandle())?.waitForElementState('stable');
+
     await expect(mailError2)
       .not.toBeVisible();
   });
