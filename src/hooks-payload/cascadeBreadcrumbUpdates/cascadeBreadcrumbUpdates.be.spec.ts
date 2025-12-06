@@ -609,7 +609,6 @@ test('Updates on parentPage update', async () => {
       },
       id: level3.id,
     });
-
   } catch (e) {
     level4 = JSON.stringify(e);
   }
@@ -630,13 +629,13 @@ test('Updates on parentPage update', async () => {
     .toBe(3);
 
   await expect(level3Updated!.breadcrumb![0].namede)
-    .toStrictEqual('Home');
+    .toStrictEqual('Home DE');
 
   await expect(level3Updated!.breadcrumb![1].namede)
     .toStrictEqual('Level 1 Navigation Title');
 
   await expect(level4Updated!.breadcrumb![0].namede)
-    .toStrictEqual('Home');
+    .toStrictEqual('Home DE');
 
   await expect(level4Updated!.breadcrumb![1].namede)
     .toStrictEqual('Level 1 Navigation Title');

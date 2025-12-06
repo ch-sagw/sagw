@@ -18,7 +18,7 @@ import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
-import { getTranslations } from 'next-intl/server';
+import { readFile } from 'fs/promises';
 
 const homeBlocks: BlockSlug[] = [
   'textBlock',
@@ -61,12 +61,10 @@ export const HomePage: CollectionConfig = {
         let homeString = 'Home';
 
         if (locale) {
-          const i18nNavigation = await getTranslations({
-            locale,
-            namespace: 'navigation',
-          });
+          const translationRawFile = (await readFile(new URL(`../../../i18n/messages/${locale}.json`, import.meta.url))).toString();
+          const translationsFile = JSON.parse(translationRawFile);
 
-          homeString = i18nNavigation('navigationTitle');
+          homeString = translationsFile.navigation.navigationTitle;
         }
 
         return homeString;

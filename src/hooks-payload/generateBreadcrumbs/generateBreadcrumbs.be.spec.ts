@@ -152,7 +152,7 @@ test('Generates breadcrumb', async () => {
     .toEqual(9);
 
   await expect(breadcrumb[0].namede)
-    .toStrictEqual('Home');
+    .toStrictEqual('Home DE');
 
   await expect(breadcrumb[1].namede)
     .toStrictEqual('Level 1 Navigation Title');
@@ -345,7 +345,7 @@ test('Generates breadcrumb in french', async () => {
     .toEqual(9);
 
   await expect(breadcrumb[0].namefr)
-    .toStrictEqual('Home');
+    .toStrictEqual('Home FR');
 
   await expect(breadcrumb[1].namefr)
     .toStrictEqual('Level 1 Navigation Title');
@@ -775,7 +775,7 @@ test('Generates breadcrumb with siblings', async () => {
   }
 
   await expect(level5b.breadcrumb[0].namede)
-    .toStrictEqual('Home');
+    .toStrictEqual('Home DE');
 
   await expect(level5b.breadcrumb[1].namede)
     .toStrictEqual('Level 2b Navigation Title');
@@ -787,7 +787,7 @@ test('Generates breadcrumb with siblings', async () => {
     .toStrictEqual('Level 4b Navigation Title');
 
   await expect(level5a.breadcrumb[0].namede)
-    .toStrictEqual('Home');
+    .toStrictEqual('Home DE');
 
   await expect(level5a.breadcrumb[1].namede)
     .toStrictEqual('Level 2b Navigation Title');
