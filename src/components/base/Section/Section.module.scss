@@ -44,6 +44,7 @@
   .title {
     @include title-heading-3;
 
+    order: 1;
     color: var(--title-color);
     margin: 0;
   }

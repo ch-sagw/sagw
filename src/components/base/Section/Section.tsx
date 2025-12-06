@@ -6,6 +6,7 @@ import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 
 export type InterfaceSectionPropTypes = {
   className?: string;
+  additionalContentClassName?: string;
   title?: string;
   subtitle?: string;
   children?: React.ReactNode;
@@ -24,6 +25,7 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
   showTopLine,
   fullBleed,
   additionalStickyContent,
+  additionalContentClassName,
 }, ref) => {
   const sectionClasses = cva([
     styles.section,
@@ -64,7 +66,7 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
       }
 
       {additionalStickyContent && title &&
-        <div className={styles.additionalStickyContent}>
+        <div className={`${styles.additionalStickyContent} ${additionalContentClassName}`}>
           <SafeHtml
             as='h2'
             className={styles.title}

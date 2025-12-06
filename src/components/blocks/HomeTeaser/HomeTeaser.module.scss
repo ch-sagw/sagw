@@ -1,0 +1,46 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/mixins/mixins-shared-styles" as *;
+
+.teasers {
+  .teaser {
+    .stickyContent {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: space-between;
+    }
+
+    .icon {
+      order: 0;
+      color: var(--primary-blue-light);
+      width: px-to-rem(120);
+      height: px-to-rem(120);
+      margin-block-end: px-to-rem(var(--spacing-2xl));
+
+      @include mq($from: large) {
+        width: px-to-rem(200);
+        height: px-to-rem(200);
+        order: 2;
+        margin-block-end: 0;
+      }
+    }
+
+    .text {
+      @include body-text-m;
+
+      margin-block-start: 0;
+    }
+
+    .link {
+      margin-block-end: px-to-rem(var(--spacing-m));
+      padding-inline: 0;
+
+      svg {
+        color: var(--interaction-secondary);
+      }
+    }
+  }
+}
