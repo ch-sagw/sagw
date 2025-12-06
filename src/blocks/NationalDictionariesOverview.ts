@@ -9,10 +9,8 @@ export const NationalDictionariesOverviewBlock = {
   },
   fields: [
     {
-      admin: {
-        description: 'This will be used as "More info" text on the teasers',
-      },
       ...rte1({
+        adminDescription: 'This will be used as "More info" text on the teasers',
         name: 'moreInfoButtonText',
       }),
     },

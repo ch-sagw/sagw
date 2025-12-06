@@ -1490,6 +1490,9 @@ export interface MagazineDetailPage {
   parentPage?: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
+    /**
+     * This text will be used as text for the teasers on the overview page.
+     */
     teaserText: {
       root: {
         type: string;
@@ -1837,6 +1840,9 @@ export interface NewsDetailPage {
   parentPage?: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
+    /**
+     * This text will be used as text for the teasers on the overview page.
+     */
     teaserText: {
       root: {
         type: string;
@@ -3059,6 +3065,9 @@ export interface InterfaceNewsOverviewBlock {
  * via the `definition` "InterfaceNationalDictionariesOverviewBlock".
  */
 export interface InterfaceNationalDictionariesOverviewBlock {
+  /**
+   * This will be used as "More info" text on the teasers
+   */
   moreInfoButtonText: {
     root: {
       type: string;
@@ -3084,6 +3093,9 @@ export interface InterfaceNationalDictionariesOverviewBlock {
  * via the `definition` "InterfaceInstitutesOverviewBlock".
  */
 export interface InterfaceInstitutesOverviewBlock {
+  /**
+   * This will be used as "More info" text on the teasers
+   */
   moreInfoButtonText: {
     root: {
       type: string;
@@ -3439,6 +3451,9 @@ export interface NationalDictionaryDetailPage {
      * This image will be used for the teasers on the overview page.
      */
     image?: (string | null) | Image;
+    /**
+     * This text will be used for the teasers on the overview page.
+     */
     teaserText: {
       root: {
         type: string;
@@ -3497,6 +3512,9 @@ export interface InstituteDetailPage {
      * This image will be used for the teasers on the overview page.
      */
     image: string | Image;
+    /**
+     * This text will be used for the teasers on the overview page.
+     */
     teaserText: {
       root: {
         type: string;
@@ -4335,6 +4353,9 @@ export interface Header {
  */
 export interface InterfaceHeaderNavigation {
   navItems: {
+    /**
+     * If the user hovers over this menu item in the navigation, this is shown as a description in the Header
+     */
     description?: {
       root: {
         type: string;
@@ -4383,7 +4404,7 @@ export interface InterfaceHeaderNavigation {
             };
             [k: string]: unknown;
           };
-          navItemLink?: InterfaceInternalLinkValue;
+          navItemLink: InterfaceInternalLinkValue;
           id?: string | null;
         }[]
       | null;

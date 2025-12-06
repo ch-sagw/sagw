@@ -57,10 +57,8 @@ export const NewsDetailPage: CollectionConfig = {
             {
               fields: [
                 {
-                  admin: {
-                    description: 'This text will be used as text for the teasers on the overview page.',
-                  },
                   ...rte2({
+                    adminDescription: 'This text will be used as text for the teasers on the overview page.',
                     name: 'teaserText',
                   }),
                 },
