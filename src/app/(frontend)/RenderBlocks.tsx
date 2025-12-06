@@ -62,6 +62,7 @@ import { ProjectsOverview } from '@/components/blocks/ProjectsOverview/ProjectsO
 import { EditionsOverview } from '@/components/blocks/EditionsOverview/EditionsOverview';
 import { Footnote } from '@/components/blocks/Footnote/Footnote';
 import { BibliographicReference } from '@/components/blocks/BibliographicReference/BibliographicReference';
+import { HomeTeaser } from '@/components/blocks/HomeTeaser/HomeTeaser';
 import {
   CollectionSlug, TypedLocale,
 } from 'payload';
@@ -378,6 +379,15 @@ export const RenderBlocks = ({
             if (blockType === 'videoBlock') {
               return (
                 <Video
+                  {...block}
+                  key={key}
+                />
+              );
+            }
+
+            if (blockType === 'homeTeasersBlock') {
+              return (
+                <HomeTeaser
                   {...block}
                   key={key}
                 />

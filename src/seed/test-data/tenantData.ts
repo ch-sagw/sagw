@@ -8,6 +8,7 @@ import {
   sampleFootnoteContent,
 } from '@/utilities/rteSampleContent';
 import { InterfaceNetworkTeaserPropTypes } from '@/components/blocks/NetworkTeaser/NetworkTeaser';
+import { HomePage } from '@/payload-types';
 
 interface InterfaceAddDataForTenantProps {
   payload: Payload;
@@ -610,70 +611,121 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // Pages
   // ############
 
+  const homeContent: HomePage['content'] = [
+    {
+      blockType: 'formBlock',
+      form,
+    },
+    {
+      blockType: 'formBlock',
+      form: newsletterForm,
+    },
+    // {
+    //   blockType: 'notificationBlock',
+    //   text: simpleRteConfig('Sample notification text.'),
+    // },
+    {
+      blockType: 'eventsTeasersBlock',
+      title: simpleRteConfig('Events'),
+    },
+    {
+      blockType: 'newsTeasersBlock',
+      colorMode: 'light',
+      title: simpleRteConfig('News'),
+    },
+    {
+      blockType: 'textBlock',
+      text: rte4FullRange,
+    },
+    {
+      blockType: 'textBlock',
+      text: rte4FullRange,
+    },
+    // {
+    //   accordions: [
+    //     {
+    //       accordionContent: simpleRteConfig('Some content'),
+    //       accordionTitle: simpleRteConfig('Accordion 1'),
+    //     },
+    //     {
+    //       accordionContent: simpleRteConfig('Some content'),
+    //       accordionTitle: simpleRteConfig('Accordion 2'),
+    //     },
+    //     {
+    //       accordionContent: simpleRteConfig('Some content'),
+    //       accordionTitle: simpleRteConfig('Accordion 3'),
+    //     },
+    //     {
+    //       accordionContent: simpleRteConfig('Some content'),
+    //       accordionTitle: simpleRteConfig('Accordion 4'),
+    //     },
+    //     {
+    //       accordionContent: simpleRteConfig('Some content'),
+    //       accordionTitle: simpleRteConfig('Accordion 5'),
+    //     },
+    //   ],
+    //   blockType: 'accordionBlock',
+    //   colorMode: 'white',
+    //   title: simpleRteConfig(`Accordion title ${tenant.toUpperCase()}`),
+    //   titleLevel: '2',
+    // },
+  ];
+
+  if (tenant === 'sagw') {
+    homeContent.unshift({
+      blockType: 'homeTeasersBlock',
+      homeTeasers: [
+        {
+          category: 'Förderung',
+          iconName: 'bar',
+          link: {
+            internalLink: {
+              documentId: 'someid',
+              slug: 'someslug',
+            },
+            linkText: simpleRteConfig('Zur Förderung'),
+          },
+          text: simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.'),
+          title: simpleRteConfig('Wir schaffen verlässliche Grundlagen für geistes- und sozialwissenschaftliche Forschung in der Schweiz.'),
+        },
+
+        {
+          category: 'Netzwerk',
+          iconName: 'bar',
+          link: {
+            internalLink: {
+              documentId: 'someid',
+              slug: 'someslug',
+            },
+            linkText: simpleRteConfig('Zum Netzwerkl'),
+          },
+          text: simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.'),
+          title: simpleRteConfig('Wir verbinden Disziplinen, Menschen und Institutionen in einem einzigartigen wissenschaftlichen Netzwerk.'),
+        },
+
+        {
+          category: 'Aktivitäten',
+          iconName: 'bar',
+          link: {
+            internalLink: {
+              documentId: 'someid',
+              slug: 'someslug',
+            },
+            linkText: simpleRteConfig('Zu den Aktivitäten'),
+          },
+          text: simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.'),
+          title: simpleRteConfig('Wir initiieren Debatten und vermittelt Wissen zwischen Wissenschaft, Gesellschaft und Politik.'),
+        },
+      ],
+    });
+  }
+
   // create home
   const home = await payload.create({
     collection: 'homePage',
     data: {
       _status: 'published',
-      content: [
-        {
-          blockType: 'formBlock',
-          form,
-        },
-        {
-          blockType: 'formBlock',
-          form: newsletterForm,
-        },
-        // {
-        //   blockType: 'notificationBlock',
-        //   text: simpleRteConfig('Sample notification text.'),
-        // },
-        {
-          blockType: 'eventsTeasersBlock',
-          title: simpleRteConfig('Events'),
-        },
-        {
-          blockType: 'newsTeasersBlock',
-          colorMode: 'light',
-          title: simpleRteConfig('News'),
-        },
-        {
-          blockType: 'textBlock',
-          text: rte4FullRange,
-        },
-        {
-          blockType: 'textBlock',
-          text: rte4FullRange,
-        },
-        // {
-        //   accordions: [
-        //     {
-        //       accordionContent: simpleRteConfig('Some content'),
-        //       accordionTitle: simpleRteConfig('Accordion 1'),
-        //     },
-        //     {
-        //       accordionContent: simpleRteConfig('Some content'),
-        //       accordionTitle: simpleRteConfig('Accordion 2'),
-        //     },
-        //     {
-        //       accordionContent: simpleRteConfig('Some content'),
-        //       accordionTitle: simpleRteConfig('Accordion 3'),
-        //     },
-        //     {
-        //       accordionContent: simpleRteConfig('Some content'),
-        //       accordionTitle: simpleRteConfig('Accordion 4'),
-        //     },
-        //     {
-        //       accordionContent: simpleRteConfig('Some content'),
-        //       accordionTitle: simpleRteConfig('Accordion 5'),
-        //     },
-        //   ],
-        //   blockType: 'accordionBlock',
-        //   colorMode: 'white',
-        //   title: simpleRteConfig(`Accordion title ${tenant.toUpperCase()}`),
-        //   titleLevel: '2',
-        // },
-      ],
+      content: homeContent,
       hero: {
         animated: true,
         lead: simpleRteConfig('Home Lead'),
