@@ -7,6 +7,7 @@ import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 export type InterfaceSectionPropTypes = {
   className?: string;
   additionalContentClassName?: string;
+  titleClassName?: string;
   title?: string;
   subtitle?: string;
   children?: React.ReactNode;
@@ -18,6 +19,7 @@ export type InterfaceSectionPropTypes = {
 
 export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
   className,
+  titleClassName,
   title,
   subtitle,
   children,
@@ -69,7 +71,7 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
         <div className={`${styles.additionalStickyContent} ${additionalContentClassName}`}>
           <SafeHtml
             as='h2'
-            className={styles.title}
+            className={`${styles.title} ${titleClassName}`}
             html={title}
           />
           {additionalStickyContent}

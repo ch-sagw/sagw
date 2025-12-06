@@ -35,6 +35,7 @@ export const HomeTeaser = ({
             subtitle={rteToHtml(title)}
             className={styles.teaser}
             additionalContentClassName={styles.stickyContent}
+            titleClassName={styles.stickyTitle}
             additionalStickyContent={
               // TODO: when moxy ready, render proper icon
               <Icon
