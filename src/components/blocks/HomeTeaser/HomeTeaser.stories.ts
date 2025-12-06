@@ -27,7 +27,7 @@ const meta: Meta<typeof HomeTeaser> = {
 
 export default meta;
 
-export const SampleStory: StrictStory = {
+export const HomeTeasers: StrictStory = {
   args: {
     blockType: 'homeTeasersBlock',
     homeTeasers: [
