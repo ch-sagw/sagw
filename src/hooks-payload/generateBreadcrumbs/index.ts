@@ -20,24 +20,65 @@ const hasNonEmptyValue = (localizedString: LocalizedString | undefined): boolean
     .some((value) => value && value.trim().length > 0);
 };
 
+// Check if the first breadcrumb item has slug 'home' in any locale
+const hasHomeAsFirstBreadcrumb = (breadcrumbs: InterfaceBreadcrumb): boolean => {
+  if (!breadcrumbs || breadcrumbs.length === 0) {
+    return false;
+  }
+
+  const [firstBreadcrumb] = breadcrumbs;
+
+  if (!firstBreadcrumb) {
+    return false;
+  }
+
+  // Check if any locale has slug 'home'
+  return (
+    firstBreadcrumb.slugde === 'home' ||
+    firstBreadcrumb.slugen === 'home' ||
+    firstBreadcrumb.slugfr === 'home' ||
+    firstBreadcrumb.slugit === 'home'
+  );
+};
+
 export const buildBreadcrumbs = async (
   payload: any,
   parentRef: InterfaceInternalLinkValue | undefined | null | Record<string, never>,
   breadcrumbs: InterfaceBreadcrumb = [],
+  excludedDocumentIds?: Set<string>,
 ): Promise<InterfaceBreadcrumb> => {
   // Handle null, undefined, or invalid parentRef - we've reached the root
   if (!parentRef || typeof parentRef !== 'object') {
+    // If we have breadcrumbs, validate they start with 'home'
+    if (breadcrumbs && breadcrumbs.length > 0) {
+      return hasHomeAsFirstBreadcrumb(breadcrumbs)
+        ? breadcrumbs
+        : [];
+    }
+
     return breadcrumbs;
   }
 
   // Handle empty object - this means no parent is set (root)
   if (Object.keys(parentRef).length === 0) {
+    // If we have breadcrumbs, validate they start with 'home'
+    if (breadcrumbs && breadcrumbs.length > 0) {
+      return hasHomeAsFirstBreadcrumb(breadcrumbs)
+        ? breadcrumbs
+        : [];
+    }
+
     return breadcrumbs;
   }
 
   // Ensure parentRef has required properties (slug and documentId)
   if (!('slug' in parentRef) || !('documentId' in parentRef) || !parentRef.slug || !parentRef.documentId) {
     return breadcrumbs;
+  }
+
+  // Check if this document is excluded (unpublished/deleted)
+  if (excludedDocumentIds?.has(String(parentRef.documentId))) {
+    return [];
   }
 
   try {
@@ -91,15 +132,20 @@ export const buildBreadcrumbs = async (
       parentParentRef.documentId;
 
     if (!hasParent) {
-      // We've reached the root, return the breadcrumbs we've built
+      // We've reached the root, check if first breadcrumb is 'home'
+      if (!hasHomeAsFirstBreadcrumb(newBreadcrumbs)) {
+        return [];
+      }
+
       return newBreadcrumbs;
     }
 
-    // Recurse to get ancestors
-    const ancestorBreadcrumbs = await buildBreadcrumbs(payload, parentParentRef, []);
+    // Recurse to get ancestors - pass excludedDocumentIds
+    // so it checks ancestors too
+    const ancestorBreadcrumbs = await buildBreadcrumbs(payload, parentParentRef, [], excludedDocumentIds);
 
     // If ancestors returned empty array, that means we hit a missing
-    // navigationTitle up the chain
+    // navigationTitle up the chain or the chain doesn't start with 'home'
     if (!ancestorBreadcrumbs || ancestorBreadcrumbs.length === 0) {
       return [];
     }
@@ -109,10 +155,17 @@ export const buildBreadcrumbs = async (
       ? ancestorBreadcrumbs
       : [];
 
-    return [
+    const finalBreadcrumbs = [
       ...ancestorArray,
       ...newBreadcrumbs,
     ];
+
+    // Check if first breadcrumb is 'home'
+    if (!hasHomeAsFirstBreadcrumb(finalBreadcrumbs)) {
+      return [];
+    }
+
+    return finalBreadcrumbs;
   } catch (error) {
     console.error('Error building breadcrumbs:', error);
   }
@@ -158,10 +211,21 @@ export const hookGenerateBreadcrumbs: CollectionBeforeChangeHook = async ({
 
   const newParentId = getParentDocumentId(data[fieldParentSelectorFieldName]);
   const oldParentId = getParentDocumentId(originalDoc?.[fieldParentSelectorFieldName]);
-  const hasBreadcrumbs = data[fieldBreadcrumbFieldName] && Array.isArray(data[fieldBreadcrumbFieldName]) && data[fieldBreadcrumbFieldName].length > 0;
+  const existingBreadcrumbs = data[fieldBreadcrumbFieldName];
+  const hasBreadcrumbs = existingBreadcrumbs && Array.isArray(existingBreadcrumbs) && existingBreadcrumbs.length > 0;
   const parentChanged = newParentId !== oldParentId;
 
+  // If parent hasn't changed but we have breadcrumbs,
+  // validate they start with 'home'
   if (!parentChanged && hasBreadcrumbs) {
+    if (!hasHomeAsFirstBreadcrumb(existingBreadcrumbs)) {
+      // Existing breadcrumbs don't start with 'home', clear them
+      return {
+        ...data,
+        [fieldBreadcrumbFieldName]: [],
+      };
+    }
+
     return data;
   }
 

@@ -7,6 +7,7 @@ import {
   test,
 } from '@playwright/test';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { generateTenant } from '@/test-helpers/tenant-generator';
 
 test('allows 1 link and 1 downloads block via API', async () => {
   const tenant = await getTenant();
@@ -612,15 +613,9 @@ test('home allows 1 teaser block via API', async () => {
   });
 
   try {
-    const tenant = await payload.create({
-      collection: 'tenants',
-      data: {
-        name: `${(new Date())
-          .getTime()}`,
-        slug: `${new Date()}`,
-        title: `${new Date()}`,
-      },
-      draft: false,
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}`,
     });
 
     /* eslint-disable @typescript-eslint/naming-convention */
