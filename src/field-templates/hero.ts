@@ -55,16 +55,16 @@ export const fieldsHeroHome: GroupField = {
   fields: [
     titleField,
     leadField,
+    rte1({
+      name: 'sideTitle',
+    }),
+    fieldsLinkInternalWithToggle({}),
     {
       access: fieldAccessHeroAnimation,
       defaultValue: true,
       name: 'animated',
       type: 'checkbox',
     },
-    rte1({
-      name: 'sideTitle',
-    }),
-    fieldsLinkInternalWithToggle({}),
   ],
   interfaceName: 'InterfaceHeroFieldHome',
   ...generalProps,
@@ -74,11 +74,11 @@ export const fieldsHeroMagazineDetail: GroupField = {
   fields: [
     titleField,
     leadField,
-    colorMode,
     rte1({
       name: 'author',
     }),
     dateField,
+    colorMode,
   ],
   interfaceName: 'InterfaceHeroFieldMagazineDetail',
   ...generalProps,
@@ -88,8 +88,8 @@ export const fieldsHeroNewsDetail: GroupField = {
   fields: [
     titleField,
     leadField,
-    colorMode,
     dateField,
+    colorMode,
   ],
   interfaceName: 'InterfaceHeroFieldNewsDetail',
   ...generalProps,

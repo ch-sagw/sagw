@@ -125,7 +125,7 @@ test.describe('Unique blocks', () => {
     page,
   }) => {
     // create an overview page
-    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
+    await page.goto('http://localhost:3000/admin/collections/overviewPage/create');
     await page.waitForLoadState('networkidle');
 
     await page.waitForLoadState('networkidle');
@@ -141,7 +141,7 @@ test.describe('Unique blocks', () => {
 
     const drawer = await page.locator('.drawer__content');
 
-    const addDownloadButton = await drawer.getByText('Generic Teasers', {
+    const addDownloadButton = await drawer.getByText('Events Teasers (automatic)', {
       exact: true,
     });
 

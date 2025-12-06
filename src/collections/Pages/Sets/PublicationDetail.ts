@@ -56,20 +56,28 @@ export const PublicationDetailPage: CollectionConfig = {
             {
               fields: [
                 {
-                  access: fieldAccessNonLocalizableField,
                   admin: {
-                    description: 'This image will be used for the teasers on the overview page.',
+                    width: '50%',
                   },
-                  name: 'image',
-                  relationTo: 'images',
-                  required: true,
-                  type: 'relationship',
-                },
-                {
-                  access: fieldAccessNonLocalizableField,
-                  name: 'date',
-                  required: true,
-                  type: 'date',
+                  fields: [
+                    {
+                      access: fieldAccessNonLocalizableField,
+                      admin: {
+                        description: 'This image will be used for the teasers on the overview page.',
+                      },
+                      name: 'image',
+                      relationTo: 'images',
+                      required: true,
+                      type: 'relationship',
+                    },
+                    {
+                      access: fieldAccessNonLocalizableField,
+                      name: 'date',
+                      required: true,
+                      type: 'date',
+                    },
+                  ],
+                  type: 'row',
                 },
               ],
               label: 'Overview Page properties',

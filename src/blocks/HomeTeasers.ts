@@ -11,11 +11,32 @@ import {
 
 const homeTeaserItem: Field[] = [
   {
-    access: fieldAccessLocalizableField,
-    localized: true,
-    name: 'category',
-    required: true,
-    type: 'text',
+    admin: {
+      width: '50%',
+    },
+    fields: [
+      {
+        access: fieldAccessLocalizableField,
+        localized: true,
+        name: 'category',
+        required: true,
+        type: 'text',
+      },
+      // TODO: add icon names as soon as we implemented the icons
+      {
+        access: fieldAccessNonLocalizableField,
+        name: 'iconName',
+        options: [
+          {
+            label: 'foo',
+            value: 'bar',
+          },
+        ],
+        required: true,
+        type: 'select',
+      },
+    ],
+    type: 'row',
   },
   rte1({
     access: fieldAccessLocalizableField,
@@ -25,20 +46,6 @@ const homeTeaserItem: Field[] = [
     access: fieldAccessLocalizableField,
     name: 'text',
   }),
-
-  // TODO: add icon names as soon as we implemented the icons
-  {
-    access: fieldAccessNonLocalizableField,
-    name: 'iconName',
-    options: [
-      {
-        label: 'foo',
-        value: 'bar',
-      },
-    ],
-    required: true,
-    type: 'select',
-  },
   {
     fields: [...fieldsLinkInternal({})],
     name: 'link',

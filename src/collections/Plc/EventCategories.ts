@@ -11,18 +11,34 @@ export const EventCategories: CollectionConfig = {
     useAsTitle: 'eventCategory',
   },
   fields: [
-    rte1({
-      name: 'eventCategory',
-    }),
     {
-      admin: {
-        allowCreate: false,
-      },
-      collection: 'eventDetailPage',
-      name: 'relatedEventPages',
-      on: 'eventDetails.category',
-      type: 'join',
+      tabs: [
+        {
+          fields: [
+            rte1({
+              name: 'eventCategory',
+            }),
+          ],
+          label: 'Event Category',
+        },
+        {
+          fields: [
+            {
+              admin: {
+                allowCreate: false,
+              },
+              collection: 'eventDetailPage',
+              name: 'relatedEventPages',
+              on: 'eventDetails.category',
+              type: 'join',
+            },
+          ],
+          label: 'Related Content',
+        },
+      ],
+      type: 'tabs',
     },
+
   ],
   slug: 'eventCategory',
 };

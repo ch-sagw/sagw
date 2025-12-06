@@ -32,32 +32,50 @@ export const VideoBlock = {
       type: 'select',
     },
     {
-      access: fieldAccessNonLocalizableField,
-      name: 'video-de',
-      relationTo: 'videos',
-      required: true,
-      type: 'relationship',
+      admin: {
+        width: '50%',
+      },
+      fields: [
+        {
+          access: fieldAccessNonLocalizableField,
+          name: 'video-de',
+          relationTo: 'videos',
+          required: true,
+          type: 'relationship',
+        },
+        {
+          access: fieldAccessNonLocalizableField,
+          name: 'video-fr',
+          relationTo: 'videos',
+          required: false,
+          type: 'relationship',
+        },
+
+      ],
+      type: 'row',
     },
     {
-      access: fieldAccessNonLocalizableField,
-      name: 'video-fr',
-      relationTo: 'videos',
-      required: false,
-      type: 'relationship',
-    },
-    {
-      access: fieldAccessNonLocalizableField,
-      name: 'video-it',
-      relationTo: 'videos',
-      required: false,
-      type: 'relationship',
-    },
-    {
-      access: fieldAccessNonLocalizableField,
-      name: 'video-en',
-      relationTo: 'videos',
-      required: false,
-      type: 'relationship',
+      admin: {
+        width: '50%',
+      },
+      fields: [
+        {
+          access: fieldAccessNonLocalizableField,
+          name: 'video-it',
+          relationTo: 'videos',
+          required: false,
+          type: 'relationship',
+        },
+        {
+          access: fieldAccessNonLocalizableField,
+          name: 'video-en',
+          relationTo: 'videos',
+          required: false,
+          type: 'relationship',
+        },
+
+      ],
+      type: 'row',
     },
     rte2({
       name: 'caption',
