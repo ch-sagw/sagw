@@ -3,7 +3,8 @@
 import { getPayload } from 'payload';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
-  DetailPage, EventDetailPage, InstituteDetailPage, MagazineDetailPage, NationalDictionaryDetailPage, NewsDetailPage, OverviewPage,
+  Config as ConfigFromTypes, DetailPage, EventDetailPage, HomePage, InstituteDetailPage, MagazineDetailPage, NationalDictionaryDetailPage, NewsDetailPage,
+  OverviewPage,
   ProjectDetailPage,
   PublicationDetailPage,
 } from '@/payload-types';
@@ -18,7 +19,9 @@ interface InterfacePageProps {
   parentPage?: {
     slug: string,
     documentId: string;
-  }
+  };
+  tenant?: string;
+  locale?: ConfigFromTypes['locale'];
 }
 
 const generatePage = async ({
@@ -26,10 +29,19 @@ const generatePage = async ({
   navigationTitle,
   parentPage,
   type,
+  tenant: propsTenant,
+  locale,
 }: {
   type: 'overviewPage' | 'detailPage';
 } & InterfacePageProps): Promise<OverviewPage | DetailPage> => {
-  const tenant = await getTenant();
+  let tenant;
+
+  if (propsTenant) {
+    tenant = propsTenant;
+  } else {
+    tenant = await getTenant();
+  }
+
   const payload = await getPayload({
     config: configPromise,
   });
@@ -56,9 +68,43 @@ const generatePage = async ({
       tenant,
     },
     draft: false,
+    locale: locale || 'de',
   });
 
   return document;
+};
+
+interface InterfaceGenerateHomePageProps {
+  title: string;
+  navigationTitle?: string;
+  sideTitle: string;
+  tenant: string;
+  locale?: ConfigFromTypes['locale'];
+}
+
+export const generateHomePage = async ({
+  title,
+  sideTitle,
+  tenant,
+  locale,
+}: InterfaceGenerateHomePageProps): Promise<HomePage> => {
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  const homePage = await payload.create({
+    collection: 'homePage',
+    data: {
+      hero: {
+        sideTitle: simpleRteConfig(sideTitle),
+        title: simpleRteConfig(title),
+      },
+      tenant,
+    },
+    locale: locale || 'de',
+  });
+
+  return homePage;
 };
 
 export const generateOverviewPage = async (props: InterfacePageProps): Promise<OverviewPage> => (await generatePage({
@@ -72,7 +118,15 @@ export const generateDetailPage = async (props: InterfacePageProps): Promise<Det
 })) as DetailPage;
 
 export const generateEventDetailPage = async (props: InterfacePageProps): Promise<EventDetailPage> => {
-  const tenant = await getTenant();
+  let tenant;
+
+  if (props.tenant) {
+    // eslint-disable-next-line prefer-destructuring
+    tenant = props.tenant;
+  } else {
+    tenant = await getTenant();
+  }
+
   const payload = await getPayload({
     config: configPromise,
   });
@@ -88,7 +142,7 @@ export const generateEventDetailPage = async (props: InterfacePageProps): Promis
         .getTime()}`),
       tenant,
     },
-    locale: 'de',
+    locale: props.locale || 'de',
   });
 
   const category = await payload.create({
@@ -98,6 +152,7 @@ export const generateEventDetailPage = async (props: InterfacePageProps): Promis
         .getTime()}`),
       tenant,
     },
+    locale: props.locale || 'de',
   });
 
   const document = await payload.create({
@@ -125,13 +180,22 @@ export const generateEventDetailPage = async (props: InterfacePageProps): Promis
       tenant,
     },
     draft: false,
+    locale: props.locale || 'de',
   });
 
   return document;
 };
 
 export const generateInstituteDetailPage = async (props: InterfacePageProps): Promise<InstituteDetailPage> => {
-  const tenant = await getTenant();
+  let tenant;
+
+  if (props.tenant) {
+    // eslint-disable-next-line prefer-destructuring
+    tenant = props.tenant;
+  } else {
+    tenant = await getTenant();
+  }
+
   const payload = await getPayload({
     config: configPromise,
   });
@@ -147,6 +211,7 @@ export const generateInstituteDetailPage = async (props: InterfacePageProps): Pr
       tenant,
     },
     filePath: 'src/seed/test-data/assets/sagw.png',
+    locale: props.locale || 'de',
   });
 
   const document = await payload.create({
@@ -171,13 +236,22 @@ export const generateInstituteDetailPage = async (props: InterfacePageProps): Pr
       tenant,
     },
     draft: false,
+    locale: props.locale || 'de',
   });
 
   return document;
 };
 
 export const generateMagazineDetailPage = async (props: InterfacePageProps): Promise<MagazineDetailPage> => {
-  const tenant = await getTenant();
+  let tenant;
+
+  if (props.tenant) {
+    // eslint-disable-next-line prefer-destructuring
+    tenant = props.tenant;
+  } else {
+    tenant = await getTenant();
+  }
+
   const payload = await getPayload({
     config: configPromise,
   });
@@ -209,13 +283,22 @@ export const generateMagazineDetailPage = async (props: InterfacePageProps): Pro
       tenant,
     },
     draft: false,
+    locale: props.locale || 'de',
   });
 
   return document;
 };
 
 export const generateNationalDictionaryDetailPage = async (props: InterfacePageProps): Promise<NationalDictionaryDetailPage> => {
-  const tenant = await getTenant();
+  let tenant;
+
+  if (props.tenant) {
+    // eslint-disable-next-line prefer-destructuring
+    tenant = props.tenant;
+  } else {
+    tenant = await getTenant();
+  }
+
   const payload = await getPayload({
     config: configPromise,
   });
@@ -245,13 +328,22 @@ export const generateNationalDictionaryDetailPage = async (props: InterfacePageP
       tenant,
     },
     draft: false,
+    locale: props.locale || 'de',
   });
 
   return document;
 };
 
 export const generateNewsDetailPage = async (props: InterfacePageProps): Promise<NewsDetailPage> => {
-  const tenant = await getTenant();
+  let tenant;
+
+  if (props.tenant) {
+    // eslint-disable-next-line prefer-destructuring
+    tenant = props.tenant;
+  } else {
+    tenant = await getTenant();
+  }
+
   const payload = await getPayload({
     config: configPromise,
   });
@@ -282,13 +374,22 @@ export const generateNewsDetailPage = async (props: InterfacePageProps): Promise
       tenant,
     },
     draft: false,
+    locale: props.locale || 'de',
   });
 
   return document;
 };
 
 export const generateProjectDetailPage = async (props: InterfacePageProps): Promise<ProjectDetailPage> => {
-  const tenant = await getTenant();
+  let tenant;
+
+  if (props.tenant) {
+    // eslint-disable-next-line prefer-destructuring
+    tenant = props.tenant;
+  } else {
+    tenant = await getTenant();
+  }
+
   const payload = await getPayload({
     config: configPromise,
   });
@@ -330,13 +431,22 @@ export const generateProjectDetailPage = async (props: InterfacePageProps): Prom
       tenant,
     },
     draft: false,
+    locale: props.locale || 'de',
   });
 
   return document;
 };
 
 export const generatePublicationDetailPage = async (props: InterfacePageProps): Promise<PublicationDetailPage> => {
-  const tenant = await getTenant();
+  let tenant;
+
+  if (props.tenant) {
+    // eslint-disable-next-line prefer-destructuring
+    tenant = props.tenant;
+  } else {
+    tenant = await getTenant();
+  }
+
   const payload = await getPayload({
     config: configPromise,
   });
@@ -376,6 +486,7 @@ export const generatePublicationDetailPage = async (props: InterfacePageProps): 
       tenant,
     },
     draft: false,
+    locale: props.locale || 'de',
   });
 
   return document;

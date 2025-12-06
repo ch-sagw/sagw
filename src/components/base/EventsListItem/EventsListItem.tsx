@@ -5,9 +5,12 @@ import { Icon } from '@/icons';
 import { formatDateToObject } from '@/components/helpers/date';
 import { Tag } from '@/components/base/Tag/Tag';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
-import { i18nA11y as internalI18nA11y } from '@/i18n/content';
 import { formatEventDetails } from '@/components/base/EventsListItem/helpers';
-import { Config } from '@/payload-types';
+import Link from 'next/link';
+import {
+  useLocale, useTranslations,
+} from 'next-intl';
+import { TypedLocale } from 'payload';
 
 export type InterfaceEventsListItemPropTypes = {
   text: string;
@@ -15,7 +18,6 @@ export type InterfaceEventsListItemPropTypes = {
     target: '_self' | '_blank';
     href: string;
   };
-  pageLanguage: Config['locale'];
   dateStart: string;
   dateEnd?: string;
   location?: string;
@@ -34,9 +36,10 @@ export const EventsListItem = ({
   language,
   tag,
   time,
-  pageLanguage,
   className,
 }: InterfaceEventsListItemPropTypes): React.JSX.Element => {
+  const locale = useLocale() as TypedLocale;
+  const internalI18nA11y = useTranslations('a11y');
   const itemClasses = cva([
     styles.item,
     className,
@@ -48,13 +51,13 @@ export const EventsListItem = ({
     dateStart,
     eventLocation: location,
     language,
-    pageLanguage,
+    pageLanguage: locale,
     time,
   });
 
   const startDateObject = formatDateToObject({
     dateString: dateStart,
-    locale: pageLanguage,
+    locale,
   });
 
   let ariaLabel = `${tag
@@ -63,7 +66,7 @@ export const EventsListItem = ({
 
   if (link.target === '_blank') {
     ariaLabel += `
-      ${internalI18nA11y.linkTarget[pageLanguage as keyof typeof internalI18nA11y.linkTarget]} ${internalI18nA11y.opensInNewWindow[pageLanguage as keyof typeof internalI18nA11y.linkTarget]}`;
+      ${internalI18nA11y('linkTarget')} ${internalI18nA11y('opensInNewWindow')}`;
   }
 
   return (
@@ -71,7 +74,8 @@ export const EventsListItem = ({
       className={itemClasses()}
       data-testid='eventListItem'
     >
-      <a
+      <Link
+        prefetch={true}
         aria-label={ariaLabel}
         href={link.href}
         target={link.target}
@@ -124,7 +128,7 @@ export const EventsListItem = ({
             className={styles.itemIcon}
           />
         </div>
-      </a>
+      </Link>
     </li >
   );
 };

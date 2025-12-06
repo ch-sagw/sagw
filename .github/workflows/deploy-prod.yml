@@ -50,7 +50,7 @@ jobs:
         shardTotal: [4]
     container:
       # if the docker image is changed, also change it in deploy-prod.yml and in Dockerfile.testing
-      image: mcr.microsoft.com/playwright:v1.56.1-noble
+      image: mcr.microsoft.com/playwright:v1.57.0-noble
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -79,7 +79,7 @@ jobs:
         shardTotal: [4]
     container:
       # if the docker image is changed, also change it in deploy-prod.yml and in Dockerfile.testing
-      image: mcr.microsoft.com/playwright:v1.56.1-noble
+      image: mcr.microsoft.com/playwright:v1.57.0-noble
     services:
       mongo:
         image: mongo:8

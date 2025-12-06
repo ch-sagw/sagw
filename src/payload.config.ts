@@ -14,7 +14,7 @@ import { collections } from '@/collections';
 import { Users } from '@/collections/Plc/Users';
 import { seedTestData } from '@/seed/test-data';
 import { seedTenantsAndUsers } from '@/seed/seedTenantsAndUsers/index';
-import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
+import { localizationConfig } from '@/i18n/payloadConfig';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -60,60 +60,7 @@ export default buildConfig({
       en,
     },
   },
-  localization: {
-    defaultLocale: 'de',
-    fallback: true,
-    filterAvailableLocales: async ({
-      req, locales,
-    }) => {
-
-      // filter available languages based on the chosen languages
-      // in the specific tenant config
-
-      const tenant = getTenantFromCookie(req.headers, 'text');
-
-      if (!tenant) {
-        return locales;
-      }
-
-      try {
-        const fullTenant = await req.payload.findByID({
-          collection: 'tenants',
-          id: tenant,
-          req,
-        });
-
-        const tenantLanguages = fullTenant.languages;
-
-        if (tenantLanguages === undefined) {
-          return locales;
-        }
-
-        return locales.filter((locale) => tenantLanguages[locale.code as keyof typeof tenantLanguages]);
-
-      } catch {
-        return locales;
-      }
-    },
-    locales: [
-      {
-        code: 'de',
-        label: 'Deutsch',
-      },
-      {
-        code: 'fr',
-        label: 'Français',
-      },
-      {
-        code: 'it',
-        label: 'Italiano',
-      },
-      {
-        code: 'en',
-        label: 'English',
-      },
-    ],
-  },
+  localization: localizationConfig,
   onInit: async (payload) => {
     // on ENV seed or playwright, we seed test data. otherwise we seed initial
     // user and tenant (if user and tenant collections are empty)

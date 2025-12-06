@@ -3,7 +3,6 @@ import React, { Fragment } from 'react';
 
 // payload types
 import {
-  Config,
   I18NGlobal,
   InterfaceAccordionBlock,
   InterfaceBibliographicReferenceBlock,
@@ -63,7 +62,9 @@ import { ProjectsOverview } from '@/components/blocks/ProjectsOverview/ProjectsO
 import { EditionsOverview } from '@/components/blocks/EditionsOverview/EditionsOverview';
 import { Footnote } from '@/components/blocks/Footnote/Footnote';
 import { BibliographicReference } from '@/components/blocks/BibliographicReference/BibliographicReference';
-import { CollectionSlug } from 'payload';
+import {
+  CollectionSlug, TypedLocale,
+} from 'payload';
 
 export interface InterfaceSourcePage {
   collectionSlug: CollectionSlug;
@@ -105,7 +106,7 @@ interface InterfaceRenderBlocksProps {
     InterfaceEditionsOverviewBlock
   )[] | null | undefined;
   i18n: I18NGlobal;
-  pageLanguage: Config['locale'];
+  locale: TypedLocale;
   sourcePage: InterfaceSourcePage;
 }
 
@@ -113,7 +114,6 @@ export const RenderBlocks = ({
   blocks,
   tenantId,
   i18n,
-  pageLanguage,
   sourcePage,
 }: InterfaceRenderBlocksProps): React.JSX.Element | null => {
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0;
@@ -173,7 +173,6 @@ export const RenderBlocks = ({
                 <Links
                   {...block}
                   title={i18n.generic.linksTitle}
-                  pageLanguage={pageLanguage}
                   key={key}
                 />
               );
@@ -184,7 +183,6 @@ export const RenderBlocks = ({
                 <Downloads
                   {...block}
                   title={i18n.generic.downloadTitle}
-                  language={pageLanguage}
                   key={key}
                 />
               );
@@ -195,7 +193,6 @@ export const RenderBlocks = ({
                 <NewsOverview
                   {...block}
                   tenant={tenantId}
-                  language={pageLanguage}
                   key={key}
                 />
               );
@@ -207,7 +204,6 @@ export const RenderBlocks = ({
                   {...block}
                   globalI18n={i18n}
                   tenant={tenantId}
-                  language={pageLanguage}
                   key={key}
                 />
               );
@@ -218,7 +214,6 @@ export const RenderBlocks = ({
                 <NewsTeaser
                   {...block}
                   tenant={tenantId}
-                  language={pageLanguage}
                   sourcePage={sourcePage}
                   key={key}
                 />
@@ -231,7 +226,6 @@ export const RenderBlocks = ({
                   {...block}
                   globalI18n={i18n}
                   tenant={tenantId}
-                  language={pageLanguage}
                   key={key}
                 />
               );
@@ -241,30 +235,8 @@ export const RenderBlocks = ({
               return (
                 <CtaLink
                   {...block}
-                  language={pageLanguage}
                   key={key}
                 />
-              );
-            }
-
-            if (blockType === 'imageBlock') {
-              return (
-                <div key={block.id || index}>
-                  <ImageBlock
-                    {...block}
-                  />
-                </div>
-              );
-            }
-
-            if (blockType === 'videoBlock') {
-              return (
-                <div key={block.id || index}>
-                  <Video
-                    {...block}
-                    pageLanguage={pageLanguage}
-                  />
-                </div>
               );
             }
 
@@ -272,7 +244,6 @@ export const RenderBlocks = ({
               return (
                 <CtaContact
                   {...block}
-                  pageLanguage={pageLanguage}
                   buttonText={i18n.generic.writeEmailButtonText}
                   key={key}
                 />
@@ -283,7 +254,6 @@ export const RenderBlocks = ({
               return (
                 <ProjectsTeaser
                   {...block}
-                  language={pageLanguage}
                   tenant={tenantId}
                   key={key}
                 />
@@ -294,7 +264,6 @@ export const RenderBlocks = ({
               return (
                 <MagazineTeaser
                   {...block}
-                  language={pageLanguage}
                   tenant={tenantId}
                   key={key}
                 />
@@ -305,7 +274,6 @@ export const RenderBlocks = ({
               return (
                 <GenericTeaser
                   {...block}
-                  pageLanguage={pageLanguage}
                   key={key}
                 />
               );
@@ -315,7 +283,6 @@ export const RenderBlocks = ({
               return (
                 <NetworkTeaser
                   {...block}
-                  pageLanguage={pageLanguage}
                   key={key}
                 />
               );
@@ -325,7 +292,6 @@ export const RenderBlocks = ({
               return (
                 <PeopleOverview
                   {...block}
-                  language={pageLanguage}
                   key={key}
                 />
               );
@@ -335,7 +301,6 @@ export const RenderBlocks = ({
               return (
                 <InstitutesOverview
                   {...block}
-                  language={pageLanguage}
                   tenant={tenantId}
                   key={key}
                 />
@@ -346,7 +311,6 @@ export const RenderBlocks = ({
               return (
                 <MagazineOverview
                   {...block}
-                  language={pageLanguage}
                   tenant={tenantId}
                   key={key}
                 />
@@ -357,7 +321,6 @@ export const RenderBlocks = ({
               return (
                 <NationalDictionariesOverview
                   {...block}
-                  language={pageLanguage}
                   tenant={tenantId}
                   key={key}
                 />
@@ -368,7 +331,6 @@ export const RenderBlocks = ({
               return (
                 <ProjectsOverview
                   {...block}
-                  language={pageLanguage}
                   tenant={tenantId}
                   key={key}
                 />
@@ -379,7 +341,6 @@ export const RenderBlocks = ({
               return (
                 <EditionsOverview
                   {...block}
-                  language={pageLanguage}
                   key={key}
                 />
               );
@@ -400,6 +361,24 @@ export const RenderBlocks = ({
                   {...block}
                   title={i18n.bibliographicReference.title}
                   buttonText={i18n.bibliographicReference.copyButtonText}
+                  key={key}
+                />
+              );
+            }
+
+            if (blockType === 'imageBlock') {
+              return (
+                <ImageBlock
+                  {...block}
+                  key={key}
+                />
+              );
+            }
+
+            if (blockType === 'videoBlock') {
+              return (
+                <Video
+                  {...block}
                   key={key}
                 />
               );

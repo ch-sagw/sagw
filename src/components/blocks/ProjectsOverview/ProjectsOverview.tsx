@@ -1,26 +1,27 @@
 import React from 'react';
 import {
-  Config, InterfaceProjectOverviewBlock,
+  InterfaceProjectOverviewBlock,
   ProjectDetailPage,
 } from '@/payload-types';
 import { fetchDetailPages } from '@/data/fetch';
 import { ProjectOverviewComponent } from '@/components/blocks/ProjectsOverview/ProjectsOverview.component';
+import { getLocale } from 'next-intl/server';
+import { TypedLocale } from 'payload';
 
 export type InterfaceProjectsOverviewPropTypes = {
-  language: Config['locale'];
   tenant: string;
 } & InterfaceProjectOverviewBlock;
 
 export const ProjectsOverview = async (props: InterfaceProjectsOverviewPropTypes): Promise<React.JSX.Element> => {
+  const locale = (await getLocale()) as TypedLocale;
   const {
-    language,
     tenant,
     ...restProps
   } = props;
 
   const pages = await fetchDetailPages({
     collection: 'projectDetailPage',
-    language,
+    language: locale,
     limit: 0,
     sort: 'createdAt',
     tenant,
@@ -29,7 +30,6 @@ export const ProjectsOverview = async (props: InterfaceProjectsOverviewPropTypes
   return (
     <ProjectOverviewComponent
       pages={pages}
-      pageLanguage={language}
       {...restProps}
     />
   );

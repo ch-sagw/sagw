@@ -61,7 +61,6 @@ const pages: ProjectDetailPage[] = Array.from({
 export const SampleStory: StrictStory = {
   args: {
     blockType: 'projectsOverviewBlock',
-    pageLanguage: 'de',
     pages,
   },
 };

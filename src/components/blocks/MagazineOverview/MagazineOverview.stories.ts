@@ -72,7 +72,6 @@ const pages: MagazineDetailPage[] = Array.from({
 export const SampleStory: StrictStory = {
   args: {
     blockType: 'magazineOverviewBlock',
-    pageLanguage: 'de',
     pages,
   },
 };

@@ -1,8 +1,22 @@
 import type { Preview } from '@storybook/nextjs-vite';
 import '@/styles/_global.scss';
 import './preview.css';
+import defaultMessages from '@/i18n/messages/de.json';
+import { NextIntlClientProvider } from 'next-intl';
+import { JSX } from 'react';
 
 const preview: Preview = {
+  decorators: [
+    (Story): JSX.Element => (
+      <NextIntlClientProvider
+        locale='de'
+        messages={defaultMessages}
+      // ... potentially other config
+      >
+        <Story />
+      </NextIntlClientProvider>
+    ),
+  ],
   initialGlobals: {
     backgrounds: {
       value: 'white',

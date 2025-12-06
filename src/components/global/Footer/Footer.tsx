@@ -5,9 +5,7 @@ import React, {
 } from 'react';
 import { cva } from 'cva';
 import styles from '@/components/global/Footer/Footer.module.scss';
-
 import {
-  Config,
   InterfaceConsentOverlay,
   InterfaceFooterContact,
   InterfaceFooterLegal,
@@ -30,10 +28,10 @@ import {
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
-import { i18nA11y } from '@/i18n/content';
 import { ConsentOverlay } from '../ConsentOverlay/ConsentOverlay';
 import { useScrollLock } from '@/hooks/useScrollLock';
 import { openConsentOverlayEventName } from '@/components/helpers/cookies';
+import { useTranslations } from 'next-intl';
 
 export type InterfaceFooterPropTypes = {
   contact: InterfaceFooterContact;
@@ -47,7 +45,6 @@ export type InterfaceFooterPropTypes = {
     sagwLink: string;
     sagwLinkText: string;
   }
-  pageLanguage: Config['locale'];
   consentOverlay: InterfaceConsentOverlay;
 };
 
@@ -60,9 +57,9 @@ export const Footer = ({
   structuredDataImage,
   structuredDataUrl,
   fg,
-  pageLanguage,
   consentOverlay,
 }: InterfaceFooterPropTypes): React.JSX.Element => {
+  const i18nA11y = useTranslations('a11y');
   const overlayDialogRef = useRef<HTMLDialogElement>(null);
   const [
     isOverlayOpen,
@@ -150,7 +147,6 @@ export const Footer = ({
 
       })
       : [],
-    pageLanguage,
   };
 
   const legalProps: InterfaceMetanavPropTypes = {
@@ -174,7 +170,6 @@ export const Footer = ({
         text: rteToHtml(legal.cookieSettings),
       },
     ],
-    pageLanguage,
   };
 
   const socialLinkProps: InterfaceSocialLinksPropTypes = {
@@ -182,7 +177,7 @@ export const Footer = ({
       ? socialLinks.items?.map((item) => ({
         icon: item.icon,
         link: item.externalLink,
-        text: i18nA11y.socialLinks[item.icon][pageLanguage],
+        text: i18nA11y(`socialLinks.${item.icon}`),
       }))
       : [],
   };
@@ -190,7 +185,6 @@ export const Footer = ({
   const navigationProps: InterfaceNavigationPropTypes = {
     colorMode: 'dark',
     footer: true,
-    pageLanguage,
     sections: navigation.navItems
       .filter((navItem) => navItem.subNavItems && navItem.subNavItems.length > 0)
       .map((navItem, index) => ({
@@ -204,11 +198,9 @@ export const Footer = ({
 
             // TODO: generate url
             link: subnavItem.navItemLink?.slug || '',
-            pageLanguage,
             text: rteToHtml(subnavItem.navItemText),
           }))
           : [],
-        pageLanguage: undefined,
         setExpanded: undefined,
         text: rteToHtml(navItem.navItemText) || '',
       })),
@@ -272,7 +264,6 @@ export const Footer = ({
         <ConsentOverlay
           ref={overlayDialogRef}
           {...consentOverlay}
-          pageLanguage={pageLanguage}
           onClose={(): void => {
             setIsOverlayOpen(false);
           }}

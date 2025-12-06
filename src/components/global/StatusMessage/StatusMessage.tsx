@@ -4,22 +4,17 @@
 // 2. if current date is later then configured toDate
 
 import React, { Fragment } from 'react';
-import {
-  Config, InterfaceStatusMessage,
-} from '@/payload-types';
+import { InterfaceStatusMessage } from '@/payload-types';
 import { Notification } from '@/components/base/Notification/Notification';
 import { rteToHtml } from '@/utilities/rteToHtml';
 
-export type InterfaceStatusMessagePropTypes = {
-  pageLanguage: Config['locale'],
-} & InterfaceStatusMessage;
+export type InterfaceStatusMessagePropTypes = {} & InterfaceStatusMessage;
 
 export const StatusMessage = ({
   type,
   title,
   message,
   optionalLink,
-  pageLanguage,
   show,
 }: InterfaceStatusMessagePropTypes): React.JSX.Element => {
   let shouldShow = true;
@@ -61,7 +56,6 @@ export const StatusMessage = ({
       // TODO: generate url
       linkHref={optionalLink?.link?.internalLink.slug || ''}
       linkText={rteToHtml(optionalLink?.link?.linkText)}
-      pageLanguage={pageLanguage}
     />
   );
 };

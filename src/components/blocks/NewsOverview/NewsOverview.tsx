@@ -1,21 +1,21 @@
 import React, { Fragment } from 'react';
-import { getPayload } from 'payload';
+import {
+  getPayload, TypedLocale,
+} from 'payload';
 import configPromise from '@/payload.config';
 
 import { NewsOverviewComponent } from '@/components/blocks/NewsOverview/NewsOverview.component';
-import {
-  Config, InterfaceNewsOverviewBlock,
-} from '@/payload-types';
+import { InterfaceNewsOverviewBlock } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { convertPayloadNewsPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
+import { getLocale } from 'next-intl/server';
 
 type InterfaceNewsOverviewPropTypes = {
-  language: Config['locale'];
   tenant: string;
 } & InterfaceNewsOverviewBlock;
 
 export const NewsOverview = async (props: InterfaceNewsOverviewPropTypes): Promise<React.JSX.Element> => {
-
+  const locale = (await getLocale()) as TypedLocale;
   const payload = await getPayload({
     config: configPromise,
   });
@@ -25,7 +25,7 @@ export const NewsOverview = async (props: InterfaceNewsOverviewPropTypes): Promi
     collection: 'newsDetailPage',
     depth: 1,
     limit: 0,
-    locale: props.language,
+    locale,
     pagination: false,
     sort: '-hero.date',
     where: {
@@ -37,7 +37,7 @@ export const NewsOverview = async (props: InterfaceNewsOverviewPropTypes): Promi
 
   const title = rteToHtml(props.title);
 
-  const items = convertPayloadNewsPagesToFeItems(newsPages, props.language);
+  const items = convertPayloadNewsPagesToFeItems(newsPages, locale);
 
   if (!items || items.length < 1) {
     return <Fragment></Fragment>;
@@ -46,7 +46,6 @@ export const NewsOverview = async (props: InterfaceNewsOverviewPropTypes): Promi
   return (
     <NewsOverviewComponent
       title={title}
-      pageLanguage={props.language}
       colorMode='white'
       items={items}
     />

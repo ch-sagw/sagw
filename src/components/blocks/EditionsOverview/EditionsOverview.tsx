@@ -1,20 +1,14 @@
 import React from 'react';
 import styles from '@/components/blocks/EditionsOverview/EditionsOverview.module.scss';
-import {
-  Config,
-  InterfaceEditionsOverviewBlock,
-} from '@/payload-types';
+import { InterfaceEditionsOverviewBlock } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
 import { GenericOverview } from '@/components/base/GenericOverview/GenericOverview';
 
-export type InterfaceEditionsOverviewPropTypes = {
-  language: Config['locale'];
-} & InterfaceEditionsOverviewBlock;
+export type InterfaceEditionsOverviewPropTypes = {} & InterfaceEditionsOverviewBlock;
 
 export const EditionsOverview = ({
   items,
-  language,
 }: InterfaceEditionsOverviewPropTypes): React.JSX.Element => {
   const allItems = items.items.map((item) => (
     <GenericTeaser
@@ -29,7 +23,6 @@ export const EditionsOverview = ({
           type: 'external',
         },
       ]}
-      pageLanguage={language}
       type='network'
     />
   ));
@@ -37,7 +30,6 @@ export const EditionsOverview = ({
   return (
     <GenericOverview
       showPagination={true}
-      language={language}
     >
       {allItems}
     </GenericOverview>

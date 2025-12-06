@@ -23,9 +23,9 @@ import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
 import { useScrollLock } from '@/hooks/useScrollLock';
 import { useInputMethod } from '@/hooks/useInputMethod';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
+import { useLocale } from 'next-intl';
 
 import {
-  Config,
   InterfaceHeaderMetaNavigation, InterfaceHeaderNavigation,
 } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
@@ -43,14 +43,13 @@ export type InterfaceHeaderPropTypes = {
     open: string,
     close: string,
   };
-  currentLang: Config['locale'];
   logoLink: string;
 } & InterfaceHeaderPropTypesCms;
 
 // --- Component
 
 export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
-
+  const locale = useLocale();
   const infoBlockMargin = 48;
 
   // --- Refs
@@ -460,7 +459,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
             }) || []}
             className={styles.metanav}
             colorMode={renderColorMode()}
-            pageLanguage={props.currentLang}
           />
         </div>
       );
@@ -495,7 +493,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
           value: 'en',
         },
       ]}
-      currentLang={props.currentLang}
+      currentLang={locale}
       className={styles.langnav}
       colorMode={renderColorMode()}
       visibilityCallback={handleLangNavHover}
@@ -536,7 +534,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
               // TODO: generate url
               link: subnavItem.navItemLink?.slug || '',
-              pageLanguage: props.currentLang,
               text: rteToHtml(subnavItem.navItemText),
             })),
             setExpanded: undefined,
@@ -551,7 +548,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
           // TODO: generate url
           link: item.navItemLink?.slug || '',
-          pageLanguage: props.currentLang,
           text: rteToHtml(item.navItemText),
         };
 
@@ -571,7 +567,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
           setNavMaxHeight(maxHeight);
         }
       }}
-      pageLanguage={props.currentLang}
     />
   );
 

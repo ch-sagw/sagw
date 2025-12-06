@@ -9,8 +9,7 @@ import { Icon } from '@/icons';
 import Link from 'next/link';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
-import { i18nA11y as internalI18nA11y } from '@/i18n/content';
-import { Config } from '@/payload-types';
+import { useTranslations } from 'next-intl';
 
 type BaseWrapperProps = {
   ariaCurrent?: boolean;
@@ -57,7 +56,6 @@ type LinkProps = BaseProps & {
   element: 'link';
   href: string;
   target?: '_blank';
-  pageLanguage: Config['locale'];
 };
 
 type TextProps = BaseProps & {
@@ -139,6 +137,7 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
     isActive,
   } = props;
 
+  const internalI18nA11y = useTranslations('a11y');
   const internalButtonRef = useRef<HTMLButtonElement>(null);
 
   // Merge the internal and external refs
@@ -203,15 +202,11 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
     let ariaLabelText = ariaLabel;
 
     if (target === '_blank') {
-      const {
-        pageLanguage,
-      } = props;
-
       ariaLabelText = ariaLabel
         ? ariaLabel
         : text;
 
-      ariaLabelText += `. ${internalI18nA11y.linkTarget[pageLanguage as keyof typeof internalI18nA11y.linkTarget]} ${internalI18nA11y.opensInNewWindow[pageLanguage as keyof typeof internalI18nA11y.linkTarget]}`;
+      ariaLabelText += `. ${internalI18nA11y('linkTarget')} ${internalI18nA11y('opensInNewWindow')}`;
     }
 
     return (

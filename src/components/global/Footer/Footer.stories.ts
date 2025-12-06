@@ -97,7 +97,6 @@ const defaultArgs: InterfaceFooterPropTypes = {
   navigation: {
     navItems: defaultNavItems,
   },
-  pageLanguage: 'de',
   socialLinks,
   structuredDataImage: 'www.sagw.ch/logo.svg',
   structuredDataUrl: 'https://www.sagw.ch',

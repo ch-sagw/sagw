@@ -37,7 +37,6 @@ export const Overview: StrictStory = {
     }, (_, index) => (
       <p key={index}>Random content {index}</p>
     )),
-    language: 'de',
     showPagination: true,
   },
 };

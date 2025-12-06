@@ -6,6 +6,7 @@ import configPromise from '@/payload.config';
 import {
   CollectionSlug, DataFromCollectionSlug, getPayload,
   Sort,
+  TypedLocale,
 } from 'payload';
 
 // #########################################################################
@@ -14,7 +15,7 @@ import {
 
 interface InterfaceFetchEventDetailPagesProps {
   limit?: number;
-  language: Config['locale'],
+  language: TypedLocale,
   tenant: string,
 }
 

@@ -7,7 +7,6 @@ import {
 } from '@/components/base/NavigationItem/NavigationItem';
 import { ColorMode } from '@/components/base/types/colorMode';
 import styles from '@/components/base/Navigation/Navigation.module.scss';
-import { Config } from '@/payload-types';
 
 // --- Interfaces
 
@@ -21,7 +20,6 @@ export type InterfaceNavigationPropTypes = {
   hoveredItemCallback?: (item: InterfaceHoveredItemCallbackType) => void;
   navMaxHeightCallback?: (maxHeight: number) => void;
   onHoverItemWithoutChildren?: () => void;
-  pageLanguage: Config['locale'];
 };
 
 // --- Component
@@ -34,7 +32,6 @@ export const Navigation = ({
   hoveredItemCallback,
   navMaxHeightCallback,
   onHoverItemWithoutChildren,
-  pageLanguage,
 }: InterfaceNavigationPropTypes): React.JSX.Element => {
 
   // --- State
@@ -135,7 +132,6 @@ export const Navigation = ({
                     }
                   },
                   link: section.link as NonNullable<typeof section.link>,
-                  pageLanguage,
                 })}
             />
           </li>
