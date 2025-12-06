@@ -50,7 +50,11 @@ test.describe('Custom Form', () => {
 
     await (await form.elementHandle())?.waitForElementState('stable');
 
-    await expect(mailError)
+    const mailError2 = await form.getByText('Geben Sie ihre E-Mail-Adresse an.', {
+      exact: true,
+    });
+
+    await expect(mailError2)
       .not.toBeVisible();
   });
 
