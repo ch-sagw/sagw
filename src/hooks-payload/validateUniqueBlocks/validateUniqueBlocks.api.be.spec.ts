@@ -278,7 +278,7 @@ test('errors with 2 links and 1 downloads block via API', async () => {
 
   /* eslint-disable no-useless-escape */
   await expect(result)
-    .toStrictEqual('{\"data\":{\"collection\":\"detailPage\",\"errors\":[{\"label\":\"Content > Content > Block 1 (Links)\",\"message\":\"The block \\\"linksBlock\\\" is not allowed.\",\"path\":\"content.0.id\"},{\"label\":\"Content > Content > Block 2 (Links)\",\"message\":\"The block \\\"linksBlock\\\" is not allowed.\",\"path\":\"content.1.id\"},{\"label\":\"Content > Content > Block 3 (Downloads)\",\"message\":\"The block \\\"downloadsBlock\\\" is not allowed.\",\"path\":\"content.2.id\"}]},\"isOperational\":true,\"isPublic\":false,\"status\":400,\"name\":\"ValidationError\"}');
+    .toStrictEqual('{\"data\":{\"collection\":\"detailPage\",\"errors\":[{\"label\":\"Content > Content > Block 1 (Links)\",\"message\":\"The block \\\"linksBlock\\\" is not allowed.\",\"path\":\"content.0.id\"},{\"label\":\"Content > Content > Block 2 (Links)\",\"message\":\"The block \\\"linksBlock\\\" is not allowed.\",\"path\":\"content.1.id\"},{\"label\":\"Content > Content > Block 3 (Downloads)\",\"message\":\"The block \\\"downloadsBlock\\\" is not allowed.\",\"path\":\"content.2.id\"}]},\"isOperational\":true,\"isPublic\":true,\"status\":400,\"name\":\"ValidationError\"}');
   /* eslint-enable no-useless-escape */
 
 });
@@ -414,7 +414,7 @@ test('errors with 1 link and 2 downloads block via API', async () => {
 
   /* eslint-disable no-useless-escape */
   await expect(result)
-    .toStrictEqual('{\"data\":{\"collection\":\"detailPage\",\"errors\":[{\"label\":\"Content > Content > Block 1 (Links)\",\"message\":\"The block \\\"linksBlock\\\" is not allowed.\",\"path\":\"content.0.id\"},{\"label\":\"Content > Content > Block 2 (Downloads)\",\"message\":\"The block \\\"downloadsBlock\\\" is not allowed.\",\"path\":\"content.1.id\"},{\"label\":\"Content > Content > Block 3 (Downloads)\",\"message\":\"The block \\\"downloadsBlock\\\" is not allowed.\",\"path\":\"content.2.id\"}]},\"isOperational\":true,\"isPublic\":false,\"status\":400,\"name\":\"ValidationError\"}');
+    .toStrictEqual('{\"data\":{\"collection\":\"detailPage\",\"errors\":[{\"label\":\"Content > Content > Block 1 (Links)\",\"message\":\"The block \\\"linksBlock\\\" is not allowed.\",\"path\":\"content.0.id\"},{\"label\":\"Content > Content > Block 2 (Downloads)\",\"message\":\"The block \\\"downloadsBlock\\\" is not allowed.\",\"path\":\"content.1.id\"},{\"label\":\"Content > Content > Block 3 (Downloads)\",\"message\":\"The block \\\"downloadsBlock\\\" is not allowed.\",\"path\":\"content.2.id\"}]},\"isOperational\":true,\"isPublic\":true,\"status\":400,\"name\":\"ValidationError\"}');
   /* eslint-enable no-useless-escape */
 
 });
@@ -498,7 +498,7 @@ test('errors with 2 overview blocks via API', async () => {
 
   /* eslint-disable no-useless-escape */
   await expect(result)
-    .toStrictEqual('{\"data\":{\"collection\":\"overviewPage\",\"errors\":[{\"label\":\"Content > Content > Block 1 (Projects Overview (automatic))\",\"message\":\"The block \\\"projectsOverviewBlock\\\" is not allowed.\",\"path\":\"content.0.id\"},{\"label\":\"Content > Content > Block 2 (Projects Overview (automatic))\",\"message\":\"The block \\\"projectsOverviewBlock\\\" is not allowed.\",\"path\":\"content.1.id\"}]},\"isOperational\":true,\"isPublic\":false,\"status\":400,\"name\":\"ValidationError\"}');
+    .toStrictEqual('{\"data\":{\"collection\":\"overviewPage\",\"errors\":[{\"label\":\"Content > Content > Block 1 (Projects Overview (automatic))\",\"message\":\"The block \\\"projectsOverviewBlock\\\" is not allowed.\",\"path\":\"content.0.id\"},{\"label\":\"Content > Content > Block 2 (Projects Overview (automatic))\",\"message\":\"The block \\\"projectsOverviewBlock\\\" is not allowed.\",\"path\":\"content.1.id\"}]},\"isOperational\":true,\"isPublic\":true,\"status\":400,\"name\":\"ValidationError\"}');
   /* eslint-enable no-useless-escape */
 
 });
@@ -601,7 +601,7 @@ test('errors with 2 same teasers blocks via API', async () => {
 
   /* eslint-disable no-useless-escape */
   await expect(result)
-    .toStrictEqual('{\"data\":{\"collection\":\"overviewPage\",\"errors\":[{\"label\":\"Content > Content > Block 1 (Projects Teasers (automatic))\",\"message\":\"The block \\\"projectsTeasersBlock\\\" is not allowed.\",\"path\":\"content.0.id\"},{\"label\":\"Content > Content > Block 2 (Projects Teasers (automatic))\",\"message\":\"The block \\\"projectsTeasersBlock\\\" is not allowed.\",\"path\":\"content.1.id\"}]},\"isOperational\":true,\"isPublic\":false,\"status\":400,\"name\":\"ValidationError\"}');
+    .toStrictEqual('{\"data\":{\"collection\":\"overviewPage\",\"errors\":[{\"label\":\"Content > Content > Block 1 (Projects Teasers (automatic))\",\"message\":\"The block \\\"projectsTeasersBlock\\\" is not allowed.\",\"path\":\"content.0.id\"},{\"label\":\"Content > Content > Block 2 (Projects Teasers (automatic))\",\"message\":\"The block \\\"projectsTeasersBlock\\\" is not allowed.\",\"path\":\"content.1.id\"}]},\"isOperational\":true,\"isPublic\":true,\"status\":400,\"name\":\"ValidationError\"}');
   /* eslint-enable no-useless-escape */
 
 });

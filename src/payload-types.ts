@@ -187,6 +187,12 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
+  fallbackLocale:
+    | ('false' | 'none' | 'null')
+    | false
+    | null
+    | ('de' | 'fr' | 'it' | 'en')
+    | ('de' | 'fr' | 'it' | 'en')[];
   globals: {};
   globalsSelect: {};
   locale: 'de' | 'fr' | 'it' | 'en';
