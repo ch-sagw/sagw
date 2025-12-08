@@ -32,5 +32,9 @@
     "buttonTextOpenCookieSettings": "Cookie-Einstellungen",
     "messageVideo": "Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können.",
     "titleExternalContent": "Externer Inhalt"
+  },
+  "publicationFilters": {
+    "publicationTopicsLabel": "Publikationsthema",
+    "publicationTypesLabel": "Publikationstyp"
   }
 }

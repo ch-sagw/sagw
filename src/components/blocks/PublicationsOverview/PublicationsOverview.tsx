@@ -1,11 +1,8 @@
 import React, { Fragment } from 'react';
-import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
 
 import { PublicationsOverviewComponent } from '@/components/blocks/PublicationsOverview/PublicationsOverview.component';
-import {
-  Config, InterfacePublicationsOverviewBlock,
-} from '@/payload-types';
+import { InterfacePublicationsOverviewBlock } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import {
@@ -13,22 +10,28 @@ import {
   preparePublicationTopicsFilterItems,
   preparePublicationTypesFilterItems,
 } from '@/components/blocks/helpers/dataTransformers';
-import { i18nPublicationFilters } from '@/i18n/content';
 import { InterfaceImagePropTypes } from '@/components/base/Image/Image';
-
 import { InterfaceFilterListPropTypes } from '@/components/base/FilterList/FilterList';
+import {
+  getLocale,
+  getTranslations,
+} from 'next-intl/server';
+import {
+  getPayload,
+  TypedLocale,
+} from 'payload';
+import { getImageDataForUniqueIds } from '@/components/blocks/helpers/getImageData';
 
 type InterfaceNewsOverviewPropTypes = {
-  language: Config['locale'];
   tenant: string;
 } & InterfacePublicationsOverviewBlock;
 
 const preparePublicationsOverviewFilters = ({
-  language,
+  i18nPublicationFilters,
   topics,
   types,
 }: {
-  language: string;
+  i18nPublicationFilters: any;
   topics: any;
   types: any;
 }): InterfaceFilterListPropTypes => {
@@ -50,13 +53,13 @@ const preparePublicationsOverviewFilters = ({
     filterListItems: [
       {
         filterItems: topicItems,
-        labelText: i18nPublicationFilters.publicationTopicsLabel[language as keyof typeof i18nPublicationFilters.publicationTopicsLabel],
+        labelText: i18nPublicationFilters('publicationTopicsLabel'),
         name: 'publication-topics',
         type: 'staticSelect',
       },
       {
         filterItems: typeItems,
-        labelText: i18nPublicationFilters.publicationTypesLabel[language as keyof typeof i18nPublicationFilters.publicationTypesLabel],
+        labelText: i18nPublicationFilters('publicationTypesLabel'),
         name: 'publication-types',
         type: 'staticSelect',
       },
@@ -67,6 +70,9 @@ const preparePublicationsOverviewFilters = ({
 };
 
 export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes): Promise<React.JSX.Element> => {
+  const locale = (await getLocale()) as TypedLocale;
+
+  const i18nPublicationFilters = await getTranslations('publicationFilters');
 
   const payload = await getPayload({
     config: configPromise,
@@ -77,7 +83,7 @@ export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes
     collection: 'publicationDetailPage',
     depth: 1,
     limit: 0,
-    locale: props.language,
+    locale,
     overrideAccess: false,
     pagination: false,
     sort: '-overviewPageProps.date',
@@ -98,15 +104,7 @@ export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes
   const uniqueImageIds = [...new Set(publicationPagesImageIds)];
 
   // Get all imageData
-  const imageData = await payload.find({
-    collection: 'images',
-    limit: uniqueImageIds.length,
-    where: {
-      id: {
-        in: uniqueImageIds,
-      },
-    },
-  });
+  const imageData = await getImageDataForUniqueIds(uniqueImageIds);
 
   const imagesById: Record<string, InterfaceImagePropTypes | undefined> = {};
 
@@ -134,7 +132,7 @@ export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes
 
   const publicationTypes = await payload.find({
     collection: 'publicationTypes',
-    locale: props.language,
+    locale,
     sort: 'publicationType.text',
     where: {
       tenant: {
@@ -145,7 +143,7 @@ export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes
 
   const publicationTopics = await payload.find({
     collection: 'publicationTopics',
-    locale: props.language,
+    locale,
     sort: 'publicationTopic.text',
     where: {
       tenant: {
@@ -172,7 +170,7 @@ export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes
   filterTitlesPublicationTopics.unshift(filterTitleAllTopics);
 
   const filters = preparePublicationsOverviewFilters({
-    language: props.language,
+    i18nPublicationFilters,
     topics: filterTitlesPublicationTopics,
     types: filterTitlesPublicationTypes,
   });

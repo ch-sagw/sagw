@@ -32,7 +32,6 @@ export const PublicationsOverview = (props: InterfacePublicationsOverviewPropTyp
     title,
     colorMode,
     children,
-    filters,
     notification,
   } = props;
 
@@ -56,7 +55,6 @@ export const PublicationsOverview = (props: InterfacePublicationsOverviewPropTyp
     <Section
       ref={sectionRef}
       className={styles.publicationsOverview}
-      filters={filters}
       showTopLine={false}
       title={title}
       colorMode={colorMode}
@@ -83,7 +81,6 @@ export const PublicationsOverview = (props: InterfacePublicationsOverviewPropTyp
         className={styles.pagination}
         totalPages={totalPages}
         currentPage={currentPage}
-        paginationTitle={props.paginationTitle}
         onPageChange={handlePageChange}
       />
     </Section>

@@ -7,6 +7,8 @@ import {
   Image,
   InterfaceImagePropTypes,
 } from '@/components/base/Image/Image';
+import Link from 'next/link';
+import { useLocale } from 'next-intl';
 
 export type InterfacePublicationsListItemPropTypes = {
   date: string,
@@ -16,20 +18,20 @@ export type InterfacePublicationsListItemPropTypes = {
   link: {
     href: string,
   },
-  pageLanguage: string,
 }
 
 export const PublicationsListItem = ({
   date,
   image,
   link,
-  pageLanguage,
   tag,
   title,
 }: InterfacePublicationsListItemPropTypes): React.JSX.Element => {
+  const locale = useLocale();
+
   const publicationDate = formatDateToReadableString({
     dateString: date,
-    locale: pageLanguage,
+    locale,
   });
 
   const ariaLabel = '';
@@ -39,10 +41,11 @@ export const PublicationsListItem = ({
       className={styles.publicationsListItem}
       data-testid='publicationListItem'
     >
-      <a
+      <Link
         aria-label={ariaLabel}
         href={link.href}
         className={styles.link}
+        prefetch={true}
       >
         <span className={styles.image}>
           <Image
@@ -77,7 +80,7 @@ export const PublicationsListItem = ({
           </span>
 
         </span>
-      </a>
+      </Link>
     </li>
   );
 };

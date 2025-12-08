@@ -6,7 +6,6 @@ import {
   InterfaceTeaserLinkListPropTypes,
   TeaserLinkList,
 } from '@/components/base/TeaserLinkList/TeaserLinkList';
-import { Config } from '@/payload-types';
 import React from 'react';
 
 export type InterfacePublicationsOverviewComponentPropTypes = Omit<
@@ -14,7 +13,6 @@ export type InterfacePublicationsOverviewComponentPropTypes = Omit<
     'children' | 'colorMode'
 > & {
     items: InterfacePublicationsListItemPropTypes[];
-    pageLanguage: Config['locale'];
 };
 
 export const PublicationsTeaserComponent = (props: InterfacePublicationsOverviewComponentPropTypes): React.JSX.Element => (
@@ -23,7 +21,6 @@ export const PublicationsTeaserComponent = (props: InterfacePublicationsOverview
     colorMode='white'
     style='publications'
     title={props.title}
-    pageLanguage={props.pageLanguage}
   >
     {props.items.map((item, key) => (
       <PublicationsListItem

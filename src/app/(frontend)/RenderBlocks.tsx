@@ -217,7 +217,7 @@ export const RenderBlocks = ({
                   <PublicationsOverview
                     {...block}
                     tenant={tenantId}
-                    language={pageLanguage}
+                    key={key}
                   />
                 </div>
               );
@@ -251,7 +251,7 @@ export const RenderBlocks = ({
                   <PublicationsTeaser
                     {...block}
                     tenant={tenantId}
-                    language={pageLanguage}
+                    key={key}
                   />
                 </div>
               );

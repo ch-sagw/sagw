@@ -43,7 +43,6 @@ export const convertPayloadPublicationsPagesToFeItems = (
       link: {
         href: publicationsPage.slug || '',
       },
-      pageLanguage: lang,
       tag: category
         ? rteToHtml(category.publicationType)
         : undefined,
@@ -58,7 +57,7 @@ export const convertPayloadPublicationsPagesToFeItems = (
   return items;
 };
 
-export const preparePublicationTypesFilterItems = (publicationTypes: PaginatedDocs<PublicationType>) => {
+export const preparePublicationTypesFilterItems = (publicationTypes: PaginatedDocs<PublicationType>): any => {
   const publicationTypeItems: string[] = [];
 
   publicationTypes.docs.forEach((publicationTypeItem) => {
@@ -73,7 +72,7 @@ export const preparePublicationTypesFilterItems = (publicationTypes: PaginatedDo
   return publicationTypeItems;
 };
 
-export const preparePublicationTopicsFilterItems = (publicationTopics: PaginatedDocs<PublicationTopic>) => {
+export const preparePublicationTopicsFilterItems = (publicationTopics: PaginatedDocs<PublicationTopic>): any => {
   const publicationTopicItems: string[] = [];
 
   publicationTopics.docs.forEach((publicationTopicItem) => {
