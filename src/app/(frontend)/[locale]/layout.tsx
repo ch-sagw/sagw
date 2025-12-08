@@ -27,7 +27,7 @@ import { NoJsScript } from '@/components/helpers/noJsScript';
 type InterfaceRootLayoutProps = {
   children: React.ReactNode
   params: Promise<{
-    locale: TypedLocale
+    locale: string
   }>
 }
 
@@ -45,8 +45,11 @@ export default async function RootLayout({
   });
 
   const {
-    locale,
+    locale: localeString,
   } = await params;
+
+  // Validate and assert locale type
+  const locale = localeString as TypedLocale;
 
   // get tenant id
 

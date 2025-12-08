@@ -16,7 +16,7 @@ export const fieldBreadcrumb: Field = {
     },
     {
       name: 'namede',
-      required: true,
+      required: false,
       type: 'text',
     },
     {
@@ -36,7 +36,7 @@ export const fieldBreadcrumb: Field = {
     },
     {
       name: 'slugde',
-      required: true,
+      required: false,
       type: 'text',
     },
     {

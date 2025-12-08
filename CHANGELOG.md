@@ -1,5 +1,123 @@
 # Changelog
 
+## [0.25.0](https://github.com/ch-sagw/sagw/compare/v0.24.0...v0.25.0) (2025-12-05)
+
+
+### Chore
+
+* adding NEXT_PUBLIC_GUMLET_URL to local, test and prod example env files ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* additional sample content for credits and caption ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* **be:** remove obsolete div wrappers ([0776fe5](https://github.com/ch-sagw/sagw/commit/0776fe57153485eb1b00dacb144f2fe362f519b4))
+* correcting duplicated if statement ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* **deps:** update dev-deps, update playwright images ([22dc60e](https://github.com/ch-sagw/sagw/commit/22dc60e2ff9d92d3689913508f1e5328d63565fa))
+* **deps:** update sentry, nextjs, payload ([22dc60e](https://github.com/ch-sagw/sagw/commit/22dc60e2ff9d92d3689913508f1e5328d63565fa))
+* **deps:** update zod, resend, js-yaml, increase webserver timeout ([22dc60e](https://github.com/ch-sagw/sagw/commit/22dc60e2ff9d92d3689913508f1e5328d63565fa))
+* fixing alignment property name in seed tenantData ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* fixing file naming by capitalizing ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* remove orphaned screenshots ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* remove unneeded sample images ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* removing figure component files ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* update deps ([22dc60e](https://github.com/ch-sagw/sagw/commit/22dc60e2ff9d92d3689913508f1e5328d63565fa))
+* updated package.lock after npm install ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+
+
+### Features
+
+* adding additional image variants ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding alignment property to video block ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding consent check and message into video component ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding defaultDecoratorNoPadding to stories files ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding duration label and applying fixes to please Safari ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding example images and playing around ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding figure block ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding figure compontent variants ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding forward ref for button component ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding gumlet url properties to image src value as well ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding gumlet video player component as dependency ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding image component ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding missing srcValue definition ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding missing type definitions in Image.tsx ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding missing type definitions in Image.tsx ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding new image block module files ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding new image source and example text ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding no-js behaviour for image display ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding noJsScript helper ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding onlad functionality for image ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding payload field description for image ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding video and image to RenderBlocks ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding video block component ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding video component improvements ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* **be:** add bibliographic reference component ([71c315f](https://github.com/ch-sagw/sagw/commit/71c315fc75c639c1c7f68b8babd6544d316b4d4b))
+* **be:** add footnote component ([71c315f](https://github.com/ch-sagw/sagw/commit/71c315fc75c639c1c7f68b8babd6544d316b4d4b))
+* **be:** move status message from layout to page level ([0776fe5](https://github.com/ch-sagw/sagw/commit/0776fe57153485eb1b00dacb144f2fe362f519b4))
+* ensure useScrollLock is removed when cookie banner button is clicked ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* **fe:** add bibliographic reference component ([71c315f](https://github.com/ch-sagw/sagw/commit/71c315fc75c639c1c7f68b8babd6544d316b4d4b))
+* **fe:** add footnote component ([71c315f](https://github.com/ch-sagw/sagw/commit/71c315fc75c639c1c7f68b8babd6544d316b4d4b))
+* fixing caption and credits handover and display ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* getting current cookie consent state from cookie in consentoverlay ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* implement next-intl for i18n support ([4e58ac8](https://github.com/ch-sagw/sagw/commit/4e58ac87b0ab65226debfaf24c7bc413fa4cdf98))
+* integrating cookie consent check in video component ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* integrating gumlet video player into video component block ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* modifying src, srcset and sizes generation in base image component ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* modifying urls in stories to avoid unnecessary exception in image url handling ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* **payload:** add color mode to newsTeaser ([0776fe5](https://github.com/ch-sagw/sagw/commit/0776fe57153485eb1b00dacb144f2fe362f519b4))
+* re-adding filename property ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* removing host and stillImageHost property from RenderBlocks ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* removing obsolete ref and castings in videoconsentmessage component ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* renaming alignement property to alignment in image block ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* reworking towards custom image component solution ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* separating video consent message into separate module ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* setting paused class as state variable ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* using defaultArgs in image stories file ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* using fixed urls for image sources in stories ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* working on image variants ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+
+
+### Bug Fixes
+
+* **be:** don't show current newsDetailPage in newsTeaser ([0776fe5](https://github.com/ch-sagw/sagw/commit/0776fe57153485eb1b00dacb144f2fe362f519b4))
+* **be:** get overlay toggle defaults from payload ([0776fe5](https://github.com/ch-sagw/sagw/commit/0776fe57153485eb1b00dacb144f2fe362f519b4))
+* **be:** remove function from people ([0776fe5](https://github.com/ch-sagw/sagw/commit/0776fe57153485eb1b00dacb144f2fe362f519b4))
+* **payload:** fix tenant name validation ([0776fe5](https://github.com/ch-sagw/sagw/commit/0776fe57153485eb1b00dacb144f2fe362f519b4))
+* **payload:** fix translator access rights ([71c315f](https://github.com/ch-sagw/sagw/commit/71c315fc75c639c1c7f68b8babd6544d316b4d4b))
+* **payload:** slug issue for translators on change ([0776fe5](https://github.com/ch-sagw/sagw/commit/0776fe57153485eb1b00dacb144f2fe362f519b4))
+* **payload:** validate tenant name ([0776fe5](https://github.com/ch-sagw/sagw/commit/0776fe57153485eb1b00dacb144f2fe362f519b4))
+
+
+### Refactor
+
+* adapting component structure ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* changing alignement property name to alignment ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* changing image src aggregation and rendering ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* changing nojs class toggle mechanism ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* correcting casting for stillImage in RenderBlock ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* integrating image base component instead of image block in video block ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* removing typings for image and videoblock from RenderBlocks ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+
+
+### Style
+
+* adding visual play button fixes ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* changing button type in video consent message and adding new screenshots ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* changing color definition for background-video and black variable ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+
+
+### Test
+
+* add check await image if there is one the page ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding new image focal point and screenshots ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding new reference screenshot ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding new reference screenshots ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding new reference screenshots ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding new reference screenshots ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding new reference screenshots for Portrait image ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding obsolete screenshots and adding new ones ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* adding reference screenshots ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* exclude gumlet iframe player from a11y test ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* extracting video test to separate file and adding new reference screenshots ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* re-adding base-image--publication-teaser screenshots ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+* removing NEXT_PUBLIC_GUMLET_URL from test:fe:native:shard again ([7d8fbbc](https://github.com/ch-sagw/sagw/commit/7d8fbbca3a0b7f65cf97e829df6ccdd1eda9393c))
+
 ## [0.24.0](https://github.com/ch-sagw/sagw/compare/v0.23.1...v0.24.0) (2025-11-25)
 
 

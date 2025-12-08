@@ -1,6 +1,11 @@
-import type { AccessArgs } from 'payload';
+import type { PayloadRequest } from 'payload';
 import { User } from '@/payload-types';
 import { isSuperAdmin } from '@/collections/Plc/Users/roles';
+
+interface InterfaceAccessArgs {
+  req: PayloadRequest;
+  id?: string | number;
+}
 
 export const isAccessingSelf = ({
   id, user,
@@ -10,12 +15,12 @@ export const isAccessingSelf = ({
 
 const createAccess = ({
   req,
-}: AccessArgs): boolean => isSuperAdmin(req);
+}: InterfaceAccessArgs): boolean => isSuperAdmin(req);
 
 const updateAccess = ({
   req,
   id,
-}: AccessArgs): boolean => {
+}: InterfaceAccessArgs): boolean => {
   if (!req.user) {
     return false;
   }
@@ -38,16 +43,16 @@ const updateAccess = ({
 
 const updateAccessWithoutSelf = ({
   req,
-}: AccessArgs): boolean => isSuperAdmin(req);
+}: InterfaceAccessArgs): boolean => isSuperAdmin(req);
 
 const deleteAccess = ({
   req,
-}: AccessArgs): boolean => isSuperAdmin(req);
+}: InterfaceAccessArgs): boolean => isSuperAdmin(req);
 
 const readAccess = ({
   req,
   id,
-}: AccessArgs): boolean => {
+}: InterfaceAccessArgs): boolean => {
   if (!req.user) {
     return false;
   }
@@ -64,7 +69,7 @@ const readAccess = ({
 
 const readAccessWithoutSelf = ({
   req,
-}: AccessArgs): boolean => isSuperAdmin(req);
+}: InterfaceAccessArgs): boolean => isSuperAdmin(req);
 
 // General User Access
 
@@ -81,3 +86,7 @@ export const usersAccessWithoutSelf = {
   read: readAccessWithoutSelf,
   update: updateAccessWithoutSelf,
 };
+
+// Field Access - same functions, compatible types
+export const usersFieldAccess = usersAccess;
+export const usersFieldAccessWithoutSelf = usersAccessWithoutSelf;
