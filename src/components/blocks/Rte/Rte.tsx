@@ -5,6 +5,8 @@ import { InterfaceRte } from '@/components/base/types/rte';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { rte4ToHtml } from '@/utilities/rteToHtml';
 import { ColorMode } from '@/components/base/types/colorMode';
+import { useLocale } from 'next-intl';
+import { TypedLocale } from 'payload';
 
 // We explicitly don't take InterfaceTextBlock, since we want explicit
 // rte typing here
@@ -21,6 +23,7 @@ export const Rte = ({
   stickyFirstTitle,
   className,
 }: InterfaceRtePropTypes): React.JSX.Element => {
+  const locale = useLocale() as TypedLocale;
   const classes = cva([
     styles.rte,
     className,
@@ -46,7 +49,7 @@ export const Rte = ({
     } >
       <SafeHtml
         as='div'
-        html={rte4ToHtml(text)}
+        html={rte4ToHtml(text, locale)}
         className={styles.text}
       />
     </div >

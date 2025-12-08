@@ -6,12 +6,16 @@ import {
 import { InterfaceLinksBlock } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { InterfaceRte } from '@/components/base/types/rte';
+import { getInternalLinkPath } from '@/utilities/getInternalLinkPath';
+import { getLocale } from 'next-intl/server';
+import { TypedLocale } from 'payload';
 
 export type InterfaceLinksPropTypes = {
   title: InterfaceRte;
 } & InterfaceLinksBlock;
 
-export const Links = (props: InterfaceLinksPropTypes): React.JSX.Element => {
+export const Links = async (props: InterfaceLinksPropTypes): Promise<React.JSX.Element> => {
+  const locale = await getLocale() as TypedLocale;
   const title = rteToHtml(props.title);
 
   // prepare link items
@@ -31,9 +35,7 @@ export const Links = (props: InterfaceLinksPropTypes): React.JSX.Element => {
     } else if (link.linkType === 'internal' && link.linkInternal) {
       const returnLink: InterfaceDownloadLinkItemPropTypes = {
         link: {
-
-          // TODO: generate url
-          href: `/${link.linkInternal.internalLink.slug}`,
+          href: getInternalLinkPath(link.linkInternal.internalLink, locale),
           target: '_self' as const,
         },
         text: rteToHtml(link.linkInternal.description),

@@ -10,6 +10,7 @@ import {
   rte1, rte3,
 } from '@/field-templates/rte';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
+import { hookGenerateRteLinkPaths } from '@/hooks-payload/generateRteLinkPaths/consent';
 
 const overlaySection: Field[] = [
   rte1({
@@ -131,6 +132,9 @@ export const Consent: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    beforeValidate: [hookGenerateRteLinkPaths],
+  },
   labels: {
     plural: 'Consent',
     singular: 'Consent',

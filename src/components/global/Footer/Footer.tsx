@@ -28,10 +28,14 @@ import {
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
+import { getInternalLinkPath } from '@/utilities/getInternalLinkPath';
 import { ConsentOverlay } from '../ConsentOverlay/ConsentOverlay';
 import { useScrollLock } from '@/hooks/useScrollLock';
 import { openConsentOverlayEventName } from '@/components/helpers/cookies';
-import { useTranslations } from 'next-intl';
+import {
+  useLocale, useTranslations,
+} from 'next-intl';
+import { TypedLocale } from 'payload';
 
 export type InterfaceFooterPropTypes = {
   contact: InterfaceFooterContact;
@@ -59,6 +63,7 @@ export const Footer = ({
   fg,
   consentOverlay,
 }: InterfaceFooterPropTypes): React.JSX.Element => {
+  const locale = useLocale() as TypedLocale;
   const i18nA11y = useTranslations('a11y');
   const overlayDialogRef = useRef<HTMLDialogElement>(null);
   const [
@@ -136,9 +141,9 @@ export const Footer = ({
         }
 
         const navItem: InterfaceMetanavItem = {
-
-          // TODO: generate url
-          link: item.linkInternal?.internalLink.slug || '',
+          link: item.linkInternal?.internalLink
+            ? getInternalLinkPath(item.linkInternal.internalLink, locale)
+            : '',
           target: '_blank',
           text: rteToHtml(item.linkInternal?.linkText),
         };

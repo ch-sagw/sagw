@@ -3,6 +3,7 @@ import {
   rte1, rte3,
 } from '@/field-templates/rte';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
+import { hookGenerateRteLinkPaths } from '@/hooks-payload/generateRteLinkPaths/dataPrivacy';
 
 export const I18nGlobals: CollectionConfig = {
   access: globalContentAccessNoTranslatorNoEditor,
@@ -87,5 +88,8 @@ export const I18nGlobals: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    beforeValidate: [hookGenerateRteLinkPaths],
+  },
   slug: 'i18nGlobals',
 };

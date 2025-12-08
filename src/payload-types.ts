@@ -366,6 +366,10 @@ export interface InterfaceHeroFieldHome {
 export interface InterfaceInternalLinkValue {
   slug: string;
   documentId: string;
+  pathde?: string | null;
+  pathfr?: string | null;
+  pathit?: string | null;
+  pathen?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1389,6 +1393,7 @@ export interface DataPrivacyPage {
   tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
+  slug?: string | null;
   hero: InterfaceHeroField;
   content?: InterfaceTextBlock[] | null;
   meta?: {
@@ -1452,6 +1457,7 @@ export interface ImpressumPage {
   tenant?: (string | null) | Tenant;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
+  slug?: string | null;
   hero: InterfaceHeroField;
   content?: InterfaceTextBlock[] | null;
   meta?: {
@@ -4836,6 +4842,10 @@ export interface InterfaceHeroFieldHomeSelect<T extends boolean = true> {
 export interface InterfaceInternalLinkValueSelect<T extends boolean = true> {
   slug?: T;
   documentId?: T;
+  pathde?: T;
+  pathfr?: T;
+  pathit?: T;
+  pathen?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5031,6 +5041,7 @@ export interface DataPrivacyPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  slug?: T;
   hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
@@ -5070,6 +5081,7 @@ export interface ImpressumPageSelect<T extends boolean = true> {
   tenant?: T;
   isLinkable?: T;
   adminTitle?: T;
+  slug?: T;
   hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T

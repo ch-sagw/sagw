@@ -6,6 +6,9 @@ import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
 import { InterfaceCtaLinkBlock } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
+import { getInternalLinkPath } from '@/utilities/getInternalLinkPath';
+import { getLocale } from 'next-intl/server';
+import { TypedLocale } from 'payload';
 
 export type InterfaceCtaLinkPropTypes = {} & InterfaceCtaLinkBlock;
 
@@ -14,7 +17,8 @@ const ctaLinkClasses = cva([
   styles.dark,
 ]);
 
-export const CtaLink = (props: InterfaceCtaLinkPropTypes): React.JSX.Element => {
+export const CtaLink = async (props: InterfaceCtaLinkPropTypes): Promise<React.JSX.Element> => {
+  const locale = await getLocale() as TypedLocale;
   const title = rteToHtml(props.title);
   const subtitle = rteToHtml(props.text);
 
@@ -26,9 +30,7 @@ export const CtaLink = (props: InterfaceCtaLinkPropTypes): React.JSX.Element => 
     linkHref = props.linkExternal.externalLink;
   } else if (props.linkType === 'internal' && props.linkInternal) {
     linkText = rteToHtml(props.linkInternal.linkText);
-
-    // TODO: generate url
-    linkHref = props.linkInternal.internalLink.slug;
+    linkHref = getInternalLinkPath(props.linkInternal.internalLink, locale);
   } else if (props.linkType === 'mail' && props.linkMail) {
     linkText = rteToHtml(props.linkMail.linkText);
     linkHref = props.linkMail.email;

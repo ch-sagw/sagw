@@ -111,7 +111,6 @@ export default async function HomePage({
             collectionSlug: 'homePage',
             id: pageData.id,
           }}
-          locale={locale}
         />
       </div>
     </Fragment>

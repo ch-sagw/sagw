@@ -13,6 +13,7 @@ import { pageAccess } from '@/access/pages';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
+import { hookGenerateRteLinkPaths } from '@/hooks-payload/generateRteLinkPaths/blocks';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
 
@@ -26,6 +27,23 @@ export const ImpressumPage: CollectionConfig = {
   fields: [
     fieldLinkablePage,
     fieldAdminTitleDefaultValue('Impressum'),
+    {
+      admin: {
+        hidden: true,
+        readOnly: true,
+      },
+
+      // TODO: get from internal i18n
+      defaultValue: {
+        de: 'impressum-de',
+        en: 'impressum-en',
+        fr: 'impressum-fr',
+        it: 'impressum-it',
+      },
+      localized: true,
+      name: 'slug',
+      type: 'text',
+    },
     {
       tabs: [
 
@@ -59,7 +77,10 @@ export const ImpressumPage: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [hookPreventBulkPublishForTranslators],
-    beforeValidate: [hookPreventBlockStructureChangesForTranslators()],
+    beforeValidate: [
+      hookPreventBlockStructureChangesForTranslators(),
+      hookGenerateRteLinkPaths,
+    ],
   },
   labels: {
     plural: 'Impressum',

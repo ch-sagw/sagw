@@ -168,7 +168,6 @@ export default async function DetailPage({
                 collectionSlug: foundCollection,
                 id: pageData.id,
               }}
-              locale={locale}
             />
           )}
         </div>

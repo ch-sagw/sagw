@@ -23,6 +23,8 @@ import {
   rte4ToHtml, rteToHtml,
 } from '@/utilities/rteToHtml';
 import { usePathname } from 'next/navigation';
+import { useLocale } from 'next-intl';
+import { TypedLocale } from 'payload';
 
 const sectionClasses = cva([styles.formBlock], {
   variants: {
@@ -67,6 +69,7 @@ export const FormComponent = ({
   submitError,
   submitSuccess,
 }: InterfaceFormClientPropTypes): React.JSX.Element => {
+  const locale = useLocale() as TypedLocale;
   const pathname = usePathname();
 
   return (
@@ -179,7 +182,7 @@ export const FormComponent = ({
                     })}
                     value='on'
                     name={field.name}
-                    label={rte4ToHtml(field.label)}
+                    label={rte4ToHtml(field.label, locale)}
                     checked={checked}
                     errorText={errors[field.name]?.join(', ') || ''}
                     colorMode={form.colorMode}
@@ -207,12 +210,12 @@ export const FormComponent = ({
                         checked: isSelectedFromServer
                           ? true
                           : (item.defaultChecked ?? undefined),
-                        label: rte4ToHtml(item.label),
+                        label: rte4ToHtml(item.label, locale),
                         value: item.value,
                       });
                     })}
                     errorText={errors[field.name]?.join(', ') || ''}
-                    descriptionLabel={rte4ToHtml(field.label)}
+                    descriptionLabel={rte4ToHtml(field.label, locale)}
                   />
                 );
               }

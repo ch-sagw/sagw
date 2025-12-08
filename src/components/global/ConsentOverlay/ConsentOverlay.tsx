@@ -1,3 +1,5 @@
+'use client';
+
 import React, {
   forwardRef, useEffect, useState,
 } from 'react';
@@ -15,6 +17,7 @@ import {
   getCookieConsent,
   setCookieConsent,
 } from '@/components/helpers/cookies';
+import { Rte } from '@/components/blocks/Rte/Rte';
 
 export type InterfaceConsentOverlayPropTypes = {
   onClose?: () => void;
@@ -225,10 +228,12 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
             <Icon name='close' />
           </button>
         </div>
-        <SafeHtml
-          as='p'
+
+        <Rte
           className={styles.text}
-          html={rteToHtml(text)}
+          text={text}
+          colorMode='white'
+          stickyFirstTitle={false}
         />
 
         <ul className={styles.sections}>
@@ -272,10 +277,11 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
                 }
               </div>
 
-              <SafeHtml
-                as='p'
+              <Rte
                 className={styles.sectionText}
-                html={rteToHtml(section.text)}
+                text={section.text}
+                colorMode='white'
+                stickyFirstTitle={false}
               />
 
             </li>

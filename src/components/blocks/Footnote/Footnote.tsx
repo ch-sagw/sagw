@@ -6,27 +6,33 @@ import {
   rte4ToHtml, rteToHtml,
 } from '@/utilities/rteToHtml';
 import { Section } from '@/components/base/Section/Section';
+import { getLocale } from 'next-intl/server';
+import { TypedLocale } from 'payload';
 
 export type InterfaceFootnotePropTypes = {} & InterfaceFootnotesBlock;
 
-export const Footnote = ({
+export const Footnote = async ({
   title,
   text,
-}: InterfaceFootnotePropTypes): React.JSX.Element => (
-  <Section
-    className={styles.section}
-    colorMode='white'
-  >
-    <SafeHtml
-      as='h3'
-      html={rteToHtml(title)}
-    />
+}: InterfaceFootnotePropTypes): Promise<React.JSX.Element> => {
+  const locale = await getLocale() as TypedLocale;
 
-    <SafeHtml
-      as='div'
-      html={rte4ToHtml(text)}
-      className={styles.text}
-    />
+  return (
+    <Section
+      className={styles.section}
+      colorMode='white'
+    >
+      <SafeHtml
+        as='h3'
+        html={rteToHtml(title)}
+      />
 
-  </Section>
-);
+      <SafeHtml
+        as='div'
+        html={rte4ToHtml(text, locale)}
+        className={styles.text}
+      />
+
+    </Section>
+  );
+};

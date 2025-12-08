@@ -37,6 +37,38 @@ export const fieldInternalLinkChooser = (props: InterfaceFieldInternalLinkChoose
         required: !props?.optional,
         type: 'text',
       },
+      {
+        admin: {
+          hidden: true,
+        },
+        name: 'pathde',
+        required: false,
+        type: 'text',
+      },
+      {
+        admin: {
+          hidden: true,
+        },
+        name: 'pathfr',
+        required: false,
+        type: 'text',
+      },
+      {
+        admin: {
+          hidden: true,
+        },
+        name: 'pathit',
+        required: false,
+        type: 'text',
+      },
+      {
+        admin: {
+          hidden: true,
+        },
+        name: 'pathen',
+        required: false,
+        type: 'text',
+      },
     ],
     interfaceName: 'InterfaceInternalLinkValue',
     name: props.name,

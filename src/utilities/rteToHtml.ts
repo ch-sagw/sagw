@@ -17,6 +17,7 @@ import {
 } from '@payloadcms/richtext-lexical/lexical';
 
 import { externalLink } from '@/icons/ui/external-link';
+import { TypedLocale } from 'payload';
 
 // Union type for all possible lexical nodes
 type LexicalNode =
@@ -27,30 +28,41 @@ type LexicalNode =
   | SerializedNonBreakingSpaceNode
   | { type: string; children?: LexicalNode[]; version: number; [key: string]: unknown };
 
-const internalDocToHref = ({
+const createInternalDocToHref = (locale: TypedLocale) => ({
   linkNode,
 }: { linkNode: SerializedLinkNode }): string => {
   if (!linkNode.fields.doc) {
     return '';
   }
 
-  const {
-    relationTo, value,
-  } = linkNode.fields.doc;
+  const pathField = `path${locale}` as 'pathde' | 'pathfr' | 'pathit' | 'pathen';
+  const storedPath = linkNode.fields[pathField];
 
-  return `/${relationTo}/${value}`;
+  if (storedPath && typeof storedPath === 'string' && storedPath.trim().length > 0) {
+    return storedPath.trim();
+  }
+
+  return '';
 };
 
 const createHtmlConverters = ({
   wrap,
-}: { wrap: boolean | undefined }): HTMLConvertersFunction<DefaultNodeTypes> => ({
+  locale,
+}: { wrap: boolean | undefined; locale?: TypedLocale }): HTMLConvertersFunction<DefaultNodeTypes> => ({
   defaultConverters,
 }) => {
+  // Only use locale-aware internalDocToHref if locale is provided
+  const internalDocToHref = locale
+    ? createInternalDocToHref(locale)
+    : undefined;
+
   const baseConverters = {
     ...defaultConverters,
-    ...linkHTMLConverter({
-      internalDocToHref,
-    }),
+    ...(internalDocToHref
+      ? linkHTMLConverter({
+        internalDocToHref,
+      })
+      : {}),
     ...softHyphenJSXConverter,
     ...nonBreakingSpaceJSXConverter,
   };
@@ -157,11 +169,7 @@ interface InterfaceRteToHtmlProps {
 }
 
 // avoid unneccessary rebuild of converters by statically defining
-// the 2 sets of converters
-
-const convertersWithWrap = createHtmlConverters({
-  wrap: true,
-});
+// converters without wrap (for rteToHtml - no locale needed)
 const convertersWithoutWrap = createHtmlConverters({
   wrap: false,
 });
@@ -169,7 +177,8 @@ const convertersWithoutWrap = createHtmlConverters({
 const rteToHtmlBase = ({
   content,
   wrap,
-}: InterfaceRteToHtmlProps): string => {
+  locale,
+}: InterfaceRteToHtmlProps & { locale?: TypedLocale }): string => {
   if (!content) {
     return '';
   }
@@ -182,8 +191,13 @@ const rteToHtmlBase = ({
     },
   };
 
+  // For wrap: false (rteToHtml), use static converters
+  // For wrap: true (rte4ToHtml), create converters dynamically with locale
   const htmlConverters = wrap
-    ? convertersWithWrap
+    ? createHtmlConverters({
+      locale,
+      wrap: true,
+    })
     : convertersWithoutWrap;
 
   const transformedData = convertLexicalToHTML({
@@ -214,7 +228,8 @@ export const rteToHtml = (content: InterfaceRte | undefined | null): string => r
   wrap: false,
 });
 
-export const rte4ToHtml = (content: InterfaceRte | undefined | null): string => rteToHtmlBase({
+export const rte4ToHtml = (content: InterfaceRte | undefined | null, locale: TypedLocale): string => rteToHtmlBase({
   content,
+  locale,
   wrap: true,
 });

@@ -8,35 +8,41 @@ import {
 } from '@/utilities/rteToHtml';
 import { InterfaceRte } from '@/components/base/types/rte';
 import { BibliographicReferenceClient } from './BibliographicReference.client';
+import { getLocale } from 'next-intl/server';
+import { TypedLocale } from 'payload';
 
 export type InterfaceBibliographicReferencePropTypes = {
   title: InterfaceRte;
   buttonText: InterfaceRte;
 } & InterfaceBibliographicReferenceBlock;
 
-export const BibliographicReference = ({
+export const BibliographicReference = async ({
   title,
   text,
   buttonText,
-}: InterfaceBibliographicReferencePropTypes): React.JSX.Element => (
-  <Section
-    colorMode='white'
-    className={styles.section}
-  >
-    <SafeHtml
-      as='h3'
-      html={rteToHtml(title)}
-    />
+}: InterfaceBibliographicReferencePropTypes): Promise<React.JSX.Element> => {
+  const locale = await getLocale() as TypedLocale;
 
-    <SafeHtml
-      as='div'
-      html={rte4ToHtml(text)}
-      className={styles.text}
-    />
+  return (
+    <Section
+      colorMode='white'
+      className={styles.section}
+    >
+      <SafeHtml
+        as='h3'
+        html={rteToHtml(title)}
+      />
 
-    <BibliographicReferenceClient
-      buttonText={buttonText}
-      text={text}
-    />
-  </Section>
-);
+      <SafeHtml
+        as='div'
+        html={rte4ToHtml(text, locale)}
+        className={styles.text}
+      />
+
+      <BibliographicReferenceClient
+        buttonText={buttonText}
+        text={text}
+      />
+    </Section>
+  );
+};

@@ -7,16 +7,20 @@ import React, { Fragment } from 'react';
 import { InterfaceStatusMessage } from '@/payload-types';
 import { Notification } from '@/components/base/Notification/Notification';
 import { rteToHtml } from '@/utilities/rteToHtml';
+import { getInternalLinkPath } from '@/utilities/getInternalLinkPath';
+import { getLocale } from 'next-intl/server';
+import { TypedLocale } from 'payload';
 
 export type InterfaceStatusMessagePropTypes = {} & InterfaceStatusMessage;
 
-export const StatusMessage = ({
+export const StatusMessage = async ({
   type,
   title,
   message,
   optionalLink,
   show,
-}: InterfaceStatusMessagePropTypes): React.JSX.Element => {
+}: InterfaceStatusMessagePropTypes): Promise<React.JSX.Element> => {
+  const locale = await getLocale() as TypedLocale;
   let shouldShow = true;
 
   if (show.display === 'hide') {
@@ -53,8 +57,9 @@ export const StatusMessage = ({
       title={rteToHtml(title)}
       text={rteToHtml(message)}
 
-      // TODO: generate url
-      linkHref={optionalLink?.link?.internalLink.slug || ''}
+      linkHref={optionalLink?.link?.internalLink
+        ? getInternalLinkPath(optionalLink.link.internalLink, locale)
+        : ''}
       linkText={rteToHtml(optionalLink?.link?.linkText)}
     />
   );

@@ -29,6 +29,8 @@ import {
   InterfaceHeaderMetaNavigation, InterfaceHeaderNavigation,
 } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
+import { getInternalLinkPath } from '@/utilities/getInternalLinkPath';
+import { TypedLocale } from 'payload';
 
 // --- Interfaces
 
@@ -49,7 +51,7 @@ export type InterfaceHeaderPropTypes = {
 // --- Component
 
 export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
-  const locale = useLocale();
+  const locale = useLocale() as TypedLocale;
   const infoBlockMargin = 48;
 
   // --- Refs
@@ -443,9 +445,9 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
             items={props.metanav.metaLinks?.map((item) => {
               if (item.linkType === 'internal') {
                 return {
-
-                  // TODO: generate url
-                  link: item.linkInternal?.internalLink.slug || '',
+                  link: item.linkInternal?.internalLink
+                    ? getInternalLinkPath(item.linkInternal.internalLink, locale)
+                    : '',
                   target: '_self',
                   text: rteToHtml(item.linkInternal?.linkText),
                 };

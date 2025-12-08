@@ -13,6 +13,7 @@ import { pageAccess } from '@/access/pages';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
+import { hookGenerateRteLinkPaths } from '@/hooks-payload/generateRteLinkPaths/blocks';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
 
@@ -26,6 +27,23 @@ export const DataPrivacyPage: CollectionConfig = {
   fields: [
     fieldLinkablePage,
     fieldAdminTitleDefaultValue('Data Privacy'),
+    {
+      admin: {
+        hidden: true,
+        readOnly: true,
+      },
+
+      // TODO: get from internal i18n
+      defaultValue: {
+        de: 'data-privacy-de',
+        en: 'data-privacy-en',
+        fr: 'data-privacy-fr',
+        it: 'data-privacy-it',
+      },
+      localized: true,
+      name: 'slug',
+      type: 'text',
+    },
     {
       tabs: [
 
@@ -59,7 +77,10 @@ export const DataPrivacyPage: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [hookPreventBulkPublishForTranslators],
-    beforeValidate: [hookPreventBlockStructureChangesForTranslators()],
+    beforeValidate: [
+      hookPreventBlockStructureChangesForTranslators(),
+      hookGenerateRteLinkPaths,
+    ],
   },
   labels: {
     plural: 'Data Privacy',

@@ -62,9 +62,7 @@ import { ProjectsOverview } from '@/components/blocks/ProjectsOverview/ProjectsO
 import { EditionsOverview } from '@/components/blocks/EditionsOverview/EditionsOverview';
 import { Footnote } from '@/components/blocks/Footnote/Footnote';
 import { BibliographicReference } from '@/components/blocks/BibliographicReference/BibliographicReference';
-import {
-  CollectionSlug, TypedLocale,
-} from 'payload';
+import { CollectionSlug } from 'payload';
 
 export interface InterfaceSourcePage {
   collectionSlug: CollectionSlug;
@@ -106,7 +104,6 @@ interface InterfaceRenderBlocksProps {
     InterfaceEditionsOverviewBlock
   )[] | null | undefined;
   i18n: I18NGlobal;
-  locale: TypedLocale;
   sourcePage: InterfaceSourcePage;
 }
 

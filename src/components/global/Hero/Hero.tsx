@@ -20,6 +20,8 @@ import { formatEventDetails } from '@/components/base/EventsListItem/helpers';
 import { formatDateToReadableString } from '@/components/helpers/date';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { useLocale } from 'next-intl';
+import { getInternalLinkPath } from '@/utilities/getInternalLinkPath';
+import { TypedLocale } from 'payload';
 
 type BaseHeroProps = {
   breadcrumb?: InterfaceBreadcrumbPropTypes;
@@ -52,7 +54,7 @@ export type InterfaceHeroPropTypes =
   } & InterfaceHeroField);
 
 export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
-  const locale = useLocale();
+  const locale = useLocale() as TypedLocale;
   const heroClasses = cva([styles.hero], {
     variants: {
       animated: {
@@ -217,8 +219,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
             className={styles.link}
             element='link'
 
-            // TODO: generate url
-            href={props.optionalLink.link.internalLink.slug}
+            href={getInternalLinkPath(props.optionalLink.link.internalLink, locale)}
             text={rteToHtml(props.optionalLink.link.linkText)}
             colorMode={heroColorMode}
             style='text'
