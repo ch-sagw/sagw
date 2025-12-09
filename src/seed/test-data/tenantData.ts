@@ -654,11 +654,6 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           title: simpleRteConfig('News'),
         },
         {
-          blockType: 'publicationsTeasersBlock',
-          linkText: simpleRteConfig('Alle Publikationen'),
-          title: simpleRteConfig('Publikationen'),
-        },
-        {
           blockType: 'textBlock',
           text: rte4FullRange,
         },
@@ -920,11 +915,13 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       hero: {
         colorMode: 'white',
         lead: simpleRteConfig('Overview Page Lead'),
-        title: simpleRteConfig(`Overview page with Publications Overview ${tenant.toUpperCase()}`),
+        title: simpleRteConfig(`Publications Overview ${tenant.toUpperCase()}`),
       },
       navigationTitle: 'Publications',
+      slug: `publications-overview-page-${tenant.toLowerCase()}`,
       tenant: tenantId,
     },
+    draft: false,
   });
 
   // create overview page with events overview block
