@@ -70,13 +70,13 @@ const preparePublicationsOverviewFilters = ({
 };
 
 export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes): Promise<React.JSX.Element> => {
-  const locale = (await getLocale()) as TypedLocale;
-
-  const i18nPublicationFilters = await getTranslations('publicationFilters');
-
   const payload = await getPayload({
     config: configPromise,
   });
+
+  const locale = (await getLocale()) as TypedLocale;
+
+  const i18nPublicationFilters = await getTranslations('publicationFilters');
 
   // Get publication detail pages data
   const publicationPages = await payload.find({
@@ -155,7 +155,7 @@ export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes
   const title = rteToHtml(props.title);
 
   // Prepare Publication items
-  const items = convertPayloadPublicationsPagesToFeItems(publicationPages, publicationImages, props.language);
+  const items = convertPayloadPublicationsPagesToFeItems(publicationPages, publicationImages, locale);
 
   // Prepare Publication Types filter items
   const filterTitleAllTypes = rte1ToPlaintext(props.filterTitleAllPublications);
