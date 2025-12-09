@@ -1,10 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import React, {
-  useRef,
-  useState,
-} from 'react';
+import { useImageLoader } from '@/hooks/useImageLoader';
 import { cva } from 'cva';
 import styles from '@/components/base/Image/Image.module.scss';
 import {
@@ -41,10 +38,6 @@ export const Image = ({
   variant,
   width,
 }: InterfaceImagePropTypes): React.JSX.Element => {
-  const [
-    loaded,
-    setLoaded,
-  ] = useState(false);
 
   const focalPointX = (focalX ?? 50) / 100;
   const focalPointY = (focalY ?? 50) / 100;
@@ -69,38 +62,24 @@ export const Image = ({
 
   // Add loaded class on image load for fade-in effect
   // and performance mark, if defined
-  const imgRef = useRef<HTMLImageElement | null>(null);
-
-  const handleLoad = (): void => {
-    if (!imgRef.current) {
-      return;
-    }
-
-    const img = imgRef.current;
-
-    if (!img) {
-      return;
-    }
-
-    if (img.complete && img.naturalWidth !== 0) {
-      setLoaded(true);
-
-      if (performanceMark) {
-        performance.mark(performanceMark);
-      }
-    }
-  };
+  const {
+    fadeIn,
+    imgRef,
+    imgSrc,
+    loaded,
+  } = useImageLoader(
+    src,
+    {
+      performanceMark,
+      placeholderSrc: '',
+    },
+  );
 
   const fetchPriority = loading === 'eager'
     ? 'high'
     : 'low';
 
-  const classes = cva([
-    styles.image,
-    loaded
-      ? styles.loaded
-      : undefined,
-  ], {
+  const classes = cva([styles.image], {
     variants: {
       variant: {
         content: [styles.content],
@@ -115,22 +94,33 @@ export const Image = ({
     },
   });
 
+  const combinedClasses = [
+    classes({
+      variant,
+    }),
+    fadeIn
+      ? styles.fadeIn
+      : '',
+    loaded
+      ? styles.loaded
+      : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
     <>
       <img
         alt={alt}
-        className={classes({
-          variant,
-        })}
+        className={combinedClasses}
         fetchPriority={fetchPriority}
         height={height}
         loading={loading}
         ref={imgRef}
         sizes={sizes}
-        src={srcAndSrcSet.src}
+        src={imgSrc}
         srcSet={srcAndSrcSet.srcSet}
         width={width}
-        onLoad={handleLoad}
       />
       <noscript>
         <img
