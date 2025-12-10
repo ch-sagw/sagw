@@ -36,6 +36,14 @@
       @include body-text-m;
 
       margin-block-start: 0;
+
+      @include mq($from: large) {
+        grid-column: 5/12;
+      }
+
+      @include mq($from: ultra) {
+        grid-column: 5/11;
+      }
     }
 
     .link {
