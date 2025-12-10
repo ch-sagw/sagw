@@ -12,64 +12,78 @@ export const Projects: CollectionConfig = {
     useAsTitle: 'name',
   },
   fields: [
-    rte1({
-      name: 'name',
-    }),
-
-    // Joins
     {
-      admin: {
-        allowCreate: false,
-      },
-      collection: 'newsDetailPage',
-      name: 'relatedNewsPages',
-      on: 'project',
-      type: 'join',
-    },
-    {
-      admin: {
-        allowCreate: false,
-      },
-      collection: 'eventDetailPage',
-      name: 'relatedEventPages',
-      on: 'eventDetails.project',
-      type: 'join',
-    },
-    {
-      admin: {
-        allowCreate: false,
-      },
-      collection: 'publicationDetailPage',
-      name: 'relatedPublicationPages',
-      on: 'categorization.project',
-      type: 'join',
-    },
-    {
-      admin: {
-        allowCreate: false,
-      },
-      collection: 'projectDetailPage',
-      name: 'relatedProjectPages',
-      on: 'project',
-      type: 'join',
-    },
-    {
-      admin: {
-        allowCreate: false,
-      },
-      collection: 'documents',
-      name: 'relatedDocuments',
-      on: 'project',
-      type: 'join',
-    },
-    {
-      admin: {
-        allowCreate: false,
-      },
-      collection: 'zenodoDocuments',
-      name: 'relatedZenodoDocuments',
-      on: 'project',
-      type: 'join',
+      tabs: [
+        {
+          fields: [
+            rte1({
+              name: 'name',
+            }),
+          ],
+          label: 'Project',
+        },
+        {
+          fields: [
+            // Joins
+            {
+              admin: {
+                allowCreate: false,
+              },
+              collection: 'newsDetailPage',
+              name: 'relatedNewsPages',
+              on: 'project',
+              type: 'join',
+            },
+            {
+              admin: {
+                allowCreate: false,
+              },
+              collection: 'eventDetailPage',
+              name: 'relatedEventPages',
+              on: 'eventDetails.project',
+              type: 'join',
+            },
+            {
+              admin: {
+                allowCreate: false,
+              },
+              collection: 'publicationDetailPage',
+              name: 'relatedPublicationPages',
+              on: 'categorization.project',
+              type: 'join',
+            },
+            {
+              admin: {
+                allowCreate: false,
+              },
+              collection: 'projectDetailPage',
+              name: 'relatedProjectPages',
+              on: 'project',
+              type: 'join',
+            },
+            {
+              admin: {
+                allowCreate: false,
+              },
+              collection: 'documents',
+              name: 'relatedDocuments',
+              on: 'project',
+              type: 'join',
+            },
+            {
+              admin: {
+                allowCreate: false,
+              },
+              collection: 'zenodoDocuments',
+              name: 'relatedZenodoDocuments',
+              on: 'project',
+              type: 'join',
+            },
+          ],
+          label: 'Related Content',
+        },
+      ],
+      type: 'tabs',
     },
   ],
   slug: 'projects',

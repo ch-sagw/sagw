@@ -11,17 +11,32 @@ export const PublicationTopics: CollectionConfig = {
     useAsTitle: 'publicationTopic',
   },
   fields: [
-    rte1({
-      name: 'publicationTopic',
-    }),
     {
-      admin: {
-        allowCreate: false,
-      },
-      collection: 'publicationDetailPage',
-      name: 'relatedPublicationPages',
-      on: 'categorization.topic',
-      type: 'join',
+      tabs: [
+        {
+          fields: [
+            rte1({
+              name: 'publicationTopic',
+            }),
+          ],
+          label: 'Publication Topic',
+        },
+        {
+          fields: [
+            {
+              admin: {
+                allowCreate: false,
+              },
+              collection: 'publicationDetailPage',
+              name: 'relatedPublicationPages',
+              on: 'categorization.topic',
+              type: 'join',
+            },
+          ],
+          label: 'Related Content',
+        },
+      ],
+      type: 'tabs',
     },
   ],
   slug: 'publicationTopics',

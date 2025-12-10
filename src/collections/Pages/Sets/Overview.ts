@@ -40,7 +40,6 @@ const contentBlocks: BlockSlug[] = [
 ];
 
 const uniqueBlocks: BlockSlug[] = [
-  'genericTeasersBlock',
   'projectsTeasersBlock',
   'eventsTeasersBlock',
   'magazineTeasersBlock',

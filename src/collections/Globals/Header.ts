@@ -11,13 +11,21 @@ import { fieldInternalLinkChooser } from '@/components/admin/InternalLinkChooser
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
 
 const navLinkDefaultFields: Field[] = [
-  rte1({
-    name: 'navItemText',
-  }),
-  fieldInternalLinkChooser({
-    name: 'navItemLink',
-    optional: false,
-  }),
+  {
+    admin: {
+      width: '50%',
+    },
+    fields: [
+      rte1({
+        name: 'navItemText',
+      }),
+      fieldInternalLinkChooser({
+        name: 'navItemLink',
+        optional: false,
+      }),
+    ],
+    type: 'row',
+  },
 ];
 
 const linkField = fieldInternalLinkChooser({
