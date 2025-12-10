@@ -10,6 +10,7 @@ import {
   InterfaceNotificationPropTypes,
   Notification,
 } from '@/components/base/Notification/Notification';
+import { Filter } from '@/components/base/Filter/Filter';
 import { InterfaceFilterListPropTypes } from '@/components/base/FilterList/FilterList';
 
 export type InterfacePublicationsOverviewPropTypes = {
@@ -32,6 +33,7 @@ export const PublicationsOverview = (props: InterfacePublicationsOverviewPropTyp
     title,
     colorMode,
     children,
+    filters,
     notification,
   } = props;
 
@@ -58,6 +60,23 @@ export const PublicationsOverview = (props: InterfacePublicationsOverviewPropTyp
       showTopLine={false}
       title={title}
       colorMode={colorMode}
+      additionalStickyContent={filters
+        ? <>
+          <Filter
+            type={filters?.filterListItems[0].type}
+            filterItems={filters?.filterListItems[0].filterItems}
+            labelText={filters?.filterListItems[0].labelText}
+            name={filters?.filterListItems[0].name}
+          />
+          <Filter
+            type={filters?.filterListItems[1].type}
+            filterItems={filters?.filterListItems[1].filterItems}
+            labelText={filters?.filterListItems[1].labelText}
+            name={filters?.filterListItems[1].name}
+          />
+        </>
+        : undefined
+      }
     >
 
       {notification &&

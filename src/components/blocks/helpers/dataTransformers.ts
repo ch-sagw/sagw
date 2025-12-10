@@ -15,6 +15,7 @@ import {
   PublicationTopic,
   PublicationType,
 } from '@/payload-types';
+import { InterfaceFilterItem } from '@/components/base/Filter/Filter';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { PaginatedDocs } from 'payload';
@@ -57,34 +58,35 @@ export const convertPayloadPublicationsPagesToFeItems = (
   return items;
 };
 
-export const preparePublicationTypesFilterItems = (publicationTypes: PaginatedDocs<PublicationType>): any => {
-  const publicationTypeItems: string[] = [];
+interface InterfacePreparePublicationsFilterItems {
+  items: PublicationTopic[] | PublicationType[];
+  labelAll: string;
+}
 
-  publicationTypes.docs.forEach((publicationTypeItem) => {
-    const pubType: any = publicationTypeItem.publicationType;
-    const text = pubType?.root?.children?.[0]?.children?.[0]?.text;
+export const prepareFilterItems = ({
+  items,
+  labelAll,
+}: InterfacePreparePublicationsFilterItems): InterfaceFilterItem[] => {
 
-    if (typeof text === 'string') {
-      publicationTypeItems.push(text);
-    }
+  const filterItems = items.map((item) => {
+    const amount = item.relatedPublicationPages?.docs?.length || 0;
+    const text = (item as PublicationTopic).publicationTopic || (item as PublicationType).publicationType;
+
+    return {
+      checked: false,
+      label: `${rte1ToPlaintext(text)} (${amount})`,
+      value: item.id,
+    };
+
   });
 
-  return publicationTypeItems;
-};
-
-export const preparePublicationTopicsFilterItems = (publicationTopics: PaginatedDocs<PublicationTopic>): any => {
-  const publicationTopicItems: string[] = [];
-
-  publicationTopics.docs.forEach((publicationTopicItem) => {
-    const pubType: any = publicationTopicItem.publicationTopic;
-    const text = pubType?.root?.children?.[0]?.children?.[0]?.text;
-
-    if (typeof text === 'string') {
-      publicationTopicItems.push(text);
-    }
+  filterItems.unshift({
+    checked: true,
+    label: labelAll,
+    value: 'all',
   });
 
-  return publicationTopicItems;
+  return filterItems;
 };
 
 export const convertPayloadNewsPagesToFeItems = (payloadPages: PaginatedDocs<NewsDetailPage>, lang: Config['locale']): InterfaceNewsListItemPropTypes[] => {
