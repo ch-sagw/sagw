@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.26.0](https://github.com/ch-sagw/sagw/compare/v0.25.0...v0.26.0) (2025-12-10)
+
+
+### Features
+
+* **payload:** hide nav level1 link if subnav-items are present (header config) ([e5444dd](https://github.com/ch-sagw/sagw/commit/e5444dd878ddb173f63bc2a4901e0a3b7735ceab))
+* **payload:** organisation of fields in tabs where appropriately ([19da19c](https://github.com/ch-sagw/sagw/commit/19da19cef6ff150cbdc3dc1bab84c479fe84cb00))
+* **payload:** use rows to layout fields appropriately ([19da19c](https://github.com/ch-sagw/sagw/commit/19da19cef6ff150cbdc3dc1bab84c479fe84cb00))
+
+
+### Test
+
+* **payload:** add breadcrumb tests for french ([54a3090](https://github.com/ch-sagw/sagw/commit/54a3090e2ae946c3d9915a0e51d2e0029e5db80f))
+* **payload:** add test for people full name ([54a3090](https://github.com/ch-sagw/sagw/commit/54a3090e2ae946c3d9915a0e51d2e0029e5db80f))
+* **payload:** add test for tenant name validation ([54a3090](https://github.com/ch-sagw/sagw/commit/54a3090e2ae946c3d9915a0e51d2e0029e5db80f))
+* remove accidently lines ([609f528](https://github.com/ch-sagw/sagw/commit/609f5286c54e67050ef78200847cd0f62abdac10))
+* try to fix test ([ef0673e](https://github.com/ch-sagw/sagw/commit/ef0673e6270c5a7767da33d24bb9276a748e1c11))
+
 ## [0.25.0](https://github.com/ch-sagw/sagw/compare/v0.24.0...v0.25.0) (2025-12-05)
 
 
