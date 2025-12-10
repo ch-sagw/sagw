@@ -8,6 +8,7 @@ import { RenderBlocks } from '@/app/(frontend)/RenderBlocks';
 import { Hero } from '@/components/global/Hero/Hero';
 import { getTenant } from '@/app/providers/TenantProvider.server';
 import { RenderStatusMessage } from '@/app/(frontend)/RenderStatusMessage';
+import { rewriteLinks } from '@/utilities/linkRewriter';
 
 type InterfacePageProps = {
   params: Promise<{
@@ -91,11 +92,15 @@ export default async function HomePage({
 
   const [i18nData] = i18nDataDocs.docs;
 
+  // Rewrite links in page data with current locale
+  const transformedPageData = await rewriteLinks(pageData, tenant, locale);
+  const transformedI18nData = await rewriteLinks(i18nData, tenant, locale);
+
   return (
     <Fragment>
       <div className='home'>
         <Hero
-          {...pageData.hero}
+          {...transformedPageData.hero}
           type='home'
         />
         <RenderStatusMessage
@@ -104,12 +109,12 @@ export default async function HomePage({
           locale={locale}
         />
         <RenderBlocks
-          i18n={i18nData}
-          blocks={pageData.content}
+          i18n={transformedI18nData}
+          blocks={transformedPageData.content}
           tenantId={tenant}
           sourcePage={{
             collectionSlug: 'homePage',
-            id: pageData.id,
+            id: transformedPageData.id,
           }}
           locale={locale}
         />

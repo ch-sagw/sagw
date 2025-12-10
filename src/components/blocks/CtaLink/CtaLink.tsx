@@ -26,9 +26,7 @@ export const CtaLink = (props: InterfaceCtaLinkPropTypes): React.JSX.Element => 
     linkHref = props.linkExternal.externalLink;
   } else if (props.linkType === 'internal' && props.linkInternal) {
     linkText = rteToHtml(props.linkInternal.linkText);
-
-    // TODO: generate url
-    linkHref = props.linkInternal.internalLink.slug;
+    linkHref = props.linkInternal.internalLink.href || props.linkInternal.internalLink.slug;
   } else if (props.linkType === 'mail' && props.linkMail) {
     linkText = rteToHtml(props.linkMail.linkText);
     linkHref = props.linkMail.email;

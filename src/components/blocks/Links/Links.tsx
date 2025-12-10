@@ -31,9 +31,7 @@ export const Links = (props: InterfaceLinksPropTypes): React.JSX.Element => {
     } else if (link.linkType === 'internal' && link.linkInternal) {
       const returnLink: InterfaceDownloadLinkItemPropTypes = {
         link: {
-
-          // TODO: generate url
-          href: `/${link.linkInternal.internalLink.slug}`,
+          href: link.linkInternal.internalLink.href || `/${link.linkInternal.internalLink.slug}`,
           target: '_self' as const,
         },
         text: rteToHtml(link.linkInternal.description),

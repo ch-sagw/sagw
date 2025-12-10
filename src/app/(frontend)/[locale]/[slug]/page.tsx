@@ -8,6 +8,7 @@ import { RenderBlocks } from '@/app/(frontend)/RenderBlocks';
 import { getTenant } from '@/app/providers/TenantProvider.server';
 import { RenderHero } from '@/app/(frontend)/RenderHero';
 import { RenderStatusMessage } from '@/app/(frontend)/RenderStatusMessage';
+import { rewriteLinks } from '@/utilities/linkRewriter';
 
 type InterfacePageProps = {
   params: Promise<{
@@ -135,13 +136,17 @@ export default async function DetailPage({
 
   const [i18nData] = i18nDataDocs.docs;
 
+  // Rewrite links in page data and i18n data with current locale
+  const transformedPageData = await rewriteLinks(pageData, tenant, locale);
+  const transformedI18nData = await rewriteLinks(i18nData, tenant, locale);
+
   // Get content blocks - some pages have content, others have blocks.content
   let contentBlocks = null;
 
-  if ('content' in pageData && pageData.content) {
-    contentBlocks = pageData.content;
-  } else if ('blocks' in pageData && pageData.blocks && 'content' in pageData.blocks) {
-    contentBlocks = pageData.blocks.content;
+  if ('content' in transformedPageData && transformedPageData.content) {
+    contentBlocks = transformedPageData.content;
+  } else if ('blocks' in transformedPageData && transformedPageData.blocks && 'content' in transformedPageData.blocks) {
+    contentBlocks = transformedPageData.blocks.content;
   }
 
   return (
@@ -150,8 +155,8 @@ export default async function DetailPage({
         <div className='detail-page'>
           <RenderHero
             foundCollection={foundCollection}
-            pageData={pageData}
-            i18nGeneric={i18nData.generic}
+            pageData={transformedPageData}
+            i18nGeneric={transformedI18nData.generic}
             locale={locale}
           />
           <RenderStatusMessage
@@ -163,10 +168,10 @@ export default async function DetailPage({
             <RenderBlocks
               blocks={contentBlocks}
               tenantId={tenant}
-              i18n={i18nData}
+              i18n={transformedI18nData}
               sourcePage={{
                 collectionSlug: foundCollection,
-                id: pageData.id,
+                id: transformedPageData.id,
               }}
               locale={locale}
             />

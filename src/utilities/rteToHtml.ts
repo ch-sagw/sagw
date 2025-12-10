@@ -30,6 +30,12 @@ type LexicalNode =
 const internalDocToHref = ({
   linkNode,
 }: { linkNode: SerializedLinkNode }): string => {
+  // If href was already resolved by linkRewriter, use it
+  if (linkNode.fields?.href && typeof linkNode.fields.href === 'string') {
+    return linkNode.fields.href;
+  }
+
+  // Fallback to original behavior if href not available
   if (!linkNode.fields.doc) {
     return '';
   }

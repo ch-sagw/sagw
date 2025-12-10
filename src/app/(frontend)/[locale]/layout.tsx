@@ -23,6 +23,7 @@ import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { NoJsScript } from '@/components/helpers/noJsScript';
+import { rewriteLinks } from '@/utilities/linkRewriter';
 
 type InterfaceRootLayoutProps = {
   children: React.ReactNode
@@ -182,6 +183,11 @@ export default async function RootLayout({
 
   const [consentData] = consentCollectionData.docs;
 
+  // Rewrite links in header, footer, and consent data with current locale
+  const transformedHeaderData = await rewriteLinks(headerData.docs[0], tenant, locale);
+  const transformedFooterData = await rewriteLinks(footerData.docs[0], tenant, locale);
+  const transformedConsentData = await rewriteLinks(consentData, tenant, locale);
+
   const colorMode: ColorMode = 'dark';
 
   const headerProps: InterfaceHeaderPropTypes = {
@@ -193,17 +199,17 @@ export default async function RootLayout({
       close: 'Close',
       open: 'Open',
     },
-    metanav: metanavData,
-    navigation: navData,
+    metanav: transformedHeaderData.metanavigation,
+    navigation: transformedHeaderData.navigation,
   };
 
   const footerProps: InterfaceFooterPropTypes = {
-    consentOverlay: consentData.overlay,
-    contact: footerContactData,
-    legal: footerLegalData,
-    metaNav: metanavData,
-    navigation: navData,
-    socialLinks: footerData.docs[0].socialLinks,
+    consentOverlay: transformedConsentData.overlay,
+    contact: transformedFooterData.contact,
+    legal: transformedFooterData.legal,
+    metaNav: transformedHeaderData.metanavigation,
+    navigation: transformedHeaderData.navigation,
+    socialLinks: transformedFooterData.socialLinks,
 
     // TODO
     structuredDataImage: 'https://www.sagw.ch/logo.svg',
