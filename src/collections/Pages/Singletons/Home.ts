@@ -20,6 +20,7 @@ import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 import { readFile } from 'fs/promises';
 import { hookGenerateRteLinkPaths } from '@/hooks-payload/generateRteLinkPaths/blocks';
+import { hookGenerateInternalLinkPaths } from '@/hooks-payload/generateInternalLinkPaths';
 
 const homeBlocks: BlockSlug[] = [
   'textBlock',
@@ -142,6 +143,7 @@ export const HomePage: CollectionConfig = {
     beforeValidate: [
       hookPreventBlockStructureChangesForTranslators(),
       hookGenerateRteLinkPaths,
+      hookGenerateInternalLinkPaths,
     ],
   },
   labels: {

@@ -13,14 +13,6 @@ import { fieldLinkablePageFieldName } from '@/field-templates/linkablePage';
 import { fieldAdminTitleFieldName } from '@/field-templates/adminTitle';
 import { useTenantSelection } from '@payloadcms/plugin-multi-tenant/client';
 import { InterfaceSlug } from '@/collections/Pages/pages';
-import { generatePagePath } from '@/utilities/generatePagePath';
-import {
-  Config, InterfaceBreadcrumb,
-} from '@/payload-types';
-import { locales } from '@/i18n/locales';
-import { extractLinkDataFromPage } from '@/utilities/extractLinkDataFromPage';
-
-type LocalizedString = Partial<Record<Config['locale'], string>>;
 
 interface InterfaceGroupedOptions {
   label: string;
@@ -98,110 +90,6 @@ const fetchPages = async ({
   return allOptions;
 };
 
-// Fetch page data (breadcrumb, slug, tenant) for path generation
-const fetchPageDataForPath = async ({
-  collectionSlug,
-  documentId,
-}: {
-  collectionSlug: string;
-  documentId: string;
-}): Promise<{
-  breadcrumb: InterfaceBreadcrumb;
-  slug: LocalizedString;
-  tenant: string | null;
-} | null> => {
-  try {
-    // Fetch page with locale 'all' to get all locale data
-    // Use depth=1 to populate tenant relation
-    const res = await fetch(`/api/${collectionSlug}/${documentId}?locale=all&depth=1`);
-
-    if (!res.ok) {
-      return null;
-    }
-
-    const pageData = await res.json();
-
-    if (!pageData || !pageData.id) {
-      return null;
-    }
-
-    return extractLinkDataFromPage({
-      pageData,
-    });
-  } catch (error) {
-    console.error(`Error fetching page data for ${collectionSlug}/${documentId}:`, error);
-
-    return null;
-  }
-};
-
-/**
- * Generate and set paths for all locales
- */
-const generateAndSetPaths = async ({
-  collectionSlug,
-  documentId,
-  tenantId,
-  setPathDeValue,
-  setPathFrValue,
-  setPathItValue,
-  setPathEnValue,
-}: {
-  collectionSlug: string;
-  documentId: string;
-  tenantId: string | null;
-  setPathDeValue: (value: string | null) => void;
-  setPathFrValue: (value: string | null) => void;
-  setPathItValue: (value: string | null) => void;
-  setPathEnValue: (value: string | null) => void;
-}): Promise<void> => {
-  if (!tenantId) {
-    return;
-  }
-
-  const pageData = await fetchPageDataForPath({
-    collectionSlug,
-    documentId,
-  });
-
-  if (!pageData) {
-    // Clear paths if page data couldn't be fetched
-    setPathDeValue(null);
-    setPathFrValue(null);
-    setPathItValue(null);
-    setPathEnValue(null);
-
-    return;
-  }
-
-  for (const locale of locales) {
-    const generatedPath = generatePagePath({
-      breadcrumb: pageData.breadcrumb,
-      locale,
-      pageSlug: pageData.slug,
-      tenant: pageData.tenant,
-    });
-
-    switch (locale) {
-      case 'de':
-        setPathDeValue(generatedPath || null);
-        break;
-      case 'fr':
-        setPathFrValue(generatedPath || null);
-        break;
-      case 'it':
-        setPathItValue(generatedPath || null);
-        break;
-      case 'en':
-        setPathEnValue(generatedPath || null);
-        break;
-      default:
-        // Unknown locale
-        break;
-    }
-  }
-};
-
 // component
 
 const InternalLinkChooserClient = ({
@@ -229,30 +117,6 @@ const InternalLinkChooserClient = ({
     setValue: setIdValue,
   } = useField<string | null>({
     path: `${path}.documentId`,
-  });
-
-  const {
-    setValue: setPathDeValue,
-  } = useField<string | null>({
-    path: `${path}.pathde`,
-  });
-
-  const {
-    setValue: setPathFrValue,
-  } = useField<string | null>({
-    path: `${path}.pathfr`,
-  });
-
-  const {
-    setValue: setPathItValue,
-  } = useField<string | null>({
-    path: `${path}.pathit`,
-  });
-
-  const {
-    setValue: setPathEnValue,
-  } = useField<string | null>({
-    path: `${path}.pathen`,
   });
 
   const {
@@ -354,7 +218,7 @@ const InternalLinkChooserClient = ({
 
           return String(option.value);
         }}
-        onChange={async (newValue) => {
+        onChange={(newValue): void => {
           if (readOnly) {
             return;
           }
@@ -362,10 +226,6 @@ const InternalLinkChooserClient = ({
           if (!newValue || Array.isArray(newValue)) {
             setSlugValue(null);
             setIdValue(null);
-            setPathDeValue(null);
-            setPathFrValue(null);
-            setPathItValue(null);
-            setPathEnValue(null);
           } else {
             const valueObj = newValue.value as { slug: string; id: string } | string;
 
@@ -376,26 +236,9 @@ const InternalLinkChooserClient = ({
               // Set nested fields separately for group fields
               setIdValue(id);
               setSlugValue(slug);
-
-              // Generate and store paths for all locales
-              const selectedTenantID = tenantContext?.selectedTenantID as string | null;
-
-              await generateAndSetPaths({
-                collectionSlug: slug,
-                documentId: id,
-                setPathDeValue,
-                setPathEnValue,
-                setPathFrValue,
-                setPathItValue,
-                tenantId: selectedTenantID,
-              });
             } else {
               setSlugValue(null);
               setIdValue(null);
-              setPathDeValue(null);
-              setPathFrValue(null);
-              setPathItValue(null);
-              setPathEnValue(null);
             }
           }
         }}

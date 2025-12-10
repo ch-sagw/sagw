@@ -7,6 +7,7 @@ import { hookSeoFallback } from '@/hooks-payload/seoFallback';
 import { hookSlug } from '@/hooks-payload/slug';
 import { hookAdminTitle } from '@/hooks-payload/adminTitle';
 import { hookGenerateRteLinkPaths } from '@/hooks-payload/generateRteLinkPaths/blocks';
+import { hookGenerateInternalLinkPaths } from '../generateInternalLinkPaths';
 import {
   CollectionAfterChangeHook, CollectionAfterDeleteHook, CollectionBeforeChangeHook, CollectionBeforeValidateHook,
 } from 'payload';
@@ -47,6 +48,7 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
     hookSlug,
     hookValidateParentCircularReference,
     hookGenerateRteLinkPaths,
+    hookGenerateInternalLinkPaths,
     ...(additionalHooks?.beforeValidate ?? []),
     hookPreventBlockStructureChangesForTranslators(),
   ],

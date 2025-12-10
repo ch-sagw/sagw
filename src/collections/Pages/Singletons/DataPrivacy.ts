@@ -14,6 +14,7 @@ import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/
 import { allBlocksButTranslator } from '@/access/blocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 import { hookGenerateRteLinkPaths } from '@/hooks-payload/generateRteLinkPaths/blocks';
+import { hookGenerateInternalLinkPaths } from '@/hooks-payload/generateInternalLinkPaths';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
 
@@ -80,6 +81,7 @@ export const DataPrivacyPage: CollectionConfig = {
     beforeValidate: [
       hookPreventBlockStructureChangesForTranslators(),
       hookGenerateRteLinkPaths,
+      hookGenerateInternalLinkPaths,
     ],
   },
   labels: {

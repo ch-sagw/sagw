@@ -49,7 +49,7 @@ export const generatePagePath = ({
   breadcrumb: InterfaceBreadcrumb;
   pageSlug: LocalizedString;
   locale: TypedLocale;
-  tenant: string | { slug?: string } | null;
+  tenant: string | { slug?: string } | LocalizedString | null;
 }): string => {
 
   // Get page slug
@@ -94,10 +94,21 @@ export const generatePagePath = ({
   let tenantSlug: string | null = null;
 
   if (tenant) {
-    if (typeof tenant === 'object' && tenant !== null && 'slug' in tenant) {
-      tenantSlug = typeof tenant.slug === 'string'
-        ? tenant.slug
-        : null;
+    if (typeof tenant === 'string') {
+      // Tenant is already a string (slug)
+      tenantSlug = tenant;
+    } else if (typeof tenant === 'object' && tenant !== null) {
+      // Tenant is an object - could be { slug: string }
+      // or localized { de: string, fr: string, ... }
+      if ('slug' in tenant && typeof tenant.slug === 'string') {
+        // Standard object with slug property
+        tenantSlug = tenant.slug;
+      } else {
+        // Localized tenant object - get slug for target locale
+        const tenantSlugObj = tenant as LocalizedString;
+
+        tenantSlug = getSlugForLocale(tenantSlugObj, locale);
+      }
     }
   }
 
