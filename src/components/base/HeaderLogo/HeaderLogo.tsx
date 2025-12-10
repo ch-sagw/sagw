@@ -2,11 +2,17 @@ import React, { forwardRef } from 'react';
 import styles from '@/components/base/HeaderLogo/HeaderLogo.module.scss';
 import { ColorMode } from '@/components/base/types/colorMode';
 
+import sago from '@/components/base/HeaderLogo/logos/sago';
 import sagw from '@/components/base/HeaderLogo/logos/sagw';
+import sgtk from '@/components/base/HeaderLogo/logos/sgtk';
+import sslas from '@/components/base/HeaderLogo/logos/sslas';
 import Link from 'next/link';
 
 export const Logos = {
+  sago,
   sagw,
+  sgtk,
+  sslas,
 };
 
 export interface InterfaceHeaderLogoPropTypes {

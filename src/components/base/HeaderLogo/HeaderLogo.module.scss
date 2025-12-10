@@ -10,6 +10,13 @@
   }
 }
 
+.logo.dark {
+  path,
+  polygon {
+    fill: rgb(var(--white));
+  }
+}
+
 .logo.sagw {
   path {
     stroke: none;
