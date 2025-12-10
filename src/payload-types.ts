@@ -321,7 +321,6 @@ export interface InterfaceHeroFieldHome {
     };
     [k: string]: unknown;
   } | null;
-  animated?: boolean | null;
   sideTitle: {
     root: {
       type: string;
@@ -358,6 +357,7 @@ export interface InterfaceHeroFieldHome {
       internalLink: InterfaceInternalLinkValue;
     };
   };
+  animated?: boolean | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -412,7 +412,6 @@ export interface Form {
    * A newsletter form has a fixed set of fields. Custom form can be build with any combination of fields as you like.
    */
   isNewsletterForm?: ('custom' | 'newsletter') | null;
-  colorMode: 'white' | 'dark' | 'light';
   title?: {
     root: {
       type: string;
@@ -446,6 +445,7 @@ export interface Form {
   submitButtonLabel: string;
   recipientMail?: string | null;
   mailSubject?: string | null;
+  colorMode: 'white' | 'dark' | 'light';
   /**
    * If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".
    */
@@ -925,6 +925,7 @@ export interface InterfaceHomeTeasersBlock {
   homeTeasers?:
     | {
         category: string;
+        iconName: 'bar';
         title: {
           root: {
             type: string;
@@ -955,7 +956,6 @@ export interface InterfaceHomeTeasersBlock {
           };
           [k: string]: unknown;
         };
-        iconName: 'bar';
         link: {
           linkText: {
             root: {
@@ -1571,7 +1571,6 @@ export interface InterfaceHeroFieldMagazineDetail {
     };
     [k: string]: unknown;
   } | null;
-  colorMode: 'white' | 'dark' | 'light';
   author: {
     root: {
       type: string;
@@ -1588,6 +1587,7 @@ export interface InterfaceHeroFieldMagazineDetail {
     [k: string]: unknown;
   };
   date: string;
+  colorMode: 'white' | 'dark' | 'light';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1922,8 +1922,8 @@ export interface InterfaceHeroFieldNewsDetail {
     };
     [k: string]: unknown;
   } | null;
-  colorMode: 'white' | 'dark' | 'light';
   date: string;
+  colorMode: 'white' | 'dark' | 'light';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2065,8 +2065,8 @@ export interface EventDetailPage {
     } | null;
     category?: (string | null) | EventCategory;
     project?: (string | null) | Project;
-    time?: string | null;
     date: string;
+    time?: string | null;
     multipleDays?: boolean | null;
     dateEnd?: string | null;
   };
@@ -2503,21 +2503,6 @@ export interface InterfaceCtaContactBlock {
 export interface Person {
   id: string;
   tenant?: (string | null) | Tenant;
-  prefix?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
   firstname: {
     root: {
       type: string;
@@ -2563,6 +2548,21 @@ export interface Person {
     };
     [k: string]: unknown;
   };
+  prefix?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   function?: {
     root: {
       type: string;
@@ -4815,7 +4815,6 @@ export interface HomePageSelect<T extends boolean = true> {
 export interface InterfaceHeroFieldHomeSelect<T extends boolean = true> {
   title?: T;
   lead?: T;
-  animated?: T;
   sideTitle?: T;
   optionalLink?:
     | T
@@ -4828,6 +4827,7 @@ export interface InterfaceHeroFieldHomeSelect<T extends boolean = true> {
               internalLink?: T | InterfaceInternalLinkValueSelect<T>;
             };
       };
+  animated?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4864,9 +4864,9 @@ export interface InterfaceHomeTeasersBlockSelect<T extends boolean = true> {
     | T
     | {
         category?: T;
+        iconName?: T;
         title?: T;
         text?: T;
-        iconName?: T;
         link?:
           | T
           | {
@@ -5161,9 +5161,9 @@ export interface InterfaceBreadcrumbSelect<T extends boolean = true> {
 export interface InterfaceHeroFieldMagazineDetailSelect<T extends boolean = true> {
   title?: T;
   lead?: T;
-  colorMode?: T;
   author?: T;
   date?: T;
+  colorMode?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5608,8 +5608,8 @@ export interface EventDetailPageSelect<T extends boolean = true> {
         language?: T;
         category?: T;
         project?: T;
-        time?: T;
         date?: T;
+        time?: T;
         multipleDays?: T;
         dateEnd?: T;
       };
@@ -5702,8 +5702,8 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
 export interface InterfaceHeroFieldNewsDetailSelect<T extends boolean = true> {
   title?: T;
   lead?: T;
-  colorMode?: T;
   date?: T;
+  colorMode?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6016,10 +6016,10 @@ export interface ProjectsSelect<T extends boolean = true> {
  */
 export interface PeopleSelect<T extends boolean = true> {
   tenant?: T;
-  prefix?: T;
   firstname?: T;
   middleName?: T;
   lastname?: T;
+  prefix?: T;
   function?: T;
   mail?: T;
   phone?: T;
@@ -6132,12 +6132,12 @@ export interface UsersSelect<T extends boolean = true> {
 export interface FormsSelect<T extends boolean = true> {
   tenant?: T;
   isNewsletterForm?: T;
-  colorMode?: T;
   title?: T;
   subtitle?: T;
   submitButtonLabel?: T;
   recipientMail?: T;
   mailSubject?: T;
+  colorMode?: T;
   showPrivacyCheckbox?: T;
   submitSuccess?:
     | T

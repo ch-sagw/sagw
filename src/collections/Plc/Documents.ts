@@ -14,15 +14,23 @@ export const Documents: CollectionConfig = {
       name: 'title',
     }),
     {
-      name: 'date',
-      required: false,
-      type: 'date',
-    },
-    {
-      name: 'project',
-      relationTo: 'projects',
-      required: false,
-      type: 'relationship',
+      admin: {
+        width: '50%',
+      },
+      fields: [
+        {
+          name: 'date',
+          required: false,
+          type: 'date',
+        },
+        {
+          name: 'project',
+          relationTo: 'projects',
+          required: false,
+          type: 'relationship',
+        },
+      ],
+      type: 'row',
     },
   ],
   slug: 'documents',

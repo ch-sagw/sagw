@@ -31,7 +31,6 @@ const contentBlocks: BlockSlug[] = [
 const uniqueBlocks: BlockSlug[] = [
   'downloadsBlock',
   'linksBlock',
-  'genericTeasersBlock',
 ];
 
 export const DetailPage: CollectionConfig = {

@@ -29,12 +29,20 @@ const overlaySectionWithoutToggle: Field[] = [
 
 const overlaySectionWithToggle: Field[] = [
   ...overlaySection,
-  rte1({
-    name: 'toggleLabelOff',
-  }),
-  rte1({
-    name: 'toggleLabelOn',
-  }),
+  {
+    admin: {
+      width: '50%',
+    },
+    fields: [
+      rte1({
+        name: 'toggleLabelOff',
+      }),
+      rte1({
+        name: 'toggleLabelOn',
+      }),
+    ],
+    type: 'row',
+  },
   {
     defaultValue: 'on',
     name: 'toggleDefault',
@@ -73,15 +81,23 @@ export const Consent: CollectionConfig = {
             rte3({
               name: 'text',
             }),
-            rte1({
-              name: 'buttonAcceptAll',
-            }),
-            rte1({
-              name: 'buttonCustomizeSelection',
-            }),
-            rte1({
-              name: 'buttonDeclineAll',
-            }),
+            {
+              admin: {
+                width: '33.33%',
+              },
+              fields: [
+                rte1({
+                  name: 'buttonAcceptAll',
+                }),
+                rte1({
+                  name: 'buttonCustomizeSelection',
+                }),
+                rte1({
+                  name: 'buttonDeclineAll',
+                }),
+              ],
+              type: 'row',
+            },
           ],
           interfaceName: 'InterfaceConsentBanner',
           label: 'Consent Banner',
@@ -97,12 +113,20 @@ export const Consent: CollectionConfig = {
             rte3({
               name: 'text',
             }),
-            rte1({
-              name: 'buttonAcceptAll',
-            }),
-            rte1({
-              name: 'buttonAcceptSelection',
-            }),
+            {
+              admin: {
+                width: '50%',
+              },
+              fields: [
+                rte1({
+                  name: 'buttonAcceptAll',
+                }),
+                rte1({
+                  name: 'buttonAcceptSelection',
+                }),
+              ],
+              type: 'row',
+            },
             {
               fields: overlaySectionWithoutToggle,
               label: 'Necessary Cookies',
