@@ -1,6 +1,8 @@
 import { LinkableCollectionSlug } from '@/collections/Pages/pages';
 import { Field } from 'payload';
 
+export const INTERNAL_LINK_MARKER_VALUE = '__internalLink__';
+
 interface InterfaceFieldInternalLinkChooserProps {
   optional?: boolean;
   name: string;
@@ -24,6 +26,15 @@ export const fieldInternalLinkChooser = (props: InterfaceFieldInternalLinkChoose
       {
         admin: {
           hidden: true,
+          readOnly: true,
+        },
+        defaultValue: INTERNAL_LINK_MARKER_VALUE,
+        name: '_internalLinkMarker',
+        type: 'text',
+      },
+      {
+        admin: {
+          hidden: true,
         },
         name: 'slug',
         required: !props?.optional,
@@ -36,6 +47,32 @@ export const fieldInternalLinkChooser = (props: InterfaceFieldInternalLinkChoose
         name: 'documentId',
         required: !props?.optional,
         type: 'text',
+      },
+      {
+        admin: {
+          hidden: true,
+        },
+        fields: [
+          {
+            name: 'de',
+            type: 'text',
+          },
+          {
+            name: 'fr',
+            type: 'text',
+          },
+          {
+            name: 'it',
+            type: 'text',
+          },
+          {
+            name: 'en',
+            type: 'text',
+          },
+        ],
+        interfaceName: 'InterfaceInternalLinkUrls',
+        name: 'url',
+        type: 'group',
       },
     ],
     interfaceName: 'InterfaceInternalLinkValue',

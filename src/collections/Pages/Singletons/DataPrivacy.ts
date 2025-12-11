@@ -13,6 +13,8 @@ import { pageAccess } from '@/access/pages';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
+import { hookGenerateRteLinkPaths } from '@/hooks-payload/generateRteLinkPaths';
+import { hookGenerateInternalLinkPaths } from '@/hooks-payload/generateInternalLinkPaths';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
 
@@ -59,7 +61,11 @@ export const DataPrivacyPage: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [hookPreventBulkPublishForTranslators],
-    beforeValidate: [hookPreventBlockStructureChangesForTranslators()],
+    beforeValidate: [
+      hookPreventBlockStructureChangesForTranslators(),
+      hookGenerateRteLinkPaths,
+      hookGenerateInternalLinkPaths,
+    ],
   },
   labels: {
     plural: 'Data Privacy',

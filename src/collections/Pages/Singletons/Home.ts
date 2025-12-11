@@ -19,6 +19,8 @@ import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 import { readFile } from 'fs/promises';
+import { hookGenerateRteLinkPaths } from '@/hooks-payload/generateRteLinkPaths';
+import { hookGenerateInternalLinkPaths } from '@/hooks-payload/generateInternalLinkPaths';
 
 const homeBlocks: BlockSlug[] = [
   'textBlock',
@@ -138,7 +140,11 @@ export const HomePage: CollectionConfig = {
       hookPreventBulkPublishForTranslators,
       hookGenerateBreadcrumbs,
     ],
-    beforeValidate: [hookPreventBlockStructureChangesForTranslators()],
+    beforeValidate: [
+      hookPreventBlockStructureChangesForTranslators(),
+      hookGenerateRteLinkPaths,
+      hookGenerateInternalLinkPaths,
+    ],
   },
   labels: {
     plural: 'Home',

@@ -1,5 +1,7 @@
 import React from 'react';
 import { cva } from 'cva';
+import { getLocale } from 'next-intl/server';
+import type { TypedLocale } from 'payload';
 import styles from '@/components/blocks/Rte/Rte.module.scss';
 import { InterfaceRte } from '@/components/base/types/rte';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
@@ -15,12 +17,14 @@ export type InterfaceRtePropTypes = {
   className?: string;
 };
 
-export const Rte = ({
+export const Rte = async ({
   colorMode,
   text,
   stickyFirstTitle,
   className,
-}: InterfaceRtePropTypes): React.JSX.Element => {
+}: InterfaceRtePropTypes): Promise<React.JSX.Element> => {
+  const locale = (await getLocale()) as TypedLocale;
+
   const classes = cva([
     styles.rte,
     className,
@@ -46,7 +50,7 @@ export const Rte = ({
     } >
       <SafeHtml
         as='div'
-        html={rte4ToHtml(text)}
+        html={rte4ToHtml(text, locale)}
         className={styles.text}
       />
     </div >

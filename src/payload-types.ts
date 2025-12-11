@@ -366,8 +366,20 @@ export interface InterfaceHeroFieldHome {
  * via the `definition` "InterfaceInternalLinkValue".
  */
 export interface InterfaceInternalLinkValue {
+  _internalLinkMarker?: string | null;
   slug: string;
   documentId: string;
+  url?: InterfaceInternalLinkUrls;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceInternalLinkUrls".
+ */
+export interface InterfaceInternalLinkUrls {
+  de?: string | null;
+  fr?: string | null;
+  it?: string | null;
+  en?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4870,8 +4882,20 @@ export interface InterfaceHeroFieldHomeSelect<T extends boolean = true> {
  * via the `definition` "InterfaceInternalLinkValue_select".
  */
 export interface InterfaceInternalLinkValueSelect<T extends boolean = true> {
+  _internalLinkMarker?: T;
   slug?: T;
   documentId?: T;
+  url?: T | InterfaceInternalLinkUrlsSelect<T>;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceInternalLinkUrls_select".
+ */
+export interface InterfaceInternalLinkUrlsSelect<T extends boolean = true> {
+  de?: T;
+  fr?: T;
+  it?: T;
+  en?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

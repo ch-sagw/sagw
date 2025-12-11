@@ -1,4 +1,6 @@
 import React from 'react';
+import { getLocale } from 'next-intl/server';
+import type { TypedLocale } from 'payload';
 import styles from '@/components/blocks/Footnote/Footnote.module.scss';
 import { InterfaceFootnotesBlock } from '@/payload-types';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
@@ -9,24 +11,28 @@ import { Section } from '@/components/base/Section/Section';
 
 export type InterfaceFootnotePropTypes = {} & InterfaceFootnotesBlock;
 
-export const Footnote = ({
+export const Footnote = async ({
   title,
   text,
-}: InterfaceFootnotePropTypes): React.JSX.Element => (
-  <Section
-    className={styles.section}
-    colorMode='white'
-  >
-    <SafeHtml
-      as='h3'
-      html={rteToHtml(title)}
-    />
+}: InterfaceFootnotePropTypes): Promise<React.JSX.Element> => {
+  const locale = (await getLocale()) as TypedLocale;
 
-    <SafeHtml
-      as='div'
-      html={rte4ToHtml(text)}
-      className={styles.text}
-    />
+  return (
+    <Section
+      className={styles.section}
+      colorMode='white'
+    >
+      <SafeHtml
+        as='h3'
+        html={rteToHtml(title)}
+      />
 
-  </Section>
-);
+      <SafeHtml
+        as='div'
+        html={rte4ToHtml(text, locale)}
+        className={styles.text}
+      />
+
+    </Section>
+  );
+};

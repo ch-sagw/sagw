@@ -2,6 +2,8 @@
 
 import React, { Fragment } from 'react';
 import { cva } from 'cva';
+import { useLocale } from 'next-intl';
+import type { TypedLocale } from 'payload';
 import { Form as InterfaceForm } from '@/payload-types';
 import {
   hiddenFormDefinitionFieldName, hiddenPageUrl,
@@ -68,6 +70,7 @@ export const FormComponent = ({
   submitSuccess,
 }: InterfaceFormClientPropTypes): React.JSX.Element => {
   const pathname = usePathname();
+  const locale = useLocale() as TypedLocale;
 
   return (
     <Section
@@ -179,7 +182,7 @@ export const FormComponent = ({
                     })}
                     value='on'
                     name={field.name}
-                    label={rte4ToHtml(field.label)}
+                    label={rte4ToHtml(field.label, locale)}
                     checked={checked}
                     errorText={errors[field.name]?.join(', ') || ''}
                     colorMode={form.colorMode}
@@ -207,12 +210,12 @@ export const FormComponent = ({
                         checked: isSelectedFromServer
                           ? true
                           : (item.defaultChecked ?? undefined),
-                        label: rte4ToHtml(item.label),
+                        label: rte4ToHtml(item.label, locale),
                         value: item.value,
                       });
                     })}
                     errorText={errors[field.name]?.join(', ') || ''}
-                    descriptionLabel={rte4ToHtml(field.label)}
+                    descriptionLabel={rte4ToHtml(field.label, locale)}
                   />
                 );
               }

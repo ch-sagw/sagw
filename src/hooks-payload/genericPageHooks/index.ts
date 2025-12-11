@@ -14,10 +14,8 @@ import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBul
 import {
   hookManageLinksCollectionOnChange, hookManageLinksCollectionOnDelete,
 } from '@/hooks-payload/manageLinksCollection';
-// import { hookGenerateRteLinkPaths } from
-// '@/hooks-payload/generateRteLinkPaths';
-// import { hookGenerateInternalLinkPaths } from
-// '@/hooks-payload/generateInternalLinkPaths';
+import { hookGenerateRteLinkPaths } from '@/hooks-payload/generateRteLinkPaths';
+import { hookGenerateInternalLinkPaths } from '@/hooks-payload/generateInternalLinkPaths';
 
 interface InterfaceGenericPageHooks {
   afterChange?: CollectionAfterChangeHook[];
@@ -54,8 +52,8 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
     hookAdminTitle,
     hookSlug,
     hookValidateParentCircularReference,
-    // hookGenerateRteLinkPaths,
-    // hookGenerateInternalLinkPaths,
+    hookGenerateRteLinkPaths,
+    hookGenerateInternalLinkPaths,
     ...(additionalHooks?.beforeValidate ?? []),
     hookPreventBlockStructureChangesForTranslators(),
   ],

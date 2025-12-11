@@ -1,20 +1,24 @@
 import React from 'react';
+import { getLocale } from 'next-intl/server';
+import type { TypedLocale } from 'payload';
 import { InterfaceNotificationBlock } from '@/payload-types';
 import { rte4ToHtml } from '@/utilities/rteToHtml';
 import { Notification as BaseComponent } from '@/components/base/Notification/Notification';
 
 export type InterfaceNotificationPropTypes = {} & InterfaceNotificationBlock;
 
-const NotificationBase = ({
+export const Notification = async ({
   text,
-}: InterfaceNotificationPropTypes): React.JSX.Element => (
-  <BaseComponent
-    text={rte4ToHtml(text)}
-    type='success'
-    colorMode='light'
-    hideIcon={true}
-    hideBorder={true}
-  />
-);
+}: InterfaceNotificationPropTypes): Promise<React.JSX.Element> => {
+  const locale = (await getLocale()) as TypedLocale;
 
-export const Notification = React.memo(NotificationBase);
+  return (
+    <BaseComponent
+      text={rte4ToHtml(text, locale)}
+      type='success'
+      colorMode='light'
+      hideIcon={true}
+      hideBorder={true}
+    />
+  );
+};
