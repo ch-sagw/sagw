@@ -112,6 +112,7 @@ export interface Config {
     tenants: Tenant;
     users: User;
     forms: Form;
+    links: Link;
     i18nGlobals: I18NGlobal;
     consent: Consent;
     footer: Footer;
@@ -173,6 +174,7 @@ export interface Config {
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
+    links: LinksSelect<false> | LinksSelect<true>;
     i18nGlobals: I18NGlobalsSelect<false> | I18NGlobalsSelect<true>;
     consent: ConsentSelect<false> | ConsentSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
@@ -3583,6 +3585,36 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "links".
+ */
+export interface Link {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  documentId: string;
+  slug: string;
+  url?: InterfacePageUrls;
+  references?:
+    | {
+        pageId?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  deleted?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfacePageUrls".
+ */
+export interface InterfacePageUrls {
+  de?: string | null;
+  fr?: string | null;
+  it?: string | null;
+  en?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "i18nGlobals".
  */
 export interface I18NGlobal {
@@ -4702,6 +4734,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'forms';
         value: string | Form;
+      } | null)
+    | ({
+        relationTo: 'links';
+        value: string | Link;
       } | null)
     | ({
         relationTo: 'i18nGlobals';
@@ -6294,6 +6330,35 @@ export interface InterfaceTextareaFieldSelect<T extends boolean = true> {
   fieldError?: T;
   id?: T;
   blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "links_select".
+ */
+export interface LinksSelect<T extends boolean = true> {
+  tenant?: T;
+  documentId?: T;
+  slug?: T;
+  url?: T | InterfacePageUrlsSelect<T>;
+  references?:
+    | T
+    | {
+        pageId?: T;
+        id?: T;
+      };
+  deleted?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfacePageUrls_select".
+ */
+export interface InterfacePageUrlsSelect<T extends boolean = true> {
+  de?: T;
+  fr?: T;
+  it?: T;
+  en?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

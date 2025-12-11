@@ -11,6 +11,13 @@ import {
 } from 'payload';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
+import {
+  hookManageLinksCollectionOnChange, hookManageLinksCollectionOnDelete,
+} from '@/hooks-payload/manageLinksCollection';
+// import { hookGenerateRteLinkPaths } from
+// '@/hooks-payload/generateRteLinkPaths';
+// import { hookGenerateInternalLinkPaths } from
+// '@/hooks-payload/generateInternalLinkPaths';
 
 interface InterfaceGenericPageHooks {
   afterChange?: CollectionAfterChangeHook[];
@@ -23,12 +30,14 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
   // 3.
   afterChange: [
     hookCascadeBreadcrumbUpdates,
+    hookManageLinksCollectionOnChange,
     ...(additionalHooks?.afterChange ?? []),
   ],
 
   // 4.
   afterDelete: [
     hookCascadeBreadcrumbUpdatesOnDelete,
+    hookManageLinksCollectionOnDelete,
     ...(additionalHooks?.afterDelete ?? []),
   ],
 
@@ -45,6 +54,8 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
     hookAdminTitle,
     hookSlug,
     hookValidateParentCircularReference,
+    // hookGenerateRteLinkPaths,
+    // hookGenerateInternalLinkPaths,
     ...(additionalHooks?.beforeValidate ?? []),
     hookPreventBlockStructureChangesForTranslators(),
   ],

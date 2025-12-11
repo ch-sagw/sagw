@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { getPayload } from 'payload';
+import configPromise from '@/payload.config';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
   Config as ConfigFromTypes, DetailPage, EventDetailPage, HomePage, InstituteDetailPage, MagazineDetailPage, NationalDictionaryDetailPage, NewsDetailPage,
@@ -9,7 +10,6 @@ import {
   PublicationDetailPage,
 } from '@/payload-types';
 
-import configPromise from '@/payload.config';
 import { getTenant } from '@/app/providers/TenantProvider.server';
 import slugify from 'slugify';
 
@@ -22,6 +22,8 @@ interface InterfacePageProps {
   };
   tenant?: string;
   locale?: ConfigFromTypes['locale'];
+  content?: any[];
+  draft?: boolean;
 }
 
 const generatePage = async ({
@@ -31,6 +33,8 @@ const generatePage = async ({
   type,
   tenant: propsTenant,
   locale,
+  content,
+  draft,
 }: {
   type: 'overviewPage' | 'detailPage';
 } & InterfacePageProps): Promise<OverviewPage | DetailPage> => {
@@ -53,7 +57,10 @@ const generatePage = async ({
   const document = await payload.create({
     collection: type,
     data: {
-      _status: 'published',
+      _status: draft
+        ? 'draft'
+        : 'published',
+      content,
       hero: {
         colorMode: 'light',
         title: simpleRteConfig(title),
@@ -78,19 +85,27 @@ interface InterfaceGenerateHomePageProps {
   title: string;
   navigationTitle?: string;
   sideTitle: string;
-  tenant: string;
+  tenant?: string;
   locale?: ConfigFromTypes['locale'];
 }
 
 export const generateHomePage = async ({
   title,
   sideTitle,
-  tenant,
+  tenant: propsTenant,
   locale,
 }: InterfaceGenerateHomePageProps): Promise<HomePage> => {
   const payload = await getPayload({
     config: configPromise,
   });
+
+  let tenant;
+
+  if (propsTenant) {
+    tenant = propsTenant;
+  } else {
+    tenant = await getTenant();
+  }
 
   const homePage = await payload.create({
     collection: 'homePage',
