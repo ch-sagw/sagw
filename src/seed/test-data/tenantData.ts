@@ -112,11 +112,11 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
   // create publication topics
   const publicationTopics = [
-    'Akademiereferate',
-    'Factsheets',
-    'Jahresbericht',
-    'Magazin',
-    'Studien und Berichte',
+    'Wissenschaftsbetrieb',
+    'Kultur und Gesellschaft',
+    'Demografischer Wandel',
+    'Bildung',
+    'Nachhaltigkeit',
   ];
 
   const addedPublicationTopics = await Promise.all(publicationTopics.map((publicationTopic) => payload.create({
@@ -129,11 +129,11 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
   // create publication type
   const publicationTypes = [
-    'Wissenschaftsbetrieb',
-    'Kultur und Gesellschaft',
-    'Demografischer Wandel',
-    'Bildung',
-    'Nachhaltigkeit',
+    'Akademiereferate',
+    'Factsheets',
+    'Jahresbericht',
+    'Magazin',
+    'Studien und Berichte',
   ];
 
   const addedPublicationTypes = await Promise.all(publicationTypes.map((publicationType) => payload.create({
