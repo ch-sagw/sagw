@@ -1,6 +1,11 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import styles from '@/components/base/PublicationsOverview/PublicationsOverview.module.scss';
 import { Pagination } from '@/components/base/Pagination/Pagination';
 import { ColorMode } from '@/components/base/types/colorMode';
@@ -10,36 +15,178 @@ import {
   InterfaceNotificationPropTypes,
   Notification,
 } from '@/components/base/Notification/Notification';
-import { Filter } from '@/components/base/Filter/Filter';
-import { InterfaceFilterListPropTypes } from '@/components/base/FilterList/FilterList';
+import {
+  InterfacePublicationsListItemPropTypes,
+  PublicationsListItem,
+} from '@/components/base/PublicationsListItem/PublicationsListItem';
+import {
+  FilterList,
+  InterfaceFilterListPropTypes,
+} from '@/components/base/FilterList/FilterList';
+import { InterfaceFilterItem } from '@/components/base/Filter/Filter';
+import { useTranslations } from 'next-intl';
 
 export type InterfacePublicationsOverviewPropTypes = {
-  children: React.ReactNode;
   title: string;
   colorMode: ColorMode;
-  filters?: {
-    filterListItems: InterfaceFilterListPropTypes['filterListItems'],
-    onValueChange?: InterfaceFilterListPropTypes['onValueChange'],
-  };
+  filterItems: InterfaceFilterItem[][],
   notification?: {
     title: InterfaceNotificationPropTypes['title'],
     text: InterfaceNotificationPropTypes['text'],
   }
   paginationTitle: string;
+  publicationItems: InterfacePublicationsListItemPropTypes[];
 }
 
 export const PublicationsOverview = (props: InterfacePublicationsOverviewPropTypes): React.JSX.Element => {
   const {
     title,
     colorMode,
-    children,
-    filters,
+    filterItems,
     notification,
+    publicationItems,
   } = props;
+
+  const publicationFiltersLabels = useTranslations('publicationFilters');
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const listRef = useRef<HTMLOListElement | null>(null);
   const userPaginatedRef = useRef(false);
+  const pageChangeRef = useRef<((page: number) => void) | null>(null);
+
+  const [
+    selectedTopic,
+    setSelectedTopic,
+  ] = useState<string>();
+
+  const [
+    selectedType,
+    setSelectedType,
+  ] = useState<string>();
+
+  const handleTopicChange = (value: string): void => {
+    setSelectedTopic(value);
+    pageChangeRef.current?.(1);
+  };
+
+  const handleTypeChange = (value: string): void => {
+    setSelectedType(value);
+    pageChangeRef.current?.(1);
+  };
+
+  console.log(filterItems);
+
+  const allValueTopics = filterItems[1][0].value;
+  const allValueTypes = filterItems[0][0].value;
+
+  // Prepare the filter list items
+  const filterData: InterfaceFilterListPropTypes = {
+    filterListItems: [
+      {
+        filterItems: filterItems[1],
+        labelText: publicationFiltersLabels('publicationTopicsLabel'),
+        name: 'publication-topics',
+        onValueChangeAction: handleTopicChange,
+        type: 'staticSelect',
+      },
+      {
+        filterItems: filterItems[0],
+        labelText: publicationFiltersLabels('publicationTypesLabel'),
+        name: 'publication-types',
+        onValueChangeAction: handleTypeChange,
+        type: 'staticSelect',
+      },
+    ],
+  };
+
+  const renderedPublicationTeasers = useMemo(() => {
+    let currentTeaserData: InterfacePublicationsListItemPropTypes[] = [];
+
+    console.log('renderedPublicationTeasers');
+    console.log(`allValueTopics ${allValueTopics}`);
+    console.log(`selectedTopic ${selectedTopic}`);
+    console.log(`selectedType ${selectedType}`);
+
+    if (
+      selectedTopic !== undefined &&
+      selectedTopic !== allValueTopics &&
+      !selectedType
+    ) {
+      // Return Publications filtered by topic
+      currentTeaserData = publicationItems.filter((item) => {
+
+        console.log('1');
+
+        if (item.categorization?.topic !== null) {
+          return item.categorization?.topic === selectedTopic;
+        }
+
+        return false;
+      });
+    } else if (
+      selectedType !== undefined &&
+      selectedType !== allValueTypes &&
+      !selectedTopic
+    ) {
+      // Return Publications filtered by type
+      currentTeaserData = publicationItems.filter((item) => {
+
+        console.log('2');
+
+        if (item.categorization?.type !== null) {
+          return item.categorization?.type === selectedType;
+        }
+
+        return false;
+      });
+    } else if (
+      selectedType !== undefined &&
+      selectedTopic !== undefined &&
+      selectedType !== allValueTypes &&
+      selectedTopic !== allValueTopics
+    ) {
+      // Return Publications filtered by type and topic
+      currentTeaserData = publicationItems.filter((item) => {
+        console.log('3');
+        if (item.categorization?.type !== null) {
+          return (
+            item.categorization?.type === selectedType &&
+            item.categorization?.topic === selectedTopic
+          );
+        }
+
+        return false;
+      });
+    } else {
+      console.log('4');
+      // If no topic or type is selected, we return the full set
+      currentTeaserData = publicationItems;
+    }
+
+    console.log(currentTeaserData);
+
+    // Render PublicationsListItems
+    const currentRenderedPublicationTeasers = currentTeaserData.map((item) => (
+      <PublicationsListItem
+        categorization={item.categorization || undefined}
+        date={item.date}
+        image={item.image}
+        key={item.id}
+        tag={item.tag}
+        title={item.title}
+        link={item.link}
+      />
+    ));
+
+    return currentRenderedPublicationTeasers;
+
+  }, [
+    allValueTopics,
+    allValueTypes,
+    publicationItems,
+    selectedTopic,
+    selectedType,
+  ]);
 
   const {
     currentPage,
@@ -47,11 +194,15 @@ export const PublicationsOverview = (props: InterfacePublicationsOverviewPropTyp
     currentItems,
     handlePageChange,
   } = usePagination({
-    items: children,
+    items: renderedPublicationTeasers,
     listRef,
     sectionRef,
     userPaginatedRef,
   });
+
+  useEffect(() => {
+    pageChangeRef.current = handlePageChange;
+  }, [handlePageChange]);
 
   return (
     <Section
@@ -60,22 +211,10 @@ export const PublicationsOverview = (props: InterfacePublicationsOverviewPropTyp
       showTopLine={false}
       title={title}
       colorMode={colorMode}
-      additionalStickyContent={filters
-        ? <>
-          <Filter
-            type={filters?.filterListItems[0].type}
-            filterItems={filters?.filterListItems[0].filterItems}
-            labelText={filters?.filterListItems[0].labelText}
-            name={filters?.filterListItems[0].name}
-          />
-          <Filter
-            type={filters?.filterListItems[1].type}
-            filterItems={filters?.filterListItems[1].filterItems}
-            labelText={filters?.filterListItems[1].labelText}
-            name={filters?.filterListItems[1].name}
-          />
-        </>
-        : undefined
+      additionalStickyContent={
+        <FilterList
+          filterListItems={filterData.filterListItems}
+        />
       }
     >
 
@@ -92,7 +231,10 @@ export const PublicationsOverview = (props: InterfacePublicationsOverviewPropTyp
         />
       }
 
-      <ol ref={listRef} className={styles.publicationsList}>
+      <ol
+        ref={listRef}
+        className={styles.publicationsList}
+      >
         {currentItems}
       </ol>
 
@@ -102,6 +244,7 @@ export const PublicationsOverview = (props: InterfacePublicationsOverviewPropTyp
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />
+
     </Section>
   );
 };

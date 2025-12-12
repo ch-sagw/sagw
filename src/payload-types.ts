@@ -2946,6 +2946,9 @@ export interface InterfaceMagazineOverviewBlock {
  * via the `definition` "InterfacePublicationsOverviewBlock".
  */
 export interface InterfacePublicationsOverviewBlock {
+  /**
+   * If populated, the notification will be shown above the publication overview.
+   */
   notification: {
     root: {
       type: string;

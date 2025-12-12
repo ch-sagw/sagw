@@ -2,20 +2,19 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { PublicationsOverviewComponent } from '@/components/blocks/PublicationsOverview/PublicationsOverview.component';
-import { PublicationOverviewFilters } from '@/components/base/FilterList/FilterList.stories';
+import { PublicationsOverview } from '@/components/base/PublicationsOverview/PublicationsOverview';
 import { InterfaceImagePropTypes } from '@/components/base/Image/Image';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 
-type PublicationsOverviewProps = React.ComponentProps<typeof PublicationsOverviewComponent>;
+type PublicationsOverviewProps = React.ComponentProps<typeof PublicationsOverview>;
 
-type StrictStory = StoryObj<typeof PublicationsOverviewComponent> & {
+type StrictStory = StoryObj<typeof PublicationsOverview> & {
   args: PublicationsOverviewProps;
 };
 
-const meta: Meta<typeof PublicationsOverviewComponent> = {
+const meta: Meta<typeof PublicationsOverview> = {
   args: {},
-  component: PublicationsOverviewComponent,
+  component: PublicationsOverview,
   decorators: [defaultDecoratorNoPadding],
   parameters: {
     layout: 'fullscreen',
@@ -34,6 +33,7 @@ const meta: Meta<typeof PublicationsOverviewComponent> = {
 export default meta;
 
 const publicationItem = {
+  categorization: {},
   date: '2025-10-23T12:00:00.000Z',
   image: {
     alt: 'SAGW image',
@@ -60,20 +60,85 @@ const publicationItem = {
   title: 'Das Paradox von sozialer Integration und Ausschluss im Schweizer Bildungswesen. Beiträge der Soziologie',
 };
 
+const filterListItems = [
+  [
+    {
+      checked: true,
+      label: 'Alle Publikationen',
+      value: 'all',
+    },
+    {
+      checked: false,
+      label: 'Akademiereferate',
+      value: '693b0993621d28f661711b4f',
+    },
+    {
+      checked: false,
+      label: 'Factsheets',
+      value: '693b0993621d28f661711b50',
+    },
+    {
+      checked: false,
+      label: 'Jahresbericht',
+      value: '693b0993621d28f661711b51',
+    },
+    {
+      checked: false,
+      label: 'Magazin',
+      value: '693b0993621d28f661711b52',
+    },
+    {
+      checked: false,
+      label: 'Studien und Berichte',
+      value: '693b0993621d28f661711b53',
+    },
+  ],
+  [
+    {
+      checked: true,
+      label: 'Alle Themen',
+      value: 'all',
+    },
+    {
+      checked: false,
+      label: 'Bildung',
+      value: '693b0993621d28f661711b48',
+    },
+    {
+      checked: false,
+      label: 'Demografischer Wandel',
+      value: '693b0993621d28f661711b47',
+    },
+    {
+      checked: false,
+      label: 'Kultur und Gesellschaft',
+      value: '693b0993621d28f661711b46',
+    },
+    {
+      checked: false,
+      label: 'Nachhaltigkeit',
+      value: '693b0993621d28f661711b49',
+    },
+    {
+      checked: false,
+      label: 'Wissenschaftsbetrieb',
+      value: '693b0993621d28f661711b45',
+    },
+  ],
+];
+
 export const LotsOfItems: StrictStory = {
   args: {
     colorMode: 'white',
-    filters: {
-      filterListItems: PublicationOverviewFilters.args.filterListItems,
-    },
-    items: Array.from({
-      length: 25,
-    }, () => publicationItem),
+    filterItems: filterListItems,
     notification: {
-      text: 'Alle Publikationen, die im Jahr 2019 oder früher publiziert wurden, sind auf <a href="https://zenodo.org/communities/sagw/records" target="_blank">Zenodo</a> zu finden.',
+      text: 'Alle Publikationen, die im Jahr 2019 oder früher publiziert wurden, sind auf Zenodo zu finden.',
       title: '',
     },
     paginationTitle: 'Pagination',
+    publicationItems: Array.from({
+      length: 25,
+    }, () => publicationItem),
     title: 'Publikationen',
   },
 };
@@ -81,17 +146,15 @@ export const LotsOfItems: StrictStory = {
 export const FewItems: StrictStory = {
   args: {
     colorMode: 'white',
-    filters: {
-      filterListItems: PublicationOverviewFilters.args.filterListItems,
-    },
-    items: Array.from({
-      length: 6,
-    }, () => publicationItem),
+    filterItems: filterListItems,
     notification: {
-      text: 'Alle Publikationen, die im Jahr 2019 oder früher publiziert wurden, sind auf <a href="https://zenodo.org/communities/sagw/records" target="_blank">Zenodo</a> zu finden.',
+      text: 'Alle Publikationen, die im Jahr 2019 oder früher publiziert wurden, sind auf Zenodo zu finden.',
       title: '',
     },
     paginationTitle: 'Pagination',
+    publicationItems: Array.from({
+      length: 25,
+    }, () => publicationItem),
     title: 'Latest News',
   },
 };

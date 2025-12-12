@@ -9,9 +9,18 @@ import {
 } from '@/components/base/Image/Image';
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
+import {
+  PublicationTopic,
+  PublicationType,
+} from '@/payload-types';
 
 export type InterfacePublicationsListItemPropTypes = {
+  categorization: {
+    topic?: string | PublicationTopic,
+    type?: string | PublicationType,
+  },
   date: string,
+  id?: string | number,
   image: InterfaceImagePropTypes,
   tag?: string,
   title: string,
@@ -36,6 +45,9 @@ export const PublicationsListItem = ({
 
   const ariaLabel = '';
 
+  console.log('tag in PublicationsListItem');
+  console.log(tag);
+
   return (
     <li
       className={styles.publicationsListItem}
@@ -50,12 +62,12 @@ export const PublicationsListItem = ({
         <span className={styles.image}>
           <Image
             alt={image.alt}
-            filename={image.filename ?? ''}
+            filename={image.filename ?? null}
             focalX={image.focalX ?? undefined}
             focalY={image.focalY ?? undefined}
             height={170}
             loading={image.loading}
-            url={image.url}
+            url={image.url ?? null}
             variant={image.variant}
             width={120}
           />

@@ -48,6 +48,7 @@ const image = {
 
 export const Full: StrictStory = {
   args: {
+    categorization: {},
     date: '2025-10-23T12:00:00.000Z',
     image,
     link: {
@@ -60,6 +61,7 @@ export const Full: StrictStory = {
 
 export const NoTag: StrictStory = {
   args: {
+    categorization: {},
     date: '2026-04-11T12:00:00.000Z',
     image,
     link: {

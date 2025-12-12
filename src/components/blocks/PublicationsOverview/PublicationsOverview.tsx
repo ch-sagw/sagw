@@ -1,40 +1,32 @@
-
 import React, { Fragment } from 'react';
 import configPromise from '@/payload.config';
 
-import { PublicationsOverviewComponent } from '@/components/blocks/PublicationsOverview/PublicationsOverview.component';
+import { PublicationsOverview } from '@/components/base/PublicationsOverview/PublicationsOverview';
 import { InterfacePublicationsOverviewBlock } from '@/payload-types';
-import { rteToHtml } from '@/utilities/rteToHtml';
 import {
   convertPayloadPublicationsPagesToFeItems,
   prepareFilterItems,
 } from '@/components/blocks/helpers/dataTransformers';
 import { InterfaceImagePropTypes } from '@/components/base/Image/Image';
-import { InterfaceFilterListPropTypes } from '@/components/base/FilterList/FilterList';
-import {
-  getLocale,
-  getTranslations,
-} from 'next-intl/server';
+import { getLocale } from 'next-intl/server';
 import {
   getPayload,
   TypedLocale,
 } from 'payload';
 import { getImageDataForUniqueIds } from '@/components/blocks/helpers/getImageData';
+import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
 type InterfaceNewsOverviewPropTypes = {
   tenant: string;
 } & InterfacePublicationsOverviewBlock;
 
-export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes): Promise<React.JSX.Element> => {
+export const PublicationsOverviewBlock = async (props: InterfaceNewsOverviewPropTypes): Promise<React.JSX.Element> => {
   const payload = await getPayload({
     config: configPromise,
   });
 
   const locale = (await getLocale()) as TypedLocale;
-
-  const i18nPublicationFilters = await getTranslations('publicationFilters');
-
-  console.log(i18nPublicationFilters('publicationTypesLabel'));
 
   // Get publication detail pages data
   // =========================
@@ -75,11 +67,28 @@ export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes
     },
   });
 
-  const publications = publicationPages.docs;
+  // Prepare Publication Types and topics filter items
+  // =========================
+  const filterItemsPublicationTypes = prepareFilterItems({
+    items: publicationTypes.docs,
+    labelAll: rte1ToPlaintext(props.filterTitleAllPublications),
+  });
+
+  const filterItemsPublicationTopics = prepareFilterItems({
+    items: publicationTopics.docs,
+    labelAll: rte1ToPlaintext(props.filterTitleAllTopics),
+  });
+
+  // Aggregate Filter data
+  // =========================
+  const filterData = [
+    filterItemsPublicationTypes,
+    filterItemsPublicationTopics,
+  ];
 
   // Get image ids of fetched publicationPages
   // =========================
-  const publicationPagesImageIds = publications
+  const publicationPagesImageIds = publicationPages.docs
     .map((p) => p.overviewPageProps?.image)
     .filter(Boolean);
 
@@ -103,7 +112,7 @@ export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes
     });
 
   const collectPublicationImages = (
-    pages: typeof publications,
+    pages: typeof publicationPages.docs,
     imagesMap: Record<string, InterfaceImagePropTypes | undefined>,
   ): (InterfaceImagePropTypes)[] => pages.map((page) => {
     const imageId = page?.overviewPageProps?.image as string;
@@ -111,59 +120,37 @@ export const PublicationsOverview = async (props: InterfaceNewsOverviewPropTypes
     return imagesMap[imageId] as InterfaceImagePropTypes;
   });
 
-  const publicationImages = collectPublicationImages(publications, imagesById);
+  const publicationImages = collectPublicationImages(
+    publicationPages.docs,
+    imagesById,
+  );
 
-  const title = rteToHtml(props.title);
+  const title = rte1ToPlaintext(props.title);
+  const notificationContent = rteToHtml(props.notification);
 
   // Prepare Publication items
-  // =========================
-  const items = convertPayloadPublicationsPagesToFeItems(publicationPages, publicationImages, locale);
-
-  // Prepare Publication Types filter items
-  // =========================
-  const filterTitlesPublicationTypes = prepareFilterItems({
-    items: publicationTypes.docs,
-    labelAll: i18nPublicationFilters('publicationTopicsLabel'),
-  });
-
-  // Prepare Publication Topics filter items
-  // =========================
-  const filterTitlesPublicationTopics = prepareFilterItems({
-    items: publicationTopics.docs,
-    labelAll: i18nPublicationFilters('publicationTypesLabel'),
-  });
-
-  const filters: InterfaceFilterListPropTypes = {
-    filterListItems: [
-      {
-        filterItems: filterTitlesPublicationTypes,
-        labelText: i18nPublicationFilters('publicationTopicsLabel'),
-        name: 'publication-topics',
-        type: 'staticSelect',
-      },
-      {
-        filterItems: filterTitlesPublicationTopics,
-        labelText: i18nPublicationFilters('publicationTypesLabel'),
-        name: 'publication-types',
-        type: 'staticSelect',
-      },
-    ],
-  };
+  const items = convertPayloadPublicationsPagesToFeItems(
+    publicationPages,
+    publicationImages,
+    publicationTypes.docs,
+    filterItemsPublicationTypes,
+    locale,
+  );
 
   if (!items || items.length < 1) {
     return <Fragment></Fragment>;
   }
 
   return (
-    <PublicationsOverviewComponent
+    <PublicationsOverview
       colorMode='white'
-      items={items}
-      filters={filters}
+      filterItems={filterData}
       notification={{
-        text: 'Das ist ein Test',
+        text: notificationContent,
         title: '',
       }}
       paginationTitle='Pagination'
+      publicationItems={items}
       title={title}
     />
   );
