@@ -23,36 +23,59 @@ import { PaginatedDocs } from 'payload';
 export const convertPayloadPublicationsPagesToFeItems = (
   payloadPages: PaginatedDocs<PublicationDetailPage>,
   publicationImages: InterfaceImagePropTypes[],
+  publicationTypes: PublicationType[],
+  publicationTypeLabels: InterfaceFilterItem[],
   lang: Config['locale'],
 ): InterfacePublicationsListItemPropTypes[] => {
-  const items = payloadPages.docs.map((publicationsPage) => {
-    let category;
+  const items = payloadPages.docs.map((publicationsPage, index) => {
+    let topic: string | undefined;
+    let type: string | undefined;
+    let tagValue: string | undefined;
 
-    if (publicationsPage.categorization?.type) {
-      category = publicationsPage.categorization.type as PublicationType;
+    const {
+      categorization,
+    } = publicationsPage || {};
+
+    if (categorization?.topic) {
+      topic = typeof categorization.topic === 'string'
+        ? categorization.topic
+        : categorization.topic?.id;
     }
 
-    const index = payloadPages.docs.indexOf(publicationsPage);
+    if (categorization?.type) {
+
+      const typeId = typeof categorization.type === 'string'
+        ? categorization.type
+        : categorization.type?.id;
+
+      if (typeId) {
+        const matchedItem = publicationTypes.find((item: PublicationType) => item.id === typeId);
+
+        tagValue = rteToHtml(matchedItem?.publicationType);
+      }
+    }
+
     const publicationImage = publicationImages[index];
 
     const returnPublicationPage: InterfacePublicationsListItemPropTypes = {
+      categorization: {
+        topic: topic ?? undefined,
+        type: type ?? undefined,
+      },
       date: formatDateToReadableString({
         dateString: publicationsPage.overviewPageProps.date,
         locale: lang,
       }),
+      id: publicationsPage.id,
       image: publicationImage,
       link: {
         href: publicationsPage.slug || '',
       },
-      tag: category
-        ? rteToHtml(category.publicationType)
-        : undefined,
-
+      tag: tagValue,
       title: rteToHtml(publicationsPage.hero.title),
     };
 
     return returnPublicationPage;
-
   });
 
   return items;
@@ -69,12 +92,12 @@ export const prepareFilterItems = ({
 }: InterfacePreparePublicationsFilterItems): InterfaceFilterItem[] => {
 
   const filterItems = items.map((item) => {
-    const amount = item.relatedPublicationPages?.docs?.length || 0;
+    // const amount = item.relatedPublicationPages?.docs?.length || 0;
     const text = (item as PublicationTopic).publicationTopic || (item as PublicationType).publicationType;
 
     return {
       checked: false,
-      label: `${rte1ToPlaintext(text)} (${amount})`,
+      label: rte1ToPlaintext(text),
       value: item.id,
     };
 

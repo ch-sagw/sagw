@@ -41,7 +41,7 @@
     --subtitle-color: var(--text-secondary-inverted);
   }
 
-  .titleWithFilter {
+  .additionalStickyContent {
     --list-flex-direction: column;
 
     @include mq($from: medium, $to: large) {
