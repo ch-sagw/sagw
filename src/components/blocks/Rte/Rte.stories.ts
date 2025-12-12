@@ -3,8 +3,12 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import { Rte } from '@/components/blocks/Rte/Rte';
+import { } from '@/components/base/types/rte';
 import { defaultDecorator } from '@/storybook-helpers';
-import { rte4FullRange } from '@/utilities/rteSampleContent';
+import {
+  rte4FullRange,
+  rte4FullRangeStartingParagraph,
+} from '@/utilities/rteSampleContent';
 
 type RteProps = React.ComponentProps<typeof Rte>;
 
@@ -32,6 +36,14 @@ export const RteWhite: StrictStory = {
     colorMode: 'white',
     stickyFirstTitle: true,
     text: rte4FullRange,
+  },
+};
+
+export const RteWhiteWithoutTitle: StrictStory = {
+  args: {
+    colorMode: 'white',
+    stickyFirstTitle: true,
+    text: rte4FullRangeStartingParagraph,
   },
 };
 
