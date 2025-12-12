@@ -12,11 +12,7 @@ type StrictStory = StoryObj<typeof FilterList> & {
 };
 
 const meta: Meta<typeof FilterList> = {
-  argTypes: {
-    onValueChange: {
-      action: 'value changed',
-    },
-  },
+  argTypes: {},
   args: {},
   component: FilterList,
   decorators: [defaultDecorator],

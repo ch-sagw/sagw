@@ -7,21 +7,20 @@ import {
   InterfaceFilterPropTypes,
 } from '@/components/base/Filter/Filter';
 
-interface InterfaceFilterListItem {
+export interface InterfaceFilterListItem {
   filterItems: InterfaceFilterPropTypes['filterItems'];
   labelText: InterfaceFilterPropTypes['labelText'];
   name: InterfaceFilterPropTypes['name'];
+  onValueChangeAction?: (selectedValue: string) => void;
   type: InterfaceFilterPropTypes['type'];
 }
 
 export type InterfaceFilterListPropTypes = {
   filterListItems: InterfaceFilterListItem[];
-  onValueChange?: (selectedValue: string) => void;
 }
 
 export const FilterList = ({
   filterListItems,
-  onValueChange,
 }: InterfaceFilterListPropTypes): React.JSX.Element => (
   <ul
     className={styles.filterList}
@@ -40,7 +39,7 @@ export const FilterList = ({
           labelText={filter.labelText}
           name={filter.name}
           type={filter.type}
-          onValueChangeAction={onValueChange}
+          onValueChangeAction={filter.onValueChangeAction}
         />
       </li>
     ))}
