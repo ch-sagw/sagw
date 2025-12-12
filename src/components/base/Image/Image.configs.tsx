@@ -109,11 +109,13 @@ export const getSrcAndSrcSet = ({
 
     case 'publicationTeaser':
       srcSetValue = `
+        ${src}?${params}&w=120&h=170&dpr=2&q=${retinaQuality} 240w,
         ${src}?${params}&w=80&h=114&dpr=2&q=${retinaQuality} 160w,
+        ${src}?${params}&w=120&h=170&q=${nonRetinaQuality} 120w,
         ${src}?${params}&w=80&h=114&q=${nonRetinaQuality} 80w
       `;
 
-      srcValue = `${src}?${params}&w=80&h=114&q=${nonRetinaQuality}`;
+      srcValue = `${src}?${params}&w=120&h=170&q=${nonRetinaQuality}`;
       break;
 
     default:
@@ -201,7 +203,7 @@ export const getSizes = (variant: string): string => {
       break;
 
     case 'publicationTeaser':
-      sizes = '80px';
+      sizes = `(min-width: ${breakPointsInRem.large}) 120px, 80px`;
       break;
 
     default:

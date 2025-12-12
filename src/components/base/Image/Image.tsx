@@ -118,8 +118,8 @@ export const Image = ({
         loading={loading}
         ref={imgRef}
         sizes={sizes}
-        src={imgSrc}
-        srcSet={srcAndSrcSet.srcSet}
+        src={imgSrc || undefined}
+        srcSet={srcAndSrcSet.srcSet || undefined}
         width={width}
       />
       <noscript>
