@@ -46,7 +46,7 @@ import { Links } from '@/components/blocks/Links/Links';
 import { Downloads } from '@/components/blocks/Downloads/Downloads';
 import { NewsOverview } from '@/components/blocks/NewsOverview/NewsOverview';
 import { EventsOverview } from '@/components/blocks/EventsOverview/EventsOverview';
-import { PublicationsOverview } from '@/components/blocks/PublicationsOverview/PublicationsOverview';
+import { PublicationsOverviewBlock } from '@/components/blocks/PublicationsOverview/PublicationsOverview';
 import { NewsTeaser } from '@/components/blocks/NewsTeaser/NewsTeaser';
 import { EventsTeaser } from '@/components/blocks/EventsTeaser/EventsTeaser';
 import { PublicationsTeaser } from '@/components/blocks/PublicationsTeaser/PublicationsTeaser';
@@ -214,7 +214,7 @@ export const RenderBlocks = ({
             if (blockType === 'publicationsOverviewBlock') {
               return (
                 <div key={block.id || index}>
-                  <PublicationsOverview
+                  <PublicationsOverviewBlock
                     {...block}
                     tenant={tenantId}
                     key={key}
