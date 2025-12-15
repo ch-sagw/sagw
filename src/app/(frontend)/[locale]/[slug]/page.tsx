@@ -58,7 +58,7 @@ export default async function DetailPage({
     try {
       const result = await payload.find({
         collection: collection as any,
-        depth: 1,
+        depth: 2,
         limit: 1,
         locale,
         where: {
