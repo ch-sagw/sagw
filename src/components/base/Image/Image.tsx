@@ -48,8 +48,6 @@ export const Image = ({
     url,
   });
 
-  console.log(`src ${src}`);
-
   const params = `fm=auto&mode=crop&crop=focalpoint&fp-x=${focalPointX}&fp-y=${focalPointY}`;
 
   const srcAndSrcSet = getSrcAndSrcSet({
