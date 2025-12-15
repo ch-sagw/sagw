@@ -15,6 +15,16 @@ export const Images: CollectionConfig = {
     group: 'Assets',
     hideAPIURL: process.env.ENV === 'prod',
   },
+  defaultPopulate: {
+    alt: true,
+    filename: true,
+    focalX: true,
+    focalY: true,
+    height: true,
+    tenant: true,
+    url: true,
+    width: true,
+  },
   fields: [
     {
       localized: true,
