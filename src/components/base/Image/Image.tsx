@@ -9,6 +9,7 @@ import {
   getSrcAndSrcSet,
 } from '@/components/base/Image/Image.configs';
 import { ImageVariant } from '@/components/base/types/imageVariant';
+import { createImageSrcUrl } from '@/components/helpers/createImageSrcUrl';
 
 export type InterfaceImagePropTypes = {
   alt: string;
@@ -42,13 +43,12 @@ export const Image = ({
   const focalPointX = (focalX ?? 50) / 100;
   const focalPointY = (focalY ?? 50) / 100;
 
-  const host = process.env.NEXT_PUBLIC_GUMLET_URL ?? '';
+  const src = createImageSrcUrl({
+    filename,
+    url,
+  });
 
-  let src = host + url;
-
-  if (process.env.NEXT_PUBLIC_GUMLET_URL?.indexOf('localhost') !== -1) {
-    src = `${host}/${filename}`;
-  }
+  console.log(`src ${src}`);
 
   const params = `fm=auto&mode=crop&crop=focalpoint&fp-x=${focalPointX}&fp-y=${focalPointY}`;
 

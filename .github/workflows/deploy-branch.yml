@@ -130,7 +130,6 @@ jobs:
           MAIL_SENDER_ADDRESS: ${{ secrets.MAIL_SENDER_ADDRESS }}
           RESEND_KEY: ${{ secrets.RESEND_KEY }}
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
-          NEXT_PUBLIC_GUMLET_URL: ${{ secrets.NEXT_PUBLIC_GUMLET_URL }}
           ENV: playwright
       - name: Upload blob report
         if: ${{ failure() && !cancelled() }}
