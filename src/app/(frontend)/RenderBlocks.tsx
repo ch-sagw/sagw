@@ -66,6 +66,7 @@ import { HomeTeaser } from '@/components/blocks/HomeTeaser/HomeTeaser';
 import {
   CollectionSlug, TypedLocale,
 } from 'payload';
+import { getLocale } from 'next-intl/server';
 
 export interface InterfaceSourcePage {
   collectionSlug: CollectionSlug;
@@ -111,13 +112,14 @@ interface InterfaceRenderBlocksProps {
   sourcePage: InterfaceSourcePage;
 }
 
-export const RenderBlocks = ({
+export const RenderBlocks = async ({
   blocks,
   tenantId,
   i18n,
   sourcePage,
-}: InterfaceRenderBlocksProps): React.JSX.Element | null => {
+}: InterfaceRenderBlocksProps): Promise<React.JSX.Element | null> => {
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0;
+  const locale = (await getLocale()) as TypedLocale;
 
   if (hasBlocks) {
     return (
@@ -145,6 +147,7 @@ export const RenderBlocks = ({
                   colorMode='white'
                   stickyFirstTitle={true}
                   key={key}
+                  locale={locale}
                 />
               );
             }

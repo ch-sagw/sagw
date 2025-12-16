@@ -1,6 +1,5 @@
 import React from 'react';
 import { cva } from 'cva';
-import { getLocale } from 'next-intl/server';
 import type { TypedLocale } from 'payload';
 import styles from '@/components/blocks/Rte/Rte.module.scss';
 import { InterfaceRte } from '@/components/base/types/rte';
@@ -15,16 +14,16 @@ export type InterfaceRtePropTypes = {
   text: InterfaceRte,
   stickyFirstTitle: boolean;
   className?: string;
+  locale: TypedLocale;
 };
 
-export const Rte = async ({
+export const Rte = ({
   colorMode,
   text,
   stickyFirstTitle,
   className,
-}: InterfaceRtePropTypes): Promise<React.JSX.Element> => {
-  const locale = (await getLocale()) as TypedLocale;
-
+  locale,
+}: InterfaceRtePropTypes): React.JSX.Element => {
   const classes = cva([
     styles.rte,
     className,

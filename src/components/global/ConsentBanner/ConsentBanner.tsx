@@ -15,6 +15,8 @@ import {
 } from '@/components/helpers/cookies';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { useScrollLock } from '@/hooks/useScrollLock';
+import { useLocale } from 'next-intl';
+import { TypedLocale } from 'payload';
 
 export type InterfaceConsentBannerPropTypes = {} & InterfaceConsentBanner;
 
@@ -25,6 +27,7 @@ export const ConsentBanner = ({
   buttonCustomizeSelection,
   buttonDeclineAll,
 }: InterfaceConsentBannerPropTypes): React.JSX.Element | null => {
+  const locale = useLocale() as TypedLocale;
   const bannerDialogRef = useRef<HTMLDialogElement>(null);
   const [
     isProcessing,
@@ -209,6 +212,7 @@ export const ConsentBanner = ({
         text={text}
         colorMode='light'
         stickyFirstTitle={false}
+        locale={locale}
       />
       <ul className={styles.buttons}>
         <li>

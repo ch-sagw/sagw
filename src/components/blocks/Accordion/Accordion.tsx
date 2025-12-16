@@ -10,6 +10,8 @@ import { rteToHtml } from '@/utilities/rteToHtml';
 import { Rte } from '@/components/blocks/Rte/Rte';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { Section } from '@/components/base/Section/Section';
+import { useLocale } from 'next-intl';
+import { TypedLocale } from 'payload';
 
 export type InterfaceAccordionPropTypes = {} & InterfaceAccordionBlock;
 
@@ -37,6 +39,7 @@ export const Accordion = ({
   title,
   colorMode,
 }: InterfaceAccordionBlock): React.JSX.Element => {
+  const locale = useLocale() as TypedLocale;
 
   const {
     activeElement,
@@ -108,6 +111,7 @@ export const Accordion = ({
                     colorMode={colorMode}
                     stickyFirstTitle={false}
                     text={item.accordionContent}
+                    locale={locale}
                   />
                 </div>
               </section>
