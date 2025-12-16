@@ -2,6 +2,9 @@ import { Field } from 'payload';
 
 export const fieldBreadcrumbFieldName = 'breadcrumb';
 
+export const BREADCRUMB_SLUG_PREFIX = 'slug';
+export const BREADCRUMB_NAME_PREFIX = 'name';
+
 export const fieldBreadcrumb: Field = {
   admin: {
     hidden: true,
@@ -15,42 +18,42 @@ export const fieldBreadcrumb: Field = {
       type: 'text',
     },
     {
-      name: 'namede',
+      name: `${BREADCRUMB_NAME_PREFIX}de`,
       required: false,
       type: 'text',
     },
     {
-      name: 'namefr',
+      name: `${BREADCRUMB_NAME_PREFIX}fr`,
       required: false,
       type: 'text',
     },
     {
-      name: 'nameit',
+      name: `${BREADCRUMB_NAME_PREFIX}it`,
       required: false,
       type: 'text',
     },
     {
-      name: 'nameen',
+      name: `${BREADCRUMB_NAME_PREFIX}en`,
       required: false,
       type: 'text',
     },
     {
-      name: 'slugde',
+      name: `${BREADCRUMB_SLUG_PREFIX}de`,
       required: false,
       type: 'text',
     },
     {
-      name: 'slugfr',
+      name: `${BREADCRUMB_SLUG_PREFIX}fr`,
       required: false,
       type: 'text',
     },
     {
-      name: 'slugit',
+      name: `${BREADCRUMB_SLUG_PREFIX}it`,
       required: false,
       type: 'text',
     },
     {
-      name: 'slugen',
+      name: `${BREADCRUMB_SLUG_PREFIX}en`,
       required: false,
       type: 'text',
     },

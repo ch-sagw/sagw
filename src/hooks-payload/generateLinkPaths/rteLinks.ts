@@ -1,11 +1,9 @@
-/**
- * Iterate over all blocks and process internal links of blocks which have
- * rte3 / rte4 fields.
- * -> generate and store paths for all internal links in RTE fields
- */
+// Iterate over all blocks and process internal links of blocks which have
+// rte3 / rte4 fields.
+// -> generate and store paths for all internal links in RTE fields
 
 import { CollectionBeforeValidateHook } from 'payload';
-import { generateRteLinkPaths } from '@/utilities/generateRteLinkPaths';
+import { generateRteLinkPaths } from '@/hooks-payload/shared/generateRteLinkPaths';
 import { BlockSlug } from '@/blocks';
 import {
   InterfaceAccordionBlock,
@@ -14,6 +12,7 @@ import {
   InterfaceNotificationBlock,
   InterfaceTextBlock,
 } from '@/payload-types';
+import { removeLinkReferencesForRemovedLinks } from '@/hooks-payload/shared/removeLinkReferencesForRemovedLinks';
 
 export const hookGenerateRteLinkPaths: CollectionBeforeValidateHook = async ({
   data,
@@ -32,12 +31,7 @@ export const hookGenerateRteLinkPaths: CollectionBeforeValidateHook = async ({
     return data;
   }
 
-  // Get current page ID
   const currentPageId = data.id || originalDoc?.id;
-
-  if (!currentPageId) {
-    return data;
-  }
 
   // blocks are in data.content or data.blocks.content (event-detail-page)
   let blocksContent;
@@ -52,14 +46,6 @@ export const hookGenerateRteLinkPaths: CollectionBeforeValidateHook = async ({
     blocksContent = data.blocks.content;
   }
 
-  if (!blocksContent) {
-    return data;
-  }
-
-  if (blocksContent.length < 1) {
-    return data;
-  }
-
   const blocksWithRte: BlockSlug[] = [
     'textBlock',
     'notificationBlock',
@@ -68,13 +54,30 @@ export const hookGenerateRteLinkPaths: CollectionBeforeValidateHook = async ({
     'bibliographicReferenceBlock',
   ];
 
-  const hasRteBlock = blocksContent.some((item: any) => blocksWithRte.includes(item.blockType));
-
-  if (!hasRteBlock) {
-    return data;
-  }
-
   try {
+    if (operation === 'update' && currentPageId && originalDoc) {
+      await removeLinkReferencesForRemovedLinks({
+        currentDoc: data,
+        currentPageId: String(currentPageId),
+        originalDoc,
+        payload: req.payload,
+      });
+    }
+
+    if (!blocksContent) {
+      return data;
+    }
+
+    if (blocksContent.length < 1) {
+      return data;
+    }
+
+    const hasRteBlock = blocksContent.some((item: any) => blocksWithRte.includes(item.blockType));
+
+    if (!hasRteBlock) {
+      return data;
+    }
+
     await Promise.all(blocksContent.map(async (item: any) => {
       if (item.blockType === 'accordionBlock') {
         const accordionBlockItem = item as InterfaceAccordionBlock;
@@ -85,12 +88,13 @@ export const hookGenerateRteLinkPaths: CollectionBeforeValidateHook = async ({
           }
 
           const processed = await generateRteLinkPaths({
-            currentPageId: String(currentPageId),
+            currentPageId: currentPageId
+              ? String(currentPageId)
+              : undefined,
             payload: req.payload,
             rteContent: accordionItem.accordionContent,
           });
 
-          // Only assign if processed is not null/undefined and has root
           if (processed && processed.root) {
             accordionItem.accordionContent = processed as NonNullable<typeof accordionItem.accordionContent>;
           }
@@ -108,12 +112,13 @@ export const hookGenerateRteLinkPaths: CollectionBeforeValidateHook = async ({
         }
 
         const processed = await generateRteLinkPaths({
-          currentPageId: String(currentPageId),
+          currentPageId: currentPageId
+            ? String(currentPageId)
+            : undefined,
           payload: req.payload,
           rteContent: textBlockItem.text,
         });
 
-        // Only assign if processed is not null/undefined and has root
         if (processed && processed.root) {
           textBlockItem.text = processed as NonNullable<typeof textBlockItem.text>;
         }
@@ -141,3 +146,4 @@ export const hookGenerateRteLinkPaths: CollectionBeforeValidateHook = async ({
     return data;
   }
 };
+

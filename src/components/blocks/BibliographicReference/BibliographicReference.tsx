@@ -6,7 +6,7 @@ import { InterfaceBibliographicReferenceBlock } from '@/payload-types';
 import { Section } from '@/components/base/Section/Section';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import {
-  rte4ToHtml, rteToHtml,
+  rte3ToHtml, rteToHtml,
 } from '@/utilities/rteToHtml';
 import { InterfaceRte } from '@/components/base/types/rte';
 import { BibliographicReferenceClient } from './BibliographicReference.client';
@@ -35,7 +35,7 @@ export const BibliographicReference = async ({
 
       <SafeHtml
         as='div'
-        html={rte4ToHtml(text, locale)}
+        html={rte3ToHtml(text, locale)}
         className={styles.text}
       />
 

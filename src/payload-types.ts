@@ -1401,6 +1401,7 @@ export interface ErrorPage {
 export interface DataPrivacyPage {
   id: string;
   tenant?: (string | null) | Tenant;
+  slug?: string | null;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   hero: InterfaceHeroField;
@@ -1464,6 +1465,7 @@ export interface InterfaceHeroField {
 export interface ImpressumPage {
   id: string;
   tenant?: (string | null) | Tenant;
+  slug?: string | null;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   hero: InterfaceHeroField;
@@ -5089,6 +5091,7 @@ export interface ErrorPageSelect<T extends boolean = true> {
  */
 export interface DataPrivacyPageSelect<T extends boolean = true> {
   tenant?: T;
+  slug?: T;
   isLinkable?: T;
   adminTitle?: T;
   hero?: T | InterfaceHeroFieldSelect<T>;
@@ -5128,6 +5131,7 @@ export interface InterfaceHeroFieldSelect<T extends boolean = true> {
  */
 export interface ImpressumPageSelect<T extends boolean = true> {
   tenant?: T;
+  slug?: T;
   isLinkable?: T;
   adminTitle?: T;
   hero?: T | InterfaceHeroFieldSelect<T>;

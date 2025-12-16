@@ -1,7 +1,12 @@
-import type { BasePayload } from 'payload';
+import type {
+  BasePayload, CollectionSlug,
+} from 'payload';
 import type { SerializedLinkNode } from '@payloadcms/richtext-lexical';
 import { addLinkReference } from './addLinkReference';
 import { singletonSlugs } from '@/collections/Pages/pages';
+import { generateSingletonUrls } from './generateSingletonUrls';
+import type { InterfacePageUrls } from '@/payload-types';
+import { getRootPathUrls } from './getRootPathUrls';
 
 // Union type for all possible lexical nodes
 type LexicalNode =
@@ -17,13 +22,12 @@ interface InterfaceGenerateRteLinkPathsParams {
     [key: string]: unknown;
   } | null | undefined;
   payload: BasePayload;
-  currentPageId: string;
+  currentPageId?: string;
 }
 
-/**
- * Recursively processes RTE lexical nodes to find internal links
- * and add URL paths from the Links collection
- */
+// Recursively processes RTE lexical nodes to find internal links
+// and add URL paths from the Links collection
+
 export const generateRteLinkPaths = async ({
   rteContent,
   payload,
@@ -60,23 +64,8 @@ export const generateRteLinkPaths = async ({
           };
         }
 
-        // Check if target page is a singleton
         const isSingleton = relationTo && singletonSlugs.some((singleton) => singleton.slug === relationTo);
 
-        if (isSingleton) {
-          // For singletons, skip URL resolution and reference tracking
-          // but still process children
-          const processedChildren = linkNode.children
-            ? await Promise.all(linkNode.children.map(processNode))
-            : linkNode.children;
-
-          return {
-            ...linkNode,
-            children: processedChildren,
-          };
-        }
-
-        // Fetch link document once
         const linkDoc = await payload.find({
           collection: 'links',
           limit: 1,
@@ -91,8 +80,32 @@ export const generateRteLinkPaths = async ({
           },
         });
 
-        if (linkDoc.docs.length === 0) {
-          // No link document found, process children and return
+        let urls: InterfacePageUrls | null = null;
+
+        if (linkDoc.docs.length === 0 && isSingleton && relationTo) {
+          urls = await generateSingletonUrls(
+            payload,
+            relationTo as CollectionSlug,
+            documentId,
+          );
+        } else if (linkDoc.docs.length > 0) {
+          const [link] = linkDoc.docs;
+
+          if (!link.deleted && link.url) {
+            urls = {
+              de: link.url.de || null,
+              en: link.url.en || null,
+              fr: link.url.fr || null,
+              it: link.url.it || null,
+            };
+          } else if (link.deleted) {
+            urls = getRootPathUrls();
+          }
+        } else {
+          urls = getRootPathUrls();
+        }
+
+        if (!urls) {
           const processedChildren = linkNode.children
             ? await Promise.all(linkNode.children.map(processNode))
             : linkNode.children;
@@ -103,32 +116,20 @@ export const generateRteLinkPaths = async ({
           };
         }
 
-        const [link] = linkDoc.docs;
+        if (currentPageId && !isSingleton && linkDoc.docs.length > 0) {
+          const [link] = linkDoc.docs;
 
-        // Extract URLs if link is not deleted
-        let urls = null;
-
-        if (!link.deleted && link.url) {
-          urls = {
-            de: link.url.de || null,
-            en: link.url.en || null,
-            fr: link.url.fr || null,
-            it: link.url.it || null,
-          };
+          if (!link.deleted) {
+            await addLinkReference({
+              linkDocument: link,
+              payload,
+              referencingPageId: currentPageId,
+              targetPageId: documentId as string,
+            });
+          }
         }
 
-        // Add reference to target page
-        await addLinkReference({
-          linkDocument: link,
-          payload,
-          referencingPageId: currentPageId,
-          targetPageId: documentId as string,
-        });
-
         // Add URL to link node
-        // Store in custom field 'internalUrl' to avoid conflict with Payload's
-        // 'url' field
-        // which expects a string for external links
         const updatedNode: SerializedLinkNode = {
           ...linkNode,
           fields: {
@@ -183,3 +184,4 @@ export const generateRteLinkPaths = async ({
 
   return rteContent;
 };
+

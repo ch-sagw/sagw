@@ -4,10 +4,13 @@
 import { CollectionBeforeChangeHook } from 'payload';
 import { fieldNavigationTitleFieldName } from '@/field-templates/navigationTitle';
 import { fieldParentSelectorFieldName } from '@/field-templates/parentSelector';
-import { fieldBreadcrumbFieldName } from '@/field-templates/breadcrumb';
+import {
+  BREADCRUMB_NAME_PREFIX, BREADCRUMB_SLUG_PREFIX, fieldBreadcrumbFieldName,
+} from '@/field-templates/breadcrumb';
 import {
   Config, InterfaceBreadcrumb, InterfaceInternalLinkValue,
 } from '@/payload-types';
+import { HOME_SLUG } from '@/collections/Pages/Singletons/Home';
 
 type LocalizedString = Partial<Record<Config['locale'], string>>;
 
@@ -34,10 +37,10 @@ const hasHomeAsFirstBreadcrumb = (breadcrumbs: InterfaceBreadcrumb): boolean => 
 
   // Check if any locale has slug 'home'
   return (
-    firstBreadcrumb.slugde === 'home' ||
-    firstBreadcrumb.slugen === 'home' ||
-    firstBreadcrumb.slugfr === 'home' ||
-    firstBreadcrumb.slugit === 'home'
+    firstBreadcrumb[`${BREADCRUMB_SLUG_PREFIX}de`] === HOME_SLUG ||
+    firstBreadcrumb[`${BREADCRUMB_SLUG_PREFIX}en`] === HOME_SLUG ||
+    firstBreadcrumb[`${BREADCRUMB_SLUG_PREFIX}fr`] === HOME_SLUG ||
+    firstBreadcrumb[`${BREADCRUMB_SLUG_PREFIX}it`] === HOME_SLUG
   );
 };
 
@@ -101,14 +104,14 @@ export const buildBreadcrumbs = async (
     // Current parent has navigationTitle, add it to breadcrumbs
     const currentBreadcrumb = {
       documentId: parentRef.documentId,
-      namede: parentNavigationTitleRaw?.de || '',
-      nameen: parentNavigationTitleRaw?.en || '',
-      namefr: parentNavigationTitleRaw?.fr || '',
-      nameit: parentNavigationTitleRaw?.it || '',
-      slugde: parentSlugRaw?.de || '',
-      slugen: parentSlugRaw?.en || '',
-      slugfr: parentSlugRaw?.fr || '',
-      slugit: parentSlugRaw?.it || '',
+      [`${BREADCRUMB_NAME_PREFIX}de`]: parentNavigationTitleRaw?.de || '',
+      [`${BREADCRUMB_NAME_PREFIX}en`]: parentNavigationTitleRaw?.en || '',
+      [`${BREADCRUMB_NAME_PREFIX}fr`]: parentNavigationTitleRaw?.fr || '',
+      [`${BREADCRUMB_NAME_PREFIX}it`]: parentNavigationTitleRaw?.it || '',
+      [`${BREADCRUMB_SLUG_PREFIX}de`]: parentSlugRaw?.de || '',
+      [`${BREADCRUMB_SLUG_PREFIX}en`]: parentSlugRaw?.en || '',
+      [`${BREADCRUMB_SLUG_PREFIX}fr`]: parentSlugRaw?.fr || '',
+      [`${BREADCRUMB_SLUG_PREFIX}it`]: parentSlugRaw?.it || '',
     };
 
     const breadcrumbsArray = Array.isArray(breadcrumbs)

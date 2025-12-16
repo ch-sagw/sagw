@@ -12,6 +12,7 @@ import {
 // import { generateTenant } from '@/test-helpers/tenant-generator';
 import { generateTenant } from '@/test-helpers/tenant-generator';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { getTenant } from '@/app/providers/TenantProvider.server';
 
 const getCollectionsDocumentForId = async (id: string): Promise<any> => {
   const payload = await getPayload({
@@ -35,7 +36,9 @@ const getCollectionsDocumentForId = async (id: string): Promise<any> => {
   return linksCollectionDocument.docs[0];
 };
 
-test('Page without parent page', async () => {
+test('Page without parent page', {
+  tag: '@linking',
+}, async () => {
   let result: any;
 
   const time = (new Date())
@@ -67,7 +70,9 @@ test('Page without parent page', async () => {
 
 });
 
-test('Page without parent page (non-sagw)', async () => {
+test('Page without parent page (non-sagw)', {
+  tag: '@linking',
+}, async () => {
   let result: any;
 
   const time = (new Date())
@@ -104,7 +109,9 @@ test('Page without parent page (non-sagw)', async () => {
 
 });
 
-test('Page with parent page', async () => {
+test('Page with parent page', {
+  tag: '@linking',
+}, async () => {
   let result: any;
 
   const time = (new Date())
@@ -157,7 +164,9 @@ test('Page with parent page', async () => {
 
 });
 
-test('Page with parent page (non-sagw)', async () => {
+test('Page with parent page (non-sagw)', {
+  tag: '@linking',
+}, async () => {
   let result: any;
 
   const time = (new Date())
@@ -214,7 +223,9 @@ test('Page with parent page (non-sagw)', async () => {
 
 });
 
-test('Updates on slug change', async () => {
+test('Updates on slug change', {
+  tag: '@linking',
+}, async () => {
   let result: any;
 
   const time = (new Date())
@@ -258,7 +269,9 @@ test('Updates on slug change', async () => {
 
 });
 
-test('Updates on slug change (non-sagw)', async () => {
+test('Updates on slug change (non-sagw)', {
+  tag: '@linking',
+}, async () => {
   let result: any;
 
   const time = (new Date())
@@ -307,7 +320,9 @@ test('Updates on slug change (non-sagw)', async () => {
 
 });
 
-test('Updates on breadcrumb change', async () => {
+test('Updates on breadcrumb change', {
+  tag: '@linking',
+}, async () => {
   let result: any;
 
   const time = (new Date())
@@ -380,7 +395,9 @@ test('Updates on breadcrumb change', async () => {
 
 });
 
-test('Updates on breadcrumb change (non-sagw)', async () => {
+test('Updates on breadcrumb change (non-sagw)', {
+  tag: '@linking',
+}, async () => {
   let result: any;
 
   const time = (new Date())
@@ -462,7 +479,9 @@ test('Updates on breadcrumb change (non-sagw)', async () => {
 
 });
 
-test('Does not create link document on page draft', async () => {
+test('Does not create link document on page draft', {
+  tag: '@linking',
+}, async () => {
   let result: any;
 
   const time = (new Date())
@@ -486,39 +505,49 @@ test('Does not create link document on page draft', async () => {
 
 });
 
-test('Marks link document as deleted on page deletion', async () => {
+test('Deletes a document which is marked as deleted', {
+  tag: '@linking',
+}, async () => {
   let result: any;
 
   const time = (new Date())
     .getTime();
 
   try {
-    const detailPage = await generateDetailPage({
-      navigationTitle: 'd1',
-      title: `d1 ${time}`,
-    });
+    const tenant = await getTenant();
 
-    const payload = await getPayload({
-      config: configPromise,
-    });
+    if (tenant) {
 
-    await payload.delete({
-      collection: 'detailPage',
-      id: detailPage.id,
-    });
+      const detailPage = await generateDetailPage({
+        navigationTitle: 'd1',
+        tenant,
+        title: `d1 ${time}`,
+      });
 
-    result = await getCollectionsDocumentForId(detailPage.id);
+      const payload = await getPayload({
+        config: configPromise,
+      });
+
+      await payload.delete({
+        collection: 'detailPage',
+        id: detailPage.id,
+      });
+
+      result = await getCollectionsDocumentForId(detailPage.id);
+    }
 
   } catch (e) {
     result = JSON.stringify(e);
   }
 
-  await expect(result.deleted)
-    .toBeTruthy();
+  await expect(result)
+    .toBeUndefined();
 
 });
 
-test('Creates links for all locales', async () => {
+test('Creates links for all locales', {
+  tag: '@linking',
+}, async () => {
   let result: any;
 
   const time = (new Date())

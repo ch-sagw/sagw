@@ -22,7 +22,7 @@ import { Radios } from '@/components/base/Radios/Radios';
 import styles from '@/components/blocks/Form/Form.module.scss';
 import { ZodError } from 'zod';
 import {
-  rte4ToHtml, rteToHtml,
+  rte3ToHtml, rteToHtml,
 } from '@/utilities/rteToHtml';
 import { usePathname } from 'next/navigation';
 
@@ -182,7 +182,7 @@ export const FormComponent = ({
                     })}
                     value='on'
                     name={field.name}
-                    label={rte4ToHtml(field.label, locale)}
+                    label={rte3ToHtml(field.label, locale)}
                     checked={checked}
                     errorText={errors[field.name]?.join(', ') || ''}
                     colorMode={form.colorMode}
@@ -210,12 +210,12 @@ export const FormComponent = ({
                         checked: isSelectedFromServer
                           ? true
                           : (item.defaultChecked ?? undefined),
-                        label: rte4ToHtml(item.label, locale),
+                        label: rte3ToHtml(item.label, locale),
                         value: item.value,
                       });
                     })}
                     errorText={errors[field.name]?.join(', ') || ''}
-                    descriptionLabel={rte4ToHtml(field.label, locale)}
+                    descriptionLabel={rte3ToHtml(field.label, locale)}
                   />
                 );
               }

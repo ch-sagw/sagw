@@ -10,10 +10,9 @@ interface InterfaceAddLinkReferenceParams {
   payload: BasePayload;
 }
 
-/**
- * Adds a referencing page ID to the target page's references array in the Links
- * collection.
- */
+// Adds a referencing page ID to the target page's references array in the Links
+// collection.
+
 export const addLinkReference = async ({
   linkDocument,
   referencingPageId,
@@ -47,3 +46,4 @@ export const addLinkReference = async ({
       'This indicates the page creation hook (hookManageLinksCollectionOnChange) did not run or failed.');
   }
 };
+

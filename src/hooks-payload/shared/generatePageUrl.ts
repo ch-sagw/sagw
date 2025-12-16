@@ -2,6 +2,8 @@ import type { BasePayload } from 'payload';
 import type {
   Config, InterfaceBreadcrumb, Tenant,
 } from '@/payload-types';
+import { HOME_SLUG } from '@/collections/Pages/Singletons/Home';
+import { BREADCRUMB_SLUG_PREFIX } from '@/field-templates/breadcrumb';
 
 type Locale = Config['locale'];
 
@@ -22,7 +24,7 @@ const getBreadcrumbSlug = (
   breadcrumbItem: BreadcrumbItem,
   locale: Locale,
 ): string | undefined => {
-  const localizedSlug = breadcrumbItem[`slug${locale}` as keyof typeof breadcrumbItem] as string | null | undefined;
+  const localizedSlug = breadcrumbItem[`${BREADCRUMB_SLUG_PREFIX}${locale}` as keyof typeof breadcrumbItem] as string | null | undefined;
 
   if (localizedSlug) {
     return localizedSlug;
@@ -51,7 +53,7 @@ const processBreadcrumb = (
   const firstSlug = getBreadcrumbSlug(firstBreadcrumb, locale);
 
   // Skip 'home' if it's the first breadcrumb, otherwise add it
-  if (firstSlug && firstSlug !== 'home') {
+  if (firstSlug && firstSlug !== HOME_SLUG) {
     pathSegments.push(firstSlug);
   }
 
@@ -75,7 +77,7 @@ const processBreadcrumb = (
  * Generates a URL for a page in the format: /{locale}/{tenant?}/{path-to-page}
  * - locale is always present
  * - tenant is only present if tenant.slug !== 'sagw'
- * - path-to-page is built from breadcrumb array (skip 'home' if first item)
+ * - path-to-page is built from breadcrumb array
  * - current page slug is appended at the end
  */
 export const generatePageUrl = async ({
@@ -84,7 +86,6 @@ export const generatePageUrl = async ({
   locale,
   payload,
 }: InterfaceGeneratePageUrlParams): Promise<string> => {
-
   // Get tenant slug if tenant exists
   let tenantSlug: string | null = null;
 
@@ -98,7 +99,7 @@ export const generatePageUrl = async ({
           collection: 'tenants',
           id: tenant,
           locale,
-        });
+        }) as Tenant | null;
       } catch {
         // Tenant not found, continue without tenant slug
       }
@@ -156,14 +157,21 @@ export const generatePageUrl = async ({
     pathSegments.push(...breadcrumbSegments);
   }
 
-  // Add current page slug at the end
-  pathSegments.push(pageSlug);
+  // Add current page slug at the end (skip 'home' slug)
+  if (pageSlug !== HOME_SLUG) {
+    pathSegments.push(pageSlug);
+  }
 
   // Build final URL
-  const path = pathSegments.join('/');
+  const path = pathSegments.length > 0
+    ? pathSegments.join('/')
+    : '';
   const tenantPart = tenantSlug
     ? `/${tenantSlug}`
     : '';
 
-  return `/${locale}${tenantPart}/${path}`;
+  return `/${locale}${tenantPart}${path
+    ? `/${path}`
+    : ''}`;
 };
+

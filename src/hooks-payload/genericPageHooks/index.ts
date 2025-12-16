@@ -14,8 +14,8 @@ import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBul
 import {
   hookManageLinksCollectionOnChange, hookManageLinksCollectionOnDelete,
 } from '@/hooks-payload/manageLinksCollection';
-import { hookGenerateRteLinkPaths } from '@/hooks-payload/generateRteLinkPaths';
-import { hookGenerateInternalLinkPaths } from '@/hooks-payload/generateInternalLinkPaths';
+import { hookGenerateRteLinkPaths } from '@/hooks-payload/generateLinkPaths/rteLinks';
+import { hookGenerateInternalLinkPaths } from '@/hooks-payload/generateLinkPaths/internalLinks';
 
 interface InterfaceGenericPageHooks {
   afterChange?: CollectionAfterChangeHook[];

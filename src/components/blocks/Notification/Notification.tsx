@@ -2,7 +2,7 @@ import React from 'react';
 import { getLocale } from 'next-intl/server';
 import type { TypedLocale } from 'payload';
 import { InterfaceNotificationBlock } from '@/payload-types';
-import { rte4ToHtml } from '@/utilities/rteToHtml';
+import { rte3ToHtml } from '@/utilities/rteToHtml';
 import { Notification as BaseComponent } from '@/components/base/Notification/Notification';
 
 export type InterfaceNotificationPropTypes = {} & InterfaceNotificationBlock;
@@ -14,7 +14,7 @@ export const Notification = async ({
 
   return (
     <BaseComponent
-      text={rte4ToHtml(text, locale)}
+      text={rte3ToHtml(text, locale)}
       type='success'
       colorMode='light'
       hideIcon={true}

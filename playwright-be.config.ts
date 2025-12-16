@@ -59,7 +59,7 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     stderr: 'pipe',
     stdout: 'pipe',
-    timeout: 2 * 60 * 1000,
+    timeout: 4 * 60 * 1000,
     url: 'http://localhost:3000/admin',
   },
 

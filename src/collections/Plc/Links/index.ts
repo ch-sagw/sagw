@@ -1,4 +1,6 @@
 import { type CollectionConfig } from 'payload';
+import { hookHandleLinksDeletion } from '@/hooks-payload/handleLinksDeletion';
+import { hookRegenerateLinksOnUrlChange } from '@/hooks-payload/regenerateLinksOnUrlChange';
 
 export const Links: CollectionConfig = {
   access: {
@@ -8,6 +10,11 @@ export const Links: CollectionConfig = {
     update: () => true,
   },
   admin: {
+    defaultColumns: [
+      'slug',
+      'references',
+      'deleted',
+    ],
     hidden: true,
   },
   fields: [
@@ -64,5 +71,9 @@ export const Links: CollectionConfig = {
       type: 'checkbox',
     },
   ],
+  hooks: {
+    afterChange: [hookRegenerateLinksOnUrlChange],
+    beforeChange: [hookHandleLinksDeletion],
+  },
   slug: 'links',
 };

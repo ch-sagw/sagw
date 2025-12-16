@@ -18,6 +18,9 @@ import {
 } from 'payload';
 import React from 'react';
 import { useTranslations } from 'next-intl';
+import {
+  BREADCRUMB_NAME_PREFIX, BREADCRUMB_SLUG_PREFIX,
+} from '@/field-templates/breadcrumb';
 
 // Union type of all detail page data types
 type PageTypes =
@@ -116,8 +119,8 @@ export const RenderHero = ({
   // implementation. e.g: for each segment, we should fallback to `namede`
   // and `slugde`.
   let breadcrumbItems: InterfaceBreadcrumbItem[] = (pageData.breadcrumb ?? []).reduce<InterfaceBreadcrumbItem[]>((acc, item) => {
-    const nameKey = `name${locale}`;
-    const slugKey = `slug${locale}`;
+    const nameKey = `${BREADCRUMB_NAME_PREFIX}${locale}`;
+    const slugKey = `${BREADCRUMB_SLUG_PREFIX}${locale}`;
 
     if (nameKey in item && slugKey in item) {
       const text = item[nameKey as keyof typeof item];

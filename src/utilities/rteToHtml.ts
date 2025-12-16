@@ -15,6 +15,7 @@ import {
 import {
   SerializedParagraphNode, SerializedTextNode,
 } from '@payloadcms/richtext-lexical/lexical';
+import type { TypedLocale } from 'payload';
 
 import { externalLink } from '@/icons/ui/external-link';
 
@@ -27,25 +28,43 @@ type LexicalNode =
   | SerializedNonBreakingSpaceNode
   | { type: string; children?: LexicalNode[]; version: number; [key: string]: unknown };
 
-const internalDocToHref = ({
-  linkNode,
-}: { linkNode: SerializedLinkNode }): string => {
-  if (!linkNode.fields.doc) {
-    return '';
-  }
-
-  const {
-    relationTo, value,
-  } = linkNode.fields.doc;
-
-  return `/${relationTo}/${value}`;
-};
-
 const createHtmlConverters = ({
+  locale,
   wrap,
-}: { wrap: boolean | undefined }): HTMLConvertersFunction<DefaultNodeTypes> => ({
+}: { locale?: TypedLocale; wrap: boolean | undefined }): HTMLConvertersFunction<DefaultNodeTypes> => ({
   defaultConverters,
 }) => {
+  // Create internalDocToHref with locale closure
+  const internalDocToHref = ({
+    linkNode,
+  }: { linkNode: SerializedLinkNode & { fields?: { internalUrl?: { de?: string | null; fr?: string | null; it?: string | null; en?: string | null } } } }): string => {
+    // Check if we have stored URLs in internalUrl field
+    // (populated by beforeValidate hook)
+    // This is a custom field we add, not part of SerializedLinkNode's
+    // standard fields
+    const internalUrl = (linkNode.fields as any)?.internalUrl;
+
+    if (internalUrl && typeof internalUrl === 'object' && locale) {
+      // Use the locale-specific URL
+      const url = internalUrl[locale];
+
+      if (url) {
+        return url;
+      }
+    }
+
+    // Fallback: generate from fields.doc (Payload's standard way)
+    if (!linkNode.fields?.doc) {
+      return '';
+    }
+
+    const {
+      relationTo, value,
+    } = linkNode.fields.doc;
+
+    return `/${relationTo}/${value}`;
+  };
+
   const baseConverters = {
     ...defaultConverters,
     ...linkHTMLConverter({
@@ -153,21 +172,13 @@ const processLexicalNodes = (nodes: LexicalNode[]): LexicalNode[] => nodes.map((
 
 interface InterfaceRteToHtmlProps {
   content: InterfaceRte | undefined | null;
+  locale?: TypedLocale;
   wrap?: boolean;
 }
 
-// avoid unneccessary rebuild of converters by statically defining
-// the 2 sets of converters
-
-const convertersWithWrap = createHtmlConverters({
-  wrap: true,
-});
-const convertersWithoutWrap = createHtmlConverters({
-  wrap: false,
-});
-
 const rteToHtmlBase = ({
   content,
+  locale,
   wrap,
 }: InterfaceRteToHtmlProps): string => {
   if (!content) {
@@ -182,9 +193,11 @@ const rteToHtmlBase = ({
     },
   };
 
-  const htmlConverters = wrap
-    ? convertersWithWrap
-    : convertersWithoutWrap;
+  // Create converters with locale (converters are now locale-aware)
+  const htmlConverters = createHtmlConverters({
+    locale,
+    wrap: wrap ?? false,
+  });
 
   const transformedData = convertLexicalToHTML({
     converters: htmlConverters,
@@ -214,7 +227,14 @@ export const rteToHtml = (content: InterfaceRte | undefined | null): string => r
   wrap: false,
 });
 
-export const rte4ToHtml = (content: InterfaceRte | undefined | null): string => rteToHtmlBase({
+export const rte3ToHtml = (content: InterfaceRte | undefined | null, locale: TypedLocale): string => rteToHtmlBase({
   content,
+  locale,
+  wrap: false,
+});
+
+export const rte4ToHtml = (content: InterfaceRte | undefined | null, locale: TypedLocale): string => rteToHtmlBase({
+  content,
+  locale,
   wrap: true,
 });

@@ -43,7 +43,7 @@ export const generateAllPageUrls = async ({
         collection: 'tenants',
         id: initialTenant,
         locale: 'all',
-      });
+      }) as Tenant | null;
     } catch {
       tenantData = null;
     }
@@ -76,3 +76,4 @@ export const generateAllPageUrls = async ({
     it: urls.it || null,
   };
 };
+

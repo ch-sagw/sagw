@@ -9,6 +9,7 @@ import {
 import { rte1 } from '@/field-templates/rte';
 import { fieldInternalLinkChooser } from '@/components/admin/InternalLinkChooser/InternalLinkChooserField';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
+import { hookGenerateInternalLinkPaths } from '@/hooks-payload/generateLinkPaths/internalLinks';
 
 const navLinkDefaultFields: Field[] = [
   {
@@ -124,6 +125,9 @@ export const Header: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    beforeValidate: [hookGenerateInternalLinkPaths],
+  },
   labels: {
     plural: 'Header',
     singular: 'Header',

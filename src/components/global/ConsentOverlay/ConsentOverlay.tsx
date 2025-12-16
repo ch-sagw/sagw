@@ -4,17 +4,22 @@ import React, {
 import styles from '@/components/global/ConsentOverlay/ConsentOverlay.module.scss';
 import { InterfaceConsentOverlay } from '@/payload-types';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
-import { rteToHtml } from '@/utilities/rteToHtml';
+import {
+  rte3ToHtml, rteToHtml,
+} from '@/utilities/rteToHtml';
 import { Button } from '@/components/base/Button/Button';
 import { Toggle } from '@/components/base/Toggle/Toggle';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { Icon } from '@/icons';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
-import { useTranslations } from 'next-intl';
+import {
+  useLocale, useTranslations,
+} from 'next-intl';
 import {
   getCookieConsent,
   setCookieConsent,
 } from '@/components/helpers/cookies';
+import { TypedLocale } from 'payload';
 
 export type InterfaceConsentOverlayPropTypes = {
   onClose?: () => void;
@@ -32,6 +37,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
   onClose,
   onConsentGiven,
 }, ref): React.JSX.Element => {
+  const locale = useLocale() as TypedLocale;
   const i18nA11y = useTranslations('a11y');
   const [
     toggleStates,
@@ -275,7 +281,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
               <SafeHtml
                 as='p'
                 className={styles.sectionText}
-                html={rteToHtml(section.text)}
+                html={rte3ToHtml(section.text, locale)}
               />
 
             </li>
