@@ -14,7 +14,7 @@ export const createImageSrcUrl = ({
   // in the stories files the entire url is stored within
   // the «url» property. in the real world, «url» will
   // contain the entire filepath.
-  if (url.indexOf('https://sagw-nu-localhost.gumlet.io')) {
+  if (url.indexOf('https://') !== -1) {
     return url;
   }
 
