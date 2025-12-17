@@ -5,6 +5,9 @@ import styles from '@/components/base/GenericTeaser/GenericTeaser.module.scss';
 import { SafeHtml } from '../SafeHtml/SafeHtml';
 import { Button } from '../Button/Button';
 import { Icon } from '@/icons';
+import { Image as ImageType } from '@/payload-types';
+import { Image } from '@/components/base/Image/Image';
+import { ImageVariant } from '@/components/base/types/imageVariant';
 
 type InterfaceLinkType = 'internal' | 'external' | 'mail' | 'phone';
 export interface InterfaceGenericTeaserLink {
@@ -24,8 +27,8 @@ export type InterfaceBaseTeaserProps = {
 // Image and logo both are optional. But as soon as image is set,
 // logo is not allowed and vice versa.
 type InterfaceGenericTeaserPropTypes =
-  | (InterfaceBaseTeaserProps & { image?: string; logo?: never })
-  | (InterfaceBaseTeaserProps & { logo?: string; image?: never })
+  | (InterfaceBaseTeaserProps & { image?: ImageType; logo?: never })
+  | (InterfaceBaseTeaserProps & { logo?: ImageType; image?: never })
   | (InterfaceBaseTeaserProps & { image?: undefined; logo?: undefined });
 
 const renderLink = ({
@@ -101,11 +104,21 @@ export const GenericTeaser = ({
   type,
   className,
 }: InterfaceGenericTeaserPropTypes): React.JSX.Element => {
+
   const teaserClasses = cva([
     styles.teaser,
     styles[type],
     className,
   ]);
+
+  let imageVariant = 'genericTeaser';
+  const imageWidth = 400;
+  let imageHeight = 300;
+
+  if (type === 'people') {
+    imageVariant = 'portrait';
+    imageHeight = 400;
+  }
 
   const shouldWrapInLink = links && links.length === 1;
   const link = shouldWrapInLink
@@ -123,7 +136,24 @@ export const GenericTeaser = ({
       }
 
       {image &&
-        <div className={styles.image}>image placeholder</div>
+        <div className={styles.image}>
+          {image?.url
+            ? (
+              <Image
+                alt={image.alt}
+                filename={image.filename || ''}
+                focalX={image.focalX || undefined}
+                focalY={image.focalY || undefined}
+                height={imageHeight}
+                loading='lazy'
+                url={image.url}
+                variant={imageVariant as ImageVariant}
+                width={imageWidth}
+              />
+            )
+            : null
+          }
+        </div>
       }
 
       <SafeHtml

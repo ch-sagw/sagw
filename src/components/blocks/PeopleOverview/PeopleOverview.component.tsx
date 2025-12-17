@@ -51,9 +51,9 @@ export const PeopleOverviewComponent = ({
         texts={[rteToHtml(team.name)]}
         links={links}
         type='people'
-        image={typeof item.image === 'object'
-          ? item.image?.id
-          : item.image
+        image={item.image && typeof item.image === 'object'
+          ? item.image
+          : undefined
         }
       />
     );

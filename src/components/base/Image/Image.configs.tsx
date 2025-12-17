@@ -87,10 +87,10 @@ export const getSrcAndSrcSet = ({
 
     case 'portrait':
       srcSetValue = `
-        ${src}?${params}&w=600&h=600&dpr=2&q=${retinaQuality} 1200w,
-        ${src}?${params}&w=400&h=400&dpr=2&q=${retinaQuality} 800w,
+        ${src}?${params}&w=400&h=400&q=${nonRetinaQuality} 400w,
         ${src}?${params}&w=600&h=600&q=${nonRetinaQuality} 600w,
-        ${src}?${params}&w=400&h=400&q=${nonRetinaQuality} 400w
+        ${src}?${params}&w=400&h=400&dpr=2&q=${retinaQuality} 800w,
+        ${src}?${params}&w=600&h=600&dpr=2&q=${retinaQuality} 1200w,
       `;
 
       srcValue = `${src}?${params}&w=600&h=600&q=${nonRetinaQuality}`;

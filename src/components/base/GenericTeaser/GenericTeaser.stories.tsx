@@ -5,11 +5,27 @@ import type {
 import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
 import { defaultDecorator } from '@/storybook-helpers';
 import React from 'react';
+import { Image } from '@/payload-types';
 
 type GenericTeaserProps = React.ComponentProps<typeof GenericTeaser>;
 
 type StrictStory = StoryObj<typeof GenericTeaser> & {
   args: GenericTeaserProps;
+};
+
+const personImage: Image = {
+  alt: 'Das Bild zeigt...',
+  createdAt: '2025-11-19T09:54:49.430Z',
+  filename: 'csm_Haller_Lea_web_cbe78041a2.jpg',
+  focalX: 50,
+  focalY: 50,
+  height: 650,
+  id: '6942d68d78d7d59f02b53782',
+  updatedAt: '2025-11-19T09:54:49.431Z',
+  // The url value coming from Payload will not contain the hostname.
+  // It is added here for Storybook only.
+  url: 'https://sagw-nu-localhost.gumlet.io/csm_Haller_Lea_web_cbe78041a2.jpg',
+  width: 650,
 };
 
 const meta: Meta<typeof GenericTeaser> = {
@@ -101,7 +117,7 @@ export const Magazine: StrictStory = {
 
 export const People: StrictStory = {
   args: {
-    image: 'some-logo.jpg',
+    image: personImage,
     links: [
       {
         href: 'tel:+41310001122',

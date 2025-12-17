@@ -149,7 +149,7 @@ export const fetchTeam = async ({
   // collect promises for fetching people
   const fetchedTeam = await payload.findByID({
     collection: 'teams',
-    depth: 1,
+    depth: 2,
     id: teamId,
     locale: language,
   });
