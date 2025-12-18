@@ -137,22 +137,17 @@ export const GenericTeaser = ({
 
       {image &&
         <div className={styles.image}>
-          {image?.url
-            ? (
-              <Image
-                alt={image.alt}
-                filename={image.filename || ''}
-                focalX={image.focalX || undefined}
-                focalY={image.focalY || undefined}
-                height={imageHeight}
-                loading='lazy'
-                url={image.url}
-                variant={imageVariant as ImageVariant}
-                width={imageWidth}
-              />
-            )
-            : null
-          }
+          <Image
+            alt={image.alt}
+            filename={image.filename || ''}
+            focalX={image.focalX || undefined}
+            focalY={image.focalY || undefined}
+            height={imageHeight}
+            loading='lazy'
+            url={image.url || ''}
+            variant={imageVariant as ImageVariant}
+            width={imageWidth}
+          />
         </div>
       }
 

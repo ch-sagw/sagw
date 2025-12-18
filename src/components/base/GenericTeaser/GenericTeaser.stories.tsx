@@ -28,6 +28,19 @@ const personImage: Image = {
   width: 650,
 };
 
+const magazineTeaserImage: Image = {
+  alt: 'Das Bild zeigt...',
+  createdAt: '2025-12-17T19:01:20.572Z',
+  filename: 'One_Way_Detailansicht.jpg',
+  focalX: 85,
+  focalY: 50,
+  height: 720,
+  id: '6942fe0078d7d59f02b546e4',
+  updatedAt: '2025-12-18T09:27:43.713Z',
+  url: 'https://sagw-nu-localhost.gumlet.io/One_Way_Detailansicht.jpg',
+  width: 1280,
+};
+
 const meta: Meta<typeof GenericTeaser> = {
   args: {},
   component: GenericTeaser,
@@ -102,7 +115,7 @@ export const Project: StrictStory = {
 
 export const Magazine: StrictStory = {
   args: {
-    image: 'some-logo.jpg',
+    image: magazineTeaserImage,
     links: [
       {
         href: 'https://www.foo.bar',
@@ -142,7 +155,7 @@ export const People: StrictStory = {
 
 export const Generic: StrictStory = {
   args: {
-    image: 'some-image.jpg',
+    image: magazineTeaserImage,
     links: [
       {
         href: 'https://www.foo.bar',
