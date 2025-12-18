@@ -153,14 +153,9 @@
     --line-opacity-animation-duration: 0s;
   }
 
-  @include forced-colors {
-    --line-cover-color: canvasText;
-  }
-
   --button-icon-color: var(--interaction-secondary);
   --line-animation-duration: 300ms;
   --line-opacity-animation-duration: var(--motion-speed-very-fast);
-  --line-cover-color: canvas;
   --button-color: var(--text-primary);
 
   // Redefined because we want to use the --button-padding-block
@@ -188,7 +183,6 @@
   &.dark {
     --button-color: var(--text-secondary-inverted);
     --button-icon-color: var(--interaction-primary-inverted);
-    --line-cover-color: var(--interaction-primary);
 
     &:hover {
       --button-color: var(--text-primary-inverted);
@@ -198,7 +192,6 @@
   &.light {
     --button-color: var(--interaction-primary);
     --button-icon-color: var(--interaction-primary);
-    --line-cover-color: var(--background-light);
   }
 
   .innerText {
@@ -208,19 +201,7 @@
     padding-block: px-to-rem(var(--button-padding-block-inner-text));
 
     &:after {
-      content: "";
-      position: absolute;
-      inset-inline: 0;
-      inset-block-end: px-to-rem(var(--spacing-2xs));
-      width: 100%;
-      height: px-to-rem(var(--border-width-l));
-      background: currentcolor;
-      transform: scaleX(0);
-      transition:
-        transform var(--line-animation-duration) var(--motion-ease-in-out),
-        opacity var(--line-opacity-animation-duration) var(--motion-ease-in-out);
-      transform-origin: left;
-      opacity: 0.5;
+      @include button-line;
     }
   }
 
@@ -274,7 +255,6 @@
   &.dark {
     --button-color: var(--text-primary-inverted);
     --button-icon-color: var(--interaction-primary-inverted);
-    --line-cover-color: var(--interaction-primary);
   }
 }
 
