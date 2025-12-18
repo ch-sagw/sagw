@@ -17,6 +17,17 @@ Förderung -> project teaser -> no padding
     @include button-line-hover;
   }
 
+  .image {
+    display: flex;
+    background: var(--background-light);
+
+    img {
+      aspect-ratio: inherit;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
   .link {
     padding: 0;
 
@@ -46,12 +57,20 @@ Förderung -> project teaser -> no padding
 
       margin-block: 0;
     }
+
+    &:focus,
+    &:hover {
+      svg {
+        color: var(--interaction-secondary-hover);
+      }
+    }
   }
 }
 
 // Institute
 .teaser.institute {
   .logo {
+    aspect-ratio: 16/9;
     margin-block-end: px-to-rem(var(--spacing-l));
     border: px-to-rem(var(--border-width-s)) solid var(--border-weak);
   }
@@ -85,11 +104,38 @@ Förderung -> project teaser -> no padding
 // Magazine
 .teaser.magazine {
   .image {
+    aspect-ratio: 4/3;
     margin-block: 0 px-to-rem(var(--spacing-l));
   }
 
   .title {
-    margin-block: 0 px-to-rem(var(--spacing-s));
+    position: relative;
+    display: inline-block;
+    padding-block: 0 px-to-rem(var(--spacing-2xs));
+    margin-block: 0 px-to-rem(var(--spacing-xs));
+
+    @include reduced-motion {
+      --line-animation-duration: 0s;
+      --line-opacity-animation-duration: 0s;
+    }
+
+    --line-animation-duration: 300ms;
+    --line-opacity-animation-duration: var(--motion-speed-very-fast);
+
+    &:after {
+      @include button-line;
+    }
+  }
+
+  .wrapper:not(:hover, :focus-visible) .title:after {
+    transform-origin: right;
+    transform: scaleX(0);
+    transition-timing-function: var(--motion-ease-in);
+    opacity: 0.5;
+  }
+
+  .wrapper:is(:hover, :focus-visible) .title:after {
+    @include button-line-hover;
   }
 }
 
@@ -101,6 +147,7 @@ Förderung -> project teaser -> no padding
   }
 
   .logo {
+    aspect-ratio: 1/1;
     margin-block-end: px-to-rem(var(--spacing-xs));
   }
 
@@ -138,12 +185,6 @@ Förderung -> project teaser -> no padding
   .image {
     aspect-ratio: 1/1;
     margin-block: 0 px-to-rem(var(--spacing-l));
-
-    img {
-      aspect-ratio: inherit;
-      width: 100%;
-      height: 100%;
-    }
   }
 
   .title {
@@ -176,11 +217,5 @@ Förderung -> project teaser -> no padding
 
   .text {
     margin-block: 0 px-to-rem(var(--spacing-l));
-  }
-
-  .link {
-    svg {
-      color: var(--icon-primary);
-    }
   }
 }
