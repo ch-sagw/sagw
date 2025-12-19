@@ -1,13 +1,11 @@
 import 'server-only';
 import React, { Fragment } from 'react';
-import {
-  getPayload, TypedLocale,
-} from 'payload';
-import configPromise from '@/payload.config';
+import { TypedLocale } from 'payload';
 import { RenderBlocks } from '@/app/(frontend)/RenderBlocks';
 import { getTenant } from '@/app/providers/TenantProvider.server';
 import { RenderHero } from '@/app/(frontend)/RenderHero';
 import { RenderStatusMessage } from '@/app/(frontend)/RenderStatusMessage';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 type InterfacePageProps = {
   params: Promise<{
@@ -44,9 +42,7 @@ export default async function DetailPage({
     slug, locale,
   } = await params;
 
-  const payload = await getPayload({
-    config: configPromise,
-  });
+  const payload = await getPayloadCached();
 
   const tenant: string | null = await getTenant();
 
@@ -168,7 +164,6 @@ export default async function DetailPage({
                 collectionSlug: foundCollection,
                 id: pageData.id,
               }}
-              locale={locale}
             />
           )}
         </div>

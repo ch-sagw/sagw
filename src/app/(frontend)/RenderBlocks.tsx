@@ -38,7 +38,7 @@ import {
 // components
 import { Notification } from '@/components/blocks/Notification/Notification';
 import { Rte } from '@/components/blocks/Rte/Rte';
-import { Accordion } from '@/components/blocks/Accordion/Accordion';
+import { Accordion } from '@/components/blocks/Accordion/Accordion.server';
 import { FormServer } from '@/components/blocks/Form/Form.server';
 import { ImageBlock } from '@/components/blocks/Image/Image';
 import { Video } from '@/components/blocks/Video/Video';
@@ -63,9 +63,7 @@ import { EditionsOverview } from '@/components/blocks/EditionsOverview/EditionsO
 import { Footnote } from '@/components/blocks/Footnote/Footnote';
 import { BibliographicReference } from '@/components/blocks/BibliographicReference/BibliographicReference';
 import { HomeTeaser } from '@/components/blocks/HomeTeaser/HomeTeaser';
-import {
-  CollectionSlug, TypedLocale,
-} from 'payload';
+import { CollectionSlug } from 'payload';
 
 export interface InterfaceSourcePage {
   collectionSlug: CollectionSlug;
@@ -107,7 +105,6 @@ interface InterfaceRenderBlocksProps {
     InterfaceEditionsOverviewBlock
   )[] | null | undefined;
   i18n: I18NGlobal;
-  locale: TypedLocale;
   sourcePage: InterfaceSourcePage;
 }
 

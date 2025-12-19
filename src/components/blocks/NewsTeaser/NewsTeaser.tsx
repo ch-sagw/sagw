@@ -1,8 +1,8 @@
+import 'server-only';
 import React, { Fragment } from 'react';
 import {
-  getPayload, TypedLocale, Where,
+  TypedLocale, Where,
 } from 'payload';
-import configPromise from '@/payload.config';
 
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { InterfaceNewsTeasersBlock } from '@/payload-types';
@@ -10,6 +10,8 @@ import { NewsTeaserComponent } from '@/components/blocks/NewsTeaser/NewsTeaser.c
 import { convertPayloadNewsPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
 import { InterfaceSourcePage } from '@/app/(frontend)/RenderBlocks';
 import { getLocale } from 'next-intl/server';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { getPageUrl } from '@/utilities/getPageUrl';
 
 type InterfaceNewsTeaserPropTypes = {
   tenant: string;
@@ -18,9 +20,7 @@ type InterfaceNewsTeaserPropTypes = {
 
 export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<React.JSX.Element> => {
   const locale = (await getLocale()) as TypedLocale;
-  const payload = await getPayload({
-    config: configPromise,
-  });
+  const payload = await getPayloadCached();
 
   const queryRestraints: Where = {
     tenant: {
@@ -55,14 +55,18 @@ export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<R
   if (props.optionalLink?.includeLink && props.optionalLink.link?.linkText) {
     allLink = {
 
-      // TODO
-      href: '/overview',
+      // TODO: we need reference tracking here
+      href: await getPageUrl({
+        locale,
+        pageId: props.optionalLink.link.internalLink.documentId,
+        payload,
+      }),
 
       text: rteToHtml(props.optionalLink.link?.linkText),
     };
   }
 
-  const items = convertPayloadNewsPagesToFeItems(newsPages, locale);
+  const items = await convertPayloadNewsPagesToFeItems(newsPages, locale);
 
   if (!items || items.length < 1) {
     return <Fragment></Fragment>;

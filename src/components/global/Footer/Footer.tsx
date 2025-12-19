@@ -6,7 +6,6 @@ import React, {
 import { cva } from 'cva';
 import styles from '@/components/global/Footer/Footer.module.scss';
 import {
-  InterfaceConsentOverlay,
   InterfaceFooterContact,
   InterfaceFooterLegal,
   InterfaceFooterSocialLinks,
@@ -28,7 +27,9 @@ import {
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
-import { ConsentOverlay } from '../ConsentOverlay/ConsentOverlay';
+import {
+  ConsentOverlayClient, type InterfaceConsentOverlayClientPropTypes,
+} from '../ConsentOverlay/ConsentOverlay.client';
 import { useScrollLock } from '@/hooks/useScrollLock';
 import { openConsentOverlayEventName } from '@/components/helpers/cookies';
 import { useTranslations } from 'next-intl';
@@ -45,7 +46,7 @@ export type InterfaceFooterPropTypes = {
     sagwLink: string;
     sagwLinkText: string;
   }
-  consentOverlay: InterfaceConsentOverlay;
+  consentOverlay: Omit<InterfaceConsentOverlayClientPropTypes, 'onClose' | 'onConsentGiven'>;
 };
 
 export const Footer = ({
@@ -261,7 +262,7 @@ export const Footer = ({
           className={styles.socialLinks}
         />
 
-        <ConsentOverlay
+        <ConsentOverlayClient
           ref={overlayDialogRef}
           {...consentOverlay}
           onClose={(): void => {

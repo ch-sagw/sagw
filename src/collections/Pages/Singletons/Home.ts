@@ -19,6 +19,7 @@ import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 import { readFile } from 'fs/promises';
+import { hookUpdateLinkReferences } from '@/hooks-payload/updateLinkReferences';
 
 const homeBlocks: BlockSlug[] = [
   'textBlock',
@@ -133,7 +134,10 @@ export const HomePage: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [hookCascadeBreadcrumbUpdates],
+    afterChange: [
+      hookCascadeBreadcrumbUpdates,
+      hookUpdateLinkReferences,
+    ],
     beforeChange: [
       hookPreventBulkPublishForTranslators,
       hookGenerateBreadcrumbs,

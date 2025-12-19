@@ -9,18 +9,19 @@ import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
-import { Rte } from '@/components/blocks/Rte/Rte';
 import {
   consentUpdatedEventName, openConsentOverlayEventName, setCookieConsent, shouldShowBanner,
 } from '@/components/helpers/cookies';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { useScrollLock } from '@/hooks/useScrollLock';
 
-export type InterfaceConsentBannerPropTypes = {} & InterfaceConsentBanner;
+export type InterfaceConsentBannerPropTypes = {
+  textHtml: string;
+} & Omit<InterfaceConsentBanner, 'text'>;
 
 export const ConsentBanner = ({
   title,
-  text,
+  textHtml,
   buttonAcceptAll,
   buttonCustomizeSelection,
   buttonDeclineAll,
@@ -204,11 +205,10 @@ export const ConsentBanner = ({
         html={rteToHtml(title)}
         id='consent-banner-title'
       />
-      <Rte
+      <SafeHtml
+        as='p'
         className={styles.text}
-        text={text}
-        colorMode='light'
-        stickyFirstTitle={false}
+        html={textHtml}
       />
       <ul className={styles.buttons}>
         <li>

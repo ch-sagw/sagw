@@ -6,6 +6,7 @@ import { MagazineOverviewComponent } from '@/components/blocks/MagazineOverview/
 import { defaultDecorator } from '@/storybook-helpers';
 import { MagazineDetailPage } from '@/payload-types';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { prerenderPageLinksStorybook } from '@/utilities/prerenderPageLinksStorybook';
 
 type MagazineOverviewProps = React.ComponentProps<typeof MagazineOverviewComponent>;
 
@@ -72,6 +73,9 @@ const pages: MagazineDetailPage[] = Array.from({
 export const SampleStory: StrictStory = {
   args: {
     blockType: 'magazineOverviewBlock',
+    pageUrls: prerenderPageLinksStorybook({
+      pages,
+    }),
     pages,
   },
 };

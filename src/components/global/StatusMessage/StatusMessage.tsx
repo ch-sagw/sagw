@@ -3,20 +3,26 @@
 // be handled in general manner: if page changes -> invalidate static paths)
 // 2. if current date is later then configured toDate
 
+import 'server-only';
 import React, { Fragment } from 'react';
-import { InterfaceStatusMessage } from '@/payload-types';
+import {
+  type Config, InterfaceStatusMessage,
+} from '@/payload-types';
 import { Notification } from '@/components/base/Notification/Notification';
 import { rteToHtml } from '@/utilities/rteToHtml';
+import { getLocale } from 'next-intl/server';
+import { getPageUrl } from '@/utilities/getPageUrl';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 export type InterfaceStatusMessagePropTypes = {} & InterfaceStatusMessage;
 
-export const StatusMessage = ({
+export const StatusMessage = async ({
   type,
   title,
   message,
   optionalLink,
   show,
-}: InterfaceStatusMessagePropTypes): React.JSX.Element => {
+}: InterfaceStatusMessagePropTypes): Promise<React.JSX.Element> => {
   let shouldShow = true;
 
   if (show.display === 'hide') {
@@ -45,6 +51,18 @@ export const StatusMessage = ({
     return <Fragment />;
   }
 
+  let linkHref = '';
+  const locale = (await getLocale()) as Config['locale'];
+  const payload = await getPayloadCached();
+
+  if (optionalLink?.link?.internalLink.documentId) {
+    linkHref = await getPageUrl({
+      locale,
+      pageId: optionalLink?.link?.internalLink.documentId,
+      payload,
+    });
+  }
+
   return (
     <Notification
       colorMode='light'
@@ -54,7 +72,7 @@ export const StatusMessage = ({
       text={rteToHtml(message)}
 
       // TODO: generate url
-      linkHref={optionalLink?.link?.internalLink.slug || ''}
+      linkHref={linkHref}
       linkText={rteToHtml(optionalLink?.link?.linkText)}
     />
   );

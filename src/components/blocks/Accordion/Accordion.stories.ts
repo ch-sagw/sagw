@@ -2,7 +2,7 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { Accordion } from '@/components/blocks/Accordion/Accordion';
+import { Accordion } from '@/components/blocks/Accordion/Accordion.server';
 import { defaultDecorator } from '@/storybook-helpers';
 import {
   rte4AccordionContent, sampleRtePrivacyCheckbox,

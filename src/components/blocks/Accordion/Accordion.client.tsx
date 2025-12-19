@@ -4,14 +4,22 @@ import React, { Fragment } from 'react';
 import { cva } from 'cva';
 import styles from '@/components/blocks/Accordion/Accordion.module.scss';
 import { Icon } from '@/icons';
-import { InterfaceAccordionBlock } from '@/payload-types';
 import { useExpandOnClick } from '@/hooks/useExpandOnClick';
-import { rteToHtml } from '@/utilities/rteToHtml';
-import { Rte } from '@/components/blocks/Rte/Rte';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { Section } from '@/components/base/Section/Section';
+import { ColorMode } from '@/components/base/types/colorMode';
 
-export type InterfaceAccordionPropTypes = {} & InterfaceAccordionBlock;
+type AccordionItemWithHtml = {
+  id?: string | null;
+  accordionTitle: string;
+  accordionContentHtml: string;
+};
+
+export type InterfaceAccordionClientPropTypes = {
+  accordions: AccordionItemWithHtml[];
+  title: string;
+  colorMode: ColorMode;
+};
 
 const accordionClasses = cva([styles.expandableElement], {
   variants: {
@@ -32,11 +40,11 @@ const accordionItemClasses = cva([styles.item], {
   },
 });
 
-export const Accordion = ({
+export const AccordionClient = ({
   accordions,
   title,
   colorMode,
-}: InterfaceAccordionBlock): React.JSX.Element => {
+}: InterfaceAccordionClientPropTypes): React.JSX.Element => {
 
   const {
     activeElement,
@@ -51,7 +59,7 @@ export const Accordion = ({
         colorMode,
       })}
       showTopLine={true}
-      title={rteToHtml(title)}
+      title={title}
       colorMode={colorMode}
     >
 
@@ -84,7 +92,7 @@ export const Accordion = ({
                   <SafeHtml
                     as='span'
                     className={styles.buttonText}
-                    html={rteToHtml(item.accordionTitle)}
+                    html={item.accordionTitle}
                   />
                   <Icon
                     name='plus'
@@ -104,10 +112,10 @@ export const Accordion = ({
                 <div
                   className={styles.rte}
                 >
-                  <Rte
-                    colorMode={colorMode}
-                    stickyFirstTitle={false}
-                    text={item.accordionContent}
+                  <SafeHtml
+                    as='div'
+                    html={item.accordionContentHtml}
+                    className={styles.text}
                   />
                 </div>
               </section>

@@ -1,13 +1,17 @@
 import 'server-only';
 import {
-  I18NGlobal,
-  InterfaceEmailField, Form as InterfaceForm, InterfaceFormBlock, InterfaceRadioField,
-  InterfaceTextField,
+  type Config,
+  I18NGlobal, InterfaceEmailField, Form as InterfaceForm, InterfaceFormBlock,
+  InterfaceRadioField, InterfaceTextField,
 } from '@/payload-types';
 import { FormClient } from '@/components/blocks/Form/Form.client';
 import { Fragment } from 'react';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
-import { getTranslations } from 'next-intl/server';
+import {
+  getLocale, getTranslations,
+} from 'next-intl/server';
+import { rte3ToHtml } from '@/utilities/rteToHtml';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 type InterfaceFormServerPropTypes = {
   globalI18n: I18NGlobal;
@@ -17,7 +21,7 @@ export const FormServer = async ({
   form,
   globalI18n,
 }: InterfaceFormServerPropTypes): Promise<React.JSX.Element> => {
-
+  const payload = await getPayloadCached();
   const i18nForm = globalI18n.forms;
   const internalI18nForm = await getTranslations('form');
 
@@ -122,9 +126,58 @@ export const FormServer = async ({
     });
   }
 
+  // --- prerender RTE content for client component
+  const locale = (await getLocale()) as Config['locale'];
+
+  const preRenderedLabels: Record<string, string> = {};
+  const preRenderedRadioLabels: Record<string, Record<string, string>> = {};
+
+  if (renderForm.fields) {
+    await Promise.all(renderForm.fields.map(async (field) => {
+      if (field.blockType === 'checkboxBlock' && field.label) {
+        const labelHtml = await rte3ToHtml({
+          content: field.label,
+          locale,
+          payload,
+        });
+
+        preRenderedLabels[field.name] = labelHtml;
+      }
+
+      if (field.blockType === 'radioBlock') {
+        if (field.label) {
+          const labelHtml = await rte3ToHtml({
+            content: field.label,
+            locale,
+            payload,
+          });
+
+          preRenderedLabels[field.name] = labelHtml;
+        }
+
+        if (field.items) {
+          preRenderedRadioLabels[field.name] = {};
+          await Promise.all(field.items.map(async (item) => {
+            if (item.label) {
+              const itemLabelHtml = await rte3ToHtml({
+                content: item.label,
+                locale,
+                payload,
+              });
+
+              preRenderedRadioLabels[field.name][item.value] = itemLabelHtml;
+            }
+          }));
+        }
+      }
+    }));
+  }
+
   return (
     <FormClient
       form={renderForm}
+      preRenderedLabels={preRenderedLabels}
+      preRenderedRadioLabels={preRenderedRadioLabels}
     />
   );
 };

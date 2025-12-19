@@ -38,7 +38,17 @@ const updateChildBreadcrumbs = async (
   parentDocumentId: string,
   tenantId: string | undefined,
   deletedDocumentIds?: Set<string>,
+  effectiveDeletedIds?: Set<string>,
+  isDraftUpdate?: boolean,
 ): Promise<void> => {
+  // effectiveDeletedIds tracks all IDs that should be treated as
+  // deleted/unpublished
+  // this includes the original deletedDocumentIds plus any
+  // children whose parentPage was cleared
+  // for draft updates, we use deletedDocumentIds
+  // for breadcrumb exclusion but don't clear parentPage
+  const effectiveIds = effectiveDeletedIds || new Set<string>(deletedDocumentIds || []);
+
   const availableCollections = linkableSlugs.map((item) => item.slug);
 
   // Find child pages in all linkable collections
@@ -55,19 +65,26 @@ const updateChildBreadcrumbs = async (
 
     const query: any = {
       [`${fieldParentSelectorFieldName}.documentId`]: parentDocumentId,
+      tenant: tenantId,
     };
 
-    query.tenant = tenantId;
+    const docs = await dbCollection.find(query);
 
-    const docs = await dbCollection.find(query)
-      .lean();
+    return docs.map((doc: any) => {
+      // Convert Mongoose document to plain object, preserving all fields
+      const plainDoc = doc.toObject
+        ? doc.toObject()
+        : {
+          ...doc,
+        };
 
-    return docs.map((doc: any) => ({
-      ...doc,
-      /* eslint-disable @typescript-eslint/naming-convention */
-      _collection: collectionSlug,
-      /* eslint-enable @typescript-eslint/naming-convention */
-    }));
+      return {
+        ...plainDoc,
+        /* eslint-disable @typescript-eslint/naming-convention */
+        _collection: collectionSlug,
+        /* eslint-enable @typescript-eslint/naming-convention */
+      };
+    });
   });
 
   const childPagesArrays = await Promise.all(childPagesPromises);
@@ -97,49 +114,52 @@ const updateChildBreadcrumbs = async (
       let shouldClearParentPage = false;
 
       // Check if parent exists and is deleted
-      // First check if it's a valid object with documentId
-      if (
-        childActualParentRef &&
+      const hasDocumentId = childActualParentRef &&
         typeof childActualParentRef === 'object' &&
         'documentId' in childActualParentRef &&
-        childActualParentRef.documentId &&
-        deletedDocumentIds?.has(String(childActualParentRef.documentId))
-      ) {
-        // Child's parent is deleted - clear the parentPage field entirely
+        childActualParentRef.documentId;
+
+      const isParentDeleted = hasDocumentId && effectiveIds.has(String(childActualParentRef.documentId));
+      // For draft updates, don't clear parentPage even if parent
+      // is in deletedDocumentIds. deletedDocumentIds is used only for
+      // breadcrumb exclusion, not for clearing parentPage
+      const shouldClearParentPageField = isParentDeleted && !isDraftUpdate;
+
+      if (hasDocumentId && shouldClearParentPageField) {
+        // child's parent is deleted/unpublished - clear the parentPage
         shouldClearParentPage = true;
 
-        // No parent, so breadcrumbs will be empty
+        // add this child to effectiveDeletedIds so its children will be cleared
+        effectiveIds.add(childId);
+
         parentRef = undefined;
-      } else if (
-        childActualParentRef &&
-        typeof childActualParentRef === 'object' &&
-        'documentId' in childActualParentRef &&
-        'slug' in childActualParentRef &&
-        childActualParentRef.documentId &&
-        childActualParentRef.slug
-      ) {
-        // Child's parent is not deleted and is valid,
-        // use the child's actual parent reference
+      } else if (hasDocumentId && isParentDeleted) {
+        // parent is draft/unpublished - clear breadcrumbs but preserve
+        // parentPage. pass undefined so breadcrumbs are cleared
+        // via buildBreadcrumbs exclusion
+        parentRef = childActualParentRef as InterfaceInternalLinkValue;
+      } else if (hasDocumentId) {
+        // child's parent is not deleted and has documentId. use the child's
+        // actual parent reference (slug may not be populated in DB)
         parentRef = childActualParentRef as InterfaceInternalLinkValue;
       } else {
         // No parent reference (null, undefined, or empty object {})
         parentRef = undefined;
       }
 
-      const breadcrumbs = await buildBreadcrumbs(payload, parentRef, [], deletedDocumentIds);
+      const breadcrumbs = await buildBreadcrumbs(payload, parentRef, [], effectiveIds);
       const dbCollection = payload.db.collections[collectionSlug];
 
       if (!dbCollection) {
         throw new Error(`${collectionSlug} db collection not found`);
       }
 
-      // Build the update object
+      // Build the update object - ONLY update breadcrumb
+      // Do NOT touch parentPage unless we're explicitly clearing it
       const updateData: any = {
         [fieldBreadcrumbFieldName]: breadcrumbs,
       };
 
-      // If parent is deleted, clear the parentPage field by setting it
-      // to an empty object
       if (shouldClearParentPage) {
         updateData[fieldParentSelectorFieldName] = {};
       }
@@ -154,7 +174,7 @@ const updateChildBreadcrumbs = async (
         },
       );
 
-      await updateChildBreadcrumbs(payload, req, childId, tenantId, deletedDocumentIds);
+      await updateChildBreadcrumbs(payload, req, childId, tenantId, deletedDocumentIds, effectiveIds, isDraftUpdate);
     } finally {
       cascadeProcessingSet.delete(childId);
     }
@@ -202,12 +222,6 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
   const isUnpublished = newStatus === 'draft' || newStatus === null;
   const isUnpublishing = wasPublished && isUnpublished;
 
-  // For local API: if status is draft/null and it's an update operation,
-  // always cascade to children (treat as unpublishing)
-  // This handles the case where local API doesn't provide correct previousDoc
-  // We cascade if: status is draft AND it's an update (not create)
-  const shouldCascadeOnDraft = operation === 'update' && isUnpublished;
-
   const oldSlug = previousDoc?.['slug'];
   const oldNavigationTitle = previousDoc?.[fieldNavigationTitleFieldName];
   const oldParent = previousDoc?.[fieldParentSelectorFieldName];
@@ -220,8 +234,33 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
 
   const onlyBreadcrumbChanged = breadcrumbChanged && !slugChanged && !navigationTitleChanged && !parentChanged && !statusChanged;
 
-  // unpublishing logic - also handle local API case where status is draft
-  if (isUnpublishing || shouldCascadeOnDraft) {
+  // Check if there are content changes (not just status change)
+  // This helps distinguish between explicit unpublish vs auto-save
+  // We check if ANY field changed besides status, updatedAt, createdAt, id
+  // This includes content blocks, navigationTitle, slug,
+  // parentPage, breadcrumb, etc.
+  const hasContentChanges = slugChanged || navigationTitleChanged || parentChanged || breadcrumbChanged ||
+    (previousDoc && Object.keys(doc)
+      .some((key) => {
+      // Skip system fields and status
+        if (key === '_status' || key === 'updatedAt' || key === 'createdAt' || key === 'id' || key === '_id') {
+          return false;
+        }
+
+        // Check if field value changed
+        return JSON.stringify(previousDoc[key]) !== JSON.stringify(doc[key]);
+      }));
+
+  // If isUnpublishing but hasContentChanges, treat as draft update (auto-save)
+  // This preserves parentPage while clearing breadcrumbs
+  const isAutoSave = isUnpublishing && hasContentChanges;
+
+  // unpublishing logic - when unpublishing (published -> draft),
+  // BUT: if there are content changes, this is likely auto-save,
+  // not explicit unpublish
+  // For auto-save: preserve parentPage (treat as draft update)
+  // For explicit unpublish: clear children's parentPage
+  if (isUnpublishing && !hasContentChanges) {
     const tenantId = typeof doc.tenant === 'string'
       ? doc.tenant
       : doc.tenant?.id;
@@ -231,7 +270,33 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
 
       const unpublishedDocumentIds = new Set<string>([String(docId)]);
 
-      await updateChildBreadcrumbs(req.payload, req, docId, tenantId, unpublishedDocumentIds);
+      await updateChildBreadcrumbs(req.payload, req, docId, tenantId, unpublishedDocumentIds, undefined, false);
+    } finally {
+      cascadeProcessingSet.delete(docId);
+    }
+
+    return doc;
+  }
+
+  // for draft documents OR auto-save (published -> draft with content changes):
+  // cascade breadcrumb updates but don't clear parentPage
+  // draft documents should be excluded from breadcrumbs
+  // (children's breadcrumbs cleared) but parentPage should remain intact
+  // Note: isAutoSave means isUnpublishing=true but hasContentChanges=true,
+  // so we treat it as draft update
+  if (isUnpublished || isAutoSave) {
+    const tenantId = typeof doc.tenant === 'string'
+      ? doc.tenant
+      : doc.tenant?.id;
+
+    try {
+      cascadeProcessingSet.add(docId);
+
+      // pass the draft document ID in deletedDocumentIds so breadcrumbs
+      // are cleared. Pass isDraftUpdate=true so parentPage is preserved
+      const draftDocumentIds = new Set<string>([String(docId)]);
+
+      await updateChildBreadcrumbs(req.payload, req, docId, tenantId, draftDocumentIds, undefined, true);
     } finally {
       cascadeProcessingSet.delete(docId);
     }
@@ -251,7 +316,7 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
   // regular update logic
   try {
     cascadeProcessingSet.add(docId);
-    await updateChildBreadcrumbs(req.payload, req, docId, tenantId, undefined);
+    await updateChildBreadcrumbs(req.payload, req, docId, tenantId, undefined, undefined, false);
   } finally {
     cascadeProcessingSet.delete(docId);
   }
@@ -283,7 +348,7 @@ export const hookCascadeBreadcrumbUpdatesOnDelete: CollectionAfterDeleteHook = a
 
     const deletedDocumentIds = new Set<string>([String(docId)]);
 
-    await updateChildBreadcrumbs(req.payload, req, docId, tenantId, deletedDocumentIds);
+    await updateChildBreadcrumbs(req.payload, req, docId, tenantId, deletedDocumentIds, undefined, false);
   } finally {
     cascadeProcessingSet.delete(docId);
   }

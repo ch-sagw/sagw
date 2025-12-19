@@ -7,15 +7,21 @@ import { hookSeoFallback } from '@/hooks-payload/seoFallback';
 import { hookSlug } from '@/hooks-payload/slug';
 import { hookAdminTitle } from '@/hooks-payload/adminTitle';
 import {
-  CollectionAfterChangeHook, CollectionAfterDeleteHook, CollectionBeforeChangeHook, CollectionBeforeValidateHook,
+  CollectionAfterChangeHook, CollectionAfterDeleteHook, CollectionBeforeChangeHook, CollectionBeforeDeleteHook, CollectionBeforeValidateHook,
 } from 'payload';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
+import { hookManageLinksCollectionOnChange } from '@/hooks-payload/manageLinksCollection';
+import { hookUpdateLinkReferences } from '@/hooks-payload/updateLinkReferences';
+import { hookInvalidateCacheOnPageUrlChange } from '@/hooks-payload/invalidateCacheOnPageUrlChange';
+import { hookInvalidateCacheOnPageDeletion } from '@/hooks-payload/invalidateCacheOnPageDeletion';
+import { hookDeleteLinksOnPageDeletion } from '@/hooks-payload/deleteLinksOnPageDeletion';
 
 interface InterfaceGenericPageHooks {
   afterChange?: CollectionAfterChangeHook[];
   afterDelete?: CollectionAfterDeleteHook[];
   beforeChange?: CollectionBeforeChangeHook[];
+  beforeDelete?: CollectionBeforeDeleteHook[];
   beforeValidate?: CollectionBeforeValidateHook[];
 }
 
@@ -23,12 +29,16 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
   // 3.
   afterChange: [
     hookCascadeBreadcrumbUpdates,
+    hookManageLinksCollectionOnChange,
+    hookUpdateLinkReferences,
+    hookInvalidateCacheOnPageUrlChange,
     ...(additionalHooks?.afterChange ?? []),
   ],
 
   // 4.
   afterDelete: [
     hookCascadeBreadcrumbUpdatesOnDelete,
+    hookDeleteLinksOnPageDeletion,
     ...(additionalHooks?.afterDelete ?? []),
   ],
 
@@ -38,6 +48,12 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
     hookSeoFallback,
     hookGenerateBreadcrumbs,
     ...(additionalHooks?.beforeChange ?? []),
+  ],
+
+  // 5.
+  beforeDelete: [
+    hookInvalidateCacheOnPageDeletion,
+    ...(additionalHooks?.beforeDelete ?? []),
   ],
 
   // 1.

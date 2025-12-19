@@ -4,7 +4,7 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import type { PartialStoryFn } from 'storybook/internal/types';
-import { ConsentOverlay } from '@/components/global/ConsentOverlay/ConsentOverlay';
+import { ConsentOverlay } from '@/components/global/ConsentOverlay/ConsentOverlay.server';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 

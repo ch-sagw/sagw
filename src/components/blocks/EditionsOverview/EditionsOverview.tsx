@@ -1,3 +1,4 @@
+import 'server-only';
 import React from 'react';
 import styles from '@/components/blocks/EditionsOverview/EditionsOverview.module.scss';
 import { InterfaceEditionsOverviewBlock } from '@/payload-types';

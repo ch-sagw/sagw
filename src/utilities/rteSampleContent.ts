@@ -3443,3 +3443,61 @@ export const sampleRtePrivacyCheckbox: InterfaceRte = {
     version: 1,
   },
 };
+
+export const sampleRteWithLink = ({
+  documentId,
+  slug,
+}: {
+  documentId: string;
+  slug: string;
+}): InterfaceRte => ({
+  root: {
+    children: [
+      {
+        children: [
+          {
+            checked: false,
+            children: [
+              {
+                detail: 0,
+                format: 0,
+                mode: 'normal',
+                style: '',
+                text: 'Datenschutz',
+                type: 'text',
+                version: 1,
+              },
+            ],
+            direction: 'ltr',
+            fields: {
+              doc: {
+                label: 'Home Page',
+                relationTo: slug,
+                value: documentId,
+              },
+              linkType: 'internal',
+              newTab: false,
+            },
+            format: '',
+            id: '68c7f8ebb2920188de8380de',
+            indent: 0,
+            type: 'link',
+            version: 3,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        textFormat: 0,
+        textStyle: '',
+        type: 'paragraph',
+        version: 1,
+      },
+    ],
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+});

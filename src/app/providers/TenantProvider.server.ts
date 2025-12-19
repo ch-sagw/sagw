@@ -1,10 +1,7 @@
-import { getPayload } from 'payload';
-import configPromise from '@/payload.config';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 export const getTenant = async (): Promise<string | null> => {
-  const payload = await getPayload({
-    config: configPromise,
-  });
+  const payload = await getPayloadCached();
 
   const tenants = await payload.find({
     collection: 'tenants',

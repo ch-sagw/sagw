@@ -1,13 +1,12 @@
+'use client';
+
 import React, {
   forwardRef, useEffect, useState,
 } from 'react';
 import styles from '@/components/global/ConsentOverlay/ConsentOverlay.module.scss';
-import { InterfaceConsentOverlay } from '@/payload-types';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
-import { rteToHtml } from '@/utilities/rteToHtml';
 import { Button } from '@/components/base/Button/Button';
 import { Toggle } from '@/components/base/Toggle/Toggle';
-import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { Icon } from '@/icons';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { useTranslations } from 'next-intl';
@@ -16,12 +15,28 @@ import {
   setCookieConsent,
 } from '@/components/helpers/cookies';
 
-export type InterfaceConsentOverlayPropTypes = {
+type ConsentOverlaySection = {
+  title: string;
+  text: string;
+  toggleLabel?: string;
+  toggleLabelOff?: string;
+  toggleLabelOn?: string;
+  toggleDefault: 'on' | 'off';
+};
+
+export type InterfaceConsentOverlayClientPropTypes = {
   onClose?: () => void;
   onConsentGiven?: () => void;
-} & InterfaceConsentOverlay;
+  title: string;
+  text: string;
+  buttonAcceptAll: string;
+  buttonAcceptSelection: string;
+  necessaryCookies: ConsentOverlaySection & { titleHtml: string; textHtml: string; toggleLabelHtml?: string; toggleLabelOffHtml?: string; toggleLabelOnHtml?: string };
+  analyticsPerformance: ConsentOverlaySection & { titleHtml: string; textHtml: string; toggleLabelHtml?: string; toggleLabelOffHtml?: string; toggleLabelOnHtml?: string };
+  externalContent: ConsentOverlaySection & { titleHtml: string; textHtml: string; toggleLabelHtml?: string; toggleLabelOffHtml?: string; toggleLabelOnHtml?: string };
+};
 
-export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOverlayPropTypes>(({
+export const ConsentOverlayClient = forwardRef<HTMLDialogElement, InterfaceConsentOverlayClientPropTypes>(({
   title,
   text,
   buttonAcceptAll,
@@ -214,7 +229,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
             id='consent-overlay-title'
             as='h2'
             className={styles.title}
-            html={rteToHtml(title)}
+            html={title}
           />
           <button
             data-testid='consent-overlay-close'
@@ -228,7 +243,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
         <SafeHtml
           as='p'
           className={styles.text}
-          html={rteToHtml(text)}
+          html={text}
         />
 
         <ul className={styles.sections}>
@@ -243,21 +258,21 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
                 <SafeHtml
                   as='h3'
                   className={styles.sectionTitle}
-                  html={rteToHtml(section.title)}
+                  html={section.titleHtml}
                 />
 
-                {('toggleLabel' in section) &&
+                {('toggleLabelHtml' in section) &&
                   <SafeHtml
                     as='span'
                     className={styles.sectionToggleLabel}
-                    html={rteToHtml(section.toggleLabel)}
+                    html={section.toggleLabelHtml || ''}
                   />
                 }
 
-                {('toggleLabelOff' in section) && ('toggleLabelOn' in section) &&
+                {('toggleLabelOffHtml' in section) && ('toggleLabelOnHtml' in section) &&
                   <Toggle
-                    labelOff={rteToHtml(section.toggleLabelOff)}
-                    labelOn={rteToHtml(section.toggleLabelOn)}
+                    labelOff={section.toggleLabelOffHtml || ''}
+                    labelOn={section.toggleLabelOnHtml || ''}
                     value={key}
                     name={key}
                     checked={toggleStates[key]}
@@ -267,7 +282,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
                         [key]: checked,
                       }));
                     }}
-                    hiddenLabel={rte1ToPlaintext(section.title)}
+                    hiddenLabel={section.title}
                   />
                 }
               </div>
@@ -275,7 +290,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
               <SafeHtml
                 as='p'
                 className={styles.sectionText}
-                html={rteToHtml(section.text)}
+                html={section.textHtml}
               />
 
             </li>
@@ -289,7 +304,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
             buttonType='button'
             colorMode='light'
             style='filled'
-            text={rteToHtml(buttonAcceptSelection)}
+            text={buttonAcceptSelection}
             onClick={handleAcceptSelection}
           />
 
@@ -299,7 +314,7 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
             buttonType='button'
             colorMode='light'
             style='outlined'
-            text={rteToHtml(buttonAcceptAll)}
+            text={buttonAcceptAll}
             onClick={handleAcceptAll}
           />
 
@@ -310,4 +325,5 @@ export const ConsentOverlay = forwardRef<HTMLDialogElement, InterfaceConsentOver
   );
 });
 
-ConsentOverlay.displayName = 'ConsentOverlay';
+ConsentOverlayClient.displayName = 'ConsentOverlayClient';
+

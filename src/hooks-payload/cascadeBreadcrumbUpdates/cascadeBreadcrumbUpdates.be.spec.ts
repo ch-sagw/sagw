@@ -15,6 +15,7 @@ import {
   generateOverviewPage,
 } from '@/test-helpers/page-generator';
 import { generateTenant } from '@/test-helpers/tenant-generator';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 // 1. Generate 4 levels of nested pages.
 // 2. Change navigation title on level 2.
@@ -947,5 +948,89 @@ test('Updates on unpublishing home', async () => {
     .toBe(0);
   await expect(level4Updated!.breadcrumb!.length)
     .toBe(0);
+
+});
+
+// Discovered during manual test: created overview (home as parent), created
+// detail (overview as parent). then added an rte block with plain text to
+// home. This lead to the parentPage being emptied on overvew page.
+test('Should not overwrite parent field', async () => {
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  let home: any;
+  let level1: any;
+  let level2: any;
+
+  try {
+    const tenant = await generateTenant({
+      name: `${(new Date())
+        .getTime()}-tenant-1`,
+    });
+
+    home = await generateHomePage({
+      sideTitle: 'Home side title',
+      tenant: tenant.id,
+      title: 'Home title',
+    });
+
+    level1 = await generateOverviewPage({
+      navigationTitle: 'Level 1 Navigation Title',
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      tenant: tenant.id,
+      title: `Level 1 ${(new Date())
+        .getTime()}`,
+    });
+
+    level2 = await generateDetailPage({
+      navigationTitle: 'Level 2 Navigation Title',
+      parentPage: {
+        documentId: level1.id,
+        slug: 'overviewPage',
+      },
+      tenant: tenant.id,
+      title: `Level 2 ${(new Date())
+        .getTime()}`,
+    });
+
+    await payload.update({
+      collection: 'homePage',
+      data: {
+        content: [
+          {
+            blockType: 'textBlock',
+            text: simpleRteConfig('foo'),
+          },
+        ],
+      },
+      id: home.id,
+    });
+
+  } catch (e) {
+    level2 = JSON.stringify(e);
+  }
+
+  const level1Updated = await payload.findByID({
+    collection: 'overviewPage',
+    id: level1.id,
+  });
+
+  const level2Updated = await payload.findByID({
+    collection: 'detailPage',
+    id: level2.id,
+  });
+
+  await expect(level1Updated.parentPage?.slug)
+    .toStrictEqual('homePage');
+  await expect(level1Updated.parentPage?.documentId)
+    .toStrictEqual(home.id);
+  await expect(level2Updated.parentPage?.slug)
+    .toStrictEqual('overviewPage');
+  await expect(level2Updated.parentPage?.documentId)
+    .toStrictEqual(level1.id);
 
 });

@@ -3,8 +3,7 @@ import {
   test,
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
-import configPromise from '@/payload.config';
-import { getPayload } from 'payload';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 test.describe('Add Zenodo document', () => {
   beforeEachPayloadLogin();
@@ -119,9 +118,7 @@ test.describe('Add Zenodo document', () => {
   test('returns proper api response', async ({
     page,
   }) => {
-    const payload = await getPayload({
-      config: configPromise,
-    });
+    const payload = await getPayloadCached();
 
     await page.goto('http://localhost:3000/admin/collections/zenodoDocuments/create');
     await page.waitForLoadState('networkidle');

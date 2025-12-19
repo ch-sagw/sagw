@@ -112,6 +112,7 @@ export interface Config {
     tenants: Tenant;
     users: User;
     forms: Form;
+    links: Link;
     i18nGlobals: I18NGlobal;
     consent: Consent;
     footer: Footer;
@@ -173,6 +174,7 @@ export interface Config {
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
+    links: LinksSelect<false> | LinksSelect<true>;
     i18nGlobals: I18NGlobalsSelect<false> | I18NGlobalsSelect<true>;
     consent: ConsentSelect<false> | ConsentSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
@@ -364,6 +366,7 @@ export interface InterfaceHeroFieldHome {
  * via the `definition` "InterfaceInternalLinkValue".
  */
 export interface InterfaceInternalLinkValue {
+  _internalLinkMarker?: boolean | null;
   slug: string;
   documentId: string;
 }
@@ -3583,6 +3586,24 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "links".
+ */
+export interface Link {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  documentId: string;
+  slug: string;
+  references?:
+    | {
+        pageId?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "i18nGlobals".
  */
 export interface I18NGlobal {
@@ -4704,6 +4725,10 @@ export interface PayloadLockedDocument {
         value: string | Form;
       } | null)
     | ({
+        relationTo: 'links';
+        value: string | Link;
+      } | null)
+    | ({
         relationTo: 'i18nGlobals';
         value: string | I18NGlobal;
       } | null)
@@ -4834,6 +4859,7 @@ export interface InterfaceHeroFieldHomeSelect<T extends boolean = true> {
  * via the `definition` "InterfaceInternalLinkValue_select".
  */
 export interface InterfaceInternalLinkValueSelect<T extends boolean = true> {
+  _internalLinkMarker?: T;
   slug?: T;
   documentId?: T;
 }
@@ -6294,6 +6320,23 @@ export interface InterfaceTextareaFieldSelect<T extends boolean = true> {
   fieldError?: T;
   id?: T;
   blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "links_select".
+ */
+export interface LinksSelect<T extends boolean = true> {
+  tenant?: T;
+  documentId?: T;
+  slug?: T;
+  references?:
+    | T
+    | {
+        pageId?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

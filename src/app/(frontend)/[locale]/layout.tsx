@@ -1,10 +1,7 @@
 import 'server-only';
 import React from 'react';
 import '../styles.scss';
-import {
-  getPayload, TypedLocale,
-} from 'payload';
-import configPromise from '@/payload.config';
+import { TypedLocale } from 'payload';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { TenantProvider } from '@/app/providers/TenantProvider';
 import { getTenant } from '@/app/providers/TenantProvider.server';
@@ -14,8 +11,10 @@ import {
 import {
   Footer, InterfaceFooterPropTypes,
 } from '@/components/global/Footer/Footer';
+import { preRenderConsentOverlayProps } from '@/components/global/ConsentOverlay/ConsentOverlay.server';
 import { Metadata } from 'next';
 import { ConsentBanner } from '@/components/global/ConsentBanner/ConsentBanner';
+import { rte3ToHtml } from '@/utilities/rteToHtml';
 import {
   hasLocale, NextIntlClientProvider,
 } from 'next-intl';
@@ -23,6 +22,7 @@ import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { NoJsScript } from '@/components/helpers/noJsScript';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 type InterfaceRootLayoutProps = {
   children: React.ReactNode
@@ -40,9 +40,7 @@ export default async function RootLayout({
   children,
   params,
 }: InterfaceRootLayoutProps): Promise<React.JSX.Element> {
-  const payload = await getPayload({
-    config: configPromise,
-  });
+  const payload = await getPayloadCached();
 
   const {
     locale: localeString,
@@ -197,8 +195,18 @@ export default async function RootLayout({
     navigation: navData,
   };
 
+  // Pre-render ConsentBanner text
+  const consentBannerTextHtml = await rte3ToHtml({
+    content: consentData.banner.text,
+    locale,
+    payload,
+  });
+
+  // Pre-render ConsentOverlay props
+  const consentOverlayProps = await preRenderConsentOverlayProps(consentData.overlay);
+
   const footerProps: InterfaceFooterPropTypes = {
-    consentOverlay: consentData.overlay,
+    consentOverlay: consentOverlayProps,
     contact: footerContactData,
     legal: footerLegalData,
     metaNav: metanavData,
@@ -235,7 +243,10 @@ export default async function RootLayout({
             {...footerProps}
           />
 
-          <ConsentBanner {...consentData.banner} />
+          <ConsentBanner
+            {...consentData.banner}
+            textHtml={consentBannerTextHtml}
+          />
         </NextIntlClientProvider>
 
       </body>

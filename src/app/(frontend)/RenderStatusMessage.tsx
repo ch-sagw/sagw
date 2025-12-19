@@ -1,12 +1,10 @@
 import 'server-only';
 import React from 'react';
 import './styles.scss';
-import {
-  getPayload, TypedLocale,
-} from 'payload';
-import configPromise from '@/payload.config';
+import { TypedLocale } from 'payload';
 import { InterfaceStatusMessage } from '@/payload-types';
 import { StatusMessage } from '@/components/global/StatusMessage/StatusMessage';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 interface InterfaceRenderStatusMessage {
   tenant: string;
@@ -19,9 +17,7 @@ export const RenderStatusMessage = async ({
   isHome,
   locale,
 }: InterfaceRenderStatusMessage): Promise<React.JSX.Element | undefined> => {
-  const payload = await getPayload({
-    config: configPromise,
-  });
+  const payload = await getPayloadCached();
 
   const statusMessageDocs = await payload.find({
     collection: 'statusMessage',

@@ -9,62 +9,80 @@ import { Section } from '@/components/base/Section/Section';
 import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
+import { getLocale } from 'next-intl/server';
+import { TypedLocale } from 'payload';
+import { getPageUrl } from '@/utilities/getPageUrl';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 export type InterfaceProjectsTeaserPropTypes = {
   pages: ProjectDetailPage[];
 } & InterfaceProjectTeasersBlock;
 
-export const ProjectsTeaserComponent = ({
+export const ProjectsTeaserComponent = async ({
   title,
   lead,
   alignement,
   optionalLink,
   pages,
-}: InterfaceProjectsTeaserPropTypes): React.JSX.Element => (
-  <Fragment>
-    <Section
-      className={styles.section}
-      title={rteToHtml(title)}
-      subtitle={rteToHtml(lead)}
-      colorMode='white'
-      fullBleed={alignement === 'vertical'}
-    >
-      {optionalLink && optionalLink.includeLink && optionalLink.link?.internalLink && optionalLink.link?.linkText &&
-        <Button
-          className={styles.link}
-          element='link'
-          style='text'
-          colorMode='white'
-          text={rteToHtml(optionalLink.link?.linkText)}
-          iconInlineStart={'arrowRight' as keyof typeof Icon}
-          isActive={true}
-          prefetch={true}
+}: InterfaceProjectsTeaserPropTypes): Promise<React.JSX.Element> => {
 
-          // TODO: generate proper url
-          href={`${optionalLink.link?.internalLink.slug}/${optionalLink.link?.internalLink.documentId}`}
-        />
-      }
-    </Section>
+  const locale = (await getLocale()) as TypedLocale;
+  const payload = await getPayloadCached();
 
-    <ul className={styles.list}>
-      {pages.map((item) => (
-        <GenericTeaser
-          className={styles.item}
-          key={item.id}
-          title={rteToHtml(item.hero.title)}
-          texts={[rteToHtml(item.overviewPageProps.teaserText)]}
-          links={[
-            {
+  return (
+    <Fragment>
+      <Section
+        className={styles.section}
+        title={rteToHtml(title)}
+        subtitle={rteToHtml(lead)}
+        colorMode='white'
+        fullBleed={alignement === 'vertical'}
+      >
+        {optionalLink && optionalLink.includeLink && optionalLink.link?.internalLink && optionalLink.link?.linkText &&
+          <Button
+            className={styles.link}
+            element='link'
+            style='text'
+            colorMode='white'
+            text={rteToHtml(optionalLink.link?.linkText)}
+            iconInlineStart={'arrowRight' as keyof typeof Icon}
+            isActive={true}
+            prefetch={true}
 
-              // TODO: generate proper url
-              href: item.id,
-              text: rteToHtml(item.overviewPageProps.linkText),
-              type: 'internal',
-            },
-          ]}
-          type='generic'
-        />
-      ))}
-    </ul>
-  </Fragment>
-);
+            // TODO: we need reference trackingfor the link here
+            href={await getPageUrl({
+              locale,
+              pageId: optionalLink.link.internalLink.documentId,
+              payload,
+            })}
+          />
+        }
+      </Section>
+
+      <ul className={styles.list}>
+        {pages.map(async (item) => (
+          <GenericTeaser
+            className={styles.item}
+            key={item.id}
+            title={rteToHtml(item.hero.title)}
+            texts={[rteToHtml(item.overviewPageProps.teaserText)]}
+            links={[
+              {
+
+                // TODO: we need reference tracking for the link here
+                href: (await getPageUrl({
+                  locale,
+                  pageId: item.id,
+                  payload,
+                })),
+                text: rteToHtml(item.overviewPageProps.linkText),
+                type: 'internal',
+              },
+            ]}
+            type='generic'
+          />
+        ))}
+      </ul>
+    </Fragment>
+  );
+};

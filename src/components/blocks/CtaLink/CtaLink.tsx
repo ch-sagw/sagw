@@ -1,3 +1,4 @@
+import 'server-only';
 import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/blocks/CtaLink/CtaLink.module.scss';
@@ -6,6 +7,10 @@ import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
 import { InterfaceCtaLinkBlock } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
+import { TypedLocale } from 'payload';
+import { getPageUrl } from '@/utilities/getPageUrl';
+import { getLocale } from 'next-intl/server';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 export type InterfaceCtaLinkPropTypes = {} & InterfaceCtaLinkBlock;
 
@@ -14,7 +19,10 @@ const ctaLinkClasses = cva([
   styles.dark,
 ]);
 
-export const CtaLink = (props: InterfaceCtaLinkPropTypes): React.JSX.Element => {
+export const CtaLink = async (props: InterfaceCtaLinkPropTypes): Promise<React.JSX.Element> => {
+  const locale = (await getLocale()) as TypedLocale;
+  const payload = await getPayloadCached();
+
   const title = rteToHtml(props.title);
   const subtitle = rteToHtml(props.text);
 
@@ -27,8 +35,11 @@ export const CtaLink = (props: InterfaceCtaLinkPropTypes): React.JSX.Element => 
   } else if (props.linkType === 'internal' && props.linkInternal) {
     linkText = rteToHtml(props.linkInternal.linkText);
 
-    // TODO: generate url
-    linkHref = props.linkInternal.internalLink.slug;
+    linkHref = await getPageUrl({
+      locale,
+      pageId: props.linkInternal.internalLink.documentId,
+      payload,
+    });
   } else if (props.linkType === 'mail' && props.linkMail) {
     linkText = rteToHtml(props.linkMail.linkText);
     linkHref = props.linkMail.email;
