@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.0](https://github.com/ch-sagw/sagw/compare/v0.26.0...v0.27.0) (2025-12-19)
+
+
+### Features
+
+* base linking implementation ([8cf560e](https://github.com/ch-sagw/sagw/commit/8cf560eaa72982379305898e146752b2a9aca2b8))
+
 ## [0.26.0](https://github.com/ch-sagw/sagw/compare/v0.25.0...v0.26.0) (2025-12-10)
 
 
