@@ -3447,9 +3447,11 @@ export const sampleRtePrivacyCheckbox: InterfaceRte = {
 export const sampleRteWithLink = ({
   documentId,
   slug,
+  text,
 }: {
   documentId: string;
   slug: string;
+  text?: string;
 }): InterfaceRte => ({
   root: {
     children: [
@@ -3463,7 +3465,9 @@ export const sampleRteWithLink = ({
                 format: 0,
                 mode: 'normal',
                 style: '',
-                text: 'Datenschutz',
+                text: text
+                  ? text
+                  : 'Home Page',
                 type: 'text',
                 version: 1,
               },
