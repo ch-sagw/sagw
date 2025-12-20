@@ -13,6 +13,7 @@ import { pageAccess } from '@/access/pages';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
+import { readFile } from 'fs/promises';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
 
@@ -24,6 +25,31 @@ export const ImpressumPage: CollectionConfig = {
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
+    {
+      admin: {
+        hidden: true,
+        readOnly: true,
+      },
+      defaultValue: async ({
+        locale,
+      }): Promise<string> => {
+        let impressumSlug = 'dataPrivacy';
+
+        if (locale) {
+          const translationRawFile = (await readFile(new URL(`../../../i18n/messages/${locale}.json`, import.meta.url))).toString();
+          const translationsFile = JSON.parse(translationRawFile);
+
+          impressumSlug = translationsFile.slugs.impressum;
+        }
+
+        return impressumSlug;
+
+      },
+      localized: true,
+      name: 'slug',
+      required: false,
+      type: 'text',
+    },
     fieldLinkablePage,
     fieldAdminTitleDefaultValue('Impressum'),
     {
