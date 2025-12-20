@@ -6,6 +6,7 @@ import { Hero } from '@/components/global/Hero/Hero';
 import { getTenant } from '@/app/providers/TenantProvider.server';
 import { RenderStatusMessage } from '@/app/(frontend)/RenderStatusMessage';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { getPageUrl } from '@/utilities/getPageUrl';
 
 type InterfacePageProps = {
   params: Promise<{
@@ -68,6 +69,17 @@ export default async function HomePage({
 
   const [pageData] = pagesData.docs;
 
+  // Compute URL for optionalLink if it exists
+  let optionalLinkUrl: string | undefined;
+
+  if (pageData.hero?.optionalLink?.includeLink && pageData.hero.optionalLink.link?.internalLink?.documentId) {
+    optionalLinkUrl = await getPageUrl({
+      locale,
+      pageId: pageData.hero.optionalLink.link.internalLink.documentId,
+      payload,
+    });
+  }
+
   // i18n
 
   const i18nDataDocs = await payload.find({
@@ -93,6 +105,7 @@ export default async function HomePage({
         <Hero
           {...pageData.hero}
           type='home'
+          optionalLinkUrl={optionalLinkUrl}
         />
         <RenderStatusMessage
           tenant={tenant}
