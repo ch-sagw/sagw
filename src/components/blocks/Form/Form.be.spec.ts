@@ -1,4 +1,7 @@
+import { getTenant } from '@/app/providers/TenantProvider.server';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
   expect,
   test,
@@ -9,6 +12,211 @@ test.describe('Custom Form', () => {
   test('correctly validates email', async ({
     page,
   }) => {
+
+    // #########################################
+    // Empty home content and add proper content
+    // #########################################
+
+    const payload = await getPayloadCached();
+    const tenant = await getTenant();
+
+    try {
+      const home = await payload.find({
+        collection: 'homePage',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      const i18nGlobals = await payload.find({
+        collection: 'i18nGlobals',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      await payload.update({
+        collection: 'i18nGlobals',
+        data: {
+          ...i18nGlobals.docs[0],
+          forms: {
+            dataPrivacyCheckbox: {
+              dataPrivacyCheckboxText: simpleRteConfig('Data privacy checkbox SAGW'),
+              errorMessage: simpleRteConfig('Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen'),
+            },
+          },
+        },
+        id: i18nGlobals.docs[0].id,
+      });
+
+      // empty homepage
+      await payload.update({
+        collection: 'homePage',
+        data: {
+          content: [],
+        },
+        id: home.docs[0].id,
+      });
+
+      // add real content
+
+      // add contact form
+      const contactForm = await payload.create({
+        collection: 'forms',
+        data: {
+          colorMode: 'dark',
+          fields: [
+            {
+              blockType: 'textBlockForm',
+              fieldError: simpleRteConfig('Geben Sie Ihren Namen an.'),
+              fieldWidth: 'half',
+              label: simpleRteConfig('Name'),
+              name: 'name',
+              placeholder: 'Ihr Name',
+              required: true,
+            },
+            {
+              blockType: 'emailBlock',
+              fieldError: simpleRteConfig('Geben Sie ihre E-Mail-Adresse an.'),
+              fieldWidth: 'half',
+              label: simpleRteConfig('E-Mail'),
+              name: 'email',
+              placeholder: 'Ihre E-Mail Adresse',
+              required: true,
+            },
+            {
+              blockType: 'textareaBlock',
+              fieldError: simpleRteConfig('Geben Sie ihren Kommentar an.'),
+              fieldWidth: 'full',
+              label: simpleRteConfig('Kommentar'),
+              name: 'comment',
+              placeholder: 'Ihr Kommentar',
+              required: true,
+            },
+            {
+              blockType: 'checkboxBlock',
+              fieldError: simpleRteConfig('Bitte akzeptieren Sie die Hinweise zum Datenschutz.'),
+              fieldWidth: 'full',
+              label: simpleRteConfig('Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.'),
+              name: 'checkbox-custom',
+              required: true,
+            },
+            {
+              blockType: 'radioBlock',
+              fieldError: simpleRteConfig('Sie müssen eine Auswahl treffen'),
+              fieldWidth: 'full',
+              items: [
+                {
+                  label: simpleRteConfig('Deutsch'),
+                  value: 'deutsch',
+                },
+                {
+                  label: simpleRteConfig('Französisch'),
+                  value: 'french',
+                },
+              ],
+              label: simpleRteConfig('In welcher Sprache möchten Sie den Newsletter erhalten?'),
+              name: 'language-select',
+              required: true,
+            },
+          ],
+          isNewsletterForm: 'custom',
+          mailSubject: 'Form submission on SAGW',
+          recipientMail: 'delivered@resend.dev',
+          showPrivacyCheckbox: false,
+          submitButtonLabel: 'Abschicken',
+          submitError: {
+            text: simpleRteConfig('Submit text error'),
+            title: simpleRteConfig('Submit title error'),
+          },
+          submitSuccess: {
+            text: simpleRteConfig('Submit text success'),
+            title: simpleRteConfig('Submit title success SAGW'),
+          },
+          subtitle: simpleRteConfig('Subtitle for contact Form'),
+          tenant,
+          title: simpleRteConfig('Contact Form SAGW'),
+        },
+      });
+
+      // add newsletter form
+      const newsletterForm = await payload.create({
+        collection: 'forms',
+        data: {
+          colorMode: 'dark',
+          isNewsletterForm: 'newsletter',
+          newsletterFields: {
+            actionText: 'Erneut senden',
+            email: {
+              fieldError: simpleRteConfig('Bitte geben Sie die E-Mail Adresse an.'),
+              fieldWidth: 'full',
+              label: simpleRteConfig('E-Mail'),
+              placeholder: 'Ihre E-Mail Adresse',
+            },
+            firstName: {
+              fieldError: simpleRteConfig('Bitte geben Sie Ihren Vornamen an.'),
+              fieldWidth: 'half',
+              label: simpleRteConfig('Vorname'),
+              placeholder: 'Ihr Vorname',
+            },
+            includeLanguageSelection: 'yes',
+            lastName: {
+              fieldError: simpleRteConfig('Bitte geben Sie Ihren Nachnamen an.'),
+              fieldWidth: 'half',
+              label: simpleRteConfig('Nachname'),
+              placeholder: 'Ihr Nachname',
+            },
+          },
+          recipientMail: 'delivered@resend.dev',
+          showPrivacyCheckbox: true,
+          submitButtonLabel: 'Abschicken',
+          submitError: {
+            text: simpleRteConfig('Newsletter Submit text error SAGW'),
+            title: simpleRteConfig('Newsletter Submit title error SAGW'),
+          },
+          submitSuccess: {
+            text: simpleRteConfig('Newsletter Submit text success SAGW'),
+            title: simpleRteConfig('Newsletter Submit title success SAGW'),
+          },
+          subtitle: simpleRteConfig('Subtitle for Newsletter Form SAGW'),
+          tenant,
+          title: simpleRteConfig('Newsletter Form SAGW'),
+        },
+      });
+
+      await payload.update({
+        collection: 'homePage',
+        data: {
+          content: [
+            {
+              blockType: 'formBlock',
+              form: contactForm,
+            },
+            {
+              blockType: 'formBlock',
+              form: newsletterForm,
+            },
+          ],
+        },
+        id: home.docs[0].id,
+      });
+
+    } catch (e) {
+      console.log(e);
+
+      throw new Error(e instanceof Error
+        ? e.message
+        : String(e));
+    }
+
+    // #########################################
+    // test
+    // #########################################
+
     // go to home
     await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
@@ -204,7 +412,7 @@ test.describe('Custom Form', () => {
     const mailField = await form.getByLabel('e-mail');
     const nameField = await form.getByLabel('name');
     const textareaField = await form.getByLabel('kommentar');
-    const checkboxField = await form.locator('#ich-habe-die-hinweise-zum-datenschutz-gelesen-und-akzeptiere-sie');
+    const checkboxField = await form.locator('#checkbox-ich-habe-die-hinweise-zum-datenschutz-gelesen-und-akzeptiere-sie');
 
     await nameField.fill('testname');
     await mailField.fill('testmail');
