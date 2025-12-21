@@ -256,6 +256,54 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     },
   });
 
+  // add some detail pages to link to in header
+  const navLinkDetail1 = await payload.create({
+    collection: 'detailPage',
+    data: {
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Detail Page for nav link 1 lead'),
+        title: simpleRteConfig(`Detail Page for nav link 1 ${tenant.toUpperCase()}`),
+      },
+      slug: `detail-page-for-nav-link-1-${tenant.toLocaleLowerCase()}`,
+      tenant: tenantId,
+    },
+  });
+
+  const navLinkDetail2 = await payload.create({
+    collection: 'detailPage',
+    data: {
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Detail Page for nav link 2 lead'),
+        title: simpleRteConfig(`Detail Page for nav link 2 ${tenant.toUpperCase()}`),
+      },
+      parentPage: {
+        documentId: navLinkDetail1.id,
+        slug: 'detailPage',
+      },
+      slug: `detail-page-for-nav-link-2-${tenant.toLocaleLowerCase()}`,
+      tenant: tenantId,
+    },
+  });
+
+  const navLinkDetail3 = await payload.create({
+    collection: 'detailPage',
+    data: {
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Detail Page for nav link 3 lead'),
+        title: simpleRteConfig(`Detail Page for nav link 3 ${tenant.toUpperCase()}`),
+      },
+      parentPage: {
+        documentId: navLinkDetail2.id,
+        slug: 'detailPage',
+      },
+      slug: `detail-page-for-nav-link-3-${tenant.toLocaleLowerCase()}`,
+      tenant: tenantId,
+    },
+  });
+
   // add header data
   await payload.create({
     collection: 'header',
@@ -290,8 +338,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           {
             description: simpleRteConfig(''),
             navItemLink: {
-              documentId: '12334',
-              slug: 'someSlug',
+              documentId: navLinkDetail1.id,
+              slug: 'detailPage',
             },
             navItemText: simpleRteConfig('Home'),
           },
@@ -301,36 +349,36 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
             subNavItems: [
               {
                 navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
+                  documentId: navLinkDetail2.id,
+                  slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Übersicht'),
               },
               {
                 navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
+                  documentId: navLinkDetail3.id,
+                  slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Institute'),
               },
               {
                 navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
+                  documentId: navLinkDetail1.id,
+                  slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Editionen'),
               },
               {
                 navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
+                  documentId: navLinkDetail2.id,
+                  slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Reisebeiträge'),
               },
               {
                 navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
+                  documentId: navLinkDetail3.id,
+                  slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Early Career Award'),
               },
@@ -342,8 +390,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
             subNavItems: [
               {
                 navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
+                  documentId: navLinkDetail1.id,
+                  slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Fachgesellschaften'),
               },
@@ -355,36 +403,36 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
             subNavItems: [
               {
                 navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
+                  documentId: navLinkDetail2.id,
+                  slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Übersicht'),
               },
               {
                 navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
+                  documentId: navLinkDetail3.id,
+                  slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Magazin'),
               },
               {
                 navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
+                  documentId: navLinkDetail1.id,
+                  slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Publikationen'),
               },
               {
                 navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
+                  documentId: navLinkDetail2.id,
+                  slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Veranstaltungen'),
               },
               {
                 navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
+                  documentId: navLinkDetail3.id,
+                  slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('News'),
               },
@@ -396,29 +444,29 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
             subNavItems: [
               {
                 navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
+                  documentId: navLinkDetail1.id,
+                  slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Die SAGW'),
               },
               {
                 navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
+                  documentId: navLinkDetail2.id,
+                  slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Team'),
               },
               {
                 navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
+                  documentId: navLinkDetail3.id,
+                  slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Kontakt'),
               },
               {
                 navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
+                  documentId: navLinkDetail1.id,
+                  slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Offene Stellen'),
               },
