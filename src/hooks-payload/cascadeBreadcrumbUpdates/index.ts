@@ -204,6 +204,7 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
   operation,
   previousDoc,
   context,
+  collection,
 }) => {
   if (!doc || !req?.payload || operation !== 'update') {
     return doc;
@@ -222,15 +223,67 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
   const isUnpublished = newStatus === 'draft' || newStatus === null;
   const isUnpublishing = wasPublished && isUnpublished;
 
-  const oldSlug = previousDoc?.['slug'];
-  const oldNavigationTitle = previousDoc?.[fieldNavigationTitleFieldName];
-  const oldParent = previousDoc?.[fieldParentSelectorFieldName];
-  const oldBreadcrumb = previousDoc?.[fieldBreadcrumbFieldName];
+  // Fetch the full document from DB to get complete localized objects
+  // IMPORTANT: previousDoc already contains the state before the update,
+  // so we use it directly
+  let fullDoc: any;
+  let fullPreviousDoc: any = previousDoc;
 
-  const slugChanged = hasLocalizedStringChanged(oldSlug, doc['slug']);
-  const navigationTitleChanged = hasLocalizedStringChanged(oldNavigationTitle, doc[fieldNavigationTitleFieldName]);
-  const parentChanged = getParentId(oldParent) !== getParentId(doc[fieldParentSelectorFieldName]);
-  const breadcrumbChanged = JSON.stringify(oldBreadcrumb) !== JSON.stringify(doc[fieldBreadcrumbFieldName]);
+  const collectionSlug = collection?.slug;
+
+  try {
+    if (collectionSlug) {
+      // fetch the new state (after update) with all locales
+      fullDoc = await req.payload.findByID({
+        collection: collectionSlug,
+        depth: 0,
+        id: docId,
+        locale: 'all',
+      });
+
+      // Use previousDoc directly
+      fullPreviousDoc = previousDoc;
+    } else {
+      fullDoc = doc;
+      fullPreviousDoc = previousDoc;
+    }
+  } catch (error) {
+    console.error('[hookCascadeBreadcrumbUpdates] Error fetching full document:', error);
+    // Fallback to using doc/previousDoc if fetch fails
+    fullDoc = doc;
+    fullPreviousDoc = previousDoc;
+  }
+
+  // Use the full documents if available, otherwise fallback to doc/previousDoc
+  const docToUse = fullDoc || doc;
+  const previousDocToUse = fullPreviousDoc || previousDoc;
+
+  const oldSlug = previousDocToUse?.['slug'];
+  const oldNavigationTitle = previousDocToUse?.[fieldNavigationTitleFieldName];
+  const oldParent = previousDocToUse?.[fieldParentSelectorFieldName];
+  const oldBreadcrumb = previousDocToUse?.[fieldBreadcrumbFieldName];
+
+  // check if new locales were added
+  // (even if values are the same, adding a locale is a change)
+  const oldSlugKeys = oldSlug && typeof oldSlug === 'object'
+    ? Object.keys(oldSlug)
+    : [];
+  const newSlugKeys = docToUse['slug'] && typeof docToUse['slug'] === 'object'
+    ? Object.keys(docToUse['slug'])
+    : [];
+  const oldNavTitleKeys = oldNavigationTitle && typeof oldNavigationTitle === 'object'
+    ? Object.keys(oldNavigationTitle)
+    : [];
+  const newNavTitleKeys = docToUse[fieldNavigationTitleFieldName] && typeof docToUse[fieldNavigationTitleFieldName] === 'object'
+    ? Object.keys(docToUse[fieldNavigationTitleFieldName])
+    : [];
+  const newSlugLocales = newSlugKeys.filter((key) => !oldSlugKeys.includes(key));
+  const newNavTitleLocales = newNavTitleKeys.filter((key) => !oldNavTitleKeys.includes(key));
+
+  const slugChanged = hasLocalizedStringChanged(oldSlug, docToUse['slug']) || newSlugLocales.length > 0;
+  const navigationTitleChanged = hasLocalizedStringChanged(oldNavigationTitle, docToUse[fieldNavigationTitleFieldName]) || newNavTitleLocales.length > 0;
+  const parentChanged = getParentId(oldParent) !== getParentId(docToUse[fieldParentSelectorFieldName]);
+  const breadcrumbChanged = JSON.stringify(oldBreadcrumb) !== JSON.stringify(docToUse[fieldBreadcrumbFieldName]);
 
   const onlyBreadcrumbChanged = breadcrumbChanged && !slugChanged && !navigationTitleChanged && !parentChanged && !statusChanged;
 
