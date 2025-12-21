@@ -44,7 +44,7 @@ const getCollectionsDocumentForId = async (id: string): Promise<any> => {
 
 test.describe('Home links', () => {
   beforeEachAcceptCookies();
-  test('rendered correctly (sagw)', {
+  test('rendered correctly', {
     tag: '@linking',
   }, async ({
     page,
