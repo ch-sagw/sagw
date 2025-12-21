@@ -369,6 +369,31 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
   // regular update logic
   try {
     cascadeProcessingSet.add(docId);
+
+    // If slug or navigationTitle changed, regenerate this page's own
+    //  breadcrumbs to ensure they have the latest locale data from ancestors
+    if ((slugChanged || navigationTitleChanged) && collectionSlug) {
+      const parentRef = docToUse[fieldParentSelectorFieldName] as InterfaceInternalLinkValue | undefined | null | Record<string, never>;
+      const newBreadcrumbs = await buildBreadcrumbs(req.payload, parentRef, [], undefined);
+
+      // Update the document's breadcrumbs directly in the database
+      const dbCollection = req.payload.db.collections[collectionSlug];
+
+      if (dbCollection) {
+        await dbCollection.findByIdAndUpdate(
+          docId,
+          {
+            $set: {
+              [fieldBreadcrumbFieldName]: newBreadcrumbs,
+            },
+          },
+          {
+            new: false,
+          },
+        );
+      }
+    }
+
     await updateChildBreadcrumbs(req.payload, req, docId, tenantId, undefined, undefined, false);
   } finally {
     cascadeProcessingSet.delete(docId);
