@@ -5,40 +5,19 @@ import type {
 import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
 import { defaultDecorator } from '@/storybook-helpers';
 import React from 'react';
-import { Image } from '@/payload-types';
+import {
+  InstitutesTeaserImagePNG,
+  InstitutesTeaserImageSVG,
+  MagazineTeaserImage,
+  NetworkTeaserImagePNG,
+  NetworkTeaserImageSVG,
+  PersonImage,
+} from '@/components/blocks/helpers/imagesData';
 
 type GenericTeaserProps = React.ComponentProps<typeof GenericTeaser>;
 
 type StrictStory = StoryObj<typeof GenericTeaser> & {
   args: GenericTeaserProps;
-};
-
-const personImage: Image = {
-  alt: 'Das Bild zeigt...',
-  createdAt: '2025-11-19T09:54:49.430Z',
-  filename: 'csm_Haller_Lea_web_cbe78041a2.jpg',
-  focalX: 50,
-  focalY: 50,
-  height: 650,
-  id: '6942d68d78d7d59f02b53782',
-  updatedAt: '2025-11-19T09:54:49.431Z',
-  // The url value coming from Payload will not contain the hostname.
-  // It is added here for Storybook only.
-  url: 'https://sagw-nu-localhost.gumlet.io/csm_Haller_Lea_web_cbe78041a2.jpg',
-  width: 650,
-};
-
-const magazineTeaserImage: Image = {
-  alt: 'Das Bild zeigt...',
-  createdAt: '2025-12-17T19:01:20.572Z',
-  filename: 'One_Way_Detailansicht.jpg',
-  focalX: 85,
-  focalY: 50,
-  height: 720,
-  id: '6942fe0078d7d59f02b546e4',
-  updatedAt: '2025-12-18T09:27:43.713Z',
-  url: 'https://sagw-nu-localhost.gumlet.io/One_Way_Detailansicht.jpg',
-  width: 1280,
 };
 
 const meta: Meta<typeof GenericTeaser> = {
@@ -55,7 +34,7 @@ const meta: Meta<typeof GenericTeaser> = {
 
 const customRender = (args: GenericTeaserProps): React.JSX.Element => (
   <div style={{
-    maxWidth: '570px',
+    maxWidth: '571px',
   }}>
     <GenericTeaser {...args} />
   </div>
@@ -63,8 +42,9 @@ const customRender = (args: GenericTeaserProps): React.JSX.Element => (
 
 export default meta;
 
-export const Institute: StrictStory = {
+export const InstitutePNGLogo: StrictStory = {
   args: {
+    image: InstitutesTeaserImagePNG,
     links: [
       {
         href: 'https://www.foo.bar',
@@ -72,16 +52,33 @@ export const Institute: StrictStory = {
         type: 'internal',
       },
     ],
-    logo: 'some-logo.svg',
-    texts: ['Die Forschungsstelle Dodis ist das unabhängige Kompetenzzentrum für die Geschichte der schweizerischen Aussenpolitik und der internationalen Beziehungen der Schweiz.'],
-    title: 'Diplomatische Dokumente der Schweiz',
+    texts: ['Das Institut des Dicziunari Rumantsch Grischun mit Sitz in Chur ist Herausgeberin des grössten bündnerromanischen Wörterbuches. Es enthält den gesamten seit dem 16. Jahrhundert bis heute dokumentierten Wortschatz aller Idiome und Dialekte, eingeschlossen der gesprochenen Sprache.'],
+    title: 'Dicziunari Rumantsch Grischun',
     type: 'institute',
   },
   render: customRender,
 };
 
-export const Network: StrictStory = {
+export const InstituteSVGLogo: StrictStory = {
   args: {
+    image: InstitutesTeaserImageSVG,
+    links: [
+      {
+        href: 'https://www.foo.bar',
+        text: 'Mehr erfahren',
+        type: 'internal',
+      },
+    ],
+    texts: ['Das Institut des Dicziunari Rumantsch Grischun mit Sitz in Chur ist Herausgeberin des grössten bündnerromanischen Wörterbuches. Es enthält den gesamten seit dem 16. Jahrhundert bis heute dokumentierten Wortschatz aller Idiome und Dialekte, eingeschlossen der gesprochenen Sprache.'],
+    title: 'Dicziunari Rumantsch Grischun',
+    type: 'institute',
+  },
+  render: customRender,
+};
+
+export const NetworkPNGLogo: StrictStory = {
+  args: {
+    image: NetworkTeaserImagePNG,
     links: [
       {
         href: 'https://www.foo.bar',
@@ -89,9 +86,25 @@ export const Network: StrictStory = {
         type: 'external',
       },
     ],
-    logo: 'some-logo.svg',
-    texts: ['Gründungsjahr: 1907'],
-    title: 'Archäologie Schweiz',
+    texts: ['Gründungsjahr: 1983'],
+    title: 'Schweizerische Gesellschaft für Lateinamerikastudien',
+    type: 'network',
+  },
+  render: customRender,
+};
+
+export const NetworkSVGLogo: StrictStory = {
+  args: {
+    image: NetworkTeaserImageSVG,
+    links: [
+      {
+        href: 'https://www.foo.bar',
+        text: 'Zur Website',
+        type: 'external',
+      },
+    ],
+    texts: ['Gründungsjahr: 1983'],
+    title: 'Schweizerische Gesellschaft für Lateinamerikastudien',
     type: 'network',
   },
   render: customRender,
@@ -115,7 +128,7 @@ export const Project: StrictStory = {
 
 export const Magazine: StrictStory = {
   args: {
-    image: magazineTeaserImage,
+    image: MagazineTeaserImage,
     links: [
       {
         href: 'https://www.foo.bar',
@@ -130,7 +143,7 @@ export const Magazine: StrictStory = {
 
 export const People: StrictStory = {
   args: {
-    image: personImage,
+    image: PersonImage,
     links: [
       {
         href: 'tel:+41310001122',
@@ -155,7 +168,7 @@ export const People: StrictStory = {
 
 export const Generic: StrictStory = {
   args: {
-    image: magazineTeaserImage,
+    image: MagazineTeaserImage,
     links: [
       {
         href: 'https://www.foo.bar',

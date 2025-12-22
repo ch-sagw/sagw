@@ -17,19 +17,13 @@ export interface InterfaceGenericTeaserLink {
 }
 
 export type InterfaceBaseTeaserProps = {
+  image?: ImageType | undefined;
   title: string;
   texts?: string[];
   links: InterfaceGenericTeaserLink[];
   type: 'institute' | 'network' | 'project' | 'magazine' | 'people' | 'generic';
   className?: string;
 };
-
-// Image and logo both are optional. But as soon as image is set,
-// logo is not allowed and vice versa.
-type InterfaceGenericTeaserPropTypes =
-  | (InterfaceBaseTeaserProps & { image?: ImageType; logo?: never })
-  | (InterfaceBaseTeaserProps & { logo?: ImageType; image?: never })
-  | (InterfaceBaseTeaserProps & { image?: undefined; logo?: undefined });
 
 const renderLink = ({
   link,
@@ -100,10 +94,9 @@ export const GenericTeaser = ({
   texts,
   links,
   image,
-  logo,
   type,
   className,
-}: InterfaceGenericTeaserPropTypes): React.JSX.Element => {
+}: InterfaceBaseTeaserProps): React.JSX.Element => {
 
   const teaserClasses = cva([
     styles.teaser,
@@ -114,10 +107,29 @@ export const GenericTeaser = ({
   let imageVariant = 'genericTeaser';
   const imageWidth = 400;
   let imageHeight = 300;
+  let optimizeImage = true;
 
   if (type === 'people') {
     imageVariant = 'portrait';
     imageHeight = 400;
+  }
+
+  if (type === 'network') {
+    imageVariant = 'networkTeaser';
+    imageHeight = 100;
+  }
+
+  if (type === 'institute') {
+    imageVariant = 'instituteTeaser';
+    imageHeight = 225;
+  }
+
+  // If we handle a svg file, we do not
+  // optimize it further in the image
+  // component. To prevent optimization
+  // we set the optimize property to false
+  if (image?.mimeType?.includes('svg')) {
+    optimizeImage = false;
   }
 
   const shouldWrapInLink = links && links.length === 1;
@@ -131,24 +143,24 @@ export const GenericTeaser = ({
 
   const wrapperContent = (
     <>
-      {logo &&
-        <div className={styles.logo}>logo placeholder</div>
-      }
-
-      {image &&
-        <div className={styles.image}>
-          <Image
-            alt={image.alt}
-            filename={image.filename || ''}
-            focalX={image.focalX || undefined}
-            focalY={image.focalY || undefined}
-            height={imageHeight}
-            loading='lazy'
-            url={image.url || ''}
-            variant={imageVariant as ImageVariant}
-            width={imageWidth}
-          />
-        </div>
+      {typeof image === 'object' && image.url
+        ? (
+          <div className={styles.image}>
+            <Image
+              alt={image.alt}
+              filename={image.filename || ''}
+              focalX={image.focalX || 50}
+              focalY={image.focalY || 50}
+              height={imageHeight}
+              loading='lazy'
+              optimize={optimizeImage}
+              url={image.url}
+              variant={imageVariant as ImageVariant}
+              width={imageWidth}
+            />
+          </div>
+        )
+        : null
       }
 
       <SafeHtml
@@ -157,16 +169,18 @@ export const GenericTeaser = ({
         className={styles.title}
       />
 
-      {texts &&
-        texts.map((text, key) => (
-          <SafeHtml
-            key={key}
-            as='p'
-            html={text}
-            className={styles.text}
-          />
-        ))
-      }
+      <div className={styles.textWrapper}>
+        {texts &&
+          texts.map((text, key) => (
+            <SafeHtml
+              key={key}
+              as='p'
+              html={text}
+              className={styles.text}
+            />
+          ))
+        }
+      </div>
 
       {links &&
         links.map((wrapperLink, key) => renderLink({
