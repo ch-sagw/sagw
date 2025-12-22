@@ -9,7 +9,7 @@ export const Images: CollectionConfig = {
       into all required renditions (image sizes). Please ensure
       that the dimensions of the uploaded image does not exceed 4000 pixels
       in either direction. Allowed image formats are «png, jpg, jpeg, gif,
-      webp, avif». Since the optimization service will compress the
+      webp, avif and svg». Since the optimization service will compress the
       renditions again, it is best to not compress the image too much before
       you upload it.`,
     group: 'Assets',
@@ -21,6 +21,7 @@ export const Images: CollectionConfig = {
     focalX: true,
     focalY: true,
     height: true,
+    mimeType: true,
     tenant: true,
     url: true,
     width: true,
@@ -43,6 +44,7 @@ export const Images: CollectionConfig = {
       'image/gif',
       'image/webp',
       'image/avif',
+      'image/svg+xml',
     ],
   },
 };
