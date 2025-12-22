@@ -21,6 +21,7 @@ export const NationalDictionariesOverview = async (props: InterfaceNationalDicti
 
   const pages = await fetchDetailPages({
     collection: 'nationalDictionaryDetailPage',
+    depth: 1,
     language: locale,
     limit: 0,
     sort: 'createdAt',
