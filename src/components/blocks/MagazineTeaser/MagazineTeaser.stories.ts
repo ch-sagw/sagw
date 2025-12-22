@@ -5,7 +5,8 @@ import type {
 import { MagazineTeaserComponent } from '@/components/blocks/MagazineTeaser/MagazineTeaser.component';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
-import { MagazineDetailPage } from '@/payload-types';
+import { MagazineTeaserImage } from '@/components/blocks/helpers/imagesData';
+import { InterfaceMagazineDetailPageWithImage } from '@/components/blocks/MagazineOverview/MagazineOverview';
 
 type MagazineTeaserProps = React.ComponentProps<typeof MagazineTeaserComponent>;
 
@@ -28,7 +29,7 @@ const meta: Meta<typeof MagazineTeaserComponent> = {
 
 export default meta;
 
-const samplePage: MagazineDetailPage = {
+const samplePage: InterfaceMagazineDetailPageWithImage = {
   content: [
     {
       alignment: 'center',
@@ -46,6 +47,7 @@ const samplePage: MagazineDetailPage = {
     title: simpleRteConfig('The Mobility Imperative in Academia'),
   },
   id: '1',
+  image: MagazineTeaserImage,
   navigationTitle: '',
   overviewPageProps: {
     teaserText: simpleRteConfig('Zur Kultur der Bookishness in der Erlebnisgesellschaft'),

@@ -1,18 +1,15 @@
 import React, { Fragment } from 'react';
 import styles from '@/components/blocks/MagazineTeaser/MagazineTeaser.module.scss';
-import {
-  InterfaceMagazineTeasersBlock,
-  MagazineDetailPage,
-} from '@/payload-types';
+import { InterfaceMagazineTeasersBlock } from '@/payload-types';
+import { InterfaceMagazineDetailPageWithImage } from '@/components/blocks/MagazineOverview/MagazineOverview';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { Section } from '@/components/base/Section/Section';
 import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
-import { getFirstImageIdOfMagazinePage } from '@/components/helpers/magazineImage';
 
 export type InterfaceMagazineTeaserComponentPropTypes = {
-  pages: MagazineDetailPage[];
+  pages: InterfaceMagazineDetailPageWithImage[];
 } & InterfaceMagazineTeasersBlock;
 
 export const MagazineTeaserComponent = ({
@@ -48,24 +45,31 @@ export const MagazineTeaserComponent = ({
     </Section>
 
     <ul className={styles.list}>
-      {pages.map((item) => (
-        <GenericTeaser
-          className={styles.item}
-          key={item.id}
-          title={rteToHtml(item.hero.title)}
-          texts={[rteToHtml(item.overviewPageProps.teaserText)]}
-          type='magazine'
-          image={getFirstImageIdOfMagazinePage(item)}
+      {pages.map((item) => {
 
-          // TODO: generate proper url
-          links={[
-            {
-              href: `${item.slug}/${item.id}`,
-              type: 'internal',
-            },
-          ]}
-        />
-      ))}
+        const image = typeof item.image === 'string'
+          ? undefined
+          : item.image;
+
+        return (
+          <GenericTeaser
+            className={styles.item}
+            image={image}
+            key={item.id}
+            title={rteToHtml(item.hero.title)}
+            texts={[rteToHtml(item.overviewPageProps.teaserText)]}
+            type='magazine'
+
+            // TODO: generate proper url
+            links={[
+              {
+                href: `${item.slug}/${item.id}`,
+                type: 'internal',
+              },
+            ]}
+          />
+        );
+      })}
     </ul>
   </Fragment>
 );
