@@ -2,10 +2,11 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { InstituteOverviewComponent } from '@/components/blocks/InstitutesOverview/InstitutesOverview.componet';
+import { InstituteOverviewComponent } from '@/components/blocks/InstitutesOverview/InstitutesOverview.component';
 import { defaultDecorator } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { InstituteDetailPage } from '@/payload-types';
+import { InstitutesTeaserImageSVG } from '@/components/blocks/helpers/imagesData';
 
 type InstitutesOverviewProps = React.ComponentProps<typeof InstituteOverviewComponent>;
 
@@ -25,8 +26,7 @@ const meta: Meta<typeof InstituteOverviewComponent> = {
   },
   tags: [
     'autodocs',
-    // TODO: enable after image is integrated
-    // 'visual:check',
+    'visual:check',
     'a11y:check',
   ],
   title: 'Components/blocks/InstitutesOverview',
@@ -49,7 +49,7 @@ const pages: InstituteDetailPage[] = Array.from({
     id: index.toString(),
     navigationTitle: 'Institute',
     overviewPageProps: {
-      image: 'some-image',
+      image: InstitutesTeaserImageSVG,
       teaserText: simpleRteConfig(`Institute Teaser Text ${index}`),
     },
     slug: 'slug',
