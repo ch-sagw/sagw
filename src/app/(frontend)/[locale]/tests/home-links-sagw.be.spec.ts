@@ -314,6 +314,27 @@ test.describe('Home links', () => {
       });
 
       // #########################################
+      // Get ids of data privacy and impressum to link to
+      // #########################################
+      const dataPrivacyDocs = await payload.find({
+        collection: 'dataPrivacyPage',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      const impressumDocs = await payload.find({
+        collection: 'impressumPage',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      // #########################################
       // add form
       // #########################################
       const newsletterForm = await payload.create({
@@ -489,6 +510,22 @@ test.describe('Home links', () => {
               },
               title: simpleRteConfig('News'),
             },
+            {
+              blockType: 'textBlock',
+              text: sampleRteWithLink({
+                documentId: dataPrivacyDocs.docs[0].id,
+                slug: 'dataPrivacyPage',
+                text: '[test]dataPrivacy:link',
+              }),
+            },
+            {
+              blockType: 'textBlock',
+              text: sampleRteWithLink({
+                documentId: impressumDocs.docs[0].id,
+                slug: 'impressumPage',
+                text: '[test]impressum:link',
+              }),
+            },
           ],
           hero: {
             optionalLink: {
@@ -596,6 +633,16 @@ test.describe('Home links', () => {
     })
       .getAttribute('href');
 
+    const dataPrivacyLink = await page.getByRole('link', {
+      name: '[test]dataPrivacy:link',
+    })
+      .getAttribute('href');
+
+    const impressumLink = await page.getByRole('link', {
+      name: '[test]impressum:link',
+    })
+      .getAttribute('href');
+
     await expect(formCheckboxLink)
       .toBe(`/de/overview-page-1-${time}/d1-${time}`);
     await expect(rteLink)
@@ -616,6 +663,11 @@ test.describe('Home links', () => {
     // /d4-${time}/d5-${time}/d6-${time}/d7-${time}/d8-${time}`);
     await expect(projectsTeasersLink)
       .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}/d6-${time}/d7-${time}/d8-${time}/d9-${time}`);
+
+    await expect(dataPrivacyLink)
+      .toBe('/de/data-privacy-de');
+    await expect(impressumLink)
+      .toBe('/de/impressum-de');
 
     // #########################################
     // verify correct url rendering: it
@@ -668,6 +720,16 @@ test.describe('Home links', () => {
     })
       .getAttribute('href');
 
+    const dataPrivacyLinkIt = await page.getByRole('link', {
+      name: '[test]dataPrivacy:link',
+    })
+      .getAttribute('href');
+
+    const impressumLinkIt = await page.getByRole('link', {
+      name: '[test]impressum:link',
+    })
+      .getAttribute('href');
+
     await expect(formCheckboxLinkIt)
       .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}`);
     await expect(rteLinkIt)
@@ -689,6 +751,11 @@ test.describe('Home links', () => {
     // /d4-it-${time}/d5-it-${time}/d6-it-${time}/d7-it-${time}/d8-${time}`);
     await expect(projectsTeasersLinkIt)
       .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}/d7-it-${time}/d8-it-${time}/d9-it-${time}`);
+
+    await expect(dataPrivacyLinkIt)
+      .toBe('/it/data-privacy-it');
+    await expect(impressumLinkIt)
+      .toBe('/it/impressum-it');
 
   });
 });
