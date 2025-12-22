@@ -45,9 +45,14 @@ export const GenericTeaser = ({
           return undefined;
         }
 
+        const image = typeof item.image?.value === 'string'
+          ? undefined
+          : item.image?.value;
+
         return (
           <TeaserBaseComponent
             className={styles.item}
+            image={image}
             key={item.id}
             title={rteToHtml(item.title)}
             texts={[rteToHtml(item.text)]}
