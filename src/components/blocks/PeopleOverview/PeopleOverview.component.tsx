@@ -17,7 +17,6 @@ export type InterfacePeopleOverviewComponentPropTypes = {
 };
 
 export const PeopleOverviewComponent = ({
-  team,
   people,
 }: InterfacePeopleOverviewComponentPropTypes): React.JSX.Element => {
   const allItems = people.map((item) => {
@@ -48,12 +47,12 @@ export const PeopleOverviewComponent = ({
         className={styles.item}
         key={item.id}
         title={item.fullName}
-        texts={[rteToHtml(team.name)]}
+        texts={[rteToHtml(item.function)]}
         links={links}
         type='people'
-        image={typeof item.image === 'object'
-          ? item.image?.id
-          : item.image
+        image={item.image && typeof item.image === 'object'
+          ? item.image
+          : undefined
         }
       />
     );

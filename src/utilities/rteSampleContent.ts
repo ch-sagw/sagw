@@ -2093,7 +2093,7 @@ export const rte4FullRange: InterfaceRte = {
             format: 0,
             mode: 'normal',
             style: '',
-            text: 'Ein neuer Name für den Preis und drei Preisträger&shy;innen das Wichtigste der Preisverleihung 2025 auf einen Blick. (h2)',
+            text: 'Ein neuer Name für den Preis und drei Preisträger&shy;innen das Wichtigste der Preisverleih&shy;ung 2025 auf einen Blick. (h2)',
             type: 'text',
             version: 1,
           },

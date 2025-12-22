@@ -1,14 +1,39 @@
 @use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
 @use "../../../styles/mixins/mixins-shared-styles" as *;
 
 .filter {
   margin-top: px-to-rem(var(--section-inside-s));
+
+  @include mq($from: ultra) {
+    grid-column: 1/3;
+
+    li {
+      width: 100%;
+    }
+  }
 }
 
 .list {
-  @include full-bleed-teaser-list-ultra;
-}
+  @include list-reset;
 
-.item {
-  @include full-bleed-teaser-item-ultra;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  row-gap: px-to-rem(var(--teaser-between-m));
+  column-gap: px-to-rem(var(--grid-gutter));
+  padding-block-end: px-to-rem(var(--section-bottom));
+
+  @include mq($from: medium) {
+    grid-template-columns: repeat(2, 1fr);
+
+    li {
+      padding-inline-end: px-to-rem(var(--grid-gutter));
+    }
+  }
+
+  @include mq($from: ultra) {
+    grid-column: 4/13;
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

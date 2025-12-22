@@ -144,8 +144,6 @@
   }
 
   .bottomLink {
-    --line-cover-color: var(--color-background);
-
     color: var(--color-text);
     margin-block-start: px-to-rem(var(--padding-block-large));
     margin-inline-start: px-to-rem(var(--spacing-l), true);

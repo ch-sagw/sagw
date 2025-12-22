@@ -3,7 +3,7 @@ import {
   InstituteDetailPage, InterfaceInstitutesOverviewBlock,
 } from '@/payload-types';
 import { fetchDetailPages } from '@/data/fetch';
-import { InstituteOverviewComponent } from '@/components/blocks/InstitutesOverview/InstitutesOverview.componet';
+import { InstituteOverviewComponent } from '@/components/blocks/InstitutesOverview/InstitutesOverview.component';
 import { getLocale } from 'next-intl/server';
 import { TypedLocale } from 'payload';
 
@@ -20,6 +20,7 @@ export const InstitutesOverview = async (props: InterfaceInstitutesOverviewPropT
 
   const pages = await fetchDetailPages({
     collection: 'instituteDetailPage',
+    depth: 1,
     language: locale,
     limit: 0,
     sort: 'createdAt',

@@ -26,6 +26,22 @@
 // ##############################
 // BUTTON LINE ANIMATION
 // ##############################
+@mixin button-line {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: px-to-rem(var(--spacing-2xs));
+  width: 100%;
+  height: px-to-rem(var(--border-width-l));
+  background: currentcolor;
+  transform: scaleX(0);
+  transition:
+    transform var(--line-animation-duration) var(--motion-ease-in-out),
+    opacity var(--line-opacity-animation-duration) var(--motion-ease-in-out);
+  transform-origin: left;
+  opacity: 0.5;
+}
+
 @mixin button-line-hover {
   transform-origin: left;
   transform: scaleX(1);
