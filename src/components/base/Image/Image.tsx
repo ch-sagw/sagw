@@ -19,6 +19,7 @@ export type InterfaceImagePropTypes = {
   focalY?: number,
   height: number;
   loading: 'lazy' | 'eager';
+  optimize?: boolean;
   params?: string,
   performanceMark?: string;
   priority?: boolean;
@@ -34,6 +35,7 @@ export const Image = ({
   focalY,
   height,
   loading,
+  optimize,
   performanceMark,
   url,
   variant,
@@ -106,6 +108,23 @@ export const Image = ({
     .filter(Boolean)
     .join(' ');
 
+  // Prepare Image properties. If optimize is
+  // set to false. We just render the image
+  // without additional renditions
+  let imageProperties = {};
+
+  if (optimize === false) {
+    imageProperties = {
+      src,
+    };
+  } else {
+    imageProperties = {
+      sizes,
+      src: imgSrc || undefined,
+      srcSet: srcAndSrcSet.srcSet || undefined,
+    };
+  }
+
   return (
     <>
       <img
@@ -115,9 +134,7 @@ export const Image = ({
         height={height}
         loading={loading}
         ref={imgRef}
-        sizes={sizes}
-        src={imgSrc || undefined}
-        srcSet={srcAndSrcSet.srcSet || undefined}
+        {...imageProperties}
         width={width}
       />
       <noscript>
@@ -129,9 +146,7 @@ export const Image = ({
           fetchPriority={fetchPriority}
           height={height}
           loading={loading}
-          sizes={sizes}
-          src={imgSrc}
-          srcSet={srcAndSrcSet.srcSet}
+          {...imageProperties}
           width={width}
         />
       </noscript>
