@@ -25,7 +25,6 @@ const meta: Meta<typeof NetworkTeaser> = {
   },
   tags: [
     'autodocs',
-    'visual:check',
     'a11y:check',
   ],
   title: 'Components/blocks/NetworkTeaser',

@@ -21,7 +21,6 @@ const meta: Meta<typeof MagazineTeaserComponent> = {
   parameters: {/* layout: 'centered', */ },
   tags: [
     'autodocs',
-    'visual:check',
     'a11y:check',
   ],
   title: 'Components/blocks/MagazineTeaser',

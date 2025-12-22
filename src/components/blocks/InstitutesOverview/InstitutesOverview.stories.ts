@@ -26,7 +26,6 @@ const meta: Meta<typeof InstituteOverviewComponent> = {
   },
   tags: [
     'autodocs',
-    'visual:check',
     'a11y:check',
   ],
   title: 'Components/blocks/InstitutesOverview',
@@ -58,7 +57,7 @@ const pages: InstituteDetailPage[] = Array.from({
   });
 });
 
-export const SampleStory: StrictStory = {
+export const InstitutesOverview: StrictStory = {
   args: {
     blockType: 'institutesOverviewBlock',
     moreInfoButtonText: simpleRteConfig('Mehr erfahren'),

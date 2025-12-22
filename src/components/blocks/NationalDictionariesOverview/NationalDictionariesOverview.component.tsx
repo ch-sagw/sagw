@@ -19,7 +19,7 @@ export const NationalDictionaryOverviewComponent = ({
 }: InterfaceNationalDictionaryOverviewComponentPropTypes): React.JSX.Element => {
   const allItems = pages.map((item) => {
 
-    const image = typeof item.overviewPageProps.image === 'string'
+    const image = typeof item.overviewPageProps.image === 'string' || item.overviewPageProps.image === null
       ? undefined
       : item.overviewPageProps.image;
 

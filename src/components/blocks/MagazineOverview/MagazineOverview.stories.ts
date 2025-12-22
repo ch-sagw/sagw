@@ -26,7 +26,6 @@ const meta: Meta<typeof MagazineOverviewComponent> = {
   },
   tags: [
     'autodocs',
-    'visual:check',
     'a11y:check',
   ],
   title: 'Components/blocks/MagazineOverview',
@@ -62,7 +61,7 @@ const pages: InterfaceMagazineDetailPageWithImage[] = Array.from({
   });
 });
 
-export const SampleStory: StrictStory = {
+export const MagazineOverview: StrictStory = {
   args: {
     blockType: 'magazineOverviewBlock',
     pages,
