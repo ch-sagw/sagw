@@ -16,7 +16,7 @@ import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/
 import { allBlocksButTranslator } from '@/access/blocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 import { Config } from '@/payload-types';
-import { getTranslations } from 'next-intl/server';
+import { readFile } from 'fs/promises';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
 
@@ -81,17 +81,24 @@ export const DataPrivacyPage: CollectionConfig = {
           return doc;
         }
 
+        // we can not use getTranslations... It works in Admin-Ui since
+        // rendered on the server. But in playwright, context strangely switches
+        // to client, which makes getTranslations throw an error.
+
         const locale = (req?.locale as Config['locale']) || 'de';
-        const t = await getTranslations({
-          locale,
-          namespace: 'slugs',
-        });
-        const impressumSlug = t('dataPrivacy');
         const fallback = 'dataPrivacy';
+        let dataPrivacySlug;
+
+        if (locale) {
+          const translationRawFile = (await readFile(new URL(`../../../i18n/messages/${locale}.json`, import.meta.url))).toString();
+          const translationsFile = JSON.parse(translationRawFile);
+
+          dataPrivacySlug = translationsFile.slugs.dataPrivacy;
+        }
 
         return {
           ...doc,
-          slug: impressumSlug || fallback,
+          slug: dataPrivacySlug || fallback,
         };
       },
     ],

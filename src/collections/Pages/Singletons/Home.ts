@@ -21,8 +21,11 @@ import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 import { hookUpdateLinkReferences } from '@/hooks-payload/updateLinkReferences';
-import { Config } from '@/payload-types';
-import { getTranslations } from 'next-intl/server';
+import { readFile } from 'fs/promises';
+import { fileURLToPath } from 'url';
+import {
+  dirname, join,
+} from 'path';
 
 const homeBlocks: BlockSlug[] = [
   'textBlock',
@@ -61,6 +64,7 @@ export const HomePage: CollectionConfig = {
         hidden: true,
         readOnly: true,
       },
+      defaultValue: 'Home',
       localized: true,
       name: fieldNavigationTitleFieldName,
       required: false,
@@ -137,13 +141,39 @@ export const HomePage: CollectionConfig = {
           return doc;
         }
 
-        const locale = (req?.locale as Config['locale']) || 'de';
-        const t = await getTranslations({
-          locale,
-          namespace: 'navigation',
-        });
-        const homeNavigationTitle = t('navigationTitle');
+        // we can not use getTranslations... It works in Admin-Ui since
+        // rendered on the server. But in playwright, context strangely switches
+        // to client, which makes getTranslations throw an error.
+
+        const locale = req?.locale || 'de';
         const fallback = 'Home';
+        let homeNavigationTitle;
+
+        /* eslint-disable @typescript-eslint/naming-convention */
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = dirname(__filename);
+        /* eslint-enable @typescript-eslint/naming-convention */
+        const messagesDir = join(__dirname, '../../../i18n/messages');
+
+        if (locale && locale === 'all') {
+          const translationRawFileDe = (await readFile(join(messagesDir, 'de.json'))).toString();
+          const translationRawFileEn = (await readFile(join(messagesDir, 'en.json'))).toString();
+          const translationRawFileFr = (await readFile(join(messagesDir, 'fr.json'))).toString();
+          const translationRawFileIt = (await readFile(join(messagesDir, 'it.json'))).toString();
+
+          homeNavigationTitle = {
+            de: JSON.parse(translationRawFileDe).navigation.navigationTitle,
+            en: JSON.parse(translationRawFileEn).navigation.navigationTitle,
+            fr: JSON.parse(translationRawFileFr).navigation.navigationTitle,
+            it: JSON.parse(translationRawFileIt).navigation.navigationTitle,
+          };
+
+        } else if (locale) {
+          const translationRawFile = (await readFile(join(messagesDir, `${locale}.json`))).toString();
+          const translationsFile = JSON.parse(translationRawFile);
+
+          homeNavigationTitle = translationsFile.navigation.navigationTitle;
+        }
 
         return {
           ...doc,
