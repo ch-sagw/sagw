@@ -201,6 +201,10 @@ test.describe('Home links', () => {
         title: `d9 ${time}`,
       });
 
+      // #########################################
+      // Update with italian
+      // #########################################
+
       await payload.update({
         collection: 'detailPage',
         data: {
@@ -513,8 +517,6 @@ test.describe('Home links', () => {
       d9Link = await getCollectionsDocumentForId(detail9.id);
 
     } catch (e) {
-      console.log(e);
-
       throw new Error(e instanceof Error
         ? e.message
         : String(e));
