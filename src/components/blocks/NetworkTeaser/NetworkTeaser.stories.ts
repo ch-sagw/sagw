@@ -6,6 +6,7 @@ import { NetworkTeaser } from '@/components/blocks/NetworkTeaser/NetworkTeaser';
 import { defaultDecorator } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { NetworkCategory } from '@/payload-types';
+import { NetworkTeaserImageSVG } from '@/components/blocks/helpers/imagesData';
 
 type NetworkTeaserProps = React.ComponentProps<typeof NetworkTeaser>;
 
@@ -24,8 +25,7 @@ const meta: Meta<typeof NetworkTeaser> = {
   },
   tags: [
     'autodocs',
-    // TODO: enable after image is integrated
-    // 'visual:check',
+    'visual:check',
     'a11y:check',
   ],
   title: 'Components/blocks/NetworkTeaser',
@@ -45,7 +45,7 @@ const getNetworkItem = (number: string, category: string): NetworkTeaserProps['i
   externalLink: 'https://www.foo.bar',
   foundingYear: 1983,
   id: number,
-  image: 'some-image.jpg',
+  image: NetworkTeaserImageSVG,
   title: simpleRteConfig(`Network item ${number}`),
 });
 
