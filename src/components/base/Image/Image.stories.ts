@@ -65,12 +65,13 @@ export const GenericTeaser: StrictStory = {
   },
 };
 
-export const LogoTeaser: StrictStory = {
+export const NetworkTeaser: StrictStory = {
   args: {
     ...defaultArgs,
-    height: 100,
-    variant: 'logoTeaser',
-    width: 100,
+    height: 96,
+    url: 'https://sagw-nu-localhost.gumlet.io/sslas-network-teaser.svg',
+    variant: 'networkTeaser',
+    width: 400,
   },
 };
 
