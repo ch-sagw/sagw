@@ -48,6 +48,8 @@ export type InterfaceFooterComponentPropTypes = {
   }
   consentOverlay: Omit<InterfaceConsentOverlayClientPropTypes, 'onClose' | 'onConsentGiven'>;
   linkUrls: Record<string, string>;
+  dataPrivacyUrl: string;
+  impressumUrl: string;
 };
 
 export const FooterComponent = ({
@@ -61,6 +63,8 @@ export const FooterComponent = ({
   fg,
   consentOverlay,
   linkUrls,
+  dataPrivacyUrl,
+  impressumUrl,
 }: InterfaceFooterComponentPropTypes): React.JSX.Element => {
   const i18nA11y = useTranslations('a11y');
   const overlayDialogRef = useRef<HTMLDialogElement>(null);
@@ -159,12 +163,12 @@ export const FooterComponent = ({
     colorMode: 'dark',
     items: [
       {
-        link: '',
+        link: dataPrivacyUrl,
         target: '_self',
         text: rteToHtml(legal.dataPrivacy),
       },
       {
-        link: '',
+        link: impressumUrl,
         target: '_self',
         text: rteToHtml(legal.impressum),
       },

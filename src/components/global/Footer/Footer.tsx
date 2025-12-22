@@ -13,6 +13,7 @@ import { TypedLocale } from 'payload';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { type InterfaceConsentOverlayClientPropTypes } from '@/components/global/ConsentOverlay/ConsentOverlay.client';
 import { generateLinkUrls } from '@/components/global/Header/generateUrls';
+import { getPageUrl } from '@/utilities/getPageUrl';
 
 export type InterfaceFooterPropTypes = {
   contact: InterfaceFooterContact;
@@ -27,6 +28,8 @@ export type InterfaceFooterPropTypes = {
     sagwLinkText: string;
   }
   consentOverlay: Omit<InterfaceConsentOverlayClientPropTypes, 'onClose' | 'onConsentGiven'>;
+  impressumPageId: string;
+  dataPrivacyPageId: string;
 }
 
 export const Footer = async (props: InterfaceFooterPropTypes): Promise<React.JSX.Element> => {
@@ -44,10 +47,24 @@ export const Footer = async (props: InterfaceFooterPropTypes): Promise<React.JSX
     payload,
   });
 
+  const impressumUrl = await getPageUrl({
+    locale,
+    pageId: props.impressumPageId,
+    payload,
+  });
+
+  const dataPrivacyUrl = await getPageUrl({
+    locale,
+    pageId: props.dataPrivacyPageId,
+    payload,
+  });
+
   return (
     <FooterComponent
       {...props}
       linkUrls={linkUrls}
+      dataPrivacyUrl={dataPrivacyUrl}
+      impressumUrl={impressumUrl}
     />
   );
 };

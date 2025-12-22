@@ -1,4 +1,6 @@
-import { CollectionConfig } from 'payload';
+import {
+  CollectionAfterReadHook, CollectionConfig,
+} from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHeroHome } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
@@ -18,8 +20,9 @@ import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
-import { readFile } from 'fs/promises';
 import { hookUpdateLinkReferences } from '@/hooks-payload/updateLinkReferences';
+import { Config } from '@/payload-types';
+import { getTranslations } from 'next-intl/server';
 
 const homeBlocks: BlockSlug[] = [
   'textBlock',
@@ -57,21 +60,6 @@ export const HomePage: CollectionConfig = {
       admin: {
         hidden: true,
         readOnly: true,
-      },
-      defaultValue: async ({
-        locale,
-      }): Promise<string> => {
-        let homeString = 'Home';
-
-        if (locale) {
-          const translationRawFile = (await readFile(new URL(`../../../i18n/messages/${locale}.json`, import.meta.url))).toString();
-          const translationsFile = JSON.parse(translationRawFile);
-
-          homeString = translationsFile.navigation.navigationTitle;
-        }
-
-        return homeString;
-
       },
       localized: true,
       name: fieldNavigationTitleFieldName,
@@ -139,6 +127,29 @@ export const HomePage: CollectionConfig = {
     afterChange: [
       hookCascadeBreadcrumbUpdates,
       hookUpdateLinkReferences,
+    ],
+    afterRead: [
+      async ({
+        doc,
+        req,
+      }): Promise<CollectionAfterReadHook<any>> => {
+        if (!doc) {
+          return doc;
+        }
+
+        const locale = (req?.locale as Config['locale']) || 'de';
+        const t = await getTranslations({
+          locale,
+          namespace: 'navigation',
+        });
+        const homeNavigationTitle = t('navigationTitle');
+        const fallback = 'Home';
+
+        return {
+          ...doc,
+          navigationTitle: homeNavigationTitle || fallback,
+        };
+      },
     ],
     beforeChange: [
       hookPreventBulkPublishForTranslators,

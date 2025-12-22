@@ -161,6 +161,40 @@ export default async function RootLayout({
     return <p>Footer Legal data incomplete</p>;
   }
 
+  // get footer data-privacy page
+  const footerDataPrivacyPage = await payload.find({
+    collection: 'dataPrivacyPage',
+    depth: 1,
+    limit: 1,
+    locale,
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (footerDataPrivacyPage.docs.length < 1) {
+    return <p>Data Privacy page missing</p>;
+  }
+
+  // get footer impressum page
+  const footerImpressumPage = await payload.find({
+    collection: 'impressumPage',
+    depth: 1,
+    limit: 1,
+    locale,
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (footerImpressumPage.docs.length < 1) {
+    return <p>Data Privacy page missing</p>;
+  }
+
   // get consent data
   const consentCollectionData = await payload.find({
     collection: 'consent',
@@ -208,6 +242,8 @@ export default async function RootLayout({
   const footerProps: InterfaceFooterPropTypes = {
     consentOverlay: consentOverlayProps,
     contact: footerContactData,
+    dataPrivacyPageId: footerDataPrivacyPage.docs[0].id,
+    impressumPageId: footerImpressumPage.docs[0].id,
     legal: footerLegalData,
     metaNav: metanavData,
     navigation: navData,

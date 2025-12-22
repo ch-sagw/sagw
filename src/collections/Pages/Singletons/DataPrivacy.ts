@@ -1,4 +1,6 @@
-import { CollectionConfig } from 'payload';
+import {
+  CollectionAfterReadHook, CollectionConfig,
+} from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
@@ -13,7 +15,8 @@ import { pageAccess } from '@/access/pages';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
-import { readFile } from 'fs/promises';
+import { Config } from '@/payload-types';
+import { getTranslations } from 'next-intl/server';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
 
@@ -29,21 +32,6 @@ export const DataPrivacyPage: CollectionConfig = {
       admin: {
         hidden: true,
         readOnly: true,
-      },
-      defaultValue: async ({
-        locale,
-      }): Promise<string> => {
-        let dataPrivacySlug = 'dataPrivacy';
-
-        if (locale) {
-          const translationRawFile = (await readFile(new URL(`../../../i18n/messages/${locale}.json`, import.meta.url))).toString();
-          const translationsFile = JSON.parse(translationRawFile);
-
-          dataPrivacySlug = translationsFile.slugs.dataPrivacy;
-        }
-
-        return dataPrivacySlug;
-
       },
       localized: true,
       name: 'slug',
@@ -84,6 +72,29 @@ export const DataPrivacyPage: CollectionConfig = {
     },
   ],
   hooks: {
+    afterRead: [
+      async ({
+        doc,
+        req,
+      }): Promise<CollectionAfterReadHook<any>> => {
+        if (!doc) {
+          return doc;
+        }
+
+        const locale = (req?.locale as Config['locale']) || 'de';
+        const t = await getTranslations({
+          locale,
+          namespace: 'slugs',
+        });
+        const impressumSlug = t('dataPrivacy');
+        const fallback = 'dataPrivacy';
+
+        return {
+          ...doc,
+          slug: impressumSlug || fallback,
+        };
+      },
+    ],
     beforeChange: [hookPreventBulkPublishForTranslators],
     beforeValidate: [hookPreventBlockStructureChangesForTranslators()],
   },
