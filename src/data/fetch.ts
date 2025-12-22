@@ -75,6 +75,7 @@ export const fetchEventDetailPages = async ({
 // #########################################################################
 
 interface InterfaceFetchDetailPagesProps {
+  depth?: number,
   limit?: number;
   language: Config['locale'],
   tenant: string,
@@ -83,6 +84,7 @@ interface InterfaceFetchDetailPagesProps {
 }
 
 export const fetchDetailPages = async ({
+  depth,
   limit,
   language,
   tenant,
@@ -94,9 +96,9 @@ export const fetchDetailPages = async ({
     config: configPromise,
   });
 
-  const magazinePages = await payload.find({
+  const detailPages = await payload.find({
     collection,
-    depth: 0,
+    depth: depth || 0,
     limit,
     locale: language,
     pagination: false,
@@ -113,7 +115,7 @@ export const fetchDetailPages = async ({
     },
   });
 
-  return magazinePages.docs;
+  return detailPages.docs;
 };
 
 // #########################################################################
