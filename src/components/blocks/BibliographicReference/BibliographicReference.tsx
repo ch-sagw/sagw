@@ -1,14 +1,10 @@
 import 'server-only';
 import React from 'react';
-import styles from '@/components/blocks/BibliographicReference/BibliographicReference.module.scss';
 import {
   type Config, InterfaceBibliographicReferenceBlock,
 } from '@/payload-types';
-import { Section } from '@/components/base/Section/Section';
-import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
-import {
-  rte3ToHtml, rteToHtml,
-} from '@/utilities/rteToHtml';
+import { rteToHtml } from '@/utilities/rteToHtml';
+import { rte3ToHtml } from '@/utilities/rteToHtml.server';
 import { InterfaceRte } from '@/components/base/types/rte';
 import { BibliographicReferenceClient } from './BibliographicReference.client';
 import { getLocale } from 'next-intl/server';
@@ -31,27 +27,13 @@ export const BibliographicReference = async ({
     locale,
     payload,
   });
+  const titleHtml = rteToHtml(title);
 
   return (
-    <Section
-      colorMode='white'
-      className={styles.section}
-    >
-      <SafeHtml
-        as='h3'
-        html={rteToHtml(title)}
-      />
-
-      <SafeHtml
-        as='div'
-        html={textHtml}
-        className={styles.text}
-      />
-
-      <BibliographicReferenceClient
-        buttonText={buttonText}
-        text={text}
-      />
-    </Section>
+    <BibliographicReferenceClient
+      buttonText={buttonText}
+      textHtml={textHtml}
+      titleHtml={titleHtml}
+    />
   );
 };

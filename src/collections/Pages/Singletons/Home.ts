@@ -41,6 +41,8 @@ const uniqueBlocks: BlockSlug[] = [
   'publicationsTeasersBlock',
 ];
 
+export const homeSlug = 'home';
+
 export const HomePage: CollectionConfig = {
   access: pageAccess,
   admin: {
@@ -81,7 +83,7 @@ export const HomePage: CollectionConfig = {
         hidden: true,
         readOnly: true,
       },
-      defaultValue: 'home',
+      defaultValue: homeSlug,
       localized: true,
       name: 'slug',
       type: 'text',

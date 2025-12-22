@@ -14,7 +14,7 @@ import {
 import { preRenderConsentOverlayProps } from '@/components/global/ConsentOverlay/ConsentOverlay.server';
 import { Metadata } from 'next';
 import { ConsentBanner } from '@/components/global/ConsentBanner/ConsentBanner';
-import { rte3ToHtml } from '@/utilities/rteToHtml';
+import { rte3ToHtml } from '@/utilities/rteToHtml.server';
 import {
   hasLocale, NextIntlClientProvider,
 } from 'next-intl';

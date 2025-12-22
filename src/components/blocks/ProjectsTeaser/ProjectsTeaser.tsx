@@ -5,9 +5,14 @@ import {
   ProjectDetailPage,
 } from '@/payload-types';
 import { fetchDetailPages } from '@/data/fetch';
-import { ProjectsTeaserComponent } from './ProjectsTeaser.component';
 import { getLocale } from 'next-intl/server';
 import { TypedLocale } from 'payload';
+import { rteToHtml } from '@/utilities/rteToHtml';
+import { getPageUrl } from '@/utilities/getPageUrl';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import {
+  type InterfaceProjectsTeaserItem, ProjectsTeaserClient,
+} from './ProjectsTeaser.client';
 
 export type InterfaceProjectsTeaserPropTypes = {
   tenant: string;
@@ -15,9 +20,13 @@ export type InterfaceProjectsTeaserPropTypes = {
 
 export const ProjectsTeaser = async (props: InterfaceProjectsTeaserPropTypes): Promise<React.JSX.Element> => {
   const locale = (await getLocale()) as TypedLocale;
+  const payload = await getPayloadCached();
   const {
     tenant,
-    ...restProps
+    title,
+    lead,
+    alignement,
+    optionalLink,
   } = props;
 
   const pages = await fetchDetailPages({
@@ -28,10 +37,52 @@ export const ProjectsTeaser = async (props: InterfaceProjectsTeaserPropTypes): P
     tenant,
   }) as ProjectDetailPage[];
 
+  const titleHtml = rteToHtml(title);
+  const subtitleHtml = rteToHtml(lead);
+
+  // Process optional link
+  let processedOptionalLink: { href: string; linkTextHtml: string } | null = null;
+
+  if (optionalLink && optionalLink.includeLink && optionalLink.link?.internalLink && optionalLink.link?.linkText) {
+    const href = await getPageUrl({
+      locale,
+      pageId: optionalLink.link.internalLink.documentId,
+      payload,
+    });
+
+    processedOptionalLink = {
+      href,
+      linkTextHtml: rteToHtml(optionalLink.link.linkText),
+    };
+  }
+
+  // Process all pages in parallel
+  const items = await Promise.all(pages.map(async (item): Promise<InterfaceProjectsTeaserItem> => {
+    const href = await getPageUrl({
+      locale,
+      pageId: item.id,
+      payload,
+    });
+
+    return {
+      id: item.id,
+      link: {
+        href,
+        text: rteToHtml(item.overviewPageProps.linkText),
+        type: 'internal' as const,
+      },
+      textHtml: rteToHtml(item.overviewPageProps.teaserText),
+      titleHtml: rteToHtml(item.hero.title),
+    };
+  }));
+
   return (
-    <ProjectsTeaserComponent
-      {...restProps}
-      pages={pages}
+    <ProjectsTeaserClient
+      alignement={alignement}
+      items={items}
+      optionalLink={processedOptionalLink}
+      subtitleHtml={subtitleHtml}
+      titleHtml={titleHtml}
     />
   );
 };

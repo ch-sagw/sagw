@@ -7,9 +7,8 @@ import {
   ConsentOverlayClient, type InterfaceConsentOverlayClientPropTypes,
 } from './ConsentOverlay.client';
 import { getLocale } from 'next-intl/server';
-import {
-  rte3ToHtml, rteToHtml,
-} from '@/utilities/rteToHtml';
+import { rteToHtml } from '@/utilities/rteToHtml';
+import { rte3ToHtml } from '@/utilities/rteToHtml.server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 // helper to safely render optional RTE fields

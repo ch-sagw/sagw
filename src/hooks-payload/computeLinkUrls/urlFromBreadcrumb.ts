@@ -1,3 +1,4 @@
+import { homeSlug } from '@/collections/Pages/Singletons/Home';
 import type {
   Config, InterfaceBreadcrumb,
 } from '@/payload-types';
@@ -40,7 +41,7 @@ export const urlFromBreadcrumb = ({
         const firstSlug = firstBreadcrumb[localeSlugField];
 
         // check if first breadcrumb is "home" for this locale
-        if (firstSlug === 'home') {
+        if (firstSlug === homeSlug) {
           startIndex = 1;
         }
       }
@@ -75,7 +76,7 @@ export const urlFromBreadcrumb = ({
       : '';
 
     // "home" is a special case
-    if (slug === 'home') {
+    if (slug === homeSlug) {
       const basePath = `${localePath}${tenantPath}`;
 
       // Remove trailing slash if tenantPath is empty

@@ -1,17 +1,13 @@
 import 'server-only';
 import React from 'react';
-import styles from '@/components/blocks/Footnote/Footnote.module.scss';
 import {
   type Config, InterfaceFootnotesBlock,
 } from '@/payload-types';
-import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
-import {
-  rte3ToHtml,
-  rteToHtml,
-} from '@/utilities/rteToHtml';
-import { Section } from '@/components/base/Section/Section';
+import { rteToHtml } from '@/utilities/rteToHtml';
+import { rte3ToHtml } from '@/utilities/rteToHtml.server';
 import { getLocale } from 'next-intl/server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { FootnoteClient } from './Footnote.client';
 
 export type InterfaceFootnotePropTypes = {} & InterfaceFootnotesBlock;
 
@@ -26,23 +22,12 @@ export const Footnote = async ({
     locale,
     payload,
   });
+  const titleHtml = rteToHtml(title);
 
   return (
-    <Section
-      className={styles.section}
-      colorMode='white'
-    >
-      <SafeHtml
-        as='h3'
-        html={rteToHtml(title)}
-      />
-
-      <SafeHtml
-        as='div'
-        html={textHtml}
-        className={styles.text}
-      />
-
-    </Section>
+    <FootnoteClient
+      textHtml={textHtml}
+      titleHtml={titleHtml}
+    />
   );
 };

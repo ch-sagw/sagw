@@ -13,19 +13,6 @@ const config: StorybookConfig = {
   typescript: {
     reactDocgen: 'react-docgen-typescript',
   },
-  viteFinal: (viteConfig) => {
-    // Exclude Payload and file-type from dependency optimization
-    // Payload imports fileTypeFromFile which doesn't
-    // exist in the installed file-type version
-    viteConfig.optimizeDeps = viteConfig.optimizeDeps || {};
-    viteConfig.optimizeDeps.exclude = [
-      ...(viteConfig.optimizeDeps.exclude || []),
-      'payload',
-      'file-type',
-    ];
-
-    return viteConfig;
-  },
 };
 
 export default config;

@@ -10,7 +10,7 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
   getLocale, getTranslations,
 } from 'next-intl/server';
-import { rte3ToHtml } from '@/utilities/rteToHtml';
+import { rte3ToHtml } from '@/utilities/rteToHtml.server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 type InterfaceFormServerPropTypes = {

@@ -8,11 +8,11 @@ import React, { Fragment } from 'react';
 import {
   type Config, InterfaceStatusMessage,
 } from '@/payload-types';
-import { Notification } from '@/components/base/Notification/Notification';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { getLocale } from 'next-intl/server';
 import { getPageUrl } from '@/utilities/getPageUrl';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { StatusMessageClient } from './StatusMessage.client';
 
 export type InterfaceStatusMessagePropTypes = {} & InterfaceStatusMessage;
 
@@ -51,29 +51,34 @@ export const StatusMessage = async ({
     return <Fragment />;
   }
 
-  let linkHref = '';
   const locale = (await getLocale()) as Config['locale'];
   const payload = await getPayloadCached();
+
+  const titleHtml = rteToHtml(title);
+  const messageHtml = rteToHtml(message);
+
+  let linkHref: string | undefined;
+  let linkTextHtml: string | undefined;
 
   if (optionalLink?.link?.internalLink.documentId) {
     linkHref = await getPageUrl({
       locale,
-      pageId: optionalLink?.link?.internalLink.documentId,
+      pageId: optionalLink.link.internalLink.documentId,
       payload,
     });
+
+    if (optionalLink.link.linkText) {
+      linkTextHtml = rteToHtml(optionalLink.link.linkText);
+    }
   }
 
   return (
-    <Notification
-      colorMode='light'
-      hideBorder={true}
-      type={type}
-      title={rteToHtml(title)}
-      text={rteToHtml(message)}
-
-      // TODO: generate url
+    <StatusMessageClient
       linkHref={linkHref}
-      linkText={rteToHtml(optionalLink?.link?.linkText)}
+      linkTextHtml={linkTextHtml}
+      messageHtml={messageHtml}
+      titleHtml={titleHtml}
+      type={type}
     />
   );
 };

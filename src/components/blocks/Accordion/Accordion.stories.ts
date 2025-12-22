@@ -2,22 +2,20 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { Accordion } from '@/components/blocks/Accordion/Accordion.server';
-import { defaultDecorator } from '@/storybook-helpers';
 import {
-  rte4AccordionContent, sampleRtePrivacyCheckbox,
-} from '@/utilities/rteSampleContent';
+  AccordionClient, type InterfaceAccordionClientPropTypes,
+} from '@/components/blocks/Accordion/Accordion.client';
+import { defaultDecorator } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
-type AccordionProps = React.ComponentProps<typeof Accordion>;
-
-type StrictStory = StoryObj<typeof Accordion> & {
-  args: AccordionProps;
+type StrictStory = StoryObj<typeof AccordionClient> & {
+  args: InterfaceAccordionClientPropTypes;
 };
 
-const meta: Meta<typeof Accordion> = {
+const meta: Meta<typeof AccordionClient> = {
   args: {},
-  component: Accordion,
+  component: AccordionClient,
   decorators: [defaultDecorator],
   parameters: {/* layout: 'centered', */ },
   tags: [
@@ -32,28 +30,28 @@ export default meta;
 
 const items = [
   {
-    accordionContent: rte4AccordionContent,
-    accordionTitle: simpleRteConfig('Title 1'),
+    accordionContentHtml: '<p>Content for accordion item 1. This is sample content that would normally come from RTE.</p>',
+    accordionTitle: rteToHtml(simpleRteConfig('Title 1')),
     id: '1',
   },
   {
-    accordionContent: sampleRtePrivacyCheckbox,
-    accordionTitle: simpleRteConfig('Title 2'),
+    accordionContentHtml: '<p>Content for accordion item 2. This is sample content that would normally come from RTE.</p>',
+    accordionTitle: rteToHtml(simpleRteConfig('Title 2')),
     id: '2',
   },
   {
-    accordionContent: rte4AccordionContent,
-    accordionTitle: simpleRteConfig('Title 3'),
+    accordionContentHtml: '<p>Content for accordion item 3. This is sample content that would normally come from RTE.</p>',
+    accordionTitle: rteToHtml(simpleRteConfig('Title 3')),
     id: '3',
   },
   {
-    accordionContent: sampleRtePrivacyCheckbox,
-    accordionTitle: simpleRteConfig('Title 4'),
+    accordionContentHtml: '<p>Content for accordion item 4. This is sample content that would normally come from RTE.</p>',
+    accordionTitle: rteToHtml(simpleRteConfig('Title 4')),
     id: '4',
   },
   {
-    accordionContent: rte4AccordionContent,
-    accordionTitle: simpleRteConfig('Title 5'),
+    accordionContentHtml: '<p>Content for accordion item 5. This is sample content that would normally come from RTE.</p>',
+    accordionTitle: rteToHtml(simpleRteConfig('Title 5')),
     id: '5',
   },
 ];
@@ -61,26 +59,23 @@ const items = [
 export const BackgroundWhite: StrictStory = {
   args: {
     accordions: items,
-    blockType: 'accordionBlock',
     colorMode: 'white',
-    title: simpleRteConfig('Accordion title'),
+    title: rteToHtml(simpleRteConfig('Accordion title')),
   },
 };
 
 export const BackgroundLight: StrictStory = {
   args: {
     accordions: items,
-    blockType: 'accordionBlock',
     colorMode: 'light',
-    title: simpleRteConfig('Accordion title'),
+    title: rteToHtml(simpleRteConfig('Accordion title')),
   },
 };
 
 export const BackgroundDark: StrictStory = {
   args: {
     accordions: items,
-    blockType: 'accordionBlock',
     colorMode: 'dark',
-    title: simpleRteConfig('Accordion title'),
+    title: rteToHtml(simpleRteConfig('Accordion title')),
   },
 };

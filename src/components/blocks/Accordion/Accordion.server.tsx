@@ -4,9 +4,8 @@ import { InterfaceAccordionBlock } from '@/payload-types';
 import { AccordionClient } from './Accordion.client';
 import { getLocale } from 'next-intl/server';
 import { TypedLocale } from 'payload';
-import {
-  rte4ToHtml, rteToHtml,
-} from '@/utilities/rteToHtml';
+import { rteToHtml } from '@/utilities/rteToHtml';
+import { rte4ToHtml } from '@/utilities/rteToHtml.server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 export type InterfaceAccordionServerPropTypes = {} & InterfaceAccordionBlock;

@@ -8,6 +8,7 @@ import { fieldBreadcrumbFieldName } from '@/field-templates/breadcrumb';
 import {
   Config, InterfaceBreadcrumb, InterfaceInternalLinkValue,
 } from '@/payload-types';
+import { homeSlug } from '@/collections/Pages/Singletons/Home';
 
 type LocalizedString = Partial<Record<Config['locale'], string>>;
 
@@ -34,10 +35,10 @@ const hasHomeAsFirstBreadcrumb = (breadcrumbs: InterfaceBreadcrumb): boolean => 
 
   // Check if any locale has slug 'home'
   return (
-    firstBreadcrumb.slugde === 'home' ||
-    firstBreadcrumb.slugen === 'home' ||
-    firstBreadcrumb.slugfr === 'home' ||
-    firstBreadcrumb.slugit === 'home'
+    firstBreadcrumb.slugde === homeSlug ||
+    firstBreadcrumb.slugen === homeSlug ||
+    firstBreadcrumb.slugfr === homeSlug ||
+    firstBreadcrumb.slugit === homeSlug
   );
 };
 
