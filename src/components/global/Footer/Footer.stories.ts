@@ -132,8 +132,13 @@ const consentOverlay = {
 const defaultArgs: InterfaceFooterComponentPropTypes = {
   consentOverlay,
   contact,
+  dataPrivacyUrl: '/datenschutz',
+  impressumUrl: '/impressum',
   legal,
-  linkUrls: {},
+  linkUrls: {
+    // eslint-disable-next-line quote-props
+    '1234': '/example-page',
+  },
   metaNav: defaultMetaNavItems,
   navigation: {
     navItems: defaultNavItems,
