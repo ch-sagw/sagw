@@ -1,19 +1,23 @@
-// TODO: implement as soon as tenant-routing is implemented
-
-/*
 import {
   expect,
   test,
 } from '@playwright/test';
 import {
+  generateConsentData,
+  generateDataPrivacyPage,
   generateDetailPage,
+  generateFooterData,
+  generateHomePage,
+  generateI18nData,
+  generateImpressumPage,
   generateOverviewPage,
 } from '@/test-helpers/page-generator';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
-import { getTenant } from '@/app/providers/TenantProvider.server';
+import { generateTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 
+/*
 const getCollectionsDocumentForId = async (id: string): Promise<any> => {
   const payload = await getPayloadCached();
 
@@ -33,8 +37,9 @@ const getCollectionsDocumentForId = async (id: string): Promise<any> => {
 
   return linksCollectionDocument.docs[0];
 };
+*/
 
-test.describe('Header/Footer links', () => {
+test.describe('Header/Footer links (non-sagw)', () => {
   beforeEachAcceptCookies();
   test('rendered correctly', {
     tag: '@linking',
@@ -44,56 +49,30 @@ test.describe('Header/Footer links', () => {
     // let o1Link;
     // let d1Link;
     // let d2Link;
-    let headerId;
-    let homeId;
-    const payload = await getPayloadCached();
-    const tenant = await getTenant();
     const time = (new Date())
       .getTime();
+    const payload = await getPayloadCached();
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+    const home = await generateHomePage({
+      sideTitle: 'Side Title',
+      tenant: tenant.id,
+      title: 'Title',
+    });
+    const homeId = home.id;
 
     try {
-
-      const header = await payload.find({
-        collection: 'header',
-        where: {
-          tenant: {
-            equals: tenant,
-          },
-        },
-      });
-
-      headerId = header.docs[0].id;
-
-      // empty header
-      await payload.update({
-        collection: 'header',
-        data: {
-          navigation: {},
-        },
-        id: headerId,
-      });
-
       // #########################################
       // Generate pages to link to
       // #########################################
-
-      const home = await payload.find({
-        collection: 'homePage',
-        where: {
-          tenant: {
-            equals: tenant,
-          },
-        },
-      });
-
-      homeId = home.docs[0].id;
-
       const level1 = await generateOverviewPage({
         navigationTitle: 'o1',
         parentPage: {
           documentId: homeId,
           slug: 'homePage',
         },
+        tenant: tenant.id,
         title: `o1 ${time}`,
       });
 
@@ -103,6 +82,7 @@ test.describe('Header/Footer links', () => {
           documentId: level1.id,
           slug: 'overviewPage',
         },
+        tenant: tenant.id,
         title: `d1 ${time}`,
       });
 
@@ -112,6 +92,7 @@ test.describe('Header/Footer links', () => {
           documentId: detail1.id,
           slug: 'detailPage',
         },
+        tenant: tenant.id,
         title: `d2 ${time}`,
       });
 
@@ -156,44 +137,85 @@ test.describe('Header/Footer links', () => {
       });
 
       // #########################################
-      // add nav items
+      // add header data
       // #########################################
-      await payload.update({
+      await payload.create({
         collection: 'header',
         data: {
+          metanavigation: {
+            metaLinks: [
+              {
+                linkExternal: {
+                  externalLink: 'https://www.foo.bar',
+                  externalLinkText: simpleRteConfig('Brand Guidelines'),
+                },
+                linkType: 'external',
+              },
+            ],
+          },
           navigation: {
             navItems: [
               {
-                description: simpleRteConfig('desc'),
-                navItemText: simpleRteConfig('text'),
+                description: simpleRteConfig('Description'),
+                navItemText: simpleRteConfig('Text'),
                 subNavItems: [
+                  {
+                    navItemLink: {
+                      documentId: home.id,
+                      slug: 'homePage',
+                    },
+                    navItemText: simpleRteConfig('[test]nav-link1:link'),
+                  },
                   {
                     navItemLink: {
                       documentId: level1.id,
                       slug: 'overviewPage',
                     },
-                    navItemText: simpleRteConfig('[test]nav-link1:link'),
+                    navItemText: simpleRteConfig('[test]nav-link2:link'),
                   },
                   {
                     navItemLink: {
                       documentId: detail1.id,
                       slug: 'detailPage',
                     },
-                    navItemText: simpleRteConfig('[test]nav-link2:link'),
+                    navItemText: simpleRteConfig('[test]nav-link3:link'),
                   },
                   {
                     navItemLink: {
                       documentId: detail2.id,
                       slug: 'detailPage',
                     },
-                    navItemText: simpleRteConfig('[test]nav-link3:link'),
+                    navItemText: simpleRteConfig('[test]nav-link4:link'),
                   },
                 ],
               },
             ],
           },
+          tenant: tenant.id,
         },
-        id: headerId,
+      });
+
+      // #########################################
+      // add remainig home data
+      // #########################################
+      await generateFooterData({
+        tenant: tenant.id,
+      });
+
+      await generateI18nData({
+        tenant: tenant.id,
+      });
+
+      await generateConsentData({
+        tenant: tenant.id,
+      });
+
+      await generateImpressumPage({
+        tenant: tenant.id,
+      });
+
+      await generateDataPrivacyPage({
+        tenant: tenant.id,
       });
 
       // o1Link = await getCollectionsDocumentForId(level1.id);
@@ -211,17 +233,19 @@ test.describe('Header/Footer links', () => {
     // #########################################
 
     // TODO: enable as soon as reference tracking is done
+    /*
     await expect(o1Link.references[0].pageId)
       .toStrictEqual(homeId);
     await expect(d1Link.references[0].pageId)
       .toStrictEqual(homeId);
     await expect(d2Link.references[0].pageId)
       .toStrictEqual(homeId);
+    */
 
     // #########################################
     // verify correct url rendering: de
     // #########################################
-    await page.goto('http://localhost:3000/de');
+    await page.goto(`http://localhost:3000/de/tenant-${time}`);
     await page.waitForLoadState('networkidle');
 
     const link1Header = await page.getByRole('link', {
@@ -257,25 +281,41 @@ test.describe('Header/Footer links', () => {
       .nth(1)
       .getAttribute('href');
 
+    const link4Header = await page.getByRole('link', {
+      name: '[test]nav-link4:link',
+    })
+      .nth(0)
+      .getAttribute('href');
+    const link4Footer = await page.getByRole('link', {
+      name: '[test]nav-link4:link',
+    })
+      .nth(1)
+      .getAttribute('href');
+
     await expect(link1Header)
-      .toStrictEqual(`/de/o1-${time}`);
+      .toStrictEqual(`/de/tenant-${time}`);
     await expect(link1Footer)
-      .toStrictEqual(`/de/o1-${time}`);
+      .toStrictEqual(`/de/tenant-${time}`);
 
     await expect(link2Header)
-      .toStrictEqual(`/de/o1-${time}/d1-${time}`);
+      .toStrictEqual(`/de/tenant-${time}/o1-${time}`);
     await expect(link2Footer)
-      .toStrictEqual(`/de/o1-${time}/d1-${time}`);
+      .toStrictEqual(`/de/tenant-${time}/o1-${time}`);
 
     await expect(link3Header)
-      .toStrictEqual(`/de/o1-${time}/d1-${time}/d2-${time}`);
+      .toStrictEqual(`/de/tenant-${time}/o1-${time}/d1-${time}`);
     await expect(link3Footer)
-      .toStrictEqual(`/de/o1-${time}/d1-${time}/d2-${time}`);
+      .toStrictEqual(`/de/tenant-${time}/o1-${time}/d1-${time}`);
+
+    await expect(link4Header)
+      .toStrictEqual(`/de/tenant-${time}/o1-${time}/d1-${time}/d2-${time}`);
+    await expect(link4Footer)
+      .toStrictEqual(`/de/tenant-${time}/o1-${time}/d1-${time}/d2-${time}`);
 
     // #########################################
     // verify correct url rendering: it
     // #########################################
-    await page.goto('http://localhost:3000/it');
+    await page.goto(`http://localhost:3000/it/tenant-${time}-it`);
     await page.waitForLoadState('networkidle');
 
     const link1HeaderIt = await page.getByRole('link', {
@@ -311,21 +351,36 @@ test.describe('Header/Footer links', () => {
       .nth(1)
       .getAttribute('href');
 
+    const link4HeaderIt = await page.getByRole('link', {
+      name: '[test]nav-link4:link',
+    })
+      .nth(0)
+      .getAttribute('href');
+    const link4FooterIt = await page.getByRole('link', {
+      name: '[test]nav-link4:link',
+    })
+      .nth(1)
+      .getAttribute('href');
+
     await expect(link1HeaderIt)
-      .toStrictEqual(`/it/o1-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}-it`);
     await expect(link1FooterIt)
-      .toStrictEqual(`/it/o1-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}-it`);
 
     await expect(link2HeaderIt)
-      .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}`);
     await expect(link2FooterIt)
-      .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}`);
 
     await expect(link3HeaderIt)
-      .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}/d2-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}/d1-it-${time}`);
     await expect(link3FooterIt)
-      .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}/d2-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}/d1-it-${time}`);
+
+    await expect(link4HeaderIt)
+      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}/d1-it-${time}/d2-it-${time}`);
+    await expect(link4FooterIt)
+      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}/d1-it-${time}/d2-it-${time}`);
 
   });
 });
-*/

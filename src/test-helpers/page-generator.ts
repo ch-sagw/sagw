@@ -2,7 +2,19 @@
 
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
-  Config as ConfigFromTypes, DetailPage, EventDetailPage, HomePage, InstituteDetailPage, MagazineDetailPage, NationalDictionaryDetailPage, NewsDetailPage,
+  Config as ConfigFromTypes,
+  Consent,
+  DataPrivacyPage,
+  DetailPage,
+  EventDetailPage,
+  Footer,
+  HomePage,
+  I18NGlobal,
+  ImpressumPage,
+  InstituteDetailPage,
+  MagazineDetailPage,
+  NationalDictionaryDetailPage,
+  NewsDetailPage,
   OverviewPage,
   ProjectDetailPage,
   PublicationDetailPage,
@@ -486,4 +498,197 @@ export const generatePublicationDetailPage = async (props: InterfacePageProps): 
   });
 
   return document;
+};
+
+export const generateFooterData = async ({
+  tenant,
+}: {
+  tenant: string;
+}): Promise<Footer> => {
+  const payload = await getPayloadCached();
+
+  const footerPage = await payload.create({
+    collection: 'footer',
+    data: {
+      contact: {
+        address1: simpleRteConfig('Haus der Akademien'),
+        address2: simpleRteConfig('Laupenstrasse 7'),
+        city: simpleRteConfig('Bern'),
+        countryCode: simpleRteConfig('CH'),
+        mail: simpleRteConfig('sagw@sagw.ch'),
+        phone: simpleRteConfig('+41 31 306 92 50'),
+        poBox: simpleRteConfig('Postfach'),
+        title: simpleRteConfig('SAGW Schweizerische Akademie der Geistes- und Sozialwissenschaften'),
+        zipCode: simpleRteConfig('3001'),
+      },
+      legal: {
+        cookieSettings: simpleRteConfig('Cookie-Einstellungen'),
+        copyright: simpleRteConfig('Copyright'),
+        dataPrivacy: simpleRteConfig('Legal'),
+        impressum: simpleRteConfig('Impressum'),
+      },
+      socialLinks: {
+        items: [
+          {
+            externalLink: 'https://www.foo.bar',
+            icon: 'instagram',
+          },
+          {
+            externalLink: 'https://www.foo.bar',
+            icon: 'facebook',
+          },
+          {
+            externalLink: 'https://www.foo.bar',
+            icon: 'twitter',
+          },
+          {
+            externalLink: 'https://www.foo.bar',
+            icon: 'linkedIn',
+          },
+        ],
+      },
+      tenant,
+    },
+  });
+
+  return footerPage;
+};
+
+export const generateI18nData = async ({
+  tenant,
+}: {
+  tenant: string;
+}): Promise<I18NGlobal> => {
+  const payload = await getPayloadCached();
+  const i18nData = await payload.create({
+    collection: 'i18nGlobals',
+    data: {
+      bibliographicReference: {
+        copyButtonText: simpleRteConfig('Copy button text'),
+        title: simpleRteConfig('Title'),
+      },
+      forms: {
+        dataPrivacyCheckbox: {
+          dataPrivacyCheckboxText: simpleRteConfig('Data privacy checkbox'),
+          errorMessage: simpleRteConfig('Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen'),
+        },
+      },
+      generic: {
+        downloadTitle: simpleRteConfig('Download title'),
+        exportArticleButtonText: simpleRteConfig('Export article button text'),
+        linksTitle: simpleRteConfig('Links'),
+        time: simpleRteConfig('Uhr'),
+        writeEmailButtonText: simpleRteConfig('Write email button text'),
+      },
+      tenant,
+    },
+
+  });
+
+  return i18nData;
+};
+
+export const generateConsentData = async ({
+  tenant,
+}: {
+  tenant: string;
+}): Promise<Consent> => {
+  const payload = await getPayloadCached();
+
+  const consentData = await payload.create({
+    collection: 'consent',
+    data: {
+      banner: {
+        buttonAcceptAll: simpleRteConfig('Alle zulassen'),
+        buttonCustomizeSelection: simpleRteConfig('Auswahl anpassen'),
+        buttonDeclineAll: simpleRteConfig('Alle ablehnen'),
+        text: simpleRteConfig('Banner text'),
+        title: simpleRteConfig('Diese Webseite verwendet Cookies'),
+      },
+      overlay: {
+        analyticsPerformance: {
+          text: simpleRteConfig('Diese Gruppe beinhaltet alle Cookies von Skripts für analytisches Tracking. Die Analysen helfen uns, die Nutzer*innenerfahrung der Website zu verbessern.'),
+          title: simpleRteConfig('Analytics und Performance'),
+          toggleDefault: 'off',
+          toggleLabelOff: simpleRteConfig('Aus'),
+          toggleLabelOn: simpleRteConfig('An'),
+        },
+        buttonAcceptAll: simpleRteConfig('Alle zulassen'),
+        buttonAcceptSelection: simpleRteConfig('Auswahl zulassen'),
+        externalContent: {
+          text: simpleRteConfig('Externe Inhalte umfassen Cookies, die von Drittanbietern gesetzt werden, damit wir auf unserer Website Inhalte von deren Plattform bereitstellen können (wie z.B. Videos oder Social Media Feeds).'),
+          title: simpleRteConfig('Externe Inhalte'),
+          toggleDefault: 'off',
+          toggleLabelOff: simpleRteConfig('Aus'),
+          toggleLabelOn: simpleRteConfig('An'),
+        },
+        necessaryCookies: {
+          text: simpleRteConfig('Diese Cookies sind notwendig für die grundlegenden Funktionen der Website. Ohne sie ist nicht gewährleistet, dass die Website einwandfrei funktioniert.'),
+          title: simpleRteConfig('Notwendige Cookies'),
+          toggleLabel: simpleRteConfig('Immer an'),
+        },
+        text: simpleRteConfig('Sie haben die volle Kontrolle über Ihre Privatsphäre und entscheiden selbst, welche Cookies wir verwenden dürfen und welche nicht.'),
+        title: simpleRteConfig('Cookies Einstellungen'),
+      },
+      tenant,
+    },
+  });
+
+  return consentData;
+};
+
+export const generateDataPrivacyPage = async ({
+  tenant,
+}: {
+  tenant: string;
+}): Promise<DataPrivacyPage> => {
+  const payload = await getPayloadCached();
+
+  const dataPrivacyPage = await payload.create({
+    collection: 'dataPrivacyPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'textBlock',
+          text: simpleRteConfig('some data privacy content'),
+        },
+      ],
+      hero: {
+        colorMode: 'dark',
+        title: simpleRteConfig('Data privacy page'),
+      },
+      tenant,
+    },
+  });
+
+  return dataPrivacyPage;
+};
+
+export const generateImpressumPage = async ({
+  tenant,
+}: {
+  tenant: string;
+}): Promise<ImpressumPage> => {
+  const payload = await getPayloadCached();
+
+  const impressumPage = await payload.create({
+    collection: 'impressumPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'textBlock',
+          text: simpleRteConfig('some impressum content'),
+        },
+      ],
+      hero: {
+        colorMode: 'dark',
+        title: simpleRteConfig('Impressum page'),
+      },
+      tenant,
+    },
+  });
+
+  return impressumPage;
 };

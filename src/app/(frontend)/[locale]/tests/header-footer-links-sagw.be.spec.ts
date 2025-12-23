@@ -33,7 +33,7 @@ const getCollectionsDocumentForId = async (id: string): Promise<any> => {
 };
 */
 
-test.describe('Header/Footer links', () => {
+test.describe('Header/Footer links (sagw)', () => {
   beforeEachAcceptCookies();
   test('rendered correctly', {
     tag: '@linking',
