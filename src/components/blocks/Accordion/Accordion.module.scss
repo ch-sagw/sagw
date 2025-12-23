@@ -1,6 +1,7 @@
 @use "../../../styles/utilities/utilities" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/mixins/mixins-rte" as *;
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/utilities/animations" as *;
 
@@ -119,6 +120,7 @@
 
     .rte {
       @include expandable-content;
+      @include rte-text;
 
       a {
         color: inherit;

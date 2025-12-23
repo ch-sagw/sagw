@@ -1,3 +1,4 @@
+import 'server-only';
 import React, { Fragment } from 'react';
 import { TeaserLinkList } from '@/components/base/TeaserLinkList/TeaserLinkList';
 import {

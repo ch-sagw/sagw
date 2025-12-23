@@ -6,6 +6,7 @@ import { ProjectOverviewComponent } from '@/components/blocks/ProjectsOverview/P
 import { defaultDecorator } from '@/storybook-helpers';
 import { ProjectDetailPage } from '@/payload-types';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { prerenderPageLinksStorybook } from '@/utilities/prerenderPageLinksStorybook';
 
 type ProjectsOverviewProps = React.ComponentProps<typeof ProjectOverviewComponent>;
 
@@ -61,6 +62,9 @@ const pages: ProjectDetailPage[] = Array.from({
 export const SampleStory: StrictStory = {
   args: {
     blockType: 'projectsOverviewBlock',
+    pageUrls: prerenderPageLinksStorybook({
+      pages,
+    }),
     pages,
   },
 };

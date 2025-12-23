@@ -31,6 +31,7 @@ export const Checkbox = ({
   className,
   autofocus,
 }: InterfaceCheckboxPropTypes): React.JSX.Element => {
+  const checkboxId = `checkbox-${name}`;
   const checkboxRef = useRef<HTMLInputElement>(null);
 
   const [
@@ -73,14 +74,14 @@ export const Checkbox = ({
         ref={checkboxRef}
         aria-describedby={
           errorText
-            ? name
+            ? `error-${checkboxId}`
             : undefined
         }
         aria-invalid={Boolean(errorText)}
         className={styles.input}
         type='checkbox'
         name={name}
-        id={name}
+        id={checkboxId}
         checked={checkedState}
         onChange={onInputChange}
         value={value}
@@ -92,7 +93,7 @@ export const Checkbox = ({
       />
 
       <label
-        htmlFor={name}
+        htmlFor={checkboxId}
         className={styles.label}
         data-testid='checkbox-label'
       >
@@ -104,7 +105,7 @@ export const Checkbox = ({
 
       {Boolean(errorText) &&
         <FormError
-          errorId={name}
+          errorId={`error-${checkboxId}`}
           errorText={errorText}
           colorMode={colorMode}
         />

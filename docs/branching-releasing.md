@@ -13,6 +13,7 @@ As a developer, you do the following:
 - If there is an Github issue related to your pull-request, make sure to link it in the pull-request comment: `closes #42`. This way, the `release-labels` workflow will automatically label the Github issues with the corresponding release version.
 - When merging your pull-request, you should use "**Squash & Merge**".
 - In the commit message of the pull-request, make sure that your commits have the correct format. When squashing, Github automatically adds your commits in the following format:
+
   ```
     * fix: some fix
 

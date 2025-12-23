@@ -2,9 +2,9 @@ import {
   Config, EventDetailPage,
   Team,
 } from '@/payload-types';
-import configPromise from '@/payload.config';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 import {
-  CollectionSlug, DataFromCollectionSlug, getPayload,
+  CollectionSlug, DataFromCollectionSlug,
   Sort,
   TypedLocale,
 } from 'payload';
@@ -25,9 +25,7 @@ export const fetchEventDetailPages = async ({
   tenant,
 }: InterfaceFetchEventDetailPagesProps): Promise<EventDetailPage[]> => {
 
-  const payload = await getPayload({
-    config: configPromise,
-  });
+  const payload = await getPayloadCached();
 
   const eventPages = await payload.find({
     collection: 'eventDetailPage',
@@ -90,9 +88,7 @@ export const fetchDetailPages = async ({
   sort,
 }: InterfaceFetchDetailPagesProps): Promise<DataFromCollectionSlug<CollectionSlug>[]> => {
 
-  const payload = await getPayload({
-    config: configPromise,
-  });
+  const payload = await getPayloadCached();
 
   const magazinePages = await payload.find({
     collection,
@@ -130,9 +126,7 @@ export const fetchTeam = async ({
   language,
 }: InterfaceFetchPeopleProps): Promise<Team | undefined> => {
   let teamId;
-  const payload = await getPayload({
-    config: configPromise,
-  });
+  const payload = await getPayloadCached();
 
   // if team is an object, we can get people from that. if not, we need
   // to fetch the team first

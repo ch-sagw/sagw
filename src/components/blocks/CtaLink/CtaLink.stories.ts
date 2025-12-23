@@ -2,19 +2,20 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { CtaLink } from '@/components/blocks/CtaLink/CtaLink';
+import {
+  CtaLinkClient, type InterfaceCtaLinkClientPropTypes,
+} from '@/components/blocks/CtaLink/CtaLink.client';
 import { defaultDecorator } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
-type CtaLinkProps = React.ComponentProps<typeof CtaLink>;
-
-type StrictStory = StoryObj<typeof CtaLink> & {
-  args: CtaLinkProps;
+type StrictStory = StoryObj<typeof CtaLinkClient> & {
+  args: InterfaceCtaLinkClientPropTypes;
 };
 
-const meta: Meta<typeof CtaLink> = {
+const meta: Meta<typeof CtaLinkClient> = {
   args: {},
-  component: CtaLink,
+  component: CtaLinkClient,
   decorators: [defaultDecorator],
   parameters: {/* layout: 'centered', */ },
   tags: [
@@ -29,42 +30,30 @@ export default meta;
 
 export const CtaInternalLink: StrictStory = {
   args: {
-    blockType: 'ctaLinkBlock',
-    linkInternal: {
-      internalLink: {
-        documentId: '1234',
-        slug: 'some-slug',
-      },
-      linkText: simpleRteConfig('Internal Link Text (internal)'),
-    },
+    linkHref: '/example-page',
+    linkText: rteToHtml(simpleRteConfig('Learn More')),
     linkType: 'internal',
-    text: simpleRteConfig('CTA Link Block Text (internal)'),
-    title: simpleRteConfig('CTA Link Block Title (internal)'),
+    subtitleHtml: rteToHtml(simpleRteConfig('This is a subtitle for the CTA link component.')),
+    titleHtml: rteToHtml(simpleRteConfig('CTA Link Title')),
   },
 };
 
 export const CtaExternalLink: StrictStory = {
   args: {
-    blockType: 'ctaLinkBlock',
-    linkExternal: {
-      externalLink: 'https://www.foo.bar',
-      externalLinkText: simpleRteConfig('External Link Text (external)'),
-    },
+    linkHref: 'https://example.com',
+    linkText: rteToHtml(simpleRteConfig('Visit External Site')),
     linkType: 'external',
-    text: simpleRteConfig('CTA Link Block Text (external)'),
-    title: simpleRteConfig('CTA Link Block Title (external)'),
+    subtitleHtml: rteToHtml(simpleRteConfig('This is a subtitle for the external CTA link.')),
+    titleHtml: rteToHtml(simpleRteConfig('External CTA Link')),
   },
 };
 
 export const CtaMailLink: StrictStory = {
   args: {
-    blockType: 'ctaLinkBlock',
-    linkExternal: {
-      externalLink: 'https://www.foo.bar',
-      externalLinkText: simpleRteConfig('External Link Text (external)'),
-    },
-    linkType: 'external',
-    text: simpleRteConfig('CTA Link Block Text (external)'),
-    title: simpleRteConfig('CTA Link Block Title (external)'),
+    linkHref: 'mailto:contact@example.com',
+    linkText: rteToHtml(simpleRteConfig('Contact Us')),
+    linkType: 'mail',
+    subtitleHtml: rteToHtml(simpleRteConfig('Get in touch with us via email.')),
+    titleHtml: rteToHtml(simpleRteConfig('Contact CTA')),
   },
 };

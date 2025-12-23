@@ -6,6 +6,8 @@ import { FormComponent } from '@/components/blocks/Form/Form.component';
 import { defaultDecorator } from '@/storybook-helpers';
 import { sampleRtePrivacyCheckbox } from '@/utilities/rteSampleContent';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { Form } from '@/payload-types';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
 type FormProps = React.ComponentProps<typeof FormComponent>;
 
@@ -28,6 +30,113 @@ const meta: Meta<typeof FormComponent> = {
 
 export default meta;
 
+const defaultFields: Form['fields'] = [
+  {
+    blockType: 'textBlockForm',
+    fieldError: simpleRteConfig('Field error SAGW'),
+    fieldWidth: 'half',
+    id: '68c6e2b6833c54485eb1b84c',
+    label: simpleRteConfig('Text field label SAGW'),
+    name: 'field1',
+    placeholder: 'Text field placeholder SAGW',
+    required: true,
+  },
+  {
+    blockType: 'textBlockForm',
+    fieldError: simpleRteConfig('Field error SAGW'),
+    fieldWidth: 'half',
+    id: '68c6e2b6833c54485eb1b84c',
+    label: simpleRteConfig('Text field label SAGW'),
+    name: 'field2',
+    placeholder: 'Text field placeholder SAGW',
+    required: true,
+  },
+  {
+    blockType: 'checkboxBlock',
+    fieldError: simpleRteConfig('checkbox error'),
+    fieldWidth: 'half',
+    id: '69c6e2b6833c54485eb1b84c',
+    label: sampleRtePrivacyCheckbox,
+    name: 'checkbox1',
+    required: true,
+  },
+  {
+    blockType: 'checkboxBlock',
+    fieldError: simpleRteConfig('checkbox error'),
+    fieldWidth: 'half',
+    id: '67c6e2b6833c54485eb1b84c',
+    label: sampleRtePrivacyCheckbox,
+    name: 'checkbox2',
+    required: false,
+  },
+  {
+    blockType: 'emailBlock',
+    fieldError: simpleRteConfig('Geben Sie eine E-Mail Adresse an'),
+    fieldWidth: 'half',
+    id: '66c6e2b6833c54485eb1b84c',
+    label: simpleRteConfig('E-Mail'),
+    name: 'email',
+    placeholder: 'Ihre E-Mail Adresse',
+    required: true,
+  },
+  {
+    blockType: 'textareaBlock',
+    fieldError: simpleRteConfig('Geben Sie einen Kommentar an.'),
+    fieldWidth: 'full',
+    id: '65c6e2b6833c54485eb1b84c',
+    label: simpleRteConfig('Kommentar'),
+    name: 'textarea',
+    placeholder: 'Ihr Kommentar',
+    required: true,
+  },
+  {
+    blockType: 'radioBlock',
+    fieldError: simpleRteConfig('Du musst eine Auswahl teffen'),
+    fieldWidth: 'full',
+    id: '65c6e2b6833c54485eb1b84csd',
+    items: [
+      {
+        label: simpleRteConfig('Deutsch'),
+        value: 'deutsch',
+      },
+      {
+        defaultChecked: true,
+        label: simpleRteConfig('Französisch'),
+        value: 'french',
+      },
+    ],
+    label: simpleRteConfig('In welcher Sprache möchten sie den Newsletter erhalten?'),
+    name: 'newsletterlanguage',
+    required: true,
+  },
+];
+
+// Prerender rte content, mimic the method from Form.server.tsx
+const preRenderedLabels: Record<string, string> = {};
+const preRenderedRadioLabels: Record<string, Record<string, string>> = {};
+
+defaultFields.forEach((field) => {
+  if (field.blockType === 'checkboxBlock' && field.label) {
+    preRenderedLabels[field.name] = rteToHtml(field.label);
+  }
+
+  if (field.blockType === 'radioBlock') {
+    if (field.label) {
+      preRenderedLabels[field.name] = rteToHtml(field.label);
+    }
+
+    if (field.items) {
+      preRenderedRadioLabels[field.name] = {};
+
+      field.items.forEach((item) => {
+        if (item.label) {
+          preRenderedRadioLabels[field.name][item.value] = rteToHtml(item.label);
+        }
+      });
+    }
+  }
+});
+
 const defaultFormConfig: FormProps = {
   action: () => {
     console.log('some submit action');
@@ -37,86 +146,7 @@ const defaultFormConfig: FormProps = {
   form: {
     colorMode: 'dark',
     createdAt: '2025-09-14T15:43:50.512Z',
-    fields: [
-      {
-        blockType: 'textBlockForm',
-        fieldError: simpleRteConfig('Field error SAGW'),
-        fieldWidth: 'half',
-        id: '68c6e2b6833c54485eb1b84c',
-        label: simpleRteConfig('Text field label SAGW'),
-        name: 'field1',
-        placeholder: 'Text field placeholder SAGW',
-        required: true,
-      },
-      {
-        blockType: 'textBlockForm',
-        fieldError: simpleRteConfig('Field error SAGW'),
-        fieldWidth: 'half',
-        id: '68c6e2b6833c54485eb1b84c',
-        label: simpleRteConfig('Text field label SAGW'),
-        name: 'field2',
-        placeholder: 'Text field placeholder SAGW',
-        required: true,
-      },
-      {
-        blockType: 'checkboxBlock',
-        fieldError: simpleRteConfig('checkbox error'),
-        fieldWidth: 'half',
-        id: '69c6e2b6833c54485eb1b84c',
-        label: sampleRtePrivacyCheckbox,
-        name: 'checkbox1',
-        required: true,
-      },
-      {
-        blockType: 'checkboxBlock',
-        fieldError: simpleRteConfig('checkbox error'),
-        fieldWidth: 'half',
-        id: '67c6e2b6833c54485eb1b84c',
-        label: sampleRtePrivacyCheckbox,
-        name: 'checkbox2',
-        required: false,
-      },
-      {
-        blockType: 'emailBlock',
-        fieldError: simpleRteConfig('Geben Sie eine E-Mail Adresse an'),
-        fieldWidth: 'half',
-        id: '66c6e2b6833c54485eb1b84c',
-        label: simpleRteConfig('E-Mail'),
-        name: 'email',
-        placeholder: 'Ihre E-Mail Adresse',
-        required: true,
-      },
-      {
-        blockType: 'textareaBlock',
-        fieldError: simpleRteConfig('Geben Sie einen Kommentar an.'),
-        fieldWidth: 'full',
-        id: '65c6e2b6833c54485eb1b84c',
-        label: simpleRteConfig('Kommentar'),
-        name: 'textarea',
-        placeholder: 'Ihr Kommentar',
-        required: true,
-      },
-      {
-        blockType: 'radioBlock',
-        fieldError: simpleRteConfig('Du musst eine Auswahl teffen'),
-        fieldWidth: 'full',
-        id: '65c6e2b6833c54485eb1b84csd',
-        items: [
-          {
-            label: simpleRteConfig('Deutsch'),
-            value: 'deutsch',
-          },
-          {
-            defaultChecked: true,
-            label: simpleRteConfig('Französisch'),
-            value: 'french',
-          },
-        ],
-        label: simpleRteConfig('In welcher Sprache möchten sie den Newsletter erhalten?'),
-        name: 'newsletterlanguage',
-        required: true,
-      },
-    ],
+    fields: defaultFields,
     id: '68c6e2b6ec3710c8de69135e',
     isNewsletterForm: 'custom',
     newsletterFields: {
@@ -176,6 +206,8 @@ const defaultFormConfig: FormProps = {
     updatedAt: '2025-09-14T15:43:50.512Z',
   },
   pending: false,
+  preRenderedLabels,
+  preRenderedRadioLabels,
   state: null,
   submitError: false,
   submitSuccess: false,

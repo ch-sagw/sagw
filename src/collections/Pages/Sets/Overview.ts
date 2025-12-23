@@ -61,7 +61,7 @@ export const OverviewPage: CollectionConfig = {
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
-    ...genericPageFields(),
+    ...genericPageFields(true),
     {
       tabs: [
 

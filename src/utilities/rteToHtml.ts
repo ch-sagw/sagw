@@ -15,7 +15,6 @@ import {
 import {
   SerializedParagraphNode, SerializedTextNode,
 } from '@payloadcms/richtext-lexical/lexical';
-
 import { externalLink } from '@/icons/ui/external-link';
 
 // Union type for all possible lexical nodes
@@ -27,7 +26,7 @@ type LexicalNode =
   | SerializedNonBreakingSpaceNode
   | { type: string; children?: LexicalNode[]; version: number; [key: string]: unknown };
 
-const internalDocToHref = ({
+const createInternalDocToHref = (linkUrlMap: Map<string, string>) => ({
   linkNode,
 }: { linkNode: SerializedLinkNode }): string => {
   if (!linkNode.fields.doc) {
@@ -35,22 +34,54 @@ const internalDocToHref = ({
   }
 
   const {
-    relationTo, value,
+    value,
   } = linkNode.fields.doc;
 
-  return `/${relationTo}/${value}`;
+  let foundDocumentId: string | null = null;
+
+  if (value && typeof value === 'object') {
+    const objValue = value as Record<string, unknown>;
+
+    if ('id' in objValue && typeof objValue.id === 'string') {
+      foundDocumentId = objValue.id;
+    }
+  }
+
+  // Check if we have a computed URL for this documentId
+  if (foundDocumentId) {
+    const computedUrl = linkUrlMap.get(foundDocumentId);
+
+    if (computedUrl && typeof computedUrl === 'string') {
+      return computedUrl;
+    }
+  }
+
+  // Last resort fallback
+  if (foundDocumentId) {
+    return `/${foundDocumentId}`;
+  }
+
+  return '';
 };
 
 const createHtmlConverters = ({
   wrap,
-}: { wrap: boolean | undefined }): HTMLConvertersFunction<DefaultNodeTypes> => ({
+  includeLinks,
+  linkUrlMap,
+}: {
+  wrap: boolean | undefined;
+  includeLinks: boolean;
+  linkUrlMap: Map<string, string>;
+}): HTMLConvertersFunction<DefaultNodeTypes> => ({
   defaultConverters,
 }) => {
   const baseConverters = {
     ...defaultConverters,
-    ...linkHTMLConverter({
-      internalDocToHref,
-    }),
+    ...(includeLinks
+      ? linkHTMLConverter({
+        internalDocToHref: createInternalDocToHref(linkUrlMap),
+      })
+      : {}),
     ...softHyphenJSXConverter,
     ...nonBreakingSpaceJSXConverter,
   };
@@ -154,21 +185,15 @@ const processLexicalNodes = (nodes: LexicalNode[]): LexicalNode[] => nodes.map((
 interface InterfaceRteToHtmlProps {
   content: InterfaceRte | undefined | null;
   wrap?: boolean;
+  includeLinks?: boolean;
+  linkUrlMap?: Map<string, string>;
 }
 
-// avoid unneccessary rebuild of converters by statically defining
-// the 2 sets of converters
-
-const convertersWithWrap = createHtmlConverters({
-  wrap: true,
-});
-const convertersWithoutWrap = createHtmlConverters({
-  wrap: false,
-});
-
-const rteToHtmlBase = ({
+export const rteToHtmlBase = ({
   content,
   wrap,
+  includeLinks = false,
+  linkUrlMap = new Map(),
 }: InterfaceRteToHtmlProps): string => {
   if (!content) {
     return '';
@@ -182,9 +207,11 @@ const rteToHtmlBase = ({
     },
   };
 
-  const htmlConverters = wrap
-    ? convertersWithWrap
-    : convertersWithoutWrap;
+  const htmlConverters = createHtmlConverters({
+    includeLinks,
+    linkUrlMap,
+    wrap: wrap ?? false,
+  });
 
   const transformedData = convertLexicalToHTML({
     converters: htmlConverters,
@@ -211,10 +238,7 @@ done by setting `wrap: true`.
 
 export const rteToHtml = (content: InterfaceRte | undefined | null): string => rteToHtmlBase({
   content,
+  includeLinks: false,
+  linkUrlMap: new Map(),
   wrap: false,
-});
-
-export const rte4ToHtml = (content: InterfaceRte | undefined | null): string => rteToHtmlBase({
-  content,
-  wrap: true,
 });

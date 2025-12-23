@@ -1,4 +1,8 @@
 {
+  "slugs": {
+    "dataPrivacy": "data-privacy-de",
+    "impressum": "impressum-de"
+  },
   "navigation": {
     "navigationTitle": "Home DE"
   },

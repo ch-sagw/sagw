@@ -2,20 +2,20 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { GenericTeaser } from '@/components/blocks/GenericTeaser/GenericTeaser';
+import {
+  GenericTeaserClient, type InterfaceGenericTeaserClientPropTypes,
+} from '@/components/blocks/GenericTeaser/GenericTeaser.client';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
-import { InterfaceGenericTeasersBlock } from '@/payload-types';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
-type GenericTeaserProps = React.ComponentProps<typeof GenericTeaser>;
-
-type StrictStory = StoryObj<typeof GenericTeaser> & {
-  args: GenericTeaserProps;
+type StrictStory = StoryObj<typeof GenericTeaserClient> & {
+  args: InterfaceGenericTeaserClientPropTypes;
 };
 
-const meta: Meta<typeof GenericTeaser> = {
+const meta: Meta<typeof GenericTeaserClient> = {
   args: {},
-  component: GenericTeaser,
+  component: GenericTeaserClient,
   decorators: [defaultDecoratorNoPadding],
   parameters: {/* layout: 'centered', */ },
   tags: [
@@ -28,48 +28,72 @@ const meta: Meta<typeof GenericTeaser> = {
 
 export default meta;
 
-const teaserBlock: InterfaceGenericTeasersBlock['teasers'][number] = {
-  id: '1',
-  linkInternal: {
-    internalLink: {
-      documentId: '1234',
-      slug: 'projectDetailPage',
-    },
-    linkText: simpleRteConfig('Zum Projekt'),
-  },
-  linkType: 'internal',
-  text: simpleRteConfig('Ab 2021 hat die Akademie zudem die Förderzuständigkeit für acht längerfristige Editionen vom SNF übernommen. '),
-  title: simpleRteConfig('Plattform Ageing Society'),
-};
-
-const defaultArgs: GenericTeaserProps = {
-  alignement: 'horizontal',
-  blockType: 'genericTeasersBlock',
-  lead: simpleRteConfig('Projekte mit gesellschaftlicher Relevanz an der Schnittstelle von Wissenschaft und Öffentlichkeit.'),
-  teasers: [
-    {
-      ...teaserBlock,
-      id: '1',
-    },
-    {
-      ...teaserBlock,
-      id: '2',
-    },
-    {
-      ...teaserBlock,
-      id: '3',
-    },
-  ],
-  title: simpleRteConfig('Aktuelle Projekte'),
-};
-
 export const Horizontal: StrictStory = {
-  args: defaultArgs,
+  args: {
+    alignement: 'horizontal',
+    subtitleHtml: rteToHtml(simpleRteConfig('This is a subtitle for the generic teaser block.')),
+    teasers: [
+      {
+        id: '1',
+        link: {
+          href: '/example-page-1',
+          text: 'Learn More',
+          type: 'internal',
+        },
+        textHtml: rteToHtml(simpleRteConfig('This is the first teaser text content.')),
+        titleHtml: rteToHtml(simpleRteConfig('Teaser Title 1')),
+      },
+      {
+        id: '2',
+        link: {
+          href: 'https://example.com',
+          text: 'Visit Site',
+          type: 'external',
+        },
+        textHtml: rteToHtml(simpleRteConfig('This is the second teaser text content.')),
+        titleHtml: rteToHtml(simpleRteConfig('Teaser Title 2')),
+      },
+      {
+        id: '3',
+        link: {
+          href: 'mailto:contact@example.com',
+          text: 'Contact',
+          type: 'mail',
+        },
+        textHtml: rteToHtml(simpleRteConfig('This is the third teaser text content.')),
+        titleHtml: rteToHtml(simpleRteConfig('Teaser Title 3')),
+      },
+    ],
+    titleHtml: rteToHtml(simpleRteConfig('Generic Teaser Block Title')),
+  },
 };
 
 export const Vertical: StrictStory = {
   args: {
-    ...defaultArgs,
     alignement: 'vertical',
+    subtitleHtml: rteToHtml(simpleRteConfig('This is a subtitle for the generic teaser block with vertical alignment.')),
+    teasers: [
+      {
+        id: '1',
+        link: {
+          href: '/example-page-1',
+          text: 'Learn More',
+          type: 'internal',
+        },
+        textHtml: rteToHtml(simpleRteConfig('This is the first teaser text content.')),
+        titleHtml: rteToHtml(simpleRteConfig('Teaser Title 1')),
+      },
+      {
+        id: '2',
+        link: {
+          href: '/example-page-2',
+          text: 'Read More',
+          type: 'internal',
+        },
+        textHtml: rteToHtml(simpleRteConfig('This is the second teaser text content.')),
+        titleHtml: rteToHtml(simpleRteConfig('Teaser Title 2')),
+      },
+    ],
+    titleHtml: rteToHtml(simpleRteConfig('Generic Teaser Block Title')),
   },
 };

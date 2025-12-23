@@ -1,3 +1,4 @@
+import 'server-only';
 import React, { Fragment } from 'react';
 import { EventsOverviewComponent } from '@/components/blocks/EventsOverview/EventsOverview.component';
 import {
@@ -23,7 +24,7 @@ export const EventsOverview = async (props: InterfaceEventsOverviewPropTypes): P
     tenant: props.tenant,
   });
 
-  const items = convertPayloadEventPagesToFeItems({
+  const items = await convertPayloadEventPagesToFeItems({
     globalI18n: props.globalI18n,
     lang: locale,
     payloadPages: pages,
