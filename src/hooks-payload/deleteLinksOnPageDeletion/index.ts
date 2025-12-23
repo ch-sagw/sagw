@@ -1,7 +1,7 @@
 // hook to delete Links document when a page is deleted
 
 import type { CollectionAfterDeleteHook } from 'payload';
-import { singletonSlugs } from '@/collections/Pages/pages';
+import { singletonSlugs } from '@/collections/Pages/constants';
 
 export const hookDeleteLinksOnPageDeletion: CollectionAfterDeleteHook = async ({
   doc,

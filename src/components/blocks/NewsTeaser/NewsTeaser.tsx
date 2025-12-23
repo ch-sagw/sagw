@@ -8,7 +8,7 @@ import { rteToHtml } from '@/utilities/rteToHtml';
 import { InterfaceNewsTeasersBlock } from '@/payload-types';
 import { NewsTeaserComponent } from '@/components/blocks/NewsTeaser/NewsTeaser.component';
 import { convertPayloadNewsPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
-import { InterfaceSourcePage } from '@/app/(frontend)/RenderBlocks';
+import { InterfaceSourcePage } from '@/app/(frontend)/renderers/RenderBlocks';
 import { getLocale } from 'next-intl/server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { getPageUrl } from '@/utilities/getPageUrl';

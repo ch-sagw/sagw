@@ -1,6 +1,5 @@
 import 'server-only';
 import React from 'react';
-import './styles.scss';
 import { TypedLocale } from 'payload';
 import { InterfaceStatusMessage } from '@/payload-types';
 import { StatusMessage } from '@/components/global/StatusMessage/StatusMessage';

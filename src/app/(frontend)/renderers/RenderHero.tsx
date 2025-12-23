@@ -13,13 +13,22 @@ import {
   InterfaceHeroFieldMagazineDetail, InterfaceHeroFieldNewsDetail, InterfaceI18NGeneric,
 } from '@/payload-types';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
+import { buildBreadcrumbItems } from '@/utilities/buildBreadcrumbItems';
+import { buildUrlFromPath } from '@/hooks-payload/computeLinkUrls/buildUrlFromPath';
 import {
   CollectionSlug, TypedLocale,
 } from 'payload';
 import React from 'react';
 import { useTranslations } from 'next-intl';
+import { CMSConfigError } from '../utilities/CMSConfigError';
+import { homeSlug } from '@/collections/constants';
 
-// Union type of all detail page data types
+// TODO: refactor
+// - get PageTypes from autogeneratePagesIndex
+// - derive page types automatically
+// - find cleaner approach for heroProps definition
+
+// union type of all detail page data types
 type PageTypes =
   | Config['collections']['detailPage']
   | Config['collections']['overviewPage']
@@ -47,20 +56,20 @@ export const RenderHero = ({
   const i18nNavigation = useTranslations('navigation');
 
   if (!pageData || !foundCollection) {
-    return <p>No page data</p>;
+    return <CMSConfigError message='No page data' />;
   }
 
   let heroType: InterfaceHeroPropTypes['type'];
   let heroProps: InterfaceHeroField | InterfaceHeroFieldNewsDetail | InterfaceHeroFieldMagazineDetail | Omit<Extract<InterfaceHeroPropTypes, { type: 'eventDetail' }>, 'type'> | null = null;
 
-  // Handle different collection types and extract hero data
+  // handle different collection types and extract hero data
   if (foundCollection === 'eventDetailPage') {
     const eventPage = pageData as Config['collections']['eventDetailPage'];
 
-    // EventDetailPage doesn't have a hero field
+    // eventDetailPage doesn't have a hero field
     heroType = 'eventDetail';
 
-    // Extract tag from category
+    // extract tag from category
     let tag = '';
 
     if (eventPage.eventDetails.category) {
@@ -102,65 +111,54 @@ export const RenderHero = ({
   } else {
     heroType = 'generic';
 
-    // For other collections, check if they have hero field
+    // for other collections, check if they have hero field
     if ('hero' in pageData && pageData.hero) {
       heroProps = pageData.hero;
     }
   }
 
   if (!heroProps) {
-    return undefined;
+    return <CMSConfigError message='Hero is misconfigured' />;
   }
 
-  // TODO: write generic url generator. it is more complicated than the current
-  // implementation. e.g: for each segment, we should fallback to `namede`
-  // and `slugde`.
-  let breadcrumbItems: InterfaceBreadcrumbItem[] = (pageData.breadcrumb ?? []).reduce<InterfaceBreadcrumbItem[]>((acc, item) => {
-    const nameKey = `name${locale}`;
-    const slugKey = `slug${locale}`;
+  // extract tenant slug from pageData
+  const pageDataRecord = pageData as unknown as Record<string, unknown>;
+  const tenant = pageDataRecord.tenant as { slug?: Record<string, string> } | { slug?: string } | undefined;
+  let tenantSlug: string | null = null;
 
-    if (nameKey in item && slugKey in item) {
-      const text = item[nameKey as keyof typeof item];
-      const link = item[slugKey as keyof typeof item];
-
-      if (typeof text === 'string') {
-
-        // just for safety: remove leading and trailing slashes
-        const slugSegment = String(link ?? '')
-          .replace(/^\/+|\/+$/gu, '');
-
-        if (slugSegment.length > 0) {
-          const previousLink = acc.length > 0
-            ? acc[acc.length - 1].link
-            : '';
-
-          // just for safety: remove trailing slashes
-          const base = previousLink.replace(/\/+$/gu, '');
-          const nextLink = base.length > 0
-            ? `${base}/${slugSegment}`
-            : `/${slugSegment}`;
-
-          acc.push({
-            link: nextLink,
-            text,
-          });
-        }
-      }
+  if (tenant && typeof tenant === 'object' && tenant.slug) {
+    if (typeof tenant.slug === 'object' && locale in tenant.slug) {
+      tenantSlug = tenant.slug[locale];
+    } else if (typeof tenant.slug === 'string') {
+      tenantSlug = tenant.slug;
     }
+    tenantSlug = tenantSlug || null;
+  }
 
-    return acc;
-  }, []);
+  // build breadcrumb items
+  let breadcrumbItems: InterfaceBreadcrumbItem[] = buildBreadcrumbItems({
+    breadcrumb: pageData.breadcrumb ?? [],
+    locale,
+    tenant: tenantSlug,
+  });
 
+  // fallback
   if (breadcrumbItems.length === 0) {
+    const homeUrl = buildUrlFromPath({
+      locale,
+      pathSegments: [],
+      slug: homeSlug,
+      tenant: tenantSlug,
+    });
+
     breadcrumbItems = [
       {
-        link: '/',
+        link: homeUrl,
         text: i18nNavigation('navigationTitle'),
       },
     ];
   }
 
-  // TODO
   const breadcrumb: InterfaceBreadcrumbPropTypes = {
     colorMode: heroProps.colorMode,
     items: breadcrumbItems,

@@ -8,7 +8,7 @@ import { fieldBreadcrumbFieldName } from '@/field-templates/breadcrumb';
 import {
   Config, InterfaceBreadcrumb, InterfaceInternalLinkValue,
 } from '@/payload-types';
-import { homeSlug } from '@/collections/Pages/Singletons/Home';
+import { homeSlug } from '@/collections/constants';
 
 type LocalizedString = Partial<Record<Config['locale'], string>>;
 

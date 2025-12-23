@@ -42,10 +42,16 @@ export const ConsentBanner = ({
   const [
     shouldShow,
     setShouldShow,
-  ] = useState<boolean | null>(() => shouldShowBanner());
+  ] = useState<boolean | null>(null);
 
-  // Check consent status on client side only
   useEffect(() => {
+    // Set initial value on client mount
+    // This is necessary to prevent hydration mismatches - we must start with
+    // null on both server and client, then set the actual value only
+    // on the client
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setShouldShow(shouldShowBanner());
+
     // Listen for consent updates
     const handleConsentUpdate = (): void => {
       setShouldShow(shouldShowBanner());

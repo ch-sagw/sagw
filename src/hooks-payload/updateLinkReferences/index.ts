@@ -2,8 +2,9 @@
 // tracks which pages do reference other pages by updating the references array
 
 import type { CollectionAfterChangeHook } from 'payload';
-import { singletonSlugs } from '@/collections/Pages/pages';
-import { globalCollections } from '@/collections';
+import {
+  globalCollectionsSlugs, singletonSlugs,
+} from '@/collections/Pages/constants';
 import { extractAllLinkIds } from '@/hooks-payload/shared/extractAllLinkIds';
 
 export const hookUpdateLinkReferences: CollectionAfterChangeHook = async ({
@@ -29,7 +30,7 @@ export const hookUpdateLinkReferences: CollectionAfterChangeHook = async ({
 
   // check if this is a singleton page or a global
   const isSingleton = singletonSlugs.some((singleton) => singleton.slug === collectionSlug);
-  const isGlobal = globalCollections.some((global) => global.slug === collectionSlug);
+  const isGlobal = globalCollectionsSlugs.some((global) => global.slug === collectionSlug);
   const isSingletonOrGlobal = isSingleton || isGlobal;
 
   // for singletons and globals, they're always considered

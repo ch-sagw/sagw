@@ -4,7 +4,7 @@
 import type {
   CollectionAfterChangeHook, CollectionSlug, PayloadRequest,
 } from 'payload';
-import { singletonSlugs } from '@/collections/Pages/pages';
+import { singletonSlugs } from '@/collections/Pages/constants';
 import { fieldBreadcrumbFieldName } from '@/field-templates/breadcrumb';
 import { extractID } from '@/utilities/extractId';
 

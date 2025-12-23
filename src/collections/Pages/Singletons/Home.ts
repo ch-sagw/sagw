@@ -23,6 +23,7 @@ import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBul
 import { hookUpdateLinkReferences } from '@/hooks-payload/updateLinkReferences';
 import { readFile } from 'fs/promises';
 import { fileURLToPath } from 'url';
+import { homeSlug } from '@/collections/constants';
 import {
   dirname, join,
 } from 'path';
@@ -46,8 +47,6 @@ const uniqueBlocks: BlockSlug[] = [
   'newsTeasersBlock',
   'publicationsTeasersBlock',
 ];
-
-export const homeSlug = 'home';
 
 export const HomePage: CollectionConfig = {
   access: pageAccess,
