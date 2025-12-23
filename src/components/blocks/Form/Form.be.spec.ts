@@ -1,4 +1,4 @@
-import { getTenant } from '@/app/providers/TenantProvider.server';
+import { getTenant } from '@/test-helpers/tenant-generator';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';

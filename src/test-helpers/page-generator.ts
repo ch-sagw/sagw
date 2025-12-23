@@ -8,7 +8,7 @@ import {
   PublicationDetailPage,
 } from '@/payload-types';
 
-import { getTenant } from '@/app/providers/TenantProvider.server';
+import { getTenant } from '@/test-helpers/tenant-generator';
 import slugify from 'slugify';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 

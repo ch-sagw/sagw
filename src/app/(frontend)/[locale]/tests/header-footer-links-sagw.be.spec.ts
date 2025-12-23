@@ -7,7 +7,7 @@ import {
   generateOverviewPage,
 } from '@/test-helpers/page-generator';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
-import { getTenant } from '@/app/providers/TenantProvider.server';
+import { getTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 

@@ -5,7 +5,7 @@ import {
   expect,
   test,
 } from '@playwright/test';
-import { getTenant } from '@/app/providers/TenantProvider.server';
+import { getTenant } from '@/test-helpers/tenant-generator';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { EventDetailPage } from '@/payload-types';
 

@@ -1,13 +1,14 @@
 import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
-import { getTenant } from '@/app/providers/TenantProvider.server';
+import {
+  generateTenant, getTenant,
+} from '@/test-helpers/tenant-generator';
 
 import {
   expect,
   test,
 } from '@playwright/test';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
-import { generateTenant } from '@/test-helpers/tenant-generator';
 
 test('allows 1 link and 1 downloads block via API', async () => {
   const tenant = await getTenant();

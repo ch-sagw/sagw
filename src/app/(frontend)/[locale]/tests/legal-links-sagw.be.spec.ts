@@ -4,7 +4,7 @@ import {
 } from '@playwright/test';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
-import { getTenant } from '@/app/providers/TenantProvider.server';
+import { getTenant } from '@/test-helpers/tenant-generator';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 test.describe('Legal links', () => {

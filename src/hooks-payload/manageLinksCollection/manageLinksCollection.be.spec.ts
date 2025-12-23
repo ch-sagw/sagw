@@ -5,7 +5,7 @@ import {
 import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
 import { generateDetailPage } from '@/test-helpers/page-generator';
-import { getTenant } from '@/app/providers/TenantProvider.server';
+import { getTenant } from '@/test-helpers/tenant-generator';
 
 const getCollectionsDocumentForId = async (id: string): Promise<any> => {
   const payload = await getPayload({

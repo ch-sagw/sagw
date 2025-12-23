@@ -5,6 +5,27 @@ interface InterfaceGenerateTenantProps {
   name: string;
 }
 
+// get's default sagw tenant
+export const getTenant = async (): Promise<string | null> => {
+  const payload = await getPayloadCached();
+
+  const tenants = await payload.find({
+    collection: 'tenants',
+    depth: 1,
+    where: {
+      name: {
+        equals: 'sagw',
+      },
+    },
+  });
+
+  if (!tenants.docs || tenants.docs.length < 1) {
+    return null;
+  }
+
+  return tenants.docs[0].id;
+};
+
 export const generateTenant = async ({
   name,
 }: InterfaceGenerateTenantProps): Promise<Tenant> => {
