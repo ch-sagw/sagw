@@ -1,14 +1,20 @@
-// TODO: implement as soon as tenant-routing is implemented
-
-/*
 import {
   expect,
   test,
 } from '@playwright/test';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
-import { getTenant } from '@/app/providers/TenantProvider.server';
+import { generateTenant } from '@/test-helpers/tenant-generator';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import {
+  generateConsentData,
+  generateDataPrivacyPage,
+  generateFooterData,
+  generateHeaderData,
+  generateHomePage,
+  generateI18nData,
+  generateImpressumPage,
+} from '@/test-helpers/page-generator';
 
 test.describe('Legal links', () => {
   beforeEachAcceptCookies();
@@ -18,7 +24,45 @@ test.describe('Legal links', () => {
     page,
   }) => {
     const payload = await getPayloadCached();
-    const tenant = await getTenant();
+    const time = (new Date())
+      .getTime();
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    await generateHomePage({
+      navigationTitle: 'home',
+      sideTitle: 'Side',
+      tenant: tenant.id,
+      title: 'Title',
+    });
+
+    // #########################################
+    // add remainig home data
+    // #########################################
+    await generateFooterData({
+      tenant: tenant.id,
+    });
+
+    await generateI18nData({
+      tenant: tenant.id,
+    });
+
+    await generateConsentData({
+      tenant: tenant.id,
+    });
+
+    await generateImpressumPage({
+      tenant: tenant.id,
+    });
+
+    await generateDataPrivacyPage({
+      tenant: tenant.id,
+    });
+
+    await generateHeaderData({
+      tenant: tenant.id,
+    });
 
     // #########################################
     // ensure proper legal links
@@ -48,7 +92,7 @@ test.describe('Legal links', () => {
     // #########################################
     // verify correct url rendering: de
     // #########################################
-    await page.goto('http://localhost:3000/de');
+    await page.goto(`http://localhost:3000/de/tenant-${time}`);
     await page.waitForLoadState('networkidle');
 
     const linkDataPrivacy = await page.getByRole('link', {
@@ -62,15 +106,15 @@ test.describe('Legal links', () => {
       .getAttribute('href');
 
     await expect(linkDataPrivacy)
-      .toStrictEqual('/de/data-privacy-de');
+      .toStrictEqual(`/de/tenant-${time}/data-privacy-de`);
 
     await expect(linkImpressum)
-      .toStrictEqual('/de/impressum-de');
+      .toStrictEqual(`/de/tenant-${time}/impressum-de`);
 
     // #########################################
     // verify correct url rendering: it
     // #########################################
-    await page.goto('http://localhost:3000/it');
+    await page.goto(`http://localhost:3000/it/tenant-${time}-it`);
     await page.waitForLoadState('networkidle');
 
     const linkDataPrivacyIt = await page.getByRole('link', {
@@ -84,12 +128,10 @@ test.describe('Legal links', () => {
       .getAttribute('href');
 
     await expect(linkDataPrivacyIt)
-      .toStrictEqual('/it/data-privacy-it');
+      .toStrictEqual(`/it/tenant-${time}-it/data-privacy-it`);
 
     await expect(linkImpressumIt)
-      .toStrictEqual('/it/impressum-it');
+      .toStrictEqual(`/it/tenant-${time}-it/impressum-it`);
 
   });
 });
-
-*/
