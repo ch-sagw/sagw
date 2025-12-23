@@ -8,6 +8,7 @@ import {
   DetailPage,
   EventDetailPage,
   Footer,
+  Header,
   HomePage,
   I18NGlobal,
   ImpressumPage,
@@ -117,6 +118,7 @@ export const generateHomePage = async ({
   const homePage = await payload.create({
     collection: 'homePage',
     data: {
+      _status: 'published',
       hero: {
         sideTitle: simpleRteConfig(sideTitle),
         title: simpleRteConfig(title),
@@ -691,4 +693,51 @@ export const generateImpressumPage = async ({
   });
 
   return impressumPage;
+};
+
+export const generateHeaderData = async ({
+  tenant,
+}: {
+  tenant: string;
+}): Promise<Header> => {
+  const payload = await getPayloadCached();
+  const time = (new Date())
+    .getTime();
+
+  const detailPage = await generateDetailPage({
+    tenant,
+    title: `generated-detail-${time}`,
+  });
+
+  const headerData = await payload.create({
+    collection: 'header',
+    data: {
+      metanavigation: {
+        metaLinks: [
+          {
+            linkExternal: {
+              externalLink: 'https://www.foo.bar',
+              externalLinkText: simpleRteConfig('Brand Guidelines'),
+            },
+            linkType: 'external',
+          },
+        ],
+      },
+      navigation: {
+        navItems: [
+          {
+            description: simpleRteConfig(''),
+            navItemLink: {
+              documentId: detailPage.id,
+              slug: 'detailPage',
+            },
+            navItemText: simpleRteConfig('Home'),
+          },
+        ],
+      },
+      tenant,
+    },
+  });
+
+  return headerData;
 };

@@ -1,20 +1,27 @@
-// TODO: implement as soon as tenant-routing is implemented
-
-/*
 import {
   expect,
   test,
 } from '@playwright/test';
 import {
+  generateConsentData,
+  generateDataPrivacyPage,
   generateDetailPage,
+  generateEventDetailPage,
+  generateFooterData,
+  generateHeaderData,
   generateHomePage,
+  generateI18nData,
+  generateImpressumPage,
+  generateMagazineDetailPage,
+  generateNewsDetailPage,
   generateOverviewPage,
+  generateProjectDetailPage,
 } from '@/test-helpers/page-generator';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { generateTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 import { sampleRteWithLink } from '@/utilities/rteSampleContent';
-import { generateTenant } from '@/test-helpers/tenant-generator';
 
 const getCollectionsDocumentForId = async (id: string): Promise<any> => {
   const payload = await getPayloadCached();
@@ -36,6 +43,16 @@ const getCollectionsDocumentForId = async (id: string): Promise<any> => {
   return linksCollectionDocument.docs[0];
 };
 
+/**
+ * Exhaustive test:
+ * - add all possible blocks to home
+ * - add links to different pages in all possible places (hero and blocks)
+ * and test if they are rendered properly in the frontend
+ * - add italian slugs to all linked pages and test links are properly rendered
+ * in italian frontend page
+ * - check if Links collection has all required references
+ */
+
 test.describe('Home links', () => {
   beforeEachAcceptCookies();
   test('rendered correctly', {
@@ -43,9 +60,6 @@ test.describe('Home links', () => {
   }, async ({
     page,
   }) => {
-    const time = (new Date())
-      .getTime();
-
     // let d1Link;
     let d2Link;
     let d3Link;
@@ -55,50 +69,23 @@ test.describe('Home links', () => {
     let d7Link;
     // let d8Link;
     let d9Link;
-    let homeId;
+
     const payload = await getPayloadCached();
-    const tenantObject = await generateTenant({
+    const time = (new Date())
+      .getTime();
+    const tenant = await generateTenant({
       name: `tenant-${time}`,
     });
-    const tenant = tenantObject.id;
+    const home = await generateHomePage({
+      navigationTitle: 'home',
+      sideTitle: 'Side',
+      tenant: tenant.id,
+      title: 'Title',
+    });
+
+    const homeId = home.id;
 
     try {
-
-      const home = await generateHomePage({
-        sideTitle: `sidetitle-${time}`,
-        tenant,
-        title: `home-${time}`,
-      });
-
-      const i18nGlobals = await payload.create({
-        collection: 'i18nGlobals',
-        data: {
-          bibliographicReference: {
-            copyButtonText: simpleRteConfig('Copy button text'),
-            title: simpleRteConfig('Title'),
-          },
-          forms: {
-            dataPrivacyCheckbox: {
-              dataPrivacyCheckboxText:
-              simpleRteConfig(`Data privacy checkbox ${tenant.toUpperCase()}`),
-              errorMessage:simpleRteConfig('Bitte akzeptieren
-              sie die allgemeinen Geschäftsbedingungen'),
-            },
-          },
-          generic: {
-            downloadTitle: simpleRteConfig('Download title'),
-            exportArticleButtonText:
-            simpleRteConfig('Export article button text'),
-            linksTitle: simpleRteConfig('Links'),
-            time: simpleRteConfig('Uhr'),
-            writeEmailButtonText: simpleRteConfig('Write email button text'),
-          },
-          tenant,
-        },
-
-      });
-
-      homeId = home.id;
 
       // #########################################
       // Generate pages to link to
@@ -110,7 +97,7 @@ test.describe('Home links', () => {
           documentId: homeId,
           slug: 'homePage',
         },
-        tenant,
+        tenant: tenant.id,
         title: `Overview Page 1 ${time}`,
       });
 
@@ -132,7 +119,7 @@ test.describe('Home links', () => {
           documentId: level1a.id,
           slug: 'overviewPage',
         },
-        tenant,
+        tenant: tenant.id,
         title: `d1 ${time}`,
       });
 
@@ -142,7 +129,7 @@ test.describe('Home links', () => {
           documentId: detail1.id,
           slug: 'detailPage',
         },
-        tenant,
+        tenant: tenant.id,
         title: `d2 ${time}`,
       });
 
@@ -152,7 +139,7 @@ test.describe('Home links', () => {
           documentId: detail2.id,
           slug: 'detailPage',
         },
-        tenant,
+        tenant: tenant.id,
         title: `d3 ${time}`,
       });
 
@@ -162,7 +149,7 @@ test.describe('Home links', () => {
           documentId: detail3.id,
           slug: 'detailPage',
         },
-        tenant,
+        tenant: tenant.id,
         title: `d4 ${time}`,
       });
 
@@ -172,7 +159,7 @@ test.describe('Home links', () => {
           documentId: detail4.id,
           slug: 'detailPage',
         },
-        tenant,
+        tenant: tenant.id,
         title: `d5 ${time}`,
       });
 
@@ -182,7 +169,7 @@ test.describe('Home links', () => {
           documentId: detail5.id,
           slug: 'detailPage',
         },
-        tenant,
+        tenant: tenant.id,
         title: `d6 ${time}`,
       });
 
@@ -192,7 +179,7 @@ test.describe('Home links', () => {
           documentId: detail6.id,
           slug: 'detailPage',
         },
-        tenant,
+        tenant: tenant.id,
         title: `d7 ${time}`,
       });
 
@@ -202,7 +189,7 @@ test.describe('Home links', () => {
           documentId: detail7.id,
           slug: 'detailPage',
         },
-        tenant,
+        tenant: tenant.id,
         title: `d8 ${time}`,
       });
 
@@ -212,9 +199,13 @@ test.describe('Home links', () => {
           documentId: detail8.id,
           slug: 'detailPage',
         },
-        tenant,
+        tenant: tenant.id,
         title: `d9 ${time}`,
       });
+
+      // #########################################
+      // Update with italian
+      // #########################################
 
       await payload.update({
         collection: 'detailPage',
@@ -325,6 +316,83 @@ test.describe('Home links', () => {
       });
 
       // #########################################
+      // add remainig home data
+      // #########################################
+      await generateFooterData({
+        tenant: tenant.id,
+      });
+
+      await generateI18nData({
+        tenant: tenant.id,
+      });
+
+      await generateConsentData({
+        tenant: tenant.id,
+      });
+
+      await generateImpressumPage({
+        tenant: tenant.id,
+      });
+
+      await generateDataPrivacyPage({
+        tenant: tenant.id,
+      });
+
+      await generateHeaderData({
+        tenant: tenant.id,
+      });
+
+      await generateEventDetailPage({
+        tenant: tenant.id,
+        title: `event-detail-page-${time}`,
+      });
+
+      await generateNewsDetailPage({
+        tenant: tenant.id,
+        title: `news-detail-page-${time}`,
+      });
+
+      await generateMagazineDetailPage({
+        tenant: tenant.id,
+        title: `magazine-detail-page-${time}`,
+      });
+
+      await generateProjectDetailPage({
+        tenant: tenant.id,
+        title: `project-detail-page-${time}`,
+      });
+
+      // #########################################
+      // Get ids of global collections
+      // #########################################
+      const i18nGlobals = await payload.find({
+        collection: 'i18nGlobals',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      const dataPrivacyDocs = await payload.find({
+        collection: 'dataPrivacyPage',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      const impressumDocs = await payload.find({
+        collection: 'impressumPage',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      // #########################################
       // add form
       // #########################################
       const newsletterForm = await payload.create({
@@ -335,8 +403,7 @@ test.describe('Home links', () => {
           newsletterFields: {
             actionText: 'Erneut senden',
             email: {
-              fieldError:
-              simpleRteConfig('Bitte geben Sie die E-Mail Adresse an.'),
+              fieldError: simpleRteConfig('Bitte geben Sie die E-Mail Adresse an.'),
               fieldWidth: 'full',
               label: simpleRteConfig('E-Mail'),
               placeholder: 'Ihre E-Mail Adresse',
@@ -349,8 +416,7 @@ test.describe('Home links', () => {
             },
             includeLanguageSelection: 'yes',
             lastName: {
-              fieldError:
-              simpleRteConfig('Bitte geben Sie Ihren Nachnamen an.'),
+              fieldError: simpleRteConfig('Bitte geben Sie Ihren Nachnamen an.'),
               fieldWidth: 'half',
               label: simpleRteConfig('Nachname'),
               placeholder: 'Ihr Nachname',
@@ -376,7 +442,7 @@ test.describe('Home links', () => {
       await payload.update({
         collection: 'i18nGlobals',
         data: {
-          ...i18nGlobals,
+          ...i18nGlobals.docs[0],
           forms: {
             dataPrivacyCheckbox: {
               dataPrivacyCheckboxText: sampleRteWithLink({
@@ -384,12 +450,11 @@ test.describe('Home links', () => {
                 slug: 'detailPage',
                 text: '[test]data-privacy-checkbox:link',
               }),
-              errorMessage:simpleRteConfig('Bitte
-              akzeptieren sie die allgemeinen Geschäftsbedingungen'),
+              errorMessage: simpleRteConfig('Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen'),
             },
           },
         },
-        id: i18nGlobals.id,
+        id: i18nGlobals.docs[0].id,
       });
 
       // #########################################
@@ -425,7 +490,8 @@ test.describe('Home links', () => {
                     },
                     linkText: simpleRteConfig('[test]homeTeaser:link'),
                   },
-                  text: simpleRteConfig('Wir fördern'),
+                  text: simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.'),
+                  title: simpleRteConfig('Wir schaffen verlässliche Grundlagen für geistes- und sozialwissenschaftliche Forschung in der Schweiz.'),
                 },
               ],
             },
@@ -502,6 +568,22 @@ test.describe('Home links', () => {
               },
               title: simpleRteConfig('News'),
             },
+            {
+              blockType: 'textBlock',
+              text: sampleRteWithLink({
+                documentId: dataPrivacyDocs.docs[0].id,
+                slug: 'dataPrivacyPage',
+                text: '[test]dataPrivacy:link',
+              }),
+            },
+            {
+              blockType: 'textBlock',
+              text: sampleRteWithLink({
+                documentId: impressumDocs.docs[0].id,
+                slug: 'impressumPage',
+                text: '[test]impressum:link',
+              }),
+            },
           ],
           hero: {
             optionalLink: {
@@ -530,8 +612,6 @@ test.describe('Home links', () => {
       d9Link = await getCollectionsDocumentForId(detail9.id);
 
     } catch (e) {
-      console.log(e);
-
       throw new Error(e instanceof Error
         ? e.message
         : String(e));
@@ -563,8 +643,10 @@ test.describe('Home links', () => {
     // #########################################
     // verify correct url rendering: de
     // #########################################
-    await page.goto(`http://localhost:3000/de/tenant-${time}/`);
+    await page.goto(`http://localhost:3000/de/tenant-${time}`);
     await page.waitForLoadState('networkidle');
+
+    console.log('$$$$$$$$$$$$$$$$');
 
     const heroLink = await page.getByRole('link', {
       name: '[test]hero:optionalLink',
@@ -611,37 +693,47 @@ test.describe('Home links', () => {
     })
       .getAttribute('href');
 
+    const dataPrivacyLink = await page.getByRole('link', {
+      name: '[test]dataPrivacy:link',
+    })
+      .getAttribute('href');
+
+    const impressumLink = await page.getByRole('link', {
+      name: '[test]impressum:link',
+    })
+      .getAttribute('href');
+
     await expect(formCheckboxLink)
-      .toBe(`/de/overview-page-1-${time}/d1-${time}`);
+      .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}`);
     await expect(rteLink)
-      .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}`);
+      .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}`);
     await expect(heroLink)
-      .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}`);
+      .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}`);
     await expect(homeTeaserLink)
-      .toBe(`/de/overview-page-1-${time}/
-      d1-${time}/d2-${time}/d3-${time}/d4-${time}`);
+      .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}`);
 
     await expect(eventsTeasersLink)
-      .toBe(`/de/overview-page-1-${time}/
-      d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}`);
+      .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}`);
     await expect(newsTeasersLink)
-      .toBe(`/de/overview-page-1-${time}/
-      d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}/d6-${time}`);
+      .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}/d6-${time}`);
     await expect(magazineTeasersLink)
-      .toBe(`/de/overview-page-1-${time}/d1-${time}/
-      d2-${time}/d3-${time}/d4-${time}/d5-${time}/d6-${time}/d7-${time}`);
+      .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}/d6-${time}/d7-${time}`);
     // await expect(publicationsTeasersLink)
-    //   .toBe(`/de/overview-page-1-${time}/d1-${time}/
-    // d2-${time}/d3-${time}
+    //   .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}
+    // /d3-${time}
     // /d4-${time}/d5-${time}/d6-${time}/d7-${time}/d8-${time}`);
     await expect(projectsTeasersLink)
-      .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/
-      d4-${time}/d5-${time}/d6-${time}/d7-${time}/d8-${time}/d9-${time}`);
+      .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}/d6-${time}/d7-${time}/d8-${time}/d9-${time}`);
+
+    await expect(dataPrivacyLink)
+      .toBe(`/de/tenant-${time}/data-privacy-de`);
+    await expect(impressumLink)
+      .toBe(`/de/tenant-${time}/impressum-de`);
 
     // #########################################
     // verify correct url rendering: it
     // #########################################
-    await page.goto('http://localhost:3000/it');
+    await page.goto(`http://localhost:3000/it/tenant-${time}-it`);
     await page.waitForLoadState('networkidle');
 
     const heroLinkIt = await page.getByRole('link', {
@@ -689,35 +781,43 @@ test.describe('Home links', () => {
     })
       .getAttribute('href');
 
+    const dataPrivacyLinkIt = await page.getByRole('link', {
+      name: '[test]dataPrivacy:link',
+    })
+      .getAttribute('href');
+
+    const impressumLinkIt = await page.getByRole('link', {
+      name: '[test]impressum:link',
+    })
+      .getAttribute('href');
+
     await expect(formCheckboxLinkIt)
-      .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}`);
+      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}`);
     await expect(rteLinkIt)
-      .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}`);
+      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}`);
     await expect(heroLinkIt)
-      .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/
-      d3-it-${time}`);
+      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
     await expect(homeTeaserLinkIt)
-      .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/
-      d3-it-${time}/d4-it-${time}`);
+      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}`);
 
     await expect(eventsTeasersLinkIt)
-      .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/
-      d3-it-${time}/d4-it-${time}/d5-it-${time}`);
+      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
     await expect(newsTeasersLinkIt)
-      .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/
-      d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}`);
+      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}`);
     await expect(magazineTeasersLinkIt)
-      .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/
-      d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}/d7-it-${time}`);
+      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}/d7-it-${time}`);
     // await expect(publicationsTeasersLinkIt)
-    //   .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/
+    //   .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}
+    // /d2-it-${time}/
     // d3-it-${time}
     // /d4-it-${time}/d5-it-${time}/d6-it-${time}/d7-it-${time}/d8-${time}`);
     await expect(projectsTeasersLinkIt)
-      .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/
-      d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}/d7-it-${time}/
-      d8-it-${time}/d9-it-${time}`);
+      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}/d7-it-${time}/d8-it-${time}/d9-it-${time}`);
+
+    await expect(dataPrivacyLinkIt)
+      .toBe(`/it/tenant-${time}-it/data-privacy-it`);
+    await expect(impressumLinkIt)
+      .toBe(`/it/tenant-${time}-it/impressum-it`);
 
   });
 });
-*/
