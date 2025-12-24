@@ -8,7 +8,9 @@ import {
   generateDetailPage, generateOverviewPage,
 } from '@/test-helpers/page-generator';
 
-test('Detects direct circular reference', async () => {
+test('Detects direct circular reference', {
+  tag: '@breadcrumb',
+}, async () => {
   const payload = await getPayload({
     config: configPromise,
   });
@@ -52,7 +54,9 @@ test('Detects direct circular reference', async () => {
 
 });
 
-test('Detects deep circular reference', async () => {
+test('Detects deep circular reference', {
+  tag: '@breadcrumb',
+}, async () => {
   const payload = await getPayload({
     config: configPromise,
   });

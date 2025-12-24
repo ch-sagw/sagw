@@ -20,7 +20,9 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 // 1. Generate 4 levels of nested pages.
 // 2. Change navigation title on level 2.
 // Expect: correct data in level 3 and 4 breadcrumb.
-test('Updates on navigationTitle change', async () => {
+test('Updates on navigationTitle change', {
+  tag: '@breadcrumb',
+}, async () => {
   const payload = await getPayload({
     config: configPromise,
   });
@@ -116,7 +118,9 @@ test('Updates on navigationTitle change', async () => {
 // 1. Generate 4 levels of nested pages.
 // 2. Change navigation title on level 2.
 // Expect: correct data in level 3 and 4 breadcrumb.
-test('Updates on navigationTitle change in french', async () => {
+test('Updates on navigationTitle change in french', {
+  tag: '@breadcrumb',
+}, async () => {
   const payload = await getPayload({
     config: configPromise,
   });
@@ -218,7 +222,9 @@ test('Updates on navigationTitle change in french', async () => {
 // 1. Generate 4 levels of nested pages.
 // 2. Change slug on level 2.
 // Expect: correct data in level 3 and 4 breadcrumb.
-test('Updates on slug change', async () => {
+test('Updates on slug change', {
+  tag: '@breadcrumb',
+}, async () => {
   const payload = await getPayload({
     config: configPromise,
   });
@@ -315,7 +321,9 @@ test('Updates on slug change', async () => {
 // 1. Generate 4 levels of nested pages.
 // 2. Change slug on level 2.
 // Expect: correct data in level 3 and 4 breadcrumb.
-test('Updates on slug change in french', async () => {
+test('Updates on slug change in french', {
+  tag: '@breadcrumb',
+}, async () => {
   const payload = await getPayload({
     config: configPromise,
   });
@@ -418,7 +426,9 @@ test('Updates on slug change in french', async () => {
 // 1. Generate 4 levels of nested pages.
 // 2. Change slug on level 2.
 // Expect: correct data in level 3 and 4 breadcrumb.
-test('Updates after adding slug in other locale', async () => {
+test('Updates after adding slug in other locale', {
+  tag: '@breadcrumb',
+}, async () => {
   const payload = await getPayload({
     config: configPromise,
   });
@@ -559,7 +569,9 @@ test('Updates after adding slug in other locale', async () => {
 // 1. Generate 4 levels of nested pages.
 // 2. Remove parentPage on level 2
 // Expect: 0 breadcrumbs on level 3 and 4
-test('Updates on parentPage removal', async () => {
+test('Updates on parentPage removal', {
+  tag: '@breadcrumb',
+}, async () => {
   const payload = await getPayload({
     config: configPromise,
   });
@@ -658,7 +670,9 @@ test('Updates on parentPage removal', async () => {
 // 2. Set level 1 as parent of level 3
 // Expect: 1 breadcrumb on level 3 and 2 breadcrumbs on level 4
 // Expect: correct data on breadcrumb in level 3 and 4.
-test('Updates on parentPage update', async () => {
+test('Updates on parentPage update', {
+  tag: '@breadcrumb',
+}, async () => {
   const payload = await getPayload({
     config: configPromise,
   });
@@ -770,7 +784,9 @@ test('Updates on parentPage update', async () => {
 // 1. Generate 4 levels of nested pages.
 // 2. Delete level 2 page
 // Expect: 0 breadcrumb on level 3 and 4
-test('Updates on page deletion', async () => {
+test('Updates on page deletion', {
+  tag: '@breadcrumb',
+}, async () => {
   const payload = await getPayload({
     config: configPromise,
   });
@@ -862,7 +878,9 @@ test('Updates on page deletion', async () => {
 // 1. Generate 4 levels of nested pages.
 // 2. Unpublish level 2 page
 // Expect: 0 breadcrumb on level 3 and 4
-test('Updates on unpublishing a page', async () => {
+test('Updates on unpublishing a page', {
+  tag: '@breadcrumb',
+}, async () => {
   const payload = await getPayload({
     config: configPromise,
   });
@@ -957,7 +975,9 @@ test('Updates on unpublishing a page', async () => {
 // 1. Generate 4 levels of nested pages.
 // 2. Unpublish home
 // Expect: 0 breadcrumb on level 1, 2, 3 and 4
-test('Updates on unpublishing home', async () => {
+test('Updates on unpublishing home', {
+  tag: '@breadcrumb',
+}, async () => {
   const payload = await getPayload({
     config: configPromise,
   });
@@ -1066,7 +1086,9 @@ test('Updates on unpublishing home', async () => {
 // Discovered during manual test: created overview (home as parent), created
 // detail (overview as parent). then added an rte block with plain text to
 // home. This lead to the parentPage being emptied on overvew page.
-test('Should not overwrite parent field', async () => {
+test('Should not overwrite parent field', {
+  tag: '@breadcrumb',
+}, async () => {
   const payload = await getPayload({
     config: configPromise,
   });

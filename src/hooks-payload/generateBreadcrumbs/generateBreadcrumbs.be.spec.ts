@@ -18,7 +18,9 @@ import { generateTenant } from '@/test-helpers/tenant-generator';
 
 // Generate 9 levels of nested pages.
 // Expect: correct data in level 9 breadcrumb.
-test('Generates breadcrumb', async () => {
+test('Generates breadcrumb', {
+  tag: '@breadcrumb',
+}, async () => {
   let result: any;
   let level1: any;
   let level2: any;
@@ -201,7 +203,9 @@ test('Generates breadcrumb', async () => {
 
 // Generate 9 levels of nested pages.
 // Expect: correct data in level 9 breadcrumb.
-test('Generates breadcrumb in french', async () => {
+test('Generates breadcrumb in french', {
+  tag: '@breadcrumb',
+}, async () => {
   let result: any;
   let level1: any;
   let level2: any;
@@ -397,7 +401,9 @@ test('Generates breadcrumb in french', async () => {
 // Level 3 is not connected.
 // Expect: Level 2 to have 1 breadcrumb
 // Expect: Level 3 to have 0 breadcrumb
-test('Does not generate breadcrumb if parent page is not set', async () => {
+test('Does not generate breadcrumb if parent page is not set', {
+  tag: '@breadcrumb',
+}, async () => {
   let result: any;
   let level2: any;
 
@@ -458,7 +464,9 @@ test('Does not generate breadcrumb if parent page is not set', async () => {
 // Home is not set as parent of level 1.
 // Expect: Level 2 to have 1 breadcrumb
 // Expect: Level 3 to have 0 breadcrumb
-test('Does not generate breadcrumb if home page is not parent', async () => {
+test('Does not generate breadcrumb if home page is not parent', {
+  tag: '@breadcrumb',
+}, async () => {
   let result: any;
   let level1: any;
   let level2: any;
@@ -513,7 +521,9 @@ test('Does not generate breadcrumb if home page is not parent', async () => {
 // Level 5 page has no navigation Title.
 // Expect: Level 1 to 5 have breadcrumb.
 // Expect: Level 6 to 9 not to have a breadcrumb.
-test('Correctly sets breadcrumb if navigation Title is missing in cascade chain', async () => {
+test('Correctly sets breadcrumb if navigation Title is missing in cascade chain', {
+  tag: '@breadcrumb',
+}, async () => {
   let level1: any;
   let level2: any;
   let level3: any;
@@ -663,7 +673,9 @@ test('Correctly sets breadcrumb if navigation Title is missing in cascade chain'
 // Generate 9 pages on 5 levels (each level has a and b).
 // Each page has two children (a and b). The b page links to the next level.
 // Expect: correct data in level 5b breadcrumb.
-test('Generates breadcrumb with siblings', async () => {
+test('Generates breadcrumb with siblings', {
+  tag: '@breadcrumb',
+}, async () => {
   let level2b: any;
   let level3b: any;
   let level4b: any;
