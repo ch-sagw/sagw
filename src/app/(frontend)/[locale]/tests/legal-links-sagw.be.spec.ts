@@ -7,7 +7,7 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { getTenant } from '@/test-helpers/tenant-generator';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
-test.describe('Legal links', () => {
+test.describe('Legal links (sagw)', () => {
   beforeEachAcceptCookies();
   test('rendered correctly', {
     tag: '@linking',

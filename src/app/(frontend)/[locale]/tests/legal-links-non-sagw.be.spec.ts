@@ -16,7 +16,7 @@ import {
   generateImpressumPage,
 } from '@/test-helpers/page-generator';
 
-test.describe('Legal links', () => {
+test.describe('Legal links (non-sagw)', () => {
   beforeEachAcceptCookies();
   test('rendered correctly', {
     tag: '@linking',

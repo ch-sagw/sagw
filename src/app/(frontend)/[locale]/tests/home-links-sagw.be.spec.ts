@@ -42,7 +42,7 @@ const getCollectionsDocumentForId = async (id: string): Promise<any> => {
  * - check if Links collection has all required references
  */
 
-test.describe('Home links', () => {
+test.describe('Home links (sagw)', () => {
   beforeEachAcceptCookies();
   test('rendered correctly', {
     tag: '@linking',
