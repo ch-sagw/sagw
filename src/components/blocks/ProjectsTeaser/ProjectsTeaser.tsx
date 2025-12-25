@@ -1,10 +1,7 @@
 import 'server-only';
 import React from 'react';
-import {
-  InterfaceProjectTeasersBlock,
-  ProjectDetailPage,
-} from '@/payload-types';
-import { fetchDetailPages } from '@/data/fetch';
+import { InterfaceProjectTeasersBlock } from '@/payload-types';
+import { fetchProjectsPages } from '@/data/fetch';
 import { getLocale } from 'next-intl/server';
 import { TypedLocale } from 'payload';
 import { rteToHtml } from '@/utilities/rteToHtml';
@@ -29,13 +26,11 @@ export const ProjectsTeaser = async (props: InterfaceProjectsTeaserPropTypes): P
     optionalLink,
   } = props;
 
-  const pages = await fetchDetailPages({
-    collection: 'projectDetailPage',
-    language: locale,
+  const pages = await fetchProjectsPages({
     limit: 3,
-    sort: 'createdAt',
+    locale,
     tenant,
-  }) as ProjectDetailPage[];
+  });
 
   const titleHtml = rteToHtml(title);
   const subtitleHtml = rteToHtml(lead);

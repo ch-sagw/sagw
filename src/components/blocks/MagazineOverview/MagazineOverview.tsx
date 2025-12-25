@@ -1,10 +1,7 @@
 import 'server-only';
 import React from 'react';
-import {
-  InterfaceMagazineOverviewBlock,
-  MagazineDetailPage,
-} from '@/payload-types';
-import { fetchDetailPages } from '@/data/fetch';
+import { InterfaceMagazineOverviewBlock } from '@/payload-types';
+import { fetchMagazinePages } from '@/data/fetch';
 import { MagazineOverviewComponent } from '@/components/blocks/MagazineOverview/MagazineOverview.component';
 import { getLocale } from 'next-intl/server';
 import { TypedLocale } from 'payload';
@@ -23,13 +20,10 @@ export const MagazineOverview = async (props: InterfaceMagazineOverviewPropTypes
     ...restProps
   } = props;
 
-  const pages = await fetchDetailPages({
-    collection: 'magazineDetailPage',
-    language: locale,
-    limit: 0,
-    sort: 'createdAt',
+  const pages = await fetchMagazinePages({
+    locale,
     tenant,
-  }) as MagazineDetailPage[];
+  });
 
   const urlMap = await prerenderPageLinks({
     locale,

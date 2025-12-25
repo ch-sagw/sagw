@@ -73,6 +73,8 @@ export const hookUpdateLinkReferences: CollectionAfterChangeHook = async ({
     // Prepare context for programmatic link extraction
     const extractionContext = tenantId && req.payload
       ? {
+        collectionSlug,
+        currentPageId: docId,
         locale,
         payload: req.payload,
         tenant: tenantId,

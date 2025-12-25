@@ -141,6 +141,8 @@ interface InterfaceExtractAllLinkIdsParams {
     payload: BasePayload;
     tenant?: string;
     locale?: TypedLocale;
+    currentPageId?: string;
+    collectionSlug?: string;
   };
 }
 

@@ -1,12 +1,14 @@
 import {
   Config, EventDetailPage,
+  MagazineDetailPage, NewsDetailPage, ProjectDetailPage,
   Team,
 } from '@/payload-types';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import {
-  CollectionSlug, DataFromCollectionSlug,
-  Sort,
-  TypedLocale,
+  BasePayload, CollectionSlug, DataFromCollectionSlug,
+  PaginatedDocs,
+  Sort, TypedLocale,
+  Where,
 } from 'payload';
 
 // #########################################################################
@@ -17,19 +19,21 @@ interface InterfaceFetchEventDetailPagesProps {
   limit?: number;
   language: TypedLocale,
   tenant: string,
+  depth?: number;
+  payload?: BasePayload;
 }
 
 export const fetchEventDetailPages = async ({
   limit,
   language,
   tenant,
+  depth = 1,
+  payload: providedPayload,
 }: InterfaceFetchEventDetailPagesProps): Promise<EventDetailPage[]> => {
-
-  const payload = await getPayloadCached();
-
+  const payload = providedPayload || await getPayloadCached();
   const eventPages = await payload.find({
     collection: 'eventDetailPage',
-    depth: 1,
+    depth,
 
     // Fetch all items first, we'll apply limit after filtering
     limit: 0,
@@ -78,6 +82,8 @@ interface InterfaceFetchDetailPagesProps {
   tenant: string,
   collection: CollectionSlug;
   sort: Sort,
+  depth?: number;
+  payload?: BasePayload;
 }
 
 export const fetchDetailPages = async ({
@@ -86,13 +92,13 @@ export const fetchDetailPages = async ({
   tenant,
   collection,
   sort,
+  depth = 1,
+  payload: providedPayload,
 }: InterfaceFetchDetailPagesProps): Promise<DataFromCollectionSlug<CollectionSlug>[]> => {
-
-  const payload = await getPayloadCached();
-
-  const magazinePages = await payload.find({
+  const payload = providedPayload || await getPayloadCached();
+  const pages = await payload.find({
     collection,
-    depth: 0,
+    depth,
     limit,
     locale: language,
     pagination: false,
@@ -109,7 +115,7 @@ export const fetchDetailPages = async ({
     },
   });
 
-  return magazinePages.docs;
+  return pages.docs;
 };
 
 // #########################################################################
@@ -154,4 +160,142 @@ export const fetchTeam = async ({
 
   return undefined;
 
+};
+
+// #########################################################################
+// News Pages
+// #########################################################################
+
+interface InterfaceFetchNewsTeaserPagesProps {
+  locale: TypedLocale;
+  tenant: string;
+  excludePageId?: string;
+  depth?: number;
+  payload?: BasePayload;
+}
+
+export const fetchNewsTeaserPages = async ({
+  locale,
+  tenant,
+  excludePageId,
+  depth = 1,
+  payload: providedPayload,
+}: InterfaceFetchNewsTeaserPagesProps): Promise<PaginatedDocs<NewsDetailPage>> => {
+  const payload = providedPayload || await getPayloadCached();
+  const queryRestraints: Where = {
+    tenant: {
+      equals: tenant,
+    },
+  };
+
+  // on news pages, don't show the teaser which points to current page
+  if (excludePageId) {
+    queryRestraints.id = {
+      /* eslint-disable @typescript-eslint/naming-convention */
+      not_equals: excludePageId,
+      /* eslint-enable @typescript-eslint/naming-convention */
+    };
+  }
+
+  const results = await payload.find({
+    collection: 'newsDetailPage',
+    depth,
+    limit: 3,
+    locale,
+    pagination: false,
+    sort: '-hero.date',
+    where: queryRestraints,
+  });
+
+  return results;
+};
+
+interface InterfaceFetchNewsOverviewPagesProps {
+  locale: TypedLocale;
+  tenant: string;
+  depth?: number;
+  payload?: BasePayload;
+}
+
+export const fetchNewsOverviewPages = async ({
+  locale,
+  tenant,
+  depth = 1,
+  payload: providedPayload,
+}: InterfaceFetchNewsOverviewPagesProps): Promise<PaginatedDocs<NewsDetailPage>> => {
+  const payload = providedPayload || await getPayloadCached();
+
+  return payload.find({
+    collection: 'newsDetailPage',
+    depth,
+    limit: 0,
+    locale,
+    pagination: false,
+    sort: '-hero.date',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+};
+
+// #########################################################################
+// Magazine Pages
+// #########################################################################
+
+interface InterfaceFetchMagazinePagesProps {
+  locale: TypedLocale;
+  tenant: string;
+  limit?: number;
+  payload?: BasePayload;
+}
+
+export const fetchMagazinePages = async ({
+  locale,
+  tenant,
+  limit = 0,
+  payload,
+}: InterfaceFetchMagazinePagesProps): Promise<MagazineDetailPage[]> => {
+  const results = await fetchDetailPages({
+    collection: 'magazineDetailPage',
+    depth: 1,
+    language: locale,
+    limit,
+    payload,
+    sort: 'createdAt',
+    tenant,
+  });
+
+  return results as MagazineDetailPage[];
+};
+
+// #########################################################################
+// Projects Pages
+// #########################################################################
+
+interface InterfaceFetchProjectsPagesProps {
+  locale: TypedLocale;
+  tenant: string;
+  limit?: number;
+  payload?: BasePayload;
+}
+
+export const fetchProjectsPages = async ({
+  locale,
+  tenant,
+  limit = 0,
+  payload,
+}: InterfaceFetchProjectsPagesProps): Promise<ProjectDetailPage[]> => {
+  const result = await fetchDetailPages({
+    collection: 'projectDetailPage',
+    depth: 1,
+    language: locale,
+    limit,
+    payload,
+    sort: 'createdAt',
+    tenant,
+  });
+
+  return result as ProjectDetailPage[];
 };

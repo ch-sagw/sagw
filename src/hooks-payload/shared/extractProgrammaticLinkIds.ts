@@ -1,11 +1,20 @@
 import {
   type BasePayload, type TypedLocale,
 } from 'payload';
+import {
+  fetchDetailPages,
+  fetchEventDetailPages,
+  fetchNewsOverviewPages,
+  fetchNewsTeaserPages,
+} from '@/data/fetch';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 interface InterfaceExtractProgrammaticLinkIdsContext {
-  payload: BasePayload;
   tenant?: string;
   locale?: TypedLocale;
+  currentPageId?: string;
+  collectionSlug?: string;
+  payload?: BasePayload;
 }
 
 // Recursively finds all blocks in a document
@@ -39,48 +48,30 @@ const findBlocks = (obj: unknown, blocks: unknown[] = []): unknown[] => {
   return blocks;
 };
 
+interface InterfaceCreateEventsTeaserOperationParams {
+  locale: TypedLocale;
+  tenant: string;
+  linkIds: Set<string>;
+  payload?: BasePayload;
+}
+
 // Helper to create async operation for events teaser
-const createEventsTeaserOperation = async (
-  payload: BasePayload,
-  locale: TypedLocale,
-  tenant: string,
-  linkIds: Set<string>,
-): Promise<void> => {
+const createEventsTeaserOperation = async ({
+  locale,
+  tenant,
+  linkIds,
+  payload,
+}: InterfaceCreateEventsTeaserOperationParams): Promise<void> => {
   try {
-    const eventPages = await payload.find({
-      collection: 'eventDetailPage',
+    const eventPages = await fetchEventDetailPages({
       depth: 0,
-      limit: 0,
-      locale,
-      pagination: false,
-      sort: 'eventDetails.date',
-      where: {
-        /* eslint-disable @typescript-eslint/naming-convention */
-        _status: {
-        /* eslint-enable @typescript-eslint/naming-convention */
-          equals: 'published',
-        },
-        tenant: {
-          equals: tenant,
-        },
-      },
+      language: locale,
+      limit: 3,
+      payload,
+      tenant,
     });
 
-    // Filter out events older than yesterday
-    const yesterday = new Date();
-
-    yesterday.setDate(yesterday.getDate() - 1);
-    yesterday.setHours(23, 59, 59, 999);
-
-    const filteredDocs = eventPages.docs.filter((eventPage) => {
-      const eventDate = new Date((eventPage as { eventDetails?: { date?: string } }).eventDetails?.date || '');
-
-      return eventDate > yesterday;
-    });
-
-    const limitedDocs = filteredDocs.slice(0, 3);
-
-    limitedDocs.forEach((event) => {
+    eventPages.forEach((event) => {
       if (event.id) {
         linkIds.add(String(event.id));
       }
@@ -90,31 +81,36 @@ const createEventsTeaserOperation = async (
   }
 };
 
+interface InterfaceCreateNewsTeaserOperationParams {
+  locale: TypedLocale;
+  tenant: string;
+  linkIds: Set<string>;
+  currentPageId?: string;
+  collectionSlug?: string;
+  payload?: BasePayload;
+}
+
 // Helper to create async operation for news teaser
-const createNewsTeaserOperation = async (
-  payload: BasePayload,
-  locale: TypedLocale,
-  tenant: string,
-  linkIds: Set<string>,
-): Promise<void> => {
+const createNewsTeaserOperation = async ({
+  locale,
+  tenant,
+  linkIds,
+  currentPageId,
+  collectionSlug,
+  payload,
+}: InterfaceCreateNewsTeaserOperationParams): Promise<void> => {
   try {
-    const newsPages = await payload.find({
-      collection: 'newsDetailPage',
+    // Exclude current page if we're on a newsDetailPage
+    const excludePageId = collectionSlug === 'newsDetailPage' && currentPageId
+      ? currentPageId
+      : undefined;
+
+    const newsPages = await fetchNewsTeaserPages({
       depth: 0,
-      limit: 3,
+      excludePageId,
       locale,
-      pagination: false,
-      sort: '-hero.date',
-      where: {
-        /* eslint-disable @typescript-eslint/naming-convention */
-        _status: {
-        /* eslint-enable @typescript-eslint/naming-convention */
-          equals: 'published',
-        },
-        tenant: {
-          equals: tenant,
-        },
-      },
+      payload,
+      tenant,
     });
 
     newsPages.docs.forEach((news) => {
@@ -127,46 +123,30 @@ const createNewsTeaserOperation = async (
   }
 };
 
+interface InterfaceCreateEventsOverviewOperationParams {
+  locale: TypedLocale;
+  tenant: string;
+  linkIds: Set<string>;
+  payload?: BasePayload;
+}
+
 // Helper to create async operation for events overview
-const createEventsOverviewOperation = async (
-  payload: BasePayload,
-  locale: TypedLocale,
-  tenant: string,
-  linkIds: Set<string>,
-): Promise<void> => {
+const createEventsOverviewOperation = async ({
+  locale,
+  tenant,
+  linkIds,
+  payload,
+}: InterfaceCreateEventsOverviewOperationParams): Promise<void> => {
   try {
-    const eventPages = await payload.find({
-      collection: 'eventDetailPage',
+    const eventPages = await fetchEventDetailPages({
       depth: 0,
+      language: locale,
       limit: 0,
-      locale,
-      pagination: false,
-      sort: 'eventDetails.date',
-      where: {
-        /* eslint-disable @typescript-eslint/naming-convention */
-        _status: {
-        /* eslint-enable @typescript-eslint/naming-convention */
-          equals: 'published',
-        },
-        tenant: {
-          equals: tenant,
-        },
-      },
+      payload,
+      tenant,
     });
 
-    // Filter out events older than yesterday
-    const yesterday = new Date();
-
-    yesterday.setDate(yesterday.getDate() - 1);
-    yesterday.setHours(23, 59, 59, 999);
-
-    const filteredDocs = eventPages.docs.filter((eventPage) => {
-      const eventDate = new Date((eventPage as { eventDetails?: { date?: string } }).eventDetails?.date || '');
-
-      return eventDate > yesterday;
-    });
-
-    filteredDocs.forEach((event) => {
+    eventPages.forEach((event) => {
       if (event.id) {
         linkIds.add(String(event.id));
       }
@@ -176,31 +156,26 @@ const createEventsOverviewOperation = async (
   }
 };
 
+interface InterfaceCreateNewsOverviewOperationParams {
+  locale: TypedLocale;
+  tenant: string;
+  linkIds: Set<string>;
+  payload?: BasePayload;
+}
+
 // Helper to create async operation for news overview
-const createNewsOverviewOperation = async (
-  payload: BasePayload,
-  locale: TypedLocale,
-  tenant: string,
-  linkIds: Set<string>,
-): Promise<void> => {
+const createNewsOverviewOperation = async ({
+  locale,
+  tenant,
+  linkIds,
+  payload,
+}: InterfaceCreateNewsOverviewOperationParams): Promise<void> => {
   try {
-    const newsPages = await payload.find({
-      collection: 'newsDetailPage',
+    const newsPages = await fetchNewsOverviewPages({
       depth: 0,
-      limit: 0,
       locale,
-      pagination: false,
-      sort: '-hero.date',
-      where: {
-        /* eslint-disable @typescript-eslint/naming-convention */
-        _status: {
-          /* eslint-enable @typescript-eslint/naming-convention */
-          equals: 'published',
-        },
-        tenant: {
-          equals: tenant,
-        },
-      },
+      payload,
+      tenant,
     });
 
     newsPages.docs.forEach((news) => {
@@ -213,15 +188,300 @@ const createNewsOverviewOperation = async (
   }
 };
 
+interface InterfaceCreateMagazineTeaserOperationParams {
+  locale: TypedLocale;
+  tenant: string;
+  linkIds: Set<string>;
+  payload?: BasePayload;
+}
+
+// Helper to create async operation for magazine teaser
+const createMagazineTeaserOperation = async ({
+  locale,
+  tenant,
+  linkIds,
+  payload,
+}: InterfaceCreateMagazineTeaserOperationParams): Promise<void> => {
+  try {
+    const magazinePages = await fetchDetailPages({
+      collection: 'magazineDetailPage',
+      depth: 0,
+      language: locale,
+      limit: 4,
+      payload,
+      sort: 'createdAt',
+      tenant,
+    });
+
+    magazinePages.forEach((magazine) => {
+      if (magazine.id) {
+        linkIds.add(String(magazine.id));
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching magazine pages for magazineTeasersBlock:', error);
+  }
+};
+
+interface InterfaceCreateProjectsTeaserOperationParams {
+  locale: TypedLocale;
+  tenant: string;
+  linkIds: Set<string>;
+  payload?: BasePayload;
+}
+
+// Helper to create async operation for projects teaser
+const createProjectsTeaserOperation = async ({
+  locale,
+  tenant,
+  linkIds,
+  payload,
+}: InterfaceCreateProjectsTeaserOperationParams): Promise<void> => {
+  try {
+    const projectPages = await fetchDetailPages({
+      collection: 'projectDetailPage',
+      depth: 0,
+      language: locale,
+      limit: 3,
+      payload,
+      sort: 'createdAt',
+      tenant,
+    });
+
+    projectPages.forEach((project) => {
+      if (project.id) {
+        linkIds.add(String(project.id));
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching project pages for projectsTeasersBlock:', error);
+  }
+};
+
+interface InterfaceCreateMagazineOverviewOperationParams {
+  locale: TypedLocale;
+  tenant: string;
+  linkIds: Set<string>;
+  payload?: BasePayload;
+}
+
+// Helper to create async operation for magazine overview
+const createMagazineOverviewOperation = async ({
+  locale,
+  tenant,
+  linkIds,
+  payload,
+}: InterfaceCreateMagazineOverviewOperationParams): Promise<void> => {
+  try {
+    const magazinePages = await fetchDetailPages({
+      collection: 'magazineDetailPage',
+      depth: 0,
+      language: locale,
+      limit: 0,
+      payload,
+      sort: 'createdAt',
+      tenant,
+    });
+
+    magazinePages.forEach((magazine) => {
+      if (magazine.id) {
+        linkIds.add(String(magazine.id));
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching magazine pages for magazineOverviewBlock:', error);
+  }
+};
+
+interface InterfaceCreateProjectsOverviewOperationParams {
+  locale: TypedLocale;
+  tenant: string;
+  linkIds: Set<string>;
+  payload?: BasePayload;
+}
+
+// Helper to create async operation for projects overview
+const createProjectsOverviewOperation = async ({
+  locale,
+  tenant,
+  linkIds,
+  payload,
+}: InterfaceCreateProjectsOverviewOperationParams): Promise<void> => {
+  try {
+    const projectPages = await fetchDetailPages({
+      collection: 'projectDetailPage',
+      depth: 0,
+      language: locale,
+      limit: 0,
+      payload,
+      sort: 'createdAt',
+      tenant,
+    });
+
+    projectPages.forEach((project) => {
+      if (project.id) {
+        linkIds.add(String(project.id));
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching project pages for projectsOverviewBlock:', error);
+  }
+};
+
+// Helper to extract RTE link IDs (reused from extractAllLinkIds logic)
+const extractRteLinkIds = (rteContent: Record<string, unknown>, linkIds: Set<string>): void => {
+  if (!rteContent || !rteContent.root || typeof rteContent.root !== 'object') {
+    return;
+  }
+
+  const root = rteContent.root as { children?: unknown[] };
+
+  if (!root.children || !Array.isArray(root.children)) {
+    return;
+  }
+
+  const processNode = (node: unknown): void => {
+    if (!node || typeof node !== 'object') {
+      return;
+    }
+
+    const nodeRecord = node as Record<string, unknown>;
+
+    if (nodeRecord.type === 'link') {
+      const linkNode = nodeRecord as {
+        fields?: {
+          linkType?: string;
+          doc?: {
+            value?: string;
+          };
+        };
+      };
+
+      // Check if it's an internal link
+      if (linkNode.fields?.linkType === 'internal' && linkNode.fields?.doc?.value) {
+        const documentId = typeof linkNode.fields.doc.value === 'string'
+          ? linkNode.fields.doc.value
+          : null;
+
+        if (documentId) {
+          linkIds.add(documentId);
+        }
+      }
+    }
+
+    // Process children recursively
+    if ('children' in nodeRecord && nodeRecord.children && Array.isArray(nodeRecord.children)) {
+      nodeRecord.children.forEach(processNode);
+    }
+  };
+
+  root.children.forEach(processNode);
+};
+
+interface InterfaceCreateFormBlockOperationParams {
+  locale: TypedLocale;
+  tenant: string;
+  blockRecord: Record<string, unknown>;
+  linkIds: Set<string>;
+  payload?: BasePayload;
+}
+
+// Helper to create async operation for form block
+const createFormBlockOperation = async ({
+  locale,
+  tenant,
+  blockRecord,
+  linkIds,
+  payload: providedPayload,
+}: InterfaceCreateFormBlockOperationParams): Promise<void> => {
+  try {
+    const payload = providedPayload || await getPayloadCached();
+
+    // Get form relationship (could be ID string or populated object)
+    const formRef = blockRecord.form;
+
+    if (!formRef) {
+      return;
+    }
+
+    // Extract form ID
+    let formId: string | undefined;
+
+    if (typeof formRef === 'string') {
+      formId = formRef;
+    } else if (formRef && typeof formRef === 'object' && 'id' in formRef) {
+      formId = String(formRef.id);
+    }
+
+    if (!formId) {
+      return;
+    }
+
+    // Fetch form to check showPrivacyCheckbox
+    const formDoc = await payload.findByID({
+      collection: 'forms',
+      depth: 0,
+      id: formId,
+      locale,
+    });
+
+    if (!formDoc || !formDoc.showPrivacyCheckbox) {
+      return;
+    }
+
+    // Fetch i18nGlobals global for this tenant
+    const i18nGlobalsDocs = await payload.find({
+      collection: 'i18nGlobals',
+      depth: 0,
+      limit: 1,
+      locale,
+      pagination: false,
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
+    });
+
+    if (i18nGlobalsDocs.docs.length === 0) {
+      return;
+    }
+
+    const [i18nGlobal] = i18nGlobalsDocs.docs;
+
+    // Extract links from dataPrivacyCheckboxText RTE field
+    if (i18nGlobal?.forms?.dataPrivacyCheckbox?.dataPrivacyCheckboxText) {
+      const dataPrivacyCheckboxText = i18nGlobal.forms.dataPrivacyCheckbox.dataPrivacyCheckboxText as Record<string, unknown>;
+
+      extractRteLinkIds(dataPrivacyCheckboxText, linkIds);
+    }
+  } catch (error) {
+    console.error('Error extracting links from formBlock dataPrivacyCheckboxText:', error);
+  }
+};
+
+interface InterfaceProcessBlockParams {
+  block: unknown;
+  locale: TypedLocale;
+  tenant: string;
+  linkIds: Set<string>;
+  asyncOperations: Promise<void>[];
+  currentPageId?: string;
+  collectionSlug?: string;
+  payload?: BasePayload;
+}
+
 // Helper to process a single block
-const processBlock = (
-  block: unknown,
-  payload: BasePayload,
-  locale: TypedLocale,
-  tenant: string,
-  linkIds: Set<string>,
-  asyncOperations: Promise<void>[],
-): void => {
+const processBlock = ({
+  block,
+  locale,
+  tenant,
+  linkIds,
+  asyncOperations,
+  currentPageId,
+  collectionSlug,
+  payload,
+}: InterfaceProcessBlockParams): void => {
   if (!block || typeof block !== 'object') {
     return;
   }
@@ -237,13 +497,71 @@ const processBlock = (
 
   // Collect async operations for parallel execution
   if (blockType === 'eventsTeasersBlock') {
-    asyncOperations.push(createEventsTeaserOperation(payload, locale, tenant, linkIds));
+    asyncOperations.push(createEventsTeaserOperation({
+      linkIds,
+      locale,
+      payload,
+      tenant,
+    }));
   } else if (blockType === 'newsTeasersBlock') {
-    asyncOperations.push(createNewsTeaserOperation(payload, locale, tenant, linkIds));
+    asyncOperations.push(createNewsTeaserOperation({
+      collectionSlug,
+      currentPageId,
+      linkIds,
+      locale,
+      payload,
+      tenant,
+    }));
+  } else if (blockType === 'magazineTeasersBlock') {
+    asyncOperations.push(createMagazineTeaserOperation({
+      linkIds,
+      locale,
+      payload,
+      tenant,
+    }));
+  } else if (blockType === 'projectsTeasersBlock') {
+    asyncOperations.push(createProjectsTeaserOperation({
+      linkIds,
+      locale,
+      payload,
+      tenant,
+    }));
   } else if (blockType === 'eventsOverviewBlock') {
-    asyncOperations.push(createEventsOverviewOperation(payload, locale, tenant, linkIds));
+    asyncOperations.push(createEventsOverviewOperation({
+      linkIds,
+      locale,
+      payload,
+      tenant,
+    }));
   } else if (blockType === 'newsOverviewBlock') {
-    asyncOperations.push(createNewsOverviewOperation(payload, locale, tenant, linkIds));
+    asyncOperations.push(createNewsOverviewOperation({
+      linkIds,
+      locale,
+      payload,
+      tenant,
+    }));
+  } else if (blockType === 'magazineOverviewBlock') {
+    asyncOperations.push(createMagazineOverviewOperation({
+      linkIds,
+      locale,
+      payload,
+      tenant,
+    }));
+  } else if (blockType === 'projectsOverviewBlock') {
+    asyncOperations.push(createProjectsOverviewOperation({
+      linkIds,
+      locale,
+      payload,
+      tenant,
+    }));
+  } else if (blockType === 'formBlock') {
+    asyncOperations.push(createFormBlockOperation({
+      blockRecord,
+      linkIds,
+      locale,
+      payload,
+      tenant,
+    }));
   }
 };
 
@@ -253,7 +571,7 @@ export const extractProgrammaticLinkIds = async (
 ): Promise<Set<string>> => {
   const linkIds = new Set<string>();
 
-  if (!context?.payload || !context?.tenant || !context?.locale) {
+  if (!context?.tenant || !context?.locale) {
     return linkIds;
   }
 
@@ -266,11 +584,20 @@ export const extractProgrammaticLinkIds = async (
 
     // Process each block (tenant and locale are guaranteed to exist here)
     const {
-      payload, tenant, locale,
+      tenant, locale, currentPageId, collectionSlug, payload,
     } = context;
 
     for (const block of blocks) {
-      processBlock(block, payload, locale, tenant, linkIds, asyncOperations);
+      processBlock({
+        asyncOperations,
+        block,
+        collectionSlug,
+        currentPageId,
+        linkIds,
+        locale,
+        payload,
+        tenant,
+      });
     }
 
     // Execute all async operations in parallel

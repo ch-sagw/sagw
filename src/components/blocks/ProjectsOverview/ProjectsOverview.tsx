@@ -1,10 +1,7 @@
 import 'server-only';
 import React from 'react';
-import {
-  InterfaceProjectOverviewBlock,
-  ProjectDetailPage,
-} from '@/payload-types';
-import { fetchDetailPages } from '@/data/fetch';
+import { InterfaceProjectOverviewBlock } from '@/payload-types';
+import { fetchProjectsPages } from '@/data/fetch';
 import { ProjectOverviewComponent } from '@/components/blocks/ProjectsOverview/ProjectsOverview.component';
 import { getLocale } from 'next-intl/server';
 import { TypedLocale } from 'payload';
@@ -23,13 +20,10 @@ export const ProjectsOverview = async (props: InterfaceProjectsOverviewPropTypes
     ...restProps
   } = props;
 
-  const pages = await fetchDetailPages({
-    collection: 'projectDetailPage',
-    language: locale,
-    limit: 0,
-    sort: 'createdAt',
+  const pages = await fetchProjectsPages({
+    locale,
     tenant,
-  }) as ProjectDetailPage[];
+  });
 
   const urlMap = await prerenderPageLinks({
     locale,

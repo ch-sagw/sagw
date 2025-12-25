@@ -1,9 +1,6 @@
 import 'server-only';
 import React, { Fragment } from 'react';
-import {
-  TypedLocale, Where,
-} from 'payload';
-
+import { TypedLocale } from 'payload';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { InterfaceNewsTeasersBlock } from '@/payload-types';
 import { NewsTeaserComponent } from '@/components/blocks/NewsTeaser/NewsTeaser.component';
@@ -12,6 +9,7 @@ import { InterfaceSourcePage } from '@/app/(frontend)/renderers/RenderBlocks';
 import { getLocale } from 'next-intl/server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { getPageUrl } from '@/utilities/getPageUrl';
+import { fetchNewsTeaserPages } from '@/data/fetch';
 
 type InterfaceNewsTeaserPropTypes = {
   tenant: string;
@@ -22,31 +20,15 @@ export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<R
   const locale = (await getLocale()) as TypedLocale;
   const payload = await getPayloadCached();
 
-  const queryRestraints: Where = {
-    tenant: {
-      equals: props.tenant,
-    },
-  };
-
-  // on news pages, don't show the teaser which points to current
-  // page
-  if (props.sourcePage.collectionSlug === 'newsDetailPage') {
-    queryRestraints.id = {
-      /* eslint-disable @typescript-eslint/naming-convention */
-      not_equals: props.sourcePage.id,
-      /* eslint-enable @typescript-eslint/naming-convention */
-    };
-  }
+  const excludePageId = props.sourcePage.collectionSlug === 'newsDetailPage'
+    ? props.sourcePage.id
+    : undefined;
 
   // Get news data
-  const newsPages = await payload.find({
-    collection: 'newsDetailPage',
-    depth: 1,
-    limit: 3,
+  const newsPages = await fetchNewsTeaserPages({
+    excludePageId,
     locale,
-    pagination: false,
-    sort: '-hero.date',
-    where: queryRestraints,
+    tenant: props.tenant,
   });
 
   const title = rteToHtml(props.title);
