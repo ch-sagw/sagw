@@ -22,6 +22,9 @@ import { generateTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 import { sampleRteWithLink } from '@/utilities/rteSampleContent';
+import {
+  fetchDetailPages, fetchEventDetailPages,
+} from '@/data/fetch';
 
 const getCollectionsDocumentForId = async (id: string): Promise<any> => {
   const payload = await getPayloadCached();
@@ -618,7 +621,55 @@ test.describe('Home links (non-sagw)', () => {
     }
 
     // #########################################
-    // verify entries in Links collection
+    // fetch event/news/magazine/project pages
+    // #########################################
+    const eventsPages = await fetchEventDetailPages({
+      language: 'de',
+      limit: 3,
+      tenant: tenant.id,
+    });
+
+    const newsPages = await payload.find({
+      collection: 'newsDetailPage',
+      depth: 1,
+      limit: 3,
+      locale: 'de',
+      pagination: false,
+      sort: '-hero.date',
+      where: {
+        tenant: {
+          equals: tenant.id,
+        },
+      },
+    });
+
+    const magazinePages = await fetchDetailPages({
+      collection: 'magazineDetailPage',
+      language: 'de',
+      limit: 3,
+      sort: 'createdAt',
+      tenant: tenant.id,
+    });
+
+    const projectPages = await fetchDetailPages({
+      collection: 'projectDetailPage',
+      language: 'de',
+      limit: 3,
+      sort: 'createdAt',
+      tenant: tenant.id,
+    });
+
+    // #########################################
+    // verify entries in Links collection for event/news/magazine/project pages
+    // #########################################
+
+    const event1Link = await getCollectionsDocumentForId(eventsPages[0].id);
+    const news1Link = await getCollectionsDocumentForId(newsPages.docs[0].id);
+    const magazine1Link = await getCollectionsDocumentForId(magazinePages[0].id);
+    const project1Link = await getCollectionsDocumentForId(projectPages[0].id);
+
+    // #########################################
+    // verify entries in Links collection for regular links
     // #########################################
 
     // await expect(d1Link.references[0].pageId)
@@ -639,14 +690,20 @@ test.describe('Home links (non-sagw)', () => {
     //   .toStrictEqual(homeId);
     await expect(d9Link.references[0].pageId)
       .toStrictEqual(homeId);
+    await expect(event1Link.references[0].pageId)
+      .toStrictEqual(homeId);
+    await expect(news1Link.references[0].pageId)
+      .toStrictEqual(homeId);
+    await expect(magazine1Link.references[0].pageId)
+      .toStrictEqual(homeId);
+    await expect(project1Link.references[0].pageId)
+      .toStrictEqual(homeId);
 
     // #########################################
     // verify correct url rendering: de
     // #########################################
     await page.goto(`http://localhost:3000/de/tenant-${time}`);
     await page.waitForLoadState('networkidle');
-
-    console.log('$$$$$$$$$$$$$$$$');
 
     const heroLink = await page.getByRole('link', {
       name: '[test]hero:optionalLink',

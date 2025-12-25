@@ -289,68 +289,6 @@ test('Adds reference to link document (for consent fields)', {
 
 });
 
-test('Adds reference to link document (for data privacy checkbox)', {
-  tag: '@linking',
-}, async () => {
-  let result: any;
-  let privacyPage: any;
-
-  const time = (new Date())
-    .getTime();
-
-  try {
-    const payload = await getPayload({
-      config: configPromise,
-    });
-
-    const i18nData = await payload.find({
-      collection: 'i18nGlobals',
-    });
-
-    const detailPage = await generateDetailPage({
-      navigationTitle: 'Detail Page',
-      title: `Detail Page ${time}`,
-    });
-
-    privacyPage = await payload.update({
-      collection: 'i18nGlobals',
-      data: {
-        forms: {
-          dataPrivacyCheckbox: {
-            dataPrivacyCheckboxText: sampleRteWithLink({
-              documentId: detailPage.id,
-              slug: 'detailPage',
-            }),
-          },
-        },
-      },
-      id: i18nData.docs[0].id,
-    });
-
-    // get link document of detail page
-    result = await payload.find({
-      collection: 'links',
-      limit: 1,
-      where: {
-        and: [
-          {
-            documentId: {
-              equals: detailPage.id,
-            },
-          },
-        ],
-      },
-    });
-
-  } catch (e) {
-    result = JSON.stringify(e);
-  }
-
-  await expect(result.docs[0].references[0].pageId)
-    .toStrictEqual(privacyPage.id);
-
-});
-
 test('Adds reference to link document (for home rte)', {
   tag: '@linking',
 }, async () => {

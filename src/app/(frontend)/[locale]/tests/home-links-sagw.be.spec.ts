@@ -11,6 +11,9 @@ import { getTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 import { sampleRteWithLink } from '@/utilities/rteSampleContent';
+import {
+  fetchDetailPages, fetchEventDetailPages,
+} from '@/data/fetch';
 
 const getCollectionsDocumentForId = async (id: string): Promise<any> => {
   const payload = await getPayloadCached();
@@ -49,7 +52,7 @@ test.describe('Home links (sagw)', () => {
   }, async ({
     page,
   }) => {
-    // let d1Link;
+    let d1Link;
     let d2Link;
     let d3Link;
     let d4Link;
@@ -543,7 +546,7 @@ test.describe('Home links (sagw)', () => {
         id: homeId,
       });
 
-      // d1Link = await getCollectionsDocumentForId(detail1.id);
+      d1Link = await getCollectionsDocumentForId(detail1.id);
       d2Link = await getCollectionsDocumentForId(detail2.id);
       d3Link = await getCollectionsDocumentForId(detail3.id);
       d4Link = await getCollectionsDocumentForId(detail4.id);
@@ -560,11 +563,63 @@ test.describe('Home links (sagw)', () => {
     }
 
     // #########################################
-    // verify entries in Links collection
+    // fetch event/news/magazine/project pages
+    // #########################################
+    const eventsPages = await fetchEventDetailPages({
+      language: 'de',
+      limit: 3,
+      tenant: tenant || '',
+    });
+
+    const newsPages = await payload.find({
+      collection: 'newsDetailPage',
+      depth: 1,
+      limit: 3,
+      locale: 'de',
+      pagination: false,
+      sort: '-hero.date',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
+    });
+
+    const magazinePages = await fetchDetailPages({
+      collection: 'magazineDetailPage',
+      language: 'de',
+      limit: 3,
+      sort: 'createdAt',
+      tenant: tenant || '',
+    });
+
+    const projectPages = await fetchDetailPages({
+      collection: 'projectDetailPage',
+      language: 'de',
+      limit: 3,
+      sort: 'createdAt',
+      tenant: tenant || '',
+    });
+
+    const event1Link = await getCollectionsDocumentForId(eventsPages[0].id);
+    const event2Link = await getCollectionsDocumentForId(eventsPages[0].id);
+    const event3Link = await getCollectionsDocumentForId(eventsPages[0].id);
+    const news1Link = await getCollectionsDocumentForId(newsPages.docs[0].id);
+    const news2Link = await getCollectionsDocumentForId(newsPages.docs[0].id);
+    const news3Link = await getCollectionsDocumentForId(newsPages.docs[0].id);
+    const magazine1Link = await getCollectionsDocumentForId(magazinePages[0].id);
+    const magazine2Link = await getCollectionsDocumentForId(magazinePages[1].id);
+    const magazine3Link = await getCollectionsDocumentForId(magazinePages[2].id);
+    const project1Link = await getCollectionsDocumentForId(projectPages[0].id);
+    const project2Link = await getCollectionsDocumentForId(projectPages[1].id);
+    const project3Link = await getCollectionsDocumentForId(projectPages[2].id);
+
+    // #########################################
+    // verify entries in Links collection for event/news/magazine/project pages
     // #########################################
 
-    // await expect(d1Link.references[0].pageId)
-    //   .toStrictEqual(homeId);
+    await expect(d1Link.references[0].pageId)
+      .toStrictEqual(homeId);
     await expect(d2Link.references[0].pageId)
       .toStrictEqual(homeId);
     await expect(d3Link.references[0].pageId)
@@ -580,6 +635,30 @@ test.describe('Home links (sagw)', () => {
     // await expect(d8Link.references[0].pageId)
     //   .toStrictEqual(homeId);
     await expect(d9Link.references[0].pageId)
+      .toStrictEqual(homeId);
+    await expect(event1Link.references[0].pageId)
+      .toStrictEqual(homeId);
+    await expect(event2Link.references[0].pageId)
+      .toStrictEqual(homeId);
+    await expect(event3Link.references[0].pageId)
+      .toStrictEqual(homeId);
+    await expect(news1Link.references[0].pageId)
+      .toStrictEqual(homeId);
+    await expect(news2Link.references[0].pageId)
+      .toStrictEqual(homeId);
+    await expect(news3Link.references[0].pageId)
+      .toStrictEqual(homeId);
+    await expect(magazine1Link.references[0].pageId)
+      .toStrictEqual(homeId);
+    await expect(magazine2Link.references[0].pageId)
+      .toStrictEqual(homeId);
+    await expect(magazine3Link.references[0].pageId)
+      .toStrictEqual(homeId);
+    await expect(project1Link.references[0].pageId)
+      .toStrictEqual(homeId);
+    await expect(project2Link.references[0].pageId)
+      .toStrictEqual(homeId);
+    await expect(project3Link.references[0].pageId)
       .toStrictEqual(homeId);
 
     // #########################################

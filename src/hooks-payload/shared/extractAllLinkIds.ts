@@ -1,4 +1,8 @@
+import type {
+  BasePayload, TypedLocale,
+} from 'payload';
 import type { SerializedLinkNode } from '@payloadcms/richtext-lexical';
+import { extractProgrammaticLinkIds } from './extractProgrammaticLinkIds';
 
 type LexicalNode =
   | SerializedLinkNode
@@ -133,15 +137,30 @@ const extractRteLinkIdsFromDocument = (obj: unknown, linkIds: Set<string> = new 
 
 interface InterfaceExtractAllLinkIdsParams {
   doc: Record<string, unknown>;
+  context?: {
+    payload: BasePayload;
+    tenant?: string;
+    locale?: TypedLocale;
+  };
 }
 
-export const extractAllLinkIds = ({
+export const extractAllLinkIds = async ({
   doc,
-}: InterfaceExtractAllLinkIdsParams): Set<string> => {
+  context,
+}: InterfaceExtractAllLinkIdsParams): Promise<Set<string>> => {
   const allLinkIds = new Set<string>();
 
   extractInternalLinkIds(doc, allLinkIds);
   extractRteLinkIdsFromDocument(doc, allLinkIds);
+
+  // Extract programmatic links from blocks
+  if (context) {
+    const programmaticLinkIds = await extractProgrammaticLinkIds(doc, context);
+
+    programmaticLinkIds.forEach((linkId) => {
+      allLinkIds.add(linkId);
+    });
+  }
 
   return allLinkIds;
 };

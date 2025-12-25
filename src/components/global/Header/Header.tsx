@@ -28,8 +28,6 @@ export type InterfaceHeaderPropTypes = {
 export const Header = async (props: InterfaceHeaderPropTypes): Promise<React.JSX.Element> => {
   const locale = (await getLocale()) as TypedLocale;
   const payload = await getPayloadCached();
-
-  // TODO: we need reference tracking here
   const linkUrls = await generateLinkUrls({
     locale,
     metanav: props.metanav,

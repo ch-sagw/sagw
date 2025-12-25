@@ -1,11 +1,14 @@
 // Hook to update references in Links collection when pages are created/updated
 // tracks which pages do reference other pages by updating the references array
 
-import type { CollectionAfterChangeHook } from 'payload';
+import type {
+  CollectionAfterChangeHook, TypedLocale,
+} from 'payload';
 import {
   globalCollectionsSlugs, singletonSlugs,
 } from '@/collections/Pages/constants';
 import { extractAllLinkIds } from '@/hooks-payload/shared/extractAllLinkIds';
+import { extractID } from '@/utilities/extractId';
 
 export const hookUpdateLinkReferences: CollectionAfterChangeHook = async ({
   doc,
@@ -13,7 +16,13 @@ export const hookUpdateLinkReferences: CollectionAfterChangeHook = async ({
   operation,
   previousDoc,
   collection,
+  context,
 }) => {
+  // Prevent infinite loops - if we're already updating link references, skip
+  if (context?.updatingLinkReferences) {
+    return doc;
+  }
+
   if (!doc || !req?.payload || ![
     'create',
     'update',
@@ -47,16 +56,41 @@ export const hookUpdateLinkReferences: CollectionAfterChangeHook = async ({
   }
 
   try {
+    // Extract tenant and locale for programmatic link extraction
+    let tenantId: string | undefined;
+
+    if ('tenant' in doc && doc.tenant) {
+      const extractedId = extractID(doc.tenant);
+
+      if (typeof extractedId === 'string') {
+        tenantId = extractedId;
+      }
+    }
+
+    // Get locale from request, fallback to 'de'
+    const locale = (req.locale as TypedLocale) || 'de';
+
+    // Prepare context for programmatic link extraction
+    const extractionContext = tenantId && req.payload
+      ? {
+        locale,
+        payload: req.payload,
+        tenant: tenantId,
+      }
+      : undefined;
+
     // extract link IDs from current document
     const currentLinkIds = isPublished
-      ? extractAllLinkIds({
+      ? await extractAllLinkIds({
+        context: extractionContext,
         doc: doc as Record<string, unknown>,
       })
       : new Set<string>();
 
     // extract link IDs from previous document (if it exists)
     const previousLinkIds = previousDoc
-      ? extractAllLinkIds({
+      ? await extractAllLinkIds({
+        context: extractionContext,
         doc: previousDoc as Record<string, unknown>,
       })
       : new Set<string>();
@@ -102,6 +136,10 @@ export const hookUpdateLinkReferences: CollectionAfterChangeHook = async ({
               if (!referenceExists) {
                 await req.payload.update({
                   collection: 'links',
+                  context: {
+                    ...context,
+                    updatingLinkReferences: true,
+                  },
                   data: {
                     references: [
                       ...existingReferences,
@@ -111,6 +149,7 @@ export const hookUpdateLinkReferences: CollectionAfterChangeHook = async ({
                     ],
                   },
                   id: existingLink.id,
+                  req,
                 });
               }
             }
@@ -148,10 +187,15 @@ export const hookUpdateLinkReferences: CollectionAfterChangeHook = async ({
 
               await req.payload.update({
                 collection: 'links',
+                context: {
+                  ...context,
+                  updatingLinkReferences: true,
+                },
                 data: {
                   references: updatedReferences,
                 },
                 id: existingLink.id,
+                req,
               });
             }
           } catch (error) {

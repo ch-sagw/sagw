@@ -3,7 +3,6 @@ import {
   rte1, rte3,
 } from '@/field-templates/rte';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
-import { hookUpdateLinkReferences } from '@/hooks-payload/updateLinkReferences';
 
 export const I18nGlobals: CollectionConfig = {
   access: globalContentAccessNoTranslatorNoEditor,
@@ -88,8 +87,5 @@ export const I18nGlobals: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: {
-    afterChange: [hookUpdateLinkReferences],
-  },
   slug: 'i18nGlobals',
 };

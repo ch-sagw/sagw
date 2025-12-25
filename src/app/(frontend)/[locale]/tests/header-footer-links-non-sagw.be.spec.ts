@@ -17,28 +17,6 @@ import { generateTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 
-/*
-const getCollectionsDocumentForId = async (id: string): Promise<any> => {
-  const payload = await getPayloadCached();
-
-  const linksCollectionDocument = await payload.find({
-    collection: 'links',
-    limit: 1,
-    where: {
-      and: [
-        {
-          documentId: {
-            equals: id,
-          },
-        },
-      ],
-    },
-  });
-
-  return linksCollectionDocument.docs[0];
-};
-*/
-
 test.describe('Header/Footer links (non-sagw)', () => {
   beforeEachAcceptCookies();
   test('rendered correctly', {
@@ -46,9 +24,6 @@ test.describe('Header/Footer links (non-sagw)', () => {
   }, async ({
     page,
   }) => {
-    // let o1Link;
-    // let d1Link;
-    // let d2Link;
     const time = (new Date())
       .getTime();
     const payload = await getPayloadCached();
@@ -217,30 +192,11 @@ test.describe('Header/Footer links (non-sagw)', () => {
       await generateDataPrivacyPage({
         tenant: tenant.id,
       });
-
-      // o1Link = await getCollectionsDocumentForId(level1.id);
-      // d1Link = await getCollectionsDocumentForId(detail1.id);
-      // d2Link = await getCollectionsDocumentForId(detail2.id);
-
     } catch (e) {
       throw new Error(e instanceof Error
         ? e.message
         : String(e));
     }
-
-    // #########################################
-    // verify entries in Links collection
-    // #########################################
-
-    // TODO: enable as soon as reference tracking is done
-    /*
-    await expect(o1Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(d1Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(d2Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    */
 
     // #########################################
     // verify correct url rendering: de
