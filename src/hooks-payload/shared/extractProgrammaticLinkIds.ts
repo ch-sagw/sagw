@@ -1,7 +1,8 @@
 import {
-  type BasePayload, type TypedLocale,
+  type BasePayload, type TypedLocale, type Where,
 } from 'payload';
 import {
+  fetchDetailPages,
   fetchEventDetailPages,
   fetchMagazinePages,
   fetchNewsOverviewPages,
@@ -367,6 +368,171 @@ const extractRteLinkIds = (rteContent: Record<string, unknown>, linkIds: Set<str
   root.children.forEach(processNode);
 };
 
+interface InterfaceCreateInstitutesOverviewOperationParams {
+  locale: TypedLocale;
+  tenant: string;
+  linkIds: Set<string>;
+  payload?: BasePayload;
+}
+
+// Helper to create async operation for institutes overview
+const createInstitutesOverviewOperation = async ({
+  locale,
+  tenant,
+  linkIds,
+  payload,
+}: InterfaceCreateInstitutesOverviewOperationParams): Promise<void> => {
+  try {
+    const institutePages = await fetchDetailPages({
+      collection: 'instituteDetailPage',
+      depth: 0,
+      language: locale,
+      limit: 0,
+      payload,
+      sort: 'createdAt',
+      tenant,
+    });
+
+    institutePages.forEach((institute) => {
+      if (institute.id) {
+        linkIds.add(String(institute.id));
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching institute pages for institutesOverviewBlock:', error);
+  }
+};
+
+interface InterfaceCreateNationalDictionariesOverviewOperationParams {
+  locale: TypedLocale;
+  tenant: string;
+  linkIds: Set<string>;
+  payload?: BasePayload;
+}
+
+// Helper to create async operation for national dictionaries overview
+const createNationalDictionariesOverviewOperation = async ({
+  locale,
+  tenant,
+  linkIds,
+  payload,
+}: InterfaceCreateNationalDictionariesOverviewOperationParams): Promise<void> => {
+  try {
+    const dictionaryPages = await fetchDetailPages({
+      collection: 'nationalDictionaryDetailPage',
+      depth: 0,
+      language: locale,
+      limit: 0,
+      payload,
+      sort: 'createdAt',
+      tenant,
+    });
+
+    dictionaryPages.forEach((dictionary) => {
+      if (dictionary.id) {
+        linkIds.add(String(dictionary.id));
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching national dictionary pages for nationalDictionariesOverviewBlock:', error);
+  }
+};
+
+interface InterfaceCreatePublicationsOverviewOperationParams {
+  locale: TypedLocale;
+  tenant: string;
+  linkIds: Set<string>;
+  payload?: BasePayload;
+}
+
+// Helper to create async operation for publications overview
+const createPublicationsOverviewOperation = async ({
+  locale,
+  tenant,
+  linkIds,
+  payload,
+}: InterfaceCreatePublicationsOverviewOperationParams): Promise<void> => {
+  try {
+    const publicationPages = await fetchDetailPages({
+      collection: 'publicationDetailPage',
+      depth: 0,
+      language: locale,
+      limit: 0,
+      payload,
+      sort: '-overviewPageProps.date',
+      tenant,
+    });
+
+    publicationPages.forEach((publication) => {
+      if (publication.id) {
+        linkIds.add(String(publication.id));
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching publication pages for publicationsOverviewBlock:', error);
+  }
+};
+
+interface InterfaceCreatePublicationsTeaserOperationParams {
+  locale: TypedLocale;
+  tenant: string;
+  linkIds: Set<string>;
+  currentPageId?: string;
+  collectionSlug?: string;
+  payload?: BasePayload;
+}
+
+// Helper to create async operation for publications teaser
+const createPublicationsTeaserOperation = async ({
+  locale,
+  tenant,
+  linkIds,
+  currentPageId,
+  collectionSlug,
+  payload,
+}: InterfaceCreatePublicationsTeaserOperationParams): Promise<void> => {
+  try {
+    // Exclude current page if we're on a publicationDetailPage
+    const excludePageId = collectionSlug === 'publicationDetailPage' && currentPageId
+      ? currentPageId
+      : undefined;
+
+    const queryRestraints: Where = {
+      tenant: {
+        equals: tenant,
+      },
+    };
+
+    // on publication pages, don't show the teaser which points to current page
+    if (excludePageId) {
+      queryRestraints.id = {
+        /* eslint-disable @typescript-eslint/naming-convention */
+        not_equals: excludePageId,
+        /* eslint-enable @typescript-eslint/naming-convention */
+      };
+    }
+
+    const payloadInstance = payload || await getPayloadCached();
+    const publicationPages = await payloadInstance.find({
+      collection: 'publicationDetailPage',
+      depth: 0,
+      limit: 3,
+      locale,
+      pagination: false,
+      sort: '-overviewPageProps.date',
+      where: queryRestraints,
+    });
+
+    publicationPages.docs.forEach((publication) => {
+      if (publication.id) {
+        linkIds.add(String(publication.id));
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching publication pages for publicationsTeasersBlock:', error);
+  }
+};
+
 interface InterfaceCreateFormBlockOperationParams {
   locale: TypedLocale;
   tenant: string;
@@ -538,6 +704,36 @@ const processBlock = ({
     }));
   } else if (blockType === 'projectsOverviewBlock') {
     asyncOperations.push(createProjectsOverviewOperation({
+      linkIds,
+      locale,
+      payload,
+      tenant,
+    }));
+  } else if (blockType === 'institutesOverviewBlock') {
+    asyncOperations.push(createInstitutesOverviewOperation({
+      linkIds,
+      locale,
+      payload,
+      tenant,
+    }));
+  } else if (blockType === 'nationalDictionariesOverviewBlock') {
+    asyncOperations.push(createNationalDictionariesOverviewOperation({
+      linkIds,
+      locale,
+      payload,
+      tenant,
+    }));
+  } else if (blockType === 'publicationsOverviewBlock') {
+    asyncOperations.push(createPublicationsOverviewOperation({
+      linkIds,
+      locale,
+      payload,
+      tenant,
+    }));
+  } else if (blockType === 'publicationsTeasersBlock') {
+    asyncOperations.push(createPublicationsTeaserOperation({
+      collectionSlug,
+      currentPageId,
       linkIds,
       locale,
       payload,

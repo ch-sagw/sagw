@@ -6,6 +6,7 @@
  * - add italian slugs to all linked pages and test links are properly rendered
  * in italian frontend page
  * - check if Links collection has all required references
+ * - check link in status message
  */
 
 import {
@@ -56,6 +57,7 @@ test.describe('Home links (sagw)', () => {
     let homeId;
     let detail1;
     let detail4;
+    let detail5;
     const payload = await getPayloadCached();
     const tenant = await getTenant();
     const time = (new Date())
@@ -153,6 +155,15 @@ test.describe('Home links (sagw)', () => {
         title: `d4 ${time}`,
       });
 
+      detail5 = await generateDetailPage({
+        navigationTitle: 'd5',
+        parentPage: {
+          documentId: detail4.id,
+          slug: 'detailPage',
+        },
+        title: `d5 ${time}`,
+      });
+
       // #########################################
       // Update with italian
       // #########################################
@@ -205,6 +216,18 @@ test.describe('Home links (sagw)', () => {
         locale: 'it',
       });
 
+      await payload.update({
+        collection: 'detailPage',
+        data: {
+          hero: {
+            title: simpleRteConfig(`d5-it-${time}`),
+          },
+          navigationTitle: 'd5 it',
+        },
+        id: detail5.id,
+        locale: 'it',
+      });
+
       // #########################################
       // Get ids of data privacy and impressum to link to
       // #########################################
@@ -224,6 +247,38 @@ test.describe('Home links (sagw)', () => {
             equals: tenant,
           },
         },
+      });
+
+      // #########################################
+      // Enable global status message
+      // #########################################
+      const statusMessage = await payload.find({
+        collection: 'statusMessage',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      await payload.update({
+        collection: 'statusMessage',
+        data: {
+          ...statusMessage,
+          content: {
+            optionalLink: {
+              includeLink: true,
+              link: {
+                internalLink: {
+                  documentId: detail5.id,
+                  slug: 'detailPage',
+                },
+                linkText: simpleRteConfig('[test]status-message:link'),
+              },
+            },
+          },
+        },
+        id: statusMessage.docs[0].id,
       });
 
       // #########################################
@@ -421,6 +476,11 @@ test.describe('Home links (sagw)', () => {
     })
       .getAttribute('href');
 
+    const statusMessageLink = await page.getByRole('link', {
+      name: '[test]status-message:link',
+    })
+      .getAttribute('href');
+
     await expect(formCheckboxLink)
       .toBe(`/de/overview-page-1-${time}/d1-${time}`);
     await expect(rteLink)
@@ -429,6 +489,8 @@ test.describe('Home links (sagw)', () => {
       .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}`);
     await expect(homeTeaserLink)
       .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}`);
+    await expect(statusMessageLink)
+      .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}`);
 
     await expect(dataPrivacyLink)
       .toBe('/de/data-privacy-de');
@@ -471,6 +533,11 @@ test.describe('Home links (sagw)', () => {
     })
       .getAttribute('href');
 
+    const statusMessageLinkIt = await page.getByRole('link', {
+      name: '[test]status-message:link',
+    })
+      .getAttribute('href');
+
     await expect(formCheckboxLinkIt)
       .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}`);
     await expect(rteLinkIt)
@@ -479,6 +546,8 @@ test.describe('Home links (sagw)', () => {
       .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
     await expect(homeTeaserLinkIt)
       .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}`);
+    await expect(statusMessageLinkIt)
+      .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
 
     await expect(dataPrivacyLinkIt)
       .toBe('/it/data-privacy-it');

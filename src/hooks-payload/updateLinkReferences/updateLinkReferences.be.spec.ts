@@ -48,8 +48,15 @@ test('Adds reference to link document (for internal links)', {
       config: configPromise,
     });
 
+    const tenant = await getTenant();
+
     const home = await payload.find({
       collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
     });
 
     const level1 = await generateOverviewPage({
@@ -115,8 +122,15 @@ test('Adds reference to link document (for rte links)', {
       config: configPromise,
     });
 
+    const tenant = await getTenant();
+
     const home = await payload.find({
       collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
     });
 
     const level1 = await generateOverviewPage({
@@ -171,8 +185,15 @@ test('Adds/removes reference to link document (for consent fields)', {
     config: configPromise,
   });
 
+  const tenant = await getTenant();
+
   const consentData = await payload.find({
     collection: 'consent',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
   });
 
   const detailPage = await generateDetailPage({
@@ -290,6 +311,93 @@ test('Adds/removes reference to link document (for consent fields)', {
 
 });
 
+test('Adds/removes reference to link document (for status message)', {
+  tag: '@linking',
+}, async () => {
+
+  const time = (new Date())
+    .getTime();
+
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  const tenant = await getTenant();
+
+  const statusMessage = await payload.find({
+    collection: 'statusMessage',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  const detailPage = await generateDetailPage({
+    navigationTitle: 'Detail Page',
+    tenant: tenant || '',
+    title: `Detail Page ${time}`,
+  });
+
+  const detailPage2 = await generateDetailPage({
+    navigationTitle: 'Detail Page 2',
+    tenant: tenant || '',
+    title: `Detail Page 2 ${time}`,
+  });
+
+  await payload.update({
+    collection: 'statusMessage',
+    data: {
+      ...statusMessage,
+      content: {
+        optionalLink: {
+          includeLink: true,
+          link: {
+            internalLink: {
+              documentId: detailPage.id,
+              slug: 'detailPage',
+            },
+            linkText: simpleRteConfig('Some action link'),
+          },
+        },
+      },
+    },
+    id: statusMessage.docs[0].id,
+  });
+
+  // get link document of detail pages
+  const detailPageLinks = await getCollectionsDocumentForId(detailPage.id);
+
+  await expect(detailPageLinks.references[0].pageId)
+    .toStrictEqual(statusMessage.docs[0].id);
+
+  await payload.update({
+    collection: 'statusMessage',
+    data: {
+      ...statusMessage,
+      content: {
+        optionalLink: {
+          includeLink: true,
+          link: {
+            internalLink: {
+              documentId: detailPage2.id,
+              slug: 'detailPage',
+            },
+            linkText: simpleRteConfig('Some action link'),
+          },
+        },
+      },
+    },
+    id: statusMessage.docs[0].id,
+  });
+
+  const detailPageLinksUpdated = await getCollectionsDocumentForId(detailPage.id);
+
+  await expect(detailPageLinksUpdated.references.some((ref: any) => ref.pageId === detailPage.id))
+    .toBe(false);
+
+});
+
 test('Adds reference to link document (for home rte)', {
   tag: '@linking',
 }, async () => {
@@ -304,8 +412,15 @@ test('Adds reference to link document (for home rte)', {
       config: configPromise,
     });
 
+    const tenant = await getTenant();
+
     const home = await payload.find({
       collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
     });
 
     const detailPage = await generateDetailPage({
@@ -445,8 +560,15 @@ test('Adds reference to link document (for home random teasers)', {
       config: configPromise,
     });
 
+    const tenant = await getTenant();
+
     const home = await payload.find({
       collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
     });
 
     const detailPage = await generateDetailPage({
@@ -745,8 +867,15 @@ test('Removes reference to the link document if links block is removed', {
       config: configPromise,
     });
 
+    const tenant = await getTenant();
+
     const home = await payload.find({
       collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
     });
 
     const level1 = await generateOverviewPage({
@@ -819,8 +948,15 @@ test('Removes reference to the link document if links block is changed', {
       config: configPromise,
     });
 
+    const tenant = await getTenant();
+
     const home = await payload.find({
       collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
     });
 
     const level1 = await generateOverviewPage({
@@ -913,8 +1049,15 @@ test('Removes reference to the link document if rte block is removed', {
       config: configPromise,
     });
 
+    const tenant = await getTenant();
+
     const home = await payload.find({
       collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
     });
 
     const level1 = await generateOverviewPage({
@@ -979,8 +1122,15 @@ test('Removes reference to the link document if rte block is changed', {
       config: configPromise,
     });
 
+    const tenant = await getTenant();
+
     const home = await payload.find({
       collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
     });
 
     const level1 = await generateOverviewPage({
@@ -1058,8 +1208,15 @@ test('Does not remove reference if link remains in rte block', {
       config: configPromise,
     });
 
+    const tenant = await getTenant();
+
     const home = await payload.find({
       collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
     });
 
     const level1 = await generateOverviewPage({
@@ -1150,8 +1307,15 @@ test('Does not remove reference if link remains in links block', {
       config: configPromise,
     });
 
+    const tenant = await getTenant();
+
     const home = await payload.find({
       collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
     });
 
     const level1 = await generateOverviewPage({

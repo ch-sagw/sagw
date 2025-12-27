@@ -6,6 +6,7 @@
  * - add italian slugs to all linked pages and test links are properly rendered
  * in italian frontend page
  * - check if Links collection has all required references
+ * - check link in status message
  */
 
 import {
@@ -66,6 +67,7 @@ test.describe('Home links (non-sagw)', () => {
     let d4Link;
     let detail1;
     let detail4;
+    let detail5;
 
     const payload = await getPayloadCached();
     const time = (new Date())
@@ -150,6 +152,16 @@ test.describe('Home links (non-sagw)', () => {
         title: `d4 ${time}`,
       });
 
+      detail5 = await generateDetailPage({
+        navigationTitle: 'd5',
+        parentPage: {
+          documentId: detail4.id,
+          slug: 'detailPage',
+        },
+        tenant: tenant.id,
+        title: `d5 ${time}`,
+      });
+
       // #########################################
       // Update with italian
       // #########################################
@@ -199,6 +211,18 @@ test.describe('Home links (non-sagw)', () => {
           navigationTitle: 'd4 it',
         },
         id: detail4.id,
+        locale: 'it',
+      });
+
+      await payload.update({
+        collection: 'detailPage',
+        data: {
+          hero: {
+            title: simpleRteConfig(`d5-it-${time}`),
+          },
+          navigationTitle: 'd5 it',
+        },
+        id: detail5.id,
         locale: 'it',
       });
 
@@ -276,6 +300,35 @@ test.describe('Home links (non-sagw)', () => {
           tenant: {
             equals: tenant,
           },
+        },
+      });
+
+      // #########################################
+      // Enable global status message
+      // #########################################
+      await payload.create({
+        collection: 'statusMessage',
+        data: {
+          content: {
+            message: simpleRteConfig('StatusMessage.'),
+            optionalLink: {
+              includeLink: true,
+              link: {
+                internalLink: {
+                  documentId: detail5.id,
+                  slug: 'detailPage',
+                },
+                linkText: simpleRteConfig('[test]status-message:link'),
+              },
+            },
+            show: {
+              display: 'show',
+            },
+            showOnHomeOnly: false,
+            title: simpleRteConfig('title'),
+            type: 'warn',
+          },
+          tenant: tenant.id,
         },
       });
 
@@ -475,6 +528,11 @@ test.describe('Home links (non-sagw)', () => {
     })
       .getAttribute('href');
 
+    const statusMessageLink = await page.getByRole('link', {
+      name: '[test]status-message:link',
+    })
+      .getAttribute('href');
+
     await expect(formCheckboxLink)
       .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}`);
     await expect(rteLink)
@@ -483,6 +541,8 @@ test.describe('Home links (non-sagw)', () => {
       .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}`);
     await expect(homeTeaserLink)
       .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}`);
+    await expect(statusMessageLink)
+      .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}`);
 
     await expect(dataPrivacyLink)
       .toBe(`/de/tenant-${time}/data-privacy-de`);
@@ -525,6 +585,11 @@ test.describe('Home links (non-sagw)', () => {
     })
       .getAttribute('href');
 
+    const statusMessageLinkIt = await page.getByRole('link', {
+      name: '[test]status-message:link',
+    })
+      .getAttribute('href');
+
     await expect(formCheckboxLinkIt)
       .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}`);
     await expect(rteLinkIt)
@@ -533,6 +598,8 @@ test.describe('Home links (non-sagw)', () => {
       .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
     await expect(homeTeaserLinkIt)
       .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}`);
+    await expect(statusMessageLinkIt)
+      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
 
     await expect(dataPrivacyLinkIt)
       .toBe(`/it/tenant-${time}-it/data-privacy-it`);
