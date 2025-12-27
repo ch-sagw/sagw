@@ -8,6 +8,7 @@ import {
   globalCollectionsSlugs, singletonSlugs,
 } from '@/collections/Pages/constants';
 import { extractAllLinkIds } from '@/hooks-payload/shared/extractAllLinkIds';
+import { updateLinkReferencesInDatabase } from '@/hooks-payload/shared/updateLinkReferencesInDatabase';
 import { extractID } from '@/utilities/extractId';
 
 export const hookUpdateLinkReferences: CollectionAfterChangeHook = async ({
@@ -97,113 +98,19 @@ export const hookUpdateLinkReferences: CollectionAfterChangeHook = async ({
       })
       : new Set<string>();
 
-    // find links that were added (in current but not in previous)
-    const addedLinkIds = new Set<string>();
-
-    currentLinkIds.forEach((linkId) => {
-      if (!previousLinkIds.has(linkId)) {
-        addedLinkIds.add(linkId);
-      }
-    });
-
-    // find links that were removed (in previous but not in current)
-    const removedLinkIds = new Set<string>();
-
-    previousLinkIds.forEach((linkId) => {
-      if (!currentLinkIds.has(linkId)) {
-        removedLinkIds.add(linkId);
-      }
-    });
-
-    // add references for newly linked pages
-    if (isPublished && addedLinkIds.size > 0) {
-      await Promise.all(Array.from(addedLinkIds)
-        .map(async (linkId) => {
-          try {
-            const linkDoc = await req.payload.find({
-              collection: 'links',
-              limit: 1,
-              where: {
-                documentId: {
-                  equals: linkId,
-                },
-              },
-            });
-
-            if (linkDoc.docs.length > 0) {
-              const [existingLink] = linkDoc.docs;
-              const existingReferences = (existingLink.references || []) as { pageId?: string | null }[];
-              const referenceExists = existingReferences.some((ref) => ref.pageId === docId);
-
-              if (!referenceExists) {
-                await req.payload.update({
-                  collection: 'links',
-                  context: {
-                    ...context,
-                    updatingLinkReferences: true,
-                  },
-                  data: {
-                    references: [
-                      ...existingReferences,
-                      {
-                        pageId: docId,
-                      },
-                    ],
-                  },
-                  id: existingLink.id,
-                  req,
-                });
-              }
-            }
-          } catch (error) {
-            console.error(`Error adding reference for link ${linkId}:`, error);
-          }
-        }));
-    }
-
-    // remove references for unlinked pages (or when unpublishing)
-    if ((isUnpublishing || removedLinkIds.size > 0) && (previousLinkIds.size > 0 || isUnpublishing)) {
-      const linkIdsToProcess = isUnpublishing
+    // use shared utility to update references in database
+    if ((isPublished || isUnpublishing) && req) {
+      const linkIdsToUse = isUnpublishing
         ? previousLinkIds
-        : removedLinkIds;
+        : currentLinkIds;
 
-      await Promise.all(Array.from(linkIdsToProcess)
-        .map(async (linkId) => {
-          try {
-            const linkDoc = await req.payload.find({
-              collection: 'links',
-              limit: 1,
-              where: {
-                documentId: {
-                  equals: linkId,
-                },
-              },
-            });
-
-            if (linkDoc.docs.length > 0) {
-              const [existingLink] = linkDoc.docs;
-              const existingReferences = (existingLink.references || []) as { pageId?: string | null }[];
-
-              // remove reference for this page
-              const updatedReferences = existingReferences.filter((ref) => ref.pageId !== docId);
-
-              await req.payload.update({
-                collection: 'links',
-                context: {
-                  ...context,
-                  updatingLinkReferences: true,
-                },
-                data: {
-                  references: updatedReferences,
-                },
-                id: existingLink.id,
-                req,
-              });
-            }
-          } catch (error) {
-            console.error(`Error removing reference for link ${linkId}:`, error);
-          }
-        }));
+      await updateLinkReferencesInDatabase({
+        context,
+        currentLinkIds: linkIdsToUse,
+        docId,
+        payload: req.payload,
+        req,
+      });
     }
   } catch (error) {
     console.error('Error updating link references:', error);

@@ -11,6 +11,28 @@ import {
 // import { generateTenant } from '@/test-helpers/tenant-generator';
 import { sampleRteWithLink } from '@/utilities/rteSampleContent';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { getTenant } from '@/test-helpers/tenant-generator';
+
+const getCollectionsDocumentForId = async (id: string): Promise<any> => {
+  const payload = await getPayloadCached();
+
+  const linksCollectionDocument = await payload.find({
+    collection: 'links',
+    limit: 1,
+    where: {
+      and: [
+        {
+          documentId: {
+            equals: id,
+          },
+        },
+      ],
+    },
+  });
+
+  return linksCollectionDocument.docs[0];
+};
 
 test('Adds reference to link document (for internal links)', {
   tag: '@linking',
@@ -68,25 +90,13 @@ test('Adds reference to link document (for internal links)', {
     });
 
     // get link document of overview page
-    result = await payload.find({
-      collection: 'links',
-      limit: 1,
-      where: {
-        and: [
-          {
-            documentId: {
-              equals: level1.id,
-            },
-          },
-        ],
-      },
-    });
+    result = await getCollectionsDocumentForId(level1.id);
 
   } catch (e) {
     result = JSON.stringify(e);
   }
 
-  await expect(result.docs[0].references[0].pageId)
+  await expect(result.references[0].pageId)
     .toStrictEqual(detailPage.id);
 
 });
@@ -139,153 +149,144 @@ test('Adds reference to link document (for rte links)', {
     });
 
     // get link document of overview page
-    result = await payload.find({
-      collection: 'links',
-      limit: 1,
-      where: {
-        and: [
-          {
-            documentId: {
-              equals: level1.id,
-            },
-          },
-        ],
-      },
-    });
+    result = await getCollectionsDocumentForId(level1.id);
 
   } catch (e) {
     result = JSON.stringify(e);
   }
 
-  await expect(result.docs[0].references[0].pageId)
+  await expect(result.references[0].pageId)
     .toStrictEqual(detailPage.id);
 
 });
 
-test('Adds reference to link document (for consent fields)', {
+test('Adds/removes reference to link document (for consent fields)', {
   tag: '@linking',
 }, async () => {
-  let detailPageLinks: any;
-  let detailPage2Links: any;
-  let detailPage3Links: any;
-  let result: any;
 
   const time = (new Date())
     .getTime();
 
-  try {
-    const payload = await getPayload({
-      config: configPromise,
-    });
+  const payload = await getPayload({
+    config: configPromise,
+  });
 
-    const consentData = await payload.find({
-      collection: 'consent',
-    });
+  const consentData = await payload.find({
+    collection: 'consent',
+  });
 
-    const detailPage = await generateDetailPage({
-      navigationTitle: 'Detail Page',
-      title: `Detail Page ${time}`,
-    });
+  const detailPage = await generateDetailPage({
+    navigationTitle: 'Detail Page',
+    title: `Detail Page ${time}`,
+  });
 
-    const detailPage2 = await generateDetailPage({
-      navigationTitle: 'Detail Page',
-      title: `Detail Page 2 ${time}`,
-    });
+  const detailPage2 = await generateDetailPage({
+    navigationTitle: 'Detail Page',
+    title: `Detail Page 2 ${time}`,
+  });
 
-    const detailPage3 = await generateDetailPage({
-      navigationTitle: 'Detail Page',
-      title: `Detail Page 3 ${time}`,
-    });
+  const detailPage3 = await generateDetailPage({
+    navigationTitle: 'Detail Page',
+    title: `Detail Page 3 ${time}`,
+  });
 
-    result = await payload.update({
-      collection: 'consent',
-      data: {
-        banner: {
+  const result = await payload.update({
+    collection: 'consent',
+    data: {
+      banner: {
+        text: sampleRteWithLink({
+          documentId: detailPage.id,
+          slug: 'detailPage',
+        }),
+      },
+      overlay: {
+        analyticsPerformance: {
+          text: sampleRteWithLink({
+            documentId: detailPage3.id,
+            slug: 'detailPage',
+          }),
+        },
+        externalContent: {
+          text: sampleRteWithLink({
+            documentId: detailPage3.id,
+            slug: 'detailPage',
+          }),
+        },
+        necessaryCookies: {
+          text: sampleRteWithLink({
+            documentId: detailPage3.id,
+            slug: 'detailPage',
+          }),
+        },
+        text: sampleRteWithLink({
+          documentId: detailPage2.id,
+          slug: 'detailPage',
+        }),
+      },
+    },
+    id: consentData.docs[0].id,
+  });
+
+  // get link document of detail pages
+  const detailPageLinks = await getCollectionsDocumentForId(detailPage.id);
+  const detailPage2Links = await getCollectionsDocumentForId(detailPage2.id);
+  const detailPage3Links = await getCollectionsDocumentForId(detailPage3.id);
+
+  await expect(detailPageLinks.references[0].pageId)
+    .toStrictEqual(result.id);
+  await expect(detailPage2Links.references[0].pageId)
+    .toStrictEqual(result.id);
+  await expect(detailPage3Links.references[0].pageId)
+    .toStrictEqual(result.id);
+
+  // update links in consent
+  await payload.update({
+    collection: 'consent',
+    data: {
+      banner: {
+        text: sampleRteWithLink({
+          documentId: detailPage.id,
+          slug: 'detailPage',
+        }),
+      },
+      overlay: {
+        analyticsPerformance: {
           text: sampleRteWithLink({
             documentId: detailPage.id,
             slug: 'detailPage',
           }),
         },
-        overlay: {
-          analyticsPerformance: {
-            text: sampleRteWithLink({
-              documentId: detailPage3.id,
-              slug: 'detailPage',
-            }),
-          },
-          externalContent: {
-            text: sampleRteWithLink({
-              documentId: detailPage3.id,
-              slug: 'detailPage',
-            }),
-          },
-          necessaryCookies: {
-            text: sampleRteWithLink({
-              documentId: detailPage3.id,
-              slug: 'detailPage',
-            }),
-          },
+        externalContent: {
           text: sampleRteWithLink({
-            documentId: detailPage2.id,
+            documentId: detailPage.id,
             slug: 'detailPage',
           }),
         },
+        necessaryCookies: {
+          text: sampleRteWithLink({
+            documentId: detailPage.id,
+            slug: 'detailPage',
+          }),
+        },
+        text: sampleRteWithLink({
+          documentId: detailPage.id,
+          slug: 'detailPage',
+        }),
       },
-      id: consentData.docs[0].id,
-    });
+    },
+    id: consentData.docs[0].id,
+  });
 
-    // get link document of detail pages
-    detailPageLinks = await payload.find({
-      collection: 'links',
-      limit: 1,
-      where: {
-        and: [
-          {
-            documentId: {
-              equals: detailPage.id,
-            },
-          },
-        ],
-      },
-    });
+  const detailPageLinksUpdated = await getCollectionsDocumentForId(detailPage.id);
+  const detailPage2LinksUpdated = await getCollectionsDocumentForId(detailPage2.id);
+  const detailPage3LinksUpdated = await getCollectionsDocumentForId(detailPage3.id);
 
-    detailPage2Links = await payload.find({
-      collection: 'links',
-      limit: 1,
-      where: {
-        and: [
-          {
-            documentId: {
-              equals: detailPage2.id,
-            },
-          },
-        ],
-      },
-    });
-
-    detailPage3Links = await payload.find({
-      collection: 'links',
-      limit: 1,
-      where: {
-        and: [
-          {
-            documentId: {
-              equals: detailPage3.id,
-            },
-          },
-        ],
-      },
-    });
-  } catch (e) {
-    result = JSON.stringify(e);
-  }
-
-  await expect(detailPageLinks.docs[0].references[0].pageId)
+  await expect(detailPageLinksUpdated.references[0].pageId)
     .toStrictEqual(result.id);
-  await expect(detailPage2Links.docs[0].references[0].pageId)
-    .toStrictEqual(result.id);
-  await expect(detailPage3Links.docs[0].references[0].pageId)
-    .toStrictEqual(result.id);
+  await expect(detailPage2LinksUpdated.references)
+    .toHaveLength(0);
+  await expect(detailPage3LinksUpdated.references)
+    .toHaveLength(0);
 
 });
 
@@ -329,25 +330,13 @@ test('Adds reference to link document (for home rte)', {
     });
 
     // get link document of detail page
-    result = await payload.find({
-      collection: 'links',
-      limit: 1,
-      where: {
-        and: [
-          {
-            documentId: {
-              equals: detailPage.id,
-            },
-          },
-        ],
-      },
-    });
+    result = await getCollectionsDocumentForId(detailPage.id);
 
   } catch (e) {
     result = JSON.stringify(e);
   }
 
-  await expect(result.docs[0].references[0].pageId)
+  await expect(result.references[0].pageId)
     .toStrictEqual(homePageUpdated.id);
 
 });
@@ -431,25 +420,13 @@ test('Adds reference to link document (for home homeTeasers)', {
     });
 
     // get link document of detail page
-    result = await payload.find({
-      collection: 'links',
-      limit: 1,
-      where: {
-        and: [
-          {
-            documentId: {
-              equals: detailPage.id,
-            },
-          },
-        ],
-      },
-    });
+    result = await getCollectionsDocumentForId(detailPage.id);
 
   } catch (e) {
     result = JSON.stringify(e);
   }
 
-  await expect(result.docs[0].references[0].pageId)
+  await expect(result.references[0].pageId)
     .toStrictEqual(homePageUpdated.id);
 
 });
@@ -502,27 +479,257 @@ test('Adds reference to link document (for home random teasers)', {
     });
 
     // get link document of detail page
-    result = await payload.find({
-      collection: 'links',
-      limit: 1,
-      where: {
-        and: [
-          {
-            documentId: {
-              equals: detailPage.id,
-            },
-          },
-        ],
-      },
-    });
+    result = await getCollectionsDocumentForId(detailPage.id);
 
   } catch (e) {
     result = JSON.stringify(e);
   }
 
-  await expect(result.docs[0].references[0].pageId)
+  await expect(result.references[0].pageId)
     .toStrictEqual(homePageUpdated.id);
 
+});
+
+test('Adds and removes reference to header links', {
+  tag: '@linking',
+}, async ({
+  page,
+}) => {
+
+  let headerId;
+  let homeId;
+  let level1;
+  let detail1;
+  let detail2;
+  const payload = await getPayloadCached();
+  const tenant = await getTenant();
+  const time = (new Date())
+    .getTime();
+
+  try {
+
+    const header = await payload.find({
+      collection: 'header',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
+    });
+
+    headerId = header.docs[0].id;
+
+    // empty header
+    await payload.update({
+      collection: 'header',
+      data: {
+        navigation: {},
+      },
+      id: headerId,
+    });
+
+    // #########################################
+    // Generate pages to link to
+    // #########################################
+
+    const home = await payload.find({
+      collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
+    });
+
+    homeId = home.docs[0].id;
+
+    level1 = await generateOverviewPage({
+      navigationTitle: 'o1',
+      parentPage: {
+        documentId: homeId,
+        slug: 'homePage',
+      },
+      title: `o1 ${time}`,
+    });
+
+    detail1 = await generateDetailPage({
+      navigationTitle: 'd1',
+      parentPage: {
+        documentId: level1.id,
+        slug: 'overviewPage',
+      },
+      title: `d1 ${time}`,
+    });
+
+    detail2 = await generateDetailPage({
+      navigationTitle: 'd2',
+      parentPage: {
+        documentId: detail1.id,
+        slug: 'detailPage',
+      },
+      title: `d2 ${time}`,
+    });
+
+    // #########################################
+    // Update with italian
+    // #########################################
+
+    await payload.update({
+      collection: 'overviewPage',
+      data: {
+        hero: {
+          title: simpleRteConfig(`o1-it-${time}`),
+        },
+        navigationTitle: 'Overview Page it',
+      },
+      id: level1.id,
+      locale: 'it',
+    });
+
+    await payload.update({
+      collection: 'detailPage',
+      data: {
+        hero: {
+          title: simpleRteConfig(`d1-it-${time}`),
+        },
+        navigationTitle: 'd1 it',
+      },
+      id: detail1.id,
+      locale: 'it',
+    });
+
+    await payload.update({
+      collection: 'detailPage',
+      data: {
+        hero: {
+          title: simpleRteConfig(`d2-it-${time}`),
+        },
+        navigationTitle: 'd2 it',
+      },
+      id: detail2.id,
+      locale: 'it',
+    });
+
+    // #########################################
+    // add nav items
+    // #########################################
+    await payload.update({
+      collection: 'header',
+      data: {
+        navigation: {
+          navItems: [
+            {
+              description: simpleRteConfig('desc'),
+              navItemText: simpleRteConfig('text'),
+              subNavItems: [
+                {
+                  navItemLink: {
+                    documentId: level1.id,
+                    slug: 'overviewPage',
+                  },
+                  navItemText: simpleRteConfig('[test]nav-link1:link'),
+                },
+                {
+                  navItemLink: {
+                    documentId: detail1.id,
+                    slug: 'detailPage',
+                  },
+                  navItemText: simpleRteConfig('[test]nav-link2:link'),
+                },
+                {
+                  navItemLink: {
+                    documentId: detail2.id,
+                    slug: 'detailPage',
+                  },
+                  navItemText: simpleRteConfig('[test]nav-link3:link'),
+                },
+              ],
+            },
+          ],
+        },
+      },
+      id: headerId,
+    });
+
+  } catch (e) {
+    throw new Error(e instanceof Error
+      ? e.message
+      : String(e));
+  }
+
+  // #########################################
+  // verify entries in Links collection
+  // #########################################
+  await page.goto('http://localhost:3000/de');
+  await page.waitForLoadState('networkidle');
+
+  const o1Link = await getCollectionsDocumentForId(level1.id);
+  const d1Link = await getCollectionsDocumentForId(detail1.id);
+  const d2Link = await getCollectionsDocumentForId(detail2.id);
+
+  await expect(o1Link.references[0].pageId)
+    .toStrictEqual(headerId);
+  await expect(d1Link.references[0].pageId)
+    .toStrictEqual(headerId);
+  await expect(d2Link.references[0].pageId)
+    .toStrictEqual(headerId);
+
+  // #########################################
+  // change nav items and make sure link references are removed
+  // #########################################
+  await payload.update({
+    collection: 'header',
+    data: {
+      navigation: {
+        navItems: [
+          {
+            description: simpleRteConfig('desc'),
+            navItemText: simpleRteConfig('text'),
+            subNavItems: [
+              {
+                navItemLink: {
+                  documentId: level1.id,
+                  slug: 'overviewPage',
+                },
+                navItemText: simpleRteConfig('[test]nav-link1:link'),
+              },
+              {
+                navItemLink: {
+                  documentId: level1.id,
+                  slug: 'overviewPage',
+                },
+                navItemText: simpleRteConfig('[test]nav-link2:link'),
+              },
+              {
+                navItemLink: {
+                  documentId: level1.id,
+                  slug: 'overviewPage',
+                },
+                navItemText: simpleRteConfig('[test]nav-link3:link'),
+              },
+            ],
+          },
+        ],
+      },
+    },
+    id: headerId,
+  });
+
+  await page.goto('http://localhost:3000/de');
+  await page.waitForLoadState('networkidle');
+
+  const o1LinkUpdated = await getCollectionsDocumentForId(level1.id);
+
+  const d1LinkUpdated = await getCollectionsDocumentForId(detail1.id);
+
+  const d2LinkUpdated = await getCollectionsDocumentForId(detail2.id);
+
+  await expect(o1LinkUpdated.references[0].pageId)
+    .toStrictEqual(headerId);
+  await expect(d1LinkUpdated.references)
+    .toHaveLength(0);
+  await expect(d2LinkUpdated.references)
+    .toHaveLength(0);
 });
 
 test('Removes reference to the link document if links block is removed', {
@@ -588,25 +795,13 @@ test('Removes reference to the link document if links block is removed', {
     });
 
     // get link document of overview page
-    result = await payload.find({
-      collection: 'links',
-      limit: 1,
-      where: {
-        and: [
-          {
-            documentId: {
-              equals: level1.id,
-            },
-          },
-        ],
-      },
-    });
+    result = await getCollectionsDocumentForId(level1.id);
 
   } catch (e) {
     result = JSON.stringify(e);
   }
 
-  await expect(result.docs[0].references)
+  await expect(result.references)
     .toHaveLength(0);
 
 });
@@ -694,25 +889,13 @@ test('Removes reference to the link document if links block is changed', {
     });
 
     // get link document of overview page
-    result = await payload.find({
-      collection: 'links',
-      limit: 1,
-      where: {
-        and: [
-          {
-            documentId: {
-              equals: level1.id,
-            },
-          },
-        ],
-      },
-    });
+    result = await getCollectionsDocumentForId(level1.id);
 
   } catch (e) {
     result = JSON.stringify(e);
   }
 
-  await expect(result.docs[0].references)
+  await expect(result.references)
     .toHaveLength(0);
 
 });
@@ -772,25 +955,13 @@ test('Removes reference to the link document if rte block is removed', {
     });
 
     // get link document of overview page
-    result = await payload.find({
-      collection: 'links',
-      limit: 1,
-      where: {
-        and: [
-          {
-            documentId: {
-              equals: level1.id,
-            },
-          },
-        ],
-      },
-    });
+    result = await getCollectionsDocumentForId(level1.id);
 
   } catch (e) {
     result = JSON.stringify(e);
   }
 
-  await expect(result.docs[0].references)
+  await expect(result.references)
     .toHaveLength(0);
 
 });
@@ -862,25 +1033,13 @@ test('Removes reference to the link document if rte block is changed', {
     });
 
     // get link document of overview page
-    result = await payload.find({
-      collection: 'links',
-      limit: 1,
-      where: {
-        and: [
-          {
-            documentId: {
-              equals: level1.id,
-            },
-          },
-        ],
-      },
-    });
+    result = await getCollectionsDocumentForId(level1.id);
 
   } catch (e) {
     result = JSON.stringify(e);
   }
 
-  await expect(result.docs[0].references)
+  await expect(result.references)
     .toHaveLength(0);
 
 });
@@ -966,25 +1125,13 @@ test('Does not remove reference if link remains in rte block', {
     });
 
     // get link document of overview page
-    result = await payload.find({
-      collection: 'links',
-      limit: 1,
-      where: {
-        and: [
-          {
-            documentId: {
-              equals: level1.id,
-            },
-          },
-        ],
-      },
-    });
+    result = await getCollectionsDocumentForId(level1.id);
 
   } catch (e) {
     result = JSON.stringify(e);
   }
 
-  await expect(result.docs[0].references[0].pageId)
+  await expect(result.references[0].pageId)
     .toStrictEqual(level2.id);
 
 });
@@ -1078,25 +1225,13 @@ test('Does not remove reference if link remains in links block', {
     });
 
     // get link document of overview page
-    result = await payload.find({
-      collection: 'links',
-      limit: 1,
-      where: {
-        and: [
-          {
-            documentId: {
-              equals: level1.id,
-            },
-          },
-        ],
-      },
-    });
+    result = await getCollectionsDocumentForId(level1.id);
 
   } catch (e) {
     result = JSON.stringify(e);
   }
 
-  await expect(result.docs[0].references[0].pageId)
+  await expect(result.references[0].pageId)
     .toStrictEqual(level2.id);
 
 });

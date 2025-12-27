@@ -38,6 +38,18 @@ interface InterfacePageProps {
   draft?: boolean;
 }
 
+type InterfaceEventPageProps = {
+  date?: string;
+} & InterfacePageProps;
+
+type InterfaceNewsPageProps = {
+  date?: string;
+} & InterfacePageProps;
+
+type InterfaceMagazinePageProps = {
+  date?: string;
+} & InterfacePageProps;
+
 const generatePage = async ({
   title,
   navigationTitle,
@@ -141,7 +153,7 @@ export const generateDetailPage = async (props: InterfacePageProps): Promise<Det
   type: 'detailPage',
 })) as DetailPage;
 
-export const generateEventDetailPage = async (props: InterfacePageProps): Promise<EventDetailPage> => {
+export const generateEventDetailPage = async (props: InterfaceEventPageProps): Promise<EventDetailPage> => {
   let tenant;
 
   if (props.tenant) {
@@ -183,7 +195,9 @@ export const generateEventDetailPage = async (props: InterfacePageProps): Promis
       _status: 'published',
       eventDetails: {
         category: category.id,
-        date: '2030-08-01T12:00:00.000Z',
+        date: props.date
+          ? props.date
+          : '2030-08-01T12:00:00.000Z',
         dateEnd: '2026-01-01T13:00:00.000Z',
         language: simpleRteConfig('Deutsch'),
         location: simpleRteConfig('ETH Zürich'),
@@ -262,7 +276,7 @@ export const generateInstituteDetailPage = async (props: InterfacePageProps): Pr
   return document;
 };
 
-export const generateMagazineDetailPage = async (props: InterfacePageProps): Promise<MagazineDetailPage> => {
+export const generateMagazineDetailPage = async (props: InterfaceMagazinePageProps): Promise<MagazineDetailPage> => {
   let tenant;
 
   if (props.tenant) {
@@ -285,7 +299,9 @@ export const generateMagazineDetailPage = async (props: InterfacePageProps): Pro
       hero: {
         author: simpleRteConfig('author'),
         colorMode: 'light',
-        date: '2030-08-01T12:00:00.000Z',
+        date: props.date
+          ? props.date
+          : '2030-08-01T12:00:00.000Z',
         title: simpleRteConfig(props.title),
       },
       navigationTitle: props.navigationTitle,
@@ -350,7 +366,7 @@ export const generateNationalDictionaryDetailPage = async (props: InterfacePageP
   return document;
 };
 
-export const generateNewsDetailPage = async (props: InterfacePageProps): Promise<NewsDetailPage> => {
+export const generateNewsDetailPage = async (props: InterfaceNewsPageProps): Promise<NewsDetailPage> => {
   let tenant;
 
   if (props.tenant) {
@@ -372,7 +388,9 @@ export const generateNewsDetailPage = async (props: InterfacePageProps): Promise
       _status: 'published',
       hero: {
         colorMode: 'light',
-        date: '2030-08-01T12:00:00.000Z',
+        date: props.date
+          ? props.date
+          : '2030-08-01T12:00:00.000Z',
         title: simpleRteConfig(props.title),
       },
       navigationTitle: props.navigationTitle,

@@ -326,4 +326,3 @@ export const ConsentOverlayClient = forwardRef<HTMLDialogElement, InterfaceConse
 });
 
 ConsentOverlayClient.displayName = 'ConsentOverlayClient';
-

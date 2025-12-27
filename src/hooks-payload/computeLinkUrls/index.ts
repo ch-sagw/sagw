@@ -79,7 +79,9 @@ const computeUrlsForLink = async ({
 
     return urls;
   } catch (error) {
-    console.error('Error computing URLs for link:', error);
+    if (error && typeof error === 'object' && 'status' in error && error.status !== 404) {
+      console.error('Error computing URLs for link:', error);
+    }
 
     return getRootPathUrls();
   }

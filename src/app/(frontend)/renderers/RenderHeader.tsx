@@ -55,6 +55,7 @@ export const RenderHeader = async ({
 
   const headerProps: InterfaceHeaderPropTypes = {
     colorMode,
+    headerDocumentId: headerData.docs[0].id,
     logoLink: '/',
 
     // TODO: get from global i18n

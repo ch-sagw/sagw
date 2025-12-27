@@ -1,3 +1,5 @@
+// Test if legal links in footer are rendered correctly
+
 import {
   expect,
   test,

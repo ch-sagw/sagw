@@ -2,10 +2,11 @@ import {
   type BasePayload, type TypedLocale,
 } from 'payload';
 import {
-  fetchDetailPages,
   fetchEventDetailPages,
+  fetchMagazinePages,
   fetchNewsOverviewPages,
   fetchNewsTeaserPages,
+  fetchProjectsPages,
 } from '@/data/fetch';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 
@@ -18,7 +19,7 @@ interface InterfaceExtractProgrammaticLinkIdsContext {
 }
 
 // Recursively finds all blocks in a document
-const findBlocks = (obj: unknown, blocks: unknown[] = []): unknown[] => {
+export const findBlocks = (obj: unknown, blocks: unknown[] = []): unknown[] => {
   if (!obj || typeof obj !== 'object') {
     return blocks;
   }
@@ -203,13 +204,10 @@ const createMagazineTeaserOperation = async ({
   payload,
 }: InterfaceCreateMagazineTeaserOperationParams): Promise<void> => {
   try {
-    const magazinePages = await fetchDetailPages({
-      collection: 'magazineDetailPage',
-      depth: 0,
-      language: locale,
+    const magazinePages = await fetchMagazinePages({
       limit: 4,
+      locale,
       payload,
-      sort: 'createdAt',
       tenant,
     });
 
@@ -238,13 +236,10 @@ const createProjectsTeaserOperation = async ({
   payload,
 }: InterfaceCreateProjectsTeaserOperationParams): Promise<void> => {
   try {
-    const projectPages = await fetchDetailPages({
-      collection: 'projectDetailPage',
-      depth: 0,
-      language: locale,
+    const projectPages = await fetchProjectsPages({
       limit: 3,
+      locale,
       payload,
-      sort: 'createdAt',
       tenant,
     });
 
@@ -273,13 +268,10 @@ const createMagazineOverviewOperation = async ({
   payload,
 }: InterfaceCreateMagazineOverviewOperationParams): Promise<void> => {
   try {
-    const magazinePages = await fetchDetailPages({
-      collection: 'magazineDetailPage',
-      depth: 0,
-      language: locale,
+    const magazinePages = await fetchMagazinePages({
       limit: 0,
+      locale,
       payload,
-      sort: 'createdAt',
       tenant,
     });
 
@@ -308,13 +300,10 @@ const createProjectsOverviewOperation = async ({
   payload,
 }: InterfaceCreateProjectsOverviewOperationParams): Promise<void> => {
   try {
-    const projectPages = await fetchDetailPages({
-      collection: 'projectDetailPage',
-      depth: 0,
-      language: locale,
+    const projectPages = await fetchProjectsPages({
       limit: 0,
+      locale,
       payload,
-      sort: 'createdAt',
       tenant,
     });
 

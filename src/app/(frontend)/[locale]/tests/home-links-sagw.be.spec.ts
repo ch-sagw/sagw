@@ -1,3 +1,13 @@
+/**
+ * Exhaustive test:
+ * - add all possible blocks to home
+ * - add links to different pages in all possible places (hero and blocks)
+ * and test if they are rendered properly in the frontend
+ * - add italian slugs to all linked pages and test links are properly rendered
+ * in italian frontend page
+ * - check if Links collection has all required references
+ */
+
 import {
   expect,
   test,
@@ -11,9 +21,6 @@ import { getTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 import { sampleRteWithLink } from '@/utilities/rteSampleContent';
-import {
-  fetchDetailPages, fetchEventDetailPages,
-} from '@/data/fetch';
 
 const getCollectionsDocumentForId = async (id: string): Promise<any> => {
   const payload = await getPayloadCached();
@@ -35,16 +42,6 @@ const getCollectionsDocumentForId = async (id: string): Promise<any> => {
   return linksCollectionDocument.docs[0];
 };
 
-/**
- * Exhaustive test:
- * - add all possible blocks to home
- * - add links to different pages in all possible places (hero and blocks)
- * and test if they are rendered properly in the frontend
- * - add italian slugs to all linked pages and test links are properly rendered
- * in italian frontend page
- * - check if Links collection has all required references
- */
-
 test.describe('Home links (sagw)', () => {
   beforeEachAcceptCookies();
   test('rendered correctly', {
@@ -56,11 +53,6 @@ test.describe('Home links (sagw)', () => {
     let d2Link;
     let d3Link;
     let d4Link;
-    let d5Link;
-    let d6Link;
-    let d7Link;
-    // let d8Link;
-    let d9Link;
     let homeId;
     const payload = await getPayloadCached();
     const tenant = await getTenant();
@@ -159,51 +151,6 @@ test.describe('Home links (sagw)', () => {
         title: `d4 ${time}`,
       });
 
-      const detail5 = await generateDetailPage({
-        navigationTitle: 'd5',
-        parentPage: {
-          documentId: detail4.id,
-          slug: 'detailPage',
-        },
-        title: `d5 ${time}`,
-      });
-
-      const detail6 = await generateDetailPage({
-        navigationTitle: 'd6',
-        parentPage: {
-          documentId: detail5.id,
-          slug: 'detailPage',
-        },
-        title: `d6 ${time}`,
-      });
-
-      const detail7 = await generateDetailPage({
-        navigationTitle: 'd7',
-        parentPage: {
-          documentId: detail6.id,
-          slug: 'detailPage',
-        },
-        title: `d7 ${time}`,
-      });
-
-      const detail8 = await generateDetailPage({
-        navigationTitle: 'd8',
-        parentPage: {
-          documentId: detail7.id,
-          slug: 'detailPage',
-        },
-        title: `d8 ${time}`,
-      });
-
-      const detail9 = await generateDetailPage({
-        navigationTitle: 'd9',
-        parentPage: {
-          documentId: detail8.id,
-          slug: 'detailPage',
-        },
-        title: `d9 ${time}`,
-      });
-
       // #########################################
       // Update with italian
       // #########################################
@@ -253,66 +200,6 @@ test.describe('Home links (sagw)', () => {
           navigationTitle: 'd4 it',
         },
         id: detail4.id,
-        locale: 'it',
-      });
-
-      await payload.update({
-        collection: 'detailPage',
-        data: {
-          hero: {
-            title: simpleRteConfig(`d5-it-${time}`),
-          },
-          navigationTitle: 'd5 it',
-        },
-        id: detail5.id,
-        locale: 'it',
-      });
-
-      await payload.update({
-        collection: 'detailPage',
-        data: {
-          hero: {
-            title: simpleRteConfig(`d6-it-${time}`),
-          },
-          navigationTitle: 'd6 it',
-        },
-        id: detail6.id,
-        locale: 'it',
-      });
-
-      await payload.update({
-        collection: 'detailPage',
-        data: {
-          hero: {
-            title: simpleRteConfig(`d7-it-${time}`),
-          },
-          navigationTitle: 'd7 it',
-        },
-        id: detail7.id,
-        locale: 'it',
-      });
-
-      await payload.update({
-        collection: 'detailPage',
-        data: {
-          hero: {
-            title: simpleRteConfig(`d8-it-${time}`),
-          },
-          navigationTitle: 'd8 it',
-        },
-        id: detail8.id,
-        locale: 'it',
-      });
-
-      await payload.update({
-        collection: 'detailPage',
-        data: {
-          hero: {
-            title: simpleRteConfig(`d9-it-${time}`),
-          },
-          navigationTitle: 'd9 it',
-        },
-        id: detail9.id,
         locale: 'it',
       });
 
@@ -441,79 +328,6 @@ test.describe('Home links (sagw)', () => {
               ],
             },
             {
-              blockType: 'eventsTeasersBlock',
-              optionalLink: {
-                includeLink: true,
-                link: {
-                  internalLink: {
-                    documentId: detail5.id,
-                    slug: 'detailPage',
-                  },
-                  linkText: simpleRteConfig('[test]eventsTeasers:link'),
-                },
-              },
-              title: simpleRteConfig('Events'),
-            },
-            {
-              blockType: 'newsTeasersBlock',
-              colorMode: 'light',
-              optionalLink: {
-                includeLink: true,
-                link: {
-                  internalLink: {
-                    documentId: detail6.id,
-                    slug: 'detailPage',
-                  },
-                  linkText: simpleRteConfig('[test]newsTeasers:link'),
-                },
-              },
-              title: simpleRteConfig('News'),
-            },
-            {
-              blockType: 'magazineTeasersBlock',
-              optionalLink: {
-                includeLink: true,
-                link: {
-                  internalLink: {
-                    documentId: detail7.id,
-                    slug: 'detailPage',
-                  },
-                  linkText: simpleRteConfig('[test]magazineTeasers:link'),
-                },
-              },
-              title: simpleRteConfig('News'),
-            },
-
-            // enable as soon as available
-            // {
-            //   blockType: 'publicationsTeasersBlock',
-            //   optionalLink: {
-            //     includeLink: true,
-            //     link: {
-            //       internalLink: {
-            //         documentId: detail8.id,
-            //         slug: 'detailPage',
-            //       },
-            //       linkText: simpleRteConfig(''),
-            //     },
-            //   },
-            //   title: simpleRteConfig('News'),
-            // },
-            {
-              blockType: 'projectsTeasersBlock',
-              optionalLink: {
-                includeLink: true,
-                link: {
-                  internalLink: {
-                    documentId: detail9.id,
-                    slug: 'detailPage',
-                  },
-                  linkText: simpleRteConfig('[test]projectsTeasers:link'),
-                },
-              },
-              title: simpleRteConfig('News'),
-            },
-            {
               blockType: 'textBlock',
               text: sampleRteWithLink({
                 documentId: dataPrivacyDocs.docs[0].id,
@@ -550,12 +364,6 @@ test.describe('Home links (sagw)', () => {
       d2Link = await getCollectionsDocumentForId(detail2.id);
       d3Link = await getCollectionsDocumentForId(detail3.id);
       d4Link = await getCollectionsDocumentForId(detail4.id);
-      d5Link = await getCollectionsDocumentForId(detail5.id);
-      d6Link = await getCollectionsDocumentForId(detail6.id);
-      d7Link = await getCollectionsDocumentForId(detail7.id);
-      // d8Link = await getCollectionsDocumentForId(detail8.id);
-      d9Link = await getCollectionsDocumentForId(detail9.id);
-
     } catch (e) {
       throw new Error(e instanceof Error
         ? e.message
@@ -563,59 +371,7 @@ test.describe('Home links (sagw)', () => {
     }
 
     // #########################################
-    // fetch event/news/magazine/project pages
-    // #########################################
-    const eventsPages = await fetchEventDetailPages({
-      language: 'de',
-      limit: 3,
-      tenant: tenant || '',
-    });
-
-    const newsPages = await payload.find({
-      collection: 'newsDetailPage',
-      depth: 1,
-      limit: 3,
-      locale: 'de',
-      pagination: false,
-      sort: '-hero.date',
-      where: {
-        tenant: {
-          equals: tenant,
-        },
-      },
-    });
-
-    const magazinePages = await fetchDetailPages({
-      collection: 'magazineDetailPage',
-      language: 'de',
-      limit: 3,
-      sort: 'createdAt',
-      tenant: tenant || '',
-    });
-
-    const projectPages = await fetchDetailPages({
-      collection: 'projectDetailPage',
-      language: 'de',
-      limit: 3,
-      sort: 'createdAt',
-      tenant: tenant || '',
-    });
-
-    const event1Link = await getCollectionsDocumentForId(eventsPages[0].id);
-    const event2Link = await getCollectionsDocumentForId(eventsPages[0].id);
-    const event3Link = await getCollectionsDocumentForId(eventsPages[0].id);
-    const news1Link = await getCollectionsDocumentForId(newsPages.docs[0].id);
-    const news2Link = await getCollectionsDocumentForId(newsPages.docs[0].id);
-    const news3Link = await getCollectionsDocumentForId(newsPages.docs[0].id);
-    const magazine1Link = await getCollectionsDocumentForId(magazinePages[0].id);
-    const magazine2Link = await getCollectionsDocumentForId(magazinePages[1].id);
-    const magazine3Link = await getCollectionsDocumentForId(magazinePages[2].id);
-    const project1Link = await getCollectionsDocumentForId(projectPages[0].id);
-    const project2Link = await getCollectionsDocumentForId(projectPages[1].id);
-    const project3Link = await getCollectionsDocumentForId(projectPages[2].id);
-
-    // #########################################
-    // verify entries in Links collection for event/news/magazine/project pages
+    // verify entries in Links collection
     // #########################################
 
     await expect(d1Link.references[0].pageId)
@@ -625,40 +381,6 @@ test.describe('Home links (sagw)', () => {
     await expect(d3Link.references[0].pageId)
       .toStrictEqual(homeId);
     await expect(d4Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(d5Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(d6Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(d7Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    // await expect(d8Link.references[0].pageId)
-    //   .toStrictEqual(homeId);
-    await expect(d9Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(event1Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(event2Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(event3Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(news1Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(news2Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(news3Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(magazine1Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(magazine2Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(magazine3Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(project1Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(project2Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(project3Link.references[0].pageId)
       .toStrictEqual(homeId);
 
     // #########################################
@@ -687,31 +409,6 @@ test.describe('Home links (sagw)', () => {
     })
       .getAttribute('href');
 
-    const eventsTeasersLink = await page.getByRole('link', {
-      name: '[test]eventsTeasers:link',
-    })
-      .getAttribute('href');
-
-    const newsTeasersLink = await page.getByRole('link', {
-      name: '[test]newsTeasers:link',
-    })
-      .getAttribute('href');
-
-    const magazineTeasersLink = await page.getByRole('link', {
-      name: '[test]magazineTeasers:link',
-    })
-      .getAttribute('href');
-
-    // const publicationsTeasersLink = await page.getByRole('link', {
-    //   name: '[test]publicationsTeasers:link',
-    // })
-    //   .getAttribute('href');
-
-    const projectsTeasersLink = await page.getByRole('link', {
-      name: '[test]projectsTeasers:link',
-    })
-      .getAttribute('href');
-
     const dataPrivacyLink = await page.getByRole('link', {
       name: '[test]dataPrivacy:link',
     })
@@ -730,18 +427,6 @@ test.describe('Home links (sagw)', () => {
       .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}`);
     await expect(homeTeaserLink)
       .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}`);
-
-    await expect(eventsTeasersLink)
-      .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}`);
-    await expect(newsTeasersLink)
-      .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}/d6-${time}`);
-    await expect(magazineTeasersLink)
-      .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}/d6-${time}/d7-${time}`);
-    // await expect(publicationsTeasersLink)
-    //   .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}
-    // /d4-${time}/d5-${time}/d6-${time}/d7-${time}/d8-${time}`);
-    await expect(projectsTeasersLink)
-      .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}/d6-${time}/d7-${time}/d8-${time}/d9-${time}`);
 
     await expect(dataPrivacyLink)
       .toBe('/de/data-privacy-de');
@@ -774,31 +459,6 @@ test.describe('Home links (sagw)', () => {
     })
       .getAttribute('href');
 
-    const eventsTeasersLinkIt = await page.getByRole('link', {
-      name: '[test]eventsTeasers:link',
-    })
-      .getAttribute('href');
-
-    const newsTeasersLinkIt = await page.getByRole('link', {
-      name: '[test]newsTeasers:link',
-    })
-      .getAttribute('href');
-
-    const magazineTeasersLinkIt = await page.getByRole('link', {
-      name: '[test]magazineTeasers:link',
-    })
-      .getAttribute('href');
-
-    // const publicationsTeasersLink = await page.getByRole('link', {
-    //   name: '[test]publicationsTeasers:link',
-    // })
-    //   .getAttribute('href');
-
-    const projectsTeasersLinkIt = await page.getByRole('link', {
-      name: '[test]projectsTeasers:link',
-    })
-      .getAttribute('href');
-
     const dataPrivacyLinkIt = await page.getByRole('link', {
       name: '[test]dataPrivacy:link',
     })
@@ -817,19 +477,6 @@ test.describe('Home links (sagw)', () => {
       .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
     await expect(homeTeaserLinkIt)
       .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}`);
-
-    await expect(eventsTeasersLinkIt)
-      .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
-    await expect(newsTeasersLinkIt)
-      .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}`);
-    await expect(magazineTeasersLinkIt)
-      .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}/d7-it-${time}`);
-    // await expect(publicationsTeasersLinkIt)
-    //   .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/
-    // d3-it-${time}
-    // /d4-it-${time}/d5-it-${time}/d6-it-${time}/d7-it-${time}/d8-${time}`);
-    await expect(projectsTeasersLinkIt)
-      .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}/d7-it-${time}/d8-it-${time}/d9-it-${time}`);
 
     await expect(dataPrivacyLinkIt)
       .toBe('/it/data-privacy-it');

@@ -263,7 +263,7 @@ export const fetchMagazinePages = async ({
     language: locale,
     limit,
     payload,
-    sort: 'createdAt',
+    sort: '-hero.date',
     tenant,
   });
 
@@ -293,7 +293,7 @@ export const fetchProjectsPages = async ({
     language: locale,
     limit,
     payload,
-    sort: 'createdAt',
+    sort: '-createdAt',
     tenant,
   });
 

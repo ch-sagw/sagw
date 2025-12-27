@@ -1278,6 +1278,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     draft: false,
   });
 
+  console.log('-->> creating magazine detail pages');
+
   // create magazine detail pages
   await Promise.all(Array.from({
     length: 12,
@@ -1319,6 +1321,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       },
     });
   }));
+
+  console.log('-->> creating event detail pages');
 
   // event detail pages (render detail Page)
   await Promise.all(Array.from({
@@ -1403,6 +1407,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     });
   }));
 
+  console.log('-->> creating event detail pages (render link)');
+
   // event detail page (render link)
   await Promise.all(Array.from({
     length: 12,
@@ -1437,6 +1443,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     });
   }));
 
+  console.log('-->> creating news detail pages');
+
   // news detail pages
   await Promise.all(Array.from({
     length: 25,
@@ -1470,6 +1478,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       draft: false,
     });
   }));
+
+  console.log('-->> creating publication detail pages');
 
   // publication detail pages
   await Promise.all(Array.from({
@@ -1507,6 +1517,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     });
   }));
 
+  console.log('-->> creating institute detail pages');
+
   // institute detail page
   await Promise.all(Array.from({
     length: 12,
@@ -1532,6 +1544,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       },
     });
   }));
+
+  console.log('-->> creating national dictionaries detail pages');
 
   // national dictionary detail page
   await Promise.all(Array.from({
@@ -1559,6 +1573,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     });
   }));
 
+  console.log('-->> creating project detail pages');
+
   // project detail pages
   await Promise.all(Array.from({
     length: 12,
@@ -1585,6 +1601,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       },
     });
   }));
+
+  console.log('-->> finished creating pages');
 
   // add consent data
   await payload.create({

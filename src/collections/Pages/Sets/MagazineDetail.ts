@@ -10,6 +10,7 @@ import { rte2 } from '@/field-templates/rte';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
+import { hookUpdateLinkReferencesReverse } from '@/hooks-payload/updateLinkReferencesReverse';
 import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccessMagazineDetail } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
@@ -104,7 +105,9 @@ export const MagazineDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: genericPageHooks(),
+  hooks: genericPageHooks({
+    afterChange: [hookUpdateLinkReferencesReverse],
+  }),
   labels: {
     plural: 'Magazine Detail Pages',
     singular: 'Magazine Detail',

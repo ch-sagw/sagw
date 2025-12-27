@@ -1,3 +1,5 @@
+// make sure correct data is rendered for a spcific url (tenant & locale)
+
 import {
   expect,
   test,
@@ -13,8 +15,6 @@ import {
   generateDataPrivacyPage,
   generateDetailPage, generateFooterData, generateHomePage, generateI18nData, generateImpressumPage, generateOverviewPage,
 } from '@/test-helpers/page-generator';
-
-// make sure correct data is rendered for a spcific url (tenant & locale)
 
 test.describe('Data rendering (sagw)', () => {
   beforeEachAcceptCookies();

@@ -1,3 +1,5 @@
+// Test if breadrcumb is rendered properly in various languages
+
 import {
   expect,
   test,

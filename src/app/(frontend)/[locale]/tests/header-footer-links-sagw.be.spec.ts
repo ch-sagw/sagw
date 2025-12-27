@@ -1,3 +1,5 @@
+// Test if links in header and footer are rendered correctly
+
 import {
   expect,
   test,
@@ -11,6 +13,26 @@ import { getTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 
+const getCollectionsDocumentForId = async (id: string): Promise<any> => {
+  const payload = await getPayloadCached();
+
+  const linksCollectionDocument = await payload.find({
+    collection: 'links',
+    limit: 1,
+    where: {
+      and: [
+        {
+          documentId: {
+            equals: id,
+          },
+        },
+      ],
+    },
+  });
+
+  return linksCollectionDocument.docs[0];
+};
+
 test.describe('Header/Footer links (sagw)', () => {
   beforeEachAcceptCookies();
   test('rendered correctly', {
@@ -20,6 +42,9 @@ test.describe('Header/Footer links (sagw)', () => {
   }) => {
     let headerId;
     let homeId;
+    let level1;
+    let detail1;
+    let detail2;
     const payload = await getPayloadCached();
     const tenant = await getTenant();
     const time = (new Date())
@@ -62,7 +87,7 @@ test.describe('Header/Footer links (sagw)', () => {
 
       homeId = home.docs[0].id;
 
-      const level1 = await generateOverviewPage({
+      level1 = await generateOverviewPage({
         navigationTitle: 'o1',
         parentPage: {
           documentId: homeId,
@@ -71,7 +96,7 @@ test.describe('Header/Footer links (sagw)', () => {
         title: `o1 ${time}`,
       });
 
-      const detail1 = await generateDetailPage({
+      detail1 = await generateDetailPage({
         navigationTitle: 'd1',
         parentPage: {
           documentId: level1.id,
@@ -80,7 +105,7 @@ test.describe('Header/Footer links (sagw)', () => {
         title: `d1 ${time}`,
       });
 
-      const detail2 = await generateDetailPage({
+      detail2 = await generateDetailPage({
         navigationTitle: 'd2',
         parentPage: {
           documentId: detail1.id,
@@ -169,6 +194,7 @@ test.describe('Header/Footer links (sagw)', () => {
         },
         id: headerId,
       });
+
     } catch (e) {
       throw new Error(e instanceof Error
         ? e.message
@@ -176,11 +202,25 @@ test.describe('Header/Footer links (sagw)', () => {
     }
 
     // #########################################
-    // verify correct url rendering: de
+    // verify entries in Links collection
     // #########################################
     await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
 
+    const o1Link = await getCollectionsDocumentForId(level1.id);
+    const d1Link = await getCollectionsDocumentForId(detail1.id);
+    const d2Link = await getCollectionsDocumentForId(detail2.id);
+
+    await expect(o1Link.references[0].pageId)
+      .toStrictEqual(headerId);
+    await expect(d1Link.references[0].pageId)
+      .toStrictEqual(headerId);
+    await expect(d2Link.references[0].pageId)
+      .toStrictEqual(headerId);
+
+    // #########################################
+    // verify correct url rendering: de
+    // #########################################
     const link1Header = await page.getByRole('link', {
       name: '[test]nav-link1:link',
     })
@@ -282,6 +322,5 @@ test.describe('Header/Footer links (sagw)', () => {
       .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}/d2-it-${time}`);
     await expect(link3FooterIt)
       .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}/d2-it-${time}`);
-
   });
 });

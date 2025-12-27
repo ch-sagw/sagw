@@ -1,3 +1,5 @@
+// Test if links in header and footer are rendered correctly
+
 import {
   expect,
   test,
@@ -17,6 +19,26 @@ import { generateTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 
+const getCollectionsDocumentForId = async (id: string): Promise<any> => {
+  const payload = await getPayloadCached();
+
+  const linksCollectionDocument = await payload.find({
+    collection: 'links',
+    limit: 1,
+    where: {
+      and: [
+        {
+          documentId: {
+            equals: id,
+          },
+        },
+      ],
+    },
+  });
+
+  return linksCollectionDocument.docs[0];
+};
+
 test.describe('Header/Footer links (non-sagw)', () => {
   beforeEachAcceptCookies();
   test('rendered correctly', {
@@ -24,6 +46,9 @@ test.describe('Header/Footer links (non-sagw)', () => {
   }, async ({
     page,
   }) => {
+    let level1;
+    let detail1;
+    let detail2;
     const time = (new Date())
       .getTime();
     const payload = await getPayloadCached();
@@ -36,12 +61,13 @@ test.describe('Header/Footer links (non-sagw)', () => {
       title: 'Title',
     });
     const homeId = home.id;
+    let header;
 
     try {
       // #########################################
       // Generate pages to link to
       // #########################################
-      const level1 = await generateOverviewPage({
+      level1 = await generateOverviewPage({
         navigationTitle: 'o1',
         parentPage: {
           documentId: homeId,
@@ -51,7 +77,7 @@ test.describe('Header/Footer links (non-sagw)', () => {
         title: `o1 ${time}`,
       });
 
-      const detail1 = await generateDetailPage({
+      detail1 = await generateDetailPage({
         navigationTitle: 'd1',
         parentPage: {
           documentId: level1.id,
@@ -61,7 +87,7 @@ test.describe('Header/Footer links (non-sagw)', () => {
         title: `d1 ${time}`,
       });
 
-      const detail2 = await generateDetailPage({
+      detail2 = await generateDetailPage({
         navigationTitle: 'd2',
         parentPage: {
           documentId: detail1.id,
@@ -114,7 +140,7 @@ test.describe('Header/Footer links (non-sagw)', () => {
       // #########################################
       // add header data
       // #########################################
-      await payload.create({
+      header = await payload.create({
         collection: 'header',
         data: {
           metanavigation: {
@@ -199,11 +225,25 @@ test.describe('Header/Footer links (non-sagw)', () => {
     }
 
     // #########################################
-    // verify correct url rendering: de
+    // verify entries in Links collection
     // #########################################
     await page.goto(`http://localhost:3000/de/tenant-${time}`);
     await page.waitForLoadState('networkidle');
 
+    const o1Link = await getCollectionsDocumentForId(level1.id);
+    const d1Link = await getCollectionsDocumentForId(detail1.id);
+    const d2Link = await getCollectionsDocumentForId(detail2.id);
+
+    await expect(o1Link.references[0].pageId)
+      .toStrictEqual(header.id);
+    await expect(d1Link.references[0].pageId)
+      .toStrictEqual(header.id);
+    await expect(d2Link.references[0].pageId)
+      .toStrictEqual(header.id);
+
+    // #########################################
+    // verify correct url rendering: de
+    // #########################################
     const link1Header = await page.getByRole('link', {
       name: '[test]nav-link1:link',
     })
