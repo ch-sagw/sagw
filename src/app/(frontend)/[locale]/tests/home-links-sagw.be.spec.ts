@@ -54,6 +54,8 @@ test.describe('Home links (sagw)', () => {
     let d3Link;
     let d4Link;
     let homeId;
+    let detail1;
+    let detail4;
     const payload = await getPayloadCached();
     const tenant = await getTenant();
     const time = (new Date())
@@ -115,7 +117,7 @@ test.describe('Home links (sagw)', () => {
         locale: 'it',
       });
 
-      const detail1 = await generateDetailPage({
+      detail1 = await generateDetailPage({
         navigationTitle: 'd1',
         parentPage: {
           documentId: level1a.id,
@@ -142,7 +144,7 @@ test.describe('Home links (sagw)', () => {
         title: `d3 ${time}`,
       });
 
-      const detail4 = await generateDetailPage({
+      detail4 = await generateDetailPage({
         navigationTitle: 'd4',
         parentPage: {
           documentId: detail3.id,
@@ -483,5 +485,22 @@ test.describe('Home links (sagw)', () => {
     await expect(impressumLinkIt)
       .toBe('/it/impressum-it');
 
+    // remove form and home teasers and verify that link references are removed
+    // empty homepage
+    await payload.update({
+      collection: 'homePage',
+      data: {
+        content: [],
+      },
+      id: homeId,
+    });
+
+    const d1LinkUpdated = await getCollectionsDocumentForId(detail1.id);
+    const d4LinkUpdated = await getCollectionsDocumentForId(detail4.id);
+
+    await expect(d1LinkUpdated.references)
+      .toHaveLength(0);
+    await expect(d4LinkUpdated.references)
+      .toHaveLength(0);
   });
 });

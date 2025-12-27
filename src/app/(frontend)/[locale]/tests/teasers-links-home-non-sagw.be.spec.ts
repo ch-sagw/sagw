@@ -64,6 +64,10 @@ test.describe('Teasers links (non-sagw)', () => {
     let projectPage2;
     let magazinePage1;
     let magazinePage2;
+    let detail1;
+    let detail2;
+    let detail3;
+    let detail5;
     const time = (new Date())
       .getTime();
     const payload = await getPayloadCached();
@@ -106,7 +110,7 @@ test.describe('Teasers links (non-sagw)', () => {
         locale: 'it',
       });
 
-      const detail1 = await generateDetailPage({
+      detail1 = await generateDetailPage({
         navigationTitle: 'd1',
         parentPage: {
           documentId: level1a.id,
@@ -116,7 +120,7 @@ test.describe('Teasers links (non-sagw)', () => {
         title: `d1 ${time}`,
       });
 
-      const detail2 = await generateDetailPage({
+      detail2 = await generateDetailPage({
         navigationTitle: 'd2',
         parentPage: {
           documentId: detail1.id,
@@ -126,7 +130,7 @@ test.describe('Teasers links (non-sagw)', () => {
         title: `d2 ${time}`,
       });
 
-      const detail3 = await generateDetailPage({
+      detail3 = await generateDetailPage({
         navigationTitle: 'd3',
         parentPage: {
           documentId: detail2.id,
@@ -146,7 +150,7 @@ test.describe('Teasers links (non-sagw)', () => {
         title: `d4 ${time}`,
       });
 
-      const detail5 = await generateDetailPage({
+      detail5 = await generateDetailPage({
         navigationTitle: 'd5',
         parentPage: {
           documentId: detail4.id,
@@ -747,6 +751,32 @@ test.describe('Teasers links (non-sagw)', () => {
       .toStrictEqual(`/it/tenant-${time}-it/overview-page-1-it-${time}/p1-it-${time}`);
     await expect(projectLink2It)
       .toStrictEqual(`/it/tenant-${time}-it/overview-page-1-it-${time}/p1-it-${time}/p2-it-${time}`);
+
+    // #########################################
+    // remove teasers and make sure that optional link referenced are removed
+    // #########################################
+    await payload.update({
+      collection: 'homePage',
+      data: {
+        content: [],
+      },
+      id: homeId,
+    });
+
+    const d1LinkUpdated = await getCollectionsDocumentForId(detail1.id);
+    const d2LinkUpdated = await getCollectionsDocumentForId(detail2.id);
+    const d3LinkUpdated = await getCollectionsDocumentForId(detail3.id);
+    // d4Link = await getCollectionsDocumentForId(detail4.id);
+    const d5LinkUpdated = await getCollectionsDocumentForId(detail5.id);
+
+    await expect(d1LinkUpdated.references)
+      .toHaveLength(0);
+    await expect(d2LinkUpdated.references)
+      .toHaveLength(0);
+    await expect(d3LinkUpdated.references)
+      .toHaveLength(0);
+    await expect(d5LinkUpdated.references)
+      .toHaveLength(0);
 
     // #########################################
     // cleanup

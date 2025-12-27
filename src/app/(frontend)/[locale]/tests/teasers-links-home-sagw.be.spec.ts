@@ -58,6 +58,10 @@ test.describe('Teasers links (sagw)', () => {
     let projectPage2;
     let magazinePage1;
     let magazinePage2;
+    let detail1;
+    let detail2;
+    let detail3;
+    let detail5;
     const payload = await getPayloadCached();
     const tenant = await getTenant();
     const time = (new Date())
@@ -110,7 +114,7 @@ test.describe('Teasers links (sagw)', () => {
         locale: 'it',
       });
 
-      const detail1 = await generateDetailPage({
+      detail1 = await generateDetailPage({
         navigationTitle: 'd1',
         parentPage: {
           documentId: level1a.id,
@@ -119,7 +123,7 @@ test.describe('Teasers links (sagw)', () => {
         title: `d1 ${time}`,
       });
 
-      const detail2 = await generateDetailPage({
+      detail2 = await generateDetailPage({
         navigationTitle: 'd2',
         parentPage: {
           documentId: detail1.id,
@@ -128,7 +132,7 @@ test.describe('Teasers links (sagw)', () => {
         title: `d2 ${time}`,
       });
 
-      const detail3 = await generateDetailPage({
+      detail3 = await generateDetailPage({
         navigationTitle: 'd3',
         parentPage: {
           documentId: detail2.id,
@@ -146,7 +150,7 @@ test.describe('Teasers links (sagw)', () => {
         title: `d4 ${time}`,
       });
 
-      const detail5 = await generateDetailPage({
+      detail5 = await generateDetailPage({
         navigationTitle: 'd5',
         parentPage: {
           documentId: detail4.id,
@@ -712,6 +716,32 @@ test.describe('Teasers links (sagw)', () => {
       .toStrictEqual(`/it/overview-page-1-it-${time}/p1-it-${time}/p2-it-${time}`);
 
     // #########################################
+    // remove teasers and make sure that optional link referenced are removed
+    // #########################################
+    await payload.update({
+      collection: 'homePage',
+      data: {
+        content: [],
+      },
+      id: homeId,
+    });
+
+    const d1LinkUpdated = await getCollectionsDocumentForId(detail1.id);
+    const d2LinkUpdated = await getCollectionsDocumentForId(detail2.id);
+    const d3LinkUpdated = await getCollectionsDocumentForId(detail3.id);
+    // d4Link = await getCollectionsDocumentForId(detail4.id);
+    const d5LinkUpdated = await getCollectionsDocumentForId(detail5.id);
+
+    await expect(d1LinkUpdated.references)
+      .toHaveLength(0);
+    await expect(d2LinkUpdated.references)
+      .toHaveLength(0);
+    await expect(d3LinkUpdated.references)
+      .toHaveLength(0);
+    await expect(d5LinkUpdated.references)
+      .toHaveLength(0);
+
+    // #########################################
     // cleanup
     // #########################################
 
@@ -754,15 +784,6 @@ test.describe('Teasers links (sagw)', () => {
     await payload.delete({
       collection: 'magazineDetailPage',
       id: magazinePage2.id,
-    });
-
-    // empty homepage
-    await payload.update({
-      collection: 'homePage',
-      data: {
-        content: [],
-      },
-      id: homeId,
     });
   });
 });
