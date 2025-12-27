@@ -38,10 +38,11 @@ const getCollectionsDocumentForId = async (id: string): Promise<any> => {
 // This test first adds pages (e.g. EventDetailPage, NewsDetailPage etc.)
 // later on, add teaser blocks and make sure that these pages get the homeId
 // as a reference in their Link-Document.
+// It also tests if references are removed after pages are deleted.
 
 test.describe('Teasers links, add pages before teasers (non-sagw)', () => {
   beforeEachAcceptCookies();
-  test('added correctly', {
+  test('added/removed correctly', {
     tag: '@linking',
   }, async () => {
     let eventPage1;
@@ -362,16 +363,55 @@ test.describe('Teasers links, add pages before teasers (non-sagw)', () => {
       .toStrictEqual(homeId);
     await expect(project2Link.references[0].pageId)
       .toStrictEqual(homeId);
+
+    // empty homepage
+    await payload.update({
+      collection: 'homePage',
+      data: {
+        content: [],
+      },
+      id: homeId,
+    });
+
+    // #########################################
+    // verify entries in Links collection are removed
+    // #########################################
+    const event1LinkUpdated = await getCollectionsDocumentForId(eventPage1.id);
+    const event2LinkUpdated = await getCollectionsDocumentForId(eventPage2.id);
+    const news1LinkUpdated = await getCollectionsDocumentForId(newsPage1.id);
+    const news2LinkUpdated = await getCollectionsDocumentForId(newsPage2.id);
+    const magazine1LinkUpdated = await getCollectionsDocumentForId(magazinePage1.id);
+    const magazine2LinkUpdated = await getCollectionsDocumentForId(magazinePage2.id);
+    const project1LinkUpdated = await getCollectionsDocumentForId(projectPage1.id);
+    const project2LinkUpdated = await getCollectionsDocumentForId(projectPage2.id);
+
+    await expect(event1LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
+    await expect(event2LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
+    await expect(news1LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
+    await expect(news2LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
+    await expect(magazine1LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
+    await expect(magazine2LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
+    await expect(project1LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
+    await expect(project2LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
   });
 });
 
 // This test checks the reverse order: first, add teaser blocks to the page.
 // later on, add pages (e.g. EventDetailPage, NewsDetailPage etc.) and make
 // sure that these pages get the homeId as a reference in their Link-Document.
+// It also tests if references are removed after pages are deleted.
 
 test.describe('Teasers links, add teasers before pages (non-sagw)', () => {
   beforeEachAcceptCookies();
-  test('added correctly', {
+  test('added/removed correctly', {
     tag: '@linking',
   }, async () => {
     let eventPage1;
@@ -577,5 +617,43 @@ test.describe('Teasers links, add teasers before pages (non-sagw)', () => {
       .toBe(true);
     await expect(project2Link.references.some((ref: any) => ref.pageId === homeId))
       .toBe(true);
+
+    // empty homepage
+    await payload.update({
+      collection: 'homePage',
+      data: {
+        content: [],
+      },
+      id: homeId,
+    });
+
+    // #########################################
+    // verify entries in Links collection are removed
+    // #########################################
+    const event1LinkUpdated = await getCollectionsDocumentForId(eventPage1.id);
+    const event2LinkUpdated = await getCollectionsDocumentForId(eventPage2.id);
+    const news1LinkUpdated = await getCollectionsDocumentForId(newsPage1.id);
+    const news2LinkUpdated = await getCollectionsDocumentForId(newsPage2.id);
+    const magazine1LinkUpdated = await getCollectionsDocumentForId(magazinePage1.id);
+    const magazine2LinkUpdated = await getCollectionsDocumentForId(magazinePage2.id);
+    const project1LinkUpdated = await getCollectionsDocumentForId(projectPage1.id);
+    const project2LinkUpdated = await getCollectionsDocumentForId(projectPage2.id);
+
+    await expect(event1LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
+    await expect(event2LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
+    await expect(news1LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
+    await expect(news2LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
+    await expect(magazine1LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
+    await expect(magazine2LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
+    await expect(project1LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
+    await expect(project2LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
   });
 });
