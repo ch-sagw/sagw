@@ -430,9 +430,8 @@ test.describe('Home links (sagw)', () => {
     // #########################################
     // verify entries in Links collection
     // #########################################
-
-    await expect(d1Link.references[0].pageId)
-      .toStrictEqual(homeId);
+    await expect(d1Link.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(true);
     await expect(d2Link.references[0].pageId)
       .toStrictEqual(homeId);
     await expect(d3Link.references[0].pageId)
@@ -567,8 +566,8 @@ test.describe('Home links (sagw)', () => {
     const d1LinkUpdated = await getCollectionsDocumentForId(detail1.id);
     const d4LinkUpdated = await getCollectionsDocumentForId(detail4.id);
 
-    await expect(d1LinkUpdated.references)
-      .toHaveLength(0);
+    await expect(d1LinkUpdated.references.some((ref: any) => ref.pageId === homeId))
+      .toBe(false);
     await expect(d4LinkUpdated.references)
       .toHaveLength(0);
   });

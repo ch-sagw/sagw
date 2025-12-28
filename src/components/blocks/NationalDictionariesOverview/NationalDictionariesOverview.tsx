@@ -27,7 +27,7 @@ export const NationalDictionariesOverview = async (props: InterfaceNationalDicti
     collection: 'nationalDictionaryDetailPage',
     language: locale,
     limit: 0,
-    sort: 'createdAt',
+    sort: '-createdAt',
     tenant,
   }) as NationalDictionaryDetailPage[];
 

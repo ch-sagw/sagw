@@ -31,10 +31,38 @@ export const FormServer = async ({
     return <Fragment></Fragment>;
   }
 
-  let renderForm;
+  let renderForm: InterfaceForm | undefined;
+  const locale = (await getLocale()) as Config['locale'];
 
-  if (typeof form === 'object') {
-    renderForm = form as InterfaceForm;
+  // Always fetch the form fresh to ensure we have all fields
+  let formId: string | undefined;
+
+  if (typeof form === 'string') {
+    formId = form;
+  } else if (typeof form === 'object' && form !== null && 'id' in form) {
+    formId = typeof form.id === 'string'
+      ? form.id
+      : String(form.id);
+  }
+
+  if (formId) {
+    const fetchedForm = await payload.findByID({
+      collection: 'forms',
+      depth: 0,
+      id: formId,
+      locale,
+    });
+
+    if (!fetchedForm) {
+      return <Fragment></Fragment>;
+    }
+
+    renderForm = fetchedForm as InterfaceForm;
+  } else {
+    // Fallback: use the form object if we can't extract an ID
+    if (typeof form === 'object' && form !== null) {
+      renderForm = form as InterfaceForm;
+    }
   }
 
   if (!renderForm) {
@@ -127,8 +155,6 @@ export const FormServer = async ({
   }
 
   // --- prerender RTE content for client component
-  const locale = (await getLocale()) as Config['locale'];
-
   const preRenderedLabels: Record<string, string> = {};
   const preRenderedRadioLabels: Record<string, Record<string, string>> = {};
 
