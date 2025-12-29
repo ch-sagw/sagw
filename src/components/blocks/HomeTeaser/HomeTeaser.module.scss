@@ -28,7 +28,7 @@
         width: px-to-rem(200);
         height: px-to-rem(200);
         order: 2;
-        margin-block-end: 0;
+        margin-block-end: px-to-rem(28);
       }
     }
 
