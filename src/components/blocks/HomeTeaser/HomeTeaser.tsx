@@ -20,7 +20,7 @@ export const HomeTeaser = ({
         category,
         title,
         text,
-        // iconName,
+        iconName,
         link,
       } = teaser;
 
@@ -34,9 +34,8 @@ export const HomeTeaser = ({
           additionalContentClassName={styles.stickyContent}
           titleClassName={styles.stickyTitle}
           additionalStickyContent={
-            // TODO: when moxy ready, render proper icon
             <Icon
-              name='arrowRight'
+              name={iconName as keyof typeof Icon}
               className={styles.icon}
             />
           }

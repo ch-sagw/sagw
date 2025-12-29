@@ -32,8 +32,21 @@ export const HomeTeasers: StrictStory = {
     blockType: 'homeTeasersBlock',
     homeTeasers: [
       {
+        category: 'Aktivitäten',
+        iconName: 'homeTeaserActivities',
+        link: {
+          internalLink: {
+            documentId: 'someid',
+            slug: 'someslug',
+          },
+          linkText: simpleRteConfig('Zu den Aktivitäten'),
+        },
+        text: simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.'),
+        title: simpleRteConfig('Wir initiieren Debatten und vermittelt Wissen zwischen Wissenschaft, Gesellschaft und Politik.'),
+      },
+      {
         category: 'Förderung',
-        iconName: 'bar',
+        iconName: 'homeTeaserFunding',
         link: {
           internalLink: {
             documentId: 'someid',
@@ -47,30 +60,16 @@ export const HomeTeasers: StrictStory = {
 
       {
         category: 'Netzwerk',
-        iconName: 'bar',
+        iconName: 'homeTeaserNetwork',
         link: {
           internalLink: {
             documentId: 'someid',
             slug: 'someslug',
           },
-          linkText: simpleRteConfig('Zum Netzwerkl'),
+          linkText: simpleRteConfig('Zum Netzwerk'),
         },
         text: simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.'),
         title: simpleRteConfig('Wir verbinden Disziplinen, Menschen und Institutionen in einem einzigartigen wissenschaftlichen Netzwerk.'),
-      },
-
-      {
-        category: 'Aktivitäten',
-        iconName: 'bar',
-        link: {
-          internalLink: {
-            documentId: 'someid',
-            slug: 'someslug',
-          },
-          linkText: simpleRteConfig('Zu den Aktivitäten'),
-        },
-        text: simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.'),
-        title: simpleRteConfig('Wir initiieren Debatten und vermittelt Wissen zwischen Wissenschaft, Gesellschaft und Politik.'),
       },
     ],
   },
