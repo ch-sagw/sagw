@@ -6,6 +6,7 @@ import {
 } from '@/field-templates/adminTitle';
 import { rte1 } from '@/field-templates/rte';
 import { globalContentAccessGeneric } from '@/access/globalContent';
+import { hookUpdateLinkReferences } from '@/hooks-payload/updateLinkReferences';
 
 export const StatusMessage: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -106,6 +107,9 @@ export const StatusMessage: CollectionConfig = {
       type: 'group',
     },
   ],
+  hooks: {
+    afterChange: [hookUpdateLinkReferences],
+  },
   labels: {
     plural: 'Status Message',
     singular: 'Status Message',

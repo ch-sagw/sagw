@@ -7,10 +7,14 @@ import { FormComponent } from '@/components/blocks/Form/Form.component';
 
 type InterfaceFormClientPropTypes = {
   form: InterfaceForm;
+  preRenderedLabels: Record<string, string>;
+  preRenderedRadioLabels: Record<string, Record<string, string>>;
 };
 
 export const FormClient = ({
   form,
+  preRenderedLabels,
+  preRenderedRadioLabels,
 }: InterfaceFormClientPropTypes): React.JSX.Element => {
 
   // --- State
@@ -49,6 +53,8 @@ export const FormClient = ({
       errors={errors}
       submitSuccess={submitSuccess}
       submitError={submitError}
+      preRenderedLabels={preRenderedLabels}
+      preRenderedRadioLabels={preRenderedRadioLabels}
     />
   );
 };

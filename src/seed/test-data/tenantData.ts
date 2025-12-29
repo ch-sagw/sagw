@@ -256,180 +256,6 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     },
   });
 
-  // add header data
-  await payload.create({
-    collection: 'header',
-    data: {
-      metanavigation: {
-        metaLinks: [
-          {
-            linkExternal: {
-              externalLink: 'https://www.foo.bar',
-              externalLinkText: simpleRteConfig('Brand Guidelines'),
-            },
-            linkType: 'external',
-          },
-          {
-            linkExternal: {
-              externalLink: 'https://www.foo.bar',
-              externalLinkText: simpleRteConfig('Intranet'),
-            },
-            linkType: 'external',
-          },
-          {
-            linkExternal: {
-              externalLink: 'https://www.foo.bar',
-              externalLinkText: simpleRteConfig('mySAGW'),
-            },
-            linkType: 'external',
-          },
-        ],
-      },
-      navigation: {
-        navItems: [
-          {
-            description: simpleRteConfig(''),
-            navItemLink: {
-              documentId: '12334',
-              slug: 'someSlug',
-            },
-            navItemText: simpleRteConfig('Home'),
-          },
-          {
-            description: simpleRteConfig('Förderung von langfristigen Forschungsinfrastrukturen'),
-            navItemText: simpleRteConfig('Förderung'),
-            subNavItems: [
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Übersicht'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Institute'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Editionen'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Reisebeiträge'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Early Career Award'),
-              },
-            ],
-          },
-          {
-            description: simpleRteConfig('Unsere 63 Fachgesellschaften unter einem Dach'),
-            navItemText: simpleRteConfig('Netzwerk'),
-            subNavItems: [
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Fachgesellschaften'),
-              },
-            ],
-          },
-          {
-            description: simpleRteConfig('Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft'),
-            navItemText: simpleRteConfig('Aktivitäten'),
-            subNavItems: [
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Übersicht'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Magazin'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Publikationen'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Veranstaltungen'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('News'),
-              },
-            ],
-          },
-          {
-            description: simpleRteConfig('Alles Wissenswertes über die SAGW'),
-            navItemText: simpleRteConfig('Über uns'),
-            subNavItems: [
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Die SAGW'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Team'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Kontakt'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Offene Stellen'),
-              },
-            ],
-          },
-        ],
-      },
-      tenant: tenantId,
-    },
-  });
-
   // add status message
   await payload.create({
     collection: 'statusMessage',
@@ -741,6 +567,238 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         },
       },
       navigationTitle: 'Home',
+      tenant: tenantId,
+    },
+  });
+
+  // add some detail pages to link to in header
+  const navLinkDetail1 = await payload.create({
+    collection: 'detailPage',
+    data: {
+      _status: 'published',
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Detail Page for nav link 1 lead'),
+        title: simpleRteConfig(`Detail Page for nav link 1 ${tenant.toUpperCase()}`),
+      },
+      navigationTitle: `Detail Page for nav link 1 ${tenant.toUpperCase()}`,
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      slug: `detail-page-for-nav-link-1-${tenant.toLocaleLowerCase()}`,
+      tenant: tenantId,
+    },
+  });
+
+  const navLinkDetail2 = await payload.create({
+    collection: 'detailPage',
+    data: {
+      _status: 'published',
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Detail Page for nav link 2 lead'),
+        title: simpleRteConfig(`Detail Page for nav link 2 ${tenant.toUpperCase()}`),
+      },
+      navigationTitle: `Detail Page for nav link 2 ${tenant.toUpperCase()}`,
+      parentPage: {
+        documentId: navLinkDetail1.id,
+        slug: 'detailPage',
+      },
+      slug: `detail-page-for-nav-link-2-${tenant.toLocaleLowerCase()}`,
+      tenant: tenantId,
+    },
+  });
+
+  const navLinkDetail3 = await payload.create({
+    collection: 'detailPage',
+    data: {
+      _status: 'published',
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Detail Page for nav link 3 lead'),
+        title: simpleRteConfig(`Detail Page for nav link 3 ${tenant.toUpperCase()}`),
+      },
+      navigationTitle: `Detail Page for nav link 3 ${tenant.toUpperCase()}`,
+      parentPage: {
+        documentId: navLinkDetail2.id,
+        slug: 'detailPage',
+      },
+      slug: `detail-page-for-nav-link-3-${tenant.toLocaleLowerCase()}`,
+      tenant: tenantId,
+    },
+  });
+
+  // add header data
+  await payload.create({
+    collection: 'header',
+    data: {
+      metanavigation: {
+        metaLinks: [
+          {
+            linkExternal: {
+              externalLink: 'https://www.foo.bar',
+              externalLinkText: simpleRteConfig('Brand Guidelines'),
+            },
+            linkType: 'external',
+          },
+          {
+            linkExternal: {
+              externalLink: 'https://www.foo.bar',
+              externalLinkText: simpleRteConfig('Intranet'),
+            },
+            linkType: 'external',
+          },
+          {
+            linkExternal: {
+              externalLink: 'https://www.foo.bar',
+              externalLinkText: simpleRteConfig('mySAGW'),
+            },
+            linkType: 'external',
+          },
+        ],
+      },
+      navigation: {
+        navItems: [
+          {
+            description: simpleRteConfig(''),
+            navItemLink: {
+              documentId: navLinkDetail1.id,
+              slug: 'detailPage',
+            },
+            navItemText: simpleRteConfig('Home'),
+          },
+          {
+            description: simpleRteConfig('Förderung von langfristigen Forschungsinfrastrukturen'),
+            navItemText: simpleRteConfig('Förderung'),
+            subNavItems: [
+              {
+                navItemLink: {
+                  documentId: navLinkDetail2.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Übersicht'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail3.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Institute'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail1.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Editionen'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail2.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Reisebeiträge'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail3.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Early Career Award'),
+              },
+            ],
+          },
+          {
+            description: simpleRteConfig('Unsere 63 Fachgesellschaften unter einem Dach'),
+            navItemText: simpleRteConfig('Netzwerk'),
+            subNavItems: [
+              {
+                navItemLink: {
+                  documentId: navLinkDetail1.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Fachgesellschaften'),
+              },
+            ],
+          },
+          {
+            description: simpleRteConfig('Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft'),
+            navItemText: simpleRteConfig('Aktivitäten'),
+            subNavItems: [
+              {
+                navItemLink: {
+                  documentId: navLinkDetail2.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Übersicht'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail3.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Magazin'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail1.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Publikationen'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail2.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Veranstaltungen'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail3.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('News'),
+              },
+            ],
+          },
+          {
+            description: simpleRteConfig('Alles Wissenswertes über die SAGW'),
+            navItemText: simpleRteConfig('Über uns'),
+            subNavItems: [
+              {
+                navItemLink: {
+                  documentId: navLinkDetail1.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Die SAGW'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail2.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Team'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail3.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Kontakt'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail1.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Offene Stellen'),
+              },
+            ],
+          },
+        ],
+      },
       tenant: tenantId,
     },
   });
@@ -1220,6 +1278,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     draft: false,
   });
 
+  console.log('-->> creating magazine detail pages');
+
   // create magazine detail pages
   await Promise.all(Array.from({
     length: 12,
@@ -1261,6 +1321,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       },
     });
   }));
+
+  console.log('-->> creating event detail pages');
 
   // event detail pages (render detail Page)
   await Promise.all(Array.from({
@@ -1345,6 +1407,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     });
   }));
 
+  console.log('-->> creating event detail pages (render link)');
+
   // event detail page (render link)
   await Promise.all(Array.from({
     length: 12,
@@ -1379,6 +1443,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     });
   }));
 
+  console.log('-->> creating news detail pages');
+
   // news detail pages
   await Promise.all(Array.from({
     length: 25,
@@ -1412,6 +1478,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       draft: false,
     });
   }));
+
+  console.log('-->> creating publication detail pages');
 
   // publication detail pages
   await Promise.all(Array.from({
@@ -1449,6 +1517,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     });
   }));
 
+  console.log('-->> creating institute detail pages');
+
   // institute detail page
   await Promise.all(Array.from({
     length: 12,
@@ -1474,6 +1544,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       },
     });
   }));
+
+  console.log('-->> creating national dictionaries detail pages');
 
   // national dictionary detail page
   await Promise.all(Array.from({
@@ -1501,6 +1573,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     });
   }));
 
+  console.log('-->> creating project detail pages');
+
   // project detail pages
   await Promise.all(Array.from({
     length: 12,
@@ -1527,6 +1601,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       },
     });
   }));
+
+  console.log('-->> finished creating pages');
 
   // add consent data
   await payload.create({

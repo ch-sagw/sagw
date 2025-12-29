@@ -13,6 +13,8 @@ import { getFirstImageIdOfMagazinePage } from '@/components/helpers/magazineImag
 
 export type InterfaceMagazineTeaserComponentPropTypes = {
   pages: MagazineDetailPage[];
+  pageUrls: Record<string, string>;
+  optionalLinkUrl?: string;
 } & InterfaceMagazineTeasersBlock;
 
 export const MagazineTeaserComponent = ({
@@ -21,6 +23,8 @@ export const MagazineTeaserComponent = ({
   alignement,
   optionalLink,
   pages,
+  pageUrls,
+  optionalLinkUrl,
 }: InterfaceMagazineTeaserComponentPropTypes): React.JSX.Element => (
   <Fragment>
     <Section
@@ -40,32 +44,32 @@ export const MagazineTeaserComponent = ({
           iconInlineStart={'arrowRight' as keyof typeof Icon}
           isActive={true}
           prefetch={true}
-
-          // TODO: generate proper url
-          href={`${optionalLink.link?.internalLink.slug}/${optionalLink.link?.internalLink.documentId}`}
+          href={optionalLinkUrl || `/${optionalLink.link?.internalLink.documentId}`}
         />
       }
     </Section>
 
     <ul className={styles.list}>
-      {pages.map((item) => (
-        <GenericTeaser
-          className={styles.item}
-          key={item.id}
-          title={rteToHtml(item.hero.title)}
-          texts={[rteToHtml(item.overviewPageProps.teaserText)]}
-          type='magazine'
-          image={getFirstImageIdOfMagazinePage(item)}
+      {pages.map((item) => {
+        const href = pageUrls[item.id] || `/${item.id}`;
 
-          // TODO: generate proper url
-          links={[
-            {
-              href: `${item.slug}/${item.id}`,
-              type: 'internal',
-            },
-          ]}
-        />
-      ))}
+        return (
+          <GenericTeaser
+            className={styles.item}
+            key={item.id}
+            title={rteToHtml(item.hero.title)}
+            texts={[rteToHtml(item.overviewPageProps.teaserText)]}
+            type='magazine'
+            image={getFirstImageIdOfMagazinePage(item)}
+            links={[
+              {
+                href,
+                type: 'internal',
+              },
+            ]}
+          />
+        );
+      })}
     </ul>
   </Fragment>
 );

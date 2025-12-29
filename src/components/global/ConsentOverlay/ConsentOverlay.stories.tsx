@@ -4,14 +4,15 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import type { PartialStoryFn } from 'storybook/internal/types';
-import { ConsentOverlay } from '@/components/global/ConsentOverlay/ConsentOverlay';
+import {
+  ConsentOverlayClient, type InterfaceConsentOverlayClientPropTypes,
+} from '@/components/global/ConsentOverlay/ConsentOverlay.client';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
-type ConsentOverlayProps = React.ComponentProps<typeof ConsentOverlay>;
-
-type StrictStory = StoryObj<typeof ConsentOverlay> & {
-  args: ConsentOverlayProps;
+type StrictStory = StoryObj<typeof ConsentOverlayClient> & {
+  args: InterfaceConsentOverlayClientPropTypes;
 };
 
 // Decorator to automatically open the dialog
@@ -38,9 +39,9 @@ const autoOpenDecorator = (Story: PartialStoryFn): React.ReactElement => {
   );
 };
 
-const meta: Meta<typeof ConsentOverlay> = {
+const meta: Meta<typeof ConsentOverlayClient> = {
   args: {},
-  component: ConsentOverlay,
+  component: ConsentOverlayClient,
   decorators: [
     defaultDecoratorNoPadding,
     autoOpenDecorator as never,
@@ -57,25 +58,39 @@ export default meta;
 export const DefaultOverlay: StrictStory = {
   args: {
     analyticsPerformance: {
-      text: simpleRteConfig('Diese Gruppe beinhaltet alle Cookies von Skripts für analytisches Tracking. Die Analysen helfen uns, die Nutzer*innenerfahrung der Website zu verbessern.'),
-      title: simpleRteConfig('Analytics und Performance'),
-      toggleLabelOff: simpleRteConfig('Aus'),
-      toggleLabelOn: simpleRteConfig('An'),
+      text: rteToHtml(simpleRteConfig('Diese Gruppe beinhaltet alle Cookies von Skripts für analytisches Tracking. Die Analysen helfen uns, die Nutzer*innenerfahrung der Website zu verbessern.')),
+      textHtml: rteToHtml(simpleRteConfig('Diese Gruppe beinhaltet alle Cookies von Skripts für analytisches Tracking. Die Analysen helfen uns, die Nutzer*innenerfahrung der Website zu verbessern.')),
+      title: rteToHtml(simpleRteConfig('Analytics und Performance')),
+      titleHtml: rteToHtml(simpleRteConfig('Analytics und Performance')),
+      toggleDefault: 'off',
+      toggleLabelOff: rteToHtml(simpleRteConfig('Aus')),
+      toggleLabelOffHtml: rteToHtml(simpleRteConfig('Aus')),
+      toggleLabelOn: rteToHtml(simpleRteConfig('An')),
+      toggleLabelOnHtml: rteToHtml(simpleRteConfig('An')),
     },
-    buttonAcceptAll: simpleRteConfig('Alle zulassen'),
-    buttonAcceptSelection: simpleRteConfig('Auswahl zulassen'),
+    buttonAcceptAll: rteToHtml(simpleRteConfig('Alle zulassen')),
+    buttonAcceptSelection: rteToHtml(simpleRteConfig('Auswahl zulassen')),
     externalContent: {
-      text: simpleRteConfig('Externe Inhalte umfassen Cookies, die von Drittanbietern gesetzt werden, damit wir auf unserer Website Inhalte von deren Plattform bereitstellen können (wie z.B. Videos oder Social Media Feeds).'),
-      title: simpleRteConfig('Externe Inhalte'),
-      toggleLabelOff: simpleRteConfig('Aus'),
-      toggleLabelOn: simpleRteConfig('An'),
+      text: rteToHtml(simpleRteConfig('Externe Inhalte umfassen Cookies, die von Drittanbietern gesetzt werden, damit wir auf unserer Website Inhalte von deren Plattform bereitstellen können (wie z.B. Videos oder Social Media Feeds).')),
+      textHtml: rteToHtml(simpleRteConfig('Externe Inhalte umfassen Cookies, die von Drittanbietern gesetzt werden, damit wir auf unserer Website Inhalte von deren Plattform bereitstellen können (wie z.B. Videos oder Social Media Feeds).')),
+      title: rteToHtml(simpleRteConfig('Externe Inhalte')),
+      titleHtml: rteToHtml(simpleRteConfig('Externe Inhalte')),
+      toggleDefault: 'off',
+      toggleLabelOff: rteToHtml(simpleRteConfig('Aus')),
+      toggleLabelOffHtml: rteToHtml(simpleRteConfig('Aus')),
+      toggleLabelOn: rteToHtml(simpleRteConfig('An')),
+      toggleLabelOnHtml: rteToHtml(simpleRteConfig('An')),
     },
     necessaryCookies: {
-      text: simpleRteConfig('Diese Cookies sind notwendig für die grundlegenden Funktionen der Website. Ohne sie ist nicht gewährleistet, dass die Website einwandfrei funktioniert.'),
-      title: simpleRteConfig('Notwendige Cookies'),
-      toggleLabel: simpleRteConfig('Immer an'),
+      text: rteToHtml(simpleRteConfig('Diese Cookies sind notwendig für die grundlegenden Funktionen der Website. Ohne sie ist nicht gewährleistet, dass die Website einwandfrei funktioniert.')),
+      textHtml: rteToHtml(simpleRteConfig('Diese Cookies sind notwendig für die grundlegenden Funktionen der Website. Ohne sie ist nicht gewährleistet, dass die Website einwandfrei funktioniert.')),
+      title: rteToHtml(simpleRteConfig('Notwendige Cookies')),
+      titleHtml: rteToHtml(simpleRteConfig('Notwendige Cookies')),
+      toggleDefault: 'on',
+      toggleLabel: rteToHtml(simpleRteConfig('Immer an')),
+      toggleLabelHtml: rteToHtml(simpleRteConfig('Immer an')),
     },
-    text: simpleRteConfig('Sie haben die volle Kontrolle über Ihre Privatsphäre und entscheiden selbst, welche Cookies wir verwenden dürfen und welche nicht.'),
-    title: simpleRteConfig('Cookies Einstellungen'),
+    text: rteToHtml(simpleRteConfig('Sie haben die volle Kontrolle über Ihre Privatsphäre und entscheiden selbst, welche Cookies wir verwenden dürfen und welche nicht.')),
+    title: rteToHtml(simpleRteConfig('Cookies Einstellungen')),
   },
 };

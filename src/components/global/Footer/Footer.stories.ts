@@ -3,25 +3,24 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import {
-  Footer, InterfaceFooterPropTypes,
-} from '@/components/global/Footer/Footer';
+  FooterComponent, InterfaceFooterComponentPropTypes,
+} from '@/components/global/Footer/Footer.component';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import {
   defaultMetaNavItems, defaultNavItems,
 } from '@/components/global/Header/Header.sampleData';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { InterfaceFooterSocialLinks } from '@/payload-types';
-import { DefaultOverlay } from '@/components/global/ConsentOverlay/ConsentOverlay.stories';
 
-type FooterProps = React.ComponentProps<typeof Footer>;
+type FooterProps = InterfaceFooterComponentPropTypes;
 
-type StrictStory = StoryObj<typeof Footer> & {
+type StrictStory = StoryObj<typeof FooterComponent> & {
   args: FooterProps;
 };
 
-const meta: Meta<typeof Footer> = {
+const meta: Meta<typeof FooterComponent> = {
   args: {},
-  component: Footer,
+  component: FooterComponent,
   decorators: [defaultDecoratorNoPadding],
   globals: {
     backgrounds: {
@@ -30,6 +29,9 @@ const meta: Meta<typeof Footer> = {
   },
   parameters: {
     layout: 'fullscreen',
+    nextjs: {
+      appDirectory: true,
+    },
   },
   tags: [
     'autodocs',
@@ -89,10 +91,54 @@ const socialLinks: InterfaceFooterSocialLinks = {
   ],
 };
 
-const defaultArgs: InterfaceFooterPropTypes = {
-  consentOverlay: DefaultOverlay.args,
+const consentOverlay = {
+  analyticsPerformance: {
+    text: 'Diese Gruppe beinhaltet alle Cookies von Skripts für analytisches Tracking. Die Analysen helfen uns, die Nutzer*innenerfahrung der Website zu verbessern.',
+    textHtml: 'Diese Gruppe beinhaltet alle Cookies von Skripts für analytisches Tracking. Die Analysen helfen uns, die Nutzer*innenerfahrung der Website zu verbessern.',
+    title: 'Analytics und Performance',
+    titleHtml: 'Analytics und Performance',
+    toggleDefault: 'on' as const,
+    toggleLabelOff: 'Aus',
+    toggleLabelOffHtml: 'Aus',
+    toggleLabelOn: 'An',
+    toggleLabelOnHtml: 'An',
+  },
+  buttonAcceptAll: 'Alle zulassen',
+  buttonAcceptSelection: 'Auswahl zulassen',
+  externalContent: {
+    text: 'Externe Inhalte umfassen Cookies, die von Drittanbietern gesetzt werden, damit wir auf unserer Website Inhalte von deren Plattform bereitstellen können (wie z.B. Videos oder Social Media Feeds).',
+    textHtml: 'Externe Inhalte umfassen Cookies, die von Drittanbietern gesetzt werden, damit wir auf unserer Website Inhalte von deren Plattform bereitstellen können (wie z.B. Videos oder Social Media Feeds).',
+    title: 'Externe Inhalte',
+    titleHtml: 'Externe Inhalte',
+    toggleDefault: 'on' as const,
+    toggleLabelOff: 'Aus',
+    toggleLabelOffHtml: 'Aus',
+    toggleLabelOn: 'An',
+    toggleLabelOnHtml: 'An',
+  },
+  necessaryCookies: {
+    text: 'Diese Cookies sind notwendig für die grundlegenden Funktionen der Website. Ohne sie ist nicht gewährleistet, dass die Website einwandfrei funktioniert.',
+    textHtml: 'Diese Cookies sind notwendig für die grundlegenden Funktionen der Website. Ohne sie ist nicht gewährleistet, dass die Website einwandfrei funktioniert.',
+    title: 'Notwendige Cookies',
+    titleHtml: 'Notwendige Cookies',
+    toggleDefault: 'on' as const,
+    toggleLabel: 'Immer an',
+    toggleLabelHtml: 'Immer an',
+  },
+  text: 'Sie haben die volle Kontrolle über Ihre Privatsphäre und entscheiden selbst, welche Cookies wir verwenden dürfen und welche nicht.',
+  title: 'Cookies Einstellungen',
+};
+
+const defaultArgs: InterfaceFooterComponentPropTypes = {
+  consentOverlay,
   contact,
+  dataPrivacyUrl: '/datenschutz',
+  impressumUrl: '/impressum',
   legal,
+  linkUrls: {
+    // eslint-disable-next-line quote-props
+    '1234': '/example-page',
+  },
   metaNav: defaultMetaNavItems,
   navigation: {
     navItems: defaultNavItems,

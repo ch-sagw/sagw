@@ -1,0 +1,62 @@
+'use client';
+
+import React from 'react';
+import styles from '@/components/blocks/HomeTeaser/HomeTeaser.module.scss';
+import { Section } from '@/components/base/Section/Section';
+import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
+import { Button } from '@/components/base/Button/Button';
+import { Icon } from '@/icons';
+
+export type InterfaceHomeTeaserItem = {
+  category: string;
+  linkHref: string;
+  linkTextHtml: string;
+  textHtml: string;
+  titleHtml: string;
+};
+
+export type InterfaceHomeTeaserClientPropTypes = {
+  teasers: InterfaceHomeTeaserItem[];
+};
+
+export const HomeTeaserClient = ({
+  teasers,
+}: InterfaceHomeTeaserClientPropTypes): React.JSX.Element => (
+  <div className={styles.teasers}>
+    {teasers.map((teaser, index) => (
+      <Section
+        additionalContentClassName={styles.stickyContent}
+        additionalStickyContent={
+          // TODO: when moxy ready, render proper icon
+          <Icon
+            className={styles.icon}
+            name='arrowRight'
+          />
+        }
+        className={styles.teaser}
+        colorMode='white'
+        key={index}
+        subtitle={teaser.titleHtml}
+        title={teaser.category}
+        titleClassName={styles.stickyTitle}
+      >
+        <SafeHtml
+          as='p'
+          className={styles.text}
+          html={teaser.textHtml}
+        />
+
+        <Button
+          className={styles.link}
+          colorMode='white'
+          element='link'
+          href={teaser.linkHref}
+          iconInlineStart={'arrowRight' as keyof typeof Icon}
+          style='text'
+          text={teaser.linkTextHtml}
+        />
+      </Section>
+    ))}
+  </div>
+);
+

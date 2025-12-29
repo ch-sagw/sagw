@@ -1,9 +1,7 @@
 import { test } from '@playwright/test';
-import {
-  getPayload, Payload,
-} from 'payload';
-import configPromise from '@/payload.config';
+import { Payload } from 'payload';
 import { User } from '@/payload-types';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 export const beforeEachPayloadLogin = (): void => {
   test.beforeEach(async ({
@@ -24,9 +22,7 @@ interface InterfaceExplicitRoleLoginReturn {
 }
 
 export const explicitRoleLogin = async (type: 'super-admin' | 'sagw-admin' | 'fg-admin' | 'editor' | 'translator'): Promise<InterfaceExplicitRoleLoginReturn> => {
-  const payload = await getPayload({
-    config: configPromise,
-  });
+  const payload = await getPayloadCached();
 
   let email;
   let password;

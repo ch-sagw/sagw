@@ -1,4 +1,6 @@
-import { CollectionConfig } from 'payload';
+import {
+  CollectionAfterReadHook, CollectionConfig,
+} from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
@@ -13,6 +15,8 @@ import { pageAccess } from '@/access/pages';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
+import { Config } from '@/payload-types';
+import { readFile } from 'fs/promises';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
 
@@ -24,6 +28,16 @@ export const ImpressumPage: CollectionConfig = {
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
+    {
+      admin: {
+        hidden: true,
+        readOnly: true,
+      },
+      localized: true,
+      name: 'slug',
+      required: false,
+      type: 'text',
+    },
     fieldLinkablePage,
     fieldAdminTitleDefaultValue('Impressum'),
     {
@@ -58,6 +72,36 @@ export const ImpressumPage: CollectionConfig = {
     },
   ],
   hooks: {
+    afterRead: [
+      async ({
+        doc,
+        req,
+      }): Promise<CollectionAfterReadHook<any>> => {
+        if (!doc) {
+          return doc;
+        }
+
+        // we can not use getTranslations... It works in Admin-Ui since
+        // rendered on the server. But in playwright, context strangely switches
+        // to client, which makes getTranslations throw an error.
+
+        const locale = (req?.locale as Config['locale']) || 'de';
+        const fallback = 'impressum';
+        let impressumSlug;
+
+        if (locale) {
+          const translationRawFile = (await readFile(new URL(`../../../i18n/messages/${locale}.json`, import.meta.url))).toString();
+          const translationsFile = JSON.parse(translationRawFile);
+
+          impressumSlug = translationsFile.slugs.impressum;
+        }
+
+        return {
+          ...doc,
+          slug: impressumSlug || fallback,
+        };
+      },
+    ],
     beforeChange: [hookPreventBulkPublishForTranslators],
     beforeValidate: [hookPreventBlockStructureChangesForTranslators()],
   },

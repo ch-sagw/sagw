@@ -1,3 +1,4 @@
+import 'server-only';
 import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/blocks/Image/Image.module.scss';

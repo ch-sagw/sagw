@@ -351,7 +351,7 @@ test.describe('can not publish pages', () => {
         user: translatorUser,
       } = await explicitRoleLogin('translator');
 
-      const upt = await translatorPayload.update({
+      await translatorPayload.update({
         collection: 'detailPage',
         data: {
           _status: 'published',
@@ -365,8 +365,6 @@ test.describe('can not publish pages', () => {
           user: translatorUser,
         },
       });
-
-      console.log(upt);
 
     }).rejects.toMatchObject({
       status: 400,
