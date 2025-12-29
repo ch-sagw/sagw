@@ -1,7 +1,7 @@
 /**
  * Exhaustive test:
  * - add all possible blocks to overview page
- * - add links to different pages in all possible places (hero and blocks)
+ * - add links to different pages in all possible places
  * and test if they are rendered properly in the frontend
  * - add italian slugs to all linked pages and test links are properly rendered
  * in italian frontend page
