@@ -50,6 +50,7 @@
 
   .subtitle {
     @include body-text-xl;
+    @include font-layout-features;
 
     color: var(--subtitle-color);
     margin: 0;
