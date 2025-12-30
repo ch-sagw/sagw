@@ -94,6 +94,7 @@
 
     .lead {
       @include body-text-lead;
+      @include font-layout-features;
 
       color: var(--color-lead);
     }
