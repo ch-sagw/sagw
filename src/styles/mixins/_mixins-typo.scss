@@ -74,6 +74,7 @@
 
 @mixin title-heading {
   @include font-smoothing;
+  @include font-layout-features;
 
   font-family: var(--font-family-display);
   font-weight: var(--font-weight-bold);
@@ -135,4 +136,8 @@
   text-underline-offset: px-to-rem(var(--spacing-2xs));
   text-decoration-thickness: px-to-rem(var(--border-width-l));
   text-decoration-color: currentcolor;
+}
+
+@mixin font-layout-features {
+  font-feature-settings: "ss01" 1, "ss02" 1, "ss06" 1, "ss08" 1;
 }
