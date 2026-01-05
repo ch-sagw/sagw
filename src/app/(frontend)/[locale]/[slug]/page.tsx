@@ -146,32 +146,30 @@ export default async function DetailPage({
 
   return (
     <Fragment>
-      <main>
-        <div className='detail-page'>
-          <RenderHero
-            foundCollection={foundCollection}
-            pageData={pageData}
-            i18nGeneric={i18nData.generic}
+      <main className='detail-page'>
+        <RenderHero
+          foundCollection={foundCollection}
+          pageData={pageData}
+          i18nGeneric={i18nData.generic}
+          locale={locale}
+        />
+        <RenderStatusMessage
+          tenant={tenant}
+          isHome={false}
+          locale={locale}
+        />
+        {contentBlocks && (
+          <RenderBlocks
+            blocks={contentBlocks}
+            tenantId={tenant}
+            i18n={i18nData}
+            sourcePage={{
+              collectionSlug: foundCollection,
+              id: pageData.id,
+            }}
             locale={locale}
           />
-          <RenderStatusMessage
-            tenant={tenant}
-            isHome={false}
-            locale={locale}
-          />
-          {contentBlocks && (
-            <RenderBlocks
-              blocks={contentBlocks}
-              tenantId={tenant}
-              i18n={i18nData}
-              sourcePage={{
-                collectionSlug: foundCollection,
-                id: pageData.id,
-              }}
-              locale={locale}
-            />
-          )}
-        </div>
+        )}
       </main>
     </Fragment>
   );

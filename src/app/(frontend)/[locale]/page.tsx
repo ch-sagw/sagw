@@ -93,7 +93,7 @@ export default async function HomePage({
 
   return (
     <Fragment>
-      <div className='home'>
+      <main className='home'>
         <Hero
           {...pageData.hero}
           type='home'
@@ -113,7 +113,7 @@ export default async function HomePage({
           }}
           locale={locale}
         />
-      </div>
+      </main>
     </Fragment>
   );
 }

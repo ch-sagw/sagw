@@ -225,11 +225,9 @@ export default async function RootLayout({
             {...headerProps}
           />
 
-          <main>
-            <TenantProvider tenant={tenant}>
-              {children}
-            </TenantProvider>
-          </main>
+          <TenantProvider tenant={tenant}>
+            {children}
+          </TenantProvider>
 
           <Footer
             {...footerProps}
