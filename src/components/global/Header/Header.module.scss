@@ -6,10 +6,11 @@
 .header {
   --margin-nav-bottom: 56;
 
-  position: sticky;
+  position: fixed;
   inset-block-start: 0;
   inset-inline-start: 0;
   width: 100%;
+  height: px-to-rem(var(--header-height));
   padding: px-to-rem(var(--grid-margin));
   overflow: hidden;
   transition: height, background-color;
@@ -29,6 +30,8 @@
   &.expanded {
     max-height: 100vh;
     overflow-y: visible;
+    scrollbar-gutter: stable;
+    overscroll-behavior: contain;
   }
 
   &:not(.white) {
@@ -138,6 +141,10 @@
 
     &.metanavHidden {
       @include expandable-wrapper;
+
+      transform: scale(0, 0);
+      will-change: opacity, grid-template-rows;
+      transition-property: grid-template-rows, opacity;
     }
 
     &:not(.metanavHidden) {
@@ -170,5 +177,23 @@
 
   .metanavWrapper.metanavHidden ~ .infoBlock {
     inset-block-start: px-to-rem(155);
+  }
+}
+
+.headerSSR {
+  @include mq($to: large) {
+    .metanav,
+    .navigation,
+    .langnav {
+      display: none;
+    }
+
+    .logoWrapper {
+      margin-block: px-to-rem(var(--spacing-2xs));
+    }
+  }
+
+  @include mq($from: large) {
+    min-height: px-to-rem(203);
   }
 }

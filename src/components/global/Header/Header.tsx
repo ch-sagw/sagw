@@ -60,7 +60,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   const focusRegionRef = useRef<HTMLDivElement>(null);
 
   // --- State
-
   const [
     isHovering,
     setIsHovering,
@@ -88,7 +87,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
   const [
     headerNaturalHeight,
-    setHeaderNatualHeight,
+    setHeaderNaturalHeight,
   ] = useState(0);
 
   const [
@@ -102,11 +101,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   ] = useState(false);
 
   const [
-    bodyFontSize,
-    setBodyFontSize,
-  ] = useState(16);
-
-  const [
     metanavHeight,
     setMetanavHeight,
   ] = useState(0);
@@ -115,6 +109,15 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     hoveredSection,
     setHoveredSection,
   ] = useState<'mainNav' | 'langNav' | null>(null);
+
+  const [
+    hydrated,
+    setHydrated,
+  ] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
 
   // With default fallback value in rem (210px / 16px)
   const [
@@ -146,16 +149,6 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
   useScrollLock(mobileMenuOpen && smallBreakpoint);
 
   // --- Effects
-
-  // set body font size
-  useEffect(() => {
-    const bodyFontSizeDefinition = window.getComputedStyle(document.body)
-      .getPropertyValue('font-size')
-      .split('px');
-
-    setBodyFontSize(parseInt(bodyFontSizeDefinition[0], 10) || 16);
-  }, []);
-
   // measure metanav height
   useEffect(() => {
     if (smallBreakpoint) {
@@ -209,19 +202,18 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     }
 
     const logoRect = logoRef.current.getBoundingClientRect();
-    let topPosition = (logoRect.bottom + infoBlockMargin) / bodyFontSize;
+    let topPosition = (logoRect.bottom + infoBlockMargin);
 
     // When scrolled, metanav is hidden, so logo moves up by metanavHeight
     // Adjust the infoBlock position accordingly
     if (didScroll && metanavHeight > 0) {
-      topPosition -= (metanavHeight / bodyFontSize);
+      topPosition -= metanavHeight;
     }
 
     setInfoBlockTop(topPosition);
   }, [
     smallBreakpoint,
     breakpoint,
-    bodyFontSize,
     didScroll,
     infoBlockMargin,
     metanavHeight,
@@ -234,6 +226,31 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
     setMobileMenuOpen(false);
   }, [breakpoint]);
 
+  // recalculate navigation heights when
+  // body font size changes
+  /* useEffect(() => {
+    if (!headerRef.current) {
+      return;
+    }
+
+    const el = headerRef.current;
+
+    let lastFontSize = Math.round(parseFloat(getComputedStyle(el).fontSize));
+
+    const headerResizeObserver = new ResizeObserver(() => {
+      const fontSize = Math.round(parseFloat(getComputedStyle(el).fontSize));
+
+      if (fontSize !== lastFontSize) {
+        lastFontSize = fontSize;
+
+        setBodyFontSize(lastFontSize);
+      }
+    });
+
+    headerResizeObserver.observe(el);
+
+  }, []); */
+
   // set nav height
   useEffect(() => {
     if (!headerRef.current) {
@@ -242,8 +259,11 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
 
     if (smallBreakpoint) {
       // Reset heights when in small breakpoint
-      setHeaderNatualHeight(0);
+      setHeaderNaturalHeight(0);
       setTotalHeaderHeight(0);
+
+      document.documentElement.style.removeProperty('--hero-padding-block-start');
+      headerRef.current.style.removeProperty('--header-height');
     } else {
       if (!headerRef.current) {
         return;
@@ -252,7 +272,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       // Temporarily remove inline height to measure natural height
       const currentInlineHeight = headerRef.current.style.height;
 
-      headerRef.current.style.height = 'auto';
+      headerRef.current.style.removeProperty('--header-height');
       // Force synchronous layout recalculation
       /* eslint-disable @typescript-eslint/no-unused-expressions */
       /* eslint-disable no-unused-expressions */
@@ -265,30 +285,41 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       headerRef.current.style.height = currentInlineHeight;
 
       const langOrNavMaxHeight = Math.max(navMaxHeight, langNavMaxHeight);
+      let heroPaddingBlockStart;
 
-      setHeaderNatualHeight(naturalHeight / bodyFontSize);
+      setHeaderNaturalHeight(naturalHeight);
 
       if (didScroll) {
         // When scrolled, metanav is hidden. Subtract its height
         // from the calculation.
-        const totalHeight = (naturalHeight + langOrNavMaxHeight - metanavHeight) / bodyFontSize;
+        const totalHeight = (naturalHeight + langOrNavMaxHeight - metanavHeight);
 
-        setHeaderNatualHeight((naturalHeight - metanavHeight) / bodyFontSize);
+        setHeaderNaturalHeight(naturalHeight - metanavHeight);
         setTotalHeaderHeight(totalHeight);
+
+        if (!smallBreakpoint) {
+          heroPaddingBlockStart = naturalHeight - metanavHeight;
+        }
+
       } else {
         // When not scrolled, metanav is visible. Use full height.
-        const totalHeight = (naturalHeight + langOrNavMaxHeight) / bodyFontSize;
+        const totalHeight = (naturalHeight + langOrNavMaxHeight);
 
-        setHeaderNatualHeight(naturalHeight / bodyFontSize);
+        setHeaderNaturalHeight(naturalHeight);
         setTotalHeaderHeight(totalHeight);
+
+        if (!smallBreakpoint) {
+          heroPaddingBlockStart = naturalHeight;
+        }
       }
+
+      document.documentElement.style.setProperty('--hero-padding-block-start', `${heroPaddingBlockStart}`);
     }
   }, [
     navMaxHeight,
     langNavMaxHeight,
     props,
     smallBreakpoint,
-    bodyFontSize,
     didScroll,
     metanavHeight,
 
@@ -423,7 +454,7 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       colorMode,
     } = props;
 
-    if ((didScroll && !isHovering) && !(smallBreakpoint && mobileMenuOpen)) {
+    if ((didScroll || isHovering) && !(smallBreakpoint && mobileMenuOpen)) {
       colorMode = 'white';
     }
 
@@ -615,20 +646,21 @@ export const Header = (props: InterfaceHeaderPropTypes): React.JSX.Element => {
       data-testid='header'
       style={totalHeaderHeight && !smallBreakpoint
         ? {
-          height: isHovering
+          ['--header-height' as any]: isHovering
 
             // 72 for the bottom padding of the nav-content
-            ? `${totalHeaderHeight + (72 / bodyFontSize)}rem`
-            : `${headerNaturalHeight}rem`,
+            ? `${totalHeaderHeight + 72}`
+            : `${headerNaturalHeight}`,
         }
-        : {
-          height: 'auto',
-        }
+        : {}
       }
       ref={headerRef}
-      className={`${styles.header} ${styles[renderColorMode()]} ${mobileMenuOpen
-        ? styles.expanded
-        : undefined}`}
+      className={`${styles.header} ${styles[renderColorMode()]} ${hydrated
+        ? ''
+        : styles.headerSSR}
+        ${mobileMenuOpen
+      ? styles.expanded
+      : undefined}`}
     >
 
       {smallBreakpoint &&

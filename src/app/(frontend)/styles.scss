@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+html {
+  scrollbar-gutter: stable;
+  scroll-padding-block-start: px-to-rem(var(--hero-padding-block-start) + var(--spacing-xl));
+}
+
 html.no-js figure > div:first-child img {
   display: none;
 }

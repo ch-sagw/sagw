@@ -5,8 +5,23 @@
 // @use "../../../styles/utilities/utilities" as *;
 
 .hero {
+  --hero-padding-block-start: 0;
+
+  @include mq($to: medium) {
+    --hero-padding-block-start: 96;
+  }
+
+  @include mq($from: medium, $to: large) {
+    --hero-padding-block-start: 112;
+  }
+
+  @include mq($from: large) {
+    --hero-padding-block-start: 203;
+  }
+
   background-color: var(--color-background);
   padding: px-to-rem(var(--hero-big)) px-to-rem(var(--grid-margin));
+  padding-block-start: px-to-rem(calc(var(--hero-big) + var(--hero-padding-block-start)));
   overflow-x: hidden;
 
   @include mq($from: large) {
