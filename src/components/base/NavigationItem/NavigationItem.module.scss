@@ -60,6 +60,7 @@
       inset-inline-start: 0;
       width: max-content;
       min-width: 100%;
+      overflow: visible;
     }
 
     @include mq($from: large, $to: wide) {
