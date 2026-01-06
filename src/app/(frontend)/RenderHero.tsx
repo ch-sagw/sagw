@@ -10,7 +10,9 @@ import {
   Config,
   EventCategory,
   InterfaceHeroField,
-  InterfaceHeroFieldMagazineDetail, InterfaceHeroFieldNewsDetail, InterfaceI18NGeneric,
+  InterfaceHeroFieldMagazineDetail,
+  InterfaceHeroFieldNewsDetail,
+  InterfaceI18NGeneric,
 } from '@/payload-types';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import {
@@ -51,7 +53,12 @@ export const RenderHero = ({
   }
 
   let heroType: InterfaceHeroPropTypes['type'];
-  let heroProps: InterfaceHeroField | InterfaceHeroFieldNewsDetail | InterfaceHeroFieldMagazineDetail | Omit<Extract<InterfaceHeroPropTypes, { type: 'eventDetail' }>, 'type'> | null = null;
+  let heroProps:
+    InterfaceHeroField |
+    InterfaceHeroFieldNewsDetail |
+    InterfaceHeroFieldMagazineDetail |
+    Omit<Extract<InterfaceHeroPropTypes, { type: 'eventDetail' }>, 'type'> |
+    null = null;
 
   // Handle different collection types and extract hero data
   if (foundCollection === 'eventDetailPage') {
@@ -85,6 +92,7 @@ export const RenderHero = ({
           ? rte1ToPlaintext(eventPage.eventDetails.language)
           : undefined,
         time: eventPage.eventDetails.time || undefined,
+        timeLabelText: rte1ToPlaintext(i18nGeneric.time),
       },
       tag,
       title: eventPage.eventDetails.title,

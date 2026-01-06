@@ -1,10 +1,11 @@
-'use client';
-
 import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/global/Hero/Hero.module.scss';
 import {
-  InterfaceHeroField, InterfaceHeroFieldHome, InterfaceHeroFieldMagazineDetail, InterfaceHeroFieldNewsDetail,
+  InterfaceHeroField,
+  InterfaceHeroFieldHome,
+  InterfaceHeroFieldMagazineDetail,
+  InterfaceHeroFieldNewsDetail,
 } from '@/payload-types';
 import {
   Breadcrumb, InterfaceBreadcrumbPropTypes,
@@ -17,7 +18,10 @@ import { Button } from '@/components/base/Button/Button';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { Icon } from '@/icons';
 import { formatEventDetails } from '@/components/base/EventsListItem/helpers';
-import { formatDateToReadableString } from '@/components/helpers/date';
+import {
+  formatDateToReadableString,
+  formatTime,
+} from '@/components/helpers/date';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { useLocale } from 'next-intl';
 
@@ -45,6 +49,7 @@ export type InterfaceHeroPropTypes =
       dateEnd?: string;
       language?: string;
       time?: string;
+      timeLabelText?: string;
       eventLocation?: string;
     };
     tag: string;
@@ -86,13 +91,16 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
   let eventDetailsString;
 
   if (props.type === 'eventDetail' && props.eventDetails) {
+
     eventDetailsString = formatEventDetails({
       dateEnd: props.eventDetails.dateEnd,
       dateStart: props.eventDetails.dateStart,
       eventLocation: props.eventDetails.eventLocation,
       language: props.eventDetails.language,
       pageLanguage: locale,
-      time: props.eventDetails.time,
+      time: `${formatTime({
+        dateString: props.eventDetails.time || '',
+      })} ${props.eventDetails.timeLabelText}`,
     });
   }
 
