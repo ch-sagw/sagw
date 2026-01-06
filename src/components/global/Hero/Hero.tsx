@@ -150,6 +150,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
           as='h1'
           html={rteToHtml(props.title)}
           className={styles.title}
+          id='content'
         />
 
         {/* Lead */}

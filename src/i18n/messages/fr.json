@@ -5,6 +5,10 @@
   "pagination": {
     "hiddenPaginationTitle": "Pagination"
   },
+  "skipLinks": {
+    "sectionLabel": "Sprunglinks (FR)",
+    "skipToContent": "Zum Inhalt (FR)"
+  },
   "form": {
     "newsletter": {
       "error": "Vous devez faire une sélection",

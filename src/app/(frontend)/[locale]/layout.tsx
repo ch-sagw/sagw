@@ -14,6 +14,7 @@ import {
 import {
   Footer, InterfaceFooterPropTypes,
 } from '@/components/global/Footer/Footer';
+import { SkipLinks } from '@/components/global/SkipLinks/SkipLinks';
 import { Metadata } from 'next';
 import { ConsentBanner } from '@/components/global/ConsentBanner/ConsentBanner';
 import {
@@ -220,6 +221,8 @@ export default async function RootLayout({
       <NoJsScript />
       <body>
         <NextIntlClientProvider>
+
+          <SkipLinks />
 
           <Header
             {...headerProps}
