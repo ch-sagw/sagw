@@ -92,7 +92,7 @@ export const RenderHero = ({
           ? rte1ToPlaintext(eventPage.eventDetails.language)
           : undefined,
         time: eventPage.eventDetails.time || undefined,
-        timeLabelText: rte1ToPlaintext(i18nGeneric.time),
+        timeLabelText: rte1ToPlaintext(i18nGeneric.time) || undefined,
       },
       tag,
       title: eventPage.eventDetails.title,

@@ -91,6 +91,13 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
   let eventDetailsString;
 
   if (props.type === 'eventDetail' && props.eventDetails) {
+    let timeValue;
+
+    if (props.eventDetails.time) {
+      timeValue = `${formatTime({
+        dateString: props.eventDetails.time || '',
+      })} ${props.eventDetails.timeLabelText}`;
+    }
 
     eventDetailsString = formatEventDetails({
       dateEnd: props.eventDetails.dateEnd,
@@ -98,9 +105,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
       eventLocation: props.eventDetails.eventLocation,
       language: props.eventDetails.language,
       pageLanguage: locale,
-      time: `${formatTime({
-        dateString: props.eventDetails.time || '',
-      })} ${props.eventDetails.timeLabelText}`,
+      time: timeValue || '',
     });
   }
 
