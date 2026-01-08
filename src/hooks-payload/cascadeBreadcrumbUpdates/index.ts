@@ -12,7 +12,7 @@ the navigationTitle and parentPage field of direct and indirect children.
 
 import {
   BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook,
-  PayloadRequest,
+  PayloadRequest, ValidationError,
 } from 'payload';
 import { fieldNavigationTitleFieldName } from '@/field-templates/navigationTitle';
 import { fieldParentSelectorFieldName } from '@/field-templates/parentSelector';
@@ -27,7 +27,7 @@ type LocalizedString = Partial<Record<Config['locale'], string>>;
 
 const cascadeProcessingSet = new Set<string>();
 
-const hasLocalizedStringChanged = (
+export const hasLocalizedStringChanged = (
   oldValue: string | LocalizedString | undefined,
   newValue: string | LocalizedString | undefined,
 ): boolean => JSON.stringify(oldValue) !== JSON.stringify(newValue);
@@ -53,38 +53,63 @@ const updateChildBreadcrumbs = async (
 
   // Find child pages in all linkable collections
   const childPagesPromises = availableCollections.map(async (collectionSlug) => {
-    const dbCollection = payload.db.collections[collectionSlug];
-
-    if (!dbCollection) {
-      return [];
-    }
-
     if (!tenantId) {
       return [];
     }
 
-    const query: any = {
-      [`${fieldParentSelectorFieldName}.documentId`]: parentDocumentId,
-      tenant: tenantId,
-    };
+    try {
+      const dbCollection = payload.db.collections[collectionSlug];
 
-    const docs = await dbCollection.find(query);
+      if (!dbCollection) {
+        return [];
+      }
 
-    return docs.map((doc: any) => {
-      // Convert Mongoose document to plain object, preserving all fields
-      const plainDoc = doc.toObject
-        ? doc.toObject()
-        : {
-          ...doc,
-        };
+      // query using database adapter directly
+      const query: any = {
+        [`${fieldParentSelectorFieldName}.documentId`]: parentDocumentId,
+        tenant: tenantId,
+      };
 
-      return {
-        ...plainDoc,
+      const docs = await dbCollection.find(query);
+
+      // convert Mongoose documents to plain objects
+      const docIds = docs.map((doc: any) => {
+        const plainDoc = doc.toObject
+          ? doc.toObject()
+          : {
+            ...doc,
+          };
+
+        return plainDoc.id || plainDoc._id?.toString();
+      })
+        .filter(Boolean);
+
+      if (docIds.length === 0) {
+        return [];
+      }
+
+      // fetch documents through Payload API to ensure proper processing
+      const result = await payload.find({
+        collection: collectionSlug,
+        depth: 0,
+        overrideAccess: true,
+        req,
+        where: {
+          id: {
+            in: docIds,
+          },
+        },
+      });
+
+      return result.docs.map((doc: any) => ({
+        ...doc,
         /* eslint-disable @typescript-eslint/naming-convention */
         _collection: collectionSlug,
         /* eslint-enable @typescript-eslint/naming-convention */
-      };
-    });
+      }));
+    } catch {
+      return [];
+    }
   });
 
   const childPagesArrays = await Promise.all(childPagesPromises);
@@ -148,11 +173,6 @@ const updateChildBreadcrumbs = async (
       }
 
       const breadcrumbs = await buildBreadcrumbs(payload, parentRef, [], effectiveIds);
-      const dbCollection = payload.db.collections[collectionSlug];
-
-      if (!dbCollection) {
-        throw new Error(`${collectionSlug} db collection not found`);
-      }
 
       // Build the update object - ONLY update breadcrumb
       // Do NOT touch parentPage unless we're explicitly clearing it
@@ -164,15 +184,34 @@ const updateChildBreadcrumbs = async (
         updateData[fieldParentSelectorFieldName] = {};
       }
 
-      await dbCollection.findByIdAndUpdate(
-        childId,
-        {
-          $set: updateData,
-        },
-        {
-          new: false,
-        },
-      );
+      try {
+        await payload.update({
+          collection: collectionSlug,
+          context: {
+            cascadeBreadcrumbUpdate: true,
+          },
+          data: updateData,
+          id: childId,
+          overrideAccess: true,
+          req,
+        });
+      } catch (error: any) {
+        // Validation errors are ignored - breadcrumb updates shouldn't fail
+        // the cascade, the document may have invalid data in other fields,
+        // but we're only updating breadcrumbs
+        const isValidationError = error instanceof ValidationError ||
+          (error?.status === 400 && (error?.data?.errors || error?.errors)) ||
+          (error?.name === 'ValidationError') ||
+          (error?.constructor?.name === 'ValidationError');
+
+        if (isValidationError) {
+          // Don't throw - skip this child but continue with other children
+          return;
+        }
+        // Only throw non-validation errors
+        throw error;
+
+      }
 
       await updateChildBreadcrumbs(payload, req, childId, tenantId, deletedDocumentIds, effectiveIds, isDraftUpdate);
     } finally {
@@ -183,7 +222,7 @@ const updateChildBreadcrumbs = async (
   await Promise.all(updatePromises);
 };
 
-const getParentId = (parent: any): string | undefined => {
+export const getParentId = (parent: any): string | undefined => {
   if (!parent) {
     return undefined;
   }
@@ -216,18 +255,10 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
     return doc;
   }
 
-  const oldStatus = previousDoc?._status;
-  const newStatus = doc._status;
-  const statusChanged = oldStatus !== newStatus;
-  const wasPublished = oldStatus === 'published';
-  const isUnpublished = newStatus === 'draft' || newStatus === null;
-  const isUnpublishing = wasPublished && isUnpublished;
-
   // Fetch the full document from DB to get complete localized objects
   // IMPORTANT: previousDoc already contains the state before the update,
   // so we use it directly
   let fullDoc: any;
-  let fullPreviousDoc: any = previousDoc;
 
   const collectionSlug = collection?.slug;
 
@@ -240,50 +271,38 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
         id: docId,
         locale: 'all',
       });
-
-      // Use previousDoc directly
-      fullPreviousDoc = previousDoc;
     } else {
       fullDoc = doc;
-      fullPreviousDoc = previousDoc;
     }
-  } catch (error) {
-    console.error('[hookCascadeBreadcrumbUpdates] Error fetching full document:', error);
+  } catch {
     // Fallback to using doc/previousDoc if fetch fails
     fullDoc = doc;
-    fullPreviousDoc = previousDoc;
   }
 
   // Use the full documents if available, otherwise fallback to doc/previousDoc
   const docToUse = fullDoc || doc;
-  const previousDocToUse = fullPreviousDoc || previousDoc;
+  const oldStatus = previousDoc?._status;
+  const newStatus = doc._status;
+  const statusChanged = oldStatus !== newStatus;
+  const wasPublished = oldStatus === 'published';
+  const isUnpublished = newStatus === 'draft' || newStatus === null;
+  const isUnpublishing = wasPublished && isUnpublished;
 
-  const oldSlug = previousDocToUse?.['slug'];
-  const oldNavigationTitle = previousDocToUse?.[fieldNavigationTitleFieldName];
-  const oldParent = previousDocToUse?.[fieldParentSelectorFieldName];
-  const oldBreadcrumb = previousDocToUse?.[fieldBreadcrumbFieldName];
+  // Compare using doc/previousDoc directly (not docToUse/previousDocToUse)
+  // to avoid false positives from different locale structures
+  const oldSlug = previousDoc?.['slug'];
+  const newSlug = doc?.['slug'];
+  const oldNavigationTitle = previousDoc?.[fieldNavigationTitleFieldName];
+  const newNavigationTitle = doc?.[fieldNavigationTitleFieldName];
+  const oldParent = previousDoc?.[fieldParentSelectorFieldName];
+  const newParent = doc?.[fieldParentSelectorFieldName];
+  const oldBreadcrumb = previousDoc?.[fieldBreadcrumbFieldName];
+  const newBreadcrumb = doc?.[fieldBreadcrumbFieldName];
 
-  // check if new locales were added
-  // (even if values are the same, adding a locale is a change)
-  const oldSlugKeys = oldSlug && typeof oldSlug === 'object'
-    ? Object.keys(oldSlug)
-    : [];
-  const newSlugKeys = docToUse['slug'] && typeof docToUse['slug'] === 'object'
-    ? Object.keys(docToUse['slug'])
-    : [];
-  const oldNavTitleKeys = oldNavigationTitle && typeof oldNavigationTitle === 'object'
-    ? Object.keys(oldNavigationTitle)
-    : [];
-  const newNavTitleKeys = docToUse[fieldNavigationTitleFieldName] && typeof docToUse[fieldNavigationTitleFieldName] === 'object'
-    ? Object.keys(docToUse[fieldNavigationTitleFieldName])
-    : [];
-  const newSlugLocales = newSlugKeys.filter((key) => !oldSlugKeys.includes(key));
-  const newNavTitleLocales = newNavTitleKeys.filter((key) => !oldNavTitleKeys.includes(key));
-
-  const slugChanged = hasLocalizedStringChanged(oldSlug, docToUse['slug']) || newSlugLocales.length > 0;
-  const navigationTitleChanged = hasLocalizedStringChanged(oldNavigationTitle, docToUse[fieldNavigationTitleFieldName]) || newNavTitleLocales.length > 0;
-  const parentChanged = getParentId(oldParent) !== getParentId(docToUse[fieldParentSelectorFieldName]);
-  const breadcrumbChanged = JSON.stringify(oldBreadcrumb) !== JSON.stringify(docToUse[fieldBreadcrumbFieldName]);
+  const slugChanged = hasLocalizedStringChanged(oldSlug, newSlug);
+  const navigationTitleChanged = hasLocalizedStringChanged(oldNavigationTitle, newNavigationTitle);
+  const parentChanged = getParentId(oldParent) !== getParentId(newParent);
+  const breadcrumbChanged = JSON.stringify(oldBreadcrumb) !== JSON.stringify(newBreadcrumb);
 
   const onlyBreadcrumbChanged = breadcrumbChanged && !slugChanged && !navigationTitleChanged && !parentChanged && !statusChanged;
 
@@ -317,6 +336,10 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
     const tenantId = typeof doc.tenant === 'string'
       ? doc.tenant
       : doc.tenant?.id;
+
+    if (!tenantId) {
+      return doc;
+    }
 
     try {
       cascadeProcessingSet.add(docId);
@@ -370,27 +393,39 @@ export const hookCascadeBreadcrumbUpdates: CollectionAfterChangeHook = async ({
   try {
     cascadeProcessingSet.add(docId);
 
-    // If slug or navigationTitle changed, regenerate this page's own
-    //  breadcrumbs to ensure they have the latest locale data from ancestors
+    // if slug or navigationTitle changed, regenerate this page's own
+    // breadcrumbs to ensure they have the latest locale data from ancestors
     if ((slugChanged || navigationTitleChanged) && collectionSlug) {
       const parentRef = docToUse[fieldParentSelectorFieldName] as InterfaceInternalLinkValue | undefined | null | Record<string, never>;
       const newBreadcrumbs = await buildBreadcrumbs(req.payload, parentRef, [], undefined);
 
-      // Update the document's breadcrumbs directly in the database
-      const dbCollection = req.payload.db.collections[collectionSlug];
+      // Update the document's breadcrumbs using Payload API
+      try {
+        await req.payload.update({
+          collection: collectionSlug,
+          context: {
+            cascadeBreadcrumbUpdate: true,
+          },
+          data: {
+            [fieldBreadcrumbFieldName]: newBreadcrumbs,
+          },
+          id: docId,
+          overrideAccess: true,
+          req,
+        });
+      } catch (error: any) {
+        // validation errors are ignored again
+        const isValidationError = error instanceof ValidationError ||
+          (error?.status === 400 && (error?.data?.errors || error?.errors)) ||
+          (error?.name === 'ValidationError') ||
+          (error?.constructor?.name === 'ValidationError');
 
-      if (dbCollection) {
-        await dbCollection.findByIdAndUpdate(
-          docId,
-          {
-            $set: {
-              [fieldBreadcrumbFieldName]: newBreadcrumbs,
-            },
-          },
-          {
-            new: false,
-          },
-        );
+        if (isValidationError) {
+          // don't throw - continue even if this document has validation errors
+        } else {
+          // ...only throw non-validation errors
+          throw error;
+        }
       }
     }
 

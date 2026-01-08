@@ -34,26 +34,6 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 import { sampleRteWithLink } from '@/utilities/rteSampleContent';
 
-const getCollectionsDocumentForId = async (id: string): Promise<any> => {
-  const payload = await getPayloadCached();
-
-  const linksCollectionDocument = await payload.find({
-    collection: 'links',
-    limit: 1,
-    where: {
-      and: [
-        {
-          documentId: {
-            equals: id,
-          },
-        },
-      ],
-    },
-  });
-
-  return linksCollectionDocument.docs[0];
-};
-
 test.describe('Home links (non-sagw)', () => {
   beforeEachAcceptCookies();
   test('rendered correctly', {
@@ -61,10 +41,6 @@ test.describe('Home links (non-sagw)', () => {
   }, async ({
     page,
   }) => {
-    let d1Link;
-    let d2Link;
-    let d3Link;
-    let d4Link;
     let detail1;
     let detail4;
     let detail5;
@@ -467,30 +443,11 @@ test.describe('Home links (non-sagw)', () => {
         },
         id: homeId,
       });
-
-      d1Link = await getCollectionsDocumentForId(detail1.id);
-      d2Link = await getCollectionsDocumentForId(detail2.id);
-      d3Link = await getCollectionsDocumentForId(detail3.id);
-      d4Link = await getCollectionsDocumentForId(detail4.id);
-
     } catch (e) {
       throw new Error(e instanceof Error
         ? e.message
         : String(e));
     }
-
-    // #########################################
-    // verify entries in Links collection for regular links
-    // #########################################
-
-    await expect(d1Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(d2Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(d3Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(d4Link.references[0].pageId)
-      .toStrictEqual(homeId);
 
     // #########################################
     // verify correct url rendering: de
@@ -606,21 +563,5 @@ test.describe('Home links (non-sagw)', () => {
     await expect(impressumLinkIt)
       .toBe(`/it/tenant-${time}-it/impressum-it`);
 
-    // remove form and home teasers and verify that link references are removed
-    await payload.update({
-      collection: 'homePage',
-      data: {
-        content: [],
-      },
-      id: homeId,
-    });
-
-    const d1LinkUpdated = await getCollectionsDocumentForId(detail1.id);
-    const d4LinkUpdated = await getCollectionsDocumentForId(detail4.id);
-
-    await expect(d1LinkUpdated.references)
-      .toHaveLength(0);
-    await expect(d4LinkUpdated.references)
-      .toHaveLength(0);
   });
 });

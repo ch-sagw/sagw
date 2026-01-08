@@ -34,26 +34,6 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 import { sampleRteWithLink } from '@/utilities/rteSampleContent';
 
-const getCollectionsDocumentForId = async (id: string): Promise<any> => {
-  const payload = await getPayloadCached();
-
-  const linksCollectionDocument = await payload.find({
-    collection: 'links',
-    limit: 1,
-    where: {
-      and: [
-        {
-          documentId: {
-            equals: id,
-          },
-        },
-      ],
-    },
-  });
-
-  return linksCollectionDocument.docs[0];
-};
-
 test.describe('Overview page regular links (non-sagw)', () => {
   beforeEachAcceptCookies();
   test('rendered correctly', {
@@ -66,7 +46,6 @@ test.describe('Overview page regular links (non-sagw)', () => {
     let detail3;
     let detail4;
     let detail5;
-    let statusMessage;
     let overviewPage;
     const payload = await getPayloadCached();
     const time = (new Date())
@@ -282,7 +261,7 @@ test.describe('Overview page regular links (non-sagw)', () => {
       // #########################################
       // Enable global status message
       // #########################################
-      statusMessage = await payload.create({
+      await payload.create({
         collection: 'statusMessage',
         data: {
           content: {
@@ -445,27 +424,6 @@ test.describe('Overview page regular links (non-sagw)', () => {
     }
 
     // #########################################
-    // verify entries in Links collection
-    // #########################################
-
-    const d1Link = await getCollectionsDocumentForId(detail1.id);
-    const d2Link = await getCollectionsDocumentForId(detail2.id);
-    const d3Link = await getCollectionsDocumentForId(detail3.id);
-    const d4Link = await getCollectionsDocumentForId(detail4.id);
-    const d5Link = await getCollectionsDocumentForId(detail5.id);
-
-    await expect(d1Link.references[0].pageId)
-      .toStrictEqual(statusMessage.id);
-    await expect(d2Link.references.some((ref: any) => ref.pageId === overviewPage.id))
-      .toBe(true);
-    await expect(d3Link.references[0].pageId)
-      .toStrictEqual(overviewPage.id);
-    await expect(d4Link.references[0].pageId)
-      .toStrictEqual(overviewPage.id);
-    await expect(d5Link.references[0].pageId)
-      .toStrictEqual(overviewPage.id);
-
-    // #########################################
     // verify correct url rendering: de
     // #########################################
     await page.goto(`http://localhost:3000/de/tenant-${time}/overview-page-${time}`);
@@ -590,57 +548,6 @@ test.describe('Overview page regular links (non-sagw)', () => {
 
     await expect(impressumLinkIt)
       .toBe(`/it/tenant-${time}-it/impressum-it`);
-
-    // #########################################
-    // test removal
-    // #########################################
-    // remove all content and verify that link references are removed
-
-    await payload.update({
-      collection: 'overviewPage',
-      data: {
-        content: [],
-      },
-      id: overviewPage.id,
-    });
-
-    await payload.update({
-      collection: 'statusMessage',
-      data: {
-        ...statusMessage,
-        content: {
-          optionalLink: {
-            includeLink: true,
-            link: {
-              internalLink: {
-                documentId: overviewPage.id,
-                slug: 'overviewPage',
-              },
-              linkText: simpleRteConfig('[test]status-message:link'),
-            },
-          },
-          showOnHomeOnly: false,
-        },
-      },
-      id: statusMessage.id,
-    });
-
-    const d1LinkUpdated = await getCollectionsDocumentForId(detail1.id);
-    const d2LinkUpdated = await getCollectionsDocumentForId(detail2.id);
-    const d3LinkUpdated = await getCollectionsDocumentForId(detail3.id);
-    const d4LinkUpdated = await getCollectionsDocumentForId(detail4.id);
-    const d5LinkUpdated = await getCollectionsDocumentForId(detail5.id);
-
-    await expect(d1LinkUpdated.references.some((ref: any) => ref.pageId === statusMessage.id))
-      .toBe(false);
-    await expect(d2LinkUpdated.references.some((ref: any) => ref.pageId === overviewPage.id))
-      .toBe(false);
-    await expect(d3LinkUpdated.references.some((ref: any) => ref.pageId === overviewPage.id))
-      .toBe(false);
-    await expect(d4LinkUpdated.references.some((ref: any) => ref.pageId === overviewPage.id))
-      .toBe(false);
-    await expect(d5LinkUpdated.references.some((ref: any) => ref.pageId === overviewPage.id))
-      .toBe(false);
   });
 });
 
@@ -1339,15 +1246,6 @@ test.describe('Overview page teasers links (non-sagw)', () => {
         ? e.message
         : String(e));
     }
-
-    // #########################################
-    // verify entries in Links collection
-    // #########################################
-
-    const d1Link = await getCollectionsDocumentForId(detail1.id);
-
-    await expect(d1Link.references[0].pageId)
-      .toStrictEqual(overviewPage.id);
 
     // #########################################
     // verify correct url rendering: de

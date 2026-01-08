@@ -14,7 +14,7 @@ import {
 } from '@/payload-types';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { buildBreadcrumbItems } from '@/utilities/buildBreadcrumbItems';
-import { buildUrlFromPath } from '@/hooks-payload/computeLinkUrls/buildUrlFromPath';
+import { buildUrlFromPath } from '@/utilities/buildUrlFromPath';
 import {
   CollectionSlug, TypedLocale,
 } from 'payload';

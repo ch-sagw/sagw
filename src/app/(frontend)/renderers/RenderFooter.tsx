@@ -112,7 +112,7 @@ export const RenderFooter = async ({
   });
 
   if (!footerImpressumPage || footerImpressumPage.docs.length !== 1) {
-    return <CMSConfigError message='Data Privacy page missing' />;
+    return <CMSConfigError message='Impressum page missing' />;
   }
 
   // get consent data

@@ -10,7 +10,6 @@ import {
   rte1, rte3,
 } from '@/field-templates/rte';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
-import { hookUpdateLinkReferences } from '@/hooks-payload/updateLinkReferences';
 
 const overlaySection: Field[] = [
   rte1({
@@ -157,7 +156,7 @@ export const Consent: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [hookUpdateLinkReferences],
+    afterChange: [],
   },
   labels: {
     plural: 'Consent',

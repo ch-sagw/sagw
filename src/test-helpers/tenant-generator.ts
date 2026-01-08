@@ -74,3 +74,41 @@ export const generateTenant = async ({
 
   return tenant;
 };
+
+export const getTenantId = async ({
+  isSagw,
+  time,
+}: {
+  isSagw: boolean;
+  time: number;
+}): Promise<string> => {
+  let tenant;
+
+  if (isSagw) {
+    tenant = (await getTenant()) || '';
+  } else {
+    const tenantObject = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    tenant = tenantObject.id;
+  }
+
+  return tenant;
+};
+
+export const getTenantOfId = async ({
+  id,
+}: {
+  id: string;
+}): Promise<any> => {
+  const payload = await getPayloadCached();
+
+  const tenant = await payload.findByID({
+    collection: 'tenants',
+    id,
+    locale: 'all',
+  });
+
+  return tenant;
+};

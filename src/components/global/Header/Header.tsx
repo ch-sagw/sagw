@@ -9,10 +9,7 @@ import { getLocale } from 'next-intl/server';
 import { TypedLocale } from 'payload';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { ColorMode } from '@/components/base/types/colorMode';
-import {
-  extractLinkIds, generateLinkUrls,
-} from '@/components/global/Header/generateUrls';
-import { updateLinkReferences } from '@/components/global/Header/updateLinkReferences';
+import { generateLinkUrls } from '@/components/global/Header/generateUrls';
 
 export type InterfaceHeaderPropTypesCms = {
   metanav: InterfaceHeaderMetaNavigation;
@@ -42,22 +39,6 @@ export const Header = async (props: InterfaceHeaderPropTypes): Promise<React.JSX
     },
     payload,
   });
-
-  // Track link references
-  if (props.headerDocumentId) {
-    const linkIds = extractLinkIds({
-      metanav: props.metanav,
-      navigation: props.navigation,
-      options: {
-        includeMainNavItems: true,
-      },
-    });
-
-    await updateLinkReferences({
-      docId: props.headerDocumentId,
-      linkIds: [...new Set(linkIds)],
-    });
-  }
 
   return (
     <HeaderComponent

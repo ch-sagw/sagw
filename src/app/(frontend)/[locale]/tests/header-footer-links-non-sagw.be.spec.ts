@@ -19,26 +19,6 @@ import { generateTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 
-const getCollectionsDocumentForId = async (id: string): Promise<any> => {
-  const payload = await getPayloadCached();
-
-  const linksCollectionDocument = await payload.find({
-    collection: 'links',
-    limit: 1,
-    where: {
-      and: [
-        {
-          documentId: {
-            equals: id,
-          },
-        },
-      ],
-    },
-  });
-
-  return linksCollectionDocument.docs[0];
-};
-
 test.describe('Header/Footer links (non-sagw)', () => {
   beforeEachAcceptCookies();
   test('rendered correctly', {
@@ -61,7 +41,6 @@ test.describe('Header/Footer links (non-sagw)', () => {
       title: 'Title',
     });
     const homeId = home.id;
-    let header;
 
     try {
       // #########################################
@@ -140,7 +119,7 @@ test.describe('Header/Footer links (non-sagw)', () => {
       // #########################################
       // add header data
       // #########################################
-      header = await payload.create({
+      await payload.create({
         collection: 'header',
         data: {
           metanavigation: {
@@ -225,25 +204,11 @@ test.describe('Header/Footer links (non-sagw)', () => {
     }
 
     // #########################################
-    // verify entries in Links collection
-    // #########################################
-    await page.goto(`http://localhost:3000/de/tenant-${time}`);
-    await page.waitForLoadState('networkidle');
-
-    const o1Link = await getCollectionsDocumentForId(level1.id);
-    const d1Link = await getCollectionsDocumentForId(detail1.id);
-    const d2Link = await getCollectionsDocumentForId(detail2.id);
-
-    await expect(o1Link.references[0].pageId)
-      .toStrictEqual(header.id);
-    await expect(d1Link.references[0].pageId)
-      .toStrictEqual(header.id);
-    await expect(d2Link.references[0].pageId)
-      .toStrictEqual(header.id);
-
-    // #########################################
     // verify correct url rendering: de
     // #########################################
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}`);
+    await page.waitForLoadState('networkidle');
     const link1Header = await page.getByRole('link', {
       name: '[test]nav-link1:link',
     })

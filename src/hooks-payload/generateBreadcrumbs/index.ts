@@ -181,8 +181,14 @@ export const hookGenerateBreadcrumbs: CollectionBeforeChangeHook = async ({
   req,
   operation,
   originalDoc,
+  context,
 }) => {
   if (!data || !req?.payload) {
+    return data;
+  }
+
+  // Skip breadcrumb generation during cascade updates
+  if (context?.cascadeBreadcrumbUpdate) {
     return data;
   }
 

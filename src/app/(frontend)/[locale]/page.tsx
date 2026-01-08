@@ -4,6 +4,7 @@ import { TypedLocale } from 'payload';
 import { RenderPage } from '@/app/(frontend)/renderers/RenderPage';
 import { getTenantFromUrl } from '@/app/(frontend)/utilities/getTenantFromUrl';
 import { CMSConfigError } from '../utilities/CMSConfigError';
+import { getLocaleCodes } from '@/i18n/payloadConfig';
 
 type InterfacePageProps = {
   params: Promise<{
@@ -11,8 +12,13 @@ type InterfacePageProps = {
   }>
 }
 
-export const revalidate = 0;
-// export const dynamic = 'force-static';
+export const generateStaticParams = (): { locale: TypedLocale }[] => {
+  const locales = getLocaleCodes();
+
+  return locales.map((locale) => ({
+    locale,
+  }));
+};
 
 export default async function HomePage({
   params,

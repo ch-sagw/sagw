@@ -20,13 +20,13 @@ import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
-import { hookUpdateLinkReferences } from '@/hooks-payload/updateLinkReferences';
 import { readFile } from 'fs/promises';
 import { fileURLToPath } from 'url';
 import { homeSlug } from '@/collections/constants';
 import {
   dirname, join,
 } from 'path';
+import { hookInvalidateCacheOnPageChange } from '@/hooks-payload/invalidateCacheOnPageChange';
 
 const homeBlocks: BlockSlug[] = [
   'textBlock',
@@ -129,7 +129,7 @@ export const HomePage: CollectionConfig = {
   hooks: {
     afterChange: [
       hookCascadeBreadcrumbUpdates,
-      hookUpdateLinkReferences,
+      hookInvalidateCacheOnPageChange,
     ],
     afterRead: [
       async ({

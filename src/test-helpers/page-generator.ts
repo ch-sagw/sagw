@@ -759,3 +759,326 @@ export const generateHeaderData = async ({
 
   return headerData;
 };
+
+export const getHomeId = async ({
+  isSagw,
+  tenant,
+}: {
+  isSagw: boolean;
+  tenant: string;
+}): Promise<string> => {
+  const payload = await getPayloadCached();
+  let home;
+
+  if (isSagw) {
+    const homeDocs = await payload.find({
+      collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
+    });
+
+    home = homeDocs.docs[0].id;
+
+    await payload.update({
+      collection: 'homePage',
+      data: {
+        content: [],
+      },
+      id: home,
+    });
+
+  } else {
+    home = (await generateHomePage({
+      locale: 'de',
+      sideTitle: 'Side',
+      tenant,
+      title: 'Home',
+    })).id;
+
+    // add remainig home data
+    await generateFooterData({
+      tenant,
+    });
+
+    await generateI18nData({
+      tenant,
+    });
+
+    await generateConsentData({
+      tenant,
+    });
+
+    await generateImpressumPage({
+      tenant,
+    });
+
+    await generateDataPrivacyPage({
+      tenant,
+    });
+
+    await generateHeaderData({
+      tenant,
+    });
+  }
+
+  return home;
+};
+
+// #########################################
+// generate a page of all types
+// #########################################
+
+interface InterfaceGeneratePageTypes {
+  detailPage: DetailPage;
+  eventDetailPage: EventDetailPage;
+  instituteDetailPage: InstituteDetailPage;
+  magazineDetailPage: MagazineDetailPage;
+  nationalDictionaryDetailPage: NationalDictionaryDetailPage;
+  newsDetailPage: NewsDetailPage;
+  overviewPage: OverviewPage;
+  projectDetailPage: ProjectDetailPage;
+  publicationDetailPage: PublicationDetailPage;
+}
+
+export const generateAllPageTypes = async ({
+  home,
+  iterator,
+  tenant,
+  time,
+}: {
+  home: string;
+  iterator: number;
+  tenant: string;
+  time: number;
+}): Promise<InterfaceGeneratePageTypes> => {
+  const overview = await generateOverviewPage({
+    navigationTitle: `overview ${iterator} ${time}`,
+    parentPage: {
+      documentId: home,
+      slug: 'homePage',
+    },
+    tenant,
+    title: `overview ${iterator} ${time}`,
+  });
+
+  const detail = await generateDetailPage({
+    navigationTitle: `detail ${iterator} ${time}`,
+    parentPage: {
+      documentId: overview.id,
+      slug: 'overviewPage',
+    },
+    tenant,
+    title: `detail ${iterator} ${time}`,
+  });
+
+  const event = await generateEventDetailPage({
+    date: '2029-08-03T12:00:00.000Z',
+    navigationTitle: `event ${iterator} ${time}`,
+    parentPage: {
+      documentId: overview.id,
+      slug: 'overviewPage',
+    },
+    tenant,
+    title: `event ${iterator} ${time}`,
+  });
+
+  const news = await generateNewsDetailPage({
+    date: '2031-08-02T12:00:00.000Z',
+    navigationTitle: `news ${iterator} ${time}`,
+    parentPage: {
+      documentId: overview.id,
+      slug: 'overviewPage',
+    },
+    tenant,
+    title: `news ${iterator} ${time}`,
+  });
+
+  const project = await generateProjectDetailPage({
+    locale: 'de',
+    navigationTitle: `project ${iterator} ${time}`,
+    parentPage: {
+      documentId: overview.id,
+      slug: 'overviewPage',
+    },
+    tenant,
+    title: `project ${iterator} ${time}`,
+  });
+
+  const magazine = await generateMagazineDetailPage({
+    date: '2031-08-01T12:00:00.000Z',
+    locale: 'de',
+    navigationTitle: `magazine ${iterator} ${time}`,
+    parentPage: {
+      documentId: overview.id,
+      slug: 'overviewPage',
+    },
+    tenant,
+    title: `magazine ${iterator} ${time}`,
+  });
+
+  const institute = await generateInstituteDetailPage({
+    locale: 'de',
+    navigationTitle: `institute ${iterator} ${time}`,
+    parentPage: {
+      documentId: overview.id,
+      slug: 'overviewPage',
+    },
+    tenant,
+    title: `institute ${iterator} ${time}`,
+  });
+
+  const nationalDictionary = await generateNationalDictionaryDetailPage({
+    locale: 'de',
+    navigationTitle: `national dictionary ${iterator} ${time}`,
+    parentPage: {
+      documentId: overview.id,
+      slug: 'overviewPage',
+    },
+    tenant,
+    title: `national dictionary ${iterator} ${time}`,
+  });
+
+  const publication = await generatePublicationDetailPage({
+    locale: 'de',
+    navigationTitle: `publication ${iterator} ${time}`,
+    parentPage: {
+      documentId: overview.id,
+      slug: 'overviewPage',
+    },
+    tenant,
+    title: `publication ${iterator} ${time}`,
+  });
+
+  // translations
+  const payload = await getPayloadCached();
+
+  await payload.update({
+    collection: 'overviewPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`overview ${iterator} ${time} it`),
+      },
+      navigationTitle: `overview ${iterator} ${time} it`,
+    },
+    id: overview.id,
+    locale: 'it',
+  });
+
+  await payload.update({
+    collection: 'detailPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`detail ${iterator} ${time} it`),
+      },
+      navigationTitle: `detail ${iterator} ${time} it`,
+    },
+    id: detail.id,
+    locale: 'it',
+  });
+
+  await payload.update({
+    collection: 'eventDetailPage',
+    data: {
+      eventDetails: {
+        title: simpleRteConfig(`event ${iterator} ${time} it`),
+      },
+      navigationTitle: `event ${iterator} ${time} it`,
+    },
+    id: event.id,
+    locale: 'it',
+  });
+
+  await payload.update({
+    collection: 'newsDetailPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`news ${iterator} ${time} it`),
+      },
+      navigationTitle: `news ${iterator} ${time} it`,
+      overviewPageProps: news.overviewPageProps,
+    },
+    id: news.id,
+    locale: 'it',
+  });
+
+  await payload.update({
+    collection: 'projectDetailPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`project ${iterator} ${time} it`),
+      },
+      navigationTitle: `project ${iterator} ${time} it`,
+      overviewPageProps: project.overviewPageProps,
+    },
+    id: project.id,
+    locale: 'it',
+  });
+
+  await payload.update({
+    collection: 'magazineDetailPage',
+    data: {
+      hero: {
+        author: magazine.hero.author,
+        title: simpleRteConfig(`magazine ${iterator} ${time} it`),
+      },
+      navigationTitle: `magazine ${iterator} ${time} it`,
+      overviewPageProps: magazine.overviewPageProps,
+    },
+    id: magazine.id,
+    locale: 'it',
+  });
+
+  await payload.update({
+    collection: 'instituteDetailPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`institute ${iterator} ${time} it`),
+      },
+      navigationTitle: `institute ${iterator} ${time} it`,
+      overviewPageProps: institute.overviewPageProps,
+    },
+    id: institute.id,
+    locale: 'it',
+  });
+
+  await payload.update({
+    collection: 'nationalDictionaryDetailPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`national dictionary ${iterator} ${time} it`),
+      },
+      navigationTitle: `national dictionary ${iterator} ${time} it`,
+      overviewPageProps: nationalDictionary.overviewPageProps,
+    },
+    id: nationalDictionary.id,
+    locale: 'it',
+  });
+
+  await payload.update({
+    collection: 'publicationDetailPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`publication ${iterator} ${time} it`),
+      },
+      navigationTitle: `publication ${iterator} ${time} it`,
+      overviewPageProps: publication.overviewPageProps,
+    },
+    id: publication.id,
+    locale: 'it',
+  });
+
+  return {
+    detailPage: detail,
+    eventDetailPage: event,
+    instituteDetailPage: institute,
+    magazineDetailPage: magazine,
+    nationalDictionaryDetailPage: nationalDictionary,
+    newsDetailPage: news,
+    overviewPage: overview,
+    projectDetailPage: project,
+    publicationDetailPage: publication,
+  };
+};

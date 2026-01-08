@@ -518,9 +518,10 @@ test('Updates after adding slug in other locale', {
     await payload.update({
       collection: 'eventDetailPage',
       data: {
-        ...level3,
+        eventDetails: {
+          title: simpleRteConfig(`Level 3 fr ${time}`),
+        },
         navigationTitle: `Level 3 Navigation Title fr ${time}`,
-        slug: `Level 3 fr ${time}`,
       },
       id: level3.id,
       locale: 'fr',
@@ -529,11 +530,11 @@ test('Updates after adding slug in other locale', {
     await payload.update({
       collection: 'instituteDetailPage',
       data: {
-        ...level4,
         hero: {
           title: simpleRteConfig(`Level 4 fr ${time}`),
         },
         navigationTitle: `Level 4 Navigation Title fr ${time}`,
+        overviewPageProps: level4.overviewPageProps,
       },
       id: level4.id,
       locale: 'fr',

@@ -24,26 +24,6 @@ import { generateTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 
-const getCollectionsDocumentForId = async (id: string): Promise<any> => {
-  const payload = await getPayloadCached();
-
-  const linksCollectionDocument = await payload.find({
-    collection: 'links',
-    limit: 1,
-    where: {
-      and: [
-        {
-          documentId: {
-            equals: id,
-          },
-        },
-      ],
-    },
-  });
-
-  return linksCollectionDocument.docs[0];
-};
-
 test.describe('Teasers links (non-sagw)', () => {
   beforeEachAcceptCookies();
   test('rendered correctly', {
@@ -51,11 +31,6 @@ test.describe('Teasers links (non-sagw)', () => {
   }, async ({
     page,
   }) => {
-    let d1Link;
-    let d2Link;
-    let d3Link;
-    // let d4Link;
-    let d5Link;
     let eventPage1;
     let eventPage2;
     let newsPage1;
@@ -525,31 +500,11 @@ test.describe('Teasers links (non-sagw)', () => {
         tenant: tenant.id,
       });
 
-      d1Link = await getCollectionsDocumentForId(detail1.id);
-      d2Link = await getCollectionsDocumentForId(detail2.id);
-      d3Link = await getCollectionsDocumentForId(detail3.id);
-      // d4Link = await getCollectionsDocumentForId(detail4.id);
-      d5Link = await getCollectionsDocumentForId(detail5.id);
     } catch (e) {
       throw new Error(e instanceof Error
         ? e.message
         : String(e));
     }
-
-    // #########################################
-    // verify entries in Links collection
-    // #########################################
-
-    await expect(d1Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(d2Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    await expect(d3Link.references[0].pageId)
-      .toStrictEqual(homeId);
-    // await expect(d4Link.references[0].pageId)
-    //   .toStrictEqual(homeId);
-    await expect(d5Link.references[0].pageId)
-      .toStrictEqual(homeId);
 
     // #########################################
     // verify correct url rendering: de
@@ -751,32 +706,6 @@ test.describe('Teasers links (non-sagw)', () => {
       .toStrictEqual(`/it/tenant-${time}-it/overview-page-1-it-${time}/p1-it-${time}`);
     await expect(projectLink2It)
       .toStrictEqual(`/it/tenant-${time}-it/overview-page-1-it-${time}/p1-it-${time}/p2-it-${time}`);
-
-    // #########################################
-    // remove teasers and make sure that optional link referenced are removed
-    // #########################################
-    await payload.update({
-      collection: 'homePage',
-      data: {
-        content: [],
-      },
-      id: homeId,
-    });
-
-    const d1LinkUpdated = await getCollectionsDocumentForId(detail1.id);
-    const d2LinkUpdated = await getCollectionsDocumentForId(detail2.id);
-    const d3LinkUpdated = await getCollectionsDocumentForId(detail3.id);
-    // d4Link = await getCollectionsDocumentForId(detail4.id);
-    const d5LinkUpdated = await getCollectionsDocumentForId(detail5.id);
-
-    await expect(d1LinkUpdated.references)
-      .toHaveLength(0);
-    await expect(d2LinkUpdated.references)
-      .toHaveLength(0);
-    await expect(d3LinkUpdated.references)
-      .toHaveLength(0);
-    await expect(d5LinkUpdated.references)
-      .toHaveLength(0);
 
     // #########################################
     // cleanup

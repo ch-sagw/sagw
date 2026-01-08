@@ -13,26 +13,6 @@ import { getTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 
-const getCollectionsDocumentForId = async (id: string): Promise<any> => {
-  const payload = await getPayloadCached();
-
-  const linksCollectionDocument = await payload.find({
-    collection: 'links',
-    limit: 1,
-    where: {
-      and: [
-        {
-          documentId: {
-            equals: id,
-          },
-        },
-      ],
-    },
-  });
-
-  return linksCollectionDocument.docs[0];
-};
-
 test.describe('Header/Footer links (sagw)', () => {
   beforeEachAcceptCookies();
   test('rendered correctly', {
@@ -202,25 +182,11 @@ test.describe('Header/Footer links (sagw)', () => {
     }
 
     // #########################################
-    // verify entries in Links collection
+    // verify correct url rendering: de
     // #########################################
     await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
 
-    const o1Link = await getCollectionsDocumentForId(level1.id);
-    const d1Link = await getCollectionsDocumentForId(detail1.id);
-    const d2Link = await getCollectionsDocumentForId(detail2.id);
-
-    await expect(o1Link.references[0].pageId)
-      .toStrictEqual(headerId);
-    await expect(d1Link.references[0].pageId)
-      .toStrictEqual(headerId);
-    await expect(d2Link.references[0].pageId)
-      .toStrictEqual(headerId);
-
-    // #########################################
-    // verify correct url rendering: de
-    // #########################################
     const link1Header = await page.getByRole('link', {
       name: '[test]nav-link1:link',
     })

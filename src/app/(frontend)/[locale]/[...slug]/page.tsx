@@ -4,6 +4,7 @@ import { TypedLocale } from 'payload';
 import { RenderPage } from '@/app/(frontend)/renderers/RenderPage';
 import { getTenantFromUrl } from '@/app/(frontend)/utilities/getTenantFromUrl';
 import { CMSConfigError } from '../../utilities/CMSConfigError';
+import { generateStaticParams } from '@/app/(frontend)/utilities/generateStaticParams';
 
 type InterfacePageProps = {
   params: Promise<{
@@ -12,7 +13,7 @@ type InterfacePageProps = {
   }>;
 }
 
-export const revalidate = 0;
+export { generateStaticParams };
 
 export default async function Page({
   params,

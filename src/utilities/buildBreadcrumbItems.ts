@@ -2,8 +2,8 @@ import {
   Config, InterfaceBreadcrumb,
 } from '@/payload-types';
 import { InterfaceBreadcrumbItem } from '@/components/base/Breadcrumb/Breadcrumb';
-import { getBreadcrumbPathSegments } from '@/hooks-payload/computeLinkUrls/getBreadcrumbPathSegments';
-import { buildUrlFromPath } from '@/hooks-payload/computeLinkUrls/buildUrlFromPath';
+import { getBreadcrumbPathSegments } from '@/utilities/getBreadcrumbPathSegments';
+import { buildUrlFromPath } from '@/utilities/buildUrlFromPath';
 import {
   breadcrumbNameFieldsPrefix, breadcrumbSlugFieldsPrefix, homeSlug,
 } from '@/collections/constants';
