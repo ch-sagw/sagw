@@ -572,7 +572,7 @@ const createFormBlockOperation = async ({
       return;
     }
 
-    // Fetch form to check showPrivacyCheckbox
+    // Fetch form document
     const formDoc = await payload.findByID({
       collection: 'forms',
       depth: 0,
@@ -580,38 +580,81 @@ const createFormBlockOperation = async ({
       locale,
     });
 
-    if (!formDoc || !formDoc.showPrivacyCheckbox) {
+    if (!formDoc) {
       return;
     }
 
-    // Fetch i18nGlobals global for this tenant
-    const i18nGlobalsDocs = await payload.find({
-      collection: 'i18nGlobals',
-      depth: 0,
-      limit: 1,
-      locale,
-      pagination: false,
-      where: {
-        tenant: {
-          equals: tenant,
+    const formDocRecord = formDoc as unknown as Record<string, unknown>;
+
+    // Extract links from form fields (all field types have RTE labels)
+    const {
+      fields,
+    } = formDocRecord;
+
+    if (Array.isArray(fields)) {
+      fields.forEach((field) => {
+        if (!field || typeof field !== 'object') {
+          return;
+        }
+
+        const fieldRecord = field as Record<string, unknown>;
+
+        // Extract links from field.label (all form field types have RTE labels)
+        if (fieldRecord.label) {
+          const label = fieldRecord.label as Record<string, unknown>;
+
+          extractRteLinkIds(label, linkIds);
+        }
+
+        // Extract links from radioBlock.items[].label
+        if (fieldRecord.blockType === 'radioBlock' && Array.isArray(fieldRecord.items)) {
+          fieldRecord.items.forEach((item) => {
+            if (!item || typeof item !== 'object') {
+              return;
+            }
+
+            const itemRecord = item as Record<string, unknown>;
+
+            if (itemRecord.label) {
+              const itemLabel = itemRecord.label as Record<string, unknown>;
+
+              extractRteLinkIds(itemLabel, linkIds);
+            }
+          });
+        }
+      });
+    }
+
+    // extract links from dataPrivacyCheckboxText if showPrivacyCheckbox
+    // is enabled
+    if (formDocRecord.showPrivacyCheckbox) {
+      // Fetch i18nGlobals global for this tenant
+      const i18nGlobalsDocs = await payload.find({
+        collection: 'i18nGlobals',
+        depth: 0,
+        limit: 1,
+        locale,
+        pagination: false,
+        where: {
+          tenant: {
+            equals: tenant,
+          },
         },
-      },
-    });
+      });
 
-    if (i18nGlobalsDocs.docs.length === 0) {
-      return;
-    }
+      if (i18nGlobalsDocs.docs.length > 0) {
+        const [i18nGlobal] = i18nGlobalsDocs.docs;
 
-    const [i18nGlobal] = i18nGlobalsDocs.docs;
+        // Extract links from dataPrivacyCheckboxText RTE field
+        if (i18nGlobal?.forms?.dataPrivacyCheckbox?.dataPrivacyCheckboxText) {
+          const dataPrivacyCheckboxText = i18nGlobal.forms.dataPrivacyCheckbox.dataPrivacyCheckboxText as Record<string, unknown>;
 
-    // Extract links from dataPrivacyCheckboxText RTE field
-    if (i18nGlobal?.forms?.dataPrivacyCheckbox?.dataPrivacyCheckboxText) {
-      const dataPrivacyCheckboxText = i18nGlobal.forms.dataPrivacyCheckbox.dataPrivacyCheckboxText as Record<string, unknown>;
-
-      extractRteLinkIds(dataPrivacyCheckboxText, linkIds);
+          extractRteLinkIds(dataPrivacyCheckboxText, linkIds);
+        }
+      }
     }
   } catch (error) {
-    console.error('Error extracting links from formBlock dataPrivacyCheckboxText:', error);
+    console.error('Error extracting links from formBlock:', error);
   }
 };
 
