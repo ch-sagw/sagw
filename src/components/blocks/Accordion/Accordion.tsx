@@ -1,6 +1,9 @@
 'use client';
 
-import React, { Fragment } from 'react';
+import React, {
+  useEffect,
+  useRef,
+} from 'react';
 import { cva } from 'cva';
 import styles from '@/components/blocks/Accordion/Accordion.module.scss';
 import { Icon } from '@/icons';
@@ -11,7 +14,7 @@ import { Rte } from '@/components/blocks/Rte/Rte';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { Section } from '@/components/base/Section/Section';
 
-export type InterfaceAccordionPropTypes = {} & InterfaceAccordionBlock;
+export type InterfaceAccordionPropTypes = InterfaceAccordionBlock;
 
 const accordionClasses = cva([styles.expandableElement], {
   variants: {
@@ -37,49 +40,88 @@ export const Accordion = ({
   title,
   colorMode,
 }: InterfaceAccordionBlock): React.JSX.Element => {
-
   const {
-    activeElement,
-    buttonRefs,
+    activeElement, buttonRefs, onToggleClick, toggleButtonAutofocus,
+  } =
+    useExpandOnClick();
+
+  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
+
+  useEffect(() => {
+    const handlers: { el: HTMLElement; handler: () => void }[] = [];
+
+    Object.entries(sectionRefs.current)
+      .forEach(([
+        key,
+        el,
+      ]) => {
+        if (!el) {
+          return;
+        }
+
+        if (key === activeElement) {
+          el.removeAttribute('hidden');
+        } else {
+          el.setAttribute('hidden', 'until-found');
+        }
+
+        const handler = ():void => {
+          onToggleClick(key);
+          buttonRefs.current[key]?.focus();
+        };
+
+        el.addEventListener('beforematch', handler);
+
+        handlers.push({
+          el,
+          handler,
+        });
+      });
+
+    return ():void => {
+      handlers.forEach(({
+        el, handler,
+      }) => {
+        el.removeEventListener('beforematch', handler);
+      });
+    };
+  }, [
     onToggleClick,
-    toggleButtonAutofocus,
-  } = useExpandOnClick();
+    buttonRefs,
+    activeElement,
+  ]);
 
   return (
     <Section
       className={accordionClasses({
         colorMode,
       })}
-      showTopLine={true}
+      showTopLine
       title={rteToHtml(title)}
       colorMode={colorMode}
     >
+      <ul className={styles.list} data-testid='accordion'>
+        {accordions.map((item, key) => {
+          const refKey = item.id || String(key);
 
-      <ul
-        className={styles.list}
-        data-testid='accordion'
-      >
-        {accordions.map((item, key) => (
-          <li
-            key={key}
-            className={accordionItemClasses({
-              active: item.id === activeElement,
-            })}
-          >
-            <Fragment>
+          return (
+            <li
+              key={refKey}
+              className={accordionItemClasses({
+                active: refKey === activeElement,
+              })}
+            >
               <h3 className={styles.title}>
                 <button
                   ref={(el) => {
-                    buttonRefs.current[item.id || String(key)] = el;
+                    buttonRefs.current[refKey] = el;
                   }}
                   className={styles.button}
-                  onClick={() => {
-                    onToggleClick(item.id || String(key));
-                  }}
+                  onClick={() => onToggleClick(refKey)}
                   aria-controls={`accordion-section-${key}`}
-                  aria-expanded={item.id === activeElement}
+                  aria-expanded={refKey === activeElement}
                   data-testid='button'
-                  autoFocus={toggleButtonAutofocus}
+                  autoFocus={refKey === activeElement && toggleButtonAutofocus}
                 >
                   <SafeHtml
                     as='span'
@@ -94,11 +136,16 @@ export const Accordion = ({
               </h3>
 
               <section
+                ref={(el) => {
+                  sectionRefs.current[refKey] = el;
+                }}
                 id={`accordion-section-${key}`}
                 className={styles.content}
-                hidden={item.id !== activeElement}
-                aria-hidden={item.id !== activeElement}
-                inert={item.id !== activeElement}
+                hidden={refKey === activeElement
+                  ? undefined
+                  : ('until-found' as unknown as boolean)
+                }
+                aria-hidden={refKey !== activeElement}
                 data-testid='content'
               >
                 <div
@@ -111,12 +158,10 @@ export const Accordion = ({
                   />
                 </div>
               </section>
-            </Fragment>
-
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
     </Section>
-
   );
 };

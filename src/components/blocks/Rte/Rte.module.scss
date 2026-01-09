@@ -12,13 +12,23 @@
     @include font-smoothing;
   }
 
+  ::search-text {
+    display: block;
+    border-radius: px-to-rem(--spacing-xs);
+  }
+
   &.light {
     --background-color: var(--background-light);
     --text-color: var(--text-primary);
 
-    ::selection {
+    ::selection,
+    ::search-text:current {
       background: var(--interaction-primary);
       color: var(--text-primary-inverted);
+    }
+
+    ::search-text {
+      background: var(--background-page);
     }
   }
 
@@ -26,9 +36,14 @@
     --background-color: var(--background-page);
     --text-color: var(--text-primary);
 
-    ::selection {
+    ::selection,
+    ::search-text:current {
       background: var(--interaction-primary);
       color: var(--text-primary-inverted);
+    }
+
+    ::search-text {
+      background: var(--background-light);
     }
   }
 
@@ -38,8 +53,14 @@
     --link-color: var(--text-color);
     --link-color-focus-hover: var(--text-color);
 
-    ::selection {
+    ::selection,
+    ::search-text:current {
       background: var(--text-primary-inverted);
+      color: var(--interaction-primary);
+    }
+
+    ::search-text {
+      background: var(--background-light);
       color: var(--interaction-primary);
     }
   }
