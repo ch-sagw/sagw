@@ -47,9 +47,27 @@ const extractRteLinkIds = (rteContent: Record<string, unknown>, linkIds: Set<str
       // check if it's an internal link
       if (linkNode.fields?.linkType === 'internal' && linkNode.fields?.doc?.value) {
         const documentIdValue = linkNode.fields.doc.value;
-        const documentId = typeof documentIdValue === 'string'
-          ? documentIdValue
-          : null;
+        let documentId: string | null = null;
+
+        if (typeof documentIdValue === 'string') {
+          documentId = documentIdValue;
+        } else if (documentIdValue && typeof documentIdValue === 'object') {
+          // Handle object value (e.g., { documentId: '...', slug: '...' })
+          const docValueObj = documentIdValue as Record<string, unknown>;
+          const {
+            documentId: docId,
+            id,
+            value,
+          } = docValueObj;
+
+          if (docId && typeof docId === 'string') {
+            documentId = docId;
+          } else if (id && typeof id === 'string') {
+            documentId = id;
+          } else if (value && typeof value === 'string') {
+            documentId = value;
+          }
+        }
 
         if (documentId) {
           linkIds.add(documentId);

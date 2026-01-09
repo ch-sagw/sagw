@@ -11,11 +11,13 @@ import {
 import { extractID } from '@/utilities/extractId';
 import { fieldParentSelectorFieldName } from '@/field-templates/parentSelector';
 import { fieldNavigationTitleFieldName } from '@/field-templates/navigationTitle';
+import { fieldBreadcrumbFieldName } from '@/field-templates/breadcrumb';
 import { findBlocks } from '@/hooks-payload/shared/extractProgrammaticLinkIds';
 import { extractAllLinkIds } from '@/hooks-payload/shared/extractAllLinkIds';
 import { invalidateCache } from '@/utilities/invalidateCache';
 import { getLocaleCodes } from '@/i18n/payloadConfig';
 import { linkableSlugs } from '@/collections/Pages/pages';
+import { revalidatePath } from 'next/cache.js';
 import {
   getParentId, hasLocalizedStringChanged,
 } from '@/hooks-payload/cascadeBreadcrumbUpdates';
@@ -52,6 +54,45 @@ const invalidatePagesWithDeduplication = async (
   }
 
   await Promise.all(invalidationPromises);
+};
+
+// helper to check if content has changed
+// compares content arrays to detect blocks added/removed/reordered/changed
+const hasContentChanged = (
+  oldContent: unknown,
+  newContent: unknown,
+): boolean => {
+  // both undefined/null - no change
+  if (!oldContent && !newContent) {
+    return false;
+  }
+
+  // one is undefined/null, other is not - changed
+  if (!oldContent || !newContent) {
+    return true;
+  }
+
+  // both should be arrays
+  if (!Array.isArray(oldContent) || !Array.isArray(newContent)) {
+    return false;
+  }
+
+  // different lengths - changed
+  if (oldContent.length !== newContent.length) {
+    return true;
+  }
+
+  // compare serialized arrays to detect any changes
+  // this catches additions, removals, reordering, and content changes
+  try {
+    const oldSerialized = JSON.stringify(oldContent);
+    const newSerialized = JSON.stringify(newContent);
+
+    return oldSerialized !== newSerialized;
+  } catch {
+    // if serialization fails, assume changed to be safe
+    return true;
+  }
 };
 
 // map detail page collections to block types that programmatically
@@ -489,10 +530,13 @@ const isPageInConsent = async ({
     });
 
     // Extract link IDs from all consent documents in parallel
-    const linkIdPromises = consents.docs.map((consent: unknown) => {
+    const linkIdPromises = consents.docs.map(async (consent: unknown) => {
       const consentRecord = consent as Record<string, unknown>;
 
       // Extract link IDs from consent document
+      // NOTE: Since RTE fields are localized, when fetched with locale: 'all',
+      // they're structured as { de: { root: {...} }, it: { root: {...} } }
+      // We need to extract from each locale's RTE content
       const extractionContext = {
         collectionSlug: 'consent' as CollectionSlug,
         currentPageId: String(consentRecord.id),
@@ -501,10 +545,57 @@ const isPageInConsent = async ({
         tenant: tenantId,
       };
 
-      return extractAllLinkIds({
+      // extract links from the full document
+      const linkIds = await extractAllLinkIds({
         context: extractionContext,
         doc: consentRecord,
       });
+
+      // extract links from localized RTE fields
+      // when fetched with locale: 'all', RTE fields are structured as
+      // { de: { root: {...} }, it: { root: {...} } }
+      // We need to extract from each locale's RTE content
+      const extractFromLocalizedRte = async (rteField: Record<string, unknown> | undefined): Promise<void> => {
+        if (rteField && typeof rteField === 'object') {
+          const extractionPromises: Promise<Set<string>>[] = [];
+
+          for (const [, rteContent] of Object.entries(rteField)) {
+            if (rteContent && typeof rteContent === 'object' && 'root' in rteContent) {
+              const rteContentRecord = rteContent as Record<string, unknown>;
+
+              extractionPromises.push(extractAllLinkIds({
+                context: extractionContext,
+                doc: rteContentRecord,
+              }));
+            }
+          }
+
+          const localeLinkIdSets = await Promise.all(extractionPromises);
+
+          localeLinkIdSets.forEach((localeLinkIds) => {
+            localeLinkIds.forEach((id) => linkIds.add(id));
+          });
+        }
+      };
+
+      const banner = consentRecord.banner as Record<string, unknown> | undefined;
+      const overlay = consentRecord.overlay as Record<string, unknown> | undefined;
+
+      // Extract from banner.text
+      await extractFromLocalizedRte(banner?.text as Record<string, unknown> | undefined);
+
+      // Extract from overlay fields
+      if (overlay) {
+        const analyticsPerformance = overlay.analyticsPerformance as Record<string, unknown> | undefined;
+        const externalContent = overlay.externalContent as Record<string, unknown> | undefined;
+        const necessaryCookies = overlay.necessaryCookies as Record<string, unknown> | undefined;
+
+        await extractFromLocalizedRte(analyticsPerformance?.text as Record<string, unknown> | undefined);
+        await extractFromLocalizedRte(externalContent?.text as Record<string, unknown> | undefined);
+        await extractFromLocalizedRte(necessaryCookies?.text as Record<string, unknown> | undefined);
+      }
+
+      return linkIds;
     });
 
     const linkIdSets = await Promise.all(linkIdPromises);
@@ -608,7 +699,13 @@ const invalidateRootPaths = async ({
           : `/${locale}`;
       }
 
-      console.log('[CACHE] invalidating path:', rootPath);
+      if (process.env.ENV !== 'prod') {
+        console.log('[CACHE] invalidating path:', rootPath);
+      }
+
+      if (process.env.ENV === 'prod') {
+        revalidatePath(rootPath);
+      }
     }
   } catch (error) {
     console.error('Error invalidating root paths:', error);
@@ -708,12 +805,8 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
 
   // handle update operation
   if (operation === 'update' && previousDoc) {
-    // Clear invalidation cache at the start of each original update
-    // This ensures we deduplicate within the same update operation
-    // but allow new invalidations in future operations
-    if (!context?.cascadeBreadcrumbUpdate) {
-      invalidationCache.clear();
-    }
+    // NOTE: we clear `invalidationCache` a bit further down, after we compute
+    // whether this operation is a *real* cascade breadcrumb-only update.
 
     // Fetch full document state after all hooks have run to get accurate
     // slug/navigationTitle/parent. This is needed because slug might be
@@ -738,49 +831,77 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
     }
 
     // check for changes that trigger breadcrumb cascade
+    //
+    // IMPORTANT:
+    // Compare `previousDoc` vs `doc` (not `docToUse`) here.
+    // `docToUse` is fetched with `locale: 'all'` and therefore has a different
+    // localized-field shape than `previousDoc` (single-locale). Comparing those
+    // shapes causes false positives (e.g. content-only updates look like
+    // slug/navTitle changes), which breaks cache invalidation behavior + tests.
     const oldSlug = previousDoc?.slug;
-    const newSlug = docToUse?.slug;
+    const newSlug = doc?.slug;
     const oldNavigationTitle = previousDoc?.[fieldNavigationTitleFieldName];
-    const newNavigationTitle = docToUse?.[fieldNavigationTitleFieldName];
+    const newNavigationTitle = doc?.[fieldNavigationTitleFieldName];
     const oldParent = previousDoc?.[fieldParentSelectorFieldName];
-    const newParent = docToUse?.[fieldParentSelectorFieldName];
+    const newParent = doc?.[fieldParentSelectorFieldName];
 
     const slugChanged = hasLocalizedStringChanged(oldSlug, newSlug);
     const navigationTitleChanged = hasLocalizedStringChanged(oldNavigationTitle, newNavigationTitle);
     const parentChanged = getParentId(oldParent) !== getParentId(newParent);
     const willTriggerCascade = slugChanged || navigationTitleChanged || parentChanged;
 
+    const oldBreadcrumb = previousDoc?.[fieldBreadcrumbFieldName];
+    const newBreadcrumb = doc?.[fieldBreadcrumbFieldName];
+    const breadcrumbChanged = JSON.stringify(oldBreadcrumb) !== JSON.stringify(newBreadcrumb);
+
+    // IMPORTANT:
+    // `context.cascadeBreadcrumbUpdate` can leak across operations
+    // (shared req/context). only treat it as a cascade update if the
+    // breadcrumb actually changed AND slug/navTitle/parent did NOT change.
+    const isCascadeBreadcrumbUpdate = context?.cascadeBreadcrumbUpdate === true &&
+      breadcrumbChanged &&
+      !willTriggerCascade;
+
+    // clear invalidation cache at the start of each non-cascade update.
+    // this ensures. we deduplicate within the same update operation but allow
+    // new invalidations. in future operations (tests rely on fresh logs per
+    // update).
+    if (!isCascadeBreadcrumbUpdate) {
+      invalidationCache.clear();
+    }
+
     // skip invalidating referencing pages during cascade breadcrumb updates
     // the original slug/parent/navTitle change already invalidated
     // referencing pages. only skip if this is a cascade update AND only
     // breadcrumb changed (not slug/parent/navTitle)
-    if (context?.cascadeBreadcrumbUpdate && !willTriggerCascade) {
+    if (isCascadeBreadcrumbUpdate) {
       return doc;
     }
 
     // check if page is in header navigation or consent banner/overlay -
     // if so, invalidate root paths
-    if (willTriggerCascade) {
-      const isInHeaderNav = await isPageInHeaderNavigation({
-        changedPageId: String(docToUse.id),
+    // NOTE: We check this for ANY update (not just cascade triggers) because
+    // if a page linked in consent/header changes in any way, we need to
+    // invalidate root paths
+    const isInHeaderNav = await isPageInHeaderNavigation({
+      changedPageId: String(docToUse.id),
+      payload: req.payload,
+      tenantId,
+    });
+
+    const isInConsent = await isPageInConsent({
+      changedPageId: String(docToUse.id),
+      payload: req.payload,
+      tenantId,
+    });
+
+    if (isInHeaderNav || isInConsent) {
+      await invalidateRootPaths({
         payload: req.payload,
         tenantId,
       });
-
-      const isInConsent = await isPageInConsent({
-        changedPageId: String(docToUse.id),
-        payload: req.payload,
-        tenantId,
-      });
-
-      if (isInHeaderNav || isInConsent) {
-        await invalidateRootPaths({
-          payload: req.payload,
-          tenantId,
-        });
-        // Skip invalidating the page itself - root paths already invalidated
-        // Continue to invalidate referencing pages below
-      }
+      // Skip invalidating the page itself - root paths already invalidated
+      // Continue to invalidate referencing pages below
     }
 
     // get all page collections
@@ -862,6 +983,42 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
     } else {
       // invalidate cache for all locales when parent page changes
       await invalidatePagesWithDeduplication(allReferencingPages, allLocales, req.payload);
+    }
+
+    // if content changed (and no cascade trigger), invalidate the page itself
+    // this handles blocks added/removed/reordered/changed when
+    // slug/navTitle/parent didn't change.
+    //
+    // IMPORTANT:
+    // Do NOT use `doc.content` here. On slug-only updates Payload often omits
+    // unchanged fields on `doc`, which caused false positives and broke the
+    // link-trigger test (extra invalidation logs).
+    //
+    // instead compare `previousDoc.content` with `docToUse.content` (fetched
+    // from DB). `content` is a non-localized blocks field in our page configs,
+    // so `locale: 'all'` does not change its shape.
+    if (!willTriggerCascade) {
+      try {
+        const oldContent = previousDoc?.content;
+        const newContent = docToUse?.content;
+        const contentChanged = hasContentChanged(oldContent, newContent);
+
+        if (contentChanged) {
+          await invalidatePagesWithDeduplication(
+            [
+              {
+                collectionSlug,
+                id: String(docToUse.id),
+              },
+            ],
+            allLocales,
+            req.payload,
+          );
+        }
+      } catch (error) {
+        // comparison fails, don't block execution, just log and continue
+        console.error('Error checking content changes:', error);
+      }
     }
   }
 
