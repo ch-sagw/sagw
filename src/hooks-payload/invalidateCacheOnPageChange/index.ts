@@ -29,6 +29,10 @@ import type {
 // to prevent duplicates
 const invalidationCache = new Set<string>();
 
+// module-level Set to track root path invalidations across hook calls
+// This persists even when invalidationCache is cleared for cascade updates
+const rootPathInvalidationCache = new Set<string>();
+
 // Helper to invalidate pages with deduplication
 const invalidatePagesWithDeduplication = async (
   pages: { id: string; collectionSlug: CollectionSlug }[],
@@ -699,12 +703,22 @@ const invalidateRootPaths = async ({
           : `/${locale}`;
       }
 
-      if (process.env.ENV !== 'prod') {
-        console.log('[CACHE] invalidating path:', rootPath);
-      }
+      // deduplicate root path invalidations across hook calls
+      // use tenantId + rootPath as key to handle multiple tenants
+      // use separate cache that persists across cache clears for
+      // cascade updates
+      const cacheKey = `rootPath:${tenantId}:${rootPath}`;
 
-      if (process.env.ENV === 'prod') {
-        revalidatePath(rootPath);
+      if (!rootPathInvalidationCache.has(cacheKey)) {
+        rootPathInvalidationCache.add(cacheKey);
+
+        if (process.env.ENV !== 'prod') {
+          console.log('[CACHE] invalidating path:', rootPath);
+        }
+
+        if (process.env.ENV === 'prod') {
+          revalidatePath(rootPath);
+        }
       }
     }
   } catch (error) {
@@ -868,6 +882,10 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
     // update).
     if (!isCascadeBreadcrumbUpdate) {
       invalidationCache.clear();
+      // Clear root path cache at the start of each operation
+      // The cache check in invalidateRootPaths will prevent duplicates
+      // within the same operation (e.g., multiple hook calls due to cascade)
+      rootPathInvalidationCache.clear();
     }
 
     // skip invalidating referencing pages during cascade breadcrumb updates
@@ -985,6 +1003,32 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
       await invalidatePagesWithDeduplication(allReferencingPages, allLocales, req.payload);
     }
 
+    // For homePage, check content changes regardless of cascade trigger
+    // HomePage content changes should always invalidate root paths
+    // Use context to prevent duplicate invalidations within the same operation
+    if (collectionSlug === 'homePage' && !context?.homePageRootPathsInvalidated) {
+      try {
+        const oldContent = previousDoc?.content;
+        const newContent = docToUse?.content;
+        const contentChanged = hasContentChanged(oldContent, newContent);
+
+        if (contentChanged) {
+          await invalidateRootPaths({
+            payload: req.payload,
+            tenantId,
+          });
+          // mark in context that we invalidated root paths for this operation
+          const reqContext = context || (req as any).context || {};
+
+          reqContext.homePageRootPathsInvalidated = true;
+          (req as any).context = reqContext;
+        }
+      } catch (error) {
+        // comparison fails, don't block execution, just log and continue
+        console.error('Error checking homePage content changes:', error);
+      }
+    }
+
     // if content changed (and no cascade trigger), invalidate the page itself
     // this handles blocks added/removed/reordered/changed when
     // slug/navTitle/parent didn't change.
@@ -1003,7 +1047,8 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
         const newContent = docToUse?.content;
         const contentChanged = hasContentChanged(oldContent, newContent);
 
-        if (contentChanged) {
+        if (contentChanged && collectionSlug !== 'homePage') {
+          // Skip homePage here - already handled above
           await invalidatePagesWithDeduplication(
             [
               {
