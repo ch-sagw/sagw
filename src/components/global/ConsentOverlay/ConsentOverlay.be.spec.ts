@@ -1,6 +1,8 @@
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
+import { getTenant } from '@/test-helpers/tenant-generator';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 import {
   expect,
   test,
@@ -12,6 +14,26 @@ test.describe('Consent Overlay', () => {
     // delete data
     await deleteSetsPages();
     await deleteOtherCollections();
+
+    // empty home
+    const payload = await getPayloadCached();
+    const tenant = await getTenant();
+    const home = await payload.find({
+      collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
+    });
+
+    await payload.update({
+      collection: 'homePage',
+      data: {
+        content: [],
+      },
+      id: home.docs[0].id,
+    });
   });
 
   test('has focus inside initially', async ({
