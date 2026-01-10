@@ -21,7 +21,6 @@ test.describe('Tenants only show content from users tenant', () => {
 
     // delete data
     await deleteSetsPages();
-    await deleteOtherCollections();
 
     // add generic data
     const payload = await getPayloadCached();
@@ -61,6 +60,8 @@ test.describe('Tenants only show content from users tenant', () => {
       tenant: tenantNonSagw || '',
       time,
     });
+
+    await deleteOtherCollections();
 
     await generateCollectionsExceptPages({
       isSagw: true,
