@@ -19,6 +19,9 @@ export const getTenant = async (): Promise<string | null> => {
     },
   });
 
+  console.log('####### TENANTS');
+  console.log(tenants.docs);
+
   if (!tenants.docs || tenants.docs.length < 1) {
     return null;
   }
