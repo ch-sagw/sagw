@@ -1,4 +1,6 @@
-import { getTenant } from '@/test-helpers/tenant-generator';
+import {
+  getTenant, getTenantNonSagw,
+} from '@/test-helpers/tenant-generator';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
@@ -6,9 +8,14 @@ import {
   expect,
   test,
 } from '@playwright/test';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
+import { generateCollectionsExceptPages } from '@/test-helpers/collections-generator';
 
 test.describe('Custom Form', () => {
   beforeEachAcceptCookies();
+
   test('correctly validates email', async ({
     page,
   }) => {
@@ -16,9 +23,23 @@ test.describe('Custom Form', () => {
     // #########################################
     // Empty home content and add proper content
     // #########################################
+    // delete data
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    // add generic data
+    const tenant = await getTenant();
+    const tenantNonSagw = await getTenantNonSagw();
+
+    await generateCollectionsExceptPages({
+      tenant: tenant || '',
+    });
+
+    await generateCollectionsExceptPages({
+      tenant: tenantNonSagw || '',
+    });
 
     const payload = await getPayloadCached();
-    const tenant = await getTenant();
 
     try {
       const home = await payload.find({
@@ -63,128 +84,12 @@ test.describe('Custom Form', () => {
       });
 
       // add real content
-
-      // add contact form
-      const contactForm = await payload.create({
+      const forms = await payload.find({
         collection: 'forms',
-        data: {
-          colorMode: 'dark',
-          fields: [
-            {
-              blockType: 'textBlockForm',
-              fieldError: simpleRteConfig('Geben Sie Ihren Namen an.'),
-              fieldWidth: 'half',
-              label: simpleRteConfig('Name'),
-              name: 'name',
-              placeholder: 'Ihr Name',
-              required: true,
-            },
-            {
-              blockType: 'emailBlock',
-              fieldError: simpleRteConfig('Geben Sie ihre E-Mail-Adresse an.'),
-              fieldWidth: 'half',
-              label: simpleRteConfig('E-Mail'),
-              name: 'email',
-              placeholder: 'Ihre E-Mail Adresse',
-              required: true,
-            },
-            {
-              blockType: 'textareaBlock',
-              fieldError: simpleRteConfig('Geben Sie ihren Kommentar an.'),
-              fieldWidth: 'full',
-              label: simpleRteConfig('Kommentar'),
-              name: 'comment',
-              placeholder: 'Ihr Kommentar',
-              required: true,
-            },
-            {
-              blockType: 'checkboxBlock',
-              fieldError: simpleRteConfig('Bitte akzeptieren Sie die Hinweise zum Datenschutz.'),
-              fieldWidth: 'full',
-              label: simpleRteConfig('Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.'),
-              name: 'checkbox-custom',
-              required: true,
-            },
-            {
-              blockType: 'radioBlock',
-              fieldError: simpleRteConfig('Sie müssen eine Auswahl treffen'),
-              fieldWidth: 'full',
-              items: [
-                {
-                  label: simpleRteConfig('Deutsch'),
-                  value: 'deutsch',
-                },
-                {
-                  label: simpleRteConfig('Französisch'),
-                  value: 'french',
-                },
-              ],
-              label: simpleRteConfig('In welcher Sprache möchten Sie den Newsletter erhalten?'),
-              name: 'language-select',
-              required: true,
-            },
-          ],
-          isNewsletterForm: 'custom',
-          mailSubject: 'Form submission on SAGW',
-          recipientMail: 'delivered@resend.dev',
-          showPrivacyCheckbox: false,
-          submitButtonLabel: 'Abschicken',
-          submitError: {
-            text: simpleRteConfig('Submit text error'),
-            title: simpleRteConfig('Submit title error'),
+        where: {
+          tenant: {
+            equals: tenant,
           },
-          submitSuccess: {
-            text: simpleRteConfig('Submit text success'),
-            title: simpleRteConfig('Submit title success SAGW'),
-          },
-          subtitle: simpleRteConfig('Subtitle for contact Form'),
-          tenant,
-          title: simpleRteConfig('Contact Form SAGW'),
-        },
-      });
-
-      // add newsletter form
-      const newsletterForm = await payload.create({
-        collection: 'forms',
-        data: {
-          colorMode: 'dark',
-          isNewsletterForm: 'newsletter',
-          newsletterFields: {
-            actionText: 'Erneut senden',
-            email: {
-              fieldError: simpleRteConfig('Bitte geben Sie die E-Mail Adresse an.'),
-              fieldWidth: 'full',
-              label: simpleRteConfig('E-Mail'),
-              placeholder: 'Ihre E-Mail Adresse',
-            },
-            firstName: {
-              fieldError: simpleRteConfig('Bitte geben Sie Ihren Vornamen an.'),
-              fieldWidth: 'half',
-              label: simpleRteConfig('Vorname'),
-              placeholder: 'Ihr Vorname',
-            },
-            includeLanguageSelection: 'yes',
-            lastName: {
-              fieldError: simpleRteConfig('Bitte geben Sie Ihren Nachnamen an.'),
-              fieldWidth: 'half',
-              label: simpleRteConfig('Nachname'),
-              placeholder: 'Ihr Nachname',
-            },
-          },
-          recipientMail: 'delivered@resend.dev',
-          showPrivacyCheckbox: true,
-          submitButtonLabel: 'Abschicken',
-          submitError: {
-            text: simpleRteConfig('Newsletter Submit text error SAGW'),
-            title: simpleRteConfig('Newsletter Submit title error SAGW'),
-          },
-          submitSuccess: {
-            text: simpleRteConfig('Newsletter Submit text success SAGW'),
-            title: simpleRteConfig('Newsletter Submit title success SAGW'),
-          },
-          subtitle: simpleRteConfig('Subtitle for Newsletter Form SAGW'),
-          tenant,
-          title: simpleRteConfig('Newsletter Form SAGW'),
         },
       });
 
@@ -194,11 +99,7 @@ test.describe('Custom Form', () => {
           content: [
             {
               blockType: 'formBlock',
-              form: contactForm,
-            },
-            {
-              blockType: 'formBlock',
-              form: newsletterForm,
+              form: forms.docs[1],
             },
           ],
         },
@@ -463,7 +364,7 @@ test.describe('Custom Form', () => {
     await submit.click();
 
     // expect success message
-    const notification = page.getByText('Submit title success SAGW', {
+    const notification = page.getByText('Submit title success', {
       exact: true,
     });
 
@@ -478,13 +379,107 @@ test.describe('Newsletter Form', () => {
   test('correctly validates email', async ({
     page,
   }) => {
+    // #########################################
+    // Empty home content and add proper content
+    // #########################################
+    // delete data
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    // add generic data
+    const tenant = await getTenant();
+    const tenantNonSagw = await getTenantNonSagw();
+
+    await generateCollectionsExceptPages({
+      tenant: tenant || '',
+    });
+
+    await generateCollectionsExceptPages({
+      tenant: tenantNonSagw || '',
+    });
+
+    const payload = await getPayloadCached();
+
+    try {
+      const home = await payload.find({
+        collection: 'homePage',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      const i18nGlobals = await payload.find({
+        collection: 'i18nGlobals',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      await payload.update({
+        collection: 'i18nGlobals',
+        data: {
+          ...i18nGlobals.docs[0],
+          forms: {
+            dataPrivacyCheckbox: {
+              dataPrivacyCheckboxText: simpleRteConfig('Data privacy checkbox SAGW'),
+              errorMessage: simpleRteConfig('Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen'),
+            },
+          },
+        },
+        id: i18nGlobals.docs[0].id,
+      });
+
+      // empty homepage
+      await payload.update({
+        collection: 'homePage',
+        data: {
+          content: [],
+        },
+        id: home.docs[0].id,
+      });
+
+      // add real content
+      const forms = await payload.find({
+        collection: 'forms',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      await payload.update({
+        collection: 'homePage',
+        data: {
+          content: [
+            {
+              blockType: 'formBlock',
+              form: forms.docs[0],
+            },
+          ],
+        },
+        id: home.docs[0].id,
+      });
+
+    } catch (e) {
+      console.log(e);
+
+      throw new Error(e instanceof Error
+        ? e.message
+        : String(e));
+    }
+
     // go to home
     await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
     const form = await page.locator('form')
-      .nth(1);
+      .nth(0);
 
     const submit = await form.locator('button');
 
@@ -532,7 +527,7 @@ test.describe('Newsletter Form', () => {
     await page.waitForLoadState('domcontentloaded');
 
     const form = await page.locator('form')
-      .nth(1);
+      .nth(0);
 
     const submit = await form.locator('button');
 
@@ -573,7 +568,7 @@ test.describe('Newsletter Form', () => {
     await page.waitForLoadState('domcontentloaded');
 
     const form = await page.locator('form')
-      .nth(1);
+      .nth(0);
 
     const submit = await form.locator('button');
 
@@ -612,7 +607,7 @@ test.describe('Newsletter Form', () => {
     await page.waitForLoadState('domcontentloaded');
 
     const form = await page.locator('form')
-      .nth(1);
+      .nth(0);
 
     const submit = await form.locator('button');
 
@@ -651,7 +646,7 @@ test.describe('Newsletter Form', () => {
     await page.waitForLoadState('domcontentloaded');
 
     const form = await page.locator('form')
-      .nth(1);
+      .nth(0);
 
     const submit = await form.locator('button');
 
@@ -691,7 +686,7 @@ test.describe('Newsletter Form', () => {
     await page.waitForLoadState('domcontentloaded');
 
     const form = await page.locator('form')
-      .nth(1);
+      .nth(0);
     const submit = await form.locator('button');
 
     const mailField = await form.getByLabel('e-mail');
@@ -709,7 +704,7 @@ test.describe('Newsletter Form', () => {
     await submit.click();
 
     // expect success message
-    const notification = page.getByText('Newsletter Submit title success SAGW', {
+    const notification = page.getByText('Newsletter Submit title success', {
       exact: true,
     });
 

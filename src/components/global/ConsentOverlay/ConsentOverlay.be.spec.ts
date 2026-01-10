@@ -1,9 +1,18 @@
 import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
+import {
   expect,
   test,
 } from '@playwright/test';
 
 test.describe('Consent Overlay', () => {
+  test.beforeEach(async () => {
+
+    // delete data
+    await deleteSetsPages();
+    await deleteOtherCollections();
+  });
 
   test('has focus inside initially', async ({
     page,

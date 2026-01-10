@@ -848,6 +848,7 @@ interface InterfaceGenerateCollectionsExceptPages {
   eventCategory: EventCategory;
   image: Image;
   networkCategory: NetworkCategory;
+  newsletterForm: Form;
   person: Person;
   project: Project;
   publicationTopic: PublicationTopic;
@@ -1092,12 +1093,60 @@ export const generateCollectionsExceptPages = async ({
     },
   });
 
+  // add newsletter form
+  const newsletterForm = await payload.create({
+    collection: 'forms',
+    data: {
+      colorMode: 'dark',
+      isNewsletterForm: 'newsletter',
+      newsletterFields: {
+        actionText: 'Erneut senden',
+        email: {
+          fieldError: simpleRteConfig('Bitte geben Sie die E-Mail Adresse an.'),
+          fieldWidth: 'full',
+          label: simpleRteConfig('E-Mail'),
+          placeholder: 'Ihre E-Mail Adresse',
+        },
+        firstName: {
+          fieldError: simpleRteConfig('Bitte geben Sie Ihren Vornamen an.'),
+          fieldWidth: 'half',
+          label: simpleRteConfig('Vorname'),
+          placeholder: 'Ihr Vorname',
+        },
+        includeLanguageSelection: 'yes',
+        lastName: {
+          fieldError: simpleRteConfig('Bitte geben Sie Ihren Nachnamen an.'),
+          fieldWidth: 'half',
+          label: simpleRteConfig('Nachname'),
+          placeholder: 'Ihr Nachname',
+        },
+      },
+      recipientMail: 'delivered@resend.dev',
+      showPrivacyCheckbox: true,
+      submitButtonLabel: 'Abschicken',
+      submitError: {
+        text: simpleRteConfig('Newsletter Submit text error'),
+        title: simpleRteConfig('Newsletter Submit title error'),
+      },
+      submitSuccess: {
+        text: simpleRteConfig('Newsletter Submit text success'),
+        title: simpleRteConfig('Newsletter Submit title success'),
+      },
+      subtitle: simpleRteConfig('Subtitle for Newsletter Form'),
+      tenant,
+      title: simpleRteConfig(`Newsletter Form ${isSagw
+        ? 'sagw'
+        : 'non-sagw'}`),
+    },
+  });
+
   return {
     document,
     eventCategory,
     form,
     image,
     networkCategory,
+    newsletterForm,
     person,
     project,
     publicationTopic,
