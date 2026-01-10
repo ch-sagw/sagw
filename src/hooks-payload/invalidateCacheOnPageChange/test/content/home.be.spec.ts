@@ -7,12 +7,15 @@ import { getTenantId } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { LogCapture } from '@/test-helpers/capture-logs';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
-import { deleteSetsPages } from '@/seed/test-data/deleteData';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
 
 test('invalidates on content change (sagw)', {
   tag: '@cache',
 }, async () => {
   await deleteSetsPages();
+  await deleteOtherCollections();
 
   const logCapture = new LogCapture();
   const payload = await getPayloadCached();
@@ -37,6 +40,19 @@ test('invalidates on content change (sagw)', {
     id: home,
   });
 
+  const homeData = await payload.findByID({
+    collection: 'homePage',
+    id: home,
+  });
+
+  console.log('########################');
+  console.log('homedate');
+  console.log(homeData);
+
+  console.log('#########################');
+  console.log('invalidates on content change (sagw)');
+  console.log('--> before log capture');
+
   logCapture.captureLogs();
 
   await payload.update({
@@ -53,6 +69,8 @@ test('invalidates on content change (sagw)', {
   });
 
   logCapture.detachLogs();
+
+  console.log('--> after log capture');
 
   expect(logCapture.hasLog('[CACHE] invalidating path: /de'))
     .toBe(true);
@@ -72,6 +90,7 @@ test('invalidates on content change in other locale (sagw)', {
   tag: '@cache',
 }, async () => {
   await deleteSetsPages();
+  await deleteOtherCollections();
 
   const logCapture = new LogCapture();
   const payload = await getPayloadCached();
