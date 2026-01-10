@@ -657,6 +657,168 @@ const isPageInHeaderNavigation = async ({
   }
 };
 
+// Get all pages for a tenant, excluding non-SAGW pages if tenant is SAGW
+const getAllPagesForTenant = async ({
+  tenantId,
+  payload,
+}: {
+  tenantId: string;
+  payload: any;
+}): Promise<{ id: string; collectionSlug: CollectionSlug }[]> => {
+  try {
+    // Get tenant info to check if it's SAGW
+    const tenant = await payload.findByID({
+      collection: 'tenants',
+      depth: 1,
+      id: tenantId,
+    });
+
+    if (!tenant) {
+      return [];
+    }
+
+    // Note: excludeNonSagw is kept for API consistency but is redundant
+    // since we already filter by tenantId in the query, ensuring we only
+    // get pages belonging to the specified tenant
+
+    const allPages: { id: string; collectionSlug: CollectionSlug }[] = [];
+    const pageCollections = [
+      ...setsSlugs,
+      ...singletonSlugs.filter((s) => s.linkable),
+    ];
+
+    // Fetch pages for each collection and locale
+    await Promise.all(pageCollections.map(async (collectionConfig) => {
+      const collectionSlug = collectionConfig.slug;
+      const isSingleton = singletonSlugs.some((singleton) => singleton.slug === collectionSlug);
+
+      try {
+        const collectionConfigObj = payload.config.collections.find((c: any) => c.slug === collectionSlug);
+        const hasDrafts = Boolean(collectionConfigObj?.versions?.drafts);
+
+        const whereConditions: any[] = [
+          {
+            tenant: {
+              equals: tenantId,
+            },
+          },
+        ];
+
+        if (hasDrafts) {
+          whereConditions.unshift({
+            /* eslint-disable @typescript-eslint/naming-convention */
+            _status: {
+            /* eslint-enable @typescript-eslint/naming-convention */
+              equals: 'published',
+            },
+          });
+        }
+
+        // Fetch pages for all locales
+        const pages = await payload.find({
+          collection: collectionSlug,
+          depth: 1,
+          limit: 0,
+          locale: 'all',
+          overrideAccess: true,
+          pagination: false,
+          where: {
+            and: whereConditions,
+          },
+        });
+
+        // Filter pages and add to results
+        for (const page of pages.docs) {
+          const pageRecord = page as Record<string, unknown>;
+          const pageIdRaw = pageRecord.id;
+
+          if (!pageIdRaw) {
+            // eslint-disable-next-line no-continue
+            continue;
+          }
+
+          // Verify tenant matches
+          if (!('tenant' in pageRecord) || !pageRecord.tenant) {
+            // eslint-disable-next-line no-continue
+            continue;
+          }
+
+          const extractedTenantId = extractID(pageRecord.tenant as any);
+          const pageTenantId = typeof extractedTenantId === 'string'
+            ? extractedTenantId
+            : String(extractedTenantId);
+
+          if (pageTenantId !== tenantId) {
+            // eslint-disable-next-line no-continue
+            continue;
+          }
+
+          // Verify published status for regular pages
+          if (!isSingleton && pageRecord._status !== 'published') {
+            // eslint-disable-next-line no-continue
+            continue;
+          }
+
+          const pageId = String(pageIdRaw);
+
+          allPages.push({
+            collectionSlug,
+            id: pageId,
+          });
+        }
+      } catch (error) {
+        console.error(`Error fetching pages from ${collectionSlug}:`, error);
+      }
+    }));
+
+    return allPages;
+  } catch (error) {
+    console.error('Error getting all pages for tenant:', error);
+
+    return [];
+  }
+};
+
+// Get home page for a tenant
+const getHomePageForTenant = async ({
+  tenantId,
+  payload,
+}: {
+  tenantId: string;
+  payload: any;
+}): Promise<{ id: string; collectionSlug: CollectionSlug } | null> => {
+  try {
+    const homePage = await payload.find({
+      collection: 'homePage',
+      depth: 0,
+      limit: 1,
+      locale: 'all',
+      overrideAccess: true,
+      where: {
+        tenant: {
+          equals: tenantId,
+        },
+      },
+    });
+
+    if (homePage.docs && homePage.docs.length > 0) {
+      const homePageDoc = homePage.docs[0] as Record<string, unknown>;
+      const pageId = String(homePageDoc.id);
+
+      return {
+        collectionSlug: 'homePage',
+        id: pageId,
+      };
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error getting home page for tenant:', error);
+
+    return null;
+  }
+};
+
 // Invalidate root paths when a header-linked page changes
 const invalidateRootPaths = async ({
   tenantId,
@@ -841,6 +1003,50 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
   }
 
   const allLocales = getLocaleCodes();
+
+  // handle global content changes (header, footer, consent, statusMessage)
+  if (isGlobal && [
+    'header',
+    'footer',
+    'consent',
+    'statusMessage',
+  ].includes(collectionSlug)) {
+    // For statusMessage, check if it should only show on home
+    if (collectionSlug === 'statusMessage') {
+      const statusMessageDoc = doc as Record<string, unknown>;
+      const content = statusMessageDoc.content as Record<string, unknown> | undefined;
+      const showOnHomeOnly = content?.showOnHomeOnly === true;
+
+      if (showOnHomeOnly) {
+        // Only invalidate home page
+        const homePage = await getHomePageForTenant({
+          payload: req.payload,
+          tenantId,
+        });
+
+        if (homePage) {
+          await invalidatePagesWithDeduplication([homePage], allLocales, req.payload);
+        }
+      } else {
+        const allPages = await getAllPagesForTenant({
+          payload: req.payload,
+          tenantId,
+        });
+
+        await invalidatePagesWithDeduplication(allPages, allLocales, req.payload);
+      }
+    } else {
+      const allPages = await getAllPagesForTenant({
+        payload: req.payload,
+        tenantId,
+      });
+
+      await invalidatePagesWithDeduplication(allPages, allLocales, req.payload);
+    }
+
+    // Return early - we've handled the invalidation
+    return doc;
+  }
 
   // handle create operation
   // for programmatically referenced detail pages,

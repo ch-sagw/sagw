@@ -6,6 +6,7 @@ import {
 } from '@/field-templates/adminTitle';
 import { rte1 } from '@/field-templates/rte';
 import { globalContentAccessGeneric } from '@/access/globalContent';
+import { hookInvalidateCacheOnPageChange } from '@/hooks-payload/invalidateCacheOnPageChange';
 
 export const StatusMessage: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -107,7 +108,7 @@ export const StatusMessage: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [],
+    afterChange: [hookInvalidateCacheOnPageChange],
   },
   labels: {
     plural: 'Status Message',
