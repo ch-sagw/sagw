@@ -29,6 +29,14 @@ test('invalidates on content change (sagw)', {
     tenant,
   });
 
+  await payload.update({
+    collection: 'homePage',
+    data: {
+      content: [],
+    },
+    id: home,
+  });
+
   logCapture.captureLogs();
 
   await payload.update({
@@ -78,6 +86,14 @@ test('invalidates on content change in other locale (sagw)', {
   const home = await getHomeId({
     isSagw: true,
     tenant,
+  });
+
+  await payload.update({
+    collection: 'homePage',
+    data: {
+      content: [],
+    },
+    id: home,
   });
 
   const homeData = await payload.findByID({
