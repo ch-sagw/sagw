@@ -769,6 +769,57 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
   const wasPublished = isSingleton || isGlobal || previousDoc?._status === 'published';
   const isUnpublishing = wasPublished && !isPublished;
 
+  // detect autosave: when a published document is edited, Payload creates a
+  // draft (status changes from 'published' to 'draft') but with content changes
+  // this is autosave, not an explicit unpublish, so we should skip cache
+  // invalidation
+  let isAutoSave = false;
+
+  if (isUnpublishing && previousDoc) {
+    // check if there are content changes (not just status change)
+    // compare fields to detect if this is autosave vs explicit unpublish
+    // check all keys from both documents to catch additions/removals
+    const allKeys = new Set([
+      ...Object.keys(doc),
+      ...Object.keys(previousDoc),
+    ]);
+
+    const hasContentChanges = Array.from(allKeys)
+      .some((key) => {
+        // skip system fields and status
+        if (key === '_status' || key === 'updatedAt' || key === 'createdAt' || key === 'id' || key === '_id') {
+          return false;
+        }
+
+        // check if field value changed
+        const prevValue = previousDoc[key];
+        const currValue = doc[key];
+
+        // if one is undefined and the other isn't, it's a change
+        if ((prevValue === undefined) !== (currValue === undefined)) {
+          return true;
+        }
+
+        // both defined or both undefined - compare values
+        try {
+          return JSON.stringify(prevValue) !== JSON.stringify(currValue);
+        } catch {
+          // if serialization fails, assume changed to be safe
+          return true;
+        }
+      });
+
+    // if unpublishing with content changes, it's autosave
+    isAutoSave = hasContentChanges;
+  }
+
+  // skip cache invalidation during autosave operations
+  // only process published pages, explicit unpublishing
+  // (without content changes), or publishing (draft -> published)
+  if (isAutoSave) {
+    return doc;
+  }
+
   // only process published pages or unpublishing
   if (!isPublished && !isUnpublishing) {
     return doc;
