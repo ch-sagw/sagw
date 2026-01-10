@@ -81,6 +81,32 @@ test.describe('Tenants only show content from users tenant', () => {
     await page.goto('http://localhost:3000/admin/collections/images');
     await page.waitForLoadState('networkidle');
 
+    const tenant = await getTenant();
+    const tenantNonSagw = await getTenantNonSagw();
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
+
+    await deleteOtherCollections();
+
+    await payload.create({
+      collection: 'images',
+      data: {
+        alt: `image sagw ${time}`,
+        tenant,
+      },
+      filePath: 'src/seed/test-data/assets/sagw.png',
+    });
+
+    await payload.create({
+      collection: 'images',
+      data: {
+        alt: `image not-sagw ${time}`,
+        tenant: tenantNonSagw,
+      },
+      filePath: 'src/seed/test-data/assets/not-sagw.png',
+    });
+
     const expectedImage = await page.getByText('sagw.png', {
       exact: true,
     });
