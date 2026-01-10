@@ -32,26 +32,22 @@ test('invalidates on content change (sagw)', {
     tenant,
   });
 
-  await payload.update({
-    collection: 'homePage',
-    data: {
-      content: [],
-    },
-    id: home,
-  });
-
   const homeData = await payload.findByID({
     collection: 'homePage',
     id: home,
   });
 
-  console.log('########################');
-  console.log('homedate');
-  console.log(homeData);
-
-  console.log('#########################');
-  console.log('invalidates on content change (sagw)');
-  console.log('--> before log capture');
+  await payload.update({
+    collection: 'homePage',
+    data: {
+      content: [],
+      hero: {
+        ...homeData.hero,
+        optionalLink: undefined,
+      },
+    },
+    id: home,
+  });
 
   logCapture.captureLogs();
 
@@ -69,8 +65,6 @@ test('invalidates on content change (sagw)', {
   });
 
   logCapture.detachLogs();
-
-  console.log('--> after log capture');
 
   expect(logCapture.hasLog('[CACHE] invalidating path: /de'))
     .toBe(true);
@@ -117,6 +111,18 @@ test('invalidates on content change in other locale (sagw)', {
 
   const homeData = await payload.findByID({
     collection: 'homePage',
+    id: home,
+  });
+
+  await payload.update({
+    collection: 'homePage',
+    data: {
+      content: [],
+      hero: {
+        ...homeData.hero,
+        optionalLink: undefined,
+      },
+    },
     id: home,
   });
 
