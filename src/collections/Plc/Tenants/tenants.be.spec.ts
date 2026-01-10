@@ -111,10 +111,10 @@ test.describe('Tenants only show content from users tenant', () => {
     await page.goto('http://localhost:3000/admin/collections/images');
     await page.waitForLoadState('networkidle');
 
-    const expectedImage = await page.getByText('sagw.png', {
+    const expectedImage = await page.getByText(`image sagw ${time}`, {
       exact: true,
     });
-    const notExpectedImage = await page.getByText('not-sagw.png', {
+    const notExpectedImage = await page.getByText(`image not-sagw ${time}`, {
       exact: true,
     });
 
