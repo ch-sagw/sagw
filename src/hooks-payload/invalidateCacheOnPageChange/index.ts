@@ -901,25 +901,29 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
     // NOTE: We check this for ANY update (not just cascade triggers) because
     // if a page linked in consent/header changes in any way, we need to
     // invalidate root paths
-    const isInHeaderNav = await isPageInHeaderNavigation({
-      changedPageId: String(docToUse.id),
-      payload: req.payload,
-      tenantId,
-    });
-
-    const isInConsent = await isPageInConsent({
-      changedPageId: String(docToUse.id),
-      payload: req.payload,
-      tenantId,
-    });
-
-    if (isInHeaderNav || isInConsent) {
-      await invalidateRootPaths({
+    // for homePage, skip this check - it's handled below in the
+    // content change check
+    if (collectionSlug !== 'homePage') {
+      const isInHeaderNav = await isPageInHeaderNavigation({
+        changedPageId: String(docToUse.id),
         payload: req.payload,
         tenantId,
       });
-      // Skip invalidating the page itself - root paths already invalidated
-      // Continue to invalidate referencing pages below
+
+      const isInConsent = await isPageInConsent({
+        changedPageId: String(docToUse.id),
+        payload: req.payload,
+        tenantId,
+      });
+
+      if (isInHeaderNav || isInConsent) {
+        await invalidateRootPaths({
+          payload: req.payload,
+          tenantId,
+        });
+        // Skip invalidating the page itself - root paths already invalidated
+        // Continue to invalidate referencing pages below
+      }
     }
 
     // get all page collections

@@ -32,18 +32,16 @@ test('invalidates on content change (sagw)', {
     tenant,
   });
 
-  const homeData = await payload.findByID({
-    collection: 'homePage',
-    id: home,
-  });
-
+  // empty home
   await payload.update({
     collection: 'homePage',
     data: {
       content: [],
       hero: {
-        ...homeData.hero,
-        optionalLink: undefined,
+        animated: true,
+        lead: simpleRteConfig('lead'),
+        optionalLink: {},
+        title: simpleRteConfig('title'),
       },
     },
     id: home,
