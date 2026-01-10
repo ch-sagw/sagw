@@ -16,7 +16,7 @@ import {
   generateHomePage,
   generateI18nData,
   generateImpressumPage,
-} from '@/test-helpers/page-generator';
+} from '@/test-helpers/collections-generator';
 
 test.describe('Legal links (non-sagw)', () => {
   beforeEachAcceptCookies();

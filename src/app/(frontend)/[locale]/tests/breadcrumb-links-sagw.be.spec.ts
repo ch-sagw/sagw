@@ -13,7 +13,7 @@ import {
   generateOverviewPage,
   generateProjectDetailPage,
   generatePublicationDetailPage,
-} from '@/test-helpers/page-generator';
+} from '@/test-helpers/collections-generator';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { getTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';

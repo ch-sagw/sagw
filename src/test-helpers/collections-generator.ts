@@ -6,19 +6,31 @@ import {
   Consent,
   DataPrivacyPage,
   DetailPage,
+  Document,
+  EventCategory,
   EventDetailPage,
   Footer,
+  Form,
   Header,
   HomePage,
   I18NGlobal,
+  Image,
   ImpressumPage,
   InstituteDetailPage,
   MagazineDetailPage,
   NationalDictionaryDetailPage,
+  NetworkCategory,
   NewsDetailPage,
   OverviewPage,
+  Person,
+  Project,
   ProjectDetailPage,
   PublicationDetailPage,
+  PublicationTopic,
+  PublicationType,
+  Team,
+  Video,
+  ZenodoDocument,
 } from '@/payload-types';
 
 import { getTenant } from '@/test-helpers/tenant-generator';
@@ -825,6 +837,243 @@ export const getHomeId = async ({
   }
 
   return home;
+};
+
+// #########################################
+// generate collections except pages
+// #########################################
+interface InterfaceGenerateCollectionsExceptPages {
+  document: Document;
+  zenodoDocument: ZenodoDocument;
+  eventCategory: EventCategory;
+  image: Image;
+  networkCategory: NetworkCategory;
+  person: Person;
+  project: Project;
+  publicationTopic: PublicationTopic;
+  publicationType: PublicationType;
+  team: Team;
+  video: Video;
+  form: Form;
+}
+
+export const generateCollectionsExceptPages = async ({
+  tenant,
+}: {
+  tenant: string;
+}): Promise<InterfaceGenerateCollectionsExceptPages> => {
+  const payload = await getPayloadCached();
+
+  const image = await payload.create({
+    collection: 'images',
+    data: {
+      alt: 'image',
+      tenant,
+    },
+    filePath: 'src/seed/test-data/assets/sagw.png',
+  });
+
+  const video = await payload.create({
+    collection: 'videos',
+    data: {
+      tenant,
+      title: 'video',
+    },
+    filePath: 'src/seed/test-data/assets/sagw.mp4',
+  });
+
+  const document = await payload.create({
+    collection: 'documents',
+    data: {
+      date: '2025-10-30',
+      tenant,
+      title: simpleRteConfig('document'),
+    },
+    filePath: 'src/seed/test-data/assets/sagw.pdf',
+  });
+
+  const zenodoDocument = await payload.create({
+    collection: 'zenodoDocuments',
+    data: {
+      files: [
+        {
+          format: 'pdf',
+          id: 'someid',
+          link: 'https://foo.bar',
+          size: 0.26,
+        },
+        {
+          format: 'zip',
+          id: 'someotherid',
+          link: 'https://foo.bar',
+          size: 1.54,
+        },
+      ],
+      publicationDate: '1919-05-01',
+      tenant,
+      title: `Sample Zenodo Document ${tenant.toUpperCase()}`,
+      zenodoId: '1512691',
+    },
+  });
+
+  const publicationTopic = await payload.create({
+    collection: 'publicationTopics',
+    data: {
+      publicationTopic: simpleRteConfig('Publication Topic'),
+      tenant,
+    },
+  });
+
+  const publicationType = await payload.create({
+    collection: 'publicationTypes',
+    data: {
+      publicationType: simpleRteConfig('Publication Type'),
+      tenant,
+    },
+  });
+
+  const networkCategory = await payload.create({
+    collection: 'networkCategories',
+    data: {
+      name: simpleRteConfig('Network Category'),
+      tenant,
+    },
+  });
+
+  const project = await payload.create({
+    collection: 'projects',
+    data: {
+      name: simpleRteConfig('Project'),
+      tenant,
+    },
+    locale: 'de',
+  });
+
+  const person = await payload.create({
+    collection: 'people',
+    data: {
+      firstname: simpleRteConfig('Firstname'),
+      function: simpleRteConfig('Some function'),
+      image,
+      lastname: simpleRteConfig('Lastname'),
+      mail: 'foo@bar.com',
+      phone: '031 123 45 67',
+      tenant,
+    },
+  });
+
+  const team = await payload.create({
+    collection: 'teams',
+    data: {
+      name: simpleRteConfig('Team'),
+      people: [person.id],
+      tenant,
+    },
+  });
+
+  const eventCategory = await payload.create({
+    collection: 'eventCategory',
+    data: {
+      eventCategory: simpleRteConfig('Event Category'),
+      tenant,
+    },
+  });
+
+  const form = await payload.create({
+    collection: 'forms',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      colorMode: 'dark',
+      fields: [
+        {
+          blockType: 'textBlockForm',
+          fieldError: simpleRteConfig('Geben Sie Ihren Namen an.'),
+          fieldWidth: 'half',
+          label: simpleRteConfig('Name'),
+          name: 'name',
+          placeholder: 'Ihr Name',
+          required: true,
+        },
+        {
+          blockType: 'emailBlock',
+          fieldError: simpleRteConfig('Geben Sie ihre E-Mail-Adresse an.'),
+          fieldWidth: 'half',
+          label: simpleRteConfig('E-Mail'),
+          name: 'email',
+          placeholder: 'Ihre E-Mail Adresse',
+          required: true,
+        },
+        {
+          blockType: 'textareaBlock',
+          fieldError: simpleRteConfig('Geben Sie ihren Kommentar an.'),
+          fieldWidth: 'full',
+          label: simpleRteConfig('Kommentar'),
+          name: 'comment',
+          placeholder: 'Ihr Kommentar',
+          required: true,
+        },
+        {
+          blockType: 'checkboxBlock',
+          fieldError: simpleRteConfig('Bitte akzeptieren Sie die Hinweise zum Datenschutz.'),
+          fieldWidth: 'full',
+          label: simpleRteConfig('Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.'),
+          name: 'checkbox-custom',
+          required: true,
+        },
+        {
+          blockType: 'radioBlock',
+          fieldError: simpleRteConfig('Sie müssen eine Auswahl treffen'),
+          fieldWidth: 'full',
+          items: [
+            {
+              label: simpleRteConfig('Deutsch'),
+              value: 'deutsch',
+            },
+            {
+              label: simpleRteConfig('Französisch'),
+              value: 'french',
+            },
+          ],
+          label: simpleRteConfig('In welcher Sprache möchten Sie den Newsletter erhalten?'),
+          name: 'language-select',
+          required: true,
+        },
+      ],
+      isNewsletterForm: 'custom',
+      mailSubject: 'Form submission on SAGW',
+      recipientMail: 'delivered@resend.dev',
+      showPrivacyCheckbox: false,
+      submitButtonLabel: 'Abschicken',
+      submitError: {
+        text: simpleRteConfig('Submit text error'),
+        title: simpleRteConfig('Submit title error'),
+      },
+      submitSuccess: {
+        text: simpleRteConfig('Submit text success'),
+        title: simpleRteConfig('Submit title success'),
+      },
+      subtitle: simpleRteConfig('Subtitle for contact Form'),
+      tenant,
+      title: simpleRteConfig('Contact Form'),
+    },
+  });
+
+  return {
+    document,
+    eventCategory,
+    form,
+    image,
+    networkCategory,
+    person,
+    project,
+    publicationTopic,
+    publicationType,
+    team,
+    video,
+    zenodoDocument,
+  };
 };
 
 // #########################################

@@ -6,7 +6,7 @@ import {
 } from '@playwright/test';
 import {
   generateDetailPage, generateOverviewPage,
-} from '@/test-helpers/page-generator';
+} from '@/test-helpers/collections-generator';
 
 test('Detects direct circular reference', {
   tag: '@breadcrumb',

@@ -14,7 +14,7 @@ import {
   generateConsentData,
   generateDataPrivacyPage,
   generateDetailPage, generateFooterData, generateHomePage, generateI18nData, generateImpressumPage, generateOverviewPage,
-} from '@/test-helpers/page-generator';
+} from '@/test-helpers/collections-generator';
 
 test.describe('Data rendering (sagw)', () => {
   beforeEachAcceptCookies();

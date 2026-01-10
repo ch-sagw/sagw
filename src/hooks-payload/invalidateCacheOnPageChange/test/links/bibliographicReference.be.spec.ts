@@ -6,7 +6,7 @@ import {
   generateDetailPage,
   generatePublicationDetailPage,
   getHomeId,
-} from '@/test-helpers/page-generator';
+} from '@/test-helpers/collections-generator';
 import { getTenantId } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { LogCapture } from '@/test-helpers/capture-logs';

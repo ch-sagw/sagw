@@ -13,7 +13,7 @@ import {
   generateOverviewPage,
   generateProjectDetailPage,
   generatePublicationDetailPage,
-} from '@/test-helpers/page-generator';
+} from '@/test-helpers/collections-generator';
 import { generateTenant } from '@/test-helpers/tenant-generator';
 
 // Generate 9 levels of nested pages.

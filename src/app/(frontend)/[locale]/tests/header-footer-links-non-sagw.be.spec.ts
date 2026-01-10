@@ -13,7 +13,7 @@ import {
   generateI18nData,
   generateImpressumPage,
   generateOverviewPage,
-} from '@/test-helpers/page-generator';
+} from '@/test-helpers/collections-generator';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { generateTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';

@@ -11,7 +11,7 @@ import {
   generateAllPageTypes,
   generateOverviewPage,
   getHomeId,
-} from '@/test-helpers/page-generator';
+} from '@/test-helpers/collections-generator';
 import {
   getTenantId, getTenantOfId,
 } from '@/test-helpers/tenant-generator';

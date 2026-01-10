@@ -59,3 +59,49 @@ export const deleteSetsPages = async (): Promise<void> => {
     payload.logger.error(e);
   }
 };
+
+export const deleteOtherCollections = async (): Promise<void> => {
+  const payload = await getPayloadCached();
+
+  console.log('clean');
+
+  const collections = [
+    'documents',
+    'eventCategory',
+    'forms',
+    'images',
+    'networkCategories',
+    'people',
+    'projects',
+    'publicationTopics',
+    'publicationTypes',
+    'teams',
+    'videos',
+    'zenodoDocuments',
+  ] as any;
+
+  try {
+
+    for await (const collection of collections) {
+
+      // delete versions of collection
+      if (Object.keys(payload.db.versions)
+        .includes(collection)) {
+        await payload.db.deleteVersions({
+          collection: (collection as CollectionSlug),
+          where: {},
+        });
+      }
+
+      // delete collection
+      await payload.db.deleteMany({
+        collection: (collection as CollectionSlug),
+        where: {},
+      });
+    }
+
+  } catch (e) {
+    payload.logger.error('error in deleting other collections');
+    payload.logger.error(e);
+  }
+};

@@ -26,6 +26,27 @@ export const getTenant = async (): Promise<string | null> => {
   return tenants.docs[0].id;
 };
 
+// get's non-sagw tenant
+export const getTenantNonSagw = async (): Promise<string | null> => {
+  const payload = await getPayloadCached();
+
+  const tenants = await payload.find({
+    collection: 'tenants',
+    depth: 1,
+    where: {
+      name: {
+        equals: 'not-sagw',
+      },
+    },
+  });
+
+  if (!tenants.docs || tenants.docs.length < 1) {
+    return null;
+  }
+
+  return tenants.docs[0].id;
+};
+
 export const generateTenant = async ({
   name,
 }: InterfaceGenerateTenantProps): Promise<Tenant> => {

@@ -13,7 +13,7 @@ import {
   generateHomePage,
   generateInstituteDetailPage,
   generateOverviewPage,
-} from '@/test-helpers/page-generator';
+} from '@/test-helpers/collections-generator';
 import { generateTenant } from '@/test-helpers/tenant-generator';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
