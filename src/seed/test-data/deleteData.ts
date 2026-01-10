@@ -63,8 +63,6 @@ export const deleteSetsPages = async (): Promise<void> => {
 export const deleteOtherCollections = async (): Promise<void> => {
   const payload = await getPayloadCached();
 
-  console.log('clean');
-
   const collections = [
     'documents',
     'eventCategory',

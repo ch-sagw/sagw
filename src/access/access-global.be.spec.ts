@@ -6,14 +6,37 @@ import {
 import { explicitRoleLogin } from '@/test-helpers/payload-login';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { extendExpect } from '@/access/test/extendExpect';
-import { beforeEachPrepareData } from '@/test-helpers/prepare-data';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
+import {
+  getTenant, getTenantNonSagw,
+} from '@/test-helpers/tenant-generator';
+import { generateCollectionsExceptPages } from '@/test-helpers/collections-generator';
 
 /* eslint-disable max-nested-callbacks */
 
 extendExpect(expect);
 
 test.describe('access-global', () => {
-  beforeEachPrepareData();
+  test.beforeEach(async () => {
+
+    // delete data
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    // add generic data
+    const tenant = await getTenant();
+    const tenantNonSagw = await getTenantNonSagw();
+
+    await generateCollectionsExceptPages({
+      tenant: tenant || '',
+    });
+
+    await generateCollectionsExceptPages({
+      tenant: tenantNonSagw || '',
+    });
+  });
 
   test.describe('can not add network categories', () => {
     test('translator', async () => {
@@ -3504,8 +3527,8 @@ test.describe('access-global', () => {
   test.describe('can delete forms', () => {
     test('sagw-admin', async () => {
       await expect(async () => {
+        const tenant = await getTenant();
         const {
-          tenant,
           payload,
           user,
         } = await explicitRoleLogin('sagw-admin');
@@ -3513,9 +3536,6 @@ test.describe('access-global', () => {
         const foundItems = await payload.find({
           collection: 'forms',
           where: {
-            recipientMail: {
-              equals: 'foo@bar.com',
-            },
             tenant: {
               equals: tenant,
             },
@@ -3540,8 +3560,8 @@ test.describe('access-global', () => {
 
     test('fg-admin', async () => {
       await expect(async () => {
+        const tenant = await getTenantNonSagw();
         const {
-          tenant,
           payload,
           user,
         } = await explicitRoleLogin('fg-admin');
@@ -3549,9 +3569,6 @@ test.describe('access-global', () => {
         const foundItems = await payload.find({
           collection: 'forms',
           where: {
-            recipientMail: {
-              equals: 'foo@bar.com',
-            },
             tenant: {
               equals: tenant,
             },

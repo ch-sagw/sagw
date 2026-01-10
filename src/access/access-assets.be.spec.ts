@@ -6,14 +6,21 @@ import {
 import { explicitRoleLogin } from '@/test-helpers/payload-login';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { extendExpect } from '@/access/test/extendExpect';
-import { beforeEachPrepareData } from '@/test-helpers/prepare-data';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
 
 /* eslint-disable max-nested-callbacks */
 
 extendExpect(expect);
 
 test.describe('access-assets', () => {
-  beforeEachPrepareData();
+  test.beforeEach(async () => {
+
+    // delete data
+    await deleteSetsPages();
+    await deleteOtherCollections();
+  });
 
   test.describe('can not add images', () => {
     test('translator', async () => {
