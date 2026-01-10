@@ -4,9 +4,35 @@ import {
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
+import {
+  getTenant, getTenantNonSagw,
+} from '@/test-helpers/tenant-generator';
+import { generateCollectionsExceptPages } from '@/test-helpers/collections-generator';
 
 test.describe('Add Zenodo document', () => {
   beforeEachPayloadLogin();
+  test.beforeEach(async () => {
+
+    // delete data
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    // add generic data
+    const tenant = await getTenant();
+    const tenantNonSagw = await getTenantNonSagw();
+
+    await generateCollectionsExceptPages({
+      tenant: tenant || '',
+    });
+
+    await generateCollectionsExceptPages({
+      tenant: tenantNonSagw || '',
+    });
+
+  });
 
   test('search and validate list items', async ({
     page,

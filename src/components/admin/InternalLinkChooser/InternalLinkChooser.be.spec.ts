@@ -3,9 +3,66 @@ import {
   test,
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import {
+  getTenant, getTenantNonSagw,
+} from '@/test-helpers/tenant-generator';
+import {
+  generateAllPageTypes, generateDetailPage,
+} from '@/test-helpers/collections-generator';
 
 test.describe('Internal Link Chooser', () => {
   beforeEachPayloadLogin();
+
+  test.beforeEach(async () => {
+
+    // delete data
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    // add generic data
+    const payload = await getPayloadCached();
+    const tenant = await getTenant();
+    const tenantNonSagw = await getTenantNonSagw();
+    const time = (new Date())
+      .getTime();
+
+    const home = await payload.find({
+      collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
+    });
+
+    const homeNonSagw = await payload.find({
+      collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenantNonSagw,
+        },
+      },
+    });
+
+    await generateAllPageTypes({
+      home: home.docs[0].id,
+      iterator: 1,
+      tenant: tenant || '',
+      time,
+    });
+
+    await generateAllPageTypes({
+      home: homeNonSagw.docs[0].id,
+      iterator: 2,
+      tenant: tenantNonSagw || '',
+      time,
+    });
+
+  });
 
   // TODO: find stable solution
   /*
@@ -158,30 +215,13 @@ test.describe('Internal Link Chooser', () => {
 
     await linkTargetInput.click();
 
-    const link1 = await page.getByText('Home Page', {
-      exact: true,
-    });
-    const link2 = await page.getByText('Overview page title SAGW', {
-      exact: true,
-    });
-    const link3 = await page.getByText('Detail page title SAGW', {
-      exact: true,
-    });
-    const link4 = await page.getByText('Magazine detail page 1 SAGW', {
-      exact: true,
-    });
-    const link6 = await page.getByText('Event 1 details title SAGW (render detail page)', {
-      exact: true,
-    });
-    const link7 = await page.getByText('Detail page title SAGW', {
-      exact: true,
-    });
-    const link8 = await page.getByText('News 1 detail page title SAGW', {
-      exact: true,
-    });
-    const link9 = await page.getByText('Publication detail page 1 SAGW', {
-      exact: true,
-    });
+    const link1 = await page.getByText('Home Page');
+    const link2 = await page.getByText('overview 1');
+    const link3 = await page.getByText('detail 1');
+    const link4 = await page.getByText('magazine 1');
+    const link6 = await page.getByText('event 1');
+    const link7 = await page.getByText('news 1');
+    const link8 = await page.getByText('publication 1');
 
     await expect(link1)
       .toBeVisible();
@@ -196,8 +236,6 @@ test.describe('Internal Link Chooser', () => {
     await expect(link7)
       .toBeVisible();
     await expect(link8)
-      .toBeVisible();
-    await expect(link9)
       .toBeVisible();
 
   });
@@ -217,12 +255,8 @@ test.describe('Internal Link Chooser', () => {
 
     await linkTargetInput.click();
 
-    const link1 = await page.getByText('Overview page title SAGW', {
-      exact: true,
-    });
-    const link2 = await page.getByText('Overview page title NOT-SAGW', {
-      exact: true,
-    });
+    const link1 = await page.getByText('overview 1');
+    const link2 = await page.getByText('overview 2');
 
     await expect(link1)
       .toBeVisible();
@@ -233,6 +267,14 @@ test.describe('Internal Link Chooser', () => {
   test('only shows published pages', async ({
     page,
   }) => {
+    const time = (new Date())
+      .getTime();
+
+    await generateDetailPage({
+      draft: true,
+      title: `draft detail ${time}`,
+    });
+
     await page.goto('http://localhost:3000/admin/collections/header');
     await page.waitForLoadState('networkidle');
 
@@ -245,13 +287,11 @@ test.describe('Internal Link Chooser', () => {
 
     await linkTargetInput.click();
 
-    const draftPage = await page.getByText('Detail Page Lead', {
+    const draftPage = await page.getByText(`draft detail ${time}`, {
       exact: true,
     });
 
-    const publishedPage = await page.getByText('Overview page title SAGW', {
-      exact: true,
-    });
+    const publishedPage = await page.getByText('overview 1');
 
     await expect(publishedPage)
       .toBeVisible();
