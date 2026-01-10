@@ -3,7 +3,7 @@
 import { Pagination } from '@/components/base/Pagination/Pagination';
 import { usePagination } from '@/hooks/usePagination';
 import React, {
-  Fragment, useRef,
+  Fragment, Suspense, useRef,
 } from 'react';
 import styles from '@/components/base/GenericOverview/GenericOverview.module.scss';
 
@@ -12,7 +12,7 @@ export type InterfaceGenericOverview = {
   children: React.ReactNode;
 };
 
-export const GenericOverview = ({
+const GenericOverviewContent = ({
   children,
   showPagination,
 }: InterfaceGenericOverview): React.JSX.Element => {
@@ -54,3 +54,9 @@ export const GenericOverview = ({
     </Fragment>
   );
 };
+
+export const GenericOverview = (props: InterfaceGenericOverview): React.JSX.Element => (
+  <Suspense fallback={<div></div>}>
+    <GenericOverviewContent {...props} />
+  </Suspense>
+);

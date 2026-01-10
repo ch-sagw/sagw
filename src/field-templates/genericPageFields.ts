@@ -2,7 +2,9 @@ import {
   Field, slugField,
   TextField,
 } from 'payload';
-import { fieldParentSelectorDetailPage } from '@/field-templates/parentSelector';
+import {
+  fieldParentSelectorDetailPage, fieldParentSelectorOverviewPage,
+} from '@/field-templates/parentSelector';
 import { fieldBreadcrumb } from '@/field-templates/breadcrumb';
 import { fieldNavigationTitle } from '@/field-templates/navigationTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
@@ -11,7 +13,7 @@ import {
 } from '@/field-templates/adminTitle';
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
-export const genericPageFields = (): Field[] => ([
+export const genericPageFields = (isOverview?: boolean): Field[] => ([
   fieldLinkablePage,
   fieldAdminTitle,
   slugField({
@@ -35,7 +37,9 @@ export const genericPageFields = (): Field[] => ([
     },
   }),
   fieldNavigationTitle,
-  fieldParentSelectorDetailPage,
+  isOverview
+    ? fieldParentSelectorOverviewPage
+    : fieldParentSelectorDetailPage,
   fieldBreadcrumb,
   {
     admin: {
