@@ -859,27 +859,37 @@ interface InterfaceGenerateCollectionsExceptPages {
 
 export const generateCollectionsExceptPages = async ({
   tenant,
+  isSagw = true,
 }: {
   tenant: string;
+  isSagw?: boolean;
 }): Promise<InterfaceGenerateCollectionsExceptPages> => {
   const payload = await getPayloadCached();
 
   const image = await payload.create({
     collection: 'images',
     data: {
-      alt: 'image',
+      alt: `image ${isSagw
+        ? 'sagw'
+        : 'non-sagw'}`,
       tenant,
     },
-    filePath: 'src/seed/test-data/assets/sagw.png',
+    filePath: `src/seed/test-data/assets/${isSagw
+      ? 'sagw'
+      : 'not-sagw'}.png`,
   });
 
   const video = await payload.create({
     collection: 'videos',
     data: {
       tenant,
-      title: 'video',
+      title: `video ${isSagw
+        ? 'sagw'
+        : 'non-sagw'}`,
     },
-    filePath: 'src/seed/test-data/assets/sagw.mp4',
+    filePath: `src/seed/test-data/assets/${isSagw
+      ? 'sagw'
+      : 'not-sagw'}.mp4`,
   });
 
   const document = await payload.create({
@@ -889,7 +899,9 @@ export const generateCollectionsExceptPages = async ({
       tenant,
       title: simpleRteConfig('document'),
     },
-    filePath: 'src/seed/test-data/assets/sagw.pdf',
+    filePath: `src/seed/test-data/assets/${isSagw
+      ? 'sagw'
+      : 'not-sagw'}.pdf`,
   });
 
   const zenodoDocument = await payload.create({
@@ -911,7 +923,9 @@ export const generateCollectionsExceptPages = async ({
       ],
       publicationDate: '1919-05-01',
       tenant,
-      title: `Sample Zenodo Document ${tenant.toUpperCase()}`,
+      title: `Sample Zenodo Document ${isSagw
+        ? 'sagw'
+        : 'non-sagw'}`,
       zenodoId: '1512691',
     },
   });
@@ -919,7 +933,9 @@ export const generateCollectionsExceptPages = async ({
   const publicationTopic = await payload.create({
     collection: 'publicationTopics',
     data: {
-      publicationTopic: simpleRteConfig('Publication Topic'),
+      publicationTopic: simpleRteConfig(`Publication Topic ${isSagw
+        ? 'sagw'
+        : 'non-sagw'}`),
       tenant,
     },
   });
@@ -927,7 +943,9 @@ export const generateCollectionsExceptPages = async ({
   const publicationType = await payload.create({
     collection: 'publicationTypes',
     data: {
-      publicationType: simpleRteConfig('Publication Type'),
+      publicationType: simpleRteConfig(`Publication Type ${isSagw
+        ? 'sagw'
+        : 'non-sagw'}`),
       tenant,
     },
   });
@@ -935,7 +953,9 @@ export const generateCollectionsExceptPages = async ({
   const networkCategory = await payload.create({
     collection: 'networkCategories',
     data: {
-      name: simpleRteConfig('Network Category'),
+      name: simpleRteConfig(`Network Category ${isSagw
+        ? 'sagw'
+        : 'non-sagw'}`),
       tenant,
     },
   });
@@ -943,7 +963,9 @@ export const generateCollectionsExceptPages = async ({
   const project = await payload.create({
     collection: 'projects',
     data: {
-      name: simpleRteConfig('Project'),
+      name: simpleRteConfig(`Project ${isSagw
+        ? 'sagw'
+        : 'non-sagw'}`),
       tenant,
     },
     locale: 'de',
@@ -952,10 +974,14 @@ export const generateCollectionsExceptPages = async ({
   const person = await payload.create({
     collection: 'people',
     data: {
-      firstname: simpleRteConfig('Firstname'),
+      firstname: simpleRteConfig(`Firstname ${isSagw
+        ? 'sagw'
+        : 'non-sagw'}`),
       function: simpleRteConfig('Some function'),
       image,
-      lastname: simpleRteConfig('Lastname'),
+      lastname: simpleRteConfig(`Lastname ${isSagw
+        ? 'sagw'
+        : 'non-sagw'}`),
       mail: 'foo@bar.com',
       phone: '031 123 45 67',
       tenant,
@@ -965,7 +991,9 @@ export const generateCollectionsExceptPages = async ({
   const team = await payload.create({
     collection: 'teams',
     data: {
-      name: simpleRteConfig('Team'),
+      name: simpleRteConfig(`Team ${isSagw
+        ? 'sagw'
+        : 'non-sagw'}`),
       people: [person.id],
       tenant,
     },
@@ -974,7 +1002,9 @@ export const generateCollectionsExceptPages = async ({
   const eventCategory = await payload.create({
     collection: 'eventCategory',
     data: {
-      eventCategory: simpleRteConfig('Event Category'),
+      eventCategory: simpleRteConfig(`Event Category ${isSagw
+        ? 'sagw'
+        : 'non-sagw'}`),
       tenant,
     },
   });
@@ -1056,7 +1086,9 @@ export const generateCollectionsExceptPages = async ({
       },
       subtitle: simpleRteConfig('Subtitle for contact Form'),
       tenant,
-      title: simpleRteConfig('Contact Form'),
+      title: simpleRteConfig(`Contact Form ${isSagw
+        ? 'sagw'
+        : 'non-sagw'}`),
     },
   });
 

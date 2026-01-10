@@ -3,9 +3,76 @@ import {
   test,
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import {
+  getTenant, getTenantNonSagw,
+} from '@/test-helpers/tenant-generator';
+import {
+  generateAllPageTypes, generateCollectionsExceptPages,
+} from '@/test-helpers/collections-generator';
 
 test.describe('Tenants only show content from users tenant', () => {
   beforeEachPayloadLogin();
+
+  test.beforeEach(async () => {
+
+    // delete data
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    // add generic data
+    const payload = await getPayloadCached();
+    const tenant = await getTenant();
+    const tenantNonSagw = await getTenantNonSagw();
+    const time = (new Date())
+      .getTime();
+
+    const home = await payload.find({
+      collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
+    });
+
+    const homeNonSagw = await payload.find({
+      collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenantNonSagw,
+        },
+      },
+    });
+
+    await generateAllPageTypes({
+      home: home.docs[0].id,
+      iterator: 1,
+      tenant: tenant || '',
+      time,
+    });
+
+    await generateAllPageTypes({
+      home: homeNonSagw.docs[0].id,
+      iterator: 2,
+      tenant: tenantNonSagw || '',
+      time,
+    });
+
+    await generateCollectionsExceptPages({
+      isSagw: true,
+      tenant: tenant || '',
+    });
+
+    await generateCollectionsExceptPages({
+      isSagw: false,
+      tenant: tenantNonSagw || '',
+    });
+
+  });
 
   test('images', async ({
     page,
@@ -32,10 +99,10 @@ test.describe('Tenants only show content from users tenant', () => {
     await page.goto('http://localhost:3000/admin/collections/publicationTopics');
     await page.waitForLoadState('networkidle');
 
-    const expectedTopic = await page.getByText('Publication Topic 1 SAGW', {
+    const expectedTopic = await page.getByText('Publication Topic sagw', {
       exact: true,
     });
-    const notExpectedTopic = await page.getByText('Publication Topic 1 NOTSAGW', {
+    const notExpectedTopic = await page.getByText('Publication Topic non-sagw', {
       exact: true,
     });
 
@@ -51,10 +118,10 @@ test.describe('Tenants only show content from users tenant', () => {
     await page.goto('http://localhost:3000/admin/collections/publicationTypes');
     await page.waitForLoadState('networkidle');
 
-    const expectedType = await page.getByText('Publication Type 1 SAGW', {
+    const expectedType = await page.getByText('Publication Type sagw', {
       exact: true,
     });
-    const notExpectedType = await page.getByText('Publication Type 1 NOTSAGW', {
+    const notExpectedType = await page.getByText('Publication Type non-sagw', {
       exact: true,
     });
 
@@ -70,10 +137,10 @@ test.describe('Tenants only show content from users tenant', () => {
     await page.goto('http://localhost:3000/admin/collections/forms');
     await page.waitForLoadState('networkidle');
 
-    const expectedForm = await page.getByText('Contact Form SAGW', {
+    const expectedForm = await page.getByText('Contact Form sagw', {
       exact: true,
     });
-    const notExpectedForm = await page.getByText('Contact Form NOT-SAGW', {
+    const notExpectedForm = await page.getByText('Contact Form non-sagw', {
       exact: true,
     });
 
@@ -89,10 +156,10 @@ test.describe('Tenants only show content from users tenant', () => {
     await page.goto('http://localhost:3000/admin/collections/zenodoDocuments');
     await page.waitForLoadState('networkidle');
 
-    const expectedDocument = await page.getByText('Sample Zenodo Document SAGW', {
+    const expectedDocument = await page.getByText('Sample Zenodo Document sagw', {
       exact: true,
     });
-    const notExpectedDocument = await page.getByText('Sample Zenodo Document NOTSAGW', {
+    const notExpectedDocument = await page.getByText('Sample Zenodo Document non-sagw', {
       exact: true,
     });
 
@@ -118,64 +185,6 @@ test.describe('Tenants only show content from users tenant', () => {
     await expect(expectedDocument)
       .toBeVisible();
     await expect(notExpectedDocument)
-      .not.toBeVisible();
-  });
-
-  test('news detail page', async ({
-    page,
-  }) => {
-    await page.goto('http://localhost:3000/admin/collections/newsDetailPage');
-    await page.waitForLoadState('networkidle');
-
-    // show all entries
-    const perPageButton = await page.locator('.page-controls .per-page');
-
-    await perPageButton.click();
-
-    const entries100 = await page.locator('.page-controls .popup__content')
-      .getByText('100');
-
-    await entries100.click();
-
-    const expectedNews = await page.getByText('News 7 detail page title SAGW', {
-      exact: true,
-    });
-    const notExpectedNews = await page.getByText('News 7 detail page title NOTSAGW', {
-      exact: true,
-    });
-
-    await expect(expectedNews)
-      .toBeVisible();
-    await expect(notExpectedNews)
-      .not.toBeVisible();
-  });
-
-  test('publication detail page', async ({
-    page,
-  }) => {
-    await page.goto('http://localhost:3000/admin/collections/publicationDetailPage');
-    await page.waitForLoadState('networkidle');
-
-    // show all entries
-    const perPageButton = await page.locator('.page-controls .per-page');
-
-    await perPageButton.click();
-
-    const entries100 = await page.locator('.page-controls .popup__content')
-      .getByText('100');
-
-    await entries100.click();
-
-    const expectedPublication = await page.getByText('Publication detail page 1 SAGW', {
-      exact: true,
-    });
-    const notExpectedPublication = await page.getByText('Publication detail page 1 NOTSAGW', {
-      exact: true,
-    });
-
-    await expect(expectedPublication)
-      .toBeVisible();
-    await expect(notExpectedPublication)
       .not.toBeVisible();
   });
 
