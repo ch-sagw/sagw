@@ -75,14 +75,9 @@ test.describe('Tenants only show content from users tenant', () => {
 
   });
 
-  // TODO: fix
-  /*
   test('images', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/admin/collections/images');
-    await page.waitForLoadState('networkidle');
-
     const tenant = await getTenant();
     const tenantNonSagw = await getTenantNonSagw();
     const payload = await getPayloadCached();
@@ -94,10 +89,12 @@ test.describe('Tenants only show content from users tenant', () => {
     await payload.create({
       collection: 'images',
       data: {
-        alt: 'image s',
+        alt: `image sagw ${time}`,
         tenant,
       },
       filePath: 'src/seed/test-data/assets/sagw.png',
+      locale: 'de',
+      overrideAccess: true,
     });
 
     await payload.create({
@@ -107,7 +104,12 @@ test.describe('Tenants only show content from users tenant', () => {
         tenant: tenantNonSagw,
       },
       filePath: 'src/seed/test-data/assets/not-sagw.png',
+      locale: 'de',
+      overrideAccess: true,
     });
+
+    await page.goto('http://localhost:3000/admin/collections/images');
+    await page.waitForLoadState('networkidle');
 
     const expectedImage = await page.getByText('sagw.png', {
       exact: true,
@@ -121,7 +123,6 @@ test.describe('Tenants only show content from users tenant', () => {
     await expect(notExpectedImage)
       .not.toBeVisible();
   });
-  */
 
   test('publication topic', async ({
     page,
