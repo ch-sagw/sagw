@@ -2,23 +2,21 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { Rte } from '@/components/blocks/Rte/Rte';
-import { } from '@/components/base/types/rte';
-import { defaultDecorator } from '@/storybook-helpers';
 import {
-  rte4FullRange,
-  rte4FullRangeStartingParagraph,
-} from '@/utilities/rteSampleContent';
+  type InterfaceRteClientPropTypes, RteClient,
+} from '@/components/blocks/Rte/Rte.client';
+import { defaultDecorator } from '@/storybook-helpers';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { rteToHtml } from '@/utilities/rteToHtml';
+import { rte4FullRangeStartingParagraph } from '@/utilities/rteSampleContent';
 
-type RteProps = React.ComponentProps<typeof Rte>;
-
-type StrictStory = StoryObj<typeof Rte> & {
-  args: RteProps;
+type StrictStory = StoryObj<typeof RteClient> & {
+  args: InterfaceRteClientPropTypes;
 };
 
-const meta: Meta<typeof Rte> = {
+const meta: Meta<typeof RteClient> = {
   args: {},
-  component: Rte,
+  component: RteClient,
   decorators: [defaultDecorator],
   parameters: {/* layout: 'centered', */ },
   tags: [
@@ -31,11 +29,27 @@ const meta: Meta<typeof Rte> = {
 
 export default meta;
 
-export const RteWhite: StrictStory = {
+export const Light: StrictStory = {
+  args: {
+    colorMode: 'light',
+    stickyFirstTitle: false,
+    textHtml: rteToHtml(simpleRteConfig('<p>This is a sample RTE content in light mode. It can contain <strong>rich text</strong> and <a href="#">links</a>.</p>')),
+  },
+};
+
+export const Dark: StrictStory = {
+  args: {
+    colorMode: 'dark',
+    stickyFirstTitle: false,
+    textHtml: rteToHtml(simpleRteConfig('<p>This is a sample RTE content in dark mode. It can contain <strong>rich text</strong> and <a href="#">links</a>.</p>')),
+  },
+};
+
+export const White: StrictStory = {
   args: {
     colorMode: 'white',
-    stickyFirstTitle: true,
-    text: rte4FullRange,
+    stickyFirstTitle: false,
+    textHtml: rteToHtml(simpleRteConfig('<p>This is a sample RTE content in white mode. It can contain <strong>rich text</strong> and <a href="#">links</a>.</p>')),
   },
 };
 
@@ -43,23 +57,14 @@ export const RteWhiteWithoutTitle: StrictStory = {
   args: {
     colorMode: 'white',
     stickyFirstTitle: true,
-    text: rte4FullRangeStartingParagraph,
+    textHtml: rteToHtml(rte4FullRangeStartingParagraph),
   },
 };
 
-export const RteLight: StrictStory = {
+export const WithStickyFirstTitle: StrictStory = {
   args: {
     colorMode: 'light',
     stickyFirstTitle: true,
-    text: rte4FullRange,
+    textHtml: rteToHtml(simpleRteConfig('<h2>Some title</h2><p>This is a sample RTE content in white mode. It can contain <strong>rich text</strong> and <a href="#">links</a>.</p>')),
   },
 };
-
-export const RteDark: StrictStory = {
-  args: {
-    colorMode: 'dark',
-    stickyFirstTitle: true,
-    text: rte4FullRange,
-  },
-};
-

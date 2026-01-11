@@ -3,9 +3,17 @@ import {
   test,
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
 
 test.describe('Unique blocks', () => {
   beforeEachPayloadLogin();
+
+  test.beforeEach(async () => {
+    await deleteSetsPages();
+    await deleteOtherCollections();
+  });
 
   test('only allows 1 overview block per page in Admin UI', async ({
     page,

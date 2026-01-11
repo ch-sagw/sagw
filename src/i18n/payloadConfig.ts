@@ -1,5 +1,6 @@
 import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
 import { LocalizationConfig } from 'payload';
+import type { Config } from '@/payload-types';
 
 export const localizationConfig: LocalizationConfig = {
   defaultLocale: 'de',
@@ -55,3 +56,8 @@ export const localizationConfig: LocalizationConfig = {
     },
   ],
 };
+
+// Extract locale codes from localization config
+export const getLocaleCodes = (): Config['locale'][] => localizationConfig.locales.map((locale) => (typeof locale === 'object' && 'code' in locale
+  ? locale.code
+  : locale)) as Config['locale'][];

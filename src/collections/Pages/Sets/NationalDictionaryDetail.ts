@@ -101,7 +101,9 @@ export const NationalDictionaryDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: genericPageHooks(),
+  hooks: genericPageHooks({
+    afterChange: [],
+  }),
   labels: {
     plural: 'National Dictionary Detail Pages',
     singular: 'National Dictionary Detail Page',
