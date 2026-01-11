@@ -106,6 +106,9 @@ export const StatusMessage: CollectionConfig = {
       type: 'group',
     },
   ],
+  hooks: {
+    afterChange: [],
+  },
   labels: {
     plural: 'Status Message',
     singular: 'Status Message',

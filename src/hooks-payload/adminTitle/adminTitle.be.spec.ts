@@ -3,9 +3,17 @@ import {
   test,
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
 
 test.describe('adminTitle', () => {
   beforeEachPayloadLogin();
+
+  test.beforeEach(async () => {
+    await deleteSetsPages();
+    await deleteOtherCollections();
+  });
 
   test('correctly adopts adminTitle from hero field', async ({
     page,
