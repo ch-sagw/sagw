@@ -8,7 +8,6 @@ import {
 import { defaultDecorator } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { rteToHtml } from '@/utilities/rteToHtml';
-import { rte4FullRangeStartingParagraph } from '@/utilities/rteSampleContent';
 
 type StrictStory = StoryObj<typeof RteClient> & {
   args: InterfaceRteClientPropTypes;
@@ -57,7 +56,7 @@ export const RteWhiteWithoutTitle: StrictStory = {
   args: {
     colorMode: 'white',
     stickyFirstTitle: true,
-    textHtml: rteToHtml(rte4FullRangeStartingParagraph),
+    textHtml: rteToHtml(simpleRteConfig('<p>Um dem in der Regel internationalen Tätigkeitsfeld der Forscher·innen gerecht zu werden, heisst der einstige Nachwuchspreis der SAGW neu Early Career Award. Stéphanie Soubrier (Universität Genf), Madeline Woker (Collegium Helveticum / University of Sheffield) und Magdalena Breyer (Universität Basel) überzeugten die Jury in diesem Jahr durch die hohe Qualität ihrer wissenschaftlichen Arbeit.</p><p><br></p><h3>Erster Preis: Ein Schlaglicht auf die&nbsp;<strong>«Boys» an Bord der französischen Dampfschiffe</strong></h3><p>Um dem in der Regel internationalen Tätigkeitsfeld der Forscher·innen gerecht zu werden, heisst der einstige Nachwuchspreis der SAGW neu Early Career Award. Stéphanie Soubrier (Universität Genf), Madeline Woker (Collegium Helveticum / University of Sheffield) und Magdalena Breyer (Universität Basel) überzeugten die Jury in diesem Jahr durch die hohe Qualität ihrer wissenschaftlichen Arbeit.</p><p>Um dem in der Regel internationalen Tätigkeitsfeld der Forscher·innen gerecht zu werden, heisst der einstige Nachwuchspreis der SAGW neu Early Career Award. Stéphanie Soubrier (Universität Genf), Madeline Woker (Collegium Helveticum / University of Sheffield) und Magdalena Breyer (Universität Basel) überzeugten die Jury in diesem Jahr durch die hohe Qualität ihrer wissenschaftlichen Arbeit.</p><ul class="list-bullet"><li>Um dem in der Regel internationalen Tätigkeitsfeld</li><li>der Forscher·innen gerecht zu werden, heisst der einstige Nachwuchspreis </li><li>der SAGW neu Early Career Award. Stéphanie Soubrier (Universität Genf), </li><li>Madeline Woker (Collegium Helveticum / University of Sheffield) und Magdalena Breyer (Universität Basel) überzeugten die Jury in diesem Jahr durch die hohe Qualität ihrer wissenschaftlichen Arbeit.</li></ul><p>Um dem in der Regel internationalen Tätigkeitsfeld der Forscher·innen gerecht zu werden, heisst der einstige Nachwuchspreis der SAGW neu Early Career Award. Stéphanie Soubrier (Universität Genf), Madeline Woker (Collegium Helveticum / University of Sheffield) und Magdalena Breyer (Universität Basel) überzeugten die Jury in diesem Jahr durch die hohe Qualität ihrer wissenschaftlichen Arbeit.</p>')),
   },
 };
 
