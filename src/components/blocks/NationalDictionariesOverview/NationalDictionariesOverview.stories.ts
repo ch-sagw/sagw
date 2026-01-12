@@ -6,6 +6,7 @@ import { NationalDictionaryOverviewComponent } from '@/components/blocks/Nationa
 import { defaultDecorator } from '@/storybook-helpers';
 import { NationalDictionaryDetailPage } from '@/payload-types';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { prerenderPageLinksStorybook } from '@/utilities/prerenderPageLinksStorybook';
 
 type NationalDictionariesOverviewProps = React.ComponentProps<typeof NationalDictionaryOverviewComponent>;
 
@@ -60,6 +61,9 @@ export const NationalDictionaries: StrictStory = {
   args: {
     blockType: 'nationalDictionariesOverviewBlock',
     moreInfoButtonText: simpleRteConfig('Weitere Informationen'),
+    pageUrls: prerenderPageLinksStorybook({
+      pages,
+    }),
     pages,
   },
 };

@@ -11,13 +11,16 @@ import { rteToHtml } from '@/utilities/rteToHtml';
 
 export type InterfaceInstituteOverviewComponentPropTypes = {
   pages: InstituteDetailPage[];
+  pageUrls: Record<string, string>;
 } & InterfaceInstitutesOverviewBlock;
 
 export const InstituteOverviewComponent = ({
   pages,
+  pageUrls,
   moreInfoButtonText,
 }: InterfaceInstituteOverviewComponentPropTypes): React.JSX.Element => {
   const allItems = pages.map((item) => {
+    const href = pageUrls[item.id] || `/${item.id}`;
 
     const image = typeof item.overviewPageProps.image === 'string'
       ? undefined
@@ -31,9 +34,7 @@ export const InstituteOverviewComponent = ({
         texts={[rteToHtml(item.overviewPageProps.teaserText)]}
         links={[
           {
-
-            // TODO: generate proper url
-            href: `${item.slug}/${item.id}`,
+            href,
             text: rteToHtml(moreInfoButtonText),
             type: 'internal',
           },
@@ -42,7 +43,6 @@ export const InstituteOverviewComponent = ({
         type='institute'
       />
     );
-
   });
 
   return (

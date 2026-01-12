@@ -14,6 +14,12 @@ import { PublicationDetailPage } from '@/collections/Pages/Sets/PublicationDetai
 import { NationalDictionaryDetailPage } from '@/collections/Pages/Sets/NationalDictionaryDetail';
 import { InstituteDetailPage } from '@/collections/Pages/Sets/InstituteDetail';
 import { ProjectDetailPage } from '@/collections/Pages/Sets/ProjectDetail';
+import { I18nGlobals } from '@/collections/Globals/i18n/Globals';
+import { Consent } from '@/collections/Globals/Consent';
+import { Footer } from '@/collections/Globals/Footer';
+import { Header } from '@/collections/Globals/Header';
+import { StatusMessage } from '@/collections/Globals/StatusMessage';
+import { Theme } from '@/collections/Globals/Theme';
 
 export default [
   HomePage,
@@ -29,4 +35,10 @@ export default [
   NationalDictionaryDetailPage,
   InstituteDetailPage,
   ProjectDetailPage,
+  I18nGlobals,
+  Consent,
+  Footer,
+  Header,
+  StatusMessage,
+  Theme,
 ];

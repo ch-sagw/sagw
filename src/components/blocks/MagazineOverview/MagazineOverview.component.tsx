@@ -10,12 +10,15 @@ import React from 'react';
 
 export type InterfaceMagazineOverviewComponentPropTypes = {
   pages: InterfaceMagazineDetailPageWithImage[];
+  pageUrls: Record<string, string>;
 } & InterfaceMagazineOverviewBlock;
 
 export const MagazineOverviewComponent = ({
   pages,
+  pageUrls,
 }: InterfaceMagazineOverviewComponentPropTypes): React.JSX.Element => {
   const allItems = pages.map((item) => {
+    const href = pageUrls[item.id] || `/${item.id}`;
 
     const image = typeof item.image === 'string'
       ? undefined
@@ -30,9 +33,7 @@ export const MagazineOverviewComponent = ({
         texts={[rteToHtml(item.overviewPageProps.teaserText)]}
         links={[
           {
-
-            // TODO: generate proper url
-            href: `${item.slug}/${item.id}`,
+            href,
             type: 'internal',
           },
         ]}

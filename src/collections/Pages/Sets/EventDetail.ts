@@ -213,7 +213,9 @@ export const EventDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: genericPageHooks(),
+  hooks: genericPageHooks({
+    afterChange: [],
+  }),
   labels: {
     plural: 'Event Detail Pages',
     singular: 'Event Detail Detail',

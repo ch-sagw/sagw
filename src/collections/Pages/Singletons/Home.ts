@@ -1,4 +1,6 @@
-import { CollectionConfig } from 'payload';
+import {
+  CollectionAfterReadHook, CollectionConfig,
+} from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHeroHome } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
@@ -19,6 +21,12 @@ import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 import { readFile } from 'fs/promises';
+import { fileURLToPath } from 'url';
+import { homeSlug } from '@/collections/constants';
+import {
+  dirname, join,
+} from 'path';
+import { hookInvalidateCacheOnPageChange } from '@/hooks-payload/invalidateCacheOnPageChange';
 
 const homeBlocks: BlockSlug[] = [
   'textBlock',
@@ -55,21 +63,7 @@ export const HomePage: CollectionConfig = {
         hidden: true,
         readOnly: true,
       },
-      defaultValue: async ({
-        locale,
-      }): Promise<string> => {
-        let homeString = 'Home';
-
-        if (locale) {
-          const translationRawFile = (await readFile(new URL(`../../../i18n/messages/${locale}.json`, import.meta.url))).toString();
-          const translationsFile = JSON.parse(translationRawFile);
-
-          homeString = translationsFile.navigation.navigationTitle;
-        }
-
-        return homeString;
-
-      },
+      defaultValue: 'Home',
       localized: true,
       name: fieldNavigationTitleFieldName,
       required: false,
@@ -80,7 +74,7 @@ export const HomePage: CollectionConfig = {
         hidden: true,
         readOnly: true,
       },
-      defaultValue: 'home',
+      defaultValue: homeSlug,
       localized: true,
       name: 'slug',
       type: 'text',
@@ -133,7 +127,59 @@ export const HomePage: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [hookCascadeBreadcrumbUpdates],
+    afterChange: [
+      hookCascadeBreadcrumbUpdates,
+      hookInvalidateCacheOnPageChange,
+    ],
+    afterRead: [
+      async ({
+        doc,
+        req,
+      }): Promise<CollectionAfterReadHook<any>> => {
+        if (!doc) {
+          return doc;
+        }
+
+        // we can not use getTranslations... It works in Admin-Ui since
+        // rendered on the server. But in playwright, context strangely switches
+        // to client, which makes getTranslations throw an error.
+
+        const locale = req?.locale || 'de';
+        const fallback = 'Home';
+        let homeNavigationTitle;
+
+        /* eslint-disable @typescript-eslint/naming-convention */
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = dirname(__filename);
+        /* eslint-enable @typescript-eslint/naming-convention */
+        const messagesDir = join(__dirname, '../../../i18n/messages');
+
+        if (locale && locale === 'all') {
+          const translationRawFileDe = (await readFile(join(messagesDir, 'de.json'))).toString();
+          const translationRawFileEn = (await readFile(join(messagesDir, 'en.json'))).toString();
+          const translationRawFileFr = (await readFile(join(messagesDir, 'fr.json'))).toString();
+          const translationRawFileIt = (await readFile(join(messagesDir, 'it.json'))).toString();
+
+          homeNavigationTitle = {
+            de: JSON.parse(translationRawFileDe).navigation.navigationTitle,
+            en: JSON.parse(translationRawFileEn).navigation.navigationTitle,
+            fr: JSON.parse(translationRawFileFr).navigation.navigationTitle,
+            it: JSON.parse(translationRawFileIt).navigation.navigationTitle,
+          };
+
+        } else if (locale) {
+          const translationRawFile = (await readFile(join(messagesDir, `${locale}.json`))).toString();
+          const translationsFile = JSON.parse(translationRawFile);
+
+          homeNavigationTitle = translationsFile.navigation.navigationTitle;
+        }
+
+        return {
+          ...doc,
+          navigationTitle: homeNavigationTitle || fallback,
+        };
+      },
+    ],
     beforeChange: [
       hookPreventBulkPublishForTranslators,
       hookGenerateBreadcrumbs,

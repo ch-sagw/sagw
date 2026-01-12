@@ -10,14 +10,18 @@ import { Icon } from '@/icons';
 
 export type InterfaceMagazineTeaserComponentPropTypes = {
   pages: InterfaceMagazineDetailPageWithImage[];
+  pageUrls: Record<string, string>;
+  optionalLinkUrl?: string;
 } & InterfaceMagazineTeasersBlock;
 
 export const MagazineTeaserComponent = ({
   title,
   lead,
-  alignement,
+  alignment,
   optionalLink,
   pages,
+  pageUrls,
+  optionalLinkUrl,
 }: InterfaceMagazineTeaserComponentPropTypes): React.JSX.Element => (
   <Fragment>
     <Section
@@ -25,7 +29,7 @@ export const MagazineTeaserComponent = ({
       title={rteToHtml(title)}
       subtitle={rteToHtml(lead)}
       colorMode='white'
-      fullBleed={alignement === 'vertical'}
+      fullBleed={alignment === 'vertical'}
     >
       {optionalLink && optionalLink.includeLink && optionalLink.link?.internalLink && optionalLink.link?.linkText &&
         <Button
@@ -37,15 +41,14 @@ export const MagazineTeaserComponent = ({
           iconInlineStart={'arrowRight' as keyof typeof Icon}
           isActive={true}
           prefetch={true}
-
-          // TODO: generate proper url
-          href={`${optionalLink.link?.internalLink.slug}/${optionalLink.link?.internalLink.documentId}`}
+          href={optionalLinkUrl || `/${optionalLink.link?.internalLink.documentId}`}
         />
       }
     </Section>
 
     <ul className={styles.list}>
       {pages.map((item) => {
+        const href = pageUrls[item.id] || `/${item.id}`;
 
         const image = typeof item.image === 'string'
           ? undefined
@@ -59,11 +62,9 @@ export const MagazineTeaserComponent = ({
             title={rteToHtml(item.hero.title)}
             texts={[rteToHtml(item.overviewPageProps.teaserText)]}
             type='magazine'
-
-            // TODO: generate proper url
             links={[
               {
-                href: `${item.slug}/${item.id}`,
+                href,
                 type: 'internal',
               },
             ]}

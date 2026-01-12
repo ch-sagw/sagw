@@ -7,6 +7,7 @@ import { InterfaceMagazineDetailPageWithImage } from '@/components/blocks/Magazi
 import { defaultDecorator } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { MagazineTeaserImage } from '@/components/blocks/helpers/imagesData';
+import { prerenderPageLinksStorybook } from '@/utilities/prerenderPageLinksStorybook';
 
 type MagazineOverviewProps = React.ComponentProps<typeof MagazineOverviewComponent>;
 
@@ -64,6 +65,9 @@ const pages: InterfaceMagazineDetailPageWithImage[] = Array.from({
 export const MagazineOverview: StrictStory = {
   args: {
     blockType: 'magazineOverviewBlock',
+    pageUrls: prerenderPageLinksStorybook({
+      pages,
+    }),
     pages,
   },
 };

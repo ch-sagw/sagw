@@ -1,3 +1,4 @@
+import 'server-only';
 import React from 'react';
 import {
   Image,
@@ -9,6 +10,8 @@ import { MagazineOverviewComponent } from '@/components/blocks/MagazineOverview/
 import { getFirstImageIdOfMagazinePage } from '@/components/helpers/magazineImage';
 import { getLocale } from 'next-intl/server';
 import { TypedLocale } from 'payload';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { prerenderPageLinks } from '@/utilities/prerenderPageLinks';
 
 export type InterfaceMagazineOverviewPropTypes = {
   tenant: string;
@@ -20,7 +23,7 @@ export type InterfaceMagazineDetailPageWithImage = {
 
 export const MagazineOverview = async (props: InterfaceMagazineOverviewPropTypes): Promise<React.JSX.Element> => {
   const locale = (await getLocale()) as TypedLocale;
-
+  const payload = await getPayloadCached();
   const {
     tenant,
     ...restProps
@@ -43,9 +46,16 @@ export const MagazineOverview = async (props: InterfaceMagazineOverviewPropTypes
     pages[i].image = teaserImages[i];
   }
 
+  const urlMap = await prerenderPageLinks({
+    locale,
+    pages,
+    payload,
+  });
+
   return (
     <MagazineOverviewComponent
       pages={pages}
+      pageUrls={urlMap}
       {...restProps}
     />
   );

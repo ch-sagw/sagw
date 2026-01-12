@@ -11,13 +11,16 @@ import { GenericOverview } from '@/components/base/GenericOverview/GenericOvervi
 
 export type InterfaceNationalDictionaryOverviewComponentPropTypes = {
   pages: NationalDictionaryDetailPage[];
+  pageUrls: Record<string, string>;
 } & InterfaceNationalDictionariesOverviewBlock;
 
 export const NationalDictionaryOverviewComponent = ({
   pages,
+  pageUrls,
   moreInfoButtonText,
 }: InterfaceNationalDictionaryOverviewComponentPropTypes): React.JSX.Element => {
   const allItems = pages.map((item) => {
+    const href = pageUrls[item.id] || `/${item.id}`;
 
     const image = typeof item.overviewPageProps.image === 'string' || item.overviewPageProps.image === null
       ? undefined
@@ -32,9 +35,7 @@ export const NationalDictionaryOverviewComponent = ({
         texts={[rteToHtml(item.overviewPageProps.teaserText)]}
         links={[
           {
-
-            // TODO: generate proper url
-            href: `${item.slug}/${item.id}`,
+            href,
             text: rteToHtml(moreInfoButtonText),
             type: 'internal',
           },
@@ -42,7 +43,6 @@ export const NationalDictionaryOverviewComponent = ({
         type='institute'
       />
     );
-
   });
 
   return (

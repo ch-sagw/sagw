@@ -7,6 +7,7 @@ import { defaultDecorator } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { InstituteDetailPage } from '@/payload-types';
 import { InstitutesTeaserImageSVG } from '@/components/blocks/helpers/imagesData';
+import { prerenderPageLinksStorybook } from '@/utilities/prerenderPageLinksStorybook';
 
 type InstitutesOverviewProps = React.ComponentProps<typeof InstituteOverviewComponent>;
 
@@ -61,6 +62,9 @@ export const InstitutesOverview: StrictStory = {
   args: {
     blockType: 'institutesOverviewBlock',
     moreInfoButtonText: simpleRteConfig('Mehr erfahren'),
+    pageUrls: prerenderPageLinksStorybook({
+      pages,
+    }),
     pages,
   },
 };

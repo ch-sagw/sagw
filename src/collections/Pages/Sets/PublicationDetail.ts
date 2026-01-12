@@ -168,7 +168,9 @@ export const PublicationDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: genericPageHooks(),
+  hooks: genericPageHooks({
+    afterChange: [],
+  }),
   labels: {
     plural: 'Publication Detail Pages',
     singular: 'Publication Detail',

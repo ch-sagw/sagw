@@ -7,6 +7,7 @@ import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { MagazineTeaserImage } from '@/components/blocks/helpers/imagesData';
 import { InterfaceMagazineDetailPageWithImage } from '@/components/blocks/MagazineOverview/MagazineOverview';
+import { prerenderPageLinksStorybook } from '@/utilities/prerenderPageLinksStorybook';
 
 type MagazineTeaserProps = React.ComponentProps<typeof MagazineTeaserComponent>;
 
@@ -56,8 +57,27 @@ const samplePage: InterfaceMagazineDetailPageWithImage = {
   updatedAt: '2025-11-19T11:29:09.521Z',
 };
 
+const pages = [
+  {
+    ...samplePage,
+    id: '1',
+  },
+  {
+    ...samplePage,
+    id: '2',
+  },
+  {
+    ...samplePage,
+    id: '3',
+  },
+  {
+    ...samplePage,
+    id: '4',
+  },
+];
+
 const defaultArgs: MagazineTeaserProps = {
-  alignement: 'horizontal',
+  alignment: 'horizontal',
   blockType: 'magazineTeasersBlock',
   lead: simpleRteConfig('Ausgewählte Artikel aus dem SAGW-Bulletin vertiefen aktuelle Themen aus den Geistes- und Sozialwissenschaften.'),
   optionalLink: {
@@ -70,24 +90,10 @@ const defaultArgs: MagazineTeaserProps = {
       linkText: simpleRteConfig('Alle Artikel anzeigen'),
     },
   },
-  pages: [
-    {
-      ...samplePage,
-      id: '1',
-    },
-    {
-      ...samplePage,
-      id: '2',
-    },
-    {
-      ...samplePage,
-      id: '3',
-    },
-    {
-      ...samplePage,
-      id: '4',
-    },
-  ],
+  pageUrls: prerenderPageLinksStorybook({
+    pages,
+  }),
+  pages,
   title: simpleRteConfig('Magazin'),
 };
 
@@ -98,6 +104,6 @@ export const Horizontal: StrictStory = {
 export const Vertical: StrictStory = {
   args: {
     ...defaultArgs,
-    alignement: 'vertical',
+    alignment: 'vertical',
   },
 };

@@ -1,7 +1,7 @@
 'use client';
 
 import React, {
-  useMemo, useRef, useState,
+  Suspense, useMemo, useRef, useState,
 } from 'react';
 import styles from '@/components/blocks/NetworkTeaser/NetworkTeaser.module.scss';
 import {
@@ -60,7 +60,7 @@ const getUniqueCategoriesOfItems = (
   return prepareFilterItems(uniqueCategories, labelAll);
 };
 
-export const NetworkTeaser = ({
+const NetworkTeaserContent = ({
   filter,
   items,
 }: InterfaceNetworkTeaserPropTypes): React.JSX.Element => {
@@ -182,3 +182,9 @@ export const NetworkTeaser = ({
     </Section>
   );
 };
+
+export const NetworkTeaser = (props: InterfaceNetworkTeaserPropTypes): React.JSX.Element => (
+  <Suspense fallback={<div></div>}>
+    <NetworkTeaserContent {...props} />
+  </Suspense>
+);

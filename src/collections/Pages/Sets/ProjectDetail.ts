@@ -121,7 +121,9 @@ export const ProjectDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: genericPageHooks(),
+  hooks: genericPageHooks({
+    afterChange: [],
+  }),
   labels: {
     plural: 'Project Detail Pages',
     singular: 'Project Detail Page',
