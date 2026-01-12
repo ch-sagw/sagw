@@ -30,7 +30,7 @@ export default meta;
 
 export const Horizontal: StrictStory = {
   args: {
-    alignement: 'horizontal',
+    alignment: 'horizontal',
     subtitleHtml: rteToHtml(simpleRteConfig('This is a subtitle for the generic teaser block.')),
     teasers: [
       {
@@ -70,7 +70,7 @@ export const Horizontal: StrictStory = {
 
 export const Vertical: StrictStory = {
   args: {
-    alignement: 'vertical',
+    alignment: 'vertical',
     subtitleHtml: rteToHtml(simpleRteConfig('This is a subtitle for the generic teaser block with vertical alignment.')),
     teasers: [
       {
