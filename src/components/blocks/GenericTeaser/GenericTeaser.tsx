@@ -49,8 +49,13 @@ export const GenericTeaser = async ({
       return null;
     }
 
+    const image = typeof item.image?.value === 'string'
+      ? undefined
+      : item.image?.value;
+
     return {
       id: item.id,
+      image,
       link: {
         href,
         text,

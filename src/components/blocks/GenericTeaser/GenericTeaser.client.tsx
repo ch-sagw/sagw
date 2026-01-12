@@ -43,24 +43,17 @@ export const GenericTeaserClient = ({
     />
 
     <ul className={styles.list}>
-      {teasers.map((item) => {
-
-        const image = typeof item.image?.value === 'string'
-          ? undefined
-          : item.image?.value;
-
-        return (
-          <TeaserBaseComponent
-            className={styles.item}
-            image={image}
-            key={item.id}
-            title={item.titleHtml}
-            texts={[item.textHtml]}
-            links={[item.link]}
-            type='generic'
-          />
-        );
-      })}
+      {teasers.map((item) => (
+        <TeaserBaseComponent
+          className={styles.item}
+          image={item.image}
+          key={item.id}
+          title={item.titleHtml}
+          texts={[item.textHtml]}
+          links={[item.link]}
+          type='generic'
+        />
+      ))}
     </ul>
   </Fragment>
 );
