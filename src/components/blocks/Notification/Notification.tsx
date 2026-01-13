@@ -1,20 +1,30 @@
+import 'server-only';
 import React from 'react';
-import { InterfaceNotificationBlock } from '@/payload-types';
-import { rte4ToHtml } from '@/utilities/rteToHtml';
-import { Notification as BaseComponent } from '@/components/base/Notification/Notification';
+import {
+  type Config, InterfaceNotificationBlock,
+} from '@/payload-types';
+import { rte3ToHtml } from '@/utilities/rteToHtml.server';
+import { getLocale } from 'next-intl/server';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { NotificationClient } from './Notification.client';
 
 export type InterfaceNotificationPropTypes = {} & InterfaceNotificationBlock;
 
-const NotificationBase = ({
+export const Notification = async ({
   text,
-}: InterfaceNotificationPropTypes): React.JSX.Element => (
-  <BaseComponent
-    text={rte4ToHtml(text)}
-    type='success'
-    colorMode='light'
-    hideIcon={true}
-    hideBorder={true}
-  />
-);
+}: InterfaceNotificationPropTypes): Promise<React.JSX.Element> => {
+  const locale = (await getLocale()) as Config['locale'];
+  const payload = await getPayloadCached();
 
-export const Notification = React.memo(NotificationBase);
+  const textHtml = await rte3ToHtml({
+    content: text,
+    locale,
+    payload,
+  });
+
+  return (
+    <NotificationClient
+      textHtml={textHtml}
+    />
+  );
+};

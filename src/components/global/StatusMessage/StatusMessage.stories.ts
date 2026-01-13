@@ -2,19 +2,20 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { StatusMessage } from '@/components/global/StatusMessage/StatusMessage';
+import {
+  type InterfaceStatusMessageClientPropTypes, StatusMessageClient,
+} from '@/components/global/StatusMessage/StatusMessage.client';
 import { defaultDecorator } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
-type StatusMessageProps = React.ComponentProps<typeof StatusMessage>;
-
-type StrictStory = StoryObj<typeof StatusMessage> & {
-  args: StatusMessageProps;
+type StrictStory = StoryObj<typeof StatusMessageClient> & {
+  args: InterfaceStatusMessageClientPropTypes;
 };
 
-const meta: Meta<typeof StatusMessage> = {
+const meta: Meta<typeof StatusMessageClient> = {
   args: {},
-  component: StatusMessage,
+  component: StatusMessageClient,
   decorators: [defaultDecorator],
   parameters: {/* layout: 'centered', */ },
   tags: [
@@ -27,40 +28,42 @@ const meta: Meta<typeof StatusMessage> = {
 
 export default meta;
 
-const defaultProps: StatusMessageProps = {
-  message: simpleRteConfig('Eigentlich undenkbar, aber trotzdem passiert. Bitte entschuldigen Sie die Unannehmlichkeiten und versuchen Sie es später erneut.'),
-  optionalLink: {
-    includeLink: true,
-    link: {
-      internalLink: {
-        documentId: '12345',
-        slug: 'some-slug',
-      },
-      linkText: simpleRteConfig('Some action link'),
-    },
-  },
-  show: {
-    display: 'show',
-  },
-  showOnHomeOnly: false,
-  title: simpleRteConfig('Das System ist aktuell nicht verfügbar'),
-  type: 'warn',
-};
-
-export const Warn: StrictStory = {
-  args: defaultProps,
-};
-
-export const Error: StrictStory = {
+export const SuccessMessage: StrictStory = {
   args: {
-    ...defaultProps,
+    linkHref: undefined,
+    linkTextHtml: undefined,
+    messageHtml: rteToHtml(simpleRteConfig('This is a success message.')),
+    titleHtml: rteToHtml(simpleRteConfig('Success')),
+    type: 'success',
+  },
+};
+
+export const ErrorMessage: StrictStory = {
+  args: {
+    linkHref: undefined,
+    linkTextHtml: undefined,
+    messageHtml: rteToHtml(simpleRteConfig('This is an error message.')),
+    titleHtml: rteToHtml(simpleRteConfig('Error')),
     type: 'error',
   },
 };
 
-export const Success: StrictStory = {
+export const WarningMessage: StrictStory = {
   args: {
-    ...defaultProps,
+    linkHref: undefined,
+    linkTextHtml: undefined,
+    messageHtml: rteToHtml(simpleRteConfig('This is a warning message.')),
+    titleHtml: rteToHtml(simpleRteConfig('Warning')),
+    type: 'warn',
+  },
+};
+
+export const WithLink: StrictStory = {
+  args: {
+    linkHref: '/example-page',
+    linkTextHtml: rteToHtml(simpleRteConfig('Learn More')),
+    messageHtml: rteToHtml(simpleRteConfig('This is a message with a link.')),
+    titleHtml: rteToHtml(simpleRteConfig('Status Message')),
     type: 'success',
   },
 };

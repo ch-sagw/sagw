@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.27.0](https://github.com/ch-sagw/sagw/compare/v0.26.0...v0.27.0) (2026-01-10)
+
+
+### Features
+
+* implement linking ([aeb3a2f](https://github.com/ch-sagw/sagw/commit/aeb3a2fab1e172ca0fc738f16f5c2505f6de61b7))
+* implement revalidatePath / cache invalidation ([aeb3a2f](https://github.com/ch-sagw/sagw/commit/aeb3a2fab1e172ca0fc738f16f5c2505f6de61b7))
+* implement static page generation ([aeb3a2f](https://github.com/ch-sagw/sagw/commit/aeb3a2fab1e172ca0fc738f16f5c2505f6de61b7))
+
+
+### Test
+
+* write tests for cache invalidation ([aeb3a2f](https://github.com/ch-sagw/sagw/commit/aeb3a2fab1e172ca0fc738f16f5c2505f6de61b7))
+* write tests for linking ([aeb3a2f](https://github.com/ch-sagw/sagw/commit/aeb3a2fab1e172ca0fc738f16f5c2505f6de61b7))
+
 ## [0.26.0](https://github.com/ch-sagw/sagw/compare/v0.25.0...v0.26.0) (2025-12-10)
 
 

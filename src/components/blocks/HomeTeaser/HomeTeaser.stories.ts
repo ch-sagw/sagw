@@ -2,19 +2,20 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { HomeTeaser } from '@/components/blocks/HomeTeaser/HomeTeaser';
+import {
+  HomeTeaserClient, type InterfaceHomeTeaserClientPropTypes,
+} from '@/components/blocks/HomeTeaser/HomeTeaser.client';
 import { defaultDecorator } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
-type HomeTeaserProps = React.ComponentProps<typeof HomeTeaser>;
-
-type StrictStory = StoryObj<typeof HomeTeaser> & {
-  args: HomeTeaserProps;
+type StrictStory = StoryObj<typeof HomeTeaserClient> & {
+  args: InterfaceHomeTeaserClientPropTypes;
 };
 
-const meta: Meta<typeof HomeTeaser> = {
+const meta: Meta<typeof HomeTeaserClient> = {
   args: {},
-  component: HomeTeaser,
+  component: HomeTeaserClient,
   decorators: [defaultDecorator],
   parameters: {/* layout: 'centered', */ },
   tags: [
@@ -29,48 +30,27 @@ export default meta;
 
 export const HomeTeasers: StrictStory = {
   args: {
-    blockType: 'homeTeasersBlock',
-    homeTeasers: [
+    teasers: [
       {
-        category: 'Förderung',
-        iconName: 'bar',
-        link: {
-          internalLink: {
-            documentId: 'someid',
-            slug: 'someslug',
-          },
-          linkText: simpleRteConfig('Zur Förderung'),
-        },
-        text: simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.'),
-        title: simpleRteConfig('Wir schaffen verlässliche Grundlagen für geistes- und sozialwissenschaftliche Forschung in der Schweiz.'),
+        category: 'Category 1',
+        linkHref: '/example-page-1',
+        linkTextHtml: rteToHtml(simpleRteConfig('Learn More')),
+        textHtml: rteToHtml(simpleRteConfig('This is the first home teaser text content.')),
+        titleHtml: rteToHtml(simpleRteConfig('Home Teaser Title 1')),
       },
-
       {
-        category: 'Netzwerk',
-        iconName: 'bar',
-        link: {
-          internalLink: {
-            documentId: 'someid',
-            slug: 'someslug',
-          },
-          linkText: simpleRteConfig('Zum Netzwerkl'),
-        },
-        text: simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.'),
-        title: simpleRteConfig('Wir verbinden Disziplinen, Menschen und Institutionen in einem einzigartigen wissenschaftlichen Netzwerk.'),
+        category: 'Category 2',
+        linkHref: '/example-page-2',
+        linkTextHtml: rteToHtml(simpleRteConfig('Read More')),
+        textHtml: rteToHtml(simpleRteConfig('This is the second home teaser text content.')),
+        titleHtml: rteToHtml(simpleRteConfig('Home Teaser Title 2')),
       },
-
       {
-        category: 'Aktivitäten',
-        iconName: 'bar',
-        link: {
-          internalLink: {
-            documentId: 'someid',
-            slug: 'someslug',
-          },
-          linkText: simpleRteConfig('Zu den Aktivitäten'),
-        },
-        text: simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.'),
-        title: simpleRteConfig('Wir initiieren Debatten und vermittelt Wissen zwischen Wissenschaft, Gesellschaft und Politik.'),
+        category: 'Category 3',
+        linkHref: '/example-page-3',
+        linkTextHtml: rteToHtml(simpleRteConfig('Explore')),
+        textHtml: rteToHtml(simpleRteConfig('This is the third home teaser text content.')),
+        titleHtml: rteToHtml(simpleRteConfig('Home Teaser Title 3')),
       },
     ],
   },

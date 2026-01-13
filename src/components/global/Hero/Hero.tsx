@@ -23,6 +23,7 @@ import { useLocale } from 'next-intl';
 
 type BaseHeroProps = {
   breadcrumb?: InterfaceBreadcrumbPropTypes;
+  optionalLinkUrl?: string;
 };
 
 export type InterfaceHeroPropTypes =
@@ -217,9 +218,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
           <Button
             className={styles.link}
             element='link'
-
-            // TODO: generate url
-            href={props.optionalLink.link.internalLink.slug}
+            href={props.optionalLinkUrl || props.optionalLink.link.internalLink.slug}
             text={rteToHtml(props.optionalLink.link.linkText)}
             colorMode={heroColorMode}
             style='text'

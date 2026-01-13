@@ -155,6 +155,9 @@ export const Consent: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    afterChange: [],
+  },
   labels: {
     plural: 'Consent',
     singular: 'Consent',
