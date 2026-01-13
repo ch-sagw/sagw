@@ -2,20 +2,20 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { Footnote } from '@/components/blocks/Footnote/Footnote';
+import {
+  FootnoteClient, type InterfaceFootnoteClientPropTypes,
+} from '@/components/blocks/Footnote/Footnote.client';
 import { defaultDecorator } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
-import { sampleFootnoteContent } from '@/utilities/rteSampleContent';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
-type FootnoteProps = React.ComponentProps<typeof Footnote>;
-
-type StrictStory = StoryObj<typeof Footnote> & {
-  args: FootnoteProps;
+type StrictStory = StoryObj<typeof FootnoteClient> & {
+  args: InterfaceFootnoteClientPropTypes;
 };
 
-const meta: Meta<typeof Footnote> = {
+const meta: Meta<typeof FootnoteClient> = {
   args: {},
-  component: Footnote,
+  component: FootnoteClient,
   decorators: [defaultDecorator],
   parameters: {/* layout: 'centered', */ },
   tags: [
@@ -30,8 +30,7 @@ export default meta;
 
 export const SampleFootnote: StrictStory = {
   args: {
-    blockType: 'footnoteBlock',
-    text: sampleFootnoteContent,
-    title: simpleRteConfig('Footnote title'),
+    textHtml: 'This is the footnote text content. It can contain multiple paragraphs and links.',
+    titleHtml: rteToHtml(simpleRteConfig('Footnote Title')),
   },
 };

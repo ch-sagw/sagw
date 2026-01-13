@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, {
+  Suspense, useRef,
+} from 'react';
 import styles from '@/components/base/EventsNewsOverview/EventsNewsOverview.module.scss';
 import { Pagination } from '@/components/base/Pagination/Pagination';
 import { ColorMode } from '@/components/base/types/colorMode';
@@ -13,7 +15,7 @@ export type InterfaceEventsNewsOverviewPropTypes = {
   colorMode: ColorMode;
 }
 
-export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes): React.JSX.Element => {
+const EventsNewsOverviewContent = (props: InterfaceEventsNewsOverviewPropTypes): React.JSX.Element => {
   const {
     title,
     colorMode,
@@ -58,3 +60,9 @@ export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes):
     </Section>
   );
 };
+
+export const EventsNewsOverview = (props: InterfaceEventsNewsOverviewPropTypes): React.JSX.Element => (
+  <Suspense fallback={<div></div>}>
+    <EventsNewsOverviewContent {...props} />
+  </Suspense>
+);
