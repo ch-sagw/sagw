@@ -1,14 +1,123 @@
+import {
+  getTenant, getTenantNonSagw,
+} from '@/test-helpers/tenant-generator';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
   expect,
   test,
 } from '@playwright/test';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
+import { generateCollectionsExceptPages } from '@/test-helpers/collections-generator';
 
 test.describe('Custom Form', () => {
   beforeEachAcceptCookies();
+
   test('correctly validates email', async ({
     page,
   }) => {
+
+    // #########################################
+    // Empty home content and add proper content
+    // #########################################
+    // delete data
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    // add generic data
+    const tenant = await getTenant();
+    const tenantNonSagw = await getTenantNonSagw();
+
+    await generateCollectionsExceptPages({
+      tenant: tenant || '',
+    });
+
+    await generateCollectionsExceptPages({
+      tenant: tenantNonSagw || '',
+    });
+
+    const payload = await getPayloadCached();
+
+    try {
+      const home = await payload.find({
+        collection: 'homePage',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      const i18nGlobals = await payload.find({
+        collection: 'i18nGlobals',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      await payload.update({
+        collection: 'i18nGlobals',
+        data: {
+          ...i18nGlobals.docs[0],
+          forms: {
+            dataPrivacyCheckbox: {
+              dataPrivacyCheckboxText: simpleRteConfig('Data privacy checkbox SAGW'),
+              errorMessage: simpleRteConfig('Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen'),
+            },
+          },
+        },
+        id: i18nGlobals.docs[0].id,
+      });
+
+      // empty homepage
+      await payload.update({
+        collection: 'homePage',
+        data: {
+          content: [],
+        },
+        id: home.docs[0].id,
+      });
+
+      // add real content
+      const forms = await payload.find({
+        collection: 'forms',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      await payload.update({
+        collection: 'homePage',
+        data: {
+          content: [
+            {
+              blockType: 'formBlock',
+              form: forms.docs[1],
+            },
+          ],
+        },
+        id: home.docs[0].id,
+      });
+
+    } catch (e) {
+      console.log(e);
+
+      throw new Error(e instanceof Error
+        ? e.message
+        : String(e));
+    }
+
+    // #########################################
+    // test
+    // #########################################
+
     // go to home
     await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
@@ -204,7 +313,7 @@ test.describe('Custom Form', () => {
     const mailField = await form.getByLabel('e-mail');
     const nameField = await form.getByLabel('name');
     const textareaField = await form.getByLabel('kommentar');
-    const checkboxField = await form.locator('#ich-habe-die-hinweise-zum-datenschutz-gelesen-und-akzeptiere-sie');
+    const checkboxField = await form.locator('#checkbox-ich-habe-die-hinweise-zum-datenschutz-gelesen-und-akzeptiere-sie');
 
     await nameField.fill('testname');
     await mailField.fill('testmail');
@@ -255,7 +364,7 @@ test.describe('Custom Form', () => {
     await submit.click();
 
     // expect success message
-    const notification = page.getByText('Submit title success SAGW', {
+    const notification = page.getByText('Submit title success', {
       exact: true,
     });
 
@@ -270,13 +379,107 @@ test.describe('Newsletter Form', () => {
   test('correctly validates email', async ({
     page,
   }) => {
+    // #########################################
+    // Empty home content and add proper content
+    // #########################################
+    // delete data
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    // add generic data
+    const tenant = await getTenant();
+    const tenantNonSagw = await getTenantNonSagw();
+
+    await generateCollectionsExceptPages({
+      tenant: tenant || '',
+    });
+
+    await generateCollectionsExceptPages({
+      tenant: tenantNonSagw || '',
+    });
+
+    const payload = await getPayloadCached();
+
+    try {
+      const home = await payload.find({
+        collection: 'homePage',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      const i18nGlobals = await payload.find({
+        collection: 'i18nGlobals',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      await payload.update({
+        collection: 'i18nGlobals',
+        data: {
+          ...i18nGlobals.docs[0],
+          forms: {
+            dataPrivacyCheckbox: {
+              dataPrivacyCheckboxText: simpleRteConfig('Data privacy checkbox SAGW'),
+              errorMessage: simpleRteConfig('Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen'),
+            },
+          },
+        },
+        id: i18nGlobals.docs[0].id,
+      });
+
+      // empty homepage
+      await payload.update({
+        collection: 'homePage',
+        data: {
+          content: [],
+        },
+        id: home.docs[0].id,
+      });
+
+      // add real content
+      const forms = await payload.find({
+        collection: 'forms',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      await payload.update({
+        collection: 'homePage',
+        data: {
+          content: [
+            {
+              blockType: 'formBlock',
+              form: forms.docs[0],
+            },
+          ],
+        },
+        id: home.docs[0].id,
+      });
+
+    } catch (e) {
+      console.log(e);
+
+      throw new Error(e instanceof Error
+        ? e.message
+        : String(e));
+    }
+
     // go to home
     await page.goto('http://localhost:3000/de');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
     const form = await page.locator('form')
-      .nth(1);
+      .nth(0);
 
     const submit = await form.locator('button');
 
@@ -324,7 +527,7 @@ test.describe('Newsletter Form', () => {
     await page.waitForLoadState('domcontentloaded');
 
     const form = await page.locator('form')
-      .nth(1);
+      .nth(0);
 
     const submit = await form.locator('button');
 
@@ -365,7 +568,7 @@ test.describe('Newsletter Form', () => {
     await page.waitForLoadState('domcontentloaded');
 
     const form = await page.locator('form')
-      .nth(1);
+      .nth(0);
 
     const submit = await form.locator('button');
 
@@ -404,7 +607,7 @@ test.describe('Newsletter Form', () => {
     await page.waitForLoadState('domcontentloaded');
 
     const form = await page.locator('form')
-      .nth(1);
+      .nth(0);
 
     const submit = await form.locator('button');
 
@@ -443,7 +646,7 @@ test.describe('Newsletter Form', () => {
     await page.waitForLoadState('domcontentloaded');
 
     const form = await page.locator('form')
-      .nth(1);
+      .nth(0);
 
     const submit = await form.locator('button');
 
@@ -483,7 +686,7 @@ test.describe('Newsletter Form', () => {
     await page.waitForLoadState('domcontentloaded');
 
     const form = await page.locator('form')
-      .nth(1);
+      .nth(0);
     const submit = await form.locator('button');
 
     const mailField = await form.getByLabel('e-mail');
@@ -501,7 +704,7 @@ test.describe('Newsletter Form', () => {
     await submit.click();
 
     // expect success message
-    const notification = page.getByText('Newsletter Submit title success SAGW', {
+    const notification = page.getByText('Newsletter Submit title success', {
       exact: true,
     });
 

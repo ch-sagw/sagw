@@ -1,67 +1,75 @@
-import React, { Fragment } from 'react';
-import styles from '@/components/blocks/GenericTeaser/GenericTeaser.module.scss';
+import 'server-only';
+import React from 'react';
 import { InterfaceGenericTeasersBlock } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
-import { Section } from '@/components/base/Section/Section';
-import { GenericTeaser as TeaserBaseComponent } from '@/components/base/GenericTeaser/GenericTeaser';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
+import { getPageUrl } from '@/utilities/getPageUrl';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { getLocale } from 'next-intl/server';
+import { TypedLocale } from 'payload';
+import {
+  GenericTeaserClient, type InterfaceGenericTeaserItem,
+} from './GenericTeaser.client';
 
 export type InterfaceGenericTeaserPropTypes = {} & InterfaceGenericTeasersBlock;
 
-export const GenericTeaser = ({
+export const GenericTeaser = async ({
   title,
   lead,
   alignement,
   teasers,
-}: InterfaceGenericTeaserPropTypes): React.JSX.Element => (
-  <Fragment>
-    <Section
-      className={styles.section}
-      title={rteToHtml(title)}
-      subtitle={rteToHtml(lead)}
-      colorMode='white'
-      fullBleed={alignement === 'vertical'}
+}: InterfaceGenericTeaserPropTypes): Promise<React.JSX.Element> => {
+  const locale = await getLocale() as TypedLocale;
+  const payload = await getPayloadCached();
+
+  const titleHtml = rteToHtml(title);
+  const subtitleHtml = rteToHtml(lead);
+
+  // Process all teasers in parallel
+  const processedTeasers = await Promise.all(teasers.map(async (item): Promise<InterfaceGenericTeaserItem | null> => {
+    let href: string | undefined;
+    let text: string | undefined;
+
+    if (item.linkType === 'external' && item.linkExternal) {
+      href = item.linkExternal.externalLink;
+      text = rte1ToPlaintext(item.linkExternal?.externalLinkText);
+    } else if (item.linkType === 'internal' && item.linkInternal) {
+      href = await getPageUrl({
+        locale,
+        pageId: item.linkInternal.internalLink.documentId,
+        payload,
+      });
+      text = rte1ToPlaintext(item.linkInternal?.linkText);
+    } else if (item.linkType === 'mail' && item.linkMail) {
+      href = item.linkMail?.email;
+      text = rte1ToPlaintext(item.linkMail?.linkText);
+    }
+
+    if (!href || !text) {
+      return null;
+    }
+
+    return {
+      id: item.id,
+      link: {
+        href,
+        text,
+        type: item.linkType,
+      },
+      textHtml: rteToHtml(item.text),
+      titleHtml: rteToHtml(item.title),
+    };
+  }));
+
+  // Filter out null values
+  const validTeasers = processedTeasers.filter((teaser): teaser is InterfaceGenericTeaserItem => teaser !== null);
+
+  return (
+    <GenericTeaserClient
+      alignement={alignement}
+      subtitleHtml={subtitleHtml}
+      teasers={validTeasers}
+      titleHtml={titleHtml}
     />
-
-    <ul className={styles.list}>
-      {teasers.map((item) => {
-        let href;
-        let text;
-
-        if (item.linkType === 'external' && item.linkExternal) {
-          href = item.linkExternal.externalLink;
-          text = rte1ToPlaintext(item.linkExternal?.externalLinkText);
-        } else if (item.linkType === 'internal' && item.linkInternal) {
-
-          // TODO: construct internal link
-          href = item.linkInternal.internalLink.documentId;
-          text = rte1ToPlaintext(item.linkInternal?.linkText);
-        } else if (item.linkType === 'mail' && item.linkMail) {
-          href = item.linkMail?.email;
-          text = rte1ToPlaintext(item.linkMail?.linkText);
-        }
-
-        if (!href || !text) {
-          return undefined;
-        }
-
-        return (
-          <TeaserBaseComponent
-            className={styles.item}
-            key={item.id}
-            title={rteToHtml(item.title)}
-            texts={[rteToHtml(item.text)]}
-            links={[
-              {
-                href,
-                text,
-                type: item.linkType,
-              },
-            ]}
-            type='generic'
-          />
-        );
-      })}
-    </ul>
-  </Fragment>
-);
+  );
+};

@@ -2,7 +2,7 @@
 
 import React, {
   useEffect,
-  useId, useRef,
+  useRef,
   useState,
 } from 'react';
 import { cva } from 'cva';
@@ -44,7 +44,7 @@ export const Radios = ({
   ] = useState(initiallyChecked?.value || undefined);
 
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
-  const blockId = useId();
+  const blockId = `radio-${name}`;
 
   useEffect(() => {
     if (autofocus && inputRef.current) {
@@ -98,12 +98,12 @@ export const Radios = ({
               setCheckedItem(item.value);
             }}
             value={item.value}
-            id={item.value}
+            id={`${name}-${item.value}`}
           />
           <SafeHtml
             as='label'
             className={styles.label}
-            htmlFor={item.value}
+            htmlFor={`${name}-${item.value}`}
             html={item.label}
           />
         </div>

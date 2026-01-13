@@ -104,7 +104,9 @@ export const MagazineDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: genericPageHooks(),
+  hooks: genericPageHooks({
+    afterChange: [],
+  }),
   labels: {
     plural: 'Magazine Detail Pages',
     singular: 'Magazine Detail',
