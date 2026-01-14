@@ -101,7 +101,9 @@ export const InstituteDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: genericPageHooks(),
+  hooks: genericPageHooks({
+    afterChange: [],
+  }),
   labels: {
     plural: 'Institute Detail Pages',
     singular: 'Institute Detail Page',

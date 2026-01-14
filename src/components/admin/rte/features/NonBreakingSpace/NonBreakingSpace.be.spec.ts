@@ -3,6 +3,9 @@ import {
   test,
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
 
 test.describe('NonBreakingSpace', () => {
   beforeEachPayloadLogin();
@@ -10,6 +13,9 @@ test.describe('NonBreakingSpace', () => {
   test('correctly displays in rte field', async ({
     page,
   }) => {
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
     await page.goto('http://localhost:3000/admin/collections/detailPage/create');
     await page.waitForLoadState('networkidle');
 

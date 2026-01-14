@@ -6,6 +6,7 @@ import { MagazineTeaserComponent } from '@/components/blocks/MagazineTeaser/Maga
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { MagazineDetailPage } from '@/payload-types';
+import { prerenderPageLinksStorybook } from '@/utilities/prerenderPageLinksStorybook';
 
 type MagazineTeaserProps = React.ComponentProps<typeof MagazineTeaserComponent>;
 
@@ -55,6 +56,25 @@ const samplePage: MagazineDetailPage = {
   updatedAt: '2025-11-19T11:29:09.521Z',
 };
 
+const pages = [
+  {
+    ...samplePage,
+    id: '1',
+  },
+  {
+    ...samplePage,
+    id: '2',
+  },
+  {
+    ...samplePage,
+    id: '3',
+  },
+  {
+    ...samplePage,
+    id: '4',
+  },
+];
+
 const defaultArgs: MagazineTeaserProps = {
   alignement: 'horizontal',
   blockType: 'magazineTeasersBlock',
@@ -69,24 +89,10 @@ const defaultArgs: MagazineTeaserProps = {
       linkText: simpleRteConfig('Alle Artikel anzeigen'),
     },
   },
-  pages: [
-    {
-      ...samplePage,
-      id: '1',
-    },
-    {
-      ...samplePage,
-      id: '2',
-    },
-    {
-      ...samplePage,
-      id: '3',
-    },
-    {
-      ...samplePage,
-      id: '4',
-    },
-  ],
+  pageUrls: prerenderPageLinksStorybook({
+    pages,
+  }),
+  pages,
   title: simpleRteConfig('Magazin'),
 };
 
