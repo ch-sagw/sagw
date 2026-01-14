@@ -45,9 +45,6 @@ export const PublicationsListItem = ({
 
   const ariaLabel = '';
 
-  console.log('tag in PublicationsListItem');
-  console.log(tag);
-
   return (
     <li
       className={styles.publicationsListItem}

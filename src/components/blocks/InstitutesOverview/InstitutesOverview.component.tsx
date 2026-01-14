@@ -22,6 +22,10 @@ export const InstituteOverviewComponent = ({
   const allItems = pages.map((item) => {
     const href = pageUrls[item.id] || `/${item.id}`;
 
+    const image = typeof item.overviewPageProps.image === 'string'
+      ? undefined
+      : item.overviewPageProps.image;
+
     return (
       <GenericTeaser
         className={styles.item}
@@ -35,10 +39,7 @@ export const InstituteOverviewComponent = ({
             type: 'internal',
           },
         ]}
-        image={typeof item.overviewPageProps.image === 'object'
-          ? item.overviewPageProps.image.id
-          : item.overviewPageProps.image
-        }
+        image={image}
         type='institute'
       />
     );

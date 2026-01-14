@@ -10,7 +10,6 @@ interface InterfaceImageLoadedOptions {
   placeholderSrc?: string;
 }
 
-// Use an arrow function expression and add explicit return type
 export const useImageLoader = (
   imgSrc: string,
   options?: InterfaceImageLoadedOptions,

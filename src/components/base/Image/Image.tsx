@@ -9,6 +9,7 @@ import {
   getSrcAndSrcSet,
 } from '@/components/base/Image/Image.configs';
 import { ImageVariant } from '@/components/base/types/imageVariant';
+import { createImageSrcUrl } from '@/components/helpers/createImageSrcUrl';
 
 export type InterfaceImagePropTypes = {
   alt: string;
@@ -18,6 +19,7 @@ export type InterfaceImagePropTypes = {
   focalY?: number,
   height: number;
   loading: 'lazy' | 'eager';
+  optimize?: boolean;
   params?: string,
   performanceMark?: string;
   priority?: boolean;
@@ -33,6 +35,7 @@ export const Image = ({
   focalY,
   height,
   loading,
+  optimize,
   performanceMark,
   url,
   variant,
@@ -42,13 +45,10 @@ export const Image = ({
   const focalPointX = (focalX ?? 50) / 100;
   const focalPointY = (focalY ?? 50) / 100;
 
-  const host = process.env.NEXT_PUBLIC_GUMLET_URL ?? '';
-
-  let src = host + url;
-
-  if (process.env.NEXT_PUBLIC_GUMLET_URL?.indexOf('localhost') !== -1) {
-    src = `${host}/${filename}`;
-  }
+  const src = createImageSrcUrl({
+    filename,
+    url,
+  });
 
   const params = `fm=auto&mode=crop&crop=focalpoint&fp-x=${focalPointX}&fp-y=${focalPointY}`;
 
@@ -68,7 +68,7 @@ export const Image = ({
     imgSrc,
     loaded,
   } = useImageLoader(
-    src,
+    srcAndSrcSet.src,
     {
       performanceMark,
       placeholderSrc: '',
@@ -86,7 +86,8 @@ export const Image = ({
         contentFull: [styles.contentFull],
         genericTeaser: [styles.genericTeaser],
         hero: [styles.hero],
-        logoTeaser: [styles.logoTeaser],
+        instituteTeaser: [styles.instituteTeaser],
+        networkTeaser: [styles.networkTeaser],
         portrait: [styles.portrait],
         portraitCta: [styles.portraitCta],
         publicationTeaser: [styles.publicationTeaser],
@@ -108,6 +109,23 @@ export const Image = ({
     .filter(Boolean)
     .join(' ');
 
+  // Prepare Image properties. If optimize is
+  // set to false. We just render the image
+  // without additional renditions
+  let imageProperties = {};
+
+  if (optimize === false) {
+    imageProperties = {
+      src,
+    };
+  } else {
+    imageProperties = {
+      sizes,
+      src: imgSrc || undefined,
+      srcSet: srcAndSrcSet.srcSet || undefined,
+    };
+  }
+
   return (
     <>
       <img
@@ -117,9 +135,7 @@ export const Image = ({
         height={height}
         loading={loading}
         ref={imgRef}
-        sizes={sizes}
-        src={imgSrc || undefined}
-        srcSet={srcAndSrcSet.srcSet || undefined}
+        {...imageProperties}
         width={width}
       />
       <noscript>
@@ -131,9 +147,7 @@ export const Image = ({
           fetchPriority={fetchPriority}
           height={height}
           loading={loading}
-          sizes={sizes}
-          src={srcAndSrcSet.src}
-          srcSet={srcAndSrcSet.srcSet}
+          {...imageProperties}
           width={width}
         />
       </noscript>

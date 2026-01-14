@@ -1261,7 +1261,7 @@ test.describe('Overview page teasers links (sagw)', () => {
         data: {
           content: [
             {
-              alignement: 'horizontal',
+              alignment: 'horizontal',
               blockType: 'genericTeasersBlock',
               lead: simpleRteConfig('Lead'),
               teasers: [
@@ -1285,7 +1285,7 @@ test.describe('Overview page teasers links (sagw)', () => {
               title: simpleRteConfig('Generic Teaser'),
             },
             {
-              alignement: 'vertical',
+              alignment: 'vertical',
               blockType: 'projectsTeasersBlock',
               lead: simpleRteConfig('Lead'),
               title: simpleRteConfig('Title'),
@@ -1295,7 +1295,7 @@ test.describe('Overview page teasers links (sagw)', () => {
               title: simpleRteConfig('Events'),
             },
             {
-              alignement: 'horizontal',
+              alignment: 'horizontal',
               blockType: 'magazineTeasersBlock',
               lead: simpleRteConfig('Lead'),
               title: simpleRteConfig('Title'),

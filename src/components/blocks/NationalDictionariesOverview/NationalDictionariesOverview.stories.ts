@@ -26,7 +26,6 @@ const meta: Meta<typeof NationalDictionaryOverviewComponent> = {
   },
   tags: [
     'autodocs',
-    'visual:check',
     'a11y:check',
   ],
   title: 'Components/blocks/NationalDictionariesOverview',
@@ -58,7 +57,7 @@ const pages: NationalDictionaryDetailPage[] = Array.from({
   });
 });
 
-export const SampleStory: StrictStory = {
+export const NationalDictionaries: StrictStory = {
   args: {
     blockType: 'nationalDictionariesOverviewBlock',
     moreInfoButtonText: simpleRteConfig('Weitere Informationen'),
