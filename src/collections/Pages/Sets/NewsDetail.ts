@@ -115,7 +115,9 @@ export const NewsDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: genericPageHooks(),
+  hooks: genericPageHooks({
+    afterChange: [],
+  }),
   labels: {
     plural: 'News Detail Pages',
     singular: 'News Detail',

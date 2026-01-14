@@ -31,6 +31,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // add image
   const image = await payload.create({
     collection: 'images',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       alt: `${tenant.toUpperCase()} image`,
       tenant: tenantId,
@@ -41,6 +44,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // add video
   await payload.create({
     collection: 'videos',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       tenant: tenantId,
       title: `video ${tenant}`,
@@ -51,6 +57,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // add document
   const document = await payload.create({
     collection: 'documents',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       date: '2025-10-30',
       tenant: tenantId,
@@ -62,6 +71,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // add zenodo document
   const zenodoDocument = await payload.create({
     collection: 'zenodoDocuments',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       files: [
         {
@@ -90,6 +102,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     // tenant...
     await payload.create({
       collection: 'zenodoDocuments',
+      context: {
+        skipCacheInvalidation: true,
+      },
       data: {
         files: [
           {
@@ -114,6 +129,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create publication topic
   const publicationTopic = await payload.create({
     collection: 'publicationTopics',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       publicationTopic: simpleRteConfig(`Publication Topic 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
@@ -123,6 +141,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create publication type
   const publicationType = await payload.create({
     collection: 'publicationTypes',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       publicationType: simpleRteConfig(`Publication Type 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
@@ -132,6 +153,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create network categories
   const networkCategory1 = await payload.create({
     collection: 'networkCategories',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       name: simpleRteConfig(`Network Category 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
@@ -140,6 +164,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
   const networkCategory2 = await payload.create({
     collection: 'networkCategories',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       name: simpleRteConfig(`Network Category 2 ${tenant.toUpperCase()}`),
       tenant: tenantId,
@@ -148,6 +175,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
   const networkCategory3 = await payload.create({
     collection: 'networkCategories',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       name: simpleRteConfig(`Network Category 3 ${tenant.toUpperCase()}`),
       tenant: tenantId,
@@ -163,6 +193,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create project
   const project = await payload.create({
     collection: 'projects',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       name: simpleRteConfig(`DE Project 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
@@ -178,6 +211,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
     return payload.create({
       collection: 'people',
+      context: {
+        skipCacheInvalidation: true,
+      },
       data: {
         firstname: simpleRteConfig(`Firstname ${index} ${tenant.toUpperCase()}`),
         function: simpleRteConfig('Some function'),
@@ -195,6 +231,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create a team
   const team = await payload.create({
     collection: 'teams',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       name: simpleRteConfig(`Team 1 ${tenant.toUpperCase()}`),
       people: people.map((item) => item.id),
@@ -205,6 +244,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create event category
   const eventCategory = await payload.create({
     collection: 'eventCategory',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       eventCategory: simpleRteConfig(`Event Category 1 ${tenant.toUpperCase()}`),
       tenant: tenantId,
@@ -214,6 +256,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // add footer data
   await payload.create({
     collection: 'footer',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       contact: {
         address1: simpleRteConfig('Haus der Akademien'),
@@ -256,183 +301,12 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     },
   });
 
-  // add header data
-  await payload.create({
-    collection: 'header',
-    data: {
-      metanavigation: {
-        metaLinks: [
-          {
-            linkExternal: {
-              externalLink: 'https://www.foo.bar',
-              externalLinkText: simpleRteConfig('Brand Guidelines'),
-            },
-            linkType: 'external',
-          },
-          {
-            linkExternal: {
-              externalLink: 'https://www.foo.bar',
-              externalLinkText: simpleRteConfig('Intranet'),
-            },
-            linkType: 'external',
-          },
-          {
-            linkExternal: {
-              externalLink: 'https://www.foo.bar',
-              externalLinkText: simpleRteConfig('mySAGW'),
-            },
-            linkType: 'external',
-          },
-        ],
-      },
-      navigation: {
-        navItems: [
-          {
-            description: simpleRteConfig(''),
-            navItemLink: {
-              documentId: '12334',
-              slug: 'someSlug',
-            },
-            navItemText: simpleRteConfig('Home'),
-          },
-          {
-            description: simpleRteConfig('Förderung von langfristigen Forschungsinfrastrukturen'),
-            navItemText: simpleRteConfig('Förderung'),
-            subNavItems: [
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Übersicht'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Institute'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Editionen'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Reisebeiträge'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Early Career Award'),
-              },
-            ],
-          },
-          {
-            description: simpleRteConfig('Unsere 63 Fachgesellschaften unter einem Dach'),
-            navItemText: simpleRteConfig('Netzwerk'),
-            subNavItems: [
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Fachgesellschaften'),
-              },
-            ],
-          },
-          {
-            description: simpleRteConfig('Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft'),
-            navItemText: simpleRteConfig('Aktivitäten'),
-            subNavItems: [
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Übersicht'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Magazin'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Publikationen'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Veranstaltungen'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('News'),
-              },
-            ],
-          },
-          {
-            description: simpleRteConfig('Alles Wissenswertes über die SAGW'),
-            navItemText: simpleRteConfig('Über uns'),
-            subNavItems: [
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Die SAGW'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Team'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Kontakt'),
-              },
-              {
-                navItemLink: {
-                  documentId: '12334',
-                  slug: 'someSlug',
-                },
-                navItemText: simpleRteConfig('Offene Stellen'),
-              },
-            ],
-          },
-        ],
-      },
-      tenant: tenantId,
-    },
-  });
-
   // add status message
   await payload.create({
     collection: 'statusMessage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       content: {
         message: simpleRteConfig(`Eigentlich undenkbar, aber trotzdem passiert. Bitte entschuldigen Sie die Unannehmlichkeiten und versuchen Sie es später erneut. ${tenant.toUpperCase()}`),
@@ -460,6 +334,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // add form item
   const form = await payload.create({
     collection: 'forms',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       colorMode: 'dark',
       fields: [
@@ -539,6 +416,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // add newsletter form
   const newsletterForm = await payload.create({
     collection: 'forms',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       colorMode: 'dark',
       isNewsletterForm: 'newsletter',
@@ -584,6 +464,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // add i18n data
   await payload.create({
     collection: 'i18nGlobals',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       bibliographicReference: {
         copyButtonText: simpleRteConfig('Copy button text'),
@@ -604,7 +487,6 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       },
       tenant: tenantId,
     },
-
   });
 
   // ############
@@ -723,6 +605,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create home
   const home = await payload.create({
     collection: 'homePage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: homeContent,
@@ -745,9 +630,256 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     },
   });
 
+  // add some detail pages to link to in header
+  const navLinkDetail1 = await payload.create({
+    collection: 'detailPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      _status: 'published',
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Detail Page for nav link 1 lead'),
+        title: simpleRteConfig(`Detail Page for nav link 1 ${tenant.toUpperCase()}`),
+      },
+      navigationTitle: `Detail Page for nav link 1 ${tenant.toUpperCase()}`,
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      slug: `detail-page-for-nav-link-1-${tenant.toLocaleLowerCase()}`,
+      tenant: tenantId,
+    },
+  });
+
+  const navLinkDetail2 = await payload.create({
+    collection: 'detailPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      _status: 'published',
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Detail Page for nav link 2 lead'),
+        title: simpleRteConfig(`Detail Page for nav link 2 ${tenant.toUpperCase()}`),
+      },
+      navigationTitle: `Detail Page for nav link 2 ${tenant.toUpperCase()}`,
+      parentPage: {
+        documentId: navLinkDetail1.id,
+        slug: 'detailPage',
+      },
+      slug: `detail-page-for-nav-link-2-${tenant.toLocaleLowerCase()}`,
+      tenant: tenantId,
+    },
+  });
+
+  const navLinkDetail3 = await payload.create({
+    collection: 'detailPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      _status: 'published',
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Detail Page for nav link 3 lead'),
+        title: simpleRteConfig(`Detail Page for nav link 3 ${tenant.toUpperCase()}`),
+      },
+      navigationTitle: `Detail Page for nav link 3 ${tenant.toUpperCase()}`,
+      parentPage: {
+        documentId: navLinkDetail2.id,
+        slug: 'detailPage',
+      },
+      slug: `detail-page-for-nav-link-3-${tenant.toLocaleLowerCase()}`,
+      tenant: tenantId,
+    },
+  });
+
+  // add header data
+  await payload.create({
+    collection: 'header',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      metanavigation: {
+        metaLinks: [
+          {
+            linkExternal: {
+              externalLink: 'https://www.foo.bar',
+              externalLinkText: simpleRteConfig('Brand Guidelines'),
+            },
+            linkType: 'external',
+          },
+          {
+            linkExternal: {
+              externalLink: 'https://www.foo.bar',
+              externalLinkText: simpleRteConfig('Intranet'),
+            },
+            linkType: 'external',
+          },
+          {
+            linkExternal: {
+              externalLink: 'https://www.foo.bar',
+              externalLinkText: simpleRteConfig('mySAGW'),
+            },
+            linkType: 'external',
+          },
+        ],
+      },
+      navigation: {
+        navItems: [
+          {
+            description: simpleRteConfig(''),
+            navItemLink: {
+              documentId: navLinkDetail1.id,
+              slug: 'detailPage',
+            },
+            navItemText: simpleRteConfig('Home'),
+          },
+          {
+            description: simpleRteConfig('Förderung von langfristigen Forschungsinfrastrukturen'),
+            navItemText: simpleRteConfig('Förderung'),
+            subNavItems: [
+              {
+                navItemLink: {
+                  documentId: navLinkDetail2.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Übersicht'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail3.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Institute'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail1.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Editionen'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail2.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Reisebeiträge'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail3.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Early Career Award'),
+              },
+            ],
+          },
+          {
+            description: simpleRteConfig('Unsere 63 Fachgesellschaften unter einem Dach'),
+            navItemText: simpleRteConfig('Netzwerk'),
+            subNavItems: [
+              {
+                navItemLink: {
+                  documentId: navLinkDetail1.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Fachgesellschaften'),
+              },
+            ],
+          },
+          {
+            description: simpleRteConfig('Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft'),
+            navItemText: simpleRteConfig('Aktivitäten'),
+            subNavItems: [
+              {
+                navItemLink: {
+                  documentId: navLinkDetail2.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Übersicht'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail3.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Magazin'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail1.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Publikationen'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail2.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Veranstaltungen'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail3.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('News'),
+              },
+            ],
+          },
+          {
+            description: simpleRteConfig('Alles Wissenswertes über die SAGW'),
+            navItemText: simpleRteConfig('Über uns'),
+            subNavItems: [
+              {
+                navItemLink: {
+                  documentId: navLinkDetail1.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Die SAGW'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail2.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Team'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail3.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Kontakt'),
+              },
+              {
+                navItemLink: {
+                  documentId: navLinkDetail1.id,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Offene Stellen'),
+              },
+            ],
+          },
+        ],
+      },
+      tenant: tenantId,
+    },
+  });
+
   // create error page
   await payload.create({
     collection: 'errorPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       error400: {
@@ -766,6 +898,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create impressum page
   await payload.create({
     collection: 'impressumPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: [
@@ -785,6 +920,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create data privacy page
   await payload.create({
     collection: 'dataPrivacyPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: [
@@ -804,6 +942,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create detail page
   const detailPage = await payload.create({
     collection: 'detailPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: [
@@ -882,6 +1023,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create draft detail page
   await payload.create({
     collection: 'detailPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'draft',
       hero: {
@@ -898,6 +1042,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create overview page
   await payload.create({
     collection: 'overviewPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       hero: {
@@ -915,6 +1062,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create overview page with news overview block
   const newsOverview = await payload.create({
     collection: 'overviewPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: [
@@ -938,6 +1088,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create overview page with events overview block
   const eventsOverview = await payload.create({
     collection: 'overviewPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: [
@@ -961,6 +1114,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create overview page with editions overview block
   await payload.create({
     collection: 'overviewPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: [
@@ -995,6 +1151,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create overview page with institutes overview block
   await payload.create({
     collection: 'overviewPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: [
@@ -1016,6 +1175,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create overview page with magazine overview block
   await payload.create({
     collection: 'overviewPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: [
@@ -1036,6 +1198,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create overview page with National Dictionary overview block
   await payload.create({
     collection: 'overviewPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: [
@@ -1075,6 +1240,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
   await payload.create({
     collection: 'overviewPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: [
@@ -1104,6 +1272,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create overview page with People overview block
   await payload.create({
     collection: 'overviewPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: [
@@ -1125,6 +1296,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create overview page with Projects overview block
   await payload.create({
     collection: 'overviewPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: [
@@ -1145,6 +1319,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create overview page with teasers
   await payload.create({
     collection: 'overviewPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: [
@@ -1228,6 +1405,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
     return payload.create({
       collection: 'magazineDetailPage',
+      context: {
+        skipCacheInvalidation: true,
+      },
       data: {
         _status: 'published',
         content: [
@@ -1270,6 +1450,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
     return payload.create({
       collection: 'eventDetailPage',
+      context: {
+        skipCacheInvalidation: true,
+      },
       data: {
         _status: 'published',
         blocks: {
@@ -1353,6 +1536,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
     return payload.create({
       collection: 'eventDetailPage',
+      context: {
+        skipCacheInvalidation: true,
+      },
       data: {
         _status: 'published',
         eventDetails: {
@@ -1387,6 +1573,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
     return payload.create({
       collection: 'newsDetailPage',
+      context: {
+        skipCacheInvalidation: true,
+      },
       data: {
         _status: 'published',
         hero: {
@@ -1421,6 +1610,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
     return payload.create({
       collection: 'publicationDetailPage',
+      context: {
+        skipCacheInvalidation: true,
+      },
       data: {
         _status: 'published',
         categorization: {
@@ -1457,6 +1649,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
     return payload.create({
       collection: 'instituteDetailPage',
+      context: {
+        skipCacheInvalidation: true,
+      },
       data: {
         _status: 'published',
         hero: {
@@ -1483,6 +1678,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
     return payload.create({
       collection: 'nationalDictionaryDetailPage',
+      context: {
+        skipCacheInvalidation: true,
+      },
       data: {
         _status: 'published',
         hero: {
@@ -1509,6 +1707,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
     return payload.create({
       collection: 'projectDetailPage',
+      context: {
+        skipCacheInvalidation: true,
+      },
       data: {
         _status: 'published',
         hero: {

@@ -2,25 +2,21 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { Links } from '@/components/blocks/Links/Links';
+import {
+  type InterfaceLinksClientPropTypes, LinksClient,
+} from '@/components/blocks/Links/Links.client';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
-type LinksProps = React.ComponentProps<typeof Links>;
-
-type StrictStory = StoryObj<typeof Links> & {
-  args: LinksProps;
+type StrictStory = StoryObj<typeof LinksClient> & {
+  args: InterfaceLinksClientPropTypes;
 };
 
-const meta: Meta<typeof Links> = {
+const meta: Meta<typeof LinksClient> = {
   args: {},
-  component: Links,
+  component: LinksClient,
   decorators: [defaultDecoratorNoPadding],
-  globals: {
-    backgrounds: {
-      value: 'light',
-    },
-  },
   parameters: {
     layout: 'fullscreen',
   },
@@ -36,34 +32,35 @@ export default meta;
 
 export const LinksBlock: StrictStory = {
   args: {
-    blockType: 'linksBlock',
-    links: [
+    items: [
       {
-        linkExternal: {
-          description: simpleRteConfig('Offenes Repository für EU-finanzierte Forschungsergebnisse aus Horizon Europe, Euratom und früheren Rahmenprogrammen.'),
-          externalLink: 'https://foo.bar',
-          externalLinkText: simpleRteConfig('Artikel auf Zenodo'),
+        link: {
+          href: '/example-page-1',
+          target: '_self' as const,
         },
-        linkType: 'external',
+        text: rteToHtml(simpleRteConfig('This is a description for the first internal link.')),
+        title: rteToHtml(simpleRteConfig('Internal Link 1')),
+        type: 'link' as const,
       },
       {
-        linkInternal: {
-          internalLink: {
-            documentId: '12345',
-            slug: 'some-slug',
-          },
-          linkText: simpleRteConfig('Artikel auf Zenodo'),
+        link: {
+          href: 'https://example.com',
+          target: '_blank' as const,
         },
-        linkType: 'internal',
+        text: rteToHtml(simpleRteConfig('This is a description for an external link.')),
+        title: rteToHtml(simpleRteConfig('External Link')),
+        type: 'link' as const,
       },
       {
-        linkMail: {
-          email: 'foo@bar.com',
-          linkText: simpleRteConfig('Schreiben Sie eine E-Mail'),
+        link: {
+          href: 'mailto:contact@example.com',
+          target: '_blank' as const,
         },
-        linkType: 'mail',
+        text: '',
+        title: rteToHtml(simpleRteConfig('Contact Email')),
+        type: 'link' as const,
       },
     ],
-    title: simpleRteConfig('Links'),
+    titleHtml: rteToHtml(simpleRteConfig('Links Block Title')),
   },
 };

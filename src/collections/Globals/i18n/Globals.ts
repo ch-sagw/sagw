@@ -87,5 +87,8 @@ export const I18nGlobals: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    afterChange: [],
+  },
   slug: 'i18nGlobals',
 };

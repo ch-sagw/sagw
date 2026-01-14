@@ -1,65 +1,44 @@
+import 'server-only';
 import React from 'react';
-import styles from '@/components/blocks/HomeTeaser/HomeTeaser.module.scss';
 import { InterfaceHomeTeasersBlock } from '@/payload-types';
-import { Section } from '@/components/base/Section/Section';
 import { rteToHtml } from '@/utilities/rteToHtml';
-import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
-import { Button } from '@/components/base/Button/Button';
-import { Icon } from '@/icons';
+import { getLocale } from 'next-intl/server';
+import { TypedLocale } from 'payload';
+import { getPageUrl } from '@/utilities/getPageUrl';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import {
+  HomeTeaserClient, type InterfaceHomeTeaserItem,
+} from './HomeTeaser.client';
 
 export type InterfaceHomeTeaserPropTypes = {} & InterfaceHomeTeasersBlock;
 
-export const HomeTeaser = ({
+export const HomeTeaser = async ({
   homeTeasers,
-}: InterfaceHomeTeaserPropTypes): React.JSX.Element => (
-  <div
-    className={styles.teasers}
-  >
-    {homeTeasers?.map((teaser, index) => {
-      const {
-        category,
-        title,
-        text,
-        iconName,
-        link,
-      } = teaser;
+}: InterfaceHomeTeaserPropTypes): Promise<React.JSX.Element> => {
+  const locale = await getLocale() as TypedLocale;
+  const payload = await getPayloadCached();
 
-      return (
-        <Section
-          key={index}
-          title={category}
-          colorMode='white'
-          subtitle={rteToHtml(title)}
-          className={styles.teaser}
-          additionalContentClassName={styles.stickyContent}
-          titleClassName={styles.stickyTitle}
-          additionalStickyContent={
-            <Icon
-              name={iconName as keyof typeof Icon}
-              className={styles.icon}
-            />
-          }
-        >
-          <SafeHtml
-            as='p'
-            html={rteToHtml(text)}
-            className={styles.text}
-          />
+  if (!homeTeasers || homeTeasers.length === 0) {
+    return <HomeTeaserClient teasers={[]} />;
+  }
 
-          <Button
-            text={rteToHtml(link.linkText)}
-            colorMode='white'
-            element='link'
-            style='text'
-            iconInlineStart={'arrowRight' as keyof typeof Icon}
-            className={styles.link}
+  // Process all teasers in parallel
+  const processedTeasers = await Promise.all(homeTeasers.map(async (teaser): Promise<InterfaceHomeTeaserItem> => {
+    const linkHref = await getPageUrl({
+      locale,
+      pageId: teaser.link.internalLink.documentId,
+      payload,
+    });
 
-            // TODO: generate valid link
-            href={link.internalLink.documentId}
-          />
-        </Section>
-      );
-    })}
+    return {
+      category: teaser.category,
+      iconName: teaser.iconName,
+      linkHref,
+      linkTextHtml: rteToHtml(teaser.link.linkText),
+      textHtml: rteToHtml(teaser.text),
+      titleHtml: rteToHtml(teaser.title),
+    };
+  }));
 
-  </div>
-);
+  return <HomeTeaserClient teasers={processedTeasers} />;
+};
