@@ -61,9 +61,9 @@ test('invalidates all pages of current tenant (only!) on content change (sagw)',
     time,
   });
 
-  // get header
-  const header = await payload.find({
-    collection: 'header',
+  // get consent
+  const consent = await payload.find({
+    collection: 'consent',
     where: {
       tenant: {
         equals: tenant,
@@ -74,22 +74,16 @@ test('invalidates all pages of current tenant (only!) on content change (sagw)',
   logCapture.captureLogs();
 
   await payload.update({
-    collection: 'header',
+    collection: 'consent',
     data: {
-      ...header.docs[0],
-      metanavigation: {
-        metaLinks: [
-          {
-            linkExternal: {
-              externalLink: 'https://www.foo.bar',
-              externalLinkText: simpleRteConfig('some changed metanav item'),
-            },
-            linkType: 'external',
-          },
-        ],
+      ...consent.docs[0],
+      banner: {
+        ...consent.docs[0].banner,
+        buttonAcceptAll: simpleRteConfig('Alle zulassen changed'),
       },
+      tenant,
     },
-    id: header.docs[0].id,
+    id: consent.docs[0].id,
   });
 
   logCapture.detachLogs();
@@ -154,9 +148,9 @@ test('invalidates all pages of current tenant (only!) on content change (non-sag
     time,
   });
 
-  // get header
-  const header = await payload.find({
-    collection: 'header',
+  // get consent
+  const consent = await payload.find({
+    collection: 'consent',
     where: {
       tenant: {
         equals: tenantNonSagw,
@@ -167,22 +161,16 @@ test('invalidates all pages of current tenant (only!) on content change (non-sag
   logCapture.captureLogs();
 
   await payload.update({
-    collection: 'header',
+    collection: 'consent',
     data: {
-      ...header.docs[0],
-      metanavigation: {
-        metaLinks: [
-          {
-            linkExternal: {
-              externalLink: 'https://www.foo.bar',
-              externalLinkText: simpleRteConfig('some changed metanav item'),
-            },
-            linkType: 'external',
-          },
-        ],
+      ...consent.docs[0],
+      banner: {
+        ...consent.docs[0].banner,
+        buttonAcceptAll: simpleRteConfig('Alle zulassen changed'),
       },
+      tenant: tenantNonSagw,
     },
-    id: header.docs[0].id,
+    id: consent.docs[0].id,
   });
 
   logCapture.detachLogs();

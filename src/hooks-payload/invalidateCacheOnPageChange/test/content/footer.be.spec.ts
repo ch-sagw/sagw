@@ -61,9 +61,9 @@ test('invalidates all pages of current tenant (only!) on content change (sagw)',
     time,
   });
 
-  // get header
-  const header = await payload.find({
-    collection: 'header',
+  // get footer
+  const footer = await payload.find({
+    collection: 'footer',
     where: {
       tenant: {
         equals: tenant,
@@ -74,22 +74,16 @@ test('invalidates all pages of current tenant (only!) on content change (sagw)',
   logCapture.captureLogs();
 
   await payload.update({
-    collection: 'header',
+    collection: 'footer',
     data: {
-      ...header.docs[0],
-      metanavigation: {
-        metaLinks: [
-          {
-            linkExternal: {
-              externalLink: 'https://www.foo.bar',
-              externalLinkText: simpleRteConfig('some changed metanav item'),
-            },
-            linkType: 'external',
-          },
-        ],
+      ...footer.docs[0],
+      legal: {
+        ...footer.docs[0].legal,
+        cookieSettings: simpleRteConfig('Cookie-Einstellungen changed'),
       },
+      tenant,
     },
-    id: header.docs[0].id,
+    id: footer.docs[0].id,
   });
 
   logCapture.detachLogs();
@@ -154,9 +148,9 @@ test('invalidates all pages of current tenant (only!) on content change (non-sag
     time,
   });
 
-  // get header
-  const header = await payload.find({
-    collection: 'header',
+  // get footer
+  const footer = await payload.find({
+    collection: 'footer',
     where: {
       tenant: {
         equals: tenantNonSagw,
@@ -167,22 +161,16 @@ test('invalidates all pages of current tenant (only!) on content change (non-sag
   logCapture.captureLogs();
 
   await payload.update({
-    collection: 'header',
+    collection: 'footer',
     data: {
-      ...header.docs[0],
-      metanavigation: {
-        metaLinks: [
-          {
-            linkExternal: {
-              externalLink: 'https://www.foo.bar',
-              externalLinkText: simpleRteConfig('some changed metanav item'),
-            },
-            linkType: 'external',
-          },
-        ],
+      ...footer.docs[0],
+      legal: {
+        ...footer.docs[0].legal,
+        cookieSettings: simpleRteConfig('Cookie-Einstellungen changed'),
       },
+      tenant: tenantNonSagw,
     },
-    id: header.docs[0].id,
+    id: footer.docs[0].id,
   });
 
   logCapture.detachLogs();
@@ -200,3 +188,4 @@ test('invalidates all pages of current tenant (only!) on content change (non-sag
     .toHaveLength(31);
 
 });
+
