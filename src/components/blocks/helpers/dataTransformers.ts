@@ -16,6 +16,7 @@ import {
   PublicationType,
 } from '@/payload-types';
 import { InterfaceFilterItem } from '@/components/base/Filter/Filter';
+import { getPageUrl } from '@/utilities/getPageUrl';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { PaginatedDocs } from 'payload';
@@ -111,17 +112,24 @@ export const prepareFilterItems = ({
 
   return filterItems;
 };
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 
-export const convertPayloadNewsPagesToFeItems = (payloadPages: PaginatedDocs<NewsDetailPage>, lang: Config['locale']): InterfaceNewsListItemPropTypes[] => {
-  const items = payloadPages.docs.map((newsPage) => {
+export const convertPayloadNewsPagesToFeItems = async (payloadPages: PaginatedDocs<NewsDetailPage>, lang: Config['locale']): Promise<InterfaceNewsListItemPropTypes[]> => {
+  const payload = await getPayloadCached();
+
+  const items = payloadPages.docs.map(async (newsPage) => {
     const returnNewsPage: InterfaceNewsListItemPropTypes = {
       date: formatDateToReadableString({
         dateString: newsPage.hero.date,
         locale: lang,
       }),
 
-      // TODO
-      link: newsPage.slug || '',
+      // TODO: we need reference tracking here
+      link: await getPageUrl({
+        locale: lang,
+        pageId: newsPage.id,
+        payload,
+      }),
 
       text: rteToHtml(newsPage.overviewPageProps.teaserText),
       title: rteToHtml(newsPage.hero.title),
@@ -130,7 +138,9 @@ export const convertPayloadNewsPagesToFeItems = (payloadPages: PaginatedDocs<New
     return returnNewsPage;
   });
 
-  return items;
+  const awaitedItems = await Promise.all(items);
+
+  return awaitedItems;
 };
 
 interface InterfaceConvertPayloadEventPagesProps {
@@ -139,23 +149,31 @@ interface InterfaceConvertPayloadEventPagesProps {
   globalI18n: I18NGlobal;
 }
 
-export const convertPayloadEventPagesToFeItems = ({
-  payloadPages, globalI18n,
-}: InterfaceConvertPayloadEventPagesProps): InterfaceEventsListItemPropTypes[] => {
+export const convertPayloadEventPagesToFeItems = async ({
+  payloadPages, globalI18n, lang,
+}: InterfaceConvertPayloadEventPagesProps): Promise<InterfaceEventsListItemPropTypes[]> => {
+  const payload = await getPayloadCached();
 
-  const items = payloadPages.map((eventPage) => {
+  const items = payloadPages.map(async (eventPage) => {
     let category;
 
     if (eventPage.eventDetails.category) {
       category = eventPage.eventDetails.category as EventCategory;
     }
 
-    // if page has a detail page
-    let link = `/${eventPage.slug}`;
+    let link = '';
 
     // if page has no detail page
     if (eventPage.showDetailPage === 'false') {
       link = eventPage.link?.externalLink || '';
+    } else {
+
+      // TODO: we need reference tracking here
+      link = await getPageUrl({
+        locale: lang,
+        pageId: eventPage.id,
+        payload,
+      });
     }
 
     const returnEventPage: InterfaceEventsListItemPropTypes = {
@@ -186,5 +204,7 @@ export const convertPayloadEventPagesToFeItems = ({
     return returnEventPage;
   });
 
-  return items;
+  const awaitedItems = await Promise.all(items);
+
+  return awaitedItems;
 };
