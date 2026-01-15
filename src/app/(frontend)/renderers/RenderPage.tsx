@@ -19,7 +19,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { hasLocale } from 'next-intl';
 import { CMSConfigError } from '../utilities/CMSConfigError';
-
+import { SkipLinks } from '@/components/global/SkipLinks/SkipLinks';
 interface InterfacePageRendererProps {
   isHome: boolean;
   locale: TypedLocale;
@@ -86,6 +86,7 @@ const renderPageContent = ({
   containerType,
 }: InterfaceRenderPageContentProps): React.JSX.Element => (
   <TenantProvider tenant={tenantId}>
+    <SkipLinks />
     <RenderHeader
       tenant={tenantId}
     />

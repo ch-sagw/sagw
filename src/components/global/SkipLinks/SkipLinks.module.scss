@@ -1,0 +1,9 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+
+.skipLinks {
+  position: fixed;
+  inset-block-start: px-to-rem(var(--spacing-l));
+  inset-inline-start: px-to-rem(var(--grid-margin));
+  z-index: 1000;
+}
