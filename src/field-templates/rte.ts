@@ -10,7 +10,6 @@ import {
   StrikethroughFeature,
   SubscriptFeature,
   SuperscriptFeature,
-  UnderlineFeature,
   UnorderedListFeature,
 } from '@payloadcms/richtext-lexical';
 import { SoftHyphenFeature } from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.server';
@@ -94,7 +93,6 @@ const rte3Editor = lexicalEditor({
     FixedToolbarFeature(),
     BoldFeature(),
     ItalicFeature(),
-    UnderlineFeature(),
     StrikethroughFeature(),
     SubscriptFeature(),
     SuperscriptFeature(),
@@ -115,7 +113,6 @@ const rte4Editor = lexicalEditor({
     FixedToolbarFeature(),
     BoldFeature(),
     ItalicFeature(),
-    UnderlineFeature(),
     StrikethroughFeature(),
     SubscriptFeature(),
     SuperscriptFeature(),
