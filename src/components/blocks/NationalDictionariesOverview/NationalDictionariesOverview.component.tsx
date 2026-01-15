@@ -22,9 +22,14 @@ export const NationalDictionaryOverviewComponent = ({
   const allItems = pages.map((item) => {
     const href = pageUrls[item.id] || `/${item.id}`;
 
+    const image = typeof item.overviewPageProps.image === 'string' || item.overviewPageProps.image === null
+      ? undefined
+      : item.overviewPageProps.image;
+
     return (
       <GenericTeaser
         className={styles.item}
+        image={image}
         key={item.id}
         title={rteToHtml(item.hero.title)}
         texts={[rteToHtml(item.overviewPageProps.teaserText)]}
@@ -35,7 +40,7 @@ export const NationalDictionaryOverviewComponent = ({
             type: 'internal',
           },
         ]}
-        type='generic'
+        type='institute'
       />
     );
   });

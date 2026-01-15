@@ -1,6 +1,9 @@
-import { MagazineDetailPage } from '@/payload-types';
+import {
+  Image,
+  MagazineDetailPage,
+} from '@/payload-types';
 
-export const getFirstImageIdOfMagazinePage = (page: MagazineDetailPage): string => {
+export const getFirstImageIdOfMagazinePage = (page: MagazineDetailPage): Image | string => {
   if (!page.content) {
     return '';
   }
@@ -15,10 +18,6 @@ export const getFirstImageIdOfMagazinePage = (page: MagazineDetailPage): string 
   }
 
   if (typeof imageBlocks[0].image === 'object') {
-    if (imageBlocks[0].image.id) {
-      return imageBlocks[0].image.id;
-    }
-  } else {
     return imageBlocks[0].image;
   }
 

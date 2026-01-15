@@ -1066,7 +1066,7 @@ export interface InterfaceMagazineTeasersBlock {
   /**
    * Align Title & text horizontally or vertically
    */
-  alignement?: ('vertical' | 'horizontal') | null;
+  alignment?: ('vertical' | 'horizontal') | null;
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
@@ -1224,7 +1224,7 @@ export interface InterfaceProjectTeasersBlock {
   /**
    * Align Title & text horizontally or vertically
    */
-  alignement?: ('vertical' | 'horizontal') | null;
+  alignment?: ('vertical' | 'horizontal') | null;
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
@@ -1257,7 +1257,7 @@ export interface InterfaceProjectTeasersBlock {
  *       into all required renditions (image sizes). Please ensure
  *       that the dimensions of the uploaded image does not exceed 4000 pixels
  *       in either direction. Allowed image formats are «png, jpg, jpeg, gif,
- *       webp, avif». Since the optimization service will compress the
+ *       webp, avif and svg». Since the optimization service will compress the
  *       renditions again, it is best to not compress the image too much before
  *       you upload it.
  *
@@ -2837,7 +2837,7 @@ export interface InterfaceGenericTeasersBlock {
   /**
    * Align Title & text horizontally or vertically
    */
-  alignement?: ('vertical' | 'horizontal') | null;
+  alignment?: ('vertical' | 'horizontal') | null;
   teasers: {
     title: {
       root: {
@@ -4910,7 +4910,7 @@ export interface InterfaceEventsTeasersBlockSelect<T extends boolean = true> {
 export interface InterfaceMagazineTeasersBlockSelect<T extends boolean = true> {
   title?: T;
   lead?: T;
-  alignement?: T;
+  alignment?: T;
   optionalLink?:
     | T
     | {
@@ -4976,7 +4976,7 @@ export interface InterfacePublicationsTeasersBlockSelect<T extends boolean = tru
 export interface InterfaceProjectTeasersBlockSelect<T extends boolean = true> {
   title?: T;
   lead?: T;
-  alignement?: T;
+  alignment?: T;
   optionalLink?:
     | T
     | {
@@ -5340,7 +5340,7 @@ export interface InterfaceCtaContactBlockSelect<T extends boolean = true> {
 export interface InterfaceGenericTeasersBlockSelect<T extends boolean = true> {
   title?: T;
   lead?: T;
-  alignement?: T;
+  alignment?: T;
   teasers?:
     | T
     | {

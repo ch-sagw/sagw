@@ -1327,7 +1327,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       content: [
         // generic teaser
         {
-          alignement: 'horizontal',
+          alignment: 'horizontal',
           blockType: 'genericTeasersBlock',
           lead: simpleRteConfig('Lead'),
           teasers: [
@@ -1363,7 +1363,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
         // projects teaser
         {
-          alignement: 'vertical',
+          alignment: 'vertical',
           blockType: 'projectsTeasersBlock',
           lead: simpleRteConfig('Lead'),
           title: simpleRteConfig('Project Teaser'),
@@ -1379,7 +1379,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
         // magazine teaser
         {
-          alignement: 'horizontal',
+          alignment: 'horizontal',
           blockType: 'magazineTeasersBlock',
           lead: simpleRteConfig('Lead'),
           title: simpleRteConfig('Magazine Teaser'),
