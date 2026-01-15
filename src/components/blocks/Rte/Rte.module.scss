@@ -15,21 +15,11 @@
   &.light {
     --background-color: var(--background-light);
     --text-color: var(--text-primary);
-
-    ::selection {
-      background: var(--interaction-primary);
-      color: var(--text-primary-inverted);
-    }
   }
 
   &.white {
     --background-color: var(--background-page);
     --text-color: var(--text-primary);
-
-    ::selection {
-      background: var(--interaction-primary);
-      color: var(--text-primary-inverted);
-    }
   }
 
   &.dark {
@@ -37,11 +27,6 @@
     --text-color: var(--text-primary-inverted);
     --link-color: var(--text-color);
     --link-color-focus-hover: var(--text-color);
-
-    ::selection {
-      background: var(--text-primary-inverted);
-      color: var(--interaction-primary);
-    }
   }
 
   .text {
