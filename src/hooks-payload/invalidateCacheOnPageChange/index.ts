@@ -127,6 +127,35 @@ const hasHeroChanged = (
   }
 };
 
+// helper to check if eventDetails field has changed
+// compares eventDetails group field to detect any changes in title,
+// location, date, etc.
+const hasEventDetailsChanged = (
+  oldEventDetails: unknown,
+  newEventDetails: unknown,
+): boolean => {
+  // both undefined/null - no change
+  if (!oldEventDetails && !newEventDetails) {
+    return false;
+  }
+
+  // one is undefined/null, other is not - changed
+  if (!oldEventDetails || !newEventDetails) {
+    return true;
+  }
+
+  // compare serialized objects to detect any changes
+  try {
+    const oldSerialized = JSON.stringify(oldEventDetails);
+    const newSerialized = JSON.stringify(newEventDetails);
+
+    return oldSerialized !== newSerialized;
+  } catch {
+    // if serialization fails, assume changed to be safe
+    return true;
+  }
+};
+
 // map detail page collections to block types that programmatically
 // reference them
 const DETAIL_PAGE_TO_BLOCKS: Record<string, string[]> = {
@@ -1344,7 +1373,17 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
         const newHero = docToUse?.hero;
         const heroChanged = hasHeroChanged(oldHero, newHero);
 
-        if ((contentChanged || heroChanged) && collectionSlug !== 'homePage') {
+        // For eventDetailPage, also check if eventDetails changed
+        let eventDetailsChanged = false;
+
+        if (collectionSlug === 'eventDetailPage') {
+          const oldEventDetails = previousDoc?.eventDetails;
+          const newEventDetails = docToUse?.eventDetails;
+
+          eventDetailsChanged = hasEventDetailsChanged(oldEventDetails, newEventDetails);
+        }
+
+        if ((contentChanged || heroChanged || eventDetailsChanged) && collectionSlug !== 'homePage') {
           // Skip homePage here - already handled above
           await invalidatePagesWithDeduplication(
             [

@@ -43,22 +43,6 @@ Error: Internal: NoFallbackError
 - invalidate on meta change!
 - test -> link -> consent (and other globals): should not only invlidate home, but all pages
 
-
-- invalidation on content change ok. but invalidation on hero change not ok. are there any other properties that should invalidate cache? e.g. event details (which is not data->content, or overview page props, which is not data->content, etc.)
-->> home hero
-->> magazine detail -> overview page props & date
-->> event detail -> event details, show detail page or link, and therefore as well detail page content blocks / external link change
---> news detail -> overview page props, date, project
---> publication detail -> overview page props, categorization, 
---> national dict detail page -> overview page props
---> institute detail -> overview page props
---> project detail -> project, overview page & teaser props
-
-
-
-
-
-
 ############## prod issues ##############
 - internal link chooser from rte -> error
 - home, data-privacy and impressum -> trouble accessing the messages files
