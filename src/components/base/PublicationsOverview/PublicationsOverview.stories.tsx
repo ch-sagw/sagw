@@ -5,6 +5,7 @@ import type {
 import { PublicationsOverview } from '@/components/base/PublicationsOverview/PublicationsOverview';
 import { InterfaceImagePropTypes } from '@/components/base/Image/Image';
 import { defaultDecorator } from '@/storybook-helpers';
+import { ImageVariant } from '@/components/base/types/imageVariant';
 
 type PublicationsOverviewProps = React.ComponentProps<typeof PublicationsOverview>;
 
@@ -35,7 +36,7 @@ export default meta;
 const image = {
   alt: 'SAGW image',
   createdAt: '2025-12-02T16:29:03.337Z',
-  filename: 'sagw.png',
+  filename: 'cover-sagw-bulletin-1-2022.jpg',
   filesize: 50757,
   focalX: 50,
   focalY: 50,
@@ -46,8 +47,8 @@ const image = {
   tenant: '692f13cdef533bd5f1765954',
   thumbnailURL: null,
   updatedAt: '2025-12-02T16:29:03.337Z',
-  url: 'https://sagw-nu-localhost.gumlet.io/sagw.png',
-  variant: 'publicationTeaser' as InterfaceImagePropTypes['variant'],
+  url: 'https://sagw-nu-localhost.gumlet.io/cover-sagw-bulletin-1-2022.jpg',
+  variant: 'publicationTeaser' as ImageVariant,
   width: 2048,
 };
 
