@@ -24,45 +24,39 @@ export const HomeTeaserClient = ({
   teasers,
 }: InterfaceHomeTeaserClientPropTypes): React.JSX.Element => (
   <div className={styles.teasers}>
-    {teasers.map((teaser, index) => {
+    {teasers.map((teaser, index) => (
+      <Section
+        additionalContentClassName={styles.stickyContent}
+        additionalStickyContent={
+          <Icon
+            name={teaser.iconName as keyof typeof Icon}
+            className={styles.icon}
+          />
+        }
+        className={styles.teaser}
+        colorMode='white'
+        key={index}
+        subtitle={teaser.titleHtml}
+        title={teaser.category}
+        titleClassName={styles.stickyTitle}
+      >
+        <SafeHtml
+          as='p'
+          className={styles.text}
+          html={teaser.textHtml}
+        />
 
-      console.log(teaser);
-
-      return (
-        <Section
-          additionalContentClassName={styles.stickyContent}
-          additionalStickyContent={
-            <Icon
-              name={teaser.iconName as keyof typeof Icon}
-              className={styles.icon}
-            />
-          }
-          className={styles.teaser}
+        <Button
+          className={styles.link}
           colorMode='white'
-          key={index}
-          subtitle={teaser.titleHtml}
-          title={teaser.category}
-          titleClassName={styles.stickyTitle}
-        >
-          <SafeHtml
-            as='p'
-            className={styles.text}
-            html={teaser.textHtml}
-          />
-
-          <Button
-            className={styles.link}
-            colorMode='white'
-            element='link'
-            href={teaser.linkHref}
-            iconInlineStart={'arrowRight' as keyof typeof Icon}
-            style='text'
-            text={teaser.linkTextHtml}
-          />
-        </Section>
-      );
-
-    })}
+          element='link'
+          href={teaser.linkHref}
+          iconInlineStart={'arrowRight' as keyof typeof Icon}
+          style='text'
+          text={teaser.linkTextHtml}
+        />
+      </Section>
+    ))}
   </div>
 );
 
