@@ -32,6 +32,7 @@ export const HomeTeaser = async ({
 
     return {
       category: teaser.category,
+      iconName: teaser.iconName,
       linkHref,
       linkTextHtml: rteToHtml(teaser.link.linkText),
       textHtml: rteToHtml(teaser.text),

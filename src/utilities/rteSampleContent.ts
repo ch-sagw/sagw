@@ -2081,7 +2081,7 @@ RTE4 e.g. magazine detail
 Showing many potential combinations of elements
 within RTE4 config. Multiple headline levels after
 each other, internal and external links, ol, ul,
-strikethrough, underline, bold, italic
+strikethrough, bold, italic
 */
 export const rte4FullRange: InterfaceRte = {
   root: {

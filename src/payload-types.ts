@@ -926,7 +926,7 @@ export interface InterfaceHomeTeasersBlock {
   homeTeasers?:
     | {
         category: string;
-        iconName: 'bar';
+        iconName: 'homeTeaserActivities' | 'homeTeaserFunding' | 'homeTeaserNetwork';
         title: {
           root: {
             type: string;
