@@ -28,6 +28,11 @@ export const Downloads = (props: InterfaceDownloadsPropTypes): React.JSX.Element
       const fileSize = documentItem.filesize
         ? Number((documentItem.filesize / (1024 * 1024)).toFixed(2))
         : 0;
+      let fileSizeText = `${fileSize} MB`;
+
+      if (fileSize < 1) {
+        fileSizeText = `${Math.round(fileSize * 1024)} KB`;
+      }
 
       if (formatSplit && formatSplit.length > 1) {
         format = formatSplit[formatSplit.length - 1];
@@ -40,7 +45,7 @@ export const Downloads = (props: InterfaceDownloadsPropTypes): React.JSX.Element
           href: documentItem.url || '',
           target: '_blank' as const,
         },
-        size: `${fileSize}KB`,
+        size: fileSizeText,
         title: rteToHtml(documentItem.title),
         type: 'download' as const,
       };
@@ -57,6 +62,13 @@ export const Downloads = (props: InterfaceDownloadsPropTypes): React.JSX.Element
           documentTitle += ` - ${index + 1} / ${documentItem.files.length}`;
         }
 
+        const fileSize = file.size || 0;
+        let fileSizeText = `${fileSize} MB`;
+
+        if (fileSize < 1) {
+          fileSizeText = `${Math.round(fileSize * 1024)} KB`;
+        }
+
         const returnDocument: InterfaceDownloadLinkItemPropTypes = {
           date: (new Date(documentItem.publicationDate))
             .toString(),
@@ -65,7 +77,7 @@ export const Downloads = (props: InterfaceDownloadsPropTypes): React.JSX.Element
             href: file.link || 'foo',
             target: '_blank' as const,
           },
-          size: `${file.size}KB`,
+          size: fileSizeText,
           title: documentTitle,
           type: 'download' as const,
         };
