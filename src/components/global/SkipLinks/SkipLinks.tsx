@@ -1,10 +1,11 @@
+import 'server-only';
 import React from 'react';
 import styles from '@/components/global/SkipLinks/SkipLinks.module.scss';
 import { SkipLink } from '@/components/base/SkipLink/SkipLink';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
-export const SkipLinks = (): React.JSX.Element => {
-  const internalI18nSkipLinks = useTranslations('skipLinks');
+export const SkipLinks = async (): Promise<React.JSX.Element> => {
+  const internalI18nSkipLinks = await getTranslations('skipLinks');
 
   return (
     <section

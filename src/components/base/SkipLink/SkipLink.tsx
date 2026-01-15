@@ -1,3 +1,5 @@
+import 'server-only';
+
 import React from 'react';
 import styles from '@/components/base/SkipLink/SkipLink.module.scss';
 
