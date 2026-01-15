@@ -17,6 +17,24 @@ type InterfaceRootLayoutProps = {
 // TODO: get proper metadata
 export const metadata: Metadata = {
   description: 'A blank template using Payload in a Next.js app.',
+  icons: {
+    apple: [
+      {
+        sizes: '180x180',
+        url: '/favicons/sagw/apple-touch-icon-dark.png',
+      },
+    ],
+    icon: [
+      {
+        sizes: '32x32',
+        url: '/favicons/sagw/favicon.ico',
+      },
+      {
+        type: 'image/svg+xml',
+        url: '/favicons/sagw/favicon.svg',
+      },
+    ],
+  },
   title: 'Payload Blank Template',
 };
 
