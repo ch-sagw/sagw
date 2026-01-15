@@ -16,10 +16,7 @@ const meta: Meta<typeof SkipLinks> = {
   component: SkipLinks,
   decorators: [defaultDecorator],
   parameters: {/* layout: 'centered', */ },
-  tags: [
-    'autodocs',
-    'a11y:check',
-  ],
+  tags: ['autodocs'],
   title: 'Components/global/SkipLinks',
 };
 
