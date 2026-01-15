@@ -99,6 +99,34 @@ const hasContentChanged = (
   }
 };
 
+// helper to check if hero field has changed
+// compares hero field to detect any changes in title, lead, colorMode, etc.
+const hasHeroChanged = (
+  oldHero: unknown,
+  newHero: unknown,
+): boolean => {
+  // both undefined/null - no change
+  if (!oldHero && !newHero) {
+    return false;
+  }
+
+  // one is undefined/null, other is not - changed
+  if (!oldHero || !newHero) {
+    return true;
+  }
+
+  // compare serialized objects to detect any changes
+  try {
+    const oldSerialized = JSON.stringify(oldHero);
+    const newSerialized = JSON.stringify(newHero);
+
+    return oldSerialized !== newSerialized;
+  } catch {
+    // if serialization fails, assume changed to be safe
+    return true;
+  }
+};
+
 // map detail page collections to block types that programmatically
 // reference them
 const DETAIL_PAGE_TO_BLOCKS: Record<string, string[]> = {
@@ -1264,16 +1292,20 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
       await invalidatePagesWithDeduplication(allReferencingPages, allLocales, req.payload);
     }
 
-    // For homePage, check content changes regardless of cascade trigger
-    // HomePage content changes should always invalidate root paths
-    // Use context to prevent duplicate invalidations within the same operation
+    // for home, check content and hero changes regardless of cascade trigger
+    // home content/hero changes should always invalidate root paths
+    // use context to prevent duplicate invalidations within the same operation
     if (collectionSlug === 'homePage' && !context?.homePageRootPathsInvalidated) {
       try {
         const oldContent = previousDoc?.content;
         const newContent = docToUse?.content;
         const contentChanged = hasContentChanged(oldContent, newContent);
 
-        if (contentChanged) {
+        const oldHero = previousDoc?.hero;
+        const newHero = docToUse?.hero;
+        const heroChanged = hasHeroChanged(oldHero, newHero);
+
+        if (contentChanged || heroChanged) {
           await invalidateRootPaths({
             payload: req.payload,
             tenantId,
@@ -1290,7 +1322,7 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
       }
     }
 
-    // if content changed (and no cascade trigger), invalidate the page itself
+    // if content or hero changed (and no cascade trigger), invalidate the page
     // this handles blocks added/removed/reordered/changed when
     // slug/navTitle/parent didn't change.
     //
@@ -1308,7 +1340,11 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
         const newContent = docToUse?.content;
         const contentChanged = hasContentChanged(oldContent, newContent);
 
-        if (contentChanged && collectionSlug !== 'homePage') {
+        const oldHero = previousDoc?.hero;
+        const newHero = docToUse?.hero;
+        const heroChanged = hasHeroChanged(oldHero, newHero);
+
+        if ((contentChanged || heroChanged) && collectionSlug !== 'homePage') {
           // Skip homePage here - already handled above
           await invalidatePagesWithDeduplication(
             [

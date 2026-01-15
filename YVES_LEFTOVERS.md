@@ -23,7 +23,6 @@ Error: Internal: NoFallbackError
     at responseGenerator (.next/server/app/(frontend)/[locale]/[...slug]/page.js:3:1917)
 
 - in overview-links tests -> institute is missing
-- when updating page with italian (e.g. update italian hero title), cache is not invalidated
 - test static generation with localized tenant slugs
 - pages created in playwright need revalidatePath before opening them in browser. check if this is needed as well if we manually create pages in payload
 - thin out tenantDataPlaywright and adapt tests !!!
@@ -36,6 +35,29 @@ Error: Internal: NoFallbackError
 - cache invalidation cascade: if Globals or Consent is revaliated, we need to revalidate all pages! same for header links and footer stuff!
 - there are certain parent page props (parentPageProps): there we need to invalidate cache of the parent page as well
 - what other functionalities / tests? (e.g. header, consent)
+- event detail page has links block link to detail page. if only content blocks of detail page changes, then event detail page should not be invalidated, but it currently is.
+- if block content of detail page changes, page is not invalidated!
+- invalidations on page deletions. e.g., delete event detail page -> event teasers / overviews should be invalidated
+- create event detail page (an overview page with events-overview exists) -> cache invalidation shows de/overview-page (ok), but it also invalidates /it, /fr/, /en
+- detail page with rte -> then remove rte -> page is not invalidated. it only happens if page is freshly loaded before rte is removed
+- invalidate on meta change!
+- test -> link -> consent (and other globals): should not only invlidate home, but all pages
+
+
+- invalidation on content change ok. but invalidation on hero change not ok. are there any other properties that should invalidate cache? e.g. event details (which is not data->content, or overview page props, which is not data->content, etc.)
+->> home hero
+->> magazine detail -> overview page props & date
+->> event detail -> event details, show detail page or link, and therefore as well detail page content blocks / external link change
+--> news detail -> overview page props, date, project
+--> publication detail -> overview page props, categorization, 
+--> national dict detail page -> overview page props
+--> institute detail -> overview page props
+--> project detail -> project, overview page & teaser props
+
+
+
+
+
 
 ############## prod issues ##############
 - internal link chooser from rte -> error

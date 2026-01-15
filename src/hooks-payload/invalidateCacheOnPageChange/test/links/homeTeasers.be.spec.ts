@@ -70,9 +70,7 @@ test('invalidates if target link changes slug (sagw)', {
   await payload.update({
     collection: 'detailPage',
     data: {
-      hero: {
-        title: simpleRteConfig('link target changed'),
-      },
+      slug: 'link-target-changed',
     },
     id: detailPage.id,
   });
@@ -151,9 +149,7 @@ test('invalidates if target link changes slug (non-sagw)', {
   await payload.update({
     collection: 'detailPage',
     data: {
-      hero: {
-        title: simpleRteConfig('link target changed'),
-      },
+      slug: 'link-target-changed',
     },
     id: detailPage.id,
   });
