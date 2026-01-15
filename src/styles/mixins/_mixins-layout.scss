@@ -41,7 +41,8 @@
       grid-row: 1 / span 5;
       grid-column: 1 / 4;
       text-wrap: pretty;
-      overflow: hidden;
+      overflow: clip;
+      overflow-clip-margin: 0.25rem;
     }
 
     // Vertically center the first line of the
