@@ -6,113 +6,128 @@ import {
 } from '@playwright/test';
 import {
   generateDetailPage, generateOverviewPage,
-} from '@/test-helpers/page-generator';
+} from '@/test-helpers/collections-generator';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
 
-test('Detects direct circular reference', async () => {
-  const payload = await getPayload({
-    config: configPromise,
+test.describe('circular-reference', () => {
+  test.beforeEach(async () => {
+
+    // delete data
+    await deleteSetsPages();
+    await deleteOtherCollections();
+  });
+  test('Detects direct circular reference', {
+    tag: '@breadcrumb',
+  }, async () => {
+    const payload = await getPayload({
+      config: configPromise,
+    });
+
+    let result: any;
+
+    try {
+      const overviewPage = await generateOverviewPage({
+        navigationTitle: 'Level 1 Navigation Title',
+        title: `Level 1 ${(new Date())
+          .getTime()}`,
+      });
+
+      const detailPage1 = await generateDetailPage({
+        navigationTitle: 'Level 2 Navigation Title',
+        parentPage: {
+          documentId: overviewPage.id,
+          slug: 'overviewPage',
+        },
+        title: `Level 2 ${(new Date())
+          .getTime()}`,
+      });
+
+      result = await payload.update({
+        collection: 'overviewPage',
+        data: {
+          parentPage: {
+            documentId: detailPage1.id,
+            slug: 'detailPage',
+          },
+        },
+        id: overviewPage.id,
+      });
+
+    } catch (e) {
+      result = JSON.stringify(e);
+    }
+
+    await expect(JSON.parse(result).data.errors[0].message)
+      .toStrictEqual('Cannot set parent page because it would create a circular reference. This page or one of its ancestors is already a descendant of the current page.');
+
   });
 
-  let result: any;
-
-  try {
-    const overviewPage = await generateOverviewPage({
-      navigationTitle: 'Level 1 Navigation Title',
-      title: `Level 1 ${(new Date())
-        .getTime()}`,
+  test('Detects deep circular reference', {
+    tag: '@breadcrumb',
+  }, async () => {
+    const payload = await getPayload({
+      config: configPromise,
     });
 
-    const detailPage1 = await generateDetailPage({
-      navigationTitle: 'Level 2 Navigation Title',
-      parentPage: {
-        documentId: overviewPage.id,
-        slug: 'overviewPage',
-      },
-      title: `Level 2 ${(new Date())
-        .getTime()}`,
-    });
+    let result: any;
 
-    result = await payload.update({
-      collection: 'overviewPage',
-      data: {
+    try {
+      const overviewPage = await generateOverviewPage({
+        navigationTitle: 'Level 1 Navigation Title',
+        title: `Level 1 ${(new Date())
+          .getTime()}`,
+      });
+
+      const detailPage1 = await generateDetailPage({
+        navigationTitle: 'Level 2 Navigation Title',
+        parentPage: {
+          documentId: overviewPage.id,
+          slug: 'overviewPage',
+        },
+        title: `Level 2 ${(new Date())
+          .getTime()}`,
+      });
+
+      const detailPage2 = await generateDetailPage({
+        navigationTitle: 'Level 3 Navigation Title',
         parentPage: {
           documentId: detailPage1.id,
           slug: 'detailPage',
         },
-      },
-      id: overviewPage.id,
-    });
+        title: `Level 3 ${(new Date())
+          .getTime()}`,
+      });
 
-  } catch (e) {
-    result = JSON.stringify(e);
-  }
-
-  await expect(JSON.parse(result).data.errors[0].message)
-    .toStrictEqual('Cannot set parent page because it would create a circular reference. This page or one of its ancestors is already a descendant of the current page.');
-
-});
-
-test('Detects deep circular reference', async () => {
-  const payload = await getPayload({
-    config: configPromise,
-  });
-
-  let result: any;
-
-  try {
-    const overviewPage = await generateOverviewPage({
-      navigationTitle: 'Level 1 Navigation Title',
-      title: `Level 1 ${(new Date())
-        .getTime()}`,
-    });
-
-    const detailPage1 = await generateDetailPage({
-      navigationTitle: 'Level 2 Navigation Title',
-      parentPage: {
-        documentId: overviewPage.id,
-        slug: 'overviewPage',
-      },
-      title: `Level 2 ${(new Date())
-        .getTime()}`,
-    });
-
-    const detailPage2 = await generateDetailPage({
-      navigationTitle: 'Level 3 Navigation Title',
-      parentPage: {
-        documentId: detailPage1.id,
-        slug: 'detailPage',
-      },
-      title: `Level 3 ${(new Date())
-        .getTime()}`,
-    });
-
-    const detailPage3 = await generateDetailPage({
-      navigationTitle: 'Level 4 Navigation Title',
-      parentPage: {
-        documentId: detailPage2.id,
-        slug: 'detailPage',
-      },
-      title: `Level 4 ${(new Date())
-        .getTime()}`,
-    });
-
-    result = await payload.update({
-      collection: 'overviewPage',
-      data: {
+      const detailPage3 = await generateDetailPage({
+        navigationTitle: 'Level 4 Navigation Title',
         parentPage: {
-          documentId: detailPage3.id,
+          documentId: detailPage2.id,
           slug: 'detailPage',
         },
-      },
-      id: overviewPage.id,
-    });
+        title: `Level 4 ${(new Date())
+          .getTime()}`,
+      });
 
-  } catch (e) {
-    result = JSON.stringify(e);
-  }
+      result = await payload.update({
+        collection: 'overviewPage',
+        data: {
+          parentPage: {
+            documentId: detailPage3.id,
+            slug: 'detailPage',
+          },
+        },
+        id: overviewPage.id,
+      });
 
-  await expect(JSON.parse(result).data.errors[0].message)
-    .toStrictEqual('Cannot set parent page because it would create a circular reference. This page or one of its ancestors is already a descendant of the current page.');
+    } catch (e) {
+      result = JSON.stringify(e);
+    }
+
+    await expect(JSON.parse(result).data.errors[0].message)
+      .toStrictEqual('Cannot set parent page because it would create a circular reference. This page or one of its ancestors is already a descendant of the current page.');
+
+  });
 
 });
-

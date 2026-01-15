@@ -24,6 +24,15 @@ export const fieldInternalLinkChooser = (props: InterfaceFieldInternalLinkChoose
       {
         admin: {
           hidden: true,
+          readOnly: true,
+        },
+        defaultValue: true,
+        name: '_internalLinkMarker',
+        type: 'checkbox',
+      },
+      {
+        admin: {
+          hidden: true,
         },
         name: 'slug',
         required: !props?.optional,

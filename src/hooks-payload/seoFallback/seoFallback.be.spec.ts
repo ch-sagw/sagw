@@ -5,15 +5,75 @@ import {
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 import configPromise from '@/payload.config';
 import { getPayload } from 'payload';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
+import {
+  getTenant, getTenantNonSagw,
+} from '@/test-helpers/tenant-generator';
+import { generateCollectionsExceptPages } from '@/test-helpers/collections-generator';
 
 test.describe('seoFallback', () => {
   beforeEachPayloadLogin();
+
+  test.beforeEach(async () => {
+
+    // delete data
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    // add generic data
+    const tenant = await getTenant();
+    const tenantNonSagw = await getTenantNonSagw();
+
+    await generateCollectionsExceptPages({
+      tenant: tenant || '',
+    });
+
+    await generateCollectionsExceptPages({
+      tenant: tenantNonSagw || '',
+    });
+  });
 
   test('page inherits seo from home', async ({
     page,
   }) => {
     const payload = await getPayload({
       config: configPromise,
+    });
+
+    // fetch sagw image
+    const imageResponse = await payload.find({
+      collection: 'images',
+      where: {
+        alt: {
+          equals: 'image sagw',
+        },
+      },
+    });
+
+    // add seo image to home
+    const tenant = await getTenant();
+    const home = await payload.find({
+      collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
+    });
+
+    await payload.update({
+      collection: 'homePage',
+      data: {
+        meta: {
+          ...home.docs[0].meta,
+          seo: {
+            image: imageResponse.docs[0].id,
+          },
+        },
+      },
+      id: home.docs[0].id,
     });
 
     // create a news detail page
@@ -46,16 +106,6 @@ test.describe('seoFallback', () => {
     await page.waitForURL(/http:\/\/localhost:3000\/admin\/collections\/newsDetailPage\/[a-f0-9]+$/u);
     await page.getByRole('heading', {
       name: 'bar',
-    });
-
-    // fetch sagw image
-    const imageResponse = await payload.find({
-      collection: 'images',
-      where: {
-        alt: {
-          equals: 'SAGW image',
-        },
-      },
     });
 
     // test api response
