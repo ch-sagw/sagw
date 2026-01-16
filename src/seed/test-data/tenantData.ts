@@ -575,7 +575,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       homeTeasers: [
         {
           category: 'Förderung',
-          iconName: 'bar',
+          iconName: 'homeTeaserFunding',
           link: {
             internalLink: {
               documentId: 'someid',
@@ -589,7 +589,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
         {
           category: 'Netzwerk',
-          iconName: 'bar',
+          iconName: 'homeTeaserNetwork',
           link: {
             internalLink: {
               documentId: 'someid',
@@ -603,7 +603,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
         {
           category: 'Aktivitäten',
-          iconName: 'bar',
+          iconName: 'homeTeaserActivities',
           link: {
             internalLink: {
               documentId: 'someid',

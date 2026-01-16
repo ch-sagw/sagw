@@ -9,6 +9,7 @@ import { Icon } from '@/icons';
 
 export type InterfaceHomeTeaserItem = {
   category: string;
+  iconName: string;
   linkHref: string;
   linkTextHtml: string;
   textHtml: string;
@@ -27,10 +28,9 @@ export const HomeTeaserClient = ({
       <Section
         additionalContentClassName={styles.stickyContent}
         additionalStickyContent={
-          // TODO: when moxy ready, render proper icon
           <Icon
+            name={teaser.iconName as keyof typeof Icon}
             className={styles.icon}
-            name='arrowRight'
           />
         }
         className={styles.teaser}
