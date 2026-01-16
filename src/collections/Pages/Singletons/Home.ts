@@ -20,12 +20,7 @@ import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
-import { readFile } from 'fs/promises';
-import { fileURLToPath } from 'url';
 import { homeSlug } from '@/collections/constants';
-import {
-  dirname, join,
-} from 'path';
 import { hookInvalidateCacheOnPageChange } from '@/hooks-payload/invalidateCacheOnPageChange';
 
 const homeBlocks: BlockSlug[] = [
@@ -148,28 +143,22 @@ export const HomePage: CollectionConfig = {
         const fallback = 'Home';
         let homeNavigationTitle;
 
-        /* eslint-disable @typescript-eslint/naming-convention */
-        const __filename = fileURLToPath(import.meta.url);
-        const __dirname = dirname(__filename);
-        /* eslint-enable @typescript-eslint/naming-convention */
-        const messagesDir = join(__dirname, '../../../i18n/messages');
-
         if (locale && locale === 'all') {
-          const translationRawFileDe = (await readFile(join(messagesDir, 'de.json'))).toString();
-          const translationRawFileEn = (await readFile(join(messagesDir, 'en.json'))).toString();
-          const translationRawFileFr = (await readFile(join(messagesDir, 'fr.json'))).toString();
-          const translationRawFileIt = (await readFile(join(messagesDir, 'it.json'))).toString();
+          const translationRawFileDe = (await import('@/i18n/messages/de.json')).default;
+          const translationRawFileEn = (await import('@/i18n/messages/en.json')).default;
+          const translationRawFileFr = (await import('@/i18n/messages/fr.json')).default;
+          const translationRawFileIt = (await import('@/i18n/messages/it.json')).default;
 
           homeNavigationTitle = {
-            de: JSON.parse(translationRawFileDe).navigation.navigationTitle,
-            en: JSON.parse(translationRawFileEn).navigation.navigationTitle,
-            fr: JSON.parse(translationRawFileFr).navigation.navigationTitle,
-            it: JSON.parse(translationRawFileIt).navigation.navigationTitle,
+            de: translationRawFileDe.navigation.navigationTitle,
+            en: translationRawFileEn.navigation.navigationTitle,
+            fr: translationRawFileFr.navigation.navigationTitle,
+            it: translationRawFileIt.navigation.navigationTitle,
           };
 
         } else if (locale) {
-          const translationRawFile = (await readFile(join(messagesDir, `${locale}.json`))).toString();
-          const translationsFile = JSON.parse(translationRawFile);
+          // Use dynamic import with template literal for locale
+          const translationsFile = (await import(`@/i18n/messages/${locale}.json`)).default;
 
           homeNavigationTitle = translationsFile.navigation.navigationTitle;
         }
