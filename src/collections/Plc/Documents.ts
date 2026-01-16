@@ -1,6 +1,10 @@
 import type { CollectionConfig } from 'payload';
 import { rte2 } from '@/field-templates/rte';
 import { assetsAccess } from '@/access/assets';
+import {
+  hookInvalidateCacheOnReferencedCollectionChange,
+  hookInvalidateCacheOnReferencedCollectionDelete,
+} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
 
 export const Documents: CollectionConfig = {
   access: assetsAccess,
@@ -33,6 +37,10 @@ export const Documents: CollectionConfig = {
       type: 'row',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateCacheOnReferencedCollectionChange],
+    afterDelete: [hookInvalidateCacheOnReferencedCollectionDelete],
+  },
   slug: 'documents',
   upload: {
     mimeTypes: ['application/pdf'],

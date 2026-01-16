@@ -1,5 +1,9 @@
 import type { CollectionConfig } from 'payload';
 import { assetsAccess } from '@/access/assets';
+import {
+  hookInvalidateCacheOnReferencedCollectionChange,
+  hookInvalidateCacheOnReferencedCollectionDelete,
+} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
 
 export const Images: CollectionConfig = {
   access: assetsAccess,
@@ -23,6 +27,10 @@ export const Images: CollectionConfig = {
       type: 'text',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateCacheOnReferencedCollectionChange],
+    afterDelete: [hookInvalidateCacheOnReferencedCollectionDelete],
+  },
   slug: 'images',
   upload: {
     focalPoint: true,

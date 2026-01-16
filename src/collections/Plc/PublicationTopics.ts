@@ -1,6 +1,10 @@
 import { CollectionConfig } from 'payload';
 import { rte1 } from '@/field-templates/rte';
 import { globalContentAccessGeneric } from '@/access/globalContent';
+import {
+  hookInvalidateCacheOnReferencedCollectionChange,
+  hookInvalidateCacheOnReferencedCollectionDelete,
+} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
 
 export const PublicationTopics: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -39,5 +43,9 @@ export const PublicationTopics: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateCacheOnReferencedCollectionChange],
+    afterDelete: [hookInvalidateCacheOnReferencedCollectionDelete],
+  },
   slug: 'publicationTopics',
 };

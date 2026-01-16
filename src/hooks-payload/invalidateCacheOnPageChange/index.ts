@@ -33,8 +33,13 @@ const invalidationCache = new Set<string>();
 // This persists even when invalidationCache is cleared for cascade updates
 const rootPathInvalidationCache = new Set<string>();
 
+export const clearInvalidationCache = (): void => {
+  invalidationCache.clear();
+  rootPathInvalidationCache.clear();
+};
+
 // Helper to invalidate pages with deduplication
-const invalidatePagesWithDeduplication = async (
+export const invalidatePagesWithDeduplication = async (
   pages: { id: string; collectionSlug: CollectionSlug }[],
   allLocales: TypedLocale[],
   payload: any,
@@ -158,7 +163,7 @@ const hasEventDetailsChanged = (
 
 // map detail page collections to block types that programmatically
 // reference them
-const DETAIL_PAGE_TO_BLOCKS: Record<string, string[]> = {
+export const DETAIL_PAGE_TO_BLOCKS: Record<string, string[]> = {
   eventDetailPage: [
     'eventsTeasersBlock',
     'eventsOverviewBlock',
@@ -184,7 +189,21 @@ const DETAIL_PAGE_TO_BLOCKS: Record<string, string[]> = {
 };
 
 // map block types to collections where they can be placed
-const BLOCK_TO_COLLECTIONS: Record<string, CollectionSlug[]> = {
+export const BLOCK_TO_COLLECTIONS: Record<string, CollectionSlug[]> = {
+  ctaContactBlock: [
+    'detailPage',
+    'homePage',
+    'overviewPage',
+    'projectDetailPage',
+  ],
+  downloadsBlock: [
+    'detailPage',
+    'eventDetailPage',
+    'magazineDetailPage',
+    'newsDetailPage',
+    'projectDetailPage',
+    'publicationDetailPage',
+  ],
   eventsOverviewBlock: [
     'homePage',
     'overviewPage',
@@ -192,6 +211,28 @@ const BLOCK_TO_COLLECTIONS: Record<string, CollectionSlug[]> = {
   eventsTeasersBlock: [
     'homePage',
     'overviewPage',
+  ],
+  formBlock: [
+    'detailPage',
+    'eventDetailPage',
+    'magazineDetailPage',
+    'newsDetailPage',
+    'projectDetailPage',
+    'publicationDetailPage',
+    'overviewPage',
+    'homePage',
+  ],
+  genericTeasersBlock: [
+    'homePage',
+    'overviewPage',
+    'detailPage',
+  ],
+  imageBlock: [
+    'detailPage',
+    'eventDetailPage',
+    'magazineDetailPage',
+    'newsDetailPage',
+    'publicationDetailPage',
   ],
   institutesOverviewBlock: [
     'homePage',
@@ -209,6 +250,7 @@ const BLOCK_TO_COLLECTIONS: Record<string, CollectionSlug[]> = {
     'homePage',
     'overviewPage',
   ],
+  networkTeasersBlock: ['overviewPage'],
   newsOverviewBlock: [
     'homePage',
     'overviewPage',
@@ -218,6 +260,10 @@ const BLOCK_TO_COLLECTIONS: Record<string, CollectionSlug[]> = {
     'overviewPage',
     'newsDetailPage',
     'projectDetailPage',
+  ],
+  peopleOverviewBlock: [
+    'homePage',
+    'overviewPage',
   ],
   projectsOverviewBlock: [
     'homePage',
@@ -237,10 +283,11 @@ const BLOCK_TO_COLLECTIONS: Record<string, CollectionSlug[]> = {
     'publicationDetailPage',
     'projectDetailPage',
   ],
+  videoBlock: ['detailPage'],
 };
 
 // Find pages that have specific programmatic blocks
-const findPagesWithProgrammaticBlocks = async ({
+export const findPagesWithProgrammaticBlocks = async ({
   blockTypes,
   payload,
   tenantId,
@@ -271,21 +318,31 @@ const findPagesWithProgrammaticBlocks = async ({
     .map(async (collectionSlug) => {
       const isSingleton = singletonSlugs.some((singleton) => singleton.slug === collectionSlug);
 
+      // check if this collection has drafts enabled
+      const collectionConfig = payload.config.collections.find((c: any) => c.slug === collectionSlug);
+      const hasDrafts = Boolean(collectionConfig?.versions?.drafts);
+
       try {
+        const whereCondition: any = {
+          tenant: {
+            equals: tenantId,
+          },
+        };
+
+        // Add published status filter only if collection has drafts enabled
+        if (hasDrafts) {
+
+          whereCondition._status = {
+            equals: 'published',
+          };
+        }
+
         const queryOptions: any = {
           collection: collectionSlug,
           // need depth to read content blocks
           depth: 1,
           locale: 'all',
-          where: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            _status: {
-              equals: 'published',
-            },
-            tenant: {
-              equals: tenantId,
-            },
-          },
+          where: whereCondition,
         };
 
         const pages = await payload.find(queryOptions);
@@ -313,8 +370,8 @@ const findPagesWithProgrammaticBlocks = async ({
               return null;
             }
 
-            // verify published status for regular pages
-            if (!isSingleton && pageRecord._status !== 'published') {
+            // verify published status for pages that have drafts enabled
+            if (!isSingleton && hasDrafts && pageRecord._status !== 'published') {
               return null;
             }
 
@@ -433,7 +490,7 @@ const findAllChildPages = async ({
   return childPageIds;
 };
 
-// Find pages that directly reference a changed page
+// find pages that directly reference a changed page
 // (via RTE links or internalLink fields)
 const findReferencingPages = async ({
   changedPageId,
@@ -448,32 +505,38 @@ const findReferencingPages = async ({
 }): Promise<{ id: string; collectionSlug: CollectionSlug }[]> => {
   const referencingPages: { id: string; collectionSlug: CollectionSlug }[] = [];
 
-  // Search all page collections in parallel
+  // search all page collections in parallel
   await Promise.all(pageCollections.map(async (collectionConfig) => {
     const collectionSlug = collectionConfig.slug;
     const isSingleton = singletonSlugs.some((singleton) => singleton.slug === collectionSlug);
     const isGlobal = globalCollectionsSlugs.some((global) => global.slug === collectionSlug);
 
+    // check if this collection has drafts enabled
+    const payloadCollectionConfig = payload.config.collections.find((c: any) => c.slug === collectionSlug);
+    const hasDrafts = Boolean(payloadCollectionConfig?.versions?.drafts);
+
     try {
+      const whereCondition: any = {
+        tenant: {
+          equals: tenantId,
+        },
+      };
+
+      // Add published status filter for regular pages that have drafts enabled
+      if (!isSingleton && !isGlobal && hasDrafts) {
+        whereCondition._status = {
+          equals: 'published',
+        };
+      }
+
       const queryOptions: any = {
         collection: collectionSlug,
         depth: 0,
         limit: 0,
         locale: 'all',
         pagination: false,
-        where: {
-          tenant: {
-            equals: tenantId,
-          },
-        },
+        where: whereCondition,
       };
-
-      // Add published status filter for regular pages
-      if (!isSingleton && !isGlobal) {
-        queryOptions.where._status = {
-          equals: 'published',
-        };
-      }
 
       const pages = await payload.find(queryOptions);
 
@@ -500,8 +563,8 @@ const findReferencingPages = async ({
           return;
         }
 
-        // Verify published status for regular pages
-        if (!isSingleton && !isGlobal && pageRecord._status !== 'published') {
+        // Verify published status for regular pages that have drafts enabled
+        if (!isSingleton && !isGlobal && hasDrafts && pageRecord._status !== 'published') {
           return;
         }
 
@@ -810,8 +873,9 @@ const getAllPagesForTenant = async ({
             continue;
           }
 
-          // Verify published status for regular pages
-          if (!isSingleton && pageRecord._status !== 'published') {
+          // Verify published status for regular pages that have drafts enabled
+          // Note: hasDrafts is already checked above when building the query
+          if (!isSingleton && hasDrafts && pageRecord._status !== 'published') {
             // eslint-disable-next-line no-continue
             continue;
           }
@@ -984,6 +1048,7 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
   // check published status
   const isSingleton = singletonSlugs.some((singleton) => singleton.slug === collectionSlug);
   const isGlobal = globalCollectionsSlugs.some((global) => global.slug === collectionSlug);
+
   const isPublished = isSingleton || isGlobal || doc._status === 'published';
   const wasPublished = isSingleton || isGlobal || previousDoc?._status === 'published';
   const isUnpublishing = wasPublished && !isPublished;
@@ -1126,6 +1191,11 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
         pageId: page.id,
         payload: req.payload,
       }))));
+
+      // clear invalidation cache after create operation to ensure
+      // subsequent operations (e.g., referenced collection changes)
+      // can properly invalidate pages
+      clearInvalidationCache();
     }
 
     return doc;
@@ -1405,3 +1475,4 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
 
   return doc;
 };
+

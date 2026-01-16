@@ -24,17 +24,14 @@ Error: Internal: NoFallbackError
 
 - in overview-links tests -> institute is missing
 - test static generation with localized tenant slugs
-- pages created in playwright need revalidatePath before opening them in browser. check if this is needed as well if we manually create pages in payload
 - thin out tenantDataPlaywright and adapt tests !!!
 - in playwright seed, add 1000s of pages, then compare test times before and after
 - invalidate pages along the breadcrumb-update-cascade -> test it!)
 
 
 ############## invalidate cache ##############
-- if network categories, projects, people, teams, publication topics, publication types, event categories or forms change, we need to find referencing pages and invalidating their cache
-- cache invalidation cascade: if Globals or Consent is revaliated, we need to revalidate all pages! same for header links and footer stuff!
+- cache invalidation cascade: if i18n or forms are changed, find referecing pages an invalidate
 - there are certain parent page props (parentPageProps): there we need to invalidate cache of the parent page as well
-- what other functionalities / tests? (e.g. header, consent)
 - event detail page has links block link to detail page. if only content blocks of detail page changes, then event detail page should not be invalidated, but it currently is.
 - if block content of detail page changes, page is not invalidated!
 - invalidations on page deletions. e.g., delete event detail page -> event teasers / overviews should be invalidated
@@ -42,6 +39,8 @@ Error: Internal: NoFallbackError
 - detail page with rte -> then remove rte -> page is not invalidated. it only happens if page is freshly loaded before rte is removed
 - invalidate on meta change!
 - test -> link -> consent (and other globals): should not only invlidate home, but all pages
+- is home invalidated, e.g. if it has event teasers and then eventPAge is created?
+- tests for teasers on home (if project, event-category etc. changes)
 
 ############## prod issues ##############
 - internal link chooser from rte -> error
