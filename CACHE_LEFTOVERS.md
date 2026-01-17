@@ -7,13 +7,15 @@
 - make preview-link in admin-ui work
 - test link-prefetching on prod
 - immediately statically rebuild a page after revalidatePath is issued
-
+- test static generation with localized tenant slugs
+- in playwright seed, add 1000s of pages, then compare test times before and after
 
 ############### LINKING ################
 - everywhere where rte3ToHtml is called: this should be rendered "as" p instead of div, right?
 - ERROR on server: GET /de 500 in 11239ms
 - in render blocks, we still pass tenant down sometimes, does that make sense?
 - renderHero is a complete client component. probably makes sense to split into server/client
+- in overview-links tests -> institute is missing
 
 ############## REFACTOR ##############
 - with npm run build:local and npm run start -> this error comes up in the frontend
@@ -21,10 +23,7 @@ Error: Internal: NoFallbackError
     at o (.next/server/app/(frontend)/[locale]/[...slug]/page.js:3:1061)
     at responseGenerator (.next/server/app/(frontend)/[locale]/[...slug]/page.js:3:1917)
 
-- in overview-links tests -> institute is missing
-- test static generation with localized tenant slugs
-- in playwright seed, add 1000s of pages, then compare test times before and after
-- invalidate pages along the breadcrumb-update-cascade -> test it!
+
 
 
 ############## invalidate cache ##############
