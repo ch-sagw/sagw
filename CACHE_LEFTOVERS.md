@@ -28,7 +28,6 @@ Error: Internal: NoFallbackError
 
 
 ############## invalidate cache ##############
-- there are certain parent page props (parentPageProps): there we need to invalidate cache of the parent page as well
 - event detail page has links block link to detail page. if only content blocks of detail page changes, then event detail page should not be invalidated, but it currently is.
 - if block content of detail page changes, page is not invalidated!
 - invalidations on page deletions. e.g., delete event detail page -> event teasers / overviews should be invalidated
