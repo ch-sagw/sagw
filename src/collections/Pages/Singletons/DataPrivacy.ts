@@ -15,11 +15,6 @@ import { pageAccess } from '@/access/pages';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
-import { readFile } from 'fs/promises';
-import { fileURLToPath } from 'url';
-import {
-  dirname, join,
-} from 'path';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
 
@@ -92,28 +87,75 @@ export const DataPrivacyPage: CollectionConfig = {
         const fallback = 'dataPrivacy';
         let dataPrivacySlug;
 
-        /* eslint-disable @typescript-eslint/naming-convention */
-        const __filename = fileURLToPath(import.meta.url);
-        const __dirname = dirname(__filename);
-        /* eslint-enable @typescript-eslint/naming-convention */
-        const messagesDir = join(__dirname, '../../../i18n/messages');
-
         if (locale && locale === 'all') {
-          const translationRawFileDe = (await readFile(join(messagesDir, 'de.json'))).toString();
-          const translationRawFileEn = (await readFile(join(messagesDir, 'en.json'))).toString();
-          const translationRawFileFr = (await readFile(join(messagesDir, 'fr.json'))).toString();
-          const translationRawFileIt = (await readFile(join(messagesDir, 'it.json'))).toString();
+          const translationRawFileDe = (await import('../../../i18n/messages/de.json', {
+            with: {
+              type: 'json',
+            },
+          })).default;
+          const translationRawFileEn = (await import('../../../i18n/messages/en.json', {
+            with: {
+              type: 'json',
+            },
+          })).default;
+          const translationRawFileFr = (await import('../../../i18n/messages/fr.json', {
+            with: {
+              type: 'json',
+            },
+          })).default;
+          const translationRawFileIt = (await import('../../../i18n/messages/it.json', {
+            with: {
+              type: 'json',
+            },
+          })).default;
 
           dataPrivacySlug = {
-            de: JSON.parse(translationRawFileDe).slugs.dataPrivacy,
-            en: JSON.parse(translationRawFileEn).slugs.dataPrivacy,
-            fr: JSON.parse(translationRawFileFr).slugs.dataPrivacy,
-            it: JSON.parse(translationRawFileIt).slugs.dataPrivacy,
+            de: translationRawFileDe.slugs.dataPrivacy,
+            en: translationRawFileEn.slugs.dataPrivacy,
+            fr: translationRawFileFr.slugs.dataPrivacy,
+            it: translationRawFileIt.slugs.dataPrivacy,
           };
 
         } else if (locale) {
-          const translationRawFile = (await readFile(join(messagesDir, `${locale}.json`))).toString();
-          const translationsFile = JSON.parse(translationRawFile);
+          // Use static string literals in switch for webpack static analysis
+          let translationsFile;
+
+          switch (locale) {
+            case 'de':
+              translationsFile = (await import('../../../i18n/messages/de.json', {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            case 'en':
+              translationsFile = (await import('../../../i18n/messages/en.json', {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            case 'fr':
+              translationsFile = (await import('../../../i18n/messages/fr.json', {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            case 'it':
+              translationsFile = (await import('../../../i18n/messages/it.json', {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            default:
+              translationsFile = (await import('../../../i18n/messages/de.json', {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+          }
 
           dataPrivacySlug = translationsFile.slugs.dataPrivacy;
         }
