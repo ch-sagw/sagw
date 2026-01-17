@@ -1,13 +1,11 @@
-// if an event category changes, we need to:
-// 1. find eventDetailPages which use that category and invalidate that page
-// 2. find pages with events overview/teasers and invalidate those pages
-
 import {
   expect,
   test,
 } from '@playwright/test';
 import {
   generateDetailPage,
+  generateImage,
+  generateVideo,
   getHomeId,
 } from '@/test-helpers/collections-generator';
 import { getTenantId } from '@/test-helpers/tenant-generator';
@@ -15,40 +13,6 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { LogCapture } from '@/test-helpers/capture-logs';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { deleteSetsPages } from '@/seed/test-data/deleteData';
-
-const getImage = async (tenant: string): Promise<string> => {
-  const payload = await getPayloadCached();
-  const image = await payload.create({
-    collection: 'images',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      alt: 'image',
-      tenant,
-    },
-    filePath: 'src/seed/test-data/assets/sagw.png',
-  });
-
-  return image.id;
-};
-
-const getVideo = async (tenant: string): Promise<string> => {
-  const payload = await getPayloadCached();
-  const video = await payload.create({
-    collection: 'videos',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      tenant,
-      title: 'video',
-    },
-    filePath: 'src/seed/test-data/assets/sagw.mp4',
-  });
-
-  return video.id;
-};
 
 test('invalidates page if video is updated (sagw)', {
   tag: '@cache',
@@ -79,8 +43,8 @@ test('invalidates page if video is updated (sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
-  const video = await getVideo(tenant);
+  const image = await generateImage(tenant);
+  const video = await generateVideo(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -150,8 +114,8 @@ test('invalidates page if video is deleted (sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
-  const video = await getVideo(tenant);
+  const image = await generateImage(tenant);
+  const video = await generateVideo(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -218,8 +182,8 @@ test('invalidates page if video is updated (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
-  const video = await getVideo(tenant);
+  const image = await generateImage(tenant);
+  const video = await generateVideo(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -289,8 +253,8 @@ test('invalidates page if video is deleted (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
-  const video = await getVideo(tenant);
+  const image = await generateImage(tenant);
+  const video = await generateVideo(tenant);
 
   await payload.update({
     collection: 'detailPage',

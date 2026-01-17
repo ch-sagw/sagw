@@ -1,13 +1,11 @@
-// if an event category changes, we need to:
-// 1. find eventDetailPages which use that category and invalidate that page
-// 2. find pages with events overview/teasers and invalidate those pages
-
 import {
   expect,
   test,
 } from '@playwright/test';
 import {
   generateDetailPage,
+  generateDocument,
+  generateZenodoDocument,
   getHomeId,
 } from '@/test-helpers/collections-generator';
 import { getTenantId } from '@/test-helpers/tenant-generator';
@@ -15,52 +13,6 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { LogCapture } from '@/test-helpers/capture-logs';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { deleteSetsPages } from '@/seed/test-data/deleteData';
-
-const getDocument = async (tenant: string, project?: string): Promise<string> => {
-  const payload = await getPayloadCached();
-  const document = await payload.create({
-    collection: 'documents',
-    data: {
-      date: '2025-10-30',
-      project,
-      tenant,
-      title: simpleRteConfig('Document'),
-    },
-    filePath: 'src/seed/test-data/assets/sagw.pdf',
-  });
-
-  return document.id;
-};
-
-const getZenodoDocument = async (tenant: string, project?: string): Promise<string> => {
-  const payload = await getPayloadCached();
-  const zenodoDocument = await payload.create({
-    collection: 'zenodoDocuments',
-    data: {
-      files: [
-        {
-          format: 'pdf',
-          id: 'someid',
-          link: 'https://foo.bar',
-          size: 0.26,
-        },
-        {
-          format: 'zip',
-          id: 'someotherid',
-          link: 'https://foo.bar',
-          size: 1.54,
-        },
-      ],
-      project,
-      publicationDate: '1919-05-01',
-      tenant,
-      title: 'Sample Zenodo Document',
-      zenodoId: '1512691',
-    },
-  });
-
-  return zenodoDocument.id;
-};
 
 test('invalidates page with downloads block (custom) if document is changed (sagw)', {
   tag: '@cache',
@@ -91,7 +43,7 @@ test('invalidates page with downloads block (custom) if document is changed (sag
     title: `detail ${time}`,
   });
 
-  const document = await getDocument(tenant);
+  const document = await generateDocument(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -162,7 +114,7 @@ test('invalidates page with downloads block (custom) if document is deleted (sag
     title: `detail ${time}`,
   });
 
-  const document = await getDocument(tenant);
+  const document = await generateDocument(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -230,7 +182,7 @@ test('invalidates page with downloads block (custom) if zenodo-document is chang
     title: `detail ${time}`,
   });
 
-  const document = await getZenodoDocument(tenant);
+  const document = await generateZenodoDocument(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -301,7 +253,7 @@ test('invalidates page with downloads block (custom) if zenodo-document is delet
     title: `detail ${time}`,
   });
 
-  const document = await getZenodoDocument(tenant);
+  const document = await generateZenodoDocument(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -381,7 +333,7 @@ test('invalidates page with downloads block (auto) if document is changed (sagw)
     locale: 'de',
   });
 
-  const document = await getDocument(tenant, project.id);
+  const document = await generateDocument(tenant, project.id);
 
   await payload.update({
     collection: 'detailPage',
@@ -459,7 +411,7 @@ test('invalidates page with downloads block (auto) if document is deleted (sagw)
     locale: 'de',
   });
 
-  const document = await getDocument(tenant, project.id);
+  const document = await generateDocument(tenant, project.id);
 
   await payload.update({
     collection: 'detailPage',
@@ -534,7 +486,7 @@ test('invalidates page with downloads block (auto) if zenodo-document is changed
     locale: 'de',
   });
 
-  const document = await getZenodoDocument(tenant, project.id);
+  const document = await generateZenodoDocument(tenant, project.id);
 
   await payload.update({
     collection: 'detailPage',
@@ -612,7 +564,7 @@ test('invalidates page with downloads block (auto) if zenodo-document is deleted
     locale: 'de',
   });
 
-  const document = await getZenodoDocument(tenant, project.id);
+  const document = await generateZenodoDocument(tenant, project.id);
 
   await payload.update({
     collection: 'detailPage',
@@ -675,7 +627,7 @@ test('invalidates page with downloads block (custom) if document is changed (non
     title: `detail ${time}`,
   });
 
-  const document = await getDocument(tenant);
+  const document = await generateDocument(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -746,7 +698,7 @@ test('invalidates page with downloads block (custom) if document is deleted (non
     title: `detail ${time}`,
   });
 
-  const document = await getDocument(tenant);
+  const document = await generateDocument(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -814,7 +766,7 @@ test('invalidates page with downloads block (custom) if zenodo-document is chang
     title: `detail ${time}`,
   });
 
-  const document = await getZenodoDocument(tenant);
+  const document = await generateZenodoDocument(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -885,7 +837,7 @@ test('invalidates page with downloads block (custom) if zenodo-document is delet
     title: `detail ${time}`,
   });
 
-  const document = await getZenodoDocument(tenant);
+  const document = await generateZenodoDocument(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -965,7 +917,7 @@ test('invalidates page with downloads block (auto) if document is changed (non-s
     locale: 'de',
   });
 
-  const document = await getDocument(tenant, project.id);
+  const document = await generateDocument(tenant, project.id);
 
   await payload.update({
     collection: 'detailPage',
@@ -1043,7 +995,7 @@ test('invalidates page with downloads block (auto) if document is deleted (non-s
     locale: 'de',
   });
 
-  const document = await getDocument(tenant, project.id);
+  const document = await generateDocument(tenant, project.id);
 
   await payload.update({
     collection: 'detailPage',
@@ -1118,7 +1070,7 @@ test('invalidates page with downloads block (auto) if zenodo-document is changed
     locale: 'de',
   });
 
-  const document = await getZenodoDocument(tenant, project.id);
+  const document = await generateZenodoDocument(tenant, project.id);
 
   await payload.update({
     collection: 'detailPage',
@@ -1196,7 +1148,7 @@ test('invalidates page with downloads block (auto) if zenodo-document is deleted
     locale: 'de',
   });
 
-  const document = await getZenodoDocument(tenant, project.id);
+  const document = await generateZenodoDocument(tenant, project.id);
 
   await payload.update({
     collection: 'detailPage',

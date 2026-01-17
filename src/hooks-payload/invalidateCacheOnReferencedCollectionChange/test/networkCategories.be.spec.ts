@@ -1,12 +1,9 @@
-// if an event category changes, we need to:
-// 1. find eventDetailPages which use that category and invalidate that page
-// 2. find pages with events overview/teasers and invalidate those pages
-
 import {
   expect,
   test,
 } from '@playwright/test';
 import {
+  generateImage,
   generateOverviewPage,
   getHomeId,
 } from '@/test-helpers/collections-generator';
@@ -15,23 +12,6 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { LogCapture } from '@/test-helpers/capture-logs';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { deleteSetsPages } from '@/seed/test-data/deleteData';
-
-const getImage = async (tenant: string): Promise<string> => {
-  const payload = await getPayloadCached();
-  const image = await payload.create({
-    collection: 'images',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      alt: 'image',
-      tenant,
-    },
-    filePath: 'src/seed/test-data/assets/sagw.png',
-  });
-
-  return image.id;
-};
 
 test('invalidates overview page with network teasers if category is changed (sagw)', {
   tag: '@cache',
@@ -53,7 +33,7 @@ test('invalidates overview page with network teasers if category is changed (sag
     tenant,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   const networkCategory = await payload.create({
     collection: 'networkCategories',
@@ -141,7 +121,7 @@ test('invalidates overview page with network teasers if category is deleted (sag
     tenant,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   const networkCategory = await payload.create({
     collection: 'networkCategories',
@@ -226,7 +206,7 @@ test('invalidates overview page with network teasers if category is changed (non
     tenant,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   const networkCategory = await payload.create({
     collection: 'networkCategories',
@@ -314,7 +294,7 @@ test('invalidates overview page with network teasers if category is deleted (non
     tenant,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   const networkCategory = await payload.create({
     collection: 'networkCategories',

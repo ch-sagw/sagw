@@ -1,62 +1,16 @@
-// if an event category changes, we need to:
-// 1. find eventDetailPages which use that category and invalidate that page
-// 2. find pages with events overview/teasers and invalidate those pages
-
 import {
   expect,
   test,
 } from '@playwright/test';
 import {
   generateDetailPage,
+  generateForm,
   getHomeId,
 } from '@/test-helpers/collections-generator';
 import { getTenantId } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { LogCapture } from '@/test-helpers/capture-logs';
-import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { deleteSetsPages } from '@/seed/test-data/deleteData';
-
-const getForm = async (tenant: string): Promise<string> => {
-  const payload = await getPayloadCached();
-  const form = await payload.create({
-    collection: 'forms',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      colorMode: 'dark',
-      fields: [
-        {
-          blockType: 'textBlockForm',
-          fieldError: simpleRteConfig('Geben Sie Ihren Namen an.'),
-          fieldWidth: 'half',
-          label: simpleRteConfig('Name'),
-          name: 'name',
-          placeholder: 'Ihr Name',
-          required: true,
-        },
-      ],
-      isNewsletterForm: 'custom',
-      mailSubject: 'Form submission on SAGW',
-      recipientMail: 'delivered@resend.dev',
-      showPrivacyCheckbox: false,
-      submitButtonLabel: 'Abschicken',
-      submitError: {
-        text: simpleRteConfig('Submit text error'),
-        title: simpleRteConfig('Submit title error'),
-      },
-      submitSuccess: {
-        text: simpleRteConfig('Submit text success'),
-        title: simpleRteConfig('Submit title success'),
-      },
-      subtitle: simpleRteConfig('Subtitle for contact Form'),
-      tenant,
-      title: simpleRteConfig('Contact Form'),
-    },
-  });
-
-  return form.id;
-};
 
 test('invalidates page if form on detail page changes (sagw)', {
   tag: '@cache',
@@ -87,7 +41,7 @@ test('invalidates page if form on detail page changes (sagw)', {
     title: `detail ${time}`,
   });
 
-  const form = await getForm(tenant);
+  const form = await generateForm(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -151,7 +105,7 @@ test('invalidates page if form on detail page is deleted (sagw)', {
     title: `detail ${time}`,
   });
 
-  const form = await getForm(tenant);
+  const form = await generateForm(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -203,7 +157,7 @@ test('invalidates page if form on home changes (sagw)', {
     tenant,
   });
 
-  const form = await getForm(tenant);
+  const form = await generateForm(tenant);
 
   await payload.update({
     collection: 'homePage',
@@ -265,7 +219,7 @@ test('invalidates page if form on home is deleted (sagw)', {
     tenant,
   });
 
-  const form = await getForm(tenant);
+  const form = await generateForm(tenant);
 
   await payload.update({
     collection: 'homePage',
@@ -333,7 +287,7 @@ test('invalidates page if form on detail page changes (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  const form = await getForm(tenant);
+  const form = await generateForm(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -397,7 +351,7 @@ test('invalidates page if form on detail page is deleted (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  const form = await getForm(tenant);
+  const form = await generateForm(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -449,7 +403,7 @@ test('invalidates page if form on home changes (non-sagw)', {
     tenant,
   });
 
-  const form = await getForm(tenant);
+  const form = await generateForm(tenant);
 
   await payload.update({
     collection: 'homePage',
@@ -511,7 +465,7 @@ test('invalidates page if form on home is deleted (non-sagw)', {
     tenant,
   });
 
-  const form = await getForm(tenant);
+  const form = await generateForm(tenant);
 
   await payload.update({
     collection: 'homePage',

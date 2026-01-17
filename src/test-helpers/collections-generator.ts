@@ -1457,3 +1457,129 @@ export const generateAllPageTypes = async ({
     publicationDetailPage: publication,
   };
 };
+
+// #########################################
+// other collections
+// #########################################
+
+export const generateForm = async (tenant: string): Promise<string> => {
+  const payload = await getPayloadCached();
+  const form = await payload.create({
+    collection: 'forms',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      colorMode: 'dark',
+      fields: [
+        {
+          blockType: 'textBlockForm',
+          fieldError: simpleRteConfig('Geben Sie Ihren Namen an.'),
+          fieldWidth: 'half',
+          label: simpleRteConfig('Name'),
+          name: 'name',
+          placeholder: 'Ihr Name',
+          required: true,
+        },
+      ],
+      isNewsletterForm: 'custom',
+      mailSubject: 'Form submission on SAGW',
+      recipientMail: 'delivered@resend.dev',
+      showPrivacyCheckbox: false,
+      submitButtonLabel: 'Abschicken',
+      submitError: {
+        text: simpleRteConfig('Submit text error'),
+        title: simpleRteConfig('Submit title error'),
+      },
+      submitSuccess: {
+        text: simpleRteConfig('Submit text success'),
+        title: simpleRteConfig('Submit title success'),
+      },
+      subtitle: simpleRteConfig('Subtitle for contact Form'),
+      tenant,
+      title: simpleRteConfig('Contact Form'),
+    },
+  });
+
+  return form.id;
+};
+
+export const generateDocument = async (tenant: string, project?: string): Promise<string> => {
+  const payload = await getPayloadCached();
+  const document = await payload.create({
+    collection: 'documents',
+    data: {
+      date: '2025-10-30',
+      project,
+      tenant,
+      title: simpleRteConfig('Document'),
+    },
+    filePath: 'src/seed/test-data/assets/sagw.pdf',
+  });
+
+  return document.id;
+};
+
+export const generateZenodoDocument = async (tenant: string, project?: string): Promise<string> => {
+  const payload = await getPayloadCached();
+  const zenodoDocument = await payload.create({
+    collection: 'zenodoDocuments',
+    data: {
+      files: [
+        {
+          format: 'pdf',
+          id: 'someid',
+          link: 'https://foo.bar',
+          size: 0.26,
+        },
+        {
+          format: 'zip',
+          id: 'someotherid',
+          link: 'https://foo.bar',
+          size: 1.54,
+        },
+      ],
+      project,
+      publicationDate: '1919-05-01',
+      tenant,
+      title: 'Sample Zenodo Document',
+      zenodoId: '1512691',
+    },
+  });
+
+  return zenodoDocument.id;
+};
+
+export const generateImage = async (tenant: string): Promise<string> => {
+  const payload = await getPayloadCached();
+  const image = await payload.create({
+    collection: 'images',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      alt: 'image',
+      tenant,
+    },
+    filePath: 'src/seed/test-data/assets/sagw.png',
+  });
+
+  return image.id;
+};
+
+export const generateVideo = async (tenant: string): Promise<string> => {
+  const payload = await getPayloadCached();
+  const video = await payload.create({
+    collection: 'videos',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      tenant,
+      title: 'video',
+    },
+    filePath: 'src/seed/test-data/assets/sagw.mp4',
+  });
+
+  return video.id;
+};

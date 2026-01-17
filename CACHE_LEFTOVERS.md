@@ -23,13 +23,11 @@ Error: Internal: NoFallbackError
 
 - in overview-links tests -> institute is missing
 - test static generation with localized tenant slugs
-- thin out tenantDataPlaywright and adapt tests !!!
 - in playwright seed, add 1000s of pages, then compare test times before and after
-- invalidate pages along the breadcrumb-update-cascade -> test it!)
+- invalidate pages along the breadcrumb-update-cascade -> test it!
 
 
 ############## invalidate cache ##############
-- cache invalidation cascade: if i18n or forms are changed, find referecing pages an invalidate
 - there are certain parent page props (parentPageProps): there we need to invalidate cache of the parent page as well
 - event detail page has links block link to detail page. if only content blocks of detail page changes, then event detail page should not be invalidated, but it currently is.
 - if block content of detail page changes, page is not invalidated!

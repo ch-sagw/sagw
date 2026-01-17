@@ -1,7 +1,3 @@
-// if an event category changes, we need to:
-// 1. find eventDetailPages which use that category and invalidate that page
-// 2. find pages with events overview/teasers and invalidate those pages
-
 import {
   expect,
   test,

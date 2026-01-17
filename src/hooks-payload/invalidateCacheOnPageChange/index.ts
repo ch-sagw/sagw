@@ -190,6 +190,7 @@ export const DETAIL_PAGE_TO_BLOCKS: Record<string, string[]> = {
 
 // map block types to collections where they can be placed
 export const BLOCK_TO_COLLECTIONS: Record<string, CollectionSlug[]> = {
+  bibliographicReferenceBlock: ['publicationDetailPage'],
   ctaContactBlock: [
     'detailPage',
     'homePage',
@@ -237,6 +238,15 @@ export const BLOCK_TO_COLLECTIONS: Record<string, CollectionSlug[]> = {
   institutesOverviewBlock: [
     'homePage',
     'overviewPage',
+  ],
+  linksBlock: [
+    'detailPage',
+    'publicationDetailPage',
+    'projectDetailPage',
+    'newsDetailPage',
+    'nationalDictionaryDetailPage',
+    'magazineDetailPage',
+    'instituteDetailPage',
   ],
   magazineOverviewBlock: [
     'homePage',

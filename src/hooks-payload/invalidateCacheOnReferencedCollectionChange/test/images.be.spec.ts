@@ -1,18 +1,16 @@
-// if an event category changes, we need to:
-// 1. find eventDetailPages which use that category and invalidate that page
-// 2. find pages with events overview/teasers and invalidate those pages
-
 import {
   expect,
   test,
 } from '@playwright/test';
 import {
   generateDetailPage,
+  generateImage,
   generateInstituteDetailPage,
   generateMagazineDetailPage,
   generateNationalDictionaryDetailPage,
   generateOverviewPage,
   generatePublicationDetailPage,
+  generateVideo,
   getHomeId,
 } from '@/test-helpers/collections-generator';
 import { getTenantId } from '@/test-helpers/tenant-generator';
@@ -20,40 +18,6 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { LogCapture } from '@/test-helpers/capture-logs';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { deleteSetsPages } from '@/seed/test-data/deleteData';
-
-const getImage = async (tenant: string): Promise<string> => {
-  const payload = await getPayloadCached();
-  const image = await payload.create({
-    collection: 'images',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      alt: 'image',
-      tenant,
-    },
-    filePath: 'src/seed/test-data/assets/sagw.png',
-  });
-
-  return image.id;
-};
-
-const getVideo = async (tenant: string): Promise<string> => {
-  const payload = await getPayloadCached();
-  const video = await payload.create({
-    collection: 'videos',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      tenant,
-      title: 'video',
-    },
-    filePath: 'src/seed/test-data/assets/sagw.mp4',
-  });
-
-  return video.id;
-};
 
 test('invalidates page with image block if image is changed (sagw)', {
   tag: '@cache',
@@ -84,7 +48,7 @@ test('invalidates page with image block if image is changed (sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -150,7 +114,7 @@ test('invalidates page with image block if image is deleted (sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -213,7 +177,7 @@ test('invalidates overview page with institute overview if image is changed (sag
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'instituteDetailPage',
@@ -298,7 +262,7 @@ test('invalidates overview page with institute overview if image is deleted (sag
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'instituteDetailPage',
@@ -380,7 +344,7 @@ test('invalidates overview page with national dictionary overview if image is ch
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'nationalDictionaryDetailPage',
@@ -465,7 +429,7 @@ test('invalidates overview page with national dictionary overview if image is de
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'nationalDictionaryDetailPage',
@@ -547,7 +511,7 @@ test('invalidates overview page with publication overview if image is changed (s
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'publicationDetailPage',
@@ -634,7 +598,7 @@ test('invalidates overview page with publication overview if image is deleted (s
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'publicationDetailPage',
@@ -718,7 +682,7 @@ test('invalidates overview page with publication teasers if image is changed (sa
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'publicationDetailPage',
@@ -803,7 +767,7 @@ test('invalidates overview page with publication teasers if image is deleted (sa
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'publicationDetailPage',
@@ -885,7 +849,7 @@ test('invalidates overview page with network teasers if image is changed (sagw)'
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   const networkCategory = await payload.create({
     collection: 'networkCategories',
@@ -994,7 +958,7 @@ test('invalidates overview page with network teasers if image is deleted (sagw)'
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   const networkCategory = await payload.create({
     collection: 'networkCategories',
@@ -1100,7 +1064,7 @@ test('invalidates page with magazine overview if news image is changed (sagw)', 
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'magazineDetailPage',
@@ -1189,7 +1153,7 @@ test('invalidates page with magazine overview if news image is deleted (sagw)', 
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'magazineDetailPage',
@@ -1275,8 +1239,8 @@ test('invalidates page with video if still image is updated (sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
-  const video = await getVideo(tenant);
+  const image = await generateImage(tenant);
+  const video = await generateVideo(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -1346,8 +1310,8 @@ test('invalidates page with video if still image is deleted (sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
-  const video = await getVideo(tenant);
+  const image = await generateImage(tenant);
+  const video = await generateVideo(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -1414,7 +1378,7 @@ test('invalidates page with cta contact if image is changed (sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
   const person = await payload.create({
     collection: 'people',
     data: {
@@ -1494,7 +1458,7 @@ test('invalidates page with cta contact if image is deleted (sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
   const person = await payload.create({
     collection: 'people',
     data: {
@@ -1571,7 +1535,7 @@ test('invalidates page with people overview if image is changed (sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
   const person = await payload.create({
     collection: 'people',
     data: {
@@ -1659,7 +1623,7 @@ test('invalidates page with people overview if image is deleted (sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
   const person = await payload.create({
     collection: 'people',
     data: {
@@ -1744,7 +1708,7 @@ test('invalidates page with image in meta if image is changed (sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -1807,7 +1771,7 @@ test('invalidates page with image in meta if image is deleted (sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -1867,7 +1831,7 @@ test('invalidates page with image block if image is changed (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -1933,7 +1897,7 @@ test('invalidates page with image block if image is deleted (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -1996,7 +1960,7 @@ test('invalidates overview page with institute overview if image is changed (non
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'instituteDetailPage',
@@ -2081,7 +2045,7 @@ test('invalidates overview page with institute overview if image is deleted (non
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'instituteDetailPage',
@@ -2163,7 +2127,7 @@ test('invalidates overview page with national dictionary overview if image is ch
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'nationalDictionaryDetailPage',
@@ -2248,7 +2212,7 @@ test('invalidates overview page with national dictionary overview if image is de
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'nationalDictionaryDetailPage',
@@ -2330,7 +2294,7 @@ test('invalidates overview page with publication overview if image is changed (n
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'publicationDetailPage',
@@ -2417,7 +2381,7 @@ test('invalidates overview page with publication overview if image is deleted (n
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'publicationDetailPage',
@@ -2501,7 +2465,7 @@ test('invalidates overview page with publication teasers if image is changed (no
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'publicationDetailPage',
@@ -2586,7 +2550,7 @@ test('invalidates overview page with publication teasers if image is deleted (no
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'publicationDetailPage',
@@ -2668,7 +2632,7 @@ test('invalidates overview page with network teasers if image is changed (non-sa
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   const networkCategory = await payload.create({
     collection: 'networkCategories',
@@ -2777,7 +2741,7 @@ test('invalidates overview page with network teasers if image is deleted (non-sa
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   const networkCategory = await payload.create({
     collection: 'networkCategories',
@@ -2883,7 +2847,7 @@ test('invalidates page with magazine overview if news image is changed (non-sagw
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'magazineDetailPage',
@@ -2972,7 +2936,7 @@ test('invalidates page with magazine overview if news image is deleted (non-sagw
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'magazineDetailPage',
@@ -3058,8 +3022,8 @@ test('invalidates page with video if still image is updated (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
-  const video = await getVideo(tenant);
+  const image = await generateImage(tenant);
+  const video = await generateVideo(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -3129,8 +3093,8 @@ test('invalidates page with video if still image is deleted (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
-  const video = await getVideo(tenant);
+  const image = await generateImage(tenant);
+  const video = await generateVideo(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -3197,7 +3161,7 @@ test('invalidates page with cta contact if image is changed (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
   const person = await payload.create({
     collection: 'people',
     data: {
@@ -3277,7 +3241,7 @@ test('invalidates page with cta contact if image is deleted (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
   const person = await payload.create({
     collection: 'people',
     data: {
@@ -3354,7 +3318,7 @@ test('invalidates page with people overview if image is changed (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
   const person = await payload.create({
     collection: 'people',
     data: {
@@ -3442,7 +3406,7 @@ test('invalidates page with people overview if image is deleted (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
   const person = await payload.create({
     collection: 'people',
     data: {
@@ -3527,7 +3491,7 @@ test('invalidates page with image in meta if image is changed (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'detailPage',
@@ -3590,7 +3554,7 @@ test('invalidates page with image in meta if image is deleted (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  const image = await getImage(tenant);
+  const image = await generateImage(tenant);
 
   await payload.update({
     collection: 'detailPage',
