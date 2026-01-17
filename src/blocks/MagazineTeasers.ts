@@ -1,4 +1,4 @@
-import { alignementHorizontalVertical } from '@/field-templates/alignement';
+import { alignmentHorizontalVertical } from '@/field-templates/alignment';
 import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
 import {
   rte1, rte2,
@@ -19,7 +19,7 @@ export const MagazineTeasersBlock = {
       name: 'lead',
       notRequired: true,
     }),
-    alignementHorizontalVertical,
+    alignmentHorizontalVertical,
     fieldsLinkInternalWithToggle(),
     {
       admin: {

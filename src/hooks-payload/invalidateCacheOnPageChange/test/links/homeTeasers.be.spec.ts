@@ -47,7 +47,7 @@ test('invalidates if target link changes slug (sagw)', {
           homeTeasers: [
             {
               category: 'Förderung',
-              iconName: 'bar',
+              iconName: 'homeTeaserFunding',
               link: {
                 internalLink: {
                   documentId: detailPage.id,
@@ -126,7 +126,7 @@ test('invalidates if target link changes slug (non-sagw)', {
           homeTeasers: [
             {
               category: 'Förderung',
-              iconName: 'bar',
+              iconName: 'homeTeaserFunding',
               link: {
                 internalLink: {
                   documentId: detailPage.id,

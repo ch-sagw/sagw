@@ -16,7 +16,7 @@ export type InterfaceGenericTeaserPropTypes = {} & InterfaceGenericTeasersBlock;
 export const GenericTeaser = async ({
   title,
   lead,
-  alignement,
+  alignment,
   teasers,
 }: InterfaceGenericTeaserPropTypes): Promise<React.JSX.Element> => {
   const locale = await getLocale() as TypedLocale;
@@ -49,8 +49,13 @@ export const GenericTeaser = async ({
       return null;
     }
 
+    const image = typeof item.image?.value === 'string'
+      ? undefined
+      : item.image?.value;
+
     return {
       id: item.id,
+      image,
       link: {
         href,
         text,
@@ -66,7 +71,7 @@ export const GenericTeaser = async ({
 
   return (
     <GenericTeaserClient
-      alignement={alignement}
+      alignment={alignment}
       subtitleHtml={subtitleHtml}
       teasers={validTeasers}
       titleHtml={titleHtml}

@@ -18,17 +18,18 @@
     }
 
     .icon {
+      aspect-ratio: 1/1;
       order: 0;
       color: var(--primary-blue-light);
       width: px-to-rem(120);
-      height: px-to-rem(120);
+      height: auto;
       margin-block-end: px-to-rem(var(--spacing-2xl));
 
       @include mq($from: large) {
-        width: px-to-rem(200);
-        height: px-to-rem(200);
+        width: px-to-rem(280);
+        max-width: 100%;
         order: 2;
-        margin-block-end: 0;
+        margin-block-end: px-to-rem(28);
       }
     }
 

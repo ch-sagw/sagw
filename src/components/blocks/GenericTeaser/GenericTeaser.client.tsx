@@ -4,6 +4,7 @@ import React, { Fragment } from 'react';
 import styles from '@/components/blocks/GenericTeaser/GenericTeaser.module.scss';
 import { Section } from '@/components/base/Section/Section';
 import { GenericTeaser as TeaserBaseComponent } from '@/components/base/GenericTeaser/GenericTeaser';
+import { Image as ImageType } from '@/payload-types';
 
 export type InterfaceGenericTeaserLink = {
   href: string;
@@ -13,6 +14,7 @@ export type InterfaceGenericTeaserLink = {
 
 export type InterfaceGenericTeaserItem = {
   id?: string | null;
+  image?: ImageType | undefined;
   titleHtml: string;
   textHtml: string;
   link: InterfaceGenericTeaserLink;
@@ -21,14 +23,14 @@ export type InterfaceGenericTeaserItem = {
 export type InterfaceGenericTeaserClientPropTypes = {
   titleHtml: string;
   subtitleHtml: string;
-  alignement: 'horizontal' | 'vertical' | null | undefined;
+  alignment: 'horizontal' | 'vertical' | null | undefined;
   teasers: InterfaceGenericTeaserItem[];
 };
 
 export const GenericTeaserClient = ({
   titleHtml,
   subtitleHtml,
-  alignement,
+  alignment,
   teasers,
 }: InterfaceGenericTeaserClientPropTypes): React.JSX.Element => (
   <Fragment>
@@ -37,13 +39,14 @@ export const GenericTeaserClient = ({
       title={titleHtml}
       subtitle={subtitleHtml}
       colorMode='white'
-      fullBleed={alignement === 'vertical'}
+      fullBleed={alignment === 'vertical'}
     />
 
     <ul className={styles.list}>
       {teasers.map((item) => (
         <TeaserBaseComponent
           className={styles.item}
+          image={item.image}
           key={item.id}
           title={item.titleHtml}
           texts={[item.textHtml]}

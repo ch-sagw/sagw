@@ -559,7 +559,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       homeTeasers: [
         {
           category: 'Förderung',
-          iconName: 'bar',
+          iconName: 'homeTeaserFunding',
           link: {
             internalLink: {
               documentId: 'someid',
@@ -573,7 +573,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
         {
           category: 'Netzwerk',
-          iconName: 'bar',
+          iconName: 'homeTeaserNetwork',
           link: {
             internalLink: {
               documentId: 'someid',
@@ -587,7 +587,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
         {
           category: 'Aktivitäten',
-          iconName: 'bar',
+          iconName: 'homeTeaserActivities',
           link: {
             internalLink: {
               documentId: 'someid',
@@ -1327,7 +1327,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       content: [
         // generic teaser
         {
-          alignement: 'horizontal',
+          alignment: 'horizontal',
           blockType: 'genericTeasersBlock',
           lead: simpleRteConfig('Lead'),
           teasers: [
@@ -1363,7 +1363,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
         // projects teaser
         {
-          alignement: 'vertical',
+          alignment: 'vertical',
           blockType: 'projectsTeasersBlock',
           lead: simpleRteConfig('Lead'),
           title: simpleRteConfig('Project Teaser'),
@@ -1379,7 +1379,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
         // magazine teaser
         {
-          alignement: 'horizontal',
+          alignment: 'horizontal',
           blockType: 'magazineTeasersBlock',
           lead: simpleRteConfig('Lead'),
           title: simpleRteConfig('Magazine Teaser'),

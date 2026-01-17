@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.28.0](https://github.com/ch-sagw/sagw/compare/v0.27.0...v0.28.0) (2026-01-17)
+
+
+### Features
+
+* adding adapted webfonts and font layout features ([7f062ec](https://github.com/ch-sagw/sagw/commit/7f062ec7363c5cd43feee2b09183cf13aab3e6cb))
+* adding basic favicon integration ([#706](https://github.com/ch-sagw/sagw/issues/706)) ([9d640f2](https://github.com/ch-sagw/sagw/commit/9d640f2efbaff002b5bf07652dc4a6c124374b97))
+* adding homepage teaser pictos ([e9381cf](https://github.com/ch-sagw/sagw/commit/e9381cf3e12a92b8bd266e633d622ce360e142ed))
+* adding images for teaser components ([9b43d70](https://github.com/ch-sagw/sagw/commit/9b43d701da5c4b51c8e3a6954ac0ec39f7e9875d))
+* adding skiplinks global component ([7016b7a](https://github.com/ch-sagw/sagw/commit/7016b7ad77de526ce7df9bc8061c4d185a0953bb))
+* implementing hidden until found for accordion content ([7216189](https://github.com/ch-sagw/sagw/commit/721618984fb1ac3aa2c99d3d7d68a5f09a4b8c5a))
+* implementing hidden until found for accordion content ([#700](https://github.com/ch-sagw/sagw/issues/700)) ([7216189](https://github.com/ch-sagw/sagw/commit/721618984fb1ac3aa2c99d3d7d68a5f09a4b8c5a))
+* removing underline rte option ([cc164ac](https://github.com/ch-sagw/sagw/commit/cc164acfff02990ffeacc225f4f27501ec91f286))
+* removing underline rte option ([#702](https://github.com/ch-sagw/sagw/issues/702)) ([cc164ac](https://github.com/ch-sagw/sagw/commit/cc164acfff02990ffeacc225f4f27501ec91f286))
+
+
+### Bug Fixes
+
+* correcting position of first p in rte if there is no title ([12ffd3e](https://github.com/ch-sagw/sagw/commit/12ffd3e72e6c32158f3b8550f30f3f24b7d90101))
+* correcting position of first p in rte if there is no title ([#684](https://github.com/ch-sagw/sagw/issues/684)) ([12ffd3e](https://github.com/ch-sagw/sagw/commit/12ffd3e72e6c32158f3b8550f30f3f24b7d90101))
+* fix i18n path resolving issue ([b2016e8](https://github.com/ch-sagw/sagw/commit/b2016e8b5eff34d126487861fe6dc7868c8cb8de))
+* fix i18n path resolving issue ([#709](https://github.com/ch-sagw/sagw/issues/709)) ([b2016e8](https://github.com/ch-sagw/sagw/commit/b2016e8b5eff34d126487861fe6dc7868c8cb8de))
+* modifying file size text in download text ([79f6587](https://github.com/ch-sagw/sagw/commit/79f6587f77c901af34f27157ea76ce08994b6da8))
+* modifying file size text in download text ([#701](https://github.com/ch-sagw/sagw/issues/701)) ([79f6587](https://github.com/ch-sagw/sagw/commit/79f6587f77c901af34f27157ea76ce08994b6da8))
+* transforming timestamp to time/text ([19b177b](https://github.com/ch-sagw/sagw/commit/19b177b591930b3fea283ac8f7b31eacf92d1934))
+
 ## [0.27.0](https://github.com/ch-sagw/sagw/compare/v0.26.0...v0.27.0) (2026-01-10)
 
 

@@ -48,7 +48,7 @@ test('invalidates if target link changes slug (sagw)', {
     data: {
       content: [
         {
-          alignement: 'horizontal',
+          alignment: 'horizontal',
           blockType: 'genericTeasersBlock',
           lead: simpleRteConfig('Lead'),
           teasers: [
@@ -130,7 +130,7 @@ test('invalidates if target link changes slug (non-sagw)', {
     data: {
       content: [
         {
-          alignement: 'horizontal',
+          alignment: 'horizontal',
           blockType: 'genericTeasersBlock',
           lead: simpleRteConfig('Lead'),
           teasers: [

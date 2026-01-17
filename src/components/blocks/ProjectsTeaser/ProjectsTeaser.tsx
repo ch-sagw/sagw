@@ -22,7 +22,7 @@ export const ProjectsTeaser = async (props: InterfaceProjectsTeaserPropTypes): P
     tenant,
     title,
     lead,
-    alignement,
+    alignment,
     optionalLink,
   } = props;
 
@@ -73,7 +73,7 @@ export const ProjectsTeaser = async (props: InterfaceProjectsTeaserPropTypes): P
 
   return (
     <ProjectsTeaserClient
-      alignement={alignement}
+      alignment={alignment}
       items={items}
       optionalLink={processedOptionalLink}
       subtitleHtml={subtitleHtml}

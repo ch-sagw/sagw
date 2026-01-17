@@ -30,7 +30,7 @@ export default meta;
 
 export const Horizontal: StrictStory = {
   args: {
-    alignement: 'horizontal',
+    alignment: 'horizontal',
     items: [
       {
         id: '1',
@@ -74,7 +74,7 @@ export const Horizontal: StrictStory = {
 
 export const Vertical: StrictStory = {
   args: {
-    alignement: 'vertical',
+    alignment: 'vertical',
     items: [
       {
         id: '1',

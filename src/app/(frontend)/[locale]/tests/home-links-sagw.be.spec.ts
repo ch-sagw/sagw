@@ -347,7 +347,7 @@ test.describe('Home links (sagw)', () => {
               homeTeasers: [
                 {
                   category: 'Förderung',
-                  iconName: 'bar',
+                  iconName: 'homeTeaserFunding',
                   link: {
                     internalLink: {
                       documentId: detail4.id,

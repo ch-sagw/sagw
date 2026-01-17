@@ -8,6 +8,12 @@ import verticalInner from '@/icons/keyvisual-lines/vertical-inner';
 import verticalMiddle from '@/icons/keyvisual-lines/vertical-middle';
 import verticalOuter from '@/icons/keyvisual-lines/vertical-outer';
 
+import homeTeaserActivities from '@/icons/home-teasers/activities';
+import homeTeaserFunding from '@/icons/home-teasers/funding';
+import homeTeaserNetwork from '@/icons/home-teasers/network';
+
+import errorPage from '@/icons/error-page/error';
+
 import facebook from '@/icons/social-media/facebook';
 import instagram from '@/icons/social-media/instagram';
 import linkedin from '@/icons/social-media/linkedin';
@@ -49,10 +55,14 @@ const Icons = {
   copy,
   download,
   errorFilled,
+  errorPage,
   exportIcon,
   externalLink,
   facebook,
   filePdf,
+  homeTeaserActivities,
+  homeTeaserFunding,
+  homeTeaserNetwork,
   horizontalInner,
   horizontalMiddle,
   horizontalOuter,

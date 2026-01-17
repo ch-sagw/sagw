@@ -77,12 +77,12 @@ export const fetchEventDetailPages = async ({
 // #########################################################################
 
 interface InterfaceFetchDetailPagesProps {
+  depth?: number,
   limit?: number;
   language: Config['locale'],
   tenant: string,
   collection: CollectionSlug;
   sort: Sort,
-  depth?: number;
   payload?: BasePayload;
 }
 
@@ -96,7 +96,7 @@ export const fetchDetailPages = async ({
   payload: providedPayload,
 }: InterfaceFetchDetailPagesProps): Promise<DataFromCollectionSlug<CollectionSlug>[]> => {
   const payload = providedPayload || await getPayloadCached();
-  const pages = await payload.find({
+  const detailPages = await payload.find({
     collection,
     depth,
     limit,
@@ -115,7 +115,7 @@ export const fetchDetailPages = async ({
     },
   });
 
-  return pages.docs;
+  return detailPages.docs;
 };
 
 // #########################################################################
@@ -149,7 +149,7 @@ export const fetchTeam = async ({
   // collect promises for fetching people
   const fetchedTeam = await payload.findByID({
     collection: 'teams',
-    depth: 1,
+    depth: 2,
     id: teamId,
     locale: language,
   });

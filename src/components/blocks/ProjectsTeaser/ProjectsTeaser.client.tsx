@@ -21,7 +21,7 @@ export type InterfaceProjectsTeaserItem = {
 };
 
 export type InterfaceProjectsTeaserClientPropTypes = {
-  alignement: 'horizontal' | 'vertical' | null | undefined;
+  alignment: 'horizontal' | 'vertical' | null | undefined;
   items: InterfaceProjectsTeaserItem[];
   optionalLink?: {
     href: string;
@@ -32,7 +32,7 @@ export type InterfaceProjectsTeaserClientPropTypes = {
 };
 
 export const ProjectsTeaserClient = ({
-  alignement,
+  alignment,
   items,
   optionalLink,
   subtitleHtml,
@@ -42,7 +42,7 @@ export const ProjectsTeaserClient = ({
     <Section
       className={styles.section}
       colorMode='white'
-      fullBleed={alignement === 'vertical'}
+      fullBleed={alignment === 'vertical'}
       subtitle={subtitleHtml}
       title={titleHtml}
     >

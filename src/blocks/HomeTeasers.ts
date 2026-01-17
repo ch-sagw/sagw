@@ -22,14 +22,21 @@ const homeTeaserItem: Field[] = [
         required: true,
         type: 'text',
       },
-      // TODO: add icon names as soon as we implemented the icons
       {
         access: fieldAccessNonLocalizableField,
         name: 'iconName',
         options: [
           {
-            label: 'foo',
-            value: 'bar',
+            label: 'Activities',
+            value: 'homeTeaserActivities',
+          },
+          {
+            label: 'Funding',
+            value: 'homeTeaserFunding',
+          },
+          {
+            label: 'Network',
+            value: 'homeTeaserNetwork',
           },
         ],
         required: true,

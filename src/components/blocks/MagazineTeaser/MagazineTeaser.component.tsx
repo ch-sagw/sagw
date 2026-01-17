@@ -1,18 +1,15 @@
 import React, { Fragment } from 'react';
 import styles from '@/components/blocks/MagazineTeaser/MagazineTeaser.module.scss';
-import {
-  InterfaceMagazineTeasersBlock,
-  MagazineDetailPage,
-} from '@/payload-types';
+import { InterfaceMagazineTeasersBlock } from '@/payload-types';
+import { InterfaceMagazineDetailPageWithImage } from '@/components/blocks/MagazineOverview/MagazineOverview';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { Section } from '@/components/base/Section/Section';
 import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
-import { getFirstImageIdOfMagazinePage } from '@/components/helpers/magazineImage';
 
 export type InterfaceMagazineTeaserComponentPropTypes = {
-  pages: MagazineDetailPage[];
+  pages: InterfaceMagazineDetailPageWithImage[];
   pageUrls: Record<string, string>;
   optionalLinkUrl?: string;
 } & InterfaceMagazineTeasersBlock;
@@ -20,7 +17,7 @@ export type InterfaceMagazineTeaserComponentPropTypes = {
 export const MagazineTeaserComponent = ({
   title,
   lead,
-  alignement,
+  alignment,
   optionalLink,
   pages,
   pageUrls,
@@ -32,7 +29,7 @@ export const MagazineTeaserComponent = ({
       title={rteToHtml(title)}
       subtitle={rteToHtml(lead)}
       colorMode='white'
-      fullBleed={alignement === 'vertical'}
+      fullBleed={alignment === 'vertical'}
     >
       {optionalLink && optionalLink.includeLink && optionalLink.link?.internalLink && optionalLink.link?.linkText &&
         <Button
@@ -53,14 +50,18 @@ export const MagazineTeaserComponent = ({
       {pages.map((item) => {
         const href = pageUrls[item.id] || `/${item.id}`;
 
+        const image = typeof item.image === 'string'
+          ? undefined
+          : item.image;
+
         return (
           <GenericTeaser
             className={styles.item}
+            image={image}
             key={item.id}
             title={rteToHtml(item.hero.title)}
             texts={[rteToHtml(item.overviewPageProps.teaserText)]}
             type='magazine'
-            image={getFirstImageIdOfMagazinePage(item)}
             links={[
               {
                 href,
