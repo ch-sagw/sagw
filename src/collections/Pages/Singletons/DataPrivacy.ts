@@ -15,6 +15,7 @@ import { pageAccess } from '@/access/pages';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
+import { preview } from '@/utilities/previewUrl';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
 
@@ -23,6 +24,7 @@ export const DataPrivacyPage: CollectionConfig = {
   admin: {
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
+    preview,
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
