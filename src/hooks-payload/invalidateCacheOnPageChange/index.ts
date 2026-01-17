@@ -1262,6 +1262,44 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
     const newBreadcrumb = doc?.[fieldBreadcrumbFieldName];
     const breadcrumbChanged = JSON.stringify(oldBreadcrumb) !== JSON.stringify(newBreadcrumb);
 
+    // check if overviewPageProps changed
+    // overviewPageProps are used for teasers on overview pages
+    const oldOverviewPageProps = previousDoc?.overviewPageProps;
+    const newOverviewPageProps = doc?.overviewPageProps;
+    let overviewPagePropsChanged = false;
+
+    try {
+      overviewPagePropsChanged = JSON.stringify(oldOverviewPageProps) !== JSON.stringify(newOverviewPageProps);
+    } catch {
+      // if serialization fails, assume changed to be safe
+      overviewPagePropsChanged = true;
+    }
+
+    // check if only overviewPageProps changed (no other important fields)
+    let onlyOverviewPagePropsChanged = false;
+
+    if (overviewPagePropsChanged && !willTriggerCascade && !breadcrumbChanged) {
+      // check if any other important fields changed
+      // Note: if a field is not in `doc`, it wasn't updated, so we compare
+      // previousDoc value with itself (no change)
+      const contentChanged = 'content' in doc
+        ? hasContentChanged(previousDoc?.content, doc.content)
+        : false;
+
+      const heroChanged = 'hero' in doc
+        ? hasHeroChanged(previousDoc?.hero, doc.hero)
+        : false;
+
+      // For eventDetailPage, also check if eventDetails changed
+      let eventDetailsChanged = false;
+
+      if (collectionSlug === 'eventDetailPage' && 'eventDetails' in doc) {
+        eventDetailsChanged = hasEventDetailsChanged(previousDoc?.eventDetails, doc.eventDetails);
+      }
+
+      onlyOverviewPagePropsChanged = !contentChanged && !heroChanged && !eventDetailsChanged;
+    }
+
     // IMPORTANT:
     // `context.cascadeBreadcrumbUpdate` can leak across operations
     // (shared req/context). only treat it as a cascade update if the
@@ -1463,7 +1501,14 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
           eventDetailsChanged = hasEventDetailsChanged(oldEventDetails, newEventDetails);
         }
 
-        if ((contentChanged || heroChanged || eventDetailsChanged) && collectionSlug !== 'homePage') {
+        // skip invalidate detail page itself if only overviewPageProps changed
+        // overviewPageProps are only used for teasers,
+        // not for the detail page itself
+        const shouldInvalidateDetailPage = !onlyOverviewPagePropsChanged &&
+          (contentChanged || heroChanged || eventDetailsChanged) &&
+          collectionSlug !== 'homePage';
+
+        if (shouldInvalidateDetailPage) {
           // Skip homePage here - already handled above
           await invalidatePagesWithDeduplication(
             [

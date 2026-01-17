@@ -4,6 +4,7 @@ import {
 } from '@playwright/test';
 import {
   generateInstituteDetailPage,
+  generateOverviewPage,
   getHomeId,
 } from '@/test-helpers/collections-generator';
 import { getTenantId } from '@/test-helpers/tenant-generator';
@@ -12,229 +13,548 @@ import { LogCapture } from '@/test-helpers/capture-logs';
 import { deleteSetsPages } from '@/seed/test-data/deleteData';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
-test('invalidates on overview page props change (image) (sagw)', {
-  tag: '@cache',
-}, async () => {
-  await deleteSetsPages();
+test.describe('detail page', () => {
+  test('does not invalidate on overview page props change (image) (sagw)', {
+    tag: '@cache',
+  }, async () => {
+    await deleteSetsPages();
 
-  const logCapture = new LogCapture();
-  const payload = await getPayloadCached();
-  const time = (new Date())
-    .getTime();
+    const logCapture = new LogCapture();
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
 
-  const tenant = await getTenantId({
-    isSagw: true,
-    time,
-  });
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
 
-  const home = await getHomeId({
-    isSagw: true,
-    tenant,
-  });
-
-  const detailPage = await generateInstituteDetailPage({
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    title: `detail ${time}`,
-  });
-
-  const image = await payload.create({
-    collection: 'images',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      alt: 'sagw image',
+    const home = await getHomeId({
+      isSagw: true,
       tenant,
-    },
-    filePath: 'src/seed/test-data/assets/sagw.png',
-  });
+    });
 
-  logCapture.captureLogs();
-
-  await payload.update({
-    collection: 'instituteDetailPage',
-    data: {
-      overviewPageProps: {
-        image: image.id,
+    const detailPage = await generateInstituteDetailPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
       },
-    },
-    id: detailPage.id,
-  });
+      title: `detail ${time}`,
+    });
 
-  logCapture.detachLogs();
-
-  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/${detailPage.slug}`))
-    .toBe(true);
-
-  expect(logCapture.logs)
-    .toHaveLength(1);
-
-});
-
-test('invalidates on overview page props change (teaser text) (sagw)', {
-  tag: '@cache',
-}, async () => {
-  await deleteSetsPages();
-
-  const logCapture = new LogCapture();
-  const payload = await getPayloadCached();
-  const time = (new Date())
-    .getTime();
-
-  const tenant = await getTenantId({
-    isSagw: true,
-    time,
-  });
-
-  const home = await getHomeId({
-    isSagw: true,
-    tenant,
-  });
-
-  const detailPage = await generateInstituteDetailPage({
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    title: `detail ${time}`,
-  });
-
-  logCapture.captureLogs();
-
-  await payload.update({
-    collection: 'instituteDetailPage',
-    data: {
-      overviewPageProps: {
-        teaserText: simpleRteConfig('teaser text changed'),
+    const image = await payload.create({
+      collection: 'images',
+      context: {
+        skipCacheInvalidation: true,
       },
-    },
-    id: detailPage.id,
+      data: {
+        alt: 'sagw image',
+        tenant,
+      },
+      filePath: 'src/seed/test-data/assets/sagw.png',
+    });
+
+    logCapture.captureLogs();
+
+    await payload.update({
+      collection: 'instituteDetailPage',
+      data: {
+        overviewPageProps: {
+          image: image.id,
+        },
+      },
+      id: detailPage.id,
+    });
+
+    logCapture.detachLogs();
+
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /de/${detailPage.slug}`))
+      .toBe(false);
+
+    expect(logCapture.logs)
+      .toHaveLength(0);
+
   });
 
-  logCapture.detachLogs();
+  test('does not invalidate on overview page props change (teaser text) (sagw)', {
+    tag: '@cache',
+  }, async () => {
+    await deleteSetsPages();
 
-  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/${detailPage.slug}`))
-    .toBe(true);
+    const logCapture = new LogCapture();
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
 
-  expect(logCapture.logs)
-    .toHaveLength(1);
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
 
-});
-
-test('invalidates on overview page props change (image) (non-sagw)', {
-  tag: '@cache',
-}, async () => {
-  await deleteSetsPages();
-
-  const logCapture = new LogCapture();
-  const payload = await getPayloadCached();
-  const time = (new Date())
-    .getTime();
-
-  const tenant = await getTenantId({
-    isSagw: false,
-    time,
-  });
-
-  const home = await getHomeId({
-    isSagw: false,
-    tenant,
-  });
-
-  const detailPage = await generateInstituteDetailPage({
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: `detail ${time}`,
-  });
-
-  const image = await payload.create({
-    collection: 'images',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      alt: 'sagw image',
+    const home = await getHomeId({
+      isSagw: true,
       tenant,
-    },
-    filePath: 'src/seed/test-data/assets/sagw.png',
-  });
+    });
 
-  logCapture.captureLogs();
-
-  await payload.update({
-    collection: 'instituteDetailPage',
-    data: {
-      overviewPageProps: {
-        image: image.id,
+    const detailPage = await generateInstituteDetailPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
       },
-    },
-    id: detailPage.id,
+      title: `detail ${time}`,
+    });
+
+    logCapture.captureLogs();
+
+    await payload.update({
+      collection: 'instituteDetailPage',
+      data: {
+        overviewPageProps: {
+          teaserText: simpleRteConfig('teaser text changed'),
+        },
+      },
+      id: detailPage.id,
+    });
+
+    logCapture.detachLogs();
+
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /de/${detailPage.slug}`))
+      .toBe(false);
+
+    expect(logCapture.logs)
+      .toHaveLength(0);
+
   });
 
-  logCapture.detachLogs();
+  test('does not invalidate on overview page props change (image) (non-sagw)', {
+    tag: '@cache',
+  }, async () => {
+    await deleteSetsPages();
 
-  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/${detailPage.slug}`))
-    .toBe(true);
+    const logCapture = new LogCapture();
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
 
-  expect(logCapture.logs)
-    .toHaveLength(1);
+    const tenant = await getTenantId({
+      isSagw: false,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant,
+    });
+
+    const detailPage = await generateInstituteDetailPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `detail ${time}`,
+    });
+
+    const image = await payload.create({
+      collection: 'images',
+      context: {
+        skipCacheInvalidation: true,
+      },
+      data: {
+        alt: 'sagw image',
+        tenant,
+      },
+      filePath: 'src/seed/test-data/assets/sagw.png',
+    });
+
+    logCapture.captureLogs();
+
+    await payload.update({
+      collection: 'instituteDetailPage',
+      data: {
+        overviewPageProps: {
+          image: image.id,
+        },
+      },
+      id: detailPage.id,
+    });
+
+    logCapture.detachLogs();
+
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/${detailPage.slug}`))
+      .toBe(false);
+
+    expect(logCapture.logs)
+      .toHaveLength(0);
+
+  });
+
+  test('does not invalidate on overview page props change (teaser text) (non-sagw)', {
+    tag: '@cache',
+  }, async () => {
+    await deleteSetsPages();
+
+    const logCapture = new LogCapture();
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: false,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant,
+    });
+
+    const detailPage = await generateInstituteDetailPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `detail ${time}`,
+    });
+
+    logCapture.captureLogs();
+
+    await payload.update({
+      collection: 'instituteDetailPage',
+      data: {
+        overviewPageProps: {
+          teaserText: simpleRteConfig('teaser text changed'),
+        },
+      },
+      id: detailPage.id,
+    });
+
+    logCapture.detachLogs();
+
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/${detailPage.slug}`))
+      .toBe(false);
+
+    expect(logCapture.logs)
+      .toHaveLength(0);
+
+  });
 
 });
 
-test('invalidates on overview page props change (teaser text) (non-sagw)', {
-  tag: '@cache',
-}, async () => {
-  await deleteSetsPages();
+test.describe('overview page', () => {
+  test('invalidates page with overview block on overview page props change (image) (sagw)', {
+    tag: '@cache',
+  }, async () => {
+    await deleteSetsPages();
 
-  const logCapture = new LogCapture();
-  const payload = await getPayloadCached();
-  const time = (new Date())
-    .getTime();
+    const logCapture = new LogCapture();
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
 
-  const tenant = await getTenantId({
-    isSagw: false,
-    time,
-  });
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
 
-  const home = await getHomeId({
-    isSagw: false,
-    tenant,
-  });
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
 
-  const detailPage = await generateInstituteDetailPage({
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: `detail ${time}`,
-  });
-
-  logCapture.captureLogs();
-
-  await payload.update({
-    collection: 'instituteDetailPage',
-    data: {
-      overviewPageProps: {
-        teaserText: simpleRteConfig('teaser text changed'),
+    const detailPage = await generateInstituteDetailPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
       },
-    },
-    id: detailPage.id,
+      title: `detail ${time}`,
+    });
+
+    const overviewPage = await generateOverviewPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      title: `overview ${time}`,
+    });
+
+    await payload.update({
+      collection: 'overviewPage',
+      data: {
+        content: [
+          {
+            blockType: 'institutesOverviewBlock',
+            moreInfoButtonText: simpleRteConfig('Mehr erfahren'),
+          },
+        ],
+      },
+      id: overviewPage.id,
+    });
+
+    const image = await payload.create({
+      collection: 'images',
+      context: {
+        skipCacheInvalidation: true,
+      },
+      data: {
+        alt: 'sagw image',
+        tenant,
+      },
+      filePath: 'src/seed/test-data/assets/sagw.png',
+    });
+
+    console.log('before');
+
+    logCapture.captureLogs();
+
+    await payload.update({
+      collection: 'instituteDetailPage',
+      data: {
+        overviewPageProps: {
+          image: image.id,
+        },
+      },
+      id: detailPage.id,
+    });
+
+    logCapture.detachLogs();
+
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /de/${overviewPage.slug}`))
+      .toBe(true);
+
+    expect(logCapture.logs)
+      .toHaveLength(1);
+
   });
 
-  logCapture.detachLogs();
+  test('invalidates page with overview block on overview page props change (teaser text) (sagw)', {
+    tag: '@cache',
+  }, async () => {
+    await deleteSetsPages();
 
-  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/${detailPage.slug}`))
-    .toBe(true);
+    const logCapture = new LogCapture();
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
 
-  expect(logCapture.logs)
-    .toHaveLength(1);
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    const detailPage = await generateInstituteDetailPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      title: `detail ${time}`,
+    });
+
+    const overviewPage = await generateOverviewPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      title: `overview ${time}`,
+    });
+
+    await payload.update({
+      collection: 'overviewPage',
+      data: {
+        content: [
+          {
+            blockType: 'institutesOverviewBlock',
+            moreInfoButtonText: simpleRteConfig('Mehr erfahren'),
+          },
+        ],
+      },
+      id: overviewPage.id,
+    });
+
+    logCapture.captureLogs();
+
+    await payload.update({
+      collection: 'instituteDetailPage',
+      data: {
+        overviewPageProps: {
+          teaserText: simpleRteConfig('teaser text changed'),
+        },
+      },
+      id: detailPage.id,
+    });
+
+    logCapture.detachLogs();
+
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /de/${overviewPage.slug}`))
+      .toBe(true);
+
+    expect(logCapture.logs)
+      .toHaveLength(1);
+
+  });
+
+  test('invalidates page with overview block on overview page props change (image) (non-sagw)', {
+    tag: '@cache',
+  }, async () => {
+    await deleteSetsPages();
+
+    const logCapture = new LogCapture();
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: false,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant,
+    });
+
+    const detailPage = await generateInstituteDetailPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `detail ${time}`,
+    });
+
+    const overviewPage = await generateOverviewPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `overview ${time}`,
+    });
+
+    await payload.update({
+      collection: 'overviewPage',
+      data: {
+        content: [
+          {
+            blockType: 'institutesOverviewBlock',
+            moreInfoButtonText: simpleRteConfig('Mehr erfahren'),
+          },
+        ],
+      },
+      id: overviewPage.id,
+    });
+
+    const image = await payload.create({
+      collection: 'images',
+      context: {
+        skipCacheInvalidation: true,
+      },
+      data: {
+        alt: 'sagw image',
+        tenant,
+      },
+      filePath: 'src/seed/test-data/assets/sagw.png',
+    });
+
+    logCapture.captureLogs();
+
+    await payload.update({
+      collection: 'instituteDetailPage',
+      data: {
+        overviewPageProps: {
+          image: image.id,
+        },
+      },
+      id: detailPage.id,
+    });
+
+    logCapture.detachLogs();
+
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/${overviewPage.slug}`))
+      .toBe(true);
+
+    expect(logCapture.logs)
+      .toHaveLength(1);
+
+  });
+
+  test('invalidates page with overview block on overview page props change (teaser text) (non-sagw)', {
+    tag: '@cache',
+  }, async () => {
+    await deleteSetsPages();
+
+    const logCapture = new LogCapture();
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: false,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant,
+    });
+
+    const detailPage = await generateInstituteDetailPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `detail ${time}`,
+    });
+
+    const overviewPage = await generateOverviewPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `overview ${time}`,
+    });
+
+    await payload.update({
+      collection: 'overviewPage',
+      data: {
+        content: [
+          {
+            blockType: 'institutesOverviewBlock',
+            moreInfoButtonText: simpleRteConfig('Mehr erfahren'),
+          },
+        ],
+      },
+      id: overviewPage.id,
+    });
+
+    logCapture.captureLogs();
+
+    await payload.update({
+      collection: 'instituteDetailPage',
+      data: {
+        overviewPageProps: {
+          teaserText: simpleRteConfig('teaser text changed'),
+        },
+      },
+      id: detailPage.id,
+    });
+
+    logCapture.detachLogs();
+
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/${overviewPage.slug}`))
+      .toBe(true);
+
+    expect(logCapture.logs)
+      .toHaveLength(1);
+
+  });
 
 });
-
