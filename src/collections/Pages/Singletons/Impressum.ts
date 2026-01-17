@@ -87,11 +87,32 @@ export const ImpressumPage: CollectionConfig = {
         const fallback = 'impressum';
         let impressumSlug;
 
+        const translationPathDe = new URL('../../../i18n/messages/de.json', import.meta.url).href;
+        const translationPathEn = new URL('../../../i18n/messages/en.json', import.meta.url).href;
+        const translationPathFr = new URL('../../../i18n/messages/fr.json', import.meta.url).href;
+        const translationPathIt = new URL('../../../i18n/messages/it.json', import.meta.url).href;
+
         if (locale && locale === 'all') {
-          const translationRawFileDe = (await import('@/i18n/messages/de.json')).default;
-          const translationRawFileEn = (await import('@/i18n/messages/en.json')).default;
-          const translationRawFileFr = (await import('@/i18n/messages/fr.json')).default;
-          const translationRawFileIt = (await import('@/i18n/messages/it.json')).default;
+          const translationRawFileDe = (await import(translationPathDe, {
+            with: {
+              type: 'json',
+            },
+          })).default;
+          const translationRawFileEn = (await import(translationPathEn, {
+            with: {
+              type: 'json',
+            },
+          })).default;
+          const translationRawFileFr = (await import(translationPathFr, {
+            with: {
+              type: 'json',
+            },
+          })).default;
+          const translationRawFileIt = (await import(translationPathIt, {
+            with: {
+              type: 'json',
+            },
+          })).default;
 
           impressumSlug = {
             de: translationRawFileDe.slugs.impressum,
@@ -101,8 +122,44 @@ export const ImpressumPage: CollectionConfig = {
           };
 
         } else if (locale) {
-          // Use dynamic import with template literal for locale
-          const translationsFile = (await import(`@/i18n/messages/${locale}.json`)).default;
+          let translationsFile;
+
+          switch (locale) {
+            case 'de':
+              translationsFile = (await import(translationPathDe, {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            case 'en':
+              translationsFile = (await import(translationPathEn, {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            case 'fr':
+              translationsFile = (await import(translationPathFr, {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            case 'it':
+              translationsFile = (await import(translationPathIt, {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            default:
+              translationsFile = (await import(translationPathDe, {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+          }
 
           impressumSlug = translationsFile.slugs.impressum;
         }
