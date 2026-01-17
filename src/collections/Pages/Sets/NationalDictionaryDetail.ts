@@ -14,6 +14,7 @@ import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccessNationalDictionary } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import { preview } from '@/utilities/previewUrl';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -28,6 +29,7 @@ export const NationalDictionaryDetailPage: CollectionConfig = {
   admin: {
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
+    preview,
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
