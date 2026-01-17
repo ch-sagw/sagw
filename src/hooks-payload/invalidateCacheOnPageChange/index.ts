@@ -1258,9 +1258,23 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
     const parentChanged = getParentId(oldParent) !== getParentId(newParent);
     const willTriggerCascade = slugChanged || navigationTitleChanged || parentChanged;
 
+    // for breadcrumb comparison, check `doc` first. if breadcrumb is
+    // not in `doc` (which can happen when only breadcrumb is updated in
+    // cascade), check `docToUse`.
     const oldBreadcrumb = previousDoc?.[fieldBreadcrumbFieldName];
-    const newBreadcrumb = doc?.[fieldBreadcrumbFieldName];
-    const breadcrumbChanged = JSON.stringify(oldBreadcrumb) !== JSON.stringify(newBreadcrumb);
+    const newBreadcrumbFromDoc = doc?.[fieldBreadcrumbFieldName];
+
+    // if breadcrumb is not in `doc`, it might be a cascade update where Payload
+    // didn't include it. Check `docToUse` as fallback
+    const newBreadcrumb = newBreadcrumbFromDoc === undefined
+      ? docToUse?.[fieldBreadcrumbFieldName]
+      : newBreadcrumbFromDoc;
+
+    // handle undefined values properly in comparison
+    const breadcrumbChanged = (oldBreadcrumb === undefined && newBreadcrumb !== undefined) ||
+      (oldBreadcrumb !== undefined && newBreadcrumb === undefined) ||
+      (oldBreadcrumb !== undefined && newBreadcrumb !== undefined &&
+        JSON.stringify(oldBreadcrumb) !== JSON.stringify(newBreadcrumb));
 
     // check if overviewPageProps changed
     // overviewPageProps are used for teasers on overview pages
@@ -1304,9 +1318,20 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
     // `context.cascadeBreadcrumbUpdate` can leak across operations
     // (shared req/context). only treat it as a cascade update if the
     // breadcrumb actually changed AND slug/navTitle/parent did NOT change.
+
+    // when cascade hook updates a child page, it updates ONLY the breadcrumb.
+    // if context.cascadeBreadcrumbUpdate is true and willTriggerCascade is,
+    // false this is a cascade breadcrumb update. We check for breadcrumbChanged
+    //  OR breadcrumb field presence in the update to avoid false positives from
+    // leaked context, but make it less strict to catch all cascade updates.
+    const hasBreadcrumbInUpdate = doc?.[fieldBreadcrumbFieldName] !== undefined ||
+      docToUse?.[fieldBreadcrumbFieldName] !== undefined;
+    // if context is set and willTriggerCascade is false, and breadcrumb is in,
+    // update, this is a cascade breadcrumb update
+    // (even if we can't detect the change)
     const isCascadeBreadcrumbUpdate = context?.cascadeBreadcrumbUpdate === true &&
-      breadcrumbChanged &&
-      !willTriggerCascade;
+      !willTriggerCascade &&
+      (breadcrumbChanged || hasBreadcrumbInUpdate);
 
     // clear invalidation cache at the start of each non-cascade update.
     // this ensures. we deduplicate within the same update operation but allow
@@ -1377,6 +1402,7 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
     // child pages' breadcrumbs will also change via cascade
     // so we need to find pages that reference child pages too
     let childReferencingPages: { id: string; collectionSlug: CollectionSlug }[] = [];
+    let childPagesToInvalidate: { id: string; collectionSlug: CollectionSlug }[] = [];
 
     if (willTriggerCascade) {
       const childPageIds = await findAllChildPages({
@@ -1397,6 +1423,44 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
       const childReferencingPagesArrays = await Promise.all(childReferencingPagesPromises);
 
       childReferencingPages = childReferencingPagesArrays.flat();
+
+      // when navigationTitle changes (not slug), child pages keep the same URLs
+      // but breadcrumb content changes, so we need to invalidate them directly.
+      // when slug changes, child pages get new URLs, we don't invalidate
+      // old URLs
+      if (navigationTitleChanged && !slugChanged) {
+        // Find collection slugs for child pages by querying each collection
+        // with the child page IDs
+        const childPagesWithCollectionsPromises = pageCollections.map(async (collectionConfig) => {
+          try {
+            const result = await req.payload.find({
+              collection: collectionConfig.slug,
+              depth: 0,
+              limit: 0,
+              overrideAccess: true,
+              where: {
+                id: {
+                  in: Array.from(childPageIds),
+                },
+                tenant: {
+                  equals: tenantId,
+                },
+              },
+            });
+
+            return result.docs.map((childDoc: any) => ({
+              collectionSlug: collectionConfig.slug,
+              id: String(childDoc.id),
+            }));
+          } catch {
+            return [];
+          }
+        });
+
+        const childPagesWithCollectionsArrays = await Promise.all(childPagesWithCollectionsPromises);
+
+        childPagesToInvalidate = childPagesWithCollectionsArrays.flat();
+      }
     }
 
     // merge and deduplicate referencing pages
@@ -1407,6 +1471,13 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
     });
 
     childReferencingPages.forEach((page) => {
+      if (!allReferencingPagesMap.has(page.id)) {
+        allReferencingPagesMap.set(page.id, page);
+      }
+    });
+
+    // Add child pages to invalidate when navigationTitle changes (not slug)
+    childPagesToInvalidate.forEach((page) => {
       if (!allReferencingPagesMap.has(page.id)) {
         allReferencingPagesMap.set(page.id, page);
       }
