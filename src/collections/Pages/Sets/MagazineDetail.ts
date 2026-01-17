@@ -13,6 +13,7 @@ import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
 import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccessMagazineDetail } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
+import { preview } from '@/utilities/previewUrl';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -40,6 +41,7 @@ export const MagazineDetailPage: CollectionConfig = {
     ],
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
+    preview,
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
