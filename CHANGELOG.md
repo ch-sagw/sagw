@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.29.0](https://github.com/ch-sagw/sagw/compare/v0.28.0...v0.29.0) (2026-01-17)
+
+
+### Chore
+
+* update payload and nextjs ([#712](https://github.com/ch-sagw/sagw/issues/712)) ([53ce77a](https://github.com/ch-sagw/sagw/commit/53ce77abede74d8151788b67e67ceac4087842e8))
+
+
+### Features
+
+* implement admin-ui preview ([#710](https://github.com/ch-sagw/sagw/issues/710)) ([e9146fd](https://github.com/ch-sagw/sagw/commit/e9146fdf399291410cda766c08bbcbde99384bd8))
+
 ## [0.28.0](https://github.com/ch-sagw/sagw/compare/v0.27.0...v0.28.0) (2026-01-17)
 
 
