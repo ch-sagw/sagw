@@ -1,10 +1,12 @@
 ################ GENERAL ################
 - make sure, all content is fetched in current locale (in layout, page level and blocks where applicaple)
+- make sure that payload.find for page queries only queries published pages (e.g. newsteasers, eventsteasers, overviews etc.)
 - implement redirects
 - add global array of tenant names. these names are forbidden to use as slugs. implement this in the validation for slug
 - optional link on form error/success notification is not rendered
 - make preview-link in admin-ui work
 - test link-prefetching on prod
+- immediately statically rebuild a page after revalidatePath is issued
 
 
 ############### LINKING ################
@@ -12,9 +14,6 @@
 - ERROR on server: GET /de 500 in 11239ms
 - in render blocks, we still pass tenant down sometimes, does that make sense?
 - renderHero is a complete client component. probably makes sense to split into server/client
-- make sure that payload.find for page queries only queries published pages (e.g. newsteasers, eventsteasers, overviews etc.)
-
-
 
 ############## REFACTOR ##############
 - with npm run build:local and npm run start -> this error comes up in the frontend
@@ -41,7 +40,3 @@ Error: Internal: NoFallbackError
 - test -> link -> consent (and other globals): should not only invlidate home, but all pages
 - is home invalidated, e.g. if it has event teasers and then eventPAge is created?
 - tests for teasers on home (if project, event-category etc. changes)
-
-############## prod issues ##############
-- internal link chooser from rte -> error
-- home, data-privacy and impressum -> trouble accessing the messages files
