@@ -143,28 +143,23 @@ export const HomePage: CollectionConfig = {
         const fallback = 'Home';
         let homeNavigationTitle;
 
-        const translationPathDe = new URL('../../../i18n/messages/de.json', import.meta.url).href;
-        const translationPathEn = new URL('../../../i18n/messages/en.json', import.meta.url).href;
-        const translationPathFr = new URL('../../../i18n/messages/fr.json', import.meta.url).href;
-        const translationPathIt = new URL('../../../i18n/messages/it.json', import.meta.url).href;
-
         if (locale && locale === 'all') {
-          const translationRawFileDe = (await import(translationPathDe, {
+          const translationRawFileDe = (await import('../../../i18n/messages/de.json', {
             with: {
               type: 'json',
             },
           })).default;
-          const translationRawFileEn = (await import(translationPathEn, {
+          const translationRawFileEn = (await import('../../../i18n/messages/en.json', {
             with: {
               type: 'json',
             },
           })).default;
-          const translationRawFileFr = (await import(translationPathFr, {
+          const translationRawFileFr = (await import('../../../i18n/messages/fr.json', {
             with: {
               type: 'json',
             },
           })).default;
-          const translationRawFileIt = (await import(translationPathIt, {
+          const translationRawFileIt = (await import('../../../i18n/messages/it.json', {
             with: {
               type: 'json',
             },
@@ -178,39 +173,40 @@ export const HomePage: CollectionConfig = {
           };
 
         } else if (locale) {
+          // Use static string literals in switch for webpack static analysis
           let translationsFile;
 
           switch (locale) {
             case 'de':
-              translationsFile = (await import(translationPathDe, {
+              translationsFile = (await import('../../../i18n/messages/de.json', {
                 with: {
                   type: 'json',
                 },
               })).default;
               break;
             case 'en':
-              translationsFile = (await import(translationPathEn, {
+              translationsFile = (await import('../../../i18n/messages/en.json', {
                 with: {
                   type: 'json',
                 },
               })).default;
               break;
             case 'fr':
-              translationsFile = (await import(translationPathFr, {
+              translationsFile = (await import('../../../i18n/messages/fr.json', {
                 with: {
                   type: 'json',
                 },
               })).default;
               break;
             case 'it':
-              translationsFile = (await import(translationPathIt, {
+              translationsFile = (await import('../../../i18n/messages/it.json', {
                 with: {
                   type: 'json',
                 },
               })).default;
               break;
             default:
-              translationsFile = (await import(translationPathDe, {
+              translationsFile = (await import('../../../i18n/messages/de.json', {
                 with: {
                   type: 'json',
                 },
