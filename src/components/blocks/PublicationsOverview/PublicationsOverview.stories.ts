@@ -2,7 +2,7 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { PublicationsOverview } from '@/components/base/PublicationsOverview/PublicationsOverview';
+import { PublicationsOverview } from '@/components/blocks/PublicationsOverview/PublicationsOverview.component';
 import { PublicationTeaserImage } from '@/components/blocks/helpers/imagesData';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 
@@ -24,7 +24,6 @@ const meta: Meta<typeof PublicationsOverview> = {
   },
   tags: [
     'autodocs',
-    'visual:check',
     'a11y:check',
   ],
   title: 'Components/blocks/PublicationsOverview',

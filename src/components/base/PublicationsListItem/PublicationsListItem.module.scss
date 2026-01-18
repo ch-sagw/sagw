@@ -33,6 +33,11 @@
     width: px-to-rem(var(--publication-teaser-image-width));
     height: px-to-rem(var(--publication-teaser-image-height));
     flex: 0 0 px-to-rem(var(--publication-teaser-image-width));
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
   }
 
   .textContent {
