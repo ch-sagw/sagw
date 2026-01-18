@@ -17,21 +17,10 @@
 - renderHero is a complete client component. probably makes sense to split into server/client
 - in overview-links tests -> institute is missing
 
-############## REFACTOR ##############
-- with npm run build:local and npm run start -> this error comes up in the frontend
-Error: Internal: NoFallbackError
-    at o (.next/server/app/(frontend)/[locale]/[...slug]/page.js:3:1061)
-    at responseGenerator (.next/server/app/(frontend)/[locale]/[...slug]/page.js:3:1917)
-
-
-
-
-############## invalidate cache ##############
+############## CACHE ##############
 - event detail page has links block link to detail page. if only content blocks of detail page changes, then event detail page should not be invalidated, but it currently is.
-- if block content of detail page changes, page is not invalidated!
 - invalidations on page deletions. e.g., delete event detail page -> event teasers / overviews should be invalidated
 - create event detail page (an overview page with events-overview exists) -> cache invalidation shows de/overview-page (ok), but it also invalidates /it, /fr/, /en
-- detail page with rte -> then remove rte -> page is not invalidated. it only happens if page is freshly loaded before rte is removed
 - invalidate on meta change!
 - test -> link -> consent (and other globals): should not only invlidate home, but all pages
 - is home invalidated, e.g. if it has event teasers and then eventPAge is created?
