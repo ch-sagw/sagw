@@ -2949,24 +2949,6 @@ export interface InterfaceMagazineOverviewBlock {
  * via the `definition` "InterfacePublicationsOverviewBlock".
  */
 export interface InterfacePublicationsOverviewBlock {
-  /**
-   * If populated, the notification will be shown above the publication overview.
-   */
-  notification: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
   title: {
     root: {
       type: string;
@@ -5403,7 +5385,6 @@ export interface InterfaceMagazineOverviewBlockSelect<T extends boolean = true> 
  * via the `definition` "InterfacePublicationsOverviewBlock_select".
  */
 export interface InterfacePublicationsOverviewBlockSelect<T extends boolean = true> {
-  notification?: T;
   title?: T;
   filterTitleAllTopics?: T;
   filterTitleAllPublications?: T;

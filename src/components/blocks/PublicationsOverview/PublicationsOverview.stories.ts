@@ -3,7 +3,7 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import { PublicationsOverview } from '@/components/base/PublicationsOverview/PublicationsOverview';
-import { InterfaceImagePropTypes } from '@/components/base/Image/Image';
+import { PublicationTeaserImage } from '@/components/blocks/helpers/imagesData';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 
 type PublicationsOverviewProps = React.ComponentProps<typeof PublicationsOverview>;
@@ -35,24 +35,7 @@ export default meta;
 const publicationItem = {
   categorization: {},
   date: '2025-10-23T12:00:00.000Z',
-  image: {
-    alt: 'SAGW image',
-    createdAt: '2025-12-02T16:29:03.337Z',
-    filename: 'sagw.png',
-    filesize: 50757,
-    focalX: 50,
-    focalY: 50,
-    height: 2048,
-    id: '692f13cfef533bd5f1765988',
-    loading: 'lazy' as InterfaceImagePropTypes['loading'],
-    mimeType: 'image/png',
-    tenant: '692f13cdef533bd5f1765954',
-    thumbnailURL: null,
-    updatedAt: '2025-12-02T16:29:03.337Z',
-    url: 'https://sagw-nu-localhost.gumlet.io/sagw.png',
-    variant: 'publicationTeaser' as InterfaceImagePropTypes['variant'],
-    width: 2048,
-  },
+  image: PublicationTeaserImage,
   link: {
     href: 'https://foo.bar',
   },
@@ -131,10 +114,6 @@ export const LotsOfItems: StrictStory = {
   args: {
     colorMode: 'white',
     filterItems: filterListItems,
-    notification: {
-      text: 'Alle Publikationen, die im Jahr 2019 oder früher publiziert wurden, sind auf Zenodo zu finden.',
-      title: '',
-    },
     paginationTitle: 'Pagination',
     publicationItems: Array.from({
       length: 25,
@@ -147,10 +126,6 @@ export const FewItems: StrictStory = {
   args: {
     colorMode: 'white',
     filterItems: filterListItems,
-    notification: {
-      text: 'Alle Publikationen, die im Jahr 2019 oder früher publiziert wurden, sind auf Zenodo zu finden.',
-      title: '',
-    },
     paginationTitle: 'Pagination',
     publicationItems: Array.from({
       length: 25,

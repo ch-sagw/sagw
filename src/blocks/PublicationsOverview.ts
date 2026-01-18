@@ -9,10 +9,6 @@ export const PublicationsOverviewBlock = {
   },
   fields: [
     rte1({
-      adminDescription: 'If populated, the notification will be shown above the publication overview.',
-      name: 'notification',
-    }),
-    rte1({
       name: 'title',
     }),
     rte1({

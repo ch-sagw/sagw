@@ -1,7 +1,6 @@
 import { InterfacePublicationsListItemPropTypes } from '@/components/base/PublicationsListItem/PublicationsListItem';
 import { InterfaceEventsListItemPropTypes } from '@/components/base/EventsListItem/EventsListItem';
 import { InterfaceNewsListItemPropTypes } from '@/components/base/NewsListItem/NewsListItem';
-import { InterfaceImagePropTypes } from '@/components/base/Image/Image';
 import {
   formatDateToReadableString, formatTime,
 } from '@/components/helpers/date';
@@ -22,15 +21,15 @@ import { rteToHtml } from '@/utilities/rteToHtml';
 import { PaginatedDocs } from 'payload';
 
 export const convertPayloadPublicationsPagesToFeItems = (
-  payloadPages: PaginatedDocs<PublicationDetailPage>,
-  publicationImages: InterfaceImagePropTypes[],
+  payloadPages: PublicationDetailPage[],
+  urlMap: Record<string, string>,
   publicationTypes: PublicationType[],
-  publicationTypeLabels: InterfaceFilterItem[],
   lang: Config['locale'],
 ): InterfacePublicationsListItemPropTypes[] => {
-  const items = payloadPages.docs.map((publicationsPage, index) => {
-    let topic: string | undefined;
-    let type: string | undefined;
+
+  const items = payloadPages.map((publicationsPage) => {
+    let topicId: string | undefined;
+    let typeId: string | undefined;
     let tagValue: string | undefined;
 
     const {
@@ -38,14 +37,13 @@ export const convertPayloadPublicationsPagesToFeItems = (
     } = publicationsPage || {};
 
     if (categorization?.topic) {
-      topic = typeof categorization.topic === 'string'
+      topicId = typeof categorization.topic === 'string'
         ? categorization.topic
         : categorization.topic?.id;
     }
 
     if (categorization?.type) {
-
-      const typeId = typeof categorization.type === 'string'
+      typeId = typeof categorization.type === 'string'
         ? categorization.type
         : categorization.type?.id;
 
@@ -56,21 +54,23 @@ export const convertPayloadPublicationsPagesToFeItems = (
       }
     }
 
-    const publicationImage = publicationImages[index];
+    const image = typeof publicationsPage.overviewPageProps.image === 'string'
+      ? undefined
+      : publicationsPage.overviewPageProps.image;
 
     const returnPublicationPage: InterfacePublicationsListItemPropTypes = {
       categorization: {
-        topic: topic ?? undefined,
-        type: type ?? undefined,
+        topic: topicId ?? undefined,
+        type: typeId ?? undefined,
       },
       date: formatDateToReadableString({
         dateString: publicationsPage.overviewPageProps.date,
         locale: lang,
       }),
       id: publicationsPage.id,
-      image: publicationImage,
+      image,
       link: {
-        href: publicationsPage.slug || '',
+        href: urlMap[publicationsPage.id],
       },
       tag: tagValue,
       title: rteToHtml(publicationsPage.hero.title),

@@ -1,49 +1,40 @@
-import React, { Fragment } from 'react';
-import configPromise from '@/payload.config';
-
-import { PublicationsOverview } from '@/components/base/PublicationsOverview/PublicationsOverview';
-import { InterfacePublicationsOverviewBlock } from '@/payload-types';
+import 'server-only';
+import React from 'react';
+import { PublicationsOverview } from '@/components/blocks/PublicationsOverview/PublicationsOverview.component';
+import {
+  InterfacePublicationsOverviewBlock,
+  PublicationDetailPage,
+} from '@/payload-types';
+import { fetchDetailPages } from '@/data/fetch';
 import {
   convertPayloadPublicationsPagesToFeItems,
   prepareFilterItems,
 } from '@/components/blocks/helpers/dataTransformers';
-import { InterfaceImagePropTypes } from '@/components/base/Image/Image';
 import { getLocale } from 'next-intl/server';
-import {
-  getPayload,
-  TypedLocale,
-} from 'payload';
-import { getImageDataForUniqueIds } from '@/components/blocks/helpers/getImageData';
+import { TypedLocale } from 'payload';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { prerenderPageLinks } from '@/utilities/prerenderPageLinks';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
-import { rteToHtml } from '@/utilities/rteToHtml';
 
 type InterfaceNewsOverviewPropTypes = {
   tenant: string;
 } & InterfacePublicationsOverviewBlock;
 
 export const PublicationsOverviewBlock = async (props: InterfaceNewsOverviewPropTypes): Promise<React.JSX.Element> => {
-  const payload = await getPayload({
-    config: configPromise,
-  });
-
   const locale = (await getLocale()) as TypedLocale;
+  const payload = await getPayloadCached();
+  const {
+    tenant,
+  } = props;
 
-  // Get publication detail pages data
-  // =========================
-  const publicationPages = await payload.find({
+  const pages = await fetchDetailPages({
     collection: 'publicationDetailPage',
-    depth: 1,
+    depth: 2,
+    language: locale,
     limit: 0,
-    locale,
-    overrideAccess: false,
-    pagination: false,
-    sort: '-overviewPageProps.date',
-    where: {
-      tenant: {
-        equals: props.tenant,
-      },
-    },
-  });
+    sort: '-createdAt',
+    tenant,
+  }) as PublicationDetailPage[];
 
   const publicationTopics = await payload.find({
     collection: 'publicationTopics',
@@ -67,6 +58,12 @@ export const PublicationsOverviewBlock = async (props: InterfaceNewsOverviewProp
     },
   });
 
+  const urlMap = await prerenderPageLinks({
+    locale,
+    pages,
+    payload,
+  });
+
   // Prepare Publication Types and topics filter items
   // =========================
   const filterItemsPublicationTypes = prepareFilterItems({
@@ -86,69 +83,21 @@ export const PublicationsOverviewBlock = async (props: InterfaceNewsOverviewProp
     filterItemsPublicationTopics,
   ];
 
-  // Get image ids of fetched publicationPages
-  // =========================
-  const publicationPagesImageIds = publicationPages.docs
-    .map((p) => p.overviewPageProps?.image)
-    .filter(Boolean);
-
-  const uniqueImageIds = [...new Set(publicationPagesImageIds)];
-
-  // Get all imageData
-  // =========================
-  const imageData = await getImageDataForUniqueIds(uniqueImageIds);
-
-  const imagesById: Record<string, InterfaceImagePropTypes | undefined> = {};
-
-  imageData.docs
-    .forEach((img) => {
-      const imageWithDefaults = {
-        ...img,
-        loading: 'lazy',
-        variant: 'publicationTeaser',
-      } as InterfaceImagePropTypes;
-
-      imagesById[img.id] = imageWithDefaults;
-    });
-
-  const collectPublicationImages = (
-    pages: typeof publicationPages.docs,
-    imagesMap: Record<string, InterfaceImagePropTypes | undefined>,
-  ): (InterfaceImagePropTypes)[] => pages.map((page) => {
-    const imageId = page?.overviewPageProps?.image as string;
-
-    return imagesMap[imageId] as InterfaceImagePropTypes;
-  });
-
-  const publicationImages = collectPublicationImages(
-    publicationPages.docs,
-    imagesById,
-  );
-
   const title = rte1ToPlaintext(props.title);
-  const notificationContent = rteToHtml(props.notification);
 
-  // Prepare Publication items
+  // Convert publication detail pages to
+  // publication teaser items
   const items = convertPayloadPublicationsPagesToFeItems(
-    publicationPages,
-    publicationImages,
+    pages,
+    urlMap,
     publicationTypes.docs,
-    filterItemsPublicationTypes,
     locale,
   );
-
-  if (!items || items.length < 1) {
-    return <Fragment></Fragment>;
-  }
 
   return (
     <PublicationsOverview
       colorMode='white'
       filterItems={filterData}
-      notification={{
-        text: notificationContent,
-        title: '',
-      }}
       paginationTitle='Pagination'
       publicationItems={items}
       title={title}

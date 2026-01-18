@@ -1,6 +1,10 @@
 import {
-  Config, EventDetailPage,
-  MagazineDetailPage, NewsDetailPage, ProjectDetailPage,
+  Config,
+  EventDetailPage,
+  MagazineDetailPage,
+  NewsDetailPage,
+  ProjectDetailPage,
+  PublicationDetailPage,
   Team,
 } from '@/payload-types';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
@@ -298,4 +302,34 @@ export const fetchProjectsPages = async ({
   });
 
   return result as ProjectDetailPage[];
+};
+
+// #########################################################################
+// Publication Pages
+// #########################################################################
+
+interface InterfaceFetchPublicationPagesProps {
+  locale: TypedLocale;
+  tenant: string;
+  limit?: number;
+  payload?: BasePayload;
+}
+
+export const fetchPublicationPages = async ({
+  locale,
+  tenant,
+  limit = 0,
+  payload,
+}: InterfaceFetchPublicationPagesProps): Promise<PublicationDetailPage[]> => {
+  const result = await fetchDetailPages({
+    collection: 'publicationDetailPage',
+    depth: 2,
+    language: locale,
+    limit,
+    payload,
+    sort: '-createdAt',
+    tenant,
+  });
+
+  return result as PublicationDetailPage[];
 };
