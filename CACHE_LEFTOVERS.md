@@ -5,7 +5,6 @@
 - add global array of tenant names. these names are forbidden to use as slugs. implement this in the validation for slug
 - optional link on form error/success notification is not rendered
 - make preview-link in admin-ui work
-- test link-prefetching on prod
 - immediately statically rebuild a page after revalidatePath is issued
 - test static generation with localized tenant slugs
 - in playwright seed, add 1000s of pages, then compare test times before and after
@@ -19,7 +18,6 @@
 
 ############## CACHE ##############
 - event detail page has links block link to detail page. if only content blocks of detail page changes, then event detail page should not be invalidated, but it currently is.
-- invalidations on page deletions. e.g., delete event detail page -> event teasers / overviews should be invalidated
 - create event detail page (an overview page with events-overview exists) -> cache invalidation shows de/overview-page (ok), but it also invalidates /it, /fr/, /en
 - invalidate on meta change!
 - test -> link -> consent (and other globals): should not only invlidate home, but all pages

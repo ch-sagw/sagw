@@ -3,7 +3,7 @@
 // and update (when slug/breadcrumb changes)
 
 import type {
-  CollectionAfterChangeHook, CollectionSlug, TypedLocale,
+  CollectionAfterChangeHook, CollectionBeforeDeleteHook, CollectionSlug, TypedLocale,
 } from 'payload';
 import {
   globalCollectionsSlugs, setsSlugs, singletonSlugs,
@@ -1602,3 +1602,97 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
   return doc;
 };
 
+// hook to invalidate cache when detail pages are deleted
+// runs on delete for programmatically referenced detail pages
+export const hookInvalidateCacheOnPageDelete: CollectionBeforeDeleteHook = async ({
+  req,
+  id,
+  collection,
+  context,
+}) => {
+  // skip if already invalidating (prevent loops)
+  if (context?.invalidatingCache) {
+    return;
+  }
+
+  // skip cache invalidation during seed operations
+  if (context?.skipCacheInvalidation) {
+    return;
+  }
+
+  if (!req?.payload || !id) {
+    return;
+  }
+
+  const collectionSlug = collection?.slug;
+
+  if (!collectionSlug) {
+    return;
+  }
+
+  // check if this is a detail page that's programmatically referenced
+  const blockTypes = DETAIL_PAGE_TO_BLOCKS[collectionSlug];
+  const isProgrammaticallyReferenced = blockTypes && blockTypes.length > 0;
+
+  if (!isProgrammaticallyReferenced) {
+    return;
+  }
+
+  // fetch the document to get tenant info
+  // we need this before deletion to extract tenant
+  let doc: any;
+
+  try {
+    doc = await req.payload.findByID({
+      collection: collectionSlug,
+      depth: 0,
+      id: String(id),
+    });
+  } catch (error) {
+    // document might already be deleted or not found
+    console.error(`Error fetching document for cache invalidation on delete for docId ${id}:`, error);
+
+    return;
+  }
+
+  if (!doc) {
+    return;
+  }
+
+  // extract tenant
+  let tenantId: string | undefined;
+
+  if ('tenant' in doc && doc.tenant) {
+    const extractedId = extractID(doc.tenant);
+
+    tenantId = typeof extractedId === 'string'
+      ? extractedId
+      : String(extractedId);
+  }
+
+  if (!tenantId) {
+    return;
+  }
+
+  const allLocales = getLocaleCodes();
+
+  // find pages with teaser/overview blocks that reference this detail page
+  const referencingPages = await findPagesWithProgrammaticBlocks({
+    blockTypes,
+    payload: req.payload,
+    tenantId,
+  });
+
+  // invalidate cache for all locales when a programmatically
+  // referenced page is deleted
+  await Promise.all(referencingPages.flatMap((page) => allLocales.map((loc) => invalidateCache({
+    collectionSlug: page.collectionSlug,
+    locale: loc,
+    pageId: page.id,
+    payload: req.payload,
+  }))));
+
+  // clear invalidation cache after delete operation to ensure
+  // subsequent operations can properly invalidate pages
+  clearInvalidationCache();
+};
