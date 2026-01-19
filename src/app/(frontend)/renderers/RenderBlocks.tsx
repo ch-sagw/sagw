@@ -41,7 +41,7 @@ import { Rte } from '@/components/blocks/Rte/Rte';
 import { Accordion } from '@/components/blocks/Accordion/Accordion.server';
 import { FormServer } from '@/components/blocks/Form/Form.server';
 import { ImageBlock } from '@/components/blocks/Image/Image';
-import { Video } from '@/components/blocks/Video/Video';
+import { Video } from '@/components/blocks/Video/Video.client';
 import { Links } from '@/components/blocks/Links/Links';
 import { Downloads } from '@/components/blocks/Downloads/Downloads';
 import { NewsOverview } from '@/components/blocks/NewsOverview/NewsOverview';

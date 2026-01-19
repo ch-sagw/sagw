@@ -4,15 +4,15 @@ import {
 } from '@playwright/test';
 import {
   generateDetailPage,
+  generateForm,
   getHomeId,
 } from '@/test-helpers/collections-generator';
 import { getTenantId } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { LogCapture } from '@/test-helpers/capture-logs';
-import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { deleteSetsPages } from '@/seed/test-data/deleteData';
 
-test('invalidates on content change (sagw)', {
+test('invalidates page if form on detail page changes (sagw)', {
   tag: '@cache',
 }, async () => {
   await deleteSetsPages();
@@ -37,22 +37,33 @@ test('invalidates on content change (sagw)', {
       documentId: home,
       slug: 'homePage',
     },
+    tenant,
     title: `detail ${time}`,
   });
 
-  logCapture.captureLogs();
+  const form = await generateForm(tenant);
 
   await payload.update({
     collection: 'detailPage',
     data: {
       content: [
         {
-          blockType: 'textBlock',
-          text: simpleRteConfig('some text'),
+          blockType: 'formBlock',
+          form,
         },
       ],
     },
     id: detailPage.id,
+  });
+
+  logCapture.captureLogs();
+
+  await payload.update({
+    collection: 'forms',
+    data: {
+      mailSubject: 'changed',
+    },
+    id: form,
   });
 
   logCapture.detachLogs();
@@ -65,7 +76,7 @@ test('invalidates on content change (sagw)', {
 
 });
 
-test('invalidates on hero change (sagw)', {
+test('invalidates page if form on detail page is deleted (sagw)', {
   tag: '@cache',
 }, async () => {
   await deleteSetsPages();
@@ -90,19 +101,30 @@ test('invalidates on hero change (sagw)', {
       documentId: home,
       slug: 'homePage',
     },
+    tenant,
     title: `detail ${time}`,
   });
 
-  logCapture.captureLogs();
+  const form = await generateForm(tenant);
 
   await payload.update({
     collection: 'detailPage',
     data: {
-      hero: {
-        title: simpleRteConfig('changed'),
-      },
+      content: [
+        {
+          blockType: 'formBlock',
+          form,
+        },
+      ],
     },
     id: detailPage.id,
+  });
+
+  logCapture.captureLogs();
+
+  await payload.delete({
+    collection: 'forms',
+    id: form,
   });
 
   logCapture.detachLogs();
@@ -115,7 +137,7 @@ test('invalidates on hero change (sagw)', {
 
 });
 
-test('invalidates on content change in other locale (sagw)', {
+test('invalidates page if form on home changes (sagw)', {
   tag: '@cache',
 }, async () => {
   await deleteSetsPages();
@@ -135,42 +157,49 @@ test('invalidates on content change in other locale (sagw)', {
     tenant,
   });
 
-  const detailPage = await generateDetailPage({
-    locale: 'it',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    title: `detail ${time}`,
-  });
-
-  logCapture.captureLogs();
+  const form = await generateForm(tenant);
 
   await payload.update({
-    collection: 'detailPage',
+    collection: 'homePage',
     data: {
       content: [
         {
-          blockType: 'textBlock',
-          text: simpleRteConfig('some text'),
+          blockType: 'formBlock',
+          form,
         },
       ],
     },
-    id: detailPage.id,
-    locale: 'it',
+    id: home,
+  });
+
+  console.log('before');
+
+  logCapture.captureLogs();
+
+  await payload.update({
+    collection: 'forms',
+    data: {
+      mailSubject: 'changed',
+    },
+    id: form,
   });
 
   logCapture.detachLogs();
 
-  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/${detailPage.slug}`))
+  expect(logCapture.hasLog('[CACHE] invalidating path: /de'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /fr'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /it'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /en'))
     .toBe(true);
 
   expect(logCapture.logs)
-    .toHaveLength(1);
-
+    .toHaveLength(4);
 });
 
-test('invalidates on hero change in other locale (sagw)', {
+test('invalidates page if form on home is deleted (sagw)', {
   tag: '@cache',
 }, async () => {
   await deleteSetsPages();
@@ -190,39 +219,46 @@ test('invalidates on hero change in other locale (sagw)', {
     tenant,
   });
 
-  const detailPage = await generateDetailPage({
-    locale: 'it',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
+  const form = await generateForm(tenant);
+
+  await payload.update({
+    collection: 'homePage',
+    data: {
+      content: [
+        {
+          blockType: 'formBlock',
+          form,
+        },
+      ],
     },
-    title: `detail ${time}`,
+    id: home,
   });
+
+  console.log('before');
 
   logCapture.captureLogs();
 
-  await payload.update({
-    collection: 'detailPage',
-    data: {
-      hero: {
-        title: simpleRteConfig('changed'),
-      },
-    },
-    id: detailPage.id,
-    locale: 'it',
+  await payload.delete({
+    collection: 'forms',
+    id: form,
   });
 
   logCapture.detachLogs();
 
-  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/${detailPage.slug}`))
+  expect(logCapture.hasLog('[CACHE] invalidating path: /de'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /fr'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /it'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /en'))
     .toBe(true);
 
   expect(logCapture.logs)
-    .toHaveLength(1);
-
+    .toHaveLength(4);
 });
 
-test('invalidates on content change (non-sagw)', {
+test('invalidates page if form on detail page changes (non-sagw)', {
   tag: '@cache',
 }, async () => {
   await deleteSetsPages();
@@ -251,19 +287,29 @@ test('invalidates on content change (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  logCapture.captureLogs();
+  const form = await generateForm(tenant);
 
   await payload.update({
     collection: 'detailPage',
     data: {
       content: [
         {
-          blockType: 'textBlock',
-          text: simpleRteConfig('some text'),
+          blockType: 'formBlock',
+          form,
         },
       ],
     },
     id: detailPage.id,
+  });
+
+  logCapture.captureLogs();
+
+  await payload.update({
+    collection: 'forms',
+    data: {
+      mailSubject: 'changed',
+    },
+    id: form,
   });
 
   logCapture.detachLogs();
@@ -276,7 +322,7 @@ test('invalidates on content change (non-sagw)', {
 
 });
 
-test('invalidates on hero change (non-sagw)', {
+test('invalidates page if form on detail page is deleted (non-sagw)', {
   tag: '@cache',
 }, async () => {
   await deleteSetsPages();
@@ -305,16 +351,26 @@ test('invalidates on hero change (non-sagw)', {
     title: `detail ${time}`,
   });
 
-  logCapture.captureLogs();
+  const form = await generateForm(tenant);
 
   await payload.update({
     collection: 'detailPage',
     data: {
-      hero: {
-        title: simpleRteConfig('changed'),
-      },
+      content: [
+        {
+          blockType: 'formBlock',
+          form,
+        },
+      ],
     },
     id: detailPage.id,
+  });
+
+  logCapture.captureLogs();
+
+  await payload.delete({
+    collection: 'forms',
+    id: form,
   });
 
   logCapture.detachLogs();
@@ -327,7 +383,7 @@ test('invalidates on hero change (non-sagw)', {
 
 });
 
-test('invalidates on content change in other locale (non-sagw)', {
+test('invalidates page if form on home changes (non-sagw)', {
   tag: '@cache',
 }, async () => {
   await deleteSetsPages();
@@ -347,43 +403,49 @@ test('invalidates on content change in other locale (non-sagw)', {
     tenant,
   });
 
-  const detailPage = await generateDetailPage({
-    locale: 'it',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: `detail ${time}`,
-  });
-
-  logCapture.captureLogs();
+  const form = await generateForm(tenant);
 
   await payload.update({
-    collection: 'detailPage',
+    collection: 'homePage',
     data: {
       content: [
         {
-          blockType: 'textBlock',
-          text: simpleRteConfig('some text'),
+          blockType: 'formBlock',
+          form,
         },
       ],
     },
-    id: detailPage.id,
-    locale: 'it',
+    id: home,
+  });
+
+  console.log('before');
+
+  logCapture.captureLogs();
+
+  await payload.update({
+    collection: 'forms',
+    data: {
+      mailSubject: 'changed',
+    },
+    id: form,
   });
 
   logCapture.detachLogs();
 
-  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/tenant-${time}-it/${detailPage.slug}`))
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /fr/tenant-${time}`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/tenant-${time}`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /en/tenant-${time}`))
     .toBe(true);
 
   expect(logCapture.logs)
-    .toHaveLength(1);
-
+    .toHaveLength(4);
 });
 
-test('invalidates on hero change in other locale (non-sagw)', {
+test('invalidates page if form on home is deleted (non-sagw)', {
   tag: '@cache',
 }, async () => {
   await deleteSetsPages();
@@ -403,35 +465,41 @@ test('invalidates on hero change in other locale (non-sagw)', {
     tenant,
   });
 
-  const detailPage = await generateDetailPage({
-    locale: 'it',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
+  const form = await generateForm(tenant);
+
+  await payload.update({
+    collection: 'homePage',
+    data: {
+      content: [
+        {
+          blockType: 'formBlock',
+          form,
+        },
+      ],
     },
-    tenant,
-    title: `detail ${time}`,
+    id: home,
   });
+
+  console.log('before');
 
   logCapture.captureLogs();
 
-  await payload.update({
-    collection: 'detailPage',
-    data: {
-      hero: {
-        title: simpleRteConfig('changed'),
-      },
-    },
-    id: detailPage.id,
-    locale: 'it',
+  await payload.delete({
+    collection: 'forms',
+    id: form,
   });
 
   logCapture.detachLogs();
 
-  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/tenant-${time}-it/${detailPage.slug}`))
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /fr/tenant-${time}`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/tenant-${time}`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /en/tenant-${time}`))
     .toBe(true);
 
   expect(logCapture.logs)
-    .toHaveLength(1);
-
+    .toHaveLength(4);
 });

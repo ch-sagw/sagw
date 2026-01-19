@@ -3,6 +3,7 @@ import {
   rte1, rte3,
 } from '@/field-templates/rte';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
+import { hookInvalidateCacheOnI18nGlobalsChange } from '@/hooks-payload/invalidateCacheOnI18nGlobalsChange';
 
 export const I18nGlobals: CollectionConfig = {
   access: globalContentAccessNoTranslatorNoEditor,
@@ -88,7 +89,7 @@ export const I18nGlobals: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [],
+    afterChange: [hookInvalidateCacheOnI18nGlobalsChange],
   },
   slug: 'i18nGlobals',
 };
