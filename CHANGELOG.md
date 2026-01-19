@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.0](https://github.com/ch-sagw/sagw/compare/v0.29.0...v0.30.0) (2026-01-19)
+
+
+### Features
+
+* improving cache invalidation ([6dd5b9d](https://github.com/ch-sagw/sagw/commit/6dd5b9d5c732ddfed91da467558e551fa9c6a783))
+
 ## [0.29.0](https://github.com/ch-sagw/sagw/compare/v0.28.0...v0.29.0) (2026-01-17)
 
 
