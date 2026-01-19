@@ -32,7 +32,7 @@ export const PublicationsOverviewBlock = async (props: InterfaceNewsOverviewProp
     depth: 2,
     language: locale,
     limit: 0,
-    sort: '-createdAt',
+    sort: '-overviewPageProps.date',
     tenant,
   }) as PublicationDetailPage[];
 

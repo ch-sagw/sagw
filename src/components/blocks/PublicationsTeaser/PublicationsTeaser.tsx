@@ -1,37 +1,43 @@
+import 'server-only';
 import React, { Fragment } from 'react';
-import {
-  getPayload,
-  TypedLocale,
-} from 'payload';
-import configPromise from '@/payload.config';
 import { rteToHtml } from '@/utilities/rteToHtml';
-import { InterfacePublicationsTeasersBlock } from '@/payload-types';
+import {
+  InterfacePublicationsTeasersBlock,
+  PublicationDetailPage,
+} from '@/payload-types';
+import { fetchDetailPages } from '@/data/fetch';
 import { PublicationsTeaserComponent } from '@/components/blocks/PublicationsTeaser/PublicationsTeaser.component';
-import { InterfaceImagePropTypes } from '@/components/base/Image/Image';
 import { convertPayloadPublicationsPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
 import { getLocale } from 'next-intl/server';
-import { getImageDataForUniqueIds } from '@/components/blocks/helpers/getImageData';
-
+import { TypedLocale } from 'payload';
+import { getPageUrl } from '@/utilities/getPageUrl';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { prerenderPageLinks } from '@/utilities/prerenderPageLinks';
+import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 export type InterfacePublicationsTeaserPropTypes = {
   tenant: string;
 } & InterfacePublicationsTeasersBlock;
 
 export const PublicationsTeaser = async (props: InterfacePublicationsTeaserPropTypes): Promise<React.JSX.Element> => {
-  const payload = await getPayload({
-    config: configPromise,
-  });
-
   const locale = (await getLocale()) as TypedLocale;
+  const payload = await getPayloadCached();
+  const {
+    tenant,
+  } = props;
 
-  // Get publications data
-  const publicationPages = await payload.find({
+  const pages = await fetchDetailPages({
     collection: 'publicationDetailPage',
-    depth: 1,
+    depth: 2,
+    language: locale,
     limit: 4,
-    locale,
-    overrideAccess: false,
-    pagination: false,
     sort: '-overviewPageProps.date',
+    tenant,
+  }) as PublicationDetailPage[];
+
+  const publicationTypes = await payload.find({
+    collection: 'publicationTypes',
+    locale,
+    sort: 'publicationType.text',
     where: {
       tenant: {
         equals: props.tenant,
@@ -39,56 +45,38 @@ export const PublicationsTeaser = async (props: InterfacePublicationsTeaserPropT
     },
   });
 
-  const publications = publicationPages.docs;
-
-  // Get image ids of fetched publicationPages
-  const publicationPagesImageIds = publications
-    .map((p) => p.overviewPageProps?.image)
-    .filter(Boolean);
-
-  const uniqueImageIds = [...new Set(publicationPagesImageIds)];
-
-  // Get all imageData
-  const imageData = await getImageDataForUniqueIds(uniqueImageIds);
-
-  const imagesById: Record<string, InterfaceImagePropTypes | undefined> = {};
-
-  imageData.docs
-    .forEach((img) => {
-      const imageWithDefaults = {
-        ...img,
-        loading: 'lazy',
-        variant: 'publicationTeaser',
-      } as InterfaceImagePropTypes;
-
-      imagesById[img.id] = imageWithDefaults;
-    });
-
-  const collectPublicationImages = (
-    pages: typeof publications,
-    imagesMap: Record<string, InterfaceImagePropTypes | undefined>,
-  ): (InterfaceImagePropTypes)[] => pages.map((page) => {
-    const imageId = page?.overviewPageProps?.image as string;
-
-    return imagesMap[imageId] as InterfaceImagePropTypes;
+  const urlMap = await prerenderPageLinks({
+    locale,
+    pages,
+    payload,
   });
 
-  const publicationImages = collectPublicationImages(publications, imagesById);
+  const title = rte1ToPlaintext(props.title);
 
-  const title = rteToHtml(props.title);
   let allLink;
 
   if (props.optionalLink?.includeLink && props.optionalLink.link?.linkText) {
     allLink = {
 
-      // TODO
-      href: '/overview',
+      // TODO: we need reference tracking here
+      href: await getPageUrl({
+        locale,
+        pageId: props.optionalLink.link.internalLink.documentId,
+        payload: await getPayloadCached(),
+      }),
 
-      text: rteToHtml(props.optionalLink.link?.linkText),
+      text: rteToHtml(props.optionalLink.link.linkText),
     };
   }
 
-  const items = convertPayloadPublicationsPagesToFeItems(publicationPages, publicationImages, locale);
+  // Convert publication detail pages to
+  // publication teaser items
+  const items = convertPayloadPublicationsPagesToFeItems(
+    pages,
+    urlMap,
+    publicationTypes.docs,
+    locale,
+  );
 
   if (!items || items.length < 1) {
     return <Fragment></Fragment>;
