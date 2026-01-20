@@ -38,8 +38,6 @@ export const TeaserLinkList = (props: InterfaceTeaserLinkListPropTypes): React.J
     },
   });
 
-  console.log(`allLink ${allLink?.href}`);
-
   return (
     <Section
       className={styles.teaserLinkList}

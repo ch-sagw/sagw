@@ -108,6 +108,7 @@ interface InterfaceRenderBlocksProps {
   )[] | null | undefined;
   i18n: I18NGlobal;
   sourcePage: InterfaceSourcePage;
+  projectId?: string;
 }
 
 export const RenderBlocks = ({
@@ -115,6 +116,7 @@ export const RenderBlocks = ({
   tenantId,
   i18n,
   sourcePage,
+  projectId,
 }: InterfaceRenderBlocksProps): React.JSX.Element | null => {
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0;
 
@@ -249,6 +251,7 @@ export const RenderBlocks = ({
                   <PublicationsTeaser
                     {...block}
                     tenant={tenantId}
+                    projectId={projectId}
                     key={key}
                   />
                 </div>

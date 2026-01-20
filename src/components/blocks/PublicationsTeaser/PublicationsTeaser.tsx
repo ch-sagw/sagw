@@ -16,6 +16,7 @@ import { prerenderPageLinks } from '@/utilities/prerenderPageLinks';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 export type InterfacePublicationsTeaserPropTypes = {
   tenant: string;
+  projectId?: string;
 } & InterfacePublicationsTeasersBlock;
 
 export const PublicationsTeaser = async (props: InterfacePublicationsTeaserPropTypes): Promise<React.JSX.Element> => {
@@ -23,6 +24,7 @@ export const PublicationsTeaser = async (props: InterfacePublicationsTeaserPropT
   const payload = await getPayloadCached();
   const {
     tenant,
+    projectId,
   } = props;
 
   const pages = await fetchDetailPages({
@@ -30,6 +32,7 @@ export const PublicationsTeaser = async (props: InterfacePublicationsTeaserPropT
     depth: 2,
     language: locale,
     limit: 4,
+    projectId,
     sort: '-overviewPageProps.date',
     tenant,
   }) as PublicationDetailPage[];
