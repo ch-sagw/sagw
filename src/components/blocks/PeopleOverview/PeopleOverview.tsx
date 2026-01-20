@@ -1,3 +1,4 @@
+import 'server-only';
 import {
   InterfacePeopleOverviewBlock,
   Person,
@@ -25,8 +26,9 @@ export const PeopleOverview = async (props: InterfacePeopleOverviewPropTypes): P
     return undefined;
   }
 
-  // we're doing a fetch with depth 1, so we can be sure we get the full
-  // objects back, not just people id's.
+  // we're doing a fetch with depth 2, so we can
+  // be sure we get the full objects back (including
+  // image references), not just people id's.
   const people = team.people as Person[];
 
   return (

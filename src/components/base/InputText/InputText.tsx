@@ -2,7 +2,7 @@
 
 import React, {
   useEffect,
-  useId, useRef,
+  useRef,
 } from 'react';
 import { cva } from 'cva';
 import styles from '@/components/base/InputText/InputText.module.scss';
@@ -44,7 +44,7 @@ export const InputText = ({
   className,
   autofocus,
 }: InterfaceInputTextPropTypes): React.JSX.Element => {
-  const inputId = useId();
+  const inputId = `input-${name}`;
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
   useEffect(() => {

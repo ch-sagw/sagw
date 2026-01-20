@@ -5,7 +5,7 @@ import { fieldsLinkInternalOrExternal } from '@/field-templates/links';
 import {
   rte1, rte2,
 } from '@/field-templates/rte';
-import { alignementHorizontalVertical } from '@/field-templates/alignement';
+import { alignmentHorizontalVertical } from '@/field-templates/alignment';
 import {
   fieldAccessLocalizableField, fieldAccessNonLocalizableField,
 } from '@/access/fields/localizedFields';
@@ -45,7 +45,7 @@ export const GenericTeasersBlock = {
       name: 'lead',
       notRequired: true,
     }),
-    alignementHorizontalVertical,
+    alignmentHorizontalVertical,
     {
       access: fieldAccessNonLocalizableField,
       fields: TeaserItem,

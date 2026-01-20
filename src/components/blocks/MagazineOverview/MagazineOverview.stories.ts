@@ -3,9 +3,11 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import { MagazineOverviewComponent } from '@/components/blocks/MagazineOverview/MagazineOverview.component';
+import { InterfaceMagazineDetailPageWithImage } from '@/components/blocks/MagazineOverview/MagazineOverview';
 import { defaultDecorator } from '@/storybook-helpers';
-import { MagazineDetailPage } from '@/payload-types';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { MagazineTeaserImage } from '@/components/blocks/helpers/imagesData';
+import { prerenderPageLinksStorybook } from '@/utilities/prerenderPageLinksStorybook';
 
 type MagazineOverviewProps = React.ComponentProps<typeof MagazineOverviewComponent>;
 
@@ -25,8 +27,6 @@ const meta: Meta<typeof MagazineOverviewComponent> = {
   },
   tags: [
     'autodocs',
-    // TODO: enable after image is integrated
-    // 'visual:check',
     'a11y:check',
   ],
   title: 'Components/blocks/MagazineOverview',
@@ -34,20 +34,12 @@ const meta: Meta<typeof MagazineOverviewComponent> = {
 
 export default meta;
 
-const pages: MagazineDetailPage[] = Array.from({
+const pages: InterfaceMagazineDetailPageWithImage[] = Array.from({
   length: 12,
 }, (_, i) => {
   const index = i + 1;
 
   return ({
-    content: [
-      {
-        alignement: 'center',
-        blockType: 'imageBlock',
-        credits: simpleRteConfig('some credits'),
-        image: 'some-image',
-      },
-    ],
     createdAt: '2025-10-20T12:50:57.693Z',
     hero: {
       author: simpleRteConfig('Author'),
@@ -59,6 +51,7 @@ const pages: MagazineDetailPage[] = Array.from({
       title: simpleRteConfig(`Magazine detail page ${index}`),
     },
     id: index.toString(),
+    image: MagazineTeaserImage,
     navigationTitle: `Article ${index}`,
     overviewPageProps: {
       teaserText: simpleRteConfig('Magazine Detail Teaser Text'),
@@ -69,9 +62,12 @@ const pages: MagazineDetailPage[] = Array.from({
   });
 });
 
-export const SampleStory: StrictStory = {
+export const MagazineOverview: StrictStory = {
   args: {
     blockType: 'magazineOverviewBlock',
+    pageUrls: prerenderPageLinksStorybook({
+      pages,
+    }),
     pages,
   },
 };

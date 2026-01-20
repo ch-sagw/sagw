@@ -18,6 +18,7 @@ import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccess } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import { preview } from '@/utilities/previewUrl';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -92,6 +93,7 @@ export const EventDetailPage: CollectionConfig = {
     ],
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
+    preview,
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
@@ -213,7 +215,9 @@ export const EventDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: genericPageHooks(),
+  hooks: genericPageHooks({
+    afterChange: [],
+  }),
   labels: {
     plural: 'Event Detail Pages',
     singular: 'Event Detail Detail',

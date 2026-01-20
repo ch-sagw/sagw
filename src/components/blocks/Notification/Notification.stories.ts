@@ -2,32 +2,22 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { Notification } from '@/components/blocks/Notification/Notification';
-import { defaultDecorator } from '@/storybook-helpers';
 import {
-  rte3NotificationText,
-  rte3NotificationTextWithUl,
-} from '@/utilities/rteSampleContent';
+  type InterfaceNotificationClientPropTypes, NotificationClient,
+} from '@/components/blocks/Notification/Notification.client';
+import { defaultDecorator } from '@/storybook-helpers';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
-type NotificationProps = React.ComponentProps<typeof Notification>;
-
-type StrictStory = StoryObj<typeof Notification> & {
-  args: NotificationProps;
+type StrictStory = StoryObj<typeof NotificationClient> & {
+  args: InterfaceNotificationClientPropTypes;
 };
 
-const meta: Meta<typeof Notification> = {
+const meta: Meta<typeof NotificationClient> = {
   args: {},
-  component: Notification,
+  component: NotificationClient,
   decorators: [defaultDecorator],
-  parameters: {
-    controls: {
-      exclude: [
-        'id',
-        'blockName',
-        'blockType',
-      ],
-    },
-  },
+  parameters: {/* layout: 'centered', */ },
   tags: [
     'autodocs',
     'visual:check',
@@ -40,16 +30,6 @@ export default meta;
 
 export const SampleNotification: StrictStory = {
   args: {
-    blockName: 'foo',
-    blockType: 'notificationBlock',
-    text: rte3NotificationText,
-  },
-};
-
-export const SampleNotificationWithUl: StrictStory = {
-  args: {
-    blockName: 'foo',
-    blockType: 'notificationBlock',
-    text: rte3NotificationTextWithUl,
+    textHtml: rteToHtml(simpleRteConfig('This is a sample notification message. It can contain <strong>rich text</strong> and <a href="#">links</a>.')),
   },
 };

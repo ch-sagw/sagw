@@ -98,6 +98,12 @@ export interface Config {
     nationalDictionaryDetailPage: NationalDictionaryDetailPage;
     instituteDetailPage: InstituteDetailPage;
     projectDetailPage: ProjectDetailPage;
+    i18nGlobals: I18NGlobal;
+    consent: Consent;
+    footer: Footer;
+    header: Header;
+    statusMessage: StatusMessage;
+    theme: Theme;
     images: Image;
     videos: Video;
     networkCategories: NetworkCategory;
@@ -112,12 +118,6 @@ export interface Config {
     tenants: Tenant;
     users: User;
     forms: Form;
-    i18nGlobals: I18NGlobal;
-    consent: Consent;
-    footer: Footer;
-    header: Header;
-    statusMessage: StatusMessage;
-    theme: Theme;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -159,6 +159,12 @@ export interface Config {
     nationalDictionaryDetailPage: NationalDictionaryDetailPageSelect<false> | NationalDictionaryDetailPageSelect<true>;
     instituteDetailPage: InstituteDetailPageSelect<false> | InstituteDetailPageSelect<true>;
     projectDetailPage: ProjectDetailPageSelect<false> | ProjectDetailPageSelect<true>;
+    i18nGlobals: I18NGlobalsSelect<false> | I18NGlobalsSelect<true>;
+    consent: ConsentSelect<false> | ConsentSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    statusMessage: StatusMessageSelect<false> | StatusMessageSelect<true>;
+    theme: ThemeSelect<false> | ThemeSelect<true>;
     images: ImagesSelect<false> | ImagesSelect<true>;
     videos: VideosSelect<false> | VideosSelect<true>;
     networkCategories: NetworkCategoriesSelect<false> | NetworkCategoriesSelect<true>;
@@ -173,12 +179,6 @@ export interface Config {
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
-    i18nGlobals: I18NGlobalsSelect<false> | I18NGlobalsSelect<true>;
-    consent: ConsentSelect<false> | ConsentSelect<true>;
-    footer: FooterSelect<false> | FooterSelect<true>;
-    header: HeaderSelect<false> | HeaderSelect<true>;
-    statusMessage: StatusMessageSelect<false> | StatusMessageSelect<true>;
-    theme: ThemeSelect<false> | ThemeSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -364,6 +364,7 @@ export interface InterfaceHeroFieldHome {
  * via the `definition` "InterfaceInternalLinkValue".
  */
 export interface InterfaceInternalLinkValue {
+  _internalLinkMarker?: boolean | null;
   slug: string;
   documentId: string;
 }
@@ -925,7 +926,7 @@ export interface InterfaceHomeTeasersBlock {
   homeTeasers?:
     | {
         category: string;
-        iconName: 'bar';
+        iconName: 'homeTeaserActivities' | 'homeTeaserFunding' | 'homeTeaserNetwork';
         title: {
           root: {
             type: string;
@@ -1065,7 +1066,7 @@ export interface InterfaceMagazineTeasersBlock {
   /**
    * Align Title & text horizontally or vertically
    */
-  alignement?: ('vertical' | 'horizontal') | null;
+  alignment?: ('vertical' | 'horizontal') | null;
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
@@ -1223,7 +1224,7 @@ export interface InterfaceProjectTeasersBlock {
   /**
    * Align Title & text horizontally or vertically
    */
-  alignement?: ('vertical' | 'horizontal') | null;
+  alignment?: ('vertical' | 'horizontal') | null;
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
@@ -1256,7 +1257,7 @@ export interface InterfaceProjectTeasersBlock {
  *       into all required renditions (image sizes). Please ensure
  *       that the dimensions of the uploaded image does not exceed 4000 pixels
  *       in either direction. Allowed image formats are «png, jpg, jpeg, gif,
- *       webp, avif». Since the optimization service will compress the
+ *       webp, avif and svg». Since the optimization service will compress the
  *       renditions again, it is best to not compress the image too much before
  *       you upload it.
  *
@@ -1387,6 +1388,7 @@ export interface ErrorPage {
 export interface DataPrivacyPage {
   id: string;
   tenant?: (string | null) | Tenant;
+  slug?: string | null;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   hero: InterfaceHeroField;
@@ -1450,6 +1452,7 @@ export interface InterfaceHeroField {
 export interface ImpressumPage {
   id: string;
   tenant?: (string | null) | Tenant;
+  slug?: string | null;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   hero: InterfaceHeroField;
@@ -2834,7 +2837,7 @@ export interface InterfaceGenericTeasersBlock {
   /**
    * Align Title & text horizontally or vertically
    */
-  alignement?: ('vertical' | 'horizontal') | null;
+  alignment?: ('vertical' | 'horizontal') | null;
   teasers: {
     title: {
       root: {
@@ -3547,39 +3550,6 @@ export interface InstituteDetailPage {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: string;
-  password?: string | null;
-  roles?: ('super-admin' | 'global-user')[] | null;
-  username?: string | null;
-  tenants?:
-    | {
-        tenant: string | Tenant;
-        roles: ('tenant-admin' | 'editor-magazine' | 'translator')[];
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4573,6 +4543,39 @@ export interface Theme {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  password?: string | null;
+  roles?: ('super-admin' | 'global-user')[] | null;
+  username?: string | null;
+  tenants?:
+    | {
+        tenant: string | Tenant;
+        roles: ('tenant-admin' | 'editor-magazine' | 'translator')[];
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -4648,6 +4651,30 @@ export interface PayloadLockedDocument {
         value: string | ProjectDetailPage;
       } | null)
     | ({
+        relationTo: 'i18nGlobals';
+        value: string | I18NGlobal;
+      } | null)
+    | ({
+        relationTo: 'consent';
+        value: string | Consent;
+      } | null)
+    | ({
+        relationTo: 'footer';
+        value: string | Footer;
+      } | null)
+    | ({
+        relationTo: 'header';
+        value: string | Header;
+      } | null)
+    | ({
+        relationTo: 'statusMessage';
+        value: string | StatusMessage;
+      } | null)
+    | ({
+        relationTo: 'theme';
+        value: string | Theme;
+      } | null)
+    | ({
         relationTo: 'images';
         value: string | Image;
       } | null)
@@ -4702,30 +4729,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'forms';
         value: string | Form;
-      } | null)
-    | ({
-        relationTo: 'i18nGlobals';
-        value: string | I18NGlobal;
-      } | null)
-    | ({
-        relationTo: 'consent';
-        value: string | Consent;
-      } | null)
-    | ({
-        relationTo: 'footer';
-        value: string | Footer;
-      } | null)
-    | ({
-        relationTo: 'header';
-        value: string | Header;
-      } | null)
-    | ({
-        relationTo: 'statusMessage';
-        value: string | StatusMessage;
-      } | null)
-    | ({
-        relationTo: 'theme';
-        value: string | Theme;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -4834,6 +4837,7 @@ export interface InterfaceHeroFieldHomeSelect<T extends boolean = true> {
  * via the `definition` "InterfaceInternalLinkValue_select".
  */
 export interface InterfaceInternalLinkValueSelect<T extends boolean = true> {
+  _internalLinkMarker?: T;
   slug?: T;
   documentId?: T;
 }
@@ -4906,7 +4910,7 @@ export interface InterfaceEventsTeasersBlockSelect<T extends boolean = true> {
 export interface InterfaceMagazineTeasersBlockSelect<T extends boolean = true> {
   title?: T;
   lead?: T;
-  alignement?: T;
+  alignment?: T;
   optionalLink?:
     | T
     | {
@@ -4972,7 +4976,7 @@ export interface InterfacePublicationsTeasersBlockSelect<T extends boolean = tru
 export interface InterfaceProjectTeasersBlockSelect<T extends boolean = true> {
   title?: T;
   lead?: T;
-  alignement?: T;
+  alignment?: T;
   optionalLink?:
     | T
     | {
@@ -5029,6 +5033,7 @@ export interface ErrorPageSelect<T extends boolean = true> {
  */
 export interface DataPrivacyPageSelect<T extends boolean = true> {
   tenant?: T;
+  slug?: T;
   isLinkable?: T;
   adminTitle?: T;
   hero?: T | InterfaceHeroFieldSelect<T>;
@@ -5068,6 +5073,7 @@ export interface InterfaceHeroFieldSelect<T extends boolean = true> {
  */
 export interface ImpressumPageSelect<T extends boolean = true> {
   tenant?: T;
+  slug?: T;
   isLinkable?: T;
   adminTitle?: T;
   hero?: T | InterfaceHeroFieldSelect<T>;
@@ -5334,7 +5340,7 @@ export interface InterfaceCtaContactBlockSelect<T extends boolean = true> {
 export interface InterfaceGenericTeasersBlockSelect<T extends boolean = true> {
   title?: T;
   lead?: T;
-  alignement?: T;
+  alignment?: T;
   teasers?:
     | T
     | {
@@ -5906,6 +5912,271 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "i18nGlobals_select".
+ */
+export interface I18NGlobalsSelect<T extends boolean = true> {
+  tenant?: T;
+  generic?: T | InterfaceI18NGenericSelect<T>;
+  bibliographicReference?: T | InterfaceI18NBibliographicReferenceSelect<T>;
+  forms?: T | InterfaceI18NFormsSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nGeneric_select".
+ */
+export interface InterfaceI18NGenericSelect<T extends boolean = true> {
+  downloadTitle?: T;
+  linksTitle?: T;
+  writeEmailButtonText?: T;
+  exportArticleButtonText?: T;
+  time?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nBibliographicReference_select".
+ */
+export interface InterfaceI18NBibliographicReferenceSelect<T extends boolean = true> {
+  title?: T;
+  copyButtonText?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nForms_select".
+ */
+export interface InterfaceI18NFormsSelect<T extends boolean = true> {
+  dataPrivacyCheckbox?:
+    | T
+    | {
+        dataPrivacyCheckboxText?: T;
+        errorMessage?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "consent_select".
+ */
+export interface ConsentSelect<T extends boolean = true> {
+  tenant?: T;
+  adminTitle?: T;
+  banner?: T | InterfaceConsentBannerSelect<T>;
+  overlay?: T | InterfaceConsentOverlaySelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceConsentBanner_select".
+ */
+export interface InterfaceConsentBannerSelect<T extends boolean = true> {
+  title?: T;
+  text?: T;
+  buttonAcceptAll?: T;
+  buttonCustomizeSelection?: T;
+  buttonDeclineAll?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceConsentOverlay_select".
+ */
+export interface InterfaceConsentOverlaySelect<T extends boolean = true> {
+  title?: T;
+  text?: T;
+  buttonAcceptAll?: T;
+  buttonAcceptSelection?: T;
+  necessaryCookies?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        toggleLabel?: T;
+      };
+  analyticsPerformance?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        toggleLabelOff?: T;
+        toggleLabelOn?: T;
+        toggleDefault?: T;
+      };
+  externalContent?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        toggleLabelOff?: T;
+        toggleLabelOn?: T;
+        toggleDefault?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  tenant?: T;
+  adminTitle?: T;
+  legal?: T | InterfaceFooterLegalSelect<T>;
+  contact?: T | InterfaceFooterContactSelect<T>;
+  socialLinks?: T | InterfaceFooterSocialLinksSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceFooterLegal_select".
+ */
+export interface InterfaceFooterLegalSelect<T extends boolean = true> {
+  dataPrivacy?: T;
+  impressum?: T;
+  cookieSettings?: T;
+  copyright?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceFooterContact_select".
+ */
+export interface InterfaceFooterContactSelect<T extends boolean = true> {
+  title?: T;
+  address1?: T;
+  address2?: T;
+  poBox?: T;
+  countryCode?: T;
+  zipCode?: T;
+  city?: T;
+  phone?: T;
+  mail?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceFooterSocialLinks_select".
+ */
+export interface InterfaceFooterSocialLinksSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        externalLink?: T;
+        icon?: T;
+        id?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  tenant?: T;
+  adminTitle?: T;
+  navigation?: T | InterfaceHeaderNavigationSelect<T>;
+  metanavigation?: T | InterfaceHeaderMetaNavigationSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeaderNavigation_select".
+ */
+export interface InterfaceHeaderNavigationSelect<T extends boolean = true> {
+  navItems?:
+    | T
+    | {
+        description?: T;
+        navItemText?: T;
+        navItemLink?: T | InterfaceInternalLinkValueSelect<T>;
+        subNavItems?:
+          | T
+          | {
+              navItemText?: T;
+              navItemLink?: T | InterfaceInternalLinkValueSelect<T>;
+              id?: T;
+            };
+        id?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeaderMetaNavigation_select".
+ */
+export interface InterfaceHeaderMetaNavigationSelect<T extends boolean = true> {
+  metaLinks?:
+    | T
+    | {
+        linkType?: T;
+        linkInternal?:
+          | T
+          | {
+              linkText?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
+            };
+        linkExternal?:
+          | T
+          | {
+              externalLinkText?: T;
+              externalLink?: T;
+            };
+        linkMail?:
+          | T
+          | {
+              linkText?: T;
+              email?: T;
+            };
+        id?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "statusMessage_select".
+ */
+export interface StatusMessageSelect<T extends boolean = true> {
+  tenant?: T;
+  adminTitle?: T;
+  content?: T | InterfaceStatusMessageSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceStatusMessage_select".
+ */
+export interface InterfaceStatusMessageSelect<T extends boolean = true> {
+  show?:
+    | T
+    | {
+        display?: T;
+        from?: T;
+        to?: T;
+      };
+  title?: T;
+  message?: T;
+  optionalLink?:
+    | T
+    | {
+        includeLink?: T;
+        link?:
+          | T
+          | {
+              linkText?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
+            };
+      };
+  showOnHomeOnly?: T;
+  type?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "theme_select".
+ */
+export interface ThemeSelect<T extends boolean = true> {
+  tenant?: T;
+  adminTitle?: T;
+  themeSelector?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "images_select".
  */
 export interface ImagesSelect<T extends boolean = true> {
@@ -6294,271 +6565,6 @@ export interface InterfaceTextareaFieldSelect<T extends boolean = true> {
   fieldError?: T;
   id?: T;
   blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "i18nGlobals_select".
- */
-export interface I18NGlobalsSelect<T extends boolean = true> {
-  tenant?: T;
-  generic?: T | InterfaceI18NGenericSelect<T>;
-  bibliographicReference?: T | InterfaceI18NBibliographicReferenceSelect<T>;
-  forms?: T | InterfaceI18NFormsSelect<T>;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceI18nGeneric_select".
- */
-export interface InterfaceI18NGenericSelect<T extends boolean = true> {
-  downloadTitle?: T;
-  linksTitle?: T;
-  writeEmailButtonText?: T;
-  exportArticleButtonText?: T;
-  time?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceI18nBibliographicReference_select".
- */
-export interface InterfaceI18NBibliographicReferenceSelect<T extends boolean = true> {
-  title?: T;
-  copyButtonText?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceI18nForms_select".
- */
-export interface InterfaceI18NFormsSelect<T extends boolean = true> {
-  dataPrivacyCheckbox?:
-    | T
-    | {
-        dataPrivacyCheckboxText?: T;
-        errorMessage?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "consent_select".
- */
-export interface ConsentSelect<T extends boolean = true> {
-  tenant?: T;
-  adminTitle?: T;
-  banner?: T | InterfaceConsentBannerSelect<T>;
-  overlay?: T | InterfaceConsentOverlaySelect<T>;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceConsentBanner_select".
- */
-export interface InterfaceConsentBannerSelect<T extends boolean = true> {
-  title?: T;
-  text?: T;
-  buttonAcceptAll?: T;
-  buttonCustomizeSelection?: T;
-  buttonDeclineAll?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceConsentOverlay_select".
- */
-export interface InterfaceConsentOverlaySelect<T extends boolean = true> {
-  title?: T;
-  text?: T;
-  buttonAcceptAll?: T;
-  buttonAcceptSelection?: T;
-  necessaryCookies?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        toggleLabel?: T;
-      };
-  analyticsPerformance?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        toggleLabelOff?: T;
-        toggleLabelOn?: T;
-        toggleDefault?: T;
-      };
-  externalContent?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        toggleLabelOff?: T;
-        toggleLabelOn?: T;
-        toggleDefault?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer_select".
- */
-export interface FooterSelect<T extends boolean = true> {
-  tenant?: T;
-  adminTitle?: T;
-  legal?: T | InterfaceFooterLegalSelect<T>;
-  contact?: T | InterfaceFooterContactSelect<T>;
-  socialLinks?: T | InterfaceFooterSocialLinksSelect<T>;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceFooterLegal_select".
- */
-export interface InterfaceFooterLegalSelect<T extends boolean = true> {
-  dataPrivacy?: T;
-  impressum?: T;
-  cookieSettings?: T;
-  copyright?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceFooterContact_select".
- */
-export interface InterfaceFooterContactSelect<T extends boolean = true> {
-  title?: T;
-  address1?: T;
-  address2?: T;
-  poBox?: T;
-  countryCode?: T;
-  zipCode?: T;
-  city?: T;
-  phone?: T;
-  mail?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceFooterSocialLinks_select".
- */
-export interface InterfaceFooterSocialLinksSelect<T extends boolean = true> {
-  items?:
-    | T
-    | {
-        externalLink?: T;
-        icon?: T;
-        id?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header_select".
- */
-export interface HeaderSelect<T extends boolean = true> {
-  tenant?: T;
-  adminTitle?: T;
-  navigation?: T | InterfaceHeaderNavigationSelect<T>;
-  metanavigation?: T | InterfaceHeaderMetaNavigationSelect<T>;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceHeaderNavigation_select".
- */
-export interface InterfaceHeaderNavigationSelect<T extends boolean = true> {
-  navItems?:
-    | T
-    | {
-        description?: T;
-        navItemText?: T;
-        navItemLink?: T | InterfaceInternalLinkValueSelect<T>;
-        subNavItems?:
-          | T
-          | {
-              navItemText?: T;
-              navItemLink?: T | InterfaceInternalLinkValueSelect<T>;
-              id?: T;
-            };
-        id?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceHeaderMetaNavigation_select".
- */
-export interface InterfaceHeaderMetaNavigationSelect<T extends boolean = true> {
-  metaLinks?:
-    | T
-    | {
-        linkType?: T;
-        linkInternal?:
-          | T
-          | {
-              linkText?: T;
-              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
-            };
-        linkExternal?:
-          | T
-          | {
-              externalLinkText?: T;
-              externalLink?: T;
-            };
-        linkMail?:
-          | T
-          | {
-              linkText?: T;
-              email?: T;
-            };
-        id?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "statusMessage_select".
- */
-export interface StatusMessageSelect<T extends boolean = true> {
-  tenant?: T;
-  adminTitle?: T;
-  content?: T | InterfaceStatusMessageSelect<T>;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceStatusMessage_select".
- */
-export interface InterfaceStatusMessageSelect<T extends boolean = true> {
-  show?:
-    | T
-    | {
-        display?: T;
-        from?: T;
-        to?: T;
-      };
-  title?: T;
-  message?: T;
-  optionalLink?:
-    | T
-    | {
-        includeLink?: T;
-        link?:
-          | T
-          | {
-              linkText?: T;
-              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
-            };
-      };
-  showOnHomeOnly?: T;
-  type?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "theme_select".
- */
-export interface ThemeSelect<T extends boolean = true> {
-  tenant?: T;
-  adminTitle?: T;
-  themeSelector?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

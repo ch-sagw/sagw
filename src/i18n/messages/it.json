@@ -1,9 +1,17 @@
 {
+  "slugs": {
+    "dataPrivacy": "data-privacy-it",
+    "impressum": "impressum-it"
+  },
   "navigation": {
     "navigationTitle": "Home IT"
   },
   "pagination": {
     "hiddenPaginationTitle": "Impaginazione"
+  },
+  "skipLinks": {
+    "sectionLabel": "Sprunglinks (IT)",
+    "skipToContent": "Zum Inhalt (IT)"
   },
   "form": {
     "newsletter": {

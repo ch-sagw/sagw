@@ -1,4 +1,6 @@
-import { CollectionConfig } from 'payload';
+import {
+  CollectionAfterReadHook, CollectionConfig,
+} from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHero } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
@@ -13,6 +15,7 @@ import { pageAccess } from '@/access/pages';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
+import { preview } from '@/utilities/previewUrl';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
 
@@ -21,9 +24,20 @@ export const ImpressumPage: CollectionConfig = {
   admin: {
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
+    preview,
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
+    {
+      admin: {
+        hidden: true,
+        readOnly: true,
+      },
+      localized: true,
+      name: 'slug',
+      required: false,
+      type: 'text',
+    },
     fieldLinkablePage,
     fieldAdminTitleDefaultValue('Impressum'),
     {
@@ -58,6 +72,102 @@ export const ImpressumPage: CollectionConfig = {
     },
   ],
   hooks: {
+    afterRead: [
+      async ({
+        doc,
+        req,
+      }): Promise<CollectionAfterReadHook<any>> => {
+        if (!doc) {
+          return doc;
+        }
+
+        // we can not use getTranslations... It works in Admin-Ui since
+        // rendered on the server. But in playwright, context strangely switches
+        // to client, which makes getTranslations throw an error.
+
+        const locale = req?.locale || 'de';
+        const fallback = 'impressum';
+        let impressumSlug;
+
+        if (locale && locale === 'all') {
+          const translationRawFileDe = (await import('../../../i18n/messages/de.json', {
+            with: {
+              type: 'json',
+            },
+          })).default;
+          const translationRawFileEn = (await import('../../../i18n/messages/en.json', {
+            with: {
+              type: 'json',
+            },
+          })).default;
+          const translationRawFileFr = (await import('../../../i18n/messages/fr.json', {
+            with: {
+              type: 'json',
+            },
+          })).default;
+          const translationRawFileIt = (await import('../../../i18n/messages/it.json', {
+            with: {
+              type: 'json',
+            },
+          })).default;
+
+          impressumSlug = {
+            de: translationRawFileDe.slugs.impressum,
+            en: translationRawFileEn.slugs.impressum,
+            fr: translationRawFileFr.slugs.impressum,
+            it: translationRawFileIt.slugs.impressum,
+          };
+
+        } else if (locale) {
+          // Use static string literals in switch for webpack static analysis
+          let translationsFile;
+
+          switch (locale) {
+            case 'de':
+              translationsFile = (await import('../../../i18n/messages/de.json', {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            case 'en':
+              translationsFile = (await import('../../../i18n/messages/en.json', {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            case 'fr':
+              translationsFile = (await import('../../../i18n/messages/fr.json', {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            case 'it':
+              translationsFile = (await import('../../../i18n/messages/it.json', {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            default:
+              translationsFile = (await import('../../../i18n/messages/de.json', {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+          }
+
+          impressumSlug = translationsFile.slugs.impressum;
+        }
+
+        return {
+          ...doc,
+          slug: impressumSlug || fallback,
+        };
+      },
+    ],
     beforeChange: [hookPreventBulkPublishForTranslators],
     beforeValidate: [hookPreventBlockStructureChangesForTranslators()],
   },

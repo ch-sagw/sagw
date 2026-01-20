@@ -1,7 +1,7 @@
 'use client';
 
 import React, {
-  useMemo, useRef, useState,
+  Suspense, useMemo, useRef, useState,
 } from 'react';
 import styles from '@/components/blocks/NetworkTeaser/NetworkTeaser.module.scss';
 import {
@@ -22,7 +22,10 @@ export type InterfaceNetworkTeaserPropTypes = {} & InterfaceNetworkTeasersBlock;
 
 const allValue = 'all';
 
-const prepareFilterItems = (items: NetworkCategory[], labelAll: string): InterfaceFilterItem[] => {
+const prepareFilterItems = (
+  items: NetworkCategory[],
+  labelAll: string,
+): InterfaceFilterItem[] => {
   const filterItems = items.map((item) => ({
     checked: false,
     label: rte1ToPlaintext(item.name),
@@ -38,7 +41,10 @@ const prepareFilterItems = (items: NetworkCategory[], labelAll: string): Interfa
   return filterItems;
 };
 
-const getUniqueCategoriesOfItems = (items: InterfaceNetworkTeasersBlock['items'], labelAll: string): InterfaceFilterItem[] => {
+const getUniqueCategoriesOfItems = (
+  items: InterfaceNetworkTeasersBlock['items'],
+  labelAll: string,
+): InterfaceFilterItem[] => {
   const categories = items.items
     .map((item) => item.category)
     .filter((c) => typeof c === 'object' && c !== null);
@@ -54,11 +60,14 @@ const getUniqueCategoriesOfItems = (items: InterfaceNetworkTeasersBlock['items']
   return prepareFilterItems(uniqueCategories, labelAll);
 };
 
-export const NetworkTeaser = ({
+const NetworkTeaserContent = ({
   filter,
   items,
 }: InterfaceNetworkTeaserPropTypes): React.JSX.Element => {
-  const filterItems = getUniqueCategoriesOfItems(items, rte1ToPlaintext(filter.allCheckboxText));
+  const filterItems = getUniqueCategoriesOfItems(
+    items,
+    rte1ToPlaintext(filter.allCheckboxText),
+  );
   const plainTitle = rte1ToPlaintext(filter.title);
   const filterName = slugify(plainTitle, {
     lower: true,
@@ -92,25 +101,31 @@ export const NetworkTeaser = ({
     selectedCategory,
   ]);
 
-  const renderedItems = useMemo(() => filteredNetworkItems.map((item) => (
-    <GenericTeaser
-      className={styles.item}
-      key={item.id}
-      title={rteToHtml(item.title)}
-      texts={[`${rteToHtml(items.foundingYearText)} :${item.foundingYear}`]}
-      image={typeof item.image === 'string'
-        ? item.image
-        : item.image.id}
-      links={[
-        {
-          href: item.externalLink,
-          text: rteToHtml(items.linkText),
-          type: 'external',
-        },
-      ]}
-      type='network'
-    />
-  )), [
+  const renderedItems = useMemo(() => filteredNetworkItems.map((item) => {
+
+    const image = typeof item.image === 'string'
+      ? undefined
+      : item.image;
+
+    return (
+      <GenericTeaser
+        className={styles.item}
+        key={item.id}
+        title={rteToHtml(item.title)}
+        texts={[`${rteToHtml(items.foundingYearText)}: ${item.foundingYear}`]}
+        image={image}
+        links={[
+          {
+            href: item.externalLink,
+            text: rteToHtml(items.linkText),
+            type: 'external',
+          },
+        ]}
+        type='network'
+      />
+    );
+
+  }), [
     filteredNetworkItems,
     items.foundingYearText,
     items.linkText,
@@ -167,3 +182,9 @@ export const NetworkTeaser = ({
     </Section>
   );
 };
+
+export const NetworkTeaser = (props: InterfaceNetworkTeaserPropTypes): React.JSX.Element => (
+  <Suspense fallback={<div></div>}>
+    <NetworkTeaserContent {...props} />
+  </Suspense>
+);

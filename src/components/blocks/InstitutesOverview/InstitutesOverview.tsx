@@ -1,11 +1,14 @@
+import 'server-only';
 import React from 'react';
 import {
   InstituteDetailPage, InterfaceInstitutesOverviewBlock,
 } from '@/payload-types';
 import { fetchDetailPages } from '@/data/fetch';
-import { InstituteOverviewComponent } from '@/components/blocks/InstitutesOverview/InstitutesOverview.componet';
+import { InstituteOverviewComponent } from '@/components/blocks/InstitutesOverview/InstitutesOverview.component';
 import { getLocale } from 'next-intl/server';
 import { TypedLocale } from 'payload';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { prerenderPageLinks } from '@/utilities/prerenderPageLinks';
 
 export type InterfaceInstitutesOverviewPropTypes = {
   tenant: string;
@@ -13,6 +16,7 @@ export type InterfaceInstitutesOverviewPropTypes = {
 
 export const InstitutesOverview = async (props: InterfaceInstitutesOverviewPropTypes): Promise<React.JSX.Element> => {
   const locale = (await getLocale()) as TypedLocale;
+  const payload = await getPayloadCached();
   const {
     tenant,
     ...restProps
@@ -20,15 +24,23 @@ export const InstitutesOverview = async (props: InterfaceInstitutesOverviewPropT
 
   const pages = await fetchDetailPages({
     collection: 'instituteDetailPage',
+    depth: 1,
     language: locale,
     limit: 0,
-    sort: 'createdAt',
+    sort: '-createdAt',
     tenant,
   }) as InstituteDetailPage[];
+
+  const urlMap = await prerenderPageLinks({
+    locale,
+    pages,
+    payload,
+  });
 
   return (
     <InstituteOverviewComponent
       pages={pages}
+      pageUrls={urlMap}
       {...restProps}
     />
   );
