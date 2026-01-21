@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.30.1](https://github.com/ch-sagw/sagw/compare/v0.30.0...v0.30.1) (2026-01-21)
+
+
+### Chore
+
+* log cache invalidation on prod ([5c72e78](https://github.com/ch-sagw/sagw/commit/5c72e784c80db6b0b4b6b23a7c8b8bef8f11cb1b))
+
+
+### Bug Fixes
+
+* export env ([b5734b5](https://github.com/ch-sagw/sagw/commit/b5734b5d62acb6d2966c2044e9a4fbcc33153d2b))
+
 ## [0.30.0](https://github.com/ch-sagw/sagw/compare/v0.29.0...v0.30.0) (2026-01-19)
 
 
