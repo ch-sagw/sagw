@@ -60,8 +60,6 @@ export const RenderHeader = async ({
     colorMode,
     headerDocumentId: headerData.docs[0].id,
     logoLink: `/${locale}`,
-
-    // TODO: get from global i18n
     menuButton: {
       close: i18nMenu('close'),
       open: i18nMenu('open'),
