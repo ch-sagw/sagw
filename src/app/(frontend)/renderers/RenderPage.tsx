@@ -34,6 +34,7 @@ interface InterfaceRenderPageContentProps {
   isHome: boolean;
   locale: TypedLocale;
   i18n: I18NGlobal;
+  projectId?: string;
   showBlocks?: boolean;
   heroComponent: React.JSX.Element;
   containerType: 'home' | 'detail';
@@ -84,6 +85,7 @@ const renderPageContent = ({
   showBlocks = true,
   heroComponent,
   containerType,
+  projectId,
 }: InterfaceRenderPageContentProps): React.JSX.Element => (
   <TenantProvider tenant={tenantId}>
     <SkipLinks />
@@ -104,6 +106,7 @@ const renderPageContent = ({
           blocks={blocks}
           tenantId={tenantId}
           i18n={i18n}
+          projectId={projectId}
           sourcePage={sourcePage}
         />
       )}
@@ -233,6 +236,12 @@ export const RenderPage = async ({
 
   const collectionSlug = foundCollection as CollectionSlug;
 
+  let projectId = null;
+
+  if (collectionSlug === 'projectDetailPage') {
+    projectId = pageData.project.id;
+  }
+
   return renderPageContent({
     blocks: contentBlocks,
     containerType: 'detail',
@@ -247,6 +256,7 @@ export const RenderPage = async ({
     i18n: i18nData,
     isHome,
     locale,
+    projectId,
     showBlocks: Boolean(contentBlocks),
     sourcePage: {
       collectionSlug,

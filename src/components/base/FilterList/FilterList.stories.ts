@@ -12,11 +12,7 @@ type StrictStory = StoryObj<typeof FilterList> & {
 };
 
 const meta: Meta<typeof FilterList> = {
-  argTypes: {
-    onValueChange: {
-      action: 'value changed',
-    },
-  },
+  argTypes: {},
   args: {},
   component: FilterList,
   decorators: [defaultDecorator],
@@ -38,7 +34,7 @@ export const PublicationOverviewFilters: StrictStory = {
         filterItems: [
           {
             checked: true,
-            label: 'All publication subjects',
+            label: 'All subjects',
             value: 'all',
           },
           {
@@ -85,7 +81,7 @@ export const PublicationOverviewFilters: StrictStory = {
         filterItems: [
           {
             checked: true,
-            label: 'All publication types',
+            label: 'All types',
             value: 'all',
           },
           {

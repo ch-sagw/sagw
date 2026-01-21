@@ -44,5 +44,9 @@
   "menu": {
     "open": "Ouvrir",
     "close": "Fermer"
+  },
+  "publicationFilters": {
+    "publicationTopicsLabel": "Publikationsthemen (FR)",
+    "publicationTypesLabel": "Publikationstypen (FR)"
   }
 }

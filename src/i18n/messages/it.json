@@ -42,7 +42,11 @@
     "titleExternalContent": "Ccontenuto esterno"
   },
   "menu": {
-    "open": "Öffnen",
-    "close": "Aprire"
+    "open": "Aprire",
+    "close": "Chiudere"
+  },
+  "publicationFilters": {
+    "publicationTopicsLabel": "Publikationsthemen (IT)",
+    "publicationTypesLabel": "Publikationstypen (IT)"
   }
 }

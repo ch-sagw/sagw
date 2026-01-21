@@ -40,7 +40,9 @@
       align-self: flex-start;
       grid-row: 1 / span 5;
       grid-column: 1 / 4;
-      overflow: hidden;
+      text-wrap: pretty;
+      overflow: clip;
+      overflow-clip-margin: 0.25rem;
     }
 
     // Vertically center the first line of the
