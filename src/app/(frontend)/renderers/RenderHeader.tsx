@@ -10,17 +10,16 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { CMSConfigError } from '../utilities/CMSConfigError';
 
 type InterfaceHeaderRendererProps = {
+  colorMode: ColorMode;
   tenant: string;
 }
 
 export const RenderHeader = async ({
+  colorMode,
   tenant,
 }: InterfaceHeaderRendererProps): Promise<React.JSX.Element> => {
   const payload = await getPayloadCached();
   const locale = (await getLocale()) as TypedLocale;
-
-  // TODO
-  const colorMode: ColorMode = 'dark';
 
   // get header data
   const headerData = await payload.find({

@@ -12,7 +12,7 @@
     --color-text: var(--interaction-primary);
   }
 
-  margin-block-end: px-to-rem(var(--spacing-l));
+  padding-block-start: px-to-rem(var(--inside-elements-l));
   margin-inline-end: px-to-rem(var(--spacing-2xl));
   animation: fade-in var(--motion-speed-medium) var(--motion-ease-in-out);
 

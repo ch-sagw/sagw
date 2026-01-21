@@ -23,7 +23,7 @@
     margin-block-end: px-to-rem(var(--spacing-s));
 
     @include mq($from: large) {
-      margin-block-end: px-to-rem(var(--spacing-xl));
+      margin-block-end: px-to-rem(var(--spacing-m));
     }
 
     .buttonLevel1 {
@@ -55,7 +55,7 @@
 
     @include mq($from: large) {
       position: absolute;
-      padding-block: px-to-rem(var(--spacing-l));
+      padding-block: px-to-rem(var(--inside-elements-l));
       inset-block-start: 100%;
       inset-inline-start: 0;
       width: max-content;

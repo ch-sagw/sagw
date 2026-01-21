@@ -17,6 +17,7 @@
   position: relative;
   cursor: pointer;
   transform: translateX(px-to-rem(var(--spacing-m)));
+  transform-style: preserve-3d;
 
   &.white,
   &.light {
