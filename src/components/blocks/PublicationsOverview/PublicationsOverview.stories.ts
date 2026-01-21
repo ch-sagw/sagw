@@ -42,40 +42,8 @@ const publicationItem = {
   title: 'Das Paradox von sozialer Integration und Ausschluss im Schweizer Bildungswesen. Beiträge der Soziologie',
 };
 
-const filterListItems = [
-  [
-    {
-      checked: true,
-      label: 'Alle Publikationen',
-      value: 'all',
-    },
-    {
-      checked: false,
-      label: 'Akademiereferate',
-      value: '693b0993621d28f661711b4f',
-    },
-    {
-      checked: false,
-      label: 'Factsheets',
-      value: '693b0993621d28f661711b50',
-    },
-    {
-      checked: false,
-      label: 'Jahresbericht',
-      value: '693b0993621d28f661711b51',
-    },
-    {
-      checked: false,
-      label: 'Magazin',
-      value: '693b0993621d28f661711b52',
-    },
-    {
-      checked: false,
-      label: 'Studien und Berichte',
-      value: '693b0993621d28f661711b53',
-    },
-  ],
-  [
+const filterListItems = {
+  topics: [
     {
       checked: true,
       label: 'Alle Themen',
@@ -107,7 +75,39 @@ const filterListItems = [
       value: '693b0993621d28f661711b45',
     },
   ],
-];
+  types: [
+    {
+      checked: true,
+      label: 'Alle Publikationen',
+      value: 'all',
+    },
+    {
+      checked: false,
+      label: 'Akademiereferate',
+      value: '693b0993621d28f661711b4f',
+    },
+    {
+      checked: false,
+      label: 'Factsheets',
+      value: '693b0993621d28f661711b50',
+    },
+    {
+      checked: false,
+      label: 'Jahresbericht',
+      value: '693b0993621d28f661711b51',
+    },
+    {
+      checked: false,
+      label: 'Magazin',
+      value: '693b0993621d28f661711b52',
+    },
+    {
+      checked: false,
+      label: 'Studien und Berichte',
+      value: '693b0993621d28f661711b53',
+    },
+  ],
+};
 
 export const LotsOfItems: StrictStory = {
   args: {
