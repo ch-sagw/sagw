@@ -78,21 +78,21 @@ export const PublicationsOverviewBlock = async (props: InterfaceNewsOverviewProp
 
   // Aggregate Filter data
   // =========================
-  const filterData = [
-    filterItemsPublicationTypes,
-    filterItemsPublicationTopics,
-  ];
+  const filterData = {
+    topics: filterItemsPublicationTopics,
+    types: filterItemsPublicationTypes,
+  };
 
   const title = rte1ToPlaintext(props.title);
 
   // Convert publication detail pages to
   // publication teaser items
-  const items = convertPayloadPublicationsPagesToFeItems(
-    pages,
+  const items = convertPayloadPublicationsPagesToFeItems({
+    lang: locale,
+    payloadPages: pages,
+    publicationTypes: publicationTypes.docs,
     urlMap,
-    publicationTypes.docs,
-    locale,
-  );
+  });
 
   return (
     <PublicationsOverview

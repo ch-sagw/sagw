@@ -19,13 +19,19 @@ import { getPageUrl } from '@/utilities/getPageUrl';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { PaginatedDocs } from 'payload';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 
-export const convertPayloadPublicationsPagesToFeItems = (
-  payloadPages: PublicationDetailPage[],
-  urlMap: Record<string, string>,
-  publicationTypes: PublicationType[],
-  lang: Config['locale'],
-): InterfacePublicationsListItemPropTypes[] => {
+export const convertPayloadPublicationsPagesToFeItems = ({
+  lang,
+  payloadPages,
+  publicationTypes,
+  urlMap,
+}: {
+  lang: Config['locale'];
+  payloadPages: PublicationDetailPage[];
+  publicationTypes: PublicationType[];
+  urlMap: Record<string, string>;
+}): InterfacePublicationsListItemPropTypes[] => {
 
   const items = payloadPages.map((publicationsPage) => {
     let topicId: string | undefined;
@@ -112,7 +118,6 @@ export const prepareFilterItems = ({
 
   return filterItems;
 };
-import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 export const convertPayloadNewsPagesToFeItems = async (payloadPages: PaginatedDocs<NewsDetailPage>, lang: Config['locale']): Promise<InterfaceNewsListItemPropTypes[]> => {
   const payload = await getPayloadCached();

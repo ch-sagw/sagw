@@ -7,7 +7,7 @@ import {
   InterfaceFilterPropTypes,
 } from '@/components/base/Filter/Filter';
 
-export interface InterfaceFilterListItem {
+interface InterfaceFilterListItem {
   filterItems: InterfaceFilterPropTypes['filterItems'];
   labelText: InterfaceFilterPropTypes['labelText'];
   name: InterfaceFilterPropTypes['name'];

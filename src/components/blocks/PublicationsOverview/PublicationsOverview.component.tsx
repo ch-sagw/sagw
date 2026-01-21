@@ -26,7 +26,10 @@ import { useTranslations } from 'next-intl';
 export type InterfacePublicationsOverviewPropTypes = {
   title: string;
   colorMode: ColorMode;
-  filterItems: InterfaceFilterItem[][];
+  filterItems: {
+    topics: InterfaceFilterItem[];
+    types: InterfaceFilterItem[];
+  };
   paginationTitle: string;
   publicationItems: InterfacePublicationsListItemPropTypes[];
 };
@@ -54,8 +57,8 @@ const PublicationsOverviewContent = ({
     setSelectedType,
   ] = useState<string>();
 
-  const allValueTopics = filterItems[1][0].value;
-  const allValueTypes = filterItems[0][0].value;
+  const allValueTopics = filterItems.topics[0].value;
+  const allValueTypes = filterItems.types[0].value;
 
   const handleTopicChange = (value: string): void => {
     setSelectedTopic(value);
@@ -71,14 +74,14 @@ const PublicationsOverviewContent = ({
   const filterData: InterfaceFilterListPropTypes = {
     filterListItems: [
       {
-        filterItems: filterItems[1],
+        filterItems: filterItems.topics,
         labelText: publicationFiltersLabels('publicationTopicsLabel'),
         name: 'publication-topics',
         onValueChangeAction: handleTopicChange,
         type: 'staticSelect',
       },
       {
-        filterItems: filterItems[0],
+        filterItems: filterItems.types,
         labelText: publicationFiltersLabels('publicationTypesLabel'),
         name: 'publication-types',
         onValueChangeAction: handleTypeChange,
