@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.2](https://github.com/ch-sagw/sagw/compare/v0.30.1...v0.30.2) (2026-01-21)
+
+
+### Bug Fixes
+
+* make sure process.env.env is prod on vercel ([f02af1a](https://github.com/ch-sagw/sagw/commit/f02af1a8061f3ffe5bf16d8b302c1975bed510ac))
+
 ## [0.30.1](https://github.com/ch-sagw/sagw/compare/v0.30.0...v0.30.1) (2026-01-21)
 
 
