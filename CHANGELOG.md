@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.31.0](https://github.com/ch-sagw/sagw/compare/v0.30.2...v0.31.0) (2026-01-21)
+
+
+### Documentation
+
+* remove todo ([dafcfcc](https://github.com/ch-sagw/sagw/commit/dafcfcc7a0d16aceb85f64b9393e47e0bcdbee6f))
+
+
+### Features
+
+* adding publication teaser and publication overview components ([3c9588f](https://github.com/ch-sagw/sagw/commit/3c9588ff7ecc5386904dfe44ada7085ad9851d72))
+
+
+### Bug Fixes
+
+* fix home link rendering ([dafcfcc](https://github.com/ch-sagw/sagw/commit/dafcfcc7a0d16aceb85f64b9393e47e0bcdbee6f))
+* translate hidden menu label ([dafcfcc](https://github.com/ch-sagw/sagw/commit/dafcfcc7a0d16aceb85f64b9393e47e0bcdbee6f))
+
 ## [0.30.2](https://github.com/ch-sagw/sagw/compare/v0.30.1...v0.30.2) (2026-01-21)
 
 
