@@ -41,8 +41,12 @@
     "messageVideo": "Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können. (IT)",
     "titleExternalContent": "Ccontenuto esterno"
   },
+  "menu": {
+    "open": "Aprire",
+    "close": "Chiudere"
+  },
   "publicationFilters": {
-    "publicationTopicsLabel": "Publikationsthemen IT",
-    "publicationTypesLabel": "Publikationstypen IT"
+    "publicationTopicsLabel": "Publikationsthemen (IT)",
+    "publicationTypesLabel": "Publikationstypen (IT)"
   }
 }
