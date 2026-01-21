@@ -74,12 +74,12 @@ export const PublicationsTeaser = async (props: InterfacePublicationsTeaserPropT
 
   // Convert publication detail pages to
   // publication teaser items
-  const items = convertPayloadPublicationsPagesToFeItems(
-    pages,
+  const items = convertPayloadPublicationsPagesToFeItems({
+    lang: locale,
+    payloadPages: pages,
+    publicationTypes: publicationTypes.docs,
     urlMap,
-    publicationTypes.docs,
-    locale,
-  );
+  });
 
   if (!items || items.length < 1) {
     return <Fragment></Fragment>;
