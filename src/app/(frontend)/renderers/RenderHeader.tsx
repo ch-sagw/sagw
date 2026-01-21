@@ -5,7 +5,9 @@ import { ColorMode } from '@/components/base/types/colorMode';
 import {
   Header, InterfaceHeaderPropTypes,
 } from '@/components/global/Header/Header';
-import { getLocale } from 'next-intl/server';
+import {
+  getLocale, getTranslations,
+} from 'next-intl/server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { CMSConfigError } from '../utilities/CMSConfigError';
 
@@ -18,6 +20,7 @@ export const RenderHeader = async ({
 }: InterfaceHeaderRendererProps): Promise<React.JSX.Element> => {
   const payload = await getPayloadCached();
   const locale = (await getLocale()) as TypedLocale;
+  const i18nMenu = await getTranslations('menu');
 
   // TODO
   const colorMode: ColorMode = 'dark';
@@ -56,12 +59,12 @@ export const RenderHeader = async ({
   const headerProps: InterfaceHeaderPropTypes = {
     colorMode,
     headerDocumentId: headerData.docs[0].id,
-    logoLink: '/',
+    logoLink: `/${locale}`,
 
     // TODO: get from global i18n
     menuButton: {
-      close: 'Close',
-      open: 'Open',
+      close: i18nMenu('close'),
+      open: i18nMenu('open'),
     },
     metanav: metanavData,
     navigation: navData,
