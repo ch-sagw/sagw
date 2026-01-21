@@ -118,3 +118,22 @@
     grid-column: span 3;
   }
 }
+
+// ##############################
+// Publication list
+// ##############################
+@mixin publication-list {
+  @include list-reset;
+
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: px-to-rem(var(--grid-gutter));
+
+  @include mq($from: medium) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mq($from: large, $to: wide) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

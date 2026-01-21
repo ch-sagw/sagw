@@ -40,5 +40,9 @@
     "buttonTextOpenCookieSettings": "Cookie-Settings",
     "messageVideo": "Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können. (EN)",
     "titleExternalContent": "External content"
+  },
+  "publicationFilters": {
+    "publicationTopicsLabel": "Publikationsthemen EN",
+    "publicationTypesLabel": "Publikationstypen EN"
   }
 }

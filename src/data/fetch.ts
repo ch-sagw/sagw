@@ -1,6 +1,10 @@
 import {
-  Config, EventDetailPage,
-  MagazineDetailPage, NewsDetailPage, ProjectDetailPage,
+  Config,
+  EventDetailPage,
+  MagazineDetailPage,
+  NewsDetailPage,
+  ProjectDetailPage,
+  PublicationDetailPage,
   Team,
 } from '@/payload-types';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
@@ -84,6 +88,7 @@ interface InterfaceFetchDetailPagesProps {
   collection: CollectionSlug;
   sort: Sort,
   payload?: BasePayload;
+  projectId?: string,
 }
 
 export const fetchDetailPages = async ({
@@ -91,11 +96,29 @@ export const fetchDetailPages = async ({
   language,
   tenant,
   collection,
+  projectId,
   sort,
   depth = 1,
   payload: providedPayload,
 }: InterfaceFetchDetailPagesProps): Promise<DataFromCollectionSlug<CollectionSlug>[]> => {
   const payload = providedPayload || await getPayloadCached();
+
+  const queryRestraints: Where = {
+    /* eslint-disable @typescript-eslint/naming-convention */
+    _status: {
+    /* eslint-enable @typescript-eslint/naming-convention */
+      equals: 'published',
+    },
+    tenant: {
+      equals: tenant,
+    },
+    ...(projectId && {
+      'categorization.project': {
+        equals: projectId,
+      },
+    }),
+  };
+
   const detailPages = await payload.find({
     collection,
     depth,
@@ -103,16 +126,7 @@ export const fetchDetailPages = async ({
     locale: language,
     pagination: false,
     sort,
-    where: {
-      /* eslint-disable @typescript-eslint/naming-convention */
-      _status: {
-      /* eslint-enable @typescript-eslint/naming-convention */
-        equals: 'published',
-      },
-      tenant: {
-        equals: tenant,
-      },
-    },
+    where: queryRestraints,
   });
 
   return detailPages.docs;
@@ -298,4 +312,34 @@ export const fetchProjectsPages = async ({
   });
 
   return result as ProjectDetailPage[];
+};
+
+// #########################################################################
+// Publication Pages
+// #########################################################################
+
+interface InterfaceFetchPublicationPagesProps {
+  locale: TypedLocale;
+  tenant: string;
+  limit?: number;
+  payload?: BasePayload;
+}
+
+export const fetchPublicationPages = async ({
+  locale,
+  tenant,
+  limit = 0,
+  payload,
+}: InterfaceFetchPublicationPagesProps): Promise<PublicationDetailPage[]> => {
+  const result = await fetchDetailPages({
+    collection: 'publicationDetailPage',
+    depth: 2,
+    language: locale,
+    limit,
+    payload,
+    sort: '-createdAt',
+    tenant,
+  });
+
+  return result as PublicationDetailPage[];
 };

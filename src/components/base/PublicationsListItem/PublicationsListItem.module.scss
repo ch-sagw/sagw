@@ -1,0 +1,59 @@
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-typo" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+
+.publicationsListItem {
+  @include list-reset;
+
+  --publication-teaser-image-width: 80;
+  --publication-teaser-image-height: 114;
+
+  @include mq($from: wide) {
+    --publication-teaser-image-width: 120;
+    --publication-teaser-image-height: 170;
+  }
+
+  .link {
+    display: flex;
+    column-gap: px-to-rem(var(--inside-elements-m));
+    text-decoration: none;
+    color: var(--text-primary);
+
+    &:focus,
+    &:hover {
+      .textContentTitle {
+        @include link-text-underline;
+      }
+    }
+  }
+
+  .image {
+    display: flex;
+    width: px-to-rem(var(--publication-teaser-image-width));
+    height: px-to-rem(var(--publication-teaser-image-height));
+    flex: 0 0 px-to-rem(var(--publication-teaser-image-width));
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  .textContent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: px-to-rem(var(--spacing-xs));
+  }
+
+  .textContentTitle {
+    @include title-heading-5;
+  }
+
+  .textContentDate {
+    @include body-text-s;
+
+    color: var(--text-secondary);
+  }
+}

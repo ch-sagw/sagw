@@ -126,29 +126,45 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // Global Content
   // ############
 
-  // create publication topic
-  const publicationTopic = await payload.create({
+  // create publication topics
+  const publicationTopics = [
+    'Wissenschaftsbetrieb',
+    'Kultur und Gesellschaft',
+    'Demografischer Wandel',
+    'Bildung',
+    'Nachhaltigkeit',
+  ];
+
+  const addedPublicationTopics = await Promise.all(publicationTopics.map((publicationTopic) => payload.create({
     collection: 'publicationTopics',
     context: {
       skipCacheInvalidation: true,
     },
     data: {
-      publicationTopic: simpleRteConfig(`Publication Topic 1 ${tenant.toUpperCase()}`),
+      publicationTopic: simpleRteConfig(publicationTopic),
       tenant: tenantId,
     },
-  });
+  })));
 
   // create publication type
-  const publicationType = await payload.create({
+  const publicationTypes = [
+    'Akademiereferate',
+    'Factsheets',
+    'Jahresbericht',
+    'Magazin',
+    'Studien und Berichte',
+  ];
+
+  const addedPublicationTypes = await Promise.all(publicationTypes.map((publicationType) => payload.create({
     collection: 'publicationTypes',
     context: {
       skipCacheInvalidation: true,
     },
     data: {
-      publicationType: simpleRteConfig(`Publication Type 1 ${tenant.toUpperCase()}`),
+      publicationType: simpleRteConfig(publicationType),
       tenant: tenantId,
     },
-  });
+  })));
 
   // create network categories
   const networkCategory1 = await payload.create({
@@ -217,7 +233,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       data: {
         firstname: simpleRteConfig(`Firstname ${index} ${tenant.toUpperCase()}`),
         function: simpleRteConfig('Some function'),
-        image,
+        image: image.id,
         lastname: simpleRteConfig(`Lastname ${index} ${tenant.toUpperCase()}`),
         mail: 'foo@bar.com',
         phone: '031 123 45 67',
@@ -1085,6 +1101,31 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     draft: false,
   });
 
+  // create overview page with news overview block
+  const publicationsOverview = await payload.create({
+    collection: 'overviewPage',
+    data: {
+      _status: 'published',
+      content: [
+        {
+          blockType: 'publicationsOverviewBlock',
+          filterTitleAllPublications: simpleRteConfig('Alle Publikationen'),
+          filterTitleAllTopics: simpleRteConfig('Alle Themen'),
+          title: simpleRteConfig('All Publications'),
+        },
+      ],
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Overview Page Lead'),
+        title: simpleRteConfig(`Publications Overview ${tenant.toUpperCase()}`),
+      },
+      navigationTitle: 'Publications',
+      slug: `publications-overview-${tenant.toLowerCase()}`,
+      tenant: tenantId,
+    },
+    draft: false,
+  });
+
   // create overview page with events overview block
   const eventsOverview = await payload.create({
     collection: 'overviewPage',
@@ -1604,9 +1645,12 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
 
   // publication detail pages
   await Promise.all(Array.from({
-    length: 12,
+    length: 52,
   }, (_, i) => {
     const index = i + 1;
+
+    const randomTopic = Math.floor(Math.random() * addedPublicationTopics.length);
+    const randomType = Math.floor(Math.random() * addedPublicationTypes.length);
 
     return payload.create({
       collection: 'publicationDetailPage',
@@ -1616,8 +1660,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       data: {
         _status: 'published',
         categorization: {
-          topic: publicationTopic.id,
-          type: publicationType.id,
+          topic: addedPublicationTopics[randomTopic].id,
+          type: addedPublicationTypes[randomType].id,
         },
         content: [
           {
@@ -1633,9 +1677,13 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         navigationTitle: `Publication ${index}`,
         overviewPageProps: {
           date: '2025-08-31T12:00:00.000Z',
-          image,
+          image: image.id,
         },
-        slug: `publication-detail-page-title-${tenant.toLowerCase()}-${index}`,
+        parentPage: {
+          documentId: publicationsOverview.id,
+          slug: 'overviewPage',
+        },
+        slug: `publication-${index}-detail-page-title-${tenant.toLowerCase()}-${index}`,
         tenant: tenantId,
       },
     });

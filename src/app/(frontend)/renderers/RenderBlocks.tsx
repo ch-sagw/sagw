@@ -46,8 +46,10 @@ import { Links } from '@/components/blocks/Links/Links';
 import { Downloads } from '@/components/blocks/Downloads/Downloads';
 import { NewsOverview } from '@/components/blocks/NewsOverview/NewsOverview';
 import { EventsOverview } from '@/components/blocks/EventsOverview/EventsOverview';
+import { PublicationsOverviewBlock } from '@/components/blocks/PublicationsOverview/PublicationsOverview';
 import { NewsTeaser } from '@/components/blocks/NewsTeaser/NewsTeaser';
 import { EventsTeaser } from '@/components/blocks/EventsTeaser/EventsTeaser';
+import { PublicationsTeaser } from '@/components/blocks/PublicationsTeaser/PublicationsTeaser';
 import { CtaLink } from '@/components/blocks/CtaLink/CtaLink';
 import { GenericTeaser } from '@/components/blocks/GenericTeaser/GenericTeaser';
 import { MagazineTeaser } from '@/components/blocks/MagazineTeaser/MagazineTeaser';
@@ -106,6 +108,7 @@ interface InterfaceRenderBlocksProps {
   )[] | null | undefined;
   i18n: I18NGlobal;
   sourcePage: InterfaceSourcePage;
+  projectId?: string;
 }
 
 export const RenderBlocks = ({
@@ -113,6 +116,7 @@ export const RenderBlocks = ({
   tenantId,
   i18n,
   sourcePage,
+  projectId,
 }: InterfaceRenderBlocksProps): React.JSX.Element | null => {
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0;
 
@@ -207,6 +211,18 @@ export const RenderBlocks = ({
               );
             }
 
+            if (blockType === 'publicationsOverviewBlock') {
+              return (
+                <div key={block.id || index}>
+                  <PublicationsOverviewBlock
+                    {...block}
+                    tenant={tenantId}
+                    key={key}
+                  />
+                </div>
+              );
+            }
+
             if (blockType === 'newsTeasersBlock') {
               return (
                 <NewsTeaser
@@ -226,6 +242,19 @@ export const RenderBlocks = ({
                   tenant={tenantId}
                   key={key}
                 />
+              );
+            }
+
+            if (blockType === 'publicationsTeasersBlock') {
+              return (
+                <div key={block.id || index}>
+                  <PublicationsTeaser
+                    {...block}
+                    tenant={tenantId}
+                    projectId={projectId}
+                    key={key}
+                  />
+                </div>
               );
             }
 
