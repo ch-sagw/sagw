@@ -9,7 +9,6 @@
 
 ############### LINKING ################
 - everywhere where rte3ToHtml is called: this should be rendered "as" p instead of div, right?
-- ERROR on server: GET /de 500 in 11239ms
 - in render blocks, we still pass tenant down sometimes, does that make sense?
 - renderHero is a complete client component. probably makes sense to split into server/client
 - make sure that payload.find for page queries only queries published pages (e.g. newsteasers, eventsteasers, overviews etc.)
