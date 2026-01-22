@@ -6,13 +6,13 @@
   @include list-reset;
 
   --list-gap: var(--spacing-m);
-  --list-flex-direction: row;
 
   display: flex;
   gap: px-to-rem(var(--list-gap));
-  flex-direction: var(--list-flex-direction);
+  flex-direction: var(--list-flex-direction, row);
+  align-items: flex-start;
 
-  @include mq($to: small) {
+  @include mq($to: medium) {
     --list-flex-direction: column;
   }
 

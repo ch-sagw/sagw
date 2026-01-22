@@ -9,7 +9,6 @@ import {
 import { getTenantId } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { LogCapture } from '@/test-helpers/capture-logs';
-import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { deleteSetsPages } from '@/seed/test-data/deleteData';
 import { sampleRteWithLink } from '@/utilities/rteSampleContent';
 
@@ -93,9 +92,7 @@ test('invalidates if target link changes slug (sagw)', {
   await payload.update({
     collection: 'detailPage',
     data: {
-      hero: {
-        title: simpleRteConfig(`detail changed ${time}`),
-      },
+      slug: `detail-changed-${time}`,
     },
     id: generatedPagesTarget.detailPage.id,
   });
@@ -120,9 +117,7 @@ test('invalidates if target link changes slug (sagw)', {
   await payload.update({
     collection: 'overviewPage',
     data: {
-      hero: {
-        title: simpleRteConfig(`overview changed ${time}`),
-      },
+      slug: `overview-changed-${time}`,
     },
     id: generatedPagesTarget.overviewPage.id,
   });
@@ -147,9 +142,7 @@ test('invalidates if target link changes slug (sagw)', {
   await payload.update({
     collection: 'newsDetailPage',
     data: {
-      hero: {
-        title: simpleRteConfig(`news changed ${time}`),
-      },
+      slug: `news-changed-${time}`,
     },
     id: generatedPagesTarget.newsDetailPage.id,
   });
@@ -174,9 +167,7 @@ test('invalidates if target link changes slug (sagw)', {
   await payload.update({
     collection: 'instituteDetailPage',
     data: {
-      hero: {
-        title: simpleRteConfig(`institute changed ${time}`),
-      },
+      slug: `institute-changed-${time}`,
     },
     id: generatedPagesTarget.instituteDetailPage.id,
   });
@@ -277,9 +268,7 @@ test('invalidates if target link changes slug (non-sagw)', {
   await payload.update({
     collection: 'detailPage',
     data: {
-      hero: {
-        title: simpleRteConfig(`detail changed ${time}`),
-      },
+      slug: `detail-changed-${time}`,
     },
     id: generatedPagesTarget.detailPage.id,
   });
@@ -304,9 +293,7 @@ test('invalidates if target link changes slug (non-sagw)', {
   await payload.update({
     collection: 'overviewPage',
     data: {
-      hero: {
-        title: simpleRteConfig(`overview changed ${time}`),
-      },
+      slug: `overview-changed-${time}`,
     },
     id: generatedPagesTarget.overviewPage.id,
   });
@@ -331,9 +318,7 @@ test('invalidates if target link changes slug (non-sagw)', {
   await payload.update({
     collection: 'newsDetailPage',
     data: {
-      hero: {
-        title: simpleRteConfig(`news changed ${time}`),
-      },
+      slug: `news-changed-${time}`,
     },
     id: generatedPagesTarget.newsDetailPage.id,
   });
@@ -358,9 +343,7 @@ test('invalidates if target link changes slug (non-sagw)', {
   await payload.update({
     collection: 'instituteDetailPage',
     data: {
-      hero: {
-        title: simpleRteConfig(`institute changed ${time}`),
-      },
+      slug: `institute-changed-${time}`,
     },
     id: generatedPagesTarget.instituteDetailPage.id,
   });

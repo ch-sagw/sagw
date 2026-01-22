@@ -105,6 +105,7 @@ export const GenericTeaser = ({
   ]);
 
   let imageVariant = 'genericTeaser';
+
   const imageWidth = 400;
   let imageHeight = 300;
   let optimizeImage = true;

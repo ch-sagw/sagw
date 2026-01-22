@@ -521,7 +521,7 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     <Navigation
 
       sections={props.navigation.navItems.map((item, key) => {
-        if (item.subNavItems) {
+        if (item.subNavItems && item.subNavItems.length > 0) {
 
           // level 1 with subnav items
           return {

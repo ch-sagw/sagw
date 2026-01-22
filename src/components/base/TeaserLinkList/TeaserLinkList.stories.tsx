@@ -7,6 +7,8 @@ import { defaultDecorator } from '@/storybook-helpers';
 import { NewsListItem } from '@/components/base/NewsListItem/NewsListItem';
 import { EventsListItem } from '@/components/base/EventsListItem/EventsListItem';
 import { DownloadLinkItem } from '@/components/base/DownloadLinkItem/DownloadLinkItem';
+import { PublicationsListItem } from '@/components/base/PublicationsListItem/PublicationsListItem';
+import { PublicationTeaserImage } from '@/components/blocks/helpers/imagesData';
 
 type TeaserLinkListProps = React.ComponentProps<typeof TeaserLinkList>;
 
@@ -54,6 +56,21 @@ const linkItem = <DownloadLinkItem
   title='Artikel auf Zenodo'
   type='link'
   key='some-key'
+/>;
+
+const publicationsListItem = <PublicationsListItem
+  categorization={{
+    topic: '',
+    type: '',
+  }}
+  date='2025-10-23T12:00:00.000Z'
+  image={PublicationTeaserImage}
+  key='some-key'
+  link={{
+    href: 'https://foo.bar',
+  }}
+  tag='Magazin'
+  title='Das Paradox von sozialer Integration und Ausschluss im Schweizer Bildungswesen. Beiträge der Soziologie'
 />;
 
 const meta: Meta<typeof TeaserLinkList> = {
@@ -125,5 +142,19 @@ export const LinkList: StrictStory = {
     ],
     colorMode: 'light',
     title: 'Links',
+  },
+};
+
+export const PublicationsList: StrictStory = {
+  args: {
+    children: [
+      publicationsListItem,
+      publicationsListItem,
+      publicationsListItem,
+      publicationsListItem,
+    ],
+    colorMode: 'white',
+    style: 'publications',
+    title: 'Publikationen',
   },
 };

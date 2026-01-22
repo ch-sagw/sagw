@@ -3,7 +3,7 @@
 // and update (when slug/breadcrumb changes)
 
 import type {
-  CollectionAfterChangeHook, CollectionSlug, TypedLocale,
+  CollectionAfterChangeHook, CollectionBeforeDeleteHook, CollectionSlug, TypedLocale,
 } from 'payload';
 import {
   globalCollectionsSlugs, setsSlugs, singletonSlugs,
@@ -33,8 +33,13 @@ const invalidationCache = new Set<string>();
 // This persists even when invalidationCache is cleared for cascade updates
 const rootPathInvalidationCache = new Set<string>();
 
+export const clearInvalidationCache = (): void => {
+  invalidationCache.clear();
+  rootPathInvalidationCache.clear();
+};
+
 // Helper to invalidate pages with deduplication
-const invalidatePagesWithDeduplication = async (
+export const invalidatePagesWithDeduplication = async (
   pages: { id: string; collectionSlug: CollectionSlug }[],
   allLocales: TypedLocale[],
   payload: any,
@@ -99,9 +104,66 @@ const hasContentChanged = (
   }
 };
 
+// helper to check if hero field has changed
+// compares hero field to detect any changes in title, lead, colorMode, etc.
+const hasHeroChanged = (
+  oldHero: unknown,
+  newHero: unknown,
+): boolean => {
+  // both undefined/null - no change
+  if (!oldHero && !newHero) {
+    return false;
+  }
+
+  // one is undefined/null, other is not - changed
+  if (!oldHero || !newHero) {
+    return true;
+  }
+
+  // compare serialized objects to detect any changes
+  try {
+    const oldSerialized = JSON.stringify(oldHero);
+    const newSerialized = JSON.stringify(newHero);
+
+    return oldSerialized !== newSerialized;
+  } catch {
+    // if serialization fails, assume changed to be safe
+    return true;
+  }
+};
+
+// helper to check if eventDetails field has changed
+// compares eventDetails group field to detect any changes in title,
+// location, date, etc.
+const hasEventDetailsChanged = (
+  oldEventDetails: unknown,
+  newEventDetails: unknown,
+): boolean => {
+  // both undefined/null - no change
+  if (!oldEventDetails && !newEventDetails) {
+    return false;
+  }
+
+  // one is undefined/null, other is not - changed
+  if (!oldEventDetails || !newEventDetails) {
+    return true;
+  }
+
+  // compare serialized objects to detect any changes
+  try {
+    const oldSerialized = JSON.stringify(oldEventDetails);
+    const newSerialized = JSON.stringify(newEventDetails);
+
+    return oldSerialized !== newSerialized;
+  } catch {
+    // if serialization fails, assume changed to be safe
+    return true;
+  }
+};
+
 // map detail page collections to block types that programmatically
 // reference them
-const DETAIL_PAGE_TO_BLOCKS: Record<string, string[]> = {
+export const DETAIL_PAGE_TO_BLOCKS: Record<string, string[]> = {
   eventDetailPage: [
     'eventsTeasersBlock',
     'eventsOverviewBlock',
@@ -127,7 +189,22 @@ const DETAIL_PAGE_TO_BLOCKS: Record<string, string[]> = {
 };
 
 // map block types to collections where they can be placed
-const BLOCK_TO_COLLECTIONS: Record<string, CollectionSlug[]> = {
+export const BLOCK_TO_COLLECTIONS: Record<string, CollectionSlug[]> = {
+  bibliographicReferenceBlock: ['publicationDetailPage'],
+  ctaContactBlock: [
+    'detailPage',
+    'homePage',
+    'overviewPage',
+    'projectDetailPage',
+  ],
+  downloadsBlock: [
+    'detailPage',
+    'eventDetailPage',
+    'magazineDetailPage',
+    'newsDetailPage',
+    'projectDetailPage',
+    'publicationDetailPage',
+  ],
   eventsOverviewBlock: [
     'homePage',
     'overviewPage',
@@ -136,9 +213,40 @@ const BLOCK_TO_COLLECTIONS: Record<string, CollectionSlug[]> = {
     'homePage',
     'overviewPage',
   ],
+  formBlock: [
+    'detailPage',
+    'eventDetailPage',
+    'magazineDetailPage',
+    'newsDetailPage',
+    'projectDetailPage',
+    'publicationDetailPage',
+    'overviewPage',
+    'homePage',
+  ],
+  genericTeasersBlock: [
+    'homePage',
+    'overviewPage',
+    'detailPage',
+  ],
+  imageBlock: [
+    'detailPage',
+    'eventDetailPage',
+    'magazineDetailPage',
+    'newsDetailPage',
+    'publicationDetailPage',
+  ],
   institutesOverviewBlock: [
     'homePage',
     'overviewPage',
+  ],
+  linksBlock: [
+    'detailPage',
+    'publicationDetailPage',
+    'projectDetailPage',
+    'newsDetailPage',
+    'nationalDictionaryDetailPage',
+    'magazineDetailPage',
+    'instituteDetailPage',
   ],
   magazineOverviewBlock: [
     'homePage',
@@ -152,6 +260,7 @@ const BLOCK_TO_COLLECTIONS: Record<string, CollectionSlug[]> = {
     'homePage',
     'overviewPage',
   ],
+  networkTeasersBlock: ['overviewPage'],
   newsOverviewBlock: [
     'homePage',
     'overviewPage',
@@ -161,6 +270,10 @@ const BLOCK_TO_COLLECTIONS: Record<string, CollectionSlug[]> = {
     'overviewPage',
     'newsDetailPage',
     'projectDetailPage',
+  ],
+  peopleOverviewBlock: [
+    'homePage',
+    'overviewPage',
   ],
   projectsOverviewBlock: [
     'homePage',
@@ -180,10 +293,11 @@ const BLOCK_TO_COLLECTIONS: Record<string, CollectionSlug[]> = {
     'publicationDetailPage',
     'projectDetailPage',
   ],
+  videoBlock: ['detailPage'],
 };
 
 // Find pages that have specific programmatic blocks
-const findPagesWithProgrammaticBlocks = async ({
+export const findPagesWithProgrammaticBlocks = async ({
   blockTypes,
   payload,
   tenantId,
@@ -214,21 +328,31 @@ const findPagesWithProgrammaticBlocks = async ({
     .map(async (collectionSlug) => {
       const isSingleton = singletonSlugs.some((singleton) => singleton.slug === collectionSlug);
 
+      // check if this collection has drafts enabled
+      const collectionConfig = payload.config.collections.find((c: any) => c.slug === collectionSlug);
+      const hasDrafts = Boolean(collectionConfig?.versions?.drafts);
+
       try {
+        const whereCondition: any = {
+          tenant: {
+            equals: tenantId,
+          },
+        };
+
+        // Add published status filter only if collection has drafts enabled
+        if (hasDrafts) {
+
+          whereCondition._status = {
+            equals: 'published',
+          };
+        }
+
         const queryOptions: any = {
           collection: collectionSlug,
           // need depth to read content blocks
           depth: 1,
           locale: 'all',
-          where: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            _status: {
-              equals: 'published',
-            },
-            tenant: {
-              equals: tenantId,
-            },
-          },
+          where: whereCondition,
         };
 
         const pages = await payload.find(queryOptions);
@@ -256,8 +380,8 @@ const findPagesWithProgrammaticBlocks = async ({
               return null;
             }
 
-            // verify published status for regular pages
-            if (!isSingleton && pageRecord._status !== 'published') {
+            // verify published status for pages that have drafts enabled
+            if (!isSingleton && hasDrafts && pageRecord._status !== 'published') {
               return null;
             }
 
@@ -376,7 +500,7 @@ const findAllChildPages = async ({
   return childPageIds;
 };
 
-// Find pages that directly reference a changed page
+// find pages that directly reference a changed page
 // (via RTE links or internalLink fields)
 const findReferencingPages = async ({
   changedPageId,
@@ -391,32 +515,38 @@ const findReferencingPages = async ({
 }): Promise<{ id: string; collectionSlug: CollectionSlug }[]> => {
   const referencingPages: { id: string; collectionSlug: CollectionSlug }[] = [];
 
-  // Search all page collections in parallel
+  // search all page collections in parallel
   await Promise.all(pageCollections.map(async (collectionConfig) => {
     const collectionSlug = collectionConfig.slug;
     const isSingleton = singletonSlugs.some((singleton) => singleton.slug === collectionSlug);
     const isGlobal = globalCollectionsSlugs.some((global) => global.slug === collectionSlug);
 
+    // check if this collection has drafts enabled
+    const payloadCollectionConfig = payload.config.collections.find((c: any) => c.slug === collectionSlug);
+    const hasDrafts = Boolean(payloadCollectionConfig?.versions?.drafts);
+
     try {
+      const whereCondition: any = {
+        tenant: {
+          equals: tenantId,
+        },
+      };
+
+      // Add published status filter for regular pages that have drafts enabled
+      if (!isSingleton && !isGlobal && hasDrafts) {
+        whereCondition._status = {
+          equals: 'published',
+        };
+      }
+
       const queryOptions: any = {
         collection: collectionSlug,
         depth: 0,
         limit: 0,
         locale: 'all',
         pagination: false,
-        where: {
-          tenant: {
-            equals: tenantId,
-          },
-        },
+        where: whereCondition,
       };
-
-      // Add published status filter for regular pages
-      if (!isSingleton && !isGlobal) {
-        queryOptions.where._status = {
-          equals: 'published',
-        };
-      }
 
       const pages = await payload.find(queryOptions);
 
@@ -443,8 +573,8 @@ const findReferencingPages = async ({
           return;
         }
 
-        // Verify published status for regular pages
-        if (!isSingleton && !isGlobal && pageRecord._status !== 'published') {
+        // Verify published status for regular pages that have drafts enabled
+        if (!isSingleton && !isGlobal && hasDrafts && pageRecord._status !== 'published') {
           return;
         }
 
@@ -657,6 +787,169 @@ const isPageInHeaderNavigation = async ({
   }
 };
 
+// Get all pages for a tenant, excluding non-SAGW pages if tenant is SAGW
+const getAllPagesForTenant = async ({
+  tenantId,
+  payload,
+}: {
+  tenantId: string;
+  payload: any;
+}): Promise<{ id: string; collectionSlug: CollectionSlug }[]> => {
+  try {
+    // Get tenant info to check if it's SAGW
+    const tenant = await payload.findByID({
+      collection: 'tenants',
+      depth: 1,
+      id: tenantId,
+    });
+
+    if (!tenant) {
+      return [];
+    }
+
+    // Note: excludeNonSagw is kept for API consistency but is redundant
+    // since we already filter by tenantId in the query, ensuring we only
+    // get pages belonging to the specified tenant
+
+    const allPages: { id: string; collectionSlug: CollectionSlug }[] = [];
+    const pageCollections = [
+      ...setsSlugs,
+      ...singletonSlugs.filter((s) => s.linkable),
+    ];
+
+    // Fetch pages for each collection and locale
+    await Promise.all(pageCollections.map(async (collectionConfig) => {
+      const collectionSlug = collectionConfig.slug;
+      const isSingleton = singletonSlugs.some((singleton) => singleton.slug === collectionSlug);
+
+      try {
+        const collectionConfigObj = payload.config.collections.find((c: any) => c.slug === collectionSlug);
+        const hasDrafts = Boolean(collectionConfigObj?.versions?.drafts);
+
+        const whereConditions: any[] = [
+          {
+            tenant: {
+              equals: tenantId,
+            },
+          },
+        ];
+
+        if (hasDrafts) {
+          whereConditions.unshift({
+            /* eslint-disable @typescript-eslint/naming-convention */
+            _status: {
+            /* eslint-enable @typescript-eslint/naming-convention */
+              equals: 'published',
+            },
+          });
+        }
+
+        // Fetch pages for all locales
+        const pages = await payload.find({
+          collection: collectionSlug,
+          depth: 1,
+          limit: 0,
+          locale: 'all',
+          overrideAccess: true,
+          pagination: false,
+          where: {
+            and: whereConditions,
+          },
+        });
+
+        // Filter pages and add to results
+        for (const page of pages.docs) {
+          const pageRecord = page as Record<string, unknown>;
+          const pageIdRaw = pageRecord.id;
+
+          if (!pageIdRaw) {
+            // eslint-disable-next-line no-continue
+            continue;
+          }
+
+          // Verify tenant matches
+          if (!('tenant' in pageRecord) || !pageRecord.tenant) {
+            // eslint-disable-next-line no-continue
+            continue;
+          }
+
+          const extractedTenantId = extractID(pageRecord.tenant as any);
+          const pageTenantId = typeof extractedTenantId === 'string'
+            ? extractedTenantId
+            : String(extractedTenantId);
+
+          if (pageTenantId !== tenantId) {
+            // eslint-disable-next-line no-continue
+            continue;
+          }
+
+          // Verify published status for regular pages that have drafts enabled
+          // Note: hasDrafts is already checked above when building the query
+          if (!isSingleton && hasDrafts && pageRecord._status !== 'published') {
+            // eslint-disable-next-line no-continue
+            continue;
+          }
+
+          const pageId = String(pageIdRaw);
+
+          allPages.push({
+            collectionSlug,
+            id: pageId,
+          });
+        }
+      } catch (error) {
+        console.error(`Error fetching pages from ${collectionSlug}:`, error);
+      }
+    }));
+
+    return allPages;
+  } catch (error) {
+    console.error('Error getting all pages for tenant:', error);
+
+    return [];
+  }
+};
+
+// Get home page for a tenant
+const getHomePageForTenant = async ({
+  tenantId,
+  payload,
+}: {
+  tenantId: string;
+  payload: any;
+}): Promise<{ id: string; collectionSlug: CollectionSlug } | null> => {
+  try {
+    const homePage = await payload.find({
+      collection: 'homePage',
+      depth: 0,
+      limit: 1,
+      locale: 'all',
+      overrideAccess: true,
+      where: {
+        tenant: {
+          equals: tenantId,
+        },
+      },
+    });
+
+    if (homePage.docs && homePage.docs.length > 0) {
+      const homePageDoc = homePage.docs[0] as Record<string, unknown>;
+      const pageId = String(homePageDoc.id);
+
+      return {
+        collectionSlug: 'homePage',
+        id: pageId,
+      };
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error getting home page for tenant:', error);
+
+    return null;
+  }
+};
+
 // Invalidate root paths when a header-linked page changes
 const invalidateRootPaths = async ({
   tenantId,
@@ -712,9 +1005,8 @@ const invalidateRootPaths = async ({
       if (!rootPathInvalidationCache.has(cacheKey)) {
         rootPathInvalidationCache.add(cacheKey);
 
-        if (process.env.ENV !== 'prod') {
-          console.log('[CACHE] invalidating path:', rootPath);
-        }
+        // IMPORTANT: do not change this log. This is neccessary for testing!!
+        console.log('[CACHE] invalidating path:', rootPath);
 
         if (process.env.ENV === 'prod') {
           revalidatePath(rootPath);
@@ -765,6 +1057,7 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
   // check published status
   const isSingleton = singletonSlugs.some((singleton) => singleton.slug === collectionSlug);
   const isGlobal = globalCollectionsSlugs.some((global) => global.slug === collectionSlug);
+
   const isPublished = isSingleton || isGlobal || doc._status === 'published';
   const wasPublished = isSingleton || isGlobal || previousDoc?._status === 'published';
   const isUnpublishing = wasPublished && !isPublished;
@@ -842,6 +1135,50 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
 
   const allLocales = getLocaleCodes();
 
+  // handle global content changes (header, footer, consent, statusMessage)
+  if (isGlobal && [
+    'header',
+    'footer',
+    'consent',
+    'statusMessage',
+  ].includes(collectionSlug)) {
+    // For statusMessage, check if it should only show on home
+    if (collectionSlug === 'statusMessage') {
+      const statusMessageDoc = doc as Record<string, unknown>;
+      const content = statusMessageDoc.content as Record<string, unknown> | undefined;
+      const showOnHomeOnly = content?.showOnHomeOnly === true;
+
+      if (showOnHomeOnly) {
+        // Only invalidate home page
+        const homePage = await getHomePageForTenant({
+          payload: req.payload,
+          tenantId,
+        });
+
+        if (homePage) {
+          await invalidatePagesWithDeduplication([homePage], allLocales, req.payload);
+        }
+      } else {
+        const allPages = await getAllPagesForTenant({
+          payload: req.payload,
+          tenantId,
+        });
+
+        await invalidatePagesWithDeduplication(allPages, allLocales, req.payload);
+      }
+    } else {
+      const allPages = await getAllPagesForTenant({
+        payload: req.payload,
+        tenantId,
+      });
+
+      await invalidatePagesWithDeduplication(allPages, allLocales, req.payload);
+    }
+
+    // Return early - we've handled the invalidation
+    return doc;
+  }
+
   // handle create operation
   // for programmatically referenced detail pages,
   // find pages with teaser/overview blocks
@@ -863,6 +1200,11 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
         pageId: page.id,
         payload: req.payload,
       }))));
+
+      // clear invalidation cache after create operation to ensure
+      // subsequent operations (e.g., referenced collection changes)
+      // can properly invalidate pages
+      clearInvalidationCache();
     }
 
     return doc;
@@ -915,17 +1257,80 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
     const parentChanged = getParentId(oldParent) !== getParentId(newParent);
     const willTriggerCascade = slugChanged || navigationTitleChanged || parentChanged;
 
+    // for breadcrumb comparison, check `doc` first. if breadcrumb is
+    // not in `doc` (which can happen when only breadcrumb is updated in
+    // cascade), check `docToUse`.
     const oldBreadcrumb = previousDoc?.[fieldBreadcrumbFieldName];
-    const newBreadcrumb = doc?.[fieldBreadcrumbFieldName];
-    const breadcrumbChanged = JSON.stringify(oldBreadcrumb) !== JSON.stringify(newBreadcrumb);
+    const newBreadcrumbFromDoc = doc?.[fieldBreadcrumbFieldName];
+
+    // if breadcrumb is not in `doc`, it might be a cascade update where Payload
+    // didn't include it. Check `docToUse` as fallback
+    const newBreadcrumb = newBreadcrumbFromDoc === undefined
+      ? docToUse?.[fieldBreadcrumbFieldName]
+      : newBreadcrumbFromDoc;
+
+    // handle undefined values properly in comparison
+    const breadcrumbChanged = (oldBreadcrumb === undefined && newBreadcrumb !== undefined) ||
+      (oldBreadcrumb !== undefined && newBreadcrumb === undefined) ||
+      (oldBreadcrumb !== undefined && newBreadcrumb !== undefined &&
+        JSON.stringify(oldBreadcrumb) !== JSON.stringify(newBreadcrumb));
+
+    // check if overviewPageProps changed
+    // overviewPageProps are used for teasers on overview pages
+    const oldOverviewPageProps = previousDoc?.overviewPageProps;
+    const newOverviewPageProps = doc?.overviewPageProps;
+    let overviewPagePropsChanged = false;
+
+    try {
+      overviewPagePropsChanged = JSON.stringify(oldOverviewPageProps) !== JSON.stringify(newOverviewPageProps);
+    } catch {
+      // if serialization fails, assume changed to be safe
+      overviewPagePropsChanged = true;
+    }
+
+    // check if only overviewPageProps changed (no other important fields)
+    let onlyOverviewPagePropsChanged = false;
+
+    if (overviewPagePropsChanged && !willTriggerCascade && !breadcrumbChanged) {
+      // check if any other important fields changed
+      // Note: if a field is not in `doc`, it wasn't updated, so we compare
+      // previousDoc value with itself (no change)
+      const contentChanged = 'content' in doc
+        ? hasContentChanged(previousDoc?.content, doc.content)
+        : false;
+
+      const heroChanged = 'hero' in doc
+        ? hasHeroChanged(previousDoc?.hero, doc.hero)
+        : false;
+
+      // For eventDetailPage, also check if eventDetails changed
+      let eventDetailsChanged = false;
+
+      if (collectionSlug === 'eventDetailPage' && 'eventDetails' in doc) {
+        eventDetailsChanged = hasEventDetailsChanged(previousDoc?.eventDetails, doc.eventDetails);
+      }
+
+      onlyOverviewPagePropsChanged = !contentChanged && !heroChanged && !eventDetailsChanged;
+    }
 
     // IMPORTANT:
     // `context.cascadeBreadcrumbUpdate` can leak across operations
     // (shared req/context). only treat it as a cascade update if the
     // breadcrumb actually changed AND slug/navTitle/parent did NOT change.
+
+    // when cascade hook updates a child page, it updates ONLY the breadcrumb.
+    // if context.cascadeBreadcrumbUpdate is true and willTriggerCascade is,
+    // false this is a cascade breadcrumb update. We check for breadcrumbChanged
+    //  OR breadcrumb field presence in the update to avoid false positives from
+    // leaked context, but make it less strict to catch all cascade updates.
+    const hasBreadcrumbInUpdate = doc?.[fieldBreadcrumbFieldName] !== undefined ||
+      docToUse?.[fieldBreadcrumbFieldName] !== undefined;
+    // if context is set and willTriggerCascade is false, and breadcrumb is in,
+    // update, this is a cascade breadcrumb update
+    // (even if we can't detect the change)
     const isCascadeBreadcrumbUpdate = context?.cascadeBreadcrumbUpdate === true &&
-      breadcrumbChanged &&
-      !willTriggerCascade;
+      !willTriggerCascade &&
+      (breadcrumbChanged || hasBreadcrumbInUpdate);
 
     // clear invalidation cache at the start of each non-cascade update.
     // this ensures. we deduplicate within the same update operation but allow
@@ -996,6 +1401,7 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
     // child pages' breadcrumbs will also change via cascade
     // so we need to find pages that reference child pages too
     let childReferencingPages: { id: string; collectionSlug: CollectionSlug }[] = [];
+    let childPagesToInvalidate: { id: string; collectionSlug: CollectionSlug }[] = [];
 
     if (willTriggerCascade) {
       const childPageIds = await findAllChildPages({
@@ -1016,6 +1422,44 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
       const childReferencingPagesArrays = await Promise.all(childReferencingPagesPromises);
 
       childReferencingPages = childReferencingPagesArrays.flat();
+
+      // when navigationTitle changes (not slug), child pages keep the same URLs
+      // but breadcrumb content changes, so we need to invalidate them directly.
+      // when slug changes, child pages get new URLs, we don't invalidate
+      // old URLs
+      if (navigationTitleChanged && !slugChanged) {
+        // Find collection slugs for child pages by querying each collection
+        // with the child page IDs
+        const childPagesWithCollectionsPromises = pageCollections.map(async (collectionConfig) => {
+          try {
+            const result = await req.payload.find({
+              collection: collectionConfig.slug,
+              depth: 0,
+              limit: 0,
+              overrideAccess: true,
+              where: {
+                id: {
+                  in: Array.from(childPageIds),
+                },
+                tenant: {
+                  equals: tenantId,
+                },
+              },
+            });
+
+            return result.docs.map((childDoc: any) => ({
+              collectionSlug: collectionConfig.slug,
+              id: String(childDoc.id),
+            }));
+          } catch {
+            return [];
+          }
+        });
+
+        const childPagesWithCollectionsArrays = await Promise.all(childPagesWithCollectionsPromises);
+
+        childPagesToInvalidate = childPagesWithCollectionsArrays.flat();
+      }
     }
 
     // merge and deduplicate referencing pages
@@ -1026,6 +1470,13 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
     });
 
     childReferencingPages.forEach((page) => {
+      if (!allReferencingPagesMap.has(page.id)) {
+        allReferencingPagesMap.set(page.id, page);
+      }
+    });
+
+    // Add child pages to invalidate when navigationTitle changes (not slug)
+    childPagesToInvalidate.forEach((page) => {
       if (!allReferencingPagesMap.has(page.id)) {
         allReferencingPagesMap.set(page.id, page);
       }
@@ -1058,16 +1509,20 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
       await invalidatePagesWithDeduplication(allReferencingPages, allLocales, req.payload);
     }
 
-    // For homePage, check content changes regardless of cascade trigger
-    // HomePage content changes should always invalidate root paths
-    // Use context to prevent duplicate invalidations within the same operation
+    // for home, check content and hero changes regardless of cascade trigger
+    // home content/hero changes should always invalidate root paths
+    // use context to prevent duplicate invalidations within the same operation
     if (collectionSlug === 'homePage' && !context?.homePageRootPathsInvalidated) {
       try {
         const oldContent = previousDoc?.content;
         const newContent = docToUse?.content;
         const contentChanged = hasContentChanged(oldContent, newContent);
 
-        if (contentChanged) {
+        const oldHero = previousDoc?.hero;
+        const newHero = docToUse?.hero;
+        const heroChanged = hasHeroChanged(oldHero, newHero);
+
+        if (contentChanged || heroChanged) {
           await invalidateRootPaths({
             payload: req.payload,
             tenantId,
@@ -1084,7 +1539,7 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
       }
     }
 
-    // if content changed (and no cascade trigger), invalidate the page itself
+    // if content or hero changed (and no cascade trigger), invalidate the page
     // this handles blocks added/removed/reordered/changed when
     // slug/navTitle/parent didn't change.
     //
@@ -1102,7 +1557,28 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
         const newContent = docToUse?.content;
         const contentChanged = hasContentChanged(oldContent, newContent);
 
-        if (contentChanged && collectionSlug !== 'homePage') {
+        const oldHero = previousDoc?.hero;
+        const newHero = docToUse?.hero;
+        const heroChanged = hasHeroChanged(oldHero, newHero);
+
+        // For eventDetailPage, also check if eventDetails changed
+        let eventDetailsChanged = false;
+
+        if (collectionSlug === 'eventDetailPage') {
+          const oldEventDetails = previousDoc?.eventDetails;
+          const newEventDetails = docToUse?.eventDetails;
+
+          eventDetailsChanged = hasEventDetailsChanged(oldEventDetails, newEventDetails);
+        }
+
+        // skip invalidate detail page itself if only overviewPageProps changed
+        // overviewPageProps are only used for teasers,
+        // not for the detail page itself
+        const shouldInvalidateDetailPage = !onlyOverviewPagePropsChanged &&
+          (contentChanged || heroChanged || eventDetailsChanged) &&
+          collectionSlug !== 'homePage';
+
+        if (shouldInvalidateDetailPage) {
           // Skip homePage here - already handled above
           await invalidatePagesWithDeduplication(
             [
@@ -1123,4 +1599,99 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
   }
 
   return doc;
+};
+
+// hook to invalidate cache when detail pages are deleted
+// runs on delete for programmatically referenced detail pages
+export const hookInvalidateCacheOnPageDelete: CollectionBeforeDeleteHook = async ({
+  req,
+  id,
+  collection,
+  context,
+}) => {
+  // skip if already invalidating (prevent loops)
+  if (context?.invalidatingCache) {
+    return;
+  }
+
+  // skip cache invalidation during seed operations
+  if (context?.skipCacheInvalidation) {
+    return;
+  }
+
+  if (!req?.payload || !id) {
+    return;
+  }
+
+  const collectionSlug = collection?.slug;
+
+  if (!collectionSlug) {
+    return;
+  }
+
+  // check if this is a detail page that's programmatically referenced
+  const blockTypes = DETAIL_PAGE_TO_BLOCKS[collectionSlug];
+  const isProgrammaticallyReferenced = blockTypes && blockTypes.length > 0;
+
+  if (!isProgrammaticallyReferenced) {
+    return;
+  }
+
+  // fetch the document to get tenant info
+  // we need this before deletion to extract tenant
+  let doc: any;
+
+  try {
+    doc = await req.payload.findByID({
+      collection: collectionSlug,
+      depth: 0,
+      id: String(id),
+    });
+  } catch (error) {
+    // document might already be deleted or not found
+    console.error(`Error fetching document for cache invalidation on delete for docId ${id}:`, error);
+
+    return;
+  }
+
+  if (!doc) {
+    return;
+  }
+
+  // extract tenant
+  let tenantId: string | undefined;
+
+  if ('tenant' in doc && doc.tenant) {
+    const extractedId = extractID(doc.tenant);
+
+    tenantId = typeof extractedId === 'string'
+      ? extractedId
+      : String(extractedId);
+  }
+
+  if (!tenantId) {
+    return;
+  }
+
+  const allLocales = getLocaleCodes();
+
+  // find pages with teaser/overview blocks that reference this detail page
+  const referencingPages = await findPagesWithProgrammaticBlocks({
+    blockTypes,
+    payload: req.payload,
+    tenantId,
+  });
+
+  // invalidate cache for all locales when a programmatically
+  // referenced page is deleted
+  await Promise.all(referencingPages.flatMap((page) => allLocales.map((loc) => invalidateCache({
+    collectionSlug: page.collectionSlug,
+    locale: loc,
+    pageId: page.id,
+    payload: req.payload,
+  }))));
+
+  // clear invalidation cache after delete operation to ensure
+  // subsequent operations can properly invalidate pages
+  clearInvalidationCache();
 };

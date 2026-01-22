@@ -79,3 +79,15 @@ export const NetworkTeaserImageSVG:Image = {
   url: 'https://sagw-nu-localhost.gumlet.io/sslas-network-teaser.svg',
   width: 576,
 };
+
+export const PublicationTeaserImage:Image = {
+  alt: '',
+  createdAt: '2025-12-21T16:31:28.095Z',
+  filename: 'cover-sagw-bulletin-1-2022.jpg',
+  height: 170,
+  id: '2025-12-21T16:31:28.095Z',
+  mimeType: 'image/jpg',
+  updatedAt: '2025-12-18T20:09:00.790Z',
+  url: 'https://sagw-nu-localhost.gumlet.io/cover-sagw-bulletin-1-2022.jpg',
+  width: 120,
+};

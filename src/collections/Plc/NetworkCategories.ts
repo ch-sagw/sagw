@@ -1,6 +1,10 @@
 import { CollectionConfig } from 'payload';
 import { rte1 } from '@/field-templates/rte';
 import { globalContentAccessGeneric } from '@/access/globalContent';
+import {
+  hookInvalidateCacheOnReferencedCollectionChange,
+  hookInvalidateCacheOnReferencedCollectionDelete,
+} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
 
 export const NetworkCategories: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -14,5 +18,9 @@ export const NetworkCategories: CollectionConfig = {
       name: 'name',
     }),
   ],
+  hooks: {
+    afterChange: [hookInvalidateCacheOnReferencedCollectionChange],
+    afterDelete: [hookInvalidateCacheOnReferencedCollectionDelete],
+  },
   slug: 'networkCategories',
 };
