@@ -7,6 +7,11 @@ const envs = [
   'test',
 ];
 
+// Auto-detect Vercel production environment if ENV is not already set
+if (!process.env.ENV && process.env.VERCEL_ENV === 'production') {
+  process.env.ENV = 'prod';
+}
+
 if (process.env.CI !== 'true') {
   dotenv.config({
     override: true,

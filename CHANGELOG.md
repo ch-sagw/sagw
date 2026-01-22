@@ -1,5 +1,49 @@
 # Changelog
 
+## [0.31.0](https://github.com/ch-sagw/sagw/compare/v0.30.2...v0.31.0) (2026-01-21)
+
+
+### Documentation
+
+* remove todo ([dafcfcc](https://github.com/ch-sagw/sagw/commit/dafcfcc7a0d16aceb85f64b9393e47e0bcdbee6f))
+
+
+### Features
+
+* adding publication teaser and publication overview components ([3c9588f](https://github.com/ch-sagw/sagw/commit/3c9588ff7ecc5386904dfe44ada7085ad9851d72))
+
+
+### Bug Fixes
+
+* fix home link rendering ([dafcfcc](https://github.com/ch-sagw/sagw/commit/dafcfcc7a0d16aceb85f64b9393e47e0bcdbee6f))
+* translate hidden menu label ([dafcfcc](https://github.com/ch-sagw/sagw/commit/dafcfcc7a0d16aceb85f64b9393e47e0bcdbee6f))
+
+## [0.30.2](https://github.com/ch-sagw/sagw/compare/v0.30.1...v0.30.2) (2026-01-21)
+
+
+### Bug Fixes
+
+* make sure process.env.env is prod on vercel ([f02af1a](https://github.com/ch-sagw/sagw/commit/f02af1a8061f3ffe5bf16d8b302c1975bed510ac))
+
+## [0.30.1](https://github.com/ch-sagw/sagw/compare/v0.30.0...v0.30.1) (2026-01-21)
+
+
+### Chore
+
+* log cache invalidation on prod ([5c72e78](https://github.com/ch-sagw/sagw/commit/5c72e784c80db6b0b4b6b23a7c8b8bef8f11cb1b))
+
+
+### Bug Fixes
+
+* export env ([b5734b5](https://github.com/ch-sagw/sagw/commit/b5734b5d62acb6d2966c2044e9a4fbcc33153d2b))
+
+## [0.30.0](https://github.com/ch-sagw/sagw/compare/v0.29.0...v0.30.0) (2026-01-19)
+
+
+### Features
+
+* improving cache invalidation ([6dd5b9d](https://github.com/ch-sagw/sagw/commit/6dd5b9d5c732ddfed91da467558e551fa9c6a783))
+
 ## [0.29.0](https://github.com/ch-sagw/sagw/compare/v0.28.0...v0.29.0) (2026-01-17)
 
 

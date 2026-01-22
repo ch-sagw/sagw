@@ -8,6 +8,7 @@ import {
 } from '@/field-templates/adminTitle';
 import { rte1 } from '@/field-templates/rte';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
+import { hookInvalidateCacheOnPageChange } from '@/hooks-payload/invalidateCacheOnPageChange';
 
 const fieldsSocialLink: Field[] = [
   {
@@ -160,6 +161,9 @@ export const Footer: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateCacheOnPageChange],
+  },
   labels: {
     plural: 'Footer',
     singular: 'Footer',

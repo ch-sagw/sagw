@@ -50,12 +50,27 @@ interface InterfacePageProps {
   draft?: boolean;
 }
 
+type InterfaceProjectPageProps = {
+  date?: string;
+  project?: string;
+} & InterfacePageProps;
+
+type InterfacePublicationPageProps = {
+  date?: string;
+  topic?: string;
+  type?: string;
+  project?: string;
+} & InterfacePageProps;
+
 type InterfaceEventPageProps = {
   date?: string;
+  category?: string;
+  project?: string;
 } & InterfacePageProps;
 
 type InterfaceNewsPageProps = {
   date?: string;
+  project?: string;
 } & InterfacePageProps;
 
 type InterfaceMagazinePageProps = {
@@ -181,39 +196,55 @@ export const generateEventDetailPage = async (props: InterfaceEventPageProps): P
     throw new Error('Tenant is not defined.');
   }
 
-  const project = await payload.create({
-    collection: 'projects',
-    data: {
-      name: simpleRteConfig(`Project ${(new Date())
-        .getTime()}`),
-      tenant,
-    },
-    locale: props.locale || 'de',
-  });
+  let {
+    project,
+  } = props;
 
-  const category = await payload.create({
-    collection: 'eventCategory',
-    data: {
-      eventCategory: simpleRteConfig(`Category ${(new Date())
-        .getTime()}`),
-      tenant,
-    },
-    locale: props.locale || 'de',
-  });
+  if (!project) {
+    const projectItem = await payload.create({
+      collection: 'projects',
+      data: {
+        name: simpleRteConfig(`Project ${(new Date())
+          .getTime()}`),
+        tenant,
+      },
+      locale: props.locale || 'de',
+    });
+
+    project = projectItem.id;
+  }
+
+  let {
+    category,
+  } = props;
+
+  if (!category) {
+    const categoryItem = await payload.create({
+      collection: 'eventCategory',
+      data: {
+        eventCategory: simpleRteConfig(`Category ${(new Date())
+          .getTime()}`),
+        tenant,
+      },
+      locale: props.locale || 'de',
+    });
+
+    category = categoryItem.id;
+  }
 
   const document = await payload.create({
     collection: 'eventDetailPage',
     data: {
       _status: 'published',
       eventDetails: {
-        category: category.id,
+        category,
         date: props.date
           ? props.date
           : '2030-08-01T12:00:00.000Z',
         dateEnd: '2026-01-01T13:00:00.000Z',
         language: simpleRteConfig('Deutsch'),
         location: simpleRteConfig('ETH Zürich'),
-        project: project.id,
+        project,
         time: '2025-08-31T12:00:00.000Z',
         title: simpleRteConfig(props.title),
       },
@@ -410,6 +441,7 @@ export const generateNewsDetailPage = async (props: InterfaceNewsPageProps): Pro
         teaserText: simpleRteConfig('some text'),
       },
       parentPage: props.parentPage,
+      project: props.project,
       slug: slugify(props.title, {
         lower: true,
         strict: true,
@@ -424,7 +456,7 @@ export const generateNewsDetailPage = async (props: InterfaceNewsPageProps): Pro
   return document;
 };
 
-export const generateProjectDetailPage = async (props: InterfacePageProps): Promise<ProjectDetailPage> => {
+export const generateProjectDetailPage = async (props: InterfaceProjectPageProps): Promise<ProjectDetailPage> => {
   let tenant;
 
   if (props.tenant) {
@@ -440,15 +472,23 @@ export const generateProjectDetailPage = async (props: InterfacePageProps): Prom
     throw new Error('Tenant is not defined.');
   }
 
-  const project = await payload.create({
-    collection: 'projects',
-    data: {
-      name: simpleRteConfig(`Project ${(new Date())
-        .getTime()}`),
-      tenant,
-    },
-    locale: 'de',
-  });
+  let {
+    project,
+  } = props;
+
+  if (!project) {
+    const projectItem = await payload.create({
+      collection: 'projects',
+      data: {
+        name: simpleRteConfig(`Project ${(new Date())
+          .getTime()}`),
+        tenant,
+      },
+      locale: 'de',
+    });
+
+    project = projectItem.id;
+  }
 
   const document = await payload.create({
     collection: 'projectDetailPage',
@@ -464,7 +504,7 @@ export const generateProjectDetailPage = async (props: InterfacePageProps): Prom
         teaserText: simpleRteConfig('some text'),
       },
       parentPage: props.parentPage,
-      project: project.id,
+      project,
       slug: slugify(props.title, {
         lower: true,
         strict: true,
@@ -479,7 +519,7 @@ export const generateProjectDetailPage = async (props: InterfacePageProps): Prom
   return document;
 };
 
-export const generatePublicationDetailPage = async (props: InterfacePageProps): Promise<PublicationDetailPage> => {
+export const generatePublicationDetailPage = async (props: InterfacePublicationPageProps): Promise<PublicationDetailPage> => {
   let tenant;
 
   if (props.tenant) {
@@ -508,6 +548,11 @@ export const generatePublicationDetailPage = async (props: InterfacePageProps): 
     collection: 'publicationDetailPage',
     data: {
       _status: 'published',
+      categorization: {
+        project: props.project,
+        topic: props.topic,
+        type: props.type,
+      },
       hero: {
         colorMode: 'light',
         title: simpleRteConfig(props.title),
@@ -1411,4 +1456,130 @@ export const generateAllPageTypes = async ({
     projectDetailPage: project,
     publicationDetailPage: publication,
   };
+};
+
+// #########################################
+// other collections
+// #########################################
+
+export const generateForm = async (tenant: string): Promise<string> => {
+  const payload = await getPayloadCached();
+  const form = await payload.create({
+    collection: 'forms',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      colorMode: 'dark',
+      fields: [
+        {
+          blockType: 'textBlockForm',
+          fieldError: simpleRteConfig('Geben Sie Ihren Namen an.'),
+          fieldWidth: 'half',
+          label: simpleRteConfig('Name'),
+          name: 'name',
+          placeholder: 'Ihr Name',
+          required: true,
+        },
+      ],
+      isNewsletterForm: 'custom',
+      mailSubject: 'Form submission on SAGW',
+      recipientMail: 'delivered@resend.dev',
+      showPrivacyCheckbox: false,
+      submitButtonLabel: 'Abschicken',
+      submitError: {
+        text: simpleRteConfig('Submit text error'),
+        title: simpleRteConfig('Submit title error'),
+      },
+      submitSuccess: {
+        text: simpleRteConfig('Submit text success'),
+        title: simpleRteConfig('Submit title success'),
+      },
+      subtitle: simpleRteConfig('Subtitle for contact Form'),
+      tenant,
+      title: simpleRteConfig('Contact Form'),
+    },
+  });
+
+  return form.id;
+};
+
+export const generateDocument = async (tenant: string, project?: string): Promise<string> => {
+  const payload = await getPayloadCached();
+  const document = await payload.create({
+    collection: 'documents',
+    data: {
+      date: '2025-10-30',
+      project,
+      tenant,
+      title: simpleRteConfig('Document'),
+    },
+    filePath: 'src/seed/test-data/assets/sagw.pdf',
+  });
+
+  return document.id;
+};
+
+export const generateZenodoDocument = async (tenant: string, project?: string): Promise<string> => {
+  const payload = await getPayloadCached();
+  const zenodoDocument = await payload.create({
+    collection: 'zenodoDocuments',
+    data: {
+      files: [
+        {
+          format: 'pdf',
+          id: 'someid',
+          link: 'https://foo.bar',
+          size: 0.26,
+        },
+        {
+          format: 'zip',
+          id: 'someotherid',
+          link: 'https://foo.bar',
+          size: 1.54,
+        },
+      ],
+      project,
+      publicationDate: '1919-05-01',
+      tenant,
+      title: 'Sample Zenodo Document',
+      zenodoId: '1512691',
+    },
+  });
+
+  return zenodoDocument.id;
+};
+
+export const generateImage = async (tenant: string): Promise<string> => {
+  const payload = await getPayloadCached();
+  const image = await payload.create({
+    collection: 'images',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      alt: 'image',
+      tenant,
+    },
+    filePath: 'src/seed/test-data/assets/sagw.png',
+  });
+
+  return image.id;
+};
+
+export const generateVideo = async (tenant: string): Promise<string> => {
+  const payload = await getPayloadCached();
+  const video = await payload.create({
+    collection: 'videos',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      tenant,
+      title: 'video',
+    },
+    filePath: 'src/seed/test-data/assets/sagw.mp4',
+  });
+
+  return video.id;
 };

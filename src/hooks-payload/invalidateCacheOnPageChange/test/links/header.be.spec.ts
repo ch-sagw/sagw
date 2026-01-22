@@ -84,9 +84,7 @@ test('invalidates if target link changes slug (sagw)', {
   await payload.update({
     collection: 'detailPage',
     data: {
-      hero: {
-        title: simpleRteConfig(`detail changed ${time}`),
-      },
+      slug: `detail-changed-${time}`,
     },
     id: generatedPagesTarget.detailPage.id,
   });
@@ -112,9 +110,7 @@ test('invalidates if target link changes slug (sagw)', {
   await payload.update({
     collection: 'overviewPage',
     data: {
-      hero: {
-        title: simpleRteConfig(`overview changed ${time}`),
-      },
+      slug: `overview-changed-${time}`,
     },
     id: generatedPagesTarget.overviewPage.id,
   });
@@ -207,9 +203,7 @@ test('invalidates if target link changes slug (non-sagw)', {
   await payload.update({
     collection: 'detailPage',
     data: {
-      hero: {
-        title: simpleRteConfig(`detail changed ${time}`),
-      },
+      slug: `detail-changed-${time}`,
     },
     id: generatedPagesTarget.detailPage.id,
   });
@@ -235,9 +229,7 @@ test('invalidates if target link changes slug (non-sagw)', {
   await payload.update({
     collection: 'overviewPage',
     data: {
-      hero: {
-        title: simpleRteConfig(`overview changed ${time}`),
-      },
+      slug: `overview-changed-${time}`,
     },
     id: generatedPagesTarget.overviewPage.id,
   });
