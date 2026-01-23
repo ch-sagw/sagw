@@ -16,7 +16,7 @@
 - renderHero is a complete client component. probably makes sense to split into server/client
 - in overview-links tests -> institute is missing
 
-############## CACHE ##############
+############## CACHE ###############
 - event detail page has links block link to detail page. if only content blocks of detail page changes, then event detail page should not be invalidated, but it currently is.
 - create event detail page (an overview page with events-overview exists) -> cache invalidation shows de/overview-page (ok), but it also invalidates /it, /fr/, /en
 - invalidate on meta change!
