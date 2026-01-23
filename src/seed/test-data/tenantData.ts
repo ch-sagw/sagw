@@ -1104,6 +1104,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create overview page with news overview block
   const publicationsOverview = await payload.create({
     collection: 'overviewPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: [
@@ -1780,6 +1783,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // add consent data
   await payload.create({
     collection: 'consent',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       banner: {
         buttonAcceptAll: simpleRteConfig('Alle zulassen'),
