@@ -52,7 +52,7 @@
     }
 
     @include mq($from: wide) {
-      padding: px-to-rem(var(56));
+      padding: px-to-rem(56);
     }
 
     @include forced-colors {
@@ -73,7 +73,7 @@
         @include button-reset;
 
         // ensure 44px click area
-        padding: px-to-rem(calc((44 - var(--spacing-l)) / 2));
+        padding: calc((44px - var(--spacing-l)) / 2);
         cursor: pointer;
 
         svg {
