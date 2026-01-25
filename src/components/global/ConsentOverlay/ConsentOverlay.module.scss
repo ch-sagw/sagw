@@ -73,7 +73,7 @@
         @include button-reset;
 
         // ensure 44px click area
-        padding: calc((44px - var(--spacing-l)) / 2);
+        padding: px-to-rem(calc((44 - var(--spacing-l)) / 2));
         cursor: pointer;
 
         svg {
