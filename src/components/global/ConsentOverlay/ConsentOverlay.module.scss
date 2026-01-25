@@ -52,7 +52,7 @@
     }
 
     @include mq($from: wide) {
-      padding: px-to-rem(56);
+      padding: px-to-rem(var(56));
     }
 
     @include forced-colors {
