@@ -203,7 +203,16 @@ test.describe('Internal Link Chooser', () => {
     page,
   }) => {
 
-    await page.goto('http://localhost:3000/admin/collections/header');
+    await page.goto('http://localhost:3000/admin');
+    await page.waitForLoadState('networkidle');
+
+    const collectionContent = await page.locator('#collections-0 .collections__wrap');
+
+    const headerButton = await collectionContent.getByText('Header');
+
+    await headerButton.click({
+      force: true,
+    });
     await page.waitForLoadState('networkidle');
 
     const navItem1 = await page.locator('#navigation-navItems-row-0');
@@ -243,7 +252,16 @@ test.describe('Internal Link Chooser', () => {
   test('only shows link of current tenant', async ({
     page,
   }) => {
-    await page.goto('http://localhost:3000/admin/collections/header');
+    await page.goto('http://localhost:3000/admin');
+    await page.waitForLoadState('networkidle');
+
+    const collectionContent = await page.locator('#collections-0 .collections__wrap');
+
+    const headerButton = await collectionContent.getByText('Header');
+
+    await headerButton.click({
+      force: true,
+    });
     await page.waitForLoadState('networkidle');
 
     const navItem1 = await page.locator('#navigation-navItems-row-0');
@@ -275,7 +293,16 @@ test.describe('Internal Link Chooser', () => {
       title: `draft detail ${time}`,
     });
 
-    await page.goto('http://localhost:3000/admin/collections/header');
+    await page.goto('http://localhost:3000/admin');
+    await page.waitForLoadState('networkidle');
+
+    const collectionContent = await page.locator('#collections-0 .collections__wrap');
+
+    const headerButton = await collectionContent.getByText('Header');
+
+    await headerButton.click({
+      force: true,
+    });
     await page.waitForLoadState('networkidle');
 
     const navItem1 = await page.locator('#navigation-navItems-row-0');
