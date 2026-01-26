@@ -16,6 +16,7 @@ import {
   SerializedParagraphNode, SerializedTextNode,
 } from '@payloadcms/richtext-lexical/lexical';
 import { externalLink } from '@/icons/ui/external-link';
+import slugify from 'slugify';
 
 // Union type for all possible lexical nodes
 type LexicalNode =
@@ -84,6 +85,43 @@ const createHtmlConverters = ({
       : {}),
     ...softHyphenJSXConverter,
     ...nonBreakingSpaceJSXConverter,
+
+    // custom heading converter to include id attribute
+    heading: ({
+      node,
+      converters,
+    }: {
+      node: { tag: string; id?: string; children?: LexicalNode[]; [key: string]: unknown };
+      converters: ReturnType<HTMLConvertersFunction<DefaultNodeTypes>>;
+    }): string => {
+      const headingNode = node as { tag: string; id?: string; children?: LexicalNode[] };
+      const tag = headingNode.tag || 'h2';
+      const id = headingNode.id
+        ? ` id="${headingNode.id}"`
+        : '';
+
+      // use default converter to render children
+      const childrenHtml = headingNode.children
+        ? headingNode.children
+          .map((child) => convertLexicalToHTML({
+            converters: () => converters,
+            data: {
+              root: {
+                children: [child],
+                direction: null,
+                format: '',
+                indent: 0,
+                type: 'root',
+                version: 1,
+              },
+            },
+            disableContainer: true,
+          }))
+          .join('')
+        : '';
+
+      return `<${tag}${id}>${childrenHtml}</${tag}>`;
+    },
   };
 
   if (!wrap) {
@@ -92,10 +130,10 @@ const createHtmlConverters = ({
       converters,
     }): string => {
 
-      // Recursively render the paragraph’s children without wrapping <p> !
+      // recursively render the paragraph’s children without wrapping <p> !
       const paragraphNode = node as SerializedParagraphNode;
 
-      // Recursively render children using convertLexicalToHTML,
+      // recursively render children using convertLexicalToHTML,
       // but with disableContainer = true to avoid <div> wrappers.
       const childrenHtml = paragraphNode.children
         .map((child) => convertLexicalToHTML({
@@ -121,11 +159,32 @@ const createHtmlConverters = ({
   return baseConverters;
 };
 
+// extract text content from a node recursively
+// (for headings that may contain links, bold, etc.)
+const extractTextFromNode = (node: LexicalNode): string => {
+  if (node.type === 'text') {
+    const textNode = node as SerializedTextNode;
+
+    return textNode.text || '';
+  }
+
+  if ('children' in node && node.children) {
+    return node.children.map(extractTextFromNode)
+      .join('');
+  }
+
+  return '';
+};
+
 // Recursively process lexical nodes to:
 // - add icons to links
 // - convert quotes to guillemets
 // - transform headings one level up (h1→h2, h2→h3, etc.)
-const processLexicalNodes = (nodes: LexicalNode[]): LexicalNode[] => nodes.map((node) => {
+// - add unique IDs to headings
+const processLexicalNodes = (
+  nodes: LexicalNode[],
+  idTracker: Map<string, number> = new Map(),
+): LexicalNode[] => nodes.map((node) => {
   if (node.type === 'heading' && 'tag' in node && typeof node.tag === 'string') {
     const headingTag = node.tag as 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
     const tagMapping: Record<'h1' | 'h2' | 'h3' | 'h4' | 'h5', 'h2' | 'h3' | 'h4' | 'h5' | 'h6'> = {
@@ -138,22 +197,49 @@ const processLexicalNodes = (nodes: LexicalNode[]): LexicalNode[] => nodes.map((
 
     const newTag = tagMapping[headingTag];
 
+    // extract text from heading to generate ID (before processing children)
+    const headingText = extractTextFromNode(node);
+    const baseSlug = slugify(headingText, {
+      lower: true,
+      strict: true,
+      trim: true,
+    });
+
     // Process children recursively
     const processedChildren = 'children' in node && node.children
-      ? processLexicalNodes(node.children)
+      ? processLexicalNodes(node.children, idTracker)
       : node.children;
+
+    // generate unique id by appending number if needed
+    // skip id generation if slug is empty (heading has no text)
+    let uniqueId: string | undefined;
+
+    if (baseSlug) {
+      if (idTracker.has(baseSlug)) {
+        const count = (idTracker.get(baseSlug) || 0) + 1;
+
+        idTracker.set(baseSlug, count);
+        uniqueId = `${baseSlug}-${count}`;
+      } else {
+        idTracker.set(baseSlug, 0);
+        uniqueId = baseSlug;
+      }
+    }
 
     return {
       ...node,
       children: processedChildren,
       tag: newTag,
+      ...(uniqueId && {
+        id: uniqueId,
+      }),
     };
   }
 
   // Process link nodes to add icons
   if (node.type === 'link') {
     const linkNode = node as SerializedLinkNode;
-    const processedChildren = processLexicalNodes(linkNode.children || []);
+    const processedChildren = processLexicalNodes(linkNode.children || [], idTracker);
     const hasExternalLink = linkNode.fields?.newTab === true;
 
     // Add external link icon as a new text node if needed
@@ -201,7 +287,7 @@ const processLexicalNodes = (nodes: LexicalNode[]): LexicalNode[] => nodes.map((
   if ('children' in node && node.children) {
     return {
       ...node,
-      children: processLexicalNodes(node.children),
+      children: processLexicalNodes(node.children, idTracker),
     };
   }
 
