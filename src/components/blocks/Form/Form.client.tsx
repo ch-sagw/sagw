@@ -41,7 +41,7 @@ export const FormClient = ({
   ] = useState(false);
 
   // Wrapper function that captures FormData before submission
-  const wrappedFormAction = (formData: FormData) => {
+  const wrappedFormAction = (formData: FormData): ReturnType<typeof formAction> => {
     // Store the FormData for potential resubmission
     lastSubmittedFormDataRef.current = formData;
     // Reset resend clicked states on new submission
