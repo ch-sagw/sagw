@@ -121,9 +121,35 @@ const createHtmlConverters = ({
   return baseConverters;
 };
 
-// Recursively process lexical nodes to add icons to links
-// and convert quotes to guillemets
+// Recursively process lexical nodes to:
+// - add icons to links
+// - convert quotes to guillemets
+// - transform headings one level up (h1→h2, h2→h3, etc.)
 const processLexicalNodes = (nodes: LexicalNode[]): LexicalNode[] => nodes.map((node) => {
+  if (node.type === 'heading' && 'tag' in node && typeof node.tag === 'string') {
+    const headingTag = node.tag as 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
+    const tagMapping: Record<'h1' | 'h2' | 'h3' | 'h4' | 'h5', 'h2' | 'h3' | 'h4' | 'h5' | 'h6'> = {
+      h1: 'h2',
+      h2: 'h3',
+      h3: 'h4',
+      h4: 'h5',
+      h5: 'h6',
+    };
+
+    const newTag = tagMapping[headingTag];
+
+    // Process children recursively
+    const processedChildren = 'children' in node && node.children
+      ? processLexicalNodes(node.children)
+      : node.children;
+
+    return {
+      ...node,
+      children: processedChildren,
+      tag: newTag,
+    };
+  }
+
   // Process link nodes to add icons
   if (node.type === 'link') {
     const linkNode = node as SerializedLinkNode;
