@@ -14,7 +14,8 @@ type FieldWithRequired = {
 
 const hasRequired = (field: unknown): field is FieldWithRequired => typeof field === 'object' && field !== null && 'required' in field;
 
-const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
+/* eslint-disable require-await */
+const InternalLinkChooser = async (props: UIFieldServerProps): Promise<JSX.Element> => {
   const {
     collectionSlug,
     id,
@@ -76,5 +77,6 @@ const InternalLinkChooser = (props: UIFieldServerProps): JSX.Element => {
     />
   );
 };
+/* eslint-enable require-await */
 
 export default InternalLinkChooser;
