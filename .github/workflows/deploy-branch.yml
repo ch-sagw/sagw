@@ -106,10 +106,8 @@ jobs:
           SHARD_INDEX: ${{ matrix.shardIndex }}
           SHARD_TOTAL: ${{ matrix.shardTotal }}
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
-          DATABASE_NAME: sagwplaywright-shard-${{ matrix.shardIndex }}
-          DATABASE_URI: mongodb://user:pass@mongo:27017/sagwplaywright-shard-${{ matrix.shardIndex }}?authSource=admin
-          # DATABASE_NAME: sagwplaywright
-          # DATABASE_URI: mongodb://user:pass@mongo:27017/sagwplaywright?authSource=admin
+          DATABASE_NAME: sagwplaywright
+          DATABASE_URI: mongodb://user:pass@mongo:27017/sagwplaywright?authSource=admin
           USER_SUPER_ADMIN_MAIL: ${{ secrets.USER_SUPER_ADMIN_MAIL }}
           USER_SUPER_ADMIN_PASS: ${{ secrets.USER_SUPER_ADMIN_PASS }}
           USER_SAGW_ADMIN_MAIL: ${{ secrets.USER_SAGW_ADMIN_MAIL }}
