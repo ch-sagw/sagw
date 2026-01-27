@@ -44,7 +44,7 @@ export const getSrcAndSrcSet = ({
         ${src}?${params}&w=1000&h=562&q=${nonRetinaQuality} 1000w,
         ${src}?${params}&w=1000&h=562&dpr=2&q=${retinaQuality} 2000w,
         ${src}?${params}&w=1250&h=703&q=${nonRetinaQuality} 1250w,
-        ${src}?${params}&w=1250&h=703&dpr=2&q=${retinaQuality} 2500w,
+        ${src}?${params}&w=1250&h=703&dpr=2&q=${retinaQuality} 2500w
       `;
 
       srcValue = `${src}?${params}&w=1000&h=562&q=${nonRetinaQuality}`;
