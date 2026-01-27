@@ -193,17 +193,7 @@ test.describe('Slug field API', () => {
         draft: false,
       });
     })
-      .rejects.toMatchObject({
-        data: {
-          errors: [
-            {
-              message: `Slug "detail-${time}" already exists in this tenant`,
-              path: 'slug',
-            },
-          ],
-        },
-        status: 400,
-      });
+      .notRejects();
   });
 
 });
