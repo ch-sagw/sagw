@@ -154,7 +154,7 @@ test.describe('Slug field API', () => {
 
     const tenantNotSagw = await getTenantId({
       isSagw: false,
-      time,
+      time: time + Math.floor(Math.random() * 1000000),
     });
 
     const homeNotSagw = await getHomeId({
