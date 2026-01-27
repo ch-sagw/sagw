@@ -79,7 +79,6 @@ export const Video = ({
       const cookieConsentObject = getCookieConsent();
 
       setInternalConsent(Boolean(cookieConsentObject?.external));
-      setInternalConsent(true);
     };
 
     handleConsentUpdate();
