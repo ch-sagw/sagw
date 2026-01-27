@@ -19,22 +19,27 @@ export const genericPageFields = (isOverview?: boolean): Field[] => ([
   slugField({
     fieldToUse: fieldAdminTitleFieldName,
     localized: true,
-    overrides: (defaultField) => {
-      defaultField.fields.forEach((field) => {
+    overrides: (defaultField) => ({
+      ...defaultField,
+      fields: defaultField.fields.map((field) => {
         if ('name' in field && field.name === 'slug') {
-          const customSlugField = field as TextField;
+          // Create a new field object without unique property
+          const {
+            ...fieldWithoutUnique
+          } = field as TextField & { unique?: boolean };
 
-          customSlugField.access = fieldAccessNonLocalizableField;
-
-          /* eslint-disable no-param-reassign */
-          field = customSlugField;
-          /* eslint-enable no-param-reassign */
+          return {
+            ...fieldWithoutUnique,
+            access: fieldAccessNonLocalizableField,
+            // unique is removed - slugs are unique per tenant,
+            // enforced by hookSlug hook
+          } as TextField;
         }
 
-      });
-
-      return defaultField;
-    },
+        return field;
+      }),
+    })
+    ,
   }),
   fieldNavigationTitle,
   isOverview
