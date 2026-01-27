@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.32.0](https://github.com/ch-sagw/sagw/compare/v0.31.0...v0.32.0) (2026-01-27)
+
+
+### Chore
+
+* **deps-dev:** bump the development-dependencies group across 1 directory with 19 updates ([#714](https://github.com/ch-sagw/sagw/issues/714)) ([3ceac45](https://github.com/ch-sagw/sagw/commit/3ceac4521fcdd9366993c0b13c2d738fb9b1aebf))
+* **deps:** bump lodash from 4.17.21 to 4.17.23 ([#724](https://github.com/ch-sagw/sagw/issues/724)) ([6745902](https://github.com/ch-sagw/sagw/commit/6745902e1060fe73f3dcb67fe11e9836a320efe1))
+* **deps:** bump the production-dependencies group across 1 directory with 10 updates ([#713](https://github.com/ch-sagw/sagw/issues/713)) ([f01f20a](https://github.com/ch-sagw/sagw/commit/f01f20a1785bd0cce12f9f4d47347e2eba10e627))
+* **deps:** bump the production-dependencies group with 12 updates ([#725](https://github.com/ch-sagw/sagw/issues/725)) ([86c4cc1](https://github.com/ch-sagw/sagw/commit/86c4cc1b652c4646d3dcac2eb5e00ed4ca322e6c))
+
+
+### Features
+
+* implement newsletter registration flow ([f251149](https://github.com/ch-sagw/sagw/commit/f2511494339d2d72282c12058da53fff1ab72483))
+
 ## [0.31.0](https://github.com/ch-sagw/sagw/compare/v0.30.2...v0.31.0) (2026-01-21)
 
 
