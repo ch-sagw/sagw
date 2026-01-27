@@ -162,10 +162,6 @@ test.describe('Slug field API', () => {
       tenant: tenantNotSagw,
     });
 
-    console.log('####################################################');
-    console.log('tenant sagw:', tenant);
-    console.log('tenant not sagw:', tenantNotSagw);
-
     // detail page not sagw
     await generateDetailPage({
       parentPage: {
@@ -177,35 +173,25 @@ test.describe('Slug field API', () => {
     });
 
     await expect(async () => {
-      try {
-        const foo = await payload.create({
-          collection: 'detailPage',
-          data: {
-            /* eslint-disable @typescript-eslint/naming-convention */
-            _status: 'published',
-            /* eslint-enable @typescript-eslint/naming-convention */
-            hero: {
-              colorMode: 'dark',
-              title: simpleRteConfig(`detail ${time}`),
-            },
-            parentPage: {
-              documentId: home,
-              slug: 'homePage',
-            },
-            slug: `detail-${time}`,
-            tenant,
+      await payload.create({
+        collection: 'detailPage',
+        data: {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          _status: 'published',
+          /* eslint-enable @typescript-eslint/naming-convention */
+          hero: {
+            colorMode: 'dark',
+            title: simpleRteConfig(`detail ${time}`),
           },
-          draft: false,
-        });
-
-        console.log('####################################################');
-        console.log(foo);
-
-      } catch (err) {
-        console.log('####################################################');
-        console.log(err);
-
-      }
+          parentPage: {
+            documentId: home,
+            slug: 'homePage',
+          },
+          slug: `detail-${time}`,
+          tenant,
+        },
+        draft: false,
+      });
     })
       .notRejects();
   });
