@@ -69,7 +69,7 @@ test.describe('Slug field UI', () => {
     const slugField = await page.locator('#field-slug');
 
     await expect(slugField)
-      .toHaveValue('sample-detail-page-name-hyphensupsub');
+      .toHaveValue('sample-detail-page-dollarname-ueoeae-hyphensupsub');
 
   });
 
@@ -166,6 +166,7 @@ test.describe('Slug field API', () => {
 
     // detail page not sagw
     await generateDetailPage({
+      locale: 'de',
       parentPage: {
         documentId: homeNotSagw,
         slug: 'homePage',
@@ -193,6 +194,7 @@ test.describe('Slug field API', () => {
           tenant,
         },
         draft: false,
+        locale: 'de',
       });
     })
       .notRejects();
