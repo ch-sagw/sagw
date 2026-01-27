@@ -78,6 +78,7 @@ test.describe('Slug field UI', () => {
 test.describe('Slug field API', () => {
   test('checks for unique slug in same tenant', async () => {
     await deleteSetsPages();
+    await deleteOtherCollections();
 
     const payload = await getPayloadCached();
     const time = (new Date())
@@ -137,6 +138,7 @@ test.describe('Slug field API', () => {
 
   test('does not error if slug exists in other tenant', async () => {
     await deleteSetsPages();
+    await deleteOtherCollections();
 
     const payload = await getPayloadCached();
     const time = (new Date())
