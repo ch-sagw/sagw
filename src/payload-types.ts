@@ -1941,7 +1941,7 @@ export interface InterfaceHeroFieldNewsDetail {
  * via the `definition` "InterfaceImageBlock".
  */
 export interface InterfaceImageBlock {
-  alignment?: ('left' | 'center' | 'right') | null;
+  alignment?: ('left' | 'center' | 'right' | 'hero') | null;
   image: string | Image;
   caption?: {
     root: {
