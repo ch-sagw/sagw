@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.2](https://github.com/ch-sagw/sagw/compare/v0.32.1...v0.32.2) (2026-01-27)
+
+
+### Bug Fixes
+
+* add logging for sagw tenant info ([4ff8e75](https://github.com/ch-sagw/sagw/commit/4ff8e75f39250d289d5eba12ef3c068c36334c1b))
+
 ## [0.32.1](https://github.com/ch-sagw/sagw/compare/v0.32.0...v0.32.1) (2026-01-27)
 
 
