@@ -59,38 +59,25 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
 
   // try to find slug in collection items of current tenant
 
-  // Normalize tenant query - use equals for string, in for array
-  const tenantConstraint = Array.isArray(tenant)
-    ? {
+  const searchConstraints: Where[] = [
+    {
       tenant: {
         in: tenant,
       },
-    }
-    : {
-      tenant: {
-        equals: tenant,
-      },
-    };
-
-  const searchConstraints: Where[] = [
-    tenantConstraint,
+    },
     {
       slug: {
         equals: dataParam.slug,
       },
     },
-  ];
-
-  // Only exclude current document on update operations when originalDoc exists
-  if (originalDoc?.id) {
-    searchConstraints.push({
+    {
       id: {
         /* eslint-disable @typescript-eslint/naming-convention */
         not_equals: originalDoc.id,
         /* eslint-enable @typescript-eslint/naming-convention */
       },
-    });
-  }
+    },
+  ];
 
   if ('_published' in collection) {
     searchConstraints.push({
