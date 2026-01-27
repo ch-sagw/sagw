@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.1](https://github.com/ch-sagw/sagw/compare/v0.32.0...v0.32.1) (2026-01-27)
+
+
+### Bug Fixes
+
+* downgrade jsdom ([6b61a6d](https://github.com/ch-sagw/sagw/commit/6b61a6d06926c66be744789e0c1abfd273bfe141))
+
 ## [0.32.0](https://github.com/ch-sagw/sagw/compare/v0.31.0...v0.32.0) (2026-01-27)
 
 
