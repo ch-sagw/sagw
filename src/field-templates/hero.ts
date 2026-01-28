@@ -58,7 +58,9 @@ export const fieldsHeroHome: GroupField = {
     rte1({
       name: 'sideTitle',
     }),
-    fieldsLinkInternalWithToggle({}),
+    fieldsLinkInternalWithToggle({
+      adminDescription: 'This is the text behind which the link is hidden.',
+    }),
     {
       access: fieldAccessHeroAnimation,
       defaultValue: true,

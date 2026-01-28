@@ -42,6 +42,7 @@ export type InterfaceHeaderComponentPropTypes = {
   metanav: InterfaceHeaderMetaNavigation;
   navigation: InterfaceHeaderNavigation;
   linkUrls: Record<string, string>;
+  localeUrls: Record<string, string>;
 }
 
 // --- Component
@@ -474,21 +475,25 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
       // TODO: put in internal i18n
       items={[
         {
+          href: props.localeUrls.de,
           shortText: 'De',
           text: 'Deutsch',
           value: 'de',
         },
         {
+          href: props.localeUrls.fr,
           shortText: 'Fr',
           text: 'Français',
           value: 'fr',
         },
         {
+          href: props.localeUrls.it,
           shortText: 'It',
           text: 'Italiano',
           value: 'it',
         },
         {
+          href: props.localeUrls.en,
           shortText: 'En',
           text: 'English',
           value: 'en',
@@ -497,11 +502,8 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
       currentLang={locale}
       className={styles.langnav}
       colorMode={renderColorMode()}
-      visibilityCallback={handleLangNavHover}
-      onHeightChange={handleLangHeightChange}
-      onLangSelect={() => {
-        console.log('TODO: on lang select');
-      }}
+      visibilityCallbackAction={handleLangNavHover}
+      onHeightChangeAction={handleLangHeightChange}
     />
   );
 

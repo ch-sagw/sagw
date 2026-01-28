@@ -14,6 +14,7 @@ export const checkboxBlock = (): Block => ({
   fields: [
     formFieldName,
     rte1({
+      label: 'Checkbox label',
       name: 'label',
     }),
     {

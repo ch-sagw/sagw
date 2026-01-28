@@ -15,6 +15,7 @@ export const PublicationsOverviewBlock = {
       name: 'filterTitleAllTopics',
     }),
     rte1({
+      label: 'Filter Title all types',
       name: 'filterTitleAllPublications',
     }),
     {

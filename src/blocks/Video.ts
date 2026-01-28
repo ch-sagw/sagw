@@ -87,6 +87,9 @@ export const VideoBlock = {
     }),
     {
       access: fieldAccessNonLocalizableField,
+      admin: {
+        description: 'This image is visible before the user clicks on the play button.',
+      },
       name: 'stillImage',
       relationTo: 'images',
       required: true,

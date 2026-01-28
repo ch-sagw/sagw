@@ -18,6 +18,7 @@ const AccordionItem: Field[] = [
   }),
   rte4({
     access: fieldAccessLocalizableField,
+    label: 'Accordion Text',
     name: 'accordionContent',
   }),
 ];

@@ -20,8 +20,8 @@ export const FootnotesBlock = {
   imageURL: '/admin-ui-images/notification.svg',
   interfaceName: 'InterfaceFootnotesBlock',
   labels: {
-    plural: 'Footnotes',
-    singular: 'Footnote',
+    plural: 'Small Texts',
+    singular: 'Small Text',
   },
   slug: 'footnoteBlock',
 } as const satisfies Block;

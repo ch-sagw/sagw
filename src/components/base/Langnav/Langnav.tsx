@@ -17,16 +17,16 @@ export type InterfaceLangnavItem = {
   text: string;
   shortText: string;
   value: string;
+  href: string;
 }
 
 export type InterfaceLangnavPropTypes = {
   items: InterfaceLangnavItem[];
   className?: string;
-  onLangSelect: () => void;
   currentLang: string;
   colorMode: ColorMode;
-  visibilityCallback?: (visible: boolean) => void;
-  onHeightChange?: (height: number) => void;
+  visibilityCallbackAction?: (visible: boolean) => void;
+  onHeightChangeAction?: (height: number) => void;
   title?: string;
   description?: string;
 };
@@ -51,11 +51,10 @@ const listClasses = cva([styles.listWrapper], {
 export const Langnav = ({
   items,
   className,
-  onLangSelect,
   currentLang,
   colorMode,
-  visibilityCallback,
-  onHeightChange,
+  visibilityCallbackAction,
+  onHeightChangeAction,
   description,
   title,
 }: InterfaceLangnavPropTypes): React.JSX.Element => {
@@ -87,12 +86,12 @@ export const Langnav = ({
   // --- Effects
 
   useEffect(() => {
-    if (visibilityCallback) {
-      visibilityCallback(menuVisible);
+    if (visibilityCallbackAction) {
+      visibilityCallbackAction(menuVisible);
     }
   }, [
     menuVisible,
-    visibilityCallback,
+    visibilityCallbackAction,
   ]);
 
   // keep track of expanded heights
@@ -103,9 +102,9 @@ export const Langnav = ({
 
     const height = measureElementHeight(expandableRef.current);
 
-    onHeightChange?.(height);
+    onHeightChangeAction?.(height);
   }, [
-    onHeightChange,
+    onHeightChangeAction,
     expandableRef,
   ]);
 
@@ -167,37 +166,41 @@ export const Langnav = ({
         ref={expandableRef}
       >
         <ul className={styles.list}>
-          {items.map((item, key: number) => (
-            <li key={key}>
-              <Button
-                onClick={() => {
-                  onLangSelect();
-                }}
-                className={styles.item}
-                text={nonExpandableMenu
-                  ? item.shortText
-                  : item.text}
-                style='text'
-                colorMode={colorMode}
-                element='button'
-                disabled={!nonExpandableMenu && item.value === currentLang}
-                ariaLabel={nonExpandableMenu
-                  ? item.text
-                  : undefined
-                }
-                ariaCurrent={
-                  item.value === currentLang
-                    ? true
+          {items.map((item, key: number) => {
+            const isCurrentLang = item.value === currentLang;
+
+            return (
+              <li
+                key={key}
+                data-testid={item.value}
+              >
+                <Button
+                  className={styles.item}
+                  text={nonExpandableMenu
+                    ? item.shortText
+                    : item.text}
+                  style='text'
+                  colorMode={colorMode}
+                  element='link'
+                  href={item.href}
+                  ariaLabel={nonExpandableMenu
+                    ? item.text
                     : undefined
-                }
-                isActive={
-                  item.text === getCurrentLang().text
-                    ? true
-                    : undefined
-                }
-              />
-            </li>
-          ))}
+                  }
+                  ariaCurrent={
+                    isCurrentLang
+                      ? true
+                      : undefined
+                  }
+                  isActive={
+                    item.text === getCurrentLang().text
+                      ? true
+                      : undefined
+                  }
+                />
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

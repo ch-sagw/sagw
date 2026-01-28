@@ -13,6 +13,13 @@ export const ImageBlock = {
   fields: [
     {
       access: fieldAccessNonLocalizableField,
+      name: 'image',
+      relationTo: 'images',
+      required: true,
+      type: 'relationship',
+    },
+    {
+      access: fieldAccessNonLocalizableField,
       defaultValue: 'center',
       name: 'alignment',
       options: [
@@ -34,13 +41,6 @@ export const ImageBlock = {
         },
       ],
       type: 'select',
-    },
-    {
-      access: fieldAccessNonLocalizableField,
-      name: 'image',
-      relationTo: 'images',
-      required: true,
-      type: 'relationship',
     },
     rte2({
       name: 'caption',

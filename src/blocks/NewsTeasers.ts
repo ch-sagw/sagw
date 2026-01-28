@@ -23,7 +23,7 @@ export const NewsTeasersBlock = {
       admin: {
         hidden: true,
       },
-      defaultValue: 'Note: the newest news teasers will be displayed here.',
+      defaultValue: 'Note: If this block is placed on a page, the latest three news will be displayed here. Exeption: If this block is placed on a project detail page, all news belonging to the project are displayed here.',
       name: 'message',
       type: 'text',
     },

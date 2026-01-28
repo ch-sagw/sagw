@@ -13,6 +13,7 @@ export const CtaLinkBlock = {
       name: 'title',
     }),
     rte1({
+      label: 'Subtitle',
       name: 'text',
     }),
     ...fieldsLinkInternalOrExternal({}),

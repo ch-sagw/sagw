@@ -17,7 +17,7 @@ export const EventsTeasersBlock = {
       admin: {
         hidden: true,
       },
-      defaultValue: 'Note: the upcoming events teasers will be displayed here.',
+      defaultValue: 'Note: If this block is placed on a page, the latest three events will be displayed here. Exeption: If this block is placed on a project detail page, all events belonging to the project are displayed here.',
       name: 'message',
       type: 'text',
     },

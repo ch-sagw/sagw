@@ -17,6 +17,7 @@ const homeTeaserItem: Field[] = [
     fields: [
       {
         access: fieldAccessLocalizableField,
+        label: 'Section Name',
         localized: true,
         name: 'category',
         required: true,
@@ -24,6 +25,10 @@ const homeTeaserItem: Field[] = [
       },
       {
         access: fieldAccessNonLocalizableField,
+        admin: {
+          description: 'Note: Icons are embedded in the code. Only developpers can add new icons.',
+        },
+        label: 'Select an icon',
         name: 'iconName',
         options: [
           {
