@@ -91,6 +91,7 @@ export const Forms: CollectionConfig = {
                   admin: {
                     condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
                   },
+                  label: 'Recipient email address',
                   name: 'recipientMail',
                   required: true,
                   type: 'email',
@@ -102,6 +103,7 @@ export const Forms: CollectionConfig = {
                   admin: {
                     condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
                   },
+                  label: 'Message will be displyed in the subject field of the email sent to the recipient.',
                   name: 'mailSubject',
                   required: true,
                   type: 'text',
@@ -122,7 +124,7 @@ export const Forms: CollectionConfig = {
             {
               access: fieldAccessAdminsOnly,
               admin: {
-                description: 'If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".',
+                description: 'If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "content snippets".',
               },
               defaultValue: true,
               name: 'showPrivacyCheckbox',
@@ -156,7 +158,7 @@ export const Forms: CollectionConfig = {
                     },
                     fieldsLinkInternalWithToggle({}),
                   ],
-                  label: 'Submit Success',
+                  label: 'Submission Success',
                   name: 'submitSuccess',
                   type: 'group',
                 },
@@ -180,7 +182,7 @@ export const Forms: CollectionConfig = {
                     },
                     fieldsLinkInternalWithToggle({}),
                   ],
-                  label: 'Submit Error',
+                  label: 'Submission Error',
                   name: 'submitError',
                   type: 'group',
                 },
@@ -249,7 +251,7 @@ export const Forms: CollectionConfig = {
                 },
                 {
                   admin: {
-                    description: 'The action text to show at the bottom of the notification. e.g.: "Send verifiaction E-Mail again."',
+                    description: 'Text is shown in the notification that appears after the user has sumbitted the form. The link behind the text allows the user to re-send the verification email. e.g.: "Send verifiaction E-Mail again."',
                   },
                   localized: true,
                   name: 'actionText',

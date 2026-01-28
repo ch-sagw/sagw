@@ -61,15 +61,18 @@ export const Footer: CollectionConfig = {
         {
           fields: [
             rte1({
+              adminDescription: 'Automatically links to data privacy page',
               name: 'dataPrivacy',
             }),
             rte1({
+              adminDescription: 'Automatically links to impressum page',
               name: 'impressum',
             }),
             rte1({
               name: 'cookieSettings',
             }),
             rte1({
+              adminDescription: 'Copyright sign and current year will automatically be added.',
               disableLocalization: true,
               name: 'copyright',
             }),

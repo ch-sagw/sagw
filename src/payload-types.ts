@@ -451,7 +451,7 @@ export interface Form {
   mailSubject?: string | null;
   colorMode: 'white' | 'dark' | 'light';
   /**
-   * If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".
+   * If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "content snippets".
    */
   showPrivacyCheckbox?: boolean | null;
   submitSuccess: {
@@ -585,6 +585,9 @@ export interface Form {
      */
     newsletterListId: number;
     email: {
+      /**
+       * Name of the field, visible for user
+       */
       label: {
         root: {
           type: string;
@@ -600,9 +603,15 @@ export interface Form {
         };
         [k: string]: unknown;
       };
+      /**
+       * Placeholder text within the field, visible for user
+       */
       placeholder: string;
       fieldWidth: 'full' | 'half';
       required?: boolean | null;
+      /**
+       * Message appears, if the user does not add text to a mandatory field.
+       */
       fieldError?: {
         root: {
           type: string;
@@ -620,6 +629,9 @@ export interface Form {
       } | null;
     };
     firstName: {
+      /**
+       * Name of the field, visible for user
+       */
       label: {
         root: {
           type: string;
@@ -635,9 +647,15 @@ export interface Form {
         };
         [k: string]: unknown;
       };
+      /**
+       * Placeholder text within the field, visible for user
+       */
       placeholder: string;
       fieldWidth: 'full' | 'half';
       required?: boolean | null;
+      /**
+       * Message appears, if the user does not add text to a mandatory field.
+       */
       fieldError?: {
         root: {
           type: string;
@@ -655,6 +673,9 @@ export interface Form {
       } | null;
     };
     lastName: {
+      /**
+       * Name of the field, visible for user
+       */
       label: {
         root: {
           type: string;
@@ -670,9 +691,15 @@ export interface Form {
         };
         [k: string]: unknown;
       };
+      /**
+       * Placeholder text within the field, visible for user
+       */
       placeholder: string;
       fieldWidth: 'full' | 'half';
       required?: boolean | null;
+      /**
+       * Message appears, if the user does not add text to a mandatory field.
+       */
       fieldError?: {
         root: {
           type: string;
@@ -690,7 +717,7 @@ export interface Form {
       } | null;
     };
     /**
-     * The action text to show at the bottom of the notification. e.g.: "Send verifiaction E-Mail again."
+     * Text is shown in the notification that appears after the user has sumbitted the form. The link behind the text allows the user to re-send the verification email. e.g.: "Send verifiaction E-Mail again."
      */
     actionText: string;
     /**
@@ -724,6 +751,9 @@ export interface InterfaceCheckboxField {
   };
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
+  /**
+   * Message appears, if the user does not add text to a mandatory field.
+   */
   fieldError?: {
     root: {
       type: string;
@@ -767,6 +797,9 @@ export interface InterfaceRadioField {
   };
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
+  /**
+   * Message appears, if the user does not add text to a mandatory field.
+   */
   fieldError?: {
     root: {
       type: string;
@@ -811,6 +844,9 @@ export interface InterfaceRadioField {
  * via the `definition` "InterfaceEmailField".
  */
 export interface InterfaceEmailField {
+  /**
+   * Name of the field, visible for user
+   */
   label: {
     root: {
       type: string;
@@ -826,10 +862,16 @@ export interface InterfaceEmailField {
     };
     [k: string]: unknown;
   };
+  /**
+   * Placeholder text within the field, visible for user
+   */
   placeholder: string;
   name: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
+  /**
+   * Message appears, if the user does not add text to a mandatory field.
+   */
   fieldError?: {
     root: {
       type: string;
@@ -854,6 +896,9 @@ export interface InterfaceEmailField {
  * via the `definition` "InterfaceTextField".
  */
 export interface InterfaceTextField {
+  /**
+   * Name of the field, visible for user
+   */
   label: {
     root: {
       type: string;
@@ -869,10 +914,16 @@ export interface InterfaceTextField {
     };
     [k: string]: unknown;
   };
+  /**
+   * Placeholder text within the field, visible for user
+   */
   placeholder: string;
   name: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
+  /**
+   * Message appears, if the user does not add text to a mandatory field.
+   */
   fieldError?: {
     root: {
       type: string;
@@ -898,6 +949,9 @@ export interface InterfaceTextField {
  */
 export interface InterfaceTextareaField {
   name: string;
+  /**
+   * Name of the field, visible for user
+   */
   label: {
     root: {
       type: string;
@@ -913,9 +967,15 @@ export interface InterfaceTextareaField {
     };
     [k: string]: unknown;
   };
+  /**
+   * Placeholder text within the field, visible for user
+   */
   placeholder: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
+  /**
+   * Message appears, if the user does not add text to a mandatory field.
+   */
   fieldError?: {
     root: {
       type: string;
@@ -2694,6 +2754,9 @@ export interface Team {
     };
     [k: string]: unknown;
   };
+  /**
+   * Add People who belong to the team. The order represents the order of the people on the website.
+   */
   people?: (string | Person)[] | null;
   updatedAt: string;
   createdAt: string;
@@ -4184,6 +4247,9 @@ export interface Footer {
  * via the `definition` "InterfaceFooterLegal".
  */
 export interface InterfaceFooterLegal {
+  /**
+   * Automatically links to data privacy page
+   */
   dataPrivacy: {
     root: {
       type: string;
@@ -4199,6 +4265,9 @@ export interface InterfaceFooterLegal {
     };
     [k: string]: unknown;
   };
+  /**
+   * Automatically links to impressum page
+   */
   impressum: {
     root: {
       type: string;
@@ -4229,6 +4298,9 @@ export interface InterfaceFooterLegal {
     };
     [k: string]: unknown;
   };
+  /**
+   * Copyright sign and current year will automatically be added.
+   */
   copyright: {
     root: {
       type: string;
@@ -4417,9 +4489,12 @@ export interface Header {
  * via the `definition` "InterfaceHeaderNavigation".
  */
 export interface InterfaceHeaderNavigation {
+  /**
+   * Note: You can add a maximum of five main navigation items, six sub-navigation items and three meta navigation items.
+   */
   navItems: {
     /**
-     * If the user hovers over this menu item in the navigation, this is shown as a description in the Header
+     * Appears when the header expands. Not visible on mobile devices.
      */
     description?: {
       root: {
@@ -4631,6 +4706,9 @@ export interface InterfaceStatusMessage {
    * Should the message be displayed on home only or everywhere?
    */
   showOnHomeOnly?: boolean | null;
+  /**
+   * Your choice affects the color of the message.
+   */
   type: 'warn' | 'error' | 'success';
 }
 /**
