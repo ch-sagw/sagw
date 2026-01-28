@@ -1490,7 +1490,7 @@ export interface MagazineDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -1840,7 +1840,7 @@ export interface NewsDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -2018,7 +2018,7 @@ export interface EventDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -2245,7 +2245,7 @@ export interface PublicationDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -2388,7 +2388,7 @@ export interface ProjectDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -2698,7 +2698,7 @@ export interface OverviewPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -3327,7 +3327,7 @@ export interface DetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -3447,7 +3447,7 @@ export interface NationalDictionaryDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -3508,7 +3508,7 @@ export interface InstituteDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
