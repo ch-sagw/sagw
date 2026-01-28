@@ -17,12 +17,12 @@ export type InterfaceLangnavItem = {
   text: string;
   shortText: string;
   value: string;
+  href: string;
 }
 
 export type InterfaceLangnavPropTypes = {
   items: InterfaceLangnavItem[];
   className?: string;
-  onLangSelectAction: (lang: string) => void;
   currentLang: string;
   colorMode: ColorMode;
   visibilityCallbackAction?: (visible: boolean) => void;
@@ -51,7 +51,6 @@ const listClasses = cva([styles.listWrapper], {
 export const Langnav = ({
   items,
   className,
-  onLangSelectAction,
   currentLang,
   colorMode,
   visibilityCallbackAction,
@@ -167,37 +166,38 @@ export const Langnav = ({
         ref={expandableRef}
       >
         <ul className={styles.list}>
-          {items.map((item, key: number) => (
-            <li key={key}>
-              <Button
-                onClick={() => {
-                  onLangSelectAction(item.value);
-                }}
-                className={styles.item}
-                text={nonExpandableMenu
-                  ? item.shortText
-                  : item.text}
-                style='text'
-                colorMode={colorMode}
-                element='button'
-                disabled={!nonExpandableMenu && item.value === currentLang}
-                ariaLabel={nonExpandableMenu
-                  ? item.text
-                  : undefined
-                }
-                ariaCurrent={
-                  item.value === currentLang
-                    ? true
+          {items.map((item, key: number) => {
+            const isCurrentLang = item.value === currentLang;
+
+            return (
+              <li key={key}>
+                <Button
+                  className={styles.item}
+                  text={nonExpandableMenu
+                    ? item.shortText
+                    : item.text}
+                  style='text'
+                  colorMode={colorMode}
+                  element='link'
+                  href={item.href}
+                  ariaLabel={nonExpandableMenu
+                    ? item.text
                     : undefined
-                }
-                isActive={
-                  item.text === getCurrentLang().text
-                    ? true
-                    : undefined
-                }
-              />
-            </li>
-          ))}
+                  }
+                  ariaCurrent={
+                    isCurrentLang
+                      ? true
+                      : undefined
+                  }
+                  isActive={
+                    item.text === getCurrentLang().text
+                      ? true
+                      : undefined
+                  }
+                />
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

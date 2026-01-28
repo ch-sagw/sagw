@@ -38,6 +38,7 @@ interface InterfaceRenderPageContentProps {
   showBlocks?: boolean;
   heroComponent: React.JSX.Element;
   containerType: 'home' | 'detail';
+  currentPageId?: string;
 }
 
 // Helper to verify lang-config and to render error page
@@ -86,11 +87,13 @@ const renderPageContent = ({
   heroComponent,
   containerType,
   projectId,
+  currentPageId,
 }: InterfaceRenderPageContentProps): React.JSX.Element => (
   <TenantProvider tenant={tenantId}>
     <SkipLinks />
     <RenderHeader
       tenant={tenantId}
+      currentPageId={currentPageId}
     />
     <div className={containerType === 'home'
       ? 'home'
@@ -187,6 +190,7 @@ export const RenderPage = async ({
     return renderPageContent({
       blocks: pageData.content,
       containerType: 'home',
+      currentPageId: pageData.id,
       heroComponent: (
         <Hero
           {...pageData.hero}
@@ -245,6 +249,7 @@ export const RenderPage = async ({
   return renderPageContent({
     blocks: contentBlocks,
     containerType: 'detail',
+    currentPageId: pageData.id,
     heroComponent: (
       <RenderHero
         foundCollection={collectionSlug}

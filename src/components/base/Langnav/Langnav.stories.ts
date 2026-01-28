@@ -27,21 +27,25 @@ export default meta;
 
 const items = [
   {
+    href: '/de',
     shortText: 'De',
     text: 'Deutsch',
     value: 'de',
   },
   {
+    href: '/fr',
     shortText: 'Fr',
     text: 'Français',
     value: 'fr',
   },
   {
+    href: '/it',
     shortText: 'It',
     text: 'Italiano',
     value: 'it',
   },
   {
+    href: '/en',
     shortText: 'En',
     text: 'English',
     value: 'en',
@@ -54,9 +58,6 @@ export const LangNavDark: StrictStory = {
     currentLang: 'de',
     description: 'Die SAGW Webseite ist in vier Sprachen verfügbar',
     items,
-    onLangSelectAction: () => {
-      console.log('lang select handler');
-    },
     title: 'Sprachen',
   },
   globals: {
@@ -72,9 +73,6 @@ export const LangNavLight: StrictStory = {
     currentLang: 'de',
     description: 'Die SAGW Webseite ist in vier Sprachen verfügbar',
     items,
-    onLangSelectAction: () => {
-      console.log('lang select handler');
-    },
     title: 'Sprachen',
   },
   globals: {
@@ -90,9 +88,6 @@ export const LangNavWhite: StrictStory = {
     currentLang: 'de',
     description: 'Die SAGW Webseite ist in vier Sprachen verfügbar',
     items,
-    onLangSelectAction: () => {
-      console.log('lang select handler');
-    },
     title: 'Sprachen',
   },
   globals: {
