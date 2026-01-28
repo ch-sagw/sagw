@@ -34,7 +34,6 @@
       color: var(--primary-blue-light);
       width: px-to-rem(120);
       height: auto;
-      margin-block-end: px-to-rem(var(--spacing-2xl));
 
       @include mq($from: large) {
         width: px-to-rem(280);

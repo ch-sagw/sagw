@@ -22,13 +22,6 @@
 
   &.white {
     background-color: var(--background-page);
-
-    // TODO add additional
-    // line variant
-
-    /* .line {
-      @include generic-block-top-line;
-    } */
   }
 
   &.light {
@@ -40,6 +33,12 @@
 
     --title-color: var(--text-primary-inverted);
     --subtitle-color: var(--text-secondary-inverted);
+  }
+
+  // Collapse top spacing if two non-white
+  // sections follow each other
+  &:not(.white) + .section:not(.white) {
+    padding-block-start: 0;
   }
 
   .additionalStickyContent {
@@ -62,9 +61,8 @@
   }
 
   .subtitle {
-    @include body-text-xl;
+    @include body-text-2xl;
     @include font-layout-features;
-    @include font-smoothing;
 
     color: var(--subtitle-color);
     margin: 0;
