@@ -59,6 +59,7 @@
   grid-template-columns: repeat(12, 1fr);
   column-gap: px-to-rem(var(--grid-gutter));
   row-gap: px-to-rem(var(--spacing-3xl));
+  padding-block-start: px-to-rem(var(--section-inside-m));
 
   @include mq($from: medium) {
     row-gap: px-to-rem(var(--spacing-4xl));
@@ -136,4 +137,29 @@
   @include mq($from: large, $to: wide) {
     grid-template-columns: repeat(1, 1fr);
   }
+}
+
+// ##############################
+// Section top line in white,
+// light and dark
+// ##############################
+@mixin white-section-top-line {
+  position: absolute;
+  content: "";
+  inset-block: px-to-rem(-1);
+  inset-inline: px-to-rem(var(--grid-margin));
+  height: px-to-rem(var(--border-width-l));
+  background: var(--border-primary);
+}
+
+@mixin light-section-top-line {
+  @include white-section-top-line;
+
+  background: var(--border-primary);
+}
+
+@mixin dark-section-top-line {
+  @include white-section-top-line;
+
+  background: var(--border-primary-inverted);
 }

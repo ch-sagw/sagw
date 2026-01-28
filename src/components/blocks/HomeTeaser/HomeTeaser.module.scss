@@ -9,12 +9,7 @@
     position: relative;
 
     &:not(:first-of-type):before {
-      position: absolute;
-      content: "";
-      inset-block: px-to-rem(-1);
-      inset-inline: px-to-rem(var(--grid-margin));
-      height: px-to-rem(var(--border-width-l));
-      background: var(--border-primary);
+      @include white-section-top-line;
     }
 
     .stickyContent {

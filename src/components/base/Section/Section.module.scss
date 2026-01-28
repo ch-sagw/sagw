@@ -3,6 +3,7 @@
 @use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/mixins/mixins-shared-styles" as *;
 
 .section {
   &:not(.fullBleed, .noTitle) {
@@ -35,10 +36,16 @@
     --subtitle-color: var(--text-secondary-inverted);
   }
 
-  // Collapse top spacing if two non-white
-  // sections follow each other
-  &:not(.white) + .section:not(.white) {
-    padding-block-start: 0;
+  &.dark + .section.dark:before {
+    @include dark-section-top-line;
+  }
+
+  &.light + .section.light:before {
+    @include light-section-top-line;
+  }
+
+  &.white + ul + .section.white:before {
+    @include white-section-top-line;
   }
 
   .additionalStickyContent {
@@ -79,7 +86,7 @@
     row-gap: px-to-rem(var(--inside-elements-l));
 
     .subtitle {
-      margin-block-end: px-to-rem(var(--inside-elements-s), true);
+      margin-block-end: 0;
     }
   }
 }
