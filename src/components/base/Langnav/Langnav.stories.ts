@@ -54,7 +54,7 @@ export const LangNavDark: StrictStory = {
     currentLang: 'de',
     description: 'Die SAGW Webseite ist in vier Sprachen verfügbar',
     items,
-    onLangSelect: () => {
+    onLangSelectAction: () => {
       console.log('lang select handler');
     },
     title: 'Sprachen',
@@ -72,7 +72,7 @@ export const LangNavLight: StrictStory = {
     currentLang: 'de',
     description: 'Die SAGW Webseite ist in vier Sprachen verfügbar',
     items,
-    onLangSelect: () => {
+    onLangSelectAction: () => {
       console.log('lang select handler');
     },
     title: 'Sprachen',
@@ -90,7 +90,7 @@ export const LangNavWhite: StrictStory = {
     currentLang: 'de',
     description: 'Die SAGW Webseite ist in vier Sprachen verfügbar',
     items,
-    onLangSelect: () => {
+    onLangSelectAction: () => {
       console.log('lang select handler');
     },
     title: 'Sprachen',

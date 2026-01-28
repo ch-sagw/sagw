@@ -497,10 +497,10 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
       currentLang={locale}
       className={styles.langnav}
       colorMode={renderColorMode()}
-      visibilityCallback={handleLangNavHover}
-      onHeightChange={handleLangHeightChange}
-      onLangSelect={() => {
-        console.log('TODO: on lang select');
+      visibilityCallbackAction={handleLangNavHover}
+      onHeightChangeAction={handleLangHeightChange}
+      onLangSelectAction={(selectedLang) => {
+        console.log(selectedLang);
       }}
     />
   );

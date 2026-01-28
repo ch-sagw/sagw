@@ -22,11 +22,11 @@ export type InterfaceLangnavItem = {
 export type InterfaceLangnavPropTypes = {
   items: InterfaceLangnavItem[];
   className?: string;
-  onLangSelect: () => void;
+  onLangSelectAction: (lang: string) => void;
   currentLang: string;
   colorMode: ColorMode;
-  visibilityCallback?: (visible: boolean) => void;
-  onHeightChange?: (height: number) => void;
+  visibilityCallbackAction?: (visible: boolean) => void;
+  onHeightChangeAction?: (height: number) => void;
   title?: string;
   description?: string;
 };
@@ -51,11 +51,11 @@ const listClasses = cva([styles.listWrapper], {
 export const Langnav = ({
   items,
   className,
-  onLangSelect,
+  onLangSelectAction,
   currentLang,
   colorMode,
-  visibilityCallback,
-  onHeightChange,
+  visibilityCallbackAction,
+  onHeightChangeAction,
   description,
   title,
 }: InterfaceLangnavPropTypes): React.JSX.Element => {
@@ -87,12 +87,12 @@ export const Langnav = ({
   // --- Effects
 
   useEffect(() => {
-    if (visibilityCallback) {
-      visibilityCallback(menuVisible);
+    if (visibilityCallbackAction) {
+      visibilityCallbackAction(menuVisible);
     }
   }, [
     menuVisible,
-    visibilityCallback,
+    visibilityCallbackAction,
   ]);
 
   // keep track of expanded heights
@@ -103,9 +103,9 @@ export const Langnav = ({
 
     const height = measureElementHeight(expandableRef.current);
 
-    onHeightChange?.(height);
+    onHeightChangeAction?.(height);
   }, [
-    onHeightChange,
+    onHeightChangeAction,
     expandableRef,
   ]);
 
@@ -171,7 +171,7 @@ export const Langnav = ({
             <li key={key}>
               <Button
                 onClick={() => {
-                  onLangSelect();
+                  onLangSelectAction(item.value);
                 }}
                 className={styles.item}
                 text={nonExpandableMenu
