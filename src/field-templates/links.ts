@@ -11,12 +11,14 @@ interface InterfaceLinkProps {
   showDescription?: boolean;
   hideLinkText?: boolean;
   optional?: boolean;
+  adminDescription?: string;
 }
 
 export const fieldsLinkInternal = (props?: InterfaceLinkProps): Field[] => {
   const linkFields: Field[] = [
     rte1({
       access: fieldAccessLocalizableField,
+      adminDescription: props?.adminDescription,
       name: 'linkText',
       notRequired: props?.optional,
     }),

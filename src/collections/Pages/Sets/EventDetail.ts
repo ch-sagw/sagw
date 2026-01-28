@@ -124,12 +124,18 @@ export const EventDetailPage: CollectionConfig = {
                   fields: [
                     {
                       access: fieldAccessNonLocalizableField,
+                      admin: {
+                        description: 'Choose the event format: workshop, talk, panel etc.',
+                      },
                       name: 'category',
                       relationTo: 'eventCategory',
                       type: 'relationship',
                     },
                     {
                       access: fieldAccessNonLocalizableField,
+                      admin: {
+                        description: 'If the event belongs to a project, add the project.',
+                      },
                       name: 'project',
                       relationTo: 'projects',
                       required: false,

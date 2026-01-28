@@ -339,6 +339,9 @@ export interface InterfaceHeroFieldHome {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1871,6 +1874,9 @@ export interface NewsDetailPage {
     };
   };
   hero: InterfaceHeroFieldNewsDetail;
+  /**
+   * If the news belongs to a project, add the project.
+   */
   project?: (string | null) | Project;
   content?:
     | (
@@ -2074,7 +2080,13 @@ export interface EventDetailPage {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Choose the event format: workshop, talk, panel etc.
+     */
     category?: (string | null) | EventCategory;
+    /**
+     * If the event belongs to a project, add the project.
+     */
     project?: (string | null) | Project;
     date: string;
     time?: string | null;
@@ -2260,11 +2272,23 @@ export interface PublicationDetailPage {
      * This image will be used for the teasers on the overview page.
      */
     image: string | Image;
+    /**
+     * The same date shown in the asset (Documents or Zenodo Documents) should be added.
+     */
     date: string;
   };
   categorization?: {
+    /**
+     * Add topic, if the filter on the publication overview page should include this publication.
+     */
     topic?: (string | null) | PublicationTopic;
+    /**
+     * Add topic, if the filter on the publication overview page should include this publication.
+     */
     type?: (string | null) | PublicationType;
+    /**
+     * If the news belongs to a project, add the project.
+     */
     project?: (string | null) | Project;
   };
   hero: InterfaceHeroField;
