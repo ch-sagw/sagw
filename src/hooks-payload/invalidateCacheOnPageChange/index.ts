@@ -1008,7 +1008,7 @@ const invalidateRootPaths = async ({
         // IMPORTANT: do not change this log. This is neccessary for testing!!
         console.log('[CACHE] invalidating path:', rootPath);
 
-        if (process.env.ENV === 'prod') {
+        if (process.env.ENV === 'prod' || process.env.ENV === 'test') {
           revalidatePath(rootPath);
         }
       }

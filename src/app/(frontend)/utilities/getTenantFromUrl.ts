@@ -38,6 +38,9 @@ export const getTenantFromUrl = async (
     }
 
     // fallback if SAGW tenant not found, should not happen!!
+
+    console.warn('getTenantFromUrl: did not find tenant with name', tenantSlugSegment);
+
     return {
       isSagw: true,
       tenantId: '',

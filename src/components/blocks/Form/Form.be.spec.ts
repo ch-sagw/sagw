@@ -694,9 +694,11 @@ test.describe('Newsletter Form', () => {
     const lastNameField = await form.getByLabel('Nachname');
     const checkboxField = await form.getByText('Data privacy checkbox SAGW');
     const radioField = await form.getByText('Deutsch');
+    const time = (new Date())
+      .getTime();
 
     await radioField.click();
-    await mailField.fill('mail@foo.bar');
+    await mailField.fill(`test-${time}@foo.bar`);
     await nameField.fill('name');
     await lastNameField.fill('nachname');
     await checkboxField.click();

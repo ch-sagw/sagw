@@ -17,6 +17,13 @@ type InterfaceFormServerPropTypes = {
   globalI18n: I18NGlobal;
 } & InterfaceFormBlock;
 
+export const newsletterFieldNames = {
+  email: 'email',
+  firstname: 'firstname',
+  language: 'language',
+  lastname: 'lastname',
+};
+
 export const FormServer = async ({
   form,
   globalI18n,
@@ -85,7 +92,7 @@ export const FormServer = async ({
       fieldError: renderForm.newsletterFields?.firstName.fieldError,
       fieldWidth: 'half',
       label: renderForm.newsletterFields?.firstName.label || simpleRteConfig(''),
-      name: 'firstname',
+      name: newsletterFieldNames.firstname,
       placeholder: renderForm.newsletterFields?.firstName.placeholder || '',
       required: true,
     };
@@ -95,7 +102,7 @@ export const FormServer = async ({
       fieldError: renderForm.newsletterFields?.lastName.fieldError,
       fieldWidth: 'half',
       label: renderForm.newsletterFields?.lastName.label || simpleRteConfig(''),
-      name: 'lastname',
+      name: newsletterFieldNames.lastname,
       placeholder: renderForm.newsletterFields?.lastName.placeholder || '',
       required: true,
     };
@@ -105,7 +112,7 @@ export const FormServer = async ({
       fieldError: renderForm.newsletterFields?.email.fieldError,
       fieldWidth: 'full',
       label: renderForm.newsletterFields?.email.label || simpleRteConfig(''),
-      name: 'email',
+      name: newsletterFieldNames.email,
       placeholder: renderForm.newsletterFields?.email.placeholder ||
         '',
       required: true,
@@ -125,15 +132,15 @@ export const FormServer = async ({
         items: [
           {
             label: simpleRteConfig(internalI18nForm('newsletter.languages.german')),
-            value: 'german',
+            value: 'de',
           },
           {
             label: simpleRteConfig(internalI18nForm('newsletter.languages.french')),
-            value: 'french',
+            value: 'fr',
           },
         ],
         label: simpleRteConfig(internalI18nForm('newsletter.label')),
-        name: 'language',
+        name: newsletterFieldNames.language,
         required: true,
       };
 
