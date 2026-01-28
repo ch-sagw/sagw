@@ -71,4 +71,15 @@
       margin-block: 0 px-to-rem(var(--section-inside-s));
     }
   }
+
+  // Fullbleed/Vertical variant
+  &.fullBleed {
+    display: flex;
+    flex-direction: column;
+    row-gap: px-to-rem(var(--inside-elements-l));
+
+    .subtitle {
+      margin-block-end: px-to-rem(var(--inside-elements-s), true);
+    }
+  }
 }
