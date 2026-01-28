@@ -170,7 +170,10 @@ export const Langnav = ({
             const isCurrentLang = item.value === currentLang;
 
             return (
-              <li key={key}>
+              <li
+                key={key}
+                data-testid={item.value}
+              >
                 <Button
                   className={styles.item}
                   text={nonExpandableMenu
