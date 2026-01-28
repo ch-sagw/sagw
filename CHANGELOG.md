@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.33.0](https://github.com/ch-sagw/sagw/compare/v0.32.2...v0.33.0) (2026-01-28)
+
+
+### Features
+
+* **be:** adding hero option for image in payload ([00a4bdd](https://github.com/ch-sagw/sagw/commit/00a4bdd6a42a861faab706a9bc8366db459ea87b))
+* **be:** removing obsolete comma in image config file ([00a4bdd](https://github.com/ch-sagw/sagw/commit/00a4bdd6a42a861faab706a9bc8366db459ea87b))
+
+
+### Bug Fixes
+
+* **be:** ensure unique slug within tenant, and not over all tenants ([3fd3ca1](https://github.com/ch-sagw/sagw/commit/3fd3ca1e55c0488ec4bad956286e196f739cc041))
+* invalidate cache properly on test-env ([8229a14](https://github.com/ch-sagw/sagw/commit/8229a1462947bb8d12cce6e6bf358067b53a79a8))
+* trigger test deployment ([48a856c](https://github.com/ch-sagw/sagw/commit/48a856c411705482aa47523059eae7c1ded49599))
+
+
+### Style
+
+* **fe:** enforcing word-break to stabilize layout ([00a4bdd](https://github.com/ch-sagw/sagw/commit/00a4bdd6a42a861faab706a9bc8366db459ea87b))
+
+
+### Test
+
+* write reliable tests for slug validation ([3fd3ca1](https://github.com/ch-sagw/sagw/commit/3fd3ca1e55c0488ec4bad956286e196f739cc041))
+
 ## [0.32.2](https://github.com/ch-sagw/sagw/compare/v0.32.1...v0.32.2) (2026-01-27)
 
 
