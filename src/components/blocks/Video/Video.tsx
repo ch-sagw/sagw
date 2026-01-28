@@ -30,7 +30,7 @@ import {
 import { TypedLocale } from 'payload';
 
 export type InterfaceVideoPropTypes = {
-  duration?: string,
+  duration?: number,
 } & InterfaceVideoBlock;
 
 const classes = cva([styles.videoWrapper], {
@@ -47,7 +47,6 @@ export const Video = ({
   alignment,
   caption,
   credits,
-  duration,
   stillImage,
   'video-de': videoDe,
   'video-en': videoEn,
@@ -116,6 +115,17 @@ export const Video = ({
     ? styles.paused
     : '';
 
+  let processedDuration;
+
+  if (video.duration) {
+    const m = String(Math.floor(video.duration / 60))
+      .padStart(2, '0');
+    const s = String(video.duration % 60)
+      .padStart(2, '0');
+
+    processedDuration = `${m}:${s}`;
+  }
+
   return (
     <figure
       className={classes({
@@ -133,7 +143,7 @@ export const Video = ({
               ref={videoContainer}
             >
               <GumletPlayer
-                videoID={video.id}
+                videoID={video.gumletAssetId}
                 title='Video'
                 ref={playerRef}
                 style={{
@@ -163,12 +173,14 @@ export const Video = ({
                 text=''
               />
 
-              <span
-                aria-hidden={true}
-                className={styles.duration}
-              >
-                {duration} Min
-              </span>
+              {video.duration && (
+                <span
+                  aria-hidden={true}
+                  className={styles.duration}
+                >
+                  {processedDuration} Min
+                </span>
+              )}
             </div>
           </div>
         )}
