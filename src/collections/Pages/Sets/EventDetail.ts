@@ -109,6 +109,34 @@ export const EventDetailPage: CollectionConfig = {
                 rte2({
                   name: 'title',
                 }),
+                {
+                  admin: {
+                    width: '50%',
+                  },
+                  fields: [
+                    {
+                      access: fieldAccessNonLocalizableField,
+                      name: 'date',
+                      required: true,
+                      type: 'date',
+                    },
+                    {
+                      access: fieldAccessNonLocalizableField,
+                      admin: {
+                        date: {
+                          displayFormat: 'HH:mm',
+                          pickerAppearance: 'timeOnly',
+                          timeFormat: 'HH:mm',
+                          timeIntervals: 5,
+                        },
+                      },
+                      name: 'time',
+                      required: false,
+                      type: 'date',
+                    },
+                  ],
+                  type: 'row',
+                },
                 rte1({
                   name: 'location',
                   notRequired: true,
@@ -140,34 +168,6 @@ export const EventDetailPage: CollectionConfig = {
                       relationTo: 'projects',
                       required: false,
                       type: 'relationship',
-                    },
-                  ],
-                  type: 'row',
-                },
-                {
-                  admin: {
-                    width: '50%',
-                  },
-                  fields: [
-                    {
-                      access: fieldAccessNonLocalizableField,
-                      name: 'date',
-                      required: true,
-                      type: 'date',
-                    },
-                    {
-                      access: fieldAccessNonLocalizableField,
-                      admin: {
-                        date: {
-                          displayFormat: 'HH:mm',
-                          pickerAppearance: 'timeOnly',
-                          timeFormat: 'HH:mm',
-                          timeIntervals: 5,
-                        },
-                      },
-                      name: 'time',
-                      required: false,
-                      type: 'date',
                     },
                   ],
                   type: 'row',

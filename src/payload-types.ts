@@ -2046,8 +2046,8 @@ export interface InterfaceHeroFieldNewsDetail {
  * via the `definition` "InterfaceImageBlock".
  */
 export interface InterfaceImageBlock {
-  alignment?: ('left' | 'center' | 'right' | 'hero') | null;
   image: string | Image;
+  alignment?: ('left' | 'center' | 'right' | 'hero') | null;
   caption?: {
     root: {
       type: string;
@@ -2149,6 +2149,8 @@ export interface EventDetailPage {
       };
       [k: string]: unknown;
     };
+    date: string;
+    time?: string | null;
     location?: {
       root: {
         type: string;
@@ -2187,8 +2189,6 @@ export interface EventDetailPage {
      * If the event belongs to a project, add the project.
      */
     project?: (string | null) | Project;
-    date: string;
-    time?: string | null;
     multipleDays?: boolean | null;
     dateEnd?: string | null;
   };
@@ -3344,7 +3344,7 @@ export interface InterfaceEditionsOverviewBlock {
  */
 export interface InterfaceNetworkTeasersBlock {
   filter: {
-    allCheckboxText: {
+    title: {
       root: {
         type: string;
         children: {
@@ -3359,7 +3359,7 @@ export interface InterfaceNetworkTeasersBlock {
       };
       [k: string]: unknown;
     };
-    title: {
+    allCheckboxText: {
       root: {
         type: string;
         children: {
@@ -5410,8 +5410,8 @@ export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceImageBlock_select".
  */
 export interface InterfaceImageBlockSelect<T extends boolean = true> {
-  alignment?: T;
   image?: T;
+  alignment?: T;
   caption?: T;
   credits?: T;
   id?: T;
@@ -5668,8 +5668,8 @@ export interface InterfaceNetworkTeasersBlockSelect<T extends boolean = true> {
   filter?:
     | T
     | {
-        allCheckboxText?: T;
         title?: T;
+        allCheckboxText?: T;
       };
   items?:
     | T
@@ -5798,12 +5798,12 @@ export interface EventDetailPageSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        date?: T;
+        time?: T;
         location?: T;
         language?: T;
         category?: T;
         project?: T;
-        date?: T;
-        time?: T;
         multipleDays?: T;
         dateEnd?: T;
       };

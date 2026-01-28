@@ -61,12 +61,12 @@ export const NetworkTeasersBlock = {
     {
       fields: [
         rte1({
-          label: 'Text for button "all"',
-          name: 'allCheckboxText',
-        }),
-        rte1({
           label: 'Filter Title',
           name: 'title',
+        }),
+        rte1({
+          label: 'Text for button "all"',
+          name: 'allCheckboxText',
         }),
       ],
       label: 'Filter',
