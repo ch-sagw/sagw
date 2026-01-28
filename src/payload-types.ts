@@ -1795,7 +1795,13 @@ export interface Document {
     };
     [k: string]: unknown;
   };
+  /**
+   * Date of the publication of the document should be added, not the publishing date on website.
+   */
   date?: string | null;
+  /**
+   * If the document belongs to a project, add the project.
+   */
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
@@ -2708,6 +2714,9 @@ export interface ZenodoDocument {
     size?: number | null;
     id?: string | null;
   }[];
+  /**
+   * If the document belongs to a project, add the project.
+   */
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
