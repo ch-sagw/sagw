@@ -488,6 +488,9 @@ export interface Form {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
+        /**
+         * This is the text behind which the link is hidden.
+         */
         linkText: {
           root: {
             type: string;
@@ -541,6 +544,9 @@ export interface Form {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
+        /**
+         * This is the text behind which the link is hidden.
+         */
         linkText: {
           root: {
             type: string;
@@ -937,6 +943,9 @@ export interface InterfaceHomeTeasersBlock {
   homeTeasers?:
     | {
         category: string;
+        /**
+         * Note: Icons are embedded in the code. Only developpers can add new icons.
+         */
         iconName: 'homeTeaserActivities' | 'homeTeaserFunding' | 'homeTeaserNetwork';
         title: {
           root: {
@@ -969,6 +978,9 @@ export interface InterfaceHomeTeasersBlock {
           [k: string]: unknown;
         };
         link: {
+          /**
+           * This is the text behind which the link is hidden.
+           */
           linkText: {
             root: {
               type: string;
@@ -1016,6 +1028,9 @@ export interface InterfaceEventsTeasersBlock {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1075,12 +1090,15 @@ export interface InterfaceMagazineTeasersBlock {
     [k: string]: unknown;
   } | null;
   /**
-   * Align Title & text horizontally or vertically
+   * Align Title and Lead horizontally or vertically
    */
   alignment?: ('vertical' | 'horizontal') | null;
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1128,6 +1146,9 @@ export interface InterfaceNewsTeasersBlock {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1174,6 +1195,9 @@ export interface InterfacePublicationsTeasersBlock {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1233,12 +1257,15 @@ export interface InterfaceProjectTeasersBlock {
     [k: string]: unknown;
   } | null;
   /**
-   * Align Title & text horizontally or vertically
+   * Align Title and Lead horizontally or vertically
    */
   alignment?: ('vertical' | 'horizontal') | null;
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1626,6 +1653,9 @@ export interface InterfaceLinksBlock {
         };
         [k: string]: unknown;
       } | null;
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1677,6 +1707,9 @@ export interface InterfaceLinksBlock {
       externalLink: string;
     };
     linkMail?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -2190,6 +2223,9 @@ export interface InterfaceCtaLinkBlock {
   };
   linkType: 'internal' | 'external' | 'mail';
   linkInternal?: {
+    /**
+     * This is the text behind which the link is hidden.
+     */
     linkText: {
       root: {
         type: string;
@@ -2226,6 +2262,9 @@ export interface InterfaceCtaLinkBlock {
     externalLink: string;
   };
   linkMail?: {
+    /**
+     * This is the text behind which the link is hidden.
+     */
     linkText: {
       root: {
         type: string;
@@ -2867,7 +2906,7 @@ export interface InterfaceGenericTeasersBlock {
     [k: string]: unknown;
   } | null;
   /**
-   * Align Title & text horizontally or vertically
+   * Align Title and Lead horizontally or vertically
    */
   alignment?: ('vertical' | 'horizontal') | null;
   teasers: {
@@ -2907,6 +2946,9 @@ export interface InterfaceGenericTeasersBlock {
     } | null;
     linkType: 'internal' | 'external' | 'mail';
     linkInternal?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -2943,6 +2985,9 @@ export interface InterfaceGenericTeasersBlock {
       externalLink: string;
     };
     linkMail?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -3063,7 +3108,7 @@ export interface InterfaceEventsOverviewBlock {
 export interface InterfacePeopleOverviewBlock {
   message?: string | null;
   /**
-   * Which team members do you want to display in the overview?
+   * Which team do you want to display on the page?
    */
   teams: string | Team;
   id?: string | null;
@@ -3101,7 +3146,7 @@ export interface InterfaceNewsOverviewBlock {
  */
 export interface InterfaceNationalDictionariesOverviewBlock {
   /**
-   * This will be used as "More info" text on the teasers
+   * This is the text behind which the link to the national dictionary detail pages is hidden.
    */
   moreInfoButtonText: {
     root: {
@@ -3129,7 +3174,7 @@ export interface InterfaceNationalDictionariesOverviewBlock {
  */
 export interface InterfaceInstitutesOverviewBlock {
   /**
-   * This will be used as "More info" text on the teasers
+   * This is the text behind which the link to the institute detail pages is hidden.
    */
   moreInfoButtonText: {
     root: {
@@ -3259,6 +3304,9 @@ export interface InterfaceNetworkTeasersBlock {
     };
   };
   items: {
+    /**
+     * The text in this field will be displayed before the founding year. For example, "Gründungsjahr" in German. The year is added in the respective network item.
+     */
     foundingYearText?: {
       root: {
         type: string;
@@ -3305,6 +3353,9 @@ export interface InterfaceNetworkTeasersBlock {
         };
         [k: string]: unknown;
       };
+      /**
+       * Needed for filter on overview page.
+       */
       category: string | NetworkCategory;
       foundingYear?: number | null;
       image: string | Image;
@@ -3436,6 +3487,9 @@ export interface InterfaceVideoBlock {
     };
     [k: string]: unknown;
   };
+  /**
+   * This image is visible before the user clicks on the play button.
+   */
   stillImage: string | Image;
   id?: string | null;
   blockName?: string | null;
@@ -4422,6 +4476,9 @@ export interface InterfaceHeaderMetaNavigation {
     | {
         linkType: 'internal' | 'external' | 'mail';
         linkInternal?: {
+          /**
+           * This is the text behind which the link is hidden.
+           */
           linkText: {
             root: {
               type: string;
@@ -4458,6 +4515,9 @@ export interface InterfaceHeaderMetaNavigation {
           externalLink: string;
         };
         linkMail?: {
+          /**
+           * This is the text behind which the link is hidden.
+           */
           linkText: {
             root: {
               type: string;
@@ -4537,6 +4597,9 @@ export interface InterfaceStatusMessage {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
