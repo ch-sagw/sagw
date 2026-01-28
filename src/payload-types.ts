@@ -3764,7 +3764,7 @@ export interface InterfaceI18NGeneric {
     [k: string]: unknown;
   };
   /**
-   * If you add a CTA-Contact-Block, this will be used as the button text
+   * If you add a personal contact block, this text will be shown in the Email button
    */
   writeEmailButtonText: {
     root: {
@@ -3782,7 +3782,7 @@ export interface InterfaceI18NGeneric {
     [k: string]: unknown;
   };
   /**
-   * On magazine detail pages, we use this to show the "Copy Text" button
+   * On magazine detail pages, this text appears in the button that enables the user to export the article as a PDF file.
    */
   exportArticleButtonText: {
     root: {
@@ -3838,6 +3838,9 @@ export interface InterfaceI18NBibliographicReference {
     };
     [k: string]: unknown;
   };
+  /**
+   * The text appears in the button that enables the user to copy the bibliographic reference with one click.
+   */
   copyButtonText: {
     root: {
       type: string;
@@ -3878,6 +3881,9 @@ export interface InterfaceI18NForms {
       };
       [k: string]: unknown;
     };
+    /**
+     * The message appears on forms if the user has not agreed to the data privacy policy.
+     */
     errorMessage: {
       root: {
         type: string;
