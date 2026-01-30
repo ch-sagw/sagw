@@ -1,5 +1,3 @@
-// TODO: migrate middleware to proxy once next16 is installed
-
 import createMiddleware from 'next-intl/middleware';
 import { routing } from '../../i18n/routing';
 
