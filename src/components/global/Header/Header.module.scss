@@ -14,8 +14,8 @@
   padding: px-to-rem(var(--grid-margin));
   overflow: hidden;
   transition: height, background-color;
-  transition-duration: var(--motion-speed-very-fast);
-  transition-timing-function: var(--motion-ease-in-out);
+  transition-duration: var(--motion-speed-fast);
+  transition-timing-function: var(--motion-ease-out);
   z-index: 999;
 
   @include reduced-motion {
@@ -23,31 +23,67 @@
   }
 
   @include mq($from: large) {
-    padding-block-start: px-to-rem(var(--spacing-l));
-    padding-block-end: 0;
+    padding-block: px-to-rem(var(--spacing-l));
+
+    &:before {
+      position: absolute;
+      content: "";
+      inset: 0;
+      opacity: 0;
+      z-index: 0;
+      transition: opacity;
+      transition-duration: var(--motion-speed-very-fast);
+    }
+
+    & + .headerBg {
+      position: fixed;
+      content: "";
+      inset: 0;
+      z-index: 1;
+      background: rgb(black, 0.4);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity;
+      transition-duration: var(--motion-speed-fast);
+      transition-timing-function: var(--motion-ease-out);
+    }
+
+    &:has(button[aria-expanded="true"]) {
+      & + .headerBg {
+        transition-timing-function: var(--motion-ease-in);
+        opacity: 1;
+      }
+    }
   }
 
-  &.expanded {
-    max-height: 100vh;
-    overflow-y: visible;
-    scrollbar-gutter: stable;
-    overscroll-behavior: contain;
+  @include mq($to: large) {
+    &.expanded {
+      height: 100dvh;
+      overflow-y: visible;
+      scrollbar-gutter: stable;
+      overscroll-behavior: contain;
+    }
   }
 
   &:not(.white) {
     @include font-smoothing;
   }
 
-  &.dark {
+  &.dark:before {
     background-color: var(--background-inverted);
+    opacity: 1;
   }
 
-  &.white {
+  &.white:before {
     background-color: var(--background-page);
+    transition-duration: var(--motion-speed-very-fast);
+    transition-timing-function: var(--motion-ease-in);
+    opacity: 1;
   }
 
-  &.light {
+  &.light:before {
     background-color: var(--background-light);
+    opacity: 1;
   }
 
   .logoWrapper {
@@ -56,6 +92,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    z-index: 1;
 
     @include mq($from: large) {
       display: grid;
@@ -65,9 +102,12 @@
     }
 
     .logoWrapperInner {
+      position: relative;
       padding-inline-end: px-to-rem(var(--grid-gutter));
 
       @include mq($from: large) {
+        align-content: center;
+        align-self: flex-end;
         grid-column: 1 / 4;
       }
     }
@@ -80,9 +120,6 @@
       @include mq($from: large) {
         display: block;
         height: px-to-rem(48);
-
-        // 48 / 2 / 4 * 3
-        transform: translateY(px-to-rem(18));
       }
     }
 
@@ -109,7 +146,8 @@
 
     @include mq($from: large) {
       grid-column: 5 / 12;
-      margin-block-end: 0;
+      margin-block-end: px-to-rem(10, true);
+      margin-inline: px-to-rem(var(--spacing-m), true);
     }
   }
 
@@ -165,9 +203,11 @@
   }
 
   .infoBlock {
+    position: absolute;
     width: px-to-rem(260);
     inset-inline-start: px-to-rem(var(--grid-margin));
-    inset-block-start: px-to-rem(210);
+    inset-block-start: px-to-rem(var(--info-block-top, 210));
+    padding: 0;
 
     @include mq($from: wide) {
       width: px-to-rem(400);
@@ -175,7 +215,7 @@
   }
 
   .metanavWrapper.metanavHidden ~ .infoBlock {
-    inset-block-start: px-to-rem(155);
+    inset-block-start: px-to-rem(var(--info-block-top, 155));
   }
 }
 
@@ -193,6 +233,6 @@
   }
 
   @include mq($from: large) {
-    min-height: px-to-rem(203);
+    min-height: px-to-rem(182);
   }
 }

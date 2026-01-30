@@ -4,6 +4,7 @@ import {
   InterfaceHeaderMetaNavigation,
   InterfaceHeaderNavigation,
 } from '@/payload-types';
+import styles from '@/components/global/Header/Header.module.scss';
 import { HeaderComponent } from '@/components/global/Header/Header.component';
 import { getLocale } from 'next-intl/server';
 import { TypedLocale } from 'payload';
@@ -41,10 +42,13 @@ export const Header = async (props: InterfaceHeaderPropTypes): Promise<React.JSX
   });
 
   return (
-    <HeaderComponent
-      {...props}
-      linkUrls={linkUrls}
-    />
+    <>
+      <HeaderComponent
+        {...props}
+        linkUrls={linkUrls}
+      />
+      <div className={styles.headerBg}></div>
+    </>
   );
 };
 

@@ -48,7 +48,7 @@ export type InterfaceHeaderComponentPropTypes = {
 
 export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React.JSX.Element => {
   const locale = useLocale();
-  const infoBlockMargin = 48;
+  const infoBlockMargin = 45;
 
   // --- Refs
 
@@ -118,11 +118,13 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     setHydrated(true);
   }, []);
 
-  // With default fallback value in rem (210px / 16px)
+  // We are going to set the height as CSS variable
+  // where it will get transformed into rem based
+  // on the current font size
   const [
     infoBlockTop,
     setInfoBlockTop,
-  ] = useState(13.125);
+  ] = useState(210);
 
   // --- Hooks
   useFocusTrap({
@@ -515,17 +517,21 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     />
   );
 
-  const navigationInfoBlockRender = (): React.JSX.Element => (
-    <NavigationInfoBlock
-      className={styles.infoBlock}
-      colorMode={renderColorMode()}
-      text={infoBlockContent?.text || ''}
-      title={infoBlockContent?.title || ''}
-      style={{
-        top: `${infoBlockTop}rem`,
-      }}
-    />
-  );
+  const navigationInfoBlockRender = (): React.JSX.Element => {
+    const infoBlockInlineStyles = {
+      '--info-block-top': `${infoBlockTop}`,
+    } as React.CSSProperties & Record<string, string>;
+
+    return (
+      <NavigationInfoBlock
+        className={styles.infoBlock}
+        colorMode={renderColorMode()}
+        text={infoBlockContent?.text || ''}
+        title={infoBlockContent?.title || ''}
+        style={infoBlockInlineStyles}
+      />
+    );
+  };
 
   const navigationRender = (): React.JSX.Element => (
     <Navigation
