@@ -26,7 +26,7 @@ const homeTeaserItem: Field[] = [
       {
         access: fieldAccessNonLocalizableField,
         admin: {
-          description: 'Note: Icons are embedded in the code. Only developpers can add new icons.',
+          description: 'Note: Icons are embedded in the code. Only developers can add new icons.',
         },
         label: 'Select an icon',
         name: 'iconName',

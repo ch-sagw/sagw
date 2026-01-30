@@ -124,7 +124,7 @@ export const Forms: CollectionConfig = {
             {
               access: fieldAccessAdminsOnly,
               admin: {
-                description: 'If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "content snippets".',
+                description: 'If enabled, the data-privacy checkbox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "content snippets".',
               },
               defaultValue: true,
               name: 'showPrivacyCheckbox',
@@ -251,7 +251,7 @@ export const Forms: CollectionConfig = {
                 },
                 {
                   admin: {
-                    description: 'Text is shown in the notification that appears after the user has sumbitted the form. The link behind the text allows the user to re-send the verification email. e.g.: "Send verifiaction E-Mail again."',
+                    description: 'Text is shown in the notification that appears after the user has sumbitted the form. The link behind the text allows the user to re-send the verification email. e.g.: "Send verification E-Mail again."',
                   },
                   localized: true,
                   name: 'actionText',

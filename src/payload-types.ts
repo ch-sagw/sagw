@@ -451,7 +451,7 @@ export interface Form {
   mailSubject?: string | null;
   colorMode: 'white' | 'dark' | 'light';
   /**
-   * If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "content snippets".
+   * If enabled, the data-privacy checkbox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "content snippets".
    */
   showPrivacyCheckbox?: boolean | null;
   submitSuccess: {
@@ -1004,7 +1004,7 @@ export interface InterfaceHomeTeasersBlock {
     | {
         category: string;
         /**
-         * Note: Icons are embedded in the code. Only developpers can add new icons.
+         * Note: Icons are embedded in the code. Only developers can add new icons.
          */
         iconName: 'homeTeaserActivities' | 'homeTeaserFunding' | 'homeTeaserNetwork';
         title: {
@@ -1698,6 +1698,9 @@ export interface InterfaceLinksBlock {
   links: {
     linkType: 'internal' | 'external' | 'mail';
     linkInternal?: {
+      /**
+       * You can add a description which provides more information about the link.
+       */
       description?: {
         root: {
           type: string;
@@ -1734,6 +1737,9 @@ export interface InterfaceLinksBlock {
       internalLink: InterfaceInternalLinkValue;
     };
     linkExternal?: {
+      /**
+       * You can add a description which provides more information about the link.
+       */
       description?: {
         root: {
           type: string;
@@ -2388,7 +2394,7 @@ export interface PublicationDetailPage {
      */
     topic?: (string | null) | PublicationTopic;
     /**
-     * Add topic, if the filter on the publication overview page should include this publication.
+     * Add type, if the filter on the publication overview page should include this publication.
      */
     type?: (string | null) | PublicationType;
     /**
@@ -3284,6 +3290,9 @@ export interface InterfaceProjectOverviewBlock {
  */
 export interface InterfaceEditionsOverviewBlock {
   items: {
+    /**
+     * This is the text behind which the link is hidden.
+     */
     linkText: {
       root: {
         type: string;
@@ -3394,6 +3403,9 @@ export interface InterfaceNetworkTeasersBlock {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * This is the text behind which the link is hidden.
+     */
     linkText: {
       root: {
         type: string;
@@ -4587,6 +4599,9 @@ export interface InterfaceHeaderMetaNavigation {
           internalLink: InterfaceInternalLinkValue;
         };
         linkExternal?: {
+          /**
+           * This is the text behind which the link is hidden.
+           */
           externalLinkText: {
             root: {
               type: string;

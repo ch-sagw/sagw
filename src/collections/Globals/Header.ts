@@ -114,7 +114,9 @@ export const Header: CollectionConfig = {
         {
           fields: [
             {
-              fields: fieldsLinkInternalOrExternal({}),
+              fields: fieldsLinkInternalOrExternal({
+                adminDescription: 'This is the text behind which the link is hidden.',
+              }),
               maxRows: 3,
               name: 'metaLinks',
               type: 'array',

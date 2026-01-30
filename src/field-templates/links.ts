@@ -33,6 +33,7 @@ export const fieldsLinkInternal = (props?: InterfaceLinkProps): Field[] => {
   if (props?.showDescription) {
     linkFields.unshift(rte2({
       access: fieldAccessLocalizableField,
+      adminDescription: 'You can add a description which provides more information about the link.',
       name: 'description',
       notRequired: true,
     }));
@@ -68,6 +69,7 @@ export const fieldsLinkExternal = (props?: InterfaceLinkProps): Field[] => {
   if (!props?.hideLinkText) {
     linkFields.unshift(rte1({
       access: fieldAccessLocalizableField,
+      adminDescription: props?.adminDescription,
       label: 'Link Text',
       name: 'externalLinkText',
     }));
@@ -76,6 +78,7 @@ export const fieldsLinkExternal = (props?: InterfaceLinkProps): Field[] => {
   if (props?.showDescription) {
     linkFields.unshift(rte2({
       access: fieldAccessLocalizableField,
+      adminDescription: 'You can add a description which provides more information about the link.',
       name: 'description',
       notRequired: true,
     }));

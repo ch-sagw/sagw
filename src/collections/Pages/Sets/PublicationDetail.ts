@@ -109,7 +109,7 @@ export const PublicationDetailPage: CollectionConfig = {
                     {
                       access: fieldAccessNonLocalizableField,
                       admin: {
-                        description: 'Add topic, if the filter on the publication overview page should include this publication.',
+                        description: 'Add type, if the filter on the publication overview page should include this publication.',
                         width: '33.33%',
                       },
                       name: 'type',

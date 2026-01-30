@@ -83,6 +83,7 @@ export const NetworkTeasersBlock = {
           notRequired: true,
         }),
         rte2({
+          adminDescription: 'This is the text behind which the link is hidden.',
           name: 'linkText',
         }),
         {
