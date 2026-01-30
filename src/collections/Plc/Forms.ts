@@ -215,6 +215,24 @@ export const Forms: CollectionConfig = {
               },
               fields: [
                 {
+                  admin: {
+                    description: 'Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the temporary contact list.',
+                  },
+                  localized: false,
+                  name: 'newsletterTemporaryListId',
+                  required: true,
+                  type: 'number',
+                },
+                {
+                  admin: {
+                    description: 'Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the final contact list.',
+                  },
+                  localized: false,
+                  name: 'newsletterListId',
+                  required: true,
+                  type: 'number',
+                },
+                {
                   fields: emailBlock(true).fields,
                   name: 'email',
                   type: 'group',

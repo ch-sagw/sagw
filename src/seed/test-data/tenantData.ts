@@ -459,6 +459,8 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           label: simpleRteConfig('Nachname'),
           placeholder: 'Ihr Nachname',
         },
+        newsletterListId: 2,
+        newsletterTemporaryListId: 3,
       },
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: true,
@@ -1104,6 +1106,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // create overview page with news overview block
   const publicationsOverview = await payload.create({
     collection: 'overviewPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       _status: 'published',
       content: [
@@ -1780,6 +1785,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // add consent data
   await payload.create({
     collection: 'consent',
+    context: {
+      skipCacheInvalidation: true,
+    },
     data: {
       banner: {
         buttonAcceptAll: simpleRteConfig('Alle zulassen'),

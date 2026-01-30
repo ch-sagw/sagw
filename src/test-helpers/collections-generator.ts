@@ -1165,6 +1165,8 @@ export const generateCollectionsExceptPages = async ({
           label: simpleRteConfig('Nachname'),
           placeholder: 'Ihr Nachname',
         },
+        newsletterListId: 2,
+        newsletterTemporaryListId: 3,
       },
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: true,

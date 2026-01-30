@@ -567,6 +567,14 @@ export interface Form {
       )[]
     | null;
   newsletterFields?: {
+    /**
+     * Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the temporary contact list.
+     */
+    newsletterTemporaryListId: number;
+    /**
+     * Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the final contact list.
+     */
+    newsletterListId: number;
     email: {
       label: {
         root: {
@@ -1482,7 +1490,7 @@ export interface MagazineDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -1832,7 +1840,7 @@ export interface NewsDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -1933,7 +1941,7 @@ export interface InterfaceHeroFieldNewsDetail {
  * via the `definition` "InterfaceImageBlock".
  */
 export interface InterfaceImageBlock {
-  alignment?: ('left' | 'center' | 'right') | null;
+  alignment?: ('left' | 'center' | 'right' | 'hero') | null;
   image: string | Image;
   caption?: {
     root: {
@@ -2010,7 +2018,7 @@ export interface EventDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -2237,7 +2245,7 @@ export interface PublicationDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -2380,7 +2388,7 @@ export interface ProjectDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -2690,7 +2698,7 @@ export interface OverviewPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -3319,7 +3327,7 @@ export interface DetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -3439,7 +3447,7 @@ export interface NationalDictionaryDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -3500,7 +3508,7 @@ export interface InstituteDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -6456,6 +6464,8 @@ export interface FormsSelect<T extends boolean = true> {
   newsletterFields?:
     | T
     | {
+        newsletterTemporaryListId?: T;
+        newsletterListId?: T;
         email?:
           | T
           | {

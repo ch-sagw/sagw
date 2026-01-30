@@ -6,7 +6,8 @@ import { themes } from '@/components/admin/ThemeSelector/Themes';
 
 import ThemeSelector from '@/components/admin/ThemeSelector/ThemeSelectorClient';
 
-const ThemeSelectorComponent = (props: UIFieldServerProps): JSX.Element => {
+/* eslint-disable require-await */
+const ThemeSelectorComponent = async (props: UIFieldServerProps): Promise<JSX.Element> => {
   const {
     path,
   } = props;
@@ -18,5 +19,6 @@ const ThemeSelectorComponent = (props: UIFieldServerProps): JSX.Element => {
     />
   );
 };
+/* eslint-enable require-await */
 
 export default ThemeSelectorComponent;

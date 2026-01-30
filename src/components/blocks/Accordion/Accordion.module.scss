@@ -45,16 +45,18 @@
     --selection-search-text-color: var(--interaction-primary);
   }
 
-  ::selection,
-  ::search-text:current {
+  ::selection /*,
+  ::search-text:current */ {
     background: var(--selection-text-background-color);
     color: var(--selection-text-color);
   }
 
+  /*
   ::search-text {
     background: var(--selection-search-text-background-color);
     color: var(--selection-search-text-color);
   }
+  */
 
   background-color: var(--background-color);
 

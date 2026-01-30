@@ -41,7 +41,7 @@ export const invalidateCache = async ({
     console.log(`[CACHE] invalidating path: ${url}`);
 
     // Invalidate cache for this URL
-    if (process.env.ENV === 'prod') {
+    if (process.env.ENV === 'prod' || process.env.ENV === 'test') {
       revalidatePath(url);
     }
 

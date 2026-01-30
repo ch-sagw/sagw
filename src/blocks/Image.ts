@@ -28,6 +28,10 @@ export const ImageBlock = {
           label: 'Rechts',
           value: 'right',
         },
+        {
+          label: 'Hero',
+          value: 'hero',
+        },
       ],
       type: 'select',
     },

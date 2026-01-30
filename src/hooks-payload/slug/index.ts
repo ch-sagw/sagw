@@ -70,13 +70,17 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
         equals: dataParam.slug,
       },
     },
-    {
-      id: {
-        /* eslint-disable @typescript-eslint/naming-convention */
-        not_equals: originalDoc.id,
-        /* eslint-enable @typescript-eslint/naming-convention */
-      },
-    },
+    ...(originalDoc?.id
+      ? [
+        {
+          id: {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            not_equals: originalDoc.id,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+        },
+      ]
+      : []),
   ];
 
   if ('_published' in collection) {
