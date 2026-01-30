@@ -121,7 +121,7 @@ export const Header: CollectionConfig = {
             },
           ],
           interfaceName: 'InterfaceHeaderMetaNavigation',
-          label: 'Metanvaigation',
+          label: 'Metanavigation',
           name: 'metanavigation',
         },
       ],
