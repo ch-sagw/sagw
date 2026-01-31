@@ -66,6 +66,9 @@ export const ZenodoDocuments: CollectionConfig = {
       type: 'array',
     },
     {
+      admin: {
+        description: 'If the document belongs to a project, add the project.',
+      },
       name: 'project',
       relationTo: 'projects',
       required: false,

@@ -5,6 +5,8 @@ import {
 import { TypedLocale } from 'payload';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { getPageUrl } from '@/utilities/getPageUrl';
+import { getLocaleCodes } from '@/i18n/payloadConfig';
+import { getRootPathUrls } from '@/hooks-payload/shared/getRootPathUrls';
 
 interface InterfaceExtractLinkIdsParams {
   navigation: InterfaceHeaderNavigation;
@@ -83,6 +85,43 @@ export const generateLinkUrls = async ({
     });
 
     urlMap[documentId] = url;
+  }));
+
+  return urlMap;
+};
+
+interface InterfaceGenerateLangNavUrlsParams {
+  pageId: string;
+  payload: Awaited<ReturnType<typeof getPayloadCached>>;
+}
+
+// generate URL map for current page in all locales for langnav
+export const generateLangNavUrls = async ({
+  pageId,
+  payload,
+}: InterfaceGenerateLangNavUrlsParams): Promise<Record<string, string>> => {
+  const localeCodes = getLocaleCodes();
+  const rootUrls = getRootPathUrls();
+  const urlMap: Record<string, string> = {};
+
+  await Promise.all(localeCodes.map(async (targetLocale) => {
+    if (!pageId) {
+      urlMap[targetLocale] = rootUrls[targetLocale] || `/${targetLocale}`;
+
+      return;
+    }
+
+    try {
+      const url = await getPageUrl({
+        locale: targetLocale as TypedLocale,
+        pageId,
+        payload,
+      });
+
+      urlMap[targetLocale] = url || rootUrls[targetLocale] || `/${targetLocale}`;
+    } catch {
+      urlMap[targetLocale] = rootUrls[targetLocale] || `/${targetLocale}`;
+    }
   }));
 
   return urlMap;

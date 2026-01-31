@@ -109,35 +109,6 @@ export const EventDetailPage: CollectionConfig = {
                 rte2({
                   name: 'title',
                 }),
-                rte1({
-                  name: 'location',
-                  notRequired: true,
-                }),
-                rte1({
-                  name: 'language',
-                  notRequired: true,
-                }),
-                {
-                  admin: {
-                    width: '50%',
-                  },
-                  fields: [
-                    {
-                      access: fieldAccessNonLocalizableField,
-                      name: 'category',
-                      relationTo: 'eventCategory',
-                      type: 'relationship',
-                    },
-                    {
-                      access: fieldAccessNonLocalizableField,
-                      name: 'project',
-                      relationTo: 'projects',
-                      required: false,
-                      type: 'relationship',
-                    },
-                  ],
-                  type: 'row',
-                },
                 {
                   admin: {
                     width: '50%',
@@ -162,6 +133,41 @@ export const EventDetailPage: CollectionConfig = {
                       name: 'time',
                       required: false,
                       type: 'date',
+                    },
+                  ],
+                  type: 'row',
+                },
+                rte1({
+                  name: 'location',
+                  notRequired: true,
+                }),
+                rte1({
+                  name: 'language',
+                  notRequired: true,
+                }),
+                {
+                  admin: {
+                    width: '50%',
+                  },
+                  fields: [
+                    {
+                      access: fieldAccessNonLocalizableField,
+                      admin: {
+                        description: 'Choose the event format: workshop, talk, panel etc.',
+                      },
+                      name: 'category',
+                      relationTo: 'eventCategory',
+                      type: 'relationship',
+                    },
+                    {
+                      access: fieldAccessNonLocalizableField,
+                      admin: {
+                        description: 'If the event belongs to a project, add the project.',
+                      },
+                      name: 'project',
+                      relationTo: 'projects',
+                      required: false,
+                      type: 'relationship',
                     },
                   ],
                   type: 'row',

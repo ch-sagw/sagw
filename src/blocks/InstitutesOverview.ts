@@ -10,7 +10,8 @@ export const InstitutesOverviewBlock = {
   fields: [
     {
       ...rte1({
-        adminDescription: 'This will be used as "More info" text on the teasers',
+        adminDescription: 'This is the text behind which the link to the institute detail pages is hidden.',
+        label: 'Link Text',
         name: 'moreInfoButtonText',
       }),
     },

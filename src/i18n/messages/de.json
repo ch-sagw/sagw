@@ -48,5 +48,11 @@
   "publicationFilters": {
     "publicationTopicsLabel": "Publikationsthemen",
     "publicationTypesLabel": "Publikationstypen"
+  },
+  "langNav": {
+    "de": "Deutsch",
+    "fr": "Français",
+    "it": "Italiano",
+    "en": "English"
   }
 }

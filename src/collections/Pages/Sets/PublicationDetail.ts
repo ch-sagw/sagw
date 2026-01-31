@@ -74,6 +74,9 @@ export const PublicationDetailPage: CollectionConfig = {
                     },
                     {
                       access: fieldAccessNonLocalizableField,
+                      admin: {
+                        description: 'The same date shown in the asset (Documents or Zenodo Documents) should be added.',
+                      },
                       name: 'date',
                       required: true,
                       type: 'date',
@@ -82,7 +85,7 @@ export const PublicationDetailPage: CollectionConfig = {
                   type: 'row',
                 },
               ],
-              label: 'Overview Page properties',
+              label: 'Overview Page and Teaser Block Properties',
               name: 'overviewPageProps',
               type: 'group',
             },
@@ -95,6 +98,7 @@ export const PublicationDetailPage: CollectionConfig = {
                     {
                       access: fieldAccessNonLocalizableField,
                       admin: {
+                        description: 'Add topic, if the filter on the publication overview page should include this publication.',
                         width: '33.33%',
                       },
                       name: 'topic',
@@ -105,6 +109,7 @@ export const PublicationDetailPage: CollectionConfig = {
                     {
                       access: fieldAccessNonLocalizableField,
                       admin: {
+                        description: 'Add type, if the filter on the publication overview page should include this publication.',
                         width: '33.33%',
                       },
                       name: 'type',
@@ -115,6 +120,7 @@ export const PublicationDetailPage: CollectionConfig = {
                     {
                       access: fieldAccessNonLocalizableField,
                       admin: {
+                        description: 'If the news belongs to a project, add the project.',
                         width: '33.33%',
                       },
                       name: 'project',

@@ -11,16 +11,20 @@ interface InterfaceLinkProps {
   showDescription?: boolean;
   hideLinkText?: boolean;
   optional?: boolean;
+  adminDescription?: string;
+  adminDescriptionLink?: string;
 }
 
 export const fieldsLinkInternal = (props?: InterfaceLinkProps): Field[] => {
   const linkFields: Field[] = [
     rte1({
       access: fieldAccessLocalizableField,
+      adminDescription: props?.adminDescription || 'This is the text behind which the link is hidden.',
       name: 'linkText',
       notRequired: props?.optional,
     }),
     fieldInternalLinkChooser({
+      description: props?.adminDescriptionLink,
       name: 'internalLink',
       optional: props?.optional,
     }),
@@ -29,6 +33,7 @@ export const fieldsLinkInternal = (props?: InterfaceLinkProps): Field[] => {
   if (props?.showDescription) {
     linkFields.unshift(rte2({
       access: fieldAccessLocalizableField,
+      adminDescription: 'You can add a description which provides more information about the link.',
       name: 'description',
       notRequired: true,
     }));
@@ -64,6 +69,8 @@ export const fieldsLinkExternal = (props?: InterfaceLinkProps): Field[] => {
   if (!props?.hideLinkText) {
     linkFields.unshift(rte1({
       access: fieldAccessLocalizableField,
+      adminDescription: props?.adminDescription,
+      label: 'Link Text',
       name: 'externalLinkText',
     }));
   }
@@ -71,6 +78,7 @@ export const fieldsLinkExternal = (props?: InterfaceLinkProps): Field[] => {
   if (props?.showDescription) {
     linkFields.unshift(rte2({
       access: fieldAccessLocalizableField,
+      adminDescription: 'You can add a description which provides more information about the link.',
       name: 'description',
       notRequired: true,
     }));
@@ -82,6 +90,7 @@ export const fieldsLinkExternal = (props?: InterfaceLinkProps): Field[] => {
 export const fieldsMail: Field[] = [
   rte1({
     access: fieldAccessLocalizableField,
+    adminDescription: 'This is the text behind which the link is hidden.',
     name: 'linkText',
   }),
   {
