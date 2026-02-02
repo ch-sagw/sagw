@@ -46,6 +46,7 @@ export type InterfaceHeaderComponentPropTypes = {
   navigation: InterfaceHeaderNavigation;
   linkUrls: Record<string, string>;
   localeUrls: Record<string, string>;
+  tenant: string;
 }
 
 // --- Component
@@ -53,6 +54,7 @@ export type InterfaceHeaderComponentPropTypes = {
 export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React.JSX.Element => {
   const locale = useLocale();
   const langNavTranslations = useTranslations('langNav');
+  const i18nA11y = useTranslations('a11y');
 
   // --- Refs
   const headerRef = useRef<HTMLElement>(null);
@@ -586,18 +588,14 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
 
   const headerLogoRender = (): React.JSX.Element => {
 
-    // TODO: derive logo name from tenant
-
-    const logoName = 'sagw' as keyof typeof Logos;
+    const logoName = props.tenant as keyof typeof Logos;
 
     return (
       <div className={styles.logoWrapperInner}>
         <HeaderLogo
           ref={logoRef}
           link={props.logoLink}
-
-          // TODO: define in i18n in code
-          linkText='Back to Homepage'
+          linkText={i18nA11y('logoLinkText')}
           className={styles.logo}
           name={logoName}
           colorMode={renderColorMode()}

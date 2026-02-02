@@ -10,6 +10,7 @@ import {
 } from 'next-intl/server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { CMSConfigError } from '../utilities/CMSConfigError';
+import { getTenantOfId } from '@/test-helpers/tenant-generator';
 
 type InterfaceHeaderRendererProps = {
   colorMode: ColorMode;
@@ -25,6 +26,9 @@ export const RenderHeader = async ({
   const payload = await getPayloadCached();
   const locale = (await getLocale()) as TypedLocale;
   const i18nMenu = await getTranslations('menu');
+  const tenantName = await getTenantOfId({
+    id: tenant,
+  });
 
   // get header data
   const headerData = await payload.find({
@@ -67,6 +71,7 @@ export const RenderHeader = async ({
     },
     metanav: metanavData,
     navigation: navData,
+    tenant: tenantName.title[locale],
   };
 
   return (

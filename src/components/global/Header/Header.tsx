@@ -26,6 +26,7 @@ export type InterfaceHeaderPropTypes = {
   };
   logoLink: string;
   documentId?: string;
+  tenant: string;
 } & InterfaceHeaderPropTypesCms;
 
 export const Header = async (props: InterfaceHeaderPropTypes): Promise<React.JSX.Element> => {
