@@ -591,7 +591,11 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     const tenantName = props.tenant.toLowerCase()
       .replaceAll(/-/gu, '');
 
-    const logoName = tenantName as keyof typeof Logos;
+    // In Playwright tests we have tenant names starting
+    // with tenant- which we have to map to «sagw».
+    const logoName = tenantName.indexOf('tenant-') === -1
+      ? 'sagw'
+      : tenantName;
 
     return (
       <div className={styles.logoWrapperInner}>
@@ -600,7 +604,7 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
           link={props.logoLink}
           linkText={i18nA11y('logoLinkText')}
           className={styles.logo}
-          name={logoName}
+          name={logoName as keyof typeof Logos}
           colorMode={renderColorMode()}
         />
       </div>
