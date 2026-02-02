@@ -1,9 +1,6 @@
 import 'server-only';
 import React, { Fragment } from 'react';
-import { TeaserLinkList } from '@/components/base/TeaserLinkList/TeaserLinkList';
-import {
-  DownloadLinkItem, InterfaceDownloadLinkItemPropTypes,
-} from '@/components/base/DownloadLinkItem/DownloadLinkItem';
+import { InterfaceDownloadLinkItemPropTypes } from '@/components/base/DownloadLinkItem/DownloadLinkItem';
 import {
   Document, InterfaceDownloadsBlock,
   Project,
@@ -12,6 +9,7 @@ import {
 import { InterfaceRte } from '@/components/base/types/rte';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { DownloadsComponent } from '@/components/blocks/Downloads/Downloads.component';
 
 export type InterfaceDownloadsPropTypes = {
   title: InterfaceRte;
@@ -149,26 +147,13 @@ export const Downloads = async (props: InterfaceDownloadsPropTypes): Promise<Rea
   }
 
   return (
-    <TeaserLinkList
+    <DownloadsComponent
       title={title}
       subtitle={props.subtitle
         ? rteToHtml(props.subtitle)
         : undefined
       }
-      colorMode='light'
-    >
-      {returnDocumentItems.map((item, key) => {
-        if (item) {
-          return (
-            <DownloadLinkItem
-              key={key}
-              {...item}
-            />
-          );
-        }
-
-        return undefined;
-      })}
-    </TeaserLinkList>
+      items={returnDocumentItems}
+    />
   );
 };
