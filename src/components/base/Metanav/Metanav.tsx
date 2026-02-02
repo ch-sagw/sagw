@@ -4,7 +4,7 @@ import { Button } from '@/components/base/Button/Button';
 import { ColorMode } from '@/components/base/types/colorMode';
 
 export type InterfaceMetanavItem = {
-  tabindex?: string;
+  tabindex?: number;
   text: string;
   link: string;
   target: '_self' | '_blank';
@@ -12,7 +12,7 @@ export type InterfaceMetanavItem = {
 
 type InterfaceMetanavItemButton = {
   text: string;
-  tabindex?: string;
+  tabindex?: number;
   clickCallback: () => void;
 }
 

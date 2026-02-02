@@ -444,7 +444,7 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
             items={props.metanav.metaLinks?.map((item) => {
 
               const tabindex = didScroll
-                ? '-1'
+                ? -1
                 : undefined;
 
               if (item.linkType === 'internal') {

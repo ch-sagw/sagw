@@ -26,7 +26,7 @@ type BaseWrapperProps = {
   prefetch?: 'auto' | true | false | null;
   className?: string;
   isActive?: boolean;
-  tabindex?: string;
+  tabindex?: number;
 };
 
 type ContentProps = {
