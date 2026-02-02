@@ -101,6 +101,10 @@
       width: calc(100% - px-to-rem(var(--spacing-l)));
       text-wrap: pretty;
 
+      @include mq($to: large) {
+        padding: 0;
+      }
+
       @include mq($from: large) {
         transition: none;
         width: auto;
