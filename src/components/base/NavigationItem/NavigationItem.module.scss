@@ -141,6 +141,7 @@
       opacity: 1;
       padding-block: 0;
       margin-block-start: 0;
+      margin-inline-start: px-to-rem(var(--spacing-m), true);
     }
   }
 

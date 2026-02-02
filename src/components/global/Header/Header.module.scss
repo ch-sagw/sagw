@@ -52,6 +52,17 @@
         opacity: 1;
       }
     }
+
+    /*
+        ============================
+        KEEP IN MIND
+        ============================
+        There are some special definitions in storybook/preview.css
+        to make the a11y test for the component work. Since the
+        component is on top of the hero element, we do not want to have
+        a background-color on the header itself in the unscrolled/non-hover
+        state to let the keyvisual lines reach over the nav.
+    */
   }
 
   @include mq($to: large) {

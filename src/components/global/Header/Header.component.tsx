@@ -259,9 +259,9 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     setLangNavMaxHeight(0);
     setMobileMenuOpen(false);
 
-    /* initialNavHeightRef.current = null;
+    initialNavHeightRef.current = null;
     initialMetaNavHeightRef.current = null;
-    initialLangOrNavMaxHeightRef.current = null; */
+    initialLangOrNavMaxHeightRef.current = null;
   }, [breakpoint]);
 
   // set nav height
