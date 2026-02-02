@@ -25,6 +25,7 @@ interface InterfaceFetchEventDetailPagesProps {
   tenant: string,
   depth?: number;
   payload?: BasePayload;
+  project?: string,
 }
 
 export const fetchEventDetailPages = async ({
@@ -33,6 +34,7 @@ export const fetchEventDetailPages = async ({
   tenant,
   depth = 1,
   payload: providedPayload,
+  project,
 }: InterfaceFetchEventDetailPagesProps): Promise<EventDetailPage[]> => {
   const payload = providedPayload || await getPayloadCached();
   const eventPages = await payload.find({
@@ -53,6 +55,11 @@ export const fetchEventDetailPages = async ({
       tenant: {
         equals: tenant,
       },
+      ...(project && {
+        'eventDetails.project': {
+          equals: project,
+        },
+      }),
     },
   });
 
@@ -69,7 +76,7 @@ export const fetchEventDetailPages = async ({
   });
 
   // Apply limit if specified and greater than 0
-  if (limit && limit > 0) {
+  if ((limit && limit > 0) && !project) {
     return filteredDocs.slice(0, limit);
   }
 
@@ -122,7 +129,9 @@ export const fetchDetailPages = async ({
   const detailPages = await payload.find({
     collection,
     depth,
-    limit,
+    limit: projectId
+      ? 0
+      : limit,
     locale: language,
     pagination: false,
     sort,
@@ -186,6 +195,7 @@ interface InterfaceFetchNewsTeaserPagesProps {
   excludePageId?: string;
   depth?: number;
   payload?: BasePayload;
+  project?: string,
 }
 
 export const fetchNewsTeaserPages = async ({
@@ -194,12 +204,18 @@ export const fetchNewsTeaserPages = async ({
   excludePageId,
   depth = 1,
   payload: providedPayload,
+  project,
 }: InterfaceFetchNewsTeaserPagesProps): Promise<PaginatedDocs<NewsDetailPage>> => {
   const payload = providedPayload || await getPayloadCached();
   const queryRestraints: Where = {
     tenant: {
       equals: tenant,
     },
+    ...(project && {
+      project: {
+        equals: project,
+      },
+    }),
   };
 
   // on news pages, don't show the teaser which points to current page
@@ -214,7 +230,9 @@ export const fetchNewsTeaserPages = async ({
   const results = await payload.find({
     collection: 'newsDetailPage',
     depth,
-    limit: 3,
+    limit: project
+      ? 0
+      : 3,
     locale,
     pagination: false,
     sort: '-hero.date',

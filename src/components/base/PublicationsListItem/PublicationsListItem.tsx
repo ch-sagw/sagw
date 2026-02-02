@@ -87,6 +87,7 @@ export const PublicationsListItem = ({
             as='span'
             className={styles.textContentTitle}
             html={title}
+            data-testid='publicationsListItemTitle'
           />
 
           <span className={styles.textContentDate}>

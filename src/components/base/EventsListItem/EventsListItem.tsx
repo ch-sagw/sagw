@@ -104,11 +104,15 @@ export const EventsListItem = ({
         <div className={styles.textAndIconWrapper}>
 
           {/* Content */}
-          <div className={styles.textContent}>
+          <div
+            className={styles.textContent}
+            data-testid='eventListItemContent'
+          >
             <SafeHtml
               as='span'
               className={styles.textContentTitle}
               html={text}
+              data-testid='eventListItemTitle'
             />
 
             <SafeHtml

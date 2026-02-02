@@ -47,9 +47,12 @@ export const TeaserLinkList = (props: InterfaceTeaserLinkListPropTypes): React.J
       colorMode={colorMode}
     >
 
-      <ul className={listClasses({
-        style,
-      })}>
+      <ul
+        className={listClasses({
+          style,
+        })}
+        data-testid='teaser-linklist'
+      >
         {props.children}
       </ul>
 
