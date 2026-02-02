@@ -717,7 +717,7 @@ export interface Form {
       } | null;
     };
     /**
-     * Text is shown in the notification that appears after the user has sumbitted the form. The link behind the text allows the user to re-send the verification email. e.g.: "Send verifiaction E-Mail again."
+     * Text is shown in the notification that appears after the user has sumbitted the form. The link behind the text allows the user to re-send the verification email. e.g.: "Send verification E-Mail again."
      */
     actionText: string;
     /**
