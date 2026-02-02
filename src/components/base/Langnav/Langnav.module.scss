@@ -9,10 +9,10 @@
   }
 
   position: relative;
+  margin-inline-end: px-to-rem(var(--spacing-l), true);
 
   .toggle {
     text-align: right;
-    padding: 0;
     width: 100%;
     justify-content: flex-end;
   }
@@ -49,10 +49,6 @@
           padding: 0 px-to-rem(calc(var(--spacing-xl) / 2));
         }
       }
-    }
-
-    .item {
-      padding: 0;
     }
   }
 

@@ -34,13 +34,17 @@
   .title {
     @include title-heading-4;
 
+    position: relative;
+    z-index: 2;
     color: var(--color-title);
-    margin: 0 0 px-to-rem(var(--spacing-xs));
+    margin: px-to-rem(calc(var(--spacing-xl) + var(--spacing-2xs))) 0 px-to-rem(var(--spacing-xs));
   }
 
   .text {
     @include body-text-m;
 
+    position: relative;
+    z-index: 2;
     color: var(--color-text);
     margin: 0;
   }

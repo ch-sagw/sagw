@@ -1,5 +1,8 @@
 import React, {
-  useCallback, useEffect, useState,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useState,
 } from 'react';
 import { cva } from 'cva';
 import {
@@ -24,7 +27,7 @@ export type InterfaceNavigationPropTypes = {
 
 // --- Component
 
-export const Navigation = ({
+export const Navigation = forwardRef<HTMLElement, InterfaceNavigationPropTypes>(({
   sections,
   footer,
   className,
@@ -32,7 +35,7 @@ export const Navigation = ({
   hoveredItemCallback,
   navMaxHeightCallback,
   onHoverItemWithoutChildren,
-}: InterfaceNavigationPropTypes): React.JSX.Element => {
+}, ref) => {
 
   // --- State
 
@@ -49,6 +52,7 @@ export const Navigation = ({
   // --- Effects
 
   useEffect(() => {
+
     const maxHeight = Math.max(...Object.values(heights));
 
     if (navMaxHeightCallback) {
@@ -88,6 +92,7 @@ export const Navigation = ({
 
   return (
     <nav
+      ref={ref}
       className={classes({
         footer,
       })}
@@ -139,4 +144,6 @@ export const Navigation = ({
       </ul>
     </nav>
   );
-};
+});
+
+Navigation.displayName = 'Navigation';

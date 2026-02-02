@@ -10,10 +10,7 @@
   inset-block-start: 0;
   inset-inline-start: 0;
   width: 100%;
-  height: px-to-rem(var(--header-height));
   padding: px-to-rem(var(--grid-margin));
-  overflow: hidden;
-  transition: height, background-color;
   transition-duration: var(--motion-speed-fast);
   transition-timing-function: var(--motion-ease-out);
   z-index: 999;
@@ -23,16 +20,17 @@
   }
 
   @include mq($from: large) {
+    overflow: hidden;
     padding-block: px-to-rem(var(--spacing-l));
 
     &:before {
       position: absolute;
       content: "";
       inset: 0;
-      opacity: 0;
+      opacity: 1;
       z-index: 0;
-      transition: opacity;
-      transition-duration: var(--motion-speed-very-fast);
+      transition-property: opacity;
+      transition-duration: 300ms;
     }
 
     & + .headerBg {
@@ -57,11 +55,22 @@
   }
 
   @include mq($to: large) {
+    transition-property: background-color;
+    background-color: rgb(white, 0);
+
     &.expanded {
       height: 100dvh;
       overflow-y: visible;
       scrollbar-gutter: stable;
       overscroll-behavior: contain;
+    }
+
+    &.dark {
+      background-color: var(--background-inverted);
+    }
+
+    &.white {
+      background-color: white;
     }
   }
 
@@ -69,20 +78,10 @@
     @include font-smoothing;
   }
 
-  &.dark:before {
-    background-color: var(--background-inverted);
-    opacity: 1;
-  }
-
   &.white:before {
-    background-color: var(--background-page);
+    background: white;
     transition-duration: var(--motion-speed-very-fast);
     transition-timing-function: var(--motion-ease-in);
-    opacity: 1;
-  }
-
-  &.light:before {
-    background-color: var(--background-light);
     opacity: 1;
   }
 
@@ -145,6 +144,7 @@
     margin-block-end: px-to-rem(var(--margin-nav-bottom));
 
     @include mq($from: large) {
+      position: relative;
       grid-column: 5 / 12;
       margin-block-end: px-to-rem(10, true);
       margin-inline: px-to-rem(var(--spacing-m), true);
@@ -177,12 +177,13 @@
   .metanavWrapper {
     @include expandable-wrapper-visible;
 
+    display: grid;
+    will-change: transform, opacity, grid-template-rows;
+    transition-duration: var(--motion-speed-fast);
+    transition-property: transform, grid-template-rows, opacity;
+
     &.metanavHidden {
       @include expandable-wrapper;
-
-      transform: scale(0, 0);
-      will-change: opacity, grid-template-rows;
-      transition-property: grid-template-rows, opacity;
     }
 
     &:not(.metanavHidden) {
@@ -203,10 +204,8 @@
   }
 
   .infoBlock {
-    position: absolute;
+    z-index: 2;
     width: px-to-rem(260);
-    inset-inline-start: px-to-rem(var(--grid-margin));
-    inset-block-start: px-to-rem(var(--info-block-top, 210));
     padding: 0;
 
     @include mq($from: wide) {
@@ -215,7 +214,7 @@
   }
 
   .metanavWrapper.metanavHidden ~ .infoBlock {
-    inset-block-start: px-to-rem(var(--info-block-top, 155));
+    inset-block-start: var(--info-block-top, px-to-rem(155));
   }
 }
 

@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, {
@@ -48,17 +49,18 @@ export type InterfaceHeaderComponentPropTypes = {
 
 export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React.JSX.Element => {
   const locale = useLocale();
-  const infoBlockMargin = 45;
 
   // --- Refs
-
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
   const metanavRef = useRef<HTMLDivElement>(null);
+  const navigationRef = useRef<HTMLDivElement>(null);
   const focusRegionRef = useRef<HTMLDivElement>(null);
+  const initialNavHeightRef = useRef<number>(null);
+  const initialMetaNavHeightRef = useRef<number>(null);
+  const initialLangOrNavMaxHeightRef = useRef<number>(null);
 
   // --- State
-
   const [
     isHovering,
     setIsHovering,
@@ -85,11 +87,6 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
   ] = useState(0);
 
   const [
-    headerNaturalHeight,
-    setHeaderNaturalHeight,
-  ] = useState(0);
-
-  const [
     mobileMenuOpen,
     setMobileMenuOpen,
   ] = useState(false);
@@ -98,11 +95,6 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     didScroll,
     setDidScroll,
   ] = useState(false);
-
-  const [
-    metanavHeight,
-    setMetanavHeight,
-  ] = useState(0);
 
   const [
     hoveredSection,
@@ -118,13 +110,98 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     setHydrated(true);
   }, []);
 
-  // We are going to set the height as CSS variable
-  // where it will get transformed into rem based
-  // on the current font size
   const [
-    infoBlockTop,
-    setInfoBlockTop,
-  ] = useState(210);
+    fontSize,
+    setFontSize,
+  ] = useState<number>(() => {
+    // Provide a sensible default (16px) for SSR
+    // or when document is unavailable
+    if (typeof window === 'undefined' || !document.body) {
+      return 16;
+    }
+
+    const style = window.getComputedStyle(document.body);
+
+    return parseFloat(style.fontSize) || 16;
+  });
+
+  const isKeyboard = useInputMethod();
+  const breakpoint = useBreakpoint();
+  const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
+  const scrollPosition = useWindowScroll();
+
+  const calculateHeaderHeight = useCallback((): void => {
+    if (!headerRef.current || smallBreakpoint || isHovering) {
+      return;
+    }
+
+    const headerElement = headerRef.current;
+    const metanavElement = metanavRef.current;
+
+    headerElement.removeAttribute('style');
+
+    /* eslint-disable @typescript-eslint/no-unused-expressions */
+    /* eslint-disable no-unused-expressions */
+    headerElement.offsetHeight;
+    /* eslint-enable @typescript-eslint/no-unused-expressions */
+    /* eslint-enable no-unused-expressions */
+
+    setInfoBlockContent(undefined);
+
+    setTimeout(() => {
+
+      const headerHeight = Math.round(headerElement.offsetHeight);
+      const metaNavHeight = Math.round(metanavElement?.offsetHeight || 0);
+
+      if (headerElement && initialNavHeightRef.current === null) {
+        initialNavHeightRef.current = headerHeight;
+      }
+
+      if (metanavElement && initialMetaNavHeightRef.current === null) {
+        initialMetaNavHeightRef.current = metaNavHeight || 0;
+      }
+
+      // When we clone one of the subnavigation items, they lack some
+      // styling information. Cloning them with all possible inline stylings
+      // would be quite brutal. Without the styling, the measurements return
+      // wrong padding sizes for the ul. We therefore compensate the missing
+      // paddings of the cloned ul elements manually, which should be good
+      // enough. We compensate 16px (large) / 68px (ultra)
+      let paddingCompensation = 16;
+
+      if (breakpoint === 'ultra') {
+        paddingCompensation = 68;
+      }
+
+      const langOrNavMaxHeight = Math.round(Math.max(navMaxHeight, langNavMaxHeight) + paddingCompensation);
+
+      if (initialLangOrNavMaxHeightRef.current === null) {
+        initialLangOrNavMaxHeightRef.current = langOrNavMaxHeight;
+      }
+
+      let totalHeight = headerHeight + langOrNavMaxHeight;
+
+      if (initialNavHeightRef.current) {
+        totalHeight = initialNavHeightRef.current + langOrNavMaxHeight;
+      }
+
+      if (didScroll && initialMetaNavHeightRef.current) {
+        // This time it is some margin compensation for the scrolled state
+        // where no meta navigation is shown.
+        totalHeight -= initialMetaNavHeightRef.current + 32;
+      }
+
+      setTotalHeaderHeight(totalHeight);
+    }, 300);
+
+  }, [
+    breakpoint,
+    didScroll,
+    smallBreakpoint,
+    navMaxHeight,
+    langNavMaxHeight,
+    isHovering,
+  ]);
 
   // --- Hooks
   useFocusTrap({
@@ -133,98 +210,52 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     ignoreElementsWithClasses: [styles.logo],
   });
 
-  const isKeyboard = useInputMethod();
-  const breakpoint = useBreakpoint();
-  const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
-  const scrollPosition = useWindowScroll();
-
   // close on escape
   useKeyboardShortcut({
     condition: isHovering,
     key: 'Escape',
     onKeyPressed: () => {
       setIsHovering(false);
+      setInfoBlockContent(undefined);
     },
   });
 
   useScrollLock(mobileMenuOpen && smallBreakpoint);
 
   // --- Effects
-  // measure metanav height
+
+  // listen to body font size changes
+  // e.g. text only zoom in firefox
   useEffect(() => {
-    if (smallBreakpoint) {
-      return;
-    }
+    const {
+      body,
+    } = document;
 
-    const measureHeight = (): void => {
-      if (!metanavRef.current) {
-        return;
-      }
+    // Create a ResizeObserver to watch for font size changes
+    const observer = new ResizeObserver(() => {
+      const style = window.getComputedStyle(body);
+      const newFontSize = Math.round(parseFloat(style.fontSize));
 
-      const wrapper = metanavRef.current;
-      const isCurrentlyHidden = wrapper.classList.contains(styles.metanavHidden);
+      setFontSize(newFontSize);
+    });
 
-      if (isCurrentlyHidden) {
-        wrapper.classList.remove(styles.metanavHidden);
-        // Force a synchronous layout recalculation
-        /* eslint-disable @typescript-eslint/no-unused-expressions */
-        /* eslint-disable no-unused-expressions */
-        wrapper.offsetHeight;
-        /* eslint-enable @typescript-eslint/no-unused-expressions */
-        /* eslint-enable no-unused-expressions */
+    observer.observe(body);
 
-        const height = wrapper.offsetHeight;
-
-        wrapper.classList.add(styles.metanavHidden);
-        setMetanavHeight(height);
-      } else {
-        const height = wrapper.offsetHeight;
-
-        setMetanavHeight(height);
-      }
+    // Clean up on unmount
+    return (): void => {
+      observer.disconnect();
     };
-
-    measureHeight();
-
-  }, [
-    breakpoint,
-    props.metanav,
-    smallBreakpoint,
-  ]);
-
-  // calculate infoBlock position
-  useEffect(() => {
-    if (!logoRef.current || smallBreakpoint || !headerRef.current) {
-      return;
-    }
-
-    if (!logoRef.current) {
-      return;
-    }
-
-    const logoRect = logoRef.current.getBoundingClientRect();
-    let topPosition = (logoRect.bottom + infoBlockMargin);
-
-    // When scrolled, metanav is hidden, so logo moves up by metanavHeight
-    // Adjust the infoBlock position accordingly
-    if (didScroll && metanavHeight > 0) {
-      topPosition -= metanavHeight;
-    }
-
-    setInfoBlockTop(topPosition);
-  }, [
-    smallBreakpoint,
-    breakpoint,
-    didScroll,
-    infoBlockMargin,
-    metanavHeight,
-  ]);
+  }, []);
 
   // reset navigation heights when breakpoint changes
   useEffect(() => {
     setNavMaxHeight(0);
     setLangNavMaxHeight(0);
     setMobileMenuOpen(false);
+
+    /* initialNavHeightRef.current = null;
+    initialMetaNavHeightRef.current = null;
+    initialLangOrNavMaxHeightRef.current = null; */
   }, [breakpoint]);
 
   // set nav height
@@ -235,70 +266,19 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
 
     if (smallBreakpoint) {
       // Reset heights when in small breakpoint
-      setHeaderNaturalHeight(0);
       setTotalHeaderHeight(0);
-
-      document.documentElement.style.removeProperty('--hero-padding-block-start');
-      headerRef.current.style.removeProperty('--header-height');
     } else {
-      if (!headerRef.current) {
-        return;
-      }
-
-      // Temporarily remove inline height to measure natural height
-      const currentInlineHeight = headerRef.current.style.height;
-
-      headerRef.current.style.removeProperty('--header-height');
-      // Force synchronous layout recalculation
-      /* eslint-disable @typescript-eslint/no-unused-expressions */
-      /* eslint-disable no-unused-expressions */
-      headerRef.current.offsetHeight;
-      /* eslint-enable @typescript-eslint/no-unused-expressions */
-      /* eslint-enable no-unused-expressions */
-
-      const naturalHeight = headerRef.current.offsetHeight;
-
-      headerRef.current.style.height = currentInlineHeight;
-
-      const langOrNavMaxHeight = Math.max(navMaxHeight, langNavMaxHeight);
-
-      let heroPaddingBlockStart;
-
-      setHeaderNaturalHeight(naturalHeight);
-
-      if (didScroll) {
-        // When scrolled, metanav is hidden. Subtract its height
-        // from the calculation.
-        const totalHeight = (naturalHeight + langOrNavMaxHeight - metanavHeight);
-
-        setHeaderNaturalHeight(naturalHeight - metanavHeight);
-        setTotalHeaderHeight(totalHeight);
-
-        if (!smallBreakpoint) {
-          heroPaddingBlockStart = naturalHeight - metanavHeight;
-        }
-
-      } else {
-        // When not scrolled, metanav is visible. Use full height.
-        const totalHeight = (naturalHeight + langOrNavMaxHeight);
-
-        setHeaderNaturalHeight(naturalHeight);
-        setTotalHeaderHeight(totalHeight);
-
-        if (!smallBreakpoint) {
-          heroPaddingBlockStart = naturalHeight;
-        }
-      }
-
-      document.documentElement.style.setProperty('--hero-padding-block-start', `${heroPaddingBlockStart}`);
+      calculateHeaderHeight();
     }
+
   }, [
+    fontSize,
     navMaxHeight,
     langNavMaxHeight,
     props,
     smallBreakpoint,
     didScroll,
-    metanavHeight,
+    calculateHeaderHeight,
 
     // Add breakpoint to trigger recalculation on viewport changes
     breakpoint,
@@ -308,7 +288,7 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
   useEffect(() => {
 
     // 0 would be too brutal
-    setDidScroll(scrollPosition > 0);
+    setDidScroll(scrollPosition > 1);
   }, [scrollPosition]);
 
   // add mouse leave detection to reset hover state when mouse leaves header
@@ -323,14 +303,22 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     };
 
     const headerElement = headerRef.current;
+    const navigationElement = navigationRef.current;
 
     if (headerElement) {
       headerElement.addEventListener('mouseleave', handleMouseLeave);
     }
 
+    if (navigationElement) {
+      navigationElement.addEventListener('mouseleave', handleMouseLeave);
+    }
+
     return (): void => {
       if (headerElement) {
         headerElement.removeEventListener('mouseleave', handleMouseLeave);
+      }
+      if (navigationElement) {
+        navigationElement.removeEventListener('mouseleave', handleMouseLeave);
       }
     };
   }, [isHovering]);
@@ -343,6 +331,7 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     if (item[selectedItem]) {
       setIsHovering(true);
       setHoveredSection('mainNav');
+
       const {
         navItems,
       } = props.navigation;
@@ -366,9 +355,6 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
         }
       }
     } else {
-      // Clear content immediately when leaving a navigation item
-      setInfoBlockContent(undefined);
-
       // Only collapse if we're not in mainNav section
       // (to prevent flickering when moving between items)
       if (hoveredSection !== 'mainNav') {
@@ -394,7 +380,6 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
 
     if (isHovering && visibility) {
       setHoveredSection('langNav');
-
       setInfoBlockContent(undefined);
     }
 
@@ -451,6 +436,11 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
         >
           <Metanav
             items={props.metanav.metaLinks?.map((item) => {
+
+              const tabindex = didScroll
+                ? '-1'
+                : undefined;
+
               if (item.linkType === 'internal') {
                 const documentId = item.linkInternal?.internalLink?.documentId;
                 const href = documentId
@@ -459,6 +449,7 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
 
                 return {
                   link: href,
+                  tabindex,
                   target: '_self',
                   text: rteToHtml(item.linkInternal?.linkText),
                 };
@@ -466,6 +457,7 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
 
               return {
                 link: item.linkExternal?.externalLink || '',
+                tabindex,
                 target: '_blank',
                 text: rteToHtml(item.linkExternal?.externalLinkText),
               };
@@ -517,25 +509,18 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     />
   );
 
-  const navigationInfoBlockRender = (): React.JSX.Element => {
-    const infoBlockInlineStyles = {
-      '--info-block-top': `${infoBlockTop}`,
-    } as React.CSSProperties & Record<string, string>;
-
-    return (
-      <NavigationInfoBlock
-        className={styles.infoBlock}
-        colorMode={renderColorMode()}
-        text={infoBlockContent?.text || ''}
-        title={infoBlockContent?.title || ''}
-        style={infoBlockInlineStyles}
-      />
-    );
-  };
+  const navigationInfoBlockRender = (): React.JSX.Element => (
+    <NavigationInfoBlock
+      className={styles.infoBlock}
+      colorMode={renderColorMode()}
+      text={infoBlockContent?.text || ''}
+      title={infoBlockContent?.title || ''}
+    />
+  );
 
   const navigationRender = (): React.JSX.Element => (
     <Navigation
-
+      ref={navigationRef}
       sections={props.navigation.navItems.map((item, key) => {
         if (item.subNavItems && item.subNavItems.length > 0) {
 
@@ -585,6 +570,7 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
         // Collapse header when hovering over items without children
         if (isHovering && hoveredSection === 'mainNav') {
           setIsHovering(false);
+          setInfoBlockContent(undefined);
         }
       }}
       navMaxHeightCallback={(maxHeight: number) => {
@@ -640,11 +626,9 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
       data-testid='header'
       style={totalHeaderHeight && !smallBreakpoint
         ? {
-          ['--header-height' as any]: isHovering
-
-            // 72 for the bottom padding of the nav-content
-            ? `${totalHeaderHeight + 72}`
-            : `${headerNaturalHeight}`,
+          ['height' as any]: isHovering
+            ? `${totalHeaderHeight / fontSize}rem`
+            : undefined,
         }
         : {}
       }
