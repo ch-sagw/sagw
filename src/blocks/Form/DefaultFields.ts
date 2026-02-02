@@ -24,10 +24,14 @@ export const formFieldName: Field = {
 };
 
 export const formFieldLabel: Field = rte1({
+  adminDescription: 'Name of the field, visible for user',
   name: 'label',
 });
 
 export const formFieldPlacehodler: Field = {
+  admin: {
+    description: 'Placeholder text within the field, visible for user',
+  },
   localized: true,
   name: 'placeholder',
   required: true,
@@ -60,6 +64,7 @@ export const formFieldCheckbox: Field = {
 export const formFieldError: Field = {
   ...rte1({
     adminCondition: (_, siblingData) => siblingData.required === true,
+    adminDescription: 'Message appears, if the user does not add text to a mandatory field.',
     name: 'fieldError',
   }),
 };

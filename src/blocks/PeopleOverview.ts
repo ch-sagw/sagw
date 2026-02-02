@@ -12,15 +12,16 @@ export const PeopleOverviewBlock = {
       admin: {
         hidden: true,
       },
-      defaultValue: 'Placeholder: all people entries will be displayed as overview here.',
+      defaultValue: 'Placeholder: All people entries belonging to the selected team will be displayed as an overview here.',
       name: 'message',
       type: 'text',
     },
     {
       access: fieldAccessNonLocalizableField,
       admin: {
-        description: 'Which team members do you want to display in the overview?',
+        description: 'Which team do you want to display on the page?',
       },
+      label: 'Team',
       name: 'teams',
       relationTo: 'teams',
       required: true,

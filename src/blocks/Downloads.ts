@@ -19,7 +19,7 @@ export const DownloadsBlock = {
       name: 'customOrAuto',
       options: [
         {
-          label: 'I want to add custom documents',
+          label: 'I want to select documents',
           value: 'custom',
         },
         {

@@ -39,6 +39,7 @@ interface InterfaceRenderPageContentProps {
   showBlocks?: boolean;
   heroComponent: React.JSX.Element;
   containerType: 'home' | 'detail';
+  currentPageId?: string;
   headerColorMode: ColorMode;
 }
 
@@ -89,12 +90,14 @@ const renderPageContent = ({
   containerType,
   headerColorMode,
   projectId,
+  currentPageId,
 }: InterfaceRenderPageContentProps): React.JSX.Element => (
   <TenantProvider tenant={tenantId}>
     <SkipLinks />
     <RenderHeader
       colorMode={headerColorMode}
       tenant={tenantId}
+      currentPageId={currentPageId}
     />
     <div className={containerType === 'home'
       ? 'home'
@@ -191,6 +194,7 @@ export const RenderPage = async ({
     return renderPageContent({
       blocks: pageData.content,
       containerType: 'home',
+      currentPageId: pageData.id,
       headerColorMode: 'dark',
       heroComponent: (
         <Hero
@@ -253,6 +257,7 @@ export const RenderPage = async ({
   return renderPageContent({
     blocks: contentBlocks,
     containerType: 'detail',
+    currentPageId: pageData.id,
     headerColorMode,
     heroComponent: (
       <RenderHero

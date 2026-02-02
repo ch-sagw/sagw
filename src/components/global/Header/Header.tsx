@@ -4,13 +4,14 @@ import {
   InterfaceHeaderMetaNavigation,
   InterfaceHeaderNavigation,
 } from '@/payload-types';
-import styles from '@/components/global/Header/Header.module.scss';
 import { HeaderComponent } from '@/components/global/Header/Header.component';
 import { getLocale } from 'next-intl/server';
 import { TypedLocale } from 'payload';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { ColorMode } from '@/components/base/types/colorMode';
-import { generateLinkUrls } from '@/components/global/Header/generateUrls';
+import {
+  generateLangNavUrls, generateLinkUrls,
+} from '@/components/global/Header/generateUrls';
 
 export type InterfaceHeaderPropTypesCms = {
   metanav: InterfaceHeaderMetaNavigation;
@@ -24,7 +25,7 @@ export type InterfaceHeaderPropTypes = {
     close: string,
   };
   logoLink: string;
-  headerDocumentId?: string;
+  documentId?: string;
 } & InterfaceHeaderPropTypesCms;
 
 export const Header = async (props: InterfaceHeaderPropTypes): Promise<React.JSX.Element> => {
@@ -41,14 +42,17 @@ export const Header = async (props: InterfaceHeaderPropTypes): Promise<React.JSX
     payload,
   });
 
+  const localeUrls = await generateLangNavUrls({
+    pageId: props.documentId || '',
+    payload,
+  });
+
   return (
-    <>
-      <HeaderComponent
-        {...props}
-        linkUrls={linkUrls}
-      />
-      <div className={styles.headerBg}></div>
-    </>
+    <HeaderComponent
+      {...props}
+      linkUrls={linkUrls}
+      localeUrls={localeUrls}
+    />
   );
 };
 

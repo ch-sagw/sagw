@@ -24,7 +24,9 @@ import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
 import { useScrollLock } from '@/hooks/useScrollLock';
 import { useInputMethod } from '@/hooks/useInputMethod';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
-import { useLocale } from 'next-intl';
+import {
+  useLocale, useTranslations,
+} from 'next-intl';
 
 import {
   InterfaceHeaderMetaNavigation, InterfaceHeaderNavigation,
@@ -43,12 +45,14 @@ export type InterfaceHeaderComponentPropTypes = {
   metanav: InterfaceHeaderMetaNavigation;
   navigation: InterfaceHeaderNavigation;
   linkUrls: Record<string, string>;
+  localeUrls: Record<string, string>;
 }
 
 // --- Component
 
 export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React.JSX.Element => {
   const locale = useLocale();
+  const langNavTranslations = useTranslations('langNav');
 
   // --- Refs
   const headerRef = useRef<HTMLElement>(null);
@@ -474,38 +478,37 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
 
   const langnavRender = (): React.JSX.Element => (
     <Langnav
-
-      // TODO: put in internal i18n
       items={[
         {
+          href: props.localeUrls.de,
           shortText: 'De',
-          text: 'Deutsch',
+          text: langNavTranslations('de'),
           value: 'de',
         },
         {
+          href: props.localeUrls.fr,
           shortText: 'Fr',
-          text: 'Français',
+          text: langNavTranslations('fr'),
           value: 'fr',
         },
         {
+          href: props.localeUrls.it,
           shortText: 'It',
-          text: 'Italiano',
+          text: langNavTranslations('it'),
           value: 'it',
         },
         {
+          href: props.localeUrls.en,
           shortText: 'En',
-          text: 'English',
+          text: langNavTranslations('en'),
           value: 'en',
         },
       ]}
       currentLang={locale}
       className={styles.langnav}
       colorMode={renderColorMode()}
-      visibilityCallback={handleLangNavHover}
-      onHeightChange={handleLangHeightChange}
-      onLangSelect={() => {
-        console.log('TODO: on lang select');
-      }}
+      visibilityCallbackAction={handleLangNavHover}
+      onHeightChangeAction={handleLangHeightChange}
     />
   );
 

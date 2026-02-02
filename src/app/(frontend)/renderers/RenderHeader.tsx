@@ -14,11 +14,13 @@ import { CMSConfigError } from '../utilities/CMSConfigError';
 type InterfaceHeaderRendererProps = {
   colorMode: ColorMode;
   tenant: string;
+  currentPageId?: string;
 }
 
 export const RenderHeader = async ({
   colorMode,
   tenant,
+  currentPageId,
 }: InterfaceHeaderRendererProps): Promise<React.JSX.Element> => {
   const payload = await getPayloadCached();
   const locale = (await getLocale()) as TypedLocale;
@@ -57,7 +59,7 @@ export const RenderHeader = async ({
 
   const headerProps: InterfaceHeaderPropTypes = {
     colorMode,
-    headerDocumentId: headerData.docs[0].id,
+    documentId: currentPageId,
     logoLink: `/${locale}`,
     menuButton: {
       close: i18nMenu('close'),
