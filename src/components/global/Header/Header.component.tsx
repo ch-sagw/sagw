@@ -588,7 +588,10 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
 
   const headerLogoRender = (): React.JSX.Element => {
 
-    const logoName = props.tenant as keyof typeof Logos;
+    const tenantName = props.tenant.toLowerCase()
+      .replaceAll(/-/gu, '');
+
+    const logoName = tenantName as keyof typeof Logos;
 
     return (
       <div className={styles.logoWrapperInner}>

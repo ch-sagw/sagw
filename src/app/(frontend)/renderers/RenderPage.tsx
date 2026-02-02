@@ -246,7 +246,7 @@ export const RenderPage = async ({
   const collectionSlug = foundCollection as CollectionSlug;
 
   // Get ColorMode for header from hero component
-  const headerColorMode = pageData.hero.colorMode || 'dark';
+  const headerColorMode = pageData.hero?.colorMode || 'white';
 
   let projectId = null;
 
