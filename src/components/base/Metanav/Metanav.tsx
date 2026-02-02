@@ -4,6 +4,7 @@ import { Button } from '@/components/base/Button/Button';
 import { ColorMode } from '@/components/base/types/colorMode';
 
 export type InterfaceMetanavItem = {
+  tabindex?: string;
   text: string;
   link: string;
   target: '_self' | '_blank';
@@ -11,6 +12,7 @@ export type InterfaceMetanavItem = {
 
 type InterfaceMetanavItemButton = {
   text: string;
+  tabindex?: string;
   clickCallback: () => void;
 }
 
@@ -33,6 +35,7 @@ export const Metanav = ({
         {'link' in item && 'target' in item &&
           <Button
             className={styles.item}
+            tabindex={item.tabindex}
             text={item.text}
             style='textSmall'
             colorMode={colorMode}
@@ -48,6 +51,7 @@ export const Metanav = ({
         {'clickCallback' in item &&
           <Button
             className={styles.item}
+            tabindex={item.tabindex}
             text={item.text}
             style='textSmall'
             colorMode={colorMode}
