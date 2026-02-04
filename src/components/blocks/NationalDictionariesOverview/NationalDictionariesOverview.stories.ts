@@ -6,6 +6,7 @@ import { NationalDictionaryOverviewComponent } from '@/components/blocks/Nationa
 import { defaultDecorator } from '@/storybook-helpers';
 import { NationalDictionaryDetailPage } from '@/payload-types';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { prerenderPageLinksStorybook } from '@/utilities/prerenderPageLinksStorybook';
 
 type NationalDictionariesOverviewProps = React.ComponentProps<typeof NationalDictionaryOverviewComponent>;
 
@@ -25,7 +26,6 @@ const meta: Meta<typeof NationalDictionaryOverviewComponent> = {
   },
   tags: [
     'autodocs',
-    'visual:check',
     'a11y:check',
   ],
   title: 'Components/blocks/NationalDictionariesOverview',
@@ -57,10 +57,13 @@ const pages: NationalDictionaryDetailPage[] = Array.from({
   });
 });
 
-export const SampleStory: StrictStory = {
+export const NationalDictionaries: StrictStory = {
   args: {
     blockType: 'nationalDictionariesOverviewBlock',
     moreInfoButtonText: simpleRteConfig('Weitere Informationen'),
+    pageUrls: prerenderPageLinksStorybook({
+      pages,
+    }),
     pages,
   },
 };

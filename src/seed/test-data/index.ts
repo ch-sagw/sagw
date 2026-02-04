@@ -1,5 +1,6 @@
 import { deleteData } from '@/seed/test-data/deleteData';
 import { addDataForTenant } from '@/seed/test-data/tenantData';
+import { addPlaywrightDataForTenant } from './tenantDataPlaywright';
 import { Payload } from 'payload';
 import { seedTenantsAndUsers } from '@/seed/seedTenantsAndUsers/index';
 
@@ -45,21 +46,39 @@ export const seedTestData = async (payload: Payload): Promise<void> => {
       return;
     }
 
+    // we want different data for playwright tests and for local dev env
+
     // add data for tenant 1
-    await addDataForTenant({
-      payload,
-      tenant: tenantSagw[0].name,
-      tenantId: tenantSagw[0].id,
-    });
+    if (isPlaywright) {
+      await addPlaywrightDataForTenant({
+        payload,
+        tenant: tenantSagw[0].name,
+        tenantId: tenantSagw[0].id,
+      });
+    } else {
+      await addDataForTenant({
+        payload,
+        tenant: tenantSagw[0].name,
+        tenantId: tenantSagw[0].id,
+      });
+    }
 
     payload.logger.info('seed test data: added data for tenant 1');
 
     // add data for tenant 2
-    await addDataForTenant({
-      payload,
-      tenant: tenantNotSagw[0].name,
-      tenantId: tenantNotSagw[0].id,
-    });
+    if (isPlaywright) {
+      await addPlaywrightDataForTenant({
+        payload,
+        tenant: tenantNotSagw[0].name,
+        tenantId: tenantNotSagw[0].id,
+      });
+    } else {
+      await addDataForTenant({
+        payload,
+        tenant: tenantNotSagw[0].name,
+        tenantId: tenantNotSagw[0].id,
+      });
+    }
 
     payload.logger.info('seed test data: added data for tenant 2');
 

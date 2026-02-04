@@ -5,6 +5,14 @@ import type {
 import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
 import { defaultDecorator } from '@/storybook-helpers';
 import React from 'react';
+import {
+  InstitutesTeaserImagePNG,
+  InstitutesTeaserImageSVG,
+  MagazineTeaserImage,
+  NetworkTeaserImagePNG,
+  NetworkTeaserImageSVG,
+  PersonImage,
+} from '@/components/blocks/helpers/imagesData';
 
 type GenericTeaserProps = React.ComponentProps<typeof GenericTeaser>;
 
@@ -26,7 +34,7 @@ const meta: Meta<typeof GenericTeaser> = {
 
 const customRender = (args: GenericTeaserProps): React.JSX.Element => (
   <div style={{
-    maxWidth: '570px',
+    maxWidth: '571px',
   }}>
     <GenericTeaser {...args} />
   </div>
@@ -34,8 +42,9 @@ const customRender = (args: GenericTeaserProps): React.JSX.Element => (
 
 export default meta;
 
-export const Institute: StrictStory = {
+export const InstitutePNGLogo: StrictStory = {
   args: {
+    image: InstitutesTeaserImagePNG,
     links: [
       {
         href: 'https://www.foo.bar',
@@ -43,16 +52,33 @@ export const Institute: StrictStory = {
         type: 'internal',
       },
     ],
-    logo: 'some-logo.svg',
-    texts: ['Die Forschungsstelle Dodis ist das unabhängige Kompetenzzentrum für die Geschichte der schweizerischen Aussenpolitik und der internationalen Beziehungen der Schweiz.'],
-    title: 'Diplomatische Dokumente der Schweiz',
+    texts: ['Das Institut des Dicziunari Rumantsch Grischun mit Sitz in Chur ist Herausgeberin des grössten bündnerromanischen Wörterbuches. Es enthält den gesamten seit dem 16. Jahrhundert bis heute dokumentierten Wortschatz aller Idiome und Dialekte, eingeschlossen der gesprochenen Sprache.'],
+    title: 'Dicziunari Rumantsch Grischun',
     type: 'institute',
   },
   render: customRender,
 };
 
-export const Network: StrictStory = {
+export const InstituteSVGLogo: StrictStory = {
   args: {
+    image: InstitutesTeaserImageSVG,
+    links: [
+      {
+        href: 'https://www.foo.bar',
+        text: 'Mehr erfahren',
+        type: 'internal',
+      },
+    ],
+    texts: ['Das Institut des Dicziunari Rumantsch Grischun mit Sitz in Chur ist Herausgeberin des grössten bündnerromanischen Wörterbuches. Es enthält den gesamten seit dem 16. Jahrhundert bis heute dokumentierten Wortschatz aller Idiome und Dialekte, eingeschlossen der gesprochenen Sprache.'],
+    title: 'Dicziunari Rumantsch Grischun',
+    type: 'institute',
+  },
+  render: customRender,
+};
+
+export const NetworkPNGLogo: StrictStory = {
+  args: {
+    image: NetworkTeaserImagePNG,
     links: [
       {
         href: 'https://www.foo.bar',
@@ -60,9 +86,25 @@ export const Network: StrictStory = {
         type: 'external',
       },
     ],
-    logo: 'some-logo.svg',
-    texts: ['Gründungsjahr: 1907'],
-    title: 'Archäologie Schweiz',
+    texts: ['Gründungsjahr: 1983'],
+    title: 'Schweizerische Gesellschaft für Lateinamerikastudien',
+    type: 'network',
+  },
+  render: customRender,
+};
+
+export const NetworkSVGLogo: StrictStory = {
+  args: {
+    image: NetworkTeaserImageSVG,
+    links: [
+      {
+        href: 'https://www.foo.bar',
+        text: 'Zur Website',
+        type: 'external',
+      },
+    ],
+    texts: ['Gründungsjahr: 1983'],
+    title: 'Schweizerische Gesellschaft für Lateinamerikastudien',
     type: 'network',
   },
   render: customRender,
@@ -86,7 +128,7 @@ export const Project: StrictStory = {
 
 export const Magazine: StrictStory = {
   args: {
-    image: 'some-logo.jpg',
+    image: MagazineTeaserImage,
     links: [
       {
         href: 'https://www.foo.bar',
@@ -101,7 +143,7 @@ export const Magazine: StrictStory = {
 
 export const People: StrictStory = {
   args: {
-    image: 'some-logo.jpg',
+    image: PersonImage,
     links: [
       {
         href: 'tel:+41310001122',
@@ -126,7 +168,7 @@ export const People: StrictStory = {
 
 export const Generic: StrictStory = {
   args: {
-    image: 'some-image.jpg',
+    image: MagazineTeaserImage,
     links: [
       {
         href: 'https://www.foo.bar',

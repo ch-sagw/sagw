@@ -14,6 +14,7 @@ import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccess } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import { preview } from '@/utilities/previewUrl';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -42,6 +43,7 @@ export const NewsDetailPage: CollectionConfig = {
     ],
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
+    preview,
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
@@ -63,7 +65,7 @@ export const NewsDetailPage: CollectionConfig = {
                   }),
                 },
               ],
-              label: 'Overview Page properties',
+              label: 'Overview Page and Teaser Block Properties',
               name: 'overviewPageProps',
               type: 'group',
             },
@@ -73,6 +75,9 @@ export const NewsDetailPage: CollectionConfig = {
 
             {
               access: fieldAccessNonLocalizableField,
+              admin: {
+                description: 'If the news belongs to a project, add the project.',
+              },
               name: 'project',
               relationTo: 'projects',
               required: false,
@@ -115,7 +120,9 @@ export const NewsDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: genericPageHooks(),
+  hooks: genericPageHooks({
+    afterChange: [],
+  }),
   labels: {
     plural: 'News Detail Pages',
     singular: 'News Detail',

@@ -19,9 +19,7 @@ import { Radios } from '@/components/base/Radios/Radios';
 
 import styles from '@/components/blocks/Form/Form.module.scss';
 import { ZodError } from 'zod';
-import {
-  rte4ToHtml, rteToHtml,
-} from '@/utilities/rteToHtml';
+import { rteToHtml } from '@/utilities/rteToHtml';
 import { usePathname } from 'next/navigation';
 
 const sectionClasses = cva([styles.formBlock], {
@@ -55,6 +53,12 @@ type InterfaceFormClientPropTypes = {
   errors: Record<string, string[] | undefined>;
   submitError: boolean;
   submitSuccess: boolean;
+  preRenderedLabels: Record<string, string>;
+  preRenderedRadioLabels: Record<string, Record<string, string>>;
+  onResubmitAction?: () => void;
+  onErrorResubmitAction?: () => void;
+  resendClicked?: boolean;
+  errorResendClicked?: boolean;
 };
 
 export const FormComponent = ({
@@ -66,6 +70,12 @@ export const FormComponent = ({
   errors,
   submitError,
   submitSuccess,
+  preRenderedLabels,
+  preRenderedRadioLabels,
+  onResubmitAction,
+  onErrorResubmitAction,
+  resendClicked,
+  errorResendClicked,
 }: InterfaceFormClientPropTypes): React.JSX.Element => {
   const pathname = usePathname();
 
@@ -82,16 +92,16 @@ export const FormComponent = ({
       <div>
         {submitError &&
           <Notification
-            actionText={form.isNewsletterForm === 'newsletter'
+            actionText={!errorResendClicked && form.isNewsletterForm === 'newsletter'
               ? form.newsletterFields?.actionText || ''
               : ''
             }
             autofocus={true}
             colorMode={form.colorMode}
             onAction={() => {
-
-              // TODO
-              console.log('todo');
+              if (onErrorResubmitAction) {
+                onErrorResubmitAction();
+              }
             }}
             text={rteToHtml(form.submitError.text)}
             title={rteToHtml(form.submitError.title)}
@@ -102,16 +112,16 @@ export const FormComponent = ({
 
         {submitSuccess &&
           <Notification
-            actionText={form.isNewsletterForm === 'newsletter'
+            actionText={!resendClicked && form.isNewsletterForm === 'newsletter'
               ? form.newsletterFields?.actionText || ''
               : ''
             }
             autofocus={true}
             colorMode={form.colorMode}
-
-            // TODO
             onAction={() => {
-              console.log('todo');
+              if (onResubmitAction) {
+                onResubmitAction();
+              }
             }}
             text={rteToHtml(form.submitSuccess.text)}
             title={rteToHtml(form.submitSuccess.title)}
@@ -179,7 +189,7 @@ export const FormComponent = ({
                     })}
                     value='on'
                     name={field.name}
-                    label={rte4ToHtml(field.label)}
+                    label={preRenderedLabels[field.name] || rteToHtml(field.label)}
                     checked={checked}
                     errorText={errors[field.name]?.join(', ') || ''}
                     colorMode={form.colorMode}
@@ -207,12 +217,12 @@ export const FormComponent = ({
                         checked: isSelectedFromServer
                           ? true
                           : (item.defaultChecked ?? undefined),
-                        label: rte4ToHtml(item.label),
+                        label: preRenderedRadioLabels[field.name]?.[item.value] || rteToHtml(item.label),
                         value: item.value,
                       });
                     })}
                     errorText={errors[field.name]?.join(', ') || ''}
-                    descriptionLabel={rte4ToHtml(field.label)}
+                    descriptionLabel={preRenderedLabels[field.name] || rteToHtml(field.label)}
                   />
                 );
               }

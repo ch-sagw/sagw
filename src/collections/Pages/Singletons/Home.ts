@@ -1,4 +1,6 @@
-import { CollectionConfig } from 'payload';
+import {
+  CollectionAfterReadHook, CollectionConfig,
+} from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { fieldsHeroHome } from '@/field-templates/hero';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
@@ -18,7 +20,9 @@ import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
-import { readFile } from 'fs/promises';
+import { homeSlug } from '@/collections/constants';
+import { hookInvalidateCacheOnPageChange } from '@/hooks-payload/invalidateCacheOnPageChange';
+import { preview } from '@/utilities/previewUrl';
 
 const homeBlocks: BlockSlug[] = [
   'textBlock',
@@ -45,6 +49,7 @@ export const HomePage: CollectionConfig = {
   admin: {
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
+    preview,
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
@@ -55,21 +60,7 @@ export const HomePage: CollectionConfig = {
         hidden: true,
         readOnly: true,
       },
-      defaultValue: async ({
-        locale,
-      }): Promise<string> => {
-        let homeString = 'Home';
-
-        if (locale) {
-          const translationRawFile = (await readFile(new URL(`../../../i18n/messages/${locale}.json`, import.meta.url))).toString();
-          const translationsFile = JSON.parse(translationRawFile);
-
-          homeString = translationsFile.navigation.navigationTitle;
-        }
-
-        return homeString;
-
-      },
+      defaultValue: 'Home',
       localized: true,
       name: fieldNavigationTitleFieldName,
       required: false,
@@ -80,7 +71,7 @@ export const HomePage: CollectionConfig = {
         hidden: true,
         readOnly: true,
       },
-      defaultValue: 'home',
+      defaultValue: homeSlug,
       localized: true,
       name: 'slug',
       type: 'text',
@@ -133,7 +124,106 @@ export const HomePage: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [hookCascadeBreadcrumbUpdates],
+    afterChange: [
+      hookCascadeBreadcrumbUpdates,
+      hookInvalidateCacheOnPageChange,
+    ],
+    afterRead: [
+      async ({
+        doc,
+        req,
+      }): Promise<CollectionAfterReadHook<any>> => {
+        if (!doc) {
+          return doc;
+        }
+
+        // we can not use getTranslations... It works in Admin-Ui since
+        // rendered on the server. But in playwright, context strangely switches
+        // to client, which makes getTranslations throw an error.
+
+        const locale = req?.locale || 'de';
+        const fallback = 'Home';
+        let homeNavigationTitle;
+
+        if (locale && locale === 'all') {
+          const translationRawFileDe = (await import('../../../i18n/messages/de.json', {
+            with: {
+              type: 'json',
+            },
+          })).default;
+          const translationRawFileEn = (await import('../../../i18n/messages/en.json', {
+            with: {
+              type: 'json',
+            },
+          })).default;
+          const translationRawFileFr = (await import('../../../i18n/messages/fr.json', {
+            with: {
+              type: 'json',
+            },
+          })).default;
+          const translationRawFileIt = (await import('../../../i18n/messages/it.json', {
+            with: {
+              type: 'json',
+            },
+          })).default;
+
+          homeNavigationTitle = {
+            de: translationRawFileDe.navigation.navigationTitle,
+            en: translationRawFileEn.navigation.navigationTitle,
+            fr: translationRawFileFr.navigation.navigationTitle,
+            it: translationRawFileIt.navigation.navigationTitle,
+          };
+
+        } else if (locale) {
+          // Use static string literals in switch for webpack static analysis
+          let translationsFile;
+
+          switch (locale) {
+            case 'de':
+              translationsFile = (await import('../../../i18n/messages/de.json', {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            case 'en':
+              translationsFile = (await import('../../../i18n/messages/en.json', {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            case 'fr':
+              translationsFile = (await import('../../../i18n/messages/fr.json', {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            case 'it':
+              translationsFile = (await import('../../../i18n/messages/it.json', {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+              break;
+            default:
+              translationsFile = (await import('../../../i18n/messages/de.json', {
+                with: {
+                  type: 'json',
+                },
+              })).default;
+          }
+
+          homeNavigationTitle = translationsFile.navigation.navigationTitle;
+        }
+
+        return {
+          ...doc,
+          navigationTitle: homeNavigationTitle || fallback,
+        };
+      },
+    ],
     beforeChange: [
       hookPreventBulkPublishForTranslators,
       hookGenerateBreadcrumbs,

@@ -15,6 +15,7 @@ export const radioBlock = (): Block => ({
   fields: [
     formFieldName,
     rte1({
+      label: 'Description',
       name: 'label',
     }),
     {
@@ -28,6 +29,7 @@ export const radioBlock = (): Block => ({
     {
       fields: [
         rte1({
+          label: 'Radio Button Label',
           name: 'label',
         }),
         {

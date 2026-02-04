@@ -1,10 +1,11 @@
-'use client';
-
 import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/global/Hero/Hero.module.scss';
 import {
-  InterfaceHeroField, InterfaceHeroFieldHome, InterfaceHeroFieldMagazineDetail, InterfaceHeroFieldNewsDetail,
+  InterfaceHeroField,
+  InterfaceHeroFieldHome,
+  InterfaceHeroFieldMagazineDetail,
+  InterfaceHeroFieldNewsDetail,
 } from '@/payload-types';
 import {
   Breadcrumb, InterfaceBreadcrumbPropTypes,
@@ -17,12 +18,16 @@ import { Button } from '@/components/base/Button/Button';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { Icon } from '@/icons';
 import { formatEventDetails } from '@/components/base/EventsListItem/helpers';
-import { formatDateToReadableString } from '@/components/helpers/date';
+import {
+  formatDateToReadableString,
+  formatTime,
+} from '@/components/helpers/date';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { useLocale } from 'next-intl';
 
 type BaseHeroProps = {
   breadcrumb?: InterfaceBreadcrumbPropTypes;
+  optionalLinkUrl?: string;
 };
 
 export type InterfaceHeroPropTypes =
@@ -45,6 +50,7 @@ export type InterfaceHeroPropTypes =
       dateEnd?: string;
       language?: string;
       time?: string;
+      timeLabelText?: string;
       eventLocation?: string;
     };
     tag: string;
@@ -86,13 +92,21 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
   let eventDetailsString;
 
   if (props.type === 'eventDetail' && props.eventDetails) {
+    let timeValue;
+
+    if (props.eventDetails.time) {
+      timeValue = `${formatTime({
+        dateString: props.eventDetails.time || '',
+      })} ${props.eventDetails.timeLabelText}`;
+    }
+
     eventDetailsString = formatEventDetails({
       dateEnd: props.eventDetails.dateEnd,
       dateStart: props.eventDetails.dateStart,
       eventLocation: props.eventDetails.eventLocation,
       language: props.eventDetails.language,
       pageLanguage: locale,
-      time: props.eventDetails.time,
+      time: timeValue || '',
     });
   }
 
@@ -150,6 +164,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
           as='h1'
           html={rteToHtml(props.title)}
           className={styles.title}
+          id='content'
         />
 
         {/* Lead */}
@@ -216,9 +231,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
           <Button
             className={styles.link}
             element='link'
-
-            // TODO: generate url
-            href={props.optionalLink.link.internalLink.slug}
+            href={props.optionalLinkUrl || props.optionalLink.link.internalLink.slug}
             text={rteToHtml(props.optionalLink.link.linkText)}
             colorMode={heroColorMode}
             style='text'

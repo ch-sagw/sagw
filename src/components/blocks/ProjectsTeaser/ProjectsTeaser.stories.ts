@@ -2,39 +2,20 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { ProjectsTeaserComponent } from '@/components/blocks/ProjectsTeaser/ProjectsTeaser.component';
+import {
+  type InterfaceProjectsTeaserClientPropTypes, ProjectsTeaserClient,
+} from '@/components/blocks/ProjectsTeaser/ProjectsTeaser.client';
 import { defaultDecorator } from '@/storybook-helpers';
-import { ProjectDetailPage } from '@/payload-types';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
-type ProjectsTeaserProps = React.ComponentProps<typeof ProjectsTeaserComponent>;
-
-type StrictStory = StoryObj<typeof ProjectsTeaserComponent> & {
-  args: ProjectsTeaserProps;
+type StrictStory = StoryObj<typeof ProjectsTeaserClient> & {
+  args: InterfaceProjectsTeaserClientPropTypes;
 };
 
-const teaserBlock: ProjectDetailPage = {
-  createdAt: '2025-11-19T11:29:09.521Z',
-  hero: {
-    colorMode: 'white',
-    lead: simpleRteConfig('Some Lead'),
-    title: simpleRteConfig('Plattform Ageing Society'),
-  },
-  id: '1',
-  navigationTitle: 'NavTitle',
-  overviewPageProps: {
-    linkText: simpleRteConfig('Zum Projekt'),
-    teaserText: simpleRteConfig('Ab 2021 hat die Akademie zudem die Förderzuständigkeit für acht längerfristige Editionen vom SNF übernommen. '),
-  },
-  project: '1',
-  slug: 'slug',
-  tenant: '1',
-  updatedAt: '2025-11-19T11:29:09.521Z',
-};
-
-const meta: Meta<typeof ProjectsTeaserComponent> = {
+const meta: Meta<typeof ProjectsTeaserClient> = {
   args: {},
-  component: ProjectsTeaserComponent,
+  component: ProjectsTeaserClient,
   decorators: [defaultDecorator],
   parameters: {/* layout: 'centered', */ },
   tags: [
@@ -47,48 +28,77 @@ const meta: Meta<typeof ProjectsTeaserComponent> = {
 
 export default meta;
 
-const defaultArgs: ProjectsTeaserProps = {
-  alignement: 'horizontal',
-  blockType: 'projectsTeasersBlock',
-  lead: simpleRteConfig('Projekte mit gesellschaftlicher Relevanz an der Schnittstelle von Wissenschaft und Öffentlichkeit.'),
-  optionalLink: {
-    includeLink: true,
-    link: {
-      internalLink: {
-        documentId: '1234',
-        slug: 'projectDetailPage',
-      },
-      linkText: simpleRteConfig('Alle Artikel anzeigen'),
-    },
-  },
-  pages: [
-    {
-      ...teaserBlock,
-      id: '1',
-    },
-    {
-      ...teaserBlock,
-      id: '2',
-    },
-    {
-      ...teaserBlock,
-      id: '3',
-    },
-    {
-      ...teaserBlock,
-      id: '4',
-    },
-  ],
-  title: simpleRteConfig('Aktuelle Projekte'),
-};
-
 export const Horizontal: StrictStory = {
-  args: defaultArgs,
+  args: {
+    alignment: 'horizontal',
+    items: [
+      {
+        id: '1',
+        link: {
+          href: '/project-1',
+          text: rteToHtml(simpleRteConfig('Learn More')),
+          type: 'internal',
+        },
+        textHtml: rteToHtml(simpleRteConfig('This is the first project teaser text content.')),
+        titleHtml: rteToHtml(simpleRteConfig('Project Title 1')),
+      },
+      {
+        id: '2',
+        link: {
+          href: '/project-2',
+          text: rteToHtml(simpleRteConfig('Learn More')),
+          type: 'internal',
+        },
+        textHtml: rteToHtml(simpleRteConfig('This is the second project teaser text content.')),
+        titleHtml: rteToHtml(simpleRteConfig('Project Title 2')),
+      },
+      {
+        id: '3',
+        link: {
+          href: '/project-3',
+          text: rteToHtml(simpleRteConfig('Learn More')),
+          type: 'internal',
+        },
+        textHtml: rteToHtml(simpleRteConfig('This is the third project teaser text content.')),
+        titleHtml: rteToHtml(simpleRteConfig('Project Title 3')),
+      },
+    ],
+    optionalLink: {
+      href: '/all-projects',
+      linkTextHtml: rteToHtml(simpleRteConfig('View All Projects')),
+    },
+    subtitleHtml: rteToHtml(simpleRteConfig('Projects with societal relevance at the intersection of science and the public.')),
+    titleHtml: rteToHtml(simpleRteConfig('Current Projects')),
+  },
 };
 
 export const Vertical: StrictStory = {
   args: {
-    ...defaultArgs,
-    alignement: 'vertical',
+    alignment: 'vertical',
+    items: [
+      {
+        id: '1',
+        link: {
+          href: '/project-1',
+          text: rteToHtml(simpleRteConfig('Learn More')),
+          type: 'internal',
+        },
+        textHtml: rteToHtml(simpleRteConfig('This is the first project teaser text content.')),
+        titleHtml: rteToHtml(simpleRteConfig('Project Title 1')),
+      },
+      {
+        id: '2',
+        link: {
+          href: '/project-2',
+          text: rteToHtml(simpleRteConfig('Learn More')),
+          type: 'internal',
+        },
+        textHtml: rteToHtml(simpleRteConfig('This is the second project teaser text content.')),
+        titleHtml: rteToHtml(simpleRteConfig('Project Title 2')),
+      },
+    ],
+    optionalLink: null,
+    subtitleHtml: rteToHtml(simpleRteConfig('Projects with societal relevance at the intersection of science and the public.')),
+    titleHtml: rteToHtml(simpleRteConfig('Current Projects')),
   },
 };

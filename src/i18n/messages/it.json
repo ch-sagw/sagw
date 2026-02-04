@@ -1,9 +1,17 @@
 {
+  "slugs": {
+    "dataPrivacy": "data-privacy-it",
+    "impressum": "impressum-it"
+  },
   "navigation": {
     "navigationTitle": "Home IT"
   },
   "pagination": {
     "hiddenPaginationTitle": "Impaginazione"
+  },
+  "skipLinks": {
+    "sectionLabel": "Sprunglinks (IT)",
+    "skipToContent": "Zum Inhalt (IT)"
   },
   "form": {
     "newsletter": {
@@ -32,5 +40,19 @@
     "buttonTextOpenCookieSettings": "Cookie-Einstellungen (IT)",
     "messageVideo": "Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können. (IT)",
     "titleExternalContent": "Ccontenuto esterno"
+  },
+  "menu": {
+    "open": "Aprire",
+    "close": "Chiudere"
+  },
+  "publicationFilters": {
+    "publicationTopicsLabel": "Publikationsthemen (IT)",
+    "publicationTypesLabel": "Publikationstypen (IT)"
+  },
+  "langNav": {
+    "de": "Deutsch",
+    "fr": "Français",
+    "it": "Italiano",
+    "en": "English"
   }
 }

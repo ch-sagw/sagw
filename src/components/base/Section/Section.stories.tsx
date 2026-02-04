@@ -35,3 +35,13 @@ export const DefaultSection: StrictStory = {
     title: 'Section title',
   },
 };
+
+export const SectionWithFilters: StrictStory = {
+  args: {
+    children: <p>some child content comes here...</p>,
+    colorMode: 'white',
+    showTopLine: true,
+    subtitle: 'Subtitle',
+    title: 'Section title',
+  },
+};

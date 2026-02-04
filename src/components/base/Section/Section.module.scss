@@ -41,6 +41,18 @@
     --subtitle-color: var(--text-secondary-inverted);
   }
 
+  .additionalStickyContent {
+    --list-flex-direction: column;
+
+    @include mq($from: medium, $to: large) {
+      --list-flex-direction: row;
+    }
+
+    display: flex;
+    flex-direction: column;
+    row-gap: px-to-rem(var(--spacing-2xl));
+  }
+
   .title {
     @include title-heading-3;
 
@@ -50,6 +62,7 @@
 
   .subtitle {
     @include body-text-xl;
+    @include font-layout-features;
 
     color: var(--subtitle-color);
     margin: 0;

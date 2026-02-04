@@ -7,15 +7,19 @@ import { hookSeoFallback } from '@/hooks-payload/seoFallback';
 import { hookSlug } from '@/hooks-payload/slug';
 import { hookAdminTitle } from '@/hooks-payload/adminTitle';
 import {
-  CollectionAfterChangeHook, CollectionAfterDeleteHook, CollectionBeforeChangeHook, CollectionBeforeValidateHook,
+  CollectionAfterChangeHook, CollectionAfterDeleteHook, CollectionBeforeChangeHook, CollectionBeforeDeleteHook, CollectionBeforeValidateHook,
 } from 'payload';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
+import {
+  hookInvalidateCacheOnPageChange, hookInvalidateCacheOnPageDelete,
+} from '@/hooks-payload/invalidateCacheOnPageChange';
 
 interface InterfaceGenericPageHooks {
   afterChange?: CollectionAfterChangeHook[];
   afterDelete?: CollectionAfterDeleteHook[];
   beforeChange?: CollectionBeforeChangeHook[];
+  beforeDelete?: CollectionBeforeDeleteHook[];
   beforeValidate?: CollectionBeforeValidateHook[];
 }
 
@@ -23,6 +27,7 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
   // 3.
   afterChange: [
     hookCascadeBreadcrumbUpdates,
+    hookInvalidateCacheOnPageChange,
     ...(additionalHooks?.afterChange ?? []),
   ],
 
@@ -38,6 +43,12 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
     hookSeoFallback,
     hookGenerateBreadcrumbs,
     ...(additionalHooks?.beforeChange ?? []),
+  ],
+
+  // 5.
+  beforeDelete: [
+    hookInvalidateCacheOnPageDelete,
+    ...(additionalHooks?.beforeDelete ?? []),
   ],
 
   // 1.

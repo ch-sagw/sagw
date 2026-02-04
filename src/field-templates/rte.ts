@@ -10,7 +10,6 @@ import {
   StrikethroughFeature,
   SubscriptFeature,
   SuperscriptFeature,
-  UnderlineFeature,
   UnorderedListFeature,
 } from '@payloadcms/richtext-lexical';
 import { SoftHyphenFeature } from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.server';
@@ -94,7 +93,6 @@ const rte3Editor = lexicalEditor({
     FixedToolbarFeature(),
     BoldFeature(),
     ItalicFeature(),
-    UnderlineFeature(),
     StrikethroughFeature(),
     SubscriptFeature(),
     SuperscriptFeature(),
@@ -115,7 +113,6 @@ const rte4Editor = lexicalEditor({
     FixedToolbarFeature(),
     BoldFeature(),
     ItalicFeature(),
-    UnderlineFeature(),
     StrikethroughFeature(),
     SubscriptFeature(),
     SuperscriptFeature(),
@@ -144,6 +141,7 @@ const rte4Editor = lexicalEditor({
 
 interface InterfaceRteInputType {
   name: string;
+  label?: string;
   notRequired?: boolean;
   disableLocalization?: boolean;
   adminDescription?: string;
@@ -156,67 +154,80 @@ type InterfaceRteInputTypeInternal = {
 } & InterfaceRteInputType;
 
 const rte = ({
-  name, notRequired, editor, disableLocalization, adminDescription, adminCondition, access,
-}: InterfaceRteInputTypeInternal): RichTextField => ({
-  access: access
-    ? access
-    : undefined,
-  admin: {
-    condition: adminCondition,
-    description: adminDescription,
-  },
-  editor,
-  hooks: {
-    beforeValidate: [
-      ({
-        value,
-      }): FieldHook => sanitizeRichTextValue(value),
-    ],
-  },
-  localized: !disableLocalization,
-  name,
-  required: !notRequired,
-  type: 'richText',
-});
+  name, notRequired, editor, disableLocalization, adminDescription, adminCondition, access, label,
+}: InterfaceRteInputTypeInternal): RichTextField => {
+
+  const fieldObject: RichTextField = {
+    access: access
+      ? access
+      : undefined,
+    admin: {
+      condition: adminCondition,
+      description: adminDescription,
+    },
+    editor,
+    hooks: {
+      beforeValidate: [
+        ({
+          value,
+        }): FieldHook => sanitizeRichTextValue(value),
+      ],
+    },
+    localized: !disableLocalization,
+    name,
+    required: !notRequired,
+    type: 'richText',
+  };
+
+  if (label) {
+    fieldObject.label = label;
+  }
+
+  return fieldObject;
+};
 
 export const rte1 = ({
-  name, notRequired, disableLocalization, adminDescription, adminCondition, access,
+  name, notRequired, disableLocalization, adminDescription, adminCondition, access, label,
 }: InterfaceRteInputType): RichTextField => rte({
   access,
   adminCondition,
   adminDescription,
   disableLocalization,
   editor: rte1Editor,
+  label,
   name,
   notRequired,
 });
 
 export const rte2 = ({
-  name, notRequired, disableLocalization, adminDescription, adminCondition, access,
+  name, notRequired, disableLocalization, adminDescription, adminCondition, access, label,
 }: InterfaceRteInputType): RichTextField => rte({
   access,
   adminCondition,
   adminDescription,
   disableLocalization,
   editor: rte2Editor,
+  label,
   name,
   notRequired,
 });
 
 export const rte3 = ({
-  name, notRequired, access,
+  name, notRequired, access, label,
 }: InterfaceRteInputType): RichTextField => rte({
   access,
   editor: rte3Editor,
+  label,
   name,
   notRequired,
 });
 
 export const rte4 = ({
-  name, notRequired, access,
+  name, notRequired, access, label,
 }: InterfaceRteInputType): RichTextField => rte({
   access,
   editor: rte4Editor,
+  label,
   name,
   notRequired,
 });

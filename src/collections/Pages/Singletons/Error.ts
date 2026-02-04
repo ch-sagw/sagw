@@ -20,6 +20,7 @@ export const ErrorPage: CollectionConfig = {
         {
           fields: [
             rte1({
+              label: 'Back to Home Button',
               name: 'homeButtonText',
             }),
 

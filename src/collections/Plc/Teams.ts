@@ -1,6 +1,10 @@
 import { CollectionConfig } from 'payload';
 import { rte1 } from '@/field-templates/rte';
 import { globalContentAccessGeneric } from '@/access/globalContent';
+import {
+  hookInvalidateCacheOnReferencedCollectionChange,
+  hookInvalidateCacheOnReferencedCollectionDelete,
+} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
 
 export const Teams: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -16,11 +20,18 @@ export const Teams: CollectionConfig = {
       name: 'name',
     }),
     {
+      admin: {
+        description: 'Add People who belong to the team. The order represents the order of the people on the website.',
+      },
       hasMany: true,
       name: 'people',
       relationTo: 'people',
       type: 'relationship',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateCacheOnReferencedCollectionChange],
+    afterDelete: [hookInvalidateCacheOnReferencedCollectionDelete],
+  },
   slug: 'teams',
 };

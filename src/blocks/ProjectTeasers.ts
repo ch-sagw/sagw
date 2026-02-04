@@ -1,4 +1,4 @@
-import { alignementHorizontalVertical } from '@/field-templates/alignement';
+import { alignmentHorizontalVertical } from '@/field-templates/alignment';
 import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
 import { rte1 } from '@/field-templates/rte';
 import { Block } from 'payload';
@@ -17,13 +17,15 @@ export const ProjectTeasersBlock = {
       name: 'lead',
       notRequired: true,
     }),
-    alignementHorizontalVertical,
-    fieldsLinkInternalWithToggle(),
+    alignmentHorizontalVertical,
+    fieldsLinkInternalWithToggle({
+      adminDescriptionLink: 'Here you can link to the overview page with all project entries.',
+    }),
     {
       admin: {
         hidden: true,
       },
-      defaultValue: 'Note: the latest projects from porject detail pages will be displayed here.',
+      defaultValue: 'Note: the latest three projects from project detail pages will be displayed here.',
       name: 'message',
       type: 'text',
     },

@@ -2,19 +2,20 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { HomeTeaser } from '@/components/blocks/HomeTeaser/HomeTeaser';
+import {
+  HomeTeaserClient, type InterfaceHomeTeaserClientPropTypes,
+} from '@/components/blocks/HomeTeaser/HomeTeaser.client';
 import { defaultDecorator } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
-type HomeTeaserProps = React.ComponentProps<typeof HomeTeaser>;
-
-type StrictStory = StoryObj<typeof HomeTeaser> & {
-  args: HomeTeaserProps;
+type StrictStory = StoryObj<typeof HomeTeaserClient> & {
+  args: InterfaceHomeTeaserClientPropTypes;
 };
 
-const meta: Meta<typeof HomeTeaser> = {
+const meta: Meta<typeof HomeTeaserClient> = {
   args: {},
-  component: HomeTeaser,
+  component: HomeTeaserClient,
   decorators: [defaultDecorator],
   parameters: {/* layout: 'centered', */ },
   tags: [
@@ -29,48 +30,30 @@ export default meta;
 
 export const HomeTeasers: StrictStory = {
   args: {
-    blockType: 'homeTeasersBlock',
-    homeTeasers: [
-      {
-        category: 'Förderung',
-        iconName: 'bar',
-        link: {
-          internalLink: {
-            documentId: 'someid',
-            slug: 'someslug',
-          },
-          linkText: simpleRteConfig('Zur Förderung'),
-        },
-        text: simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.'),
-        title: simpleRteConfig('Wir schaffen verlässliche Grundlagen für geistes- und sozialwissenschaftliche Forschung in der Schweiz.'),
-      },
-
-      {
-        category: 'Netzwerk',
-        iconName: 'bar',
-        link: {
-          internalLink: {
-            documentId: 'someid',
-            slug: 'someslug',
-          },
-          linkText: simpleRteConfig('Zum Netzwerkl'),
-        },
-        text: simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.'),
-        title: simpleRteConfig('Wir verbinden Disziplinen, Menschen und Institutionen in einem einzigartigen wissenschaftlichen Netzwerk.'),
-      },
-
+    teasers: [
       {
         category: 'Aktivitäten',
-        iconName: 'bar',
-        link: {
-          internalLink: {
-            documentId: 'someid',
-            slug: 'someslug',
-          },
-          linkText: simpleRteConfig('Zu den Aktivitäten'),
-        },
-        text: simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.'),
-        title: simpleRteConfig('Wir initiieren Debatten und vermittelt Wissen zwischen Wissenschaft, Gesellschaft und Politik.'),
+        iconName: 'homeTeaserActivities',
+        linkHref: '/example-page-1',
+        linkTextHtml: rteToHtml(simpleRteConfig('Zu den Aktivitäten')),
+        textHtml: rteToHtml(simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.')),
+        titleHtml: rteToHtml(simpleRteConfig('Wir initiieren Debatten und vermittelt Wissen zwischen Wissenschaft, Gesellschaft und Politik.')),
+      },
+      {
+        category: 'Förderung',
+        iconName: 'homeTeaserFunding',
+        linkHref: '/example-page-2',
+        linkTextHtml: rteToHtml(simpleRteConfig('Zur Förderung')),
+        textHtml: rteToHtml(simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.')),
+        titleHtml: rteToHtml(simpleRteConfig('Wir schaffen verlässliche Grundlagen für geistes- und sozialwissenschaftliche Forschung in der Schweiz.')),
+      },
+      {
+        category: 'Netzwerk',
+        iconName: 'homeTeaserFunding',
+        linkHref: '/example-page-3',
+        linkTextHtml: rteToHtml(simpleRteConfig('um Netzwerk')),
+        textHtml: rteToHtml(simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.')),
+        titleHtml: rteToHtml(simpleRteConfig('Wir verbinden Disziplinen, Menschen und Institutionen in einem einzigartigen wissenschaftlichen Netzwerk.')),
       },
     ],
   },

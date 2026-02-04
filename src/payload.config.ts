@@ -62,7 +62,8 @@ export default buildConfig({
   },
   localization: localizationConfig,
   onInit: async (payload) => {
-    // on ENV seed or playwright, we seed test data. otherwise we seed initial
+    // on ENV playwright, we seed test data. in ENV seed, we seed data
+    // via npm scripts in package.json. otherwise we seed initial
     // user and tenant (if user and tenant collections are empty)
 
     // TODO: this runs everytime we import config promise into another file
@@ -71,9 +72,9 @@ export default buildConfig({
     // the config. we use an env variable in playwright be config as flag)
     // -> NOT SOLVED FOR PAYLOAD APP: e.g. in events/news teasers and overviews,
     // we import the config. find solution.
-    if (process.env.ENV === 'seed' || process.env.ENV === 'playwright') {
+    if (process.env.ENV === 'playwright') {
       await seedTestData(payload);
-    } else {
+    } else if (process.env.ENV !== 'seed') {
       await seedTenantsAndUsers({
         payload,
       });

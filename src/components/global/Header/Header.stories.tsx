@@ -3,23 +3,23 @@ import type {
   StoryObj,
 } from '@storybook/nextjs-vite';
 import {
-  Header, InterfaceHeaderPropTypes,
-} from '@/components/global/Header/Header';
+  HeaderComponent, InterfaceHeaderComponentPropTypes,
+} from '@/components/global/Header/Header.component';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import React, { Fragment } from 'react';
 import {
   defaultMetaNavItems, defaultNavItems,
 } from '@/components/global/Header/Header.sampleData';
 
-type HeaderProps = React.ComponentProps<typeof Header>;
+type HeaderProps = InterfaceHeaderComponentPropTypes;
 
-type StrictStory = StoryObj<typeof Header> & {
+type StrictStory = StoryObj<typeof HeaderComponent> & {
   args: HeaderProps;
 };
 
-const meta: Meta<typeof Header> = {
+const meta: Meta<typeof HeaderComponent> = {
   args: {},
-  component: Header,
+  component: HeaderComponent,
   decorators: [defaultDecoratorNoPadding],
   parameters: {
     layout: 'fullscreen',
@@ -34,9 +34,9 @@ const meta: Meta<typeof Header> = {
 
 export default meta;
 
-const render = (args: Partial<InterfaceHeaderPropTypes> & InterfaceHeaderPropTypes): React.JSX.Element => (
+const render = (args: Partial<InterfaceHeaderComponentPropTypes> & InterfaceHeaderComponentPropTypes): React.JSX.Element => (
   <Fragment>
-    <Header {...args} />
+    <HeaderComponent {...args} />
 
     {Array.from({
       length: 20,
@@ -53,8 +53,15 @@ const render = (args: Partial<InterfaceHeaderPropTypes> & InterfaceHeaderPropTyp
 
 );
 
-const defaultArgs: InterfaceHeaderPropTypes = {
+const defaultArgs: InterfaceHeaderComponentPropTypes = {
   colorMode: 'dark',
+  linkUrls: {},
+  localeUrls: {
+    de: '/de',
+    en: '/en',
+    fr: '/fr',
+    it: '/it',
+  },
   logoLink: '/',
   menuButton: {
     close: 'Schliessen',
@@ -64,7 +71,6 @@ const defaultArgs: InterfaceHeaderPropTypes = {
   navigation: {
     navItems: defaultNavItems,
   },
-
 };
 
 export const HeaderDark: StrictStory = {

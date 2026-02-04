@@ -11,6 +11,10 @@ import { textBlock } from '@/blocks/Form/Text';
 import { globalContentAccessGeneric } from '@/access/globalContent';
 import { fieldAccessAdminsOnly } from '@/access/fields/localizedFields';
 import { isSuperOrTenantAdmin } from '@/collections/Plc/Users/roles';
+import {
+  hookInvalidateCacheOnReferencedCollectionChange,
+  hookInvalidateCacheOnReferencedCollectionDelete,
+} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
 
 export const Forms: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -87,6 +91,7 @@ export const Forms: CollectionConfig = {
                   admin: {
                     condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
                   },
+                  label: 'Recipient email address',
                   name: 'recipientMail',
                   required: true,
                   type: 'email',
@@ -98,6 +103,7 @@ export const Forms: CollectionConfig = {
                   admin: {
                     condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
                   },
+                  label: 'Message will be displyed in the subject field of the email sent to the recipient.',
                   name: 'mailSubject',
                   required: true,
                   type: 'text',
@@ -118,7 +124,7 @@ export const Forms: CollectionConfig = {
             {
               access: fieldAccessAdminsOnly,
               admin: {
-                description: 'If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".',
+                description: 'If enabled, the data-privacy checkbox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "content snippets".',
               },
               defaultValue: true,
               name: 'showPrivacyCheckbox',
@@ -152,7 +158,7 @@ export const Forms: CollectionConfig = {
                     },
                     fieldsLinkInternalWithToggle({}),
                   ],
-                  label: 'Submit Success',
+                  label: 'Submission Success',
                   name: 'submitSuccess',
                   type: 'group',
                 },
@@ -176,7 +182,7 @@ export const Forms: CollectionConfig = {
                     },
                     fieldsLinkInternalWithToggle({}),
                   ],
-                  label: 'Submit Error',
+                  label: 'Submission Error',
                   name: 'submitError',
                   type: 'group',
                 },
@@ -211,6 +217,24 @@ export const Forms: CollectionConfig = {
               },
               fields: [
                 {
+                  admin: {
+                    description: 'Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the temporary contact list.',
+                  },
+                  localized: false,
+                  name: 'newsletterTemporaryListId',
+                  required: true,
+                  type: 'number',
+                },
+                {
+                  admin: {
+                    description: 'Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the final contact list.',
+                  },
+                  localized: false,
+                  name: 'newsletterListId',
+                  required: true,
+                  type: 'number',
+                },
+                {
                   fields: emailBlock(true).fields,
                   name: 'email',
                   type: 'group',
@@ -227,7 +251,7 @@ export const Forms: CollectionConfig = {
                 },
                 {
                   admin: {
-                    description: 'The action text to show at the bottom of the notification. e.g.: "Send verifiaction E-Mail again."',
+                    description: 'Text is shown in the notification that appears after the user has sumbitted the form. The link behind the text allows the user to re-send the verification email. e.g.: "Send verification E-Mail again."',
                   },
                   localized: true,
                   name: 'actionText',
@@ -264,5 +288,9 @@ export const Forms: CollectionConfig = {
     },
 
   ],
+  hooks: {
+    afterChange: [hookInvalidateCacheOnReferencedCollectionChange],
+    afterDelete: [hookInvalidateCacheOnReferencedCollectionDelete],
+  },
   slug: 'forms',
 };

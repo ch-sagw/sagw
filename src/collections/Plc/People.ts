@@ -2,6 +2,10 @@ import type { CollectionConfig } from 'payload';
 import { rte1 } from '@/field-templates/rte';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { globalContentAccessGeneric } from '@/access/globalContent';
+import {
+  hookInvalidateCacheOnReferencedCollectionChange,
+  hookInvalidateCacheOnReferencedCollectionDelete,
+} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
 
 export const People: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -120,6 +124,10 @@ export const People: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateCacheOnReferencedCollectionChange],
+    afterDelete: [hookInvalidateCacheOnReferencedCollectionDelete],
+  },
   labels: {
     plural: 'People',
     singular: 'People',

@@ -3,11 +3,12 @@ import {
   rte1, rte3,
 } from '@/field-templates/rte';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
+import { hookInvalidateCacheOnI18nGlobalsChange } from '@/hooks-payload/invalidateCacheOnI18nGlobalsChange';
 
 export const I18nGlobals: CollectionConfig = {
   access: globalContentAccessNoTranslatorNoEditor,
   admin: {
-    group: 'i18n',
+    group: 'Global Content',
     hideAPIURL: process.env.ENV === 'prod',
   },
   fields: [
@@ -18,24 +19,28 @@ export const I18nGlobals: CollectionConfig = {
             {
               ...rte1({
                 adminDescription: 'If you add a Download-Block, this will be used as a title',
+                label: 'Downloads Block Title',
                 name: 'downloadTitle',
               }),
             },
             {
               ...rte1({
                 adminDescription: 'If you add a Link-Block, this will be used as a title',
+                label: 'Links Block Title',
                 name: 'linksTitle',
               }),
             },
             {
               ...rte1({
-                adminDescription: 'If you add a CTA-Contact-Block, this will be used as the button text',
+                adminDescription: 'If you add a personal contact block, this text will be shown in the Email button',
+                label: '"Write Email" Button',
                 name: 'writeEmailButtonText',
               }),
             },
             {
               ...rte1({
-                adminDescription: 'On magazine detail pages, we use this to show the "Copy Text" button',
+                adminDescription: 'On magazine detail pages, this text appears in the button that enables the user to export the article as a PDF file.',
+                label: '"Export Article" Button',
                 name: 'exportArticleButtonText',
               }),
             },
@@ -55,6 +60,8 @@ export const I18nGlobals: CollectionConfig = {
               name: 'title',
             }),
             rte1({
+              adminDescription: 'The text appears in the button that enables the user to copy the bibliographic reference with one click.',
+              label: '"Copy Text" Button',
               name: 'copyButtonText',
             }),
           ],
@@ -73,6 +80,7 @@ export const I18nGlobals: CollectionConfig = {
                   name: 'dataPrivacyCheckboxText',
                 }),
                 rte1({
+                  adminDescription: 'The message appears on forms if the user has not agreed to the data privacy policy.',
                   name: 'errorMessage',
                 }),
               ],
@@ -87,5 +95,12 @@ export const I18nGlobals: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateCacheOnI18nGlobalsChange],
+  },
+  labels: {
+    plural: 'Content Snippets',
+    singular: 'Content Snippets',
+  },
   slug: 'i18nGlobals',
 };

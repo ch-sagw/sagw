@@ -18,6 +18,7 @@ import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccess } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import { preview } from '@/utilities/previewUrl';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -92,6 +93,7 @@ export const EventDetailPage: CollectionConfig = {
     ],
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
+    preview,
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
@@ -107,35 +109,6 @@ export const EventDetailPage: CollectionConfig = {
                 rte2({
                   name: 'title',
                 }),
-                rte1({
-                  name: 'location',
-                  notRequired: true,
-                }),
-                rte1({
-                  name: 'language',
-                  notRequired: true,
-                }),
-                {
-                  admin: {
-                    width: '50%',
-                  },
-                  fields: [
-                    {
-                      access: fieldAccessNonLocalizableField,
-                      name: 'category',
-                      relationTo: 'eventCategory',
-                      type: 'relationship',
-                    },
-                    {
-                      access: fieldAccessNonLocalizableField,
-                      name: 'project',
-                      relationTo: 'projects',
-                      required: false,
-                      type: 'relationship',
-                    },
-                  ],
-                  type: 'row',
-                },
                 {
                   admin: {
                     width: '50%',
@@ -160,6 +133,41 @@ export const EventDetailPage: CollectionConfig = {
                       name: 'time',
                       required: false,
                       type: 'date',
+                    },
+                  ],
+                  type: 'row',
+                },
+                rte1({
+                  name: 'location',
+                  notRequired: true,
+                }),
+                rte1({
+                  name: 'language',
+                  notRequired: true,
+                }),
+                {
+                  admin: {
+                    width: '50%',
+                  },
+                  fields: [
+                    {
+                      access: fieldAccessNonLocalizableField,
+                      admin: {
+                        description: 'Choose the event format: workshop, talk, panel etc.',
+                      },
+                      name: 'category',
+                      relationTo: 'eventCategory',
+                      type: 'relationship',
+                    },
+                    {
+                      access: fieldAccessNonLocalizableField,
+                      admin: {
+                        description: 'If the event belongs to a project, add the project.',
+                      },
+                      name: 'project',
+                      relationTo: 'projects',
+                      required: false,
+                      type: 'relationship',
                     },
                   ],
                   type: 'row',
@@ -213,7 +221,9 @@ export const EventDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: genericPageHooks(),
+  hooks: genericPageHooks({
+    afterChange: [],
+  }),
   labels: {
     plural: 'Event Detail Pages',
     singular: 'Event Detail Detail',

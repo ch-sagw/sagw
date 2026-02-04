@@ -17,19 +17,31 @@ const homeTeaserItem: Field[] = [
     fields: [
       {
         access: fieldAccessLocalizableField,
+        label: 'Section Name',
         localized: true,
         name: 'category',
         required: true,
         type: 'text',
       },
-      // TODO: add icon names as soon as we implemented the icons
       {
         access: fieldAccessNonLocalizableField,
+        admin: {
+          description: 'Note: Icons are embedded in the code. Only developers can add new icons.',
+        },
+        label: 'Select an icon',
         name: 'iconName',
         options: [
           {
-            label: 'foo',
-            value: 'bar',
+            label: 'Activities',
+            value: 'homeTeaserActivities',
+          },
+          {
+            label: 'Funding',
+            value: 'homeTeaserFunding',
+          },
+          {
+            label: 'Network',
+            value: 'homeTeaserNetwork',
           },
         ],
         required: true,

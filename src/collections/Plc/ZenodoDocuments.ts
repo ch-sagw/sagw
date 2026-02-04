@@ -1,5 +1,9 @@
 import type { CollectionConfig } from 'payload';
 import { assetsAccess } from '@/access/assets';
+import {
+  hookInvalidateCacheOnReferencedCollectionChange,
+  hookInvalidateCacheOnReferencedCollectionDelete,
+} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
 
 export const ZenodoDocuments: CollectionConfig = {
   access: assetsAccess,
@@ -62,6 +66,9 @@ export const ZenodoDocuments: CollectionConfig = {
       type: 'array',
     },
     {
+      admin: {
+        description: 'If the document belongs to a project, add the project.',
+      },
       name: 'project',
       relationTo: 'projects',
       required: false,
@@ -79,5 +86,9 @@ export const ZenodoDocuments: CollectionConfig = {
       type: 'ui',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateCacheOnReferencedCollectionChange],
+    afterDelete: [hookInvalidateCacheOnReferencedCollectionDelete],
+  },
   slug: 'zenodoDocuments',
 };

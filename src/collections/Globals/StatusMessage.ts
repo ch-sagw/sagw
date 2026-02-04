@@ -6,6 +6,7 @@ import {
 } from '@/field-templates/adminTitle';
 import { rte1 } from '@/field-templates/rte';
 import { globalContentAccessGeneric } from '@/access/globalContent';
+import { hookInvalidateCacheOnPageChange } from '@/hooks-payload/invalidateCacheOnPageChange';
 
 export const StatusMessage: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -80,6 +81,9 @@ export const StatusMessage: CollectionConfig = {
           type: 'checkbox',
         },
         {
+          admin: {
+            description: 'Your choice affects the color of the message.',
+          },
           defaultValue: 'warn',
           name: 'type',
           options: [
@@ -106,6 +110,9 @@ export const StatusMessage: CollectionConfig = {
       type: 'group',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateCacheOnPageChange],
+  },
   labels: {
     plural: 'Status Message',
     singular: 'Status Message',

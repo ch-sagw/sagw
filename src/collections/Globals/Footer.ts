@@ -8,6 +8,7 @@ import {
 } from '@/field-templates/adminTitle';
 import { rte1 } from '@/field-templates/rte';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
+import { hookInvalidateCacheOnPageChange } from '@/hooks-payload/invalidateCacheOnPageChange';
 
 const fieldsSocialLink: Field[] = [
   {
@@ -60,15 +61,18 @@ export const Footer: CollectionConfig = {
         {
           fields: [
             rte1({
+              adminDescription: 'Automatically links to data privacy page',
               name: 'dataPrivacy',
             }),
             rte1({
+              adminDescription: 'Automatically links to impressum page',
               name: 'impressum',
             }),
             rte1({
               name: 'cookieSettings',
             }),
             rte1({
+              adminDescription: 'Copyright sign and current year will automatically be added.',
               disableLocalization: true,
               name: 'copyright',
             }),
@@ -160,6 +164,9 @@ export const Footer: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateCacheOnPageChange],
+  },
   labels: {
     plural: 'Footer',
     singular: 'Footer',

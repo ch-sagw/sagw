@@ -23,7 +23,6 @@ Sample usage:
 
 - RTE2
 - bold
-- underline
 - strikethrough
 - unordered list
 - ordered list

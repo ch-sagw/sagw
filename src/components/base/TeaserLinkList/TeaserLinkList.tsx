@@ -1,4 +1,5 @@
 import React from 'react';
+import { cva } from 'cva';
 import styles from '@/components/base/TeaserLinkList/TeaserLinkList.module.scss';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
@@ -6,14 +7,16 @@ import { ColorMode } from '@/components/base/types/colorMode';
 import { Section } from '@/components/base/Section/Section';
 
 export type InterfaceTeaserLinkListPropTypes = {
-  children: React.ReactNode;
-  title: string;
-  colorMode: ColorMode;
   allLink?: {
     text: string;
     href: string;
   };
+  children: React.ReactNode;
+  className?: string;
+  colorMode: ColorMode;
   subtitle?: string;
+  style?: 'events' | 'news' | 'publications';
+  title: string;
 };
 
 export const TeaserLinkList = (props: InterfaceTeaserLinkListPropTypes): React.JSX.Element => {
@@ -21,8 +24,19 @@ export const TeaserLinkList = (props: InterfaceTeaserLinkListPropTypes): React.J
     allLink,
     colorMode,
     subtitle,
+    style,
     title,
   } = props;
+
+  const listClasses = cva([styles.list], {
+    variants: {
+      style: {
+        events: [styles.eventsList],
+        news: [styles.newsList],
+        publications: [styles.publicationsList],
+      },
+    },
+  });
 
   return (
     <Section
@@ -33,7 +47,12 @@ export const TeaserLinkList = (props: InterfaceTeaserLinkListPropTypes): React.J
       colorMode={colorMode}
     >
 
-      <ul className={styles.list}>
+      <ul
+        className={listClasses({
+          style,
+        })}
+        data-testid='teaser-linklist'
+      >
         {props.children}
       </ul>
 

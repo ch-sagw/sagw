@@ -17,7 +17,7 @@ export const PublicationsTeasersBlock = {
       admin: {
         hidden: true,
       },
-      defaultValue: 'Note: the latest publications teasers will be displayed here.',
+      defaultValue: 'Note: If this block is placed on a page, the latest four publications will be displayed here. Exeptions: If this block is placed on a project detail page, all publications belonging to the project are displayed here. If this block is placed on a publication detail page, the last four publications with the same topic are displayed here.',
       name: 'message',
       type: 'text',
     },

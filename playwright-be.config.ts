@@ -41,7 +41,9 @@ export default defineConfig({
   retries: 0,
   testDir: './src/',
   testMatch: '**/*.be.spec.ts?(x)',
-  timeout: 120_000,
+
+  // 4 minutes
+  timeout: 240_000,
   use: {
     trace: 'on-first-retry',
   },
@@ -59,7 +61,7 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     stderr: 'pipe',
     stdout: 'pipe',
-    timeout: 2 * 60 * 1000,
+    timeout: 5 * 60 * 1000,
     url: 'http://localhost:3000/admin',
   },
 

@@ -13,6 +13,7 @@ import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccess } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import { preview } from '@/utilities/previewUrl';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -41,6 +42,7 @@ export const PublicationDetailPage: CollectionConfig = {
     ],
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
+    preview,
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
@@ -72,6 +74,9 @@ export const PublicationDetailPage: CollectionConfig = {
                     },
                     {
                       access: fieldAccessNonLocalizableField,
+                      admin: {
+                        description: 'The same date shown in the asset (Documents or Zenodo Documents) should be added.',
+                      },
                       name: 'date',
                       required: true,
                       type: 'date',
@@ -80,7 +85,7 @@ export const PublicationDetailPage: CollectionConfig = {
                   type: 'row',
                 },
               ],
-              label: 'Overview Page properties',
+              label: 'Overview Page and Teaser Block Properties',
               name: 'overviewPageProps',
               type: 'group',
             },
@@ -93,6 +98,7 @@ export const PublicationDetailPage: CollectionConfig = {
                     {
                       access: fieldAccessNonLocalizableField,
                       admin: {
+                        description: 'Add topic, if the filter on the publication overview page should include this publication.',
                         width: '33.33%',
                       },
                       name: 'topic',
@@ -103,6 +109,7 @@ export const PublicationDetailPage: CollectionConfig = {
                     {
                       access: fieldAccessNonLocalizableField,
                       admin: {
+                        description: 'Add type, if the filter on the publication overview page should include this publication.',
                         width: '33.33%',
                       },
                       name: 'type',
@@ -113,6 +120,7 @@ export const PublicationDetailPage: CollectionConfig = {
                     {
                       access: fieldAccessNonLocalizableField,
                       admin: {
+                        description: 'If the news belongs to a project, add the project.',
                         width: '33.33%',
                       },
                       name: 'project',
@@ -168,7 +176,9 @@ export const PublicationDetailPage: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: genericPageHooks(),
+  hooks: genericPageHooks({
+    afterChange: [],
+  }),
   labels: {
     plural: 'Publication Detail Pages',
     singular: 'Publication Detail',

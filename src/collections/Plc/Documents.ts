@@ -1,6 +1,10 @@
 import type { CollectionConfig } from 'payload';
 import { rte2 } from '@/field-templates/rte';
 import { assetsAccess } from '@/access/assets';
+import {
+  hookInvalidateCacheOnReferencedCollectionChange,
+  hookInvalidateCacheOnReferencedCollectionDelete,
+} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
 
 export const Documents: CollectionConfig = {
   access: assetsAccess,
@@ -19,11 +23,17 @@ export const Documents: CollectionConfig = {
       },
       fields: [
         {
+          admin: {
+            description: 'Date of the publication of the document should be added, not the publishing date on website.',
+          },
           name: 'date',
           required: false,
           type: 'date',
         },
         {
+          admin: {
+            description: 'If the document belongs to a project, add the project.',
+          },
           name: 'project',
           relationTo: 'projects',
           required: false,
@@ -33,6 +43,10 @@ export const Documents: CollectionConfig = {
       type: 'row',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateCacheOnReferencedCollectionChange],
+    afterDelete: [hookInvalidateCacheOnReferencedCollectionDelete],
+  },
   slug: 'documents',
   upload: {
     mimeTypes: ['application/pdf'],

@@ -211,7 +211,7 @@
       content: "";
       position: absolute;
       inset-inline: 0;
-      inset-block-end: px-to-rem(var(--spacing-2xs));
+      inset-block-end: px-to-rem(var(--spacing-xs));
       width: 100%;
       height: px-to-rem(var(--border-width-l));
       background: currentcolor;

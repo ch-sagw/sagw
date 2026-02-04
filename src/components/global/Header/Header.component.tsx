@@ -1,0 +1,696 @@
+'use client';
+
+import React, {
+  Fragment, useCallback, useEffect, useRef, useState,
+} from 'react';
+import styles from '@/components/global/Header/Header.module.scss';
+import {
+  InterfaceHoveredItemCallbackType,
+  Navigation,
+} from '@/components/base/Navigation/Navigation';
+import { MenuButton } from '@/components/base/MenuButton/MenuButton';
+import { NavigationInfoBlock } from '@/components/base/NavigationInfoBlock/NavigationInfoBlock';
+import { Metanav } from '@/components/base/Metanav/Metanav';
+import { Langnav } from '@/components/base/Langnav/Langnav';
+import { ColorMode } from '@/components/base/types/colorMode';
+
+import {
+  HeaderLogo, Logos,
+} from '@/components/base/HeaderLogo/HeaderLogo';
+import { useBreakpoint } from '@/hooks/useBreakpoint';
+import { useWindowScroll } from '@/hooks/useWindowScroll';
+import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
+import { useScrollLock } from '@/hooks/useScrollLock';
+import { useInputMethod } from '@/hooks/useInputMethod';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
+import {
+  useLocale, useTranslations,
+} from 'next-intl';
+
+import {
+  InterfaceHeaderMetaNavigation, InterfaceHeaderNavigation,
+} from '@/payload-types';
+import { rteToHtml } from '@/utilities/rteToHtml';
+
+// --- Interfaces
+
+export type InterfaceHeaderComponentPropTypes = {
+  colorMode: ColorMode;
+  menuButton: {
+    open: string,
+    close: string,
+  };
+  logoLink: string;
+  metanav: InterfaceHeaderMetaNavigation;
+  navigation: InterfaceHeaderNavigation;
+  linkUrls: Record<string, string>;
+  localeUrls: Record<string, string>;
+}
+
+// --- Component
+
+export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React.JSX.Element => {
+  const locale = useLocale();
+  const langNavTranslations = useTranslations('langNav');
+  const infoBlockMargin = 48;
+
+  // --- Refs
+
+  const headerRef = useRef<HTMLElement>(null);
+  const logoRef = useRef<HTMLAnchorElement>(null);
+  const metanavRef = useRef<HTMLDivElement>(null);
+  const focusRegionRef = useRef<HTMLDivElement>(null);
+
+  // --- State
+
+  const [
+    isHovering,
+    setIsHovering,
+  ] = useState(false);
+
+  const [
+    infoBlockContent,
+    setInfoBlockContent,
+  ] = useState<{ title: string; text: string } | undefined>();
+
+  const [
+    navMaxHeight,
+    setNavMaxHeight,
+  ] = useState(0);
+
+  const [
+    langNavMaxHeight,
+    setLangNavMaxHeight,
+  ] = useState(0);
+
+  const [
+    totalHeaderHeight,
+    setTotalHeaderHeight,
+  ] = useState(0);
+
+  const [
+    headerNaturalHeight,
+    setHeaderNatualHeight,
+  ] = useState(0);
+
+  const [
+    mobileMenuOpen,
+    setMobileMenuOpen,
+  ] = useState(false);
+
+  const [
+    didScroll,
+    setDidScroll,
+  ] = useState(false);
+
+  const [
+    bodyFontSize,
+    setBodyFontSize,
+  ] = useState(16);
+
+  const [
+    metanavHeight,
+    setMetanavHeight,
+  ] = useState(0);
+
+  const [
+    hoveredSection,
+    setHoveredSection,
+  ] = useState<'mainNav' | 'langNav' | null>(null);
+
+  // With default fallback value in rem (210px / 16px)
+  const [
+    infoBlockTop,
+    setInfoBlockTop,
+  ] = useState(13.125);
+
+  // --- Hooks
+  useFocusTrap({
+    condition: mobileMenuOpen,
+    focusTrapRootRef: focusRegionRef,
+    ignoreElementsWithClasses: [styles.logo],
+  });
+
+  const isKeyboard = useInputMethod();
+  const breakpoint = useBreakpoint();
+  const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
+  const scrollPosition = useWindowScroll();
+
+  // close on escape
+  useKeyboardShortcut({
+    condition: isHovering,
+    key: 'Escape',
+    onKeyPressed: () => {
+      setIsHovering(false);
+    },
+  });
+
+  useScrollLock(mobileMenuOpen && smallBreakpoint);
+
+  // --- Effects
+
+  // set body font size
+  useEffect(() => {
+    const bodyFontSizeDefinition = window.getComputedStyle(document.body)
+      .getPropertyValue('font-size')
+      .split('px');
+
+    setBodyFontSize(parseInt(bodyFontSizeDefinition[0], 10) || 16);
+  }, []);
+
+  // measure metanav height
+  useEffect(() => {
+    if (smallBreakpoint) {
+      return;
+    }
+
+    const measureHeight = (): void => {
+      if (!metanavRef.current) {
+        return;
+      }
+
+      const wrapper = metanavRef.current;
+      const isCurrentlyHidden = wrapper.classList.contains(styles.metanavHidden);
+
+      if (isCurrentlyHidden) {
+        wrapper.classList.remove(styles.metanavHidden);
+        // Force a synchronous layout recalculation
+        /* eslint-disable @typescript-eslint/no-unused-expressions */
+        /* eslint-disable no-unused-expressions */
+        wrapper.offsetHeight;
+        /* eslint-enable @typescript-eslint/no-unused-expressions */
+        /* eslint-enable no-unused-expressions */
+
+        const height = wrapper.offsetHeight;
+
+        wrapper.classList.add(styles.metanavHidden);
+        setMetanavHeight(height);
+      } else {
+        const height = wrapper.offsetHeight;
+
+        setMetanavHeight(height);
+      }
+    };
+
+    measureHeight();
+
+  }, [
+    breakpoint,
+    props.metanav,
+    smallBreakpoint,
+  ]);
+
+  // calculate infoBlock position
+  useEffect(() => {
+    if (!logoRef.current || smallBreakpoint || !headerRef.current) {
+      return;
+    }
+
+    if (!logoRef.current) {
+      return;
+    }
+
+    const logoRect = logoRef.current.getBoundingClientRect();
+    let topPosition = (logoRect.bottom + infoBlockMargin) / bodyFontSize;
+
+    // When scrolled, metanav is hidden, so logo moves up by metanavHeight
+    // Adjust the infoBlock position accordingly
+    if (didScroll && metanavHeight > 0) {
+      topPosition -= (metanavHeight / bodyFontSize);
+    }
+
+    setInfoBlockTop(topPosition);
+  }, [
+    smallBreakpoint,
+    breakpoint,
+    bodyFontSize,
+    didScroll,
+    infoBlockMargin,
+    metanavHeight,
+  ]);
+
+  // reset navigation heights when breakpoint changes
+  useEffect(() => {
+    setNavMaxHeight(0);
+    setLangNavMaxHeight(0);
+    setMobileMenuOpen(false);
+  }, [breakpoint]);
+
+  // set nav height
+  useEffect(() => {
+    if (!headerRef.current) {
+      return;
+    }
+
+    if (smallBreakpoint) {
+      // Reset heights when in small breakpoint
+      setHeaderNatualHeight(0);
+      setTotalHeaderHeight(0);
+    } else {
+      if (!headerRef.current) {
+        return;
+      }
+
+      // Temporarily remove inline height to measure natural height
+      const currentInlineHeight = headerRef.current.style.height;
+
+      headerRef.current.style.height = 'auto';
+      // Force synchronous layout recalculation
+      /* eslint-disable @typescript-eslint/no-unused-expressions */
+      /* eslint-disable no-unused-expressions */
+      headerRef.current.offsetHeight;
+      /* eslint-enable @typescript-eslint/no-unused-expressions */
+      /* eslint-enable no-unused-expressions */
+
+      const naturalHeight = headerRef.current.offsetHeight;
+
+      headerRef.current.style.height = currentInlineHeight;
+
+      const langOrNavMaxHeight = Math.max(navMaxHeight, langNavMaxHeight);
+
+      setHeaderNatualHeight(naturalHeight / bodyFontSize);
+
+      if (didScroll) {
+        // When scrolled, metanav is hidden. Subtract its height
+        // from the calculation.
+        const totalHeight = (naturalHeight + langOrNavMaxHeight - metanavHeight) / bodyFontSize;
+
+        setHeaderNatualHeight((naturalHeight - metanavHeight) / bodyFontSize);
+        setTotalHeaderHeight(totalHeight);
+      } else {
+        // When not scrolled, metanav is visible. Use full height.
+        const totalHeight = (naturalHeight + langOrNavMaxHeight) / bodyFontSize;
+
+        setHeaderNatualHeight(naturalHeight / bodyFontSize);
+        setTotalHeaderHeight(totalHeight);
+      }
+    }
+  }, [
+    navMaxHeight,
+    langNavMaxHeight,
+    props,
+    smallBreakpoint,
+    bodyFontSize,
+    didScroll,
+    metanavHeight,
+
+    // Add breakpoint to trigger recalculation on viewport changes
+    breakpoint,
+  ]);
+
+  // handle scroll
+  useEffect(() => {
+
+    // 0 would be too brutal
+    setDidScroll(scrollPosition > 0);
+  }, [scrollPosition]);
+
+  // add mouse leave detection to reset hover state when mouse leaves header
+  useEffect(() => {
+    const handleMouseLeave = (): void => {
+      // Reset hover state when mouse leaves the header area
+      if (isHovering) {
+        setIsHovering(false);
+        setHoveredSection(null);
+        setInfoBlockContent(undefined);
+      }
+    };
+
+    const headerElement = headerRef.current;
+
+    if (headerElement) {
+      headerElement.addEventListener('mouseleave', handleMouseLeave);
+    }
+
+    return (): void => {
+      if (headerElement) {
+        headerElement.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
+  }, [isHovering]);
+
+  // --- Callbacks
+
+  const handleHoveredItem = (item: InterfaceHoveredItemCallbackType): void => {
+    const [selectedItem] = Object.keys(item);
+
+    if (item[selectedItem]) {
+      setIsHovering(true);
+      setHoveredSection('mainNav');
+      const {
+        navItems,
+      } = props.navigation;
+
+      const selectedSections = navItems.filter((section) => section.id === selectedItem);
+
+      if (selectedSections.length > 0) {
+        const [selectedSection] = selectedSections;
+        const {
+          subNavItems,
+        } = selectedSection;
+
+        if (subNavItems && subNavItems.length > 0) {
+          setInfoBlockContent({
+            text: rteToHtml(selectedSections[0].description),
+            title: rteToHtml(selectedSections[0].navItemText),
+          });
+        } else {
+          setIsHovering(false);
+          setHoveredSection(null);
+        }
+      }
+    } else {
+      // Clear content immediately when leaving a navigation item
+      setInfoBlockContent(undefined);
+
+      // Only collapse if we're not in mainNav section
+      // (to prevent flickering when moving between items)
+      if (hoveredSection !== 'mainNav') {
+        setIsHovering(false);
+        setHoveredSection(null);
+      }
+
+      // on keyboard navigation, hide the menu
+      if (isKeyboard && isHovering && hoveredSection === 'mainNav') {
+        setIsHovering(false);
+      }
+    }
+  };
+
+  const handleLangNavHover = useCallback((visibility: boolean): void => {
+    if (smallBreakpoint) {
+      return;
+    }
+
+    if (!isHovering) {
+      setIsHovering(visibility);
+    }
+
+    if (isHovering && visibility) {
+      setHoveredSection('langNav');
+
+      setInfoBlockContent(undefined);
+    }
+
+    // Clear info block when leaving lang-nav, but only if we're not in mainNav
+    if (!visibility && hoveredSection !== 'mainNav') {
+      setInfoBlockContent(undefined);
+      setHoveredSection(null);
+    }
+
+    // on keyboard navigation, hide the menu
+    if (isHovering && !visibility && isKeyboard && hoveredSection === 'langNav') {
+      setIsHovering(false);
+    }
+  }, [
+    isHovering,
+    smallBreakpoint,
+    isKeyboard,
+    hoveredSection,
+  ]);
+
+  const handleLangHeightChange = useCallback((height: number) => {
+    if (smallBreakpoint) {
+      return;
+    }
+    setLangNavMaxHeight((prev) => (prev === height
+      ? prev
+      : height));
+  }, [smallBreakpoint]);
+
+  // --- Render Helpers
+
+  const renderColorMode = (): ColorMode => {
+    let {
+      colorMode,
+    } = props;
+
+    if ((didScroll && !isHovering) && !(smallBreakpoint && mobileMenuOpen)) {
+      colorMode = 'white';
+    }
+
+    return colorMode;
+  };
+
+  const metanavRender = (): React.JSX.Element => {
+    if (props.metanav.metaLinks && props.metanav.metaLinks?.length > 0) {
+      return (
+        <div
+          ref={metanavRef}
+          className={`${styles.metanavWrapper} ${didScroll
+            ? styles.metanavHidden
+            : ''}`}
+        >
+          <Metanav
+            items={props.metanav.metaLinks?.map((item) => {
+              if (item.linkType === 'internal') {
+                const documentId = item.linkInternal?.internalLink?.documentId;
+                const href = documentId
+                  ? props.linkUrls[documentId] || ''
+                  : '';
+
+                return {
+                  link: href,
+                  target: '_self',
+                  text: rteToHtml(item.linkInternal?.linkText),
+                };
+              }
+
+              return {
+                link: item.linkExternal?.externalLink || '',
+                target: '_blank',
+                text: rteToHtml(item.linkExternal?.externalLinkText),
+              };
+            }) || []}
+            className={styles.metanav}
+            colorMode={renderColorMode()}
+          />
+        </div>
+      );
+    }
+
+    return <Fragment />;
+  };
+
+  const langnavRender = (): React.JSX.Element => (
+    <Langnav
+      items={[
+        {
+          href: props.localeUrls.de,
+          shortText: 'De',
+          text: langNavTranslations('de'),
+          value: 'de',
+        },
+        {
+          href: props.localeUrls.fr,
+          shortText: 'Fr',
+          text: langNavTranslations('fr'),
+          value: 'fr',
+        },
+        {
+          href: props.localeUrls.it,
+          shortText: 'It',
+          text: langNavTranslations('it'),
+          value: 'it',
+        },
+        {
+          href: props.localeUrls.en,
+          shortText: 'En',
+          text: langNavTranslations('en'),
+          value: 'en',
+        },
+      ]}
+      currentLang={locale}
+      className={styles.langnav}
+      colorMode={renderColorMode()}
+      visibilityCallbackAction={handleLangNavHover}
+      onHeightChangeAction={handleLangHeightChange}
+    />
+  );
+
+  const navigationInfoBlockRender = (): React.JSX.Element => (
+    <NavigationInfoBlock
+      className={styles.infoBlock}
+      colorMode={renderColorMode()}
+      text={infoBlockContent?.text || ''}
+      title={infoBlockContent?.title || ''}
+      style={{
+        top: `${infoBlockTop}rem`,
+      }}
+    />
+  );
+
+  const navigationRender = (): React.JSX.Element => (
+    <Navigation
+
+      sections={props.navigation.navItems.map((item, key) => {
+        if (item.subNavItems && item.subNavItems.length > 0) {
+
+          // level 1 with subnav items
+          return {
+            colorMode: props.colorMode,
+            description: rteToHtml(item.description),
+            expandableId: item.id || String(key),
+            footer: false,
+            items: item.subNavItems.map((subnavItem) => {
+              const documentId = subnavItem.navItemLink?.documentId;
+              const href = documentId
+                ? props.linkUrls[documentId] || ''
+                : '';
+
+              return {
+                colorMode: props.colorMode,
+                footer: false,
+                link: href,
+                text: rteToHtml(subnavItem.navItemText),
+              };
+            }),
+            setExpanded: undefined,
+            text: rteToHtml(item.navItemText) || '',
+          };
+        }
+
+        // level 1 without subnav items
+        const documentId = item.navItemLink?.documentId;
+        const href = documentId
+          ? props.linkUrls[documentId] || ''
+          : '';
+
+        return {
+          colorMode: props.colorMode,
+          footer: false,
+          link: href,
+          text: rteToHtml(item.navItemText),
+        };
+
+      })}
+      footer={false}
+      className={styles.navigation}
+      colorMode={renderColorMode()}
+      hoveredItemCallback={handleHoveredItem}
+      onHoverItemWithoutChildren={() => {
+        // Collapse header when hovering over items without children
+        if (isHovering && hoveredSection === 'mainNav') {
+          setIsHovering(false);
+        }
+      }}
+      navMaxHeightCallback={(maxHeight: number) => {
+        if (maxHeight >= 0) {
+          setNavMaxHeight(maxHeight);
+        }
+      }}
+    />
+  );
+
+  const headerLogoRender = (): React.JSX.Element => {
+
+    // TODO: derive logo name from tenant
+
+    const logoName = 'sagw' as keyof typeof Logos;
+
+    return (
+      <div className={styles.logoWrapperInner}>
+        <HeaderLogo
+          ref={logoRef}
+          link={props.logoLink}
+
+          // TODO: define in i18n in code
+          linkText='Back to Homepage'
+          className={styles.logo}
+          name={logoName}
+          colorMode={renderColorMode()}
+        />
+      </div>
+    );
+  };
+
+  const menuButtonRender = (): React.JSX.Element => (
+    <MenuButton
+      hiddenTexts={{
+        closeMenu: props.menuButton.close,
+        openMenu: props.menuButton.open,
+      }}
+      className={styles.menuButton}
+      colorMode={renderColorMode()}
+      open={mobileMenuOpen}
+      onClick={() => {
+        setMobileMenuOpen(!mobileMenuOpen);
+
+      }}
+    />
+  );
+
+  // --- Render
+
+  return (
+    <header
+      data-testid='header'
+      style={totalHeaderHeight && !smallBreakpoint
+        ? {
+          height: isHovering
+
+            // 72 for the bottom padding of the nav-content
+            ? `${totalHeaderHeight + (72 / bodyFontSize)}rem`
+            : `${headerNaturalHeight}rem`,
+        }
+        : {
+          height: 'auto',
+        }
+      }
+      ref={headerRef}
+      className={`${styles.header} ${styles[renderColorMode()]} ${mobileMenuOpen
+        ? styles.expanded
+        : undefined}`}
+    >
+
+      {smallBreakpoint &&
+        <div data-header='focus-region' ref={focusRegionRef}>
+          <div className={styles.logoWrapper}>
+            {headerLogoRender()}
+            {menuButtonRender()}
+          </div>
+
+          <div
+            className={`${styles.mobileMenu} ${mobileMenuOpen
+              ? styles.open
+              : undefined}`}
+            inert={!mobileMenuOpen || undefined}
+            role='dialog'
+            aria-modal='true'
+          >
+            <div className={styles.mobileMenuWrapper}>
+              {navigationRender()}
+
+              <div
+                className={`${styles.horizontalLine} ${styles[renderColorMode()]}`}
+              ></div>
+
+              {langnavRender()}
+              {metanavRender()}
+            </div>
+          </div>
+        </div>
+      }
+
+      {!smallBreakpoint &&
+        <Fragment>
+          {metanavRender()}
+
+          <div
+            className={styles.logoWrapper}
+            onMouseLeave={() => {
+              setIsHovering(false);
+            }}
+          >
+            {headerLogoRender()}
+            {navigationRender()}
+            {langnavRender()}
+          </div>
+
+          {navigationInfoBlockRender()}
+        </Fragment>
+      }
+    </header>
+  );
+};
+

@@ -1,5 +1,131 @@
 # Changelog
 
+## [0.32.2](https://github.com/ch-sagw/sagw/compare/v0.32.1...v0.32.2) (2026-01-27)
+
+
+### Bug Fixes
+
+* add logging for sagw tenant info ([4ff8e75](https://github.com/ch-sagw/sagw/commit/4ff8e75f39250d289d5eba12ef3c068c36334c1b))
+
+## [0.32.1](https://github.com/ch-sagw/sagw/compare/v0.32.0...v0.32.1) (2026-01-27)
+
+
+### Bug Fixes
+
+* downgrade jsdom ([6b61a6d](https://github.com/ch-sagw/sagw/commit/6b61a6d06926c66be744789e0c1abfd273bfe141))
+
+## [0.32.0](https://github.com/ch-sagw/sagw/compare/v0.31.0...v0.32.0) (2026-01-27)
+
+
+### Chore
+
+* **deps-dev:** bump the development-dependencies group across 1 directory with 19 updates ([#714](https://github.com/ch-sagw/sagw/issues/714)) ([3ceac45](https://github.com/ch-sagw/sagw/commit/3ceac4521fcdd9366993c0b13c2d738fb9b1aebf))
+* **deps:** bump lodash from 4.17.21 to 4.17.23 ([#724](https://github.com/ch-sagw/sagw/issues/724)) ([6745902](https://github.com/ch-sagw/sagw/commit/6745902e1060fe73f3dcb67fe11e9836a320efe1))
+* **deps:** bump the production-dependencies group across 1 directory with 10 updates ([#713](https://github.com/ch-sagw/sagw/issues/713)) ([f01f20a](https://github.com/ch-sagw/sagw/commit/f01f20a1785bd0cce12f9f4d47347e2eba10e627))
+* **deps:** bump the production-dependencies group with 12 updates ([#725](https://github.com/ch-sagw/sagw/issues/725)) ([86c4cc1](https://github.com/ch-sagw/sagw/commit/86c4cc1b652c4646d3dcac2eb5e00ed4ca322e6c))
+
+
+### Features
+
+* implement newsletter registration flow ([f251149](https://github.com/ch-sagw/sagw/commit/f2511494339d2d72282c12058da53fff1ab72483))
+
+## [0.31.0](https://github.com/ch-sagw/sagw/compare/v0.30.2...v0.31.0) (2026-01-21)
+
+
+### Documentation
+
+* remove todo ([dafcfcc](https://github.com/ch-sagw/sagw/commit/dafcfcc7a0d16aceb85f64b9393e47e0bcdbee6f))
+
+
+### Features
+
+* adding publication teaser and publication overview components ([3c9588f](https://github.com/ch-sagw/sagw/commit/3c9588ff7ecc5386904dfe44ada7085ad9851d72))
+
+
+### Bug Fixes
+
+* fix home link rendering ([dafcfcc](https://github.com/ch-sagw/sagw/commit/dafcfcc7a0d16aceb85f64b9393e47e0bcdbee6f))
+* translate hidden menu label ([dafcfcc](https://github.com/ch-sagw/sagw/commit/dafcfcc7a0d16aceb85f64b9393e47e0bcdbee6f))
+
+## [0.30.2](https://github.com/ch-sagw/sagw/compare/v0.30.1...v0.30.2) (2026-01-21)
+
+
+### Bug Fixes
+
+* make sure process.env.env is prod on vercel ([f02af1a](https://github.com/ch-sagw/sagw/commit/f02af1a8061f3ffe5bf16d8b302c1975bed510ac))
+
+## [0.30.1](https://github.com/ch-sagw/sagw/compare/v0.30.0...v0.30.1) (2026-01-21)
+
+
+### Chore
+
+* log cache invalidation on prod ([5c72e78](https://github.com/ch-sagw/sagw/commit/5c72e784c80db6b0b4b6b23a7c8b8bef8f11cb1b))
+
+
+### Bug Fixes
+
+* export env ([b5734b5](https://github.com/ch-sagw/sagw/commit/b5734b5d62acb6d2966c2044e9a4fbcc33153d2b))
+
+## [0.30.0](https://github.com/ch-sagw/sagw/compare/v0.29.0...v0.30.0) (2026-01-19)
+
+
+### Features
+
+* improving cache invalidation ([6dd5b9d](https://github.com/ch-sagw/sagw/commit/6dd5b9d5c732ddfed91da467558e551fa9c6a783))
+
+## [0.29.0](https://github.com/ch-sagw/sagw/compare/v0.28.0...v0.29.0) (2026-01-17)
+
+
+### Chore
+
+* update payload and nextjs ([#712](https://github.com/ch-sagw/sagw/issues/712)) ([53ce77a](https://github.com/ch-sagw/sagw/commit/53ce77abede74d8151788b67e67ceac4087842e8))
+
+
+### Features
+
+* implement admin-ui preview ([#710](https://github.com/ch-sagw/sagw/issues/710)) ([e9146fd](https://github.com/ch-sagw/sagw/commit/e9146fdf399291410cda766c08bbcbde99384bd8))
+
+## [0.28.0](https://github.com/ch-sagw/sagw/compare/v0.27.0...v0.28.0) (2026-01-17)
+
+
+### Features
+
+* adding adapted webfonts and font layout features ([7f062ec](https://github.com/ch-sagw/sagw/commit/7f062ec7363c5cd43feee2b09183cf13aab3e6cb))
+* adding basic favicon integration ([#706](https://github.com/ch-sagw/sagw/issues/706)) ([9d640f2](https://github.com/ch-sagw/sagw/commit/9d640f2efbaff002b5bf07652dc4a6c124374b97))
+* adding homepage teaser pictos ([e9381cf](https://github.com/ch-sagw/sagw/commit/e9381cf3e12a92b8bd266e633d622ce360e142ed))
+* adding images for teaser components ([9b43d70](https://github.com/ch-sagw/sagw/commit/9b43d701da5c4b51c8e3a6954ac0ec39f7e9875d))
+* adding skiplinks global component ([7016b7a](https://github.com/ch-sagw/sagw/commit/7016b7ad77de526ce7df9bc8061c4d185a0953bb))
+* implementing hidden until found for accordion content ([7216189](https://github.com/ch-sagw/sagw/commit/721618984fb1ac3aa2c99d3d7d68a5f09a4b8c5a))
+* implementing hidden until found for accordion content ([#700](https://github.com/ch-sagw/sagw/issues/700)) ([7216189](https://github.com/ch-sagw/sagw/commit/721618984fb1ac3aa2c99d3d7d68a5f09a4b8c5a))
+* removing underline rte option ([cc164ac](https://github.com/ch-sagw/sagw/commit/cc164acfff02990ffeacc225f4f27501ec91f286))
+* removing underline rte option ([#702](https://github.com/ch-sagw/sagw/issues/702)) ([cc164ac](https://github.com/ch-sagw/sagw/commit/cc164acfff02990ffeacc225f4f27501ec91f286))
+
+
+### Bug Fixes
+
+* correcting position of first p in rte if there is no title ([12ffd3e](https://github.com/ch-sagw/sagw/commit/12ffd3e72e6c32158f3b8550f30f3f24b7d90101))
+* correcting position of first p in rte if there is no title ([#684](https://github.com/ch-sagw/sagw/issues/684)) ([12ffd3e](https://github.com/ch-sagw/sagw/commit/12ffd3e72e6c32158f3b8550f30f3f24b7d90101))
+* fix i18n path resolving issue ([b2016e8](https://github.com/ch-sagw/sagw/commit/b2016e8b5eff34d126487861fe6dc7868c8cb8de))
+* fix i18n path resolving issue ([#709](https://github.com/ch-sagw/sagw/issues/709)) ([b2016e8](https://github.com/ch-sagw/sagw/commit/b2016e8b5eff34d126487861fe6dc7868c8cb8de))
+* modifying file size text in download text ([79f6587](https://github.com/ch-sagw/sagw/commit/79f6587f77c901af34f27157ea76ce08994b6da8))
+* modifying file size text in download text ([#701](https://github.com/ch-sagw/sagw/issues/701)) ([79f6587](https://github.com/ch-sagw/sagw/commit/79f6587f77c901af34f27157ea76ce08994b6da8))
+* transforming timestamp to time/text ([19b177b](https://github.com/ch-sagw/sagw/commit/19b177b591930b3fea283ac8f7b31eacf92d1934))
+
+## [0.27.0](https://github.com/ch-sagw/sagw/compare/v0.26.0...v0.27.0) (2026-01-10)
+
+
+### Features
+
+* implement linking ([aeb3a2f](https://github.com/ch-sagw/sagw/commit/aeb3a2fab1e172ca0fc738f16f5c2505f6de61b7))
+* implement revalidatePath / cache invalidation ([aeb3a2f](https://github.com/ch-sagw/sagw/commit/aeb3a2fab1e172ca0fc738f16f5c2505f6de61b7))
+* implement static page generation ([aeb3a2f](https://github.com/ch-sagw/sagw/commit/aeb3a2fab1e172ca0fc738f16f5c2505f6de61b7))
+
+
+### Test
+
+* write tests for cache invalidation ([aeb3a2f](https://github.com/ch-sagw/sagw/commit/aeb3a2fab1e172ca0fc738f16f5c2505f6de61b7))
+* write tests for linking ([aeb3a2f](https://github.com/ch-sagw/sagw/commit/aeb3a2fab1e172ca0fc738f16f5c2505f6de61b7))
+
 ## [0.26.0](https://github.com/ch-sagw/sagw/compare/v0.25.0...v0.26.0) (2025-12-10)
 
 

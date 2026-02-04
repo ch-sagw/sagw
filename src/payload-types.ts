@@ -98,6 +98,12 @@ export interface Config {
     nationalDictionaryDetailPage: NationalDictionaryDetailPage;
     instituteDetailPage: InstituteDetailPage;
     projectDetailPage: ProjectDetailPage;
+    i18nGlobals: I18NGlobal;
+    consent: Consent;
+    footer: Footer;
+    header: Header;
+    statusMessage: StatusMessage;
+    theme: Theme;
     images: Image;
     videos: Video;
     networkCategories: NetworkCategory;
@@ -112,12 +118,6 @@ export interface Config {
     tenants: Tenant;
     users: User;
     forms: Form;
-    i18nGlobals: I18NGlobal;
-    consent: Consent;
-    footer: Footer;
-    header: Header;
-    statusMessage: StatusMessage;
-    theme: Theme;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -159,6 +159,12 @@ export interface Config {
     nationalDictionaryDetailPage: NationalDictionaryDetailPageSelect<false> | NationalDictionaryDetailPageSelect<true>;
     instituteDetailPage: InstituteDetailPageSelect<false> | InstituteDetailPageSelect<true>;
     projectDetailPage: ProjectDetailPageSelect<false> | ProjectDetailPageSelect<true>;
+    i18nGlobals: I18NGlobalsSelect<false> | I18NGlobalsSelect<true>;
+    consent: ConsentSelect<false> | ConsentSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    statusMessage: StatusMessageSelect<false> | StatusMessageSelect<true>;
+    theme: ThemeSelect<false> | ThemeSelect<true>;
     images: ImagesSelect<false> | ImagesSelect<true>;
     videos: VideosSelect<false> | VideosSelect<true>;
     networkCategories: NetworkCategoriesSelect<false> | NetworkCategoriesSelect<true>;
@@ -173,12 +179,6 @@ export interface Config {
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
-    i18nGlobals: I18NGlobalsSelect<false> | I18NGlobalsSelect<true>;
-    consent: ConsentSelect<false> | ConsentSelect<true>;
-    footer: FooterSelect<false> | FooterSelect<true>;
-    header: HeaderSelect<false> | HeaderSelect<true>;
-    statusMessage: StatusMessageSelect<false> | StatusMessageSelect<true>;
-    theme: ThemeSelect<false> | ThemeSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -339,6 +339,9 @@ export interface InterfaceHeroFieldHome {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -364,6 +367,7 @@ export interface InterfaceHeroFieldHome {
  * via the `definition` "InterfaceInternalLinkValue".
  */
 export interface InterfaceInternalLinkValue {
+  _internalLinkMarker?: boolean | null;
   slug: string;
   documentId: string;
 }
@@ -447,7 +451,7 @@ export interface Form {
   mailSubject?: string | null;
   colorMode: 'white' | 'dark' | 'light';
   /**
-   * If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".
+   * If enabled, the data-privacy checkbox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "content snippets".
    */
   showPrivacyCheckbox?: boolean | null;
   submitSuccess: {
@@ -484,6 +488,9 @@ export interface Form {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
+        /**
+         * This is the text behind which the link is hidden.
+         */
         linkText: {
           root: {
             type: string;
@@ -537,6 +544,9 @@ export interface Form {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
+        /**
+         * This is the text behind which the link is hidden.
+         */
         linkText: {
           root: {
             type: string;
@@ -566,7 +576,18 @@ export interface Form {
       )[]
     | null;
   newsletterFields?: {
+    /**
+     * Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the temporary contact list.
+     */
+    newsletterTemporaryListId: number;
+    /**
+     * Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the final contact list.
+     */
+    newsletterListId: number;
     email: {
+      /**
+       * Name of the field, visible for user
+       */
       label: {
         root: {
           type: string;
@@ -582,9 +603,15 @@ export interface Form {
         };
         [k: string]: unknown;
       };
+      /**
+       * Placeholder text within the field, visible for user
+       */
       placeholder: string;
       fieldWidth: 'full' | 'half';
       required?: boolean | null;
+      /**
+       * Message appears, if the user does not add text to a mandatory field.
+       */
       fieldError?: {
         root: {
           type: string;
@@ -602,6 +629,9 @@ export interface Form {
       } | null;
     };
     firstName: {
+      /**
+       * Name of the field, visible for user
+       */
       label: {
         root: {
           type: string;
@@ -617,9 +647,15 @@ export interface Form {
         };
         [k: string]: unknown;
       };
+      /**
+       * Placeholder text within the field, visible for user
+       */
       placeholder: string;
       fieldWidth: 'full' | 'half';
       required?: boolean | null;
+      /**
+       * Message appears, if the user does not add text to a mandatory field.
+       */
       fieldError?: {
         root: {
           type: string;
@@ -637,6 +673,9 @@ export interface Form {
       } | null;
     };
     lastName: {
+      /**
+       * Name of the field, visible for user
+       */
       label: {
         root: {
           type: string;
@@ -652,9 +691,15 @@ export interface Form {
         };
         [k: string]: unknown;
       };
+      /**
+       * Placeholder text within the field, visible for user
+       */
       placeholder: string;
       fieldWidth: 'full' | 'half';
       required?: boolean | null;
+      /**
+       * Message appears, if the user does not add text to a mandatory field.
+       */
       fieldError?: {
         root: {
           type: string;
@@ -672,7 +717,7 @@ export interface Form {
       } | null;
     };
     /**
-     * The action text to show at the bottom of the notification. e.g.: "Send verifiaction E-Mail again."
+     * Text is shown in the notification that appears after the user has sumbitted the form. The link behind the text allows the user to re-send the verification email. e.g.: "Send verification E-Mail again."
      */
     actionText: string;
     /**
@@ -706,6 +751,9 @@ export interface InterfaceCheckboxField {
   };
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
+  /**
+   * Message appears, if the user does not add text to a mandatory field.
+   */
   fieldError?: {
     root: {
       type: string;
@@ -749,6 +797,9 @@ export interface InterfaceRadioField {
   };
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
+  /**
+   * Message appears, if the user does not add text to a mandatory field.
+   */
   fieldError?: {
     root: {
       type: string;
@@ -793,6 +844,9 @@ export interface InterfaceRadioField {
  * via the `definition` "InterfaceEmailField".
  */
 export interface InterfaceEmailField {
+  /**
+   * Name of the field, visible for user
+   */
   label: {
     root: {
       type: string;
@@ -808,10 +862,16 @@ export interface InterfaceEmailField {
     };
     [k: string]: unknown;
   };
+  /**
+   * Placeholder text within the field, visible for user
+   */
   placeholder: string;
   name: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
+  /**
+   * Message appears, if the user does not add text to a mandatory field.
+   */
   fieldError?: {
     root: {
       type: string;
@@ -836,6 +896,9 @@ export interface InterfaceEmailField {
  * via the `definition` "InterfaceTextField".
  */
 export interface InterfaceTextField {
+  /**
+   * Name of the field, visible for user
+   */
   label: {
     root: {
       type: string;
@@ -851,10 +914,16 @@ export interface InterfaceTextField {
     };
     [k: string]: unknown;
   };
+  /**
+   * Placeholder text within the field, visible for user
+   */
   placeholder: string;
   name: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
+  /**
+   * Message appears, if the user does not add text to a mandatory field.
+   */
   fieldError?: {
     root: {
       type: string;
@@ -880,6 +949,9 @@ export interface InterfaceTextField {
  */
 export interface InterfaceTextareaField {
   name: string;
+  /**
+   * Name of the field, visible for user
+   */
   label: {
     root: {
       type: string;
@@ -895,9 +967,15 @@ export interface InterfaceTextareaField {
     };
     [k: string]: unknown;
   };
+  /**
+   * Placeholder text within the field, visible for user
+   */
   placeholder: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
+  /**
+   * Message appears, if the user does not add text to a mandatory field.
+   */
   fieldError?: {
     root: {
       type: string;
@@ -925,7 +1003,10 @@ export interface InterfaceHomeTeasersBlock {
   homeTeasers?:
     | {
         category: string;
-        iconName: 'bar';
+        /**
+         * Note: Icons are embedded in the code. Only developers can add new icons.
+         */
+        iconName: 'homeTeaserActivities' | 'homeTeaserFunding' | 'homeTeaserNetwork';
         title: {
           root: {
             type: string;
@@ -957,6 +1038,9 @@ export interface InterfaceHomeTeasersBlock {
           [k: string]: unknown;
         };
         link: {
+          /**
+           * This is the text behind which the link is hidden.
+           */
           linkText: {
             root: {
               type: string;
@@ -1004,6 +1088,9 @@ export interface InterfaceEventsTeasersBlock {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1063,12 +1150,15 @@ export interface InterfaceMagazineTeasersBlock {
     [k: string]: unknown;
   } | null;
   /**
-   * Align Title & text horizontally or vertically
+   * Align Title and Lead horizontally or vertically
    */
-  alignement?: ('vertical' | 'horizontal') | null;
+  alignment?: ('vertical' | 'horizontal') | null;
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1116,6 +1206,9 @@ export interface InterfaceNewsTeasersBlock {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1162,6 +1255,9 @@ export interface InterfacePublicationsTeasersBlock {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1221,12 +1317,15 @@ export interface InterfaceProjectTeasersBlock {
     [k: string]: unknown;
   } | null;
   /**
-   * Align Title & text horizontally or vertically
+   * Align Title and Lead horizontally or vertically
    */
-  alignement?: ('vertical' | 'horizontal') | null;
+  alignment?: ('vertical' | 'horizontal') | null;
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1256,7 +1355,7 @@ export interface InterfaceProjectTeasersBlock {
  *       into all required renditions (image sizes). Please ensure
  *       that the dimensions of the uploaded image does not exceed 4000 pixels
  *       in either direction. Allowed image formats are «png, jpg, jpeg, gif,
- *       webp, avif». Since the optimization service will compress the
+ *       webp, avif and svg». Since the optimization service will compress the
  *       renditions again, it is best to not compress the image too much before
  *       you upload it.
  *
@@ -1387,6 +1486,7 @@ export interface ErrorPage {
 export interface DataPrivacyPage {
   id: string;
   tenant?: (string | null) | Tenant;
+  slug?: string | null;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   hero: InterfaceHeroField;
@@ -1450,6 +1550,7 @@ export interface InterfaceHeroField {
 export interface ImpressumPage {
   id: string;
   tenant?: (string | null) | Tenant;
+  slug?: string | null;
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   hero: InterfaceHeroField;
@@ -1479,7 +1580,7 @@ export interface MagazineDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -1597,6 +1698,9 @@ export interface InterfaceLinksBlock {
   links: {
     linkType: 'internal' | 'external' | 'mail';
     linkInternal?: {
+      /**
+       * You can add a description which provides more information about the link.
+       */
       description?: {
         root: {
           type: string;
@@ -1612,6 +1716,9 @@ export interface InterfaceLinksBlock {
         };
         [k: string]: unknown;
       } | null;
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1630,6 +1737,9 @@ export interface InterfaceLinksBlock {
       internalLink: InterfaceInternalLinkValue;
     };
     linkExternal?: {
+      /**
+       * You can add a description which provides more information about the link.
+       */
       description?: {
         root: {
           type: string;
@@ -1663,6 +1773,9 @@ export interface InterfaceLinksBlock {
       externalLink: string;
     };
     linkMail?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1748,7 +1861,13 @@ export interface Document {
     };
     [k: string]: unknown;
   };
+  /**
+   * Date of the publication of the document should be added, not the publishing date on website.
+   */
   date?: string | null;
+  /**
+   * If the document belongs to a project, add the project.
+   */
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
@@ -1829,7 +1948,7 @@ export interface NewsDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -1860,6 +1979,9 @@ export interface NewsDetailPage {
     };
   };
   hero: InterfaceHeroFieldNewsDetail;
+  /**
+   * If the news belongs to a project, add the project.
+   */
   project?: (string | null) | Project;
   content?:
     | (
@@ -1930,8 +2052,8 @@ export interface InterfaceHeroFieldNewsDetail {
  * via the `definition` "InterfaceImageBlock".
  */
 export interface InterfaceImageBlock {
-  alignment?: ('left' | 'center' | 'right') | null;
   image: string | Image;
+  alignment?: ('left' | 'center' | 'right' | 'hero') | null;
   caption?: {
     root: {
       type: string;
@@ -2007,7 +2129,7 @@ export interface EventDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -2033,6 +2155,8 @@ export interface EventDetailPage {
       };
       [k: string]: unknown;
     };
+    date: string;
+    time?: string | null;
     location?: {
       root: {
         type: string;
@@ -2063,10 +2187,14 @@ export interface EventDetailPage {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Choose the event format: workshop, talk, panel etc.
+     */
     category?: (string | null) | EventCategory;
+    /**
+     * If the event belongs to a project, add the project.
+     */
     project?: (string | null) | Project;
-    date: string;
-    time?: string | null;
     multipleDays?: boolean | null;
     dateEnd?: string | null;
   };
@@ -2167,6 +2295,9 @@ export interface InterfaceCtaLinkBlock {
   };
   linkType: 'internal' | 'external' | 'mail';
   linkInternal?: {
+    /**
+     * This is the text behind which the link is hidden.
+     */
     linkText: {
       root: {
         type: string;
@@ -2203,6 +2334,9 @@ export interface InterfaceCtaLinkBlock {
     externalLink: string;
   };
   linkMail?: {
+    /**
+     * This is the text behind which the link is hidden.
+     */
     linkText: {
       root: {
         type: string;
@@ -2234,7 +2368,7 @@ export interface PublicationDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -2249,11 +2383,23 @@ export interface PublicationDetailPage {
      * This image will be used for the teasers on the overview page.
      */
     image: string | Image;
+    /**
+     * The same date shown in the asset (Documents or Zenodo Documents) should be added.
+     */
     date: string;
   };
   categorization?: {
+    /**
+     * Add topic, if the filter on the publication overview page should include this publication.
+     */
     topic?: (string | null) | PublicationTopic;
+    /**
+     * Add type, if the filter on the publication overview page should include this publication.
+     */
     type?: (string | null) | PublicationType;
+    /**
+     * If the news belongs to a project, add the project.
+     */
     project?: (string | null) | Project;
   };
   hero: InterfaceHeroField;
@@ -2377,7 +2523,7 @@ export interface ProjectDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -2614,6 +2760,9 @@ export interface Team {
     };
     [k: string]: unknown;
   };
+  /**
+   * Add People who belong to the team. The order represents the order of the people on the website.
+   */
   people?: (string | Person)[] | null;
   updatedAt: string;
   createdAt: string;
@@ -2634,6 +2783,9 @@ export interface ZenodoDocument {
     size?: number | null;
     id?: string | null;
   }[];
+  /**
+   * If the document belongs to a project, add the project.
+   */
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
@@ -2687,7 +2839,7 @@ export interface OverviewPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -2832,9 +2984,9 @@ export interface InterfaceGenericTeasersBlock {
     [k: string]: unknown;
   } | null;
   /**
-   * Align Title & text horizontally or vertically
+   * Align Title and Lead horizontally or vertically
    */
-  alignement?: ('vertical' | 'horizontal') | null;
+  alignment?: ('vertical' | 'horizontal') | null;
   teasers: {
     title: {
       root: {
@@ -2872,6 +3024,9 @@ export interface InterfaceGenericTeasersBlock {
     } | null;
     linkType: 'internal' | 'external' | 'mail';
     linkInternal?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -2908,6 +3063,9 @@ export interface InterfaceGenericTeasersBlock {
       externalLink: string;
     };
     linkMail?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -3028,7 +3186,7 @@ export interface InterfaceEventsOverviewBlock {
 export interface InterfacePeopleOverviewBlock {
   message?: string | null;
   /**
-   * Which team members do you want to display in the overview?
+   * Which team do you want to display on the page?
    */
   teams: string | Team;
   id?: string | null;
@@ -3066,7 +3224,7 @@ export interface InterfaceNewsOverviewBlock {
  */
 export interface InterfaceNationalDictionariesOverviewBlock {
   /**
-   * This will be used as "More info" text on the teasers
+   * This is the text behind which the link to the national dictionary detail pages is hidden.
    */
   moreInfoButtonText: {
     root: {
@@ -3094,7 +3252,7 @@ export interface InterfaceNationalDictionariesOverviewBlock {
  */
 export interface InterfaceInstitutesOverviewBlock {
   /**
-   * This will be used as "More info" text on the teasers
+   * This is the text behind which the link to the institute detail pages is hidden.
    */
   moreInfoButtonText: {
     root: {
@@ -3132,6 +3290,9 @@ export interface InterfaceProjectOverviewBlock {
  */
 export interface InterfaceEditionsOverviewBlock {
   items: {
+    /**
+     * This is the text behind which the link is hidden.
+     */
     linkText: {
       root: {
         type: string;
@@ -3192,7 +3353,7 @@ export interface InterfaceEditionsOverviewBlock {
  */
 export interface InterfaceNetworkTeasersBlock {
   filter: {
-    allCheckboxText: {
+    title: {
       root: {
         type: string;
         children: {
@@ -3207,7 +3368,7 @@ export interface InterfaceNetworkTeasersBlock {
       };
       [k: string]: unknown;
     };
-    title: {
+    allCheckboxText: {
       root: {
         type: string;
         children: {
@@ -3224,6 +3385,9 @@ export interface InterfaceNetworkTeasersBlock {
     };
   };
   items: {
+    /**
+     * The text in this field will be displayed before the founding year. For example, "Gründungsjahr" in German. The year is added in the respective network item.
+     */
     foundingYearText?: {
       root: {
         type: string;
@@ -3239,6 +3403,9 @@ export interface InterfaceNetworkTeasersBlock {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * This is the text behind which the link is hidden.
+     */
     linkText: {
       root: {
         type: string;
@@ -3270,6 +3437,9 @@ export interface InterfaceNetworkTeasersBlock {
         };
         [k: string]: unknown;
       };
+      /**
+       * Needed for filter on overview page.
+       */
       category: string | NetworkCategory;
       foundingYear?: number | null;
       image: string | Image;
@@ -3316,7 +3486,7 @@ export interface DetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -3401,6 +3571,9 @@ export interface InterfaceVideoBlock {
     };
     [k: string]: unknown;
   };
+  /**
+   * This image is visible before the user clicks on the play button.
+   */
   stillImage: string | Image;
   id?: string | null;
   blockName?: string | null;
@@ -3436,7 +3609,7 @@ export interface NationalDictionaryDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -3497,7 +3670,7 @@ export interface InstituteDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
@@ -3547,39 +3720,6 @@ export interface InstituteDetailPage {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: string;
-  password?: string | null;
-  roles?: ('super-admin' | 'global-user')[] | null;
-  username?: string | null;
-  tenants?:
-    | {
-        tenant: string | Tenant;
-        roles: ('tenant-admin' | 'editor-magazine' | 'translator')[];
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3636,7 +3776,7 @@ export interface InterfaceI18NGeneric {
     [k: string]: unknown;
   };
   /**
-   * If you add a CTA-Contact-Block, this will be used as the button text
+   * If you add a personal contact block, this text will be shown in the Email button
    */
   writeEmailButtonText: {
     root: {
@@ -3654,7 +3794,7 @@ export interface InterfaceI18NGeneric {
     [k: string]: unknown;
   };
   /**
-   * On magazine detail pages, we use this to show the "Copy Text" button
+   * On magazine detail pages, this text appears in the button that enables the user to export the article as a PDF file.
    */
   exportArticleButtonText: {
     root: {
@@ -3710,6 +3850,9 @@ export interface InterfaceI18NBibliographicReference {
     };
     [k: string]: unknown;
   };
+  /**
+   * The text appears in the button that enables the user to copy the bibliographic reference with one click.
+   */
   copyButtonText: {
     root: {
       type: string;
@@ -3750,6 +3893,9 @@ export interface InterfaceI18NForms {
       };
       [k: string]: unknown;
     };
+    /**
+     * The message appears on forms if the user has not agreed to the data privacy policy.
+     */
     errorMessage: {
       root: {
         type: string;
@@ -4119,6 +4265,9 @@ export interface Footer {
  * via the `definition` "InterfaceFooterLegal".
  */
 export interface InterfaceFooterLegal {
+  /**
+   * Automatically links to data privacy page
+   */
   dataPrivacy: {
     root: {
       type: string;
@@ -4134,6 +4283,9 @@ export interface InterfaceFooterLegal {
     };
     [k: string]: unknown;
   };
+  /**
+   * Automatically links to impressum page
+   */
   impressum: {
     root: {
       type: string;
@@ -4164,6 +4316,9 @@ export interface InterfaceFooterLegal {
     };
     [k: string]: unknown;
   };
+  /**
+   * Copyright sign and current year will automatically be added.
+   */
   copyright: {
     root: {
       type: string;
@@ -4352,9 +4507,12 @@ export interface Header {
  * via the `definition` "InterfaceHeaderNavigation".
  */
 export interface InterfaceHeaderNavigation {
+  /**
+   * Note: You can add a maximum of five main navigation items, six sub-navigation items and three meta navigation items.
+   */
   navItems: {
     /**
-     * If the user hovers over this menu item in the navigation, this is shown as a description in the Header
+     * Appears when the header expands. Not visible on mobile devices.
      */
     description?: {
       root: {
@@ -4420,6 +4578,9 @@ export interface InterfaceHeaderMetaNavigation {
     | {
         linkType: 'internal' | 'external' | 'mail';
         linkInternal?: {
+          /**
+           * This is the text behind which the link is hidden.
+           */
           linkText: {
             root: {
               type: string;
@@ -4438,6 +4599,9 @@ export interface InterfaceHeaderMetaNavigation {
           internalLink: InterfaceInternalLinkValue;
         };
         linkExternal?: {
+          /**
+           * This is the text behind which the link is hidden.
+           */
           externalLinkText: {
             root: {
               type: string;
@@ -4456,6 +4620,9 @@ export interface InterfaceHeaderMetaNavigation {
           externalLink: string;
         };
         linkMail?: {
+          /**
+           * This is the text behind which the link is hidden.
+           */
           linkText: {
             root: {
               type: string;
@@ -4535,6 +4702,9 @@ export interface InterfaceStatusMessage {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -4557,6 +4727,9 @@ export interface InterfaceStatusMessage {
    * Should the message be displayed on home only or everywhere?
    */
   showOnHomeOnly?: boolean | null;
+  /**
+   * Your choice affects the color of the message.
+   */
   type: 'warn' | 'error' | 'success';
 }
 /**
@@ -4570,6 +4743,39 @@ export interface Theme {
   themeSelector: string;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  password?: string | null;
+  roles?: ('super-admin' | 'global-user')[] | null;
+  username?: string | null;
+  tenants?:
+    | {
+        tenant: string | Tenant;
+        roles: ('tenant-admin' | 'editor-magazine' | 'translator')[];
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4648,6 +4854,30 @@ export interface PayloadLockedDocument {
         value: string | ProjectDetailPage;
       } | null)
     | ({
+        relationTo: 'i18nGlobals';
+        value: string | I18NGlobal;
+      } | null)
+    | ({
+        relationTo: 'consent';
+        value: string | Consent;
+      } | null)
+    | ({
+        relationTo: 'footer';
+        value: string | Footer;
+      } | null)
+    | ({
+        relationTo: 'header';
+        value: string | Header;
+      } | null)
+    | ({
+        relationTo: 'statusMessage';
+        value: string | StatusMessage;
+      } | null)
+    | ({
+        relationTo: 'theme';
+        value: string | Theme;
+      } | null)
+    | ({
         relationTo: 'images';
         value: string | Image;
       } | null)
@@ -4702,30 +4932,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'forms';
         value: string | Form;
-      } | null)
-    | ({
-        relationTo: 'i18nGlobals';
-        value: string | I18NGlobal;
-      } | null)
-    | ({
-        relationTo: 'consent';
-        value: string | Consent;
-      } | null)
-    | ({
-        relationTo: 'footer';
-        value: string | Footer;
-      } | null)
-    | ({
-        relationTo: 'header';
-        value: string | Header;
-      } | null)
-    | ({
-        relationTo: 'statusMessage';
-        value: string | StatusMessage;
-      } | null)
-    | ({
-        relationTo: 'theme';
-        value: string | Theme;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -4834,6 +5040,7 @@ export interface InterfaceHeroFieldHomeSelect<T extends boolean = true> {
  * via the `definition` "InterfaceInternalLinkValue_select".
  */
 export interface InterfaceInternalLinkValueSelect<T extends boolean = true> {
+  _internalLinkMarker?: T;
   slug?: T;
   documentId?: T;
 }
@@ -4906,7 +5113,7 @@ export interface InterfaceEventsTeasersBlockSelect<T extends boolean = true> {
 export interface InterfaceMagazineTeasersBlockSelect<T extends boolean = true> {
   title?: T;
   lead?: T;
-  alignement?: T;
+  alignment?: T;
   optionalLink?:
     | T
     | {
@@ -4972,7 +5179,7 @@ export interface InterfacePublicationsTeasersBlockSelect<T extends boolean = tru
 export interface InterfaceProjectTeasersBlockSelect<T extends boolean = true> {
   title?: T;
   lead?: T;
-  alignement?: T;
+  alignment?: T;
   optionalLink?:
     | T
     | {
@@ -5029,6 +5236,7 @@ export interface ErrorPageSelect<T extends boolean = true> {
  */
 export interface DataPrivacyPageSelect<T extends boolean = true> {
   tenant?: T;
+  slug?: T;
   isLinkable?: T;
   adminTitle?: T;
   hero?: T | InterfaceHeroFieldSelect<T>;
@@ -5068,6 +5276,7 @@ export interface InterfaceHeroFieldSelect<T extends boolean = true> {
  */
 export interface ImpressumPageSelect<T extends boolean = true> {
   tenant?: T;
+  slug?: T;
   isLinkable?: T;
   adminTitle?: T;
   hero?: T | InterfaceHeroFieldSelect<T>;
@@ -5216,8 +5425,8 @@ export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
  * via the `definition` "InterfaceImageBlock_select".
  */
 export interface InterfaceImageBlockSelect<T extends boolean = true> {
-  alignment?: T;
   image?: T;
+  alignment?: T;
   caption?: T;
   credits?: T;
   id?: T;
@@ -5334,7 +5543,7 @@ export interface InterfaceCtaContactBlockSelect<T extends boolean = true> {
 export interface InterfaceGenericTeasersBlockSelect<T extends boolean = true> {
   title?: T;
   lead?: T;
-  alignement?: T;
+  alignment?: T;
   teasers?:
     | T
     | {
@@ -5474,8 +5683,8 @@ export interface InterfaceNetworkTeasersBlockSelect<T extends boolean = true> {
   filter?:
     | T
     | {
-        allCheckboxText?: T;
         title?: T;
+        allCheckboxText?: T;
       };
   items?:
     | T
@@ -5604,12 +5813,12 @@ export interface EventDetailPageSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        date?: T;
+        time?: T;
         location?: T;
         language?: T;
         category?: T;
         project?: T;
-        date?: T;
-        time?: T;
         multipleDays?: T;
         dateEnd?: T;
       };
@@ -5906,6 +6115,271 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "i18nGlobals_select".
+ */
+export interface I18NGlobalsSelect<T extends boolean = true> {
+  tenant?: T;
+  generic?: T | InterfaceI18NGenericSelect<T>;
+  bibliographicReference?: T | InterfaceI18NBibliographicReferenceSelect<T>;
+  forms?: T | InterfaceI18NFormsSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nGeneric_select".
+ */
+export interface InterfaceI18NGenericSelect<T extends boolean = true> {
+  downloadTitle?: T;
+  linksTitle?: T;
+  writeEmailButtonText?: T;
+  exportArticleButtonText?: T;
+  time?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nBibliographicReference_select".
+ */
+export interface InterfaceI18NBibliographicReferenceSelect<T extends boolean = true> {
+  title?: T;
+  copyButtonText?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceI18nForms_select".
+ */
+export interface InterfaceI18NFormsSelect<T extends boolean = true> {
+  dataPrivacyCheckbox?:
+    | T
+    | {
+        dataPrivacyCheckboxText?: T;
+        errorMessage?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "consent_select".
+ */
+export interface ConsentSelect<T extends boolean = true> {
+  tenant?: T;
+  adminTitle?: T;
+  banner?: T | InterfaceConsentBannerSelect<T>;
+  overlay?: T | InterfaceConsentOverlaySelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceConsentBanner_select".
+ */
+export interface InterfaceConsentBannerSelect<T extends boolean = true> {
+  title?: T;
+  text?: T;
+  buttonAcceptAll?: T;
+  buttonCustomizeSelection?: T;
+  buttonDeclineAll?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceConsentOverlay_select".
+ */
+export interface InterfaceConsentOverlaySelect<T extends boolean = true> {
+  title?: T;
+  text?: T;
+  buttonAcceptAll?: T;
+  buttonAcceptSelection?: T;
+  necessaryCookies?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        toggleLabel?: T;
+      };
+  analyticsPerformance?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        toggleLabelOff?: T;
+        toggleLabelOn?: T;
+        toggleDefault?: T;
+      };
+  externalContent?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        toggleLabelOff?: T;
+        toggleLabelOn?: T;
+        toggleDefault?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  tenant?: T;
+  adminTitle?: T;
+  legal?: T | InterfaceFooterLegalSelect<T>;
+  contact?: T | InterfaceFooterContactSelect<T>;
+  socialLinks?: T | InterfaceFooterSocialLinksSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceFooterLegal_select".
+ */
+export interface InterfaceFooterLegalSelect<T extends boolean = true> {
+  dataPrivacy?: T;
+  impressum?: T;
+  cookieSettings?: T;
+  copyright?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceFooterContact_select".
+ */
+export interface InterfaceFooterContactSelect<T extends boolean = true> {
+  title?: T;
+  address1?: T;
+  address2?: T;
+  poBox?: T;
+  countryCode?: T;
+  zipCode?: T;
+  city?: T;
+  phone?: T;
+  mail?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceFooterSocialLinks_select".
+ */
+export interface InterfaceFooterSocialLinksSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        externalLink?: T;
+        icon?: T;
+        id?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  tenant?: T;
+  adminTitle?: T;
+  navigation?: T | InterfaceHeaderNavigationSelect<T>;
+  metanavigation?: T | InterfaceHeaderMetaNavigationSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeaderNavigation_select".
+ */
+export interface InterfaceHeaderNavigationSelect<T extends boolean = true> {
+  navItems?:
+    | T
+    | {
+        description?: T;
+        navItemText?: T;
+        navItemLink?: T | InterfaceInternalLinkValueSelect<T>;
+        subNavItems?:
+          | T
+          | {
+              navItemText?: T;
+              navItemLink?: T | InterfaceInternalLinkValueSelect<T>;
+              id?: T;
+            };
+        id?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceHeaderMetaNavigation_select".
+ */
+export interface InterfaceHeaderMetaNavigationSelect<T extends boolean = true> {
+  metaLinks?:
+    | T
+    | {
+        linkType?: T;
+        linkInternal?:
+          | T
+          | {
+              linkText?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
+            };
+        linkExternal?:
+          | T
+          | {
+              externalLinkText?: T;
+              externalLink?: T;
+            };
+        linkMail?:
+          | T
+          | {
+              linkText?: T;
+              email?: T;
+            };
+        id?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "statusMessage_select".
+ */
+export interface StatusMessageSelect<T extends boolean = true> {
+  tenant?: T;
+  adminTitle?: T;
+  content?: T | InterfaceStatusMessageSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceStatusMessage_select".
+ */
+export interface InterfaceStatusMessageSelect<T extends boolean = true> {
+  show?:
+    | T
+    | {
+        display?: T;
+        from?: T;
+        to?: T;
+      };
+  title?: T;
+  message?: T;
+  optionalLink?:
+    | T
+    | {
+        includeLink?: T;
+        link?:
+          | T
+          | {
+              linkText?: T;
+              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
+            };
+      };
+  showOnHomeOnly?: T;
+  type?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "theme_select".
+ */
+export interface ThemeSelect<T extends boolean = true> {
+  tenant?: T;
+  adminTitle?: T;
+  themeSelector?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "images_select".
  */
 export interface ImagesSelect<T extends boolean = true> {
@@ -6185,6 +6659,8 @@ export interface FormsSelect<T extends boolean = true> {
   newsletterFields?:
     | T
     | {
+        newsletterTemporaryListId?: T;
+        newsletterListId?: T;
         email?:
           | T
           | {
@@ -6294,271 +6770,6 @@ export interface InterfaceTextareaFieldSelect<T extends boolean = true> {
   fieldError?: T;
   id?: T;
   blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "i18nGlobals_select".
- */
-export interface I18NGlobalsSelect<T extends boolean = true> {
-  tenant?: T;
-  generic?: T | InterfaceI18NGenericSelect<T>;
-  bibliographicReference?: T | InterfaceI18NBibliographicReferenceSelect<T>;
-  forms?: T | InterfaceI18NFormsSelect<T>;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceI18nGeneric_select".
- */
-export interface InterfaceI18NGenericSelect<T extends boolean = true> {
-  downloadTitle?: T;
-  linksTitle?: T;
-  writeEmailButtonText?: T;
-  exportArticleButtonText?: T;
-  time?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceI18nBibliographicReference_select".
- */
-export interface InterfaceI18NBibliographicReferenceSelect<T extends boolean = true> {
-  title?: T;
-  copyButtonText?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceI18nForms_select".
- */
-export interface InterfaceI18NFormsSelect<T extends boolean = true> {
-  dataPrivacyCheckbox?:
-    | T
-    | {
-        dataPrivacyCheckboxText?: T;
-        errorMessage?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "consent_select".
- */
-export interface ConsentSelect<T extends boolean = true> {
-  tenant?: T;
-  adminTitle?: T;
-  banner?: T | InterfaceConsentBannerSelect<T>;
-  overlay?: T | InterfaceConsentOverlaySelect<T>;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceConsentBanner_select".
- */
-export interface InterfaceConsentBannerSelect<T extends boolean = true> {
-  title?: T;
-  text?: T;
-  buttonAcceptAll?: T;
-  buttonCustomizeSelection?: T;
-  buttonDeclineAll?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceConsentOverlay_select".
- */
-export interface InterfaceConsentOverlaySelect<T extends boolean = true> {
-  title?: T;
-  text?: T;
-  buttonAcceptAll?: T;
-  buttonAcceptSelection?: T;
-  necessaryCookies?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        toggleLabel?: T;
-      };
-  analyticsPerformance?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        toggleLabelOff?: T;
-        toggleLabelOn?: T;
-        toggleDefault?: T;
-      };
-  externalContent?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        toggleLabelOff?: T;
-        toggleLabelOn?: T;
-        toggleDefault?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer_select".
- */
-export interface FooterSelect<T extends boolean = true> {
-  tenant?: T;
-  adminTitle?: T;
-  legal?: T | InterfaceFooterLegalSelect<T>;
-  contact?: T | InterfaceFooterContactSelect<T>;
-  socialLinks?: T | InterfaceFooterSocialLinksSelect<T>;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceFooterLegal_select".
- */
-export interface InterfaceFooterLegalSelect<T extends boolean = true> {
-  dataPrivacy?: T;
-  impressum?: T;
-  cookieSettings?: T;
-  copyright?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceFooterContact_select".
- */
-export interface InterfaceFooterContactSelect<T extends boolean = true> {
-  title?: T;
-  address1?: T;
-  address2?: T;
-  poBox?: T;
-  countryCode?: T;
-  zipCode?: T;
-  city?: T;
-  phone?: T;
-  mail?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceFooterSocialLinks_select".
- */
-export interface InterfaceFooterSocialLinksSelect<T extends boolean = true> {
-  items?:
-    | T
-    | {
-        externalLink?: T;
-        icon?: T;
-        id?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header_select".
- */
-export interface HeaderSelect<T extends boolean = true> {
-  tenant?: T;
-  adminTitle?: T;
-  navigation?: T | InterfaceHeaderNavigationSelect<T>;
-  metanavigation?: T | InterfaceHeaderMetaNavigationSelect<T>;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceHeaderNavigation_select".
- */
-export interface InterfaceHeaderNavigationSelect<T extends boolean = true> {
-  navItems?:
-    | T
-    | {
-        description?: T;
-        navItemText?: T;
-        navItemLink?: T | InterfaceInternalLinkValueSelect<T>;
-        subNavItems?:
-          | T
-          | {
-              navItemText?: T;
-              navItemLink?: T | InterfaceInternalLinkValueSelect<T>;
-              id?: T;
-            };
-        id?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceHeaderMetaNavigation_select".
- */
-export interface InterfaceHeaderMetaNavigationSelect<T extends boolean = true> {
-  metaLinks?:
-    | T
-    | {
-        linkType?: T;
-        linkInternal?:
-          | T
-          | {
-              linkText?: T;
-              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
-            };
-        linkExternal?:
-          | T
-          | {
-              externalLinkText?: T;
-              externalLink?: T;
-            };
-        linkMail?:
-          | T
-          | {
-              linkText?: T;
-              email?: T;
-            };
-        id?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "statusMessage_select".
- */
-export interface StatusMessageSelect<T extends boolean = true> {
-  tenant?: T;
-  adminTitle?: T;
-  content?: T | InterfaceStatusMessageSelect<T>;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceStatusMessage_select".
- */
-export interface InterfaceStatusMessageSelect<T extends boolean = true> {
-  show?:
-    | T
-    | {
-        display?: T;
-        from?: T;
-        to?: T;
-      };
-  title?: T;
-  message?: T;
-  optionalLink?:
-    | T
-    | {
-        includeLink?: T;
-        link?:
-          | T
-          | {
-              linkText?: T;
-              internalLink?: T | InterfaceInternalLinkValueSelect<T>;
-            };
-      };
-  showOnHomeOnly?: T;
-  type?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "theme_select".
- */
-export interface ThemeSelect<T extends boolean = true> {
-  tenant?: T;
-  adminTitle?: T;
-  themeSelector?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

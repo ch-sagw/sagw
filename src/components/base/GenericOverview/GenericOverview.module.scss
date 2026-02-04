@@ -12,7 +12,13 @@
   padding-inline: px-to-rem(var(--grid-margin));
   margin-block-end: px-to-rem(var(--section-inside-l));
 
-  @include mq($from: ultra) {
-    justify-self: center;
+  @include mq($from: large) {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: px-to-rem(var(--grid-gutter));
+
+    ol {
+      grid-column: 5/13;
+    }
   }
 }
