@@ -43,6 +43,7 @@ export const NewsListItem = ({
             className={styles.itemTitle}
             as='span'
             html={title}
+            data-testid='newsListItemTitle'
           />
 
           <SafeHtml
