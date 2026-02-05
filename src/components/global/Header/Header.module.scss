@@ -6,15 +6,13 @@
 .header {
   --margin-nav-bottom: 56;
 
-  position: sticky;
+  position: fixed;
   inset-block-start: 0;
   inset-inline-start: 0;
   width: 100%;
   padding: px-to-rem(var(--grid-margin));
-  overflow: hidden;
-  transition: height, background-color;
-  transition-duration: var(--motion-speed-very-fast);
-  transition-timing-function: var(--motion-ease-in-out);
+  transition-duration: var(--motion-speed-fast);
+  transition-timing-function: var(--motion-ease-out);
   z-index: 999;
 
   @include reduced-motion {
@@ -22,29 +20,80 @@
   }
 
   @include mq($from: large) {
-    padding-block-start: px-to-rem(var(--spacing-l));
-    padding-block-end: 0;
+    overflow: hidden;
+    padding-block: px-to-rem(var(--spacing-l));
+
+    &:before {
+      position: absolute;
+      content: "";
+      inset: 0;
+      opacity: 1;
+      z-index: 0;
+      transition-property: opacity;
+      transition-duration: 300ms;
+    }
+
+    & + .headerBg {
+      position: fixed;
+      content: "";
+      inset: 0;
+      z-index: 1;
+      background: rgb(black, 0.4);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity;
+      transition-duration: var(--motion-speed-fast);
+      transition-timing-function: var(--motion-ease-out);
+    }
+
+    &:has(button[aria-expanded="true"]) {
+      & + .headerBg {
+        transition-timing-function: var(--motion-ease-in);
+        opacity: 1;
+      }
+    }
+
+    /*
+        ============================
+        KEEP IN MIND
+        ============================
+        There are some special definitions in storybook/preview.css
+        to make the a11y test for the component work. Since the
+        component is on top of the hero element, we do not want to have
+        a background-color on the header itself in the unscrolled/non-hover
+        state to let the keyvisual lines reach over the nav.
+    */
   }
 
-  &.expanded {
-    max-height: 100vh;
-    overflow-y: visible;
+  @include mq($to: large) {
+    transition-property: background-color;
+    background-color: rgb(white, 0);
+
+    &.expanded {
+      height: 100dvh;
+      overflow-y: visible;
+      scrollbar-gutter: stable;
+      overscroll-behavior: contain;
+    }
+
+    &.dark {
+      background-color: var(--background-inverted);
+    }
+
+    &.white {
+      background-color: white;
+    }
   }
 
   &:not(.white) {
     @include font-smoothing;
   }
 
-  &.dark {
-    background-color: var(--background-inverted);
-  }
-
-  &.white {
-    background-color: var(--background-page);
-  }
-
-  &.light {
-    background-color: var(--background-light);
+  &.white:before {
+    background: white;
+    transition-duration: var(--motion-speed-very-fast);
+    transition-timing-function: var(--motion-ease-in);
+    opacity: 1;
   }
 
   .logoWrapper {
@@ -53,6 +102,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    z-index: 1;
 
     @include mq($from: large) {
       display: grid;
@@ -62,9 +112,12 @@
     }
 
     .logoWrapperInner {
+      position: relative;
       padding-inline-end: px-to-rem(var(--grid-gutter));
 
       @include mq($from: large) {
+        align-content: center;
+        align-self: flex-end;
         grid-column: 1 / 4;
       }
     }
@@ -77,9 +130,6 @@
       @include mq($from: large) {
         display: block;
         height: px-to-rem(48);
-
-        // 48 / 2 / 4 * 3
-        transform: translateY(px-to-rem(18));
       }
     }
 
@@ -105,8 +155,10 @@
     margin-block-end: px-to-rem(var(--margin-nav-bottom));
 
     @include mq($from: large) {
+      position: relative;
       grid-column: 5 / 12;
-      margin-block-end: 0;
+      margin-block-end: px-to-rem(10, true);
+      margin-inline: px-to-rem(var(--spacing-m), true);
     }
   }
 
@@ -136,6 +188,11 @@
   .metanavWrapper {
     @include expandable-wrapper-visible;
 
+    display: grid;
+    will-change: transform, opacity, grid-template-rows;
+    transition-duration: var(--motion-speed-fast);
+    transition-property: transform, grid-template-rows, opacity;
+
     &.metanavHidden {
       @include expandable-wrapper;
     }
@@ -158,10 +215,9 @@
   }
 
   .infoBlock {
-    position: absolute;
+    z-index: 2;
     width: px-to-rem(260);
-    inset-inline-start: px-to-rem(var(--grid-margin));
-    inset-block-start: px-to-rem(210);
+    padding: 0;
 
     @include mq($from: wide) {
       width: px-to-rem(400);
@@ -169,6 +225,24 @@
   }
 
   .metanavWrapper.metanavHidden ~ .infoBlock {
-    inset-block-start: px-to-rem(155);
+    inset-block-start: var(--info-block-top, px-to-rem(155));
+  }
+}
+
+.headerSSR {
+  @include mq($to: large) {
+    .metanav,
+    .navigation,
+    .langnav {
+      display: none;
+    }
+
+    .logoWrapper {
+      margin-block: px-to-rem(var(--spacing-2xs));
+    }
+  }
+
+  @include mq($from: large) {
+    min-height: px-to-rem(182);
   }
 }

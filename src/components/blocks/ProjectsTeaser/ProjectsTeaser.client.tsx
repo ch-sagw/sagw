@@ -61,7 +61,10 @@ export const ProjectsTeaserClient = ({
       )}
     </Section>
 
-    <ul className={styles.list}>
+    <ul
+      className={styles.list}
+      data-testid='projects-teaser-linklist'
+    >
       {items.map((item) => (
         <GenericTeaser
           className={styles.item}

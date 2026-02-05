@@ -52,7 +52,7 @@ const navLinkLevel1: Field[] = [
     fields: [
       {
         ...rte1({
-          adminDescription: 'If the user hovers over this menu item in the navigation, this is shown as a description in the Header',
+          adminDescription: 'Appears when the header expands. Not visible on mobile devices.',
           name: 'description',
           notRequired: true,
         }),
@@ -87,6 +87,9 @@ export const Header: CollectionConfig = {
         {
           fields: [
             {
+              admin: {
+                description: 'Note: You can add a maximum of five main navigation items, six sub-navigation items and three meta navigation items.',
+              },
               fields: [
                 ...navLinkLevel1,
                 {
@@ -111,14 +114,16 @@ export const Header: CollectionConfig = {
         {
           fields: [
             {
-              fields: fieldsLinkInternalOrExternal({}),
+              fields: fieldsLinkInternalOrExternal({
+                adminDescription: 'This is the text behind which the link is hidden.',
+              }),
               maxRows: 3,
               name: 'metaLinks',
               type: 'array',
             },
           ],
           interfaceName: 'InterfaceHeaderMetaNavigation',
-          label: 'Metanvaigation',
+          label: 'Metanavigation',
           name: 'metanavigation',
         },
       ],

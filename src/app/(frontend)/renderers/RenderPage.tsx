@@ -20,6 +20,7 @@ import { routing } from '@/i18n/routing';
 import { hasLocale } from 'next-intl';
 import { CMSConfigError } from '../utilities/CMSConfigError';
 import { SkipLinks } from '@/components/global/SkipLinks/SkipLinks';
+import { ColorMode } from '@/components/base/types/colorMode';
 interface InterfacePageRendererProps {
   isHome: boolean;
   locale: TypedLocale;
@@ -38,6 +39,8 @@ interface InterfaceRenderPageContentProps {
   showBlocks?: boolean;
   heroComponent: React.JSX.Element;
   containerType: 'home' | 'detail';
+  currentPageId?: string;
+  headerColorMode: ColorMode;
 }
 
 // Helper to verify lang-config and to render error page
@@ -85,12 +88,16 @@ const renderPageContent = ({
   showBlocks = true,
   heroComponent,
   containerType,
+  headerColorMode,
   projectId,
+  currentPageId,
 }: InterfaceRenderPageContentProps): React.JSX.Element => (
   <TenantProvider tenant={tenantId}>
     <SkipLinks />
     <RenderHeader
+      colorMode={headerColorMode}
       tenant={tenantId}
+      currentPageId={currentPageId}
     />
     <div className={containerType === 'home'
       ? 'home'
@@ -187,6 +194,8 @@ export const RenderPage = async ({
     return renderPageContent({
       blocks: pageData.content,
       containerType: 'home',
+      currentPageId: pageData.id,
+      headerColorMode: 'dark',
       heroComponent: (
         <Hero
           {...pageData.hero}
@@ -236,6 +245,9 @@ export const RenderPage = async ({
 
   const collectionSlug = foundCollection as CollectionSlug;
 
+  // Get ColorMode for header from hero component
+  const headerColorMode = pageData.hero?.colorMode || 'white';
+
   let projectId = null;
 
   if (collectionSlug === 'projectDetailPage') {
@@ -245,6 +257,8 @@ export const RenderPage = async ({
   return renderPageContent({
     blocks: contentBlocks,
     containerType: 'detail',
+    currentPageId: pageData.id,
+    headerColorMode,
     heroComponent: (
       <RenderHero
         foundCollection={collectionSlug}

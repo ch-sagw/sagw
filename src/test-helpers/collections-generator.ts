@@ -559,7 +559,7 @@ export const generatePublicationDetailPage = async (props: InterfacePublicationP
       },
       navigationTitle: props.navigationTitle,
       overviewPageProps: {
-        date: '2030-08-01T12:00:00.000Z',
+        date: props.date || '2030-08-01T12:00:00.000Z',
         image: image.id,
       },
       parentPage: props.parentPage,
@@ -1165,6 +1165,8 @@ export const generateCollectionsExceptPages = async ({
           label: simpleRteConfig('Nachname'),
           placeholder: 'Ihr Nachname',
         },
+        newsletterListId: 2,
+        newsletterTemporaryListId: 3,
       },
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: true,
@@ -1504,7 +1506,7 @@ export const generateForm = async (tenant: string): Promise<string> => {
   return form.id;
 };
 
-export const generateDocument = async (tenant: string, project?: string): Promise<string> => {
+export const generateDocument = async (tenant: string, project?: string, title?: string): Promise<string> => {
   const payload = await getPayloadCached();
   const document = await payload.create({
     collection: 'documents',
@@ -1512,7 +1514,7 @@ export const generateDocument = async (tenant: string, project?: string): Promis
       date: '2025-10-30',
       project,
       tenant,
-      title: simpleRteConfig('Document'),
+      title: simpleRteConfig(title || 'Document'),
     },
     filePath: 'src/seed/test-data/assets/sagw.pdf',
   });
@@ -1520,7 +1522,7 @@ export const generateDocument = async (tenant: string, project?: string): Promis
   return document.id;
 };
 
-export const generateZenodoDocument = async (tenant: string, project?: string): Promise<string> => {
+export const generateZenodoDocument = async (tenant: string, project?: string, title?: string): Promise<string> => {
   const payload = await getPayloadCached();
   const zenodoDocument = await payload.create({
     collection: 'zenodoDocuments',
@@ -1542,7 +1544,7 @@ export const generateZenodoDocument = async (tenant: string, project?: string): 
       project,
       publicationDate: '1919-05-01',
       tenant,
-      title: 'Sample Zenodo Document',
+      title: title || 'Sample Zenodo Document',
       zenodoId: '1512691',
     },
   });

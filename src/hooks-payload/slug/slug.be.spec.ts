@@ -6,8 +6,17 @@ import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { getTenantId } from '@/test-helpers/tenant-generator';
+import {
+  generateDetailPage, getHomeId,
+} from '@/test-helpers/collections-generator';
+import { extendExpect } from '@/access/test/extendExpect';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
-test.describe('Slug field', () => {
+extendExpect(expect);
+
+test.describe('Slug field UI', () => {
   beforeEachPayloadLogin();
 
   test('gets populated correctly', async ({
@@ -60,90 +69,135 @@ test.describe('Slug field', () => {
     const slugField = await page.locator('#field-slug');
 
     await expect(slugField)
-      .toHaveValue('sample-detail-page-name-hyphensupsub');
+      .toHaveValue('sample-detail-page-dollarname-ueoeae-hyphensupsub');
 
   });
 
-  test('checks for unique slug in same tenant', async ({
-    page,
-  }) => {
-    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
-    await page.waitForLoadState('networkidle');
+});
 
-    const heroField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
-      .nth(0);
+test.describe('Slug field API', () => {
+  test('checks for unique slug in same tenant', async () => {
+    await deleteSetsPages();
+    await deleteOtherCollections();
 
-    await heroField.fill('sample-detail-page-name-hyphensupsub');
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
 
-    // save
-    const saveButton = await page.getByRole('button', {
-      name: 'Publish changes',
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
     });
 
-    const slugInput = await page.locator('#field-slug');
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
 
-    await expect(slugInput)
-      .toHaveValue('sample-detail-page-name-hyphensupsub');
+    await generateDetailPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      title: `detail ${time}`,
+    });
 
-    await saveButton.click();
-
-    const errorToast = await page.getByText('The following field is invalid: slug');
-
-    await expect(errorToast)
-      .toBeVisible();
-
-    // set correct slug
-    await heroField.fill('Sample Detail. Page with unique name');
-    await saveButton.click();
-
+    await expect(async () => {
+      await payload.create({
+        collection: 'detailPage',
+        data: {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          _status: 'published',
+          /* eslint-enable @typescript-eslint/naming-convention */
+          hero: {
+            colorMode: 'dark',
+            title: simpleRteConfig(`detail ${time}`),
+          },
+          parentPage: {
+            documentId: home,
+            slug: 'homePage',
+          },
+          slug: `detail-${time}`,
+          tenant,
+        },
+        draft: false,
+      });
+    })
+      .rejects.toMatchObject({
+        data: {
+          errors: [
+            {
+              message: `Slug "detail-${time}" already exists in this tenant`,
+              path: 'slug',
+            },
+          ],
+        },
+        status: 400,
+      });
   });
 
-  test('does not error if slug exists in other tenant', async ({
-    page,
-  }) => {
-    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
-    await page.waitForLoadState('networkidle');
+  test('does not error if slug exists in other tenant', async () => {
+    await deleteSetsPages();
+    await deleteOtherCollections();
 
-    const heroField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
-      .nth(0);
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
 
-    await heroField.fill('Detail page title NOT-SAGW');
-
-    // save
-    const saveButton = await page.getByRole('button', {
-      name: 'Publish changes',
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
     });
 
-    const slugInput = await page.locator('#field-slug');
-
-    await expect(slugInput)
-      .toHaveValue('detail-page-title-not-sagw');
-
-    await saveButton.click();
-
-    // wait for confirmation toast and close it
-    const closeToast = await page.locator('.payload-toast-container [data-close-button="true"]');
-
-    await closeToast.click();
-
-    // wait for refresh
-    const title = await page.getByRole('heading', {
-      name: 'Detail page title NOT-SAGW',
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
     });
 
-    await expect(title)
-      .toBeVisible();
+    const tenantNotSagw = await getTenantId({
+      isSagw: false,
+      time: time + Math.floor(Math.random() * 1000000),
+    });
 
-    const slugField = await page.locator('#field-slug');
+    const homeNotSagw = await getHomeId({
+      isSagw: false,
+      tenant: tenantNotSagw,
+    });
 
-    await expect(slugField)
-      .toHaveValue('detail-page-title-not-sagw');
+    // detail page not sagw
+    await generateDetailPage({
+      locale: 'de',
+      parentPage: {
+        documentId: homeNotSagw,
+        slug: 'homePage',
+      },
+      tenant: tenantNotSagw,
+      title: `detail ${time}`,
+    });
 
-    // reset title and slug, so not to disturb other sagw/no-sagw specific tests
-    await heroField.fill('Detail page title sagw after testing');
-    await saveButton.click();
-    await expect(slugField)
-      .toHaveValue('detail-page-title-not-sagw');
-
+    await expect(async () => {
+      await payload.create({
+        collection: 'detailPage',
+        data: {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          _status: 'published',
+          /* eslint-enable @typescript-eslint/naming-convention */
+          hero: {
+            colorMode: 'dark',
+            title: simpleRteConfig(`detail ${time}`),
+          },
+          parentPage: {
+            documentId: home,
+            slug: 'homePage',
+          },
+          slug: `detail-${time}`,
+          tenant,
+        },
+        draft: false,
+        locale: 'de',
+      });
+    })
+      .notRejects();
   });
+
 });
