@@ -10,7 +10,7 @@ import {
 } from 'next-intl/server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { CMSConfigError } from '../utilities/CMSConfigError';
-import { getTenantOfId } from '@/test-helpers/tenant-generator';
+import { getTenantName } from '../utilities/getTenantName';
 
 type InterfaceHeaderRendererProps = {
   colorMode: ColorMode;
@@ -26,7 +26,7 @@ export const RenderHeader = async ({
   const payload = await getPayloadCached();
   const locale = (await getLocale()) as TypedLocale;
   const i18nMenu = await getTranslations('menu');
-  const tenantName = await getTenantOfId({
+  const tenantName = await getTenantName({
     id: tenant,
   });
 

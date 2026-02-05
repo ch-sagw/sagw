@@ -146,12 +146,6 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
 
     headerElement.removeAttribute('style');
 
-    /* eslint-disable @typescript-eslint/no-unused-expressions */
-    /* eslint-disable no-unused-expressions */
-    headerElement.offsetHeight;
-    /* eslint-enable @typescript-eslint/no-unused-expressions */
-    /* eslint-enable no-unused-expressions */
-
     setInfoBlockContent(undefined);
 
     setTimeout(() => {
