@@ -1,7 +1,10 @@
 import { test } from '@playwright/test';
 import { Payload } from 'payload';
-import { User } from '@/payload-types';
+import {
+  HomePage, User,
+} from '@/payload-types';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 export const beforeEachPayloadLogin = (): void => {
   test.beforeEach(async ({
@@ -16,6 +19,7 @@ export const beforeEachPayloadLogin = (): void => {
 };
 
 interface InterfaceExplicitRoleLoginReturn {
+  home: HomePage;
   payload: Payload;
   user: User & { collection: 'users'; };
   tenant?: string;
@@ -68,7 +72,40 @@ export const explicitRoleLogin = async (type: 'super-admin' | 'sagw-admin' | 'fg
     }
   }
 
+  let home: HomePage;
+
+  const homeDocs = await payload.find({
+    collection: 'homePage',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (homeDocs.docs.length < 1) {
+    home = await payload.create({
+      collection: 'homePage',
+      data: {
+        /* eslint-disable @typescript-eslint/naming-convention */
+        _status: 'published',
+        /* eslint-enable @typescript-eslint/naming-convention */
+        hero: {
+          sideTitle: simpleRteConfig('home side'),
+          title: simpleRteConfig('home'),
+        },
+        tenant,
+      },
+      locale: 'de',
+    });
+  } else {
+    /* eslint-disable prefer-destructuring */
+    home = homeDocs.docs[0];
+    /* eslint-enable prefer-destructuring */
+  }
+
   return {
+    home,
     payload,
     tenant,
     user,

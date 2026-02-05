@@ -113,6 +113,7 @@ test.describe('Slug field API', () => {
             colorMode: 'dark',
             title: simpleRteConfig(`detail ${time}`),
           },
+          navigationTitle: 'Some navigation title',
           parentPage: {
             documentId: home,
             slug: 'homePage',
@@ -172,11 +173,11 @@ test.describe('Slug field API', () => {
         slug: 'homePage',
       },
       tenant: tenantNotSagw,
-      title: `detail ${time}`,
+      title: `detail 1 ${time}`,
     });
 
     await expect(async () => {
-      await payload.create({
+      const foo = await payload.create({
         collection: 'detailPage',
         data: {
           /* eslint-disable @typescript-eslint/naming-convention */
@@ -184,18 +185,22 @@ test.describe('Slug field API', () => {
           /* eslint-enable @typescript-eslint/naming-convention */
           hero: {
             colorMode: 'dark',
-            title: simpleRteConfig(`detail ${time}`),
+            title: simpleRteConfig(`detail 2 ${time}`),
           },
+          navigationTitle: 'nav title',
           parentPage: {
             documentId: home,
             slug: 'homePage',
           },
-          slug: `detail-${time}`,
+          slug: `detail-2-${time}`,
           tenant,
         },
         draft: false,
         locale: 'de',
       });
+
+      console.log(foo);
+
     })
       .notRejects();
   });
