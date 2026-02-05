@@ -27,6 +27,7 @@
     "breadcrumb": "Navigating back in the page structure",
     "closeDialog": "Close dialog",
     "linkTarget": "Link target",
+    "logoLinkText": "Back to Homepage",
     "opensInNewWindow": "opens in new window",
     "playVideoText": "Video mit dem Titel «{{title}}» laden und abspielen (EN).",
     "socialLinks": {

@@ -71,6 +71,7 @@ const defaultArgs: InterfaceHeaderComponentPropTypes = {
   navigation: {
     navItems: defaultNavItems,
   },
+  tenant: 'sagw',
 };
 
 export const HeaderDark: StrictStory = {

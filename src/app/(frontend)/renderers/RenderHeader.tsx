@@ -10,22 +10,25 @@ import {
 } from 'next-intl/server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { CMSConfigError } from '../utilities/CMSConfigError';
+import { getTenantName } from '../utilities/getTenantName';
 
 type InterfaceHeaderRendererProps = {
+  colorMode: ColorMode;
   tenant: string;
   currentPageId?: string;
 }
 
 export const RenderHeader = async ({
+  colorMode,
   tenant,
   currentPageId,
 }: InterfaceHeaderRendererProps): Promise<React.JSX.Element> => {
   const payload = await getPayloadCached();
   const locale = (await getLocale()) as TypedLocale;
   const i18nMenu = await getTranslations('menu');
-
-  // TODO
-  const colorMode: ColorMode = 'dark';
+  const tenantName = await getTenantName({
+    id: tenant,
+  });
 
   // get header data
   const headerData = await payload.find({
@@ -68,6 +71,7 @@ export const RenderHeader = async ({
     },
     metanav: metanavData,
     navigation: navData,
+    tenant: tenantName.name || 'sagw',
   };
 
   return (

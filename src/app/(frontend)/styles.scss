@@ -4,6 +4,12 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 100%;
+  scrollbar-gutter: stable;
+  scroll-padding-block-start: px-to-rem(var(--hero-padding-block-start) + var(--spacing-xl));
+}
+
 html.no-js figure > div:first-child img {
   display: none;
 }
@@ -11,7 +17,6 @@ html.no-js figure > div:first-child img {
 body {
   @include body-text-s;
 
-  font-size: var(--font-size-base);
   background: var(--background-page);
 }
 

@@ -27,6 +27,7 @@
     "breadcrumb": "Revenir en arrière dans la structure du site",
     "closeDialog": "Fermer le dialogue",
     "linkTarget": "La cible du lien",
+    "logoLinkText": "Zurück zur Startseite (FR)",
     "opensInNewWindow": "s'ouvre dans une nouvelle fenêtre.",
     "playVideoText": "Video mit dem Titel «{{title}}» laden und abspielen (FR).",
     "socialLinks": {
