@@ -58,6 +58,10 @@ export const explicitRoleLogin = async (type: 'super-admin' | 'sagw-admin' | 'fg
     },
   });
 
+  if (!user) {
+    throw new Error('Login failed: user is undefined');
+  }
+
   let tenant;
 
   if (type !== 'super-admin') {
@@ -71,6 +75,9 @@ export const explicitRoleLogin = async (type: 'super-admin' | 'sagw-admin' | 'fg
   return {
     payload,
     tenant,
-    user,
+    user: {
+      ...user,
+      collection: 'users' as const,
+    },
   };
 };
