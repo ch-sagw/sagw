@@ -35,6 +35,9 @@ test.describe('Slug field UI', () => {
     const nbspButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-nonBreakingSpaceButton');
     const superscriptButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-superscript');
     const subscriptButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-subscript');
+    const navigationTitle = await page.locator('#field-navigationTitle');
+    const parentPage = await page.locator('#field-parentPage');
+    const sidebar = await page.locator('.document-fields__sidebar-fields');
 
     await heroField.fill('Sample Detail. Page. $name üöä');
 
@@ -45,6 +48,12 @@ test.describe('Slug field UI', () => {
     await heroField.pressSequentially('sup');
     await subscriptButton.click();
     await heroField.pressSequentially('sub');
+    await navigationTitle.fill('nav title');
+    await parentPage.click();
+
+    const homePageParentPage = await sidebar.getByText('Home Page');
+
+    await homePageParentPage.click();
 
     // save
     const saveButton = await page.getByRole('button', {

@@ -83,7 +83,7 @@ export const explicitRoleLogin = async (type: 'super-admin' | 'sagw-admin' | 'fg
     },
   });
 
-  if (homeDocs.docs.length < 1) {
+  if (homeDocs.docs.length < 1 && user.tenants?.length && user.tenants.length > 0) {
     home = await payload.create({
       collection: 'homePage',
       data: {
