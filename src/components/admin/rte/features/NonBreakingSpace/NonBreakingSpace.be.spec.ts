@@ -6,9 +6,11 @@ import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
+import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 
 test.describe('NonBreakingSpace', () => {
   beforeEachPayloadLogin();
+  beforeEachAcceptCookies();
 
   test('correctly displays in rte field', async ({
     page,
@@ -127,5 +129,64 @@ test.describe('NonBreakingSpace', () => {
 
     await expect(fieldToScreenshot)
       .toHaveScreenshot();
+  });
+
+  test('correctly renders in frontend', async ({
+    page,
+  }) => {
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
+    await page.waitForLoadState('networkidle');
+
+    const rteField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
+      .nth(0);
+    const nbspButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-nonBreakingSpaceButton');
+
+    await rteField.fill('detailpagetitle-non-breaking-space');
+    await nbspButton.click();
+    await rteField.pressSequentially('bar');
+
+    const saveButton = await page.getByRole('button', {
+      name: 'Publish changes',
+    });
+
+    await saveButton.click();
+
+    const addContentButton = await page.getByText('Add Content', {
+      exact: true,
+    });
+
+    await addContentButton.click();
+
+    const addTextBlockButton = await page.getByText('Richtext', {
+      exact: true,
+    });
+
+    await addTextBlockButton.click();
+
+    const rteField2 = await page.locator('#field-content .blocks-field__row');
+    const rteInputField2 = await rteField2.locator('.rich-text-lexical .ContentEditable__root');
+    const nbspButton2 = await rteField2.locator('.rich-text-lexical .toolbar-popup__button-nonBreakingSpaceButton');
+
+    await rteInputField2.fill('detailpagetitle');
+    await nbspButton2.click();
+    await rteInputField2.pressSequentially('bar');
+
+    await saveButton.click();
+
+    await page.goto('http://localhost:3000/de/detailpagetitle-non-breaking-space-bar');
+    await page.waitForLoadState('networkidle');
+
+    const titleText = await page.getByText('detailpagetitle-non-breaking-space bar')
+      .innerHTML();
+    const rteText = await page.getByText('detailpagetitle bar')
+      .innerHTML();
+
+    await expect(titleText)
+      .toMatch(/detailpagetitle-non-breaking-space&nbsp;bar/u);
+    await expect(rteText)
+      .toMatch(/detailpagetitle&nbsp;bar/u);
   });
 });

@@ -6,9 +6,11 @@ import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
+import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 
 test.describe('Softhyphen', () => {
   beforeEachPayloadLogin();
+  beforeEachAcceptCookies();
 
   test('correctly displays in hero field', async ({
     page,
@@ -127,5 +129,69 @@ test.describe('Softhyphen', () => {
 
     await expect(fieldToScreenshot)
       .toHaveScreenshot();
+  });
+
+  test('correctly renders in frontend', async ({
+    page,
+  }) => {
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
+    await page.waitForLoadState('networkidle');
+
+    const rteField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
+      .nth(0);
+    const hyphenButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-softHyphenButton');
+
+    await rteField.fill('detailpagetitle');
+    await hyphenButton.click();
+    await rteField.pressSequentially('bar');
+
+    // save
+    const saveButton = await page.getByRole('button', {
+      name: 'Publish changes',
+    });
+
+    await saveButton.click();
+
+    const addContentButton = await page.getByText('Add Content', {
+      exact: true,
+    });
+
+    await addContentButton.click();
+
+    const addTextBlockButton = await page.getByText('Richtext', {
+      exact: true,
+    });
+
+    await addTextBlockButton.click();
+
+    const rteField2 = await page.locator('#field-content .blocks-field__row');
+    const rteInputField2 = await rteField2.locator('.rich-text-lexical .ContentEditable__root');
+    const hyphenButton2 = await rteField2.locator('.rich-text-lexical .toolbar-popup__button-softHyphenButton');
+
+    await rteInputField2.fill('detailpagetitle');
+    await hyphenButton2.click();
+    await rteInputField2.pressSequentially('bar');
+
+    // save
+    await saveButton.click();
+
+    await page.goto('http://localhost:3000/de/detailpagetitlebar');
+    await page.waitForLoadState('networkidle');
+
+    const texts = await page.getByText('detailpagetitlebar');
+
+    const titleText = await texts.nth(0)
+      .textContent();
+    const rteText = await texts.nth(1)
+      .textContent();
+
+    await expect(titleText)
+      .toMatch(/detailpagetitle\u00ADbar/u);
+    await expect(rteText)
+      .toMatch(/detailpagetitle\u00ADbar/u);
+
   });
 });
