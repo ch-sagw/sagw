@@ -4,11 +4,13 @@ import {
   LinkHTMLConverter as linkHTMLConverter,
 } from '@payloadcms/richtext-lexical/html';
 import {
-  SerializedSoftHyphenNode, softHyphenJSXConverter,
-} from '@/components/admin/rte/features/SoftHyphen/SoftHyphenNode';
+  type SerializedSoftHyphenNode,
+  softHyphenJSXConverter,
+} from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.shared';
 import {
-  nonBreakingSpaceJSXConverter, SerializedNonBreakingSpaceNode,
-} from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpaceNode';
+  nonBreakingSpaceJSXConverter,
+  type SerializedNonBreakingSpaceNode,
+} from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpace.shared';
 import {
   DefaultNodeTypes, SerializedLinkNode,
 } from '@payloadcms/richtext-lexical';

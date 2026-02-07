@@ -68,4 +68,64 @@ test.describe('NonBreakingSpace', () => {
       .toBe('unicode-char-nbsp');
 
   });
+
+  test('correctly displays in textblock', async ({
+    page,
+  }) => {
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
+    await page.waitForLoadState('networkidle');
+
+    const heroField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
+      .nth(0);
+
+    await heroField.fill('detailpagetitle');
+
+    const addContentButton = await page.getByText('Add Content', {
+      exact: true,
+    });
+
+    await addContentButton.click();
+
+    const addTextBlockButton = await page.getByText('Richtext', {
+      exact: true,
+    });
+
+    await addTextBlockButton.click();
+
+    const rteField = await page.locator('#field-content .blocks-field__row');
+    const fieldToScreenshot = await rteField.locator('.LexicalEditorTheme__paragraph');
+    const rteInputField = await rteField.locator('.rich-text-lexical .ContentEditable__root');
+    const nbspButton = await rteField.locator('.rich-text-lexical .toolbar-popup__button-nonBreakingSpaceButton');
+
+    await rteInputField.fill('detailpagetitle');
+    await nbspButton.click();
+    await rteInputField.pressSequentially('bar');
+
+    // save
+    const saveButton = await page.getByRole('button', {
+      name: 'Publish changes',
+    });
+
+    await saveButton.click();
+
+    // wait for confirmation toast and close it
+    const closeToast = await page.locator('.payload-toast-container [data-close-button="true"]');
+
+    await closeToast.click();
+
+    // add another block to make sure that previous has finished loading
+    await addContentButton.click();
+
+    const addTextBlockButton2 = (await page.getByText('Richtext', {
+      exact: true,
+    })).nth(1);
+
+    await addTextBlockButton2.click();
+
+    await expect(fieldToScreenshot)
+      .toHaveScreenshot();
+  });
 });
