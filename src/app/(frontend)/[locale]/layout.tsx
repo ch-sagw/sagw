@@ -2,7 +2,6 @@ import 'server-only';
 import React from 'react';
 import '../styles.scss';
 import { TypedLocale } from 'payload';
-import { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { NoJsScript } from '@/components/helpers/noJsScript';
@@ -13,30 +12,6 @@ type InterfaceRootLayoutProps = {
     locale: string
   }>
 }
-
-// TODO: get proper metadata
-export const metadata: Metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  icons: {
-    apple: [
-      {
-        sizes: '180x180',
-        url: '/favicons/sagw/apple-touch-icon-dark.png',
-      },
-    ],
-    icon: [
-      {
-        sizes: '32x32',
-        url: '/favicons/sagw/favicon.ico',
-      },
-      {
-        type: 'image/svg+xml',
-        url: '/favicons/sagw/favicon.svg',
-      },
-    ],
-  },
-  title: 'Payload Blank Template',
-};
 
 export default async function RootLayout({
   children,

@@ -39,6 +39,17 @@ export const fieldsTabMeta: Tab = {
             required: true,
           },
         }),
+        {
+          fields: [
+            {
+              name: 'keyword',
+              type: 'text',
+            },
+          ],
+          maxRows: 10,
+          name: 'keywords',
+          type: 'array',
+        },
         /* eslint-enable new-cap */
       ],
       label: 'General',

@@ -253,6 +253,12 @@ export interface HomePage {
        */
       image?: (string | null) | Image;
       description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -1471,6 +1477,12 @@ export interface ErrorPage {
        */
       image?: (string | null) | Image;
       description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -1498,6 +1510,12 @@ export interface DataPrivacyPage {
        */
       image?: (string | null) | Image;
       description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -1562,6 +1580,12 @@ export interface ImpressumPage {
        */
       image?: (string | null) | Image;
       description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -1629,6 +1653,12 @@ export interface MagazineDetailPage {
        */
       image?: (string | null) | Image;
       description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -2001,6 +2031,12 @@ export interface NewsDetailPage {
        */
       image?: (string | null) | Image;
       description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -2220,6 +2256,12 @@ export interface EventDetailPage {
        */
       image?: (string | null) | Image;
       description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -2421,6 +2463,12 @@ export interface PublicationDetailPage {
        */
       image?: (string | null) | Image;
       description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -2593,6 +2641,12 @@ export interface ProjectDetailPage {
        */
       image?: (string | null) | Image;
       description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -2882,6 +2936,12 @@ export interface OverviewPage {
        */
       image?: (string | null) | Image;
       description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -3520,6 +3580,12 @@ export interface DetailPage {
        */
       image?: (string | null) | Image;
       description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -3652,6 +3718,12 @@ export interface NationalDictionaryDetailPage {
        */
       image?: (string | null) | Image;
       description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -3713,6 +3785,12 @@ export interface InstituteDetailPage {
        */
       image?: (string | null) | Image;
       description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -5007,6 +5085,12 @@ export interface HomePageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5223,6 +5307,12 @@ export interface ErrorPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5254,6 +5344,12 @@ export interface DataPrivacyPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5294,6 +5390,12 @@ export interface ImpressumPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5340,6 +5442,12 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5500,6 +5608,12 @@ export interface OverviewPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5744,6 +5858,12 @@ export interface DetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5850,6 +5970,12 @@ export interface EventDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5897,6 +6023,12 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5961,6 +6093,12 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -6013,6 +6151,12 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -6056,6 +6200,12 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -6106,6 +6256,12 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
