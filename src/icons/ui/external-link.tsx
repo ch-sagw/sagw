@@ -22,7 +22,7 @@ const svgData = {
 };
 
 // Generate string version of SVG. Used in RTE component.
-export const externalLink = `<svg viewBox="${svgData.viewBox}" fill="${svgData.fill}" xmlns="${svgData.xmlns}">${svgData.paths.map((path) => `<path ${Object.entries(path)
+export const externalLink = `<svg role='presentation' viewBox="${svgData.viewBox}" fill="${svgData.fill}" xmlns="${svgData.xmlns}">${svgData.paths.map((path) => `<path ${Object.entries(path)
   .map(([
     key,
     value,
@@ -32,7 +32,7 @@ export const externalLink = `<svg viewBox="${svgData.viewBox}" fill="${svgData.f
 
 // Generate React component. Used in Icon component.
 const icon = (): JSX.Element => (
-  <svg viewBox={svgData.viewBox} fill={svgData.fill} xmlns={svgData.xmlns}>
+  <svg role='presentation' viewBox={svgData.viewBox} fill={svgData.fill} xmlns={svgData.xmlns}>
     {svgData.paths.map((path, index) => (
       <path key={index} {...path} />
     ))}

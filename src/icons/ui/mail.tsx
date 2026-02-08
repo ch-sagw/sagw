@@ -19,7 +19,7 @@ const svgData = {
 };
 
 // Generate string version of SVG. Used in RTE component.
-export const mail = `<svg viewBox="${svgData.viewBox}" fill="${svgData.fill}" xmlns="${svgData.xmlns}">${svgData.paths.map((path) => `<path ${Object.entries(path)
+export const mail = `<svg role='presentation' viewBox="${svgData.viewBox}" fill="${svgData.fill}" xmlns="${svgData.xmlns}">${svgData.paths.map((path) => `<path ${Object.entries(path)
   .map(([
     key,
     value,
@@ -28,7 +28,7 @@ export const mail = `<svg viewBox="${svgData.viewBox}" fill="${svgData.fill}" xm
   .join('')}</svg>`;
 
 const icon = (): JSX.Element => (
-  <svg viewBox={svgData.viewBox} fill={svgData.fill} xmlns={svgData.xmlns}>
+  <svg role='presentation' viewBox={svgData.viewBox} fill={svgData.fill} xmlns={svgData.xmlns}>
     {svgData.paths.map((path, index) => (
       <path key={index} {...path} />
     ))}
