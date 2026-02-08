@@ -16,6 +16,7 @@ import {
   SerializedParagraphNode, SerializedTextNode,
 } from '@payloadcms/richtext-lexical/lexical';
 import { externalLink } from '@/icons/ui/external-link';
+import { mail } from '@/icons/ui/mail';
 import slugify from 'slugify';
 
 // Union type for all possible lexical nodes
@@ -237,19 +238,30 @@ const processLexicalNodes = (
   }
 
   // Process link nodes to add icons
-  if (node.type === 'link') {
+  if (node.type === 'link' || node.type === 'autolink') {
     const linkNode = node as SerializedLinkNode;
     const processedChildren = processLexicalNodes(linkNode.children || [], idTracker);
     const hasExternalLink = linkNode.fields?.newTab === true;
+    const hasMailToLink = linkNode.fields?.url?.includes('mailto');
+
+    let icon;
+
+    if (hasExternalLink) {
+      icon = externalLink;
+    }
+
+    if (hasMailToLink) {
+      icon = mail;
+    }
 
     // Add external link icon as a new text node if needed
-    if (hasExternalLink) {
+    if (icon !== undefined) {
       const iconNode: SerializedTextNode = {
         detail: 0,
         format: 0,
         mode: 'normal',
         style: '',
-        text: externalLink,
+        text: icon,
         type: 'text',
         version: 1,
       };

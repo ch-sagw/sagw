@@ -51,10 +51,6 @@ const renderLink = ({
     icon = 'phone';
   }
 
-  console.log('link.type');
-  console.log(link.type);
-  console.log(icon);
-
   if (wrapper === 'a') {
     return (
       <Button

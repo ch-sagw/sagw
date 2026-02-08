@@ -10,9 +10,10 @@
 @mixin inline-svg {
   svg {
     display: inline-block;
-    width: px-to-rem(var(--spacing-l));
-    height: px-to-rem(var(--spacing-l));
+    width: px-to-rem(calc(var(--spacing-m) + var(--spacing-2xs)));
+    height: px-to-rem(calc(var(--spacing-m) + var(--spacing-2xs)));
     stroke: var(--interaction-secondary);
+    stroke-width: px-to-rem(2);
     margin-block-start: px-to-rem(-3);
     margin-block-end: px-to-rem(-4);
     margin-inline-start: px-to-rem(var(--spacing-2xs));
