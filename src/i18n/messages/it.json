@@ -23,6 +23,10 @@
       }
     }
   },
+  "landmarks": {
+    "footerNavigation": "Navigation im Footerbereich (IT)",
+    "mainNavigation": "Hauptnavigation (IT)"
+  },
   "a11y": {
     "breadcrumb": "Torna indietro nella struttura delle pagine",
     "closeDialog": "Chiudi finestra di dialogo",
