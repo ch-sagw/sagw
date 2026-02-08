@@ -4,16 +4,16 @@ const svgData = {
   fill: 'none',
   paths: [
     {
-      d: 'M1 8L16 8',
+      d: 'M0 12.1335L22.9999 12.1335',
       strokeWidth: '1.5',
     },
     {
-      d: 'M11.5 3.5L16 8L11.5 12.5',
+      d: 'M16.1001 6L23.0001 12.1333L16.1001 18.2667',
       strokeLinecap: 'square' as const,
       strokeWidth: '1.5',
     },
   ],
-  viewBox: '0 0 18 16',
+  viewBox: '0 0 24 24',
   xmlns: 'http://www.w3.org/2000/svg',
 };
 

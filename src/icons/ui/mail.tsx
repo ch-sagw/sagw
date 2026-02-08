@@ -1,9 +1,37 @@
-import { JSX } from 'react';
+import React, { JSX } from 'react';
+
+const svgData = {
+  fill: 'none',
+  paths: [
+    {
+      d: 'M3.00011 5.25H21.0001V18C21.0001 18.1989 21.0001 18.75 21.0001 18.75C21.0001 18.75 20.449 18.75 20.2501 18.75H3.75011C3.5512 18.75 3.00011 18.75 3.00011 18.75C3.00011 18.75 3.00011 18.1989 3.00011 18V5.25Z',
+      strokeLinecap: 'round' as const,
+      strokeWidth: '1.5',
+    },
+    {
+      d: 'M21 5.25L12 13.5L3 5.25',
+      strokeLinecap: 'round' as const,
+      strokeWidth: '1.5',
+    },
+  ],
+  viewBox: '0 0 24 24',
+  xmlns: 'http://www.w3.org/2000/svg',
+};
+
+// Generate string version of SVG. Used in RTE component.
+export const mail = `<svg viewBox="${svgData.viewBox}" fill="${svgData.fill}" xmlns="${svgData.xmlns}">${svgData.paths.map((path) => `<path ${Object.entries(path)
+  .map(([
+    key,
+    value,
+  ]) => `${key}="${value}"`)
+  .join(' ')} />`)
+  .join('')}</svg>`;
 
 const icon = (): JSX.Element => (
-  <svg viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-    <path d='M3.50011 5.25H21.5001V18C21.5001 18.1989 21.5001 18.75 21.5001 18.75C21.5001 18.75 20.949 18.75 20.7501 18.75H4.25011C4.0512 18.75 3.50011 18.75 3.50011 18.75C3.50011 18.75 3.50011 18.1989 3.50011 18V5.25Z' strokeWidth='1.5' strokeLinecap='round' />
-    <path d='M21.5 5.25L12.5 13.5L3.5 5.25' strokeWidth='1.5' strokeLinecap='round' />
+  <svg viewBox={svgData.viewBox} fill={svgData.fill} xmlns={svgData.xmlns}>
+    {svgData.paths.map((path, index) => (
+      <path key={index} {...path} />
+    ))}
   </svg>
 );
 
