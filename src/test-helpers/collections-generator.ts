@@ -36,6 +36,7 @@ import {
 import { getTenant } from '@/test-helpers/tenant-generator';
 import slugify from 'slugify';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { seoData } from '@/seed/test-data/seoData';
 
 interface InterfacePageProps {
   title: string;
@@ -118,6 +119,7 @@ const generatePage = async ({
         colorMode: 'light',
         title: simpleRteConfig(title),
       },
+      ...seoData,
       navigationTitle,
       parentPage,
       slug: slugify(title, {
@@ -166,6 +168,7 @@ export const generateHomePage = async ({
         sideTitle: simpleRteConfig(sideTitle),
         title: simpleRteConfig(title),
       },
+      ...seoData,
       tenant,
     },
     locale: locale || 'de',
@@ -262,6 +265,7 @@ export const generateEventDetailPage = async (props: InterfaceEventPageProps): P
       },
       navigationTitle: props.navigationTitle,
       parentPage: props.parentPage,
+      ...seoData,
       showDetailPage: 'true',
       slug: slugify(props.title, {
         lower: true,
@@ -311,6 +315,7 @@ export const generateInstituteDetailPage = async (props: InterfacePageProps): Pr
         colorMode: 'light',
         title: simpleRteConfig(props.title),
       },
+      ...seoData,
       navigationTitle: props.navigationTitle,
       overviewPageProps: {
         image: image.id,
@@ -359,6 +364,7 @@ export const generateMagazineDetailPage = async (props: InterfaceMagazinePagePro
           : '2030-08-01T12:00:00.000Z',
         title: simpleRteConfig(props.title),
       },
+      ...seoData,
       navigationTitle: props.navigationTitle,
       overviewPageProps: {
         teaserText: simpleRteConfig('some text'),
@@ -402,6 +408,7 @@ export const generateNationalDictionaryDetailPage = async (props: InterfacePageP
         colorMode: 'light',
         title: simpleRteConfig(props.title),
       },
+      ...seoData,
       navigationTitle: props.navigationTitle,
       overviewPageProps: {
         teaserText: simpleRteConfig('some text'),
@@ -448,6 +455,7 @@ export const generateNewsDetailPage = async (props: InterfaceNewsPageProps): Pro
           : '2030-08-01T12:00:00.000Z',
         title: simpleRteConfig(props.title),
       },
+      ...seoData,
       navigationTitle: props.navigationTitle,
       overviewPageProps: {
         teaserText: simpleRteConfig('some text'),
@@ -510,6 +518,7 @@ export const generateProjectDetailPage = async (props: InterfaceProjectPageProps
         colorMode: 'light',
         title: simpleRteConfig(props.title),
       },
+      ...seoData,
       navigationTitle: props.navigationTitle,
       overviewPageProps: {
         linkText: simpleRteConfig('some text'),
@@ -569,6 +578,7 @@ export const generatePublicationDetailPage = async (props: InterfacePublicationP
         colorMode: 'light',
         title: simpleRteConfig(props.title),
       },
+      ...seoData,
       navigationTitle: props.navigationTitle,
       overviewPageProps: {
         date: props.date || '2030-08-01T12:00:00.000Z',
@@ -747,6 +757,7 @@ export const generateDataPrivacyPage = async ({
         colorMode: 'dark',
         title: simpleRteConfig('Data privacy page'),
       },
+      ...seoData,
       tenant,
     },
   });
@@ -775,6 +786,7 @@ export const generateImpressumPage = async ({
         colorMode: 'dark',
         title: simpleRteConfig('Impressum page'),
       },
+      ...seoData,
       tenant,
     },
   });

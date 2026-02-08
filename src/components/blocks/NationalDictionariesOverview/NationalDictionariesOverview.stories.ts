@@ -7,6 +7,7 @@ import { defaultDecorator } from '@/storybook-helpers';
 import { NationalDictionaryDetailPage } from '@/payload-types';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { prerenderPageLinksStorybook } from '@/utilities/prerenderPageLinksStorybook';
+import { seoData } from '@/seed/test-data/seoData';
 
 type NationalDictionariesOverviewProps = React.ComponentProps<typeof NationalDictionaryOverviewComponent>;
 
@@ -45,6 +46,7 @@ const pages: NationalDictionaryDetailPage[] = Array.from({
       lead: simpleRteConfig('National Dictionary Detail Page Lead'),
       title: simpleRteConfig(`National Dictionary detail page ${index} title`),
     },
+    ...seoData,
     id: index.toString(),
     navigationTitle: 'National Dictionary Detail',
     overviewPageProps: {

@@ -11,6 +11,7 @@ import { EventDetailPage } from '@/payload-types';
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
+import { seoData } from '@/seed/test-data/seoData';
 
 test.describe('links', () => {
   test.beforeEach(async () => {
@@ -46,6 +47,7 @@ test.describe('links', () => {
           slug: `${(new Date())
             .toString()} - 1`,
           tenant,
+          ...seoData,
         },
         draft: false,
       });
@@ -89,6 +91,7 @@ test.describe('links', () => {
           slug: `${(new Date())
             .toString()} - 2`,
           tenant,
+          ...seoData,
         },
         draft: false,
       });
@@ -132,6 +135,7 @@ test.describe('links', () => {
           slug: `${(new Date())
             .toString()} - 3`,
           tenant,
+          ...seoData,
         },
         draft: false,
       });
@@ -175,6 +179,7 @@ test.describe('links', () => {
           slug: `${(new Date())
             .toString()} - 4`,
           tenant,
+          ...seoData,
         },
         draft: false,
       });

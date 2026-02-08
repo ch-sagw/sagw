@@ -9,6 +9,7 @@ import {
 } from '@/utilities/rteSampleContent';
 import { InterfaceNetworkTeaserPropTypes } from '@/components/blocks/NetworkTeaser/NetworkTeaser';
 import { HomePage } from '@/payload-types';
+import { seoData } from '@/seed/test-data/seoData';
 
 interface InterfaceAddDataForTenantProps {
   payload: Payload;
@@ -661,6 +662,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         lead: simpleRteConfig('Detail Page for nav link 1 lead'),
         title: simpleRteConfig(`Detail Page for nav link 1 ${tenant.toUpperCase()}`),
       },
+      ...seoData,
       navigationTitle: `Detail Page for nav link 1 ${tenant.toUpperCase()}`,
       parentPage: {
         documentId: home.id,
@@ -683,6 +685,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         lead: simpleRteConfig('Detail Page for nav link 2 lead'),
         title: simpleRteConfig(`Detail Page for nav link 2 ${tenant.toUpperCase()}`),
       },
+      ...seoData,
       navigationTitle: `Detail Page for nav link 2 ${tenant.toUpperCase()}`,
       parentPage: {
         documentId: navLinkDetail1.id,
@@ -705,6 +708,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         lead: simpleRteConfig('Detail Page for nav link 3 lead'),
         title: simpleRteConfig(`Detail Page for nav link 3 ${tenant.toUpperCase()}`),
       },
+      ...seoData,
       navigationTitle: `Detail Page for nav link 3 ${tenant.toUpperCase()}`,
       parentPage: {
         documentId: navLinkDetail2.id,
@@ -909,6 +913,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         title: simpleRteConfig(`Not found title ${tenant.toUpperCase()}`),
       },
       homeButtonText: simpleRteConfig('Home Button Text'),
+      ...seoData,
       tenant: tenantId,
     },
   });
@@ -931,6 +936,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         colorMode: 'dark',
         title: simpleRteConfig(`Impressum page ${tenant}`),
       },
+      ...seoData,
       tenant: tenantId,
     },
   });
@@ -953,6 +959,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         colorMode: 'dark',
         title: simpleRteConfig(`Data privacy page ${tenant}`),
       },
+      ...seoData,
       tenant: tenantId,
     },
   });
@@ -1031,6 +1038,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         lead: simpleRteConfig('Detail Page Lead'),
         title: simpleRteConfig(`Detail page title ${tenant.toUpperCase()}`),
       },
+      ...seoData,
       navigationTitle: 'Detail Page',
       slug: `detail-page-title-${tenant.toLocaleLowerCase()}`,
       tenant: tenantId,
@@ -1070,6 +1078,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         lead: simpleRteConfig('Overview Page Lead'),
         title: simpleRteConfig(`Overview page title ${tenant.toUpperCase()}`),
       },
+      ...seoData,
       navigationTitle: `Overview page title ${tenant.toUpperCase()}`,
       slug: `overview-page-title-${tenant.toLowerCase()}`,
       tenant: tenantId,
@@ -1096,6 +1105,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         lead: simpleRteConfig('Overview Page Lead'),
         title: simpleRteConfig(`News Overview ${tenant.toUpperCase()}`),
       },
+      ...seoData,
       navigationTitle: 'News',
       slug: `overview-page-with-news-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
@@ -1124,6 +1134,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         lead: simpleRteConfig('Overview Page Lead'),
         title: simpleRteConfig(`Publications Overview ${tenant.toUpperCase()}`),
       },
+      ...seoData,
       navigationTitle: 'Publications',
       slug: `publications-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
@@ -1150,6 +1161,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         lead: simpleRteConfig('Overview Page Lead'),
         title: simpleRteConfig(`Events Overview ${tenant.toUpperCase()}`),
       },
+      ...seoData,
       navigationTitle: 'Events',
       slug: `overview-page-with-events-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
@@ -1188,6 +1200,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         colorMode: 'light',
         title: simpleRteConfig('Editions overview'),
       },
+      ...seoData,
       navigationTitle: 'Editionen',
       slug: `editions-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
@@ -1212,6 +1225,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         colorMode: 'light',
         title: simpleRteConfig('Institutes overview'),
       },
+      ...seoData,
       navigationTitle: 'Institutes',
       slug: `institutes-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
@@ -1235,6 +1249,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         colorMode: 'light',
         title: simpleRteConfig('Magazine overview'),
       },
+      ...seoData,
       navigationTitle: 'Magazine overview',
       slug: `magazine-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
@@ -1259,6 +1274,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         colorMode: 'light',
         title: simpleRteConfig('National Dictionaries overview'),
       },
+      ...seoData,
       navigationTitle: 'National Dictionaries overview',
       slug: `national-dictionaries-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
@@ -1309,6 +1325,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         colorMode: 'light',
         title: simpleRteConfig('Network overview'),
       },
+      ...seoData,
       navigationTitle: 'Network overview',
       slug: `network-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
@@ -1333,6 +1350,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         colorMode: 'light',
         title: simpleRteConfig('People overview'),
       },
+      ...seoData,
       navigationTitle: 'People overview',
       slug: `people-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
@@ -1356,6 +1374,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         colorMode: 'light',
         title: simpleRteConfig('Projects overview'),
       },
+      ...seoData,
       navigationTitle: 'Projects overview',
       slug: `projects-overview-${tenant.toLowerCase()}`,
       tenant: tenantId,
@@ -1436,6 +1455,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         lead: simpleRteConfig('Lead'),
         title: simpleRteConfig(`Overview page with Teasers ${tenant.toUpperCase()}`),
       },
+      ...seoData,
       navigationTitle: 'Teasers Overview',
       slug: `teasers-overview-page-${tenant.toLowerCase()}`,
       tenant: tenantId,
@@ -1478,6 +1498,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           lead: simpleRteConfig('Magazine Detail Page Lead'),
           title: simpleRteConfig(`Magazine detail page ${index} ${tenant.toUpperCase()}`),
         },
+        ...seoData,
         navigationTitle: `Article ${index}`,
         overviewPageProps: {
           teaserText: simpleRteConfig('Magazine Detail Teaser Text'),
@@ -1561,6 +1582,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           time: '2025-08-31T12:00:00.000Z',
           title: simpleRteConfig(`Event ${index} details title ${tenant.toUpperCase()} (render detail page)`),
         },
+        ...seoData,
         navigationTitle: 'Event',
         parentPage: {
           documentId: eventsOverview.id,
@@ -1603,6 +1625,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           documentId: eventsOverview.id,
           slug: 'overviewPage',
         },
+        ...seoData,
         showDetailPage: 'false',
         slug: `event-${index}-details-title-${tenant.toLocaleLowerCase()}-render-link`,
         tenant: tenantId,
@@ -1632,6 +1655,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           lead: simpleRteConfig(`News ${index} Detail Page Lead`),
           title: simpleRteConfig(`News ${index} detail page title ${tenant.toUpperCase()}`),
         },
+        ...seoData,
         navigationTitle: 'News Page',
         overviewPageProps: {
           teaserText: simpleRteConfig(`Overview Teaser Text from News ${index}`),
@@ -1679,6 +1703,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           lead: simpleRteConfig('Publication Detail Page Lead'),
           title: simpleRteConfig(`Publication detail page ${index} ${tenant.toUpperCase()}`),
         },
+        ...seoData,
         navigationTitle: `Publication ${index}`,
         overviewPageProps: {
           date: '2025-08-31T12:00:00.000Z',
@@ -1712,6 +1737,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           lead: simpleRteConfig('Institute Detail Page Lead'),
           title: simpleRteConfig(`Institute detail page title ${index} ${tenant.toUpperCase()}`),
         },
+        ...seoData,
         navigationTitle: 'Institute',
         overviewPageProps: {
           image,
@@ -1741,6 +1767,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           lead: simpleRteConfig('National Dictionary Detail Page Lead'),
           title: simpleRteConfig(`National Dictionary detail page ${index} title ${tenant.toUpperCase()}`),
         },
+        ...seoData,
         navigationTitle: `National Dictionary Detail ${index}`,
         overviewPageProps: {
           image,
@@ -1775,6 +1802,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
           linkText: simpleRteConfig('some text'),
           teaserText: simpleRteConfig('Project Teaser Text'),
         },
+        ...seoData,
         project,
         slug: `project-detail-page-title${tenant.toLowerCase()}-${index}`,
         tenant: tenantId,

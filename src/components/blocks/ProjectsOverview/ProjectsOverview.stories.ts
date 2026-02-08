@@ -7,6 +7,7 @@ import { defaultDecorator } from '@/storybook-helpers';
 import { ProjectDetailPage } from '@/payload-types';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { prerenderPageLinksStorybook } from '@/utilities/prerenderPageLinksStorybook';
+import { seoData } from '@/seed/test-data/seoData';
 
 type ProjectsOverviewProps = React.ComponentProps<typeof ProjectOverviewComponent>;
 
@@ -46,6 +47,7 @@ const pages: ProjectDetailPage[] = Array.from({
       lead: simpleRteConfig('Project Detail Page Lead'),
       title: simpleRteConfig(`Project detail page ${index}`),
     },
+    ...seoData,
     id: index.toString(),
     navigationTitle: `Project Detail ${index}`,
     overviewPageProps: {

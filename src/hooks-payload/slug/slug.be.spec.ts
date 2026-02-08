@@ -13,6 +13,7 @@ import {
 } from '@/test-helpers/collections-generator';
 import { extendExpect } from '@/access/test/extendExpect';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { seoData } from '@/seed/test-data/seoData';
 
 extendExpect(expect);
 
@@ -119,6 +120,7 @@ test.describe('Slug field API', () => {
           },
           slug: `detail-${time}`,
           tenant,
+          ...seoData,
         },
         draft: false,
       });
@@ -192,6 +194,7 @@ test.describe('Slug field API', () => {
           },
           slug: `detail-${time}`,
           tenant,
+          ...seoData,
         },
         draft: false,
         locale: 'de',

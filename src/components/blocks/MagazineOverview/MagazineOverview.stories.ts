@@ -8,6 +8,7 @@ import { defaultDecorator } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { MagazineTeaserImage } from '@/components/blocks/helpers/imagesData';
 import { prerenderPageLinksStorybook } from '@/utilities/prerenderPageLinksStorybook';
+import { seoData } from '@/seed/test-data/seoData';
 
 type MagazineOverviewProps = React.ComponentProps<typeof MagazineOverviewComponent>;
 
@@ -50,6 +51,7 @@ const pages: InterfaceMagazineDetailPageWithImage[] = Array.from({
       lead: simpleRteConfig('Magazine Detail Page Lead'),
       title: simpleRteConfig(`Magazine detail page ${index}`),
     },
+    ...seoData,
     id: index.toString(),
     image: MagazineTeaserImage,
     navigationTitle: `Article ${index}`,

@@ -244,15 +244,15 @@ export interface HomePage {
         | InterfaceProjectTeasersBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
     };
   };
   updatedAt: string;
@@ -1462,15 +1462,15 @@ export interface ErrorPage {
       [k: string]: unknown;
     };
   };
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
     };
   };
   updatedAt: string;
@@ -1489,15 +1489,15 @@ export interface DataPrivacyPage {
   adminTitle?: string | null;
   hero: InterfaceHeroField;
   content?: InterfaceTextBlock[] | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
     };
   };
   updatedAt: string;
@@ -1553,15 +1553,15 @@ export interface ImpressumPage {
   adminTitle?: string | null;
   hero: InterfaceHeroField;
   content?: InterfaceTextBlock[] | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
     };
   };
   updatedAt: string;
@@ -1620,15 +1620,15 @@ export interface MagazineDetailPage {
         | InterfaceFootnotesBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
     };
   };
   updatedAt: string;
@@ -1992,15 +1992,15 @@ export interface NewsDetailPage {
         | InterfaceNewsTeasersBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
     };
   };
   updatedAt: string;
@@ -2211,15 +2211,15 @@ export interface EventDetailPage {
   link?: {
     externalLink: string;
   };
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
     };
   };
   updatedAt: string;
@@ -2412,15 +2412,15 @@ export interface PublicationDetailPage {
         | InterfacePublicationsTeasersBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
     };
   };
   updatedAt: string;
@@ -2584,15 +2584,15 @@ export interface ProjectDetailPage {
         | InterfacePublicationsTeasersBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
     };
   };
   updatedAt: string;
@@ -2873,15 +2873,15 @@ export interface OverviewPage {
         | InterfaceProjectTeasersBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
     };
   };
   updatedAt: string;
@@ -3511,15 +3511,15 @@ export interface DetailPage {
         | InterfaceFootnotesBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
     };
   };
   updatedAt: string;
@@ -3643,15 +3643,15 @@ export interface NationalDictionaryDetailPage {
   };
   hero: InterfaceHeroField;
   content?: (InterfaceTextBlock | InterfaceLinksBlock | InterfaceNotificationBlock)[] | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
     };
   };
   updatedAt: string;
@@ -3704,15 +3704,15 @@ export interface InstituteDetailPage {
   };
   hero: InterfaceHeroField;
   content?: (InterfaceTextBlock | InterfaceLinksBlock | InterfaceNotificationBlock)[] | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
     };
   };
   updatedAt: string;

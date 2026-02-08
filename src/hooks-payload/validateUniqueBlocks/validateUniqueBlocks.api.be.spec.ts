@@ -12,6 +12,7 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
+import { seoData } from '@/seed/test-data/seoData';
 
 test.describe('unique-blocks', () => {
   test.beforeEach(async () => {
@@ -125,6 +126,7 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Detail Page Lead'),
             title: simpleRteConfig(`Detail page title ${(new Date())} - 1`),
           },
+          ...seoData,
           slug: `detail-page-title-${(new Date())}-1`,
           tenant: await getTenant(),
         },
@@ -275,6 +277,7 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Detail Page Lead'),
             title: simpleRteConfig(`Detail page title ${(new Date())} - 2`),
           },
+          ...seoData,
           slug: `detail-page-title-${(new Date())}-2`,
           tenant: await getTenant(),
         },
@@ -412,6 +415,7 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Detail Page Lead'),
             title: simpleRteConfig(`Detail page title ${(new Date())} - 3`),
           },
+          ...seoData,
           slug: `detail-page-title-${(new Date())}-3`,
           tenant: await getTenant(),
         },
@@ -454,6 +458,7 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Overview Page Lead'),
             title: simpleRteConfig(`Overview page title ${new Date()} - 1`),
           },
+          ...seoData,
           slug: `overview-page-title-${(new Date())}-1`,
           tenant: await getTenant(),
         },
@@ -496,6 +501,7 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Overview Page Lead'),
             title: simpleRteConfig(`Overview page title ${new Date()} - 2`),
           },
+          ...seoData,
           slug: `overview-page-title-${(new Date())}-2`,
           tenant: await getTenant(),
         },
@@ -555,6 +561,7 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Overview Page Lead'),
             title: simpleRteConfig(`Overview page title ${new Date()} - 3`),
           },
+          ...seoData,
           slug: `overview-page-title-${(new Date())}-3`,
           tenant: await getTenant(),
         },
@@ -599,6 +606,7 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Overview Page Lead'),
             title: simpleRteConfig(`Overview page title ${new Date()} - 4`),
           },
+          ...seoData,
           slug: `overview-page-title-${(new Date())}-4`,
           tenant: await getTenant(),
         },
@@ -666,6 +674,7 @@ test.describe('unique-blocks', () => {
             sideTitle: simpleRteConfig('Side title'),
             title: simpleRteConfig(`Overview page title ${new Date()} - 3`),
           },
+          ...seoData,
           navigationTitle: 'Home',
           tenant: tenant.id,
         },

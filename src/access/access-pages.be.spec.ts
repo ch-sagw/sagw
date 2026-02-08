@@ -16,6 +16,7 @@ import {
   getTenant, getTenantNonSagw,
 } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { seoData } from '@/seed/test-data/seoData';
 
 extendExpect(expect);
 test.describe('access-pages', () => {
@@ -225,6 +226,7 @@ test.describe('access-pages', () => {
               title: simpleRteConfig(`Detail page ${(new Date())
                 .toString()}`),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date()
               .toString())}`,
@@ -267,6 +269,7 @@ test.describe('access-pages', () => {
               title: simpleRteConfig(`Detail page ${(new Date())
                 .toString()}`),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date()
               .toString())}1`,
@@ -306,6 +309,7 @@ test.describe('access-pages', () => {
               title: simpleRteConfig(`Detail page ${(new Date())
                 .toString()}`),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date()
               .toString())}2`,
@@ -345,6 +349,7 @@ test.describe('access-pages', () => {
               title: simpleRteConfig(`Detail page ${(new Date())
                 .toString()}`),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date()
               .toString())}3`,
@@ -386,6 +391,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date())
               .toString()}`,
@@ -449,6 +455,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date())
               .toString()}41`,
@@ -509,6 +516,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date())
               .toString()}42`,
@@ -562,6 +570,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date())
               .toString()}43`,
@@ -624,6 +633,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date())
               .toString()}-1`,
@@ -691,6 +701,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date())
               .toString()}-11`,
@@ -757,6 +768,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date())
               .toString()}-12`,
@@ -815,6 +827,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date())
               .toString()}-13`,
@@ -883,6 +896,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date())
               .toString()}-1`,
@@ -953,6 +967,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date())
               .toString()}-21`,
@@ -1018,6 +1033,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date())
               .toString()}-22`,
@@ -1076,6 +1092,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             slug: `detail-page-title-${(new Date())
               .toString()}-23`,

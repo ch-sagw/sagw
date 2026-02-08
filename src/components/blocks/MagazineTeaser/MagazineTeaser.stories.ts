@@ -8,6 +8,7 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { MagazineTeaserImage } from '@/components/blocks/helpers/imagesData';
 import { InterfaceMagazineDetailPageWithImage } from '@/components/blocks/MagazineOverview/MagazineOverview';
 import { prerenderPageLinksStorybook } from '@/utilities/prerenderPageLinksStorybook';
+import { seoData } from '@/seed/test-data/seoData';
 
 type MagazineTeaserProps = React.ComponentProps<typeof MagazineTeaserComponent>;
 
@@ -46,6 +47,7 @@ const samplePage: InterfaceMagazineDetailPageWithImage = {
     lead: simpleRteConfig('Some lead'),
     title: simpleRteConfig('The Mobility Imperative in Academia'),
   },
+  ...seoData,
   id: '1',
   image: MagazineTeaserImage,
   navigationTitle: '',
