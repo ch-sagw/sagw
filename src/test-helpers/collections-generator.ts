@@ -64,8 +64,12 @@ type InterfacePublicationPageProps = {
 
 type InterfaceEventPageProps = {
   date?: string;
+  dateEnd?: string;
   category?: string;
   project?: string;
+  hideLanguage?: boolean;
+  hideLocation?: boolean;
+  time?: string;
 } & InterfacePageProps;
 
 type InterfaceNewsPageProps = {
@@ -241,11 +245,19 @@ export const generateEventDetailPage = async (props: InterfaceEventPageProps): P
         date: props.date
           ? props.date
           : '2030-08-01T12:00:00.000Z',
-        dateEnd: '2026-01-01T13:00:00.000Z',
-        language: simpleRteConfig('Deutsch'),
-        location: simpleRteConfig('ETH Zürich'),
+        dateEnd: props.dateEnd
+          ? props.dateEnd
+          : undefined,
+        language: props.hideLanguage
+          ? undefined
+          : simpleRteConfig('Deutsch'),
+        location: props.hideLocation
+          ? undefined
+          : simpleRteConfig('ETH Zürich'),
         project,
-        time: '2025-08-31T12:00:00.000Z',
+        time: props.time
+          ? props.time
+          : '2025-08-31T12:00:00.000Z',
         title: simpleRteConfig(props.title),
       },
       navigationTitle: props.navigationTitle,

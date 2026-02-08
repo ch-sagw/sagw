@@ -97,7 +97,12 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
     if (props.eventDetails.time) {
       timeValue = `${formatTime({
         dateString: props.eventDetails.time || '',
-      })} ${props.eventDetails.timeLabelText}`;
+        locale,
+      })}`;
+
+      if (locale === 'de' && props.eventDetails.timeLabelText) {
+        timeValue += ` ${props.eventDetails.timeLabelText}`;
+      }
     }
 
     eventDetailsString = formatEventDetails({
@@ -178,7 +183,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
 
         {/* News detail: date */}
         {props.type === 'newsDetail' && props.date &&
-          <p className={styles.newsDate}>{formatDateToReadableString({
+          <p className={styles.newsDate} data-testid='news-date'>{formatDateToReadableString({
             dateString: props.date,
             locale,
           })}</p>
@@ -186,7 +191,10 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
 
         {/* Event detail: event detail summary */}
         {eventDetailsString &&
-          <p className={styles.eventDetails}>{eventDetailsString}</p>
+          <p
+            className={styles.eventDetails}
+            data-testid='eventdetails'
+          >{eventDetailsString}</p>
         }
 
         {/* Magazine detail: author, date & export button */}

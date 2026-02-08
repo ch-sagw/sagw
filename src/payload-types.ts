@@ -3810,7 +3810,7 @@ export interface InterfaceI18NGeneric {
     [k: string]: unknown;
   };
   /**
-   * On events, we use this to display the time. If you provide the value "Uhr", we display: "09:00 Uhr"
+   * On events, we use this to display the time. If you provide the value "Uhr", we display: "09:00 Uhr". Only used for german language.
    */
   time: {
     root: {
