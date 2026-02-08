@@ -16,9 +16,7 @@ import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 test.describe('langnav', () => {
   beforeEachAcceptCookies();
 
-  test('generates proper langnav links (sagw)', {
-    tag: '@cache',
-  }, async ({
+  test('generates proper langnav links (sagw)', async ({
     page,
   }) => {
     await deleteSetsPages();
@@ -108,9 +106,7 @@ test.describe('langnav', () => {
       .toStrictEqual(`/it/overview-it-${time}/magazine-detail-it-${time}`);
   });
 
-  test('generates proper langnav links (non-sagw)', {
-    tag: '@cache',
-  }, async ({
+  test('generates proper langnav links (non-sagw)', async ({
     page,
   }) => {
     await deleteSetsPages();
