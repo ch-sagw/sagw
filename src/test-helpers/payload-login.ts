@@ -5,6 +5,7 @@ import {
 } from '@/payload-types';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { seoData } from '@/seed/test-data/seoData';
 
 export const beforeEachPayloadLogin = (): void => {
   test.beforeEach(async ({
@@ -98,6 +99,7 @@ export const explicitRoleLogin = async (type: 'super-admin' | 'sagw-admin' | 'fg
           sideTitle: simpleRteConfig('home side'),
           title: simpleRteConfig('home'),
         },
+        ...seoData,
         tenant,
       },
       locale: 'de',
