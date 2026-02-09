@@ -22,12 +22,12 @@ import { CMSConfigError } from '../utilities/CMSConfigError';
 import { SkipLinks } from '@/components/global/SkipLinks/SkipLinks';
 import { ColorMode } from '@/components/base/types/colorMode';
 
-interface InterfacePreFetchedHomePageData {
+export interface InterfacePreFetchedHomePageData {
   pageData: HomePage;
   optionalLinkUrl?: string;
 }
 
-interface InterfacePreFetchedOtherPageData {
+export interface InterfacePreFetchedOtherPageData {
   pageData: any;
   foundCollection: CollectionSlug;
 }

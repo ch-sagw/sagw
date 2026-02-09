@@ -3,7 +3,9 @@ import React from 'react';
 import '../styles.scss';
 import { TypedLocale } from 'payload';
 import { NextIntlClientProvider } from 'next-intl';
-import { setRequestLocale } from 'next-intl/server';
+import {
+  getMessages, setRequestLocale,
+} from 'next-intl/server';
 import { NoJsScript } from '@/components/helpers/noJsScript';
 
 type InterfaceRootLayoutProps = {
@@ -25,6 +27,9 @@ export default async function RootLayout({
   // define locale for next-intl provider
   setRequestLocale(locale);
 
+  // Load messages for the client provider
+  const messages = await getMessages();
+
   return (
     <html
       className='theme-sagw no-js'
@@ -32,7 +37,7 @@ export default async function RootLayout({
     >
       <NoJsScript />
       <body>
-        <NextIntlClientProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <main>
             {children}
           </main>

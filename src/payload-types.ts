@@ -281,6 +281,11 @@ export interface Tenant {
    * Used for url paths, example: /tenant-slug/page-slug
    */
   slug: string;
+  /**
+   * The final root URL for the tenant, example: https://www.sagw.ch
+   */
+  url: string;
+  faviconName: string;
   languages?: {
     de?: boolean | null;
     fr?: boolean | null;
@@ -6711,6 +6716,8 @@ export interface TenantsSelect<T extends boolean = true> {
   title?: T;
   domain?: T;
   slug?: T;
+  url?: T;
+  faviconName?: T;
   languages?:
     | T
     | {
