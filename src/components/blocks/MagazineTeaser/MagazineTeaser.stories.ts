@@ -52,6 +52,10 @@ const samplePage: InterfaceMagazineDetailPageWithImage = {
   overviewPageProps: {
     teaserText: simpleRteConfig('Zur Kultur der Bookishness in der Erlebnisgesellschaft'),
   },
+  parentPage: {
+    documentId: '1234',
+    slug: 'homePage',
+  },
   slug: 'slug',
   tenant: '1',
   updatedAt: '2025-11-19T11:29:09.521Z',

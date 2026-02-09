@@ -1585,8 +1585,8 @@ export interface MagazineDetailPage {
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
@@ -1953,8 +1953,8 @@ export interface NewsDetailPage {
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
@@ -2134,8 +2134,8 @@ export interface EventDetailPage {
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   eventDetails: {
     title: {
@@ -2373,8 +2373,8 @@ export interface PublicationDetailPage {
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
@@ -2528,8 +2528,8 @@ export interface ProjectDetailPage {
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   project: string | Project;
   overviewPageProps: {
@@ -2844,8 +2844,8 @@ export interface OverviewPage {
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   hero: InterfaceHeroField;
   content?:
@@ -3491,8 +3491,8 @@ export interface DetailPage {
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   hero: InterfaceHeroField;
   content?:
@@ -3614,8 +3614,8 @@ export interface NationalDictionaryDetailPage {
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
@@ -3675,8 +3675,8 @@ export interface InstituteDetailPage {
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**

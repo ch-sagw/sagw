@@ -1484,6 +1484,57 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
 
     const allReferencingPages = Array.from(allReferencingPagesMap.values());
 
+    // filter out pages that are only in header navigation but don't actually
+    // reference the changed page.
+    // pages in header navigation are already handled by root path
+    // invalidation
+    const filteredReferencingPages = collectionSlug === 'homePage'
+      ? await Promise.all(allReferencingPages.map(async (page) => {
+        const isInHeaderNav = await isPageInHeaderNavigation({
+          changedPageId: page.id,
+          payload: req.payload,
+          tenantId,
+        });
+
+        // if page is in header nav, check if it actually
+        // references the home page
+        if (isInHeaderNav) {
+          try {
+            const pageDoc = await req.payload.findByID({
+              collection: page.collectionSlug,
+              depth: 0,
+              id: page.id,
+              locale: 'all',
+            });
+
+            const extractionContext = {
+              collectionSlug: page.collectionSlug,
+              currentPageId: page.id,
+              locale: 'de' as TypedLocale,
+              payload: req.payload,
+              tenant: tenantId,
+            };
+
+            const linkIds = await extractAllLinkIds({
+              context: extractionContext,
+              doc: pageDoc as unknown as Record<string, unknown>,
+            });
+
+            if (linkIds.has(String(docToUse.id))) {
+              return page;
+            }
+
+            return null;
+          } catch {
+            return page;
+          }
+        }
+
+        return page;
+      }))
+        .then((pages) => pages.filter((page): page is { id: string; collectionSlug: CollectionSlug } => page !== null))
+      : allReferencingPages;
+
     // for programmatically referenced pages,
     // also find pages with teaser/overview blocks
     if (isProgrammaticallyReferenced) {
@@ -1494,19 +1545,25 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
       });
 
       // merge and deduplicate with programmatic pages
+      const finalReferencingPagesMap = new Map<string, { id: string; collectionSlug: CollectionSlug }>();
+
+      filteredReferencingPages.forEach((page) => {
+        finalReferencingPagesMap.set(page.id, page);
+      });
+
       programmaticPages.forEach((page) => {
-        if (!allReferencingPagesMap.has(page.id)) {
-          allReferencingPagesMap.set(page.id, page);
+        if (!finalReferencingPagesMap.has(page.id)) {
+          finalReferencingPagesMap.set(page.id, page);
         }
       });
 
-      const finalReferencingPages = Array.from(allReferencingPagesMap.values());
+      const finalReferencingPages = Array.from(finalReferencingPagesMap.values());
 
       // invalidate cache for all locales when parent page changes
       await invalidatePagesWithDeduplication(finalReferencingPages, allLocales, req.payload);
     } else {
       // invalidate cache for all locales when parent page changes
-      await invalidatePagesWithDeduplication(allReferencingPages, allLocales, req.payload);
+      await invalidatePagesWithDeduplication(filteredReferencingPages, allLocales, req.payload);
     }
 
     // for home, check content and hero changes regardless of cascade trigger
@@ -1574,9 +1631,13 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
         // skip invalidate detail page itself if only overviewPageProps changed
         // overviewPageProps are only used for teasers,
         // not for the detail page itself
+        const hasReferencingPages = allReferencingPages.length > 0;
+        const onlyHeroChanged = heroChanged && !contentChanged && !eventDetailsChanged;
+
         const shouldInvalidateDetailPage = !onlyOverviewPagePropsChanged &&
           (contentChanged || heroChanged || eventDetailsChanged) &&
-          collectionSlug !== 'homePage';
+          collectionSlug !== 'homePage' &&
+          !(hasReferencingPages && onlyHeroChanged);
 
         if (shouldInvalidateDetailPage) {
           // Skip homePage here - already handled above

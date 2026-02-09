@@ -52,6 +52,10 @@ const pages: ProjectDetailPage[] = Array.from({
       linkText: simpleRteConfig('some text'),
       teaserText: simpleRteConfig('Project Teaser Text'),
     },
+    parentPage: {
+      documentId: '1234',
+      slug: 'homePage',
+    },
     project: '1',
     slug: 'slug',
     tenant: '1',
