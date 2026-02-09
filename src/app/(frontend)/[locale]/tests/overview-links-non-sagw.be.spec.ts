@@ -701,6 +701,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
           hero: {
             title: simpleRteConfig(`project it ${time}`),
           },
+          navigationTitle: 'nav title',
           overviewPageProps: projectPage.overviewPageProps,
           project: projectPage.project,
         },
@@ -715,6 +716,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
             ...magazinePage.hero,
             title: simpleRteConfig(`magazine it ${time}`),
           },
+          navigationTitle: 'nav title',
           overviewPageProps: magazinePage.overviewPageProps,
         },
         id: magazinePage.id,
@@ -727,6 +729,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
           hero: {
             title: simpleRteConfig(`publication it ${time}`),
           },
+          navigationTitle: 'nav title',
           overviewPageProps: publicationPage.overviewPageProps,
         },
         id: publicationPage.id,
@@ -739,6 +742,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
           eventDetails: {
             title: simpleRteConfig(`event it ${time}`),
           },
+          navigationTitle: 'nav title',
         },
         id: eventPage.id,
         locale: 'it',
@@ -750,6 +754,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
           hero: {
             title: simpleRteConfig(`news it ${time}`),
           },
+          navigationTitle: 'nav title',
           overviewPageProps: newsPage.overviewPageProps,
         },
         id: newsPage.id,
@@ -776,6 +781,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
           },
         ],
         hero: overviewPage.hero,
+        navigationTitle: 'nav title',
       },
       id: overviewPage.id,
     });
@@ -1132,6 +1138,7 @@ test.describe('Overview page teasers links (non-sagw)', () => {
           hero: {
             title: simpleRteConfig(`project it ${time}`),
           },
+          navigationTitle: 'nav title',
           overviewPageProps: projectPage.overviewPageProps,
           project: projectPage.project,
         },
@@ -1146,6 +1153,7 @@ test.describe('Overview page teasers links (non-sagw)', () => {
             ...magazinePage.hero,
             title: simpleRteConfig(`magazine it ${time}`),
           },
+          navigationTitle: 'nav title',
           overviewPageProps: magazinePage.overviewPageProps,
         },
         id: magazinePage.id,
@@ -1158,6 +1166,7 @@ test.describe('Overview page teasers links (non-sagw)', () => {
           eventDetails: {
             title: simpleRteConfig(`event it ${time}`),
           },
+          navigationTitle: 'nav title',
         },
         id: eventPage.id,
         locale: 'it',
@@ -1169,6 +1178,7 @@ test.describe('Overview page teasers links (non-sagw)', () => {
           hero: {
             title: simpleRteConfig(`news it ${time}`),
           },
+          navigationTitle: 'nav title',
           overviewPageProps: newsPage.overviewPageProps,
         },
         id: newsPage.id,
@@ -1239,6 +1249,7 @@ test.describe('Overview page teasers links (non-sagw)', () => {
             },
           ],
           hero: overviewPage.hero,
+          navigationTitle: 'nav title',
         },
         id: overviewPage.id,
       });

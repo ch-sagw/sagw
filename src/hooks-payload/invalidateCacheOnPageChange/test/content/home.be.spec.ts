@@ -314,6 +314,7 @@ test('invalidates on content change (non-sagw)', {
   tag: '@cache',
 }, async () => {
   await deleteSetsPages();
+  await deleteOtherCollections();
 
   const logCapture = new LogCapture();
   const payload = await getPayloadCached();
