@@ -4,6 +4,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { resendAdapter } from '@payloadcms/email-resend';
 import { de } from '@payloadcms/translations/languages/de';
 import { en } from '@payloadcms/translations/languages/en';
+import { fr } from '@payloadcms/translations/languages/fr';
 import { buildConfig } from 'payload';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -58,6 +59,7 @@ export default buildConfig({
     supportedLanguages: {
       de,
       en,
+      fr,
     },
   },
   localization: localizationConfig,
