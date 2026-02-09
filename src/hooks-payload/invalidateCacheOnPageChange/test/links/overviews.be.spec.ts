@@ -876,7 +876,7 @@ test.describe('Invalidates overview page with eventsOverview', () => {
       .toBe(true);
 
     expect(logCapture.logs)
-      .toHaveLength(1);
+      .toHaveLength(2);
 
   });
 
@@ -998,7 +998,7 @@ test.describe('Invalidates overview page with eventsOverview', () => {
       .toBe(true);
 
     expect(logCapture.logs)
-      .toHaveLength(1);
+      .toHaveLength(2);
 
   });
 });

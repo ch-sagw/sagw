@@ -9,6 +9,6 @@ export const fieldNavigationTitle: Field = {
   },
   localized: true,
   name: fieldNavigationTitleFieldName,
-  required: false,
+  required: true,
   type: 'text',
 };

@@ -58,6 +58,10 @@ const pages: InterfaceMagazineDetailPageWithImage[] = Array.from({
     overviewPageProps: {
       teaserText: simpleRteConfig('Magazine Detail Teaser Text'),
     },
+    parentPage: {
+      documentId: '1234',
+      slug: 'homePage',
+    },
     slug: 'slug',
     tenant: '1',
     updatedAt: '2025-10-20T12:50:57.693Z',
