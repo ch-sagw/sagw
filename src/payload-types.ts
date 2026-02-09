@@ -196,9 +196,7 @@ export interface Config {
   globals: {};
   globalsSelect: {};
   locale: 'de' | 'fr' | 'it' | 'en';
-  user: User & {
-    collection: 'users';
-  };
+  user: User;
   jobs: {
     tasks: unknown;
     workflows: unknown;
@@ -4776,6 +4774,7 @@ export interface User {
         expiresAt: string;
       }[]
     | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
