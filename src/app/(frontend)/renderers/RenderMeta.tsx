@@ -106,7 +106,9 @@ export const renderMeta = async ({
     },
     keywords: meta?.keywords?.map((k: any) => k.keyword)
       .filter((k: any): k is string => Boolean(k)),
-    metadataBase: new URL(tenantInfo.url),
+    metadataBase: tenantInfo.url
+      ? new URL(tenantInfo.url)
+      : undefined,
     openGraph: {
       description: meta.description,
       images: seoImage?.url
@@ -121,7 +123,9 @@ export const renderMeta = async ({
       locale: `${locale}_${locale.toUpperCase()}`,
       title: meta.title,
       type: 'website',
-      url: tenantInfo.url,
+      url: tenantInfo.url
+        ? new URL(tenantInfo.url)
+        : undefined,
     },
     robots: {
       follow: seoIndex,
