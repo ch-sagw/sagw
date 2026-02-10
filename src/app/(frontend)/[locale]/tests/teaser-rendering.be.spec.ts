@@ -124,12 +124,7 @@ test.describe('Teaser rendering project detail page (sagw)', () => {
     await generateDocument(tenant, undefined, 'unrelated document');
 
     // related document
-    console.log('########## will generate related document', tenant, project.id);
-
-    const tempDoc = await generateDocument(tenant, project.id, 'related document');
-
-    console.log('########## created document');
-    console.log(tempDoc);
+    await generateDocument(tenant, project.id, 'related document');
 
     // unrelated zenodo document
     await generateZenodoDocument(tenant, undefined, 'unrelated zenodo document');
@@ -168,7 +163,7 @@ test.describe('Teaser rendering project detail page (sagw)', () => {
         ],
         hero: {
           colorMode: 'light',
-          title: simpleRteConfig(`Project ${time}`),
+          title: simpleRteConfig(`project-${time}`),
         },
         ...seoData,
         navigationTitle: 'Project',
@@ -191,17 +186,18 @@ test.describe('Teaser rendering project detail page (sagw)', () => {
     await page.goto(`http://localhost:3000/de/project-${time}`);
     await page.waitForLoadState('networkidle');
 
-    const eventsList = await page.locator(':text("Events") + [data-testid="teaser-linklist"]');
-    const events = eventsList.getByRole('listitem');
+    const teaserBlocks = await page.getByTestId('teaser-linklist');
+    const events = teaserBlocks.nth(0)
+      .getByRole('listitem');
 
-    const newsList = await page.locator(':text("News") + [data-testid="teaser-linklist"]');
-    const news = newsList.getByRole('listitem');
+    const news = teaserBlocks.nth(1)
+      .getByRole('listitem');
 
-    const publicationTeaserList = await page.locator(':text("Publication Teaser") + [data-testid="teaser-linklist"]');
-    const publicationTeasers = publicationTeaserList.getByRole('listitem');
+    const publicationTeasers = teaserBlocks.nth(2)
+      .getByRole('listitem');
 
-    const downloadsList = await page.locator(':text("Download title") + [data-testid="teaser-linklist"]');
-    const downloads = downloadsList.getByRole('listitem');
+    const downloads = teaserBlocks.nth(3)
+      .getByRole('listitem');
 
     await expect(events)
       .toHaveCount(1);
@@ -447,7 +443,7 @@ test.describe('Teaser rendering project detail page (sagw)', () => {
         ],
         hero: {
           colorMode: 'light',
-          title: simpleRteConfig(`Project ${time}`),
+          title: simpleRteConfig(`project-${time}`),
         },
         ...seoData,
         navigationTitle: 'Project',
@@ -470,17 +466,19 @@ test.describe('Teaser rendering project detail page (sagw)', () => {
     await page.goto(`http://localhost:3000/de/project-${time}`);
     await page.waitForLoadState('networkidle');
 
-    const eventsList = await page.locator(':text("Events") + [data-testid="teaser-linklist"]');
-    const events = eventsList.getByRole('listitem');
+    const teaserBlocks = await page.getByTestId('teaser-linklist');
 
-    const newsList = await page.locator(':text("News") + [data-testid="teaser-linklist"]');
-    const news = newsList.getByRole('listitem');
+    const events = teaserBlocks.nth(0)
+      .getByRole('listitem');
 
-    const publicationTeaserList = await page.locator(':text("Publication Teaser") + [data-testid="teaser-linklist"]');
-    const publicationTeasers = publicationTeaserList.getByRole('listitem');
+    const news = teaserBlocks.nth(1)
+      .getByRole('listitem');
 
-    const downloadsList = await page.locator(':text("Download title") + [data-testid="teaser-linklist"]');
-    const downloads = downloadsList.getByRole('listitem');
+    const publicationTeasers = teaserBlocks.nth(2)
+      .getByRole('listitem');
+
+    const downloads = teaserBlocks.nth(3)
+      .getByRole('listitem');
 
     await expect(events)
       .toHaveCount(5);
