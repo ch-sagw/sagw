@@ -481,7 +481,7 @@ test.describe('properly renders date range in french', () => {
       },
       tenant,
       time: '2025-08-31T13:00:00.000Z',
-      title: `event ${time}`,
+      title: `event-${time}`,
     });
 
     await page.goto(`http://localhost:3000/fr/event-${time}`);
@@ -524,7 +524,7 @@ test.describe('properly renders date range in french', () => {
       },
       tenant,
       time: '2025-08-31T13:00:00.000Z',
-      title: `event ${time}`,
+      title: `event-${time}`,
     });
 
     await page.goto(`http://localhost:3000/fr/event-${time}`);
@@ -567,7 +567,7 @@ test.describe('properly renders date range in french', () => {
       },
       tenant,
       time: '2025-08-31T13:00:00.000Z',
-      title: `event ${time}`,
+      title: `event-${time}`,
     });
 
     await page.goto(`http://localhost:3000/fr/event-${time}`);
@@ -610,7 +610,7 @@ test.describe('properly renders date range in french', () => {
       },
       tenant,
       time: '2025-08-31T13:00:00.000Z',
-      title: `event ${time}`,
+      title: `event-${time}`,
     });
 
     await page.goto(`http://localhost:3000/fr/event-${time}`);
@@ -653,7 +653,7 @@ test.describe('properly renders date range in french', () => {
       },
       tenant,
       time: '2025-08-31T13:00:00.000Z',
-      title: `event ${time}`,
+      title: `event-${time}`,
     });
 
     await page.goto(`http://localhost:3000/fr/event-${time}`);

@@ -124,7 +124,12 @@ test.describe('Teaser rendering project detail page (sagw)', () => {
     await generateDocument(tenant, undefined, 'unrelated document');
 
     // related document
-    await generateDocument(tenant, project.id, 'related document');
+    console.log('########## will generate related document', tenant, project.id);
+
+    const tempDoc = await generateDocument(tenant, project.id, 'related document');
+
+    console.log('########## created document');
+    console.log(tempDoc);
 
     // unrelated zenodo document
     await generateZenodoDocument(tenant, undefined, 'unrelated zenodo document');
