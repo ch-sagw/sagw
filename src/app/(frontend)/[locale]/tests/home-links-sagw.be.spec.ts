@@ -22,6 +22,7 @@ import { getTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 import { sampleRteWithLink } from '@/utilities/rteSampleContent';
+import { seoData } from '@/seed/test-data/seoData';
 
 test.describe('Home links (sagw)', () => {
   beforeEachAcceptCookies();
@@ -89,6 +90,7 @@ test.describe('Home links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`overview-page-1-it-${time}`),
           },
+          ...seoData,
           navigationTitle: 'Overview Page it',
         },
         id: level1a.id,
@@ -150,6 +152,7 @@ test.describe('Home links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d1-it-${time}`),
           },
+          ...seoData,
           navigationTitle: 'd1 it',
         },
         id: detail1.id,
@@ -162,6 +165,7 @@ test.describe('Home links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d2-it-${time}`),
           },
+          ...seoData,
           navigationTitle: 'd2 it',
         },
         id: detail2.id,
@@ -174,6 +178,7 @@ test.describe('Home links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d3-it-${time}`),
           },
+          ...seoData,
           navigationTitle: 'd3 it',
         },
         id: detail3.id,
@@ -186,6 +191,7 @@ test.describe('Home links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d4-it-${time}`),
           },
+          ...seoData,
           navigationTitle: 'd4 it',
         },
         id: detail4.id,
@@ -198,6 +204,7 @@ test.describe('Home links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d5-it-${time}`),
           },
+          ...seoData,
           navigationTitle: 'd5 it',
         },
         id: detail5.id,

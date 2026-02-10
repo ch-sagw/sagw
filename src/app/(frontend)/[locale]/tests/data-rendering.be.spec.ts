@@ -15,6 +15,7 @@ import {
   generateDataPrivacyPage,
   generateDetailPage, generateFooterData, generateHomePage, generateI18nData, generateImpressumPage, generateOverviewPage,
 } from '@/test-helpers/collections-generator';
+import { seoData } from '@/seed/test-data/seoData';
 
 test.describe('Data rendering (sagw)', () => {
   beforeEachAcceptCookies();
@@ -86,6 +87,7 @@ test.describe('Data rendering (sagw)', () => {
           hero: {
             title: simpleRteConfig(`o1 it ${time}`),
           },
+          ...seoData,
           navigationTitle: '[test]link:o1-it',
         },
         id: o1.id,
@@ -107,6 +109,7 @@ test.describe('Data rendering (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d1 it ${time}`),
           },
+          ...seoData,
           navigationTitle: '[test]link:d1-it',
         },
         id: d1.id,
@@ -132,6 +135,7 @@ test.describe('Data rendering (sagw)', () => {
           hero: {
             title: simpleRteConfig(`o1 it ${time} tenant-${time}`),
           },
+          ...seoData,
           navigationTitle: '[test]link:o1-it',
         },
         id: o1NonSagw.id,
@@ -154,6 +158,7 @@ test.describe('Data rendering (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d1 it ${time} tenant-${time}`),
           },
+          ...seoData,
           navigationTitle: '[test]link:d1-it',
         },
         id: d1NonSagw.id,

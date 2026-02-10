@@ -21,6 +21,7 @@ import { LogCapture } from '@/test-helpers/capture-logs';
 import { CollectionSlug } from 'payload';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { deleteSetsPages } from '@/seed/test-data/deleteData';
+import { seoData } from '@/seed/test-data/seoData';
 
 /* eslint-disable no-await-in-loop */
 
@@ -268,6 +269,7 @@ test.describe('Hook triggers on all page types (sagw)', () => {
           collection: collectionSlugLinkTarget as CollectionSlug,
           data: {
             slug: `${collectionSlugLinkTarget}-linked-${time}-${indexLinkTarget + 1}-${indexLinkSource + 1}`,
+            ...seoData,
           },
           id: targetPage.id,
           locale: 'it',
@@ -367,6 +369,7 @@ test.describe('Hook triggers on all page types (sagw)', () => {
               title: simpleRteConfig(`parent page ${time} ${indexLinkTarget + 1} ${indexLinkSource + 1} it`),
             },
             navigationTitle: `parent page ${time} ${indexLinkTarget + 1} ${indexLinkSource + 1} it`,
+            ...seoData,
           },
           id: newParentPage.id,
           locale: 'it',
@@ -876,6 +879,7 @@ test.describe('Hook triggers on all page types (non-sagw)', () => {
           collection: collectionSlugLinkTarget as CollectionSlug,
           data: {
             slug: `${collectionSlugLinkTarget}-linked-${time}-${indexLinkTarget + 1}-${indexLinkSource + 1}`,
+            ...seoData,
           },
           id: targetPage.id,
           locale: 'it',
@@ -978,6 +982,7 @@ test.describe('Hook triggers on all page types (non-sagw)', () => {
               title: simpleRteConfig(`parent page ${time} ${indexLinkTarget + 1} ${indexLinkSource + 1} it`),
             },
             navigationTitle: `parent page ${time} ${indexLinkTarget + 1} ${indexLinkSource + 1} it`,
+            ...seoData,
           },
           id: newParentPage.id,
           locale: 'it',

@@ -12,6 +12,7 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { LogCapture } from '@/test-helpers/capture-logs';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { deleteSetsPages } from '@/seed/test-data/deleteData';
+import { seoData } from '@/seed/test-data/seoData';
 
 test.describe('detail page', () => {
   test('invalidates on project change (sagw)', {
@@ -214,6 +215,7 @@ test.describe('detail page', () => {
       collection: 'newsDetailPage',
       data: {
         project: project.id,
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -266,6 +268,7 @@ test.describe('detail page', () => {
         hero: {
           date: '2030',
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -318,6 +321,7 @@ test.describe('detail page', () => {
         overviewPageProps: {
           teaserText: simpleRteConfig('overview page props changed'),
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -527,6 +531,7 @@ test.describe('detail page', () => {
       data: {
         name: simpleRteConfig('category'),
         tenant,
+        ...seoData,
       },
       locale: 'it',
     });
@@ -537,6 +542,7 @@ test.describe('detail page', () => {
       collection: 'newsDetailPage',
       data: {
         project: project.id,
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -590,6 +596,7 @@ test.describe('detail page', () => {
         hero: {
           date: '2030',
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -643,6 +650,7 @@ test.describe('detail page', () => {
         overviewPageProps: {
           teaserText: simpleRteConfig('overview page props changed'),
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -780,6 +788,7 @@ test.describe('overview page', () => {
             title: simpleRteConfig('All News'),
           },
         ],
+        ...seoData,
       },
       id: overviewPage.id,
       locale: 'it',
@@ -793,6 +802,7 @@ test.describe('overview page', () => {
         overviewPageProps: {
           teaserText: simpleRteConfig('overview page props changed'),
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -930,6 +940,7 @@ test.describe('overview page', () => {
             title: simpleRteConfig('All News'),
           },
         ],
+        ...seoData,
       },
       id: overviewPage.id,
       locale: 'it',
@@ -943,6 +954,7 @@ test.describe('overview page', () => {
         overviewPageProps: {
           teaserText: simpleRteConfig('overview page props changed'),
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -1080,6 +1092,7 @@ test.describe('overview page', () => {
             title: simpleRteConfig('News'),
           },
         ],
+        ...seoData,
       },
       id: overviewPage.id,
       locale: 'it',
@@ -1093,6 +1106,7 @@ test.describe('overview page', () => {
         overviewPageProps: {
           teaserText: simpleRteConfig('overview page props changed'),
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -1232,6 +1246,7 @@ test.describe('overview page', () => {
             title: simpleRteConfig('News'),
           },
         ],
+        ...seoData,
       },
       id: overviewPage.id,
       locale: 'it',
@@ -1245,6 +1260,7 @@ test.describe('overview page', () => {
         overviewPageProps: {
           teaserText: simpleRteConfig('overview page props changed'),
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
