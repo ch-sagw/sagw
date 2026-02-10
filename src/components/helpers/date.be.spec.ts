@@ -469,7 +469,7 @@ test.describe('properly renders date range in french', () => {
       tenant,
     });
 
-    const temp = await generateEventDetailPage({
+    await generateEventDetailPage({
       date: '2030-02-01T13:00:00.000Z',
       hideLanguage: true,
       hideLocation: true,
@@ -483,9 +483,6 @@ test.describe('properly renders date range in french', () => {
       time: '2025-08-31T13:00:00.000Z',
       title: `event-${time}`,
     });
-
-    console.log('EVENT PAGE TEMP');
-    console.log(temp);
 
     await page.goto(`http://localhost:3000/fr/event-${time}`);
     await page.waitForLoadState('networkidle');
