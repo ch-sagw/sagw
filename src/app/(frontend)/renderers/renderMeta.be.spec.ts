@@ -106,6 +106,11 @@ test.describe('render meta home', () => {
       data: {
         ...defaultMeta(time, 'it'),
         hero: {
+          optionalLink: {
+            link: {
+              linkText: simpleRteConfig('foo'),
+            },
+          },
           sideTitle: simpleRteConfig('sidetitle'),
           title: simpleRteConfig('title'),
         },
