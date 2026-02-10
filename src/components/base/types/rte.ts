@@ -1,5 +1,5 @@
-import { SerializedSoftHyphenNode } from '@/components/admin/rte/features/SoftHyphen/SoftHyphenNode';
-import { SerializedNonBreakingSpaceNode } from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpaceNode';
+import type { SerializedSoftHyphenNode } from '@/components/admin/rte/features/SoftHyphen/SoftHyphen.shared';
+import type { SerializedNonBreakingSpaceNode } from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpace.shared';
 
 import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical';
 

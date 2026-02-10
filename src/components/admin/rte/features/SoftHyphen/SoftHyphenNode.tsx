@@ -1,17 +1,19 @@
 'use client';
 
 import {
-  DecoratorNode, NodeKey, SerializedLexicalNode,
+  DecoratorNode, NodeKey,
 } from 'lexical';
 import React, { JSX } from 'react';
 
-const nodeType = 'unicode-char-shy';
+import {
+  type SerializedSoftHyphenNode,
+  SOFT_HYPHEN_NODE_TYPE,
+} from './SoftHyphen.shared';
 
-export type SerializedSoftHyphenNode = SerializedLexicalNode & {
-  type: typeof nodeType;
-  version: 1;
-  text: string;
-};
+const nodeType = SOFT_HYPHEN_NODE_TYPE;
+
+// Keep local alias for backwards-compat imports within client code.
+export type { SerializedSoftHyphenNode };
 
 // export decorator node
 export class SoftHyphenNode extends DecoratorNode<JSX.Element> {
