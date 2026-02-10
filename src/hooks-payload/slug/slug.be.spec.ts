@@ -61,6 +61,18 @@ test.describe('Slug field UI', () => {
       name: 'Publish changes',
     });
 
+    const metaTab = await page.getByText('Meta', {
+      exact: true,
+    });
+
+    await metaTab.click();
+
+    const metaTitle = await page.locator('#field-meta__seo__title');
+    const metaDescription = await page.locator('#field-meta__seo__description');
+
+    await metaTitle.fill('foo');
+    await metaDescription.fill('foo');
+
     await saveButton.click();
 
     // wait for confirmation toast and close it

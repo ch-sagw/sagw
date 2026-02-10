@@ -38,6 +38,24 @@ test.describe('NonBreakingSpace', () => {
 
     await homePageParentPage.click();
 
+    const metaTab = await page.getByText('Meta', {
+      exact: true,
+    });
+
+    const contentTab = await page.getByText('Content', {
+      exact: true,
+    });
+
+    await metaTab.click();
+
+    const metaTitle = await page.locator('#field-meta__seo__title');
+    const metaDescription = await page.locator('#field-meta__seo__description');
+
+    await metaTitle.fill('foo');
+    await metaDescription.fill('foo');
+
+    await contentTab.click();
+
     // save
     const saveButton = await page.getByRole('button', {
       name: 'Publish changes',

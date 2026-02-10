@@ -13,7 +13,6 @@ import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
-import { seoData } from '@/seed/test-data/seoData';
 
 const defaultMeta = (time: number, lang?: string): any => ({
   meta: {
@@ -110,7 +109,6 @@ test.describe('render meta home', () => {
           sideTitle: simpleRteConfig('sidetitle'),
           title: simpleRteConfig('title'),
         },
-        ...seoData,
         tenant,
       },
       id: home,
@@ -207,7 +205,6 @@ test.describe('render meta home', () => {
           sideTitle: simpleRteConfig('sidetitle'),
           title: simpleRteConfig('title'),
         },
-        ...seoData,
         tenant,
       },
       id: home,
@@ -327,7 +324,6 @@ test.describe('render meta on other pages', () => {
       data: {
         ...defaultMeta(time, 'it'),
         tenant,
-        ...seoData,
       },
       id: detail.id,
       locale: 'it',
@@ -442,7 +438,6 @@ test.describe('render meta on other pages', () => {
       data: {
         ...defaultMeta(time, 'it'),
         tenant,
-        ...seoData,
       },
       id: detail.id,
       locale: 'it',
