@@ -224,7 +224,7 @@ export const RenderPage = async ({
   let otherPageData: any;
   let foundCollection: CollectionSlug | undefined;
 
-  if (preFetchedData && !isHome) {
+  if (preFetchedData) {
     const detailData = preFetchedData as InterfacePreFetchedOtherPageData;
 
     otherPageData = detailData.pageData;
