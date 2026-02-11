@@ -117,6 +117,17 @@ test.describe('Softhyphen', () => {
     await hyphenButton.click();
     await rteInputField.pressSequentially('bar');
 
+    const navigationTitle = await page.locator('#field-navigationTitle');
+    const parentPage = await page.locator('#field-parentPage');
+    const sidebar = await page.locator('.document-fields__sidebar-fields');
+
+    await navigationTitle.fill('nav title');
+    await parentPage.click();
+
+    const homePageParentPage = await sidebar.getByText('Home Page');
+
+    await homePageParentPage.click();
+
     // save
     const saveButton = await page.getByRole('button', {
       name: 'Publish changes',
@@ -158,6 +169,17 @@ test.describe('Softhyphen', () => {
     await rteField.fill('detailpagetitle');
     await hyphenButton.click();
     await rteField.pressSequentially('bar');
+
+    const navigationTitle = await page.locator('#field-navigationTitle');
+    const parentPage = await page.locator('#field-parentPage');
+    const sidebar = await page.locator('.document-fields__sidebar-fields');
+
+    await navigationTitle.fill('nav title');
+    await parentPage.click();
+
+    const homePageParentPage = await sidebar.getByText('Home Page');
+
+    await homePageParentPage.click();
 
     // save
     const saveButton = await page.getByRole('button', {
