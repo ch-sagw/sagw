@@ -67,7 +67,7 @@ const getTenantThemeName = async ({
     id: tenantId,
   });
 
-  return theme.docs[0].themeSelector || 'sagw';
+  return theme.docs[0]?.themeSelector || 'sagw';
 };
 
 // Helper to verify lang-config and to render error page
