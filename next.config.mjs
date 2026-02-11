@@ -24,10 +24,11 @@ const ContentSecurityPolicy = `
   img-src 'self' https://www.gravatar.com https://*.gumlet.io data: blob:;
   font-src 'self' data:;
   connect-src 'self' https:;
-  frame-src 'self';
+  frame-src 'self' https://vercel.live;
   object-src 'none';
   base-uri 'self';
   form-action 'self';
+  worker-src 'self' https://vercel.live;
 `.replace(/\n/gu, ' ')
   .trim();
 
