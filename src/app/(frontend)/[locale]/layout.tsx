@@ -36,11 +36,9 @@ export default async function RootLayout({
       lang={locale}
     >
       <NoJsScript />
-      <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-      </body>
+      <NextIntlClientProvider locale={locale} messages={messages}>
+        {children}
+      </NextIntlClientProvider>
     </html >
   );
 }
