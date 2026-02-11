@@ -174,6 +174,17 @@ test.describe('NonBreakingSpace', () => {
       name: 'Publish changes',
     });
 
+    const navigationTitle = await page.locator('#field-navigationTitle');
+    const parentPage = await page.locator('#field-parentPage');
+    const sidebar = await page.locator('.document-fields__sidebar-fields');
+
+    await navigationTitle.fill('nav title');
+    await parentPage.click();
+
+    const homePageParentPage = await sidebar.getByText('Home Page');
+
+    await homePageParentPage.click();
+
     await saveButton.click();
 
     const addContentButton = await page.getByText('Add Content', {
