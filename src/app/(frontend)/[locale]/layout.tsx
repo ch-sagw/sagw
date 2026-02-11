@@ -52,17 +52,13 @@ export default async function RootLayout({
 
   return (
     <html
-      className='theme-sagw no-js'
+      className='no-js'
       lang={locale}
     >
       <NoJsScript />
-      <body>
-        <NextIntlClientProvider>
-          <main>
-            {children}
-          </main>
-        </NextIntlClientProvider>
-      </body>
+      <NextIntlClientProvider>
+        {children}
+      </NextIntlClientProvider>
     </html >
   );
 }
