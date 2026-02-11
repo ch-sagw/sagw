@@ -28,7 +28,7 @@ const ContentSecurityPolicy = `
   object-src 'none';
   base-uri 'self';
   form-action 'self';
-  worker-src 'self' https://vercel.live;
+  worker-src 'self' https://vercel.live blob:;
 `.replace(/\n/gu, ' ')
   .trim();
 
