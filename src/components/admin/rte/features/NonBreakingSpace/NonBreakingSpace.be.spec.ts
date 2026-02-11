@@ -210,28 +210,6 @@ test.describe('NonBreakingSpace', () => {
       name: 'Publish changes',
     });
 
-    await saveButton.click();
-
-    const addContentButton = await page.getByText('Add Content', {
-      exact: true,
-    });
-
-    await addContentButton.click();
-
-    const addTextBlockButton = await page.getByText('Richtext', {
-      exact: true,
-    });
-
-    await addTextBlockButton.click();
-
-    const rteField2 = await page.locator('#field-content .blocks-field__row');
-    const rteInputField2 = await rteField2.locator('.rich-text-lexical .ContentEditable__root');
-    const nbspButton2 = await rteField2.locator('.rich-text-lexical .toolbar-popup__button-nonBreakingSpaceButton');
-
-    await rteInputField2.fill('detailpagetitle');
-    await nbspButton2.click();
-    await rteInputField2.pressSequentially('bar');
-
     const navigationTitle = await page.locator('#field-navigationTitle');
     const parentPage = await page.locator('#field-parentPage');
     const sidebar = await page.locator('.document-fields__sidebar-fields');
@@ -260,6 +238,28 @@ test.describe('NonBreakingSpace', () => {
     await metaDescription.fill('foo');
 
     await contentTab.click();
+
+    await saveButton.click();
+
+    const addContentButton = await page.getByText('Add Content', {
+      exact: true,
+    });
+
+    await addContentButton.click();
+
+    const addTextBlockButton = await page.getByText('Richtext', {
+      exact: true,
+    });
+
+    await addTextBlockButton.click();
+
+    const rteField2 = await page.locator('#field-content .blocks-field__row');
+    const rteInputField2 = await rteField2.locator('.rich-text-lexical .ContentEditable__root');
+    const nbspButton2 = await rteField2.locator('.rich-text-lexical .toolbar-popup__button-nonBreakingSpaceButton');
+
+    await rteInputField2.fill('detailpagetitle');
+    await nbspButton2.click();
+    await rteInputField2.pressSequentially('bar');
 
     await saveButton.click();
 
