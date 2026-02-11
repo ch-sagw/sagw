@@ -46,7 +46,7 @@ export const I18nGlobals: CollectionConfig = {
             },
             {
               ...rte1({
-                adminDescription: 'On events, we use this to display the time. If you provide the value "Uhr", we display: "09:00 Uhr"',
+                adminDescription: 'On events, we use this to display the time. If you provide the value "Uhr", we display: "09:00 Uhr". Only used for german language.',
                 name: 'time',
               }),
             },

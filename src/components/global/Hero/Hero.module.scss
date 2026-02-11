@@ -1,8 +1,7 @@
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
-
-// @use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/utilities" as *;
 
 .hero {
   --hero-padding-block-start-fallback: 0;
@@ -35,6 +34,8 @@
   }
 
   &.dark {
+    @include font-smoothing;
+
     --color-background: var(--background-inverted);
     --color-title: var(--text-primary-inverted);
     --color-lead: var(--text-secondary-inverted);
@@ -92,8 +93,13 @@
   }
 
   .rightColumn {
+    display: flex;
+    flex-direction: column;
+    row-gap: px-to-rem(var(--spacing-l));
+
     @include mq($from: large) {
       grid-column: 5 / 12;
+      row-gap: px-to-rem(var(--spacing-2xl));
       margin-block-end: 0;
     }
 
@@ -115,6 +121,7 @@
       @include body-text-lead;
       @include font-layout-features;
 
+      margin: 0;
       color: var(--color-lead);
     }
 
@@ -175,7 +182,11 @@
 
     .link {
       padding-inline: 0;
-      margin-block-start: px-to-rem(var(--section-inside-s));
+      margin-block-start: px-to-rem(calc(var(--spacing-m) + var(--spacing-l)));
+
+      @include mq($from: medium) {
+        margin-block-start: px-to-rem(var(--spacing-m));
+      }
     }
   }
 

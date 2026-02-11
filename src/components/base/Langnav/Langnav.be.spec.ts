@@ -12,13 +12,12 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { deleteSetsPages } from '@/seed/test-data/deleteData';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
+import { seoData } from '@/seed/test-data/seoData';
 
 test.describe('langnav', () => {
   beforeEachAcceptCookies();
 
-  test('generates proper langnav links (sagw)', {
-    tag: '@cache',
-  }, async ({
+  test('generates proper langnav links (sagw)', async ({
     page,
   }) => {
     await deleteSetsPages();
@@ -63,6 +62,7 @@ test.describe('langnav', () => {
         hero: {
           title: simpleRteConfig(`overview it ${time}`),
         },
+        ...seoData,
         navigationTitle: `overview it ${time}`,
         slug: `overview-it-${time}`,
       },
@@ -77,6 +77,7 @@ test.describe('langnav', () => {
           author: simpleRteConfig('some author'),
           title: simpleRteConfig(`magazine detail it ${time}`),
         },
+        ...seoData,
         navigationTitle: `magazine detail it ${time}`,
         overviewPageProps: {
           teaserText: simpleRteConfig('some teaser text'),
@@ -108,9 +109,7 @@ test.describe('langnav', () => {
       .toStrictEqual(`/it/overview-it-${time}/magazine-detail-it-${time}`);
   });
 
-  test('generates proper langnav links (non-sagw)', {
-    tag: '@cache',
-  }, async ({
+  test('generates proper langnav links (non-sagw)', async ({
     page,
   }) => {
     await deleteSetsPages();
@@ -157,6 +156,7 @@ test.describe('langnav', () => {
         hero: {
           title: simpleRteConfig(`overview it ${time}`),
         },
+        ...seoData,
         navigationTitle: `overview it ${time}`,
         slug: `overview-it-${time}`,
       },
@@ -171,6 +171,7 @@ test.describe('langnav', () => {
           author: simpleRteConfig('some author'),
           title: simpleRteConfig(`magazine detail it ${time}`),
         },
+        ...seoData,
         navigationTitle: `magazine detail it ${time}`,
         overviewPageProps: {
           teaserText: simpleRteConfig('some teaser text'),

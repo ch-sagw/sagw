@@ -21,6 +21,7 @@ import {
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
+import { seoData } from '@/seed/test-data/seoData';
 
 test.describe('Teaser rendering project detail page (sagw)', () => {
   beforeEachAcceptCookies();
@@ -162,8 +163,9 @@ test.describe('Teaser rendering project detail page (sagw)', () => {
         ],
         hero: {
           colorMode: 'light',
-          title: simpleRteConfig(`Project ${time}`),
+          title: simpleRteConfig(`project-${time}`),
         },
+        ...seoData,
         navigationTitle: 'Project',
         overviewPageProps: {
           linkText: simpleRteConfig('some text'),
@@ -185,7 +187,6 @@ test.describe('Teaser rendering project detail page (sagw)', () => {
     await page.waitForLoadState('networkidle');
 
     const teaserBlocks = await page.getByTestId('teaser-linklist');
-
     const events = teaserBlocks.nth(0)
       .getByRole('listitem');
 
@@ -442,8 +443,9 @@ test.describe('Teaser rendering project detail page (sagw)', () => {
         ],
         hero: {
           colorMode: 'light',
-          title: simpleRteConfig(`Project ${time}`),
+          title: simpleRteConfig(`project-${time}`),
         },
+        ...seoData,
         navigationTitle: 'Project',
         overviewPageProps: {
           linkText: simpleRteConfig('some text'),
@@ -610,6 +612,7 @@ test.describe('Teaser rendering general (sagw)', () => {
           colorMode: 'light',
           title: simpleRteConfig(`Project ${time}`),
         },
+        ...seoData,
         navigationTitle: 'Project',
         parentPage: {
           documentId: home,
@@ -752,6 +755,7 @@ test.describe('Teaser rendering general (sagw)', () => {
           colorMode: 'light',
           title: simpleRteConfig(`Project ${time}`),
         },
+        ...seoData,
         navigationTitle: 'Project',
         parentPage: {
           documentId: home,
@@ -895,6 +899,7 @@ test.describe('Teaser rendering general (sagw)', () => {
           colorMode: 'light',
           title: simpleRteConfig(`Project ${time}`),
         },
+        ...seoData,
         navigationTitle: 'Project',
         parentPage: {
           documentId: home,
@@ -1040,6 +1045,7 @@ test.describe('Teaser rendering general (sagw)', () => {
           colorMode: 'light',
           title: simpleRteConfig(`Project ${time}`),
         },
+        ...seoData,
         navigationTitle: 'Project',
         parentPage: {
           documentId: home,
@@ -1187,6 +1193,7 @@ test.describe('Teaser rendering general (sagw)', () => {
           colorMode: 'light',
           title: simpleRteConfig(`Project ${time}`),
         },
+        ...seoData,
         navigationTitle: 'Project',
         parentPage: {
           documentId: home,

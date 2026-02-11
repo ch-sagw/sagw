@@ -13,6 +13,7 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
+import { seoData } from '@/seed/test-data/seoData';
 import { getHomeId } from '@/test-helpers/collections-generator';
 
 test.describe('unique-blocks', () => {
@@ -139,6 +140,7 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Detail Page Lead'),
             title: simpleRteConfig(`Detail page title ${(new Date())} - 1`),
           },
+          ...seoData,
           navigationTitle: 'nav title',
           parentPage: {
             documentId: home,
@@ -306,6 +308,7 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Detail Page Lead'),
             title: simpleRteConfig(`Detail page title ${(new Date())} - 2`),
           },
+          ...seoData,
           navigationTitle: 'nav title',
           parentPage: {
             documentId: home,
@@ -460,6 +463,7 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Detail Page Lead'),
             title: simpleRteConfig(`Detail page title ${(new Date())} - 3`),
           },
+          ...seoData,
           navigationTitle: 'nav title',
           parentPage: {
             documentId: home,
@@ -520,6 +524,7 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Overview Page Lead'),
             title: simpleRteConfig(`Overview page title ${new Date()} - 1`),
           },
+          ...seoData,
           navigationTitle: 'nav title',
           parentPage: {
             documentId: home,
@@ -580,6 +585,7 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Overview Page Lead'),
             title: simpleRteConfig(`Overview page title ${new Date()} - 2`),
           },
+          ...seoData,
           navigationTitle: 'nav title',
           parentPage: {
             documentId: home,
@@ -657,6 +663,7 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Overview Page Lead'),
             title: simpleRteConfig(`Overview page title ${new Date()} - 3`),
           },
+          ...seoData,
           navigationTitle: 'nav title',
           parentPage: {
             documentId: home,
@@ -719,6 +726,7 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Overview Page Lead'),
             title: simpleRteConfig(`Overview page title ${new Date()} - 4`),
           },
+          ...seoData,
           navigationTitle: 'nav title',
           parentPage: {
             documentId: home,
@@ -791,6 +799,7 @@ test.describe('unique-blocks', () => {
             sideTitle: simpleRteConfig('Side title'),
             title: simpleRteConfig(`Overview page title ${new Date()} - 3`),
           },
+          ...seoData,
           navigationTitle: 'Home',
           tenant: tenant.id,
         },

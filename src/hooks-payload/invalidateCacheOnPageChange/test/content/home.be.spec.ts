@@ -10,6 +10,7 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
+import { seoData } from '@/seed/test-data/seoData';
 
 test('invalidates on content change (sagw)', {
   tag: '@cache',
@@ -206,6 +207,7 @@ test('invalidates on content change in other locale (sagw)', {
         sideTitle: simpleRteConfig('Home Side-Title'),
         title: simpleRteConfig('title changed'),
       },
+      ...seoData,
     },
     id: home,
     locale: 'it',
@@ -268,6 +270,7 @@ test('invalidates on hero change in other locale (sagw)', {
         },
         title: simpleRteConfig('title'),
       },
+      ...seoData,
     },
     id: home,
     locale: 'it',
@@ -289,6 +292,7 @@ test('invalidates on hero change in other locale (sagw)', {
         },
         title: simpleRteConfig('title changed'),
       },
+      ...seoData,
     },
     id: home,
     locale: 'it',
@@ -450,6 +454,7 @@ test('invalidates on content change in other locale (non-sagw)', {
         sideTitle: simpleRteConfig('Home Side-Title'),
         title: simpleRteConfig('title changed'),
       },
+      ...seoData,
     },
     id: home,
     locale: 'it',
@@ -513,6 +518,7 @@ test('invalidates on hero change in other locale (non-sagw)', {
         sideTitle: simpleRteConfig('side'),
         title: simpleRteConfig('title'),
       },
+      ...seoData,
     },
     id: home,
     locale: 'it',
@@ -535,6 +541,7 @@ test('invalidates on hero change in other locale (non-sagw)', {
         sideTitle: simpleRteConfig('side'),
         title: simpleRteConfig('title changed'),
       },
+      ...seoData,
     },
     id: home,
     locale: 'it',

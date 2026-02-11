@@ -86,7 +86,7 @@ export const ProjectDetailPage: CollectionConfig = {
             },
 
             // Hero
-            fieldsHero,
+            fieldsHero(),
 
             // Content Blocks
             {

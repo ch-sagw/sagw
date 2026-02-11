@@ -22,6 +22,9 @@ export const fieldsTabMeta: Tab = {
         /* eslint-disable new-cap */
         MetaTitleField({
           hasGenerateFn: true,
+          overrides: {
+            required: true,
+          },
         }),
         MetaImageField({
           overrides: {
@@ -31,7 +34,22 @@ export const fieldsTabMeta: Tab = {
           relationTo: 'images',
         }),
 
-        MetaDescriptionField({}),
+        MetaDescriptionField({
+          overrides: {
+            required: true,
+          },
+        }),
+        {
+          fields: [
+            {
+              name: 'keyword',
+              type: 'text',
+            },
+          ],
+          maxRows: 10,
+          name: 'keywords',
+          type: 'array',
+        },
         /* eslint-enable new-cap */
       ],
       label: 'General',

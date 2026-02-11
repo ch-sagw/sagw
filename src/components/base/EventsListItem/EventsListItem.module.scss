@@ -99,6 +99,10 @@
         width: 1.5rem;
         flex-shrink: 0;
         color: var(--interaction-secondary);
+
+        path {
+          stroke-width: 2;
+        }
       }
     }
   }

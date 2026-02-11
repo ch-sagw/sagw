@@ -23,6 +23,10 @@
       }
     }
   },
+  "landmarks": {
+    "footerNavigation": "Navigation im Footerbereich (EN)",
+    "mainNavigation": "Hauptnavigation (EN)"
+  },
   "a11y": {
     "breadcrumb": "Navigating back in the page structure",
     "closeDialog": "Close dialog",

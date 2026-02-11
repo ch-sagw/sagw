@@ -181,6 +181,23 @@ export const convertPayloadEventPagesToFeItems = async ({
       });
     }
 
+    const timeStringGerman = lang
+      ? rte1ToPlaintext(globalI18n.generic.time)
+      : '';
+
+    let renderTimeString;
+
+    if (eventPage.eventDetails.time) {
+      renderTimeString = `${formatTime({
+        dateString: eventPage.eventDetails.time,
+        locale: lang,
+      })}`;
+
+      if (lang === 'de' && timeStringGerman) {
+        renderTimeString += ` ${timeStringGerman}`;
+      }
+    }
+
     const returnEventPage: InterfaceEventsListItemPropTypes = {
       dateEnd: eventPage.eventDetails.multipleDays
         ? eventPage.eventDetails.dateEnd || eventPage.eventDetails.date
@@ -198,12 +215,7 @@ export const convertPayloadEventPagesToFeItems = async ({
         ? rteToHtml(category.eventCategory)
         : undefined,
       text: rteToHtml(eventPage.eventDetails.title),
-      // time: eventPage.eventDetails.time,
-      time: eventPage.eventDetails.time
-        ? `${formatTime({
-          dateString: eventPage.eventDetails.time,
-        })} ${rte1ToPlaintext(globalI18n.generic.time)}`
-        : undefined,
+      time: renderTimeString,
     };
 
     return returnEventPage;

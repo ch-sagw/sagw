@@ -23,6 +23,10 @@
     height: px-to-rem(var(--spacing-m));
     color: var(--icon-color);
     flex-shrink: 0;
+
+    path {
+      stroke-width: 2;
+    }
   }
 
   .hiddenLabel {

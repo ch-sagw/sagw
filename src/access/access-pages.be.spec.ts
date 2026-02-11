@@ -16,6 +16,7 @@ import {
   getTenant, getTenantNonSagw,
 } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { seoData } from '@/seed/test-data/seoData';
 
 extendExpect(expect);
 test.describe('access-pages', () => {
@@ -226,6 +227,7 @@ test.describe('access-pages', () => {
               title: simpleRteConfig(`Detail page ${(new Date())
                 .toString()}`),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,
@@ -273,6 +275,7 @@ test.describe('access-pages', () => {
               title: simpleRteConfig(`Detail page ${(new Date())
                 .toString()}`),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,
@@ -317,6 +320,7 @@ test.describe('access-pages', () => {
               title: simpleRteConfig(`Detail page ${(new Date())
                 .toString()}`),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,
@@ -361,6 +365,7 @@ test.describe('access-pages', () => {
               title: simpleRteConfig(`Detail page ${(new Date())
                 .toString()}`),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,
@@ -407,6 +412,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,
@@ -475,6 +481,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,
@@ -540,6 +547,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,
@@ -598,6 +606,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,
@@ -665,6 +674,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,
@@ -737,6 +747,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,
@@ -808,6 +819,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,
@@ -871,6 +883,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,
@@ -944,6 +957,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,
@@ -1019,6 +1033,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,
@@ -1089,6 +1104,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,
@@ -1152,6 +1168,7 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
             parentPage: {
               documentId: home.id,

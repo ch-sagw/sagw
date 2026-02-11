@@ -12,6 +12,7 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { LogCapture } from '@/test-helpers/capture-logs';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { deleteSetsPages } from '@/seed/test-data/deleteData';
+import { seoData } from '@/seed/test-data/seoData';
 
 test.describe('detail page', () => {
   test('does not invalidate on overview page props change (sagw)', {
@@ -255,6 +256,7 @@ test.describe('detail page', () => {
           ...detailPage.hero,
           author: simpleRteConfig('author changed'),
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -309,6 +311,7 @@ test.describe('detail page', () => {
           ...detailPage.hero,
           date: '2030',
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -515,6 +518,7 @@ test.describe('detail page', () => {
         overviewPageProps: {
           teaserText: simpleRteConfig('overview page props changed'),
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -570,6 +574,7 @@ test.describe('detail page', () => {
           ...detailPage.hero,
           author: simpleRteConfig('author changed'),
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -625,6 +630,7 @@ test.describe('detail page', () => {
           ...detailPage.hero,
           date: '2030',
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -760,6 +766,7 @@ test.describe('overview page', () => {
             blockType: 'magazineOverviewBlock',
           },
         ],
+        ...seoData,
       },
       id: overviewPage.id,
       locale: 'it',
@@ -773,6 +780,7 @@ test.describe('overview page', () => {
         overviewPageProps: {
           teaserText: simpleRteConfig('overview page props changed'),
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -908,6 +916,7 @@ test.describe('overview page', () => {
             blockType: 'magazineOverviewBlock',
           },
         ],
+        ...seoData,
       },
       id: overviewPage.id,
       locale: 'it',
@@ -921,6 +930,7 @@ test.describe('overview page', () => {
         overviewPageProps: {
           teaserText: simpleRteConfig('overview page props changed'),
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -1060,6 +1070,7 @@ test.describe('overview page', () => {
             title: simpleRteConfig('Magazine Teaser'),
           },
         ],
+        ...seoData,
       },
       id: overviewPage.id,
       locale: 'it',
@@ -1073,6 +1084,7 @@ test.describe('overview page', () => {
         overviewPageProps: {
           teaserText: simpleRteConfig('overview page props changed'),
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
@@ -1214,6 +1226,7 @@ test.describe('overview page', () => {
             title: simpleRteConfig('Magazine Teaser'),
           },
         ],
+        ...seoData,
       },
       id: overviewPage.id,
       locale: 'it',
@@ -1227,6 +1240,7 @@ test.describe('overview page', () => {
         overviewPageProps: {
           teaserText: simpleRteConfig('overview page props changed'),
         },
+        ...seoData,
       },
       id: detailPage.id,
       locale: 'it',
