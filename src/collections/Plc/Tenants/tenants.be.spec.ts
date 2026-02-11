@@ -241,17 +241,6 @@ test.describe('Tenants only show content from users tenant', () => {
       force: true,
     });
 
-    const navigationTitle = await page.locator('#field-navigationTitle');
-    const parentPage = await page.locator('#field-parentPage');
-    const sidebar = await page.locator('.document-fields__sidebar-fields');
-
-    await navigationTitle.fill('nav title');
-    await parentPage.click();
-
-    const homePageParentPage = await sidebar.getByText('Home Page');
-
-    await homePageParentPage.click();
-
     const save = await page.getByRole('button', {
       name: 'Save',
     });
