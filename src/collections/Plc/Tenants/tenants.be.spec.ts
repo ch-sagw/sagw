@@ -317,10 +317,6 @@ test.describe('Tenants only show content from users tenant', () => {
     await expect(frButton)
       .not.toBeVisible();
 
-    await fr.click({
-      force: true,
-    });
-
     await saveButton.click();
   });
 
