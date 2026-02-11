@@ -20,16 +20,10 @@ import {
   FieldHook,
   RichTextField,
 } from 'payload';
-import { JSDOM } from 'jsdom';
-import domPurify from 'dompurify';
+import sanitizeHtml from 'sanitize-html';
 import validator from 'validator';
 import { linkableSlugs } from '@/collections/Pages/pages';
 import { LexicalRichTextAdapterProvider } from 'node_modules/@payloadcms/richtext-lexical/dist/types';
-
-const {
-  window,
-} = new JSDOM('');
-const purify = domPurify(window);
 
 const sanitizeNode = (node: any): void => {
   if (node.text && typeof node.text === 'string') {
@@ -38,11 +32,10 @@ const sanitizeNode = (node: any): void => {
     // allow: letters, numbers, punctuation, space, tabs, newlines
     node.text = validator.whitelist(node.text, '\\x09\\x0A\\x0D\\x20-\\x7E\\u00A0-\\u00FF\\u2019');
 
-    // sanitize
-    node.text = purify.sanitize(node.text, {
-      USE_PROFILES: {
-        html: false,
-      },
+    // sanitize: strip all HTML tags (no DOM required, works on Vercel)
+    node.text = sanitizeHtml(node.text, {
+      allowedAttributes: {},
+      allowedTags: [],
     });
   }
 
