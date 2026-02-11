@@ -38,7 +38,7 @@ export const PeopleOverviewComponent = ({
       links.push({
         href: `mailto:${item.mail}`,
         text: item.mail,
-        type: 'phone',
+        type: 'mail',
       });
     }
 

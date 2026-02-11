@@ -35,8 +35,10 @@
 }
 
 @mixin body-text-lead {
-  font-family: var(--font-family-display);
-  font-size: px-to-rem(var(--body-text-lead-size));
+  /* font-family: var(--font-family-display);
+  font-size: px-to-rem(var(--body-text-lead-size)); */
+  @include body-text-l;
+
   letter-spacing: 0.009rem;
   line-height: 1.4;
 }

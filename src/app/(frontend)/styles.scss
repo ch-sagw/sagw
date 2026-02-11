@@ -49,3 +49,10 @@ div:has(section[class*="light"]) + div:has(section[class*="light"]) {
     padding-block-start: 0;
   }
 }
+
+// Print styles
+@media print {
+  body > *:not(main) {
+    display: none;
+  }
+}
