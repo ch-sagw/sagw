@@ -8,9 +8,9 @@ import { Hero } from '@/components/global/Hero/Hero';
 import { RenderHero } from '@/app/(frontend)/renderers/RenderHero';
 import { RenderStatusMessage } from '@/app/(frontend)/renderers/RenderStatusMessage';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
-import { getPageUrl } from '@/utilities/getPageUrl';
-import { findPageByPath } from '@/app/(frontend)/utilities/findPageByPath';
-import { I18NGlobal } from '@/payload-types';
+import {
+  HomePage, I18NGlobal,
+} from '@/payload-types';
 import { RenderHeader } from './RenderHeader';
 import { RenderFooter } from './RenderFooter';
 import { RenderConsentBanner } from './RenderConsentBanner';
@@ -21,11 +21,23 @@ import { hasLocale } from 'next-intl';
 import { CMSConfigError } from '../utilities/CMSConfigError';
 import { SkipLinks } from '@/components/global/SkipLinks/SkipLinks';
 import { ColorMode } from '@/components/base/types/colorMode';
+
+export interface InterfacePreFetchedHomePageData {
+  pageData: HomePage;
+  optionalLinkUrl?: string;
+}
+
+export interface InterfacePreFetchedOtherPageData {
+  pageData: any;
+  foundCollection: CollectionSlug;
+}
+
 interface InterfacePageRendererProps {
   isHome: boolean;
   locale: TypedLocale;
   tenantId: string;
   pageSlugs?: string[];
+  preFetchedData?: InterfacePreFetchedHomePageData | InterfacePreFetchedOtherPageData;
 }
 
 interface InterfaceRenderPageContentProps {
@@ -133,6 +145,7 @@ export const RenderPage = async ({
   locale,
   tenantId,
   pageSlugs,
+  preFetchedData,
 }: InterfacePageRendererProps): Promise<React.JSX.Element> => {
   await verifyLangConfig({
     locale,
@@ -141,7 +154,7 @@ export const RenderPage = async ({
 
   const payload = await getPayloadCached();
 
-  // Fetch i18n data (needed for both home and detail pages)
+  // fetch i18n data (needed for both home and detail pages)
   const i18nDataDocs = await payload.find({
     collection: 'i18nGlobals',
     depth: 1,
@@ -159,46 +172,35 @@ export const RenderPage = async ({
   }
 
   const [i18nData] = i18nDataDocs.docs;
+  let homePageData: HomePage | undefined;
+  let optionalLinkUrl: string | undefined;
+
+  if (preFetchedData) {
+    if (isHome && 'optionalLinkUrl' in preFetchedData) {
+      const homeData = preFetchedData as InterfacePreFetchedHomePageData;
+
+      homePageData = homeData.pageData;
+
+      /* eslint-disable prefer-destructuring */
+      optionalLinkUrl = homeData.optionalLinkUrl;
+      /* eslint-enable prefer-destructuring */
+    }
+  }
 
   // Handle home page
   if (isHome) {
-    const pagesData = await payload.find({
-      collection: 'homePage',
-      depth: 1,
-      limit: 1,
-      locale,
-      where: {
-        tenant: {
-          equals: tenantId,
-        },
-      },
-    });
-
-    if (!pagesData.docs || pagesData.docs.length < 1) {
-      notFound();
-    }
-
-    const [pageData] = pagesData.docs;
-
-    // Compute URL for optionalLink if it exists
-    let optionalLinkUrl: string | undefined;
-
-    if (pageData.hero?.optionalLink?.includeLink && pageData.hero.optionalLink.link?.internalLink?.documentId) {
-      optionalLinkUrl = await getPageUrl({
-        locale,
-        pageId: pageData.hero.optionalLink.link.internalLink.documentId,
-        payload,
-      });
+    if (!homePageData) {
+      return <CMSConfigError message='No data for HomePage found.' />;
     }
 
     return renderPageContent({
-      blocks: pageData.content,
+      blocks: homePageData.content,
       containerType: 'home',
-      currentPageId: pageData.id,
+      currentPageId: homePageData.id,
       headerColorMode: 'dark',
       heroComponent: (
         <Hero
-          {...pageData.hero}
+          {...homePageData.hero}
           type='home'
           optionalLinkUrl={optionalLinkUrl}
         />
@@ -208,61 +210,63 @@ export const RenderPage = async ({
       locale,
       sourcePage: {
         collectionSlug: 'homePage',
-        id: pageData.id,
+        id: homePageData.id,
       },
       tenantId,
     });
   }
 
-  // Handle other pages
+  // handle other pages
   if (!pageSlugs || pageSlugs.length === 0) {
     return <CMSConfigError message='Something is wrong with the url structure' />;
   }
 
-  const pageResult = await findPageByPath({
-    locale,
-    slugSegments: pageSlugs,
-    tenantId,
-  });
+  let otherPageData: any;
+  let foundCollection: CollectionSlug | undefined;
 
-  if (!pageResult) {
-    notFound();
+  if (preFetchedData) {
+    const detailData = preFetchedData as InterfacePreFetchedOtherPageData;
+
+    otherPageData = detailData.pageData;
+
+    /* eslint-disable prefer-destructuring */
+    foundCollection = detailData.foundCollection;
+    /* eslint-enable prefer-destructuring */
   }
 
-  const {
-    pageData,
-    foundCollection,
-  } = pageResult;
+  if (!foundCollection) {
+    return <CMSConfigError message='Page data not found.' />;
+  }
 
   // Get content blocks - some pages have content, others have blocks.content
   let contentBlocks = null;
 
-  if ('content' in pageData && pageData.content) {
-    contentBlocks = pageData.content;
-  } else if ('blocks' in pageData && pageData.blocks && 'content' in pageData.blocks) {
-    contentBlocks = pageData.blocks.content;
+  if ('content' in otherPageData && otherPageData.content) {
+    contentBlocks = otherPageData.content;
+  } else if ('blocks' in otherPageData && otherPageData.blocks && 'content' in otherPageData.blocks) {
+    contentBlocks = otherPageData.blocks.content;
   }
 
-  const collectionSlug = foundCollection as CollectionSlug;
+  const collectionSlug = foundCollection;
 
   // Get ColorMode for header from hero component
-  const headerColorMode = pageData.hero?.colorMode || 'white';
+  const headerColorMode = otherPageData.hero?.colorMode || 'white';
 
   let projectId = null;
 
   if (collectionSlug === 'projectDetailPage') {
-    projectId = pageData.project.id;
+    projectId = otherPageData.project.id;
   }
 
   return renderPageContent({
     blocks: contentBlocks,
     containerType: 'detail',
-    currentPageId: pageData.id,
+    currentPageId: otherPageData.id,
     headerColorMode,
     heroComponent: (
       <RenderHero
         foundCollection={collectionSlug}
-        pageData={pageData}
+        pageData={otherPageData}
         i18nGeneric={i18nData.generic}
         locale={locale}
       />
@@ -274,7 +278,7 @@ export const RenderPage = async ({
     showBlocks: Boolean(contentBlocks),
     sourcePage: {
       collectionSlug,
-      id: pageData.id,
+      id: otherPageData.id,
     },
     tenantId,
   });

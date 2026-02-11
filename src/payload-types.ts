@@ -244,15 +244,21 @@ export interface HomePage {
         | InterfaceProjectTeasersBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -275,6 +281,11 @@ export interface Tenant {
    * Used for url paths, example: /tenant-slug/page-slug
    */
   slug: string;
+  /**
+   * The final root URL for the tenant, example: https://www.sagw.ch
+   */
+  url: string;
+  faviconName: string;
   languages?: {
     de?: boolean | null;
     fr?: boolean | null;
@@ -1462,15 +1473,21 @@ export interface ErrorPage {
       [k: string]: unknown;
     };
   };
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -1489,15 +1506,21 @@ export interface DataPrivacyPage {
   adminTitle?: string | null;
   hero: InterfaceHeroField;
   content?: InterfaceTextBlock[] | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -1553,15 +1576,21 @@ export interface ImpressumPage {
   adminTitle?: string | null;
   hero: InterfaceHeroField;
   content?: InterfaceTextBlock[] | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -1620,15 +1649,21 @@ export interface MagazineDetailPage {
         | InterfaceFootnotesBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -1992,15 +2027,21 @@ export interface NewsDetailPage {
         | InterfaceNewsTeasersBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -2211,15 +2252,21 @@ export interface EventDetailPage {
   link?: {
     externalLink: string;
   };
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -2412,15 +2459,21 @@ export interface PublicationDetailPage {
         | InterfacePublicationsTeasersBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -2584,15 +2637,21 @@ export interface ProjectDetailPage {
         | InterfacePublicationsTeasersBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -2873,15 +2932,21 @@ export interface OverviewPage {
         | InterfaceProjectTeasersBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -3511,15 +3576,21 @@ export interface DetailPage {
         | InterfaceFootnotesBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -3643,15 +3714,21 @@ export interface NationalDictionaryDetailPage {
   };
   hero: InterfaceHeroField;
   content?: (InterfaceTextBlock | InterfaceLinksBlock | InterfaceNotificationBlock)[] | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -3704,15 +3781,21 @@ export interface InstituteDetailPage {
   };
   hero: InterfaceHeroField;
   content?: (InterfaceTextBlock | InterfaceLinksBlock | InterfaceNotificationBlock)[] | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -3810,7 +3893,7 @@ export interface InterfaceI18NGeneric {
     [k: string]: unknown;
   };
   /**
-   * On events, we use this to display the time. If you provide the value "Uhr", we display: "09:00 Uhr"
+   * On events, we use this to display the time. If you provide the value "Uhr", we display: "09:00 Uhr". Only used for german language.
    */
   time: {
     root: {
@@ -5007,6 +5090,12 @@ export interface HomePageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5223,6 +5312,12 @@ export interface ErrorPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5254,6 +5349,12 @@ export interface DataPrivacyPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5294,6 +5395,12 @@ export interface ImpressumPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5340,6 +5447,12 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5500,6 +5613,12 @@ export interface OverviewPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5744,6 +5863,12 @@ export interface DetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5850,6 +5975,12 @@ export interface EventDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5897,6 +6028,12 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5961,6 +6098,12 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -6013,6 +6156,12 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -6056,6 +6205,12 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -6106,6 +6261,12 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -6555,6 +6716,8 @@ export interface TenantsSelect<T extends boolean = true> {
   title?: T;
   domain?: T;
   slug?: T;
+  url?: T;
+  faviconName?: T;
   languages?:
     | T
     | {

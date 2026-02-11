@@ -29,8 +29,9 @@ const sanitizeNode = (node: any): void => {
   if (node.text && typeof node.text === 'string') {
 
     // clean up.
-    // allow: letters, numbers, punctuation, space, tabs, newlines
-    node.text = validator.whitelist(node.text, '\\x09\\x0A\\x0D\\x20-\\x7E\\u00A0-\\u00FF\\u2019');
+    // allow: letters, numbers, punctuation, space, tabs, newlines,
+    // dashes (en-dash, em-dash)
+    node.text = validator.whitelist(node.text, '\\x09\\x0A\\x0D\\x20-\\x7E\\u00A0-\\u00FF\\u2013-\\u2014\\u2019');
 
     // sanitize: strip all HTML tags (no DOM required, works on Vercel)
     node.text = sanitizeHtml(node.text, {

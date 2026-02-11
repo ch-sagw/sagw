@@ -36,6 +36,7 @@ import {
 import { getTenant } from '@/test-helpers/tenant-generator';
 import slugify from 'slugify';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { seoData } from '@/seed/test-data/seoData';
 
 interface InterfacePageProps {
   title: string;
@@ -64,8 +65,12 @@ type InterfacePublicationPageProps = {
 
 type InterfaceEventPageProps = {
   date?: string;
+  dateEnd?: string;
   category?: string;
   project?: string;
+  hideLanguage?: boolean;
+  hideLocation?: boolean;
+  time?: string;
 } & InterfacePageProps;
 
 type InterfaceNewsPageProps = {
@@ -121,6 +126,7 @@ export const generateHomePage = async ({
           sideTitle: simpleRteConfig(sideTitle),
           title: simpleRteConfig(title),
         },
+        ...seoData,
         tenant,
       },
       locale: locale || 'de',
@@ -218,6 +224,7 @@ const generatePage = async ({
         colorMode: 'light',
         title: simpleRteConfig(title),
       },
+      ...seoData,
       navigationTitle: navigationTitle || 'some navigation title',
       parentPage: ensuredParentPage,
       slug: slugify(title, {
@@ -311,13 +318,22 @@ export const generateEventDetailPage = async (props: InterfaceEventPageProps): P
         date: props.date
           ? props.date
           : '2030-08-01T12:00:00.000Z',
-        dateEnd: '2026-01-01T13:00:00.000Z',
-        language: simpleRteConfig('Deutsch'),
-        location: simpleRteConfig('ETH Zürich'),
+        dateEnd: props.dateEnd
+          ? props.dateEnd
+          : undefined,
+        language: props.hideLanguage
+          ? undefined
+          : simpleRteConfig('Deutsch'),
+        location: props.hideLocation
+          ? undefined
+          : simpleRteConfig('ETH Zürich'),
         project,
-        time: '2025-08-31T12:00:00.000Z',
+        time: props.time
+          ? props.time
+          : '2025-08-31T12:00:00.000Z',
         title: simpleRteConfig(props.title),
       },
+      ...seoData,
       navigationTitle: props.navigationTitle || 'some navigation title',
       parentPage: ensuredParentPage,
       showDetailPage: 'true',
@@ -380,6 +396,7 @@ export const generateInstituteDetailPage = async (props: InterfacePageProps): Pr
         image: image.id,
         teaserText: simpleRteConfig('some text'),
       },
+      ...seoData,
       parentPage: ensuredParentPage,
       slug: slugify(props.title, {
         lower: true,
@@ -429,6 +446,7 @@ export const generateMagazineDetailPage = async (props: InterfaceMagazinePagePro
           : '2030-08-01T12:00:00.000Z',
         title: simpleRteConfig(props.title),
       },
+      ...seoData,
       navigationTitle: props.navigationTitle || 'some navigation title',
       overviewPageProps: {
         teaserText: simpleRteConfig('some text'),
@@ -482,6 +500,7 @@ export const generateNationalDictionaryDetailPage = async (props: InterfacePageP
       overviewPageProps: {
         teaserText: simpleRteConfig('some text'),
       },
+      ...seoData,
       parentPage: ensuredParentPage,
       slug: slugify(props.title, {
         lower: true,
@@ -534,6 +553,7 @@ export const generateNewsDetailPage = async (props: InterfaceNewsPageProps): Pro
       overviewPageProps: {
         teaserText: simpleRteConfig('some text'),
       },
+      ...seoData,
       parentPage: ensuredParentPage,
       project: props.project,
       slug: slugify(props.title, {
@@ -598,6 +618,7 @@ export const generateProjectDetailPage = async (props: InterfaceProjectPageProps
         colorMode: 'light',
         title: simpleRteConfig(props.title),
       },
+      ...seoData,
       navigationTitle: props.navigationTitle || 'some navigation title',
       overviewPageProps: {
         linkText: simpleRteConfig('some text'),
@@ -663,6 +684,7 @@ export const generatePublicationDetailPage = async (props: InterfacePublicationP
         colorMode: 'light',
         title: simpleRteConfig(props.title),
       },
+      ...seoData,
       navigationTitle: props.navigationTitle || 'some navigation title',
       overviewPageProps: {
         date: props.date || '2030-08-01T12:00:00.000Z',
@@ -841,6 +863,7 @@ export const generateDataPrivacyPage = async ({
         colorMode: 'dark',
         title: simpleRteConfig('Data privacy page'),
       },
+      ...seoData,
       tenant,
     },
   });
@@ -869,6 +892,7 @@ export const generateImpressumPage = async ({
         colorMode: 'dark',
         title: simpleRteConfig('Impressum page'),
       },
+      ...seoData,
       tenant,
     },
   });
@@ -1444,6 +1468,7 @@ export const generateAllPageTypes = async ({
       hero: {
         title: simpleRteConfig(`overview ${iterator} ${time} it`),
       },
+      ...seoData,
       navigationTitle: `overview ${iterator} ${time} it`,
     },
     id: overview.id,
@@ -1457,6 +1482,7 @@ export const generateAllPageTypes = async ({
         title: simpleRteConfig(`detail ${iterator} ${time} it`),
       },
       navigationTitle: `detail ${iterator} ${time} it`,
+      ...seoData,
     },
     id: detail.id,
     locale: 'it',
@@ -1469,6 +1495,7 @@ export const generateAllPageTypes = async ({
         title: simpleRteConfig(`event ${iterator} ${time} it`),
       },
       navigationTitle: `event ${iterator} ${time} it`,
+      ...seoData,
     },
     id: event.id,
     locale: 'it',
@@ -1482,6 +1509,7 @@ export const generateAllPageTypes = async ({
       },
       navigationTitle: `news ${iterator} ${time} it`,
       overviewPageProps: news.overviewPageProps,
+      ...seoData,
     },
     id: news.id,
     locale: 'it',
@@ -1495,6 +1523,7 @@ export const generateAllPageTypes = async ({
       },
       navigationTitle: `project ${iterator} ${time} it`,
       overviewPageProps: project.overviewPageProps,
+      ...seoData,
     },
     id: project.id,
     locale: 'it',
@@ -1509,6 +1538,7 @@ export const generateAllPageTypes = async ({
       },
       navigationTitle: `magazine ${iterator} ${time} it`,
       overviewPageProps: magazine.overviewPageProps,
+      ...seoData,
     },
     id: magazine.id,
     locale: 'it',
@@ -1522,6 +1552,7 @@ export const generateAllPageTypes = async ({
       },
       navigationTitle: `institute ${iterator} ${time} it`,
       overviewPageProps: institute.overviewPageProps,
+      ...seoData,
     },
     id: institute.id,
     locale: 'it',
@@ -1535,6 +1566,7 @@ export const generateAllPageTypes = async ({
       },
       navigationTitle: `national dictionary ${iterator} ${time} it`,
       overviewPageProps: nationalDictionary.overviewPageProps,
+      ...seoData,
     },
     id: nationalDictionary.id,
     locale: 'it',
@@ -1548,6 +1580,7 @@ export const generateAllPageTypes = async ({
       },
       navigationTitle: `publication ${iterator} ${time} it`,
       overviewPageProps: publication.overviewPageProps,
+      ...seoData,
     },
     id: publication.id,
     locale: 'it',

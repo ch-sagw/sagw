@@ -135,7 +135,11 @@ export const Notification = ({
         />
       }
 
-      <div id={notificationId}>
+      <div {...(actionText
+        ? {
+          id: notificationId,
+        }
+        : {})}>
         {title &&
           <SafeHtml
             className={styles.title}

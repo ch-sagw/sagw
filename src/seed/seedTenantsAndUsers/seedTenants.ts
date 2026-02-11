@@ -29,14 +29,16 @@ export const seedTenants = async (props: InterfaceSeedTenantsProps): Promise<Ten
 
     const tenantPromises: Promise<Tenant>[] = [];
 
-    props.tenants.forEach((tenant) => {
+    props.tenants.forEach((tenant, index) => {
       tenantPromises.push(props.payload.create({
         collection: 'tenants',
         data: {
           domain: `${tenant.slug}.localhost`,
+          faviconName: `https://www.foo${index}.bar`,
           name: tenant.name,
           slug: tenant.slug,
           title: tenant.name,
+          url: `https://www.foo${index}.bar`,
         },
       }));
     });

@@ -11,6 +11,7 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { LogCapture } from '@/test-helpers/capture-logs';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { deleteSetsPages } from '@/seed/test-data/deleteData';
+import { seoData } from '@/seed/test-data/seoData';
 
 test('invalidates on content change (sagw)', {
   tag: '@cache',
@@ -155,6 +156,7 @@ test('invalidates on content change in other locale (sagw)', {
           text: simpleRteConfig('some text'),
         },
       ],
+      ...seoData,
     },
     id: detailPage.id,
     locale: 'it',
@@ -207,6 +209,7 @@ test('invalidates on hero change in other locale (sagw)', {
       hero: {
         title: simpleRteConfig('changed'),
       },
+      ...seoData,
     },
     id: detailPage.id,
     locale: 'it',
@@ -368,6 +371,7 @@ test('invalidates on content change in other locale (non-sagw)', {
           text: simpleRteConfig('some text'),
         },
       ],
+      ...seoData,
     },
     id: detailPage.id,
     locale: 'it',
@@ -421,6 +425,7 @@ test('invalidates on hero change in other locale (non-sagw)', {
       hero: {
         title: simpleRteConfig('changed'),
       },
+      ...seoData,
     },
     id: detailPage.id,
     locale: 'it',

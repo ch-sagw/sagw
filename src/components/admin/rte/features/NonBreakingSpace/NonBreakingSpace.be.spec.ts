@@ -40,6 +40,24 @@ test.describe('NonBreakingSpace', () => {
 
     await homePageParentPage.click();
 
+    const metaTab = await page.getByText('Meta', {
+      exact: true,
+    });
+
+    const contentTab = await page.getByText('Content', {
+      exact: true,
+    });
+
+    await metaTab.click();
+
+    const metaTitle = await page.locator('#field-meta__seo__title');
+    const metaDescription = await page.locator('#field-meta__seo__description');
+
+    await metaTitle.fill('foo');
+    await metaDescription.fill('foo');
+
+    await contentTab.click();
+
     // save
     const saveButton = await page.getByRole('button', {
       name: 'Publish changes',
@@ -117,6 +135,11 @@ test.describe('NonBreakingSpace', () => {
     await nbspButton.click();
     await rteInputField.pressSequentially('bar');
 
+    // save
+    const saveButton = await page.getByRole('button', {
+      name: 'Publish changes',
+    });
+
     const navigationTitle = await page.locator('#field-navigationTitle');
     const parentPage = await page.locator('#field-parentPage');
     const sidebar = await page.locator('.document-fields__sidebar-fields');
@@ -128,10 +151,23 @@ test.describe('NonBreakingSpace', () => {
 
     await homePageParentPage.click();
 
-    // save
-    const saveButton = await page.getByRole('button', {
-      name: 'Publish changes',
+    const metaTab = await page.getByText('Meta', {
+      exact: true,
     });
+
+    const contentTab = await page.getByText('Content', {
+      exact: true,
+    });
+
+    await metaTab.click();
+
+    const metaTitle = await page.locator('#field-meta__seo__title');
+    const metaDescription = await page.locator('#field-meta__seo__description');
+
+    await metaTitle.fill('foo');
+    await metaDescription.fill('foo');
+
+    await contentTab.click();
 
     await saveButton.click();
 
@@ -184,6 +220,24 @@ test.describe('NonBreakingSpace', () => {
     const homePageParentPage = await sidebar.getByText('Home Page');
 
     await homePageParentPage.click();
+
+    const metaTab = await page.getByText('Meta', {
+      exact: true,
+    });
+
+    const contentTab = await page.getByText('Content', {
+      exact: true,
+    });
+
+    await metaTab.click();
+
+    const metaTitle = await page.locator('#field-meta__seo__title');
+    const metaDescription = await page.locator('#field-meta__seo__description');
+
+    await metaTitle.fill('foo');
+    await metaDescription.fill('foo');
+
+    await contentTab.click();
 
     await saveButton.click();
 
