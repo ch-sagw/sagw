@@ -138,7 +138,7 @@ export const PublicationDetailPage: CollectionConfig = {
             },
 
             // Hero
-            fieldsHero,
+            fieldsHero(),
 
             // Content Blocks
             {

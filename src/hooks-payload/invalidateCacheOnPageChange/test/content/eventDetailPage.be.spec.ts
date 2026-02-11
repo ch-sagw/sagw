@@ -11,6 +11,7 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { LogCapture } from '@/test-helpers/capture-logs';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { deleteSetsPages } from '@/seed/test-data/deleteData';
+import { seoData } from '@/seed/test-data/seoData';
 
 test('invalidates on title change (sagw)', {
   tag: '@cache',
@@ -539,6 +540,7 @@ test('invalidates on title change in other locale (sagw)', {
       eventDetails: {
         title: simpleRteConfig('event title changed'),
       },
+      ...seoData,
     },
     id: detailPage.id,
     locale: 'it',
@@ -591,6 +593,7 @@ test('invalidates on location change in other locale (sagw)', {
       eventDetails: {
         location: simpleRteConfig('location changed'),
       },
+      ...seoData,
     },
     id: detailPage.id,
     locale: 'it',
@@ -643,6 +646,7 @@ test('invalidates on language change in other locale (sagw)', {
       eventDetails: {
         language: simpleRteConfig('language changed'),
       },
+      ...seoData,
     },
     id: detailPage.id,
     locale: 'it',
@@ -691,6 +695,7 @@ test('invalidates on detail page content change in other locale (sagw)', {
     collection: 'eventDetailPage',
     data: {
       showDetailPage: 'true',
+      ...seoData,
     },
     id: detailPage.id,
     locale: 'it',
@@ -709,6 +714,7 @@ test('invalidates on detail page content change in other locale (sagw)', {
           },
         ],
       },
+      ...seoData,
     },
     id: detailPage.id,
     locale: 'it',
@@ -1261,6 +1267,7 @@ test('invalidates on title change in other locale (non-sagw)', {
       eventDetails: {
         title: simpleRteConfig('event title changed'),
       },
+      ...seoData,
     },
     id: detailPage.id,
     locale: 'it',
@@ -1314,6 +1321,7 @@ test('invalidates on location change in other locale (non-sagw)', {
       eventDetails: {
         location: simpleRteConfig('location changed'),
       },
+      ...seoData,
     },
     id: detailPage.id,
     locale: 'it',
@@ -1367,6 +1375,7 @@ test('invalidates on language change in other locale (non-sagw)', {
       eventDetails: {
         language: simpleRteConfig('language changed'),
       },
+      ...seoData,
     },
     id: detailPage.id,
     locale: 'it',
@@ -1416,6 +1425,7 @@ test('invalidates on detail page content change in other locale (non-sagw)', {
     collection: 'eventDetailPage',
     data: {
       showDetailPage: 'true',
+      ...seoData,
     },
     id: detailPage.id,
     locale: 'it',
@@ -1434,6 +1444,7 @@ test('invalidates on detail page content change in other locale (non-sagw)', {
           },
         ],
       },
+      ...seoData,
     },
     id: detailPage.id,
     locale: 'it',

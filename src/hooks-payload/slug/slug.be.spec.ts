@@ -9,10 +9,11 @@ import {
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { getTenantId } from '@/test-helpers/tenant-generator';
 import {
-  generateDetailPage, getHomeId,
+  generateDetailPage, generateOverviewPage, getHomeId,
 } from '@/test-helpers/collections-generator';
 import { extendExpect } from '@/access/test/extendExpect';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
+import { seoData } from '@/seed/test-data/seoData';
 
 extendExpect(expect);
 
@@ -60,6 +61,18 @@ test.describe('Slug field UI', () => {
       name: 'Publish changes',
     });
 
+    const metaTab = await page.getByText('Meta', {
+      exact: true,
+    });
+
+    await metaTab.click();
+
+    const metaTitle = await page.locator('#field-meta__seo__title');
+    const metaDescription = await page.locator('#field-meta__seo__description');
+
+    await metaTitle.fill('foo');
+    await metaDescription.fill('foo');
+
     await saveButton.click();
 
     // wait for confirmation toast and close it
@@ -89,7 +102,6 @@ test.describe('Slug field API', () => {
     await deleteSetsPages();
     await deleteOtherCollections();
 
-    const payload = await getPayloadCached();
     const time = (new Date())
       .getTime();
 
@@ -112,25 +124,59 @@ test.describe('Slug field API', () => {
     });
 
     await expect(async () => {
-      await payload.create({
-        collection: 'detailPage',
-        data: {
-          /* eslint-disable @typescript-eslint/naming-convention */
-          _status: 'published',
-          /* eslint-enable @typescript-eslint/naming-convention */
-          hero: {
-            colorMode: 'dark',
-            title: simpleRteConfig(`detail ${time}`),
-          },
-          navigationTitle: 'Some navigation title',
-          parentPage: {
-            documentId: home,
-            slug: 'homePage',
-          },
-          slug: `detail-${time}`,
-          tenant,
+      await generateDetailPage({
+        parentPage: {
+          documentId: home,
+          slug: 'homePage',
         },
-        draft: false,
+        title: `detail ${time}`,
+      });
+    })
+      .rejects.toMatchObject({
+        data: {
+          errors: [
+            {
+              message: `Slug "detail-${time}" already exists in this tenant`,
+              path: 'slug',
+            },
+          ],
+        },
+        status: 400,
+      });
+  });
+
+  test('checks for unique slug accross all collections in same tenant', async () => {
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await generateDetailPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      title: `detail ${time}`,
+    });
+
+    await expect(async () => {
+      await generateOverviewPage({
+        parentPage: {
+          documentId: home,
+          slug: 'homePage',
+        },
+        title: `detail ${time}`,
       });
     })
       .rejects.toMatchObject({
@@ -203,6 +249,7 @@ test.describe('Slug field API', () => {
           },
           slug: `detail-2-${time}`,
           tenant,
+          ...seoData,
         },
         draft: false,
         locale: 'de',

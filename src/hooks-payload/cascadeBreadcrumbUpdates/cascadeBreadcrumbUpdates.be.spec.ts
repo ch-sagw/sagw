@@ -19,6 +19,7 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
+import { seoData } from '@/seed/test-data/seoData';
 
 test.describe('breadcrumb-cascade', () => {
   test.beforeEach(async () => {
@@ -505,6 +506,7 @@ test.describe('breadcrumb-cascade', () => {
           hero: {
             title: simpleRteConfig(`Level 1 fr ${time}`),
           },
+          ...seoData,
           navigationTitle: `Level 1 Navigation Title fr ${time}`,
         },
         id: level1.id,
@@ -518,6 +520,7 @@ test.describe('breadcrumb-cascade', () => {
             title: simpleRteConfig(`Level 2 fr ${time}`),
           },
           navigationTitle: `Level 2 Navigation Title fr ${time}`,
+          ...seoData,
         },
         id: level2.id,
         locale: 'fr',
@@ -530,6 +533,7 @@ test.describe('breadcrumb-cascade', () => {
             title: simpleRteConfig(`Level 3 fr ${time}`),
           },
           navigationTitle: `Level 3 Navigation Title fr ${time}`,
+          ...seoData,
         },
         id: level3.id,
         locale: 'fr',
@@ -543,6 +547,7 @@ test.describe('breadcrumb-cascade', () => {
           },
           navigationTitle: `Level 4 Navigation Title fr ${time}`,
           overviewPageProps: level4.overviewPageProps,
+          ...seoData,
         },
         id: level4.id,
         locale: 'fr',
