@@ -232,7 +232,7 @@ test.describe('Slug field API', () => {
     });
 
     await expect(async () => {
-      const foo = await payload.create({
+      await payload.create({
         collection: 'detailPage',
         data: {
           /* eslint-disable @typescript-eslint/naming-convention */
@@ -255,10 +255,57 @@ test.describe('Slug field API', () => {
         locale: 'de',
       });
 
-      console.log(foo);
-
     })
       .notRejects();
+  });
+
+});
+
+test.describe('SAGW slug restrictions', () => {
+  test('validation fails if sagw creates slug which corresponds to other tenant slug', async () => {
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    await getTenantId({
+      isSagw: false,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await expect(async () => {
+      await generateDetailPage({
+        parentPage: {
+          documentId: home,
+          slug: 'homePage',
+        },
+        tenant,
+        title: `tenant ${time}`,
+      });
+
+    })
+      .rejects.toMatchObject({
+        data: {
+          errors: [
+            {
+              message: `Slug "tenant-${time}" conflicts with another tenant's URL and cannot be used`,
+              path: 'slug',
+            },
+          ],
+        },
+        status: 400,
+      });
   });
 
 });
