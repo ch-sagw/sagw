@@ -16,6 +16,8 @@ import { NonBreakingSpaceNode } from '@/components/admin/rte/features/NonBreakin
 import {
   JSX, useEffect,
 } from 'react';
+import validator from 'validator';
+import sanitizeHtml from 'sanitize-html';
 
 const NON_BREAKING_SPACE = '\u00A0';
 
@@ -77,8 +79,15 @@ const getClipboardTextWithNbsp = (event: ClipboardEvent): string | null => {
     return null;
   }
 
+  let sanitizedHtmlText = validator.whitelist(htmlText, '\\x09\\x0A\\x0D\\x20-\\x7E\\u00A0-\\u00FF\\u2013-\\u2014\\u2019');
+
+  sanitizedHtmlText = sanitizeHtml(sanitizedHtmlText, {
+    allowedAttributes: {},
+    allowedTags: [],
+  });
+
   const parsedHtmlText = new DOMParser()
-    .parseFromString(htmlText, 'text/html')
+    .parseFromString(sanitizedHtmlText, 'text/html')
     .body
     .textContent ?? '';
 
