@@ -107,6 +107,9 @@ jobs:
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
           DATABASE_NAME: sagwplaywright
           DATABASE_URI: mongodb://user:pass@mongo:27017/sagwplaywright?authSource=admin
+          GUMLET_API_URL: ${{ secrets.GUMLET_API_URL }}
+          GUMLET_API_TOKEN: ${{ secrets.GUMLET_API_TOKEN }}
+          GUMLET_COLLECTION_ID: ${{ secrets.GUMLET_COLLECTION_ID }}
           USER_SUPER_ADMIN_MAIL: ${{ secrets.USER_SUPER_ADMIN_MAIL }}
           USER_SUPER_ADMIN_PASS: ${{ secrets.USER_SUPER_ADMIN_PASS }}
           USER_SAGW_ADMIN_MAIL: ${{ secrets.USER_SAGW_ADMIN_MAIL }}

@@ -3649,6 +3649,12 @@ export interface InterfaceVideoBlock {
   blockType: 'videoBlock';
 }
 /**
+ *
+ *       Storing videos requires a lot of disk space, especially in backups.
+ *       Please ensure that your video does not exceed 50 MB in size and 5 Mins in length.
+ *       Please upload videos in the format 16/9.
+ *
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "videos".
  */
@@ -3656,6 +3662,11 @@ export interface Video {
   id: string;
   tenant?: (string | null) | Tenant;
   title: string;
+  /**
+   * Enter video duration in seconds
+   */
+  duration?: number | null;
+  gumletAssetId?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -6564,6 +6575,8 @@ export interface ImagesSelect<T extends boolean = true> {
 export interface VideosSelect<T extends boolean = true> {
   tenant?: T;
   title?: T;
+  duration?: T;
+  gumletAssetId?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
