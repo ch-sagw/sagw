@@ -22,6 +22,7 @@ const classes = cva([styles.figure], {
 
 export const ImageBlock = ({
   alignment,
+  alignmentMagazine,
   caption,
   credits,
   image,
@@ -34,7 +35,7 @@ export const ImageBlock = ({
 
   let variant = 'content';
 
-  if (alignment === 'hero') {
+  if (alignmentMagazine === 'hero') {
     variant = 'hero';
   }
 

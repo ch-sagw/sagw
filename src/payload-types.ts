@@ -2092,7 +2092,8 @@ export interface InterfaceHeroFieldNewsDetail {
  */
 export interface InterfaceImageBlock {
   image: string | Image;
-  alignment?: ('left' | 'center' | 'right' | 'hero') | null;
+  alignmentMagazine?: ('left' | 'center' | 'right' | 'hero') | null;
+  alignment?: ('left' | 'center' | 'right') | null;
   caption?: {
     root: {
       type: string;
@@ -5538,6 +5539,7 @@ export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
  */
 export interface InterfaceImageBlockSelect<T extends boolean = true> {
   image?: T;
+  alignmentMagazine?: T;
   alignment?: T;
   caption?: T;
   credits?: T;
