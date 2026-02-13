@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.34.0](https://github.com/ch-sagw/sagw/compare/v0.33.0...v0.34.0) (2026-02-13)
+
+
+### Chore
+
+* **deps-dev:** bump the development-dependencies group across 1 directory with 8 updates ([#793](https://github.com/ch-sagw/sagw/issues/793)) ([59dabb4](https://github.com/ch-sagw/sagw/commit/59dabb4f9a7349a48015e9720e08b18051d6fb51))
+
+
+### Features
+
+* adding hero option for image in payload ([55ea0e1](https://github.com/ch-sagw/sagw/commit/55ea0e187706b07894020c70b373be1a30d5d0a4))
+* preserve nbsp on paste ([#799](https://github.com/ch-sagw/sagw/issues/799)) ([9096bab](https://github.com/ch-sagw/sagw/commit/9096babc488b9c860a05bf4948a9f817d1cf365c))
+* validate sagw page slug and make sure it does not exist as tenant slug ([#796](https://github.com/ch-sagw/sagw/issues/796)) ([e585029](https://github.com/ch-sagw/sagw/commit/e585029475df20b4f08dd4b2f3b1ed1da97143ed))
+
+
+### Bug Fixes
+
+* adding helper to get theme name and move rendering of class to body tag ([41ca889](https://github.com/ch-sagw/sagw/commit/41ca88967e65d72c0e02a6a23c0fa87696326b85))
+* only allow hero alignement on magazine pages ([#800](https://github.com/ch-sagw/sagw/issues/800)) ([102aa89](https://github.com/ch-sagw/sagw/commit/102aa891dae13e409463876400690e0fb214a1b9))
+
 ## [0.33.0](https://github.com/ch-sagw/sagw/compare/v0.32.2...v0.33.0) (2026-02-11)
 
 
