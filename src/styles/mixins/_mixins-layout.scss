@@ -37,6 +37,7 @@
       will-change: transform;
       top: px-to-rem(calc(var(--sticky-offset-top) + var(--grid-gutter)));
       bottom: 0;
+      margin: 0;
       align-self: flex-start;
       grid-row: 1 / span 5;
       grid-column: 1 / 4;

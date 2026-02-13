@@ -34,7 +34,7 @@ const samplePage: InterfaceMagazineDetailPageWithImage = {
   content: [
     {
       alignment: 'center',
-      blockType: 'imageBlock',
+      blockType: 'imageBlockMagazine',
       credits: simpleRteConfig('some credits'),
       image: 'someid',
     },

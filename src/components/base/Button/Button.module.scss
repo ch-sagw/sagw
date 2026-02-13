@@ -57,6 +57,10 @@
     svg {
       stroke: var(--button-icon-color);
 
+      path {
+        stroke-width: 2;
+      }
+
       @include forced-colors {
         stroke: currentcolor;
       }

@@ -1531,7 +1531,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
         content: [
           {
             alignment: 'center',
-            blockType: 'imageBlock',
+            blockType: 'imageBlockMagazine',
             credits: simpleRteConfig('some credits'),
             image: image.id,
           },

@@ -21,6 +21,7 @@ import { hasLocale } from 'next-intl';
 import { CMSConfigError } from '../utilities/CMSConfigError';
 import { SkipLinks } from '@/components/global/SkipLinks/SkipLinks';
 import { ColorMode } from '@/components/base/types/colorMode';
+import { getThemeName } from '../utilities/getThemeName';
 
 export interface InterfacePreFetchedHomePageData {
   pageData: HomePage;
@@ -53,7 +54,21 @@ interface InterfaceRenderPageContentProps {
   containerType: 'home' | 'detail';
   currentPageId?: string;
   headerColorMode: ColorMode;
+  themeName: string;
 }
+
+const getTenantThemeName = async ({
+  tenantId,
+}: {
+  tenantId: string,
+}): Promise<string> => {
+  // Get Theme name based on tenant
+  const theme = await getThemeName({
+    id: tenantId,
+  });
+
+  return theme.docs[0]?.themeSelector || 'sagw';
+};
 
 // Helper to verify lang-config and to render error page
 const verifyLangConfig = async ({
@@ -103,40 +118,47 @@ const renderPageContent = ({
   headerColorMode,
   projectId,
   currentPageId,
+  themeName,
 }: InterfaceRenderPageContentProps): React.JSX.Element => (
   <TenantProvider tenant={tenantId}>
-    <SkipLinks />
-    <RenderHeader
-      colorMode={headerColorMode}
-      tenant={tenantId}
-      currentPageId={currentPageId}
-    />
-    <div className={containerType === 'home'
-      ? 'home'
-      : 'detail-page'}>
-      {heroComponent}
-      <RenderStatusMessage
+    <body className={`theme-${themeName}`}>
+      <SkipLinks />
+      <RenderHeader
+        colorMode={headerColorMode}
         tenant={tenantId}
-        isHome={isHome}
-        locale={locale}
+        currentPageId={currentPageId}
       />
-      {showBlocks && blocks && (
-        <RenderBlocks
-          blocks={blocks}
-          tenantId={tenantId}
-          i18n={i18n}
-          projectId={projectId}
-          sourcePage={sourcePage}
-        />
-      )}
-    </div>
-    <RenderFooter
-      tenant={tenantId}
-    />
+      <main>
+        <main>
+          <div className={containerType === 'home'
+            ? 'home'
+            : 'detail-page'}>
+            {heroComponent}
+            <RenderStatusMessage
+              tenant={tenantId}
+              isHome={isHome}
+              locale={locale}
+            />
+            {showBlocks && blocks && (
+              <RenderBlocks
+                blocks={blocks}
+                tenantId={tenantId}
+                i18n={i18n}
+                projectId={projectId}
+                sourcePage={sourcePage}
+              />
+            )}
+          </div>
+        </main>
+      </main>
+      <RenderFooter
+        tenant={tenantId}
+      />
 
-    <RenderConsentBanner
-      tenant={tenantId}
-    />
+      <RenderConsentBanner
+        tenant={tenantId}
+      />
+    </body>
   </TenantProvider>
 );
 
@@ -193,6 +215,11 @@ export const RenderPage = async ({
       return <CMSConfigError message='No data for HomePage found.' />;
     }
 
+    // Get tenant theme name
+    const themeName = await getTenantThemeName({
+      tenantId,
+    });
+
     return renderPageContent({
       blocks: homePageData.content,
       containerType: 'home',
@@ -213,6 +240,7 @@ export const RenderPage = async ({
         id: homePageData.id,
       },
       tenantId,
+      themeName,
     });
   }
 
@@ -258,6 +286,11 @@ export const RenderPage = async ({
     projectId = otherPageData.project.id;
   }
 
+  // Get tenant theme name
+  const themeName = await getTenantThemeName({
+    tenantId,
+  });
+
   return renderPageContent({
     blocks: contentBlocks,
     containerType: 'detail',
@@ -281,6 +314,7 @@ export const RenderPage = async ({
       id: otherPageData.id,
     },
     tenantId,
+    themeName,
   });
 };
 

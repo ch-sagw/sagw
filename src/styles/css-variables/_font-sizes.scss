@@ -58,6 +58,10 @@
     --title-heading-section-size: var(--font-size-l);
   }
 
+  @include mq($from: large) {
+    --button-text-size: var(--font-size-m);
+  }
+
   @include mq($from: ultra) {
     --body-text-s-size: var(--font-size-m);
     --body-text-m-size: var(--font-size-xl);
@@ -65,8 +69,7 @@
     --body-text-xl-size: var(--font-size-3xl);
     --body-text-2xl-size: var(--font-size-4xl);
     --body-text-lead-size: var(--font-size-3xl);
-
-    // --button-text-size: var(--font-size-l);
+    --button-text-size: var(--font-size-l);
     --input-text-size: var(--font-size-l);
     --label-text-size: var(--font-size-m);
     --navigation-text-size: var(--font-size-l);

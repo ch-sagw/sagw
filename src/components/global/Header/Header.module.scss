@@ -69,9 +69,13 @@
     transition-property: background-color;
     background-color: rgb(white, 0);
 
-    &.expanded {
+    &.expanded div[data-header] {
+      margin-inline-end: px-to-rem(var(--grid-margin), true);
+      padding-inline-end: px-to-rem(var(--grid-margin));
       height: 100dvh;
-      overflow-y: visible;
+      max-height: 100dvh;
+      overflow-y: scroll;
+      overflow-x: hidden;
       scrollbar-gutter: stable;
       overscroll-behavior: contain;
     }

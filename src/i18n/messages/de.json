@@ -23,6 +23,10 @@
       }
     }
   },
+  "landmarks": {
+    "footerNavigation": "Navigation im Footerbereich",
+    "mainNavigation": "Hauptnavigation"
+  },
   "a11y": {
     "breadcrumb": "Zurücknavigieren in der Seitenstruktur",
     "closeDialog": "Dialog schliessen",

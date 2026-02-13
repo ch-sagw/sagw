@@ -7,7 +7,9 @@ import { rteToHtml } from '@/utilities/rteToHtml';
 import { Image } from '@/components/base/Image/Image';
 import { ImageVariant } from '@/components/base/types/imageVariant';
 
-import { InterfaceImageBlock } from '@/payload-types';
+import {
+  InterfaceImageBlock, InterfaceImageBlockMagazine,
+} from '@/payload-types';
 
 const classes = cva([styles.figure], {
   variants: {
@@ -25,7 +27,7 @@ export const ImageBlock = ({
   caption,
   credits,
   image,
-}: InterfaceImageBlock): React.JSX.Element | undefined => {
+}: InterfaceImageBlock | InterfaceImageBlockMagazine): React.JSX.Element | undefined => {
 
   // only handle objects
   if (typeof image !== 'object') {

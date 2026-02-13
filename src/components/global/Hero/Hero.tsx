@@ -243,8 +243,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
             text={rteToHtml(props.optionalLink.link.linkText)}
             colorMode={heroColorMode}
             style='text'
-            iconInlineEnd={'arrowRight' as keyof typeof Icon}
-            ariaCurrent={true}
+            iconInlineStart={'arrowRight' as keyof typeof Icon}
             prefetch={true}
           />
         }
