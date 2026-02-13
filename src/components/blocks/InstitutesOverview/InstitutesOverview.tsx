@@ -27,7 +27,7 @@ export const InstitutesOverview = async (props: InterfaceInstitutesOverviewPropT
     depth: 1,
     language: locale,
     limit: 0,
-    sort: '-createdAt',
+    sort: 'hero.title',
     tenant,
   }) as InstituteDetailPage[];
 
