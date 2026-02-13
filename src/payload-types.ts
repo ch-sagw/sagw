@@ -1643,7 +1643,7 @@ export interface MagazineDetailPage {
         | InterfaceTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
-        | InterfaceImageBlock
+        | InterfaceImageBlockMagazine
         | InterfaceFormBlock
         | InterfaceNotificationBlock
         | InterfaceFootnotesBlock
@@ -2092,7 +2092,6 @@ export interface InterfaceHeroFieldNewsDetail {
  */
 export interface InterfaceImageBlock {
   image: string | Image;
-  alignmentMagazine?: ('left' | 'center' | 'right' | 'hero') | null;
   alignment?: ('left' | 'center' | 'right') | null;
   caption?: {
     root: {
@@ -2847,6 +2846,50 @@ export interface ZenodoDocument {
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceImageBlockMagazine".
+ */
+export interface InterfaceImageBlockMagazine {
+  image: string | Image;
+  alignment?: ('left' | 'center' | 'right' | 'hero') | null;
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * The © will be added automatically in front of this text.
+   */
+  credits: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'imageBlockMagazine';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5433,7 +5476,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
         textBlock?: T | InterfaceTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
-        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        imageBlockMagazine?: T | InterfaceImageBlockMagazineSelect<T>;
         formBlock?: T | InterfaceFormBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
@@ -5535,11 +5578,10 @@ export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceImageBlock_select".
+ * via the `definition` "InterfaceImageBlockMagazine_select".
  */
-export interface InterfaceImageBlockSelect<T extends boolean = true> {
+export interface InterfaceImageBlockMagazineSelect<T extends boolean = true> {
   image?: T;
-  alignmentMagazine?: T;
   alignment?: T;
   caption?: T;
   credits?: T;
@@ -5876,6 +5918,18 @@ export interface DetailPageSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceImageBlock_select".
+ */
+export interface InterfaceImageBlockSelect<T extends boolean = true> {
+  image?: T;
+  alignment?: T;
+  caption?: T;
+  credits?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

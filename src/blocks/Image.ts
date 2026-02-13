@@ -6,7 +6,7 @@ import { Block } from 'payload';
 
 // Example: Magazine Detail
 
-const alignementOptions = [
+const alignmentOptions = [
   {
     label: 'Links',
     value: 'left',
@@ -21,15 +21,15 @@ const alignementOptions = [
   },
 ];
 
-const alignementOptionsMagazineDetail = [
-  ...alignementOptions,
+const alignmentOptionsMagazineDetail = [
+  ...alignmentOptions,
   {
     label: 'Hero',
     value: 'hero',
   },
 ];
 
-export const ImageBlock = {
+const genericImageBlock = (isMagazine: boolean): Block => ({
   admin: {
     disableBlockName: true,
   },
@@ -43,22 +43,11 @@ export const ImageBlock = {
     },
     {
       access: fieldAccessNonLocalizableField,
-      admin: {
-        condition: (data): boolean => data.hero?.author && data.hero?.date,
-      },
-      defaultValue: 'center',
-      name: 'alignmentMagazine',
-      options: alignementOptionsMagazineDetail,
-      type: 'select',
-    },
-    {
-      access: fieldAccessNonLocalizableField,
-      admin: {
-        condition: (data): boolean => !(data.hero?.author && data.hero?.date),
-      },
       defaultValue: 'center',
       name: 'alignment',
-      options: alignementOptions,
+      options: isMagazine
+        ? alignmentOptionsMagazineDetail
+        : alignmentOptions,
       type: 'select',
     },
     rte2({
@@ -71,10 +60,17 @@ export const ImageBlock = {
     }),
   ],
   imageURL: '/admin-ui-images/image.svg',
-  interfaceName: 'InterfaceImageBlock',
+  interfaceName: isMagazine
+    ? 'InterfaceImageBlockMagazine'
+    : 'InterfaceImageBlock',
   labels: {
     plural: 'Images',
     singular: 'Image',
   },
-  slug: 'imageBlock',
-} as const satisfies Block;
+  slug: isMagazine
+    ? 'imageBlockMagazine'
+    : 'imageBlock',
+});
+
+export const ImageBlock = genericImageBlock(false);
+export const ImageBlockMagazine = genericImageBlock(true);

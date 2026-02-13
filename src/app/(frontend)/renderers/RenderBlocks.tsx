@@ -17,6 +17,7 @@ import {
   InterfaceGenericTeasersBlock,
   InterfaceHomeTeasersBlock,
   InterfaceImageBlock,
+  InterfaceImageBlockMagazine,
   InterfaceInstitutesOverviewBlock,
   InterfaceLinksBlock,
   InterfaceMagazineOverviewBlock,
@@ -87,6 +88,7 @@ interface InterfaceRenderBlocksProps {
     InterfaceFootnotesBlock |
     InterfaceHomeTeasersBlock |
     InterfaceImageBlock |
+    InterfaceImageBlockMagazine |
     InterfaceGenericTeasersBlock |
     InterfaceInstitutesOverviewBlock |
     InterfaceLinksBlock |
@@ -396,7 +398,7 @@ export const RenderBlocks = ({
               );
             }
 
-            if (blockType === 'imageBlock') {
+            if (blockType === 'imageBlock' || blockType === 'imageBlockMagazine') {
               return (
                 <ImageBlock
                   {...block}

@@ -1072,7 +1072,7 @@ test('invalidates page with magazine overview if news image is changed (sagw)', 
       content: [
         {
           alignment: 'center',
-          blockType: 'imageBlock',
+          blockType: 'imageBlockMagazine',
           credits: simpleRteConfig('some credits'),
           image,
         },
@@ -1161,7 +1161,7 @@ test('invalidates page with magazine overview if news image is deleted (sagw)', 
       content: [
         {
           alignment: 'center',
-          blockType: 'imageBlock',
+          blockType: 'imageBlockMagazine',
           credits: simpleRteConfig('some credits'),
           image,
         },
@@ -2855,7 +2855,7 @@ test('invalidates page with magazine overview if news image is changed (non-sagw
       content: [
         {
           alignment: 'center',
-          blockType: 'imageBlock',
+          blockType: 'imageBlockMagazine',
           credits: simpleRteConfig('some credits'),
           image,
         },
@@ -2944,7 +2944,7 @@ test('invalidates page with magazine overview if news image is deleted (non-sagw
       content: [
         {
           alignment: 'center',
-          blockType: 'imageBlock',
+          blockType: 'imageBlockMagazine',
           credits: simpleRteConfig('some credits'),
           image,
         },
