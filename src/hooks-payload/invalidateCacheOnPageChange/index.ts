@@ -231,10 +231,10 @@ export const BLOCK_TO_COLLECTIONS: Record<string, CollectionSlug[]> = {
   imageBlock: [
     'detailPage',
     'eventDetailPage',
-    'magazineDetailPage',
     'newsDetailPage',
     'publicationDetailPage',
   ],
+  imageBlockMagazine: ['magazineDetailPage'],
   institutesOverviewBlock: [
     'homePage',
     'overviewPage',

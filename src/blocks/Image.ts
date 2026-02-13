@@ -6,7 +6,30 @@ import { Block } from 'payload';
 
 // Example: Magazine Detail
 
-export const ImageBlock = {
+const alignmentOptions = [
+  {
+    label: 'Links',
+    value: 'left',
+  },
+  {
+    label: 'Mitte',
+    value: 'center',
+  },
+  {
+    label: 'Rechts',
+    value: 'right',
+  },
+];
+
+const alignmentOptionsMagazineDetail = [
+  ...alignmentOptions,
+  {
+    label: 'Hero',
+    value: 'hero',
+  },
+];
+
+const genericImageBlock = (isMagazine: boolean): Block => ({
   admin: {
     disableBlockName: true,
   },
@@ -22,24 +45,9 @@ export const ImageBlock = {
       access: fieldAccessNonLocalizableField,
       defaultValue: 'center',
       name: 'alignment',
-      options: [
-        {
-          label: 'Links',
-          value: 'left',
-        },
-        {
-          label: 'Mitte',
-          value: 'center',
-        },
-        {
-          label: 'Rechts',
-          value: 'right',
-        },
-        {
-          label: 'Hero',
-          value: 'hero',
-        },
-      ],
+      options: isMagazine
+        ? alignmentOptionsMagazineDetail
+        : alignmentOptions,
       type: 'select',
     },
     rte2({
@@ -52,10 +60,17 @@ export const ImageBlock = {
     }),
   ],
   imageURL: '/admin-ui-images/image.svg',
-  interfaceName: 'InterfaceImageBlock',
+  interfaceName: isMagazine
+    ? 'InterfaceImageBlockMagazine'
+    : 'InterfaceImageBlock',
   labels: {
     plural: 'Images',
     singular: 'Image',
   },
-  slug: 'imageBlock',
-} as const satisfies Block;
+  slug: isMagazine
+    ? 'imageBlockMagazine'
+    : 'imageBlock',
+});
+
+export const ImageBlock = genericImageBlock(false);
+export const ImageBlockMagazine = genericImageBlock(true);

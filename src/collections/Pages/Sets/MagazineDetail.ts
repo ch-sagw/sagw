@@ -20,7 +20,7 @@ const contentBlocks: BlockSlug[] = [
   'footnoteBlock',
   'linksBlock',
   'downloadsBlock',
-  'imageBlock',
+  'imageBlockMagazine',
   'formBlock',
   'notificationBlock',
 ];

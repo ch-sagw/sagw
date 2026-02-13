@@ -102,6 +102,7 @@ const REFERENCED_COLLECTION_TO_BLOCKS: Record<string, string[]> = {
   forms: ['formBlock'],
   images: [
     'imageBlock',
+    'imageBlockMagazine',
     'networkTeasersBlock',
     'videoBlock',
     'genericTeasersBlock',
@@ -245,7 +246,7 @@ const blockReferencesDocument = (
     if (collectionSlug === 'forms') {
       return matchesDocumentId(blockRecord.form, changedDocumentId);
     }
-  } else if (blockTypeValue === 'imageBlock') {
+  } else if (blockTypeValue === 'imageBlock' || blockTypeValue === 'imageBlockMagazine') {
     // ImageBlock references images
     if (collectionSlug === 'images') {
       return matchesDocumentId(blockRecord.image, changedDocumentId);
@@ -1076,7 +1077,7 @@ const invalidatePagesReferencingDocument = async ({
             }
             const blockRecord = block as Record<string, unknown>;
 
-            return blockRecord.blockType === 'imageBlock' &&
+            return blockRecord.blockType === 'imageBlockMagazine' &&
               matchesDocumentId(blockRecord.image, changedDocumentId);
           });
         })
