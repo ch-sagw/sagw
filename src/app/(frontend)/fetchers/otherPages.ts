@@ -26,7 +26,7 @@ export const fetchOtherPagesData = async ({
   pageData: any;
 } | null> => {
   const pageResult = await findPageByPath({
-    depth: depth || 1,
+    depth: depth || 2,
     locale,
     slugSegments,
     tenantId,
