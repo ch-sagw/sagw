@@ -6,6 +6,7 @@ import slugify from 'slugify';
 import {
   setsSlugs, singletonSlugs,
 } from '@/collections/Pages/constants';
+import { getLocaleCodes } from '@/i18n/payloadConfig';
 
 // - ensure unique slug in same tenant across all page collections
 // - slugify slug (authors may edit the slug after generation... we need to
@@ -170,6 +171,70 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
         },
       ],
       global: `Slug "${dataParam.slug}" already exists in this tenant`,
+    });
+  }
+
+  // prevent SAGW pages from using slugs that match other tenants' slugs.
+  const currentTenantDocs = await req.payload.find({
+    collection: 'tenants',
+    locale: 'all',
+    overrideAccess: true,
+    where: {
+      id: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (currentTenantDocs.docs.length !== 1) {
+    return dataParam;
+  }
+
+  const tenantSlugs = currentTenantDocs.docs[0].slug;
+  const slugValues = (slug: string | Record<string, string>): string[] => {
+    if (typeof slug === 'string') {
+      return [slug];
+    }
+
+    return getLocaleCodes()
+      .map((locale) => slug[locale] ?? '')
+      .filter(Boolean);
+  };
+  const tenantSlugsArray = slugValues(tenantSlugs);
+  const isSagw = tenantSlugsArray.some((s) => s.toLowerCase() === 'sagw');
+
+  if (!isSagw) {
+    return dataParam;
+  }
+
+  const allTenants = await req.payload.find({
+    collection: 'tenants',
+    depth: 0,
+    limit: 0,
+    locale: 'all',
+    overrideAccess: true,
+  });
+
+  const conflictingTenant = allTenants.docs.find((t) => {
+    if (tenant === t.id) {
+      return false;
+    }
+
+    const potenationConflictingTenantSlugs = slugValues(t.slug);
+
+    return potenationConflictingTenantSlugs.some((s) => s === dataParam.slug);
+  });
+
+  if (conflictingTenant) {
+    throw new ValidationError({
+      errors: [
+        {
+          label: 'slug',
+          message: `Slug "${dataParam.slug}" conflicts with another tenant's URL and cannot be used`,
+          path: 'slug',
+        },
+      ],
+      global: `Slug "${dataParam.slug}" conflicts with another tenant's URL and cannot be used`,
     });
   }
 
