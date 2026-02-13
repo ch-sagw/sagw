@@ -66,6 +66,8 @@
     --color-news-date: var(--text-secondary);
     --color-author-name: var(--text-primary);
     --color-author-date: var(--text-secondary);
+
+    padding-block-end: 0;
   }
 
   // &.animated {}
@@ -200,6 +202,8 @@
   }
 
   &.magazineDetail {
+    padding-block-end: px-to-rem(var(--hero-big));
+
     .title {
       @include title-heading-article;
     }

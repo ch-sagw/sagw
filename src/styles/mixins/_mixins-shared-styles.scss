@@ -60,7 +60,6 @@
   grid-template-columns: repeat(12, 1fr);
   column-gap: px-to-rem(var(--grid-gutter));
   row-gap: px-to-rem(var(--spacing-3xl));
-  padding-block-start: px-to-rem(var(--section-inside-m));
 
   @include mq($from: medium) {
     row-gap: px-to-rem(var(--spacing-4xl));
