@@ -19,15 +19,16 @@ const NEXT_PUBLIC_SERVER_URL = process.env.URL ||
  */
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' 'unsafe-eval';
+  script-src 'self' https://vercel.live 'unsafe-inline' 'unsafe-eval';
   style-src 'self' 'unsafe-inline';
   img-src 'self' https://www.gravatar.com https://*.gumlet.io data: blob:;
   font-src 'self' data:;
   connect-src 'self' https:;
-  frame-src 'self';
+  frame-src 'self' https://vercel.live;
   object-src 'none';
   base-uri 'self';
   form-action 'self';
+  worker-src 'self' https://vercel.live blob:;
 `.replace(/\n/gu, ' ')
   .trim();
 
