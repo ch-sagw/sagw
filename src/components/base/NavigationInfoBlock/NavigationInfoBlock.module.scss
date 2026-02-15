@@ -1,4 +1,5 @@
 @use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/utilities" as *;
 
@@ -38,6 +39,10 @@
     z-index: 2;
     color: var(--color-title);
     margin: px-to-rem(calc(var(--spacing-xl) + var(--spacing-2xs))) 0 px-to-rem(var(--spacing-xs));
+
+    @include mq($from: ultra) {
+      margin-block-start: px-to-rem(calc(var(--spacing-2xl) + var(--spacing-xs)));
+    }
   }
 
   .text {
