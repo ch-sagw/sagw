@@ -201,6 +201,8 @@
 
         @include mq($from: medium) {
           display: flex;
+
+          --button-border-color: var(--border-weak);
         }
       }
 
@@ -209,6 +211,8 @@
 
         @include mq($to: medium) {
           display: flex;
+
+          --button-border-color: var(--border-weak);
         }
       }
     }
