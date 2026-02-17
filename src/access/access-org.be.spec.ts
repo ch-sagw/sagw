@@ -35,6 +35,7 @@ test.describe('access-org', () => {
           data: {
             domain: `${(new Date())
               .getTime()}.localhost`,
+            faviconName: 'foo',
             name: `${(new Date())
               .getTime()
               .toString()}1`,
@@ -44,6 +45,7 @@ test.describe('access-org', () => {
             title: `${(new Date())
               .getTime()
               .toString()}1`,
+            url: 'https://www.foo.bar',
           },
           overrideAccess: false,
           req: {
@@ -72,6 +74,7 @@ test.describe('access-org', () => {
           data: {
             domain: `${(new Date())
               .getTime()}.localhost`,
+            faviconName: 'foo',
             name: `${(new Date())
               .getTime()
               .toString()}1`,
@@ -81,6 +84,7 @@ test.describe('access-org', () => {
             title: `${(new Date())
               .getTime()
               .toString()}1`,
+            url: 'https://www.foo.bar',
           },
           overrideAccess: false,
           req: {
@@ -109,6 +113,7 @@ test.describe('access-org', () => {
           data: {
             domain: `${(new Date())
               .getTime()}.localhost`,
+            faviconName: 'foo',
             name: `${(new Date())
               .getTime()
               .toString()}1`,
@@ -118,6 +123,7 @@ test.describe('access-org', () => {
             title: `${(new Date())
               .getTime()
               .toString()}1`,
+            url: 'https://www.foo.bar',
           },
           overrideAccess: false,
           req: {
@@ -146,6 +152,7 @@ test.describe('access-org', () => {
           data: {
             domain: `${(new Date())
               .getTime()}.localhost`,
+            faviconName: 'foo',
             name: `${(new Date())
               .getTime()
               .toString()}1`,
@@ -155,6 +162,7 @@ test.describe('access-org', () => {
             title: `${(new Date())
               .getTime()
               .toString()}1`,
+            url: 'https://www.foo.bar',
           },
           overrideAccess: false,
           req: {
@@ -570,9 +578,11 @@ test.describe('access-org', () => {
           collection: 'tenants',
           data: {
             domain: 'testtenant',
+            faviconName: 'foo',
             name: 'testtenant',
             slug: 'testtenant',
             title: 'testtenant',
+            url: 'https://www.foo.bar',
           },
           overrideAccess: false,
           req: {

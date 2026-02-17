@@ -81,6 +81,9 @@ export const StatusMessage: CollectionConfig = {
           type: 'checkbox',
         },
         {
+          admin: {
+            description: 'Your choice affects the color of the message.',
+          },
           defaultValue: 'warn',
           name: 'type',
           options: [

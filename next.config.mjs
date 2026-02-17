@@ -12,9 +12,41 @@ const NEXT_PUBLIC_SERVER_URL = process.env.URL ||
   process.env.DEPLOY_URL ||
   'http://localhost:3000';
 
+/**
+ * CSP Headers
+ * Gravatar is needed within Payload,
+ * that's why it's in the list.
+ */
+const ContentSecurityPolicy = `
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' https://www.gravatar.com https://*.gumlet.io data: blob:;
+  font-src 'self' data:;
+  connect-src 'self' https:;
+  frame-src 'self';
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self';
+`.replace(/\n/gu, ' ')
+  .trim();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   devIndicators: false,
+  headers() {
+    return [
+      {
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: ContentSecurityPolicy,
+          },
+        ],
+        source: '/(.*)',
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL].map((item) => {

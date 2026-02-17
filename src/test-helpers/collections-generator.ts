@@ -36,6 +36,7 @@ import {
 import { getTenant } from '@/test-helpers/tenant-generator';
 import slugify from 'slugify';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { seoData } from '@/seed/test-data/seoData';
 
 interface InterfacePageProps {
   title: string;
@@ -64,8 +65,12 @@ type InterfacePublicationPageProps = {
 
 type InterfaceEventPageProps = {
   date?: string;
+  dateEnd?: string;
   category?: string;
   project?: string;
+  hideLanguage?: boolean;
+  hideLocation?: boolean;
+  time?: string;
 } & InterfacePageProps;
 
 type InterfaceNewsPageProps = {
@@ -76,59 +81,6 @@ type InterfaceNewsPageProps = {
 type InterfaceMagazinePageProps = {
   date?: string;
 } & InterfacePageProps;
-
-const generatePage = async ({
-  title,
-  navigationTitle,
-  parentPage,
-  type,
-  tenant: propsTenant,
-  locale,
-  content,
-  draft,
-}: {
-  type: 'overviewPage' | 'detailPage';
-} & InterfacePageProps): Promise<OverviewPage | DetailPage> => {
-  let tenant;
-
-  if (propsTenant) {
-    tenant = propsTenant;
-  } else {
-    tenant = await getTenant();
-  }
-
-  const payload = await getPayloadCached();
-
-  if (!tenant) {
-    throw new Error('Tenant is not defined.');
-  }
-
-  const document = await payload.create({
-    collection: type,
-    data: {
-      _status: draft
-        ? 'draft'
-        : 'published',
-      content,
-      hero: {
-        colorMode: 'light',
-        title: simpleRteConfig(title),
-      },
-      navigationTitle,
-      parentPage,
-      slug: slugify(title, {
-        lower: true,
-        strict: true,
-        trim: true,
-      }),
-      tenant,
-    },
-    draft: false,
-    locale: locale || 'de',
-  });
-
-  return document;
-};
 
 interface InterfaceGenerateHomePageProps {
   title: string;
@@ -154,20 +106,139 @@ export const generateHomePage = async ({
     tenant = await getTenant();
   }
 
-  const homePage = await payload.create({
+  const homeDocs = await payload.find({
     collection: 'homePage',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  let homePage;
+
+  if (homeDocs.docs.length < 1) {
+    homePage = await payload.create({
+      collection: 'homePage',
+      data: {
+        _status: 'published',
+        hero: {
+          sideTitle: simpleRteConfig(sideTitle),
+          title: simpleRteConfig(title),
+        },
+        ...seoData,
+        tenant,
+      },
+      locale: locale || 'de',
+    });
+  } else {
+    /* eslint-disable prefer-destructuring */
+    homePage = homeDocs.docs[0];
+    /* eslint-enable prefer-destructuring */
+  }
+
+  return homePage;
+};
+
+const getEnsuredParentPage = async ({
+  locale,
+  tenant,
+  parentPage,
+}: {
+  locale?: ConfigFromTypes['locale'];
+  tenant: string | null;
+  parentPage: {
+    slug: string,
+    documentId: string;
+  } | undefined;
+}): Promise<{
+  slug: string,
+  documentId: string;
+}> => {
+  if (!tenant) {
+    throw new Error('No tenant found in collections-generator');
+  }
+
+  let ensuredParentPage = parentPage;
+
+  if (!parentPage) {
+    const homeId = (await generateHomePage({
+      locale: locale || 'de',
+      sideTitle: 'Side',
+      tenant,
+      title: 'Home',
+    })).id;
+
+    ensuredParentPage = {
+      documentId: homeId,
+      slug: 'homePage',
+    };
+  }
+
+  return ensuredParentPage as {
+    slug: string,
+    documentId: string;
+  };
+};
+
+const generatePage = async ({
+  title,
+  navigationTitle,
+  parentPage,
+  type,
+  tenant: propsTenant,
+  locale,
+  content,
+  draft,
+}: {
+  type: 'overviewPage' | 'detailPage';
+} & InterfacePageProps): Promise<OverviewPage | DetailPage> => {
+  let tenant;
+
+  if (propsTenant) {
+    tenant = propsTenant;
+  } else {
+    tenant = await getTenant();
+  }
+
+  const ensuredParentPage = await getEnsuredParentPage({
+    locale,
+    parentPage,
+    tenant,
+  });
+
+  const payload = await getPayloadCached();
+
+  if (!tenant) {
+    throw new Error('Tenant is not defined.');
+  }
+
+  const document = await payload.create({
+    collection: type,
     data: {
-      _status: 'published',
+      _status: draft
+        ? 'draft'
+        : 'published',
+      content,
       hero: {
-        sideTitle: simpleRteConfig(sideTitle),
+        colorMode: 'light',
         title: simpleRteConfig(title),
       },
+      ...seoData,
+      navigationTitle: navigationTitle || 'some navigation title',
+      parentPage: ensuredParentPage,
+      slug: slugify(title, {
+        lower: true,
+        strict: true,
+        trim: true,
+      }),
       tenant,
     },
+    draft: false,
     locale: locale || 'de',
   });
 
-  return homePage;
+  return document;
 };
 
 export const generateOverviewPage = async (props: InterfacePageProps): Promise<OverviewPage> => (await generatePage({
@@ -232,6 +303,12 @@ export const generateEventDetailPage = async (props: InterfaceEventPageProps): P
     category = categoryItem.id;
   }
 
+  const ensuredParentPage = await getEnsuredParentPage({
+    locale: props.locale,
+    parentPage: props.parentPage,
+    tenant,
+  });
+
   const document = await payload.create({
     collection: 'eventDetailPage',
     data: {
@@ -241,15 +318,24 @@ export const generateEventDetailPage = async (props: InterfaceEventPageProps): P
         date: props.date
           ? props.date
           : '2030-08-01T12:00:00.000Z',
-        dateEnd: '2026-01-01T13:00:00.000Z',
-        language: simpleRteConfig('Deutsch'),
-        location: simpleRteConfig('ETH Zürich'),
+        dateEnd: props.dateEnd
+          ? props.dateEnd
+          : undefined,
+        language: props.hideLanguage
+          ? undefined
+          : simpleRteConfig('Deutsch'),
+        location: props.hideLocation
+          ? undefined
+          : simpleRteConfig('ETH Zürich'),
         project,
-        time: '2025-08-31T12:00:00.000Z',
+        time: props.time
+          ? props.time
+          : '2025-08-31T12:00:00.000Z',
         title: simpleRteConfig(props.title),
       },
-      navigationTitle: props.navigationTitle,
-      parentPage: props.parentPage,
+      ...seoData,
+      navigationTitle: props.navigationTitle || 'some navigation title',
+      parentPage: ensuredParentPage,
       showDetailPage: 'true',
       slug: slugify(props.title, {
         lower: true,
@@ -291,6 +377,12 @@ export const generateInstituteDetailPage = async (props: InterfacePageProps): Pr
     locale: props.locale || 'de',
   });
 
+  const ensuredParentPage = await getEnsuredParentPage({
+    locale: props.locale,
+    parentPage: props.parentPage,
+    tenant,
+  });
+
   const document = await payload.create({
     collection: 'instituteDetailPage',
     data: {
@@ -299,12 +391,13 @@ export const generateInstituteDetailPage = async (props: InterfacePageProps): Pr
         colorMode: 'light',
         title: simpleRteConfig(props.title),
       },
-      navigationTitle: props.navigationTitle,
+      navigationTitle: props.navigationTitle || 'some navigation title',
       overviewPageProps: {
         image: image.id,
         teaserText: simpleRteConfig('some text'),
       },
-      parentPage: props.parentPage,
+      ...seoData,
+      parentPage: ensuredParentPage,
       slug: slugify(props.title, {
         lower: true,
         strict: true,
@@ -335,6 +428,12 @@ export const generateMagazineDetailPage = async (props: InterfaceMagazinePagePro
     throw new Error('Tenant is not defined.');
   }
 
+  const ensuredParentPage = await getEnsuredParentPage({
+    locale: props.locale,
+    parentPage: props.parentPage,
+    tenant,
+  });
+
   const document = await payload.create({
     collection: 'magazineDetailPage',
     data: {
@@ -347,11 +446,12 @@ export const generateMagazineDetailPage = async (props: InterfaceMagazinePagePro
           : '2030-08-01T12:00:00.000Z',
         title: simpleRteConfig(props.title),
       },
-      navigationTitle: props.navigationTitle,
+      ...seoData,
+      navigationTitle: props.navigationTitle || 'some navigation title',
       overviewPageProps: {
         teaserText: simpleRteConfig('some text'),
       },
-      parentPage: props.parentPage,
+      parentPage: ensuredParentPage,
       slug: slugify(props.title, {
         lower: true,
         strict: true,
@@ -382,6 +482,12 @@ export const generateNationalDictionaryDetailPage = async (props: InterfacePageP
     throw new Error('Tenant is not defined.');
   }
 
+  const ensuredParentPage = await getEnsuredParentPage({
+    locale: props.locale,
+    parentPage: props.parentPage,
+    tenant,
+  });
+
   const document = await payload.create({
     collection: 'nationalDictionaryDetailPage',
     data: {
@@ -390,11 +496,12 @@ export const generateNationalDictionaryDetailPage = async (props: InterfacePageP
         colorMode: 'light',
         title: simpleRteConfig(props.title),
       },
-      navigationTitle: props.navigationTitle,
+      navigationTitle: props.navigationTitle || 'some navigation title',
       overviewPageProps: {
         teaserText: simpleRteConfig('some text'),
       },
-      parentPage: props.parentPage,
+      ...seoData,
+      parentPage: ensuredParentPage,
       slug: slugify(props.title, {
         lower: true,
         strict: true,
@@ -425,6 +532,12 @@ export const generateNewsDetailPage = async (props: InterfaceNewsPageProps): Pro
     throw new Error('Tenant is not defined.');
   }
 
+  const ensuredParentPage = await getEnsuredParentPage({
+    locale: props.locale,
+    parentPage: props.parentPage,
+    tenant,
+  });
+
   const document = await payload.create({
     collection: 'newsDetailPage',
     data: {
@@ -436,11 +549,12 @@ export const generateNewsDetailPage = async (props: InterfaceNewsPageProps): Pro
           : '2030-08-01T12:00:00.000Z',
         title: simpleRteConfig(props.title),
       },
-      navigationTitle: props.navigationTitle,
+      navigationTitle: props.navigationTitle || 'some navigation title',
       overviewPageProps: {
         teaserText: simpleRteConfig('some text'),
       },
-      parentPage: props.parentPage,
+      ...seoData,
+      parentPage: ensuredParentPage,
       project: props.project,
       slug: slugify(props.title, {
         lower: true,
@@ -490,6 +604,12 @@ export const generateProjectDetailPage = async (props: InterfaceProjectPageProps
     project = projectItem.id;
   }
 
+  const ensuredParentPage = await getEnsuredParentPage({
+    locale: props.locale,
+    parentPage: props.parentPage,
+    tenant,
+  });
+
   const document = await payload.create({
     collection: 'projectDetailPage',
     data: {
@@ -498,12 +618,13 @@ export const generateProjectDetailPage = async (props: InterfaceProjectPageProps
         colorMode: 'light',
         title: simpleRteConfig(props.title),
       },
-      navigationTitle: props.navigationTitle,
+      ...seoData,
+      navigationTitle: props.navigationTitle || 'some navigation title',
       overviewPageProps: {
         linkText: simpleRteConfig('some text'),
         teaserText: simpleRteConfig('some text'),
       },
-      parentPage: props.parentPage,
+      parentPage: ensuredParentPage,
       project,
       slug: slugify(props.title, {
         lower: true,
@@ -544,6 +665,12 @@ export const generatePublicationDetailPage = async (props: InterfacePublicationP
     filePath: 'src/seed/test-data/assets/sagw.png',
   });
 
+  const ensuredParentPage = await getEnsuredParentPage({
+    locale: props.locale,
+    parentPage: props.parentPage,
+    tenant,
+  });
+
   const document = await payload.create({
     collection: 'publicationDetailPage',
     data: {
@@ -557,12 +684,13 @@ export const generatePublicationDetailPage = async (props: InterfacePublicationP
         colorMode: 'light',
         title: simpleRteConfig(props.title),
       },
-      navigationTitle: props.navigationTitle,
+      ...seoData,
+      navigationTitle: props.navigationTitle || 'some navigation title',
       overviewPageProps: {
-        date: '2030-08-01T12:00:00.000Z',
+        date: props.date || '2030-08-01T12:00:00.000Z',
         image: image.id,
       },
-      parentPage: props.parentPage,
+      parentPage: ensuredParentPage,
       slug: slugify(props.title, {
         lower: true,
         strict: true,
@@ -735,6 +863,7 @@ export const generateDataPrivacyPage = async ({
         colorMode: 'dark',
         title: simpleRteConfig('Data privacy page'),
       },
+      ...seoData,
       tenant,
     },
   });
@@ -763,6 +892,7 @@ export const generateImpressumPage = async ({
         colorMode: 'dark',
         title: simpleRteConfig('Impressum page'),
       },
+      ...seoData,
       tenant,
     },
   });
@@ -1165,6 +1295,8 @@ export const generateCollectionsExceptPages = async ({
           label: simpleRteConfig('Nachname'),
           placeholder: 'Ihr Nachname',
         },
+        newsletterListId: 2,
+        newsletterTemporaryListId: 3,
       },
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: true,
@@ -1336,6 +1468,7 @@ export const generateAllPageTypes = async ({
       hero: {
         title: simpleRteConfig(`overview ${iterator} ${time} it`),
       },
+      ...seoData,
       navigationTitle: `overview ${iterator} ${time} it`,
     },
     id: overview.id,
@@ -1349,6 +1482,7 @@ export const generateAllPageTypes = async ({
         title: simpleRteConfig(`detail ${iterator} ${time} it`),
       },
       navigationTitle: `detail ${iterator} ${time} it`,
+      ...seoData,
     },
     id: detail.id,
     locale: 'it',
@@ -1361,6 +1495,7 @@ export const generateAllPageTypes = async ({
         title: simpleRteConfig(`event ${iterator} ${time} it`),
       },
       navigationTitle: `event ${iterator} ${time} it`,
+      ...seoData,
     },
     id: event.id,
     locale: 'it',
@@ -1374,6 +1509,7 @@ export const generateAllPageTypes = async ({
       },
       navigationTitle: `news ${iterator} ${time} it`,
       overviewPageProps: news.overviewPageProps,
+      ...seoData,
     },
     id: news.id,
     locale: 'it',
@@ -1387,6 +1523,7 @@ export const generateAllPageTypes = async ({
       },
       navigationTitle: `project ${iterator} ${time} it`,
       overviewPageProps: project.overviewPageProps,
+      ...seoData,
     },
     id: project.id,
     locale: 'it',
@@ -1401,6 +1538,7 @@ export const generateAllPageTypes = async ({
       },
       navigationTitle: `magazine ${iterator} ${time} it`,
       overviewPageProps: magazine.overviewPageProps,
+      ...seoData,
     },
     id: magazine.id,
     locale: 'it',
@@ -1414,6 +1552,7 @@ export const generateAllPageTypes = async ({
       },
       navigationTitle: `institute ${iterator} ${time} it`,
       overviewPageProps: institute.overviewPageProps,
+      ...seoData,
     },
     id: institute.id,
     locale: 'it',
@@ -1427,6 +1566,7 @@ export const generateAllPageTypes = async ({
       },
       navigationTitle: `national dictionary ${iterator} ${time} it`,
       overviewPageProps: nationalDictionary.overviewPageProps,
+      ...seoData,
     },
     id: nationalDictionary.id,
     locale: 'it',
@@ -1440,6 +1580,7 @@ export const generateAllPageTypes = async ({
       },
       navigationTitle: `publication ${iterator} ${time} it`,
       overviewPageProps: publication.overviewPageProps,
+      ...seoData,
     },
     id: publication.id,
     locale: 'it',
@@ -1504,7 +1645,7 @@ export const generateForm = async (tenant: string): Promise<string> => {
   return form.id;
 };
 
-export const generateDocument = async (tenant: string, project?: string): Promise<string> => {
+export const generateDocument = async (tenant: string, project?: string, title?: string): Promise<string> => {
   const payload = await getPayloadCached();
   const document = await payload.create({
     collection: 'documents',
@@ -1512,7 +1653,7 @@ export const generateDocument = async (tenant: string, project?: string): Promis
       date: '2025-10-30',
       project,
       tenant,
-      title: simpleRteConfig('Document'),
+      title: simpleRteConfig(title || 'Document'),
     },
     filePath: 'src/seed/test-data/assets/sagw.pdf',
   });
@@ -1520,7 +1661,7 @@ export const generateDocument = async (tenant: string, project?: string): Promis
   return document.id;
 };
 
-export const generateZenodoDocument = async (tenant: string, project?: string): Promise<string> => {
+export const generateZenodoDocument = async (tenant: string, project?: string, title?: string): Promise<string> => {
   const payload = await getPayloadCached();
   const zenodoDocument = await payload.create({
     collection: 'zenodoDocuments',
@@ -1542,7 +1683,7 @@ export const generateZenodoDocument = async (tenant: string, project?: string): 
       project,
       publicationDate: '1919-05-01',
       tenant,
-      title: 'Sample Zenodo Document',
+      title: title || 'Sample Zenodo Document',
       zenodoId: '1512691',
     },
   });

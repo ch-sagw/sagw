@@ -18,6 +18,7 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { getTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
+import { seoData } from '@/seed/test-data/seoData';
 
 test.describe('Breadcrumb links (sagw)', () => {
   beforeEachAcceptCookies();
@@ -60,6 +61,7 @@ test.describe('Breadcrumb links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`o1 it ${time}`),
           },
+          ...seoData,
           navigationTitle: '[test]link:o1-it',
         },
         id: o1.id,
@@ -81,6 +83,7 @@ test.describe('Breadcrumb links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d1 it ${time}`),
           },
+          ...seoData,
           navigationTitle: '[test]link:d1-it',
         },
         id: d1.id,
@@ -102,6 +105,7 @@ test.describe('Breadcrumb links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d2 it ${time}`),
           },
+          ...seoData,
           navigationTitle: '[test]link:d2-it',
           overviewPageProps: {
             teaserText: simpleRteConfig('some text'),
@@ -126,6 +130,7 @@ test.describe('Breadcrumb links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d3 it ${time}`),
           },
+          ...seoData,
           navigationTitle: '[test]link:d3-it',
           overviewPageProps: d3.overviewPageProps,
         },
@@ -149,6 +154,7 @@ test.describe('Breadcrumb links (sagw)', () => {
             ...d4.hero,
             title: simpleRteConfig(`d4 it ${time}`),
           },
+          ...seoData,
           navigationTitle: '[test]link:d4-it',
           overviewPageProps: {
             teaserText: simpleRteConfig('some text'),
@@ -173,6 +179,7 @@ test.describe('Breadcrumb links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d5 it ${time}`),
           },
+          ...seoData,
           navigationTitle: '[test]link:d5-it',
           overviewPageProps: {
             teaserText: simpleRteConfig('some text'),
@@ -197,6 +204,7 @@ test.describe('Breadcrumb links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d6 it ${time}`),
           },
+          ...seoData,
           navigationTitle: '[test]link:d6-it',
           overviewPageProps: {
             linkText: simpleRteConfig('some text'),
@@ -223,6 +231,7 @@ test.describe('Breadcrumb links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d7 it ${time}`),
           },
+          ...seoData,
           navigationTitle: '[test]link:d7-it',
           overviewPageProps: d7.overviewPageProps,
         },

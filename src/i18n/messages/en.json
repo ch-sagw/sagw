@@ -23,10 +23,15 @@
       }
     }
   },
+  "landmarks": {
+    "footerNavigation": "Navigation im Footerbereich (EN)",
+    "mainNavigation": "Hauptnavigation (EN)"
+  },
   "a11y": {
     "breadcrumb": "Navigating back in the page structure",
     "closeDialog": "Close dialog",
     "linkTarget": "Link target",
+    "logoLinkText": "Back to Homepage",
     "opensInNewWindow": "opens in new window",
     "playVideoText": "Video mit dem Titel «{{title}}» laden und abspielen (EN).",
     "socialLinks": {
@@ -48,5 +53,11 @@
   "publicationFilters": {
     "publicationTopicsLabel": "Publikationsthemen (EN)",
     "publicationTypesLabel": "Publikationstypen (EN)"
+  },
+  "langNav": {
+    "de": "Deutsch",
+    "fr": "Français",
+    "it": "Italiano",
+    "en": "English"
   }
 }

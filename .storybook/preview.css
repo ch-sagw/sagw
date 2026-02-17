@@ -11,3 +11,18 @@
 html.no-js {
   --initial-image-opacity: 0;
 }
+
+/*
+We have to set the header background-color for
+the header a11y tests. Header has no default
+background-color since it will receive it from
+the hero component. To make the a11y tests still
+work though, we have to set the background-color
+here. */
+header[class*='dark']:before {
+  background-color: var(--background-inverted);
+}
+
+header[class*='light']:before {
+  background-color: var(--background-light);
+}

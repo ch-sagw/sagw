@@ -7,7 +7,7 @@ export const getFirstImageIdOfMagazinePage = (page: MagazineDetailPage): Image |
   if (!page.content) {
     return '';
   }
-  const imageBlocks = page.content.filter((block) => block.blockType === 'imageBlock');
+  const imageBlocks = page.content.filter((block) => block.blockType === 'imageBlockMagazine');
 
   if (imageBlocks.length < 1) {
     return '';

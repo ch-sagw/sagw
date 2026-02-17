@@ -196,9 +196,7 @@ export interface Config {
   globals: {};
   globalsSelect: {};
   locale: 'de' | 'fr' | 'it' | 'en';
-  user: User & {
-    collection: 'users';
-  };
+  user: User;
   jobs: {
     tasks: unknown;
     workflows: unknown;
@@ -246,15 +244,21 @@ export interface HomePage {
         | InterfaceProjectTeasersBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -277,6 +281,11 @@ export interface Tenant {
    * Used for url paths, example: /tenant-slug/page-slug
    */
   slug: string;
+  /**
+   * The final root URL for the tenant, example: https://www.sagw.ch
+   */
+  url: string;
+  faviconName: string;
   languages?: {
     de?: boolean | null;
     fr?: boolean | null;
@@ -339,6 +348,9 @@ export interface InterfaceHeroFieldHome {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -448,7 +460,7 @@ export interface Form {
   mailSubject?: string | null;
   colorMode: 'white' | 'dark' | 'light';
   /**
-   * If enabled, the data-privacy checkebox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "i18n Forms".
+   * If enabled, the data-privacy checkbox will be added to the form. Note: you must define the "Data Privacy Checkbox Text" in "content snippets".
    */
   showPrivacyCheckbox?: boolean | null;
   submitSuccess: {
@@ -485,6 +497,9 @@ export interface Form {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
+        /**
+         * This is the text behind which the link is hidden.
+         */
         linkText: {
           root: {
             type: string;
@@ -538,6 +553,9 @@ export interface Form {
     optionalLink?: {
       includeLink?: boolean | null;
       link?: {
+        /**
+         * This is the text behind which the link is hidden.
+         */
         linkText: {
           root: {
             type: string;
@@ -567,7 +585,18 @@ export interface Form {
       )[]
     | null;
   newsletterFields?: {
+    /**
+     * Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the temporary contact list.
+     */
+    newsletterTemporaryListId: number;
+    /**
+     * Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the final contact list.
+     */
+    newsletterListId: number;
     email: {
+      /**
+       * Name of the field, visible for user
+       */
       label: {
         root: {
           type: string;
@@ -583,9 +612,15 @@ export interface Form {
         };
         [k: string]: unknown;
       };
+      /**
+       * Placeholder text within the field, visible for user
+       */
       placeholder: string;
       fieldWidth: 'full' | 'half';
       required?: boolean | null;
+      /**
+       * Message appears, if the user does not add text to a mandatory field.
+       */
       fieldError?: {
         root: {
           type: string;
@@ -603,6 +638,9 @@ export interface Form {
       } | null;
     };
     firstName: {
+      /**
+       * Name of the field, visible for user
+       */
       label: {
         root: {
           type: string;
@@ -618,9 +656,15 @@ export interface Form {
         };
         [k: string]: unknown;
       };
+      /**
+       * Placeholder text within the field, visible for user
+       */
       placeholder: string;
       fieldWidth: 'full' | 'half';
       required?: boolean | null;
+      /**
+       * Message appears, if the user does not add text to a mandatory field.
+       */
       fieldError?: {
         root: {
           type: string;
@@ -638,6 +682,9 @@ export interface Form {
       } | null;
     };
     lastName: {
+      /**
+       * Name of the field, visible for user
+       */
       label: {
         root: {
           type: string;
@@ -653,9 +700,15 @@ export interface Form {
         };
         [k: string]: unknown;
       };
+      /**
+       * Placeholder text within the field, visible for user
+       */
       placeholder: string;
       fieldWidth: 'full' | 'half';
       required?: boolean | null;
+      /**
+       * Message appears, if the user does not add text to a mandatory field.
+       */
       fieldError?: {
         root: {
           type: string;
@@ -673,7 +726,7 @@ export interface Form {
       } | null;
     };
     /**
-     * The action text to show at the bottom of the notification. e.g.: "Send verifiaction E-Mail again."
+     * Text is shown in the notification that appears after the user has sumbitted the form. The link behind the text allows the user to re-send the verification email. e.g.: "Send verification E-Mail again."
      */
     actionText: string;
     /**
@@ -707,6 +760,9 @@ export interface InterfaceCheckboxField {
   };
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
+  /**
+   * Message appears, if the user does not add text to a mandatory field.
+   */
   fieldError?: {
     root: {
       type: string;
@@ -750,6 +806,9 @@ export interface InterfaceRadioField {
   };
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
+  /**
+   * Message appears, if the user does not add text to a mandatory field.
+   */
   fieldError?: {
     root: {
       type: string;
@@ -794,6 +853,9 @@ export interface InterfaceRadioField {
  * via the `definition` "InterfaceEmailField".
  */
 export interface InterfaceEmailField {
+  /**
+   * Name of the field, visible for user
+   */
   label: {
     root: {
       type: string;
@@ -809,10 +871,16 @@ export interface InterfaceEmailField {
     };
     [k: string]: unknown;
   };
+  /**
+   * Placeholder text within the field, visible for user
+   */
   placeholder: string;
   name: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
+  /**
+   * Message appears, if the user does not add text to a mandatory field.
+   */
   fieldError?: {
     root: {
       type: string;
@@ -837,6 +905,9 @@ export interface InterfaceEmailField {
  * via the `definition` "InterfaceTextField".
  */
 export interface InterfaceTextField {
+  /**
+   * Name of the field, visible for user
+   */
   label: {
     root: {
       type: string;
@@ -852,10 +923,16 @@ export interface InterfaceTextField {
     };
     [k: string]: unknown;
   };
+  /**
+   * Placeholder text within the field, visible for user
+   */
   placeholder: string;
   name: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
+  /**
+   * Message appears, if the user does not add text to a mandatory field.
+   */
   fieldError?: {
     root: {
       type: string;
@@ -881,6 +958,9 @@ export interface InterfaceTextField {
  */
 export interface InterfaceTextareaField {
   name: string;
+  /**
+   * Name of the field, visible for user
+   */
   label: {
     root: {
       type: string;
@@ -896,9 +976,15 @@ export interface InterfaceTextareaField {
     };
     [k: string]: unknown;
   };
+  /**
+   * Placeholder text within the field, visible for user
+   */
   placeholder: string;
   fieldWidth: 'full' | 'half';
   required?: boolean | null;
+  /**
+   * Message appears, if the user does not add text to a mandatory field.
+   */
   fieldError?: {
     root: {
       type: string;
@@ -926,6 +1012,9 @@ export interface InterfaceHomeTeasersBlock {
   homeTeasers?:
     | {
         category: string;
+        /**
+         * Note: Icons are embedded in the code. Only developers can add new icons.
+         */
         iconName: 'homeTeaserActivities' | 'homeTeaserFunding' | 'homeTeaserNetwork';
         title: {
           root: {
@@ -958,6 +1047,9 @@ export interface InterfaceHomeTeasersBlock {
           [k: string]: unknown;
         };
         link: {
+          /**
+           * This is the text behind which the link is hidden.
+           */
           linkText: {
             root: {
               type: string;
@@ -1005,6 +1097,9 @@ export interface InterfaceEventsTeasersBlock {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1064,12 +1159,15 @@ export interface InterfaceMagazineTeasersBlock {
     [k: string]: unknown;
   } | null;
   /**
-   * Align Title & text horizontally or vertically
+   * Align Title and Lead horizontally or vertically
    */
   alignment?: ('vertical' | 'horizontal') | null;
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1117,6 +1215,9 @@ export interface InterfaceNewsTeasersBlock {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1163,6 +1264,9 @@ export interface InterfacePublicationsTeasersBlock {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1222,12 +1326,15 @@ export interface InterfaceProjectTeasersBlock {
     [k: string]: unknown;
   } | null;
   /**
-   * Align Title & text horizontally or vertically
+   * Align Title and Lead horizontally or vertically
    */
   alignment?: ('vertical' | 'horizontal') | null;
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1366,15 +1473,21 @@ export interface ErrorPage {
       [k: string]: unknown;
     };
   };
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -1393,15 +1506,21 @@ export interface DataPrivacyPage {
   adminTitle?: string | null;
   hero: InterfaceHeroField;
   content?: InterfaceTextBlock[] | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -1457,15 +1576,21 @@ export interface ImpressumPage {
   adminTitle?: string | null;
   hero: InterfaceHeroField;
   content?: InterfaceTextBlock[] | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -1482,15 +1607,15 @@ export interface MagazineDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
@@ -1518,21 +1643,27 @@ export interface MagazineDetailPage {
         | InterfaceTextBlock
         | InterfaceLinksBlock
         | InterfaceDownloadsBlock
-        | InterfaceImageBlock
+        | InterfaceImageBlockMagazine
         | InterfaceFormBlock
         | InterfaceNotificationBlock
         | InterfaceFootnotesBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -1600,6 +1731,9 @@ export interface InterfaceLinksBlock {
   links: {
     linkType: 'internal' | 'external' | 'mail';
     linkInternal?: {
+      /**
+       * You can add a description which provides more information about the link.
+       */
       description?: {
         root: {
           type: string;
@@ -1615,6 +1749,9 @@ export interface InterfaceLinksBlock {
         };
         [k: string]: unknown;
       } | null;
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1633,6 +1770,9 @@ export interface InterfaceLinksBlock {
       internalLink: InterfaceInternalLinkValue;
     };
     linkExternal?: {
+      /**
+       * You can add a description which provides more information about the link.
+       */
       description?: {
         root: {
           type: string;
@@ -1666,6 +1806,9 @@ export interface InterfaceLinksBlock {
       externalLink: string;
     };
     linkMail?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -1751,7 +1894,13 @@ export interface Document {
     };
     [k: string]: unknown;
   };
+  /**
+   * Date of the publication of the document should be added, not the publishing date on website.
+   */
   date?: string | null;
+  /**
+   * If the document belongs to a project, add the project.
+   */
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
@@ -1832,15 +1981,15 @@ export interface NewsDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
@@ -1863,6 +2012,9 @@ export interface NewsDetailPage {
     };
   };
   hero: InterfaceHeroFieldNewsDetail;
+  /**
+   * If the news belongs to a project, add the project.
+   */
   project?: (string | null) | Project;
   content?:
     | (
@@ -1875,15 +2027,21 @@ export interface NewsDetailPage {
         | InterfaceNewsTeasersBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -1933,8 +2091,8 @@ export interface InterfaceHeroFieldNewsDetail {
  * via the `definition` "InterfaceImageBlock".
  */
 export interface InterfaceImageBlock {
-  alignment?: ('left' | 'center' | 'right') | null;
   image: string | Image;
+  alignment?: ('left' | 'center' | 'right') | null;
   caption?: {
     root: {
       type: string;
@@ -2010,15 +2168,15 @@ export interface EventDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   eventDetails: {
     title: {
@@ -2036,6 +2194,8 @@ export interface EventDetailPage {
       };
       [k: string]: unknown;
     };
+    date: string;
+    time?: string | null;
     location?: {
       root: {
         type: string;
@@ -2066,10 +2226,14 @@ export interface EventDetailPage {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Choose the event format: workshop, talk, panel etc.
+     */
     category?: (string | null) | EventCategory;
+    /**
+     * If the event belongs to a project, add the project.
+     */
     project?: (string | null) | Project;
-    date: string;
-    time?: string | null;
     multipleDays?: boolean | null;
     dateEnd?: string | null;
   };
@@ -2088,15 +2252,21 @@ export interface EventDetailPage {
   link?: {
     externalLink: string;
   };
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -2170,6 +2340,9 @@ export interface InterfaceCtaLinkBlock {
   };
   linkType: 'internal' | 'external' | 'mail';
   linkInternal?: {
+    /**
+     * This is the text behind which the link is hidden.
+     */
     linkText: {
       root: {
         type: string;
@@ -2206,6 +2379,9 @@ export interface InterfaceCtaLinkBlock {
     externalLink: string;
   };
   linkMail?: {
+    /**
+     * This is the text behind which the link is hidden.
+     */
     linkText: {
       root: {
         type: string;
@@ -2237,26 +2413,38 @@ export interface PublicationDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
      * This image will be used for the teasers on the overview page.
      */
     image: string | Image;
+    /**
+     * The same date shown in the asset (Documents or Zenodo Documents) should be added.
+     */
     date: string;
   };
   categorization?: {
+    /**
+     * Add topic, if the filter on the publication overview page should include this publication.
+     */
     topic?: (string | null) | PublicationTopic;
+    /**
+     * Add type, if the filter on the publication overview page should include this publication.
+     */
     type?: (string | null) | PublicationType;
+    /**
+     * If the news belongs to a project, add the project.
+     */
     project?: (string | null) | Project;
   };
   hero: InterfaceHeroField;
@@ -2271,15 +2459,21 @@ export interface PublicationDetailPage {
         | InterfacePublicationsTeasersBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -2380,15 +2574,15 @@ export interface ProjectDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   project: string | Project;
   overviewPageProps: {
@@ -2443,15 +2637,21 @@ export interface ProjectDetailPage {
         | InterfacePublicationsTeasersBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -2617,6 +2817,9 @@ export interface Team {
     };
     [k: string]: unknown;
   };
+  /**
+   * Add People who belong to the team. The order represents the order of the people on the website.
+   */
   people?: (string | Person)[] | null;
   updatedAt: string;
   createdAt: string;
@@ -2637,9 +2840,56 @@ export interface ZenodoDocument {
     size?: number | null;
     id?: string | null;
   }[];
+  /**
+   * If the document belongs to a project, add the project.
+   */
   project?: (string | null) | Project;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceImageBlockMagazine".
+ */
+export interface InterfaceImageBlockMagazine {
+  image: string | Image;
+  alignment?: ('left' | 'center' | 'right' | 'hero') | null;
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * The © will be added automatically in front of this text.
+   */
+  credits: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'imageBlockMagazine';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2690,15 +2940,15 @@ export interface OverviewPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   hero: InterfaceHeroField;
   content?:
@@ -2726,15 +2976,21 @@ export interface OverviewPage {
         | InterfaceProjectTeasersBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -2835,7 +3091,7 @@ export interface InterfaceGenericTeasersBlock {
     [k: string]: unknown;
   } | null;
   /**
-   * Align Title & text horizontally or vertically
+   * Align Title and Lead horizontally or vertically
    */
   alignment?: ('vertical' | 'horizontal') | null;
   teasers: {
@@ -2875,6 +3131,9 @@ export interface InterfaceGenericTeasersBlock {
     } | null;
     linkType: 'internal' | 'external' | 'mail';
     linkInternal?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -2911,6 +3170,9 @@ export interface InterfaceGenericTeasersBlock {
       externalLink: string;
     };
     linkMail?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -3031,7 +3293,7 @@ export interface InterfaceEventsOverviewBlock {
 export interface InterfacePeopleOverviewBlock {
   message?: string | null;
   /**
-   * Which team members do you want to display in the overview?
+   * Which team do you want to display on the page?
    */
   teams: string | Team;
   id?: string | null;
@@ -3069,7 +3331,7 @@ export interface InterfaceNewsOverviewBlock {
  */
 export interface InterfaceNationalDictionariesOverviewBlock {
   /**
-   * This will be used as "More info" text on the teasers
+   * This is the text behind which the link to the national dictionary detail pages is hidden.
    */
   moreInfoButtonText: {
     root: {
@@ -3097,7 +3359,7 @@ export interface InterfaceNationalDictionariesOverviewBlock {
  */
 export interface InterfaceInstitutesOverviewBlock {
   /**
-   * This will be used as "More info" text on the teasers
+   * This is the text behind which the link to the institute detail pages is hidden.
    */
   moreInfoButtonText: {
     root: {
@@ -3135,6 +3397,9 @@ export interface InterfaceProjectOverviewBlock {
  */
 export interface InterfaceEditionsOverviewBlock {
   items: {
+    /**
+     * This is the text behind which the link is hidden.
+     */
     linkText: {
       root: {
         type: string;
@@ -3195,7 +3460,7 @@ export interface InterfaceEditionsOverviewBlock {
  */
 export interface InterfaceNetworkTeasersBlock {
   filter: {
-    allCheckboxText: {
+    title: {
       root: {
         type: string;
         children: {
@@ -3210,7 +3475,7 @@ export interface InterfaceNetworkTeasersBlock {
       };
       [k: string]: unknown;
     };
-    title: {
+    allCheckboxText: {
       root: {
         type: string;
         children: {
@@ -3227,6 +3492,9 @@ export interface InterfaceNetworkTeasersBlock {
     };
   };
   items: {
+    /**
+     * The text in this field will be displayed before the founding year. For example, "Gründungsjahr" in German. The year is added in the respective network item.
+     */
     foundingYearText?: {
       root: {
         type: string;
@@ -3242,6 +3510,9 @@ export interface InterfaceNetworkTeasersBlock {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * This is the text behind which the link is hidden.
+     */
     linkText: {
       root: {
         type: string;
@@ -3273,6 +3544,9 @@ export interface InterfaceNetworkTeasersBlock {
         };
         [k: string]: unknown;
       };
+      /**
+       * Needed for filter on overview page.
+       */
       category: string | NetworkCategory;
       foundingYear?: number | null;
       image: string | Image;
@@ -3319,15 +3593,15 @@ export interface DetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   hero: InterfaceHeroField;
   content?:
@@ -3346,15 +3620,21 @@ export interface DetailPage {
         | InterfaceFootnotesBlock
       )[]
     | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -3404,6 +3684,9 @@ export interface InterfaceVideoBlock {
     };
     [k: string]: unknown;
   };
+  /**
+   * This image is visible before the user clicks on the play button.
+   */
   stillImage: string | Image;
   id?: string | null;
   blockName?: string | null;
@@ -3450,15 +3733,15 @@ export interface NationalDictionaryDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
@@ -3486,15 +3769,21 @@ export interface NationalDictionaryDetailPage {
   };
   hero: InterfaceHeroField;
   content?: (InterfaceTextBlock | InterfaceLinksBlock | InterfaceNotificationBlock)[] | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -3511,15 +3800,15 @@ export interface InstituteDetailPage {
   isLinkable?: boolean | null;
   adminTitle?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * When enabled, the slug will auto-generate from the adminTitle field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
   /**
    * Used as the title in the breadcrumb.
    */
-  navigationTitle?: string | null;
-  parentPage?: InterfaceInternalLinkValue;
+  navigationTitle: string;
+  parentPage: InterfaceInternalLinkValue;
   breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
@@ -3547,15 +3836,21 @@ export interface InstituteDetailPage {
   };
   hero: InterfaceHeroField;
   content?: (InterfaceTextBlock | InterfaceLinksBlock | InterfaceNotificationBlock)[] | null;
-  meta?: {
-    seo?: {
+  meta: {
+    seo: {
       index?: boolean | null;
-      title?: string | null;
+      title: string;
       /**
        * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
        */
       image?: (string | null) | Image;
-      description?: string | null;
+      description: string;
+      keywords?:
+        | {
+            keyword?: string | null;
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   updatedAt: string;
@@ -3617,7 +3912,7 @@ export interface InterfaceI18NGeneric {
     [k: string]: unknown;
   };
   /**
-   * If you add a CTA-Contact-Block, this will be used as the button text
+   * If you add a personal contact block, this text will be shown in the Email button
    */
   writeEmailButtonText: {
     root: {
@@ -3635,7 +3930,7 @@ export interface InterfaceI18NGeneric {
     [k: string]: unknown;
   };
   /**
-   * On magazine detail pages, we use this to show the "Copy Text" button
+   * On magazine detail pages, this text appears in the button that enables the user to export the article as a PDF file.
    */
   exportArticleButtonText: {
     root: {
@@ -3653,7 +3948,7 @@ export interface InterfaceI18NGeneric {
     [k: string]: unknown;
   };
   /**
-   * On events, we use this to display the time. If you provide the value "Uhr", we display: "09:00 Uhr"
+   * On events, we use this to display the time. If you provide the value "Uhr", we display: "09:00 Uhr". Only used for german language.
    */
   time: {
     root: {
@@ -3691,6 +3986,9 @@ export interface InterfaceI18NBibliographicReference {
     };
     [k: string]: unknown;
   };
+  /**
+   * The text appears in the button that enables the user to copy the bibliographic reference with one click.
+   */
   copyButtonText: {
     root: {
       type: string;
@@ -3731,6 +4029,9 @@ export interface InterfaceI18NForms {
       };
       [k: string]: unknown;
     };
+    /**
+     * The message appears on forms if the user has not agreed to the data privacy policy.
+     */
     errorMessage: {
       root: {
         type: string;
@@ -4100,6 +4401,9 @@ export interface Footer {
  * via the `definition` "InterfaceFooterLegal".
  */
 export interface InterfaceFooterLegal {
+  /**
+   * Automatically links to data privacy page
+   */
   dataPrivacy: {
     root: {
       type: string;
@@ -4115,6 +4419,9 @@ export interface InterfaceFooterLegal {
     };
     [k: string]: unknown;
   };
+  /**
+   * Automatically links to impressum page
+   */
   impressum: {
     root: {
       type: string;
@@ -4145,6 +4452,9 @@ export interface InterfaceFooterLegal {
     };
     [k: string]: unknown;
   };
+  /**
+   * Copyright sign and current year will automatically be added.
+   */
   copyright: {
     root: {
       type: string;
@@ -4333,9 +4643,12 @@ export interface Header {
  * via the `definition` "InterfaceHeaderNavigation".
  */
 export interface InterfaceHeaderNavigation {
+  /**
+   * Note: You can add a maximum of five main navigation items, six sub-navigation items and three meta navigation items.
+   */
   navItems: {
     /**
-     * If the user hovers over this menu item in the navigation, this is shown as a description in the Header
+     * Appears when the header expands. Not visible on mobile devices.
      */
     description?: {
       root: {
@@ -4401,6 +4714,9 @@ export interface InterfaceHeaderMetaNavigation {
     | {
         linkType: 'internal' | 'external' | 'mail';
         linkInternal?: {
+          /**
+           * This is the text behind which the link is hidden.
+           */
           linkText: {
             root: {
               type: string;
@@ -4419,6 +4735,9 @@ export interface InterfaceHeaderMetaNavigation {
           internalLink: InterfaceInternalLinkValue;
         };
         linkExternal?: {
+          /**
+           * This is the text behind which the link is hidden.
+           */
           externalLinkText: {
             root: {
               type: string;
@@ -4437,6 +4756,9 @@ export interface InterfaceHeaderMetaNavigation {
           externalLink: string;
         };
         linkMail?: {
+          /**
+           * This is the text behind which the link is hidden.
+           */
           linkText: {
             root: {
               type: string;
@@ -4516,6 +4838,9 @@ export interface InterfaceStatusMessage {
   optionalLink?: {
     includeLink?: boolean | null;
     link?: {
+      /**
+       * This is the text behind which the link is hidden.
+       */
       linkText: {
         root: {
           type: string;
@@ -4538,6 +4863,9 @@ export interface InterfaceStatusMessage {
    * Should the message be displayed on home only or everywhere?
    */
   showOnHomeOnly?: boolean | null;
+  /**
+   * Your choice affects the color of the message.
+   */
   type: 'warn' | 'error' | 'success';
 }
 /**
@@ -4584,6 +4912,7 @@ export interface User {
         expiresAt: string;
       }[]
     | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4816,6 +5145,12 @@ export interface HomePageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5032,6 +5367,12 @@ export interface ErrorPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5063,6 +5404,12 @@ export interface DataPrivacyPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5103,6 +5450,12 @@ export interface ImpressumPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5134,7 +5487,7 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
         textBlock?: T | InterfaceTextBlockSelect<T>;
         linksBlock?: T | InterfaceLinksBlockSelect<T>;
         downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
-        imageBlock?: T | InterfaceImageBlockSelect<T>;
+        imageBlockMagazine?: T | InterfaceImageBlockMagazineSelect<T>;
         formBlock?: T | InterfaceFormBlockSelect<T>;
         notificationBlock?: T | InterfaceNotificationBlockSelect<T>;
         footnoteBlock?: T | InterfaceFootnotesBlockSelect<T>;
@@ -5149,6 +5502,12 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5230,11 +5589,11 @@ export interface InterfaceDownloadsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceImageBlock_select".
+ * via the `definition` "InterfaceImageBlockMagazine_select".
  */
-export interface InterfaceImageBlockSelect<T extends boolean = true> {
-  alignment?: T;
+export interface InterfaceImageBlockMagazineSelect<T extends boolean = true> {
   image?: T;
+  alignment?: T;
   caption?: T;
   credits?: T;
   id?: T;
@@ -5309,6 +5668,12 @@ export interface OverviewPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5491,8 +5856,8 @@ export interface InterfaceNetworkTeasersBlockSelect<T extends boolean = true> {
   filter?:
     | T
     | {
-        allCheckboxText?: T;
         title?: T;
+        allCheckboxText?: T;
       };
   items?:
     | T
@@ -5553,11 +5918,29 @@ export interface DetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InterfaceImageBlock_select".
+ */
+export interface InterfaceImageBlockSelect<T extends boolean = true> {
+  image?: T;
+  alignment?: T;
+  caption?: T;
+  credits?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5621,12 +6004,12 @@ export interface EventDetailPageSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        date?: T;
+        time?: T;
         location?: T;
         language?: T;
         category?: T;
         project?: T;
-        date?: T;
-        time?: T;
         multipleDays?: T;
         dateEnd?: T;
       };
@@ -5659,6 +6042,12 @@ export interface EventDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5706,6 +6095,12 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5770,6 +6165,12 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5822,6 +6223,12 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5865,6 +6272,12 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -5915,6 +6328,12 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
               title?: T;
               image?: T;
               description?: T;
+              keywords?:
+                | T
+                | {
+                    keyword?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;
@@ -6366,6 +6785,8 @@ export interface TenantsSelect<T extends boolean = true> {
   title?: T;
   domain?: T;
   slug?: T;
+  url?: T;
+  faviconName?: T;
   languages?:
     | T
     | {
@@ -6469,6 +6890,8 @@ export interface FormsSelect<T extends boolean = true> {
   newsletterFields?:
     | T
     | {
+        newsletterTemporaryListId?: T;
+        newsletterListId?: T;
         email?:
           | T
           | {

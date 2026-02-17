@@ -18,6 +18,7 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { generateTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
+import { seoData } from '@/seed/test-data/seoData';
 
 test.describe('Header/Footer links (non-sagw)', () => {
   beforeEachAcceptCookies();
@@ -86,6 +87,7 @@ test.describe('Header/Footer links (non-sagw)', () => {
           hero: {
             title: simpleRteConfig(`o1-it-${time}`),
           },
+          ...seoData,
           navigationTitle: 'Overview Page it',
         },
         id: level1.id,
@@ -98,6 +100,7 @@ test.describe('Header/Footer links (non-sagw)', () => {
           hero: {
             title: simpleRteConfig(`d1-it-${time}`),
           },
+          ...seoData,
           navigationTitle: 'd1 it',
         },
         id: detail1.id,
@@ -110,6 +113,7 @@ test.describe('Header/Footer links (non-sagw)', () => {
           hero: {
             title: simpleRteConfig(`d2-it-${time}`),
           },
+          ...seoData,
           navigationTitle: 'd2 it',
         },
         id: detail2.id,

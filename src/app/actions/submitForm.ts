@@ -1,5 +1,6 @@
 'use server';
 
+import 'server-only';
 import { z } from 'zod';
 import {
   hiddenFormDefinitionFieldName, hiddenPageUrl,
@@ -9,6 +10,7 @@ import { subscribe } from '@/mail/subscribe';
 import { Form as InterfaceForm } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
+import { newsletterFieldNames } from '@/components/blocks/Form/Form.server';
 
 type SubmitFormResult =
   | {
@@ -157,13 +159,31 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       };
     }
   } else {
-    const subscribeResult = await subscribe();
+    if (!hiddenFormData.newsletterFields?.newsletterListId || !hiddenFormData.newsletterFields?.newsletterTemporaryListId) {
+      return {
+        success: false,
+        values: data,
+      };
+    }
 
-    if (subscribeResult) {
+    const subscribeResult = await subscribe({
+      email: formData.get(newsletterFieldNames.email),
+      firstname: formData.get(newsletterFieldNames.firstname),
+      language: formData.get(newsletterFieldNames.language),
+      lastname: formData.get(newsletterFieldNames.lastname),
+      listId: hiddenFormData.newsletterFields?.newsletterListId,
+      listIdTemp: hiddenFormData.newsletterFields?.newsletterTemporaryListId,
+    });
+
+    if (subscribeResult === 'pendingVerification') {
       return {
         success: true,
       };
     }
+
+    return {
+      success: false,
+    };
   }
 
   return {

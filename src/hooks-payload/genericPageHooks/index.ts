@@ -3,7 +3,6 @@ import { hookGenerateBreadcrumbs } from '@/hooks-payload/generateBreadcrumbs';
 import {
   hookCascadeBreadcrumbUpdates, hookCascadeBreadcrumbUpdatesOnDelete,
 } from '@/hooks-payload/cascadeBreadcrumbUpdates';
-import { hookSeoFallback } from '@/hooks-payload/seoFallback';
 import { hookSlug } from '@/hooks-payload/slug';
 import { hookAdminTitle } from '@/hooks-payload/adminTitle';
 import {
@@ -40,7 +39,6 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
   // 2.
   beforeChange: [
     hookPreventBulkPublishForTranslators,
-    hookSeoFallback,
     hookGenerateBreadcrumbs,
     ...(additionalHooks?.beforeChange ?? []),
   ],

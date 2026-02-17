@@ -9,8 +9,16 @@ import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
 import { fieldAccessHeroAnimation } from '@/access/fields/hero';
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
-const colorMode = fieldsColorMode({
+const colorModeOverview = fieldsColorMode({
   dark: true,
+  defaultColor: 'light',
+  light: true,
+  white: true,
+});
+
+const colorModeDetail = fieldsColorMode({
+  dark: true,
+  defaultColor: 'white',
   light: true,
   white: true,
 });
@@ -41,15 +49,17 @@ const generalProps: {
   type: 'group',
 };
 
-export const fieldsHero: GroupField = {
+export const fieldsHero = (isOverview?: boolean): GroupField => ({
   fields: [
     titleField,
     leadField,
-    colorMode,
+    isOverview
+      ? colorModeOverview
+      : colorModeDetail,
   ],
   interfaceName: 'InterfaceHeroField',
   ...generalProps,
-};
+});
 
 export const fieldsHeroHome: GroupField = {
   fields: [
@@ -58,7 +68,9 @@ export const fieldsHeroHome: GroupField = {
     rte1({
       name: 'sideTitle',
     }),
-    fieldsLinkInternalWithToggle({}),
+    fieldsLinkInternalWithToggle({
+      adminDescription: 'This is the text behind which the link is hidden.',
+    }),
     {
       access: fieldAccessHeroAnimation,
       defaultValue: true,
@@ -78,7 +90,7 @@ export const fieldsHeroMagazineDetail: GroupField = {
       name: 'author',
     }),
     dateField,
-    colorMode,
+    colorModeDetail,
   ],
   interfaceName: 'InterfaceHeroFieldMagazineDetail',
   ...generalProps,
@@ -89,7 +101,7 @@ export const fieldsHeroNewsDetail: GroupField = {
     titleField,
     leadField,
     dateField,
-    colorMode,
+    colorModeDetail,
   ],
   interfaceName: 'InterfaceHeroFieldNewsDetail',
   ...generalProps,

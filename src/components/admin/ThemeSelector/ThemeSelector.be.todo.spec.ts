@@ -21,11 +21,11 @@ test.describe('Theme selector', () => {
     });
     await page.waitForLoadState('networkidle');
 
-    const selectedOption = await page.getByText('ocean');
+    const selectedOption = await page.getByText('sagw');
 
     await selectedOption.click();
 
-    const option2 = await page.getByText('sunset');
+    const option2 = await page.getByText('emerald');
 
     await expect(option2)
       .toBeVisible();

@@ -87,7 +87,7 @@ await (async (): Promise<void> => {
         ],
         message: 'What kind of component do you want to generate?',
         name: 'componentType',
-        type: 'list',
+        type: 'select',
       },
       {
         message: 'How should the component be named? (use Pascal Case, e.g.: FooBar)',

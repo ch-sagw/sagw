@@ -168,6 +168,7 @@ export const GenericTeaser = ({
         as='h3'
         html={title}
         className={styles.title}
+        data-testid='genericTeaserItemTitle'
       />
 
       <div className={styles.textWrapper}>

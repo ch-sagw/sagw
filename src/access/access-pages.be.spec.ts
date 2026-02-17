@@ -16,6 +16,7 @@ import {
   getTenant, getTenantNonSagw,
 } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { seoData } from '@/seed/test-data/seoData';
 
 extendExpect(expect);
 test.describe('access-pages', () => {
@@ -209,6 +210,7 @@ test.describe('access-pages', () => {
     test('translator', async () => {
       await expect(async () => {
         const {
+          home,
           tenant,
           payload,
           user,
@@ -225,7 +227,12 @@ test.describe('access-pages', () => {
               title: simpleRteConfig(`Detail page ${(new Date())
                 .toString()}`),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date()
               .toString())}`,
             tenant,
@@ -251,6 +258,7 @@ test.describe('access-pages', () => {
     test('sagw-admin', async () => {
       await expect(async () => {
         const {
+          home,
           tenant,
           payload,
           user,
@@ -267,7 +275,12 @@ test.describe('access-pages', () => {
               title: simpleRteConfig(`Detail page ${(new Date())
                 .toString()}`),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date()
               .toString())}1`,
             tenant,
@@ -290,6 +303,7 @@ test.describe('access-pages', () => {
     test('fg-admin', async () => {
       await expect(async () => {
         const {
+          home,
           tenant,
           payload,
           user,
@@ -306,7 +320,12 @@ test.describe('access-pages', () => {
               title: simpleRteConfig(`Detail page ${(new Date())
                 .toString()}`),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date()
               .toString())}2`,
             tenant,
@@ -329,6 +348,7 @@ test.describe('access-pages', () => {
     test('editor', async () => {
       await expect(async () => {
         const {
+          home,
           tenant,
           payload,
           user,
@@ -345,7 +365,12 @@ test.describe('access-pages', () => {
               title: simpleRteConfig(`Detail page ${(new Date())
                 .toString()}`),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date()
               .toString())}3`,
             tenant,
@@ -372,6 +397,7 @@ test.describe('access-pages', () => {
       await expect(async () => {
       // create draft page as sagw-admin
         const {
+          home,
           tenant,
           payload,
           user,
@@ -386,7 +412,12 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date())
               .toString()}`,
             tenant,
@@ -435,6 +466,7 @@ test.describe('access-pages', () => {
       await expect(async () => {
       // create draft page as sagw-admin
         const {
+          home,
           tenant,
           payload,
           user,
@@ -449,7 +481,12 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date())
               .toString()}41`,
             tenant,
@@ -495,6 +532,7 @@ test.describe('access-pages', () => {
       await expect(async () => {
       // create draft page as fg-admin
         const {
+          home,
           tenant,
           payload,
           user,
@@ -509,7 +547,12 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date())
               .toString()}42`,
             tenant,
@@ -548,6 +591,7 @@ test.describe('access-pages', () => {
       await expect(async () => {
       // create draft page as sagw-admin
         const {
+          home,
           tenant,
           payload,
           user,
@@ -562,7 +606,12 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date())
               .toString()}43`,
             tenant,
@@ -610,6 +659,7 @@ test.describe('access-pages', () => {
       await expect(async () => {
       // create a page as sagw-admin
         const {
+          home,
           tenant,
           payload,
           user,
@@ -624,7 +674,12 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date())
               .toString()}-1`,
             tenant,
@@ -677,6 +732,7 @@ test.describe('access-pages', () => {
       await expect(async () => {
       // create a page as sagw-admin
         const {
+          home,
           tenant,
           payload,
           user,
@@ -691,7 +747,12 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date())
               .toString()}-11`,
             tenant,
@@ -743,6 +804,7 @@ test.describe('access-pages', () => {
       await expect(async () => {
       // create a page as sagw-admin
         const {
+          home,
           tenant,
           payload,
           user,
@@ -757,7 +819,12 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date())
               .toString()}-12`,
             tenant,
@@ -801,6 +868,7 @@ test.describe('access-pages', () => {
 
       await expect(async () => {
         const {
+          home,
           tenant,
           payload,
           user,
@@ -815,7 +883,12 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date())
               .toString()}-13`,
             tenant,
@@ -862,6 +935,7 @@ test.describe('access-pages', () => {
       await expect(async () => {
       // create a page as sagw-admin
         const {
+          home,
           tenant,
           payload,
           user,
@@ -883,7 +957,12 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date())
               .toString()}-1`,
             tenant,
@@ -932,6 +1011,7 @@ test.describe('access-pages', () => {
       await expect(async () => {
       // create a page as sagw-admin
         const {
+          home,
           tenant,
           payload,
           user,
@@ -953,7 +1033,12 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date())
               .toString()}-21`,
             tenant,
@@ -997,6 +1082,7 @@ test.describe('access-pages', () => {
     test('sagw-admin', async () => {
       await expect(async () => {
         const {
+          home,
           tenant,
           payload,
           user,
@@ -1018,7 +1104,12 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date())
               .toString()}-22`,
             tenant,
@@ -1055,6 +1146,7 @@ test.describe('access-pages', () => {
     test('fg-admin', async () => {
       await expect(async () => {
         const {
+          home,
           tenant,
           payload,
           user,
@@ -1076,7 +1168,12 @@ test.describe('access-pages', () => {
               lead: simpleRteConfig('Overview Page Lead'),
               title: simpleRteConfig('Overview page title'),
             },
+            ...seoData,
             navigationTitle: 'Detail Page',
+            parentPage: {
+              documentId: home.id,
+              slug: 'homePage',
+            },
             slug: `detail-page-title-${(new Date())
               .toString()}-23`,
             tenant,

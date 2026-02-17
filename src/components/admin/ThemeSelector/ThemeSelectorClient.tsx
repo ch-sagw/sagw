@@ -97,8 +97,8 @@ const ThemeSelectorClient = ({
             className={styles.image}
             src={selectedOption.image}
             alt={`Theme preview for ${selectedOption.label}`}
-            width={600}
-            height={400}
+            width={720}
+            height={500}
           />
         </div>
       )}

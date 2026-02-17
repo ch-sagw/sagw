@@ -192,6 +192,12 @@ export const NavigationItem = ({
     level1AriaCurrent = undefined;
   }
 
+  let hasSubNavigation = false;
+
+  if (items && items?.length > 0) {
+    hasSubNavigation = true;
+  }
+
   return (
     <div
       data-testid='navigationItem'
@@ -301,7 +307,7 @@ export const NavigationItem = ({
           />
         }
 
-        {(smallBreakpoint && items) &&
+        {(smallBreakpoint && hasSubNavigation) &&
           <Icon
             name='caretDown'
             className={iconClasses({
@@ -313,42 +319,44 @@ export const NavigationItem = ({
       </div>
 
       {/* Expandable content */}
-      <div
-        ref={expandableRef}
-        className={listClasses({
-          active: smallBreakpoint && expandableId === activeElement,
-          menuVisible: !smallBreakpoint && menuVisible,
-        })}
-        inert={smallBreakpoint
-          ? expandableId !== activeElement
-          : !menuVisible && !footer
-        }
-      >
-        <ul
-          className={styles.listWrapper}
-          aria-label={items && (footer && !smallBreakpoint)
-            ? text
-            : undefined
+      {hasSubNavigation &&
+        <div
+          ref={expandableRef}
+          className={listClasses({
+            active: smallBreakpoint && expandableId === activeElement,
+            menuVisible: !smallBreakpoint && menuVisible,
+          })}
+          inert={smallBreakpoint
+            ? expandableId !== activeElement
+            : !menuVisible && !footer
           }
         >
-          {items?.map((child, id) => (
-            <li key={id}>
-              <Button
-                text={child.text}
-                style={footer
-                  ? 'textSmall'
-                  : 'text'
-                }
-                colorMode={colorMode}
-                element='link'
-                href={child.link}
-                className={styles.item}
-                prefetch={true}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div >
+          <ul
+            className={styles.listWrapper}
+            aria-label={items && (footer && !smallBreakpoint)
+              ? text
+              : undefined
+            }
+          >
+            {items?.map((child, id) => (
+              <li key={id}>
+                <Button
+                  text={child.text}
+                  style={footer
+                    ? 'textSmall'
+                    : 'text'
+                  }
+                  colorMode={colorMode}
+                  element='link'
+                  href={child.link}
+                  className={styles.item}
+                  prefetch={true}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      }
+    </div>
   );
 };

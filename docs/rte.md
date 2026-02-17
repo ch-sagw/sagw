@@ -35,7 +35,6 @@ Sample usage:
 ## RTE4
 
 - RTE3
-- soft hyphen
 - headings
 
 Sample usage:

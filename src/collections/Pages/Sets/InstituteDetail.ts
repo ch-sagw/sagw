@@ -66,7 +66,7 @@ export const InstituteDetailPage: CollectionConfig = {
             },
 
             // Hero
-            fieldsHero,
+            fieldsHero(),
 
             // Content Blocks
             {

@@ -17,6 +17,7 @@ import {
   InterfaceGenericTeasersBlock,
   InterfaceHomeTeasersBlock,
   InterfaceImageBlock,
+  InterfaceImageBlockMagazine,
   InterfaceInstitutesOverviewBlock,
   InterfaceLinksBlock,
   InterfaceMagazineOverviewBlock,
@@ -87,6 +88,7 @@ interface InterfaceRenderBlocksProps {
     InterfaceFootnotesBlock |
     InterfaceHomeTeasersBlock |
     InterfaceImageBlock |
+    InterfaceImageBlockMagazine |
     InterfaceGenericTeasersBlock |
     InterfaceInstitutesOverviewBlock |
     InterfaceLinksBlock |
@@ -184,6 +186,7 @@ export const RenderBlocks = ({
               return (
                 <Downloads
                   {...block}
+                  tenant={tenantId}
                   title={i18n.generic.downloadTitle}
                   key={key}
                 />
@@ -230,6 +233,7 @@ export const RenderBlocks = ({
                   tenant={tenantId}
                   sourcePage={sourcePage}
                   key={key}
+                  projectId={projectId}
                 />
               );
             }
@@ -240,6 +244,7 @@ export const RenderBlocks = ({
                   {...block}
                   globalI18n={i18n}
                   tenant={tenantId}
+                  projectId={projectId}
                   key={key}
                 />
               );
@@ -393,7 +398,7 @@ export const RenderBlocks = ({
               );
             }
 
-            if (blockType === 'imageBlock') {
+            if (blockType === 'imageBlock' || blockType === 'imageBlockMagazine') {
               return (
                 <ImageBlock
                   {...block}

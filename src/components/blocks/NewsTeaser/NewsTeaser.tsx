@@ -13,12 +13,16 @@ import { fetchNewsTeaserPages } from '@/data/fetch';
 
 type InterfaceNewsTeaserPropTypes = {
   tenant: string;
-  sourcePage: InterfaceSourcePage
+  sourcePage: InterfaceSourcePage;
+  projectId?: string;
 } & InterfaceNewsTeasersBlock;
 
 export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<React.JSX.Element> => {
   const locale = (await getLocale()) as TypedLocale;
   const payload = await getPayloadCached();
+  const {
+    projectId,
+  } = props;
 
   const excludePageId = props.sourcePage.collectionSlug === 'newsDetailPage'
     ? props.sourcePage.id
@@ -28,6 +32,7 @@ export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<R
   const newsPages = await fetchNewsTeaserPages({
     excludePageId,
     locale,
+    project: projectId,
     tenant: props.tenant,
   });
 

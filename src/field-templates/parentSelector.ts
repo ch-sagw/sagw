@@ -9,7 +9,7 @@ export const fieldParentSelector = (linkableCollections: CollectionSlug[] | unde
   description: 'The parent page that this page blongs to. Neccessary for the breadcrumb.',
   linkableCollections,
   name: fieldParentSelectorFieldName,
-  optional: true,
+  optional: false,
   position: 'sidebar',
 });
 

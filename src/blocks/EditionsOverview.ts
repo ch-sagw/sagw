@@ -31,6 +31,7 @@ export const EditionsOverviewBlock = {
     {
       fields: [
         rte2({
+          adminDescription: 'This is the text behind which the link is hidden.',
           name: 'linkText',
         }),
         {

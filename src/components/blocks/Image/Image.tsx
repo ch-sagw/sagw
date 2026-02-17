@@ -5,13 +5,17 @@ import styles from '@/components/blocks/Image/Image.module.scss';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { Image } from '@/components/base/Image/Image';
+import { ImageVariant } from '@/components/base/types/imageVariant';
 
-import { InterfaceImageBlock } from '@/payload-types';
+import {
+  InterfaceImageBlock, InterfaceImageBlockMagazine,
+} from '@/payload-types';
 
 const classes = cva([styles.figure], {
   variants: {
     alignment: {
       center: [styles.centered],
+      hero: [styles.hero],
       left: [styles.left],
       right: [styles.right],
     },
@@ -23,11 +27,17 @@ export const ImageBlock = ({
   caption,
   credits,
   image,
-}: InterfaceImageBlock): React.JSX.Element | undefined => {
+}: InterfaceImageBlock | InterfaceImageBlockMagazine): React.JSX.Element | undefined => {
 
   // only handle objects
   if (typeof image !== 'object') {
     return undefined;
+  }
+
+  let variant = 'content';
+
+  if (alignment === 'hero') {
+    variant = 'hero';
   }
 
   return (
@@ -47,7 +57,7 @@ export const ImageBlock = ({
               height={450}
               loading='lazy'
               url={image.url}
-              variant='content'
+              variant={variant as ImageVariant}
               width={800}
             />
           )

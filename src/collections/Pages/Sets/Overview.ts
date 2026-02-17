@@ -72,7 +72,7 @@ export const OverviewPage: CollectionConfig = {
           fields: [
 
             // Hero
-            fieldsHero,
+            fieldsHero(true),
 
             // Content Blocks
             {

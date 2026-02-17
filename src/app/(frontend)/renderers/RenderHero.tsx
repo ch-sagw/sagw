@@ -101,7 +101,9 @@ export const RenderHero = ({
           ? rte1ToPlaintext(eventPage.eventDetails.language)
           : undefined,
         time: eventPage.eventDetails.time || undefined,
-        timeLabelText: rte1ToPlaintext(i18nGeneric.time) || undefined,
+        timeLabelText: locale === 'de'
+          ? rte1ToPlaintext(i18nGeneric.time) || undefined
+          : undefined,
       },
       tag,
       title: eventPage.eventDetails.title,

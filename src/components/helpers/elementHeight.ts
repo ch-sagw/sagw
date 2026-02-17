@@ -11,6 +11,7 @@ export const measureElementHeight = (el: HTMLElement): number => {
   clone.style.maxHeight = 'none';
   clone.style.opacity = '0';
   clone.style.pointerEvents = 'none';
+  clone.style.setProperty('--button-text-size', 'var(--font-size-m)');
   document.body.appendChild(clone);
 
   const height = clone.offsetHeight;

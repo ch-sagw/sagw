@@ -8,6 +8,7 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { InstituteDetailPage } from '@/payload-types';
 import { InstitutesTeaserImageSVG } from '@/components/blocks/helpers/imagesData';
 import { prerenderPageLinksStorybook } from '@/utilities/prerenderPageLinksStorybook';
+import { seoData } from '@/seed/test-data/seoData';
 
 type InstitutesOverviewProps = React.ComponentProps<typeof InstituteOverviewComponent>;
 
@@ -46,11 +47,16 @@ const pages: InstituteDetailPage[] = Array.from({
       lead: simpleRteConfig('Institute Detail Page Lead'),
       title: simpleRteConfig(`Institute detail page title ${index}`),
     },
+    ...seoData,
     id: index.toString(),
     navigationTitle: 'Institute',
     overviewPageProps: {
       image: InstitutesTeaserImageSVG,
       teaserText: simpleRteConfig(`Institute Teaser Text ${index}`),
+    },
+    parentPage: {
+      documentId: '1234',
+      slug: 'homePage',
     },
     slug: 'slug',
     tenant: '1',

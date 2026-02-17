@@ -20,6 +20,9 @@ export const Teams: CollectionConfig = {
       name: 'name',
     }),
     {
+      admin: {
+        description: 'Add People who belong to the team. The order represents the order of the people on the website.',
+      },
       hasMany: true,
       name: 'people',
       relationTo: 'people',

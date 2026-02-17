@@ -1,5 +1,8 @@
 import React, {
-  useCallback, useEffect, useState,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useState,
 } from 'react';
 import { cva } from 'cva';
 import {
@@ -7,6 +10,7 @@ import {
 } from '@/components/base/NavigationItem/NavigationItem';
 import { ColorMode } from '@/components/base/types/colorMode';
 import styles from '@/components/base/Navigation/Navigation.module.scss';
+import { useTranslations } from 'next-intl';
 
 // --- Interfaces
 
@@ -24,7 +28,7 @@ export type InterfaceNavigationPropTypes = {
 
 // --- Component
 
-export const Navigation = ({
+export const Navigation = forwardRef<HTMLElement, InterfaceNavigationPropTypes>(({
   sections,
   footer,
   className,
@@ -32,7 +36,7 @@ export const Navigation = ({
   hoveredItemCallback,
   navMaxHeightCallback,
   onHoverItemWithoutChildren,
-}: InterfaceNavigationPropTypes): React.JSX.Element => {
+}, ref) => {
 
   // --- State
 
@@ -49,6 +53,7 @@ export const Navigation = ({
   // --- Effects
 
   useEffect(() => {
+
     const maxHeight = Math.max(...Object.values(heights));
 
     if (navMaxHeightCallback) {
@@ -84,10 +89,18 @@ export const Navigation = ({
     },
   });
 
-  // --- Render
+  const i18nA11y = useTranslations('landmarks');
+  let ariaLabel = i18nA11y('mainNavigation');
 
+  if (footer) {
+    ariaLabel = i18nA11y('footerNavigation');
+  }
+
+  // --- Render
   return (
     <nav
+      aria-label={ariaLabel}
+      ref={ref}
       className={classes({
         footer,
       })}
@@ -139,4 +152,6 @@ export const Navigation = ({
       </ul>
     </nav>
   );
-};
+});
+
+Navigation.displayName = 'Navigation';

@@ -23,11 +23,17 @@ export const Documents: CollectionConfig = {
       },
       fields: [
         {
+          admin: {
+            description: 'Date of the publication of the document should be added, not the publishing date on website.',
+          },
           name: 'date',
           required: false,
           type: 'date',
         },
         {
+          admin: {
+            description: 'If the document belongs to a project, add the project.',
+          },
           name: 'project',
           relationTo: 'projects',
           required: false,

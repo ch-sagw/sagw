@@ -23,6 +23,9 @@ const fieldsNetworkItem: Field[] = [
     fields: [
       {
         access: fieldAccessNonLocalizableField,
+        admin: {
+          description: 'Needed for filter on overview page.',
+        },
         name: 'category',
         relationTo: 'networkCategories',
         required: true,
@@ -58,10 +61,12 @@ export const NetworkTeasersBlock = {
     {
       fields: [
         rte1({
-          name: 'allCheckboxText',
+          label: 'Filter Title',
+          name: 'title',
         }),
         rte1({
-          name: 'title',
+          label: 'Text for button "all"',
+          name: 'allCheckboxText',
         }),
       ],
       label: 'Filter',
@@ -73,16 +78,18 @@ export const NetworkTeasersBlock = {
     {
       fields: [
         rte1({
+          adminDescription: 'The text in this field will be displayed before the founding year. For example, "Gründungsjahr" in German. The year is added in the respective network item.',
           name: 'foundingYearText',
           notRequired: true,
         }),
         rte2({
+          adminDescription: 'This is the text behind which the link is hidden.',
           name: 'linkText',
         }),
         {
           access: fieldAccessNonLocalizableField,
           fields: fieldsNetworkItem,
-          label: 'Network items',
+          label: 'Network items global',
           name: 'items',
           required: true,
           type: 'array',

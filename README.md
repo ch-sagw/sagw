@@ -10,7 +10,7 @@ Install [Docker](https://www.docker.com/get-started/).
 
 Install [Node](https://nodejs.org/en) (version mentioned in `.nvmrc`).
 
-Node is also used inside the dockerimage for the testing environment as well as on vercel. Check [node.md](/docs/node.md) for details.
+Node is also used inside the docker image for the testing environment as well as on vercel. Check [node.md](/docs/node.md) for details.
 
 ### Environment Variables
 

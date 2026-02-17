@@ -2,8 +2,10 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { Downloads } from '@/components/blocks/Downloads/Downloads';
+import { DownloadsComponent as Downloads } from '@/components/blocks/Downloads/Downloads.component';
 import { defaultDecoratorNoPadding } from '@/storybook-helpers';
+import type { InterfaceDownloadLinkItemPropTypes } from '@/components/base/DownloadLinkItem/DownloadLinkItem';
+import { rteToHtml } from '@/utilities/rteToHtml';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 type DownloadsProps = React.ComponentProps<typeof Downloads>;
@@ -36,60 +38,51 @@ export default meta;
 
 export const DownloadsBlock: StrictStory = {
   args: {
-    blockType: 'downloadsBlock',
-    customOrAuto: 'custom',
-    downloads: [
+    items: [
       {
-        relationTo: 'documents',
-        value: {
-          createdAt: '2025-10-20T12:50:57.693Z',
-          date: '2025-10-30T00:00:00.000Z',
-          filename: 'sagw.pdf',
-          filesize: 250400,
-          id: '68f630312362405afa4762ea',
-          mimeType: 'application/pdf',
-          thumbnailURL: null,
-          title: simpleRteConfig('Sample Regular Document'),
-          updatedAt: '2025-10-20T12:50:57.693Z',
-          url: '/api/documents/file/sagw.pdf',
+        date: '2025-10-30T00:00:00.000Z',
+        format: 'PDF',
+        link: {
+          href: '/api/documents/file/sagw.pdf',
+          target: '_blank' as const,
         },
+        size: '246 KB',
+        title: rteToHtml(simpleRteConfig('Sample Regular Document')),
+        type: 'download' as const,
       },
       {
-        relationTo: 'zenodoDocuments',
-        value: {
-          createdAt: '2025-10-20T12:50:57.727Z',
-          files: [
-            {
-              format: 'zip',
-              id: 'someid',
-              link: 'https://foo.bar',
-              size: 1.54,
-            },
-            {
-              format: 'pdf',
-              id: 'someid',
-              link: 'https://foo.bar',
-              size: 0.31,
-            },
-          ],
-          id: '68f630312362405afa4762f0',
-          publicationDate: '1919-05-01',
-          title: 'Sample Zenodo Document',
-          updatedAt: '2025-10-20T12:50:57.727Z',
-          zenodoId: '1512691',
+        date: (new Date('1919-05-01'))
+          .toString(),
+        format: 'ZIP',
+        link: {
+          href: 'https://foo.bar',
+          target: '_blank' as const,
         },
+        size: '1.54 MB',
+        title: 'Sample Zenodo Document - 1 / 2',
+        type: 'download' as const,
       },
-    ],
-    subtitle: simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe'),
-    title: simpleRteConfig('Downloads'),
+      {
+        date: (new Date('1919-05-01'))
+          .toString(),
+        format: 'PDF',
+        link: {
+          href: 'https://foo.bar',
+          target: '_blank' as const,
+        },
+        size: '317 KB',
+        title: 'Sample Zenodo Document - 2 / 2',
+        type: 'download' as const,
+      },
+    ] as InterfaceDownloadLinkItemPropTypes[],
+    subtitle: rteToHtml(simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe')),
+    title: rteToHtml(simpleRteConfig('Downloads')),
   },
 };
 
 export const DownloadsBlockWithoutLinkAndSubtitle: StrictStory = {
   args: {
-    blockType: 'downloadsBlock',
-    customOrAuto: 'custom',
-    downloads: DownloadsBlock.args.downloads,
-    title: simpleRteConfig('Downloads'),
+    items: DownloadsBlock.args.items,
+    title: DownloadsBlock.args.title,
   },
 };

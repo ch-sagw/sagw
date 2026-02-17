@@ -58,7 +58,26 @@ export const Tenants: CollectionConfig = {
       name: 'slug',
       required: true,
       type: 'text',
-      unique: true,
+    },
+    {
+      access: fieldsAccess,
+      admin: {
+        description: 'The final root URL for the tenant, example: https://www.sagw.ch',
+      },
+      localized: false,
+      name: 'url',
+      required: true,
+      type: 'text',
+      unique: false,
+    },
+    {
+      access: fieldsAccess,
+      index: true,
+      localized: false,
+      name: 'faviconName',
+      required: true,
+      type: 'text',
+      unique: false,
     },
     {
       fields: [

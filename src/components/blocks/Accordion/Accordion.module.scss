@@ -45,6 +45,13 @@
     --selection-search-text-color: var(--interaction-primary);
   }
 
+  button:hover,
+  button:focus {
+    .icon {
+      --icon-color: var(--interaction-secondary-hover);
+    }
+  }
+
   ::selection /*,
   ::search-text:current */ {
     background: var(--selection-text-background-color);

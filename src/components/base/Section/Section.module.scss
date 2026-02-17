@@ -2,6 +2,8 @@
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/mixins/mixins-shared-styles" as *;
 
 .section {
   &:not(.fullBleed, .noTitle) {
@@ -21,13 +23,6 @@
 
   &.white {
     background-color: var(--background-page);
-
-    // TODO add additional
-    // line variant
-
-    /* .line {
-      @include generic-block-top-line;
-    } */
   }
 
   &.light {
@@ -39,6 +34,18 @@
 
     --title-color: var(--text-primary-inverted);
     --subtitle-color: var(--text-secondary-inverted);
+  }
+
+  &.dark + .section.dark:before {
+    @include dark-section-top-line;
+  }
+
+  &.light + .section.light:before {
+    @include light-section-top-line;
+  }
+
+  &.white + ul + .section.white:before {
+    @include white-section-top-line;
   }
 
   .additionalStickyContent {
@@ -61,7 +68,7 @@
   }
 
   .subtitle {
-    @include body-text-xl;
+    @include body-text-2xl;
     @include font-layout-features;
 
     color: var(--subtitle-color);
@@ -69,6 +76,17 @@
 
     @include mq($from: large) {
       margin-block: 0 px-to-rem(var(--section-inside-s));
+    }
+  }
+
+  // Fullbleed/Vertical variant
+  &.fullBleed {
+    display: flex;
+    flex-direction: column;
+    row-gap: px-to-rem(var(--inside-elements-l));
+
+    .subtitle {
+      margin-block-end: 0;
     }
   }
 }

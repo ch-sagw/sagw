@@ -1,5 +1,120 @@
 # Changelog
 
+## [0.34.0](https://github.com/ch-sagw/sagw/compare/v0.33.0...v0.34.0) (2026-02-13)
+
+
+### Chore
+
+* **deps-dev:** bump the development-dependencies group across 1 directory with 8 updates ([#793](https://github.com/ch-sagw/sagw/issues/793)) ([59dabb4](https://github.com/ch-sagw/sagw/commit/59dabb4f9a7349a48015e9720e08b18051d6fb51))
+
+
+### Features
+
+* adding hero option for image in payload ([55ea0e1](https://github.com/ch-sagw/sagw/commit/55ea0e187706b07894020c70b373be1a30d5d0a4))
+* preserve nbsp on paste ([#799](https://github.com/ch-sagw/sagw/issues/799)) ([9096bab](https://github.com/ch-sagw/sagw/commit/9096babc488b9c860a05bf4948a9f817d1cf365c))
+* validate sagw page slug and make sure it does not exist as tenant slug ([#796](https://github.com/ch-sagw/sagw/issues/796)) ([e585029](https://github.com/ch-sagw/sagw/commit/e585029475df20b4f08dd4b2f3b1ed1da97143ed))
+
+
+### Bug Fixes
+
+* adding helper to get theme name and move rendering of class to body tag ([41ca889](https://github.com/ch-sagw/sagw/commit/41ca88967e65d72c0e02a6a23c0fa87696326b85))
+* only allow hero alignement on magazine pages ([#800](https://github.com/ch-sagw/sagw/issues/800)) ([102aa89](https://github.com/ch-sagw/sagw/commit/102aa891dae13e409463876400690e0fb214a1b9))
+
+## [0.33.0](https://github.com/ch-sagw/sagw/compare/v0.32.2...v0.33.0) (2026-02-11)
+
+
+### Chore
+
+* **deps-dev:** bump the development-dependencies group across 1 directory with 19 updates ([#777](https://github.com/ch-sagw/sagw/issues/777)) ([5f17e28](https://github.com/ch-sagw/sagw/commit/5f17e28028057fe79c4155ee6a81f5480c617c1b))
+* **deps:** bump the production-dependencies group across 1 directory with 6 updates ([#772](https://github.com/ch-sagw/sagw/issues/772)) ([29c2419](https://github.com/ch-sagw/sagw/commit/29c24196f0d5e9856e1d7534bb14592f7f8302b7))
+* **deps:** bump webpack from 5.102.1 to 5.105.0 ([#771](https://github.com/ch-sagw/sagw/issues/771)) ([239eccd](https://github.com/ch-sagw/sagw/commit/239eccd97009d85b184303bdb2a592588d111732))
+* fixing Metanavigation label ([54bb1b2](https://github.com/ch-sagw/sagw/commit/54bb1b232a93dfb77f80162dd6c56d507f8f0f91))
+* update nextjs ([54bb1b2](https://github.com/ch-sagw/sagw/commit/54bb1b232a93dfb77f80162dd6c56d507f8f0f91))
+* update payload to v3.75.0 ([#770](https://github.com/ch-sagw/sagw/issues/770)) ([2e6a12f](https://github.com/ch-sagw/sagw/commit/2e6a12feca5cb4724aea9f2f8baf110709a795a2))
+
+
+### Features
+
+* adding additional theme configs ([3859bd2](https://github.com/ch-sagw/sagw/commit/3859bd25c6ceff79fc42fc6c6adec9b8eb9f9793))
+* adding csp headers to next.config ([#765](https://github.com/ch-sagw/sagw/issues/765)) ([fbf401d](https://github.com/ch-sagw/sagw/commit/fbf401d8f7990fcc49d4fbd945c9cb7365ee6fef))
+* adding theme preview images ([3859bd2](https://github.com/ch-sagw/sagw/commit/3859bd25c6ceff79fc42fc6c6adec9b8eb9f9793))
+* **be:** adding hero option for image in payload ([00a4bdd](https://github.com/ch-sagw/sagw/commit/00a4bdd6a42a861faab706a9bc8366db459ea87b))
+* **be:** removing obsolete comma in image config file ([00a4bdd](https://github.com/ch-sagw/sagw/commit/00a4bdd6a42a861faab706a9bc8366db459ea87b))
+* enable french ([#773](https://github.com/ch-sagw/sagw/issues/773)) ([fc5a9d5](https://github.com/ch-sagw/sagw/commit/fc5a9d514e2550d4a6bf94f15498a7fa378f4921))
+* implement proper url generation for langnav links ([54bb1b2](https://github.com/ch-sagw/sagw/commit/54bb1b232a93dfb77f80162dd6c56d507f8f0f91))
+* move language strings to i18n ([54bb1b2](https://github.com/ch-sagw/sagw/commit/54bb1b232a93dfb77f80162dd6c56d507f8f0f91))
+* pass selected lang from langnav to header ([54bb1b2](https://github.com/ch-sagw/sagw/commit/54bb1b232a93dfb77f80162dd6c56d507f8f0f91))
+* properly render meta-data ([4acc36a](https://github.com/ch-sagw/sagw/commit/4acc36a6a4f01495616dc7cf48a1c9852a50b3fb))
+* properly render related teasers on project pages ([bf9c4d4](https://github.com/ch-sagw/sagw/commit/bf9c4d44146ccab681cf9830d99d283cebefcef6))
+* properly render related teasers on project pages ([#761](https://github.com/ch-sagw/sagw/issues/761)) ([bf9c4d4](https://github.com/ch-sagw/sagw/commit/bf9c4d44146ccab681cf9830d99d283cebefcef6))
+
+
+### Bug Fixes
+
+* add missing  localeUrls ([54bb1b2](https://github.com/ch-sagw/sagw/commit/54bb1b232a93dfb77f80162dd6c56d507f8f0f91))
+* adopt assets level field labels and descriptions from stella ([54bb1b2](https://github.com/ch-sagw/sagw/commit/54bb1b232a93dfb77f80162dd6c56d507f8f0f91))
+* adopt block level field labels and descriptions from stella ([54bb1b2](https://github.com/ch-sagw/sagw/commit/54bb1b232a93dfb77f80162dd6c56d507f8f0f91))
+* adopt global content field labels and descriptions from stella ([54bb1b2](https://github.com/ch-sagw/sagw/commit/54bb1b232a93dfb77f80162dd6c56d507f8f0f91))
+* adopt i18n field labels and descriptions from stella ([54bb1b2](https://github.com/ch-sagw/sagw/commit/54bb1b232a93dfb77f80162dd6c56d507f8f0f91))
+* adopt order of fields ([54bb1b2](https://github.com/ch-sagw/sagw/commit/54bb1b232a93dfb77f80162dd6c56d507f8f0f91))
+* adopt page level field labels and descriptions from stella ([54bb1b2](https://github.com/ch-sagw/sagw/commit/54bb1b232a93dfb77f80162dd6c56d507f8f0f91))
+* allow em-dash and en-dash in rte fields ([4acc36a](https://github.com/ch-sagw/sagw/commit/4acc36a6a4f01495616dc7cf48a1c9852a50b3fb))
+* **be:** ensure unique slug within tenant, and not over all tenants ([3fd3ca1](https://github.com/ch-sagw/sagw/commit/3fd3ca1e55c0488ec4bad956286e196f739cc041))
+* **be:** fix nbsp and softhyphen in client components ([73063a0](https://github.com/ch-sagw/sagw/commit/73063a04928125b1104d10f045203216bef93342))
+* downgrade jsdom ([#792](https://github.com/ch-sagw/sagw/issues/792)) ([6428cd6](https://github.com/ch-sagw/sagw/commit/6428cd628ff2ea57fc4510f811e54d7e10196be6))
+* fix nbsp and softhyphen in client components, write tests ([#775](https://github.com/ch-sagw/sagw/issues/775)) ([73063a0](https://github.com/ch-sagw/sagw/commit/73063a04928125b1104d10f045203216bef93342))
+* fix typos and add missing labels ([54bb1b2](https://github.com/ch-sagw/sagw/commit/54bb1b232a93dfb77f80162dd6c56d507f8f0f91))
+* invalidate cache properly on test-env ([8229a14](https://github.com/ch-sagw/sagw/commit/8229a1462947bb8d12cce6e6bf358067b53a79a8))
+* make parent page and navigation title mandatory ([686bd01](https://github.com/ch-sagw/sagw/commit/686bd0124761343646327535cd896d92fa0f7a31))
+* make seo data required ([4acc36a](https://github.com/ch-sagw/sagw/commit/4acc36a6a4f01495616dc7cf48a1c9852a50b3fb))
+* properly render date/time in different languages, add tests ([4acc36a](https://github.com/ch-sagw/sagw/commit/4acc36a6a4f01495616dc7cf48a1c9852a50b3fb))
+* set hero color default values for overviews and details ([4acc36a](https://github.com/ch-sagw/sagw/commit/4acc36a6a4f01495616dc7cf48a1c9852a50b3fb))
+* trigger test deployment ([520e1e8](https://github.com/ch-sagw/sagw/commit/520e1e873b76565f1ce43947824b3bc2becc9bde))
+* trigger test deployment ([48a856c](https://github.com/ch-sagw/sagw/commit/48a856c411705482aa47523059eae7c1ded49599))
+
+
+### Style
+
+* **fe:** enforcing word-break to stabilize layout ([00a4bdd](https://github.com/ch-sagw/sagw/commit/00a4bdd6a42a861faab706a9bc8366db459ea87b))
+
+
+### Test
+
+* add tests for langnav links generation ([54bb1b2](https://github.com/ch-sagw/sagw/commit/54bb1b232a93dfb77f80162dd6c56d507f8f0f91))
+* **fe:** add rendering tests for softhyphen ([73063a0](https://github.com/ch-sagw/sagw/commit/73063a04928125b1104d10f045203216bef93342))
+* fix all tests ([686bd01](https://github.com/ch-sagw/sagw/commit/686bd0124761343646327535cd896d92fa0f7a31))
+* write extensive tests for teaser rendering ([bf9c4d4](https://github.com/ch-sagw/sagw/commit/bf9c4d44146ccab681cf9830d99d283cebefcef6))
+* write reliable tests for slug validation ([3fd3ca1](https://github.com/ch-sagw/sagw/commit/3fd3ca1e55c0488ec4bad956286e196f739cc041))
+
+## [0.32.2](https://github.com/ch-sagw/sagw/compare/v0.32.1...v0.32.2) (2026-01-27)
+
+
+### Bug Fixes
+
+* add logging for sagw tenant info ([4ff8e75](https://github.com/ch-sagw/sagw/commit/4ff8e75f39250d289d5eba12ef3c068c36334c1b))
+
+## [0.32.1](https://github.com/ch-sagw/sagw/compare/v0.32.0...v0.32.1) (2026-01-27)
+
+
+### Bug Fixes
+
+* downgrade jsdom ([6b61a6d](https://github.com/ch-sagw/sagw/commit/6b61a6d06926c66be744789e0c1abfd273bfe141))
+
+## [0.32.0](https://github.com/ch-sagw/sagw/compare/v0.31.0...v0.32.0) (2026-01-27)
+
+
+### Chore
+
+* **deps-dev:** bump the development-dependencies group across 1 directory with 19 updates ([#714](https://github.com/ch-sagw/sagw/issues/714)) ([3ceac45](https://github.com/ch-sagw/sagw/commit/3ceac4521fcdd9366993c0b13c2d738fb9b1aebf))
+* **deps:** bump lodash from 4.17.21 to 4.17.23 ([#724](https://github.com/ch-sagw/sagw/issues/724)) ([6745902](https://github.com/ch-sagw/sagw/commit/6745902e1060fe73f3dcb67fe11e9836a320efe1))
+* **deps:** bump the production-dependencies group across 1 directory with 10 updates ([#713](https://github.com/ch-sagw/sagw/issues/713)) ([f01f20a](https://github.com/ch-sagw/sagw/commit/f01f20a1785bd0cce12f9f4d47347e2eba10e627))
+* **deps:** bump the production-dependencies group with 12 updates ([#725](https://github.com/ch-sagw/sagw/issues/725)) ([86c4cc1](https://github.com/ch-sagw/sagw/commit/86c4cc1b652c4646d3dcac2eb5e00ed4ca322e6c))
+
+
+### Features
+
+* implement newsletter registration flow ([f251149](https://github.com/ch-sagw/sagw/commit/f2511494339d2d72282c12058da53fff1ab72483))
+
 ## [0.31.0](https://github.com/ch-sagw/sagw/compare/v0.30.2...v0.31.0) (2026-01-21)
 
 

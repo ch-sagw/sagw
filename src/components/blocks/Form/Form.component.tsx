@@ -55,6 +55,10 @@ type InterfaceFormClientPropTypes = {
   submitSuccess: boolean;
   preRenderedLabels: Record<string, string>;
   preRenderedRadioLabels: Record<string, Record<string, string>>;
+  onResubmitAction?: () => void;
+  onErrorResubmitAction?: () => void;
+  resendClicked?: boolean;
+  errorResendClicked?: boolean;
 };
 
 export const FormComponent = ({
@@ -68,6 +72,10 @@ export const FormComponent = ({
   submitSuccess,
   preRenderedLabels,
   preRenderedRadioLabels,
+  onResubmitAction,
+  onErrorResubmitAction,
+  resendClicked,
+  errorResendClicked,
 }: InterfaceFormClientPropTypes): React.JSX.Element => {
   const pathname = usePathname();
 
@@ -84,16 +92,16 @@ export const FormComponent = ({
       <div>
         {submitError &&
           <Notification
-            actionText={form.isNewsletterForm === 'newsletter'
+            actionText={!errorResendClicked && form.isNewsletterForm === 'newsletter'
               ? form.newsletterFields?.actionText || ''
               : ''
             }
             autofocus={true}
             colorMode={form.colorMode}
             onAction={() => {
-
-              // TODO
-              console.log('todo');
+              if (onErrorResubmitAction) {
+                onErrorResubmitAction();
+              }
             }}
             text={rteToHtml(form.submitError.text)}
             title={rteToHtml(form.submitError.title)}
@@ -104,16 +112,16 @@ export const FormComponent = ({
 
         {submitSuccess &&
           <Notification
-            actionText={form.isNewsletterForm === 'newsletter'
+            actionText={!resendClicked && form.isNewsletterForm === 'newsletter'
               ? form.newsletterFields?.actionText || ''
               : ''
             }
             autofocus={true}
             colorMode={form.colorMode}
-
-            // TODO
             onAction={() => {
-              console.log('todo');
+              if (onResubmitAction) {
+                onResubmitAction();
+              }
             }}
             text={rteToHtml(form.submitSuccess.text)}
             title={rteToHtml(form.submitSuccess.title)}

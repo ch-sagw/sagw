@@ -28,6 +28,7 @@ interface InterfaceFindPageByPathParams {
   slugSegments: string[];
   tenantId: string;
   locale: TypedLocale;
+  depth?: number;
 }
 
 // searches for pages by last slug segment only.
@@ -38,6 +39,7 @@ export const findPageByPath = async ({
   slugSegments,
   tenantId,
   locale,
+  depth,
 }: InterfaceFindPageByPathParams): Promise<InterfaceFindPageByPathResult> => {
   if (slugSegments.length === 0) {
     return null;
@@ -56,7 +58,7 @@ export const findPageByPath = async ({
     try {
       const result = await payload.find({
         collection: collection as any,
-        depth: 1,
+        depth: depth || 1,
         limit: 1,
         locale,
         where: {

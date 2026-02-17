@@ -16,6 +16,8 @@
   display: block;
   position: relative;
   cursor: pointer;
+  transform: translateX(px-to-rem(var(--spacing-m)));
+  transform-style: preserve-3d;
 
   &.white,
   &.light {
@@ -24,21 +26,29 @@
 
   &.open {
     .dash1 {
-      transform-origin: 50% 50%;
-      transform:
-        translate3d(0, px-to-rem(var(--dashes-vertical-spacing)), 0)
-        rotate3d(0, 0, 1, 45deg);
+      inset-block-start: px-to-rem(calc($verticalCenter - var(--dashes-vertical-spacing)));
+
+      &:before {
+        transform-origin: 50% 50%;
+        transform:
+          translate3d(0, px-to-rem(var(--dashes-vertical-spacing)), 0)
+          rotate3d(0, 0, 1, 45deg);
+      }
     }
 
-    .dash2 {
+    .dash2:before {
       opacity: 0;
     }
 
     .dash3 {
-      transform-origin: 50% 50%;
-      transform:
-        translate3d(0, px-to-rem(calc(-1 * var(--dashes-vertical-spacing))), 0)
-        rotate3d(0, 0, 1, -45deg);
+      inset-block-start: px-to-rem(calc($verticalCenter + var(--dashes-vertical-spacing)));
+
+      &:before {
+        transform-origin: 50% 50%;
+        transform:
+          translate3d(0, px-to-rem(calc(-1 * var(--dashes-vertical-spacing))), 0)
+          rotate3d(0, 0, 1, -45deg);
+      }
     }
   }
 
@@ -47,15 +57,26 @@
   .dash3 {
     display: block;
     position: absolute;
-    width: px-to-rem(var(--spacing-l));
     height: px-to-rem(var(--border-width-l));
-    background-color: var(--background-color);
     inset-inline-start: $leftPosition;
-    transition-duration: var(--motion-speed-very-fast);
-    transition-timing-function: (--motion-ease-in-out);
+    backface-visibility: hidden;
 
-    @include forced-colors {
-      background-color: LinkText;
+    &:before {
+      position: absolute;
+      content: "";
+      inset: 0;
+      width: px-to-rem(var(--spacing-l));
+      height: px-to-rem(var(--border-width-l));
+      background-color: var(--background-color);
+      transition-duration: var(--motion-speed-very-fast);
+      transition-timing-function: (--motion-ease-in-out);
+      transform:
+        translate3d(0, 0, 0)
+        rotate3d(0, 0, 0, 0deg);
+
+      @include forced-colors {
+        background-color: LinkText;
+      }
     }
 
     @include reduced-motion {
@@ -64,7 +85,7 @@
   }
 
   .dash1 {
-    inset-block-start: px-to-rem(calc($verticalCenter - var(--dashes-vertical-spacing)));
+    inset-block-start: px-to-rem(calc($verticalCenter - (var(--dashes-vertical-spacing) + 1)));
     transition-property: transform;
   }
 
@@ -74,7 +95,7 @@
   }
 
   .dash3 {
-    inset-block-start: px-to-rem(calc($verticalCenter + var(--dashes-vertical-spacing)));
+    inset-block-start: px-to-rem(calc($verticalCenter + (var(--dashes-vertical-spacing) + 1)));
     transition-property: transform;
   }
 }

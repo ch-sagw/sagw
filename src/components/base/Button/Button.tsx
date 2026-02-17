@@ -26,6 +26,7 @@ type BaseWrapperProps = {
   prefetch?: 'auto' | true | false | null;
   className?: string;
   isActive?: boolean;
+  tabindex?: number;
 };
 
 type ContentProps = {
@@ -135,6 +136,7 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
     className,
     classNameLinkText,
     isActive,
+    tabindex,
   } = props;
 
   const internalI18nA11y = useTranslations('a11y');
@@ -221,6 +223,7 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
         data-testid='link'
         href={href}
         target={target}
+        tabIndex={tabindex}
         prefetch={prefetch}
       >
         {buttonLinkContent({
@@ -258,6 +261,7 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
         data-testid='button'
         onClick={onClick}
         popoverTarget={popOverTarget}
+        tabIndex={tabindex}
         type={buttonType ?? 'button'}
         aria-expanded={ariaExpanded}
       >

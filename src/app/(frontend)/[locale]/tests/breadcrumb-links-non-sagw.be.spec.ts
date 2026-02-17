@@ -24,6 +24,7 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { generateTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
+import { seoData } from '@/seed/test-data/seoData';
 
 test.describe('Breadcrumb links (non-sagw)', () => {
   beforeEachAcceptCookies();
@@ -89,6 +90,7 @@ test.describe('Breadcrumb links (non-sagw)', () => {
           hero: {
             title: simpleRteConfig(`o1 it ${time}`),
           },
+          ...seoData,
           navigationTitle: '[test]link:o1-it',
         },
         id: o1.id,
@@ -111,6 +113,7 @@ test.describe('Breadcrumb links (non-sagw)', () => {
           hero: {
             title: simpleRteConfig(`d1 it ${time}`),
           },
+          ...seoData,
           navigationTitle: '[test]link:d1-it',
         },
         id: d1.id,
@@ -137,6 +140,7 @@ test.describe('Breadcrumb links (non-sagw)', () => {
           overviewPageProps: {
             teaserText: simpleRteConfig('some text'),
           },
+          ...seoData,
         },
         id: d2.id,
         locale: 'it',
@@ -160,6 +164,7 @@ test.describe('Breadcrumb links (non-sagw)', () => {
           },
           navigationTitle: '[test]link:d3-it',
           overviewPageProps: d3.overviewPageProps,
+          ...seoData,
         },
         id: d3.id,
         locale: 'it',
@@ -186,6 +191,7 @@ test.describe('Breadcrumb links (non-sagw)', () => {
           overviewPageProps: {
             teaserText: simpleRteConfig('some text'),
           },
+          ...seoData,
         },
         id: d4.id,
         locale: 'it',
@@ -211,6 +217,7 @@ test.describe('Breadcrumb links (non-sagw)', () => {
           overviewPageProps: {
             teaserText: simpleRteConfig('some text'),
           },
+          ...seoData,
         },
         id: d5.id,
         locale: 'it',
@@ -237,6 +244,7 @@ test.describe('Breadcrumb links (non-sagw)', () => {
             linkText: simpleRteConfig('some text'),
             teaserText: simpleRteConfig('some text'),
           },
+          ...seoData,
           project: d6.project,
         },
         id: d6.id,
@@ -261,6 +269,7 @@ test.describe('Breadcrumb links (non-sagw)', () => {
           },
           navigationTitle: '[test]link:d7-it',
           overviewPageProps: d7.overviewPageProps,
+          ...seoData,
         },
         id: d7.id,
         locale: 'it',

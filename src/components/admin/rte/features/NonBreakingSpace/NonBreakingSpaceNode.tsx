@@ -1,17 +1,19 @@
 'use client';
 
 import {
-  DecoratorNode, NodeKey, SerializedLexicalNode,
+  DecoratorNode, NodeKey,
 } from 'lexical';
 import React, { JSX } from 'react';
 
-const nodeType = 'unicode-char-nbsp';
+import {
+  NON_BREAKING_SPACE_NODE_TYPE,
+  type SerializedNonBreakingSpaceNode,
+} from './NonBreakingSpace.shared';
 
-export type SerializedNonBreakingSpaceNode = SerializedLexicalNode & {
-  type: typeof nodeType;
-  version: 1;
-  text: string;
-};
+const nodeType = NON_BREAKING_SPACE_NODE_TYPE;
+
+// Keep local alias for backwards-compat imports within client code.
+export type { SerializedNonBreakingSpaceNode };
 
 // export decorator node
 export class NonBreakingSpaceNode extends DecoratorNode<JSX.Element> {

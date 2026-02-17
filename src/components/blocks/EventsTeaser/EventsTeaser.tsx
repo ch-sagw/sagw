@@ -16,13 +16,18 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 type InterfaceEventsTeaserPropTypes = {
   tenant: string;
   globalI18n: I18NGlobal;
+  projectId?: string;
 } & InterfaceEventsTeasersBlock;
 
 export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promise<React.JSX.Element> => {
   const locale = (await getLocale()) as TypedLocale;
+  const {
+    projectId,
+  } = props;
   const pages = await fetchEventDetailPages({
     language: locale,
     limit: 3,
+    project: projectId,
     tenant: props.tenant,
   });
 

@@ -18,12 +18,14 @@ export const ProjectTeasersBlock = {
       notRequired: true,
     }),
     alignmentHorizontalVertical,
-    fieldsLinkInternalWithToggle(),
+    fieldsLinkInternalWithToggle({
+      adminDescriptionLink: 'Here you can link to the overview page with all project entries.',
+    }),
     {
       admin: {
         hidden: true,
       },
-      defaultValue: 'Note: the latest projects from porject detail pages will be displayed here.',
+      defaultValue: 'Note: the latest three projects from project detail pages will be displayed here.',
       name: 'message',
       type: 'text',
     },

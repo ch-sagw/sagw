@@ -4,6 +4,7 @@ import { Payload } from 'payload';
 
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { rte4ConsentBannerText } from '@/utilities/rteSampleContent';
+import { seoData } from '@/seed/test-data/seoData';
 
 interface InterfaceAddDataForTenantProps {
   payload: Payload;
@@ -230,6 +231,7 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
         lead: simpleRteConfig('Detail Page for nav link 1 lead'),
         title: simpleRteConfig(`Detail Page for nav link 1 ${tenant.toUpperCase()}`),
       },
+      ...seoData,
       navigationTitle: `Detail Page for nav link 1 ${tenant.toUpperCase()}`,
       parentPage: {
         documentId: home.id,
@@ -252,6 +254,7 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
         lead: simpleRteConfig('Detail Page for nav link 2 lead'),
         title: simpleRteConfig(`Detail Page for nav link 2 ${tenant.toUpperCase()}`),
       },
+      ...seoData,
       navigationTitle: `Detail Page for nav link 2 ${tenant.toUpperCase()}`,
       parentPage: {
         documentId: navLinkDetail1.id,
@@ -274,6 +277,7 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
         lead: simpleRteConfig('Detail Page for nav link 3 lead'),
         title: simpleRteConfig(`Detail Page for nav link 3 ${tenant.toUpperCase()}`),
       },
+      ...seoData,
       navigationTitle: `Detail Page for nav link 3 ${tenant.toUpperCase()}`,
       parentPage: {
         documentId: navLinkDetail2.id,
@@ -478,6 +482,7 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
         title: simpleRteConfig(`Not found title ${tenant.toUpperCase()}`),
       },
       homeButtonText: simpleRteConfig('Home Button Text'),
+      ...seoData,
       tenant: tenantId,
     },
   });
@@ -500,6 +505,7 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
         colorMode: 'dark',
         title: simpleRteConfig(`Impressum page ${tenant}`),
       },
+      ...seoData,
       tenant: tenantId,
     },
   });
@@ -522,6 +528,7 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
         colorMode: 'dark',
         title: simpleRteConfig(`Data privacy page ${tenant}`),
       },
+      ...seoData,
       tenant: tenantId,
     },
   });

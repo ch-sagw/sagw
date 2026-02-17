@@ -13,9 +13,14 @@
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
-    column-gap: px-to-rem(calc(2 * var(--spacing-m)));
     width: 100%;
     margin-block-start: 0;
+  }
+
+  li:before {
+    contain: strict;
+    inset-block-start: px-to-rem(-1);
+    inset-inline-start: px-to-rem(-1);
   }
 
   > li:last-of-type [data-submenu] {

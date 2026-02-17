@@ -14,6 +14,7 @@ export const CtaContactBlock = {
       name: 'title',
     }),
     rte1({
+      label: 'Subtitle',
       name: 'text',
     }),
     fieldsColorMode({
@@ -24,6 +25,7 @@ export const CtaContactBlock = {
     {
       access: fieldAccessNonLocalizableField,
       hasMany: true,
+      label: 'Select a person',
       name: 'contact',
       relationTo: 'people',
       required: true,
@@ -33,8 +35,8 @@ export const CtaContactBlock = {
   imageURL: '/admin-ui-images/cta-contact.svg',
   interfaceName: 'InterfaceCtaContactBlock',
   labels: {
-    plural: 'CTAs Contact',
-    singular: 'CTA Contact',
+    plural: 'Personal Contacts',
+    singular: 'Personal Contact',
   },
   slug: 'ctaContactBlock',
 } as const satisfies Block;

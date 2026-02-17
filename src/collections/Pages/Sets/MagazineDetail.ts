@@ -20,7 +20,7 @@ const contentBlocks: BlockSlug[] = [
   'footnoteBlock',
   'linksBlock',
   'downloadsBlock',
-  'imageBlock',
+  'imageBlockMagazine',
   'formBlock',
   'notificationBlock',
 ];
@@ -63,7 +63,7 @@ export const MagazineDetailPage: CollectionConfig = {
                   }),
                 },
               ],
-              label: 'Overview Page properties',
+              label: 'Overview Page and Teaser Block Properties',
               name: 'overviewPageProps',
               type: 'group',
             },

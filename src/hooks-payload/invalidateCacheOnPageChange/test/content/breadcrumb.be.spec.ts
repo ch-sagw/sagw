@@ -17,6 +17,7 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { LogCapture } from '@/test-helpers/capture-logs';
 import { deleteSetsPages } from '@/seed/test-data/deleteData';
 import { Config } from '@/payload-types';
+import { seoData } from '@/seed/test-data/seoData';
 
 const generateSamplePages = async ({
   tenant,
@@ -275,6 +276,7 @@ test('does not invalidate pages along the breadcrumb cascade if slug changes in 
     collection: 'overviewPage',
     data: {
       slug: `overview-${time}-changed`,
+      ...seoData,
     },
     id: overview,
     locale: 'it',
@@ -334,6 +336,7 @@ test('does not invalidate pages along the breadcrumb cascade if parent page chan
         documentId: overview2.id,
         slug: 'overviewPage',
       },
+      ...seoData,
     },
     id: overview,
     locale: 'it',
@@ -379,6 +382,7 @@ test('invalidates all pages along the breadcrumb cascade if navigation title cha
     collection: 'overviewPage',
     data: {
       navigationTitle: `overview ${time} changed`,
+      ...seoData,
     },
     id: overview,
     locale: 'it',
@@ -584,6 +588,7 @@ test('does not invalidate pages along the breadcrumb cascade if slug changes in 
     collection: 'overviewPage',
     data: {
       slug: `overview-${time}-changed`,
+      ...seoData,
     },
     id: overview,
     locale: 'it',
@@ -688,6 +693,7 @@ test('invalidates all pages along the breadcrumb cascade if navigation title cha
     collection: 'overviewPage',
     data: {
       navigationTitle: `overview ${time} changed`,
+      ...seoData,
     },
     id: overview,
     locale: 'it',

@@ -20,12 +20,14 @@ export const MagazineTeasersBlock = {
       notRequired: true,
     }),
     alignmentHorizontalVertical,
-    fieldsLinkInternalWithToggle(),
+    fieldsLinkInternalWithToggle({
+      adminDescriptionLink: 'Here you can link to the overview page with all magazine entries.',
+    }),
     {
       admin: {
         hidden: true,
       },
-      defaultValue: 'Note: the latest magazine entries will be displayed here.',
+      defaultValue: 'Note: the latest four magazine entries will be displayed here.',
       name: 'message',
       type: 'text',
     },

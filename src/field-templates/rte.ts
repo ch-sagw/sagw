@@ -20,30 +20,14 @@ import {
   FieldHook,
   RichTextField,
 } from 'payload';
-import { JSDOM } from 'jsdom';
-import domPurify from 'dompurify';
-import validator from 'validator';
 import { linkableSlugs } from '@/collections/Pages/pages';
 import { LexicalRichTextAdapterProvider } from 'node_modules/@payloadcms/richtext-lexical/dist/types';
+import { sanitizeHtmlHelper } from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpace.shared';
 
-const {
-  window,
-} = new JSDOM('');
-const purify = domPurify(window);
-
+// sanitize
 const sanitizeNode = (node: any): void => {
   if (node.text && typeof node.text === 'string') {
-
-    // clean up.
-    // allow: letters, numbers, punctuation, space, tabs, newlines
-    node.text = validator.whitelist(node.text, '\\x09\\x0A\\x0D\\x20-\\x7E\\u00A0-\\u00FF\\u2019');
-
-    // sanitize
-    node.text = purify.sanitize(node.text, {
-      USE_PROFILES: {
-        html: false,
-      },
-    });
+    node.text = sanitizeHtmlHelper(node.text);
   }
 
   if (node.children && Array.isArray(node.children)) {
@@ -141,6 +125,7 @@ const rte4Editor = lexicalEditor({
 
 interface InterfaceRteInputType {
   name: string;
+  label?: string;
   notRequired?: boolean;
   disableLocalization?: boolean;
   adminDescription?: string;
@@ -153,67 +138,80 @@ type InterfaceRteInputTypeInternal = {
 } & InterfaceRteInputType;
 
 const rte = ({
-  name, notRequired, editor, disableLocalization, adminDescription, adminCondition, access,
-}: InterfaceRteInputTypeInternal): RichTextField => ({
-  access: access
-    ? access
-    : undefined,
-  admin: {
-    condition: adminCondition,
-    description: adminDescription,
-  },
-  editor,
-  hooks: {
-    beforeValidate: [
-      ({
-        value,
-      }): FieldHook => sanitizeRichTextValue(value),
-    ],
-  },
-  localized: !disableLocalization,
-  name,
-  required: !notRequired,
-  type: 'richText',
-});
+  name, notRequired, editor, disableLocalization, adminDescription, adminCondition, access, label,
+}: InterfaceRteInputTypeInternal): RichTextField => {
+
+  const fieldObject: RichTextField = {
+    access: access
+      ? access
+      : undefined,
+    admin: {
+      condition: adminCondition,
+      description: adminDescription,
+    },
+    editor,
+    hooks: {
+      beforeValidate: [
+        ({
+          value,
+        }): FieldHook => sanitizeRichTextValue(value),
+      ],
+    },
+    localized: !disableLocalization,
+    name,
+    required: !notRequired,
+    type: 'richText',
+  };
+
+  if (label) {
+    fieldObject.label = label;
+  }
+
+  return fieldObject;
+};
 
 export const rte1 = ({
-  name, notRequired, disableLocalization, adminDescription, adminCondition, access,
+  name, notRequired, disableLocalization, adminDescription, adminCondition, access, label,
 }: InterfaceRteInputType): RichTextField => rte({
   access,
   adminCondition,
   adminDescription,
   disableLocalization,
   editor: rte1Editor,
+  label,
   name,
   notRequired,
 });
 
 export const rte2 = ({
-  name, notRequired, disableLocalization, adminDescription, adminCondition, access,
+  name, notRequired, disableLocalization, adminDescription, adminCondition, access, label,
 }: InterfaceRteInputType): RichTextField => rte({
   access,
   adminCondition,
   adminDescription,
   disableLocalization,
   editor: rte2Editor,
+  label,
   name,
   notRequired,
 });
 
 export const rte3 = ({
-  name, notRequired, access,
+  name, notRequired, access, label,
 }: InterfaceRteInputType): RichTextField => rte({
   access,
   editor: rte3Editor,
+  label,
   name,
   notRequired,
 });
 
 export const rte4 = ({
-  name, notRequired, access,
+  name, notRequired, access, label,
 }: InterfaceRteInputType): RichTextField => rte({
   access,
   editor: rte4Editor,
+  label,
   name,
   notRequired,
 });

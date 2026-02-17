@@ -47,24 +47,19 @@ export const formatDateToReadableString = ({
 }: InterfaceFormatDateToReadableStringProps): string => {
   const inputDate = new Date(dateString);
 
-  // Helper to format parts consistently
-  const formatDay = (date: Date): string => date.toLocaleString(locale, {
+  const formattedDate = inputDate.toLocaleString(locale, {
     day: '2-digit',
-  });
-  const formatMonth = (date: Date): string => date.toLocaleString(locale, {
     month: 'long',
-  });
-  const formatYear = (date: Date): string => date.toLocaleString(locale, {
     year: 'numeric',
   });
 
-  return `${formatDay(inputDate)}. ${formatMonth(inputDate)} ${formatYear(inputDate)}`;
+  return formattedDate;
 };
 
 interface InterfaceFormatDateRangeToReadableStringProps {
   startString: string;
   endString: string;
-  locale: string
+  locale: string;
 }
 
 export const formatDateRangeToReadableString = ({
@@ -75,48 +70,41 @@ export const formatDateRangeToReadableString = ({
   const start = new Date(startString);
   const end = new Date(endString);
 
-  const sameYear = start.getFullYear() === end.getFullYear();
-  const sameMonth = sameYear && start.getMonth() === end.getMonth();
-  const sameDay = sameMonth && start.getDate() === end.getDate();
-
-  // Helper to format parts consistently
-  const formatDay = (date: Date): string => date.toLocaleString(locale, {
+  const formatter = new Intl.DateTimeFormat(locale, {
     day: '2-digit',
-  });
-  const formatMonth = (date: Date): string => date.toLocaleString(locale, {
     month: 'long',
-  });
-  const formatYear = (date: Date): string => date.toLocaleString(locale, {
     year: 'numeric',
   });
 
-  if (sameMonth && sameYear && sameDay) {
-    // e.g. 27. Oktober 2025
-    return `${formatDay(start)}. ${formatMonth(start)} ${formatYear(start)}`;
-  } else if (sameMonth && sameYear) {
-    // e.g. 27.-29. Oktober 2025
-    return `${formatDay(start)}.-${formatDay(end)}. ${formatMonth(start)} ${formatYear(start)}`;
-  } else if (sameYear) {
-    // e.g. 27. Oktober - 01. November 2025
-    return `${formatDay(start)}. ${formatMonth(start)} - ${formatDay(end)}. ${formatMonth(end)} ${formatYear(start)}`;
-  }
+  // ensure leading zeroes
+  const parts = formatter.formatRangeToParts(start, end);
 
-  // e.g. 27. Oktober 2025 - 01. Januar 2026
-  return `${formatDay(start)}. ${formatMonth(start)} ${formatYear(start)} - ${formatDay(end)}. ${formatMonth(end)} ${formatYear(end)}`;
+  return parts
+    .map((part) => {
+      if (part.type === 'day') {
+        // Ensure 2-digit format with leading zero
+        return part.value.padStart(2, '0');
+      }
+
+      return part.value;
+    })
+    .join('');
 };
 
 interface InterfaceFormatTimeProps {
   dateString: string;
+  locale: string;
 }
 
 export const formatTime = ({
   dateString,
+  locale,
 }: InterfaceFormatTimeProps): string => {
   const date = new Date(dateString);
 
-  return date.toLocaleTimeString('de-DE', {
+  return date.toLocaleTimeString(`${locale}-${locale.toUpperCase()}`, {
     hour: '2-digit',
-    hour12: false,
+    // hour12: false,
     minute: '2-digit',
   });
 };

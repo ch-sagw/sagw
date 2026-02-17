@@ -1,6 +1,5 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
-import { hookSeoFallback } from '@/hooks-payload/seoFallback';
 import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
 import { pageAccess } from '@/access/pages';
@@ -20,6 +19,7 @@ export const ErrorPage: CollectionConfig = {
         {
           fields: [
             rte1({
+              label: 'Back to Home Button',
               name: 'homeButtonText',
             }),
 
@@ -63,10 +63,7 @@ export const ErrorPage: CollectionConfig = {
     },
   ],
   hooks: {
-    beforeChange: [
-      hookSeoFallback,
-      hookPreventBulkPublishForTranslators,
-    ],
+    beforeChange: [hookPreventBulkPublishForTranslators],
   },
   labels: {
     plural: 'Error Page',

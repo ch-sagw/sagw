@@ -11,6 +11,8 @@ Förderung -> project teaser -> no padding
 .teaser {
   @include list-reset;
 
+  overflow-wrap: anywhere;
+
   // double specificity to overwrite button style
   &.teaser:not(.people):is(:hover) .linkText:after,
   &.teaser:not(.people) .wrapper:is(:focus-visible) .linkText:after {

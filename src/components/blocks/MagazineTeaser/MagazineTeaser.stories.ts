@@ -8,6 +8,7 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { MagazineTeaserImage } from '@/components/blocks/helpers/imagesData';
 import { InterfaceMagazineDetailPageWithImage } from '@/components/blocks/MagazineOverview/MagazineOverview';
 import { prerenderPageLinksStorybook } from '@/utilities/prerenderPageLinksStorybook';
+import { seoData } from '@/seed/test-data/seoData';
 
 type MagazineTeaserProps = React.ComponentProps<typeof MagazineTeaserComponent>;
 
@@ -33,7 +34,7 @@ const samplePage: InterfaceMagazineDetailPageWithImage = {
   content: [
     {
       alignment: 'center',
-      blockType: 'imageBlock',
+      blockType: 'imageBlockMagazine',
       credits: simpleRteConfig('some credits'),
       image: 'someid',
     },
@@ -46,11 +47,16 @@ const samplePage: InterfaceMagazineDetailPageWithImage = {
     lead: simpleRteConfig('Some lead'),
     title: simpleRteConfig('The Mobility Imperative in Academia'),
   },
+  ...seoData,
   id: '1',
   image: MagazineTeaserImage,
   navigationTitle: '',
   overviewPageProps: {
     teaserText: simpleRteConfig('Zur Kultur der Bookishness in der Erlebnisgesellschaft'),
+  },
+  parentPage: {
+    documentId: '1234',
+    slug: 'homePage',
   },
   slug: 'slug',
   tenant: '1',

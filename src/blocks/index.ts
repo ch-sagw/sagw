@@ -3,7 +3,9 @@ import { Block } from 'payload';
 import { DownloadsBlock } from '@/blocks/Downloads';
 import { EventsTeasersBlock } from '@/blocks/EventsTeasers';
 import { HomeTeasersBlock } from '@/blocks/HomeTeasers';
-import { ImageBlock } from '@/blocks/Image';
+import {
+  ImageBlock, ImageBlockMagazine,
+} from '@/blocks/Image';
 import { LinksBlock } from '@/blocks/Links';
 import { MagazineTeasersBlock } from '@/blocks/MagazineTeasers';
 import { NewsTeasersBlock } from '@/blocks/NewsTeasers';
@@ -53,6 +55,7 @@ const availableBlocksConst = [
   LinksBlock,
   DownloadsBlock,
   ImageBlock,
+  ImageBlockMagazine,
   VideoBlock,
   AccordionBlock,
   FormBlock,

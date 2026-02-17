@@ -16,6 +16,10 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { getTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
+import { seoData } from '@/seed/test-data/seoData';
 
 test.describe('Teasers links (sagw)', () => {
   beforeEachAcceptCookies();
@@ -24,6 +28,9 @@ test.describe('Teasers links (sagw)', () => {
   }, async ({
     page,
   }) => {
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
     let homeId;
     let eventPage1;
     let eventPage2;
@@ -83,6 +90,7 @@ test.describe('Teasers links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`overview-page-1-it-${time}`),
           },
+          ...seoData,
           navigationTitle: 'Overview Page it',
         },
         id: level1a.id,
@@ -225,6 +233,7 @@ test.describe('Teasers links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d1-it-${time}`),
           },
+          ...seoData,
           navigationTitle: 'd1 it',
         },
         id: detail1.id,
@@ -237,6 +246,7 @@ test.describe('Teasers links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d2-it-${time}`),
           },
+          ...seoData,
           navigationTitle: 'd2 it',
         },
         id: detail2.id,
@@ -249,6 +259,7 @@ test.describe('Teasers links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d3-it-${time}`),
           },
+          ...seoData,
           navigationTitle: 'd3 it',
         },
         id: detail3.id,
@@ -261,6 +272,7 @@ test.describe('Teasers links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d4-it-${time}`),
           },
+          ...seoData,
           navigationTitle: 'd4 it',
         },
         id: detail4.id,
@@ -273,6 +285,7 @@ test.describe('Teasers links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`d5-it-${time}`),
           },
+          ...seoData,
           navigationTitle: 'd5 it',
         },
         id: detail5.id,
@@ -288,6 +301,8 @@ test.describe('Teasers links (sagw)', () => {
           eventDetails: {
             title: simpleRteConfig(`e1 it ${time}`),
           },
+          ...seoData,
+          navigationTitle: 'nav title',
         },
         id: eventPage1.id,
         locale: 'it',
@@ -299,6 +314,8 @@ test.describe('Teasers links (sagw)', () => {
           eventDetails: {
             title: simpleRteConfig(`e2 it ${time}`),
           },
+          ...seoData,
+          navigationTitle: 'nav title',
         },
         id: eventPage2.id,
         locale: 'it',
@@ -310,6 +327,8 @@ test.describe('Teasers links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`n1 it ${time}`),
           },
+          ...seoData,
+          navigationTitle: 'nav title',
           overviewPageProps: newsPage1.overviewPageProps,
         },
         id: newsPage1.id,
@@ -322,6 +341,8 @@ test.describe('Teasers links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`n2 it ${time}`),
           },
+          ...seoData,
+          navigationTitle: 'nav title',
           overviewPageProps: newsPage2.overviewPageProps,
         },
         id: newsPage2.id,
@@ -334,6 +355,8 @@ test.describe('Teasers links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`p1 it ${time}`),
           },
+          ...seoData,
+          navigationTitle: 'nav title',
           overviewPageProps: projectPage1.overviewPageProps,
         },
         id: projectPage1.id,
@@ -346,6 +369,8 @@ test.describe('Teasers links (sagw)', () => {
           hero: {
             title: simpleRteConfig(`p2 it ${time}`),
           },
+          ...seoData,
+          navigationTitle: 'nav title',
           overviewPageProps: projectPage2.overviewPageProps,
         },
         id: projectPage2.id,
@@ -359,6 +384,8 @@ test.describe('Teasers links (sagw)', () => {
             author: magazinePage1.hero.author,
             title: simpleRteConfig(`m1 it ${time}`),
           },
+          ...seoData,
+          navigationTitle: 'nav title',
           overviewPageProps: magazinePage1.overviewPageProps,
         },
         id: magazinePage1.id,
@@ -372,6 +399,8 @@ test.describe('Teasers links (sagw)', () => {
             author: magazinePage2.hero.author,
             title: simpleRteConfig(`m2 it ${time}`),
           },
+          ...seoData,
+          navigationTitle: 'nav title',
           overviewPageProps: magazinePage2.overviewPageProps,
         },
         id: magazinePage2.id,

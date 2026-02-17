@@ -6,6 +6,12 @@
 
 .teasers {
   .teaser {
+    position: relative;
+
+    &:not(:first-of-type):before {
+      @include white-section-top-line;
+    }
+
     .stickyContent {
       display: flex;
       flex-direction: column;
@@ -23,7 +29,6 @@
       color: var(--primary-blue-light);
       width: px-to-rem(120);
       height: auto;
-      margin-block-end: px-to-rem(var(--spacing-2xl));
 
       @include mq($from: large) {
         width: px-to-rem(280);

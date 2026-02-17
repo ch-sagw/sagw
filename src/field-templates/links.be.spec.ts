@@ -5,12 +5,14 @@ import {
   expect,
   test,
 } from '@playwright/test';
-import { getTenant } from '@/test-helpers/tenant-generator';
+import { getTenantId } from '@/test-helpers/tenant-generator';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { EventDetailPage } from '@/payload-types';
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
+import { seoData } from '@/seed/test-data/seoData';
+import { getHomeId } from '@/test-helpers/collections-generator';
 
 test.describe('links', () => {
   test.beforeEach(async () => {
@@ -21,9 +23,21 @@ test.describe('links', () => {
   });
 
   test('throws error on invalid external url', async () => {
-    const tenant = await getTenant();
     const payload = await getPayload({
       config: configPromise,
+    });
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
     });
 
     let result;
@@ -42,10 +56,16 @@ test.describe('links', () => {
           link: {
             externalLink: '.foo.bar',
           },
+          navigationTitle: 'Nav Title',
+          parentPage: {
+            documentId: home,
+            slug: 'homePage',
+          },
           showDetailPage: 'false',
           slug: `${(new Date())
             .toString()} - 1`,
           tenant,
+          ...seoData,
         },
         draft: false,
       });
@@ -64,9 +84,21 @@ test.describe('links', () => {
   });
 
   test('does not throw an error on valid external url', async () => {
-    const tenant = await getTenant();
     const payload = await getPayload({
       config: configPromise,
+    });
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
     });
 
     let result: EventDetailPage | undefined;
@@ -85,10 +117,16 @@ test.describe('links', () => {
           link: {
             externalLink: 'https://www.foo.bar',
           },
+          navigationTitle: 'Nav Title',
+          parentPage: {
+            documentId: home,
+            slug: 'homePage',
+          },
           showDetailPage: 'false',
           slug: `${(new Date())
             .toString()} - 2`,
           tenant,
+          ...seoData,
         },
         draft: false,
       });
@@ -107,9 +145,21 @@ test.describe('links', () => {
   });
 
   test('does not throw an error on valid external url with path segment', async () => {
-    const tenant = await getTenant();
     const payload = await getPayload({
       config: configPromise,
+    });
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
     });
 
     let result: EventDetailPage | undefined;
@@ -128,10 +178,16 @@ test.describe('links', () => {
           link: {
             externalLink: 'https://www.foo.bar/baz',
           },
+          navigationTitle: 'Nav Title',
+          parentPage: {
+            documentId: home,
+            slug: 'homePage',
+          },
           showDetailPage: 'false',
           slug: `${(new Date())
             .toString()} - 3`,
           tenant,
+          ...seoData,
         },
         draft: false,
       });
@@ -150,9 +206,21 @@ test.describe('links', () => {
   });
 
   test('does not throw an error on valid external without www', async () => {
-    const tenant = await getTenant();
     const payload = await getPayload({
       config: configPromise,
+    });
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
     });
 
     let result: EventDetailPage | undefined;
@@ -171,10 +239,16 @@ test.describe('links', () => {
           link: {
             externalLink: 'https://foo.bar',
           },
+          navigationTitle: 'Nav Title',
+          parentPage: {
+            documentId: home,
+            slug: 'homePage',
+          },
           showDetailPage: 'false',
           slug: `${(new Date())
             .toString()} - 4`,
           tenant,
+          ...seoData,
         },
         draft: false,
       });

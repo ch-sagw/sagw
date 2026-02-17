@@ -2,6 +2,7 @@ import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
 import {
   generateTenant, getTenant,
+  getTenantId,
 } from '@/test-helpers/tenant-generator';
 
 import {
@@ -12,6 +13,8 @@ import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
+import { seoData } from '@/seed/test-data/seoData';
+import { getHomeId } from '@/test-helpers/collections-generator';
 
 test.describe('unique-blocks', () => {
   test.beforeEach(async () => {
@@ -22,9 +25,21 @@ test.describe('unique-blocks', () => {
   });
 
   test('allows 1 link and 1 downloads block via API', async () => {
-    const tenant = await getTenant();
     const payload = await getPayload({
       config: configPromise,
+    });
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
     });
 
     let result: any;
@@ -125,6 +140,12 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Detail Page Lead'),
             title: simpleRteConfig(`Detail page title ${(new Date())} - 1`),
           },
+          ...seoData,
+          navigationTitle: 'nav title',
+          parentPage: {
+            documentId: home,
+            slug: 'homePage',
+          },
           slug: `detail-page-title-${(new Date())}-1`,
           tenant: await getTenant(),
         },
@@ -145,9 +166,21 @@ test.describe('unique-blocks', () => {
 
   test('errors with 2 links and 1 downloads block via API', async () => {
     let result: any;
-    const tenant = await getTenant();
     const payload = await getPayload({
       config: configPromise,
+    });
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
     });
 
     try {
@@ -275,6 +308,12 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Detail Page Lead'),
             title: simpleRteConfig(`Detail page title ${(new Date())} - 2`),
           },
+          ...seoData,
+          navigationTitle: 'nav title',
+          parentPage: {
+            documentId: home,
+            slug: 'homePage',
+          },
           slug: `detail-page-title-${(new Date())}-2`,
           tenant: await getTenant(),
         },
@@ -297,9 +336,21 @@ test.describe('unique-blocks', () => {
 
   test('errors with 1 link and 2 downloads block via API', async () => {
     let result: any;
-    const tenant = await getTenant();
     const payload = await getPayload({
       config: configPromise,
+    });
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
     });
 
     try {
@@ -412,6 +463,12 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Detail Page Lead'),
             title: simpleRteConfig(`Detail page title ${(new Date())} - 3`),
           },
+          ...seoData,
+          navigationTitle: 'nav title',
+          parentPage: {
+            documentId: home,
+            slug: 'homePage',
+          },
           slug: `detail-page-title-${(new Date())}-3`,
           tenant: await getTenant(),
         },
@@ -438,6 +495,19 @@ test.describe('unique-blocks', () => {
       config: configPromise,
     });
 
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
     try {
     /* eslint-disable @typescript-eslint/naming-convention */
       const createOverviewPageResult = await payload.create({
@@ -453,6 +523,12 @@ test.describe('unique-blocks', () => {
             colorMode: 'white',
             lead: simpleRteConfig('Overview Page Lead'),
             title: simpleRteConfig(`Overview page title ${new Date()} - 1`),
+          },
+          ...seoData,
+          navigationTitle: 'nav title',
+          parentPage: {
+            documentId: home,
+            slug: 'homePage',
           },
           slug: `overview-page-title-${(new Date())}-1`,
           tenant: await getTenant(),
@@ -477,6 +553,19 @@ test.describe('unique-blocks', () => {
       config: configPromise,
     });
 
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
     try {
     /* eslint-disable @typescript-eslint/naming-convention */
       const createOverviewPageResult = await payload.create({
@@ -495,6 +584,12 @@ test.describe('unique-blocks', () => {
             colorMode: 'white',
             lead: simpleRteConfig('Overview Page Lead'),
             title: simpleRteConfig(`Overview page title ${new Date()} - 2`),
+          },
+          ...seoData,
+          navigationTitle: 'nav title',
+          parentPage: {
+            documentId: home,
+            slug: 'homePage',
           },
           slug: `overview-page-title-${(new Date())}-2`,
           tenant: await getTenant(),
@@ -519,6 +614,19 @@ test.describe('unique-blocks', () => {
     let result: any;
     const payload = await getPayload({
       config: configPromise,
+    });
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
     });
 
     try {
@@ -555,6 +663,12 @@ test.describe('unique-blocks', () => {
             lead: simpleRteConfig('Overview Page Lead'),
             title: simpleRteConfig(`Overview page title ${new Date()} - 3`),
           },
+          ...seoData,
+          navigationTitle: 'nav title',
+          parentPage: {
+            documentId: home,
+            slug: 'homePage',
+          },
           slug: `overview-page-title-${(new Date())}-3`,
           tenant: await getTenant(),
         },
@@ -578,6 +692,19 @@ test.describe('unique-blocks', () => {
       config: configPromise,
     });
 
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
     try {
     /* eslint-disable @typescript-eslint/naming-convention */
       const createOverviewPageResult = await payload.create({
@@ -598,6 +725,12 @@ test.describe('unique-blocks', () => {
             colorMode: 'white',
             lead: simpleRteConfig('Overview Page Lead'),
             title: simpleRteConfig(`Overview page title ${new Date()} - 4`),
+          },
+          ...seoData,
+          navigationTitle: 'nav title',
+          parentPage: {
+            documentId: home,
+            slug: 'homePage',
           },
           slug: `overview-page-title-${(new Date())}-4`,
           tenant: await getTenant(),
@@ -666,6 +799,7 @@ test.describe('unique-blocks', () => {
             sideTitle: simpleRteConfig('Side title'),
             title: simpleRteConfig(`Overview page title ${new Date()} - 3`),
           },
+          ...seoData,
           navigationTitle: 'Home',
           tenant: tenant.id,
         },

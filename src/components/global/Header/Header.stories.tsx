@@ -56,6 +56,12 @@ const render = (args: Partial<InterfaceHeaderComponentPropTypes> & InterfaceHead
 const defaultArgs: InterfaceHeaderComponentPropTypes = {
   colorMode: 'dark',
   linkUrls: {},
+  localeUrls: {
+    de: '/de',
+    en: '/en',
+    fr: '/fr',
+    it: '/it',
+  },
   logoLink: '/',
   menuButton: {
     close: 'Schliessen',
@@ -65,6 +71,7 @@ const defaultArgs: InterfaceHeaderComponentPropTypes = {
   navigation: {
     navItems: defaultNavItems,
   },
+  tenant: 'sagw',
 };
 
 export const HeaderDark: StrictStory = {

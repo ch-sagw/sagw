@@ -261,6 +261,35 @@ test.describe('Tenants only show content from users tenant', () => {
       name: 'Publish changes',
     });
 
+    const navigationTitle = await page.locator('#field-navigationTitle');
+    const parentPage = await page.locator('#field-parentPage');
+    const sidebar = await page.locator('.document-fields__sidebar-fields');
+
+    await navigationTitle.fill('nav title');
+    await parentPage.click();
+
+    const homePageParentPage = await sidebar.getByText('Home Page');
+
+    await homePageParentPage.click();
+
+    const metaTab = await page.getByText('Meta', {
+      exact: true,
+    });
+
+    const contentTab = await page.getByText('Content', {
+      exact: true,
+    });
+
+    await metaTab.click();
+
+    const metaTitle = await page.locator('#field-meta__seo__title');
+    const metaDescription = await page.locator('#field-meta__seo__description');
+
+    await metaTitle.fill('foo');
+    await metaDescription.fill('foo');
+
+    await contentTab.click();
+
     await saveButton.click();
 
     // wait for confirmation toast and close it

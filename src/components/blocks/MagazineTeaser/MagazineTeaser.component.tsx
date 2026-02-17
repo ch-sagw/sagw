@@ -46,7 +46,10 @@ export const MagazineTeaserComponent = ({
       }
     </Section>
 
-    <ul className={styles.list}>
+    <ul
+      className={styles.list}
+      data-testid='generic-teaser-linklist'
+    >
       {pages.map((item) => {
         const href = pageUrls[item.id] || `/${item.id}`;
 
