@@ -16,10 +16,10 @@ export const uploadToGumletFromUrl = async ({
   const collectionId = process.env.GUMLET_COLLECTION_ID;
   const host = process.env.NEXT_PUBLIC_GUMLET_URL;
 
-  let inputUrl = `${host}/${fileUrl}`;
+  let inputUrl = `${host}${fileUrl}`;
 
   if (host && host.indexOf('localhost') !== -1) {
-    inputUrl = `${host}${fileName}`;
+    inputUrl = `${host}/${fileName}`;
   }
 
   const payload = {

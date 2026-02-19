@@ -151,7 +151,7 @@ export const ContentVideoLeftAligned: StrictStory = {
     'video-fr': videoData.fr,
     'video-it': videoData.it,
   },
-  decorators: [withCookieConsent(true)],
+  decorators: [withCookieConsent(false)],
 };
 
 export const ContentVideoRightAligned: StrictStory = {
@@ -172,5 +172,5 @@ export const ContentVideoRightAligned: StrictStory = {
     'video-fr': videoData.fr,
     'video-it': videoData.it,
   },
-  decorators: [withCookieConsent(true)],
+  decorators: [withCookieConsent(false)],
 };

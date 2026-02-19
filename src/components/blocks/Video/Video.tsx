@@ -14,7 +14,7 @@ import { Image } from '@/components/base/Image/Image';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
 import { VideoConsentMessage } from '@/components/base/VideoConsentMessage/VideoConsentMessage';
-import { GumletPlayer } from '@gumlet/react-embed-player';
+import dynamic from 'next/dynamic';
 import {
   useLocale, useTranslations,
 } from 'next-intl';
@@ -43,6 +43,15 @@ const classes = cva([styles.videoWrapper], {
   },
 });
 
+const GumletPlayer = dynamic(
+  () => import('@gumlet/react-embed-player').then((mod) => ({
+    default: mod.GumletPlayer,
+  })),
+  {
+    ssr: false,
+  },
+);
+
 export const Video = ({
   alignment,
   caption,
@@ -54,7 +63,7 @@ export const Video = ({
   'video-it': videoIt,
 }: InterfaceVideoPropTypes): React.JSX.Element | undefined => {
   const locale = useLocale() as TypedLocale;
-  const i18nA11y = useTranslations('a11y');
+  const internalI18nA11y = useTranslations('a11y');
 
   // Select correct video source for the current language
   // if available and fall back to german if there is no
@@ -88,7 +97,7 @@ export const Video = ({
     return (): void => {
       window.removeEventListener(consentUpdatedEventName, handleConsentUpdate);
     };
-  });
+  }, []);
 
   // Paused state
   const [
@@ -108,8 +117,7 @@ export const Video = ({
     setPaused(false);
   };
 
-  const playButtonText = i18nA11y('playVideoText')
-    .replace('{{title}}', video.title);
+  const playButtonText = internalI18nA11y('playVideoText');
 
   const pausedClass = paused
     ? styles.paused
@@ -163,7 +171,7 @@ export const Video = ({
             >
               <Button
                 ariaHasPopUp={false}
-                ariaLabel={playButtonText}
+                ariaLabel={playButtonText.replace('((title))', video.title)}
                 buttonType='button'
                 colorMode='white'
                 element='button'
