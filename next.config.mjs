@@ -17,24 +17,40 @@ const NEXT_PUBLIC_SERVER_URL = process.env.URL ||
  * Gravatar is needed within Payload,
  * that's why it's in the list.
  */
-const ContentSecurityPolicy = `
-  default-src 'self';
-  script-src 'self' 'unsafe-inline' 'unsafe-eval';
+/* const ContentSecurityPolicy = `
+  default-src
+    'self'
+    https://www.gravatar.com
+    https://*.gumlet.io
+    https://ingest.gumlytics.com
+    https://cdn.jsdeliver.net;
+  script-src
+    'self'
+    'unsafe-inline'
+    'unsafe-eval'
+    https://ingest.gumlytics.com
+    https://cdn.jsdeliver.net;
   style-src 'self' 'unsafe-inline';
   img-src 'self' https://www.gravatar.com https://*.gumlet.io data: blob:;
+  media-src 'self' https://*.gumlet.io https://*.cloudfront.net blob:;
   font-src 'self' data:;
-  connect-src 'self' https:;
-  frame-src 'self';
-  object-src 'none';
+  connect-src
+    'self'
+    https://*.gumlet.io
+    https://*.cloudfront.net
+    https://blob.vercel-storage.com;
+  frame-src 'self' https://*.gumlet.io;
+  object-src https://*.gumlet.io;
   base-uri 'self';
   form-action 'self';
 `.replace(/\n/gu, ' ')
-  .trim();
+  .trim(); */
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   devIndicators: false,
-  headers() {
+
+  /* headers() {
     return [
       {
         headers: [
@@ -46,7 +62,7 @@ const nextConfig = {
         source: '/(.*)',
       },
     ];
-  },
+  }, */
   images: {
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL].map((item) => {
