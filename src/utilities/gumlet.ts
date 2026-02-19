@@ -29,6 +29,9 @@ export const uploadToGumletFromUrl = async ({
     title: fileTitle,
   };
 
+  console.log(inputUrl);
+  console.log(`${process.env.GUMLET_API_URL}`);
+
   const res = await fetch(`${process.env.GUMLET_API_URL}`, {
     body: JSON.stringify(payload),
     headers: {
