@@ -19,7 +19,7 @@ export const uploadToGumletFromUrl = async ({
   let inputUrl = `${host}/${fileUrl}`;
 
   if (host && host.indexOf('localhost') !== -1) {
-    inputUrl = `${host}/${fileName}`;
+    inputUrl = `${host}${fileName}`;
   }
 
   const payload = {
@@ -28,9 +28,6 @@ export const uploadToGumletFromUrl = async ({
     input: inputUrl,
     title: fileTitle,
   };
-
-  console.log(inputUrl);
-  console.log(`${process.env.GUMLET_API_URL}`);
 
   const res = await fetch(`${process.env.GUMLET_API_URL}`, {
     body: JSON.stringify(payload),
