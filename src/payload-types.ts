@@ -274,10 +274,6 @@ export interface Tenant {
   name: string;
   title: string;
   /**
-   * Used for domain-based tenant handling
-   */
-  domain?: string | null;
-  /**
    * Used for url paths, example: /tenant-slug/page-slug
    */
   slug: string;
@@ -6770,7 +6766,6 @@ export interface EventCategorySelect<T extends boolean = true> {
 export interface TenantsSelect<T extends boolean = true> {
   name?: T;
   title?: T;
-  domain?: T;
   slug?: T;
   url?: T;
   faviconName?: T;

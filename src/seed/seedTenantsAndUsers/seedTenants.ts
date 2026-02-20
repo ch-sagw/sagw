@@ -33,7 +33,6 @@ export const seedTenants = async (props: InterfaceSeedTenantsProps): Promise<Ten
       tenantPromises.push(props.payload.create({
         collection: 'tenants',
         data: {
-          domain: `${tenant.slug}.localhost`,
           faviconName: `https://www.foo${index}.bar`,
           name: tenant.name,
           slug: tenant.slug,
