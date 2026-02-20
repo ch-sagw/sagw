@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.34.1](https://github.com/ch-sagw/sagw/compare/v0.34.0...v0.34.1) (2026-02-20)
+
+
+### Chore
+
+* disable csp ([a2af01f](https://github.com/ch-sagw/sagw/commit/a2af01fdbfc4907ecb7ac20f38d8906d65339cdc))
+* enable csp again ([13e0e14](https://github.com/ch-sagw/sagw/commit/13e0e140128e5aaed24e3f9df87ac0d765b11c3b))
+
+
+### Bug Fixes
+
+* sort institutes by name ([#810](https://github.com/ch-sagw/sagw/issues/810)) ([0c85e5f](https://github.com/ch-sagw/sagw/commit/0c85e5f10418f37174502ec72689ada4657859cc))
+
 ## [0.34.0](https://github.com/ch-sagw/sagw/compare/v0.33.0...v0.34.0) (2026-02-13)
 
 
