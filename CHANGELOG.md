@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.34.2](https://github.com/ch-sagw/sagw/compare/v0.34.1...v0.34.2) (2026-02-21)
+
+
+### Bug Fixes
+
+* fix strange cache invalidation issue and add test ([7e4f323](https://github.com/ch-sagw/sagw/commit/7e4f323e9c72311e1b74168130f6bb113985ab6e))
+* fix strange cache invalidation issue and add test ([#818](https://github.com/ch-sagw/sagw/issues/818)) ([7e4f323](https://github.com/ch-sagw/sagw/commit/7e4f323e9c72311e1b74168130f6bb113985ab6e))
+* make sure cache is not invalidated on auto-save ([7e4f323](https://github.com/ch-sagw/sagw/commit/7e4f323e9c72311e1b74168130f6bb113985ab6e))
+
+
+### Test
+
+* stabilize tests which are repeatetly failing ([7e4f323](https://github.com/ch-sagw/sagw/commit/7e4f323e9c72311e1b74168130f6bb113985ab6e))
+
 ## [0.34.1](https://github.com/ch-sagw/sagw/compare/v0.34.0...v0.34.1) (2026-02-20)
 
 
