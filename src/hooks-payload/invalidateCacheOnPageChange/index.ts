@@ -1323,14 +1323,11 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
     // false this is a cascade breadcrumb update. We check for breadcrumbChanged
     //  OR breadcrumb field presence in the update to avoid false positives from
     // leaked context, but make it less strict to catch all cascade updates.
-    const hasBreadcrumbInUpdate = doc?.[fieldBreadcrumbFieldName] !== undefined ||
-      docToUse?.[fieldBreadcrumbFieldName] !== undefined;
-    // if context is set and willTriggerCascade is false, and breadcrumb is in,
-    // update, this is a cascade breadcrumb update
-    // (even if we can't detect the change)
+    // if context is set and willTriggerCascade is false, and breadcrumb
+    // changed, this is a cascade breadcrumb update
     const isCascadeBreadcrumbUpdate = context?.cascadeBreadcrumbUpdate === true &&
       !willTriggerCascade &&
-      (breadcrumbChanged || hasBreadcrumbInUpdate);
+      breadcrumbChanged;
 
     // clear invalidation cache at the start of each non-cascade update.
     // this ensures. we deduplicate within the same update operation but allow
