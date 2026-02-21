@@ -129,27 +129,25 @@ const renderPageContent = ({
         currentPageId={currentPageId}
       />
       <main>
-        <main>
-          <div className={containerType === 'home'
-            ? 'home'
-            : 'detail-page'}>
-            {heroComponent}
-            <RenderStatusMessage
-              tenant={tenantId}
-              isHome={isHome}
-              locale={locale}
+        <div className={containerType === 'home'
+          ? 'home'
+          : 'detail-page'}>
+          {heroComponent}
+          <RenderStatusMessage
+            tenant={tenantId}
+            isHome={isHome}
+            locale={locale}
+          />
+          {showBlocks && blocks && (
+            <RenderBlocks
+              blocks={blocks}
+              tenantId={tenantId}
+              i18n={i18n}
+              projectId={projectId}
+              sourcePage={sourcePage}
             />
-            {showBlocks && blocks && (
-              <RenderBlocks
-                blocks={blocks}
-                tenantId={tenantId}
-                i18n={i18n}
-                projectId={projectId}
-                sourcePage={sourcePage}
-              />
-            )}
-          </div>
-        </main>
+          )}
+        </div>
       </main>
       <RenderFooter
         tenant={tenantId}

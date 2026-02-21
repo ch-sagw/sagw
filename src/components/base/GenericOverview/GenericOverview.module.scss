@@ -4,8 +4,6 @@
 
 .list {
   @include full-bleed-teaser-list;
-
-  padding-block-end: px-to-rem(var(--section-inside-s));
 }
 
 .pagination {
