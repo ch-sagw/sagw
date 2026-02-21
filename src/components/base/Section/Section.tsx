@@ -6,6 +6,7 @@ import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 
 export type InterfaceSectionPropTypes = {
   className?: string;
+  additionalSubTitleClassName?: string;
   additionalContentClassName?: string;
   titleClassName?: string;
   title?: string;
@@ -27,6 +28,7 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
   showTopLine,
   fullBleed,
   additionalStickyContent,
+  additionalSubTitleClassName,
   additionalContentClassName,
 }, ref) => {
   const sectionClasses = cva([
@@ -81,7 +83,7 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
       {subtitle &&
         <SafeHtml
           as='p'
-          className={styles.subtitle}
+          className={`${styles.subtitle} ${additionalSubTitleClassName}`}
           html={subtitle}
         />
       }

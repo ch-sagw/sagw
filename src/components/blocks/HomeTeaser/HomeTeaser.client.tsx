@@ -27,6 +27,7 @@ export const HomeTeaserClient = ({
     {teasers.map((teaser, index) => (
       <Section
         additionalContentClassName={styles.stickyContent}
+        additionalSubTitleClassName={styles.subTitleHomeTeaser}
         additionalStickyContent={
           <Icon
             name={teaser.iconName as keyof typeof Icon}

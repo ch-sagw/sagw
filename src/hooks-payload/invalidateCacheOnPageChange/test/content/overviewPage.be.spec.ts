@@ -232,3 +232,61 @@ test('invalidates on content change in other locale (non-sagw)', {
     .toHaveLength(1);
 
 });
+
+// Fixed Cache issue: after changing hero, cache did not update. This test
+// covers this case.
+
+test('invalidates on content change even if cascadeBreadcrumbUpdate is true', {
+  tag: '@cache',
+}, async () => {
+  await deleteSetsPages();
+
+  const logCapture = new LogCapture();
+  const payload = await getPayloadCached();
+  const time = (new Date())
+    .getTime();
+
+  const tenant = await getTenantId({
+    isSagw: true,
+    time,
+  });
+
+  const home = await getHomeId({
+    isSagw: true,
+    tenant,
+  });
+
+  const overviewPage = await generateOverviewPage({
+    parentPage: {
+      documentId: home,
+      slug: 'homePage',
+    },
+    title: `overview ${time}`,
+  });
+
+  logCapture.captureLogs();
+
+  await payload.update({
+    collection: 'overviewPage',
+    context: {
+      cascadeBreadcrumbUpdate: true,
+    },
+    data: {
+      breadcrumb: overviewPage.breadcrumb,
+      hero: {
+        colorMode: 'light',
+        title: simpleRteConfig(`updated hero ${time}`),
+      },
+    },
+    id: overviewPage.id,
+  });
+
+  logCapture.detachLogs();
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/${overviewPage.slug}`))
+    .toBe(true);
+
+  expect(logCapture.logs)
+    .toHaveLength(1);
+
+});
