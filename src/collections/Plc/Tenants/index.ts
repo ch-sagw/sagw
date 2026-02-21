@@ -10,7 +10,7 @@ export const Tenants: CollectionConfig = {
   admin: {
     defaultColumns: [
       'name',
-      'domain',
+      'url',
       'slug',
     ],
     group: 'Org',
@@ -38,15 +38,6 @@ export const Tenants: CollectionConfig = {
       name: 'title',
       required: true,
       type: 'text',
-    },
-    {
-      access: fieldsAccess,
-      admin: {
-        description: 'Used for domain-based tenant handling',
-      },
-      name: 'domain',
-      type: 'text',
-      unique: true,
     },
     {
       access: fieldsAccess,
