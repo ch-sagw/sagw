@@ -77,6 +77,9 @@ export const Videos: CollectionConfig = {
   },
   slug: 'videos',
   upload: {
-    mimeTypes: ['video/*'],
+    mimeTypes: [
+      'text/plain',
+      'video/*',
+    ],
   },
 };

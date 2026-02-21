@@ -2,22 +2,38 @@ import type {
   CollectionAfterChangeHook,
   CollectionAfterDeleteHook,
 } from 'payload';
+
 import {
   deleteFromGumlet,
   uploadToGumletFromUrl,
 } from '@/utilities/gumlet';
 
 export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
+  context,
   doc,
   previousDoc,
   req,
 }) => {
+
+  // If gumletAssetId was added after upload or
+  // when we run Playwright tests, we immediately
+  // return
+  if (
+    context?.skipGumletSync ||
+    process.env.IS_RUNNING_IN_PLAYWRIGHT_TEST_ENV === 'true'
+  ) {
+    return;
+  }
+
   const hasNewFile = doc.filename && doc.filename !== previousDoc?.filename;
   const wasDeleted = !doc.filename && previousDoc?.filename;
 
   // Remove the video from Gumlet as well, when it
   // is deleted in Payload.
-  if (wasDeleted && previousDoc?.gumletAssetId) {
+  if (
+    wasDeleted &&
+    previousDoc?.gumletAssetId
+  ) {
     await deleteFromGumlet(previousDoc.gumletAssetId);
     await req.payload.update({
       collection: 'videos',
@@ -27,6 +43,8 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
       id: doc.id,
     });
 
+    return;
+  } else if (wasDeleted) {
     return;
   }
 
@@ -58,14 +76,16 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
     // Update the document after the upload
     await req.payload.update({
       collection: 'videos',
+      context: {
+        skipGumletSync: true,
+      },
       data: {
         gumletAssetId: gumletAsset.id,
       },
       id: doc.id,
     });
-
-    console.log('Video was successfully uploaded to Gumlet');
   }
+
 };
 
 export const deleteVideoFromGumlet: CollectionAfterDeleteHook = async ({
@@ -81,7 +101,8 @@ export const deleteVideoFromGumlet: CollectionAfterDeleteHook = async ({
 
       console.log(`Gumlet asset ${doc.gumletAssetId} deleted successfully.`);
     } catch (error) {
-      console.error(`Failed to delete Gumlet asset ${doc.gumletAssetId}:`, error);
+      console.error(`Failed to delete Gumlet
+      asset ${doc.gumletAssetId}:`, error);
     }
   }
 };
