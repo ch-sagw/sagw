@@ -1026,6 +1026,16 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
   context,
   previousDoc,
 }) => {
+  const autosaveQueryValue = (req as any)?.query?.autosave;
+  const isAutosaveRequest = context?.autosave === true ||
+    autosaveQueryValue === true ||
+    autosaveQueryValue === 'true' ||
+    ((req as any)?.url?.includes('autosave=true') ?? false);
+
+  if (isAutosaveRequest) {
+    return doc;
+  }
+
   // skip if already invalidating (prevent loops)
   if (context?.invalidatingCache) {
     return doc;
