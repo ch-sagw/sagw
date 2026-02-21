@@ -42,6 +42,8 @@
   // Centered variant
   &.centered {
     .buttonWrapper,
+    .consentMessageWrapper,
+    .stillImageWrapper,
     .videoWrapperInner {
       @include mq($from: large) {
         grid-column: 2 / var(--grid-columns);
