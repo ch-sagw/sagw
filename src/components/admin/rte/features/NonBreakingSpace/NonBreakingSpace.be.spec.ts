@@ -263,6 +263,12 @@ test.describe('NonBreakingSpace', () => {
 
     await saveButton.click();
 
+    // wait for confirmation toast and close it
+    const closeToast = await page.locator('.payload-toast-container [data-close-button="true"]')
+      .nth(0);
+
+    await closeToast.click();
+
     await page.goto('http://localhost:3000/de/detailpagetitle-non-breaking-space-bar');
     await page.waitForLoadState('networkidle');
 
