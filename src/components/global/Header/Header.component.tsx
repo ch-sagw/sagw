@@ -166,11 +166,12 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
       // would be quite brutal. Without the styling, the measurements return
       // wrong padding sizes for the ul. We therefore compensate the missing
       // paddings of the cloned ul elements manually, which should be good
-      // enough. We compensate 16px (large) / 68px (ultra)
+      // enough. We compensate 16px (large) / 100px (ultra)
       let paddingCompensation = 16;
 
       if (breakpoint === 'ultra') {
-        paddingCompensation = 68;
+        console.log('test');
+        paddingCompensation = 100;
       }
 
       const langOrNavMaxHeight = Math.round(Math.max(navMaxHeight, langNavMaxHeight) + paddingCompensation);

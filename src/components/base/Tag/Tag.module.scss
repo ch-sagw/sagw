@@ -4,6 +4,7 @@
 
 .tag {
   @include label-text;
+  @include font-smoothing;
 
   --spacing-block: 6;
 

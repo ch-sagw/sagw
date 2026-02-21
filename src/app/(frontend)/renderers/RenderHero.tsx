@@ -178,6 +178,7 @@ export const RenderHero = ({
     return (
       <Hero
         {...heroProps as Omit<Extract<InterfaceHeroPropTypes, { type: 'eventDetail' }>, 'type'>}
+        breadcrumb={breadcrumb}
         type='eventDetail'
       />
     );
@@ -185,6 +186,7 @@ export const RenderHero = ({
     return (
       <Hero
         {...heroProps as InterfaceHeroFieldNewsDetail}
+        breadcrumb={breadcrumb}
         type='newsDetail'
       />
     );
@@ -192,6 +194,7 @@ export const RenderHero = ({
     return (
       <Hero
         {...heroProps as InterfaceHeroFieldMagazineDetail}
+        breadcrumb={breadcrumb}
         type='magazineDetail'
         exportArticleText={i18nGeneric.exportArticleButtonText}
       />
