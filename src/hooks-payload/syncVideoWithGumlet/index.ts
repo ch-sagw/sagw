@@ -18,10 +18,7 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
   // If gumletAssetId was added after upload or
   // when we run Playwright tests, we immediately
   // return
-  if (
-    context?.skipGumletSync ||
-    process.env.IS_RUNNING_IN_PLAYWRIGHT_TEST_ENV === 'true'
-  ) {
+  if (context?.skipGumletSync) {
     return;
   }
 

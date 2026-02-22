@@ -1057,6 +1057,9 @@ export const generateCollectionsExceptPages = async ({
 
   const video = await payload.create({
     collection: 'videos',
+    context: {
+      skipGumletSync: true,
+    },
     data: {
       tenant,
       title: `video ${isSagw
