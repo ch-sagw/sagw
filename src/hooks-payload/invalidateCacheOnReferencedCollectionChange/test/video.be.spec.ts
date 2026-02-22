@@ -140,6 +140,9 @@ test('invalidates page if video is deleted (sagw)', {
 
   await payload.delete({
     collection: 'videos',
+    context: {
+      skipGumletSync: true,
+    },
     id: video,
   });
 

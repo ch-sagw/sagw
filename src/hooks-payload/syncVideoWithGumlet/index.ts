@@ -86,9 +86,10 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
 };
 
 export const deleteVideoFromGumlet: CollectionAfterDeleteHook = async ({
+  context,
   doc,
 }) => {
-  if (!doc) {
+  if (!doc || context?.skipGumletSync) {
     return;
   }
 
