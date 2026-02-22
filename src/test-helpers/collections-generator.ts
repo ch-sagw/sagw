@@ -1717,6 +1717,7 @@ export const generateVideo = async (tenant: string): Promise<string> => {
     collection: 'videos',
     context: {
       skipCacheInvalidation: true,
+      skipGumletSync: true,
     },
     data: {
       tenant,
