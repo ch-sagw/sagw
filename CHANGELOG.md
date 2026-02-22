@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.35.0](https://github.com/ch-sagw/sagw/compare/v0.34.2...v0.35.0) (2026-02-22)
+
+
+### Features
+
+* fixing structural issue with duplicated main element ([e6bb214](https://github.com/ch-sagw/sagw/commit/e6bb2146f9099f9a3d6d01f9a3295472785e433d))
+* increasing depth in fetchOtherPagesData ([#808](https://github.com/ch-sagw/sagw/issues/808)) ([e10bcfb](https://github.com/ch-sagw/sagw/commit/e10bcfb41065ca9c55b22973cf37661d3ee28e59))
+
+
+### Bug Fixes
+
+* adding breadcrumb data to all hero types ([e6bb214](https://github.com/ch-sagw/sagw/commit/e6bb2146f9099f9a3d6d01f9a3295472785e433d))
+* fix cache invalidation issue for status message ([#823](https://github.com/ch-sagw/sagw/issues/823)) ([ca924b8](https://github.com/ch-sagw/sagw/commit/ca924b8fcf9d3f71d9f08fba45082f09725e2f91))
+* remove obsolete domain field in tenant config ([#817](https://github.com/ch-sagw/sagw/issues/817)) ([3c1fb9c](https://github.com/ch-sagw/sagw/commit/3c1fb9c42a996c316fae4d783d079813a6b05d9c))
+
+
+### Style
+
+* adding exception styling for export button ([e6bb214](https://github.com/ch-sagw/sagw/commit/e6bb2146f9099f9a3d6d01f9a3295472785e433d))
+* changing subtitle style of home teaser ([e6bb214](https://github.com/ch-sagw/sagw/commit/e6bb2146f9099f9a3d6d01f9a3295472785e433d))
+* creating all hero exceptions ([e6bb214](https://github.com/ch-sagw/sagw/commit/e6bb2146f9099f9a3d6d01f9a3295472785e433d))
+* fixing navigation info block and nav in ultra ([e6bb214](https://github.com/ch-sagw/sagw/commit/e6bb2146f9099f9a3d6d01f9a3295472785e433d))
+* reworking paddings to match design as baseline ([e6bb214](https://github.com/ch-sagw/sagw/commit/e6bb2146f9099f9a3d6d01f9a3295472785e433d))
+
 ## [0.34.2](https://github.com/ch-sagw/sagw/compare/v0.34.1...v0.34.2) (2026-02-21)
 
 
