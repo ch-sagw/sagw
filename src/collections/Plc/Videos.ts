@@ -67,6 +67,11 @@ export const Videos: CollectionConfig = {
   },
   slug: 'videos',
   upload: {
-    mimeTypes: ['video/*'],
+    mimeTypes: [
+      'video/*',
+      // Sometimes Payload can't detect the mime type properly
+      // and returns text/plain
+      'text/plain',
+    ],
   },
 };
