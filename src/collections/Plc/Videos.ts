@@ -64,22 +64,9 @@ export const Videos: CollectionConfig = {
       hookInvalidateCacheOnReferencedCollectionDelete,
       deleteVideoFromGumlet,
     ],
-    beforeChange: [
-      ({
-        req,
-      }): void => {
-        // We temporarily logging the mime type of the video
-        // on upload to debug the mime type error message which
-        // randomly appears.
-        console.log(`Mimetype of upload ${req.file?.mimetype}`);
-      },
-    ],
   },
   slug: 'videos',
   upload: {
-    mimeTypes: [
-      'text/plain',
-      'video/*',
-    ],
+    mimeTypes: ['video/*'],
   },
 };
