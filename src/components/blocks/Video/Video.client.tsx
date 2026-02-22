@@ -11,7 +11,7 @@ const VideoComponent = dynamic(() => import('./Video').then((mod) => ({
 });
 
 export type InterfaceVideoClientPropTypes = {
-  duration?: string;
+  duration?: number;
 } & InterfaceVideoBlock;
 
 export const Video = (props: InterfaceVideoClientPropTypes): React.JSX.Element => <VideoComponent {...props} />;

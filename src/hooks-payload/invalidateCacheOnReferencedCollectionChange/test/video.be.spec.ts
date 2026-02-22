@@ -69,6 +69,9 @@ test('invalidates page if video is updated (sagw)', {
 
   await payload.update({
     collection: 'videos',
+    context: {
+      skipGumletSync: true,
+    },
     data: {
       title: 'changed',
     },
@@ -140,6 +143,9 @@ test('invalidates page if video is deleted (sagw)', {
 
   await payload.delete({
     collection: 'videos',
+    context: {
+      skipGumletSync: true,
+    },
     id: video,
   });
 
@@ -208,6 +214,9 @@ test('invalidates page if video is updated (non-sagw)', {
 
   await payload.update({
     collection: 'videos',
+    context: {
+      skipGumletSync: true,
+    },
     data: {
       title: 'changed',
     },
@@ -279,6 +288,9 @@ test('invalidates page if video is deleted (non-sagw)', {
 
   await payload.delete({
     collection: 'videos',
+    context: {
+      skipGumletSync: true,
+    },
     id: video,
   });
 

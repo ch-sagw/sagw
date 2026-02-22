@@ -47,6 +47,7 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
     collection: 'videos',
     context: {
       skipCacheInvalidation: true,
+      skipGumletSync: true,
     },
     data: {
       tenant: tenantId,

@@ -14,7 +14,7 @@ import { Image } from '@/components/base/Image/Image';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
 import { VideoConsentMessage } from '@/components/base/VideoConsentMessage/VideoConsentMessage';
-import { GumletPlayer } from '@gumlet/react-embed-player';
+import dynamic from 'next/dynamic';
 import {
   useLocale, useTranslations,
 } from 'next-intl';
@@ -30,7 +30,7 @@ import {
 import { TypedLocale } from 'payload';
 
 export type InterfaceVideoPropTypes = {
-  duration?: string,
+  duration?: number,
 } & InterfaceVideoBlock;
 
 const classes = cva([styles.videoWrapper], {
@@ -43,11 +43,19 @@ const classes = cva([styles.videoWrapper], {
   },
 });
 
+const GumletPlayer = dynamic(
+  () => import('@gumlet/react-embed-player').then((mod) => ({
+    default: mod.GumletPlayer,
+  })),
+  {
+    ssr: false,
+  },
+);
+
 export const Video = ({
   alignment,
   caption,
   credits,
-  duration,
   stillImage,
   'video-de': videoDe,
   'video-en': videoEn,
@@ -55,7 +63,7 @@ export const Video = ({
   'video-it': videoIt,
 }: InterfaceVideoPropTypes): React.JSX.Element | undefined => {
   const locale = useLocale() as TypedLocale;
-  const i18nA11y = useTranslations('a11y');
+  const internalI18nA11y = useTranslations('a11y');
 
   // Select correct video source for the current language
   // if available and fall back to german if there is no
@@ -89,7 +97,7 @@ export const Video = ({
     return (): void => {
       window.removeEventListener(consentUpdatedEventName, handleConsentUpdate);
     };
-  });
+  }, []);
 
   // Paused state
   const [
@@ -109,12 +117,22 @@ export const Video = ({
     setPaused(false);
   };
 
-  const playButtonText = i18nA11y('playVideoText')
-    .replace('{{title}}', video.title);
+  const playButtonText = internalI18nA11y('playVideoText');
 
   const pausedClass = paused
     ? styles.paused
     : '';
+
+  let processedDuration;
+
+  if (video.duration) {
+    const m = String(Math.floor(video.duration / 60))
+      .padStart(2, '0');
+    const s = String(video.duration % 60)
+      .padStart(2, '0');
+
+    processedDuration = `${m}:${s}`;
+  }
 
   return (
     <figure
@@ -133,7 +151,7 @@ export const Video = ({
               ref={videoContainer}
             >
               <GumletPlayer
-                videoID={video.id}
+                videoID={video.gumletAssetId}
                 title='Video'
                 ref={playerRef}
                 style={{
@@ -153,7 +171,7 @@ export const Video = ({
             >
               <Button
                 ariaHasPopUp={false}
-                ariaLabel={playButtonText}
+                ariaLabel={playButtonText.replace('((title))', video.title)}
                 buttonType='button'
                 colorMode='white'
                 element='button'
@@ -163,12 +181,14 @@ export const Video = ({
                 text=''
               />
 
-              <span
-                aria-hidden={true}
-                className={styles.duration}
-              >
-                {duration} Min
-              </span>
+              {video.duration && (
+                <span
+                  aria-hidden={true}
+                  className={styles.duration}
+                >
+                  {processedDuration} Min
+                </span>
+              )}
             </div>
           </div>
         )}
