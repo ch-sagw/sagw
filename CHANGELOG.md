@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.35.2](https://github.com/ch-sagw/sagw/compare/v0.35.1...v0.35.2) (2026-02-23)
+
+
+### Bug Fixes
+
+* disable cache ([c230225](https://github.com/ch-sagw/sagw/commit/c2302251acf8e3566005964b5dc4d9b12e3d6db7))
+
 ## [0.35.1](https://github.com/ch-sagw/sagw/compare/v0.35.0...v0.35.1) (2026-02-23)
 
 
