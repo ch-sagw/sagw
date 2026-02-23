@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.35.4](https://github.com/ch-sagw/sagw/compare/v0.35.3...v0.35.4) (2026-02-23)
+
+
+### Bug Fixes
+
+* adding breadcrumb data to all hero types ([0fa3caf](https://github.com/ch-sagw/sagw/commit/0fa3cafd59d3a82116a60a81fb0da3aaa2e01e1f))
+* adding breadcrumb data to all hero types ([#811](https://github.com/ch-sagw/sagw/issues/811)) ([0fa3caf](https://github.com/ch-sagw/sagw/commit/0fa3cafd59d3a82116a60a81fb0da3aaa2e01e1f))
+* correcting class mapping and adding new reference screenshots ([4abd346](https://github.com/ch-sagw/sagw/commit/4abd346aba57d954abf354cd3e2016db894d3824))
+* correcting class mapping and adding new reference screenshots ([#807](https://github.com/ch-sagw/sagw/issues/807)) ([4abd346](https://github.com/ch-sagw/sagw/commit/4abd346aba57d954abf354cd3e2016db894d3824))
+
+
+### Style
+
+* fixing footnote padding and row-gap ([2091184](https://github.com/ch-sagw/sagw/commit/209118463438540a59baebcbccc86d0d203b0e7d))
+
 ## [0.35.3](https://github.com/ch-sagw/sagw/compare/v0.35.2...v0.35.3) (2026-02-23)
 
 
