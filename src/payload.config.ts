@@ -16,6 +16,7 @@ import { Users } from '@/collections/Plc/Users';
 import { seedTestData } from '@/seed/test-data';
 import { seedTenantsAndUsers } from '@/seed/seedTenantsAndUsers/index';
 import { localizationConfig } from '@/i18n/payloadConfig';
+import { unpublishExpiredEventDetailPagesTask } from '@/jobs/unpublishExpiredEventDetailPages';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -61,6 +62,28 @@ export default buildConfig({
       en,
       fr,
     },
+  },
+  jobs: {
+    access: {
+      run: ({
+        req,
+      }) => {
+        if (req.user) {
+          return true;
+        }
+
+        const secret = process.env.CRON_SECRET;
+
+        if (!secret) {
+          return false;
+        }
+
+        const authHeader = req.headers.get('authorization');
+
+        return authHeader === `Bearer ${secret}`;
+      },
+    },
+    tasks: [unpublishExpiredEventDetailPagesTask],
   },
   localization: localizationConfig,
   onInit: async (payload) => {

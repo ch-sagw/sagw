@@ -201,6 +201,72 @@ test.describe('Invalidates overview page with eventTeasers', () => {
 
   });
 
+  test('if event page is unpublished (sagw)', {
+    tag: '@cache',
+  }, async () => {
+    await deleteSetsPages();
+
+    const logCapture = new LogCapture();
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+    const overview = await generateOverviewPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `overview ${time}`,
+    });
+
+    const page = await generateEventDetailPage({
+      tenant,
+      title: `event ${time}`,
+    });
+
+    await payload.update({
+      collection: 'overviewPage',
+      data: {
+        content: [
+          {
+            blockType: 'eventsTeasersBlock',
+            title: simpleRteConfig('Events'),
+          },
+        ],
+      },
+      id: overview.id,
+    });
+
+    logCapture.captureLogs();
+
+    await payload.update({
+      collection: 'eventDetailPage',
+      data: {
+        /* eslint-disable @typescript-eslint/naming-convention */
+        _status: 'draft',
+        /* eslint-enable @typescript-eslint/naming-convention */
+      },
+      id: page.id,
+    });
+
+    logCapture.detachLogs();
+
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /de/overview-${time}`))
+      .toBe(true);
+
+    expect(logCapture.logs)
+      .toHaveLength(2);
+
+  });
+
   test('if event page is created (non-sagw)', {
     tag: '@cache',
   }, async () => {
@@ -309,6 +375,72 @@ test.describe('Invalidates overview page with eventTeasers', () => {
         eventDetails: {
           title: simpleRteConfig(`event changed ${time}`),
         },
+      },
+      id: page.id,
+    });
+
+    logCapture.detachLogs();
+
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/overview-${time}`))
+      .toBe(true);
+
+    expect(logCapture.logs)
+      .toHaveLength(2);
+
+  });
+
+  test('if event page is unpublished (non-sagw)', {
+    tag: '@cache',
+  }, async () => {
+    await deleteSetsPages();
+
+    const logCapture = new LogCapture();
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
+    const tenant = await getTenantId({
+      isSagw: false,
+      time,
+    });
+    const home = await getHomeId({
+      isSagw: false,
+      tenant,
+    });
+    const overview = await generateOverviewPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `overview ${time}`,
+    });
+
+    const page = await generateEventDetailPage({
+      tenant,
+      title: `event ${time}`,
+    });
+
+    await payload.update({
+      collection: 'overviewPage',
+      data: {
+        content: [
+          {
+            blockType: 'eventsTeasersBlock',
+            title: simpleRteConfig('Events'),
+          },
+        ],
+      },
+      id: overview.id,
+    });
+
+    logCapture.captureLogs();
+
+    await payload.update({
+      collection: 'eventDetailPage',
+      data: {
+        /* eslint-disable @typescript-eslint/naming-convention */
+        _status: 'draft',
+        /* eslint-enable @typescript-eslint/naming-convention */
       },
       id: page.id,
     });
