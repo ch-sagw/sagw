@@ -4786,9 +4786,7 @@ export interface InterfaceStatusMessage {
     /**
      * Show, hide or define date range when to show the message.
      */
-    display: 'show' | 'hide' | 'date';
-    from?: string | null;
-    to?: string | null;
+    display: 'show' | 'hide';
   };
   title: {
     root: {
@@ -6560,8 +6558,6 @@ export interface InterfaceStatusMessageSelect<T extends boolean = true> {
     | T
     | {
         display?: T;
-        from?: T;
-        to?: T;
       };
   title?: T;
   message?: T;
