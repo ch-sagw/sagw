@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.35.3](https://github.com/ch-sagw/sagw/compare/v0.35.2...v0.35.3) (2026-02-23)
+
+
+### Bug Fixes
+
+* add force-dynamic ([a9f1c4b](https://github.com/ch-sagw/sagw/commit/a9f1c4be2a73d4a1ed12c97f15be0f00fea94aba))
+
 ## [0.35.2](https://github.com/ch-sagw/sagw/compare/v0.35.1...v0.35.2) (2026-02-23)
 
 
