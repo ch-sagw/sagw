@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.35.1](https://github.com/ch-sagw/sagw/compare/v0.35.0...v0.35.1) (2026-02-23)
+
+
+### Bug Fixes
+
+* remove date option from status message ([0ab3784](https://github.com/ch-sagw/sagw/commit/0ab37849ec5f57e3a37f2e717013166e6349cfb2))
+
 ## [0.35.0](https://github.com/ch-sagw/sagw/compare/v0.34.2...v0.35.0) (2026-02-22)
 
 
