@@ -17,7 +17,7 @@ const NEXT_PUBLIC_SERVER_URL = process.env.URL ||
  * Gravatar is needed within Payload,
  * that's why it's in the list.
  */
-const ContentSecurityPolicy = `
+/* const ContentSecurityPolicy = `
   default-src 'self';
   script-src 'self' 'unsafe-inline' 'unsafe-eval';
   style-src 'self' 'unsafe-inline';
@@ -29,12 +29,13 @@ const ContentSecurityPolicy = `
   base-uri 'self';
   form-action 'self';
 `.replace(/\n/gu, ' ')
-  .trim();
+  .trim(); */
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   devIndicators: false,
-  headers() {
+
+  /* headers() {
     return [
       {
         headers: [
@@ -46,7 +47,7 @@ const nextConfig = {
         source: '/(.*)',
       },
     ];
-  },
+  }, */
   images: {
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL].map((item) => {
