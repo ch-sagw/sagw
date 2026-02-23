@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.37.0](https://github.com/ch-sagw/sagw/compare/v0.36.0...v0.37.0) (2026-02-23)
+
+
+### Features
+
+* unpublish past event detail pages via cron job ([4000a46](https://github.com/ch-sagw/sagw/commit/4000a46ffa7220b1658634b8f9a3b6c918030bdc))
+* unpublish past event detail pages via cron job ([#846](https://github.com/ch-sagw/sagw/issues/846)) ([4000a46](https://github.com/ch-sagw/sagw/commit/4000a46ffa7220b1658634b8f9a3b6c918030bdc))
+
+
+### Test
+
+* add tests for unpubishing events ([4000a46](https://github.com/ch-sagw/sagw/commit/4000a46ffa7220b1658634b8f9a3b6c918030bdc))
+* write test for job execution ([4000a46](https://github.com/ch-sagw/sagw/commit/4000a46ffa7220b1658634b8f9a3b6c918030bdc))
+
 ## [0.36.0](https://github.com/ch-sagw/sagw/compare/v0.35.4...v0.36.0) (2026-02-23)
 
 
