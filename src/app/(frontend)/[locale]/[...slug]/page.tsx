@@ -10,6 +10,8 @@ import { getPageData } from '../../fetchers/pageData';
 
 export { generateStaticParams };
 
+export const revalidate = 1;
+
 export const generateMetadata = async ({
   params,
 }: InterfaceOtherPagesProps): Promise<Metadata> => {
