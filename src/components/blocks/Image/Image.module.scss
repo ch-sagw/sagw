@@ -44,7 +44,7 @@
   }
 
   // Centered image
-  &.center {
+  &.centered {
     .imageWrapper {
       @include mq($from: large) {
         grid-column: 2 / var(--grid-columns);
