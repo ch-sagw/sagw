@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.36.0](https://github.com/ch-sagw/sagw/compare/v0.35.4...v0.36.0) (2026-02-23)
+
+
+### Features
+
+* is temporarily commenting csp headers ([#843](https://github.com/ch-sagw/sagw/issues/843)) ([f03befd](https://github.com/ch-sagw/sagw/commit/f03befdb4ee5dd311cb1fb6d7c0bc655dca8b35d))
+* is temporarily commenting out csp headers ([f03befd](https://github.com/ch-sagw/sagw/commit/f03befdb4ee5dd311cb1fb6d7c0bc655dca8b35d))
+* removing obsolete console log ([f03befd](https://github.com/ch-sagw/sagw/commit/f03befdb4ee5dd311cb1fb6d7c0bc655dca8b35d))
+
 ## [0.35.4](https://github.com/ch-sagw/sagw/compare/v0.35.3...v0.35.4) (2026-02-23)
 
 
