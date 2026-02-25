@@ -44,6 +44,7 @@
   }
 
   // Centered image
+  &.hero,
   &.center {
     .imageWrapper {
       @include mq($from: large) {
@@ -71,6 +72,22 @@
     .caption {
       @include mq($from: large) {
         grid-column: 4 / var(--grid-columns);
+      }
+    }
+  }
+
+  // Hero image, runs full bleed
+  &.hero {
+    .imageWrapper,
+    .figcaption {
+      @include mq($from: large) {
+        grid-column: 1 / calc(var(--grid-columns) + 1);
+      }
+    }
+
+    .caption {
+      @include mq($from: large) {
+        grid-column: 4 / calc(var(--grid-columns) + 1);
       }
     }
   }
