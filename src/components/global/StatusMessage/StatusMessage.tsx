@@ -29,24 +29,6 @@ export const StatusMessage = async ({
     shouldShow = false;
   }
 
-  if (show.display === 'date' && show.from && show.to) {
-    const today = new Date();
-    const fromDate = new Date(show.from);
-    const toDate = new Date(show.to);
-
-    // Normalize all dates to ignore time
-    const startOfDay = (d: Date): Date => new Date(d.getFullYear(), d.getMonth(), d.getDate());
-    const todayDay = startOfDay(today);
-    const fromDay = startOfDay(fromDate);
-    const toDay = startOfDay(toDate);
-
-    if (fromDay && toDay) {
-      shouldShow = todayDay >= fromDay && todayDay <= toDay;
-    } else {
-      shouldShow = false;
-    }
-  }
-
   if (!shouldShow) {
     return <Fragment />;
   }

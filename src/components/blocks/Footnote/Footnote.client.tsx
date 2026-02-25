@@ -15,7 +15,10 @@ export const FootnoteClient = ({
   textHtml,
 }: InterfaceFootnoteClientPropTypes): React.JSX.Element => (
   <Section
-    className={styles.section}
+    className={`
+      ${styles.section}
+      ${styles.sectionFootnote}
+    `}
     colorMode='white'
   >
     <div className={styles.footNoteContent}>

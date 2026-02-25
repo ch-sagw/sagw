@@ -2,6 +2,7 @@
 @use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/mixins/mixins-rte" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
 
 .section {
   @include rte-text;
@@ -32,5 +33,14 @@
 
   .text {
     @include body-text-s;
+  }
+}
+
+.sectionFootnote:is([class*="noTitle"]) {
+  row-gap: px-to-rem(var(--spacing-xs));
+  padding-block: px-to-rem(var(--spacing-l)) px-to-rem(var(--text-block-bottom));
+
+  @include mq($from: large) {
+    padding-block: 0 px-to-rem(var(--spacing-4xl));
   }
 }

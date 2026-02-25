@@ -36,29 +36,9 @@ export const StatusMessage: CollectionConfig = {
                   label: 'Hide',
                   value: 'hide',
                 },
-                {
-                  label: 'Date',
-                  value: 'date',
-                },
               ],
               required: true,
               type: 'select',
-            },
-            {
-              admin: {
-                condition: (_, siblingData) => siblingData.display === 'date',
-              },
-              name: 'from',
-              required: true,
-              type: 'date',
-            },
-            {
-              admin: {
-                condition: (_, siblingData) => siblingData.display === 'date',
-              },
-              name: 'to',
-              required: true,
-              type: 'date',
             },
           ],
           name: 'show',

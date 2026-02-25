@@ -47,7 +47,7 @@ const createStatusMesssage = async ({
   title,
   type,
 }: {
-  display: 'date' | 'show' | 'hide',
+  display: 'show' | 'hide',
   message: InterfaceRte;
   showOnHomeOnly: boolean;
   tenant: string;
