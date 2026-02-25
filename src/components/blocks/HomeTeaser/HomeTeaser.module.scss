@@ -31,6 +31,13 @@
       height: auto;
 
       @include mq($from: large) {
+        width: px-to-rem(200);
+        max-width: 100%;
+        order: 2;
+        margin-block-end: px-to-rem(28);
+      }
+
+      @include mq($from: ultra) {
         width: px-to-rem(280);
         max-width: 100%;
         order: 2;
