@@ -136,7 +136,9 @@ export const CtaContact = ({
                     />
                   }
                   {item.phone &&
-                    <p className={styles.phone}>{item.phone}</p>
+                    <p className={styles.phone}>
+                      <a href={`tel:${item.phone}`}>{item.phone}</a>
+                    </p>
                   }
                 </div>
               </div>
