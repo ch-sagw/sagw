@@ -145,7 +145,7 @@ export const CtaContact = ({
                 colorMode={colorMode}
                 element='link'
                 style='filled'
-                href='mailto:'
+                href={`mailto:${item.mail}`}
                 className={styles.button}
               />
             </ChildElem>
