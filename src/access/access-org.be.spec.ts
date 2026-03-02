@@ -33,8 +33,6 @@ test.describe('access-org', () => {
         await payload.create({
           collection: 'tenants',
           data: {
-            domain: `${(new Date())
-              .getTime()}.localhost`,
             faviconName: 'foo',
             name: `${(new Date())
               .getTime()
@@ -72,8 +70,6 @@ test.describe('access-org', () => {
         await payload.create({
           collection: 'tenants',
           data: {
-            domain: `${(new Date())
-              .getTime()}.localhost`,
             faviconName: 'foo',
             name: `${(new Date())
               .getTime()
@@ -111,8 +107,6 @@ test.describe('access-org', () => {
         await payload.create({
           collection: 'tenants',
           data: {
-            domain: `${(new Date())
-              .getTime()}.localhost`,
             faviconName: 'foo',
             name: `${(new Date())
               .getTime()
@@ -150,8 +144,6 @@ test.describe('access-org', () => {
         await payload.create({
           collection: 'tenants',
           data: {
-            domain: `${(new Date())
-              .getTime()}.localhost`,
             faviconName: 'foo',
             name: `${(new Date())
               .getTime()
@@ -577,7 +569,6 @@ test.describe('access-org', () => {
         await payload.create({
           collection: 'tenants',
           data: {
-            domain: 'testtenant',
             faviconName: 'foo',
             name: 'testtenant',
             slug: 'testtenant',

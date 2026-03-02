@@ -327,6 +327,7 @@ export const generateEventDetailPage = async (props: InterfaceEventPageProps): P
         location: props.hideLocation
           ? undefined
           : simpleRteConfig('ETH Zürich'),
+        multipleDays: Boolean(props.dateEnd),
         project,
         time: props.time
           ? props.time

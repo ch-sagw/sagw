@@ -1,3 +1,5 @@
+// TODO: remove, seems obsolete
+
 export const getServerSideURL = (): string => {
   let url = process.env.NEXT_PUBLIC_SERVER_URL;
 

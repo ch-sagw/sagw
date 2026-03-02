@@ -1185,6 +1185,10 @@ export const hookInvalidateCacheOnPageChange: CollectionAfterChangeHook = async 
       await invalidatePagesWithDeduplication(allPages, allLocales, req.payload);
     }
 
+    // clear invalidation cache after global operation to ensure
+    // subsequent operations can properly invalidate pages
+    clearInvalidationCache();
+
     // Return early - we've handled the invalidation
     return doc;
   }

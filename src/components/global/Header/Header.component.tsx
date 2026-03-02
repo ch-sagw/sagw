@@ -170,7 +170,6 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
       let paddingCompensation = 16;
 
       if (breakpoint === 'ultra') {
-        console.log('test');
         paddingCompensation = 100;
       }
 

@@ -119,6 +119,7 @@ export interface Config {
     users: User;
     forms: Form;
     'payload-kv': PayloadKv;
+    'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -180,6 +181,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
+    'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -193,12 +195,22 @@ export interface Config {
     | null
     | ('de' | 'fr' | 'it' | 'en')
     | ('de' | 'fr' | 'it' | 'en')[];
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'payload-jobs-stats': PayloadJobsStat;
+  };
+  globalsSelect: {
+    'payload-jobs-stats': PayloadJobsStatsSelect<false> | PayloadJobsStatsSelect<true>;
+  };
   locale: 'de' | 'fr' | 'it' | 'en';
   user: User;
   jobs: {
-    tasks: unknown;
+    tasks: {
+      unpublishExpiredEventDetailPages: TaskUnpublishExpiredEventDetailPages;
+      inline: {
+        input: unknown;
+        output: unknown;
+      };
+    };
     workflows: unknown;
   };
 }
@@ -273,10 +285,6 @@ export interface Tenant {
   id: string;
   name: string;
   title: string;
-  /**
-   * Used for domain-based tenant handling
-   */
-  domain?: string | null;
   /**
    * Used for url paths, example: /tenant-slug/page-slug
    */
@@ -4801,9 +4809,7 @@ export interface InterfaceStatusMessage {
     /**
      * Show, hide or define date range when to show the message.
      */
-    display: 'show' | 'hide' | 'date';
-    from?: string | null;
-    to?: string | null;
+    display: 'show' | 'hide';
   };
   title: {
     root: {
@@ -4930,6 +4936,107 @@ export interface PayloadKv {
     | number
     | boolean
     | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-jobs".
+ */
+export interface PayloadJob {
+  id: string;
+  /**
+   * Input data provided to the job
+   */
+  input?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  taskStatus?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  completedAt?: string | null;
+  totalTried?: number | null;
+  /**
+   * If hasError is true this job will not be retried
+   */
+  hasError?: boolean | null;
+  /**
+   * If hasError is true, this is the error that caused it
+   */
+  error?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * Task execution log
+   */
+  log?:
+    | {
+        executedAt: string;
+        completedAt: string;
+        taskSlug: 'inline' | 'unpublishExpiredEventDetailPages';
+        taskID: string;
+        input?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        output?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        state: 'failed' | 'succeeded';
+        error?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  taskSlug?: ('inline' | 'unpublishExpiredEventDetailPages') | null;
+  queue?: string | null;
+  waitUntil?: string | null;
+  processing?: boolean | null;
+  meta?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6575,8 +6682,6 @@ export interface InterfaceStatusMessageSelect<T extends boolean = true> {
     | T
     | {
         display?: T;
-        from?: T;
-        to?: T;
       };
   title?: T;
   message?: T;
@@ -6783,7 +6888,6 @@ export interface EventCategorySelect<T extends boolean = true> {
 export interface TenantsSelect<T extends boolean = true> {
   name?: T;
   title?: T;
-  domain?: T;
   slug?: T;
   url?: T;
   faviconName?: T;
@@ -7012,6 +7116,38 @@ export interface PayloadKvSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-jobs_select".
+ */
+export interface PayloadJobsSelect<T extends boolean = true> {
+  input?: T;
+  taskStatus?: T;
+  completedAt?: T;
+  totalTried?: T;
+  hasError?: T;
+  error?: T;
+  log?:
+    | T
+    | {
+        executedAt?: T;
+        completedAt?: T;
+        taskSlug?: T;
+        taskID?: T;
+        input?: T;
+        output?: T;
+        state?: T;
+        error?: T;
+        id?: T;
+      };
+  taskSlug?: T;
+  queue?: T;
+  waitUntil?: T;
+  processing?: T;
+  meta?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
@@ -7041,6 +7177,50 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-jobs-stats".
+ */
+export interface PayloadJobsStat {
+  id: string;
+  stats?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-jobs-stats_select".
+ */
+export interface PayloadJobsStatsSelect<T extends boolean = true> {
+  stats?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskUnpublishExpiredEventDetailPages".
+ */
+export interface TaskUnpublishExpiredEventDetailPages {
+  input: {
+    forceRun?: boolean | null;
+  };
+  output: {
+    checked: number;
+    unpublished: number;
+    unpublishedIDs: string[];
+    errors: string[];
+    reason?: string | null;
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

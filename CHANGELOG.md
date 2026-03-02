@@ -1,5 +1,88 @@
 # Changelog
 
+## [0.37.0](https://github.com/ch-sagw/sagw/compare/v0.36.0...v0.37.0) (2026-02-23)
+
+
+### Features
+
+* unpublish past event detail pages via cron job ([4000a46](https://github.com/ch-sagw/sagw/commit/4000a46ffa7220b1658634b8f9a3b6c918030bdc))
+* unpublish past event detail pages via cron job ([#846](https://github.com/ch-sagw/sagw/issues/846)) ([4000a46](https://github.com/ch-sagw/sagw/commit/4000a46ffa7220b1658634b8f9a3b6c918030bdc))
+
+
+### Test
+
+* add tests for unpubishing events ([4000a46](https://github.com/ch-sagw/sagw/commit/4000a46ffa7220b1658634b8f9a3b6c918030bdc))
+* write test for job execution ([4000a46](https://github.com/ch-sagw/sagw/commit/4000a46ffa7220b1658634b8f9a3b6c918030bdc))
+
+## [0.36.0](https://github.com/ch-sagw/sagw/compare/v0.35.4...v0.36.0) (2026-02-23)
+
+
+### Features
+
+* is temporarily commenting csp headers ([#843](https://github.com/ch-sagw/sagw/issues/843)) ([f03befd](https://github.com/ch-sagw/sagw/commit/f03befdb4ee5dd311cb1fb6d7c0bc655dca8b35d))
+* is temporarily commenting out csp headers ([f03befd](https://github.com/ch-sagw/sagw/commit/f03befdb4ee5dd311cb1fb6d7c0bc655dca8b35d))
+* removing obsolete console log ([f03befd](https://github.com/ch-sagw/sagw/commit/f03befdb4ee5dd311cb1fb6d7c0bc655dca8b35d))
+
+## [0.35.4](https://github.com/ch-sagw/sagw/compare/v0.35.3...v0.35.4) (2026-02-23)
+
+
+### Bug Fixes
+
+* adding breadcrumb data to all hero types ([0fa3caf](https://github.com/ch-sagw/sagw/commit/0fa3cafd59d3a82116a60a81fb0da3aaa2e01e1f))
+* adding breadcrumb data to all hero types ([#811](https://github.com/ch-sagw/sagw/issues/811)) ([0fa3caf](https://github.com/ch-sagw/sagw/commit/0fa3cafd59d3a82116a60a81fb0da3aaa2e01e1f))
+* correcting class mapping and adding new reference screenshots ([4abd346](https://github.com/ch-sagw/sagw/commit/4abd346aba57d954abf354cd3e2016db894d3824))
+* correcting class mapping and adding new reference screenshots ([#807](https://github.com/ch-sagw/sagw/issues/807)) ([4abd346](https://github.com/ch-sagw/sagw/commit/4abd346aba57d954abf354cd3e2016db894d3824))
+
+
+### Style
+
+* fixing footnote padding and row-gap ([2091184](https://github.com/ch-sagw/sagw/commit/209118463438540a59baebcbccc86d0d203b0e7d))
+
+## [0.35.3](https://github.com/ch-sagw/sagw/compare/v0.35.2...v0.35.3) (2026-02-23)
+
+
+### Bug Fixes
+
+* add force-dynamic ([a9f1c4b](https://github.com/ch-sagw/sagw/commit/a9f1c4be2a73d4a1ed12c97f15be0f00fea94aba))
+
+## [0.35.2](https://github.com/ch-sagw/sagw/compare/v0.35.1...v0.35.2) (2026-02-23)
+
+
+### Bug Fixes
+
+* disable cache ([c230225](https://github.com/ch-sagw/sagw/commit/c2302251acf8e3566005964b5dc4d9b12e3d6db7))
+
+## [0.35.1](https://github.com/ch-sagw/sagw/compare/v0.35.0...v0.35.1) (2026-02-23)
+
+
+### Bug Fixes
+
+* remove date option from status message ([0ab3784](https://github.com/ch-sagw/sagw/commit/0ab37849ec5f57e3a37f2e717013166e6349cfb2))
+
+## [0.35.0](https://github.com/ch-sagw/sagw/compare/v0.34.2...v0.35.0) (2026-02-22)
+
+
+### Features
+
+* fixing structural issue with duplicated main element ([e6bb214](https://github.com/ch-sagw/sagw/commit/e6bb2146f9099f9a3d6d01f9a3295472785e433d))
+* increasing depth in fetchOtherPagesData ([#808](https://github.com/ch-sagw/sagw/issues/808)) ([e10bcfb](https://github.com/ch-sagw/sagw/commit/e10bcfb41065ca9c55b22973cf37661d3ee28e59))
+
+
+### Bug Fixes
+
+* adding breadcrumb data to all hero types ([e6bb214](https://github.com/ch-sagw/sagw/commit/e6bb2146f9099f9a3d6d01f9a3295472785e433d))
+* fix cache invalidation issue for status message ([#823](https://github.com/ch-sagw/sagw/issues/823)) ([ca924b8](https://github.com/ch-sagw/sagw/commit/ca924b8fcf9d3f71d9f08fba45082f09725e2f91))
+* remove obsolete domain field in tenant config ([#817](https://github.com/ch-sagw/sagw/issues/817)) ([3c1fb9c](https://github.com/ch-sagw/sagw/commit/3c1fb9c42a996c316fae4d783d079813a6b05d9c))
+
+
+### Style
+
+* adding exception styling for export button ([e6bb214](https://github.com/ch-sagw/sagw/commit/e6bb2146f9099f9a3d6d01f9a3295472785e433d))
+* changing subtitle style of home teaser ([e6bb214](https://github.com/ch-sagw/sagw/commit/e6bb2146f9099f9a3d6d01f9a3295472785e433d))
+* creating all hero exceptions ([e6bb214](https://github.com/ch-sagw/sagw/commit/e6bb2146f9099f9a3d6d01f9a3295472785e433d))
+* fixing navigation info block and nav in ultra ([e6bb214](https://github.com/ch-sagw/sagw/commit/e6bb2146f9099f9a3d6d01f9a3295472785e433d))
+* reworking paddings to match design as baseline ([e6bb214](https://github.com/ch-sagw/sagw/commit/e6bb2146f9099f9a3d6d01f9a3295472785e433d))
+
 ## [0.34.2](https://github.com/ch-sagw/sagw/compare/v0.34.1...v0.34.2) (2026-02-21)
 
 
