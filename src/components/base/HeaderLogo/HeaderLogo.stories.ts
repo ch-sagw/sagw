@@ -47,6 +47,11 @@ export const LogoSagwLight: StrictStory = {
     linkText: 'Back to Homepage',
     name: 'sagw',
   },
+  globals: {
+    backgrounds: {
+      value: 'light',
+    },
+  },
 };
 
 export const LogoSagoDark: StrictStory = {
@@ -55,6 +60,11 @@ export const LogoSagoDark: StrictStory = {
     link: '/',
     linkText: 'Back to Homepage',
     name: 'sago',
+  },
+  globals: {
+    backgrounds: {
+      value: 'dark',
+    },
   },
 };
 
@@ -65,14 +75,24 @@ export const LogoSagoLight: StrictStory = {
     linkText: 'Back to Homepage',
     name: 'sago',
   },
+  globals: {
+    backgrounds: {
+      value: 'light',
+    },
+  },
 };
 
-export const LogoSgtDark: StrictStory = {
+export const LogoSgtkDark: StrictStory = {
   args: {
     colorMode: 'dark',
     link: '/',
     linkText: 'Back to Homepage',
     name: 'sgtk',
+  },
+  globals: {
+    backgrounds: {
+      value: 'dark',
+    },
   },
 };
 
@@ -92,6 +112,11 @@ export const LogoSslasDark: StrictStory = {
     linkText: 'Back to Homepage',
     name: 'sslas',
   },
+  globals: {
+    backgrounds: {
+      value: 'dark',
+    },
+  },
 };
 
 export const LogoSslaLight: StrictStory = {
@@ -100,6 +125,11 @@ export const LogoSslaLight: StrictStory = {
     link: '/',
     linkText: 'Back to Homepage',
     name: 'sslas',
+  },
+  globals: {
+    backgrounds: {
+      value: 'light',
+    },
   },
 };
 
