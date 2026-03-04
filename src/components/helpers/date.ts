@@ -1,5 +1,7 @@
 import { Locale } from 'next-intl';
 
+const timeZone = 'Europe/Zurich';
+
 interface InterfaceFormatDateToObjectProps {
   dateString: string;
   locale: Locale;
@@ -19,13 +21,16 @@ export const formatDateToObject = ({
 
   const day = date.toLocaleString(locale, {
     day: '2-digit',
+    timeZone,
   });
   const month = date
     .toLocaleString(locale, {
       month: 'short',
+      timeZone,
     })
     .toUpperCase();
   const year = date.toLocaleString(locale, {
+    timeZone,
     year: '2-digit',
   });
 
@@ -50,6 +55,7 @@ export const formatDateToReadableString = ({
   const formattedDate = inputDate.toLocaleString(locale, {
     day: '2-digit',
     month: 'long',
+    timeZone,
     year: 'numeric',
   });
 
@@ -73,6 +79,7 @@ export const formatDateRangeToReadableString = ({
   const formatter = new Intl.DateTimeFormat(locale, {
     day: '2-digit',
     month: 'long',
+    timeZone,
     year: 'numeric',
   });
 
@@ -106,5 +113,6 @@ export const formatTime = ({
     hour: '2-digit',
     // hour12: false,
     minute: '2-digit',
+    timeZone,
   });
 };
