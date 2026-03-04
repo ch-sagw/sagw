@@ -49,7 +49,7 @@ export const HomeTeasers: StrictStory = {
       },
       {
         category: 'Netzwerk',
-        iconName: 'homeTeaserFunding',
+        iconName: 'homeTeaserNetwork',
         linkHref: '/example-page-3',
         linkTextHtml: rteToHtml(simpleRteConfig('um Netzwerk')),
         textHtml: rteToHtml(simpleRteConfig('Wir fördern langfristige Forschungsinfrastrukturen, unterstützen Fachgesellschaften und zeichnen Nachwuchsforschende aus. Unsere Förderpraxis sichert Stabilität, Transparenz und Wirkung - als Beitrag zu einer vielfältigen und exzellenten Forschungslandschaft.')),

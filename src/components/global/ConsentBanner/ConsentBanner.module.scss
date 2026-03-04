@@ -11,7 +11,7 @@
   border-block-start: px-to-rem(var(--border-width-l)) solid var(--border-primary);
   position: fixed;
   background-color: var(--background-light);
-  padding: px-to-rem(var(--inside-elements-m));
+  padding: px-to-rem(var(--grid-gutter));
   inset-inline: 0;
   inset-block-start: auto;
   inset-block-end: 0;

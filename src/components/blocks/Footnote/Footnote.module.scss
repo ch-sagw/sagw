@@ -1,4 +1,5 @@
 @use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/mixins/mixins-rte" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
@@ -6,8 +7,28 @@
 .section {
   @include rte-text;
 
-  &:first-child {
-    margin-block-start: 0;
+  padding-block: px-to-rem(var(--spacing-l)) px-to-rem(var(--spacing-4xl));
+
+  @include mq($from: large) {
+    row-gap: px-to-rem(var(--spacing-xl));
+  }
+
+  .footNoteContent {
+    display: flex;
+    flex-direction: column;
+    row-gap: px-to-rem(var(--spacing-l));
+
+    @include mq($from: large) {
+      grid-column: 5 / 12;
+    }
+
+    @include mq($from: ultra) {
+      grid-column: 5 / 11;
+    }
+  }
+
+  .footNoteTitle {
+    @include title-heading-4;
   }
 
   .text {

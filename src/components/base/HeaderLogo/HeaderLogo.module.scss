@@ -28,3 +28,39 @@
     }
   }
 }
+
+.logo.sslas,
+.logo.sago {
+  &.dark {
+    path {
+      fill: rgb(var(--white));
+    }
+  }
+}
+
+.logo.sslas {
+  &.dark {
+    &.text {
+      path {
+        fill: rgb(var(--white));
+      }
+    }
+  }
+
+  &.white,
+  &.light {
+    &.text {
+      path {
+        fill: rgb(var(--black));
+      }
+    }
+  }
+}
+
+.logo.sgtk {
+  &.dark {
+    polygon {
+      fill: rgb(var(--white));
+    }
+  }
+}
