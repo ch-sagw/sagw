@@ -14,7 +14,7 @@ import {
 const classes = cva([styles.figure], {
   variants: {
     alignment: {
-      center: [styles.centered],
+      center: [styles.center],
       hero: [styles.hero],
       left: [styles.left],
       right: [styles.right],

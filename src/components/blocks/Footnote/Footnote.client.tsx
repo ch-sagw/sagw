@@ -21,16 +21,19 @@ export const FootnoteClient = ({
     `}
     colorMode='white'
   >
-    <SafeHtml
-      as='h3'
-      html={titleHtml}
-    />
+    <div className={styles.footNoteContent}>
+      <SafeHtml
+        as='h2'
+        html={titleHtml}
+        className={styles.footNoteTitle}
+      />
 
-    <SafeHtml
-      as='div'
-      html={textHtml}
-      className={styles.text}
-    />
+      <SafeHtml
+        as='div'
+        html={textHtml}
+        className={styles.text}
+      />
+    </div>
   </Section>
 );
 
