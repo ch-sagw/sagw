@@ -58,16 +58,25 @@ interface InterfaceRenderPageContentProps {
 }
 
 const getTenantThemeName = async ({
-  tenantId,
+  pageData,
 }: {
-  tenantId: string,
+  pageData: any;
 }): Promise<string> => {
-  // Get Theme name based on tenant
+  let isSagw = true;
+
+  if (pageData.tenant && typeof pageData.tenant === 'object') {
+    isSagw = pageData?.tenant?.name === 'sagw';
+  }
+
+  if (isSagw) {
+    return 'sagw';
+  }
+
   const theme = await getThemeName({
-    id: tenantId,
+    id: pageData.tenant.id,
   });
 
-  return theme.docs[0]?.themeSelector || 'sagw';
+  return theme.docs[0]?.themeSelector || 'amber';
 };
 
 // Helper to verify lang-config and to render error page
@@ -215,7 +224,7 @@ export const RenderPage = async ({
 
     // Get tenant theme name
     const themeName = await getTenantThemeName({
-      tenantId,
+      pageData: homePageData,
     });
 
     return renderPageContent({
@@ -286,7 +295,7 @@ export const RenderPage = async ({
 
   // Get tenant theme name
   const themeName = await getTenantThemeName({
-    tenantId,
+    pageData: otherPageData,
   });
 
   return renderPageContent({
