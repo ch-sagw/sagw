@@ -9,7 +9,7 @@
   .content {
     .title {
       color: var(--text-primary-inverted);
-      font-weight: var(--font-weight-medium);
+      font-weight: var(--font-weight-bold);
       margin: 0 0 px-to-rem(var(--spacing-xl));
       text-wrap: pretty;
     }
@@ -24,11 +24,17 @@
 
     .contact {
       margin: 0;
+      line-height: 1.5;
 
       a {
         display: block;
         color: inherit;
         text-decoration: none;
+
+        &:focus,
+        &:hover {
+          @include link-text-underline;
+        }
       }
     }
   }
