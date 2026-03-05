@@ -109,10 +109,25 @@ export const formatTime = ({
 }: InterfaceFormatTimeProps): string => {
   const date = new Date(dateString);
 
-  return date.toLocaleTimeString(`${locale}-${locale.toUpperCase()}`, {
-    hour: '2-digit',
+  const formattedTime = date.toLocaleTimeString(`${locale}-${locale.toUpperCase()}`, {
+    hour: 'numeric',
     // hour12: false,
     minute: '2-digit',
     timeZone,
   });
+
+  if (locale.toLowerCase()
+    .startsWith('en') || locale.toLowerCase()
+    .startsWith('de')) {
+    return formattedTime.replace(':', '.');
+  }
+
+  if (locale.toLowerCase()
+    .startsWith('fr')) {
+    const frenchFormattedTime = formattedTime.replace(':', ' h ');
+
+    return frenchFormattedTime.replace(/ h 00$/u, ' h');
+  }
+
+  return formattedTime;
 };
