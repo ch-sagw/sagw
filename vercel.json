@@ -1,12 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "bash vercel.sh",
-  "crons": [
-    {
-      "path": "/api/payload-jobs/run?queue=event-maintenance",
-      "schedule": "* * * * *"
-    }
-  ],
   "git": {
     "deploymentEnabled": {
       "main": false
