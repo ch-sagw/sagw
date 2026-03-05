@@ -174,8 +174,7 @@ const defaultFormConfig: FormProps = {
     submitButtonLabel: 'Submit button SAGW',
     submitError: {
       optionalLink: {
-        includeLink: false,
-
+        includeLink: true,
         link: {
           internalLink: {
             documentId: '12345',
@@ -189,7 +188,7 @@ const defaultFormConfig: FormProps = {
     },
     submitSuccess: {
       optionalLink: {
-        includeLink: false,
+        includeLink: true,
 
         link: {
           internalLink: {
@@ -212,7 +211,11 @@ const defaultFormConfig: FormProps = {
   preRenderedRadioLabels,
   state: null,
   submitError: false,
+  submitErrorLinkHref: '/de/some-slug',
+  submitErrorLinkText: rteToHtml(simpleRteConfig('error link')),
   submitSuccess: false,
+  submitSuccessLinkHref: '/de/some-slug',
+  submitSuccessLinkText: rteToHtml(simpleRteConfig('success link')),
 
 };
 
@@ -261,6 +264,17 @@ export const SubmitError: StrictStory = {
   args: {
     ...defaultFormConfig,
     submitError: true,
+  },
+};
+
+export const SubmitSuccessWithActionText: StrictStory = {
+  args: {
+    ...defaultFormConfig,
+    form: {
+      ...(defaultFormConfig.form as Exclude<FormProps['form'], string | null | undefined>),
+      isNewsletterForm: 'newsletter',
+    },
+    submitSuccess: true,
   },
 };
 

@@ -55,6 +55,10 @@ type InterfaceFormClientPropTypes = {
   submitSuccess: boolean;
   preRenderedLabels: Record<string, string>;
   preRenderedRadioLabels: Record<string, Record<string, string>>;
+  submitSuccessLinkHref?: string;
+  submitSuccessLinkText?: string;
+  submitErrorLinkHref?: string;
+  submitErrorLinkText?: string;
   onResubmitAction?: () => void;
   onErrorResubmitAction?: () => void;
   resendClicked?: boolean;
@@ -72,12 +76,75 @@ export const FormComponent = ({
   submitSuccess,
   preRenderedLabels,
   preRenderedRadioLabels,
+  submitSuccessLinkHref,
+  submitSuccessLinkText,
+  submitErrorLinkHref,
+  submitErrorLinkText,
   onResubmitAction,
   onErrorResubmitAction,
   resendClicked,
   errorResendClicked,
 }: InterfaceFormClientPropTypes): React.JSX.Element => {
   const pathname = usePathname();
+  const submitErrorLink = submitErrorLinkHref && submitErrorLinkText
+    ? {
+      linkHref: submitErrorLinkHref,
+      linkText: submitErrorLinkText,
+    }
+    : undefined;
+  const submitSuccessLink = submitSuccessLinkHref && submitSuccessLinkText
+    ? {
+      linkHref: submitSuccessLinkHref,
+      linkText: submitSuccessLinkText,
+    }
+    : undefined;
+  const renderFormNotification = ({
+    actionText,
+    className,
+    link,
+    onAction,
+    text,
+    title,
+    type,
+  }: {
+    actionText: string;
+    className?: string;
+    link?: {
+      linkHref: string;
+      linkText: string;
+    };
+    onAction: () => void;
+    text: string;
+    title?: string;
+    type: 'error' | 'success';
+  }): React.JSX.Element => {
+    const sharedProps = {
+      actionText,
+      autofocus: true,
+      className,
+      colorMode: form.colorMode,
+      onAction,
+      text,
+      title,
+      type,
+    };
+
+    if (link) {
+      return (
+        <Notification
+          {...sharedProps}
+          linkHref={link.linkHref}
+          linkText={link.linkText}
+        />
+      );
+    }
+
+    return (
+      <Notification
+        {...sharedProps}
+      />
+    );
+  };
 
   return (
     <Section
@@ -91,42 +158,38 @@ export const FormComponent = ({
     >
       <div>
         {submitError &&
-          <Notification
-            actionText={!errorResendClicked && form.isNewsletterForm === 'newsletter'
+          renderFormNotification({
+            actionText: !errorResendClicked && form.isNewsletterForm === 'newsletter'
               ? form.newsletterFields?.actionText || ''
-              : ''
-            }
-            autofocus={true}
-            colorMode={form.colorMode}
-            onAction={() => {
+              : '',
+            className: styles.errorNotification,
+            link: submitErrorLink,
+            onAction: () => {
               if (onErrorResubmitAction) {
                 onErrorResubmitAction();
               }
-            }}
-            text={rteToHtml(form.submitError.text)}
-            title={rteToHtml(form.submitError.title)}
-            type='error'
-            className={styles.errorNotification}
-          />
+            },
+            text: rteToHtml(form.submitError.text),
+            title: rteToHtml(form.submitError.title),
+            type: 'error',
+          })
         }
 
         {submitSuccess &&
-          <Notification
-            actionText={!resendClicked && form.isNewsletterForm === 'newsletter'
+          renderFormNotification({
+            actionText: !resendClicked && form.isNewsletterForm === 'newsletter'
               ? form.newsletterFields?.actionText || ''
-              : ''
-            }
-            autofocus={true}
-            colorMode={form.colorMode}
-            onAction={() => {
+              : '',
+            link: submitSuccessLink,
+            onAction: () => {
               if (onResubmitAction) {
                 onResubmitAction();
               }
-            }}
-            text={rteToHtml(form.submitSuccess.text)}
-            title={rteToHtml(form.submitSuccess.title)}
-            type='success'
-          />
+            },
+            text: rteToHtml(form.submitSuccess.text),
+            title: rteToHtml(form.submitSuccess.title),
+            type: 'success',
+          })
         }
 
         {!submitSuccess &&

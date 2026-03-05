@@ -256,6 +256,7 @@ export const RenderBlocks = ({
                   <PublicationsTeaser
                     {...block}
                     tenant={tenantId}
+                    sourcePage={sourcePage}
                     projectId={projectId}
                     key={key}
                   />

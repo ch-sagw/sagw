@@ -164,7 +164,7 @@ const PublicationsOverviewContent = ({
           </ol>
         )
         : (
-      // TODO create better error message
+          // TODO create better error message
           <p>No matching results for the current filter settings</p>
         )}
 

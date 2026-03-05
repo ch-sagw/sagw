@@ -11,12 +11,20 @@ type InterfaceFormClientPropTypes = {
   form: InterfaceForm;
   preRenderedLabels: Record<string, string>;
   preRenderedRadioLabels: Record<string, Record<string, string>>;
+  submitSuccessLinkHref?: string;
+  submitSuccessLinkText?: string;
+  submitErrorLinkHref?: string;
+  submitErrorLinkText?: string;
 };
 
 export const FormClient = ({
   form,
   preRenderedLabels,
   preRenderedRadioLabels,
+  submitSuccessLinkHref,
+  submitSuccessLinkText,
+  submitErrorLinkHref,
+  submitErrorLinkText,
 }: InterfaceFormClientPropTypes): React.JSX.Element => {
 
   // --- State
@@ -106,6 +114,10 @@ export const FormClient = ({
       submitError={submitError}
       preRenderedLabels={preRenderedLabels}
       preRenderedRadioLabels={preRenderedRadioLabels}
+      submitSuccessLinkHref={submitSuccessLinkHref}
+      submitSuccessLinkText={submitSuccessLinkText}
+      submitErrorLinkHref={submitErrorLinkHref}
+      submitErrorLinkText={submitErrorLinkText}
       onResubmitAction={handleResubmit}
       onErrorResubmitAction={handleErrorResubmit}
       resendClicked={resendClicked}

@@ -33,7 +33,7 @@ export default meta;
 
 const publicationItem = {
   categorization: {},
-  date: '2025-10-23T12:00:00.000Z',
+  date: '23. Oktober 2025',
   image: PublicationTeaserImage,
   link: {
     href: 'https://foo.bar',

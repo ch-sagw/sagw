@@ -89,6 +89,7 @@ export const fetchEventDetailPages = async ({
 
 interface InterfaceFetchDetailPagesProps {
   depth?: number,
+  excludePageId?: string;
   limit?: number;
   language: Config['locale'],
   tenant: string,
@@ -99,6 +100,7 @@ interface InterfaceFetchDetailPagesProps {
 }
 
 export const fetchDetailPages = async ({
+  excludePageId,
   limit,
   language,
   tenant,
@@ -125,6 +127,14 @@ export const fetchDetailPages = async ({
       },
     }),
   };
+
+  if (excludePageId) {
+    queryRestraints.id = {
+      /* eslint-disable @typescript-eslint/naming-convention */
+      not_equals: excludePageId,
+      /* eslint-enable @typescript-eslint/naming-convention */
+    };
+  }
 
   const detailPages = await payload.find({
     collection,
@@ -341,21 +351,32 @@ interface InterfaceFetchPublicationPagesProps {
   tenant: string;
   limit?: number;
   payload?: BasePayload;
+  projectId?: string;
+  sort?: Sort;
+  excludePageId?: string;
+  depth: number;
 }
 
 export const fetchPublicationPages = async ({
+  excludePageId,
   locale,
   tenant,
   limit = 0,
   payload,
+  depth = 2,
+  projectId,
+  sort = '-createdAt',
 }: InterfaceFetchPublicationPagesProps): Promise<PublicationDetailPage[]> => {
+
   const result = await fetchDetailPages({
     collection: 'publicationDetailPage',
-    depth: 2,
+    depth,
+    excludePageId,
     language: locale,
     limit,
     payload,
-    sort: '-createdAt',
+    projectId,
+    sort,
     tenant,
   });
 

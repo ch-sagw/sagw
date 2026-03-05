@@ -22,7 +22,7 @@ export const Theme: CollectionConfig = {
           },
         },
       },
-      defaultValue: 'sagw',
+      defaultValue: 'amber',
       name: 'themeSelector',
       required: true,
       type: 'text',
