@@ -1,10 +1,8 @@
 import React from 'react';
 import styles from '@/components/base/PublicationsListItem/PublicationsListItem.module.scss';
-import { formatDateToReadableString } from '@/components/helpers/date';
 import { Tag } from '@/components/base/Tag/Tag';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import Link from 'next/link';
-import { useLocale } from 'next-intl';
 import {
   Image as ImageType,
   PublicationTopic,
@@ -35,13 +33,6 @@ export const PublicationsListItem = ({
   tag,
   title,
 }: InterfacePublicationsListItemPropTypes): React.JSX.Element => {
-  const locale = useLocale();
-
-  const publicationDate = formatDateToReadableString({
-    dateString: date,
-    locale,
-  });
-
   const ariaLabel = '';
   const imageVariant = 'publicationTeaser';
 
@@ -91,7 +82,7 @@ export const PublicationsListItem = ({
           />
 
           <span className={styles.textContentDate}>
-            {publicationDate}
+            {date}
           </span>
 
         </span>
