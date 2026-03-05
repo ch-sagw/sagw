@@ -17,10 +17,6 @@ For convenience, env-vars are split between base and local/test/prod.
 |`SENTRY_PROJECT`|Sentry project name.|Sentry|Vercel & Local Dev|
 |`SENTRY_ORG`|Sentry organisation name.|Sentry|Vercel & Local Dev|
 
-### Cron jobs authentication
-- Vercel cron requests to `/api/payload-jobs/run` are authenticated via the `Authorization` header using `CRON_SECRET`.
-- Keep `CRON_SECRET` set in Vercel for production so scheduled Payload jobs can run securely.
-
 ## Test/Prod
 |variable name|description|Creation|Usage|
 |-|-|-|-|
