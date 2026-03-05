@@ -1,6 +1,9 @@
+@use "../../../styles/utilities/functions" as *;
+
 .image {
   opacity: 0;
   transition: opacity var(--motion-speed-fast) var(--motion-ease-in);
+  border: px-to-rem(var(--border-width-m)) inset solid var(--background-video);
 
   &.hero,
   &.content,
@@ -15,6 +18,11 @@
 
   &.genericTeaser {
     aspect-ratio: 4 / 3;
+  }
+
+  &.instituteTeaser,
+  &.networkTeaser {
+    border: none;
   }
 
   &.networkTeaser,

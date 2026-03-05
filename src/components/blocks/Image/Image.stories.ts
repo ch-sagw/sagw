@@ -51,6 +51,16 @@ const imageConfig = {
 
 export default meta;
 
+export const ContentImageHero: StrictStory = {
+  args: {
+    alignment: 'hero',
+    blockType: 'imageBlockMagazine',
+    caption: captionRte1,
+    credits: creditsRte1,
+    image: imageConfig,
+  },
+};
+
 export const ContentImageCentered: StrictStory = {
   args: {
     alignment: 'center',
