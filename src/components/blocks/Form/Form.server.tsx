@@ -12,6 +12,8 @@ import {
 } from 'next-intl/server';
 import { rte3ToHtml } from '@/utilities/rteToHtml.server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { getPageUrl } from '@/utilities/getPageUrl';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
 type InterfaceFormServerPropTypes = {
   globalI18n: I18NGlobal;
@@ -164,6 +166,10 @@ export const FormServer = async ({
   // --- prerender RTE content for client component
   const preRenderedLabels: Record<string, string> = {};
   const preRenderedRadioLabels: Record<string, Record<string, string>> = {};
+  let submitSuccessLinkHref: string | undefined;
+  let submitSuccessLinkText: string | undefined;
+  let submitErrorLinkHref: string | undefined;
+  let submitErrorLinkText: string | undefined;
 
   if (renderForm.fields) {
     await Promise.all(renderForm.fields.map(async (field) => {
@@ -206,11 +212,39 @@ export const FormServer = async ({
     }));
   }
 
+  if (renderForm.submitSuccess.optionalLink?.includeLink && renderForm.submitSuccess.optionalLink.link?.internalLink.documentId) {
+    submitSuccessLinkHref = await getPageUrl({
+      locale,
+      pageId: renderForm.submitSuccess.optionalLink.link.internalLink.documentId,
+      payload,
+    });
+
+    if (renderForm.submitSuccess.optionalLink.link.linkText) {
+      submitSuccessLinkText = rteToHtml(renderForm.submitSuccess.optionalLink.link.linkText);
+    }
+  }
+
+  if (renderForm.submitError.optionalLink?.includeLink && renderForm.submitError.optionalLink.link?.internalLink.documentId) {
+    submitErrorLinkHref = await getPageUrl({
+      locale,
+      pageId: renderForm.submitError.optionalLink.link.internalLink.documentId,
+      payload,
+    });
+
+    if (renderForm.submitError.optionalLink.link.linkText) {
+      submitErrorLinkText = rteToHtml(renderForm.submitError.optionalLink.link.linkText);
+    }
+  }
+
   return (
     <FormClient
       form={renderForm}
       preRenderedLabels={preRenderedLabels}
       preRenderedRadioLabels={preRenderedRadioLabels}
+      submitSuccessLinkHref={submitSuccessLinkHref}
+      submitSuccessLinkText={submitSuccessLinkText}
+      submitErrorLinkHref={submitErrorLinkHref}
+      submitErrorLinkText={submitErrorLinkText}
     />
   );
 };
