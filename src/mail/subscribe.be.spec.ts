@@ -40,6 +40,9 @@ test.describe('Newsletter Form', () => {
     page,
   }) => {
     test.skip(!process.env.BREVO_TOKEN, 'BREVO_TOKEN is required for this test.');
+    const brevoTimeoutMs = process.env.CI
+      ? 180_000
+      : 120_000;
 
     await deleteSetsPages();
     await deleteOtherCollections();
@@ -145,6 +148,19 @@ test.describe('Newsletter Form', () => {
 
     const sentAfterMs = Date.now();
 
+    // await Promise.all([
+    //   page.waitForResponse((response) => {
+    //     const request = response.request();
+
+    //     return request.method() === 'POST' &&
+    //       response.url()
+    //         .includes('/de') &&
+    //       response.status() === 200;
+    //   }, {
+    //     timeout: 20_000,
+    //   }),
+    //   submit.click(),
+    // ]);
     await submit.click();
 
     // expect success message
@@ -178,7 +194,9 @@ test.describe('Newsletter Form', () => {
     // END
 
     await expect(notification)
-      .toBeVisible();
+      .toBeVisible({
+        timeout: 15_000,
+      });
 
     const {
       newsletterFields,
@@ -203,6 +221,7 @@ test.describe('Newsletter Form', () => {
       apiKey: process.env.BREVO_TOKEN as string,
       email,
       requiredListId: listIdTemp,
+      timeoutMs: brevoTimeoutMs,
     });
 
     // TODO: remove
@@ -215,6 +234,7 @@ test.describe('Newsletter Form', () => {
     const confirmationLink = await waitForBrevoConfirmationLink({
       apiKey: process.env.BREVO_TOKEN as string,
       sentAfterMs,
+      timeoutMs: brevoTimeoutMs,
       to: email,
     });
 
@@ -238,6 +258,7 @@ test.describe('Newsletter Form', () => {
       email,
       forbiddenListId: listIdTemp,
       requiredListId: listId,
+      timeoutMs: brevoTimeoutMs,
     });
 
     // TODO: remove
