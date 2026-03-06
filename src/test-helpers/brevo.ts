@@ -30,7 +30,6 @@ interface InterfaceWaitForBrevoConfirmationLinkProps {
   sentAfterMs: number;
   to: string;
   subjectIncludes?: string;
-  linkIncludes?: string;
   timeoutMs?: number;
   pollIntervalMs?: number;
 }
@@ -183,7 +182,6 @@ export const waitForBrevoConfirmationLink = ({
   sentAfterMs,
   to,
   subjectIncludes,
-  linkIncludes,
   timeoutMs = 120_000,
   pollIntervalMs = 2_500,
 }: InterfaceWaitForBrevoConfirmationLinkProps): Promise<string> => {
@@ -216,9 +214,7 @@ export const waitForBrevoConfirmationLink = ({
 
       const body = data?.body || '';
       const links = extractLinksFromHtml(body);
-      const confirmationLink = linkIncludes
-        ? links.find((link) => link.includes(linkIncludes))
-        : links[0];
+      const [confirmationLink] = links;
 
       if (confirmationLink) {
         return confirmationLink;

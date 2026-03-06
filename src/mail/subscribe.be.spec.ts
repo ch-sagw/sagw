@@ -91,15 +91,6 @@ test.describe('Newsletter Form', () => {
       throw new Error('newsletter form not found.');
     }
 
-    // await payload.update({
-    //   collection: 'forms',
-    //   data: {
-    //     ...newsletterForm,
-    //     recipientMail: 'delivered@resend.dev',
-    //   },
-    //   id: newsletterForm.id,
-    // });
-
     await payload.update({
       collection: 'homePage',
       data: {
@@ -164,7 +155,6 @@ test.describe('Newsletter Form', () => {
 
     const confirmationLink = await waitForBrevoConfirmationLink({
       apiKey: process.env.BREVO_TOKEN as string,
-      linkIncludes: process.env.BREVO_CONFIRMATION_LINK_INCLUDES,
       sentAfterMs,
       to: email,
     });
