@@ -130,6 +130,9 @@ jobs:
           MAIL_SENDER_ADDRESS: ${{ secrets.MAIL_SENDER_ADDRESS }}
           RESEND_KEY: ${{ secrets.RESEND_KEY }}
           BREVO_TOKEN: ${{ secrets.BREVO_TOKEN }}
+
+          # TODO: remove
+          DEBUG_BREVO_TESTS: true
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           ENV: playwright
       - name: Upload blob report

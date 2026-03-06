@@ -1,5 +1,23 @@
 const brevoApiUrl = 'https://api.brevo.com/v3';
 
+// TODO: remove
+const isBrevoDebugEnabled = process.env.DEBUG_BREVO_TESTS === 'true';
+
+const brevoDebug = (message: string, payload?: Record<string, unknown>): void => {
+  if (!isBrevoDebugEnabled) {
+    return;
+  }
+
+  const timestamp = new Date()
+    .toISOString();
+  const serializedPayload = payload
+    ? ` ${JSON.stringify(payload)}`
+    : '';
+
+  process.stdout.write(`[brevo-debug ${timestamp}] ${message}${serializedPayload}\n`);
+};
+// END
+
 interface InterfaceBrevoRequestProps {
   apiKey: string;
   pathname: string;
@@ -87,6 +105,14 @@ const brevoRequest = async <T>({
       });
   }
 
+  // TODO: remove
+  brevoDebug('request:start', {
+    pathname,
+    searchParams,
+    url: url.toString(),
+  });
+  // END
+
   const response = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -104,6 +130,16 @@ const brevoRequest = async <T>({
 
   const responseData = await response.json()
     .catch(() => undefined) as T | undefined;
+
+  // TODO: remove
+  brevoDebug('request:end', {
+    hasData: typeof responseData !== 'undefined',
+    ok: response.ok,
+    pathname,
+    status: response.status,
+    url: url.toString(),
+  });
+  // END
 
   return {
     data: responseData,
@@ -142,6 +178,24 @@ const getLatestTransactionalEmail = async ({
   const entries = Array.isArray(data?.transactionalEmails)
     ? data.transactionalEmails
     : [];
+
+  // TODO: remove
+  brevoDebug('emails:list', {
+    count: entries.length,
+    sample: entries
+      .slice(0, 5)
+      .map((entry) => ({
+        date: entry.date,
+        email: entry.email,
+        freshEnough: isFreshEnough(entry.date, sentAfterMs),
+        subject: entry.subject,
+        uuid: entry.uuid,
+      })),
+    sentAfterMs,
+    subjectIncludes,
+    to,
+  });
+  // END
 
   return entries.find((entry) => {
     if (entry.email !== to) {
@@ -187,8 +241,37 @@ export const waitForBrevoConfirmationLink = ({
 }: InterfaceWaitForBrevoConfirmationLinkProps): Promise<string> => {
   const deadlineMs = Date.now() + timeoutMs;
 
+  // TODO: remove
+  let attempts = 0;
+  // END
+
   const attempt = async (): Promise<string> => {
+
+    // TODO: remove
+    attempts += 1;
+
+    brevoDebug('confirmation:attempt', {
+      attempt: attempts,
+      deadlineMs,
+      nowMs: Date.now(),
+      sentAfterMs,
+      subjectIncludes,
+      to,
+    });
+    // END
+
     if (Date.now() > deadlineMs) {
+
+      // TODO: remove
+      brevoDebug('confirmation:timeout', {
+        attempt: attempts,
+        deadlineMs,
+        nowMs: Date.now(),
+        sentAfterMs,
+        to,
+      });
+      // END
+
       throw new Error(`Timed out waiting for Brevo confirmation link for ${to}.`);
     }
 
@@ -200,6 +283,15 @@ export const waitForBrevoConfirmationLink = ({
     });
 
     if (latestEmail?.uuid) {
+
+      // TODO: remove
+      brevoDebug('confirmation:email-found', {
+        date: latestEmail.date,
+        subject: latestEmail.subject,
+        uuid: latestEmail.uuid,
+      });
+      // END
+
       const {
         data,
         response,
@@ -216,9 +308,25 @@ export const waitForBrevoConfirmationLink = ({
       const links = extractLinksFromHtml(body);
       const [confirmationLink] = links;
 
+      // TODO: remove
+      brevoDebug('confirmation:links', {
+        links,
+        linksCount: links.length,
+        selected: confirmationLink,
+        uuid: latestEmail.uuid,
+      });
+      // END
+
       if (confirmationLink) {
         return confirmationLink;
       }
+      // TODO: remove
+    } else {
+      brevoDebug('confirmation:no-email-yet', {
+        sentAfterMs,
+        to,
+      });
+      // END
     }
 
     await sleep(pollIntervalMs);
@@ -240,8 +348,38 @@ export const waitForBrevoContactListMembership = ({
   const deadlineMs = Date.now() + timeoutMs;
   const encodedEmail = encodeURIComponent(email);
 
+  // TODO: remove
+  let attempts = 0;
+  // END
+
   const attempt = async (): Promise<void> => {
+
+    // TODO: remove
+    attempts += 1;
+
+    brevoDebug('membership:attempt', {
+      attempt: attempts,
+      deadlineMs,
+      email,
+      forbiddenListId,
+      nowMs: Date.now(),
+      requiredListId,
+    });
+    // END
+
     if (Date.now() > deadlineMs) {
+
+      // TODO: remove
+      brevoDebug('membership:timeout', {
+        attempt: attempts,
+        deadlineMs,
+        email,
+        forbiddenListId,
+        nowMs: Date.now(),
+        requiredListId,
+      });
+      // END
+
       throw new Error(`Timed out waiting for Brevo contact ${email} list membership.`);
     }
 
@@ -253,7 +391,22 @@ export const waitForBrevoContactListMembership = ({
       pathname: `/contacts/${encodedEmail}`,
     });
 
+    // TODO: remove
+    brevoDebug('membership:response', {
+      email,
+      ok: response.ok,
+      status: response.status,
+    });
+    // END
+
     if (response.status === 404) {
+
+      // TODO: remove
+      brevoDebug('membership:not-found-yet', {
+        email,
+      });
+      // END
+
       await sleep(pollIntervalMs);
 
       return attempt();
@@ -271,6 +424,16 @@ export const waitForBrevoContactListMembership = ({
     const hasForbiddenList = typeof forbiddenListId === 'number'
       ? listIds.includes(Number(forbiddenListId))
       : false;
+
+    // TODO: remove
+    brevoDebug('membership:list-state', {
+      email,
+      hasForbiddenList,
+      hasRequiredList,
+      listIds,
+      requiredListId,
+    });
+    // END
 
     if (hasRequiredList && !hasForbiddenList) {
       return Promise.resolve();

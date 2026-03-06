@@ -15,6 +15,24 @@ import {
   waitForBrevoContactListMembership,
 } from '@/test-helpers/brevo';
 
+// TODO: remove
+const isBrevoDebugEnabled = process.env.DEBUG_BREVO_TESTS === 'true';
+
+const brevoSpecDebug = (message: string, payload?: Record<string, unknown>): void => {
+  if (!isBrevoDebugEnabled) {
+    return;
+  }
+
+  const timestamp = new Date()
+    .toISOString();
+  const serializedPayload = payload
+    ? ` ${JSON.stringify(payload)}`
+    : '';
+
+  process.stdout.write(`[subscribe-spec-debug ${timestamp}] ${message}${serializedPayload}\n`);
+};
+// END
+
 test.describe('Newsletter Form', () => {
   beforeEachAcceptCookies();
 
@@ -147,11 +165,27 @@ test.describe('Newsletter Form', () => {
       throw new Error('newsletter list IDs are missing in the generated form.');
     }
 
+    // TODO: remove
+    brevoSpecDebug('flow:after-submit', {
+      email,
+      listId,
+      listIdTemp,
+      sentAfterMs,
+    });
+    // END
+
     await waitForBrevoContactListMembership({
       apiKey: process.env.BREVO_TOKEN as string,
       email,
       requiredListId: listIdTemp,
     });
+
+    // TODO: remove
+    brevoSpecDebug('flow:temp-list-confirmed', {
+      email,
+      listIdTemp,
+    });
+    // END
 
     const confirmationLink = await waitForBrevoConfirmationLink({
       apiKey: process.env.BREVO_TOKEN as string,
@@ -159,7 +193,20 @@ test.describe('Newsletter Form', () => {
       to: email,
     });
 
+    // TODO: remove
+    brevoSpecDebug('flow:confirmation-link', {
+      confirmationLink,
+      email,
+    });
+    // END
+
     await page.goto(confirmationLink);
+
+    // TODO: remove
+    brevoSpecDebug('flow:confirmation-visited', {
+      email,
+    });
+    // END
 
     await waitForBrevoContactListMembership({
       apiKey: process.env.BREVO_TOKEN as string,
@@ -167,5 +214,13 @@ test.describe('Newsletter Form', () => {
       forbiddenListId: listIdTemp,
       requiredListId: listId,
     });
+
+    // TODO: remove
+    brevoSpecDebug('flow:final-list-confirmed', {
+      email,
+      listId,
+      listIdTemp,
+    });
+    // END
   });
 });
