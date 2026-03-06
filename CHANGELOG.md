@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.38.1](https://github.com/ch-sagw/sagw/compare/v0.38.0...v0.38.1) (2026-03-06)
+
+
+### Chore
+
+* move resend to envs ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+
+
+### Documentation
+
+* add brevo ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* remove oboslete key ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+
+
+### Bug Fixes
+
+* better format mail ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+
+
+### Test
+
+* add debug logs ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* add more debugs ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* add safety timeouts ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* remove debugs ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* try to fix test ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* write e2e tests for contact form / newsletter submission flow ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+
 ## [0.38.0](https://github.com/ch-sagw/sagw/compare/v0.37.0...v0.38.0) (2026-03-05)
 
 
