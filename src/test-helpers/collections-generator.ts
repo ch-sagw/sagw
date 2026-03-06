@@ -1296,8 +1296,10 @@ export const generateCollectionsExceptPages = async ({
           label: simpleRteConfig('Nachname'),
           placeholder: 'Ihr Nachname',
         },
-        newsletterListId: 2,
-        newsletterTemporaryListId: 3,
+
+        // must match list id's in brevo
+        newsletterListId: 12,
+        newsletterTemporaryListId: 11,
       },
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: true,
