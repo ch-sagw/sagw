@@ -4,12 +4,17 @@ API documentation: https://developers.brevo.com/reference/create-contact
 DOI workflow creation: https://help.brevo.com/hc/en-us/articles/27353832123026-Set-up-a-double-opt-in-process-for-a-sign-up-form-created-outside-of-Brevo
 Admin console: https://app.brevo.com/
 Also: create custom contact attribute for LANG: https://my.brevo.com/lists/add-attributes
+
+If subscription throws an error, make sure that the IP is not blocked by brevo:
+https://app.brevo.com/security/authorised_ips
+
 */
 /* eslint-enable max-len */
 
 import 'server-only';
 
 const brevoApiUrl = 'https://api.brevo.com/v3';
+
 const brevoEndpoints = {
   contacts: `${brevoApiUrl}/contacts`,
 };
@@ -63,7 +68,6 @@ const userIsAlreadySubscribed = async ({
     }
 
     return 'none';
-
   } catch {
     return 'error';
   }
