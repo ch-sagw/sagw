@@ -14,6 +14,41 @@ https://app.brevo.com/security/authorised_ips
 import 'server-only';
 
 const brevoApiUrl = 'https://api.brevo.com/v3';
+
+// TODO: remove
+const isBrevoDebugEnabled = process.env.DEBUG_BREVO_TESTS === 'true';
+
+const brevoSubscribeDebug = (message: string, payload?: Record<string, unknown>): void => {
+  if (!isBrevoDebugEnabled) {
+    return;
+  }
+
+  const timestamp = new Date()
+    .toISOString();
+  const serializedPayload = payload
+    ? ` ${JSON.stringify(payload)}`
+    : '';
+
+  process.stdout.write(`[brevo-subscribe-debug ${timestamp}] ${message}${serializedPayload}\n`);
+};
+
+const safeTextFromResponse = async (response: Response): Promise<string | undefined> => {
+  try {
+    const text = await response.text();
+
+    if (!text) {
+      return undefined;
+    }
+
+    return text.length > 2000
+      ? `${text.slice(0, 2000)}...[truncated]`
+      : text;
+  } catch {
+    return undefined;
+  }
+};
+// END
+
 const brevoEndpoints = {
   contacts: `${brevoApiUrl}/contacts`,
 };
@@ -48,12 +83,40 @@ const userIsAlreadySubscribed = async ({
   try {
     const encodedEmail = encodeURIComponent(String(email));
     const requestUrl = `${brevoEndpoints.contacts}/${encodedEmail}`;
+
+    // TODO: remove
+    brevoSubscribeDebug('userIsAlreadySubscribed:request', {
+      email: String(email),
+      listId,
+      listIdTemp,
+      requestUrl,
+    });
+    // END
+
     const response = await fetch(requestUrl, {
       headers: requestHeaders,
       method: 'GET',
     });
 
+    // TODO: remove
+    brevoSubscribeDebug('userIsAlreadySubscribed:response', {
+      email: String(email),
+      status: response.status,
+    });
+    // END
+
     if (response.status !== 200) {
+
+      // TODO: remove
+      const responseBody = await safeTextFromResponse(response);
+
+      brevoSubscribeDebug('userIsAlreadySubscribed:not-200', {
+        email: String(email),
+        responseBody,
+        status: response.status,
+      });
+      // END
+
       return 'none';
     }
 
@@ -61,14 +124,44 @@ const userIsAlreadySubscribed = async ({
     const listIdsAsNumbers = data.listIds.map((id: unknown) => Number(id));
 
     if (listIdsAsNumbers.includes(Number(listIdTemp))) {
+
+      // TODO: remove
+      brevoSubscribeDebug('userIsAlreadySubscribed:result', {
+        email: String(email),
+        result: 'tempList',
+      });
+      // END
+
       return 'tempList';
     } else if (listIdsAsNumbers.includes(Number(listId))) {
+
+      // TODO: remove
+      brevoSubscribeDebug('userIsAlreadySubscribed:result', {
+        email: String(email),
+        result: 'finalList',
+      });
+      // END
+
       return 'finalList';
     }
+
+    // TODO: remove
+    brevoSubscribeDebug('userIsAlreadySubscribed:result', {
+      email: String(email),
+      result: 'none',
+    });
+    // END
 
     return 'none';
 
   } catch {
+
+    // TODO: remove
+    brevoSubscribeDebug('userIsAlreadySubscribed:error', {
+      email: String(email),
+    });
+    // END
+
     return 'error';
   }
 };
@@ -84,10 +177,30 @@ const deleteUser = async ({
   try {
     const encodedEmail = encodeURIComponent(String(email));
     const requestUrl = `${brevoEndpoints.contacts}/${encodedEmail}`;
+
+    // TODO: remove
+    brevoSubscribeDebug('deleteUser:request', {
+      email: String(email),
+      requestUrl,
+    });
+    // END
+
     const response = await fetch(requestUrl, {
       headers: requestHeaders,
       method: 'DELETE',
     });
+
+    // TODO: remove
+    const responseBody = response.status === 204
+      ? undefined
+      : await safeTextFromResponse(response);
+
+    brevoSubscribeDebug('deleteUser:response', {
+      email: String(email),
+      responseBody,
+      status: response.status,
+    });
+    // END
 
     if (response.status === 204) {
       return true;
@@ -95,6 +208,13 @@ const deleteUser = async ({
 
     return false;
   } catch {
+
+    // TODO: remove
+    brevoSubscribeDebug('deleteUser:error', {
+      email: String(email),
+    });
+    // END
+
     return false;
   }
 
@@ -125,6 +245,18 @@ const subscribeAction = async ({
 }: InterfaceSubscribeActionProps): Promise<InterfaceSubscribeReturnValue> => {
   try {
     const requestUrl = `${brevoEndpoints.contacts}`;
+
+    // TODO: remove
+    brevoSubscribeDebug('subscribeAction:request', {
+      email: String(email),
+      firstname: String(firstname),
+      language: String(language),
+      lastname: String(lastname),
+      listIdTemp,
+      requestUrl,
+    });
+    // END
+
     const response = await fetch(requestUrl, {
       body: JSON.stringify({
       /* eslint-disable quote-props */
@@ -141,12 +273,30 @@ const subscribeAction = async ({
       method: 'POST',
     });
 
+    // TODO: remove
+    const responseBody = response.status === 201
+      ? undefined
+      : await safeTextFromResponse(response);
+
+    brevoSubscribeDebug('subscribeAction:response', {
+      email: String(email),
+      responseBody,
+      status: response.status,
+    });
+    // END
+
     if (response.status === 201) {
       return 'pendingVerification';
     }
 
     return 'generalError';
   } catch {
+    // TODO: remove
+    brevoSubscribeDebug('subscribeAction:error', {
+      email: String(email),
+    });
+    // END
+
     return 'generalError';
   }
 };
@@ -169,11 +319,26 @@ export const subscribe = async ({
 }: InterfaceSubscribeProps): Promise<InterfaceSubscribeReturnValue> => {
 
   try {
+    // TODO: remove
+    brevoSubscribeDebug('subscribe:start', {
+      email: String(email),
+      listId,
+      listIdTemp,
+    });
+    // END
+
     const alreadySubscribed = await userIsAlreadySubscribed({
       email,
       listId,
       listIdTemp,
     });
+
+    // TODO: remove
+    brevoSubscribeDebug('subscribe:alreadySubscribed', {
+      alreadySubscribed,
+      email: String(email),
+    });
+    // END
 
     if (alreadySubscribed === 'none') {
       const subscribeResult = await subscribeAction({
@@ -184,6 +349,14 @@ export const subscribe = async ({
         listIdTemp,
       });
 
+      // TODO: remove
+      brevoSubscribeDebug('subscribe:result', {
+        email: String(email),
+        path: 'none',
+        subscribeResult,
+      });
+      // END
+
       return subscribeResult;
     } else if (alreadySubscribed === 'finalList' || alreadySubscribed === 'tempList') {
       const userDeleted = await deleteUser({
@@ -191,6 +364,14 @@ export const subscribe = async ({
       });
 
       if (!userDeleted) {
+        // TODO: remove
+        brevoSubscribeDebug('subscribe:result', {
+          email: String(email),
+          path: 'deleteUser-failed',
+          subscribeResult: 'generalError',
+        });
+        // END
+
         return 'generalError';
       }
 
@@ -202,11 +383,33 @@ export const subscribe = async ({
         listIdTemp,
       });
 
+      // TODO: remove
+      brevoSubscribeDebug('subscribe:result', {
+        email: String(email),
+        path: 'delete+resubscribe',
+        subscribeResult,
+      });
+      // END
+
       return subscribeResult;
     }
 
+    // TODO: remove
+    brevoSubscribeDebug('subscribe:result', {
+      email: String(email),
+      path: 'alreadySubscribed-error',
+      subscribeResult: 'generalError',
+    });
+    // END
+
     return 'generalError';
   } catch {
+    // TODO: remove
+    brevoSubscribeDebug('subscribe:error', {
+      email: String(email),
+    });
+    // END
+
     return 'generalError';
   }
 

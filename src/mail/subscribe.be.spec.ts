@@ -152,6 +152,31 @@ test.describe('Newsletter Form', () => {
       exact: true,
     });
 
+    // TODO: remove
+    const errorNotification = page.getByText('Newsletter Submit title error', {
+      exact: true,
+    });
+    const formHtmlBeforeAssert = await form.innerHTML();
+    const successVisible = await notification.isVisible();
+    const errorVisible = await errorNotification.isVisible();
+
+    brevoSpecDebug('flow:notification-visibility', {
+      errorVisible,
+      successVisible,
+    });
+
+    if (!successVisible) {
+      const pageHtml = await page.content();
+
+      brevoSpecDebug('flow:success-not-visible', {
+        errorVisible,
+        formHtmlSnippet: formHtmlBeforeAssert.slice(0, 3000),
+        pageHtmlSnippet: pageHtml.slice(0, 3000),
+        successVisible,
+      });
+    }
+    // END
+
     await expect(notification)
       .toBeVisible();
 
