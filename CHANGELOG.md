@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.38.2](https://github.com/ch-sagw/sagw/compare/v0.38.1...v0.38.2) (2026-03-06)
+
+
+### Bug Fixes
+
+* set proper env var on prod-release test ([eb988e0](https://github.com/ch-sagw/sagw/commit/eb988e0b887fbea606229b0f603f549bb067ffd8))
+
 ## [0.38.1](https://github.com/ch-sagw/sagw/compare/v0.38.0...v0.38.1) (2026-03-06)
 
 
