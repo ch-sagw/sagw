@@ -26,11 +26,11 @@ const generateMailContent = (formData: FormData, hiddenFormData: InterfaceForm, 
   let mailContent = '';
 
   // add url
-  mailContent += `URL: ${hiddenUrl}\n\n\n`;
+  mailContent += `URL: ${hiddenUrl}<br><br><br>`;
 
   // add title and subtitle
-  mailContent += `${rte1ToPlaintext(hiddenFormData.title)}\n`;
-  mailContent += `${rte1ToPlaintext(hiddenFormData.subtitle)}\n\n\n`;
+  mailContent += `${rte1ToPlaintext(hiddenFormData.title)}<br>`;
+  mailContent += `${rte1ToPlaintext(hiddenFormData.subtitle)}<br><br><br>`;
 
   // add field data
   hiddenFormData.fields?.forEach((field) => {
@@ -39,7 +39,7 @@ const generateMailContent = (formData: FormData, hiddenFormData: InterfaceForm, 
     } = field;
     const value = formData.get(name);
 
-    mailContent += `${name}:\n${value}\n\n\n`;
+    mailContent += `${name}:<br>${value}<br><br><br>`;
   });
 
   return mailContent;
