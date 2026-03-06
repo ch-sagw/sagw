@@ -130,7 +130,7 @@ jobs:
           RESEND_KEY: ${{ secrets.RESEND_KEY }}
           BREVO_TOKEN: ${{ secrets.BREVO_TOKEN }}
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
-          ENV: prod
+          ENV: playwright
 
   deploy-production:
     needs: [test-fe, test-be]
