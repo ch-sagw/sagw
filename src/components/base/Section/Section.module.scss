@@ -88,5 +88,16 @@
     .subtitle {
       margin-block-end: 0;
     }
+
+    @include mq($from: large) {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: px-to-rem(var(--grid-gutter));
+
+      .title,
+      .subtitle {
+        grid-column: 1 / 9;
+      }
+    }
   }
 }
