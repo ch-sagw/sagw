@@ -36,16 +36,14 @@ import { useTranslations } from 'next-intl';
 
 export type InterfaceFooterComponentPropTypes = {
   contact: InterfaceFooterContact;
+  homeLink: string;
   legal: InterfaceFooterLegal;
   metaNav: InterfaceHeaderMetaNavigation;
   navigation: InterfaceHeaderNavigation;
   socialLinks?: InterfaceFooterSocialLinks;
   structuredDataImage: string;
   structuredDataUrl: string;
-  fg?: {
-    sagwLink: string;
-    sagwLinkText: string;
-  }
+  fg?: boolean;
   consentOverlay: Omit<InterfaceConsentOverlayClientPropTypes, 'onClose' | 'onConsentGiven'>;
   linkUrls: Record<string, string>;
   dataPrivacyUrl: string;
@@ -227,8 +225,8 @@ export const FooterComponent = ({
   };
 
   if (fg) {
-    logoProps.link = fg.sagwLink;
-    logoProps.linkText = fg.sagwLinkText;
+    logoProps.linkText = i18nA11y('footerLogoLinkText');
+    logoProps.link = '/';
   }
 
   return (
