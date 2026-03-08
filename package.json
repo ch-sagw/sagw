@@ -47,7 +47,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@gumlet/react-embed-player": "^2.0.19",
+    "@gumlet/react-embed-player": "^2.1.0",
     "@payloadcms/db-mongodb": "^3.79.0",
     "@payloadcms/email-resend": "^3.79.0",
     "@payloadcms/next": "^3.79.0",
@@ -56,9 +56,9 @@
     "@payloadcms/plugin-seo": "^3.79.0",
     "@payloadcms/richtext-lexical": "^3.79.0",
     "@payloadcms/storage-vercel-blob": "^3.79.0",
-    "@sentry/nextjs": "^10.40.0",
+    "@sentry/nextjs": "^10.42.0",
     "cross-env": "^10.0.0",
-    "graphql": "^16.13.0",
+    "graphql": "^16.13.1",
     "next": "^16.1.6",
     "next-intl": "^4.8.3",
     "payload": "^3.79.0",
