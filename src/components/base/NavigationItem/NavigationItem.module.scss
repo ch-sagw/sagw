@@ -86,6 +86,12 @@
     &.active {
       @include expandable-wrapper-visible;
 
+      .listWrapper {
+        @include mq($to: large) {
+          padding-block-end: px-to-rem(var(--spacing-l));
+        }
+      }
+
       .item {
         transform: translate3d(px-to-rem(var(--spacing-l)), 0, 0);
 
