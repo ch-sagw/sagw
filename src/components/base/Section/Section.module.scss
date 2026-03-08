@@ -89,13 +89,18 @@
       margin-block-end: 0;
     }
 
+    .sectionTitleInner {
+      display: flex;
+      flex-direction: column;
+      row-gap: px-to-rem(var(--inside-elements-l));
+    }
+
     @include mq($from: large) {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       column-gap: px-to-rem(var(--grid-gutter));
 
-      .title,
-      .subtitle {
+      .sectionTitleInner {
         grid-column: 1 / 9;
       }
     }
