@@ -17,16 +17,14 @@ import { getPageUrl } from '@/utilities/getPageUrl';
 
 export type InterfaceFooterPropTypes = {
   contact: InterfaceFooterContact;
+  homeLink?: string;
   legal: InterfaceFooterLegal;
   metaNav: InterfaceHeaderMetaNavigation;
   navigation: InterfaceHeaderNavigation;
   socialLinks?: InterfaceFooterSocialLinks;
   structuredDataImage: string;
   structuredDataUrl: string;
-  fg?: {
-    sagwLink: string;
-    sagwLinkText: string;
-  }
+  fg?: boolean,
   consentOverlay: Omit<InterfaceConsentOverlayClientPropTypes, 'onClose' | 'onConsentGiven'>;
   impressumPageId: string;
   dataPrivacyPageId: string;
