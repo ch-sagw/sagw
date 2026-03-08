@@ -36,7 +36,7 @@ import { useTranslations } from 'next-intl';
 
 export type InterfaceFooterComponentPropTypes = {
   contact: InterfaceFooterContact;
-  homeLink: string;
+  homeLink?: string;
   legal: InterfaceFooterLegal;
   metaNav: InterfaceHeaderMetaNavigation;
   navigation: InterfaceHeaderNavigation;
