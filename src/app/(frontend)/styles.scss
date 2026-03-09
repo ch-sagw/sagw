@@ -55,4 +55,12 @@ div:has(section[class*="light"]) + div:has(section[class*="light"]) {
   body > *:not(main) {
     display: none;
   }
+
+  body.print-magazine-detail [data-magazine-breadcrumb="true"] {
+    display: none !important;
+  }
+
+  body.print-magazine-detail [data-magazine-detail-extras="true"] button {
+    display: none !important;
+  }
 }

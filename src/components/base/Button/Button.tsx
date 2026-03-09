@@ -20,9 +20,10 @@ type BaseWrapperProps = {
   buttonType?: 'submit' | 'button';
   colorMode: ColorMode;
   disabled?: boolean;
+  isLoading?: boolean;
   onClick?: (e: React.PointerEvent<HTMLButtonElement>) => void;
   popOverTarget?: string;
-  style: 'filled' | 'outlined' | 'text' | 'textSmall' | 'textBright' | 'buttonPlay' | 'socialLink' | 'icon';
+  style: 'filled' | 'outlined' | 'text' | 'textSmall' | 'textBright' | 'buttonPlay' | 'socialLink' | 'icon' | 'loading';
   prefetch?: 'auto' | true | false | null;
   className?: string;
   isActive?: boolean;
@@ -125,6 +126,7 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
     buttonType,
     colorMode,
     disabled,
+    isLoading,
     element,
     iconInlineEnd,
     iconInlineStart,
@@ -179,6 +181,7 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
         buttonPlay: [styles.buttonPlay],
         filled: [styles.buttonFilled],
         icon: [styles.icon],
+        loading: [styles.buttonLoading],
         outlined: [styles.buttonOutlined],
         socialLink: [styles.socialLink],
         text: [styles.buttonText],
@@ -257,7 +260,8 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
           isActive,
           style,
         })}
-        disabled={disabled}
+        aria-busy={isLoading}
+        disabled={disabled || isLoading}
         data-testid='button'
         onClick={onClick}
         popoverTarget={popOverTarget}
@@ -269,11 +273,19 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
           <span className={styles.visuallyHidden}>{ariaDescription}</span>
         }
 
+        {isLoading &&
+          <span className={styles.loadingSpinner} aria-hidden='true' />
+        }
+
         {buttonLinkContent({
           classNameLinkText,
           element: 'button',
-          iconInlineEnd,
-          iconInlineStart,
+          iconInlineEnd: isLoading
+            ? undefined
+            : iconInlineEnd,
+          iconInlineStart: isLoading
+            ? undefined
+            : iconInlineStart,
           text,
         })}
       </button>
