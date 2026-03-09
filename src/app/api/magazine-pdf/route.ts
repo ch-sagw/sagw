@@ -29,7 +29,33 @@ const sanitizePath = (pathValue: string): string | null => {
     return null;
   }
 
-  return pathValue;
+  if (pathValue.includes('\\')) {
+    return null;
+  }
+
+  const parsedPath = new URL(pathValue, 'http://localhost');
+
+  if (parsedPath.search || parsedPath.hash) {
+    return null;
+  }
+
+  return parsedPath.pathname;
+};
+
+const isAllowedFrontendPath = (pathname: string): boolean => {
+  const segments = pathname.split('/')
+    .filter(Boolean);
+
+  if (segments.length < 2) {
+    return false;
+  }
+
+  const forbiddenRoots = new Set([
+    'admin',
+    'api',
+  ]);
+
+  return !forbiddenRoots.has(segments[1] || '');
 };
 
 const escapeHtml = (value: string): string => value
@@ -126,6 +152,12 @@ export const GET = async (req: NextRequest): Promise<Response> => {
 
   if (!origin) {
     return new Response('Could not resolve request origin', {
+      status: 400,
+    });
+  }
+
+  if (!isAllowedFrontendPath(sanitizedPath)) {
+    return new Response('Invalid `path` query parameter', {
       status: 400,
     });
   }

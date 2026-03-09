@@ -139,7 +139,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
       try {
         const exportUrl = new URL('/api/magazine-pdf', window.location.origin);
 
-        exportUrl.searchParams.set('path', `${window.location.pathname}${window.location.search}`);
+        exportUrl.searchParams.set('path', window.location.pathname);
         exportUrl.searchParams.set('token', token);
         exportUrl.searchParams.set('expiresAt', expiresAt);
 
