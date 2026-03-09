@@ -34,12 +34,25 @@ const sanitizePath = (pathValue: string): string | null => {
   }
 
   const parsedPath = new URL(pathValue, 'http://localhost');
+  const {
+    pathname,
+  } = parsedPath;
 
   if (parsedPath.search || parsedPath.hash) {
     return null;
   }
 
-  return parsedPath.pathname;
+  // Reject path traversal attempts targeting other routes after normalization.
+  if (pathname.includes('..')) {
+    return null;
+  }
+
+  // Reject unusual duplicate-slash path structures in normalized path.
+  if (pathname.includes('//')) {
+    return null;
+  }
+
+  return pathname;
 };
 
 const isAllowedFrontendPath = (pathname: string): boolean => {
