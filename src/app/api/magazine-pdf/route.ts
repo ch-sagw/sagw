@@ -29,46 +29,7 @@ const sanitizePath = (pathValue: string): string | null => {
     return null;
   }
 
-  if (pathValue.includes('\\')) {
-    return null;
-  }
-
-  const parsedPath = new URL(pathValue, 'http://localhost');
-  const {
-    pathname,
-  } = parsedPath;
-
-  if (parsedPath.search || parsedPath.hash) {
-    return null;
-  }
-
-  // Reject path traversal attempts targeting other routes after normalization.
-  if (pathname.includes('..')) {
-    return null;
-  }
-
-  // Reject unusual duplicate-slash path structures in normalized path.
-  if (pathname.includes('//')) {
-    return null;
-  }
-
-  return pathname;
-};
-
-const isAllowedFrontendPath = (pathname: string): boolean => {
-  const segments = pathname.split('/')
-    .filter(Boolean);
-
-  if (segments.length < 2) {
-    return false;
-  }
-
-  const forbiddenRoots = new Set([
-    'admin',
-    'api',
-  ]);
-
-  return !forbiddenRoots.has(segments[1] || '');
+  return pathValue;
 };
 
 const escapeHtml = (value: string): string => value
@@ -165,12 +126,6 @@ export const GET = async (req: NextRequest): Promise<Response> => {
 
   if (!origin) {
     return new Response('Could not resolve request origin', {
-      status: 400,
-    });
-  }
-
-  if (!isAllowedFrontendPath(sanitizedPath)) {
-    return new Response('Invalid `path` query parameter', {
       status: 400,
     });
   }
