@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { cva } from 'cva';
 import styles from '@/components/global/Hero/Hero.module.scss';
@@ -39,6 +41,8 @@ export type InterfaceHeroPropTypes =
   } & InterfaceHeroField)
   | (BaseHeroProps & {
     exportArticleText?: InterfaceRte;
+    pdfGenerationToken?: string;
+    pdfGenerationExpiresAt?: string;
     type: 'magazineDetail';
   } & InterfaceHeroFieldMagazineDetail)
   | (BaseHeroProps & {
@@ -115,9 +119,65 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
     });
   }
 
+  const [
+    isExporting,
+    setIsExporting,
+  ] = React.useState(false);
+
   const handleExport = (): void => {
-    // TODO
-    console.log('export clicked');
+    if (typeof window === 'undefined' || props.type !== 'magazineDetail') {
+      return;
+    }
+
+    if (!props.pdfGenerationToken || !props.pdfGenerationExpiresAt || isExporting) {
+      return;
+    }
+    const token = props.pdfGenerationToken;
+    const expiresAt = props.pdfGenerationExpiresAt;
+
+    const downloadPdf = async (): Promise<void> => {
+      setIsExporting(true);
+
+      try {
+        const exportUrl = new URL('/api/magazine-pdf', window.location.origin);
+
+        exportUrl.searchParams.set('path', `${window.location.pathname}${window.location.search}`);
+        exportUrl.searchParams.set('token', token);
+        exportUrl.searchParams.set('expiresAt', expiresAt);
+
+        const response = await fetch(exportUrl.toString());
+
+        if (!response.ok) {
+          const errorMessage = await response.text();
+
+          throw new Error(`Failed to export PDF (${response.status}): ${errorMessage}`);
+        }
+
+        const contentDisposition = response.headers.get('content-disposition') || '';
+        const filenameMatch = contentDisposition.match(/filename="(?<filename>[^"]+)"/u);
+        const filename = filenameMatch?.groups?.filename || 'magazine-detail.pdf';
+        const pdfBlob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(pdfBlob);
+        const link = document.createElement('a');
+
+        link.href = blobUrl;
+        link.download = filename;
+        document.body.append(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(blobUrl);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsExporting(false);
+      }
+    };
+
+    downloadPdf()
+      .catch((error) => {
+        console.error(error);
+        setIsExporting(false);
+      });
   };
 
   return (
@@ -134,10 +194,12 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
 
         {/* Breadcrumb */}
         {props.breadcrumb &&
-          <Breadcrumb
-            {...props.breadcrumb}
-            className={styles.breadcrumb}
-          />
+          <div data-magazine-breadcrumb='true'>
+            <Breadcrumb
+              {...props.breadcrumb}
+              className={styles.breadcrumb}
+            />
+          </div>
         }
 
         {/* Side Title */}
@@ -199,7 +261,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
 
         {/* Magazine detail: author, date & export button */}
         {props.type === 'magazineDetail' &&
-          <div className={styles.magazineDetailExtras}>
+          <div className={styles.magazineDetailExtras} data-magazine-detail-extras='true'>
             <p className={styles.authorDate}>
               <SafeHtml
                 as='span'
@@ -216,8 +278,12 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
               text={rteToHtml(props.exportArticleText)}
               colorMode={heroColorMode}
               className={styles.exportButtonLarge}
-              style='outlined'
+              style={isExporting
+                ? 'loading'
+                : 'outlined'
+              }
               iconInlineStart={'exportIcon' as keyof typeof Icon}
+              isLoading={isExporting}
               onClick={handleExport}
             />
 
@@ -225,10 +291,17 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
               element='button'
               colorMode={heroColorMode}
               className={styles.exportButtonSmall}
-              style='icon'
-              iconInlineStart={'exportIcon' as keyof typeof Icon}
+              style={isExporting
+                ? 'loading'
+                : 'icon'
+              }
+              iconInlineStart={isExporting
+                ? undefined
+                : 'exportIcon' as keyof typeof Icon
+              }
               ariaLabel={rte1ToPlaintext(props.exportArticleText)}
               text=''
+              isLoading={isExporting}
               onClick={handleExport}
             />
           </div>
