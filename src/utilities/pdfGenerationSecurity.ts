@@ -9,7 +9,7 @@ const getSecret = (): string => {
     return process.env.PDF_GENERATION_SECRET;
   }
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production' || process.env.ENV === 'playwright') {
     return localDevPdfSecret;
   }
 

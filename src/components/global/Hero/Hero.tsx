@@ -271,41 +271,37 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
                 locale,
               })}</span>
             </p>
-            {props.pdfGenerationToken && props.pdfGenerationExpiresAt &&
-              <>
-                <Button
-                  element='button'
-                  text={rteToHtml(props.exportArticleText)}
-                  colorMode={heroColorMode}
-                  className={styles.exportButtonLarge}
-                  style={isExporting
-                    ? 'loading'
-                    : 'outlined'
-                  }
-                  iconInlineStart={'exportIcon' as keyof typeof Icon}
-                  isLoading={isExporting}
-                  onClick={handleExport}
-                />
+            <Button
+              element='button'
+              text={rteToHtml(props.exportArticleText)}
+              colorMode={heroColorMode}
+              className={styles.exportButtonLarge}
+              style={isExporting
+                ? 'loading'
+                : 'outlined'
+              }
+              iconInlineStart={'exportIcon' as keyof typeof Icon}
+              isLoading={isExporting}
+              onClick={handleExport}
+            />
 
-                <Button
-                  element='button'
-                  colorMode={heroColorMode}
-                  className={styles.exportButtonSmall}
-                  style={isExporting
-                    ? 'loading'
-                    : 'icon'
-                  }
-                  iconInlineStart={isExporting
-                    ? undefined
-                    : 'exportIcon' as keyof typeof Icon
-                  }
-                  ariaLabel={rte1ToPlaintext(props.exportArticleText)}
-                  text=''
-                  isLoading={isExporting}
-                  onClick={handleExport}
-                />
-              </>
-            }
+            <Button
+              element='button'
+              colorMode={heroColorMode}
+              className={styles.exportButtonSmall}
+              style={isExporting
+                ? 'loading'
+                : 'icon'
+              }
+              iconInlineStart={isExporting
+                ? undefined
+                : 'exportIcon' as keyof typeof Icon
+              }
+              ariaLabel={rte1ToPlaintext(props.exportArticleText)}
+              text=''
+              isLoading={isExporting}
+              onClick={handleExport}
+            />
           </div>
         }
 
