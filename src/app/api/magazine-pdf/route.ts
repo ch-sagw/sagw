@@ -21,7 +21,8 @@ const buildOrigin = (req: NextRequest): string | null => {
 };
 
 const sanitizePath = (pathValue: string): string | null => {
-  // Require a leading slash so the path is always relative to the current origin.
+  // require a leading slash so the path is always relative to the current
+  // origin.
   if (!pathValue.startsWith('/')) {
     return null;
   }
@@ -33,14 +34,16 @@ const sanitizePath = (pathValue: string): string | null => {
 
   // Normalize and validate path segments to prevent directory traversal.
   // This forbids any ".." segments in the path portion.
-  const urlWithoutOrigin = pathValue.split('?')[0];
+  const [urlWithoutOrigin] = pathValue.split('?');
   const segments = urlWithoutOrigin.split('/');
+
   if (segments.some((segment) => segment === '..')) {
     return null;
   }
 
-  // Optionally, reject control characters and whitespace that can confuse URL parsing.
-  if (/[^\x20-\x7E]/.test(pathValue)) {
+  // Optionally, reject control characters and whitespace that can
+  // confuse URL parsing.
+  if ((/[^\x20-\x7E]/u).test(pathValue)) {
     return null;
   }
 
@@ -147,9 +150,10 @@ export const GET = async (req: NextRequest): Promise<Response> => {
 
   const targetUrl = new URL(sanitizedPath, origin);
 
-  // For security, only allow paths without a query string. This ensures that the
-  // server-side navigation cannot be used to introduce unauthorized parameters,
-  // and that the value checked by verifyPdfGenerationAuth fully describes the URL.
+  // For security, only allow paths without a query string. This ensures that
+  // the server-side navigation cannot be used to introduce unauthorized
+  // parameters, and that the value checked by verifyPdfGenerationAuth fully
+  // describes the URL.
   if (targetUrl.search && targetUrl.search !== '') {
     return new Response('Query parameters are not allowed in `path`', {
       status: 400,
@@ -222,7 +226,8 @@ export const GET = async (req: NextRequest): Promise<Response> => {
       value: consentValue,
     });
 
-    // Navigate only to the validated, same-origin URL derived from the sanitized path.
+    // Navigate only to the validated, same-origin URL derived from the
+    // sanitized path.
     await page.goto(targetUrl.toString(), {
       waitUntil: 'networkidle0',
     });
