@@ -1,0 +1,58 @@
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+
+.keyVisual {
+  background: var(--background-inverted);
+
+  svg path {
+    stroke: var(--secondary-blue-comp-1);
+  }
+}
+
+// Horizontal
+.keyVisualHorizontal {
+  --key-visual-horizontal-inner-width: 1518;
+  --key-visual-horizontal-inner-height: 1074;
+
+  position: relative;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+}
+
+.keyVisualHorizontalSvgs {
+  position: absolute;
+  width: 100%;
+  aspect-ratio: var(--key-visual-horizontal-inner-width) / var(--key-visual-horizontal-inner-height);
+
+  .keyVisualHorizontalOuter,
+  .keyVisualHorizontalMiddle,
+  .keyVisualHorizontalInner {
+    position: absolute;
+    inset: 0;
+  }
+}
+
+// Vertical
+.keyVisualVertical {
+  --key-visual-vertical-inner-width: 1074;
+  --key-visual-vertical-inner-height: 1514;
+
+  position: relative;
+  aspect-ratio: var(--key-visual-vertical-inner-width) / var(--key-visual-vertical-inner-height);
+  overflow: hidden;
+}
+
+.keyVisualVerticalSvgs {
+  position: absolute;
+  inset-block-end: 0;
+  width: 100%;
+  aspect-ratio: var(--key-visual-vertical-inner-width) / var(--key-visual-vertical-inner-height);
+
+  .keyVisualVerticalOuter,
+  .keyVisualVerticalMiddle,
+  .keyVisualVerticalInner {
+    position: absolute;
+    inset: 0;
+  }
+}
