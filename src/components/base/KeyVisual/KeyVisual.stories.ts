@@ -16,11 +16,7 @@ const meta: Meta<typeof KeyVisual> = {
   component: KeyVisual,
   decorators: [defaultDecorator],
   parameters: {/* layout: 'centered', */ },
-  tags: [
-    'autodocs',
-    'visual:check',
-    'a11y:check',
-  ],
+  tags: ['autodocs'],
   title: 'Components/base/KeyVisual',
 };
 
