@@ -21,12 +21,7 @@ Förderung -> project teaser -> no padding
 
   .image {
     display: flex;
-    position: relative;
     margin-block-end: px-to-rem(var(--spacing-l));
-
-    &:before {
-      @include image-inset-border;
-    }
 
     img {
       aspect-ratio: inherit;
@@ -90,10 +85,6 @@ Förderung -> project teaser -> no padding
   .image {
     aspect-ratio: 16/9;
     border: px-to-rem(var(--border-width-s)) solid var(--border-weak);
-
-    &:before {
-      display: none;
-    }
   }
 }
 
@@ -138,10 +129,6 @@ Förderung -> project teaser -> no padding
 .teaser.network {
   .image {
     aspect-ratio: 576 / 100;
-
-    &:before {
-      display: none;
-    }
   }
 }
 
@@ -149,10 +136,6 @@ Förderung -> project teaser -> no padding
 .teaser.people {
   .image {
     aspect-ratio: 1/1;
-
-    &:before {
-      display: none;
-    }
   }
 
   .link {
