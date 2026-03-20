@@ -15,8 +15,13 @@
   margin: 0;
 
   .imageWrapper {
+    position: relative;
     grid-column: 1 / calc(var(--grid-columns) + 1);
     aspect-ratio: 16 / 9;
+
+    &:before {
+      @include image-inset-border;
+    }
 
     img {
       width: 100%;
