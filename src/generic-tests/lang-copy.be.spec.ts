@@ -46,12 +46,11 @@ test.describe('Language copy', () => {
     });
 
     // ensure correct language
-    const langSelect = await page.locator('.localizer.app-header__localizer button');
+    const langSelect = await page.locator('.localizer.app-header__localizer');
 
     await langSelect.click();
 
-    const germanLang = await page.locator('.popup-button-list__button')
-      .first();
+    const germanLang = await page.locator('[data-locale="de"]');
 
     await germanLang.click({
       force: true,
@@ -84,8 +83,7 @@ test.describe('Language copy', () => {
 
     await copyToSelectField.click();
 
-    const langOptions = await page.locator('.rs__option')
-      .first();
+    const langOptions = await copyToSelectField.getByText('Français');
 
     await langOptions.click();
 
@@ -120,7 +118,7 @@ test.describe('Language copy', () => {
     // reset language to german
     await langSelect.click();
 
-    await germanLang.click({
+    await await germanLang.click({
       force: true,
     });
   });
