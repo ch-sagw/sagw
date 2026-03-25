@@ -50,7 +50,7 @@ test.describe('Language copy', () => {
 
     await langSelect.click();
 
-    const germanLang = await page.locator('[data-locale="de"]');
+    const germanLang = await page.locator('.localizer__locale-code[data-locale="de"]');
 
     await germanLang.click({
       force: true,
