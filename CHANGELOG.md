@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.39.0](https://github.com/ch-sagw/sagw/compare/v0.38.2...v0.39.0) (2026-03-25)
+
+
+### Features
+
+* implement article export ([#911](https://github.com/ch-sagw/sagw/issues/911)) ([4643d71](https://github.com/ch-sagw/sagw/commit/4643d71c627d797e6a4ad2a0b994a27866c077ef))
+
+
+### Bug Fixes
+
+* fix field access on meta fields to prevent lang-copy error ([b809882](https://github.com/ch-sagw/sagw/commit/b809882c81561adde9e374ee62084fc782c437bf))
+* make unique slug on page copy to prevent page copy error, add test ([b809882](https://github.com/ch-sagw/sagw/commit/b809882c81561adde9e374ee62084fc782c437bf))
+
+
+### Test
+
+* add test for proper language copy ([b809882](https://github.com/ch-sagw/sagw/commit/b809882c81561adde9e374ee62084fc782c437bf))
+
 ## [0.38.2](https://github.com/ch-sagw/sagw/compare/v0.38.1...v0.38.2) (2026-03-06)
 
 
