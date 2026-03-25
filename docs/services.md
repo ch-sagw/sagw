@@ -46,3 +46,9 @@ https://sentry.io
 - Error monitoring
 - Error tracing
 - Performance montoring
+
+## Brevo
+
+https://www.brevo.com
+
+- Newsletter registration

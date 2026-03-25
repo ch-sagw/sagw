@@ -1,5 +1,58 @@
 # Changelog
 
+## [0.39.0](https://github.com/ch-sagw/sagw/compare/v0.38.2...v0.39.0) (2026-03-25)
+
+
+### Features
+
+* implement article export ([#911](https://github.com/ch-sagw/sagw/issues/911)) ([4643d71](https://github.com/ch-sagw/sagw/commit/4643d71c627d797e6a4ad2a0b994a27866c077ef))
+
+
+### Bug Fixes
+
+* fix field access on meta fields to prevent lang-copy error ([b809882](https://github.com/ch-sagw/sagw/commit/b809882c81561adde9e374ee62084fc782c437bf))
+* make unique slug on page copy to prevent page copy error, add test ([b809882](https://github.com/ch-sagw/sagw/commit/b809882c81561adde9e374ee62084fc782c437bf))
+
+
+### Test
+
+* add test for proper language copy ([b809882](https://github.com/ch-sagw/sagw/commit/b809882c81561adde9e374ee62084fc782c437bf))
+
+## [0.38.2](https://github.com/ch-sagw/sagw/compare/v0.38.1...v0.38.2) (2026-03-06)
+
+
+### Bug Fixes
+
+* set proper env var on prod-release test ([eb988e0](https://github.com/ch-sagw/sagw/commit/eb988e0b887fbea606229b0f603f549bb067ffd8))
+
+## [0.38.1](https://github.com/ch-sagw/sagw/compare/v0.38.0...v0.38.1) (2026-03-06)
+
+
+### Chore
+
+* move resend to envs ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+
+
+### Documentation
+
+* add brevo ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* remove oboslete key ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+
+
+### Bug Fixes
+
+* better format mail ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+
+
+### Test
+
+* add debug logs ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* add more debugs ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* add safety timeouts ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* remove debugs ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* try to fix test ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* write e2e tests for contact form / newsletter submission flow ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+
 ## [0.38.0](https://github.com/ch-sagw/sagw/compare/v0.37.0...v0.38.0) (2026-03-05)
 
 
