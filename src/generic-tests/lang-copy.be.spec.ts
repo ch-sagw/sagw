@@ -83,7 +83,7 @@ test.describe('Language copy', () => {
 
     await copyToSelectField.click();
 
-    const langOptions = await copyToSelectField.getByText('Français');
+    const langOptions = await copyToSelectField.getByText('Italiano');
 
     await langOptions.click();
 
@@ -96,7 +96,7 @@ test.describe('Language copy', () => {
     const langButtonNew = await langSelect.locator('.localizer-button__current-label');
 
     await expect(langButtonNew)
-      .toHaveText('Français');
+      .toHaveText('Italiano');
 
     // verify hero content
     const heroField = await page.locator('#field-hero .rich-text-lexical:first-of-type p.LexicalEditorTheme__paragraph');
