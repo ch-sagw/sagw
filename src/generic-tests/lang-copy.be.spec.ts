@@ -116,6 +116,13 @@ test.describe('Language copy', () => {
 
     await expect(metaTitle)
       .toHaveValue('seo title');
+
+    // reset language to german
+    await langSelect.click();
+
+    await germanLang.click({
+      force: true,
+    });
   });
 
 });
