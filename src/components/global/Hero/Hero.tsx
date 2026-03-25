@@ -29,6 +29,7 @@ import { useLocale } from 'next-intl';
 type BaseHeroProps = {
   breadcrumb?: InterfaceBreadcrumbPropTypes;
   optionalLinkUrl?: string;
+  tenantName?: string;
 };
 
 export type InterfaceHeroPropTypes =
@@ -131,7 +132,7 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
       titleIndent: props.type === 'magazineDetail',
     })}>
       {/* Key Visual for Home */}
-      {props.type === 'home' &&
+      {props.type === 'home' && props.tenantName === 'sagw' &&
         <KeyVisual
           animation={false}
           className={styles.keyVisualHome}
