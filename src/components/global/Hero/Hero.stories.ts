@@ -148,7 +148,7 @@ export const Generic: StrictStory = {
 
 export const Error: StrictStory = {
   args: {
-    descriptionHtml: rteToHtml(simpleRteConfig('Möglicherweise wurde sie entfernt, umbenannt oder die URL wurde falsch eingegeben.')),
+    descriptionHtml: rteToHtml(simpleRteConfig('Möglicherweise wurde die Seite entfernt, umbenannt oder die URL wurde falsch eingegeben.')),
     homeButtonHtml: rteToHtml(simpleRteConfig('Zur Startseite')),
     homeHref: '/de',
     titleHtml: rteToHtml(simpleRteConfig('Diese Seite wurde leider nicht gefunden')),
