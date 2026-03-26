@@ -7,12 +7,9 @@ import { defaultDecoratorNoPadding } from '@/storybook-helpers';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { InterfaceBreadcrumbPropTypes } from '@/components/base/Breadcrumb/Breadcrumb';
 import { homeHeroTitle } from '@/utilities/rteSampleContent';
+import { rteToHtml } from '@/utilities/rteToHtml';
 
-type HeroProps = React.ComponentProps<typeof Hero>;
-
-type StrictStory = StoryObj<typeof Hero> & {
-  args: HeroProps;
-};
+type StrictStory = StoryObj<typeof Hero>;
 
 const meta: Meta<typeof Hero> = {
   args: {},
@@ -68,6 +65,7 @@ export const HomeWithLead: StrictStory = {
     ...Home.args,
     lead: simpleRteConfig('Wir stärken die Geistes- und Sozialwissenschaften in der Schweiz - mit fundierter Förderung, interdisziplinären Netzwerken und sichtbaren Aktivitäten. Wir verbinden Menschen und Themen, die unsere Gesellschaft weiterbringen.'),
     title: simpleRteConfig('Fördern, vernetzen, vermitteln'),
+    type: 'home',
   },
 };
 
@@ -104,6 +102,7 @@ export const NewsDetailWithLead: StrictStory = {
   args: {
     ...NewsDetail.args,
     lead: simpleRteConfig('Intelligenz und Dummheit sind als Konzepte eng miteinander verwoben. Als man die Vernunft als Motor des Fortschritts anzusehen begann, geriet auch die Dummheit verstärkt ins Visier. Dass sie bis heute nicht ausgerottet werden konnte, gehört zu den wohl grössten Kränkungen der Menschheit. Klar ist: Dumm sind in der Regel die anderen.'),
+    type: 'newsDetail',
   },
 };
 
@@ -130,6 +129,7 @@ export const EventDetailWithLead: StrictStory = {
   args: {
     ...EventDetail.args,
     lead: simpleRteConfig('Intelligenz und Dummheit sind als Konzepte eng miteinander verwoben. Als man die Vernunft als Motor des Fortschritts anzusehen begann, geriet auch die Dummheit verstärkt ins Visier. Dass sie bis heute nicht ausgerottet werden konnte, gehört zu den wohl grössten Kränkungen der Menschheit. Klar ist: Dumm sind in der Regel die anderen.'),
+    type: 'eventDetail',
   },
 };
 
@@ -145,3 +145,19 @@ export const Generic: StrictStory = {
     type: 'generic',
   },
 };
+
+export const Error: StrictStory = {
+  args: {
+    descriptionHtml: rteToHtml(simpleRteConfig('Möglicherweise wurde sie entfernt, umbenannt oder die URL wurde falsch eingegeben.')),
+    homeButtonHtml: rteToHtml(simpleRteConfig('Zur Startseite')),
+    homeHref: '/de',
+    titleHtml: rteToHtml(simpleRteConfig('Diese Seite wurde leider nicht gefunden')),
+    type: 'error',
+  },
+  parameters: {
+    backgrounds: {
+      default: 'light',
+    },
+  },
+};
+

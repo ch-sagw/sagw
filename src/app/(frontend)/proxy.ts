@@ -1,7 +1,22 @@
 import createMiddleware from 'next-intl/middleware';
-import { routing } from '../../i18n/routing';
+import {
+  NextRequest,
+  NextResponse,
+} from 'next/server';
+import { routing } from '@/i18n/routing';
 
-export default createMiddleware(routing);
+const intlMiddleware = createMiddleware(routing);
+
+export const proxy = function proxy(request: NextRequest): NextResponse {
+  const requestHeaders = new Headers(request.headers);
+
+  requestHeaders.set('x-pathname', request.nextUrl.pathname);
+  requestHeaders.set('x-url', request.url);
+
+  return intlMiddleware(new NextRequest(request, {
+    headers: requestHeaders,
+  }));
+};
 
 export const config = {
   // Match all pathnames except for
@@ -9,4 +24,3 @@ export const config = {
   // - … the ones containing a dot (e.g. `favicon.ico`)
   matcher: '/((?!api|_next|_vercel|admin|next|.*\\..*).*)',
 };
-
