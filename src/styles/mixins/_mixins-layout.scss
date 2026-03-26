@@ -46,6 +46,10 @@
       overflow-clip-margin: 0.25rem;
     }
 
+    .additionalStickyContent {
+      grid-row: 1;
+    }
+
     // Vertically center the first line of the
     // headings next to each other
     h3:nth-child(2) {
