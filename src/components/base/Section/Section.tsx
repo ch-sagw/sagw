@@ -56,13 +56,19 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
     },
   });
 
+  console.log('######');
+  console.log(title);
+  console.log(subtitle);
+
+  console.log(!subtitle || !title || !additionalStickyContent);
+
   return (
     <section
       ref={ref}
       className={sectionClasses({
         colorMode,
         fullBleed,
-        noStickyContent: !subtitle || !title || !additionalStickyContent,
+        noStickyContent: !subtitle && !title && !additionalStickyContent,
         title: title !== undefined,
       })}
     >
