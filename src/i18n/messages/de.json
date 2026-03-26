@@ -30,6 +30,7 @@
   "a11y": {
     "breadcrumb": "Zurücknavigieren in der Seitenstruktur",
     "closeDialog": "Dialog schliessen",
+    "footerLogoLinkText": "Zur Startseite von SAGW",
     "linkTarget": "Linkziel",
     "logoLinkText": "Zurück zur Startseite",
     "opensInNewWindow": "öffnet sich in einem neuen Fenster.",
