@@ -60,6 +60,16 @@ const generateSlugHook: FieldHook = ({
   return false;
 };
 
+const duplicateSlugHook: FieldHook = ({
+  value,
+}) => {
+  if (typeof value !== 'string' || !value) {
+    return value;
+  }
+
+  return `${value}-copy-${Date.now()}`;
+};
+
 export const genericPageFields = (isOverview?: boolean): Field[] => ([
   fieldLinkablePage,
   fieldAdminTitle,
@@ -108,6 +118,9 @@ export const genericPageFields = (isOverview?: boolean): Field[] => ([
 
             return slugifyWithUmlauts(String(valueToSlugify));
           },
+        },
+        hooks: {
+          beforeDuplicate: [duplicateSlugHook],
         },
         localized: true,
         name: 'slug',

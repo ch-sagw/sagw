@@ -240,6 +240,7 @@ export const RenderPage = async ({
       heroComponent: (
         <Hero
           {...homePageData.hero}
+          tenantName={themeName}
           type='home'
           optionalLinkUrl={optionalLinkUrl}
         />

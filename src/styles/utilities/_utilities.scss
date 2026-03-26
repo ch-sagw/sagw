@@ -2,6 +2,17 @@
 @use "./mediaqueries" as *;
 
 // ##############################
+// Image inset border
+// ##############################
+@mixin image-inset-border {
+  position: absolute;
+  inset: 0;
+  content: "";
+  border: px-to-rem(var(--border-width-l)) inset var(--border-image);
+  z-index: 2;
+}
+
+// ##############################
 // Hover / Focus styling
 // ##############################
 

@@ -1,10 +1,11 @@
 @use "../../../styles/utilities/utilities" as *;
 @use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
 
 .breadcrumb {
   display: flex;
-  align-items: center;
   column-gap: px-to-rem(var(--spacing-m));
+  margin-block: px-to-rem(var(--spacing-xs));
 
   &.dark {
     --icon-color: var(--interaction-primary-inverted);
@@ -19,6 +20,17 @@
   }
 
   .icon {
+    --arrow-top-margin: calc(var(--spacing-s) - 1);
+
+    @include mq($from: large) {
+      --arrow-top-margin: calc(var(--spacing-s) + 1);
+    }
+
+    @include mq($from: ultra) {
+      --arrow-top-margin: calc(var(--spacing-s) + 2);
+    }
+
+    margin-block-start: px-to-rem(var(--arrow-top-margin));
     width: px-to-rem(var(--spacing-m));
     height: px-to-rem(var(--spacing-m));
     color: var(--icon-color);
@@ -38,6 +50,7 @@
 
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     column-gap: px-to-rem(var(--spacing-s));
 
     .item {
@@ -47,6 +60,8 @@
 
       .link {
         padding-inline: 0;
+
+        --button-padding-block-inner-text: var(--spacing-xs);
       }
 
       .separatorIcon {

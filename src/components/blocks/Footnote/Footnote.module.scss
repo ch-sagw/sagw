@@ -34,6 +34,10 @@
   .text {
     @include body-text-s;
   }
+
+  a {
+    overflow-wrap: break-word;
+  }
 }
 
 .sectionFootnote:is([class*="noTitle"]) {

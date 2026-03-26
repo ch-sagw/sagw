@@ -1,0 +1,125 @@
+@use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+
+// Horizontal
+.keyVisualHorizontal {
+  --key-visual-horizontal-inner-width: 1518;
+  --key-visual-horizontal-inner-height: 1074;
+  --key-visual-horizontal-grid-columns: 9 / 13;
+
+  position: relative;
+  overflow: hidden;
+  grid-column: var(--key-visual-horizontal-grid-columns);
+  grid-row: 3 / -1;
+  margin-inline-end: px-to-rem(var(--grid-margin), true);
+  opacity: 0;
+  transition: opacity var(--motion-ease-in-out) var(--motion-speed-slow);
+
+  @include mq($from: large) {
+    opacity: 1;
+    transition: opacity var(--motion-ease-in-out) var(--motion-speed-slow);
+    margin-inline-start: px-to-rem(var(--grid-margin), true);
+  }
+
+  @include mq($from: ultra) {
+    --key-visual-horizontal-inner-width: 2507;
+    --key-visual-horizontal-inner-height: 1774;
+    --key-visual-horizontal-grid-columns: 8 / 13;
+  }
+}
+
+.keyVisualHorizontalSvgs {
+  position: absolute;
+  width: px-to-rem(var(--key-visual-horizontal-inner-width));
+  height: auto;
+  aspect-ratio: var(--key-visual-horizontal-inner-width) / var(--key-visual-horizontal-inner-height);
+
+  .keyVisualHorizontalOuter,
+  .keyVisualHorizontalMiddle,
+  .keyVisualHorizontalInner {
+    position: absolute;
+    inset: 0;
+
+    svg path {
+      stroke: var(--secondary-blue-comp-1);
+    }
+  }
+}
+
+// Vertical
+.keyVisualVertical {
+  --key-visual-vertical-inner-width: 514;
+  --key-visual-vertical-inner-height: 724;
+  --key-visual-vertical-grid-columns: 1 / 4;
+
+  overflow: hidden;
+  grid-column: var(--key-visual-vertical-grid-columns);
+  grid-row: 1 / -1;
+  contain: strict;
+  margin-block-end: px-to-rem(var(--spacing-2xl));
+
+  @include mq($to: medium) {
+    margin-inline: px-to-rem(var(--grid-margin), true);
+  }
+
+  @include mq($from: small) {
+    --key-visual-vertical-grid-columns: 1 / 8;
+  }
+
+  @include mq($from: medium) {
+    --key-visual-vertical-inner-width: 1074;
+    --key-visual-vertical-inner-height: 1514;
+    --key-visual-vertical-grid-columns: 1 / 6;
+
+    width: 167.8%;
+    margin-inline-start: -35%;
+    margin-block-end: px-to-rem(var(--spacing-xl), true);
+  }
+
+  @include mq($from: large) {
+    --key-visual-vertical-inner-width: 1074;
+    --key-visual-vertical-inner-height: 1514;
+    --key-visual-vertical-grid-columns: 1 / 6;
+
+    width: 100%;
+    margin-inline-start: -12%;
+    margin-block-end: -15%;
+  }
+
+  @include mq($from: wide) {
+    margin-inline-end: px-to-rem(var(--grid-margin));
+  }
+
+  @include mq($from: ultra) {
+    --key-visual-vertical-inner-width: 1774;
+    --key-visual-vertical-inner-height: 2449;
+
+    width: 110.875%; // 1774 / 1600
+    margin-inline-start: -15%;
+    margin-block-end: -25%;
+  }
+}
+
+.keyVisualVerticalSvgs {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  width: px-to-rem(var(--key-visual-vertical-inner-width));
+  aspect-ratio: var(--key-visual-vertical-inner-width) / var(--key-visual-vertical-inner-height);
+
+  @include mq($to: medium) {
+    min-width: 125%;
+  }
+
+  .keyVisualVerticalOuter,
+  .keyVisualVerticalMiddle,
+  .keyVisualVerticalInner {
+    position: absolute;
+    inset: 0;
+
+    svg path {
+      stroke: var(--secondary-blue-comp-1);
+    }
+  }
+}

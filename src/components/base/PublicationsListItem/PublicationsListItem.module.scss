@@ -29,10 +29,15 @@
   }
 
   .image {
+    position: relative;
     display: flex;
     width: px-to-rem(var(--publication-teaser-image-width));
     height: px-to-rem(var(--publication-teaser-image-height));
     flex: 0 0 px-to-rem(var(--publication-teaser-image-width));
+
+    &:before {
+      @include image-inset-border;
+    }
 
     img {
       max-width: 100%;
