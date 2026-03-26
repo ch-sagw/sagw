@@ -56,12 +56,6 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
     },
   });
 
-  console.log('######');
-  console.log(title);
-  console.log(subtitle);
-
-  console.log(!subtitle || !title || !additionalStickyContent);
-
   return (
     <section
       ref={ref}
