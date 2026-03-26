@@ -11,7 +11,16 @@
     "selector-pseudo-element-colon-notation": "single",
     "@stylistic/block-closing-brace-newline-after": null,
     "@stylistic/max-line-length": null,
-    "no-duplicate-selectors": null
+    "no-duplicate-selectors": null,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": [
+          "global",
+          "local"
+        ]
+      }
+    ]
   },
   "ignoreFiles": [
     "convenience/generate-component/boilerplate/styles/*.scss"
