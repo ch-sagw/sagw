@@ -60,6 +60,10 @@
     row-gap: px-to-rem(var(--spacing-2xl));
   }
 
+  &[class*="publicationsOverview"] .additionalStickyContent {
+    grid-row: 1;
+  }
+
   .title {
     @include title-heading-3;
 
