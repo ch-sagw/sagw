@@ -69,9 +69,8 @@
 
     @include mouse-only {
       & + label:hover {
-        @include focus-visible;
-
-        outline-offset: px-to-rem(var(--radio-button-outline-offset));
+        background-color: var(--interaction-primary-hover);
+        color: var(--text-primary-inverted);
       }
     }
 
@@ -98,10 +97,8 @@
       & + label {
         @include focus-visible;
 
-        --label-background: var(--background-inverted);
+        --label-background: var(--interaction-primary-hover);
         --label-color: var(--text-primary-inverted);
-
-        outline-offset: px-to-rem(var(--radio-button-outline-offset));
       }
     }
   }
@@ -148,20 +145,12 @@
       filter: invert(1);
     }
 
-    --label-background: var(--background-inverted);
+    --label-background: var(--interaction-primary-hover);
     --label-color: var(--text-primary-inverted);
 
     &:after,
     &:before {
       transition: background-color var(--animation-duration) var(--motion-ease-in);
-    }
-  }
-
-  &:has(select:focus-visible) {
-    &:after {
-      @include focus-visible;
-
-      outline-offset: px-to-rem(var(--border-width-l));
     }
   }
 

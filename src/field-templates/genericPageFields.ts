@@ -13,6 +13,20 @@ import {
 } from '@/field-templates/adminTitle';
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
+const slugifyWithUmlauts = (value: string): string => {
+  slugify.extend({
+    ä: 'ae',
+    ö: 'oe',
+    ü: 'ue',
+  });
+
+  return slugify(value, {
+    lower: true,
+    strict: true,
+    trim: true,
+  });
+};
+
 // hook to auto-generate slug from adminTitle when generateSlug
 // checkbox is checked
 const generateSlugHook: FieldHook = ({
@@ -20,16 +34,7 @@ const generateSlugHook: FieldHook = ({
 }) => {
   if (operation === 'create') {
     if (data && !data.slug && data[fieldAdminTitleFieldName]) {
-      slugify.extend({
-        ä: 'ae',
-        ö: 'oe',
-        ü: 'ue',
-      });
-      data.slug = slugify(data[fieldAdminTitleFieldName], {
-        lower: true,
-        strict: true,
-        trim: true,
-      });
+      data.slug = slugifyWithUmlauts(String(data[fieldAdminTitleFieldName]));
     }
 
     return Boolean(!data?.slug);
@@ -41,20 +46,11 @@ const generateSlugHook: FieldHook = ({
     }
 
     if (data && data[fieldAdminTitleFieldName]) {
-      slugify.extend({
-        ä: 'ae',
-        ö: 'oe',
-        ü: 'ue',
-      });
       // Only generate if slug is empty or user hasn't manually changed it
       const userOverride = data.slug !== originalDoc?.slug;
 
       if (!userOverride || !data.slug) {
-        data.slug = slugify(data[fieldAdminTitleFieldName], {
-          lower: true,
-          strict: true,
-          trim: true,
-        });
+        data.slug = slugifyWithUmlauts(String(data[fieldAdminTitleFieldName]));
       }
     }
 
@@ -62,6 +58,16 @@ const generateSlugHook: FieldHook = ({
   }
 
   return false;
+};
+
+const duplicateSlugHook: FieldHook = ({
+  value,
+}) => {
+  if (typeof value !== 'string' || !value) {
+    return value;
+  }
+
+  return `${value}-copy-${Date.now()}`;
 };
 
 export const genericPageFields = (isOverview?: boolean): Field[] => ([
@@ -101,6 +107,20 @@ export const genericPageFields = (isOverview?: boolean): Field[] => ([
             },
           },
           width: '100%',
+        },
+        custom: {
+          slugify: ({
+            valueToSlugify,
+          }: { valueToSlugify?: unknown }): string => {
+            if (!valueToSlugify) {
+              return '';
+            }
+
+            return slugifyWithUmlauts(String(valueToSlugify));
+          },
+        },
+        hooks: {
+          beforeDuplicate: [duplicateSlugHook],
         },
         localized: true,
         name: 'slug',

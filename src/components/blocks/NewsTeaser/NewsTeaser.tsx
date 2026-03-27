@@ -41,8 +41,6 @@ export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<R
 
   if (props.optionalLink?.includeLink && props.optionalLink.link?.linkText) {
     allLink = {
-
-      // TODO: we need reference tracking here
       href: await getPageUrl({
         locale,
         pageId: props.optionalLink.link.internalLink.documentId,

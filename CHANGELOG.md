@@ -1,5 +1,103 @@
 # Changelog
 
+## [0.39.0](https://github.com/ch-sagw/sagw/compare/v0.38.2...v0.39.0) (2026-03-25)
+
+
+### Features
+
+* implement article export ([#911](https://github.com/ch-sagw/sagw/issues/911)) ([4643d71](https://github.com/ch-sagw/sagw/commit/4643d71c627d797e6a4ad2a0b994a27866c077ef))
+
+
+### Bug Fixes
+
+* fix field access on meta fields to prevent lang-copy error ([b809882](https://github.com/ch-sagw/sagw/commit/b809882c81561adde9e374ee62084fc782c437bf))
+* make unique slug on page copy to prevent page copy error, add test ([b809882](https://github.com/ch-sagw/sagw/commit/b809882c81561adde9e374ee62084fc782c437bf))
+
+
+### Test
+
+* add test for proper language copy ([b809882](https://github.com/ch-sagw/sagw/commit/b809882c81561adde9e374ee62084fc782c437bf))
+
+## [0.38.2](https://github.com/ch-sagw/sagw/compare/v0.38.1...v0.38.2) (2026-03-06)
+
+
+### Bug Fixes
+
+* set proper env var on prod-release test ([eb988e0](https://github.com/ch-sagw/sagw/commit/eb988e0b887fbea606229b0f603f549bb067ffd8))
+
+## [0.38.1](https://github.com/ch-sagw/sagw/compare/v0.38.0...v0.38.1) (2026-03-06)
+
+
+### Chore
+
+* move resend to envs ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+
+
+### Documentation
+
+* add brevo ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* remove oboslete key ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+
+
+### Bug Fixes
+
+* better format mail ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+
+
+### Test
+
+* add debug logs ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* add more debugs ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* add safety timeouts ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* remove debugs ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* try to fix test ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+* write e2e tests for contact form / newsletter submission flow ([5661306](https://github.com/ch-sagw/sagw/commit/56613064199cb91361547facdd894171a693606b))
+
+## [0.38.0](https://github.com/ch-sagw/sagw/compare/v0.37.0...v0.38.0) (2026-03-05)
+
+
+### Chore
+
+* **deps:** bump the production-dependencies group across 1 directory with 14 updates ([#891](https://github.com/ch-sagw/sagw/issues/891)) ([d26a15b](https://github.com/ch-sagw/sagw/commit/d26a15ba5da7c14aadfabc6ff10a7f8210d29f46))
+
+
+### Features
+
+* adding header logo markup and styling for sslas, sago and sgtk ([16b6511](https://github.com/ch-sagw/sagw/commit/16b6511ddc3f3bf37d4bc85663974a2283a5001f))
+* adding placeholder files for additional header logos ([16b6511](https://github.com/ch-sagw/sagw/commit/16b6511ddc3f3bf37d4bc85663974a2283a5001f))
+* adding tel link for cta contact ([16b6511](https://github.com/ch-sagw/sagw/commit/16b6511ddc3f3bf37d4bc85663974a2283a5001f))
+* fixing footnote styling and structure ([16b6511](https://github.com/ch-sagw/sagw/commit/16b6511ddc3f3bf37d4bc85663974a2283a5001f))
+* render email address for cta button in cta contact component ([16b6511](https://github.com/ch-sagw/sagw/commit/16b6511ddc3f3bf37d4bc85663974a2283a5001f))
+
+
+### Bug Fixes
+
+* exclude current publication from publication teasers ([cec2ac2](https://github.com/ch-sagw/sagw/commit/cec2ac2549b508abab2824b0c640f27eae068665))
+* fix invalid date, do not format date twice ([cec2ac2](https://github.com/ch-sagw/sagw/commit/cec2ac2549b508abab2824b0c640f27eae068665))
+* make sure that payload's slug generation respects umlauts ([cec2ac2](https://github.com/ch-sagw/sagw/commit/cec2ac2549b508abab2824b0c640f27eae068665))
+* make sure time/date is rendered in the correct timezone ([cec2ac2](https://github.com/ch-sagw/sagw/commit/cec2ac2549b508abab2824b0c640f27eae068665))
+* make theme selection mandatory, only render sagw theme for sagw tenant ([cec2ac2](https://github.com/ch-sagw/sagw/commit/cec2ac2549b508abab2824b0c640f27eae068665))
+* properly render time in lea's flavour ([cec2ac2](https://github.com/ch-sagw/sagw/commit/cec2ac2549b508abab2824b0c640f27eae068665))
+* remove cron job to unpublish past event detail pages ([#897](https://github.com/ch-sagw/sagw/issues/897)) ([de94c53](https://github.com/ch-sagw/sagw/commit/de94c53502d62a2c21f3311fbef819423b233d7e))
+* render optional link in form ([cec2ac2](https://github.com/ch-sagw/sagw/commit/cec2ac2549b508abab2824b0c640f27eae068665))
+
+
+### Style
+
+* adding focus/hover style to links in footer contact block ([16b6511](https://github.com/ch-sagw/sagw/commit/16b6511ddc3f3bf37d4bc85663974a2283a5001f))
+* adding subtle inset border for images ([16b6511](https://github.com/ch-sagw/sagw/commit/16b6511ddc3f3bf37d4bc85663974a2283a5001f))
+* fixing caption placement and image src for content image ([16b6511](https://github.com/ch-sagw/sagw/commit/16b6511ddc3f3bf37d4bc85663974a2283a5001f))
+* reducing size of homepage illustrations between large and ultra ([16b6511](https://github.com/ch-sagw/sagw/commit/16b6511ddc3f3bf37d4bc85663974a2283a5001f))
+* removing stroke definition for home teaser svgs ([16b6511](https://github.com/ch-sagw/sagw/commit/16b6511ddc3f3bf37d4bc85663974a2283a5001f))
+* setting footer titles to bold ([16b6511](https://github.com/ch-sagw/sagw/commit/16b6511ddc3f3bf37d4bc85663974a2283a5001f))
+* use --grid-gutter instead of --inside-elements-m for consent banner padding ([16b6511](https://github.com/ch-sagw/sagw/commit/16b6511ddc3f3bf37d4bc85663974a2283a5001f))
+
+
+### Test
+
+* fix be tests ([cec2ac2](https://github.com/ch-sagw/sagw/commit/cec2ac2549b508abab2824b0c640f27eae068665))
+* fix fe tests ([cec2ac2](https://github.com/ch-sagw/sagw/commit/cec2ac2549b508abab2824b0c640f27eae068665))
+
 ## [0.37.0](https://github.com/ch-sagw/sagw/compare/v0.36.0...v0.37.0) (2026-02-23)
 
 

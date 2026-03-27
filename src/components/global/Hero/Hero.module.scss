@@ -22,6 +22,7 @@
     --hero-padding-block-start-fallback: 182;
   }
 
+  position: relative;
   background-color: var(--color-background);
   padding: px-to-rem(var(--hero-big)) px-to-rem(var(--grid-margin));
   padding-block-start: calc(px-to-rem(var(--hero-big)) + var(--hero-padding-block-start, px-to-rem(var(--hero-padding-block-start-fallback))));
@@ -70,9 +71,23 @@
     padding-block-end: 0;
   }
 
+  // Key Visual Elements Home
+  .keyVisualHome {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    column-gap: px-to-rem(var(--grid-gutter));
+    padding-inline: px-to-rem(var(--grid-margin));
+    overflow: hidden;
+  }
+
   // &.animated {}
 
   .leftColumn {
+    position: relative;
+
     @include mq($from: large) {
       grid-column: 1 / 4;
       margin-block-end: 0;
@@ -97,6 +112,7 @@
   .rightColumn {
     display: flex;
     flex-direction: column;
+    position: relative;
 
     @include mq($from: large) {
       display: grid;

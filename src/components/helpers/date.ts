@@ -1,5 +1,7 @@
 import { Locale } from 'next-intl';
 
+const timeZone = 'Europe/Zurich';
+
 interface InterfaceFormatDateToObjectProps {
   dateString: string;
   locale: Locale;
@@ -19,13 +21,16 @@ export const formatDateToObject = ({
 
   const day = date.toLocaleString(locale, {
     day: '2-digit',
+    timeZone,
   });
   const month = date
     .toLocaleString(locale, {
       month: 'short',
+      timeZone,
     })
     .toUpperCase();
   const year = date.toLocaleString(locale, {
+    timeZone,
     year: '2-digit',
   });
 
@@ -50,6 +55,7 @@ export const formatDateToReadableString = ({
   const formattedDate = inputDate.toLocaleString(locale, {
     day: '2-digit',
     month: 'long',
+    timeZone,
     year: 'numeric',
   });
 
@@ -73,6 +79,7 @@ export const formatDateRangeToReadableString = ({
   const formatter = new Intl.DateTimeFormat(locale, {
     day: '2-digit',
     month: 'long',
+    timeZone,
     year: 'numeric',
   });
 
@@ -102,9 +109,25 @@ export const formatTime = ({
 }: InterfaceFormatTimeProps): string => {
   const date = new Date(dateString);
 
-  return date.toLocaleTimeString(`${locale}-${locale.toUpperCase()}`, {
-    hour: '2-digit',
+  const formattedTime = date.toLocaleTimeString(`${locale}-${locale.toUpperCase()}`, {
+    hour: 'numeric',
     // hour12: false,
     minute: '2-digit',
+    timeZone,
   });
+
+  if (locale.toLowerCase()
+    .startsWith('en') || locale.toLowerCase()
+    .startsWith('de')) {
+    return formattedTime.replace(':', '.');
+  }
+
+  if (locale.toLowerCase()
+    .startsWith('fr')) {
+    const frenchFormattedTime = formattedTime.replace(':', ' h ');
+
+    return frenchFormattedTime.replace(/ h 00$/u, ' h');
+  }
+
+  return formattedTime;
 };

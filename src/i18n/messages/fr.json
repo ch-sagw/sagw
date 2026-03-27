@@ -30,6 +30,7 @@
   "a11y": {
     "breadcrumb": "Revenir en arrière dans la structure du site",
     "closeDialog": "Fermer le dialogue",
+    "footerLogoLinkText": "Zur Startseite von SAGW (FR)",
     "linkTarget": "La cible du lien",
     "logoLinkText": "Zurück zur Startseite (FR)",
     "opensInNewWindow": "s'ouvre dans une nouvelle fenêtre.",

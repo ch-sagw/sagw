@@ -5,7 +5,7 @@ import {
   InterfacePublicationsTeasersBlock,
   PublicationDetailPage,
 } from '@/payload-types';
-import { fetchDetailPages } from '@/data/fetch';
+import { fetchPublicationPages } from '@/data/fetch';
 import { PublicationsTeaserComponent } from '@/components/blocks/PublicationsTeaser/PublicationsTeaser.component';
 import { convertPayloadPublicationsPagesToFeItems } from '@/components/blocks/helpers/dataTransformers';
 import { getLocale } from 'next-intl/server';
@@ -14,9 +14,12 @@ import { getPageUrl } from '@/utilities/getPageUrl';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { prerenderPageLinks } from '@/utilities/prerenderPageLinks';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
+import { InterfaceSourcePage } from '@/app/(frontend)/renderers/RenderBlocks';
+
 export type InterfacePublicationsTeaserPropTypes = {
   tenant: string;
   projectId?: string;
+  sourcePage?: InterfaceSourcePage;
 } & InterfacePublicationsTeasersBlock;
 
 export const PublicationsTeaser = async (props: InterfacePublicationsTeaserPropTypes): Promise<React.JSX.Element> => {
@@ -27,11 +30,15 @@ export const PublicationsTeaser = async (props: InterfacePublicationsTeaserPropT
     projectId,
   } = props;
 
-  const pages = await fetchDetailPages({
-    collection: 'publicationDetailPage',
+  const excludePageId = props.sourcePage?.collectionSlug === 'publicationDetailPage'
+    ? props.sourcePage.id
+    : undefined;
+
+  const pages = await fetchPublicationPages({
     depth: 2,
-    language: locale,
+    excludePageId,
     limit: 4,
+    locale,
     projectId,
     sort: '-overviewPageProps.date',
     tenant,

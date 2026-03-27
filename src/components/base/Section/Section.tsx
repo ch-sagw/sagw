@@ -52,6 +52,39 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
     },
   });
 
+  const sectionContent = (
+    <>
+      {!additionalStickyContent && title && (
+        <SafeHtml
+          as='h2'
+          className={styles.title}
+          html={title}
+        />
+      )}
+
+      {additionalStickyContent && title && (
+        <div className={`${styles.additionalStickyContent} ${additionalContentClassName}`}>
+          <SafeHtml
+            as='h2'
+            className={`${styles.title} ${titleClassName}`}
+            html={title}
+          />
+          {additionalStickyContent}
+        </div>
+      )}
+
+      {subtitle && (
+        <SafeHtml
+          as='p'
+          className={`${styles.subtitle} ${additionalSubTitleClassName}`}
+          html={subtitle}
+        />
+      )}
+
+      {children}
+    </>
+  );
+
   return (
     <section
       ref={ref}
@@ -61,38 +94,15 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
         title: title !== undefined,
       })}
     >
-      {!additionalStickyContent && title &&
-        <SafeHtml
-          as='h2'
-          className={styles.title}
-          html={title}
-        />
-      }
+      {fullBleed
+        ? (
+          <div className={styles.sectionTitleInner}>{sectionContent}</div>
+        )
+        : (
+          sectionContent
+        )}
 
-      {additionalStickyContent && title &&
-        <div className={`${styles.additionalStickyContent} ${additionalContentClassName}`}>
-          <SafeHtml
-            as='h2'
-            className={`${styles.title} ${titleClassName}`}
-            html={title}
-          />
-          {additionalStickyContent}
-        </div>
-      }
-
-      {subtitle &&
-        <SafeHtml
-          as='p'
-          className={`${styles.subtitle} ${additionalSubTitleClassName}`}
-          html={subtitle}
-        />
-      }
-
-      {children}
-
-      {showTopLine &&
-        <span className={styles.line} />
-      }
+      {showTopLine && <span className={styles.line} />}
     </section>
   );
 });

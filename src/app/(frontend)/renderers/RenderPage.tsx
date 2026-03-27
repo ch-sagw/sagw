@@ -22,6 +22,7 @@ import { CMSConfigError } from '../utilities/CMSConfigError';
 import { SkipLinks } from '@/components/global/SkipLinks/SkipLinks';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { getThemeName } from '../utilities/getThemeName';
+import { createPdfGenerationAuth } from '@/utilities/pdfGenerationSecurity';
 
 export interface InterfacePreFetchedHomePageData {
   pageData: HomePage;
@@ -55,19 +56,29 @@ interface InterfaceRenderPageContentProps {
   currentPageId?: string;
   headerColorMode: ColorMode;
   themeName: string;
+  isMagazineDetail?: boolean;
 }
 
 const getTenantThemeName = async ({
-  tenantId,
+  pageData,
 }: {
-  tenantId: string,
+  pageData: any;
 }): Promise<string> => {
-  // Get Theme name based on tenant
+  let isSagw = true;
+
+  if (pageData.tenant && typeof pageData.tenant === 'object') {
+    isSagw = pageData?.tenant?.name === 'sagw';
+  }
+
+  if (isSagw) {
+    return 'sagw';
+  }
+
   const theme = await getThemeName({
-    id: tenantId,
+    id: pageData.tenant.id,
   });
 
-  return theme.docs[0]?.themeSelector || 'sagw';
+  return theme.docs[0]?.themeSelector || 'amber';
 };
 
 // Helper to verify lang-config and to render error page
@@ -119,9 +130,12 @@ const renderPageContent = ({
   projectId,
   currentPageId,
   themeName,
+  isMagazineDetail = false,
 }: InterfaceRenderPageContentProps): React.JSX.Element => (
   <TenantProvider tenant={tenantId}>
-    <body className={`theme-${themeName}`}>
+    <body className={`theme-${themeName}${isMagazineDetail
+      ? ' print-magazine-detail'
+      : ''}`}>
       <SkipLinks />
       <RenderHeader
         colorMode={headerColorMode}
@@ -215,7 +229,7 @@ export const RenderPage = async ({
 
     // Get tenant theme name
     const themeName = await getTenantThemeName({
-      tenantId,
+      pageData: homePageData,
     });
 
     return renderPageContent({
@@ -226,6 +240,7 @@ export const RenderPage = async ({
       heroComponent: (
         <Hero
           {...homePageData.hero}
+          tenantName={themeName}
           type='home'
           optionalLinkUrl={optionalLinkUrl}
         />
@@ -286,8 +301,14 @@ export const RenderPage = async ({
 
   // Get tenant theme name
   const themeName = await getTenantThemeName({
-    tenantId,
+    pageData: otherPageData,
   });
+  const detailPathname = `/${locale}/${pageSlugs.join('/')}`;
+  const pdfGenerationAuth = collectionSlug === 'magazineDetailPage'
+    ? createPdfGenerationAuth({
+      path: detailPathname,
+    })
+    : null;
 
   return renderPageContent({
     blocks: contentBlocks,
@@ -297,6 +318,8 @@ export const RenderPage = async ({
     heroComponent: (
       <RenderHero
         foundCollection={collectionSlug}
+        pdfGenerationExpiresAt={pdfGenerationAuth?.expiresAt.toString()}
+        pdfGenerationToken={pdfGenerationAuth?.token}
         pageData={otherPageData}
         i18nGeneric={i18nData.generic}
         locale={locale}
@@ -304,6 +327,7 @@ export const RenderPage = async ({
     ),
     i18n: i18nData,
     isHome,
+    isMagazineDetail: collectionSlug === 'magazineDetailPage',
     locale,
     projectId,
     showBlocks: Boolean(contentBlocks),

@@ -82,6 +82,18 @@ export const HeaderDark: StrictStory = {
   render: (args) => render(args),
 };
 
+export const HeaderSslasDark: StrictStory = {
+  args: {
+    ...defaultArgs,
+    colorMode: 'dark',
+    tenant: 'sslas',
+  },
+  parameters: {
+    layout: 'fullscreen',
+  },
+  render: (args) => render(args),
+};
+
 export const HeaderLight: StrictStory = {
   args: {
     ...defaultArgs,
@@ -90,10 +102,34 @@ export const HeaderLight: StrictStory = {
   render: (args) => render(args),
 };
 
+export const HeaderSslasLight: StrictStory = {
+  args: {
+    ...defaultArgs,
+    colorMode: 'light',
+    tenant: 'sslas',
+  },
+  parameters: {
+    layout: 'fullscreen',
+  },
+  render: (args) => render(args),
+};
+
 export const HeaderWhite: StrictStory = {
   args: {
     ...defaultArgs,
     colorMode: 'white',
+  },
+  render: (args) => render(args),
+};
+
+export const HeaderSslasWhite: StrictStory = {
+  args: {
+    ...defaultArgs,
+    colorMode: 'white',
+    tenant: 'sslas',
+  },
+  parameters: {
+    layout: 'fullscreen',
   },
   render: (args) => render(args),
 };

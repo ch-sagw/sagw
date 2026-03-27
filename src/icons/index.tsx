@@ -1,12 +1,12 @@
 import { JSX } from 'react';
 import styles from '@/icons/styles.module.scss';
 
-import horizontalInner from '@/icons/keyvisual-lines/horizontal-inner';
-import horizontalMiddle from '@/icons/keyvisual-lines/horizontal-middle';
-import horizontalOuter from '@/icons/keyvisual-lines/horizontal-outer';
-import verticalInner from '@/icons/keyvisual-lines/vertical-inner';
-import verticalMiddle from '@/icons/keyvisual-lines/vertical-middle';
-import verticalOuter from '@/icons/keyvisual-lines/vertical-outer';
+import horizontalInner from '@/components/base/KeyVisual/svgs/horizontal-inner';
+import horizontalMiddle from '@/components/base/KeyVisual/svgs/horizontal-middle';
+import horizontalOuter from '@/components/base/KeyVisual/svgs/horizontal-outer';
+import verticalInner from '@/components/base/KeyVisual/svgs/vertical-inner';
+import verticalMiddle from '@/components/base/KeyVisual/svgs/vertical-middle';
+import verticalOuter from '@/components/base/KeyVisual/svgs/vertical-outer';
 
 import homeTeaserActivities from '@/icons/home-teasers/activities';
 import homeTeaserFunding from '@/icons/home-teasers/funding';

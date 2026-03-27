@@ -216,13 +216,11 @@ export const RenderBlocks = ({
 
             if (blockType === 'publicationsOverviewBlock') {
               return (
-                <div key={block.id || index}>
-                  <PublicationsOverviewBlock
-                    {...block}
-                    tenant={tenantId}
-                    key={key}
-                  />
-                </div>
+                <PublicationsOverviewBlock
+                  {...block}
+                  tenant={tenantId}
+                  key={key || index}
+                />
               );
             }
 
@@ -252,14 +250,13 @@ export const RenderBlocks = ({
 
             if (blockType === 'publicationsTeasersBlock') {
               return (
-                <div key={block.id || index}>
-                  <PublicationsTeaser
-                    {...block}
-                    tenant={tenantId}
-                    projectId={projectId}
-                    key={key}
-                  />
-                </div>
+                <PublicationsTeaser
+                  {...block}
+                  tenant={tenantId}
+                  sourcePage={sourcePage}
+                  projectId={projectId}
+                  key={key || index}
+                />
               );
             }
 

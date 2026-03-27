@@ -149,6 +149,23 @@
 }
 
 /**
+  * Loading variant
+  */
+.buttonLoading {
+  --button-background-color: none;
+  --button-icon-color: var(--icon-primary);
+}
+
+.loadingSpinner {
+  width: px-to-rem(var(--spacing-m));
+  height: px-to-rem(var(--spacing-m));
+  border: px-to-rem(var(--border-width-l)) solid currentcolor;
+  border-inline-end-color: transparent;
+  border-radius: 50%;
+  animation: button-loading-spin var(--motion-speed-slow) linear infinite;
+}
+
+/**
   * Text only variant
   */
 .buttonText {
@@ -361,5 +378,11 @@
     @include forced-colors {
       color: CanvasText;
     }
+  }
+}
+
+@keyframes button-loading-spin {
+  to {
+    transform: rotate(360deg);
   }
 }

@@ -30,10 +30,16 @@ const ThemeSelectorClient = ({
     path,
   });
 
+  const {
+    showError,
+  } = useField({
+    path,
+  });
+
   const selectedOption = options.find((opt) => opt.value === value);
 
   const ThemeOptionLabel = ({
-    label, colors,
+    label: optionLabel, colors,
   }: { label: unknown; colors: string[] }): JSX.Element => (
     <div className={styles.optionRow}>
       <div className={styles.colors}>
@@ -47,7 +53,7 @@ const ThemeSelectorClient = ({
           />
         ))}
       </div>
-      <span className={styles.label}>{String(label)}</span>
+      <span className={styles.label}>{String(optionLabel)}</span>
     </div>
   );
 
@@ -66,6 +72,7 @@ const ThemeSelectorClient = ({
   return (
     <div>
       <FieldLabel
+        required
         label='Color Theme'
         htmlFor={`field-${path}`}
       />
@@ -85,6 +92,7 @@ const ThemeSelectorClient = ({
           Option: ColorOption,
           SingleValue: ColorSingleValue,
         }}
+        showError={showError}
       />
 
       {(selectedOption) && (

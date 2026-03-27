@@ -65,12 +65,6 @@ export const Breadcrumb = ({
             className={styles.item}
             key={index}
           >
-            {index !== 0 &&
-              <Icon
-                name='longDash'
-                className={styles.separatorIcon}
-              />
-            }
             <Button
               className={styles.link}
               href={item.link}
@@ -80,6 +74,12 @@ export const Breadcrumb = ({
               style='text'
               prefetch={true}
             />
+            {index < items.length - 1 && (
+              <Icon
+                name='longDash'
+                className={styles.separatorIcon}
+              />
+            )}
           </li>
         ))}
       </ul>
