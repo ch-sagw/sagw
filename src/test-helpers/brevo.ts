@@ -1,3 +1,8 @@
+import {
+  brevoEndpoints, encodedEmail,
+  requestHeaders,
+} from '@/mail/helpers';
+
 const brevoApiUrl = 'https://api.brevo.com/v3';
 
 interface InterfaceBrevoRequestProps {
@@ -237,7 +242,6 @@ export const waitForBrevoContactListMembership = ({
   pollIntervalMs = 2_500,
 }: InterfaceWaitForBrevoContactListMembershipProps): Promise<void> => {
   const deadlineMs = Date.now() + timeoutMs;
-  const encodedEmail = encodeURIComponent(email);
   const attempt = async (): Promise<void> => {
     if (Date.now() > deadlineMs) {
       throw new Error(`Timed out waiting for Brevo contact ${email} list membership.`);
@@ -248,7 +252,7 @@ export const waitForBrevoContactListMembership = ({
       response,
     } = await brevoRequest<InterfaceBrevoContact>({
       apiKey,
-      pathname: `/contacts/${encodedEmail}`,
+      pathname: `/contacts/${encodedEmail(email)}`,
     });
 
     if (response.status === 404) {
@@ -280,4 +284,27 @@ export const waitForBrevoContactListMembership = ({
   };
 
   return attempt();
+};
+
+export const deleteUser = async ({
+  email,
+}: {
+  email: FormDataEntryValue | null;
+}): Promise<boolean> => {
+  try {
+    const requestUrl = `${brevoEndpoints.contacts}/${encodedEmail(email)}`;
+    const response = await fetch(requestUrl, {
+      headers: requestHeaders,
+      method: 'DELETE',
+    });
+
+    if (response.status === 204) {
+      return true;
+    }
+
+    return false;
+  } catch {
+    return false;
+  }
+
 };
