@@ -1,7 +1,4 @@
-import {
-  brevoEndpoints, encodedEmail,
-  requestHeaders,
-} from '@/mail/helpers';
+import { encodedEmail } from '@/mail/helpers';
 
 const brevoApiUrl = 'https://api.brevo.com/v3';
 
@@ -284,27 +281,4 @@ export const waitForBrevoContactListMembership = ({
   };
 
   return attempt();
-};
-
-export const deleteUser = async ({
-  email,
-}: {
-  email: FormDataEntryValue | null;
-}): Promise<boolean> => {
-  try {
-    const requestUrl = `${brevoEndpoints.contacts}/${encodedEmail(email)}`;
-    const response = await fetch(requestUrl, {
-      headers: requestHeaders,
-      method: 'DELETE',
-    });
-
-    if (response.status === 204) {
-      return true;
-    }
-
-    return false;
-  } catch {
-    return false;
-  }
-
 };
