@@ -23,6 +23,7 @@ import { SkipLinks } from '@/components/global/SkipLinks/SkipLinks';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { createPdfGenerationAuth } from '@/utilities/pdfGenerationSecurity';
 import { getThemeNameForTenant } from '../utilities/getThemeNameForTenant';
+import { Tracking } from '@/components/helpers/tracking';
 
 export interface InterfacePreFetchedHomePageData {
   pageData: HomePage;
@@ -131,6 +132,7 @@ export const renderPageContent = ({
   skipStatusMessage = false,
 }: InterfaceRenderPageContentProps): React.JSX.Element => (
   <TenantProvider tenant={tenantId}>
+    <Tracking />
     <body className={`theme-${themeName}${isMagazineDetail
       ? ' print-magazine-detail'
       : ''}`}>
