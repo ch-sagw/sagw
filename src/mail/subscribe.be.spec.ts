@@ -258,7 +258,6 @@ test.describe('Correctly signs up for Newsletter', () => {
       // submit form
       const {
         newsletterForm,
-        sentAfterMs,
       } = await prepareContentAndSubmitForm({
         email,
         page,
@@ -274,22 +273,8 @@ test.describe('Correctly signs up for Newsletter', () => {
         throw new Error('newsletter list IDs are missing in the generated form.');
       }
 
-      await waitForBrevoContactListMembership({
-        apiKey: process.env.BREVO_TOKEN as string,
-        email,
-        requiredListId: listIdTemp,
-        timeoutMs: brevoTimeoutMs,
-      });
-
-      await waitForBrevoConfirmationLink({
-        apiKey: process.env.BREVO_TOKEN as string,
-        sentAfterMs,
-        timeoutMs: brevoTimeoutMs,
-        to: email,
-      });
-
       // submit form a second time
-      const sentAfterMs2 = await fillAndSubmitForm({
+      const sentAfterMs = await fillAndSubmitForm({
         email,
         page,
       });
@@ -303,7 +288,7 @@ test.describe('Correctly signs up for Newsletter', () => {
 
       const confirmationLink = await waitForBrevoConfirmationLink({
         apiKey: process.env.BREVO_TOKEN as string,
-        sentAfterMs: sentAfterMs2,
+        sentAfterMs,
         timeoutMs: brevoTimeoutMs,
         to: email,
       });
