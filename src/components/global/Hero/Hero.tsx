@@ -24,12 +24,14 @@ import {
   formatDateToReadableString,
   formatTime,
 } from '@/components/helpers/date';
+import { KeyVisual } from '@/components/base/KeyVisual/KeyVisual';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { useLocale } from 'next-intl';
 
 type BaseHeroProps = {
   breadcrumb?: InterfaceBreadcrumbPropTypes;
   optionalLinkUrl?: string;
+  tenantName?: string;
 };
 
 export type InterfaceHeroPropTypes =
@@ -248,6 +250,14 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
         )
         : (
           <>
+            {/* Key Visual for Home */}
+            {props.type === 'home' && props.tenantName === 'sagw' &&
+              <KeyVisual
+                animation={false}
+                className={styles.keyVisualHome}
+              />
+            }
+
             {/* Left Column */}
             <div className={styles.leftColumn}>
 

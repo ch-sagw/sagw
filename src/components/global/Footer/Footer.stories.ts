@@ -158,9 +158,7 @@ export const FooterFg: StrictStory = {
   args: {
     ...defaultArgs,
     contact: contactMinimal,
-    fg: {
-      sagwLink: 'www.sagw.ch',
-      sagwLinkText: 'Go to SAGW main page',
-    },
+    fg: true,
+    homeLink: '/de/',
   },
 };

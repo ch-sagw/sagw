@@ -581,15 +581,13 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
   );
 
   const headerLogoRender = (): React.JSX.Element => {
-
-    const tenantName = props.tenant.toLowerCase()
-      .replaceAll(/-/gu, '');
+    const tenantName = props.tenant.toLowerCase();
 
     // In Playwright tests we have tenant names starting
     // with tenant- which we have to map to «sagw».
     const logoName = tenantName.indexOf('tenant-') === -1
-      ? 'sagw'
-      : tenantName;
+      ? tenantName
+      : 'sagw';
 
     return (
       <div className={styles.logoWrapperInner}>

@@ -55,7 +55,28 @@ export const Home: StrictStory = {
       },
     },
     sideTitle: simpleRteConfig('Die Schweizer Akademie der Geistes- und Sozialwissenschaften'),
+    tenantName: 'sagw',
     title: homeHeroTitle,
+    type: 'home',
+  },
+};
+
+export const HomeSslas: StrictStory = {
+  args: {
+    lead: simpleRteConfig('The SSLAS (previously Société Suisse des Américanistes – SSA) is the largest network of actors and institutions promoting and advancing research from the social sciences and the humanitie on Latin America at Swiss universities.'),
+    optionalLink: {
+      includeLink: true,
+      link: {
+        internalLink: {
+          documentId: '1234',
+          slug: 'some-slug',
+        },
+        linkText: simpleRteConfig('Learn more about us'),
+      },
+    },
+    sideTitle: simpleRteConfig('The Swiss Society of Latin American Studies (SSLAS)'),
+    tenantName: 'sslas',
+    title: simpleRteConfig('Home'),
     type: 'home',
   },
 };

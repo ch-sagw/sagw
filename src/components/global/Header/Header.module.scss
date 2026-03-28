@@ -80,7 +80,12 @@
       overscroll-behavior: contain;
     }
 
-    &.dark {
+    &.expanded.dark {
+      background-color: var(--background-inverted);
+    }
+
+    // Needed for visual tests
+    &.dark:not(:has(.keyVisual)) {
       background-color: var(--background-inverted);
     }
 

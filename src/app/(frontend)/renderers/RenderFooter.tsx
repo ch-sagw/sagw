@@ -8,6 +8,7 @@ import { preRenderConsentOverlayProps } from '@/components/global/ConsentOverlay
 import { getLocale } from 'next-intl/server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { CMSConfigError } from '../utilities/CMSConfigError';
+import { getTenantName } from '../utilities/getTenantName';
 
 type InterfaceFooterRendererProps = {
   tenant: string;
@@ -18,6 +19,10 @@ export const RenderFooter = async ({
 }: InterfaceFooterRendererProps): Promise<React.JSX.Element> => {
   const payload = await getPayloadCached();
   const locale = (await getLocale()) as TypedLocale;
+  const tenantName = await getTenantName({
+    id: tenant,
+  });
+  const fg = tenantName.name !== 'sagw';
 
   // get footer data
   const footerData = await payload.find({
@@ -141,6 +146,8 @@ export const RenderFooter = async ({
     consentOverlay: consentOverlayProps,
     contact: footerContactData,
     dataPrivacyPageId: footerDataPrivacyPage.docs[0].id,
+    fg,
+    homeLink: `/${locale}`,
     impressumPageId: footerImpressumPage.docs[0].id,
     legal: footerLegalData,
     metaNav: metanavData,
