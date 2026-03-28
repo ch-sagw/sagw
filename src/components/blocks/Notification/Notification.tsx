@@ -12,7 +12,8 @@ export type InterfaceNotificationPropTypes = {} & InterfaceNotificationBlock;
 
 export const Notification = async ({
   text,
-}: InterfaceNotificationPropTypes): Promise<React.JSX.Element> => {
+  show,
+}: InterfaceNotificationPropTypes): Promise<React.JSX.Element | null> => {
   const locale = (await getLocale()) as Config['locale'];
   const payload = await getPayloadCached();
 
@@ -21,6 +22,10 @@ export const Notification = async ({
     locale,
     payload,
   });
+
+  if (!show) {
+    return null;
+  }
 
   return (
     <NotificationClient
