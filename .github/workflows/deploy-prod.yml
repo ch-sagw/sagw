@@ -131,6 +131,9 @@ jobs:
           BREVO_TOKEN: ${{ secrets.BREVO_TOKEN }}
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           ENV: playwright
+          NEXT_PUBLIC_TRACKING_SITE_ID: ${{ secrets.NEXT_PUBLIC_TRACKING_SITE_ID_PLAYWRIGHT }}
+          FATHOM_API_KEY: ${{ secrets.FATHOM_API_KEY }}
+          NEXT_PUBLIC_TRACKING_DISABLED: ${{ true }}
 
   deploy-production:
     needs: [test-fe, test-be]
