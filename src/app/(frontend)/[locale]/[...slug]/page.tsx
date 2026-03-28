@@ -2,10 +2,10 @@ import 'server-only';
 import React from 'react';
 import { RenderPage } from '@/app/(frontend)/renderers/RenderPage';
 import { generateStaticParams } from '@/app/(frontend)/utilities/generateStaticParams';
-import { notFound } from 'next/navigation';
 import { InterfaceOtherPagesProps } from '@/app/(frontend)/fetchers/otherPages';
 import { Metadata } from 'next';
 import { renderMeta } from '@/app/(frontend)/renderers/RenderMeta';
+import { RenderNotFoundPage } from '@/app/(frontend)/renderers/RenderNotFoundPage';
 import { getPageData } from '../../fetchers/pageData';
 
 export { generateStaticParams };
@@ -38,7 +38,12 @@ export default async function Page({
   });
 
   if (!pageData) {
-    notFound();
+    return (
+      <RenderNotFoundPage
+        locale={locale}
+        slugSegments={slug}
+      />
+    );
   }
 
   return (

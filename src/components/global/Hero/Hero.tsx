@@ -61,7 +61,14 @@ export type InterfaceHeroPropTypes =
     };
     tag: string;
     type: 'eventDetail';
-  } & InterfaceHeroField);
+  } & InterfaceHeroField)
+  | (BaseHeroProps & {
+    descriptionHtml: string;
+    homeButtonHtml: string;
+    homeHref: string;
+    titleHtml: string;
+    type: 'error';
+  });
 
 export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
   const locale = useLocale();
@@ -91,6 +98,8 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
 
   if (props.type === 'home') {
     heroColorMode = 'dark';
+  } else if (props.type === 'error') {
+    heroColorMode = 'light';
   } else {
     heroColorMode = props.colorMode;
   }
@@ -182,155 +191,207 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
       });
   };
 
-  return (
-    <div className={heroClasses({
+  const rootClassName = [
+    heroClasses({
       animated: 'animated' in props
         ? props.animated
         : false,
       colorMode: heroColorMode,
       magazineDetail: props.type === 'magazineDetail',
       titleIndent: props.type === 'magazineDetail',
-    })}>
-      {/* Key Visual for Home */}
-      {props.type === 'home' && props.tenantName === 'sagw' &&
-        <KeyVisual
-          animation={false}
-          className={styles.keyVisualHome}
-        />
-      }
-      {/* Left Column */}
-      <div className={styles.leftColumn}>
+    }),
+    props.type === 'error'
+      ? styles.errorPage
+      : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
-        {/* Breadcrumb */}
-        {props.breadcrumb &&
-          <div data-magazine-breadcrumb='true'>
-            <Breadcrumb
-              {...props.breadcrumb}
-              className={styles.breadcrumb}
-            />
-          </div>
-        }
-
-        {/* Side Title */}
-        {'sideTitle' in props && props.sideTitle &&
-          <SafeHtml
-            as='p'
-            html={rteToHtml(props.sideTitle)}
-            className={styles.sideTitle}
-          />
-        }
-      </div>
-
-      <div className={styles.rightColumn}>
-        {/* Event Detail tag */}
-        {props.type === 'eventDetail' && props.tag &&
-          <Tag
-            text={props.tag}
-            colorTheme={heroColorMode === 'light'
-              ? 'primary'
-              : 'secondary'
-            }
-            className={styles.tag}
-            large={true}
-          />
-        }
-
-        {/* Title */}
-        <SafeHtml
-          as='h1'
-          html={rteToHtml(props.title)}
-          className={styles.title}
-          id='content'
-        />
-
-        {/* Lead */}
-        {props.lead &&
-          <SafeHtml
-            as='p'
-            html={rteToHtml(props.lead)}
-            className={styles.lead}
-          />
-        }
-
-        {/* News detail: date */}
-        {props.type === 'newsDetail' && props.date &&
-          <p className={styles.newsDate} data-testid='news-date'>{formatDateToReadableString({
-            dateString: props.date,
-            locale,
-          })}</p>
-        }
-
-        {/* Event detail: event detail summary */}
-        {eventDetailsString &&
-          <p
-            className={styles.eventDetails}
-            data-testid='eventdetails'
-          >{eventDetailsString}</p>
-        }
-
-        {/* Magazine detail: author, date & export button */}
-        {props.type === 'magazineDetail' &&
-          <div className={styles.magazineDetailExtras} data-magazine-detail-extras='true'>
-            <p className={styles.authorDate}>
+  return (
+    <div className={rootClassName}>
+      {props.type === 'error'
+        ? (
+          <>
+            <div className={styles.leftColumn}>
+              <div className={styles.errorLeftStack}>
+                <p className={styles.errorStatus}>
+                  404
+                </p>
+                <Icon
+                  className={styles.errorIcon}
+                  name='errorPage'
+                />
+              </div>
+            </div>
+            <div className={styles.rightColumn}>
               <SafeHtml
-                as='span'
-                html={rteToHtml(props.author)}
-                className={styles.author}
+                as='h1'
+                className={styles.title}
+                html={props.titleHtml}
+                id='content'
               />
-              <span className={styles.date}>{formatDateToReadableString({
-                dateString: props.date,
-                locale,
-              })}</span>
-            </p>
-            <Button
-              element='button'
-              text={rteToHtml(props.exportArticleText)}
-              colorMode={heroColorMode}
-              className={styles.exportButtonLarge}
-              style={isExporting
-                ? 'loading'
-                : 'outlined'
-              }
-              iconInlineStart={'exportIcon' as keyof typeof Icon}
-              isLoading={isExporting}
-              onClick={handleExport}
-            />
+              <SafeHtml
+                as='p'
+                className={styles.lead}
+                html={props.descriptionHtml}
+              />
+              <Button
+                className={styles.link}
+                colorMode='light'
+                element='link'
+                href={props.homeHref}
+                iconInlineStart={'arrowRight' as keyof typeof Icon}
+                prefetch={true}
+                style='text'
+                text={props.homeButtonHtml}
+              />
+            </div>
+          </>
+        )
+        : (
+          <>
+            {/* Key Visual for Home */}
+            {props.type === 'home' && props.tenantName === 'sagw' &&
+              <KeyVisual
+                animation={false}
+                className={styles.keyVisualHome}
+              />
+            }
 
-            <Button
-              element='button'
-              colorMode={heroColorMode}
-              className={styles.exportButtonSmall}
-              style={isExporting
-                ? 'loading'
-                : 'icon'
-              }
-              iconInlineStart={isExporting
-                ? undefined
-                : 'exportIcon' as keyof typeof Icon
-              }
-              ariaLabel={rte1ToPlaintext(props.exportArticleText)}
-              text=''
-              isLoading={isExporting}
-              onClick={handleExport}
-            />
-          </div>
-        }
+            {/* Left Column */}
+            <div className={styles.leftColumn}>
 
-        {/* Link */}
-        {'optionalLink' in props && props.optionalLink && props.optionalLink.includeLink && props.optionalLink.link &&
-          <Button
-            className={styles.link}
-            element='link'
-            href={props.optionalLinkUrl || props.optionalLink.link.internalLink.slug}
-            text={rteToHtml(props.optionalLink.link.linkText)}
-            colorMode={heroColorMode}
-            style='text'
-            iconInlineStart={'arrowRight' as keyof typeof Icon}
-            prefetch={true}
-          />
-        }
+              {/* Breadcrumb */}
+              {props.breadcrumb &&
+                <div data-magazine-breadcrumb='true'>
+                  <Breadcrumb
+                    {...props.breadcrumb}
+                    className={styles.breadcrumb}
+                  />
+                </div>
+              }
 
-      </div>
+              {/* Side Title */}
+              {'sideTitle' in props && props.sideTitle &&
+                <SafeHtml
+                  as='p'
+                  html={rteToHtml(props.sideTitle)}
+                  className={styles.sideTitle}
+                />
+              }
+            </div>
+
+            <div className={styles.rightColumn}>
+              {/* Event Detail tag */}
+              {props.type === 'eventDetail' && props.tag && (
+                <Tag
+                  className={styles.tag}
+                  colorTheme={heroColorMode === 'light'
+                    ? 'primary'
+                    : 'secondary'
+                  }
+                  large={true}
+                  text={props.tag}
+                />
+              )}
+
+              {/* Title */}
+              <SafeHtml
+                as='h1'
+                className={styles.title}
+                html={rteToHtml(props.title)}
+                id='content'
+              />
+
+              {/* Lead */}
+              {props.lead &&
+                <SafeHtml
+                  as='p'
+                  className={styles.lead}
+                  html={rteToHtml(props.lead)}
+                />
+              }
+
+              {/* News detail: date */}
+              {props.type === 'newsDetail' && props.date &&
+                <p className={styles.newsDate} data-testid='news-date'>{formatDateToReadableString({
+                  dateString: props.date,
+                  locale,
+                })}</p>
+              }
+
+              {/* Event detail: event detail summary */}
+              {eventDetailsString &&
+                <p
+                  className={styles.eventDetails}
+                  data-testid='eventdetails'
+                >{eventDetailsString}</p>
+              }
+
+              {/* Magazine detail: author, date & export button */}
+              {props.type === 'magazineDetail' &&
+                <div className={styles.magazineDetailExtras} data-magazine-detail-extras='true'>
+                  <p className={styles.authorDate}>
+                    <SafeHtml
+                      as='span'
+                      className={styles.author}
+                      html={rteToHtml(props.author)}
+                    />
+                    <span className={styles.date}>{formatDateToReadableString({
+                      dateString: props.date,
+                      locale,
+                    })}</span>
+                  </p>
+                  <Button
+                    className={styles.exportButtonLarge}
+                    colorMode={heroColorMode}
+                    element='button'
+                    iconInlineStart={'exportIcon' as keyof typeof Icon}
+                    isLoading={isExporting}
+                    onClick={handleExport}
+                    style={isExporting
+                      ? 'loading'
+                      : 'outlined'
+                    }
+                    text={rteToHtml(props.exportArticleText)}
+                  />
+
+                  <Button
+                    ariaLabel={rte1ToPlaintext(props.exportArticleText)}
+                    className={styles.exportButtonSmall}
+                    colorMode={heroColorMode}
+                    element='button'
+                    iconInlineStart={isExporting
+                      ? undefined
+                      : 'exportIcon' as keyof typeof Icon
+                    }
+                    isLoading={isExporting}
+                    onClick={handleExport}
+                    style={isExporting
+                      ? 'loading'
+                      : 'icon'
+                    }
+                    text=''
+                  />
+                </div>
+              }
+
+              {/* Link */}
+              {'optionalLink' in props && props.optionalLink && props.optionalLink.includeLink && props.optionalLink.link &&
+                <Button
+                  className={styles.link}
+                  colorMode={heroColorMode}
+                  element='link'
+                  href={props.optionalLinkUrl || props.optionalLink.link.internalLink.slug}
+                  iconInlineStart={'arrowRight' as keyof typeof Icon}
+                  prefetch={true}
+                  style='text'
+                  text={rteToHtml(props.optionalLink.link.linkText)}
+                />
+              }
+            </div>
+          </>
+        )}
     </div>
   );
 };

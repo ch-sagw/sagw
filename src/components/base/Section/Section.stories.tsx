@@ -45,3 +45,29 @@ export const SectionWithFilters: StrictStory = {
     title: 'Section title',
   },
 };
+
+export const SectionWithNoStickyContent: StrictStory = {
+  args: {
+    children: <p>some child content comes here...</p>,
+    colorMode: 'white',
+    showTopLine: true,
+  },
+};
+
+export const SectionWithNoTitle: StrictStory = {
+  args: {
+    children: <p>some child content comes here...</p>,
+    colorMode: 'white',
+    showTopLine: true,
+    subtitle: 'Subtitle',
+  },
+};
+
+export const SectionWithNoSubtitle: StrictStory = {
+  args: {
+    children: <p>some child content comes here...</p>,
+    colorMode: 'white',
+    showTopLine: true,
+    title: 'Title',
+  },
+};
