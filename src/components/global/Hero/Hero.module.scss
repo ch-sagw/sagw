@@ -285,11 +285,10 @@
       align-items: flex-start;
       display: flex;
       flex-direction: column-reverse;
-      gap: px-to-rem(var(--spacing-m));
+      row-gap: px-to-rem(var(--spacing-2xl));
 
       @include mq($from: large) {
         flex-direction: column;
-        gap: px-to-rem(var(--spacing-l));
       }
     }
 
