@@ -14,7 +14,6 @@ import { Image } from '@/components/base/Image/Image';
 import { Button } from '@/components/base/Button/Button';
 import { Icon } from '@/icons';
 import { VideoConsentMessage } from '@/components/base/VideoConsentMessage/VideoConsentMessage';
-import dynamic from 'next/dynamic';
 import {
   useLocale, useTranslations,
 } from 'next-intl';
@@ -29,6 +28,8 @@ import {
 } from '@/components/helpers/cookies';
 import { TypedLocale } from 'payload';
 
+import { GumletPlayer } from '@gumlet/react-embed-player';
+
 export type InterfaceVideoPropTypes = {
   duration?: number,
 } & InterfaceVideoBlock;
@@ -42,15 +43,6 @@ const classes = cva([styles.videoWrapper], {
     },
   },
 });
-
-const GumletPlayer = dynamic(
-  () => import('@gumlet/react-embed-player').then((mod) => ({
-    default: mod.GumletPlayer,
-  })),
-  {
-    ssr: false,
-  },
-);
 
 export const Video = ({
   alignment,

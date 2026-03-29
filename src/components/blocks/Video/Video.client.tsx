@@ -4,11 +4,13 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import type { InterfaceVideoBlock } from '@/payload-types';
 
-const VideoComponent = dynamic(() => import('./Video').then((mod) => ({
-  default: mod.Video,
-})), {
-  ssr: false,
-});
+const VideoComponent = dynamic(
+  () => import('./Video').then((mod) => mod.Video),
+  {
+    loading: () => null,
+    ssr: false,
+  },
+);
 
 export type InterfaceVideoClientPropTypes = {
   duration?: number;
