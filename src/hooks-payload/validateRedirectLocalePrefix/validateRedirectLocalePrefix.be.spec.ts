@@ -17,7 +17,9 @@ test.describe('Validate Redirects from/to format', () => {
     await deleteOtherCollections();
   });
 
-  test('disallows leading slashes', async () => {
+  test('disallows leading slashes', {
+    tag: '@redirects',
+  }, async () => {
     const payload = await getPayloadCached();
     const tenant = await getTenant();
 
@@ -48,7 +50,9 @@ test.describe('Validate Redirects from/to format', () => {
     });
   });
 
-  test('requires locale code and slash at start', async () => {
+  test('requires locale code and slash at start', {
+    tag: '@redirects',
+  }, async () => {
     const payload = await getPayloadCached();
     const tenant = await getTenant();
 
@@ -105,7 +109,9 @@ test.describe('Validate Redirects from/to format', () => {
     });
   });
 
-  test('allows correct format', async () => {
+  test('allows correct format', {
+    tag: '@redirects',
+  }, async () => {
     const payload = await getPayloadCached();
     const tenant = await getTenant();
 
@@ -116,6 +122,42 @@ test.describe('Validate Redirects from/to format', () => {
           from: 'de/foo',
           tenant: tenant || '',
           to: 'de/bar',
+        },
+      });
+    })
+      .notRejects();
+
+    await expect(async () => {
+      await payload.create({
+        collection: 'redirects',
+        data: {
+          from: 'fr/foo',
+          tenant: tenant || '',
+          to: 'fr/bar',
+        },
+      });
+    })
+      .notRejects();
+
+    await expect(async () => {
+      await payload.create({
+        collection: 'redirects',
+        data: {
+          from: 'it/foo',
+          tenant: tenant || '',
+          to: 'it/bar',
+        },
+      });
+    })
+      .notRejects();
+
+    await expect(async () => {
+      await payload.create({
+        collection: 'redirects',
+        data: {
+          from: 'en/foo',
+          tenant: tenant || '',
+          to: 'en/bar',
         },
       });
     })
