@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload';
 import { globalContentAccessGeneric } from '@/access/globalContent';
+import { validateRedirectGraph } from '@/hooks-payload/validateRedirectGraph';
 import { validateRedirectLocalePrefix } from '@/hooks-payload/validateRedirectLocalePrefix';
 
 export const Redirects: CollectionConfig = {
@@ -30,7 +31,10 @@ export const Redirects: CollectionConfig = {
     },
   ],
   hooks: {
-    beforeValidate: [validateRedirectLocalePrefix],
+    beforeValidate: [
+      validateRedirectLocalePrefix,
+      validateRedirectGraph,
+    ],
   },
   slug: 'redirects',
 };

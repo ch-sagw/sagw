@@ -4,6 +4,7 @@ import {
   ValidationError,
 } from 'payload';
 import { getLocaleCodes } from '@/i18n/payloadConfig';
+import { normalizeRedirectPath } from '@/utilities/normalizeRedirectPath';
 
 const localeCodes = getLocaleCodes();
 
@@ -96,6 +97,14 @@ export const validateRedirectLocalePrefix: CollectionBeforeValidateHook = ({
     throw new ValidationError({
       errors,
     });
+  }
+
+  if (typeof data.from === 'string') {
+    data.from = normalizeRedirectPath(data.from);
+  }
+
+  if (typeof data.to === 'string') {
+    data.to = normalizeRedirectPath(data.to);
   }
 
   return data;

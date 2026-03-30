@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { redirect } from '@/i18n/navigation';
 import { getLocaleCodes } from '@/i18n/payloadConfig';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { normalizeRedirectPath } from '@/utilities/normalizeRedirectPath';
 import type { TypedLocale } from 'payload';
 
 interface InterfaceRedirectProps {
@@ -64,13 +65,15 @@ export const Redirector = async ({
 }: InterfaceRedirectProps): Promise<null> => {
   const redirects = await getRedirects();
 
-  const redirectItem = redirects.find((redirectEntry) => redirectEntry.from === `${locale}/${url}`);
+  const fromKey = normalizeRedirectPath(`${locale}/${url}`);
+
+  const redirectItem = redirects.find((redirectEntry) => normalizeRedirectPath(redirectEntry.from) === fromKey);
 
   if (redirectItem) {
     const {
       href, locale: targetLocale,
     } = hrefLocaleFromRedirectTo(
-      redirectItem.to,
+      normalizeRedirectPath(redirectItem.to),
       locale,
     );
 
