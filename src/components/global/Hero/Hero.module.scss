@@ -273,4 +273,76 @@
       font-size: px-to-rem(var(--body-text-lead-size));
     }
   }
+
+  &.errorPage {
+    @include mq($to: large) {
+      display: flex;
+      flex-direction: column;
+      gap: px-to-rem(var(--spacing-xl));
+    }
+
+    .errorLeftStack {
+      align-items: flex-start;
+      display: flex;
+      flex-direction: column-reverse;
+      row-gap: px-to-rem(var(--spacing-2xl));
+
+      @include mq($from: large) {
+        flex-direction: column;
+      }
+    }
+
+    .errorStatus {
+      @include title-heading-3;
+
+      color: var(--color-title);
+      margin: 0;
+    }
+
+    .errorIcon {
+      color: var(--interaction-primary);
+      height: px-to-rem(120);
+      width: px-to-rem(120);
+
+      @include mq($from: medium) {
+        height: px-to-rem(200);
+        width: px-to-rem(200);
+      }
+
+      @include mq($from: large) {
+        height: px-to-rem(280);
+        width: px-to-rem(280);
+      }
+    }
+
+    .leftColumn {
+      @include mq($to: large) {
+        margin-block-end: 0;
+      }
+    }
+
+    .rightColumn {
+      @include mq($to: large) {
+        display: flex;
+        flex-direction: column;
+        grid-column: unset;
+        margin-block-end: 0;
+      }
+
+      @include mq($from: large) {
+        display: flex;
+        flex-direction: column;
+        grid-template-columns: unset;
+        margin-block-end: 0;
+
+        > * {
+          grid-column: unset;
+        }
+      }
+
+      .lead {
+        margin-block-end: 0;
+      }
+    }
+  }
 }
