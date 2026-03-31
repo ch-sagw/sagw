@@ -31,7 +31,7 @@ type ExtendedPluginOptions = sentryPluginOptions & {
 
 const plugins: Plugin[] = [
   vercelBlobStorage({
-    clientUploads: true,
+    clientUploads: false,
     collections: {
       [Images.slug]: true,
       [Videos.slug]: true,

@@ -42,6 +42,7 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
     collection: 'videos',
     context: {
       skipCacheInvalidation: true,
+      skipGumletSync: true,
     },
     data: {
       tenant: tenantId,
