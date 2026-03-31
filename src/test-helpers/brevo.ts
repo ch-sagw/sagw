@@ -1,3 +1,5 @@
+import { encodedEmail } from '@/mail/helpers';
+
 const brevoApiUrl = 'https://api.brevo.com/v3';
 
 interface InterfaceBrevoRequestProps {
@@ -237,7 +239,6 @@ export const waitForBrevoContactListMembership = ({
   pollIntervalMs = 2_500,
 }: InterfaceWaitForBrevoContactListMembershipProps): Promise<void> => {
   const deadlineMs = Date.now() + timeoutMs;
-  const encodedEmail = encodeURIComponent(email);
   const attempt = async (): Promise<void> => {
     if (Date.now() > deadlineMs) {
       throw new Error(`Timed out waiting for Brevo contact ${email} list membership.`);
@@ -248,7 +249,7 @@ export const waitForBrevoContactListMembership = ({
       response,
     } = await brevoRequest<InterfaceBrevoContact>({
       apiKey,
-      pathname: `/contacts/${encodedEmail}`,
+      pathname: `/contacts/${encodedEmail(email)}`,
     });
 
     if (response.status === 404) {
