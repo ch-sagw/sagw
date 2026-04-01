@@ -68,6 +68,80 @@ const createInternalDocToHref = (linkUrlMap: Map<string, string>) => ({
   return '';
 };
 
+// appended inside `<a>…</a>` for mailto / new-tab links
+const linkInlineIconSuffix = (node: {
+  fields?: { newTab?: boolean; url?: string | null };
+}): string => {
+  const url = node.fields?.url ?? '';
+
+  if (typeof url === 'string' && url.includes('mailto')) {
+    return mail;
+  }
+
+  if (node.fields?.newTab) {
+    return externalLink;
+  }
+
+  return '';
+};
+
+type LinkHtmlConverters = ReturnType<typeof linkHTMLConverter>;
+
+// Emit SVG as real markup in the link converter instead of a text node
+// (avoids escape/unescape).
+const wrapLinkConvertersWithInlineIcons = (converters: LinkHtmlConverters): LinkHtmlConverters => {
+  const {
+    autolink: autolinkConverter,
+    link: linkConverter,
+  } = converters;
+
+  if (typeof autolinkConverter !== 'function' || typeof linkConverter !== 'function') {
+    return converters;
+  }
+
+  return {
+    ...converters,
+    autolink: (args): string => {
+      const html = autolinkConverter(args);
+      const icon = linkInlineIconSuffix(args.node);
+
+      return icon
+        ? html.replace(/<\/a>$/u, `${icon}</a>`)
+        : html;
+    },
+    link: (args): string => {
+      const html = linkConverter(args);
+      const icon = linkInlineIconSuffix(args.node);
+
+      return icon
+        ? html.replace(/<\/a>$/u, `${icon}</a>`)
+        : html;
+    },
+  };
+};
+
+// older RTE JSON stored the icon as a trailing text node,
+// strip it so we do not duplicate icons.
+const pruneLegacyRteLinkIconTextNodes = (children: LexicalNode[]): LexicalNode[] => {
+  if (children.length === 0) {
+    return children;
+  }
+
+  const last = children[children.length - 1];
+
+  if (last.type !== 'text') {
+    return children;
+  }
+
+  const text = (last as SerializedTextNode).text ?? '';
+
+  if (text === externalLink || text === mail) {
+    return children.slice(0, -1);
+  }
+
+  return children;
+};
+
 const createHtmlConverters = ({
   wrap,
   includeLinks,
@@ -82,9 +156,9 @@ const createHtmlConverters = ({
   const baseConverters = {
     ...defaultConverters,
     ...(includeLinks
-      ? linkHTMLConverter({
+      ? wrapLinkConvertersWithInlineIcons(linkHTMLConverter({
         internalDocToHref: createInternalDocToHref(linkUrlMap),
-      })
+      }))
       : {}),
     ...softHyphenJSXConverter,
     ...nonBreakingSpaceJSXConverter,
@@ -239,43 +313,11 @@ const processLexicalNodes = (
     };
   }
 
-  // Process link nodes to add icons
   if (node.type === 'link' || node.type === 'autolink') {
     const linkNode = node as SerializedLinkNode;
-    const processedChildren = processLexicalNodes(linkNode.children || [], idTracker);
-    const hasExternalLink = linkNode.fields?.newTab === true;
-    const hasMailToLink = linkNode.fields?.url?.includes('mailto');
+    let processedChildren = processLexicalNodes(linkNode.children || [], idTracker);
 
-    let icon;
-
-    if (hasExternalLink) {
-      icon = externalLink;
-    }
-
-    if (hasMailToLink) {
-      icon = mail;
-    }
-
-    // Add external link icon as a new text node if needed
-    if (icon !== undefined) {
-      const iconNode: SerializedTextNode = {
-        detail: 0,
-        format: 0,
-        mode: 'normal',
-        style: '',
-        text: icon,
-        type: 'text',
-        version: 1,
-      };
-
-      return {
-        ...linkNode,
-        children: [
-          ...processedChildren,
-          iconNode,
-        ],
-      };
-    }
+    processedChildren = pruneLegacyRteLinkIconTextNodes(processedChildren);
 
     return {
       ...linkNode,
