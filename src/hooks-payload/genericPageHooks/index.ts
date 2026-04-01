@@ -13,12 +13,6 @@ import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBul
 import {
   hookInvalidateCacheOnPageChange, hookInvalidateCacheOnPageDelete,
 } from '@/hooks-payload/invalidateCacheOnPageChange';
-import {
-  hookCreateRedirectsOnUrlChange,
-  hookDeleteRedirectsOnUrlChange,
-  hookStoreRedirectsForPageDelete,
-  hookValidateRedirectsOnUrlChange,
-} from '@/hooks-payload/createRedirectsOnUrlChange';
 
 interface InterfaceGenericPageHooks {
   afterChange?: CollectionAfterChangeHook[];
@@ -32,7 +26,6 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
   // 3.
   afterChange: [
     hookCascadeBreadcrumbUpdates,
-    hookCreateRedirectsOnUrlChange,
     hookInvalidateCacheOnPageChange,
     ...(additionalHooks?.afterChange ?? []),
   ],
@@ -40,7 +33,6 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
   // 4.
   afterDelete: [
     hookCascadeBreadcrumbUpdatesOnDelete,
-    hookDeleteRedirectsOnUrlChange,
     ...(additionalHooks?.afterDelete ?? []),
   ],
 
@@ -48,14 +40,12 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
   beforeChange: [
     hookPreventBulkPublishForTranslators,
     hookGenerateBreadcrumbs,
-    hookValidateRedirectsOnUrlChange,
     ...(additionalHooks?.beforeChange ?? []),
   ],
 
   // 5.
   beforeDelete: [
     hookInvalidateCacheOnPageDelete,
-    hookStoreRedirectsForPageDelete,
     ...(additionalHooks?.beforeDelete ?? []),
   ],
 
