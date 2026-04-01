@@ -30,10 +30,12 @@ test.describe('access-global', () => {
     const tenantNonSagw = await getTenantNonSagw();
 
     await generateCollectionsExceptPages({
+      addRedirects: true,
       tenant: tenant || '',
     });
 
     await generateCollectionsExceptPages({
+      addRedirects: true,
       tenant: tenantNonSagw || '',
     });
   });
