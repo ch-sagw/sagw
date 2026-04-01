@@ -24,6 +24,7 @@ import { ColorMode } from '@/components/base/types/colorMode';
 import { createPdfGenerationAuth } from '@/utilities/pdfGenerationSecurity';
 import { getThemeNameForTenant } from '../utilities/getThemeNameForTenant';
 import { Redirector } from '@/components/helpers/redirects';
+import { Tracking } from '@/components/helpers/tracking';
 
 export interface InterfacePreFetchedHomePageData {
   pageData: HomePage;
@@ -134,6 +135,7 @@ export const renderPageContent = ({
   pageSlugs,
 }: InterfaceRenderPageContentProps): React.JSX.Element => (
   <TenantProvider tenant={tenantId}>
+    <Tracking />
     <body className={`theme-${themeName}${isMagazineDetail
       ? ' print-magazine-detail'
       : ''}`}>

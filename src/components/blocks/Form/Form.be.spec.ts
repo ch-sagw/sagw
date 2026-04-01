@@ -12,6 +12,7 @@ import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
 import { generateCollectionsExceptPages } from '@/test-helpers/collections-generator';
+import { deleteUser } from '@/mail/helpers';
 
 test.describe('Custom Form', () => {
   beforeEachAcceptCookies();
@@ -680,37 +681,46 @@ test.describe('Newsletter Form', () => {
   test('correctly submits form', async ({
     page,
   }) => {
-    // go to home
-    await page.goto('http://localhost:3000/de');
-    await page.waitForLoadState('networkidle');
-    await page.waitForLoadState('domcontentloaded');
-
-    const form = await page.locator('form')
-      .nth(0);
-    const submit = await form.locator('button');
-
-    const mailField = await form.getByLabel('e-mail');
-    const nameField = await form.getByLabel('Vorname');
-    const lastNameField = await form.getByLabel('Nachname');
-    const checkboxField = await form.getByText('Data privacy checkbox SAGW');
-    const radioField = await form.getByText('Deutsch');
     const time = (new Date())
       .getTime();
+    const email = `test-${time}@foo.bar`;
 
-    await radioField.click();
-    await mailField.fill(`test-${time}@foo.bar`);
-    await nameField.fill('name');
-    await lastNameField.fill('nachname');
-    await checkboxField.click();
+    try {
 
-    await submit.click();
+      // go to home
+      await page.goto('http://localhost:3000/de');
+      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
 
-    // expect success message
-    const notification = page.getByText('Newsletter Submit title success', {
-      exact: true,
-    });
+      const form = await page.locator('form')
+        .nth(0);
+      const submit = await form.locator('button');
 
-    await expect(notification)
-      .toBeVisible();
+      const mailField = await form.getByLabel('e-mail');
+      const nameField = await form.getByLabel('Vorname');
+      const lastNameField = await form.getByLabel('Nachname');
+      const checkboxField = await form.getByText('Data privacy checkbox SAGW');
+      const radioField = await form.getByText('Deutsch');
+
+      await radioField.click();
+      await mailField.fill(email);
+      await nameField.fill('name');
+      await lastNameField.fill('nachname');
+      await checkboxField.click();
+
+      await submit.click();
+
+      // expect success message
+      const notification = page.getByText('Newsletter Submit title success', {
+        exact: true,
+      });
+
+      await expect(notification)
+        .toBeVisible();
+    } finally {
+      await deleteUser({
+        email,
+      });
+    }
   });
 });

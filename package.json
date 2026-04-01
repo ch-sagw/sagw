@@ -1,6 +1,6 @@
 {
   "name": "sagw",
-  "version": "0.39.0",
+  "version": "0.40.0",
   "description": "Codebase for SAGW websites.",
   "author": "Vorhall KlG <info@vorhall.com> (https://vorhall.com)",
   "license": "MIT",
@@ -59,6 +59,7 @@
     "@sentry/nextjs": "^10.45.0",
     "@sparticuz/chromium": "^143.0.4",
     "cross-env": "^10.0.0",
+    "fathom-client": "^3.7.2",
     "graphql": "^16.13.2",
     "next": "^16.2.1",
     "next-intl": "^4.8.3",
