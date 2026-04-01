@@ -1,10 +1,10 @@
 import { CollectionConfig } from 'payload';
-import { globalContentAccessGeneric } from '@/access/globalContent';
+import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
 import { validateRedirectGraph } from '@/hooks-payload/validateRedirectGraph';
 import { validateRedirectLocalePrefix } from '@/hooks-payload/validateRedirectLocalePrefix';
 
 export const Redirects: CollectionConfig = {
-  access: globalContentAccessGeneric,
+  access: globalContentAccessNoTranslatorNoEditor,
   admin: {
     group: 'Global Content',
     hideAPIURL: process.env.ENV === 'prod',
