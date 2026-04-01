@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.40.1](https://github.com/ch-sagw/sagw/compare/v0.40.0...v0.40.1) (2026-04-01)
+
+
+### Bug Fixes
+
+* chore commit to trigger a test deployment ([8b4543a](https://github.com/ch-sagw/sagw/commit/8b4543ac30fea4c708aaed335ee23bc452218094))
+
 ## [0.40.0](https://github.com/ch-sagw/sagw/compare/v0.39.0...v0.40.0) (2026-03-31)
 
 
