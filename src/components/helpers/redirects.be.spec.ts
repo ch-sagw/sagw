@@ -43,16 +43,6 @@ test.describe('Redirects', () => {
       },
     });
 
-    const overviewA = await generateOverviewPage({
-      locale: 'de',
-      parentPage: {
-        documentId: home.docs[0].id,
-        slug: 'homePage',
-      },
-      tenant: tenant || '',
-      title: `overview-a-${time}`,
-    });
-
     const overviewB = await generateOverviewPage({
       locale: 'de',
       parentPage: {
@@ -61,16 +51,6 @@ test.describe('Redirects', () => {
       },
       tenant: tenant || '',
       title: `overview-b-${time}`,
-    });
-
-    await generateDetailPage({
-      locale: 'de',
-      parentPage: {
-        documentId: overviewA.id,
-        slug: 'overviewPage',
-      },
-      tenant: tenant || '',
-      title: `detail-a-${time}`,
     });
 
     await generateDetailPage({
@@ -122,6 +102,124 @@ test.describe('Redirects', () => {
       .toBe(307);
     await expect(redirectResponse.headers().location)
       .toContain(redirectTargetPath);
+
+    // expect target page to be loaded
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveURL(urlPageB);
+
+  });
+
+  test('properly redirects multiple levels', {
+    tag: '@redirects',
+  }, async ({
+    page,
+  }) => {
+    await deleteSetsPages();
+    await deleteOtherCollections();
+    const payload = await getPayloadCached();
+    const tenant = await getTenant();
+    const time = (new Date())
+      .getTime();
+
+    await generateCollectionsExceptPages({
+      tenant: tenant || '',
+    });
+
+    const home = await payload.find({
+      collection: 'homePage',
+      where: {
+        tenant: {
+          equals: tenant,
+        },
+      },
+    });
+
+    const overviewB = await generateOverviewPage({
+      locale: 'de',
+      parentPage: {
+        documentId: home.docs[0].id,
+        slug: 'homePage',
+      },
+      tenant: tenant || '',
+      title: `overview-b-${time}`,
+    });
+
+    await generateDetailPage({
+      locale: 'de',
+      parentPage: {
+        documentId: overviewB.id,
+        slug: 'overviewPage',
+      },
+      tenant: tenant || '',
+      title: `detail-b-${time}`,
+    });
+
+    const url1 = `de/overview-pseudo1-${time}/detail-pseudo1-${time}`;
+    const url2 = `de/overview-pseudo1-b-${time}/detail-pseudo1-b-${time}`;
+    const url3 = `de/overview-a-${time}/detail-a-${time}`;
+    const url4 = `de/overview-b-${time}/detail-b-${time}`;
+
+    // pseudo redirect 1
+    await payload.create({
+      collection: 'redirects',
+      data: {
+        from: url1,
+        tenant: tenant || '',
+        to: url2,
+      },
+    });
+
+    // pseudo redirect 1
+    await payload.create({
+      collection: 'redirects',
+      data: {
+        from: url2,
+        tenant: tenant || '',
+        to: url3,
+      },
+    });
+
+    // redirect detailA to detailB
+    await payload.create({
+      collection: 'redirects',
+      data: {
+        from: url3,
+        tenant: tenant || '',
+        to: url4,
+      },
+    });
+
+    // visit detailA
+    const urlPageA = `http://localhost:3000/de/${url1}`;
+    const urlPageB = `http://localhost:3000/de/${url4}`;
+
+    // first 307 may be middleware (e.g. trailing slash)
+    // with Location still on page A; the CMS redirect is the document 307
+    // whose Location points at page B.
+    const redirectResponsePromise = page.waitForResponse((response) => {
+      if (response.request()
+        .resourceType() !== 'document') {
+        return false;
+      }
+      if (response.status() !== 307) {
+        return false;
+      }
+      const location = response.headers().location ?? '';
+
+      return location.includes(url4);
+    });
+
+    // expect 307 response code and correct target page
+    await page.goto(urlPageA);
+    const redirectResponse = await redirectResponsePromise;
+
+    await expect(redirectResponse.status())
+      .toBe(307);
+    await expect(redirectResponse.headers().location)
+      .toContain(url4);
 
     // expect target page to be loaded
     await page.waitForLoadState('domcontentloaded');
