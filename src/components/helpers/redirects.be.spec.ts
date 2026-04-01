@@ -193,8 +193,8 @@ test.describe('Redirects', () => {
     });
 
     // visit detailA
-    const urlPageA = `http://localhost:3000/de/${url1}`;
-    const urlPageB = `http://localhost:3000/de/${url4}`;
+    const urlPageA = `http://localhost:3000/${url1}`;
+    const urlPageB = `http://localhost:3000/${url4}`;
 
     // first 307 may be middleware (e.g. trailing slash)
     // with Location still on page A; the CMS redirect is the document 307
