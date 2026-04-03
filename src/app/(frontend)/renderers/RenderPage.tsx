@@ -21,8 +21,9 @@ import { hasLocale } from 'next-intl';
 import { CMSConfigError } from '../utilities/CMSConfigError';
 import { SkipLinks } from '@/components/global/SkipLinks/SkipLinks';
 import { ColorMode } from '@/components/base/types/colorMode';
-import { getThemeName } from '../utilities/getThemeName';
 import { createPdfGenerationAuth } from '@/utilities/pdfGenerationSecurity';
+import { getThemeNameForTenant } from '../utilities/getThemeNameForTenant';
+import { Tracking } from '@/components/helpers/tracking';
 
 export interface InterfacePreFetchedHomePageData {
   pageData: HomePage;
@@ -57,28 +58,26 @@ interface InterfaceRenderPageContentProps {
   headerColorMode: ColorMode;
   themeName: string;
   isMagazineDetail?: boolean;
+  skipStatusMessage?: boolean;
 }
 
-const getTenantThemeName = async ({
+const getTenantThemeName = ({
   pageData,
 }: {
   pageData: any;
 }): Promise<string> => {
   let isSagw = true;
+  let tenantId = '';
 
   if (pageData.tenant && typeof pageData.tenant === 'object') {
     isSagw = pageData?.tenant?.name === 'sagw';
+    tenantId = pageData.tenant.id;
   }
 
-  if (isSagw) {
-    return 'sagw';
-  }
-
-  const theme = await getThemeName({
-    id: pageData.tenant.id,
+  return getThemeNameForTenant({
+    isSagw,
+    tenantId,
   });
-
-  return theme.docs[0]?.themeSelector || 'amber';
 };
 
 // Helper to verify lang-config and to render error page
@@ -115,8 +114,7 @@ const verifyLangConfig = async ({
   }
 };
 
-// render helper
-const renderPageContent = ({
+export const renderPageContent = ({
   blocks,
   sourcePage,
   tenantId,
@@ -131,8 +129,10 @@ const renderPageContent = ({
   currentPageId,
   themeName,
   isMagazineDetail = false,
+  skipStatusMessage = false,
 }: InterfaceRenderPageContentProps): React.JSX.Element => (
   <TenantProvider tenant={tenantId}>
+    <Tracking />
     <body className={`theme-${themeName}${isMagazineDetail
       ? ' print-magazine-detail'
       : ''}`}>
@@ -147,11 +147,13 @@ const renderPageContent = ({
           ? 'home'
           : 'detail-page'}>
           {heroComponent}
-          <RenderStatusMessage
-            tenant={tenantId}
-            isHome={isHome}
-            locale={locale}
-          />
+          {!skipStatusMessage && (
+            <RenderStatusMessage
+              tenant={tenantId}
+              isHome={isHome}
+              locale={locale}
+            />
+          )}
           {showBlocks && blocks && (
             <RenderBlocks
               blocks={blocks}

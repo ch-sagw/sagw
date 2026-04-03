@@ -6,8 +6,6 @@ import {
   type InterfaceNotificationClientPropTypes, NotificationClient,
 } from '@/components/blocks/Notification/Notification.client';
 import { defaultDecorator } from '@/storybook-helpers';
-import { simpleRteConfig } from '@/utilities/simpleRteConfig';
-import { rteToHtml } from '@/utilities/rteToHtml';
 
 type StrictStory = StoryObj<typeof NotificationClient> & {
   args: InterfaceNotificationClientPropTypes;
@@ -30,6 +28,6 @@ export default meta;
 
 export const SampleNotification: StrictStory = {
   args: {
-    textHtml: rteToHtml(simpleRteConfig('This is a sample notification message. It can contain <strong>rich text</strong> and <a href="#">links</a>.')),
+    textHtml: 'This is a sample notification message. It can contain <strong>rich text</strong> and <a href="#">links</a>.',
   },
 };

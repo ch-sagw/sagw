@@ -44,3 +44,11 @@
     }
   }
 }
+
+// Hide form's title/subtitle if it's a direct sibling of the hero
+:global(.detail-page) > :global(*:first-child) + section.formBlock {
+  & > h2,
+  & > p {
+    display: none;
+  }
+}

@@ -1,5 +1,63 @@
 # Changelog
 
+## [0.40.0](https://github.com/ch-sagw/sagw/compare/v0.39.0...v0.40.0) (2026-03-31)
+
+
+### Chore
+
+* define homeLink as optional in footer.component as well ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* **deps-dev:** bump the development-dependencies group across 1 directory with 19 updates ([#934](https://github.com/ch-sagw/sagw/issues/934)) ([4ab7e24](https://github.com/ch-sagw/sagw/commit/4ab7e2417a604b25241be86406f5be3a4dd9ac67))
+* **deps:** bump the production-dependencies group across 1 directory with 17 updates ([#933](https://github.com/ch-sagw/sagw/issues/933)) ([cfaa85f](https://github.com/ch-sagw/sagw/commit/cfaa85fa4111794bac276a3a47e3cfbc141b84e5))
+* removing div wrapper around publicationsOverviewBlock and publicationsTeasersBlock ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+
+
+### Features
+
+* adding fg logo in footer ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* adding first draft of keyvisual for homepage ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* adding homeLink property to RenderFooter ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* adding image border and new reference screenshots ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* adding image border and new reference screenshots ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* adding keyvisual base implementation ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* ensure keyvisual is only rendered sagw home ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* ensure rendering of fg logo ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* implement error page ([01620fe](https://github.com/ch-sagw/sagw/commit/01620fef32b338d4299b5084f978cacf4930c97f))
+* integrate tracking ([#952](https://github.com/ch-sagw/sagw/issues/952)) ([4adcee7](https://github.com/ch-sagw/sagw/commit/4adcee71369ce93597200f858b0758f5c3361a8a))
+* replacing homepage teaser network picto ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+
+
+### Bug Fixes
+
+* hide form title/subtitle if direct sibling of hero ([01620fe](https://github.com/ch-sagw/sagw/commit/01620fef32b338d4299b5084f978cacf4930c97f))
+* only show notification if enabled ([#950](https://github.com/ch-sagw/sagw/issues/950)) ([6d0d2c2](https://github.com/ch-sagw/sagw/commit/6d0d2c2fa9ed65ed800d7ec93aac1db07dc20f2e))
+* removing obsolete dash replace ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* rewrite brevo integration to fix various issues ([80311b7](https://github.com/ch-sagw/sagw/commit/80311b766faa1dec0fecd34e567c78930f45f29d))
+* rewrite brevo integration to fix various issues ([#948](https://github.com/ch-sagw/sagw/issues/948)) ([80311b7](https://github.com/ch-sagw/sagw/commit/80311b766faa1dec0fecd34e567c78930f45f29d))
+* support section without title/subtitle ([01620fe](https://github.com/ch-sagw/sagw/commit/01620fef32b338d4299b5084f978cacf4930c97f))
+
+
+### Refactor
+
+* adapting breadcrumb behaviour ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+
+
+### Style
+
+* adding additional section title wrapper ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* adding bottom margin to breadcrumb ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* adding bottom padding for sub navigation before large ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* adding styling exception to fix tests ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* changing hover/focus style for filters ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* limit title and leadtext width for vertical section title block ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+
+
+### Test
+
+* adding new reference screenshots ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* adding new reference screenshots ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* adding new reference screenshots ([3e1a486](https://github.com/ch-sagw/sagw/commit/3e1a48665784ea9811e84e300b45ce729f4d477b))
+* delete user after regular newsletter send ([80311b7](https://github.com/ch-sagw/sagw/commit/80311b766faa1dec0fecd34e567c78930f45f29d))
+
 ## [0.39.0](https://github.com/ch-sagw/sagw/compare/v0.38.2...v0.39.0) (2026-03-25)
 
 

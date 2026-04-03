@@ -45,6 +45,10 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
         false: undefined,
         true: [styles.fullBleed],
       },
+      noStickyContent: {
+        false: undefined,
+        true: [styles.noStickyContent],
+      },
       title: {
         false: [styles.noTitle],
         true: undefined,
