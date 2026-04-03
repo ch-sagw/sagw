@@ -147,7 +147,7 @@ export const RenderFooter = async ({
     contact: footerContactData,
     dataPrivacyPageId: footerDataPrivacyPage.docs[0].id,
     fg,
-    homeLink: `/${locale}`,
+    homeLink: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}`,
     impressumPageId: footerImpressumPage.docs[0].id,
     legal: footerLegalData,
     metaNav: metanavData,

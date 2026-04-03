@@ -6,12 +6,12 @@
 .keyVisualHorizontal {
   --key-visual-horizontal-inner-width: 1518;
   --key-visual-horizontal-inner-height: 1074;
-  --key-visual-horizontal-grid-columns: 9 / 13;
+  --key-visual-horizontal-grid-columns: 1 / 4;
 
   position: relative;
   overflow: hidden;
   grid-column: var(--key-visual-horizontal-grid-columns);
-  grid-row: 3 / -1;
+  grid-row: 2;
   margin-inline-end: px-to-rem(var(--grid-margin), true);
   opacity: 0;
   transition: opacity var(--motion-ease-in-out) var(--motion-speed-slow);
@@ -20,6 +20,9 @@
     opacity: 1;
     transition: opacity var(--motion-ease-in-out) var(--motion-speed-slow);
     margin-inline-start: px-to-rem(var(--grid-margin), true);
+    grid-row: 3 / -1;
+
+    --key-visual-horizontal-grid-columns: 9 / 13;
   }
 
   @include mq($from: ultra) {
@@ -51,20 +54,16 @@
 .keyVisualVertical {
   --key-visual-vertical-inner-width: 514;
   --key-visual-vertical-inner-height: 724;
-  --key-visual-vertical-grid-columns: 1 / 4;
+  --key-visual-vertical-grid-columns: 1 / -1;
 
   overflow: hidden;
   grid-column: var(--key-visual-vertical-grid-columns);
   grid-row: 1 / -1;
   contain: strict;
-  margin-block-end: px-to-rem(var(--spacing-2xl));
+  margin-block-end: px-to-rem(var(--spacing-4xl));
 
   @include mq($to: medium) {
     margin-inline: px-to-rem(var(--grid-margin), true);
-  }
-
-  @include mq($from: small) {
-    --key-visual-vertical-grid-columns: 1 / 8;
   }
 
   @include mq($from: medium) {
@@ -110,6 +109,7 @@
 
   @include mq($to: medium) {
     min-width: 125%;
+    inset-inline-end: px-to-rem(var(--grid-margin));
   }
 
   .keyVisualVerticalOuter,

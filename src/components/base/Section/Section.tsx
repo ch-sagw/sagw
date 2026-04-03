@@ -95,7 +95,6 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
       className={sectionClasses({
         colorMode,
         fullBleed,
-        noStickyContent: !subtitle && !title && !additionalStickyContent,
         title: title !== undefined,
       })}
     >

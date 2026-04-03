@@ -35,34 +35,35 @@ import { openConsentOverlayEventName } from '@/components/helpers/cookies';
 import { useTranslations } from 'next-intl';
 
 export type InterfaceFooterComponentPropTypes = {
+  consentOverlay: Omit<InterfaceConsentOverlayClientPropTypes, 'onClose' | 'onConsentGiven'>;
   contact: InterfaceFooterContact;
+  dataPrivacyUrl: string;
+  fg?: boolean;
   homeLink?: string;
+  impressumUrl: string;
   legal: InterfaceFooterLegal;
+  linkUrls: Record<string, string>;
   metaNav: InterfaceHeaderMetaNavigation;
   navigation: InterfaceHeaderNavigation;
   socialLinks?: InterfaceFooterSocialLinks;
   structuredDataImage: string;
   structuredDataUrl: string;
-  fg?: boolean;
-  consentOverlay: Omit<InterfaceConsentOverlayClientPropTypes, 'onClose' | 'onConsentGiven'>;
-  linkUrls: Record<string, string>;
-  dataPrivacyUrl: string;
-  impressumUrl: string;
 };
 
 export const FooterComponent = ({
+  consentOverlay,
   contact,
+  dataPrivacyUrl,
+  fg,
   legal,
+  homeLink,
+  impressumUrl,
+  linkUrls,
   metaNav,
   navigation,
   socialLinks,
   structuredDataImage,
   structuredDataUrl,
-  fg,
-  consentOverlay,
-  linkUrls,
-  dataPrivacyUrl,
-  impressumUrl,
 }: InterfaceFooterComponentPropTypes): React.JSX.Element => {
   const i18nA11y = useTranslations('a11y');
   const overlayDialogRef = useRef<HTMLDialogElement>(null);
@@ -226,7 +227,7 @@ export const FooterComponent = ({
 
   if (fg) {
     logoProps.linkText = i18nA11y('footerLogoLinkText');
-    logoProps.link = '/';
+    logoProps.link = homeLink || '/';
   }
 
   return (

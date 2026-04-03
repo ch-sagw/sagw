@@ -72,8 +72,8 @@
     &.expanded div[data-header] {
       margin-inline-end: px-to-rem(var(--grid-margin), true);
       padding-inline-end: px-to-rem(var(--grid-margin));
-      height: 100dvh;
-      max-height: 100dvh;
+      height: 100vh;
+      max-height: 100vh;
       overflow-y: scroll;
       overflow-x: hidden;
       scrollbar-gutter: stable;
@@ -84,13 +84,13 @@
       background-color: var(--background-inverted);
     }
 
-    // Needed for visual tests
-    &.dark:not(:has(.keyVisual)) {
-      background-color: var(--background-inverted);
-    }
-
     &.white {
       background-color: white;
+    }
+
+    // Needed for visual tests
+    &.dark:has(+ p) {
+      background-color: var(--background-inverted);
     }
   }
 
