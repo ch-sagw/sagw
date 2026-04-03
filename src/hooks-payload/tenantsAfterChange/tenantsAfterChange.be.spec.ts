@@ -21,6 +21,7 @@ test.describe('After creating tenant', () => {
     const time = (new Date())
       .getTime();
     const tenant = await generateTenant({
+      addDefaultTenantData: true,
       name: `tenant-${time}`,
     });
 

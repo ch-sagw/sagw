@@ -21,6 +21,7 @@ test.describe('Before deleting tenant', () => {
     const time = (new Date())
       .getTime();
     const tenant = await generateTenant({
+      addDefaultTenantData: true,
       name: `tenant-${time}`,
     });
 
@@ -97,12 +98,15 @@ test.describe('Before deleting tenant', () => {
     const time = (new Date())
       .getTime();
     const tenant = await generateTenant({
+      addDefaultTenantData: true,
       name: `tenant-${time}`,
     });
     const tenant2 = await generateTenant({
+      addDefaultTenantData: true,
       name: `tenant2-${time}`,
     });
     const tenant3 = await generateTenant({
+      addDefaultTenantData: true,
       name: `tenant3-${time}`,
     });
 
