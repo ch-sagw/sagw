@@ -61,10 +61,17 @@ export const RenderHeader = async ({
     return <CMSConfigError message='No metanav data in header data' />;
   }
 
+  // logo link
+  let logoLink = `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}`;
+
+  if (tenantName.name !== 'sagw') {
+    logoLink = `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/${tenantName.name}`;
+  }
+
   const headerProps: InterfaceHeaderPropTypes = {
     colorMode,
     documentId: currentPageId,
-    logoLink: `/${locale}`,
+    logoLink,
     menuButton: {
       close: i18nMenu('close'),
       open: i18nMenu('open'),
