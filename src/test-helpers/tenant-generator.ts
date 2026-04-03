@@ -54,6 +54,9 @@ export const generateTenant = async ({
 
   const tenant = await payload.create({
     collection: 'tenants',
+    context: {
+      skipTenantInitialData: true,
+    },
     data: {
       faviconName: `favicon-${name}`,
       name,

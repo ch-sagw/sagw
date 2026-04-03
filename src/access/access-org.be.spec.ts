@@ -32,6 +32,9 @@ test.describe('access-org', () => {
 
         await payload.create({
           collection: 'tenants',
+          context: {
+            skipTenantInitialData: true,
+          },
           data: {
             faviconName: 'foo',
             name: `${(new Date())
@@ -69,6 +72,9 @@ test.describe('access-org', () => {
 
         await payload.create({
           collection: 'tenants',
+          context: {
+            skipTenantInitialData: true,
+          },
           data: {
             faviconName: 'foo',
             name: `${(new Date())
@@ -106,6 +112,9 @@ test.describe('access-org', () => {
 
         await payload.create({
           collection: 'tenants',
+          context: {
+            skipTenantInitialData: true,
+          },
           data: {
             faviconName: 'foo',
             name: `${(new Date())
@@ -143,6 +152,9 @@ test.describe('access-org', () => {
 
         await payload.create({
           collection: 'tenants',
+          context: {
+            skipTenantInitialData: true,
+          },
           data: {
             faviconName: 'foo',
             name: `${(new Date())
@@ -186,6 +198,9 @@ test.describe('access-org', () => {
 
         await payload.delete({
           collection: 'tenants',
+          context: {
+            skipTenantInitialData: true,
+          },
           id: tenant,
           overrideAccess: false,
           req: {
@@ -214,6 +229,9 @@ test.describe('access-org', () => {
 
         await payload.delete({
           collection: 'tenants',
+          context: {
+            skipTenantInitialData: true,
+          },
           id: tenant,
           overrideAccess: false,
           req: {
@@ -242,6 +260,9 @@ test.describe('access-org', () => {
 
         await payload.delete({
           collection: 'tenants',
+          context: {
+            skipTenantInitialData: true,
+          },
           id: tenant,
           overrideAccess: false,
           req: {
@@ -270,6 +291,9 @@ test.describe('access-org', () => {
 
         await payload.delete({
           collection: 'tenants',
+          context: {
+            skipTenantInitialData: true,
+          },
           id: tenant,
           overrideAccess: false,
           req: {
@@ -568,6 +592,9 @@ test.describe('access-org', () => {
 
         await payload.create({
           collection: 'tenants',
+          context: {
+            skipTenantInitialData: true,
+          },
           data: {
             faviconName: 'foo',
             name: 'testtenant',
@@ -600,6 +627,9 @@ test.describe('access-org', () => {
 
         await payload.delete({
           collection: 'tenants',
+          context: {
+            skipTenantInitialData: true,
+          },
           overrideAccess: false,
           req: {
             data: {
