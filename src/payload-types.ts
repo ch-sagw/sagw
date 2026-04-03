@@ -274,16 +274,11 @@ export interface HomePage {
  */
 export interface Tenant {
   id: string;
-  name: string;
   title: string;
   /**
    * Used for url paths, example: /tenant-slug/page-slug
    */
   slug: string;
-  /**
-   * The final root URL for the tenant, example: https://www.sagw.ch
-   */
-  url: string;
   faviconName: string;
   languages?: {
     de?: boolean | null;
@@ -6763,10 +6758,8 @@ export interface EventCategorySelect<T extends boolean = true> {
  * via the `definition` "tenants_select".
  */
 export interface TenantsSelect<T extends boolean = true> {
-  name?: T;
   title?: T;
   slug?: T;
-  url?: T;
   faviconName?: T;
   languages?:
     | T

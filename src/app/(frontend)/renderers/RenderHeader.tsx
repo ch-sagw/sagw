@@ -11,6 +11,7 @@ import {
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { CMSConfigError } from '../utilities/CMSConfigError';
 import { getTenantName } from '../utilities/getTenantName';
+import { tenantSlugForLocale } from '@/utilities/tenantSlug';
 
 type InterfaceHeaderRendererProps = {
   colorMode: ColorMode;
@@ -71,7 +72,7 @@ export const RenderHeader = async ({
     },
     metanav: metanavData,
     navigation: navData,
-    tenant: tenantName.name || 'sagw',
+    tenant: tenantSlugForLocale(tenantName.slug, locale) || 'sagw',
   };
 
   return (

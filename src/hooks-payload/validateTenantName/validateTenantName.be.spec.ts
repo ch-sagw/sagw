@@ -10,7 +10,7 @@ extendExpect(expect);
 test('throws validation error on malformed tenant name', async () => {
   await expect(async () => {
     await generateTenant({
-      name: `${(new Date())
+      slug: `${(new Date())
         .getTime()}-$a`,
     });
 

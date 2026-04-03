@@ -9,6 +9,7 @@ import {
 import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
 import { getCollectionIDType } from '@/utilities/getCollectionIdType';
 import { User } from '@/payload-types';
+import { isSagwTenantSlug } from '@/utilities/tenantSlug';
 
 export const userRoles = {
   admin: 'super-admin',
@@ -101,11 +102,10 @@ export const isSagwTenant = async (req: PayloadRequest): Promise<boolean> => {
     const requestedTenant = await req.payload.findByID({
       collection: 'tenants',
       id: requestedTenantId,
+      locale: 'all',
     });
 
-    const tenantName = requestedTenant.name.toLowerCase();
-
-    return tenantName === 'sagw';
+    return isSagwTenantSlug(requestedTenant.slug);
   } catch {
     return false;
   }

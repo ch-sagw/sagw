@@ -37,16 +37,12 @@ test.describe('access-org', () => {
           },
           data: {
             faviconName: 'foo',
-            name: `${(new Date())
-              .getTime()
-              .toString()}1`,
             slug: `${(new Date())
               .getTime()
               .toString()}1`,
             title: `${(new Date())
               .getTime()
               .toString()}1`,
-            url: 'https://www.foo.bar',
           },
           overrideAccess: false,
           req: {
@@ -77,16 +73,12 @@ test.describe('access-org', () => {
           },
           data: {
             faviconName: 'foo',
-            name: `${(new Date())
-              .getTime()
-              .toString()}1`,
             slug: `${(new Date())
               .getTime()
               .toString()}1`,
             title: `${(new Date())
               .getTime()
               .toString()}1`,
-            url: 'https://www.foo.bar',
           },
           overrideAccess: false,
           req: {
@@ -117,16 +109,12 @@ test.describe('access-org', () => {
           },
           data: {
             faviconName: 'foo',
-            name: `${(new Date())
-              .getTime()
-              .toString()}1`,
             slug: `${(new Date())
               .getTime()
               .toString()}1`,
             title: `${(new Date())
               .getTime()
               .toString()}1`,
-            url: 'https://www.foo.bar',
           },
           overrideAccess: false,
           req: {
@@ -157,16 +145,12 @@ test.describe('access-org', () => {
           },
           data: {
             faviconName: 'foo',
-            name: `${(new Date())
-              .getTime()
-              .toString()}1`,
             slug: `${(new Date())
               .getTime()
               .toString()}1`,
             title: `${(new Date())
               .getTime()
               .toString()}1`,
-            url: 'https://www.foo.bar',
           },
           overrideAccess: false,
           req: {
@@ -597,10 +581,8 @@ test.describe('access-org', () => {
           },
           data: {
             faviconName: 'foo',
-            name: 'testtenant',
             slug: 'testtenant',
             title: 'testtenant',
-            url: 'https://www.foo.bar',
           },
           overrideAccess: false,
           req: {

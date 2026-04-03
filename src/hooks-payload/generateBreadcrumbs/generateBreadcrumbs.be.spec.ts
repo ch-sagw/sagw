@@ -41,7 +41,7 @@ test.describe('breadcrumb-geneartion', () => {
 
     try {
       const tenant = await generateTenant({
-        name: `${(new Date())
+        slug: `${(new Date())
           .getTime()}-tenant-1`,
       });
 
@@ -226,7 +226,7 @@ test.describe('breadcrumb-geneartion', () => {
 
     try {
       const tenant = await generateTenant({
-        name: `${(new Date())
+        slug: `${(new Date())
           .getTime()}-tenant-11`,
       });
 
@@ -419,7 +419,7 @@ test.describe('breadcrumb-geneartion', () => {
 
     try {
       const tenant = await generateTenant({
-        name: `${(new Date())
+        slug: `${(new Date())
           .getTime()}-tenant-3`,
       });
 

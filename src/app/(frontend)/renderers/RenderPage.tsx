@@ -24,6 +24,7 @@ import { ColorMode } from '@/components/base/types/colorMode';
 import { createPdfGenerationAuth } from '@/utilities/pdfGenerationSecurity';
 import { getThemeNameForTenant } from '../utilities/getThemeNameForTenant';
 import { Tracking } from '@/components/helpers/tracking';
+import { isSagwTenantSlug } from '@/utilities/tenantSlug';
 
 export interface InterfacePreFetchedHomePageData {
   pageData: HomePage;
@@ -70,7 +71,7 @@ const getTenantThemeName = ({
   let tenantId = '';
 
   if (pageData.tenant && typeof pageData.tenant === 'object') {
-    isSagw = pageData?.tenant?.name === 'sagw';
+    isSagw = isSagwTenantSlug(pageData?.tenant?.slug);
     tenantId = pageData.tenant.id;
   }
 

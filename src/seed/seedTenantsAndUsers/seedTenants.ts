@@ -3,8 +3,8 @@ import { Tenant } from '@/payload-types';
 import { Payload } from 'payload';
 
 interface InterfaceSeedTenant {
-  name: string;
   slug: string;
+  title: string;
 }
 
 interface InterfaceSeedTenantsProps {
@@ -36,10 +36,8 @@ export const seedTenants = async (props: InterfaceSeedTenantsProps): Promise<Ten
         context: skipTenantInitialDataContext,
         data: {
           faviconName: `https://www.foo${index}.bar`,
-          name: tenant.name,
           slug: tenant.slug,
-          title: tenant.name,
-          url: `https://www.foo${index}.bar`,
+          title: tenant.title,
         },
       }));
     });

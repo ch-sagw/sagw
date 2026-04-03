@@ -45,7 +45,7 @@ test.describe('breadcrumb-cascade', () => {
 
     try {
       const tenant = await generateTenant({
-        name: `${time}-tenant-1`,
+        slug: `${time}-tenant-1`,
       });
 
       const home = await generateHomePage({
@@ -143,7 +143,7 @@ test.describe('breadcrumb-cascade', () => {
 
     try {
       const tenant = await generateTenant({
-        name: `${time}-tenant-11`,
+        slug: `${time}-tenant-11`,
       });
 
       const home = await generateHomePage({
@@ -248,7 +248,7 @@ test.describe('breadcrumb-cascade', () => {
 
     try {
       const tenant = await generateTenant({
-        name: `${time}-tenant-2`,
+        slug: `${time}-tenant-2`,
       });
 
       const home = await generateHomePage({
@@ -347,7 +347,7 @@ test.describe('breadcrumb-cascade', () => {
 
     try {
       const tenant = await generateTenant({
-        name: `${time}-tenant-2`,
+        slug: `${time}-tenant-2`,
       });
 
       const home = await generateHomePage({
@@ -451,7 +451,7 @@ test.describe('breadcrumb-cascade', () => {
 
     try {
       const tenant = await generateTenant({
-        name: `${time}-tenant-2`,
+        slug: `${time}-tenant-2`,
       });
 
       const home = await generateHomePage({
@@ -600,7 +600,7 @@ test.describe('breadcrumb-cascade', () => {
 
     try {
       const tenant = await generateTenant({
-        name: `${time}-tenant-4`,
+        slug: `${time}-tenant-4`,
       });
 
       const home = await generateHomePage({
@@ -714,7 +714,7 @@ test.describe('breadcrumb-cascade', () => {
 
     try {
       const tenant = await generateTenant({
-        name: `${time}-tenant-5`,
+        slug: `${time}-tenant-5`,
       });
 
       const home = await generateHomePage({
@@ -808,7 +808,7 @@ test.describe('breadcrumb-cascade', () => {
 
     try {
       const tenant = await generateTenant({
-        name: `${time}-tenant-6`,
+        slug: `${time}-tenant-6`,
       });
 
       const home = await generateHomePage({
@@ -905,7 +905,7 @@ test.describe('breadcrumb-cascade', () => {
 
     try {
       const tenant = await generateTenant({
-        name: `${time}-tenant-7`,
+        slug: `${time}-tenant-7`,
       });
 
       const home = await generateHomePage({
@@ -1015,7 +1015,7 @@ test.describe('breadcrumb-cascade', () => {
 
     try {
       const tenant = await generateTenant({
-        name: `${time}-tenant-1`,
+        slug: `${time}-tenant-1`,
       });
 
       home = await generateHomePage({

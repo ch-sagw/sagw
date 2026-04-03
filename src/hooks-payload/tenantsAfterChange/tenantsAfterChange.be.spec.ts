@@ -22,7 +22,7 @@ test.describe('After creating tenant', () => {
       .getTime();
     const tenant = await generateTenant({
       addDefaultTenantData: true,
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const consent = await payload.find({

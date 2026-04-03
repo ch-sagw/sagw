@@ -1,12 +1,12 @@
 import 'server-only';
 import { TypedLocale } from 'payload';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { isSagwTenantSlug } from '@/utilities/tenantSlug';
 
 export interface InterfaceGetTenantFromUrlResult {
   tenantId: string;
   isSagw: boolean;
   tenantSlug: string | null;
-  url: string;
 }
 
 // extracts tenant information from URL segment.
@@ -23,8 +23,9 @@ export const getTenantFromUrl = async (
       collection: 'tenants',
       depth: 1,
       limit: 1,
+      locale,
       where: {
-        name: {
+        slug: {
           equals: 'sagw',
         },
       },
@@ -35,19 +36,17 @@ export const getTenantFromUrl = async (
         isSagw: true,
         tenantId: sagwTenant.docs[0].id,
         tenantSlug: null,
-        url: sagwTenant.docs[0].url,
       };
     }
 
     // fallback if SAGW tenant not found, should not happen!!
 
-    console.warn('getTenantFromUrl: did not find tenant with name', tenantSlugSegment);
+    console.warn('getTenantFromUrl: did not find tenant with slug sagw', tenantSlugSegment);
 
     return {
       isSagw: true,
       tenantId: '',
       tenantSlug: null,
-      url: '',
     };
   }
 
@@ -68,12 +67,11 @@ export const getTenantFromUrl = async (
   if (tenants.docs && tenants.docs.length > 0) {
     const [tenant] = tenants.docs;
 
-    if (tenant.name !== 'sagw') {
+    if (!isSagwTenantSlug(tenant.slug)) {
       return {
         isSagw: false,
         tenantId: tenant.id,
         tenantSlug: tenantSlugSegment,
-        url: tenant.url,
       };
     }
   }
@@ -84,8 +82,9 @@ export const getTenantFromUrl = async (
     collection: 'tenants',
     depth: 1,
     limit: 1,
+    locale,
     where: {
-      name: {
+      slug: {
         equals: 'sagw',
       },
     },
@@ -96,7 +95,6 @@ export const getTenantFromUrl = async (
       isSagw: true,
       tenantId: sagwTenant.docs[0].id,
       tenantSlug: null,
-      url: sagwTenant.docs[0].url,
     };
   }
 
@@ -105,7 +103,5 @@ export const getTenantFromUrl = async (
     isSagw: true,
     tenantId: '',
     tenantSlug: null,
-    url: '',
   };
 };
-

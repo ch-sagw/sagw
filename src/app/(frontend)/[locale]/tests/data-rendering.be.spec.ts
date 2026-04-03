@@ -27,7 +27,7 @@ test.describe('Data rendering (sagw)', () => {
     const time = (new Date())
       .getTime();
     const nonSagwTenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     try {

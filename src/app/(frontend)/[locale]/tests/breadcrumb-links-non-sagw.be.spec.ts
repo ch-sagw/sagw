@@ -37,7 +37,7 @@ test.describe('Breadcrumb links (non-sagw)', () => {
     const time = (new Date())
       .getTime();
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
     const home = await generateHomePage({
       sideTitle: 'Side',

@@ -34,7 +34,7 @@ test.describe('Header/Footer links (non-sagw)', () => {
       .getTime();
     const payload = await getPayloadCached();
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
     const home = await generateHomePage({
       sideTitle: 'Side Title',

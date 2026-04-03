@@ -11,8 +11,7 @@ export const Tenants: CollectionConfig = {
   access: tenantsAccess,
   admin: {
     defaultColumns: [
-      'name',
-      'url',
+      'title',
       'slug',
     ],
     group: 'Org',
@@ -20,20 +19,9 @@ export const Tenants: CollectionConfig = {
       user,
     }): boolean => !isSuperOrTenantAdmin(user),
     hideAPIURL: process.env.ENV === 'prod',
-    useAsTitle: 'name',
+    useAsTitle: 'title',
   },
   fields: [
-    {
-      access: fieldsAccess,
-      hooks: {
-        beforeValidate: [validateTenantName],
-      },
-      localized: false,
-      name: 'name',
-      required: true,
-      type: 'text',
-      unique: true,
-    },
     {
       access: fieldsAccess,
       localized: true,
@@ -46,22 +34,14 @@ export const Tenants: CollectionConfig = {
       admin: {
         description: 'Used for url paths, example: /tenant-slug/page-slug',
       },
+      hooks: {
+        beforeValidate: [validateTenantName],
+      },
       index: true,
       localized: true,
       name: 'slug',
       required: true,
       type: 'text',
-    },
-    {
-      access: fieldsAccess,
-      admin: {
-        description: 'The final root URL for the tenant, example: https://www.sagw.ch',
-      },
-      localized: false,
-      name: 'url',
-      required: true,
-      type: 'text',
-      unique: false,
     },
     {
       access: fieldsAccess,
