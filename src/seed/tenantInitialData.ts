@@ -1,7 +1,17 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
-import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { BasePayload } from 'payload';
+
+// Lazy-load payload so Tenants hooks do not import
+// payload.config during module init (circular import).
+const getPayload = async (): Promise<BasePayload> => {
+  const {
+    getPayloadCached,
+  } = await import('@/utilities/getPayloadCached');
+
+  return getPayloadCached();
+};
 
 interface InterfaceAddDataForTenantProps {
   tenantId: string;
@@ -22,7 +32,7 @@ type InterfaceAddDataForTenantReturnPropsWithTenant = {
 const addInitialDataGerman = async ({
   tenantId,
 }: InterfaceAddDataForTenantProps): Promise<InterfaceAddDataForTenantReturnProps> => {
-  const payload = await getPayloadCached();
+  const payload = await getPayload();
 
   // error page
   const errorPage = await payload.create({
@@ -220,7 +230,7 @@ const addInitialDataFrench = async ({
   status,
   form,
 }: InterfaceAddDataForTenantReturnPropsWithTenant): Promise<void> => {
-  const payload = await getPayloadCached();
+  const payload = await getPayload();
 
   // error page
   await payload.update({
@@ -416,7 +426,7 @@ const addInitialDataItalian = async ({
   status,
   form,
 }: InterfaceAddDataForTenantReturnPropsWithTenant): Promise<void> => {
-  const payload = await getPayloadCached();
+  const payload = await getPayload();
 
   // error page
   await payload.update({
@@ -611,7 +621,7 @@ const addInitialDataEnglish = async ({
   status,
   form,
 }: InterfaceAddDataForTenantReturnPropsWithTenant): Promise<void> => {
-  const payload = await getPayloadCached();
+  const payload = await getPayload();
 
   // error page
   await payload.update({

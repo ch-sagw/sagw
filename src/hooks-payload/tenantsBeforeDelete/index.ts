@@ -1,4 +1,3 @@
-import { collections } from '@/collections';
 import { deleteCollectionsData } from '@/utilities/deleteCollectionsData';
 import type {
   CollectionBeforeDeleteHook, CollectionSlug,
@@ -12,6 +11,9 @@ export const hookTenantsBeforeDelete: CollectionBeforeDeleteHook = async ({
   }
 
   try {
+    const {
+      collections,
+    } = await import('@/collections');
     // skip users and tenants
     const collectionsSlugs = collections
       .map((collectionSlug) => collectionSlug.slug)

@@ -5,6 +5,9 @@ import {
 export const setCookieBasedOnDomain: CollectionAfterLoginHook = async ({
   req, user,
 }) => {
+
+  // this will not work... host does not correspond to any
+  // of the tenant's fields
   const relatedOrg = await req.payload.find({
     collection: 'tenants',
     depth: 0,
