@@ -22,6 +22,7 @@ export const invalidateCache = async ({
   try {
     // Get page URL using updated getPageUrl (no Links collection dependency)
     const url = await getPageUrl({
+      absolute: false,
       locale,
       pageId,
       payload,

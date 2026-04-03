@@ -13,6 +13,7 @@ import {
   expect,
   test,
 } from '@playwright/test';
+import { pathnameFromLinkHref } from '@/test-helpers/link-href-pathname';
 import {
   generateConsentData,
   generateDataPrivacyPage,
@@ -499,20 +500,20 @@ test.describe('Home links (non-sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(formCheckboxLink)
+    await expect(pathnameFromLinkHref(formCheckboxLink))
       .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}`);
-    await expect(rteLink)
+    await expect(pathnameFromLinkHref(rteLink))
       .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}`);
-    await expect(heroLink)
+    await expect(pathnameFromLinkHref(heroLink))
       .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}`);
-    await expect(homeTeaserLink)
+    await expect(pathnameFromLinkHref(homeTeaserLink))
       .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}`);
-    await expect(statusMessageLink)
+    await expect(pathnameFromLinkHref(statusMessageLink))
       .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}`);
 
-    await expect(dataPrivacyLink)
+    await expect(pathnameFromLinkHref(dataPrivacyLink))
       .toBe(`/de/tenant-${time}/data-privacy-de`);
-    await expect(impressumLink)
+    await expect(pathnameFromLinkHref(impressumLink))
       .toBe(`/de/tenant-${time}/impressum-de`);
 
     // #########################################
@@ -556,20 +557,20 @@ test.describe('Home links (non-sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(formCheckboxLinkIt)
+    await expect(pathnameFromLinkHref(formCheckboxLinkIt))
       .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}`);
-    await expect(rteLinkIt)
+    await expect(pathnameFromLinkHref(rteLinkIt))
       .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}`);
-    await expect(heroLinkIt)
+    await expect(pathnameFromLinkHref(heroLinkIt))
       .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
-    await expect(homeTeaserLinkIt)
+    await expect(pathnameFromLinkHref(homeTeaserLinkIt))
       .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}`);
-    await expect(statusMessageLinkIt)
+    await expect(pathnameFromLinkHref(statusMessageLinkIt))
       .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
 
-    await expect(dataPrivacyLinkIt)
+    await expect(pathnameFromLinkHref(dataPrivacyLinkIt))
       .toBe(`/it/tenant-${time}-it/data-privacy-it`);
-    await expect(impressumLinkIt)
+    await expect(pathnameFromLinkHref(impressumLinkIt))
       .toBe(`/it/tenant-${time}-it/impressum-it`);
 
   });

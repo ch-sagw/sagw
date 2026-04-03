@@ -12,6 +12,7 @@ import {
   expect,
   test,
 } from '@playwright/test';
+import { pathnameFromLinkHref } from '@/test-helpers/link-href-pathname';
 import {
   generateDetailPage,
   generateEventDetailPage,
@@ -443,25 +444,25 @@ test.describe('Overview page regular links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(statusMessageLink)
+    await expect(pathnameFromLinkHref(statusMessageLink))
       .toBe(`/de/overview-page-${time}/d1-${time}`);
 
-    await expect(checkboxLink)
+    await expect(pathnameFromLinkHref(checkboxLink))
       .toBe(`/de/overview-page-${time}/d1-${time}/d2-${time}`);
 
-    await expect(rteLink1)
+    await expect(pathnameFromLinkHref(rteLink1))
       .toBe(`/de/overview-page-${time}/d1-${time}/d2-${time}/d3-${time}`);
 
-    await expect(accordionLink)
+    await expect(pathnameFromLinkHref(accordionLink))
       .toBe(`/de/overview-page-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}`);
 
-    await expect(notificationLink)
+    await expect(pathnameFromLinkHref(notificationLink))
       .toBe(`/de/overview-page-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}`);
 
-    await expect(dataPrivacyLink)
+    await expect(pathnameFromLinkHref(dataPrivacyLink))
       .toBe('/de/data-privacy-de');
 
-    await expect(impressumLink)
+    await expect(pathnameFromLinkHref(impressumLink))
       .toBe('/de/impressum-de');
 
     // #########################################
@@ -506,25 +507,25 @@ test.describe('Overview page regular links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(statusMessageLinkIt)
+    await expect(pathnameFromLinkHref(statusMessageLinkIt))
       .toBe(`/it/overview-page-it-${time}/d1-it-${time}`);
 
-    await expect(checkboxLinkIt)
+    await expect(pathnameFromLinkHref(checkboxLinkIt))
       .toBe(`/it/overview-page-it-${time}/d1-it-${time}/d2-it-${time}`);
 
-    await expect(rteLink1It)
+    await expect(pathnameFromLinkHref(rteLink1It))
       .toBe(`/it/overview-page-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
 
-    await expect(accordionLinkIt)
+    await expect(pathnameFromLinkHref(accordionLinkIt))
       .toBe(`/it/overview-page-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}`);
 
-    await expect(notificationLinkIt)
+    await expect(pathnameFromLinkHref(notificationLinkIt))
       .toBe(`/it/overview-page-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
 
-    await expect(dataPrivacyLinkIt)
+    await expect(pathnameFromLinkHref(dataPrivacyLinkIt))
       .toBe('/it/data-privacy-it');
 
-    await expect(impressumLinkIt)
+    await expect(pathnameFromLinkHref(impressumLinkIt))
       .toBe('/it/impressum-it');
   });
 });
@@ -805,7 +806,7 @@ test.describe('Overview page overview-block links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(eventLink)
+    await expect(pathnameFromLinkHref(eventLink))
       .toStrictEqual(`/de/overview-page-${time}/event-${time}`);
 
     // it
@@ -818,7 +819,7 @@ test.describe('Overview page overview-block links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(eventLinkIt)
+    await expect(pathnameFromLinkHref(eventLinkIt))
       .toStrictEqual(`/it/overview-page-it-${time}/event-it-${time}`);
 
     // #########################################
@@ -849,7 +850,7 @@ test.describe('Overview page overview-block links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(newsLink)
+    await expect(pathnameFromLinkHref(newsLink))
       .toStrictEqual(`/de/overview-page-${time}/news-${time}`);
 
     // it
@@ -862,7 +863,7 @@ test.describe('Overview page overview-block links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(newsLinkIt)
+    await expect(pathnameFromLinkHref(newsLinkIt))
       .toStrictEqual(`/it/overview-page-it-${time}/news-it-${time}`);
 
     // #########################################
@@ -892,7 +893,7 @@ test.describe('Overview page overview-block links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(projectLink)
+    await expect(pathnameFromLinkHref(projectLink))
       .toStrictEqual(`/de/overview-page-${time}/project-${time}`);
 
     // it
@@ -905,7 +906,7 @@ test.describe('Overview page overview-block links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(projectLinkIt)
+    await expect(pathnameFromLinkHref(projectLinkIt))
       .toStrictEqual(`/it/overview-page-it-${time}/project-it-${time}`);
 
     // #########################################
@@ -935,7 +936,7 @@ test.describe('Overview page overview-block links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(magazineLink)
+    await expect(pathnameFromLinkHref(magazineLink))
       .toStrictEqual(`/de/overview-page-${time}/magazine-${time}`);
 
     // it
@@ -948,7 +949,7 @@ test.describe('Overview page overview-block links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(magazineLinkIt)
+    await expect(pathnameFromLinkHref(magazineLinkIt))
       .toStrictEqual(`/it/overview-page-it-${time}/magazine-it-${time}`);
 
     // #########################################
@@ -979,7 +980,7 @@ test.describe('Overview page overview-block links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(instituteLink)
+    await expect(pathnameFromLinkHref(instituteLink))
       .toStrictEqual(`/de/overview-page-${time}/institute-${time}`);
 
     // it
@@ -992,7 +993,7 @@ test.describe('Overview page overview-block links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(instituteLinkIt)
+    await expect(pathnameFromLinkHref(instituteLinkIt))
       .toStrictEqual(`/it/overview-page-it-${time}/institute-it-${time}`);
 
     // #########################################
@@ -1023,7 +1024,7 @@ test.describe('Overview page overview-block links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(nationalDictionaryLink)
+    await expect(pathnameFromLinkHref(nationalDictionaryLink))
       .toStrictEqual(`/de/overview-page-${time}/national-dictionary-${time}`);
 
     // it
@@ -1036,7 +1037,7 @@ test.describe('Overview page overview-block links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(nationalDictionaryLinkIt)
+    await expect(pathnameFromLinkHref(nationalDictionaryLinkIt))
       .toStrictEqual(`/it/overview-page-it-${time}/national-dictionary-it-${time}`);
 
     // #########################################
@@ -1383,19 +1384,19 @@ test.describe('Overview page teasers links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(genericLink)
+    await expect(pathnameFromLinkHref(genericLink))
       .toBe(`/de/overview-page-${time}/d1-${time}`);
 
-    await expect(projectLink)
+    await expect(pathnameFromLinkHref(projectLink))
       .toBe(`/de/overview-page-${time}/project-${time}`);
 
-    await expect(eventLink)
+    await expect(pathnameFromLinkHref(eventLink))
       .toBe(`/de/overview-page-${time}/event-${time}`);
 
-    await expect(newsLink)
+    await expect(pathnameFromLinkHref(newsLink))
       .toBe(`/de/overview-page-${time}/news-${time}`);
 
-    await expect(magazineLink)
+    await expect(pathnameFromLinkHref(magazineLink))
       .toBe(`/de/overview-page-${time}/magazine-${time}`);
 
     // #########################################
@@ -1429,19 +1430,19 @@ test.describe('Overview page teasers links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(genericLinkIt)
+    await expect(pathnameFromLinkHref(genericLinkIt))
       .toBe(`/it/overview-page-it-${time}/d1-it-${time}`);
 
-    await expect(projectLinkIt)
+    await expect(pathnameFromLinkHref(projectLinkIt))
       .toBe(`/it/overview-page-it-${time}/project-it-${time}`);
 
-    await expect(eventLinkIt)
+    await expect(pathnameFromLinkHref(eventLinkIt))
       .toBe(`/it/overview-page-it-${time}/event-it-${time}`);
 
-    await expect(newsLinkIt)
+    await expect(pathnameFromLinkHref(newsLinkIt))
       .toBe(`/it/overview-page-it-${time}/news-it-${time}`);
 
-    await expect(magazineLinkIt)
+    await expect(pathnameFromLinkHref(magazineLinkIt))
       .toBe(`/it/overview-page-it-${time}/magazine-it-${time}`);
 
     // #########################################

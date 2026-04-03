@@ -4,6 +4,7 @@ import {
   expect,
   test,
 } from '@playwright/test';
+import { pathnameFromLinkHref } from '@/test-helpers/link-href-pathname';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { generateTenant } from '@/test-helpers/tenant-generator';
@@ -107,10 +108,10 @@ test.describe('Legal links (non-sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(linkDataPrivacy)
+    await expect(pathnameFromLinkHref(linkDataPrivacy))
       .toStrictEqual(`/de/tenant-${time}/data-privacy-de`);
 
-    await expect(linkImpressum)
+    await expect(pathnameFromLinkHref(linkImpressum))
       .toStrictEqual(`/de/tenant-${time}/impressum-de`);
 
     // #########################################
@@ -129,10 +130,10 @@ test.describe('Legal links (non-sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(linkDataPrivacyIt)
+    await expect(pathnameFromLinkHref(linkDataPrivacyIt))
       .toStrictEqual(`/it/tenant-${time}-it/data-privacy-it`);
 
-    await expect(linkImpressumIt)
+    await expect(pathnameFromLinkHref(linkImpressumIt))
       .toStrictEqual(`/it/tenant-${time}-it/impressum-it`);
 
   });
