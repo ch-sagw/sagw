@@ -1,6 +1,7 @@
-// TODO: remove, seems obsolete
-
 export const getServerSideURL = (): string => {
+  // We set NEXT_PUBLIC_SERVER_URL explicitly on prod and test
+  // environments. try to use VERCEL_PROJECT_PRODUCTION_URL for preview
+  // deployments, which should be injected by vercel automatically.
   let url = process.env.NEXT_PUBLIC_SERVER_URL;
 
   if (!url && process.env.VERCEL_PROJECT_PRODUCTION_URL) {
@@ -14,32 +15,9 @@ export const getServerSideURL = (): string => {
   return url;
 };
 
-/*
-const canUseDOM = Boolean(
-typeof window !== 'undefined'
-&& window.document && window.document.createElement);
-*/
+export const absoluteUrlFromPathname = (pathname: string): string => {
+  const origin = getServerSideURL()
+    .replace(/\/+$/u, '');
 
-/*
-export const getClientSideURL = (): string => {
-  if (canUseDOM) {
-    const {
-      protocol,
-    } = window.location;
-    const domain = window.location.hostname;
-    const {
-      port,
-    } = window.location;
-
-    return `${protocol}//${domain}${port
-      ? `:${port}`
-      : ''}`;
-  }
-
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-  }
-
-  return process.env.NEXT_PUBLIC_SERVER_URL || '';
+  return new URL(pathname, `${origin}/`).href;
 };
-*/

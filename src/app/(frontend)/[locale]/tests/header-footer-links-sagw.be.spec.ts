@@ -4,6 +4,7 @@ import {
   expect,
   test,
 } from '@playwright/test';
+import { pathnameFromLinkHref } from '@/test-helpers/link-href-pathname';
 import {
   generateDetailPage,
   generateOverviewPage,
@@ -224,19 +225,19 @@ test.describe('Header/Footer links (sagw)', () => {
       .nth(1)
       .getAttribute('href');
 
-    await expect(link1Header)
+    await expect(pathnameFromLinkHref(link1Header))
       .toStrictEqual(`/de/o1-${time}`);
-    await expect(link1Footer)
+    await expect(pathnameFromLinkHref(link1Footer))
       .toStrictEqual(`/de/o1-${time}`);
 
-    await expect(link2Header)
+    await expect(pathnameFromLinkHref(link2Header))
       .toStrictEqual(`/de/o1-${time}/d1-${time}`);
-    await expect(link2Footer)
+    await expect(pathnameFromLinkHref(link2Footer))
       .toStrictEqual(`/de/o1-${time}/d1-${time}`);
 
-    await expect(link3Header)
+    await expect(pathnameFromLinkHref(link3Header))
       .toStrictEqual(`/de/o1-${time}/d1-${time}/d2-${time}`);
-    await expect(link3Footer)
+    await expect(pathnameFromLinkHref(link3Footer))
       .toStrictEqual(`/de/o1-${time}/d1-${time}/d2-${time}`);
 
     // #########################################
@@ -278,19 +279,19 @@ test.describe('Header/Footer links (sagw)', () => {
       .nth(1)
       .getAttribute('href');
 
-    await expect(link1HeaderIt)
+    await expect(pathnameFromLinkHref(link1HeaderIt))
       .toStrictEqual(`/it/o1-it-${time}`);
-    await expect(link1FooterIt)
+    await expect(pathnameFromLinkHref(link1FooterIt))
       .toStrictEqual(`/it/o1-it-${time}`);
 
-    await expect(link2HeaderIt)
+    await expect(pathnameFromLinkHref(link2HeaderIt))
       .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}`);
-    await expect(link2FooterIt)
+    await expect(pathnameFromLinkHref(link2FooterIt))
       .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}`);
 
-    await expect(link3HeaderIt)
+    await expect(pathnameFromLinkHref(link3HeaderIt))
       .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}/d2-it-${time}`);
-    await expect(link3FooterIt)
+    await expect(pathnameFromLinkHref(link3FooterIt))
       .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}/d2-it-${time}`);
   });
 });

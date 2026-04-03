@@ -9,11 +9,13 @@ import {
 import { urlFromBreadcrumb } from '@/utilities/urlFromBreadcrumb';
 import { fieldBreadcrumbFieldName } from '@/field-templates/breadcrumb';
 import { getLocaleCodes } from '@/i18n/payloadConfig';
+import { absoluteUrlFromPathname } from '@/utilities/getUrl';
 
-interface InterfaceGetPageUrlParams {
+export interface InterfaceGetPageUrlParams {
   payload: BasePayload;
   pageId: string;
   locale: Config['locale'];
+  absolute?: boolean;
 }
 
 const urlForSingletonPage = ({
@@ -147,7 +149,10 @@ export const getPageUrl = async ({
   payload,
   pageId,
   locale,
+  absolute = true,
 }: InterfaceGetPageUrlParams): Promise<string> => {
+  let pathname: string;
+
   try {
     // try regular page collections first (sets and globals)
     const regularCollections = [
@@ -179,7 +184,11 @@ export const getPageUrl = async ({
     // find the first successful result
     for (const result of regularResults) {
       if (result.status === 'fulfilled' && result.value) {
-        return result.value;
+        pathname = result.value;
+
+        return absolute
+          ? absoluteUrlFromPathname(pathname)
+          : pathname;
       }
     }
 
@@ -214,15 +223,23 @@ export const getPageUrl = async ({
     // find the first successful result
     for (const result of singletonResults) {
       if (result.status === 'fulfilled' && result.value) {
-        return result.value;
+        pathname = result.value;
+
+        return absolute
+          ? absoluteUrlFromPathname(pathname)
+          : pathname;
       }
     }
 
     // Fallback
-    return getRootPathUrls()[locale] || '/de';
+    pathname = getRootPathUrls()[locale] || '/de';
   } catch (error) {
     console.error('Error getting page URL:', error);
 
-    return getRootPathUrls()[locale] || '/de';
+    pathname = getRootPathUrls()[locale] || '/de';
   }
+
+  return absolute
+    ? absoluteUrlFromPathname(pathname)
+    : pathname;
 };

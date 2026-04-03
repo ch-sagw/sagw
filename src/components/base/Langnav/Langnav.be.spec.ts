@@ -2,6 +2,7 @@ import {
   expect,
   test,
 } from '@playwright/test';
+import { pathnameFromLinkHref } from '@/test-helpers/link-href-pathname';
 import {
   generateMagazineDetailPage,
   generateOverviewPage,
@@ -103,9 +104,9 @@ test.describe('langnav', () => {
     const itLinkItem = await itListItem.getByRole('link');
     const itLink = await itLinkItem.getAttribute('href');
 
-    await expect(deLink)
+    await expect(pathnameFromLinkHref(deLink))
       .toStrictEqual(`/de/overview-${time}/magazine-detail-${time}`);
-    await expect(itLink)
+    await expect(pathnameFromLinkHref(itLink))
       .toStrictEqual(`/it/overview-it-${time}/magazine-detail-it-${time}`);
   });
 
@@ -197,9 +198,9 @@ test.describe('langnav', () => {
     const itLinkItem = await itListItem.getByRole('link');
     const itLink = await itLinkItem.getAttribute('href');
 
-    await expect(deLink)
+    await expect(pathnameFromLinkHref(deLink))
       .toStrictEqual(`/de/tenant-${time}/overview-${time}/magazine-detail-${time}`);
-    await expect(itLink)
+    await expect(pathnameFromLinkHref(itLink))
       .toStrictEqual(`/it/tenant-${time}-it/overview-it-${time}/magazine-detail-it-${time}`);
   });
 });
