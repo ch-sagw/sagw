@@ -17,8 +17,8 @@ export const validateTenantName: FieldHook = ({
     throw new ValidationError({
       errors: [
         {
-          message: 'Name must be all lowercase, contain no spaces, and only alphanumeric characters and dashes.',
-          path: 'name',
+          message: 'Slug must be all lowercase, contain no spaces, and only alphanumeric characters and dashes.',
+          path: 'slug',
         },
       ],
     });

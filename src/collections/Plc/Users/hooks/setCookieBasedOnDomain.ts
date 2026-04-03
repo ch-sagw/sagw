@@ -2,17 +2,28 @@ import {
   type CollectionAfterLoginHook, generateCookie, getCookieExpiration, mergeHeaders,
 } from 'payload';
 
+import { getLocaleCodes } from '@/i18n/payloadConfig';
+
 export const setCookieBasedOnDomain: CollectionAfterLoginHook = async ({
   req, user,
 }) => {
+  const host = req.headers.get('host');
+
+  if (!host) {
+    return user;
+  }
+
   const relatedOrg = await req.payload.find({
     collection: 'tenants',
     depth: 0,
     limit: 1,
     where: {
-      url: {
-        equals: req.headers.get('host'),
-      },
+      or: getLocaleCodes()
+        .map((loc) => ({
+          [`slug.${loc}`]: {
+            equals: host,
+          },
+        })),
     },
   });
 

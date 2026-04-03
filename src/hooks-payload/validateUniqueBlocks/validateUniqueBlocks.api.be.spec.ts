@@ -759,7 +759,7 @@ test.describe('unique-blocks', () => {
 
     try {
       const tenant = await generateTenant({
-        name: `${(new Date())
+        slug: `${(new Date())
           .getTime()}`,
       });
 

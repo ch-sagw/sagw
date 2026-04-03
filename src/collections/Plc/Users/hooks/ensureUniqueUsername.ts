@@ -8,6 +8,7 @@ import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
 import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
 import { getCollectionIDType } from '@/utilities/getCollectionIdType';
 import { userRoles } from '../roles';
+import { formatTenantLabelForError } from '@/utilities/tenantSlug';
 
 export const ensureUniqueUsername: FieldHook = async ({
   originalDoc, req, value,
@@ -62,7 +63,7 @@ export const ensureUniqueUsername: FieldHook = async ({
       throw new ValidationError({
         errors: [
           {
-            message: `The "${attemptedTenantChange.name}" tenant already has a user with the username "${value}". Usernames must be unique per tenant.`,
+            message: `The "${formatTenantLabelForError(attemptedTenantChange)}" tenant already has a user with the username "${value}". Usernames must be unique per tenant.`,
             path: 'username',
           },
         ],

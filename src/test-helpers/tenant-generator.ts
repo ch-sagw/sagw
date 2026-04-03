@@ -2,7 +2,8 @@ import { Tenant } from '@/payload-types';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 interface InterfaceGenerateTenantProps {
-  name: string;
+  slug: string;
+  addDefaultTenantData?: boolean;
 }
 
 // get's default sagw tenant
@@ -12,8 +13,9 @@ export const getTenant = async (): Promise<string | null> => {
   const tenants = await payload.find({
     collection: 'tenants',
     depth: 1,
+    locale: 'de',
     where: {
-      name: {
+      slug: {
         equals: 'sagw',
       },
     },
@@ -33,8 +35,9 @@ export const getTenantNonSagw = async (): Promise<string | null> => {
   const tenants = await payload.find({
     collection: 'tenants',
     depth: 1,
+    locale: 'de',
     where: {
-      name: {
+      slug: {
         equals: 'not-sagw',
       },
     },
@@ -48,18 +51,20 @@ export const getTenantNonSagw = async (): Promise<string | null> => {
 };
 
 export const generateTenant = async ({
-  name,
+  addDefaultTenantData,
+  slug,
 }: InterfaceGenerateTenantProps): Promise<Tenant> => {
   const payload = await getPayloadCached();
 
   const tenant = await payload.create({
     collection: 'tenants',
+    context: {
+      skipTenantInitialData: !addDefaultTenantData,
+    },
     data: {
-      faviconName: `favicon-${name}`,
-      name,
-      slug: name,
-      title: name,
-      url: `https://www.url-${name}.bar`,
+      faviconName: `favicon-${slug}`,
+      slug,
+      title: slug,
     },
     draft: false,
     overrideAccess: true,
@@ -69,7 +74,7 @@ export const generateTenant = async ({
     collection: 'tenants',
     data: {
       ...tenant,
-      slug: `${name}-fr`,
+      slug: `${slug}-fr`,
     },
     id: tenant.id,
     locale: 'fr',
@@ -79,7 +84,7 @@ export const generateTenant = async ({
     collection: 'tenants',
     data: {
       ...tenant,
-      slug: `${name}-en`,
+      slug: `${slug}-en`,
     },
     id: tenant.id,
     locale: 'en',
@@ -89,7 +94,7 @@ export const generateTenant = async ({
     collection: 'tenants',
     data: {
       ...tenant,
-      slug: `${name}-it`,
+      slug: `${slug}-it`,
     },
     id: tenant.id,
     locale: 'it',
@@ -111,7 +116,7 @@ export const getTenantId = async ({
     tenant = (await getTenant()) || '';
   } else {
     const tenantObject = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     tenant = tenantObject.id;

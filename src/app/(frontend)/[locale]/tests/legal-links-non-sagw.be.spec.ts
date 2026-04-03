@@ -29,7 +29,7 @@ test.describe('Legal links (non-sagw)', () => {
     const time = (new Date())
       .getTime();
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     await generateHomePage({

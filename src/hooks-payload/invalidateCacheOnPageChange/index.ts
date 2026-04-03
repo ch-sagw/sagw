@@ -18,6 +18,7 @@ import { invalidateCache } from '@/utilities/invalidateCache';
 import { getLocaleCodes } from '@/i18n/payloadConfig';
 import { linkableSlugs } from '@/collections/Pages/pages';
 import { revalidatePath } from 'next/cache.js';
+import { isSagwTenantSlug } from '@/utilities/tenantSlug';
 import {
   getParentId, hasLocalizedStringChanged,
 } from '@/hooks-payload/cascadeBreadcrumbUpdates';
@@ -969,12 +970,8 @@ const invalidateRootPaths = async ({
       return;
     }
 
-    const tenantName = typeof tenant.name === 'string'
-      ? tenant.name
-      : (tenant.name as any)?.de || tenant.name;
-    const isSagw = (tenantName?.toLowerCase() || '') === 'sagw';
-
     const tenantSlugRecord = tenant.slug as string | Record<string, string> | undefined;
+    const isSagw = isSagwTenantSlug(tenantSlugRecord);
     const tenantSlug = typeof tenantSlugRecord === 'string'
       ? tenantSlugRecord
       : tenantSlugRecord?.de || null;

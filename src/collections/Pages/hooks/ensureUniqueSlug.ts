@@ -6,6 +6,7 @@ import {
 
 import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
 import { extractID } from '@/utilities/extractId';
+import { formatTenantLabelForError } from '@/utilities/tenantSlug';
 
 export const ensureUniqueSlug: FieldHook = async ({
   data, originalDoc, req, value,
@@ -61,7 +62,7 @@ export const ensureUniqueSlug: FieldHook = async ({
       throw new ValidationError({
         errors: [
           {
-            message: `The "${attemptedTenantChange.name}" tenant already has a page with the slug "${value}". Slugs must be unique per tenant.`,
+            message: `The "${formatTenantLabelForError(attemptedTenantChange)}" tenant already has a page with the slug "${value}". Slugs must be unique per tenant.`,
             path: 'slug',
           },
         ],

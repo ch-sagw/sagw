@@ -9,6 +9,7 @@ import { getLocale } from 'next-intl/server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { CMSConfigError } from '../utilities/CMSConfigError';
 import { getTenantName } from '../utilities/getTenantName';
+import { isSagwTenantSlug } from '@/utilities/tenantSlug';
 
 type InterfaceFooterRendererProps = {
   tenant: string;
@@ -22,7 +23,7 @@ export const RenderFooter = async ({
   const tenantName = await getTenantName({
     id: tenant,
   });
-  const fg = tenantName.name !== 'sagw';
+  const fg = !isSagwTenantSlug(tenantName.slug);
 
   // get footer data
   const footerData = await payload.find({

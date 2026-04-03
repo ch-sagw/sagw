@@ -52,7 +52,7 @@ test.describe('Overview page regular links (non-sagw)', () => {
     const time = (new Date())
       .getTime();
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
     const home = await generateHomePage({
       locale: 'de',
@@ -577,7 +577,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
     const time = (new Date())
       .getTime();
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
     const home = await generateHomePage({
       locale: 'de',
@@ -1002,7 +1002,7 @@ test.describe('Overview page teasers links (non-sagw)', () => {
     const time = (new Date())
       .getTime();
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
     const home = await generateHomePage({
       locale: 'de',

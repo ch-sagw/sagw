@@ -2,6 +2,7 @@ import { Payload } from 'payload';
 import { seedTenants } from '@/seed/seedTenantsAndUsers/seedTenants';
 import { seedUsers } from '@/seed/seedTenantsAndUsers/seedUsers';
 import { Tenant } from '@/payload-types';
+import { collectLocalizedSlugValues } from '@/utilities/tenantSlug';
 
 interface InterfaceSeedTenantsAndUsers {
   payload: Payload;
@@ -15,12 +16,12 @@ export const seedTenantsAndUsers = async (props: InterfaceSeedTenantsAndUsers): 
     payload: props.payload,
     tenants: [
       {
-        name: 'sagw',
         slug: 'sagw',
+        title: 'sagw',
       },
       {
-        name: 'not-sagw',
         slug: 'not-sagw',
+        title: 'not-sagw',
       },
     ],
   });
@@ -29,8 +30,10 @@ export const seedTenantsAndUsers = async (props: InterfaceSeedTenantsAndUsers): 
     return [];
   }
 
-  const sagwTenant = tenants?.filter((tenant) => tenant.slug === 'sagw');
-  const notSagwTenant = tenants?.filter((tenant) => tenant.slug === 'not-sagw');
+  const sagwTenant = tenants?.filter((tenant) => collectLocalizedSlugValues(tenant.slug)
+    .includes('sagw'));
+  const notSagwTenant = tenants?.filter((tenant) => collectLocalizedSlugValues(tenant.slug)
+    .includes('not-sagw'));
 
   if (!(sagwTenant && sagwTenant.length === 1) || !(notSagwTenant && notSagwTenant.length === 1)) {
     return [];

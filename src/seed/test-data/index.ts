@@ -3,6 +3,7 @@ import { addDataForTenant } from '@/seed/test-data/tenantData';
 import { addPlaywrightDataForTenant } from './tenantDataPlaywright';
 import { Payload } from 'payload';
 import { seedTenantsAndUsers } from '@/seed/seedTenantsAndUsers/index';
+import { collectLocalizedSlugValues } from '@/utilities/tenantSlug';
 
 export const seedTestData = async (payload: Payload): Promise<void> => {
 
@@ -37,8 +38,10 @@ export const seedTestData = async (payload: Payload): Promise<void> => {
       return;
     }
 
-    const tenantSagw = tenants.filter((tenant) => tenant.slug === 'sagw');
-    const tenantNotSagw = tenants.filter((tenant) => tenant.slug === 'not-sagw');
+    const tenantSagw = tenants.filter((tenant) => collectLocalizedSlugValues(tenant.slug)
+      .includes('sagw'));
+    const tenantNotSagw = tenants.filter((tenant) => collectLocalizedSlugValues(tenant.slug)
+      .includes('not-sagw'));
 
     if (!(tenantSagw && tenantSagw.length === 1) || !(tenantNotSagw && tenantNotSagw.length === 1)) {
       payload.logger.error('seed test data: error seeding test data');
@@ -52,13 +55,13 @@ export const seedTestData = async (payload: Payload): Promise<void> => {
     if (isPlaywright) {
       await addPlaywrightDataForTenant({
         payload,
-        tenant: tenantSagw[0].name,
+        tenant: collectLocalizedSlugValues(tenantSagw[0].slug)[0] ?? 'sagw',
         tenantId: tenantSagw[0].id,
       });
     } else {
       await addDataForTenant({
         payload,
-        tenant: tenantSagw[0].name,
+        tenant: collectLocalizedSlugValues(tenantSagw[0].slug)[0] ?? 'sagw',
         tenantId: tenantSagw[0].id,
       });
     }
@@ -69,13 +72,13 @@ export const seedTestData = async (payload: Payload): Promise<void> => {
     if (isPlaywright) {
       await addPlaywrightDataForTenant({
         payload,
-        tenant: tenantNotSagw[0].name,
+        tenant: collectLocalizedSlugValues(tenantNotSagw[0].slug)[0] ?? 'not-sagw',
         tenantId: tenantNotSagw[0].id,
       });
     } else {
       await addDataForTenant({
         payload,
-        tenant: tenantNotSagw[0].name,
+        tenant: collectLocalizedSlugValues(tenantNotSagw[0].slug)[0] ?? 'not-sagw',
         tenantId: tenantNotSagw[0].id,
       });
     }

@@ -8,6 +8,7 @@ import {
 } from '@/collections/Pages/constants';
 import type { Config } from '@/payload-types';
 import { fieldBreadcrumbFieldName } from '@/field-templates/breadcrumb';
+import { isSagwTenantSlug } from '@/utilities/tenantSlug';
 
 // helper function to process pages and build slug params
 const processPagesForParams = ({
@@ -109,14 +110,9 @@ export const generateStaticParams = async (): Promise<{ locale: TypedLocale; slu
       ? locales.filter((locale) => tenantLanguages[locale as keyof typeof tenantLanguages])
       : locales;
 
-    // tenant name (should be an object, but also handle string case)
-    const tenantName = typeof tenant.name === 'string'
-      ? tenant.name
-      : (tenant.name as any)?.de || tenant.name;
-    const isSagw = tenantName?.toLowerCase() === 'sagw';
-
     // get tenant slug (localized)
     const tenantSlugRecord = tenant.slug as string | Record<string, string> | undefined;
+    const isSagw = isSagwTenantSlug(tenantSlugRecord);
     const tenantSlug = typeof tenantSlugRecord === 'string'
       ? tenantSlugRecord
       : tenantSlugRecord?.de || null;
