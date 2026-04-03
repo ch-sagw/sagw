@@ -76,6 +76,7 @@ export const deleteOtherCollections = async (): Promise<void> => {
     'teams',
     'videos',
     'zenodoDocuments',
+    'redirects',
   ] as any;
 
   try {
