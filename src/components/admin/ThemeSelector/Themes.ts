@@ -18,26 +18,6 @@ export const themes: InterfaceThemeOption[] = [
   },
   {
     colors: [
-      '#0e1b40',
-      '#1e3a8a',
-      '#dbeafe',
-    ],
-    image: '/theme-preview/blue.png',
-    label: 'Blue',
-    value: 'blue',
-  },
-  {
-    colors: [
-      '#0077B6',
-      '#00B4D8',
-      '#90E0EF',
-    ],
-    image: '/theme-preview/cyan.png',
-    label: 'Cyan',
-    value: 'cyan',
-  },
-  {
-    colors: [
       '#054030',
       '#064e3b',
       '#d1fae5',
@@ -155,16 +135,6 @@ export const themes: InterfaceThemeOption[] = [
     image: '/theme-preview/rose.png',
     label: 'Rose',
     value: 'rose',
-  },
-  {
-    colors: [
-      '#072b40',
-      '#0c4a6e',
-      '#e0f2fe',
-    ],
-    image: '/theme-preview/sky.png',
-    label: 'Sky',
-    value: 'sky',
   },
   {
     colors: [
