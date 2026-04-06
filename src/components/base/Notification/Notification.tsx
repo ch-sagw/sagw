@@ -107,6 +107,7 @@ export const Notification = ({
 
   return (
     <WrapperElem
+      data-testid='notification'
       ref={elementRef as React.Ref<HTMLButtonElement & HTMLDivElement>}
       className={notifcationClasses({
         action: Boolean(actionText),

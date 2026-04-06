@@ -9,6 +9,10 @@ import {
 
 export const runtime = 'nodejs';
 
+// Vercel / Puppeteer: allow time for Chromium boot,
+// navigation, and PDF render.
+export const maxDuration = 60;
+
 const buildOrigin = (req: NextRequest): string | null => {
   const proto = req.headers.get('x-forwarded-proto') ?? 'http';
   const host = req.headers.get('x-forwarded-host') ?? req.headers.get('host');

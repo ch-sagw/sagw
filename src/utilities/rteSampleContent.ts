@@ -659,6 +659,56 @@ export const rte3NotificationText: InterfaceRte = {
   },
 };
 
+export const rte3NotificationTextWithMail: InterfaceRte = {
+  root: {
+
+    children: [
+
+      {
+
+        children: [
+
+          {
+            children: [
+              {
+                detail: 0,
+                format: 0,
+                mode: 'normal',
+                style: '',
+                text: 'foo@bar.com',
+                type: 'text',
+                version: 1,
+              },
+            ],
+            direction: null,
+            fields: {
+              linkType: 'custom',
+              newTab: true,
+              url: 'mailto:foo@bar.com',
+            },
+            format: '',
+            indent: 0,
+            type: 'autolink',
+            version: 2,
+          },
+        ],
+        direction: null,
+        format: '',
+        indent: 0,
+        textFormat: 0,
+        textStyle: '',
+        type: 'paragraph',
+        version: 1,
+      },
+    ],
+    direction: null,
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+};
+
 export const rte3NotificationTextWithUl: InterfaceRte = {
   root: {
     children: [
