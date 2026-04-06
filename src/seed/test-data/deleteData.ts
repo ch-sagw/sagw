@@ -1,9 +1,11 @@
+import { plcCollections } from '@/collections';
 import { setsSlugs } from '@/collections/Pages/constants';
-import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { deleteCollectionsData } from '@/utilities/deleteCollectionsData';
 import {
   CollectionSlug, Payload,
 } from 'payload';
 
+// erase all collections in db completely
 export const deleteData = async (payload: Payload): Promise<void> => {
   try {
 
@@ -31,76 +33,22 @@ export const deleteData = async (payload: Payload): Promise<void> => {
   }
 };
 
+// delete sets & pages
 export const deleteSetsPages = async (): Promise<void> => {
-  const payload = await getPayloadCached();
-
-  try {
-
-    for await (const collection of setsSlugs) {
-
-      // delete versions of collection
-      if (Object.keys(payload.db.versions)
-        .includes(collection.slug)) {
-        await payload.db.deleteVersions({
-          collection: (collection.slug as CollectionSlug),
-          where: {},
-        });
-      }
-
-      // delete collection
-      await payload.db.deleteMany({
-        collection: (collection.slug as CollectionSlug),
-        where: {},
-      });
-    }
-
-  } catch (e) {
-    payload.logger.error('error in delete sets pages');
-    payload.logger.error(e);
-  }
+  await deleteCollectionsData({
+    collectionSlugs: setsSlugs.map((collection) => collection.slug),
+  });
 };
 
+// delete collections except sets & pages
 export const deleteOtherCollections = async (): Promise<void> => {
-  const payload = await getPayloadCached();
 
-  const collections = [
-    'documents',
-    'eventCategory',
-    'forms',
-    'images',
-    'networkCategories',
-    'people',
-    'projects',
-    'publicationTopics',
-    'publicationTypes',
-    'teams',
-    'videos',
-    'zenodoDocuments',
-    'redirects',
-  ] as any;
+  // skip users and tenants
+  const collectionsSlugs = plcCollections
+    .map((collectionSlug) => collectionSlug.slug)
+    .filter((collectionSlug) => collectionSlug !== 'users' && collectionSlug !== 'tenants') as any as CollectionSlug[];
 
-  try {
-
-    for await (const collection of collections) {
-
-      // delete versions of collection
-      if (Object.keys(payload.db.versions)
-        .includes(collection)) {
-        await payload.db.deleteVersions({
-          collection: (collection as CollectionSlug),
-          where: {},
-        });
-      }
-
-      // delete collection
-      await payload.db.deleteMany({
-        collection: (collection as CollectionSlug),
-        where: {},
-      });
-    }
-
-  } catch (e) {
-    payload.logger.error('error in deleting other collections');
-    payload.logger.error(e);
-  }
+  await deleteCollectionsData({
+    collectionSlugs: collectionsSlugs,
+  });
 };
