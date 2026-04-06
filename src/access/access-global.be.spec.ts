@@ -30,10 +30,12 @@ test.describe('access-global', () => {
     const tenantNonSagw = await getTenantNonSagw();
 
     await generateCollectionsExceptPages({
+      addRedirects: true,
       tenant: tenant || '',
     });
 
     await generateCollectionsExceptPages({
+      addRedirects: true,
       tenant: tenantNonSagw || '',
     });
   });
@@ -1248,6 +1250,210 @@ test.describe('access-global', () => {
 
     });
 
+  });
+
+  test.describe('can not add redirects', () => {
+    test('translator', async () => {
+      await expect(async () => {
+        const {
+          tenant,
+          payload,
+          user,
+        } = await explicitRoleLogin('translator');
+
+        await payload.create({
+          collection: 'redirects',
+          data: {
+            from: 'de/foo/bar',
+            to: 'de/foo/baz',
+          },
+          overrideAccess: false,
+          req: {
+            data: {
+              tenant,
+            },
+            user,
+          },
+        });
+      }).rejects.toMatchObject({
+        status: 403,
+      });
+
+    });
+
+    test('editor', async () => {
+      await expect(async () => {
+        const {
+          tenant,
+          payload,
+          user,
+        } = await explicitRoleLogin('editor');
+
+        await payload.create({
+          collection: 'redirects',
+          data: {
+            from: 'de/foo/bar',
+            to: 'de/foo/baz',
+          },
+          overrideAccess: false,
+          req: {
+            data: {
+              tenant,
+            },
+            user,
+          },
+        });
+      }).rejects.toMatchObject({
+        status: 403,
+      });
+
+    });
+  });
+
+  test.describe('can not change redirects', () => {
+    test('translator', async () => {
+      await expect(async () => {
+        const {
+          tenant,
+          payload,
+          user,
+        } = await explicitRoleLogin('translator');
+
+        const foundItems = await payload.find({
+          collection: 'redirects',
+          where: {
+            tenant: {
+              equals: tenant,
+            },
+          },
+        });
+
+        await payload.update({
+          collection: 'redirects',
+          data: {
+            to: 'de/foo/bar/some-random-redirect-target-page-changed',
+          },
+          id: foundItems.docs[0].id,
+          overrideAccess: false,
+          req: {
+            data: {
+              tenant,
+            },
+            user,
+          },
+        });
+      }).rejects.toMatchObject({
+        status: 403,
+      });
+
+    });
+
+    test('editor', async () => {
+      await expect(async () => {
+        const {
+          tenant,
+          payload,
+          user,
+        } = await explicitRoleLogin('editor');
+
+        const foundItems = await payload.find({
+          collection: 'redirects',
+          where: {
+            tenant: {
+              equals: tenant,
+            },
+          },
+        });
+
+        await payload.update({
+          collection: 'redirects',
+          data: {
+            to: 'de/foo/bar/some-random-redirect-target-page-changed',
+          },
+          id: foundItems.docs[0].id,
+          overrideAccess: false,
+          req: {
+            data: {
+              tenant,
+            },
+            user,
+          },
+        });
+      }).rejects.toMatchObject({
+        status: 403,
+      });
+
+    });
+  });
+
+  test.describe('can not delete redirects', () => {
+    test('translator', async () => {
+      await expect(async () => {
+        const {
+          tenant,
+          payload,
+          user,
+        } = await explicitRoleLogin('translator');
+
+        const foundItems = await payload.find({
+          collection: 'redirects',
+          where: {
+            tenant: {
+              equals: tenant,
+            },
+          },
+        });
+
+        await payload.delete({
+          collection: 'redirects',
+          id: foundItems.docs[0].id,
+          overrideAccess: false,
+          req: {
+            data: {
+              tenant,
+            },
+            user,
+          },
+        });
+      }).rejects.toMatchObject({
+        status: 403,
+      });
+
+    });
+
+    test('editor', async () => {
+      await expect(async () => {
+        const {
+          tenant,
+          payload,
+          user,
+        } = await explicitRoleLogin('editor');
+
+        const foundItems = await payload.find({
+          collection: 'redirects',
+          where: {
+            tenant: {
+              equals: tenant,
+            },
+          },
+        });
+
+        await payload.delete({
+          collection: 'redirects',
+          id: foundItems.docs[0].id,
+          overrideAccess: false,
+          req: {
+            data: {
+              tenant,
+            },
+            user,
+          },
+        });
+      }).rejects.toMatchObject({
+        status: 403,
+      });
+
+    });
   });
 
   test.describe('can add network categories', () => {
@@ -3945,5 +4151,205 @@ test.describe('access-global', () => {
 
     });
 
+  });
+
+  test.describe('can add redirects', () => {
+    test('fg-admin', async () => {
+      await expect(async () => {
+        const {
+          tenant,
+          payload,
+          user,
+        } = await explicitRoleLogin('fg-admin');
+
+        await payload.create({
+          collection: 'redirects',
+          data: {
+            from: 'de/foo/bar',
+            tenant,
+            to: 'de/foo/baz',
+          },
+          overrideAccess: false,
+          req: {
+            data: {
+              tenant,
+            },
+            user,
+          },
+        });
+      })
+        .notRejects();
+
+    });
+
+    test('sagw-admin', async () => {
+      await expect(async () => {
+        const {
+          tenant,
+          payload,
+          user,
+        } = await explicitRoleLogin('sagw-admin');
+
+        await payload.create({
+          collection: 'redirects',
+          data: {
+            from: 'de/foo/bar',
+            tenant,
+            to: 'de/foo/baz',
+          },
+          overrideAccess: false,
+          req: {
+            data: {
+              tenant,
+            },
+            user,
+          },
+        });
+      })
+        .notRejects();
+
+    });
+  });
+
+  test.describe('can change redirects', () => {
+    test('fg-admin', async () => {
+      await expect(async () => {
+        const {
+          tenant,
+          payload,
+          user,
+        } = await explicitRoleLogin('fg-admin');
+
+        const foundItems = await payload.find({
+          collection: 'redirects',
+          where: {
+            tenant: {
+              equals: tenant,
+            },
+          },
+        });
+
+        await payload.update({
+          collection: 'redirects',
+          data: {
+            to: 'de/foo/bar/some-random-redirect-target-page-changed',
+          },
+          id: foundItems.docs[0].id,
+          overrideAccess: false,
+          req: {
+            data: {
+              tenant,
+            },
+            user,
+          },
+        });
+      })
+        .notRejects();
+
+    });
+
+    test('sagw-admin', async () => {
+      await expect(async () => {
+        const {
+          tenant,
+          payload,
+          user,
+        } = await explicitRoleLogin('sagw-admin');
+
+        const foundItems = await payload.find({
+          collection: 'redirects',
+          where: {
+            tenant: {
+              equals: tenant,
+            },
+          },
+        });
+
+        await payload.update({
+          collection: 'redirects',
+          data: {
+            to: 'de/foo/bar/some-random-redirect-target-page-changed',
+          },
+          id: foundItems.docs[0].id,
+          overrideAccess: false,
+          req: {
+            data: {
+              tenant,
+            },
+            user,
+          },
+        });
+      })
+        .notRejects();
+
+    });
+  });
+
+  test.describe('can delete redirects', () => {
+    test('fg-admin', async () => {
+      await expect(async () => {
+        const {
+          tenant,
+          payload,
+          user,
+        } = await explicitRoleLogin('fg-admin');
+
+        const foundItems = await payload.find({
+          collection: 'redirects',
+          where: {
+            tenant: {
+              equals: tenant,
+            },
+          },
+        });
+
+        await payload.delete({
+          collection: 'redirects',
+          id: foundItems.docs[0].id,
+          overrideAccess: false,
+          req: {
+            data: {
+              tenant,
+            },
+            user,
+          },
+        });
+      })
+        .notRejects();
+
+    });
+
+    test('sagw-admin', async () => {
+      await expect(async () => {
+        const {
+          tenant,
+          payload,
+          user,
+        } = await explicitRoleLogin('sagw-admin');
+
+        const foundItems = await payload.find({
+          collection: 'redirects',
+          where: {
+            tenant: {
+              equals: tenant,
+            },
+          },
+        });
+
+        await payload.delete({
+          collection: 'redirects',
+          id: foundItems.docs[0].id,
+          overrideAccess: false,
+          req: {
+            data: {
+              tenant,
+            },
+            user,
+          },
+        });
+      })
+        .notRejects();
+
+    });
   });
 });
