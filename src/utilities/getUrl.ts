@@ -1,45 +1,22 @@
-// TODO: remove, seems obsolete
-
 export const getServerSideURL = (): string => {
-  let url = process.env.NEXT_PUBLIC_SERVER_URL;
 
-  if (!url && process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  // Prod and Test Env
+  if (process.env.NEXT_PUBLIC_SERVER_URL) {
+    return process.env.NEXT_PUBLIC_SERVER_URL;
   }
 
-  if (!url) {
-    url = 'http://localhost:3000';
+  // Preview Env
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
   }
 
-  return url;
+  // Local dev env
+  return 'http://localhost:3000';
 };
 
-/*
-const canUseDOM = Boolean(
-typeof window !== 'undefined'
-&& window.document && window.document.createElement);
-*/
+export const absoluteUrlFromPathname = (pathname: string): string => {
+  const origin = getServerSideURL()
+    .replace(/\/+$/u, '');
 
-/*
-export const getClientSideURL = (): string => {
-  if (canUseDOM) {
-    const {
-      protocol,
-    } = window.location;
-    const domain = window.location.hostname;
-    const {
-      port,
-    } = window.location;
-
-    return `${protocol}//${domain}${port
-      ? `:${port}`
-      : ''}`;
-  }
-
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-  }
-
-  return process.env.NEXT_PUBLIC_SERVER_URL || '';
+  return new URL(pathname, `${origin}/`).href;
 };
-*/
