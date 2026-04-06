@@ -4,6 +4,7 @@ import {
   expect,
   test,
 } from '@playwright/test';
+import { pathnameFromLinkHref } from '@/test-helpers/link-href-pathname';
 import {
   generateDetailPage,
   generateEventDetailPage,
@@ -569,33 +570,33 @@ test.describe('Teasers links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(eventsTeasersLink)
+    await expect(pathnameFromLinkHref(eventsTeasersLink))
       .toBe(`/de/overview-page-1-${time}/d1-${time}`);
-    await expect(newsTeasersLink)
+    await expect(pathnameFromLinkHref(newsTeasersLink))
       .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}`);
-    await expect(magazineTeasersLink)
+    await expect(pathnameFromLinkHref(magazineTeasersLink))
       .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}`);
     // await expect(publicationsTeasersLink)
     //   .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}
     // /d4-${time}/d5-${time}/d2-${time}/d3-${time}/d8-${time}`);
-    await expect(projectsTeasersLink)
+    await expect(pathnameFromLinkHref(projectsTeasersLink))
       .toBe(`/de/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}`);
 
-    await expect(newsLink1)
+    await expect(pathnameFromLinkHref(newsLink1))
       .toStrictEqual(`/de/overview-page-1-${time}/n1-${time}`);
-    await expect(newsLink2)
+    await expect(pathnameFromLinkHref(newsLink2))
       .toStrictEqual(`/de/overview-page-1-${time}/n1-${time}/n2-${time}`);
-    await expect(eventLink1)
+    await expect(pathnameFromLinkHref(eventLink1))
       .toStrictEqual(`/de/overview-page-1-${time}/e1-${time}`);
-    await expect(eventLink2)
+    await expect(pathnameFromLinkHref(eventLink2))
       .toStrictEqual(`/de/overview-page-1-${time}/e1-${time}/e2-${time}`);
-    await expect(magazineLink1)
+    await expect(pathnameFromLinkHref(magazineLink1))
       .toStrictEqual(`/de/overview-page-1-${time}/m1-${time}`);
-    await expect(magazineLink2)
+    await expect(pathnameFromLinkHref(magazineLink2))
       .toStrictEqual(`/de/overview-page-1-${time}/m1-${time}/m2-${time}`);
-    await expect(projectLink1)
+    await expect(pathnameFromLinkHref(projectLink1))
       .toStrictEqual(`/de/overview-page-1-${time}/p1-${time}`);
-    await expect(projectLink2)
+    await expect(pathnameFromLinkHref(projectLink2))
       .toStrictEqual(`/de/overview-page-1-${time}/p1-${time}/p2-${time}`);
 
     // #########################################
@@ -669,34 +670,34 @@ test.describe('Teasers links (sagw)', () => {
     })
       .getAttribute('href');
 
-    await expect(eventsTeasersLinkIt)
+    await expect(pathnameFromLinkHref(eventsTeasersLinkIt))
       .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}`);
-    await expect(newsTeasersLinkIt)
+    await expect(pathnameFromLinkHref(newsTeasersLinkIt))
       .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}`);
-    await expect(magazineTeasersLinkIt)
+    await expect(pathnameFromLinkHref(magazineTeasersLinkIt))
       .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
     // await expect(publicationsTeasersLinkIt)
     //   .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/
     // d3-it-${time}
     // /d4-it-${time}/d5-it-${time}/d6-it-${time}/d7-it-${time}/d8-${time}`);
-    await expect(projectsTeasersLinkIt)
+    await expect(pathnameFromLinkHref(projectsTeasersLinkIt))
       .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
 
-    await expect(newsLink1It)
+    await expect(pathnameFromLinkHref(newsLink1It))
       .toStrictEqual(`/it/overview-page-1-it-${time}/n1-it-${time}`);
-    await expect(newsLink2It)
+    await expect(pathnameFromLinkHref(newsLink2It))
       .toStrictEqual(`/it/overview-page-1-it-${time}/n1-it-${time}/n2-it-${time}`);
-    await expect(eventLink1It)
+    await expect(pathnameFromLinkHref(eventLink1It))
       .toStrictEqual(`/it/overview-page-1-it-${time}/e1-it-${time}`);
-    await expect(eventLink2It)
+    await expect(pathnameFromLinkHref(eventLink2It))
       .toStrictEqual(`/it/overview-page-1-it-${time}/e1-it-${time}/e2-it-${time}`);
-    await expect(magazineLink1It)
+    await expect(pathnameFromLinkHref(magazineLink1It))
       .toStrictEqual(`/it/overview-page-1-it-${time}/m1-it-${time}`);
-    await expect(magazineLink2It)
+    await expect(pathnameFromLinkHref(magazineLink2It))
       .toStrictEqual(`/it/overview-page-1-it-${time}/m1-it-${time}/m2-it-${time}`);
-    await expect(projectLink1It)
+    await expect(pathnameFromLinkHref(projectLink1It))
       .toStrictEqual(`/it/overview-page-1-it-${time}/p1-it-${time}`);
-    await expect(projectLink2It)
+    await expect(pathnameFromLinkHref(projectLink2It))
       .toStrictEqual(`/it/overview-page-1-it-${time}/p1-it-${time}/p2-it-${time}`);
 
     // #########################################

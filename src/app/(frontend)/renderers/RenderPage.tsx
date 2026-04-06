@@ -23,6 +23,7 @@ import { SkipLinks } from '@/components/global/SkipLinks/SkipLinks';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { createPdfGenerationAuth } from '@/utilities/pdfGenerationSecurity';
 import { getThemeNameForTenant } from '../utilities/getThemeNameForTenant';
+import { Redirector } from '@/components/helpers/redirects';
 import { Tracking } from '@/components/helpers/tracking';
 
 export interface InterfacePreFetchedHomePageData {
@@ -59,6 +60,7 @@ interface InterfaceRenderPageContentProps {
   themeName: string;
   isMagazineDetail?: boolean;
   skipStatusMessage?: boolean;
+  pageSlugs?: string[];
 }
 
 const getTenantThemeName = ({
@@ -130,12 +132,20 @@ export const renderPageContent = ({
   themeName,
   isMagazineDetail = false,
   skipStatusMessage = false,
+  pageSlugs,
 }: InterfaceRenderPageContentProps): React.JSX.Element => (
   <TenantProvider tenant={tenantId}>
     <Tracking />
     <body className={`theme-${themeName}${isMagazineDetail
       ? ' print-magazine-detail'
       : ''}`}>
+      {pageSlugs &&
+        <Redirector
+          disableNotFound
+          url={pageSlugs.join('/')}
+          locale={locale}
+        />
+      }
       <SkipLinks />
       <RenderHeader
         colorMode={headerColorMode}
@@ -278,7 +288,10 @@ export const RenderPage = async ({
   }
 
   if (!foundCollection) {
-    return <CMSConfigError message='Page data not found.' />;
+    return <Redirector
+      url={pageSlugs.join('/')}
+      locale={locale}
+    />;
   }
 
   // Get content blocks - some pages have content, others have blocks.content
@@ -331,6 +344,7 @@ export const RenderPage = async ({
     isHome,
     isMagazineDetail: collectionSlug === 'magazineDetailPage',
     locale,
+    pageSlugs,
     projectId,
     showBlocks: Boolean(contentBlocks),
     sourcePage: {
