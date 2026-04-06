@@ -1648,6 +1648,92 @@ export const generateForm = async (tenant: string): Promise<string> => {
   return form.id;
 };
 
+export const generateRegularForm = async (tenant: string): Promise<string> => {
+  const payload = await getPayloadCached();
+  const form = await payload.create({
+    collection: 'forms',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      colorMode: 'dark',
+      fields: [
+        {
+          blockType: 'textBlockForm',
+          fieldError: simpleRteConfig('Geben Sie Ihren Nachnamen an.'),
+          fieldWidth: 'half',
+          label: simpleRteConfig('Nachname'),
+          name: 'nachname',
+          placeholder: 'Ihr Nachname',
+          required: true,
+        },
+        {
+          blockType: 'textBlockForm',
+          fieldError: simpleRteConfig('Geben Sie Ihren Vornamen an.'),
+          fieldWidth: 'half',
+          label: simpleRteConfig('Vorname'),
+          name: 'vorname',
+          placeholder: 'Ihr Vornaname',
+          required: true,
+        },
+        {
+          blockType: 'textareaBlock',
+          fieldError: simpleRteConfig('Geben Sie ihren Kommentar an.'),
+          fieldWidth: 'full',
+          label: simpleRteConfig('Kommentar'),
+          name: 'comment',
+          placeholder: 'Ihr Kommentar',
+          required: true,
+        },
+        {
+          blockType: 'checkboxBlock',
+          fieldError: simpleRteConfig('Bitte akzeptieren Sie die Hinweise zum Datenschutz.'),
+          fieldWidth: 'full',
+          label: simpleRteConfig('Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.'),
+          name: 'checkbox-custom',
+          required: true,
+        },
+        {
+          blockType: 'radioBlock',
+          fieldError: simpleRteConfig('Sie müssen eine Auswahl treffen'),
+          fieldWidth: 'full',
+          items: [
+            {
+              label: simpleRteConfig('Deutsch'),
+              value: 'deutsch',
+            },
+            {
+              label: simpleRteConfig('Französisch'),
+              value: 'french',
+            },
+          ],
+          label: simpleRteConfig('In welcher Sprache möchten Sie den Newsletter erhalten?'),
+          name: 'language-select',
+          required: true,
+        },
+      ],
+      isNewsletterForm: 'custom',
+      mailSubject: 'Form submission on SAGW',
+      recipientMail: 'delivered@resend.dev',
+      showPrivacyCheckbox: false,
+      submitButtonLabel: 'Abschicken',
+      submitError: {
+        text: simpleRteConfig('Submit text error'),
+        title: simpleRteConfig('Submit title error'),
+      },
+      submitSuccess: {
+        text: simpleRteConfig('Submit text success'),
+        title: simpleRteConfig('Submit title success'),
+      },
+      subtitle: simpleRteConfig('Subtitle for contact Form'),
+      tenant,
+      title: simpleRteConfig('Contact Form'),
+    },
+  });
+
+  return form.id;
+};
+
 export const generateDocument = async (tenant: string, project?: string, title?: string): Promise<string> => {
   const payload = await getPayloadCached();
   const document = await payload.create({
