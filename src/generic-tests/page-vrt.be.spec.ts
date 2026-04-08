@@ -12,7 +12,9 @@ import {
 import {
   generateDetailPage,
   generateEventDetailPage,
+  generateInstituteDetailPage,
   generateMagazineDetailPage,
+  generateNationalDictionaryDetailPage,
   generateNewsDetailPage,
   generateOverviewPage,
   generateProjectDetailPage,
@@ -191,6 +193,60 @@ const generatePublicationPages = async ({
   }
 };
 
+const generateNationalDictionaryPages = async ({
+  amount,
+  home,
+  tenant,
+}: {
+  amount: number;
+  home: string;
+  tenant: string;
+}): Promise<void> => {
+  const indices = Array.from({
+    length: amount,
+  }, (_, idx) => idx + 1);
+
+  for (const i of indices) {
+    await generateNationalDictionaryDetailPage({
+      locale: 'de',
+      navigationTitle: `nationalDictionary ${i}`,
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `nationalDictionary ${i}`,
+    });
+  }
+};
+
+const generateInstituePages = async ({
+  amount,
+  home,
+  tenant,
+}: {
+  amount: number;
+  home: string;
+  tenant: string;
+}): Promise<void> => {
+  const indices = Array.from({
+    length: amount,
+  }, (_, idx) => idx + 1);
+
+  for (const i of indices) {
+    await generateInstituteDetailPage({
+      locale: 'de',
+      navigationTitle: `institute ${i}`,
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `institute ${i}`,
+    });
+  }
+};
+
 const generateSamplePagesForTeasers = async ({
   amount,
   home,
@@ -232,6 +288,65 @@ const generateSamplePagesForTeasers = async ({
 };
 
 /* eslint-enable no-await-in-loop */
+
+// ########################################################################
+// Helpers: Other Collections
+// ########################################################################
+const generateTeam = async ({
+  tenant,
+}: {
+  tenant: string
+}): Promise<string> => {
+  const payload = await getPayloadCached();
+  const image = await payload.create({
+    collection: 'images',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      alt: 'image',
+      tenant,
+    },
+    filePath: 'src/seed/test-data/assets/sagw.png',
+  });
+
+  const people = await Promise.all(Array.from({
+    length: 12,
+  }, (_, i) => {
+    const index = i + 1;
+
+    return payload.create({
+      collection: 'people',
+      context: {
+        skipCacheInvalidation: true,
+      },
+      data: {
+        firstname: simpleRteConfig(`Firstname ${index}`),
+        function: simpleRteConfig('Some function'),
+        image: image.id,
+        lastname: simpleRteConfig(`Lastname ${index}`),
+        mail: 'foo@bar.com',
+        phone: '031 123 45 67',
+        tenant,
+      },
+    });
+  }));
+
+  // create a team
+  const team = await payload.create({
+    collection: 'teams',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      name: simpleRteConfig('Team 1'),
+      people: people.map((item) => item.id),
+      tenant,
+    },
+  });
+
+  return team.id;
+};
 
 // ########################################################################
 // Helpers: Setup test pages
@@ -979,7 +1094,7 @@ const setupOverviewWithTeasersPage = async ({
   });
 
   await generateSamplePagesForTeasers({
-    amount: 21,
+    amount: 5,
     home: homeId,
     tenant: tenantId,
   });
@@ -1210,6 +1325,435 @@ const setupOverviewWithTeasersPage = async ({
   });
 };
 
+const setupOverviewWithMagazineOverview = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const overviewPage = await generateOverviewPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Overview Page',
+  });
+
+  await generateMagazinePages({
+    amount: 21,
+    home: homeId,
+    tenant: tenantId,
+  });
+
+  // add content
+  await payload.update({
+    collection: 'overviewPage',
+    data: {
+      content: [
+        {
+          blockType: 'magazineOverviewBlock',
+        },
+      ],
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: overviewPage.id,
+  });
+};
+
+const setupOverviewWithPublicationsOverview = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const overviewPage = await generateOverviewPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Overview Page',
+  });
+
+  await generatePublicationPages({
+    amount: 21,
+    home: homeId,
+    tenant: tenantId,
+  });
+
+  // add content
+  await payload.update({
+    collection: 'overviewPage',
+    data: {
+      content: [
+        {
+          blockType: 'publicationsOverviewBlock',
+          filterTitleAllPublications: simpleRteConfig('Alle Arten'),
+          filterTitleAllTopics: simpleRteConfig('Alle Themen'),
+          title: simpleRteConfig('Publications'),
+
+        },
+      ],
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: overviewPage.id,
+  });
+};
+
+const setupOverviewWithEventsOverview = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const overviewPage = await generateOverviewPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Overview Page',
+  });
+
+  await generateEventPages({
+    amount: 21,
+    home: homeId,
+    tenant: tenantId,
+  });
+
+  // add content
+  await payload.update({
+    collection: 'overviewPage',
+    data: {
+      content: [
+        {
+          blockType: 'eventsOverviewBlock',
+          title: simpleRteConfig('Events'),
+        },
+      ],
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: overviewPage.id,
+  });
+};
+
+const setupOverviewWithPeopleOverview = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const overviewPage = await generateOverviewPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Overview Page',
+  });
+
+  const team = await generateTeam({
+    tenant: tenantId,
+  });
+
+  // add content
+  await payload.update({
+    collection: 'overviewPage',
+    data: {
+      content: [
+        {
+          blockType: 'peopleOverviewBlock',
+          teams: team,
+        },
+      ],
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: overviewPage.id,
+  });
+};
+
+const setupOverviewWithNewsOverview = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const overviewPage = await generateOverviewPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Overview Page',
+  });
+
+  await generateNewsPages({
+    amount: 21,
+    home: homeId,
+    tenant: tenantId,
+  });
+
+  // add content
+  await payload.update({
+    collection: 'overviewPage',
+    data: {
+      content: [
+        {
+          blockType: 'newsOverviewBlock',
+          title: simpleRteConfig('News'),
+        },
+      ],
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: overviewPage.id,
+  });
+};
+
+const setupOverviewWithNationalDictionariesOverview = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const overviewPage = await generateOverviewPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Overview Page',
+  });
+
+  await generateNationalDictionaryPages({
+    amount: 21,
+    home: homeId,
+    tenant: tenantId,
+  });
+
+  // add content
+  await payload.update({
+    collection: 'overviewPage',
+    data: {
+      content: [
+        {
+          blockType: 'nationalDictionariesOverviewBlock',
+          moreInfoButtonText: simpleRteConfig('Weitere Infos'),
+        },
+      ],
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: overviewPage.id,
+  });
+};
+
+const setupOverviewWithInstitutesOverview = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const overviewPage = await generateOverviewPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Overview Page',
+  });
+
+  await generateInstituePages({
+    amount: 21,
+    home: homeId,
+    tenant: tenantId,
+  });
+
+  // add content
+  await payload.update({
+    collection: 'overviewPage',
+    data: {
+      content: [
+        {
+          blockType: 'institutesOverviewBlock',
+          moreInfoButtonText: simpleRteConfig('Weitere infos'),
+        },
+      ],
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: overviewPage.id,
+  });
+};
+
+const setupOverviewWithProjectsOverview = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const overviewPage = await generateOverviewPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Overview Page',
+  });
+
+  await generateProjectPages({
+    amount: 21,
+    home: homeId,
+    tenant: tenantId,
+  });
+
+  // add content
+  await payload.update({
+    collection: 'overviewPage',
+    data: {
+      content: [
+        {
+          blockType: 'projectsOverviewBlock',
+        },
+      ],
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: overviewPage.id,
+  });
+};
+
+const setupOverviewWithEditionsOverview = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const overviewPage = await generateOverviewPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Overview Page',
+  });
+
+  // add content
+  await payload.update({
+    collection: 'overviewPage',
+    data: {
+      content: [
+        {
+          blockType: 'editionsOverview',
+          items: {
+            items: Array.from({
+              length: 21,
+            }, (_, i) => {
+              const index = i + 1;
+
+              return {
+                externalLink: 'https://www.foo.bar',
+                text: simpleRteConfig('Editions text'),
+                title: simpleRteConfig(`Edition ${index}`),
+              };
+            }),
+            linkText: simpleRteConfig('link text'),
+          },
+        },
+      ],
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: overviewPage.id,
+  });
+};
+
 // ########################################################################
 // Tests
 // ########################################################################
@@ -1367,6 +1911,600 @@ test.describe('overview page with teasers', () => {
     });
 
     await setupOverviewWithTeasersPage({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/overview-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+
+  });
+});
+
+test.describe('overview page with magazine overview', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupOverviewWithMagazineOverview({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/overview-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupOverviewWithMagazineOverview({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/overview-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+
+  });
+});
+
+test.describe('overview page with publications overview', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupOverviewWithPublicationsOverview({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/overview-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupOverviewWithPublicationsOverview({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/overview-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+
+  });
+});
+
+test.describe('overview page with events overview', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupOverviewWithEventsOverview({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/overview-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupOverviewWithEventsOverview({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/overview-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+
+  });
+});
+
+test.describe('overview page with people overview', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupOverviewWithPeopleOverview({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/overview-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupOverviewWithPeopleOverview({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/overview-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+
+  });
+});
+
+test.describe('overview page with news overview', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupOverviewWithNewsOverview({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/overview-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupOverviewWithNewsOverview({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/overview-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+
+  });
+});
+
+test.describe('overview page with national dictionaries overview', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupOverviewWithNationalDictionariesOverview({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/overview-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupOverviewWithNationalDictionariesOverview({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/overview-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+
+  });
+});
+
+test.describe('overview page with institutes overview', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupOverviewWithInstitutesOverview({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/overview-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupOverviewWithInstitutesOverview({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/overview-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+
+  });
+});
+
+test.describe('overview page with projects overview', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupOverviewWithProjectsOverview({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/overview-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupOverviewWithProjectsOverview({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/overview-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+
+  });
+});
+
+test.describe('overview page with editions overview', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupOverviewWithEditionsOverview({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/overview-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupOverviewWithEditionsOverview({
       homeId: home,
       tenantId: tenant.id,
     });
