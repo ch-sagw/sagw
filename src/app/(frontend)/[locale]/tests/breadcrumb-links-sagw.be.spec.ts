@@ -4,6 +4,7 @@ import {
   expect,
   test,
 } from '@playwright/test';
+import { pathnameFromLinkHref } from '@/test-helpers/link-href-pathname';
 import {
   generateDetailPage,
   generateInstituteDetailPage,
@@ -295,28 +296,28 @@ test.describe('Breadcrumb links (sagw)', () => {
       name: '[test]link:d7',
     });
 
-    await expect(linkHome)
+    await expect(pathnameFromLinkHref(linkHome))
       .toStrictEqual('/de');
 
-    await expect(link1)
+    await expect(pathnameFromLinkHref(link1))
       .toStrictEqual(`/de/o1-${time}`);
 
-    await expect(link2)
+    await expect(pathnameFromLinkHref(link2))
       .toStrictEqual(`/de/o1-${time}/d1-${time}`);
 
-    await expect(link3)
+    await expect(pathnameFromLinkHref(link3))
       .toStrictEqual(`/de/o1-${time}/d1-${time}/d2-${time}`);
 
-    await expect(link4)
+    await expect(pathnameFromLinkHref(link4))
       .toStrictEqual(`/de/o1-${time}/d1-${time}/d2-${time}/d3-${time}`);
 
-    await expect(link5)
+    await expect(pathnameFromLinkHref(link5))
       .toStrictEqual(`/de/o1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}`);
 
-    await expect(link6)
+    await expect(pathnameFromLinkHref(link6))
       .toStrictEqual(`/de/o1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}`);
 
-    await expect(link7)
+    await expect(pathnameFromLinkHref(link7))
       .toStrictEqual(`/de/o1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}/d6-${time}`);
 
     await expect(link8)
@@ -372,28 +373,28 @@ test.describe('Breadcrumb links (sagw)', () => {
       name: '[test]link:d7-it',
     });
 
-    await expect(linkHomeIt)
+    await expect(pathnameFromLinkHref(linkHomeIt))
       .toStrictEqual('/it');
 
-    await expect(link1It)
+    await expect(pathnameFromLinkHref(link1It))
       .toStrictEqual(`/it/o1-it-${time}`);
 
-    await expect(link2It)
+    await expect(pathnameFromLinkHref(link2It))
       .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}`);
 
-    await expect(link3It)
+    await expect(pathnameFromLinkHref(link3It))
       .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}/d2-it-${time}`);
 
-    await expect(link4It)
+    await expect(pathnameFromLinkHref(link4It))
       .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
 
-    await expect(link5It)
+    await expect(pathnameFromLinkHref(link5It))
       .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}`);
 
-    await expect(link6It)
+    await expect(pathnameFromLinkHref(link6It))
       .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
 
-    await expect(link7It)
+    await expect(pathnameFromLinkHref(link7It))
       .toStrictEqual(`/it/o1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}`);
 
     await expect(link8It)

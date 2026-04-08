@@ -3,6 +3,7 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 interface InterfaceGenerateTenantProps {
   name: string;
+  addDefaultTenantData?: boolean;
 }
 
 // get's default sagw tenant
@@ -48,12 +49,16 @@ export const getTenantNonSagw = async (): Promise<string | null> => {
 };
 
 export const generateTenant = async ({
+  addDefaultTenantData,
   name,
 }: InterfaceGenerateTenantProps): Promise<Tenant> => {
   const payload = await getPayloadCached();
 
   const tenant = await payload.create({
     collection: 'tenants',
+    context: {
+      skipTenantInitialData: !addDefaultTenantData,
+    },
     data: {
       faviconName: `favicon-${name}`,
       name,

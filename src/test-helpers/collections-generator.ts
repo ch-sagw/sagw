@@ -1037,9 +1037,11 @@ interface InterfaceGenerateCollectionsExceptPages {
 export const generateCollectionsExceptPages = async ({
   tenant,
   isSagw = true,
+  addRedirects = false,
 }: {
   tenant: string;
   isSagw?: boolean;
+  addRedirects?: boolean,
 }): Promise<InterfaceGenerateCollectionsExceptPages> => {
   const payload = await getPayloadCached();
 
@@ -1185,6 +1187,17 @@ export const generateCollectionsExceptPages = async ({
       tenant,
     },
   });
+
+  if (addRedirects) {
+    await payload.create({
+      collection: 'redirects',
+      data: {
+        from: 'de/some-random-redirect-source-page',
+        tenant,
+        to: 'de/some-random-redirect-target-page',
+      },
+    });
+  }
 
   const form = await payload.create({
     collection: 'forms',

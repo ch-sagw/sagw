@@ -3,6 +3,8 @@ import {
   fieldsAccess, languageAccess, tenantsAccess,
 } from '@/access/tenants';
 import { isSuperOrTenantAdmin } from '../Users/roles';
+import { hookTenantsAfterCreate } from '@/hooks-payload/tenantsAfterChange';
+import { hookTenantsBeforeDelete } from '@/hooks-payload/tenantsBeforeDelete';
 import { validateTenantName } from '@/hooks-payload/validateTenantName';
 
 export const Tenants: CollectionConfig = {
@@ -101,5 +103,9 @@ export const Tenants: CollectionConfig = {
       type: 'group',
     },
   ],
+  hooks: {
+    afterChange: [hookTenantsAfterCreate],
+    beforeDelete: [hookTenantsBeforeDelete],
+  },
   slug: 'tenants',
 };

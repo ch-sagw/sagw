@@ -9,14 +9,6 @@
     @include theme-variables("amber");
   }
 
-  .theme-blue {
-    @include theme-variables("blue");
-  }
-
-  .theme-cyan {
-    @include theme-variables("cyan");
-  }
-
   .theme-emerald {
     @include theme-variables("emerald");
   }
@@ -63,10 +55,6 @@
 
   .theme-rose {
     @include theme-variables("rose");
-  }
-
-  .theme-sky {
-    @include theme-variables("sky");
   }
 
   .theme-slate {
