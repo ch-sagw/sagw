@@ -28,11 +28,22 @@ const desktopChromeHiDPI = stripDefaultBrowserType(devices['Desktop Chrome HiDPI
 const desktopFirefox = stripDefaultBrowserType(devices['Desktop Firefox']);
 const desktopSafari = stripDefaultBrowserType(devices['Desktop Safari']);
 
-export type FeVrtProject = {
+type FeVrtProject = {
   browserName: BrowserName;
   contextOptions: BrowserContextOptions;
   name: string;
 };
+
+// Project Breakpoints:
+/*
+zero: 0,
+micro: 320,
+small: 360,
+medium: 640,
+large: 1024,
+wide: 1280,
+ultra: 1600,
+*/
 
 const feVrtProjects: FeVrtProject[] = [
   {

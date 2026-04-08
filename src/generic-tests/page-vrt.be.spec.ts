@@ -28,13 +28,25 @@ import {
 import { addPlaywrightErrorPage } from '@/seed/test-data/tenantDataPlaywright';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 
-const generateSamplePagesForTeasers = async ({
+// ########################################################################
+// Helpers: Generate pages
+// ########################################################################
+
+/* eslint-disable no-await-in-loop */
+
+const generateEventPages = async ({
+  amount,
   home,
   tenant,
 }: {
+  amount: number;
   home: string;
   tenant: string;
 }): Promise<void> => {
+  const indices = Array.from({
+    length: amount,
+  }, (_, idx) => idx + 1);
+
   const payload = await getPayloadCached();
   const eventCategory = await payload.create({
     collection: 'eventCategory',
@@ -45,181 +57,185 @@ const generateSamplePagesForTeasers = async ({
     locale: 'de',
   });
 
-  await generateEventDetailPage({
-    category: eventCategory.id,
-    date: '2040-08-03T12:00:00.000Z',
-    locale: 'de',
-    navigationTitle: 'event 1',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: 'event 1',
-  });
+  for (const i of indices) {
+    const day = String(i)
+      .padStart(2, '0');
 
-  await generateEventDetailPage({
-    category: eventCategory.id,
-    date: '2040-08-04T12:00:00.000Z',
-    locale: 'de',
-    navigationTitle: 'event 2',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: 'event 2',
-  });
-
-  await generateEventDetailPage({
-    category: eventCategory.id,
-    date: '2040-08-05T12:00:00.000Z',
-    locale: 'de',
-    navigationTitle: 'event 3',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: 'event 3',
-  });
-
-  await generateNewsDetailPage({
-    date: '2031-08-02T12:00:00.000Z',
-    navigationTitle: 'news 1',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: 'news 1',
-  });
-
-  await generateNewsDetailPage({
-    date: '2031-08-03T12:00:00.000Z',
-    navigationTitle: 'news 2',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: 'news 2',
-  });
-
-  await generateNewsDetailPage({
-    date: '2031-08-04T12:00:00.000Z',
-    navigationTitle: 'news 3',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: 'news 3',
-  });
-
-  await generateProjectDetailPage({
-    locale: 'de',
-    navigationTitle: 'project 1',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: 'project 1',
-  });
-
-  await generateProjectDetailPage({
-    locale: 'de',
-    navigationTitle: 'project 2',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: 'project 2',
-  });
-
-  await generateProjectDetailPage({
-    locale: 'de',
-    navigationTitle: 'project 3',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: 'project 3',
-  });
-
-  await generateMagazineDetailPage({
-    date: '2031-08-01T12:00:00.000Z',
-    locale: 'de',
-    navigationTitle: 'magazine 1',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: 'magazine 1',
-  });
-
-  await generateMagazineDetailPage({
-    date: '2031-08-02T12:00:00.000Z',
-    locale: 'de',
-    navigationTitle: 'magazine 2',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: 'magazine 2',
-  });
-
-  await generateMagazineDetailPage({
-    date: '2031-08-03T12:00:00.000Z',
-    locale: 'de',
-    navigationTitle: 'magazine 3',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: 'magazine 3',
-  });
-
-  await generatePublicationDetailPage({
-    locale: 'de',
-    navigationTitle: 'publication 1',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: 'publication 1',
-  });
-
-  await generatePublicationDetailPage({
-    locale: 'de',
-    navigationTitle: 'publication 2',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: 'publication 2',
-  });
-
-  await generatePublicationDetailPage({
-    locale: 'de',
-    navigationTitle: 'publication 3',
-    parentPage: {
-      documentId: home,
-      slug: 'homePage',
-    },
-    tenant,
-    title: 'publication 3',
-  });
-
+    await generateEventDetailPage({
+      category: eventCategory.id,
+      date: `2040-08-${day}T12:00:00.000Z`,
+      locale: 'de',
+      navigationTitle: `event ${i}`,
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `event ${i}`,
+    });
+  }
 };
+
+const generateNewsPages = async ({
+  amount,
+  home,
+  tenant,
+}: {
+  amount: number;
+  home: string;
+  tenant: string;
+}): Promise<void> => {
+  const indices = Array.from({
+    length: amount,
+  }, (_, idx) => idx + 1);
+
+  for (const i of indices) {
+    const day = String(i)
+      .padStart(2, '0');
+
+    await generateNewsDetailPage({
+      date: `2031-08-${day}T12:00:00.000Z`,
+      navigationTitle: `news ${day}`,
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `news ${day}`,
+    });
+  }
+};
+
+const generateProjectPages = async ({
+  amount,
+  home,
+  tenant,
+}: {
+  amount: number;
+  home: string;
+  tenant: string;
+}): Promise<void> => {
+  const indices = Array.from({
+    length: amount,
+  }, (_, idx) => idx + 1);
+
+  for (const i of indices) {
+    await generateProjectDetailPage({
+      locale: 'de',
+      navigationTitle: `project ${i}`,
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `project ${i}`,
+    });
+  }
+};
+
+const generateMagazinePages = async ({
+  amount,
+  home,
+  tenant,
+}: {
+  amount: number;
+  home: string;
+  tenant: string;
+}): Promise<void> => {
+  const indices = Array.from({
+    length: amount,
+  }, (_, idx) => idx + 1);
+
+  for (const i of indices) {
+    const day = String(i)
+      .padStart(2, '0');
+
+    await generateMagazineDetailPage({
+      date: `2031-08-${day}T12:00:00.000Z`,
+      locale: 'de',
+      navigationTitle: `magazine ${day}`,
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `magazine ${day}`,
+    });
+  }
+};
+
+const generatePublicationPages = async ({
+  amount,
+  home,
+  tenant,
+}: {
+  amount: number;
+  home: string;
+  tenant: string;
+}): Promise<void> => {
+  const indices = Array.from({
+    length: amount,
+  }, (_, idx) => idx + 1);
+
+  for (const i of indices) {
+    await generatePublicationDetailPage({
+      locale: 'de',
+      navigationTitle: `publication${i}`,
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `publication${i}`,
+    });
+  }
+};
+
+const generateSamplePagesForTeasers = async ({
+  amount,
+  home,
+  tenant,
+}: {
+  amount: number;
+  home: string;
+  tenant: string;
+}): Promise<void> => {
+  await generateEventPages({
+    amount,
+    home,
+    tenant,
+  });
+
+  await generateNewsPages({
+    amount,
+    home,
+    tenant,
+  });
+
+  await generateProjectPages({
+    amount,
+    home,
+    tenant,
+  });
+
+  await generateMagazinePages({
+    amount,
+    home,
+    tenant,
+  });
+
+  await generatePublicationPages({
+    amount,
+    home,
+    tenant,
+  });
+};
+
+/* eslint-enable no-await-in-loop */
+
+// ########################################################################
+// Helpers: Setup test pages
+// ########################################################################
 
 const setupSagwHomePage = async (): Promise<void> => {
   await deleteSetsPages();
@@ -250,6 +266,7 @@ const setupSagwHomePage = async (): Promise<void> => {
   });
 
   await generateSamplePagesForTeasers({
+    amount: 5,
     home,
     tenant,
   });
@@ -458,6 +475,7 @@ const setupSagwHomePageNonSagw = async (overrideTime?: number): Promise<void> =>
   });
 
   await generateSamplePagesForTeasers({
+    amount: 5,
     home,
     tenant: tenant.id,
   });
@@ -961,6 +979,7 @@ const setupOverviewWithTeasersPage = async ({
   });
 
   await generateSamplePagesForTeasers({
+    amount: 21,
     home: homeId,
     tenant: tenantId,
   });
@@ -1190,6 +1209,10 @@ const setupOverviewWithTeasersPage = async ({
     id: overviewPage.id,
   });
 };
+
+// ########################################################################
+// Tests
+// ########################################################################
 
 test.describe('home', () => {
   beforeEachAcceptCookies();
