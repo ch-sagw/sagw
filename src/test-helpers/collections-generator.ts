@@ -33,10 +33,15 @@ import {
   ZenodoDocument,
 } from '@/payload-types';
 
-import { getTenant } from '@/test-helpers/tenant-generator';
+import {
+  getTenant, getTenantId,
+} from '@/test-helpers/tenant-generator';
 import slugify from 'slugify';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { seoData } from '@/seed/test-data/seoData';
+import {
+  addPlaywrightFooterData, addPlaywrightHeaderData,
+} from '@/seed/test-data/tenantDataPlaywright';
 
 interface InterfacePageProps {
   title: string;
@@ -1825,4 +1830,187 @@ export const generateVideo = async (tenant: string): Promise<string> => {
   });
 
   return video.id;
+};
+
+export const regenerateI18nData = async (): Promise<void> => {
+  const tenant = await getTenantId({
+    isSagw: true,
+    time: 0,
+  });
+  const payload = await getPayloadCached();
+  const currentI18n = await payload.find({
+    collection: 'i18nGlobals',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (currentI18n.docs.length > 0) {
+    await payload.delete({
+      collection: 'i18nGlobals',
+      id: currentI18n.docs[0].id,
+    });
+  }
+
+  await generateI18nData({
+    tenant,
+  });
+};
+
+export const regenerateFooterData = async (): Promise<void> => {
+  const tenant = await getTenantId({
+    isSagw: true,
+    time: 0,
+  });
+  const payload = await getPayloadCached();
+  const currentFooter = await payload.find({
+    collection: 'footer',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (currentFooter.docs.length > 0) {
+    await payload.delete({
+      collection: 'footer',
+      id: currentFooter.docs[0].id,
+    });
+  }
+
+  await addPlaywrightFooterData({
+    tenant,
+    tenantName: 'sagw',
+  });
+};
+
+export const regenerateConsentData = async (): Promise<void> => {
+  const tenant = await getTenantId({
+    isSagw: true,
+    time: 0,
+  });
+  const payload = await getPayloadCached();
+  const currentConsent = await payload.find({
+    collection: 'consent',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (currentConsent.docs.length > 0) {
+    await payload.delete({
+      collection: 'consent',
+      id: currentConsent.docs[0].id,
+    });
+  }
+
+  await generateConsentData({
+    tenant,
+  });
+};
+
+export const regenerateHeaderData = async (): Promise<void> => {
+  const tenant = await getTenantId({
+    isSagw: true,
+    time: 0,
+  });
+  const payload = await getPayloadCached();
+  const currentHeader = await payload.find({
+    collection: 'header',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (currentHeader.docs.length > 0) {
+    await payload.delete({
+      collection: 'header',
+      id: currentHeader.docs[0].id,
+    });
+  }
+
+  const time = (new Date())
+    .getTime();
+
+  const detailPage = await generateDetailPage({
+    tenant,
+    title: `detail-${time}`,
+  });
+
+  await addPlaywrightHeaderData({
+    detail1: detailPage.id,
+    detail2: detailPage.id,
+    detail3: detailPage.id,
+    tenant,
+  });
+};
+
+export const regenerateImpressumPage = async (): Promise<void> => {
+  const tenant = await getTenantId({
+    isSagw: true,
+    time: 0,
+  });
+  const payload = await getPayloadCached();
+  const currentImpressum = await payload.find({
+    collection: 'impressumPage',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (currentImpressum.docs.length > 0) {
+    await payload.delete({
+      collection: 'impressumPage',
+      id: currentImpressum.docs[0].id,
+    });
+  }
+
+  await generateImpressumPage({
+    tenant,
+  });
+};
+
+export const regenerateDataPrivacyPage = async (): Promise<void> => {
+  const tenant = await getTenantId({
+    isSagw: true,
+    time: 0,
+  });
+  const payload = await getPayloadCached();
+  const currentDataPrivacy = await payload.find({
+    collection: 'dataPrivacyPage',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (currentDataPrivacy.docs.length > 0) {
+    await payload.delete({
+      collection: 'dataPrivacyPage',
+      id: currentDataPrivacy.docs[0].id,
+    });
+  }
+
+  await generateDataPrivacyPage({
+    tenant,
+  });
+};
+
+export const regenerateAllGenericData = async (): Promise<void> => {
+  await regenerateI18nData();
+  await regenerateFooterData();
+  await regenerateConsentData();
+  await regenerateHeaderData();
+  await regenerateImpressumPage();
+  await regenerateDataPrivacyPage();
 };

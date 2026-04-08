@@ -24,6 +24,7 @@ import {
   generateProjectDetailPage,
   generatePublicationDetailPage,
   generateRegularForm, getHomeId,
+  regenerateAllGenericData,
 } from '@/test-helpers/collections-generator';
 import { feVrtProjects } from '@/test-helpers/playwright-projects';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
@@ -1262,8 +1263,11 @@ const setupDataPrivacyPage = async ({
 };
 
 test.describe('home sagw', () => {
+
   for (const feVrtProject of feVrtProjects) {
     test(`${feVrtProject.name}`, async () => {
+      await regenerateAllGenericData();
+
       const browser = await browserTypeByName[feVrtProject.browserName]
         .launch();
       const context = await browser.newContext(feVrtProject.contextOptions);
@@ -1324,6 +1328,8 @@ test.describe('home non-sagw', () => {
 test.describe('detail page sagw', () => {
   for (const feVrtProject of feVrtProjects) {
     test(`${feVrtProject.name}`, async () => {
+      await regenerateAllGenericData();
+
       const browser = await browserTypeByName[feVrtProject.browserName]
         .launch();
       const context = await browser.newContext(feVrtProject.contextOptions);
@@ -1411,6 +1417,8 @@ test.describe('detail page non-sagw', () => {
 test.describe('overview page with teasers sagw', () => {
   for (const feVrtProject of feVrtProjects) {
     test(`${feVrtProject.name}`, async () => {
+      await regenerateAllGenericData();
+
       const browser = await browserTypeByName[feVrtProject.browserName]
         .launch();
       const context = await browser.newContext(feVrtProject.contextOptions);
@@ -1498,6 +1506,8 @@ test.describe('overview page with teasers non-sagw', () => {
 test.describe('impressum page sagw', () => {
   for (const feVrtProject of feVrtProjects) {
     test(`${feVrtProject.name}`, async () => {
+      await regenerateAllGenericData();
+
       const browser = await browserTypeByName[feVrtProject.browserName]
         .launch();
       const context = await browser.newContext(feVrtProject.contextOptions);
@@ -1574,6 +1584,8 @@ test.describe('impressum page non-sagw', () => {
 test.describe('data privacy page sagw', () => {
   for (const feVrtProject of feVrtProjects) {
     test(`${feVrtProject.name}`, async () => {
+      await regenerateAllGenericData();
+
       const browser = await browserTypeByName[feVrtProject.browserName]
         .launch();
       const context = await browser.newContext(feVrtProject.contextOptions);
@@ -1654,6 +1666,8 @@ test.describe('data privacy page non-sagw', () => {
 test.describe('error page sagw', () => {
   for (const feVrtProject of feVrtProjects) {
     test(`${feVrtProject.name}`, async () => {
+      await regenerateAllGenericData();
+
       const browser = await browserTypeByName[feVrtProject.browserName]
         .launch();
       const context = await browser.newContext(feVrtProject.contextOptions);
