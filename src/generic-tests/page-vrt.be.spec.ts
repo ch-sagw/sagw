@@ -29,6 +29,7 @@ import {
 } from '@/utilities/rteSampleContent';
 import { addPlaywrightErrorPage } from '@/seed/test-data/tenantDataPlaywright';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
+import { BasePayload } from 'payload';
 
 // ########################################################################
 // Helpers: Generate pages
@@ -40,10 +41,12 @@ const generateEventPages = async ({
   amount,
   home,
   tenant,
+  project,
 }: {
   amount: number;
   home: string;
   tenant: string;
+  project?: string;
 }): Promise<void> => {
   const indices = Array.from({
     length: amount,
@@ -72,6 +75,7 @@ const generateEventPages = async ({
         documentId: home,
         slug: 'homePage',
       },
+      project,
       tenant,
       title: `event ${i}`,
     });
@@ -81,11 +85,13 @@ const generateEventPages = async ({
 const generateNewsPages = async ({
   amount,
   home,
+  project,
   tenant,
 }: {
   amount: number;
   home: string;
   tenant: string;
+  project?: string;
 }): Promise<void> => {
   const indices = Array.from({
     length: amount,
@@ -102,6 +108,7 @@ const generateNewsPages = async ({
         documentId: home,
         slug: 'homePage',
       },
+      project,
       tenant,
       title: `news ${day}`,
     });
@@ -170,10 +177,12 @@ const generatePublicationPages = async ({
   amount,
   home,
   tenant,
+  project,
 }: {
   amount: number;
   home: string;
   tenant: string;
+  project?: string;
 }): Promise<void> => {
   const indices = Array.from({
     length: amount,
@@ -187,6 +196,7 @@ const generatePublicationPages = async ({
         documentId: home,
         slug: 'homePage',
       },
+      project,
       tenant,
       title: `publication${i}`,
     });
@@ -346,6 +356,138 @@ const generateTeam = async ({
   });
 
   return team.id;
+};
+
+const generateDocument = async ({
+  payload,
+  tenant,
+}: {
+  payload: BasePayload;
+  tenant: string;
+}): Promise<string> => {
+  const document = await payload.create({
+    collection: 'documents',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      date: '2025-10-30',
+      tenant,
+      title: simpleRteConfig('Some Document'),
+    },
+    filePath: 'src/seed/test-data/assets/sagw.pdf',
+  });
+
+  return document.id;
+};
+
+const generateZenodoDocument = async ({
+  payload,
+  tenant,
+}: {
+  payload: BasePayload;
+  tenant: string;
+}): Promise<string> => {
+  const zenodoDocument = await payload.create({
+    collection: 'zenodoDocuments',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      files: [
+        {
+          format: 'pdf',
+          id: 'someid',
+          link: 'https://foo.bar',
+          size: 0.26,
+        },
+        {
+          format: 'zip',
+          id: 'someotherid',
+          link: 'https://foo.bar',
+          size: 1.54,
+        },
+      ],
+      publicationDate: '1919-05-01',
+      tenant,
+      title: 'Sample Zenodo Document',
+      zenodoId: '1512691',
+    },
+  });
+
+  return zenodoDocument.id;
+};
+
+const generateImage = async ({
+  payload,
+  tenant,
+}: {
+  payload: BasePayload;
+  tenant: string;
+}): Promise<string> => {
+  const image = await payload.create({
+    collection: 'images',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      alt: 'alt',
+      tenant,
+    },
+    filePath: 'src/seed/test-data/assets/sagw.png',
+  });
+
+  return image.id;
+};
+
+const generateVideo = async ({
+  payload,
+  tenant,
+}: {
+  payload: BasePayload;
+  tenant: string;
+}): Promise<string> => {
+  const video = await payload.create({
+    collection: 'videos',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      tenant,
+      title: 'video',
+    },
+    filePath: 'src/seed/test-data/assets/sagw.mp4',
+  });
+
+  return video.id;
+};
+
+const generatePerson = async ({
+  payload,
+  tenant,
+  image,
+}: {
+  payload: BasePayload;
+  tenant: string;
+  image: string;
+}): Promise<string> => {
+  const person = await payload.create({
+    collection: 'people',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      firstname: simpleRteConfig('Firstname'),
+      function: simpleRteConfig('Some function'),
+      image,
+      lastname: simpleRteConfig('Lastname'),
+      mail: 'foo@bar.com',
+      phone: '031 123 45 67',
+      tenant,
+    },
+  });
+
+  return person.id;
 };
 
 // ########################################################################
@@ -754,92 +896,32 @@ const setupDetailPage = async ({
     title: 'Detail Page 2',
   });
 
-  // create a form
   const sampleForm = await generateRegularForm(tenantId);
 
-  // create document
-  const document = await payload.create({
-    collection: 'documents',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      date: '2025-10-30',
-      tenant: tenantId,
-      title: simpleRteConfig('Some Document'),
-    },
-    filePath: 'src/seed/test-data/assets/sagw.pdf',
+  const document = await generateDocument({
+    payload,
+    tenant: tenantId,
   });
 
-  // add zenodo document
-  const zenodoDocument = await payload.create({
-    collection: 'zenodoDocuments',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      files: [
-        {
-          format: 'pdf',
-          id: 'someid',
-          link: 'https://foo.bar',
-          size: 0.26,
-        },
-        {
-          format: 'zip',
-          id: 'someotherid',
-          link: 'https://foo.bar',
-          size: 1.54,
-        },
-      ],
-      publicationDate: '1919-05-01',
-      tenant: tenantId,
-      title: 'Sample Zenodo Document',
-      zenodoId: '1512691',
-    },
+  const zenodoDocument = await generateZenodoDocument({
+    payload,
+    tenant: tenantId,
   });
 
-  // add image
-  const image = await payload.create({
-    collection: 'images',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      alt: 'alt',
-      tenant: tenantId,
-    },
-    filePath: 'src/seed/test-data/assets/sagw.png',
+  const image = await generateImage({
+    payload,
+    tenant: tenantId,
   });
 
-  // add video
-  const video = await payload.create({
-    collection: 'videos',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      tenant: tenantId,
-      title: 'video',
-    },
-    filePath: 'src/seed/test-data/assets/sagw.mp4',
+  const video = await generateVideo({
+    payload,
+    tenant: tenantId,
   });
 
-  // add person
-  const person = await payload.create({
-    collection: 'people',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      firstname: simpleRteConfig('Firstname'),
-      function: simpleRteConfig('Some function'),
-      image: image.id,
-      lastname: simpleRteConfig('Lastname'),
-      mail: 'foo@bar.com',
-      phone: '031 123 45 67',
-      tenant: tenantId,
-    },
+  const person = await generatePerson({
+    image,
+    payload,
+    tenant: tenantId,
   });
 
   // add content
@@ -898,11 +980,11 @@ const setupDetailPage = async ({
           downloads: [
             {
               relationTo: 'documents',
-              value: document.id,
+              value: document,
             },
             {
               relationTo: 'zenodoDocuments',
-              value: zenodoDocument.id,
+              value: zenodoDocument,
             },
           ],
           subtitle: simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe'),
@@ -914,7 +996,7 @@ const setupDetailPage = async ({
           blockType: 'imageBlock',
           caption: simpleRteConfig('Some caption'),
           credits: simpleRteConfig('Some credits'),
-          image: image.id,
+          image,
         },
 
         // video
@@ -923,11 +1005,11 @@ const setupDetailPage = async ({
           'blockType': 'videoBlock',
           'caption': simpleRteConfig('Some caption'),
           'credits': simpleRteConfig('Some credits'),
-          'stillImage': image.id,
-          'video-de': video.id,
-          'video-en': video.id,
-          'video-fr': video.id,
-          'video-it': video.id,
+          'stillImage': image,
+          'video-de': video,
+          'video-en': video,
+          'video-fr': video,
+          'video-it': video,
         },
 
         // accordion
@@ -963,7 +1045,7 @@ const setupDetailPage = async ({
         {
           blockType: 'ctaContactBlock',
           colorMode: 'dark',
-          contact: [person.id],
+          contact: [person],
           text: simpleRteConfig('Haben Sie Fragen? Dann melden Sie sich gerne bei uns.'),
           title: simpleRteConfig('Kontakt'),
 
@@ -1020,7 +1102,7 @@ const setupDetailPage = async ({
             {
               image: {
                 relationTo: 'images',
-                value: image.id,
+                value: image,
               },
               linkExternal: {
                 externalLink: 'https://www.foo.bar',
@@ -1033,7 +1115,7 @@ const setupDetailPage = async ({
             {
               image: {
                 relationTo: 'images',
-                value: image.id,
+                value: image,
               },
               linkExternal: {
                 externalLink: 'https://www.foo.bar',
@@ -1071,6 +1153,1007 @@ const setupDetailPage = async ({
   });
 };
 
+const setupMagazineDetailPage = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const detailPage = await generateMagazineDetailPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Detail Page',
+  });
+
+  const detailPageForLinks = await generateDetailPage({
+    navigationTitle: 'nav title 2',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Detail Page 2',
+  });
+
+  const sampleForm = await generateRegularForm(tenantId);
+
+  const document = await generateDocument({
+    payload,
+    tenant: tenantId,
+  });
+
+  const zenodoDocument = await generateZenodoDocument({
+    payload,
+    tenant: tenantId,
+  });
+
+  const image = await generateImage({
+    payload,
+    tenant: tenantId,
+  });
+
+  // add content
+  await payload.update({
+    collection: 'magazineDetailPage',
+    data: {
+      content: [
+        // richtext
+        {
+          blockType: 'textBlock',
+          text: sampleRte1,
+        },
+
+        // links
+        {
+          blockType: 'linksBlock',
+          links: [
+            {
+              linkExternal: {
+                description: simpleRteConfig('Offenes Repository für EU-finanzierte Forschungsergebnisse aus Horizon Europe, Euratom und früheren Rahmenprogrammen.'),
+                externalLink: 'https://www.foo.bar',
+                externalLinkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'external',
+            },
+            {
+              linkInternal: {
+                internalLink: {
+                  documentId: detailPageForLinks.id,
+                  slug: 'detailPage',
+                },
+                linkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'internal',
+            },
+            {
+              linkMail: {
+                email: 'foo@bar.com',
+                linkText: simpleRteConfig('Schreiben Sie eine E-Mail'),
+              },
+              linkType: 'mail',
+            },
+          ],
+        },
+
+        // downloads
+        {
+          blockType: 'downloadsBlock',
+          customOrAuto: 'custom',
+          downloads: [
+            {
+              relationTo: 'documents',
+              value: document,
+            },
+            {
+              relationTo: 'zenodoDocuments',
+              value: zenodoDocument,
+            },
+          ],
+          subtitle: simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe'),
+        },
+
+        // image
+        {
+          alignment: 'center',
+          blockType: 'imageBlockMagazine',
+          caption: simpleRteConfig('Some caption'),
+          credits: simpleRteConfig('Some credits'),
+          image,
+        },
+
+        // form
+        {
+          blockType: 'formBlock',
+          form: sampleForm,
+        },
+
+        // notification
+        {
+          blockType: 'notificationBlock',
+          text: simpleRteConfig('Sample notification text.'),
+        },
+
+        // small text
+        {
+          blockType: 'footnoteBlock',
+          text: sampleFootnoteContent,
+          title: simpleRteConfig('Footnote'),
+        },
+      ],
+
+      // hero
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: detailPage.id,
+  });
+};
+
+const setupEventDetailPage = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const eventCategory = await payload.create({
+    collection: 'eventCategory',
+    data: {
+      eventCategory: simpleRteConfig('Category'),
+      tenant: tenantId,
+    },
+    locale: 'de',
+  });
+
+  const detailPage = await generateEventDetailPage({
+    category: eventCategory.id,
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Detail Page',
+  });
+
+  const sampleForm = await generateRegularForm(tenantId);
+
+  const document = await generateDocument({
+    payload,
+    tenant: tenantId,
+  });
+
+  const zenodoDocument = await generateZenodoDocument({
+    payload,
+    tenant: tenantId,
+  });
+
+  // add content
+  await payload.update({
+    collection: 'eventDetailPage',
+    data: {
+      blocks: {
+        content: [
+        // richtext
+          {
+            blockType: 'textBlock',
+            text: sampleRte1,
+          },
+
+          // downloads
+          {
+            blockType: 'downloadsBlock',
+            customOrAuto: 'custom',
+            downloads: [
+              {
+                relationTo: 'documents',
+                value: document,
+              },
+              {
+                relationTo: 'zenodoDocuments',
+                value: zenodoDocument,
+              },
+            ],
+            subtitle: simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe'),
+          },
+
+          // form
+          {
+            blockType: 'formBlock',
+            form: sampleForm,
+          },
+
+          // cta link block internal link
+          {
+            blockType: 'ctaLinkBlock',
+            linkInternal: {
+              internalLink: {
+                documentId: detailPage.id,
+                slug: 'detailPage',
+              },
+              linkText: simpleRteConfig('Internal Link Text (internal)'),
+            },
+            linkType: 'internal',
+            text: simpleRteConfig('CTA Link Block Text (internal)'),
+            title: simpleRteConfig('CTA Link Block Title (internal)'),
+
+          },
+
+          // cta link block external link
+          {
+            blockType: 'ctaLinkBlock',
+            linkExternal: {
+              externalLink: 'https://www.foo.bar',
+              externalLinkText: simpleRteConfig('External Link Text (external)'),
+            },
+            linkType: 'external',
+            text: simpleRteConfig('CTA Link Block Text (external)'),
+            title: simpleRteConfig('CTA Link Block Title (external)'),
+
+          },
+
+          // cta link block mail link
+          {
+            blockType: 'ctaLinkBlock',
+            linkMail: {
+              email: 'foo@bar.com',
+              linkText: simpleRteConfig('Mail link'),
+            },
+            linkType: 'mail',
+            text: simpleRteConfig('CTA Link Block Text (mail)'),
+            title: simpleRteConfig('CTA Link Block Title (mail)'),
+
+          },
+
+          // notification
+          {
+            blockType: 'notificationBlock',
+            text: simpleRteConfig('Sample notification text.'),
+          },
+        ],
+      },
+    },
+    id: detailPage.id,
+  });
+};
+
+const setupNewsDetailPage = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const detailPage = await generateNewsDetailPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Detail Page',
+  });
+
+  await generateNewsPages({
+    amount: 5,
+    home: homeId,
+    tenant: tenantId,
+  });
+
+  const detailPageForLinks = await generateDetailPage({
+    navigationTitle: 'nav title 2',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Detail Page 2',
+  });
+
+  const sampleForm = await generateRegularForm(tenantId);
+
+  const document = await generateDocument({
+    payload,
+    tenant: tenantId,
+  });
+
+  const zenodoDocument = await generateZenodoDocument({
+    payload,
+    tenant: tenantId,
+  });
+
+  const image = await generateImage({
+    payload,
+    tenant: tenantId,
+  });
+
+  // add content
+  await payload.update({
+    collection: 'newsDetailPage',
+    data: {
+      content: [
+        // form
+        {
+          blockType: 'formBlock',
+          form: sampleForm,
+        },
+
+        // richtext
+        {
+          blockType: 'textBlock',
+          text: sampleRte1,
+        },
+
+        // links
+        {
+          blockType: 'linksBlock',
+          links: [
+            {
+              linkExternal: {
+                description: simpleRteConfig('Offenes Repository für EU-finanzierte Forschungsergebnisse aus Horizon Europe, Euratom und früheren Rahmenprogrammen.'),
+                externalLink: 'https://www.foo.bar',
+                externalLinkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'external',
+            },
+            {
+              linkInternal: {
+                internalLink: {
+                  documentId: detailPageForLinks.id,
+                  slug: 'detailPage',
+                },
+                linkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'internal',
+            },
+            {
+              linkMail: {
+                email: 'foo@bar.com',
+                linkText: simpleRteConfig('Schreiben Sie eine E-Mail'),
+              },
+              linkType: 'mail',
+            },
+          ],
+        },
+
+        // downloads
+        {
+          blockType: 'downloadsBlock',
+          customOrAuto: 'custom',
+          downloads: [
+            {
+              relationTo: 'documents',
+              value: document,
+            },
+            {
+              relationTo: 'zenodoDocuments',
+              value: zenodoDocument,
+            },
+          ],
+          subtitle: simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe'),
+        },
+
+        // image
+        {
+          alignment: 'center',
+          blockType: 'imageBlock',
+          caption: simpleRteConfig('Some caption'),
+          credits: simpleRteConfig('Some credits'),
+          image,
+        },
+
+        // notification
+        {
+          blockType: 'notificationBlock',
+          text: simpleRteConfig('Sample notification text.'),
+        },
+
+        // news teasers
+        {
+          blockType: 'newsTeasersBlock',
+          title: simpleRteConfig('News'),
+        },
+      ],
+
+      // hero
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: detailPage.id,
+  });
+};
+
+const setupPublicationDetailPage = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const detailPage = await generatePublicationDetailPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Detail Page',
+  });
+
+  const detailPageForLinks = await generateDetailPage({
+    navigationTitle: 'nav title 2',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Detail Page 2',
+  });
+
+  await generatePublicationPages({
+    amount: 5,
+    home: homeId,
+    tenant: tenantId,
+  });
+
+  const sampleForm = await generateRegularForm(tenantId);
+
+  const document = await generateDocument({
+    payload,
+    tenant: tenantId,
+  });
+
+  const zenodoDocument = await generateZenodoDocument({
+    payload,
+    tenant: tenantId,
+  });
+
+  // add content
+  await payload.update({
+    collection: 'publicationDetailPage',
+    data: {
+      content: [
+        // form
+        {
+          blockType: 'formBlock',
+          form: sampleForm,
+        },
+
+        // richtext
+        {
+          blockType: 'textBlock',
+          text: sampleRte1,
+        },
+
+        // links
+        {
+          blockType: 'linksBlock',
+          links: [
+            {
+              linkExternal: {
+                description: simpleRteConfig('Offenes Repository für EU-finanzierte Forschungsergebnisse aus Horizon Europe, Euratom und früheren Rahmenprogrammen.'),
+                externalLink: 'https://www.foo.bar',
+                externalLinkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'external',
+            },
+            {
+              linkInternal: {
+                internalLink: {
+                  documentId: detailPageForLinks.id,
+                  slug: 'detailPage',
+                },
+                linkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'internal',
+            },
+            {
+              linkMail: {
+                email: 'foo@bar.com',
+                linkText: simpleRteConfig('Schreiben Sie eine E-Mail'),
+              },
+              linkType: 'mail',
+            },
+          ],
+        },
+
+        // downloads
+        {
+          blockType: 'downloadsBlock',
+          customOrAuto: 'custom',
+          downloads: [
+            {
+              relationTo: 'documents',
+              value: document,
+            },
+            {
+              relationTo: 'zenodoDocuments',
+              value: zenodoDocument,
+            },
+          ],
+          subtitle: simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe'),
+        },
+
+        // notification
+        {
+          blockType: 'notificationBlock',
+          text: simpleRteConfig('Sample notification text.'),
+        },
+
+        // small text
+        {
+          blockType: 'bibliographicReferenceBlock',
+          text: simpleRteConfig('Bibliographic reference'),
+        },
+
+        // publications teasers
+        {
+          blockType: 'publicationsTeasersBlock',
+          optionalLink: {
+            includeLink: true,
+            link: {
+              internalLink: {
+                documentId: detailPageForLinks.id,
+                slug: 'detailPage',
+              },
+              linkText: simpleRteConfig('link'),
+            },
+          },
+          title: simpleRteConfig('Publication Teasers'),
+        },
+      ],
+
+      // hero
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: detailPage.id,
+  });
+};
+
+const setupNationalDictionaryDetailPage = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const detailPage = await generateNationalDictionaryDetailPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Detail Page',
+  });
+
+  const detailPageForLinks = await generateDetailPage({
+    navigationTitle: 'nav title 2',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Detail Page 2',
+  });
+
+  // add content
+  await payload.update({
+    collection: 'nationalDictionaryDetailPage',
+    data: {
+      content: [
+        // richtext
+        {
+          blockType: 'textBlock',
+          text: sampleRte1,
+        },
+
+        // links
+        {
+          blockType: 'linksBlock',
+          links: [
+            {
+              linkExternal: {
+                description: simpleRteConfig('Offenes Repository für EU-finanzierte Forschungsergebnisse aus Horizon Europe, Euratom und früheren Rahmenprogrammen.'),
+                externalLink: 'https://www.foo.bar',
+                externalLinkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'external',
+            },
+            {
+              linkInternal: {
+                internalLink: {
+                  documentId: detailPageForLinks.id,
+                  slug: 'detailPage',
+                },
+                linkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'internal',
+            },
+            {
+              linkMail: {
+                email: 'foo@bar.com',
+                linkText: simpleRteConfig('Schreiben Sie eine E-Mail'),
+              },
+              linkType: 'mail',
+            },
+          ],
+        },
+
+        // notification
+        {
+          blockType: 'notificationBlock',
+          text: simpleRteConfig('Sample notification text.'),
+        },
+
+      ],
+
+      // hero
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: detailPage.id,
+  });
+};
+
+const setupInstituteDetailPage = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const detailPage = await generateInstituteDetailPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Detail Page',
+  });
+
+  const detailPageForLinks = await generateDetailPage({
+    navigationTitle: 'nav title 2',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Detail Page 2',
+  });
+
+  // add content
+  await payload.update({
+    collection: 'instituteDetailPage',
+    data: {
+      content: [
+        // richtext
+        {
+          blockType: 'textBlock',
+          text: sampleRte1,
+        },
+
+        // links
+        {
+          blockType: 'linksBlock',
+          links: [
+            {
+              linkExternal: {
+                description: simpleRteConfig('Offenes Repository für EU-finanzierte Forschungsergebnisse aus Horizon Europe, Euratom und früheren Rahmenprogrammen.'),
+                externalLink: 'https://www.foo.bar',
+                externalLinkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'external',
+            },
+            {
+              linkInternal: {
+                internalLink: {
+                  documentId: detailPageForLinks.id,
+                  slug: 'detailPage',
+                },
+                linkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'internal',
+            },
+            {
+              linkMail: {
+                email: 'foo@bar.com',
+                linkText: simpleRteConfig('Schreiben Sie eine E-Mail'),
+              },
+              linkType: 'mail',
+            },
+          ],
+        },
+
+        // notification
+        {
+          blockType: 'notificationBlock',
+          text: simpleRteConfig('Sample notification text.'),
+        },
+
+      ],
+
+      // hero
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: detailPage.id,
+  });
+};
+
+const setupProjectDetailPage = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const detailPage = await generateProjectDetailPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Detail Page',
+  });
+
+  const detailPageForLinks = await generateDetailPage({
+    navigationTitle: 'nav title 2',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Detail Page 2',
+  });
+
+  const project = await payload.create({
+    collection: 'projects',
+    data: {
+      name: simpleRteConfig('Project Name'),
+      tenant: tenantId,
+    },
+  });
+
+  await generateEventPages({
+    amount: 5,
+    home: homeId,
+    project: project.id,
+    tenant: tenantId,
+  });
+
+  await generateNewsPages({
+    amount: 5,
+    home: homeId,
+    project: project.id,
+    tenant: tenantId,
+  });
+
+  await generatePublicationPages({
+    amount: 5,
+    home: homeId,
+    project: project.id,
+    tenant: tenantId,
+  });
+
+  const sampleForm = await generateRegularForm(tenantId);
+
+  const document = await generateDocument({
+    payload,
+    tenant: tenantId,
+  });
+
+  const zenodoDocument = await generateZenodoDocument({
+    payload,
+    tenant: tenantId,
+  });
+
+  const image = await generateImage({
+    payload,
+    tenant: tenantId,
+  });
+
+  const person = await generatePerson({
+    image,
+    payload,
+    tenant: tenantId,
+  });
+
+  // add content
+  await payload.update({
+    collection: 'projectDetailPage',
+    data: {
+      content: [
+        // form
+        {
+          blockType: 'formBlock',
+          form: sampleForm,
+        },
+
+        // richtext
+        {
+          blockType: 'textBlock',
+          text: sampleRte1,
+        },
+
+        // links
+        {
+          blockType: 'linksBlock',
+          links: [
+            {
+              linkExternal: {
+                description: simpleRteConfig('Offenes Repository für EU-finanzierte Forschungsergebnisse aus Horizon Europe, Euratom und früheren Rahmenprogrammen.'),
+                externalLink: 'https://www.foo.bar',
+                externalLinkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'external',
+            },
+            {
+              linkInternal: {
+                internalLink: {
+                  documentId: detailPageForLinks.id,
+                  slug: 'detailPage',
+                },
+                linkText: simpleRteConfig('Artikel auf Zenodo'),
+              },
+              linkType: 'internal',
+            },
+            {
+              linkMail: {
+                email: 'foo@bar.com',
+                linkText: simpleRteConfig('Schreiben Sie eine E-Mail'),
+              },
+              linkType: 'mail',
+            },
+          ],
+        },
+
+        // downloads
+        {
+          blockType: 'downloadsBlock',
+          customOrAuto: 'custom',
+          downloads: [
+            {
+              relationTo: 'documents',
+              value: document,
+            },
+            {
+              relationTo: 'zenodoDocuments',
+              value: zenodoDocument,
+            },
+          ],
+          subtitle: simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe'),
+        },
+
+        // personal contact
+        {
+          blockType: 'ctaContactBlock',
+          colorMode: 'dark',
+          contact: [person],
+          text: simpleRteConfig('Haben Sie Fragen? Dann melden Sie sich gerne bei uns.'),
+          title: simpleRteConfig('Kontakt'),
+
+        },
+
+        // notification
+        {
+          blockType: 'notificationBlock',
+          text: simpleRteConfig('Sample notification text.'),
+        },
+
+        // event teasers
+        {
+          blockType: 'eventsTeasersBlock',
+          optionalLink: {
+            includeLink: true,
+            link: {
+              internalLink: {
+                documentId: detailPageForLinks.id,
+                slug: 'detailPage',
+              },
+              linkText: simpleRteConfig('link'),
+            },
+          },
+          title: simpleRteConfig('Event Teasers'),
+        },
+
+        // news teasers
+        {
+          blockType: 'newsTeasersBlock',
+          optionalLink: {
+            includeLink: true,
+            link: {
+              internalLink: {
+                documentId: detailPageForLinks.id,
+                slug: 'detailPage',
+              },
+              linkText: simpleRteConfig('link'),
+            },
+          },
+          title: simpleRteConfig('News Teasers'),
+        },
+
+        // publication teasers
+        {
+          blockType: 'publicationsTeasersBlock',
+          optionalLink: {
+            includeLink: true,
+            link: {
+              internalLink: {
+                documentId: detailPageForLinks.id,
+                slug: 'detailPage',
+              },
+              linkText: simpleRteConfig('link'),
+            },
+          },
+          title: simpleRteConfig('Publication Teasers'),
+        },
+      ],
+
+      // hero
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+      project: project.id,
+    },
+    id: detailPage.id,
+  });
+};
+
 const setupOverviewWithTeasersPage = async ({
   tenantId,
   homeId,
@@ -1103,33 +2186,15 @@ const setupOverviewWithTeasersPage = async ({
   const sampleForm = await generateRegularForm(tenantId);
 
   // add image
-  const image = await payload.create({
-    collection: 'images',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      alt: 'alt',
-      tenant: tenantId,
-    },
-    filePath: 'src/seed/test-data/assets/sagw.png',
+  const image = await generateImage({
+    payload,
+    tenant: tenantId,
   });
 
-  // add person
-  const person = await payload.create({
-    collection: 'people',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      firstname: simpleRteConfig('Firstname'),
-      function: simpleRteConfig('Some function'),
-      image: image.id,
-      lastname: simpleRteConfig('Lastname'),
-      mail: 'foo@bar.com',
-      phone: '031 123 45 67',
-      tenant: tenantId,
-    },
+  const person = await generatePerson({
+    image,
+    payload,
+    tenant: tenantId,
   });
 
   // add content
@@ -1182,7 +2247,7 @@ const setupOverviewWithTeasersPage = async ({
         {
           blockType: 'ctaContactBlock',
           colorMode: 'dark',
-          contact: [person.id],
+          contact: [person],
           text: simpleRteConfig('Haben Sie Fragen? Dann melden Sie sich gerne bei uns.'),
           title: simpleRteConfig('Kontakt'),
 
@@ -1197,7 +2262,7 @@ const setupOverviewWithTeasersPage = async ({
             {
               image: {
                 relationTo: 'images',
-                value: image.id,
+                value: image,
               },
               linkExternal: {
                 externalLink: 'https://www.foo.bar',
@@ -1210,7 +2275,7 @@ const setupOverviewWithTeasersPage = async ({
             {
               image: {
                 relationTo: 'images',
-                value: image.id,
+                value: image,
               },
               linkExternal: {
                 externalLink: 'https://www.foo.bar',
@@ -1846,6 +2911,461 @@ test.describe('detail page', () => {
     });
 
     await setupDetailPage({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/detail-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+});
+
+test.describe('magazine detail page', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupMagazineDetailPage({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/detail-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupMagazineDetailPage({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/detail-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+});
+
+test.describe('event detail page', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupEventDetailPage({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/detail-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupEventDetailPage({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/detail-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+});
+
+test.describe('news detail page', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupNewsDetailPage({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/detail-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupNewsDetailPage({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/detail-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+});
+
+test.describe('publication detail page', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupPublicationDetailPage({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/detail-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupPublicationDetailPage({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/detail-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+});
+
+test.describe('national dictionary detail page', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupNationalDictionaryDetailPage({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/detail-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupNationalDictionaryDetailPage({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/detail-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+});
+
+test.describe('institute detail page', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupInstituteDetailPage({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/detail-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupInstituteDetailPage({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/detail-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+});
+
+test.describe('project detail page', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupProjectDetailPage({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/detail-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupProjectDetailPage({
       homeId: home,
       tenantId: tenant.id,
     });
