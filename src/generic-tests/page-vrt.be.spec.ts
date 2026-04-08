@@ -14,10 +14,8 @@ import {
   getTenantId,
 } from '@/test-helpers/tenant-generator';
 import {
-  generateDataPrivacyPage,
   generateDetailPage,
   generateEventDetailPage,
-  generateImpressumPage,
   generateMagazineDetailPage,
   generateNewsDetailPage,
   generateOverviewPage,
@@ -1209,59 +1207,6 @@ const setupOverviewWithTeasersPage = async ({
   });
 };
 
-const setupImpressumPage = async ({
-  tenantId,
-}: {
-  tenantId: string;
-}): Promise<void> => {
-  await deleteSetsPages();
-  await deleteOtherCollections();
-
-  const payload = await getPayloadCached();
-
-  const impressumPages = await payload.find({
-    collection: 'impressumPage',
-    where: {
-      tenant: {
-        equals: tenantId,
-      },
-    },
-  });
-
-  if (impressumPages.docs.length < 1) {
-    await generateImpressumPage({
-      tenant: tenantId,
-    });
-  }
-
-};
-
-const setupDataPrivacyPage = async ({
-  tenantId,
-}: {
-  tenantId: string;
-}): Promise<void> => {
-  await deleteSetsPages();
-  await deleteOtherCollections();
-
-  const payload = await getPayloadCached();
-
-  const dataPrivacyPages = await payload.find({
-    collection: 'impressumPage',
-    where: {
-      tenant: {
-        equals: tenantId,
-      },
-    },
-  });
-
-  if (dataPrivacyPages.docs.length < 1) {
-    await generateDataPrivacyPage({
-      tenant: tenantId,
-    });
-  }
-};
-
 test.describe('home sagw', () => {
 
   for (const feVrtProject of feVrtProjects) {
@@ -1515,17 +1460,6 @@ test.describe('impressum page sagw', () => {
       try {
         await context.addCookies([acceptedCookie]);
         const page = await context.newPage();
-        const time = (new Date())
-          .getTime();
-
-        const tenant = await getTenantId({
-          isSagw: true,
-          time,
-        });
-
-        await setupImpressumPage({
-          tenantId: tenant || '',
-        });
 
         await page.goto('http://localhost:3000/de/impressum-de');
         await page.waitForLoadState('networkidle');
@@ -1593,17 +1527,6 @@ test.describe('data privacy page sagw', () => {
       try {
         await context.addCookies([acceptedCookie]);
         const page = await context.newPage();
-        const time = (new Date())
-          .getTime();
-
-        const tenant = await getTenantId({
-          isSagw: true,
-          time,
-        });
-
-        await setupDataPrivacyPage({
-          tenantId: tenant || '',
-        });
 
         await page.goto('http://localhost:3000/de/data-privacy-de');
         await page.waitForLoadState('networkidle');
@@ -1641,10 +1564,6 @@ test.describe('data privacy page non-sagw', () => {
         await getHomeId({
           isSagw: false,
           tenant: tenant.id,
-        });
-
-        await setupDataPrivacyPage({
-          tenantId: tenant.id,
         });
 
         await page.goto(`http://localhost:3000/de/tenant-${time}/data-privacy-de`);

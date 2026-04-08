@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { Payload } from 'payload';
+import {
+  BasePayload, Payload,
+} from 'payload';
 
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { rte4ConsentBannerText } from '@/utilities/rteSampleContent';
 import { seoData } from '@/seed/test-data/seoData';
-import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 interface InterfaceAddDataForTenantProps {
   payload: Payload;
@@ -14,14 +15,14 @@ interface InterfaceAddDataForTenantProps {
 }
 
 export const addPlaywrightFooterData = async ({
+  payload,
   tenant,
   tenantName,
 }: {
+  payload: BasePayload,
   tenant: string;
   tenantName: string;
 }): Promise<void> => {
-  const payload = await getPayloadCached();
-
   await payload.create({
     collection: 'footer',
     context: {
@@ -71,18 +72,18 @@ export const addPlaywrightFooterData = async ({
 };
 
 export const addPlaywrightHeaderData = async ({
+  payload,
   tenant,
   detail1,
   detail2,
   detail3,
 }: {
+  payload: BasePayload,
   tenant: string;
   detail1: string;
   detail2: string;
   detail3: string;
 }): Promise<void> => {
-  const payload = await getPayloadCached();
-
   await payload.create({
     collection: 'header',
     context: {
@@ -330,6 +331,7 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
 
   // add footer data
   await addPlaywrightFooterData({
+    payload,
     tenant: tenantId,
     tenantName: tenant,
   });
@@ -499,6 +501,7 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
     detail1: navLinkDetail1.id,
     detail2: navLinkDetail2.id,
     detail3: navLinkDetail3.id,
+    payload,
     tenant: tenantId,
   });
 

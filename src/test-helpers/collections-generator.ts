@@ -1882,6 +1882,7 @@ export const regenerateFooterData = async (): Promise<void> => {
   }
 
   await addPlaywrightFooterData({
+    payload,
     tenant,
     tenantName: 'sagw',
   });
@@ -1948,6 +1949,7 @@ export const regenerateHeaderData = async (): Promise<void> => {
     detail1: detailPage.id,
     detail2: detailPage.id,
     detail3: detailPage.id,
+    payload,
     tenant,
   });
 };
