@@ -30,6 +30,7 @@ import {
   rte4FullRange, sampleFootnoteContent,
   sampleRte1,
 } from '@/utilities/rteSampleContent';
+import { addPlaywrightErrorPage } from '@/seed/test-data/tenantDataPlaywright';
 
 const browserTypeByName = {
   chromium,
@@ -1619,8 +1620,6 @@ test.describe('error page non-sagw', () => {
       const context = await browser.newContext(feVrtProject.contextOptions);
 
       try {
-        await context.addCookies([acceptedCookie]);
-        const page = await context.newPage();
         const time = (new Date())
           .getTime();
 
@@ -1633,35 +1632,15 @@ test.describe('error page non-sagw', () => {
           tenant: tenant.id,
         });
 
+        await context.addCookies([acceptedCookie]);
+        const page = await context.newPage();
+
         const payload = await getPayloadCached();
 
-        // create error page
-        await payload.create({
-          collection: 'errorPage',
-          context: {
-            skipCacheInvalidation: true,
-          },
-          data: {
-            /* eslint-disable @typescript-eslint/naming-convention */
-            _status: 'published',
-            /* eslint-enable @typescript-eslint/naming-convention */
-            error400: {
-              description: simpleRteConfig('Error description'),
-              title: simpleRteConfig('Not found title'),
-            },
-            error500: {
-              description: simpleRteConfig('Error description'),
-              title: simpleRteConfig('Not found title'),
-            },
-            homeButtonText: simpleRteConfig('Home Button Text'),
-            meta: {
-              seo: {
-                description: 'seo description',
-                title: 'seo title',
-              },
-            },
-            tenant: tenant.id,
-          },
+        await addPlaywrightErrorPage({
+          payload,
+          tenant: tenant.id,
+          tenantName: 'non-sagw',
         });
 
         await page.goto(`http://localhost:3000/de/tenant-${time}/some-random-page-that-does-not-exist`);

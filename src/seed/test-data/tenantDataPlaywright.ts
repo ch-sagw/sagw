@@ -261,6 +261,38 @@ export const addPlaywrightHeaderData = async ({
   });
 };
 
+export const addPlaywrightErrorPage = async ({
+  payload,
+  tenant,
+  tenantName,
+}: {
+  payload: BasePayload,
+  tenant: string;
+  tenantName: string;
+}): Promise<void> => {
+  await payload.create({
+    collection: 'errorPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      _status: 'published',
+      error400: {
+        description: simpleRteConfig('Error description'),
+        title: simpleRteConfig(`Not found title ${tenantName.toUpperCase()}`),
+      },
+      error500: {
+        description: simpleRteConfig('Error description'),
+        title: simpleRteConfig(`Not found title ${tenantName.toUpperCase()}`),
+      },
+      homeButtonText: simpleRteConfig('Home Button Text'),
+      ...seoData,
+      tenant,
+    },
+    locale: 'de',
+  });
+};
+
 export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenantProps): Promise<void> => {
 
   const {
@@ -506,25 +538,10 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
   });
 
   // create error page
-  await payload.create({
-    collection: 'errorPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      _status: 'published',
-      error400: {
-        description: simpleRteConfig('Error description'),
-        title: simpleRteConfig(`Not found title ${tenant.toUpperCase()}`),
-      },
-      error500: {
-        description: simpleRteConfig('Error description'),
-        title: simpleRteConfig(`Not found title ${tenant.toUpperCase()}`),
-      },
-      homeButtonText: simpleRteConfig('Home Button Text'),
-      ...seoData,
-      tenant: tenantId,
-    },
+  await addPlaywrightErrorPage({
+    payload,
+    tenant: tenantId,
+    tenantName: tenant,
   });
 
   // create impressum page

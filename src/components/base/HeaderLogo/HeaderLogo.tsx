@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import styles from '@/components/base/HeaderLogo/HeaderLogo.module.scss';
 import { ColorMode } from '@/components/base/types/colorMode';
 
@@ -11,6 +11,7 @@ import Link from 'next/link';
 
 export const Logos = {
   // notsagw will not be used in production
+  'not-sagw': notsagw,
   notsagw,
   sago,
   sagw,

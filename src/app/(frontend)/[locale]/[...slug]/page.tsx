@@ -6,7 +6,7 @@ import { InterfaceOtherPagesProps } from '@/app/(frontend)/fetchers/otherPages';
 import { Metadata } from 'next';
 import { renderMeta } from '@/app/(frontend)/renderers/RenderMeta';
 import { getPageData } from '../../fetchers/pageData';
-import { Redirector } from '@/components/helpers/redirects';
+import { RenderNotFoundPage } from '../../renderers/RenderNotFoundPage';
 
 export { generateStaticParams };
 
@@ -38,10 +38,12 @@ export default async function Page({
   });
 
   if (!pageData) {
-    return <Redirector
-      url={slug.join('/')}
-      locale={locale}
-    />;
+    return (
+      <RenderNotFoundPage
+        locale={locale}
+        slugSegments={slug}
+      />
+    );
   }
 
   return (

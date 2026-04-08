@@ -40,6 +40,7 @@ import slugify from 'slugify';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { seoData } from '@/seed/test-data/seoData';
 import {
+  addPlaywrightErrorPage,
   addPlaywrightFooterData, addPlaywrightHeaderData,
 } from '@/seed/test-data/tenantDataPlaywright';
 
@@ -2008,6 +2009,35 @@ export const regenerateDataPrivacyPage = async (): Promise<void> => {
   });
 };
 
+export const regenerateErrorPage = async (): Promise<void> => {
+  const tenant = await getTenantId({
+    isSagw: true,
+    time: 0,
+  });
+  const payload = await getPayloadCached();
+  const currentErrorPage = await payload.find({
+    collection: 'errorPage',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (currentErrorPage.docs.length > 0) {
+    await payload.delete({
+      collection: 'errorPage',
+      id: currentErrorPage.docs[0].id,
+    });
+  }
+
+  await addPlaywrightErrorPage({
+    payload,
+    tenant,
+    tenantName: 'sagw',
+  });
+};
+
 export const regenerateAllGenericData = async (): Promise<void> => {
   await regenerateI18nData();
   await regenerateFooterData();
@@ -2015,4 +2045,5 @@ export const regenerateAllGenericData = async (): Promise<void> => {
   await regenerateHeaderData();
   await regenerateImpressumPage();
   await regenerateDataPrivacyPage();
+  await regenerateErrorPage();
 };
