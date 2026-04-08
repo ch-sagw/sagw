@@ -1,9 +1,5 @@
 import {
-  chromium,
-  expect,
-  firefox,
-  test,
-  webkit,
+  expect, test,
 } from '@playwright/test';
 import {
   deleteOtherCollections, deleteSetsPages,
@@ -24,26 +20,13 @@ import {
   generateRegularForm, getHomeId,
   regenerateAllGenericData,
 } from '@/test-helpers/collections-generator';
-import { feVrtProjects } from '@/test-helpers/playwright-projects';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import {
   rte4FullRange, sampleFootnoteContent,
   sampleRte1,
 } from '@/utilities/rteSampleContent';
 import { addPlaywrightErrorPage } from '@/seed/test-data/tenantDataPlaywright';
-
-const browserTypeByName = {
-  chromium,
-  firefox,
-  webkit,
-} as const;
-
-const acceptedCookie = {
-  domain: 'localhost',
-  name: 'cookie_consent',
-  path: '/',
-  value: '{"analytics":true,"consentGiven":true,"essential":true,"external":true,"timestamp":1762095991926}',
-};
+import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 
 const generateSamplePagesForTeasers = async ({
   home,
@@ -1208,453 +1191,305 @@ const setupOverviewWithTeasersPage = async ({
   });
 };
 
-test.describe('home sagw', () => {
+test.describe('home', () => {
+  beforeEachAcceptCookies();
 
-  for (const feVrtProject of feVrtProjects) {
-    test(`${feVrtProject.name}`, async () => {
-      await regenerateAllGenericData();
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
 
-      const browser = await browserTypeByName[feVrtProject.browserName]
-        .launch();
-      const context = await browser.newContext(feVrtProject.contextOptions);
+    await setupSagwHomePage();
 
-      try {
-        await context.addCookies([acceptedCookie]);
-        const page = await context.newPage();
+    await page.goto('http://localhost:3000/de');
+    await page.waitForLoadState('networkidle');
 
-        await setupSagwHomePage();
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
 
-        await page.goto('http://localhost:3000/de');
-        await page.waitForLoadState('networkidle');
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
 
-        await expect(page)
-          .toHaveScreenshot(`home-sagw-${feVrtProject.name}.png`, {
-            animations: 'disabled',
-            fullPage: true,
-          });
-      } finally {
-        await context.close();
-        await browser.close();
-      }
-    });
-  }
+    await setupSagwHomePageNonSagw(time);
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
 });
 
-test.describe('home non-sagw', () => {
-  for (const feVrtProject of feVrtProjects) {
-    test(`${feVrtProject.name}`, async () => {
-      const browser = await browserTypeByName[feVrtProject.browserName]
-        .launch();
-      const context = await browser.newContext(feVrtProject.contextOptions);
-      const time = (new Date())
-        .getTime();
+test.describe('detail page', () => {
+  beforeEachAcceptCookies();
 
-      try {
-        await context.addCookies([acceptedCookie]);
-        const page = await context.newPage();
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
 
-        await setupSagwHomePageNonSagw(time);
+    const time = (new Date())
+      .getTime();
 
-        await page.goto(`http://localhost:3000/de/tenant-${time}`);
-        await page.waitForLoadState('networkidle');
-
-        await expect(page)
-          .toHaveScreenshot(`home-non-sagw-${feVrtProject.name}.png`, {
-            animations: 'disabled',
-            fullPage: true,
-          });
-      } finally {
-        await context.close();
-        await browser.close();
-      }
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
     });
-  }
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupDetailPage({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/detail-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupDetailPage({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/detail-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
 });
 
-test.describe('detail page sagw', () => {
-  for (const feVrtProject of feVrtProjects) {
-    test(`${feVrtProject.name}`, async () => {
-      await regenerateAllGenericData();
+test.describe('overview page with teasers', () => {
+  beforeEachAcceptCookies();
 
-      const browser = await browserTypeByName[feVrtProject.browserName]
-        .launch();
-      const context = await browser.newContext(feVrtProject.contextOptions);
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
 
-      try {
-        await context.addCookies([acceptedCookie]);
-        const page = await context.newPage();
-        const time = (new Date())
-          .getTime();
+    const time = (new Date())
+      .getTime();
 
-        const tenant = await getTenantId({
-          isSagw: true,
-          time,
-        });
-
-        const home = await getHomeId({
-          isSagw: true,
-          tenant,
-        });
-
-        await setupDetailPage({
-          homeId: home,
-          tenantId: tenant || '',
-        });
-
-        await page.goto('http://localhost:3000/de/detail-page');
-        await page.waitForLoadState('networkidle');
-
-        await expect(page)
-          .toHaveScreenshot(`detail-page-sagw-${feVrtProject.name}.png`, {
-            animations: 'disabled',
-            fullPage: true,
-          });
-      } finally {
-        await context.close();
-        await browser.close();
-      }
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
     });
-  }
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupOverviewWithTeasersPage({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/overview-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupOverviewWithTeasersPage({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/overview-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+
+  });
 });
 
-test.describe('detail page non-sagw', () => {
-  for (const feVrtProject of feVrtProjects) {
-    test(`${feVrtProject.name}`, async () => {
-      const browser = await browserTypeByName[feVrtProject.browserName]
-        .launch();
-      const context = await browser.newContext(feVrtProject.contextOptions);
+test.describe('impressum page', () => {
+  beforeEachAcceptCookies();
 
-      try {
-        await context.addCookies([acceptedCookie]);
-        const page = await context.newPage();
-        const time = (new Date())
-          .getTime();
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
 
-        const tenant = await generateTenant({
-          name: `tenant-${time}`,
-        });
+    await page.goto('http://localhost:3000/de/impressum-de');
+    await page.waitForLoadState('networkidle');
 
-        const home = await getHomeId({
-          isSagw: false,
-          tenant: tenant.id,
-        });
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
 
-        await setupDetailPage({
-          homeId: home,
-          tenantId: tenant.id,
-        });
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
 
-        await page.goto(`http://localhost:3000/de/tenant-${time}/detail-page`);
-        await page.waitForLoadState('networkidle');
-
-        await expect(page)
-          .toHaveScreenshot(`detail-page-non-sagw-${feVrtProject.name}.png`, {
-            animations: 'disabled',
-            fullPage: true,
-          });
-      } finally {
-        await context.close();
-        await browser.close();
-      }
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
     });
-  }
+
+    await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/impressum-de`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
 });
 
-test.describe('overview page with teasers sagw', () => {
-  for (const feVrtProject of feVrtProjects) {
-    test(`${feVrtProject.name}`, async () => {
-      await regenerateAllGenericData();
+test.describe('data privacy page', () => {
+  beforeEachAcceptCookies();
 
-      const browser = await browserTypeByName[feVrtProject.browserName]
-        .launch();
-      const context = await browser.newContext(feVrtProject.contextOptions);
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
 
-      try {
-        await context.addCookies([acceptedCookie]);
-        const page = await context.newPage();
-        const time = (new Date())
-          .getTime();
+    await page.goto('http://localhost:3000/de/data-privacy-de');
+    await page.waitForLoadState('networkidle');
 
-        const tenant = await getTenantId({
-          isSagw: true,
-          time,
-        });
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
 
-        const home = await getHomeId({
-          isSagw: true,
-          tenant,
-        });
+  test('non-sagw', async ({
+    page,
+  }) => {
 
-        await setupOverviewWithTeasersPage({
-          homeId: home,
-          tenantId: tenant || '',
-        });
+    const time = (new Date())
+      .getTime();
 
-        await page.goto('http://localhost:3000/de/overview-page');
-        await page.waitForLoadState('networkidle');
-
-        await expect(page)
-          .toHaveScreenshot(`overview-page-teasers-sagw-${feVrtProject.name}.png`, {
-            animations: 'disabled',
-            fullPage: true,
-          });
-      } finally {
-        await context.close();
-        await browser.close();
-      }
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
     });
-  }
+
+    await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/data-privacy-de`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
 });
 
-test.describe('overview page with teasers non-sagw', () => {
-  for (const feVrtProject of feVrtProjects) {
-    test(`${feVrtProject.name}`, async () => {
-      const browser = await browserTypeByName[feVrtProject.browserName]
-        .launch();
-      const context = await browser.newContext(feVrtProject.contextOptions);
+test.describe('error page', () => {
+  beforeEachAcceptCookies();
 
-      try {
-        await context.addCookies([acceptedCookie]);
-        const page = await context.newPage();
-        const time = (new Date())
-          .getTime();
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
 
-        const tenant = await generateTenant({
-          name: `tenant-${time}`,
-        });
+    await page.goto('http://localhost:3000/de/some-random-page-that-does-not-exist');
+    await page.waitForLoadState('networkidle');
 
-        const home = await getHomeId({
-          isSagw: false,
-          tenant: tenant.id,
-        });
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
 
-        await setupOverviewWithTeasersPage({
-          homeId: home,
-          tenantId: tenant.id,
-        });
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
 
-        await page.goto(`http://localhost:3000/de/tenant-${time}/overview-page`);
-        await page.waitForLoadState('networkidle');
-
-        await expect(page)
-          .toHaveScreenshot(`overview-page-teasers-non-sagw-${feVrtProject.name}.png`, {
-            animations: 'disabled',
-            fullPage: true,
-          });
-      } finally {
-        await context.close();
-        await browser.close();
-      }
+    const tenant = await generateTenant({
+      name: `tenant-${time}`,
     });
-  }
-});
 
-test.describe('impressum page sagw', () => {
-  for (const feVrtProject of feVrtProjects) {
-    test(`${feVrtProject.name}`, async () => {
-      await regenerateAllGenericData();
-
-      const browser = await browserTypeByName[feVrtProject.browserName]
-        .launch();
-      const context = await browser.newContext(feVrtProject.contextOptions);
-
-      try {
-        await context.addCookies([acceptedCookie]);
-        const page = await context.newPage();
-
-        await page.goto('http://localhost:3000/de/impressum-de');
-        await page.waitForLoadState('networkidle');
-
-        await expect(page)
-          .toHaveScreenshot(`impressum-page-sagw-${feVrtProject.name}.png`, {
-            animations: 'disabled',
-            fullPage: true,
-          });
-      } finally {
-        await context.close();
-        await browser.close();
-      }
+    await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
     });
-  }
-});
 
-test.describe('impressum page non-sagw', () => {
-  for (const feVrtProject of feVrtProjects) {
-    test(`${feVrtProject.name}`, async () => {
-      const browser = await browserTypeByName[feVrtProject.browserName]
-        .launch();
-      const context = await browser.newContext(feVrtProject.contextOptions);
+    const payload = await getPayloadCached();
 
-      try {
-        await context.addCookies([acceptedCookie]);
-        const page = await context.newPage();
-        const time = (new Date())
-          .getTime();
-
-        const tenant = await generateTenant({
-          name: `tenant-${time}`,
-        });
-
-        await getHomeId({
-          isSagw: false,
-          tenant: tenant.id,
-        });
-
-        await page.goto(`http://localhost:3000/de/tenant-${time}/impressum-de`);
-        await page.waitForLoadState('networkidle');
-
-        await expect(page)
-          .toHaveScreenshot(`impressum-page-non-sagw-${feVrtProject.name}.png`, {
-            animations: 'disabled',
-            fullPage: true,
-          });
-      } finally {
-        await context.close();
-        await browser.close();
-      }
+    await addPlaywrightErrorPage({
+      payload,
+      tenant: tenant.id,
+      tenantName: 'non-sagw',
     });
-  }
-});
 
-test.describe('data privacy page sagw', () => {
-  for (const feVrtProject of feVrtProjects) {
-    test(`${feVrtProject.name}`, async () => {
-      await regenerateAllGenericData();
+    await page.goto(`http://localhost:3000/de/tenant-${time}/some-random-page-that-does-not-exist`);
+    await page.waitForLoadState('networkidle');
 
-      const browser = await browserTypeByName[feVrtProject.browserName]
-        .launch();
-      const context = await browser.newContext(feVrtProject.contextOptions);
-
-      try {
-        await context.addCookies([acceptedCookie]);
-        const page = await context.newPage();
-
-        await page.goto('http://localhost:3000/de/data-privacy-de');
-        await page.waitForLoadState('networkidle');
-
-        await expect(page)
-          .toHaveScreenshot(`data-privacy-page-sagw-${feVrtProject.name}.png`, {
-            animations: 'disabled',
-            fullPage: true,
-          });
-      } finally {
-        await context.close();
-        await browser.close();
-      }
-    });
-  }
-});
-
-test.describe('data privacy page non-sagw', () => {
-  for (const feVrtProject of feVrtProjects) {
-    test(`${feVrtProject.name}`, async () => {
-      const browser = await browserTypeByName[feVrtProject.browserName]
-        .launch();
-      const context = await browser.newContext(feVrtProject.contextOptions);
-
-      try {
-        await context.addCookies([acceptedCookie]);
-        const page = await context.newPage();
-        const time = (new Date())
-          .getTime();
-
-        const tenant = await generateTenant({
-          name: `tenant-${time}`,
-        });
-
-        await getHomeId({
-          isSagw: false,
-          tenant: tenant.id,
-        });
-
-        await page.goto(`http://localhost:3000/de/tenant-${time}/data-privacy-de`);
-        await page.waitForLoadState('networkidle');
-
-        await expect(page)
-          .toHaveScreenshot(`data-privacy-page-non-sagw-${feVrtProject.name}.png`, {
-            animations: 'disabled',
-            fullPage: true,
-          });
-      } finally {
-        await context.close();
-        await browser.close();
-      }
-    });
-  }
-});
-
-test.describe('error page sagw', () => {
-  for (const feVrtProject of feVrtProjects) {
-    test(`${feVrtProject.name}`, async () => {
-      await regenerateAllGenericData();
-
-      const browser = await browserTypeByName[feVrtProject.browserName]
-        .launch();
-      const context = await browser.newContext(feVrtProject.contextOptions);
-
-      try {
-        await context.addCookies([acceptedCookie]);
-        const page = await context.newPage();
-
-        await page.goto('http://localhost:3000/de/some-random-page-that-does-not-exist');
-        await page.waitForLoadState('networkidle');
-
-        await expect(page)
-          .toHaveScreenshot(`error-page-sagw-${feVrtProject.name}.png`, {
-            animations: 'disabled',
-            fullPage: true,
-          });
-      } finally {
-        await context.close();
-        await browser.close();
-      }
-    });
-  }
-});
-
-test.describe('error page non-sagw', () => {
-  for (const feVrtProject of feVrtProjects) {
-    test(`${feVrtProject.name}`, async () => {
-      const browser = await browserTypeByName[feVrtProject.browserName]
-        .launch();
-      const context = await browser.newContext(feVrtProject.contextOptions);
-
-      try {
-        const time = (new Date())
-          .getTime();
-
-        const tenant = await generateTenant({
-          name: `tenant-${time}`,
-        });
-
-        await getHomeId({
-          isSagw: false,
-          tenant: tenant.id,
-        });
-
-        await context.addCookies([acceptedCookie]);
-        const page = await context.newPage();
-
-        const payload = await getPayloadCached();
-
-        await addPlaywrightErrorPage({
-          payload,
-          tenant: tenant.id,
-          tenantName: 'non-sagw',
-        });
-
-        await page.goto(`http://localhost:3000/de/tenant-${time}/some-random-page-that-does-not-exist`);
-        await page.waitForLoadState('networkidle');
-
-        await expect(page)
-          .toHaveScreenshot(`error-page-non-sagw-${feVrtProject.name}.png`, {
-            animations: 'disabled',
-            fullPage: true,
-          });
-      } finally {
-        await context.close();
-        await browser.close();
-      }
-    });
-  }
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
 });

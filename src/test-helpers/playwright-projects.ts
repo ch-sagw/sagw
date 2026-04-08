@@ -34,7 +34,7 @@ export type FeVrtProject = {
   name: string;
 };
 
-export const feVrtProjects: FeVrtProject[] = [
+const feVrtProjects: FeVrtProject[] = [
   {
     browserName: 'chromium',
     contextOptions: {
