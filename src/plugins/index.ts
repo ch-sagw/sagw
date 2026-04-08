@@ -31,6 +31,7 @@ type ExtendedPluginOptions = sentryPluginOptions & {
 
 const plugins: Plugin[] = [
   vercelBlobStorage({
+    addRandomSuffix: true,
     clientUploads: true,
     collections: {
       [Images.slug]: true,
