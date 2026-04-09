@@ -17,7 +17,7 @@ interface InterfaceTenantRouteTenant {
   slug?: string | Partial<Record<Config['locale'], string>>;
 }
 
-export interface InterfaceTenantRouteParam {
+interface InterfaceTenantRouteParam {
   isHome: boolean;
   locale: TypedLocale;
   slug: string[];
