@@ -1,19 +1,8 @@
 import type {
   CollectionAfterChangeHook, CollectionAfterDeleteHook,
 } from 'payload';
+import { extractID } from '@/utilities/extractId';
 import { invalidateCache } from '@/utilities/invalidateCache';
-
-const getTenantId = (value: unknown): string | null => {
-  if (typeof value === 'string') {
-    return value;
-  }
-
-  if (value && typeof value === 'object' && 'id' in value && typeof value.id === 'string') {
-    return value.id;
-  }
-
-  return null;
-};
 
 export const hookInvalidateTenantCache: CollectionAfterChangeHook = async ({
   doc,
@@ -21,7 +10,9 @@ export const hookInvalidateTenantCache: CollectionAfterChangeHook = async ({
 }) => {
   await invalidateCache({
     payload: req.payload,
-    tenantId: getTenantId(doc?.tenant),
+    tenantId: doc?.tenant
+      ? extractID(doc.tenant)
+      : null,
   });
 
   return doc;
@@ -33,6 +24,8 @@ export const hookInvalidateTenantCacheOnDelete: CollectionAfterDeleteHook = asyn
 }) => {
   await invalidateCache({
     payload: req.payload,
-    tenantId: getTenantId(doc?.tenant),
+    tenantId: doc?.tenant
+      ? extractID(doc.tenant)
+      : null,
   });
 };
