@@ -30,6 +30,7 @@ export const generateStaticParams = async (): Promise<{ locale: TypedLocale; slu
     payload,
     tenant,
   })));
+
   const params = tenantParams
     .flat()
     .filter((param) => param.slug.length > 0)

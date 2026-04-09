@@ -124,7 +124,7 @@ const processPagesForParams = ({
   return pageParams;
 };
 
-export const getTenantRoutePath = ({
+const getTenantRoutePath = ({
   locale,
   slug,
 }: {
@@ -133,6 +133,8 @@ export const getTenantRoutePath = ({
 }): string => `/${locale}${slug.length > 0
   ? `/${slug.join('/')}`
   : ''}`;
+
+// used generateStaticParams.ts routine
 
 export const getTenantRouteParams = async ({
   payload,
@@ -227,6 +229,8 @@ export const getTenantRouteParams = async ({
 
   return params;
 };
+
+// used by invalidateCache.ts routine
 
 export const getTenantRoutePaths = async ({
   payload,

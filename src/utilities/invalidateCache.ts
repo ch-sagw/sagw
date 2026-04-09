@@ -2,15 +2,13 @@ import type { BasePayload } from 'payload';
 import { getTenantRoutePaths } from '@/app/(frontend)/utilities/getTenantRouteParams';
 import { revalidatePath } from 'next/cache.js';
 
-interface InterfaceInvalidateCacheParams {
-  payload: BasePayload;
-  tenantId?: string | null;
-}
-
 export const invalidateCache = async ({
   payload,
   tenantId,
-}: InterfaceInvalidateCacheParams): Promise<void> => {
+}: {
+  payload: BasePayload;
+  tenantId?: string | null;
+}): Promise<void> => {
   if (!payload || !tenantId) {
     return;
   }
