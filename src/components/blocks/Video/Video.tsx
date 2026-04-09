@@ -110,7 +110,7 @@ export const Video = ({
   };
 
   const playButtonText = i18nA11y('playVideoText')
-    .replace('{{title}}', video.title);
+    .replace('$$title$$', video.title);
 
   const pausedClass = paused
     ? styles.paused

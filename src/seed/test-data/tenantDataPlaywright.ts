@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { Payload } from 'payload';
+import {
+  BasePayload, Payload,
+} from 'payload';
 
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { rte4ConsentBannerText } from '@/utilities/rteSampleContent';
@@ -11,6 +13,285 @@ interface InterfaceAddDataForTenantProps {
   tenant: string;
   tenantId: string;
 }
+
+export const addPlaywrightFooterData = async ({
+  payload,
+  tenant,
+  tenantName,
+}: {
+  payload: BasePayload,
+  tenant: string;
+  tenantName: string;
+}): Promise<void> => {
+  await payload.create({
+    collection: 'footer',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      contact: {
+        address1: simpleRteConfig('Haus der Akademien'),
+        address2: simpleRteConfig('Laupenstrasse 7'),
+        city: simpleRteConfig('Bern'),
+        countryCode: simpleRteConfig('CH'),
+        mail: simpleRteConfig('sagw@sagw.ch'),
+        phone: simpleRteConfig('+41 31 306 92 50'),
+        poBox: simpleRteConfig('Postfach'),
+        title: simpleRteConfig('SAGW Schweizerische Akademie der Geistes- und Sozialwissenschaften'),
+        zipCode: simpleRteConfig('3001'),
+      },
+      legal: {
+        cookieSettings: simpleRteConfig('Cookie-Einstellungen'),
+        copyright: simpleRteConfig(`Copyright ${tenantName.toUpperCase()}`),
+        dataPrivacy: simpleRteConfig(`Legal ${tenantName.toUpperCase()}`),
+        impressum: simpleRteConfig(`Impressum ${tenantName.toUpperCase()}`),
+      },
+      socialLinks: {
+        items: [
+          {
+            externalLink: 'https://www.foo.bar',
+            icon: 'instagram',
+          },
+          {
+            externalLink: 'https://www.foo.bar',
+            icon: 'facebook',
+          },
+          {
+            externalLink: 'https://www.foo.bar',
+            icon: 'twitter',
+          },
+          {
+            externalLink: 'https://www.foo.bar',
+            icon: 'linkedIn',
+          },
+        ],
+      },
+      tenant,
+    },
+  });
+};
+
+export const addPlaywrightHeaderData = async ({
+  payload,
+  tenant,
+  detail1,
+  detail2,
+  detail3,
+}: {
+  payload: BasePayload,
+  tenant: string;
+  detail1: string;
+  detail2: string;
+  detail3: string;
+}): Promise<void> => {
+  await payload.create({
+    collection: 'header',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      metanavigation: {
+        metaLinks: [
+          {
+            linkExternal: {
+              externalLink: 'https://www.foo.bar',
+              externalLinkText: simpleRteConfig('Brand Guidelines'),
+            },
+            linkType: 'external',
+          },
+          {
+            linkExternal: {
+              externalLink: 'https://www.foo.bar',
+              externalLinkText: simpleRteConfig('Intranet'),
+            },
+            linkType: 'external',
+          },
+          {
+            linkExternal: {
+              externalLink: 'https://www.foo.bar',
+              externalLinkText: simpleRteConfig('mySAGW'),
+            },
+            linkType: 'external',
+          },
+        ],
+      },
+      navigation: {
+        navItems: [
+          {
+            description: simpleRteConfig(''),
+            navItemLink: {
+              documentId: detail1,
+              slug: 'detailPage',
+            },
+            navItemText: simpleRteConfig('Home'),
+          },
+          {
+            description: simpleRteConfig('Förderung von langfristigen Forschungsinfrastrukturen'),
+            navItemText: simpleRteConfig('Förderung'),
+            subNavItems: [
+              {
+                navItemLink: {
+                  documentId: detail2,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Übersicht'),
+              },
+              {
+                navItemLink: {
+                  documentId: detail3,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Institute'),
+              },
+              {
+                navItemLink: {
+                  documentId: detail1,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Editionen'),
+              },
+              {
+                navItemLink: {
+                  documentId: detail2,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Reisebeiträge'),
+              },
+              {
+                navItemLink: {
+                  documentId: detail3,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Early Career Award'),
+              },
+            ],
+          },
+          {
+            description: simpleRteConfig('Unsere 63 Fachgesellschaften unter einem Dach'),
+            navItemText: simpleRteConfig('Netzwerk'),
+            subNavItems: [
+              {
+                navItemLink: {
+                  documentId: detail1,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Fachgesellschaften'),
+              },
+            ],
+          },
+          {
+            description: simpleRteConfig('Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft'),
+            navItemText: simpleRteConfig('Aktivitäten'),
+            subNavItems: [
+              {
+                navItemLink: {
+                  documentId: detail2,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Übersicht'),
+              },
+              {
+                navItemLink: {
+                  documentId: detail3,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Magazin'),
+              },
+              {
+                navItemLink: {
+                  documentId: detail3,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Publikationen'),
+              },
+              {
+                navItemLink: {
+                  documentId: detail2,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Veranstaltungen'),
+              },
+              {
+                navItemLink: {
+                  documentId: detail3,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('News'),
+              },
+            ],
+          },
+          {
+            description: simpleRteConfig('Alles Wissenswertes über die SAGW'),
+            navItemText: simpleRteConfig('Über uns'),
+            subNavItems: [
+              {
+                navItemLink: {
+                  documentId: detail1,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Die SAGW'),
+              },
+              {
+                navItemLink: {
+                  documentId: detail2,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Team'),
+              },
+              {
+                navItemLink: {
+                  documentId: detail3,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Kontakt'),
+              },
+              {
+                navItemLink: {
+                  documentId: detail1,
+                  slug: 'detailPage',
+                },
+                navItemText: simpleRteConfig('Offene Stellen'),
+              },
+            ],
+          },
+        ],
+      },
+      tenant,
+    },
+  });
+};
+
+export const addPlaywrightErrorPage = async ({
+  payload,
+  tenant,
+  tenantName,
+}: {
+  payload: BasePayload,
+  tenant: string;
+  tenantName: string;
+}): Promise<void> => {
+  await payload.create({
+    collection: 'errorPage',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      _status: 'published',
+      error400: {
+        description: simpleRteConfig('Error description'),
+        title: simpleRteConfig(`Not found title ${tenantName.toUpperCase()}`),
+      },
+      error500: {
+        description: simpleRteConfig('Error description'),
+        title: simpleRteConfig(`Not found title ${tenantName.toUpperCase()}`),
+      },
+      homeButtonText: simpleRteConfig('Home Button Text'),
+      ...seoData,
+      tenant,
+    },
+    locale: 'de',
+  });
+};
 
 export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenantProps): Promise<void> => {
 
@@ -72,48 +353,10 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
   // ############
 
   // add footer data
-  await payload.create({
-    collection: 'footer',
-    data: {
-      contact: {
-        address1: simpleRteConfig('Haus der Akademien'),
-        address2: simpleRteConfig('Laupenstrasse 7'),
-        city: simpleRteConfig('Bern'),
-        countryCode: simpleRteConfig('CH'),
-        mail: simpleRteConfig('sagw@sagw.ch'),
-        phone: simpleRteConfig('+41 31 306 92 50'),
-        poBox: simpleRteConfig('Postfach'),
-        title: simpleRteConfig('SAGW Schweizerische Akademie der Geistes- und Sozialwissenschaften'),
-        zipCode: simpleRteConfig('3001'),
-      },
-      legal: {
-        cookieSettings: simpleRteConfig('Cookie-Einstellungen'),
-        copyright: simpleRteConfig(`Copyright ${tenant.toUpperCase()}`),
-        dataPrivacy: simpleRteConfig(`Legal ${tenant.toUpperCase()}`),
-        impressum: simpleRteConfig(`Impressum ${tenant.toUpperCase()}`),
-      },
-      socialLinks: {
-        items: [
-          {
-            externalLink: 'https://www.foo.bar',
-            icon: 'instagram',
-          },
-          {
-            externalLink: 'https://www.foo.bar',
-            icon: 'facebook',
-          },
-          {
-            externalLink: 'https://www.foo.bar',
-            icon: 'twitter',
-          },
-          {
-            externalLink: 'https://www.foo.bar',
-            icon: 'linkedIn',
-          },
-        ],
-      },
-      tenant: tenantId,
-    },
+  await addPlaywrightFooterData({
+    payload,
+    tenant: tenantId,
+    tenantName: tenant,
   });
 
   // add status message
@@ -259,196 +502,19 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
   });
 
   // add header data
-  await payload.create({
-    collection: 'header',
-    data: {
-      metanavigation: {
-        metaLinks: [
-          {
-            linkExternal: {
-              externalLink: 'https://www.foo.bar',
-              externalLinkText: simpleRteConfig('Brand Guidelines'),
-            },
-            linkType: 'external',
-          },
-          {
-            linkExternal: {
-              externalLink: 'https://www.foo.bar',
-              externalLinkText: simpleRteConfig('Intranet'),
-            },
-            linkType: 'external',
-          },
-          {
-            linkExternal: {
-              externalLink: 'https://www.foo.bar',
-              externalLinkText: simpleRteConfig('mySAGW'),
-            },
-            linkType: 'external',
-          },
-        ],
-      },
-      navigation: {
-        navItems: [
-          {
-            description: simpleRteConfig(''),
-            navItemLink: {
-              documentId: navLinkDetail1.id,
-              slug: 'detailPage',
-            },
-            navItemText: simpleRteConfig('Home'),
-          },
-          {
-            description: simpleRteConfig('Förderung von langfristigen Forschungsinfrastrukturen'),
-            navItemText: simpleRteConfig('Förderung'),
-            subNavItems: [
-              {
-                navItemLink: {
-                  documentId: navLinkDetail2.id,
-                  slug: 'detailPage',
-                },
-                navItemText: simpleRteConfig('Übersicht'),
-              },
-              {
-                navItemLink: {
-                  documentId: navLinkDetail3.id,
-                  slug: 'detailPage',
-                },
-                navItemText: simpleRteConfig('Institute'),
-              },
-              {
-                navItemLink: {
-                  documentId: navLinkDetail1.id,
-                  slug: 'detailPage',
-                },
-                navItemText: simpleRteConfig('Editionen'),
-              },
-              {
-                navItemLink: {
-                  documentId: navLinkDetail2.id,
-                  slug: 'detailPage',
-                },
-                navItemText: simpleRteConfig('Reisebeiträge'),
-              },
-              {
-                navItemLink: {
-                  documentId: navLinkDetail3.id,
-                  slug: 'detailPage',
-                },
-                navItemText: simpleRteConfig('Early Career Award'),
-              },
-            ],
-          },
-          {
-            description: simpleRteConfig('Unsere 63 Fachgesellschaften unter einem Dach'),
-            navItemText: simpleRteConfig('Netzwerk'),
-            subNavItems: [
-              {
-                navItemLink: {
-                  documentId: navLinkDetail1.id,
-                  slug: 'detailPage',
-                },
-                navItemText: simpleRteConfig('Fachgesellschaften'),
-              },
-            ],
-          },
-          {
-            description: simpleRteConfig('Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft'),
-            navItemText: simpleRteConfig('Aktivitäten'),
-            subNavItems: [
-              {
-                navItemLink: {
-                  documentId: navLinkDetail2.id,
-                  slug: 'detailPage',
-                },
-                navItemText: simpleRteConfig('Übersicht'),
-              },
-              {
-                navItemLink: {
-                  documentId: navLinkDetail3.id,
-                  slug: 'detailPage',
-                },
-                navItemText: simpleRteConfig('Magazin'),
-              },
-              {
-                navItemLink: {
-                  documentId: navLinkDetail1.id,
-                  slug: 'detailPage',
-                },
-                navItemText: simpleRteConfig('Publikationen'),
-              },
-              {
-                navItemLink: {
-                  documentId: navLinkDetail2.id,
-                  slug: 'detailPage',
-                },
-                navItemText: simpleRteConfig('Veranstaltungen'),
-              },
-              {
-                navItemLink: {
-                  documentId: navLinkDetail3.id,
-                  slug: 'detailPage',
-                },
-                navItemText: simpleRteConfig('News'),
-              },
-            ],
-          },
-          {
-            description: simpleRteConfig('Alles Wissenswertes über die SAGW'),
-            navItemText: simpleRteConfig('Über uns'),
-            subNavItems: [
-              {
-                navItemLink: {
-                  documentId: navLinkDetail1.id,
-                  slug: 'detailPage',
-                },
-                navItemText: simpleRteConfig('Die SAGW'),
-              },
-              {
-                navItemLink: {
-                  documentId: navLinkDetail2.id,
-                  slug: 'detailPage',
-                },
-                navItemText: simpleRteConfig('Team'),
-              },
-              {
-                navItemLink: {
-                  documentId: navLinkDetail3.id,
-                  slug: 'detailPage',
-                },
-                navItemText: simpleRteConfig('Kontakt'),
-              },
-              {
-                navItemLink: {
-                  documentId: navLinkDetail1.id,
-                  slug: 'detailPage',
-                },
-                navItemText: simpleRteConfig('Offene Stellen'),
-              },
-            ],
-          },
-        ],
-      },
-      tenant: tenantId,
-    },
+  await addPlaywrightHeaderData({
+    detail1: navLinkDetail1.id,
+    detail2: navLinkDetail2.id,
+    detail3: navLinkDetail3.id,
+    payload,
+    tenant: tenantId,
   });
 
   // create error page
-  await payload.create({
-    collection: 'errorPage',
-    data: {
-      _status: 'published',
-      error400: {
-        description: simpleRteConfig('Error description'),
-        title: simpleRteConfig(`Not found title ${tenant.toUpperCase()}`),
-      },
-      error500: {
-        description: simpleRteConfig('Error description'),
-        title: simpleRteConfig(`Not found title ${tenant.toUpperCase()}`),
-      },
-      homeButtonText: simpleRteConfig('Home Button Text'),
-      ...seoData,
-      tenant: tenantId,
-    },
+  await addPlaywrightErrorPage({
+    payload,
+    tenant: tenantId,
+    tenantName: tenant,
   });
 
   // create impressum page
