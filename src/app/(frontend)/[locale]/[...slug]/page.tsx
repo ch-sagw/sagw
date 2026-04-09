@@ -11,8 +11,8 @@ import { RenderNotFoundPage } from '@/app/(frontend)/renderers/RenderNotFoundPag
 
 export { generateStaticParams };
 
-export const revalidate = 1;
-export const dynamic = 'force-dynamic';
+// export const revalidate = 1;
+// export const dynamic = 'force-dynamic';
 
 export const generateMetadata = async ({
   params,
