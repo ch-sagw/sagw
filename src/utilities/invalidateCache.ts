@@ -34,7 +34,9 @@ export const invalidateCache = async ({
 
     for (const path of paths) {
       // IMPORTANT: do not change this log. This is neccessary for testing!!
-      console.log(`[CACHE] invalidating path: ${path}`);
+      if (process.env.ENV === 'local' || process.env.ENV === 'playwright') {
+        console.log(`[CACHE] invalidating path: ${path}`);
+      }
 
       if (process.env.ENV === 'prod' || process.env.ENV === 'test') {
         revalidatePath(path);
