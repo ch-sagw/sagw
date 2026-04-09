@@ -308,9 +308,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
   // add image
   const image = await payload.create({
     collection: 'images',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       alt: `${tenant.toUpperCase()} image`,
       tenant: tenantId,
@@ -321,9 +318,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
   // add video
   await payload.create({
     collection: 'videos',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       tenant: tenantId,
       title: `video ${tenant}`,
@@ -337,9 +331,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
     // tenant...
     await payload.create({
       collection: 'zenodoDocuments',
-      context: {
-        skipCacheInvalidation: true,
-      },
       data: {
         files: [
           {
@@ -371,9 +362,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
   // add status message
   await payload.create({
     collection: 'statusMessage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       content: {
         message: simpleRteConfig(`Eigentlich undenkbar, aber trotzdem passiert. Bitte entschuldigen Sie die Unannehmlichkeiten und versuchen Sie es später erneut. ${tenant.toUpperCase()}`),
@@ -401,9 +389,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
   // add i18n data
   await payload.create({
     collection: 'i18nGlobals',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       bibliographicReference: {
         copyButtonText: simpleRteConfig('Copy button text'),
@@ -433,9 +418,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
   // create home
   const home = await payload.create({
     collection: 'homePage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       _status: 'published',
       content: [],
@@ -461,9 +443,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
   // add some detail pages to link to in header
   const navLinkDetail1 = await payload.create({
     collection: 'detailPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       _status: 'published',
       hero: {
@@ -484,9 +463,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
 
   const navLinkDetail2 = await payload.create({
     collection: 'detailPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       _status: 'published',
       hero: {
@@ -507,9 +483,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
 
   const navLinkDetail3 = await payload.create({
     collection: 'detailPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       _status: 'published',
       hero: {
@@ -547,9 +520,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
   // create impressum page
   await payload.create({
     collection: 'impressumPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       _status: 'published',
       content: [
@@ -570,9 +540,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
   // create data privacy page
   await payload.create({
     collection: 'dataPrivacyPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       _status: 'published',
       content: [
@@ -593,9 +560,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
   // create draft detail page
   await payload.create({
     collection: 'detailPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       _status: 'draft',
       hero: {
