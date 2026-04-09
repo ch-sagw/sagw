@@ -1201,9 +1201,6 @@ export const generateCollectionsExceptPages = async ({
 
   const form = await payload.create({
     collection: 'forms',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       colorMode: 'dark',
       fields: [
@@ -1623,9 +1620,6 @@ export const generateForm = async (tenant: string): Promise<string> => {
   const payload = await getPayloadCached();
   const form = await payload.create({
     collection: 'forms',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       colorMode: 'dark',
       fields: [
@@ -1711,9 +1705,6 @@ export const generateImage = async (tenant: string): Promise<string> => {
   const payload = await getPayloadCached();
   const image = await payload.create({
     collection: 'images',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       alt: 'image',
       tenant,
@@ -1728,9 +1719,6 @@ export const generateVideo = async (tenant: string): Promise<string> => {
   const payload = await getPayloadCached();
   const video = await payload.create({
     collection: 'videos',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       tenant,
       title: 'video',
