@@ -1,5 +1,8 @@
 import type { CollectionConfig } from 'payload';
 import { assetsAccess } from '@/access/assets';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 export const Images: CollectionConfig = {
   access: assetsAccess,
@@ -34,6 +37,10 @@ export const Images: CollectionConfig = {
       type: 'text',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
+  },
   slug: 'images',
   upload: {
     focalPoint: true,

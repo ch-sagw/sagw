@@ -6,6 +6,9 @@ import {
 } from '@/field-templates/adminTitle';
 import { rte1 } from '@/field-templates/rte';
 import { globalContentAccessGeneric } from '@/access/globalContent';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 export const StatusMessage: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -89,6 +92,10 @@ export const StatusMessage: CollectionConfig = {
       type: 'group',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
+  },
   labels: {
     plural: 'Status Message',
     singular: 'Status Message',

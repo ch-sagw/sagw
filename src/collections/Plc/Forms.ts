@@ -11,6 +11,9 @@ import { textBlock } from '@/blocks/Form/Text';
 import { globalContentAccessGeneric } from '@/access/globalContent';
 import { fieldAccessAdminsOnly } from '@/access/fields/localizedFields';
 import { isSuperOrTenantAdmin } from '@/collections/Plc/Users/roles';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 export const Forms: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -284,5 +287,9 @@ export const Forms: CollectionConfig = {
     },
 
   ],
+  hooks: {
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
+  },
   slug: 'forms',
 };
