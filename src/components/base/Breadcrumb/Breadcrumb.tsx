@@ -5,6 +5,10 @@ import { ColorMode } from '@/components/base/types/colorMode';
 import { Icon } from '@/icons';
 import { Button } from '@/components/base/Button/Button';
 import { useTranslations } from 'next-intl';
+import type {
+  BreadcrumbList,
+  WithContext,
+} from 'schema-dts';
 
 export interface InterfaceBreadcrumbItem {
   link: string;
@@ -15,6 +19,25 @@ export type InterfaceBreadcrumbPropTypes = {
   colorMode: ColorMode;
   items: InterfaceBreadcrumbItem[] | undefined;
   className?: string;
+};
+
+const constructStructuredData = ({
+  items,
+}: InterfaceBreadcrumbPropTypes): WithContext<BreadcrumbList> => {
+  const breadCrumbItems = items?.slice(1);
+
+  const data: WithContext<BreadcrumbList> = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': breadCrumbItems?.map((item, index) => ({
+      '@type': 'ListItem',
+      'item': item.link,
+      'name': item.text,
+      'position': index + 1,
+    })),
+  };
+
+  return data;
 };
 
 export const Breadcrumb = ({
@@ -42,47 +65,61 @@ export const Breadcrumb = ({
   }
 
   return (
-    <div
-      className={breadcrumbClasses({
-        colorMode,
-      })}
-    >
-      <Icon
-        name='arrowLeft'
-        className={styles.icon}
+    <>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          /* eslint-disable @typescript-eslint/naming-convention */
+          __html: JSON.stringify(constructStructuredData({
+            className,
+            colorMode,
+            items,
+          })),
+          /* eslint-enmdisable @typescript-eslint/naming-convention */
+        }}
       />
-      <p
-        className={styles.hiddenLabel}
-        id='breadcrumb-label'
-      >{i18nA11y('breadcrumb')}</p>
-      <ul
-        aria-labelledby='breadcrumb-label'
-        className={styles.content}
+      <div
+        className={breadcrumbClasses({
+          colorMode,
+        })}
       >
+        <Icon
+          name='arrowLeft'
+          className={styles.icon}
+        />
+        <p
+          className={styles.hiddenLabel}
+          id='breadcrumb-label'
+        >{i18nA11y('breadcrumb')}</p>
+        <ul
+          aria-labelledby='breadcrumb-label'
+          className={styles.content}
+        >
 
-        {items.map((item, index) => (
-          <li
-            className={styles.item}
-            key={index}
-          >
-            <Button
-              className={styles.link}
-              href={item.link}
-              colorMode={colorMode}
-              element='link'
-              text={item.text}
-              style='text'
-              prefetch={true}
-            />
-            {index < items.length - 1 && (
-              <Icon
-                name='longDash'
-                className={styles.separatorIcon}
+          {items.map((item, index) => (
+            <li
+              className={styles.item}
+              key={index}
+            >
+              <Button
+                className={styles.link}
+                href={item.link}
+                colorMode={colorMode}
+                element='link'
+                text={item.text}
+                style='text'
+                prefetch={true}
               />
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
+              {index < items.length - 1 && (
+                <Icon
+                  name='longDash'
+                  className={styles.separatorIcon}
+                />
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 };
