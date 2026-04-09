@@ -1,3 +1,6 @@
+// will be reused in the cache-rework
+
+/*
 import type {
   BasePayload, TypedLocale,
 } from 'payload';
@@ -57,3 +60,4 @@ export const invalidateCache = async ({
   }
 };
 
+*/

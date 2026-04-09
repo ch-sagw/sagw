@@ -21,7 +21,6 @@ import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 import { homeSlug } from '@/collections/constants';
-import { hookInvalidateCacheOnPageChange } from '@/hooks-payload/invalidateCacheOnPageChange';
 import { preview } from '@/utilities/previewUrl';
 
 const homeBlocks: BlockSlug[] = [
@@ -124,10 +123,7 @@ export const HomePage: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [
-      hookCascadeBreadcrumbUpdates,
-      hookInvalidateCacheOnPageChange,
-    ],
+    afterChange: [hookCascadeBreadcrumbUpdates],
     afterRead: [
       async ({
         doc,

@@ -37,9 +37,6 @@ const addInitialDataGerman = async ({
   // error page
   const errorPage = await payload.create({
     collection: 'errorPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       _status: 'published',
       error400: {
@@ -65,9 +62,6 @@ const addInitialDataGerman = async ({
   // i18n data / content snippets
   const contentSnippets = await payload.create({
     collection: 'i18nGlobals',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       bibliographicReference: {
         copyButtonText: simpleRteConfig('Text kopieren'),
@@ -135,9 +129,6 @@ const addInitialDataGerman = async ({
   // status message
   const status = await payload.create({
     collection: 'statusMessage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       content: {
         message: simpleRteConfig('Wir arbeiten bereits an einer Lösung. Bitte entschuldigen Sie die Unannehmlichkeiten und versuchen Sie es später noch einmal.'),
@@ -159,9 +150,6 @@ const addInitialDataGerman = async ({
   // contact form
   const form = await payload.create({
     collection: 'forms',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       colorMode: 'dark',
       fields: [
@@ -235,9 +223,6 @@ const addInitialDataFrench = async ({
   // error page
   await payload.update({
     collection: 'errorPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       _status: 'published',
       error400: {
@@ -264,9 +249,6 @@ const addInitialDataFrench = async ({
   // i18n data / content snippets
   await payload.update({
     collection: 'i18nGlobals',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       bibliographicReference: {
         copyButtonText: simpleRteConfig('foo'),
@@ -336,9 +318,6 @@ const addInitialDataFrench = async ({
   // status message
   await payload.update({
     collection: 'statusMessage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       content: {
         message: simpleRteConfig('foo'),
@@ -361,9 +340,6 @@ const addInitialDataFrench = async ({
   // contact form
   await payload.update({
     collection: 'forms',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       colorMode: 'dark',
       fields: [
@@ -431,9 +407,6 @@ const addInitialDataItalian = async ({
   // error page
   await payload.update({
     collection: 'errorPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       _status: 'published',
       error400: {
@@ -460,9 +433,6 @@ const addInitialDataItalian = async ({
   // i18n data / content snippets
   await payload.update({
     collection: 'i18nGlobals',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       bibliographicReference: {
         copyButtonText: simpleRteConfig('foo'),
@@ -532,9 +502,6 @@ const addInitialDataItalian = async ({
   // status message
   await payload.update({
     collection: 'statusMessage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       content: {
         message: simpleRteConfig('foo'),
@@ -557,9 +524,6 @@ const addInitialDataItalian = async ({
   // contact form
   await payload.update({
     collection: 'forms',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       colorMode: 'dark',
       fields: [
@@ -626,9 +590,6 @@ const addInitialDataEnglish = async ({
   // error page
   await payload.update({
     collection: 'errorPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       _status: 'published',
       error400: {
@@ -655,9 +616,6 @@ const addInitialDataEnglish = async ({
   // i18n data / content snippets
   await payload.update({
     collection: 'i18nGlobals',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       bibliographicReference: {
         copyButtonText: simpleRteConfig('foo'),
@@ -727,9 +685,6 @@ const addInitialDataEnglish = async ({
   // status message
   await payload.update({
     collection: 'statusMessage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       content: {
         message: simpleRteConfig('foo'),
@@ -752,9 +707,6 @@ const addInitialDataEnglish = async ({
   // contact form
   await payload.update({
     collection: 'forms',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       colorMode: 'dark',
       fields: [

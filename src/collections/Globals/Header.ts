@@ -9,7 +9,6 @@ import {
 import { rte1 } from '@/field-templates/rte';
 import { fieldInternalLinkChooser } from '@/components/admin/InternalLinkChooser/InternalLinkChooserField';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
-import { hookInvalidateCacheOnPageChange } from '@/hooks-payload/invalidateCacheOnPageChange';
 
 const navLinkDefaultFields: Field[] = [
   {
@@ -130,9 +129,6 @@ export const Header: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: {
-    afterChange: [hookInvalidateCacheOnPageChange],
-  },
   labels: {
     plural: 'Header',
     singular: 'Header',
