@@ -5,6 +5,9 @@ import type {
 import { getLocaleCodes } from '@/i18n/payloadConfig';
 import { getBreadcrumbPathSegments } from '@/utilities/getBreadcrumbPathSegments';
 import {
+  getTenantName, getTenantSlugForLocale,
+} from '@/utilities/tenant';
+import {
   setsSlugs, singletonSlugs,
 } from '@/collections/Pages/constants';
 import type { Config } from '@/payload-types';
@@ -23,19 +26,6 @@ interface InterfaceTenantRouteParam {
   slug: string[];
 }
 
-const getTenantName = (tenant: InterfaceTenantRouteTenant): string | null => {
-  if (typeof tenant.name === 'string') {
-    return tenant.name;
-  }
-
-  if (tenant.name && typeof tenant.name === 'object') {
-    return tenant.name.de || Object.values(tenant.name)
-      .find(Boolean) || null;
-  }
-
-  return null;
-};
-
 const getEnabledLocales = (tenant: InterfaceTenantRouteTenant): TypedLocale[] => {
   const locales = getLocaleCodes();
 
@@ -44,25 +34,6 @@ const getEnabledLocales = (tenant: InterfaceTenantRouteTenant): TypedLocale[] =>
   }
 
   return locales.filter((locale) => tenant.languages?.[locale]);
-};
-
-const getTenantSlugForLocale = ({
-  locale,
-  tenant,
-}: {
-  locale: TypedLocale;
-  tenant: InterfaceTenantRouteTenant;
-}): string | null => {
-  if (typeof tenant.slug === 'string') {
-    return tenant.slug;
-  }
-
-  if (tenant.slug && typeof tenant.slug === 'object') {
-    return tenant.slug[locale] || tenant.slug.de || Object.values(tenant.slug)
-      .find(Boolean) || null;
-  }
-
-  return null;
 };
 
 const processPagesForParams = ({
@@ -104,7 +75,7 @@ const processPagesForParams = ({
       } else {
         const localeTenantSlug = getTenantSlugForLocale({
           locale,
-          tenant,
+          slug: tenant.slug,
         });
 
         if (localeTenantSlug) {
@@ -145,7 +116,9 @@ export const getTenantRouteParams = async ({
 }): Promise<InterfaceTenantRouteParam[]> => {
   const params: InterfaceTenantRouteParam[] = [];
   const enabledLocales = getEnabledLocales(tenant);
-  const isSagw = getTenantName(tenant)
+  const isSagw = getTenantName({
+    name: tenant.name,
+  })
     ?.toLowerCase() === 'sagw';
 
   if (isSagw) {
@@ -158,7 +131,7 @@ export const getTenantRouteParams = async ({
     params.push(...enabledLocales.flatMap((locale) => {
       const tenantSlug = getTenantSlugForLocale({
         locale,
-        tenant,
+        slug: tenant.slug,
       });
 
       if (!tenantSlug) {
