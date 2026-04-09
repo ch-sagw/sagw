@@ -18,7 +18,7 @@ import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBul
 import { preview } from '@/utilities/previewUrl';
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
-} from '@/hooks-payload/invalidateTenantCache';
+} from '@/hooks-payload/invalidateTenantCache/';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
 

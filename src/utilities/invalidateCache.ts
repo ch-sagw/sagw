@@ -1,5 +1,5 @@
 import type { BasePayload } from 'payload';
-import { getTenantRoutePaths } from '@/app/(frontend)/utilities/getTenantRouteParams';
+import { getTenantRoutePaths } from '@/utilities/getTenantRouteParams';
 import { revalidatePath } from 'next/cache.js';
 
 export const invalidateCache = async ({

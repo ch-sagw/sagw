@@ -17,7 +17,6 @@ import {
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { buildBreadcrumbItems } from '@/utilities/buildBreadcrumbItems';
 import { buildUrlFromPath } from '@/utilities/buildUrlFromPath';
-import { getTenantSlugForLocale } from '@/utilities/tenant';
 import {
   CollectionSlug, TypedLocale,
 } from 'payload';
@@ -139,10 +138,17 @@ export const RenderHero = ({
   // extract tenant slug from pageData
   const pageDataRecord = pageData as unknown as Record<string, unknown>;
   const tenant = pageDataRecord.tenant as { slug?: Record<string, string> } | { slug?: string } | undefined;
-  const tenantSlug = getTenantSlugForLocale({
-    locale,
-    slug: tenant?.slug,
-  });
+  let tenantSlug: string | null = null;
+
+  if (tenant && typeof tenant === 'object' && tenant.slug) {
+    if (typeof tenant.slug === 'object' && locale in tenant.slug) {
+      tenantSlug = tenant.slug[locale];
+    } else if (typeof tenant.slug === 'string') {
+      tenantSlug = tenant.slug;
+    }
+
+    tenantSlug = tenantSlug || null;
+  }
 
   // build breadcrumb items
   let breadcrumbItems: InterfaceBreadcrumbItem[] = buildBreadcrumbItems({

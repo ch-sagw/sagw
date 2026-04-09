@@ -1,4 +1,3 @@
-import 'server-only';
 import type {
   BasePayload, TypedLocale, Where,
 } from 'payload';
@@ -95,7 +94,7 @@ const processPagesForParams = ({
   return pageParams;
 };
 
-const getTenantRoutePath = ({
+export const getTenantRoutePath = ({
   locale,
   slug,
 }: {
@@ -104,8 +103,6 @@ const getTenantRoutePath = ({
 }): string => `/${locale}${slug.length > 0
   ? `/${slug.join('/')}`
   : ''}`;
-
-// used generateStaticParams.ts routine
 
 export const getTenantRouteParams = async ({
   payload,
@@ -202,8 +199,6 @@ export const getTenantRouteParams = async ({
 
   return params;
 };
-
-// used by invalidateCache.ts routine
 
 export const getTenantRoutePaths = async ({
   payload,

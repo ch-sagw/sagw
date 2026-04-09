@@ -1,7 +1,7 @@
 import 'server-only';
 import { TypedLocale } from 'payload';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
-import { getTenantRouteParams } from '@/app/(frontend)/utilities/getTenantRouteParams';
+import { getTenantRouteParams } from '@/utilities/getTenantRouteParams';
 
 // Generate static params for all dynamic routes
 export const generateStaticParams = async (): Promise<{ locale: TypedLocale; slug: string[] }[]> => {
