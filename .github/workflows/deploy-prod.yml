@@ -71,6 +71,8 @@ jobs:
   test-be:
     if: ${{ !startsWith(github.head_ref, 'release-please--branches--main') }}
     needs: [lint]
+    env:
+      HOME: /root
     runs-on: blacksmith-4vcpu-ubuntu-2404
     strategy:
       fail-fast: false
