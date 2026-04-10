@@ -35,6 +35,10 @@ const NEXT_PUBLIC_SERVER_URL = process.env.URL ||
 const nextConfig = {
   devIndicators: false,
 
+  experimental: {
+    viewTransition: true,
+  },
+
   images: {
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL].map((item) => {
