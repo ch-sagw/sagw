@@ -14,6 +14,8 @@ export { generateStaticParams };
 // export const revalidate = 1;
 // export const dynamic = 'force-dynamic';
 
+export const dynamic = 'force-static';
+
 export const generateMetadata = async ({
   params,
 }: InterfaceOtherPagesProps): Promise<Metadata> => {
