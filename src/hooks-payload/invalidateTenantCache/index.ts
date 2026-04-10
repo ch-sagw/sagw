@@ -5,6 +5,7 @@ import { extractID } from '@/utilities/extractId';
 import { invalidateCache } from '@/utilities/invalidateCache';
 
 export const hookInvalidateTenantCache: CollectionAfterChangeHook = async ({
+  context,
   doc,
   req,
   previousDoc,
@@ -24,6 +25,7 @@ export const hookInvalidateTenantCache: CollectionAfterChangeHook = async ({
   }
 
   await invalidateCache({
+    logCacheInvalidation: context.logCacheInvalidation === true,
     payload: req.payload,
     tenantId: doc?.tenant
       ? extractID(doc.tenant)
@@ -34,10 +36,12 @@ export const hookInvalidateTenantCache: CollectionAfterChangeHook = async ({
 };
 
 export const hookInvalidateTenantCacheOnDelete: CollectionAfterDeleteHook = async ({
+  context,
   doc,
   req,
 }) => {
   await invalidateCache({
+    logCacheInvalidation: context.logCacheInvalidation === true,
     payload: req.payload,
     tenantId: doc?.tenant
       ? extractID(doc.tenant)
