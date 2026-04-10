@@ -1,6 +1,9 @@
 import { CollectionConfig } from 'payload';
 import { rte1 } from '@/field-templates/rte';
 import { globalContentAccessGeneric } from '@/access/globalContent';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 export const NetworkCategories: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -14,5 +17,9 @@ export const NetworkCategories: CollectionConfig = {
       name: 'name',
     }),
   ],
+  hooks: {
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
+  },
   slug: 'networkCategories',
 };

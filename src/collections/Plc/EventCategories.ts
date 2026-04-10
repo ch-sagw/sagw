@@ -1,6 +1,9 @@
 import { CollectionConfig } from 'payload';
 import { rte1 } from '@/field-templates/rte';
 import { globalContentAccessGeneric } from '@/access/globalContent';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 export const EventCategories: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -40,5 +43,9 @@ export const EventCategories: CollectionConfig = {
     },
 
   ],
+  hooks: {
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
+  },
   slug: 'eventCategory',
 };

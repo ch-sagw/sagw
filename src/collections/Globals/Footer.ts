@@ -8,6 +8,9 @@ import {
 } from '@/field-templates/adminTitle';
 import { rte1 } from '@/field-templates/rte';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 const fieldsSocialLink: Field[] = [
   {
@@ -163,6 +166,10 @@ export const Footer: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
+  },
   labels: {
     plural: 'Footer',
     singular: 'Footer',

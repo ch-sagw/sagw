@@ -1,63 +1,48 @@
-// will be reused in the cache-rework
-
-/*
-import type {
-  BasePayload, TypedLocale,
-} from 'payload';
-import { getPageUrl } from './getPageUrl';
-import { getRootPathUrls } from '@/hooks-payload/shared/getRootPathUrls';
+import type { BasePayload } from 'payload';
+import { getTenantRoutePaths } from '@/utilities/getTenantRouteParams';
 import { revalidatePath } from 'next/cache.js';
 
-interface InterfaceInvalidateCacheParams {
-  pageId: string;
-  locale: TypedLocale;
-  payload: BasePayload;
-  collectionSlug?: string;
-}
-
-// invalidates cache for a page by revalidating its URL path
 export const invalidateCache = async ({
-  pageId,
-  locale,
   payload,
-  collectionSlug,
-}: InterfaceInvalidateCacheParams): Promise<void> => {
+  tenantId,
+}: {
+  payload: BasePayload;
+  tenantId?: string | null;
+}): Promise<void> => {
+  if (!payload || !tenantId) {
+    return;
+  }
+
   try {
-    // Get page URL using updated getPageUrl (no Links collection dependency)
-    const url = await getPageUrl({
-      absolute: false,
-      locale,
-      pageId,
-      payload,
+    const tenant = await payload.findByID({
+      collection: 'tenants',
+      depth: 0,
+      id: tenantId,
+      locale: 'all',
+      overrideAccess: true,
     });
 
-    // skip invalidation if URL is just the root path for this locale
-    // this can happen when the page doesn't have a slug in this locale
-    // (home is exception)
-    const rootPathUrls = getRootPathUrls();
-    const rootPathForLocale = rootPathUrls[locale] || `/${locale}`;
+    const paths = await getTenantRoutePaths({
+      payload,
+      tenant: {
+        id: tenant.id,
+        languages: tenant.languages,
+        name: tenant.name as string | Record<string, string> | undefined,
+        slug: tenant.slug as string | Record<string, string> | undefined,
+      },
+    });
 
-    if (url === rootPathForLocale && collectionSlug !== 'homePage') {
-      return;
+    for (const path of paths) {
+      // IMPORTANT: do not change this log. This is neccessary for testing!!
+      if (process.env.ENV === 'local' || process.env.ENV === 'playwright') {
+        console.log(`[CACHE] invalidating path: ${path}`);
+      }
+
+      if (process.env.ENV === 'prod' || process.env.ENV === 'test') {
+        revalidatePath(path);
+      }
     }
-
-    // IMPORTANT: do not change this log. This is neccessary for testing!!
-    console.log(`[CACHE] invalidating path: ${url}`);
-
-    // Invalidate cache for this URL
-    if (process.env.ENV === 'prod' || process.env.ENV === 'test') {
-      revalidatePath(url);
-    }
-
-    // Optionally invalidate for all locales if needed
-    // const locales = getLocaleCodes();
-    // await Promise.all(locales.map(loc => {
-    //   const url = await getPageUrl({ payload, pageId, locale: loc });
-    //   revalidatePath(url);
-    // }));
   } catch (error) {
-    console.error(`Error invalidating cache for page ${pageId}:`, error);
+    console.error(`Error invalidating cache for tenant ${tenantId}:`, error);
   }
 };
-
-*/

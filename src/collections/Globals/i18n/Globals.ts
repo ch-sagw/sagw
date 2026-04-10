@@ -3,6 +3,9 @@ import {
   rte1, rte3,
 } from '@/field-templates/rte';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 export const I18nGlobals: CollectionConfig = {
   access: globalContentAccessNoTranslatorNoEditor,
@@ -94,6 +97,10 @@ export const I18nGlobals: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
+  },
   labels: {
     plural: 'Content Snippets',
     singular: 'Content Snippets',

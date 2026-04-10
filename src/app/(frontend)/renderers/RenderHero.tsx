@@ -146,6 +146,7 @@ export const RenderHero = ({
     } else if (typeof tenant.slug === 'string') {
       tenantSlug = tenant.slug;
     }
+
     tenantSlug = tenantSlug || null;
   }
 
