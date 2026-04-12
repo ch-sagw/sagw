@@ -12,8 +12,10 @@ import {
 } from '@/app/(frontend)/fetchers/home';
 import { renderMeta } from '@/app/(frontend)/renderers/RenderMeta';
 
-export const revalidate = 1;
-export const dynamic = 'force-dynamic';
+// export const revalidate = 1;
+// export const dynamic = 'force-dynamic';
+
+export const dynamic = 'force-static';
 
 export const generateStaticParams = (): { locale: TypedLocale }[] => {
   const locales = getLocaleCodes();

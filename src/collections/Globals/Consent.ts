@@ -10,6 +10,9 @@ import {
   rte1, rte3,
 } from '@/field-templates/rte';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 const overlaySection: Field[] = [
   rte1({
@@ -155,6 +158,10 @@ export const Consent: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
+  },
   labels: {
     plural: 'Consent',
     singular: 'Consent',

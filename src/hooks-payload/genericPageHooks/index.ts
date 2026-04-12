@@ -10,6 +10,9 @@ import {
 } from 'payload';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 interface InterfaceGenericPageHooks {
   afterChange?: CollectionAfterChangeHook[];
@@ -23,12 +26,14 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
   // 3.
   afterChange: [
     hookCascadeBreadcrumbUpdates,
+    hookInvalidateTenantCache,
     ...(additionalHooks?.afterChange ?? []),
   ],
 
   // 4.
   afterDelete: [
     hookCascadeBreadcrumbUpdatesOnDelete,
+    hookInvalidateTenantCacheOnDelete,
     ...(additionalHooks?.afterDelete ?? []),
   ],
 

@@ -33,10 +33,16 @@ import {
   ZenodoDocument,
 } from '@/payload-types';
 
-import { getTenant } from '@/test-helpers/tenant-generator';
+import {
+  getTenant, getTenantId,
+} from '@/test-helpers/tenant-generator';
 import slugify from 'slugify';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { seoData } from '@/seed/test-data/seoData';
+import {
+  addPlaywrightErrorPage,
+  addPlaywrightFooterData, addPlaywrightHeaderData,
+} from '@/seed/test-data/tenantDataPlaywright';
 
 interface InterfacePageProps {
   title: string;
@@ -49,6 +55,9 @@ interface InterfacePageProps {
   locale?: ConfigFromTypes['locale'];
   content?: any[];
   draft?: boolean;
+  context?: {
+    logCacheInvalidation?: boolean;
+  };
 }
 
 type InterfaceProjectPageProps = {
@@ -190,6 +199,7 @@ const generatePage = async ({
   locale,
   content,
   draft,
+  context,
 }: {
   type: 'overviewPage' | 'detailPage';
 } & InterfacePageProps): Promise<OverviewPage | DetailPage> => {
@@ -215,6 +225,7 @@ const generatePage = async ({
 
   const document = await payload.create({
     collection: type,
+    context,
     data: {
       _status: draft
         ? 'draft'
@@ -1655,6 +1666,92 @@ export const generateForm = async (tenant: string): Promise<string> => {
   return form.id;
 };
 
+export const generateRegularForm = async (tenant: string): Promise<string> => {
+  const payload = await getPayloadCached();
+  const form = await payload.create({
+    collection: 'forms',
+    context: {
+      skipCacheInvalidation: true,
+    },
+    data: {
+      colorMode: 'dark',
+      fields: [
+        {
+          blockType: 'textBlockForm',
+          fieldError: simpleRteConfig('Geben Sie Ihren Nachnamen an.'),
+          fieldWidth: 'half',
+          label: simpleRteConfig('Nachname'),
+          name: 'nachname',
+          placeholder: 'Ihr Nachname',
+          required: true,
+        },
+        {
+          blockType: 'textBlockForm',
+          fieldError: simpleRteConfig('Geben Sie Ihren Vornamen an.'),
+          fieldWidth: 'half',
+          label: simpleRteConfig('Vorname'),
+          name: 'vorname',
+          placeholder: 'Ihr Vornaname',
+          required: true,
+        },
+        {
+          blockType: 'textareaBlock',
+          fieldError: simpleRteConfig('Geben Sie ihren Kommentar an.'),
+          fieldWidth: 'full',
+          label: simpleRteConfig('Kommentar'),
+          name: 'comment',
+          placeholder: 'Ihr Kommentar',
+          required: true,
+        },
+        {
+          blockType: 'checkboxBlock',
+          fieldError: simpleRteConfig('Bitte akzeptieren Sie die Hinweise zum Datenschutz.'),
+          fieldWidth: 'full',
+          label: simpleRteConfig('Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.'),
+          name: 'checkbox-custom',
+          required: true,
+        },
+        {
+          blockType: 'radioBlock',
+          fieldError: simpleRteConfig('Sie müssen eine Auswahl treffen'),
+          fieldWidth: 'full',
+          items: [
+            {
+              label: simpleRteConfig('Deutsch'),
+              value: 'deutsch',
+            },
+            {
+              label: simpleRteConfig('Französisch'),
+              value: 'french',
+            },
+          ],
+          label: simpleRteConfig('In welcher Sprache möchten Sie den Newsletter erhalten?'),
+          name: 'language-select',
+          required: true,
+        },
+      ],
+      isNewsletterForm: 'custom',
+      mailSubject: 'Form submission on SAGW',
+      recipientMail: 'delivered@resend.dev',
+      showPrivacyCheckbox: false,
+      submitButtonLabel: 'Abschicken',
+      submitError: {
+        text: simpleRteConfig('Submit text error'),
+        title: simpleRteConfig('Submit title error'),
+      },
+      submitSuccess: {
+        text: simpleRteConfig('Submit text success'),
+        title: simpleRteConfig('Submit title success'),
+      },
+      subtitle: simpleRteConfig('Subtitle for contact Form'),
+      tenant,
+      title: simpleRteConfig('Contact Form'),
+    },
+  });
+
+  return form.id;
+};
+
 export const generateDocument = async (tenant: string, project?: string, title?: string): Promise<string> => {
   const payload = await getPayloadCached();
   const document = await payload.create({
@@ -1727,4 +1824,219 @@ export const generateVideo = async (tenant: string): Promise<string> => {
   });
 
   return video.id;
+};
+
+export const regenerateI18nData = async (): Promise<void> => {
+  const tenant = await getTenantId({
+    isSagw: true,
+    time: 0,
+  });
+  const payload = await getPayloadCached();
+  const currentI18n = await payload.find({
+    collection: 'i18nGlobals',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (currentI18n.docs.length > 0) {
+    await payload.delete({
+      collection: 'i18nGlobals',
+      id: currentI18n.docs[0].id,
+    });
+  }
+
+  await generateI18nData({
+    tenant,
+  });
+};
+
+export const regenerateFooterData = async (): Promise<void> => {
+  const tenant = await getTenantId({
+    isSagw: true,
+    time: 0,
+  });
+  const payload = await getPayloadCached();
+  const currentFooter = await payload.find({
+    collection: 'footer',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (currentFooter.docs.length > 0) {
+    await payload.delete({
+      collection: 'footer',
+      id: currentFooter.docs[0].id,
+    });
+  }
+
+  await addPlaywrightFooterData({
+    payload,
+    tenant,
+    tenantName: 'sagw',
+  });
+};
+
+export const regenerateConsentData = async (): Promise<void> => {
+  const tenant = await getTenantId({
+    isSagw: true,
+    time: 0,
+  });
+  const payload = await getPayloadCached();
+  const currentConsent = await payload.find({
+    collection: 'consent',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (currentConsent.docs.length > 0) {
+    await payload.delete({
+      collection: 'consent',
+      id: currentConsent.docs[0].id,
+    });
+  }
+
+  await generateConsentData({
+    tenant,
+  });
+};
+
+export const regenerateHeaderData = async (): Promise<void> => {
+  const tenant = await getTenantId({
+    isSagw: true,
+    time: 0,
+  });
+  const payload = await getPayloadCached();
+  const currentHeader = await payload.find({
+    collection: 'header',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (currentHeader.docs.length > 0) {
+    await payload.delete({
+      collection: 'header',
+      id: currentHeader.docs[0].id,
+    });
+  }
+
+  const time = (new Date())
+    .getTime();
+
+  const detailPage = await generateDetailPage({
+    tenant,
+    title: `detail-${time}`,
+  });
+
+  await addPlaywrightHeaderData({
+    detail1: detailPage.id,
+    detail2: detailPage.id,
+    detail3: detailPage.id,
+    payload,
+    tenant,
+  });
+};
+
+export const regenerateImpressumPage = async (): Promise<void> => {
+  const tenant = await getTenantId({
+    isSagw: true,
+    time: 0,
+  });
+  const payload = await getPayloadCached();
+  const currentImpressum = await payload.find({
+    collection: 'impressumPage',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (currentImpressum.docs.length > 0) {
+    await payload.delete({
+      collection: 'impressumPage',
+      id: currentImpressum.docs[0].id,
+    });
+  }
+
+  await generateImpressumPage({
+    tenant,
+  });
+};
+
+export const regenerateDataPrivacyPage = async (): Promise<void> => {
+  const tenant = await getTenantId({
+    isSagw: true,
+    time: 0,
+  });
+  const payload = await getPayloadCached();
+  const currentDataPrivacy = await payload.find({
+    collection: 'dataPrivacyPage',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (currentDataPrivacy.docs.length > 0) {
+    await payload.delete({
+      collection: 'dataPrivacyPage',
+      id: currentDataPrivacy.docs[0].id,
+    });
+  }
+
+  await generateDataPrivacyPage({
+    tenant,
+  });
+};
+
+export const regenerateErrorPage = async (): Promise<void> => {
+  const tenant = await getTenantId({
+    isSagw: true,
+    time: 0,
+  });
+  const payload = await getPayloadCached();
+  const currentErrorPage = await payload.find({
+    collection: 'errorPage',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  if (currentErrorPage.docs.length > 0) {
+    await payload.delete({
+      collection: 'errorPage',
+      id: currentErrorPage.docs[0].id,
+    });
+  }
+
+  await addPlaywrightErrorPage({
+    payload,
+    tenant,
+    tenantName: 'sagw',
+  });
+};
+
+export const regenerateAllGenericData = async (): Promise<void> => {
+  await regenerateI18nData();
+  await regenerateFooterData();
+  await regenerateConsentData();
+  await regenerateHeaderData();
+  await regenerateImpressumPage();
+  await regenerateDataPrivacyPage();
+  await regenerateErrorPage();
 };

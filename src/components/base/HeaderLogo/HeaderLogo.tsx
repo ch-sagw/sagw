@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import styles from '@/components/base/HeaderLogo/HeaderLogo.module.scss';
 import { ColorMode } from '@/components/base/types/colorMode';
 

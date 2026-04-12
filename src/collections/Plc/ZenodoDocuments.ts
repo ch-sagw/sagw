@@ -1,5 +1,8 @@
 import type { CollectionConfig } from 'payload';
 import { assetsAccess } from '@/access/assets';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 export const ZenodoDocuments: CollectionConfig = {
   access: assetsAccess,
@@ -82,5 +85,9 @@ export const ZenodoDocuments: CollectionConfig = {
       type: 'ui',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
+  },
   slug: 'zenodoDocuments',
 };

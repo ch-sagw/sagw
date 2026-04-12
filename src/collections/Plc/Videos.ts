@@ -1,5 +1,8 @@
 import type { CollectionConfig } from 'payload';
 import { assetsAccess } from '@/access/assets';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 // TODO:
 // - discuss: subtitles
@@ -18,6 +21,10 @@ export const Videos: CollectionConfig = {
       type: 'text',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
+  },
   slug: 'videos',
   upload: {
     mimeTypes: ['video/*'],

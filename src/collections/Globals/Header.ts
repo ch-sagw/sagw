@@ -9,6 +9,9 @@ import {
 import { rte1 } from '@/field-templates/rte';
 import { fieldInternalLinkChooser } from '@/components/admin/InternalLinkChooser/InternalLinkChooserField';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 const navLinkDefaultFields: Field[] = [
   {
@@ -129,6 +132,10 @@ export const Header: CollectionConfig = {
       type: 'tabs',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
+  },
   labels: {
     plural: 'Header',
     singular: 'Header',

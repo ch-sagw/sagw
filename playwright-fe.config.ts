@@ -1,95 +1,9 @@
 import {
-  defineConfig, devices,
+  defineConfig,
   ReporterDescription,
 } from '@playwright/test';
 import { vrtConfig } from '@/automated-testing/config';
-
-// Project Breakpoints:
-/*
-zero: 0,
-micro: 320,
-small: 360,
-medium: 640,
-large: 1024,
-wide: 1280,
-ultra: 1600,
-*/
-
-const projects = [
-  // viewport small
-  {
-    name: 'chromium-400',
-    use: {
-      ...devices['Desktop Chrome'],
-      viewport: {
-        height: 300,
-        width: 400,
-      },
-    },
-  },
-
-  // viewport medium
-  {
-    name: 'chromium-700',
-    use: {
-      ...devices['Desktop Chrome'],
-      viewport: {
-        height: 300,
-        width: 700,
-      },
-    },
-  },
-
-  // viewport large
-  {
-    name: 'chromium-1100',
-    use: {
-      ...devices['Desktop Chrome'],
-      viewport: {
-        height: 300,
-        width: 1100,
-      },
-    },
-  },
-
-  // viewport ultra
-  {
-    name: 'chromium-1600',
-    use: {
-      ...devices['Desktop Chrome HiDPI'],
-      viewport: {
-        height: 300,
-        width: 1600,
-      },
-    },
-  },
-
-  // desktop firefox viewport large
-  {
-    name: 'firefox',
-    use: {
-      ...devices['Desktop Firefox'],
-      viewport: {
-        height: 300,
-        width: 1100,
-      },
-    },
-  },
-
-  // desktop safari viewport large
-  {
-    name: 'webkit',
-    use: {
-      ...devices['Desktop Safari'],
-      viewport: {
-        height: 300,
-        width: 1280,
-      },
-
-    },
-  },
-
-];
+import { fePlaywrightProjects } from '@/test-helpers/playwright-projects';
 
 const reporterJson: ReporterDescription = [
   'json',
@@ -137,7 +51,7 @@ export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
   fullyParallel: true,
   outputDir: 'test-results/main',
-  projects,
+  projects: fePlaywrightProjects,
   reporter: process.env.CI
     ? ciReporters
     : defaultReporters,
