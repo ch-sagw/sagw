@@ -55,6 +55,9 @@ interface InterfacePageProps {
   locale?: ConfigFromTypes['locale'];
   content?: any[];
   draft?: boolean;
+  context?: {
+    logCacheInvalidation?: boolean;
+  };
 }
 
 type InterfaceProjectPageProps = {
@@ -196,6 +199,7 @@ const generatePage = async ({
   locale,
   content,
   draft,
+  context,
 }: {
   type: 'overviewPage' | 'detailPage';
 } & InterfacePageProps): Promise<OverviewPage | DetailPage> => {
@@ -221,6 +225,7 @@ const generatePage = async ({
 
   const document = await payload.create({
     collection: type,
+    context,
     data: {
       _status: draft
         ? 'draft'
