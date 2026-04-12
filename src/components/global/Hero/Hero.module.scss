@@ -304,6 +304,10 @@
       height: px-to-rem(120);
       width: px-to-rem(120);
 
+      svg path {
+        fill: var(--background-inverted);
+      }
+
       @include mq($from: medium) {
         height: px-to-rem(200);
         width: px-to-rem(200);
