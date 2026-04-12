@@ -5,7 +5,7 @@
 
 # ATTENTION: If the docker image is changed here, it also needs to be changed in deploy-branch.yml and deploy-prod.yml
 
-FROM mcr.microsoft.com/playwright:v1.58.2-noble
+FROM mcr.microsoft.com/playwright:v1.59.1-noble
 
 # Set working directory
 WORKDIR /app

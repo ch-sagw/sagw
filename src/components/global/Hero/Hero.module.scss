@@ -305,7 +305,7 @@
       width: px-to-rem(120);
 
       svg path {
-        fill: var(--background-inverted);
+        fill: var(--background-cta);
       }
 
       @include mq($from: medium) {
