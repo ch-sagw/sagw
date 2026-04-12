@@ -3,9 +3,11 @@ import { getTenantRoutePaths } from '@/utilities/getTenantRouteParams';
 import { revalidatePath } from 'next/cache.js';
 
 export const invalidateCache = async ({
+  logCacheInvalidation = false,
   payload,
   tenantId,
 }: {
+  logCacheInvalidation?: boolean;
   payload: BasePayload;
   tenantId?: string | null;
 }): Promise<void> => {
@@ -33,8 +35,11 @@ export const invalidateCache = async ({
     });
 
     for (const path of paths) {
-      // IMPORTANT: do not change this log. This is neccessary for testing!!
-      if (process.env.ENV === 'local' || process.env.ENV === 'playwright') {
+      // IMPORTANT: tests rely on this exact log output when logging is enabled.
+      if (
+        logCacheInvalidation &&
+        (process.env.ENV === 'local' || process.env.ENV === 'playwright')
+      ) {
         console.log(`[CACHE] invalidating path: ${path}`);
       }
 
