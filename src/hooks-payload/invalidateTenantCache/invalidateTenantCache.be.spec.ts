@@ -23,6 +23,10 @@ import {
   deleteSingletonPages,
 } from '@/seed/test-data/deleteData';
 
+const logCacheInvalidationContext = {
+  logCacheInvalidation: true,
+} as const;
+
 const generatePages = async ({
   amountPerPage,
   tenant,
@@ -142,6 +146,7 @@ test('invalidates all tenant pages on content change (sagw)', {
 
   await payload.update({
     collection: 'detailPage',
+    context: logCacheInvalidationContext,
     data: {
       content: [
         {
@@ -250,6 +255,7 @@ test('invalidates all tenant pages on content change (non-sagw)', {
 
   await payload.update({
     collection: 'detailPage',
+    context: logCacheInvalidationContext,
     data: {
       content: [
         {
@@ -363,6 +369,7 @@ test('invalidates all tenant pages on page deletion (sagw)', {
 
   await payload.delete({
     collection: 'detailPage',
+    context: logCacheInvalidationContext,
     id: detailPage.id,
   });
 
@@ -459,6 +466,7 @@ test('invalidates all tenant pages on page deletion (non-sagw)', {
 
   await payload.delete({
     collection: 'detailPage',
+    context: logCacheInvalidationContext,
     id: detailPage.id,
   });
 
@@ -549,6 +557,7 @@ test('invalidates all tenant pages on page creation (sagw)', {
 
   // generate random detail page
   await generateDetailPage({
+    context: logCacheInvalidationContext,
     parentPage: {
       documentId: home,
       slug: 'homePage',
@@ -643,6 +652,7 @@ test('invalidates all tenant pages on page creation (non-sagw)', {
 
   // generate random detail page
   await generateDetailPage({
+    context: logCacheInvalidationContext,
     parentPage: {
       documentId: homeNonSagw,
       slug: 'homePage',
@@ -746,6 +756,7 @@ test('invalidates all tenant pages on non-autosave collection change (sagw)', {
 
   await payload.update({
     collection: 'forms',
+    context: logCacheInvalidationContext,
     data: {
       title: simpleRteConfig('some changed title'),
     },
@@ -838,6 +849,7 @@ test('invalidates all tenant pages on non-autosave collection change (non-sagw)'
 
   await payload.update({
     collection: 'forms',
+    context: logCacheInvalidationContext,
     data: {
       title: simpleRteConfig('some title changed'),
     },
