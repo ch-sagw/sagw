@@ -1,9 +1,8 @@
 import type { CollectionConfig } from 'payload';
 import { assetsAccess } from '@/access/assets';
 import {
-  hookInvalidateCacheOnReferencedCollectionChange,
-  hookInvalidateCacheOnReferencedCollectionDelete,
-} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 // TODO:
 // - discuss: subtitles
@@ -23,8 +22,8 @@ export const Videos: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [hookInvalidateCacheOnReferencedCollectionChange],
-    afterDelete: [hookInvalidateCacheOnReferencedCollectionDelete],
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
   },
   slug: 'videos',
   upload: {

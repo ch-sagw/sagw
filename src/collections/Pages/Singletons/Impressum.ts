@@ -16,6 +16,9 @@ import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/
 import { allBlocksButTranslator } from '@/access/blocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 import { preview } from '@/utilities/previewUrl';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache/';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
 
@@ -72,6 +75,8 @@ export const ImpressumPage: CollectionConfig = {
     },
   ],
   hooks: {
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
     afterRead: [
       async ({
         doc,

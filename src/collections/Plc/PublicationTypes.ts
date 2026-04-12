@@ -2,9 +2,8 @@ import { CollectionConfig } from 'payload';
 import { rte1 } from '@/field-templates/rte';
 import { globalContentAccessGeneric } from '@/access/globalContent';
 import {
-  hookInvalidateCacheOnReferencedCollectionChange,
-  hookInvalidateCacheOnReferencedCollectionDelete,
-} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 export const PublicationTypes: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -44,8 +43,8 @@ export const PublicationTypes: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [hookInvalidateCacheOnReferencedCollectionChange],
-    afterDelete: [hookInvalidateCacheOnReferencedCollectionDelete],
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
   },
   slug: 'publicationTypes',
 };

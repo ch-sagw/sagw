@@ -58,30 +58,47 @@ const hrefLocaleFromRedirectTo = (
   };
 };
 
+// if a redirect matches `locale` + `url`, performs navigation (throws).
+// otherwise returns so callers can render a tenant-aware 404 with route params.
+
+export const runRedirectIfMatch = async ({
+  locale,
+  url,
+}: {
+  locale: TypedLocale;
+  url: string;
+}): Promise<void> => {
+  const redirects = await getRedirects();
+  const fromKey = normalizeRedirectPath(`${locale}/${url}`);
+  const redirectItem = redirects.find((redirectEntry) => normalizeRedirectPath(redirectEntry.from) === fromKey);
+
+  if (!redirectItem) {
+    return;
+  }
+
+  const {
+    href,
+    locale: targetLocale,
+  } = hrefLocaleFromRedirectTo(
+    normalizeRedirectPath(redirectItem.to),
+    locale,
+  );
+
+  redirect({
+    href,
+    locale: targetLocale,
+  });
+};
+
 export const Redirector = async ({
   disableNotFound,
   url,
   locale,
 }: InterfaceRedirectProps): Promise<null> => {
-  const redirects = await getRedirects();
-
-  const fromKey = normalizeRedirectPath(`${locale}/${url}`);
-
-  const redirectItem = redirects.find((redirectEntry) => normalizeRedirectPath(redirectEntry.from) === fromKey);
-
-  if (redirectItem) {
-    const {
-      href, locale: targetLocale,
-    } = hrefLocaleFromRedirectTo(
-      normalizeRedirectPath(redirectItem.to),
-      locale,
-    );
-
-    return redirect({
-      href,
-      locale: targetLocale,
-    });
-  }
+  await runRedirectIfMatch({
+    locale,
+    url,
+  });
 
   if (disableNotFound) {
     return null;

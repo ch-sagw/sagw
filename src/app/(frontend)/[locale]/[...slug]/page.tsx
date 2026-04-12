@@ -6,12 +6,15 @@ import { InterfaceOtherPagesProps } from '@/app/(frontend)/fetchers/otherPages';
 import { Metadata } from 'next';
 import { renderMeta } from '@/app/(frontend)/renderers/RenderMeta';
 import { getPageData } from '../../fetchers/pageData';
-import { Redirector } from '@/components/helpers/redirects';
+import { runRedirectIfMatch } from '@/components/helpers/redirects';
+import { RenderNotFoundPage } from '@/app/(frontend)/renderers/RenderNotFoundPage';
 
 export { generateStaticParams };
 
-export const revalidate = 1;
-export const dynamic = 'force-dynamic';
+// export const revalidate = 1;
+// export const dynamic = 'force-dynamic';
+
+export const dynamic = 'force-static';
 
 export const generateMetadata = async ({
   params,
@@ -38,10 +41,17 @@ export default async function Page({
   });
 
   if (!pageData) {
-    return <Redirector
-      url={slug.join('/')}
-      locale={locale}
-    />;
+    await runRedirectIfMatch({
+      locale,
+      url: slug.join('/'),
+    });
+
+    return (
+      <RenderNotFoundPage
+        locale={locale}
+        slugSegments={slug}
+      />
+    );
   }
 
   return (

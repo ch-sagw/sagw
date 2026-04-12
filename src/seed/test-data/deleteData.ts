@@ -1,5 +1,7 @@
 import { plcCollections } from '@/collections';
-import { setsSlugs } from '@/collections/Pages/constants';
+import {
+  setsSlugs, singletonSlugs,
+} from '@/collections/Pages/constants';
 import { deleteCollectionsData } from '@/utilities/deleteCollectionsData';
 import {
   CollectionSlug, Payload,
@@ -47,6 +49,17 @@ export const deleteOtherCollections = async (): Promise<void> => {
   const collectionsSlugs = plcCollections
     .map((collectionSlug) => collectionSlug.slug)
     .filter((collectionSlug) => collectionSlug !== 'users' && collectionSlug !== 'tenants') as any as CollectionSlug[];
+
+  await deleteCollectionsData({
+    collectionSlugs: collectionsSlugs,
+  });
+};
+
+// delete singleton pages
+export const deleteSingletonPages = async (): Promise<void> => {
+
+  const collectionsSlugs = singletonSlugs
+    .map((collectionSlug) => collectionSlug.slug);
 
   await deleteCollectionsData({
     collectionSlugs: collectionsSlugs,

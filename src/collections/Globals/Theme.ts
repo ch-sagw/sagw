@@ -4,6 +4,9 @@ import {
   fieldAdminTitleDefaultValue, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 import { globalContentAccessTheme } from '@/access/globalContent';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 export const Theme: CollectionConfig = {
   access: globalContentAccessTheme,
@@ -28,6 +31,10 @@ export const Theme: CollectionConfig = {
       type: 'text',
     },
   ],
+  hooks: {
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
+  },
   labels: {
     plural: 'Theme',
     singular: 'Theme',

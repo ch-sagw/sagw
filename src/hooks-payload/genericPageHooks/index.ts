@@ -11,8 +11,8 @@ import {
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 import {
-  hookInvalidateCacheOnPageChange, hookInvalidateCacheOnPageDelete,
-} from '@/hooks-payload/invalidateCacheOnPageChange';
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 interface InterfaceGenericPageHooks {
   afterChange?: CollectionAfterChangeHook[];
@@ -26,13 +26,14 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
   // 3.
   afterChange: [
     hookCascadeBreadcrumbUpdates,
-    hookInvalidateCacheOnPageChange,
+    hookInvalidateTenantCache,
     ...(additionalHooks?.afterChange ?? []),
   ],
 
   // 4.
   afterDelete: [
     hookCascadeBreadcrumbUpdatesOnDelete,
+    hookInvalidateTenantCacheOnDelete,
     ...(additionalHooks?.afterDelete ?? []),
   ],
 
@@ -44,10 +45,7 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
   ],
 
   // 5.
-  beforeDelete: [
-    hookInvalidateCacheOnPageDelete,
-    ...(additionalHooks?.beforeDelete ?? []),
-  ],
+  beforeDelete: [...(additionalHooks?.beforeDelete ?? [])],
 
   // 1.
   beforeValidate: [
