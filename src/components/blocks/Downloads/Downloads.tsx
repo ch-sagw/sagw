@@ -99,7 +99,7 @@ export const Downloads = async (props: InterfaceDownloadsPropTypes): Promise<Rea
         format: format.toUpperCase(),
         link: {
           href: documentItem.url || '',
-          target: '_blank' as const,
+          target: '_self' as const,
         },
         size: fileSizeText,
         title: rteToHtml(documentItem.title),
