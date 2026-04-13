@@ -58,6 +58,9 @@ type LinkProps = BaseProps & {
   element: 'link';
   href: string;
   target?: '_blank';
+  // passed to `next/link`; use `[]` to avoid adding navigation
+  // transition types
+  transitionTypes?: string[];
 };
 
 type TextProps = BaseProps & {
@@ -140,6 +143,10 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
     isActive,
     tabindex,
   } = props;
+
+  const linkTransitionTypes = element === 'link' && 'transitionTypes' in props
+    ? props.transitionTypes
+    : undefined;
 
   const internalI18nA11y = useTranslations('a11y');
   const internalButtonRef = useRef<HTMLButtonElement>(null);
@@ -228,6 +235,7 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
         target={target}
         tabIndex={tabindex}
         prefetch={prefetch}
+        transitionTypes={linkTransitionTypes}
       >
         {buttonLinkContent({
           classNameLinkText,

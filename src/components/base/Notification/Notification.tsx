@@ -173,6 +173,7 @@ export const Notification = ({
             text={linkText}
             iconInlineStart={'arrowRight' as keyof typeof Icon}
             prefetch={true}
+            transitionTypes={[]}
           />
         }
       </div>
