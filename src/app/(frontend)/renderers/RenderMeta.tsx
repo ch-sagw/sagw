@@ -88,9 +88,12 @@ export const renderMeta = async ({
     seoImage = meta.image as Image;
   }
 
-  if (meta.index) {
+  if (meta.index && process.env.ENV === 'prod') {
     seoIndex = meta.index;
   }
+
+  // remove before go-live: https://github.com/ch-sagw/sagw/issues/782
+  seoIndex = false;
 
   return {
     description: meta.description,
