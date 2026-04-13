@@ -25,6 +25,7 @@ import { createPdfGenerationAuth } from '@/utilities/pdfGenerationSecurity';
 import { getThemeNameForTenant } from '../utilities/getThemeNameForTenant';
 import { Redirector } from '@/components/helpers/redirects';
 import { Tracking } from '@/components/helpers/tracking';
+import { PageMainViewTransition } from '@/components/PageMainViewTransition';
 
 export interface InterfacePreFetchedHomePageData {
   pageData: HomePage;
@@ -152,29 +153,31 @@ export const renderPageContent = ({
         tenant={tenantId}
         currentPageId={currentPageId}
       />
-      <main>
-        <div className={containerType === 'home'
-          ? 'home'
-          : 'detail-page'}>
-          {heroComponent}
-          {!skipStatusMessage && (
-            <RenderStatusMessage
-              tenant={tenantId}
-              isHome={isHome}
-              locale={locale}
-            />
-          )}
-          {showBlocks && blocks && (
-            <RenderBlocks
-              blocks={blocks}
-              tenantId={tenantId}
-              i18n={i18n}
-              projectId={projectId}
-              sourcePage={sourcePage}
-            />
-          )}
-        </div>
-      </main>
+      <PageMainViewTransition name='page-main'>
+        <main>
+          <div className={containerType === 'home'
+            ? 'home'
+            : 'detail-page'}>
+            {heroComponent}
+            {!skipStatusMessage && (
+              <RenderStatusMessage
+                tenant={tenantId}
+                isHome={isHome}
+                locale={locale}
+              />
+            )}
+            {showBlocks && blocks && (
+              <RenderBlocks
+                blocks={blocks}
+                tenantId={tenantId}
+                i18n={i18n}
+                projectId={projectId}
+                sourcePage={sourcePage}
+              />
+            )}
+          </div>
+        </main>
+      </PageMainViewTransition>
       <RenderFooter
         tenant={tenantId}
       />

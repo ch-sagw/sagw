@@ -60,6 +60,7 @@ export default defineConfig({
       // this gets removed from env during tests. so we can use it to seed
       // only once.
       DOSEED: 'true',
+      NEXT_PUBLIC_DISABLE_VIEW_TRANSITIONS: 'true',
     },
     reuseExistingServer: !process.env.CI,
     stderr: 'pipe',
