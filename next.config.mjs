@@ -12,6 +12,9 @@ const NEXT_PUBLIC_SERVER_URL = process.env.URL ||
   process.env.DEPLOY_URL ||
   'http://localhost:3000';
 
+const disableViewTransitions =
+  process.env.NEXT_PUBLIC_DISABLE_VIEW_TRANSITIONS === 'true';
+
 /**
  * CSP Headers
  * Gravatar is needed within Payload,
@@ -36,7 +39,7 @@ const nextConfig = {
   devIndicators: false,
 
   experimental: {
-    viewTransition: true,
+    viewTransition: !disableViewTransitions,
   },
 
   images: {
