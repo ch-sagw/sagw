@@ -63,6 +63,9 @@ export default defineConfig({
   },
   webServer: {
     command: 'npm run storybook:ci',
+    env: {
+      NEXT_PUBLIC_DISABLE_VIEW_TRANSITIONS: 'true',
+    },
     reuseExistingServer: !process.env.CI,
     stderr: 'ignore',
     stdout: 'ignore',
