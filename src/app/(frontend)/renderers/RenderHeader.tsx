@@ -11,6 +11,7 @@ import {
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { CMSConfigError } from '../utilities/CMSConfigError';
 import { getTenantName } from '../utilities/getTenantName';
+import { getServerSideURL } from '@/utilities/getUrl';
 
 type InterfaceHeaderRendererProps = {
   colorMode: ColorMode;
@@ -29,6 +30,10 @@ export const RenderHeader = async ({
   const tenantName = await getTenantName({
     id: tenant,
   });
+
+  // get host origin
+  const origin = getServerSideURL()
+    .replace(/\/+$/u, '');
 
   // get header data
   const headerData = await payload.find({
@@ -62,10 +67,10 @@ export const RenderHeader = async ({
   }
 
   // logo link
-  let logoLink = `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}`;
+  let logoLink = `${origin}/${locale}`;
 
   if (tenantName.name !== 'sagw') {
-    logoLink = `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/${tenantName.name}`;
+    logoLink = `${origin}/${locale}/${tenantName.name}`;
   }
 
   const headerProps: InterfaceHeaderPropTypes = {

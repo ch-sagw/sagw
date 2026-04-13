@@ -9,6 +9,7 @@ import { getLocale } from 'next-intl/server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { CMSConfigError } from '../utilities/CMSConfigError';
 import { getTenantName } from '../utilities/getTenantName';
+import { getServerSideURL } from '@/utilities/getUrl';
 
 type InterfaceFooterRendererProps = {
   tenant: string;
@@ -23,6 +24,10 @@ export const RenderFooter = async ({
     id: tenant,
   });
   const fg = tenantName.name !== 'sagw';
+
+  // get host origin
+  const origin = getServerSideURL()
+    .replace(/\/+$/u, '');
 
   // get footer data
   const footerData = await payload.find({
@@ -147,7 +152,7 @@ export const RenderFooter = async ({
     contact: footerContactData,
     dataPrivacyPageId: footerDataPrivacyPage.docs[0].id,
     fg,
-    homeLink: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}`,
+    homeLink: `${origin}/${locale}`,
     impressumPageId: footerImpressumPage.docs[0].id,
     legal: footerLegalData,
     metaNav: metanavData,
