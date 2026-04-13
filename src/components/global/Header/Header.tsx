@@ -13,6 +13,7 @@ import { ColorMode } from '@/components/base/types/colorMode';
 import {
   generateLangNavUrls, generateLinkUrls,
 } from '@/components/global/Header/generateUrls';
+import { PageMainViewTransition } from '@/components/PageMainViewTransition';
 
 export type InterfaceHeaderPropTypesCms = {
   metanav: InterfaceHeaderMetaNavigation;
@@ -50,14 +51,14 @@ export const Header = async (props: InterfaceHeaderPropTypes): Promise<React.JSX
   });
 
   return (
-    <>
+    <PageMainViewTransition name='page-header'>
       <HeaderComponent
         {...props}
         linkUrls={linkUrls}
         localeUrls={localeUrls}
       />
       <div className={styles.headerBg}></div>
-    </>
+    </PageMainViewTransition>
   );
 };
 

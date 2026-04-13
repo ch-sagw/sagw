@@ -44,7 +44,7 @@ jobs:
         shardTotal: [4]
     container:
       # if the docker image is changed, also change it in deploy-prod.yml and in Dockerfile.testing
-      image: mcr.microsoft.com/playwright:v1.58.2-noble
+      image: mcr.microsoft.com/playwright:v1.59.1-noble
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -72,15 +72,17 @@ jobs:
   test-be:
     if: ${{ !startsWith(github.head_ref, 'release-please--branches--main') }}
     needs: [lint]
+    env:
+      HOME: /root
     runs-on: blacksmith-4vcpu-ubuntu-2404
     strategy:
       fail-fast: false
       matrix:
-        shardIndex: [1, 2, 3, 4]
-        shardTotal: [4]
+        shardIndex: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+        shardTotal: [14]
     container:
       # if the docker image is changed, also change it in deploy-prod.yml and in Dockerfile.testing
-      image: mcr.microsoft.com/playwright:v1.58.2-noble
+      image: mcr.microsoft.com/playwright:v1.59.1-noble
     services:
       mongo:
         image: mongo:8
@@ -136,6 +138,9 @@ jobs:
           BREVO_TOKEN: ${{ secrets.BREVO_TOKEN }}
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           ENV: playwright
+          NEXT_PUBLIC_TRACKING_SITE_ID: ${{ secrets.NEXT_PUBLIC_TRACKING_SITE_ID_PLAYWRIGHT }}
+          FATHOM_API_KEY: ${{ secrets.FATHOM_API_KEY }}
+          NEXT_PUBLIC_TRACKING_DISABLED: ${{ true }}
       - name: Upload blob report
         if: ${{ failure() && !cancelled() }}
         uses: actions/upload-artifact@v4

@@ -50,7 +50,7 @@ jobs:
         shardTotal: [4]
     container:
       # if the docker image is changed, also change it in deploy-prod.yml and in Dockerfile.testing
-      image: mcr.microsoft.com/playwright:v1.58.2-noble
+      image: mcr.microsoft.com/playwright:v1.59.1-noble
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -71,6 +71,8 @@ jobs:
   test-be:
     if: ${{ !startsWith(github.head_ref, 'release-please--branches--main') }}
     needs: [lint]
+    env:
+      HOME: /root
     runs-on: blacksmith-4vcpu-ubuntu-2404
     strategy:
       fail-fast: false
@@ -79,7 +81,7 @@ jobs:
         shardTotal: [4]
     container:
       # if the docker image is changed, also change it in deploy-prod.yml and in Dockerfile.testing
-      image: mcr.microsoft.com/playwright:v1.58.2-noble
+      image: mcr.microsoft.com/playwright:v1.59.1-noble
     services:
       mongo:
         image: mongo:8
@@ -134,6 +136,9 @@ jobs:
           BREVO_TOKEN: ${{ secrets.BREVO_TOKEN }}
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           ENV: playwright
+          NEXT_PUBLIC_TRACKING_SITE_ID: ${{ secrets.NEXT_PUBLIC_TRACKING_SITE_ID_PLAYWRIGHT }}
+          FATHOM_API_KEY: ${{ secrets.FATHOM_API_KEY }}
+          NEXT_PUBLIC_TRACKING_DISABLED: ${{ true }}
 
   deploy-production:
     needs: [test-fe, test-be]
@@ -151,4 +156,4 @@ jobs:
       - name: Build Project Artifacts
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --prebuilt --archive=tgz --prod --token=${{ secrets.VERCEL_TOKEN }}

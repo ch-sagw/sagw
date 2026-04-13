@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { Payload } from 'payload';
+import {
+  BasePayload, Payload,
+} from 'payload';
 
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 import { rte4ConsentBannerText } from '@/utilities/rteSampleContent';
@@ -12,76 +14,15 @@ interface InterfaceAddDataForTenantProps {
   tenantId: string;
 }
 
-export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenantProps): Promise<void> => {
-
-  const {
-    payload,
-    tenantId,
-    tenant,
-  } = props;
-
-  // ############
-  // Assets
-  // ############
-
-  // add image
-  const image = await payload.create({
-    collection: 'images',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      alt: `${tenant.toUpperCase()} image`,
-      tenant: tenantId,
-    },
-    filePath: `src/seed/test-data/assets/${tenant}.png`,
-  });
-
-  // add video
-  await payload.create({
-    collection: 'videos',
-    context: {
-      skipCacheInvalidation: true,
-      skipGumletSync: true,
-    },
-    data: {
-      tenant: tenantId,
-      title: `video ${tenant}`,
-    },
-    filePath: `src/seed/test-data/assets/${tenant}.mp4`,
-  });
-
-  if (tenant !== 'sagw') {
-    // this way, we can test if sagw tenant can add a document with
-    // zenodo id 15126918. uniqueness should only be applied inside same
-    // tenant...
-    await payload.create({
-      collection: 'zenodoDocuments',
-      context: {
-        skipCacheInvalidation: true,
-      },
-      data: {
-        files: [
-          {
-            format: 'pdf',
-            id: 'someid',
-            link: 'https://foo.bar',
-            size: 0.26,
-          },
-        ],
-        publicationDate: '1919-05-01',
-        tenant: tenantId,
-        title: `Sample Zenodo Document ${tenant.toUpperCase()}`,
-        zenodoId: '15126918',
-      },
-    });
-  }
-
-  // ############
-  // Global Content
-  // ############
-
-  // add footer data
+export const addPlaywrightFooterData = async ({
+  payload,
+  tenant,
+  tenantName,
+}: {
+  payload: BasePayload,
+  tenant: string;
+  tenantName: string;
+}): Promise<void> => {
   await payload.create({
     collection: 'footer',
     context: {
@@ -101,9 +42,9 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
       },
       legal: {
         cookieSettings: simpleRteConfig('Cookie-Einstellungen'),
-        copyright: simpleRteConfig(`Copyright ${tenant.toUpperCase()}`),
-        dataPrivacy: simpleRteConfig(`Legal ${tenant.toUpperCase()}`),
-        impressum: simpleRteConfig(`Impressum ${tenant.toUpperCase()}`),
+        copyright: simpleRteConfig(`Copyright ${tenantName.toUpperCase()}`),
+        dataPrivacy: simpleRteConfig(`Legal ${tenantName.toUpperCase()}`),
+        impressum: simpleRteConfig(`Impressum ${tenantName.toUpperCase()}`),
       },
       socialLinks: {
         items: [
@@ -125,171 +66,24 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
           },
         ],
       },
-      tenant: tenantId,
+      tenant,
     },
   });
+};
 
-  // add status message
-  await payload.create({
-    collection: 'statusMessage',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      content: {
-        message: simpleRteConfig(`Eigentlich undenkbar, aber trotzdem passiert. Bitte entschuldigen Sie die Unannehmlichkeiten und versuchen Sie es später erneut. ${tenant.toUpperCase()}`),
-        optionalLink: {
-          includeLink: true,
-          link: {
-            internalLink: {
-              documentId: '12345',
-              slug: 'some-slug',
-            },
-            linkText: simpleRteConfig('Some action link'),
-          },
-        },
-        show: {
-          display: 'show',
-        },
-        showOnHomeOnly: false,
-        title: simpleRteConfig(`Das System ist aktuell nicht verfügbar ${tenant.toUpperCase()}`),
-        type: 'warn',
-      },
-      tenant: tenantId,
-    },
-  });
-
-  // add i18n data
-  await payload.create({
-    collection: 'i18nGlobals',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      bibliographicReference: {
-        copyButtonText: simpleRteConfig('Copy button text'),
-        title: simpleRteConfig('Title'),
-      },
-      forms: {
-        dataPrivacyCheckbox: {
-          dataPrivacyCheckboxText: simpleRteConfig(`Data privacy checkbox ${tenant.toUpperCase()}`),
-          errorMessage: simpleRteConfig('Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen'),
-        },
-      },
-      generic: {
-        downloadTitle: simpleRteConfig('Download title'),
-        exportArticleButtonText: simpleRteConfig('Export article button text'),
-        linksTitle: simpleRteConfig('Links'),
-        time: simpleRteConfig('Uhr'),
-        writeEmailButtonText: simpleRteConfig('Write email button text'),
-      },
-      tenant: tenantId,
-    },
-  });
-
-  // ############
-  // Pages
-  // ############
-
-  // create home
-  const home = await payload.create({
-    collection: 'homePage',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      _status: 'published',
-      content: [],
-      hero: {
-        animated: true,
-        lead: simpleRteConfig('Home Lead'),
-        sideTitle: simpleRteConfig('Home Side-Title'),
-        title: simpleRteConfig(`Home Title ${tenant.toUpperCase()}`),
-      },
-      meta: {
-        seo: {
-          description: `SEO Description ${tenant.toUpperCase()}`,
-          image: image.id,
-          index: true,
-          title: `SEO Title ${tenant.toUpperCase()}`,
-        },
-      },
-      navigationTitle: 'Home',
-      tenant: tenantId,
-    },
-  });
-
-  // add some detail pages to link to in header
-  const navLinkDetail1 = await payload.create({
-    collection: 'detailPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      _status: 'published',
-      hero: {
-        colorMode: 'white',
-        lead: simpleRteConfig('Detail Page for nav link 1 lead'),
-        title: simpleRteConfig(`Detail Page for nav link 1 ${tenant.toUpperCase()}`),
-      },
-      ...seoData,
-      navigationTitle: `Detail Page for nav link 1 ${tenant.toUpperCase()}`,
-      parentPage: {
-        documentId: home.id,
-        slug: 'homePage',
-      },
-      slug: `detail-page-for-nav-link-1-${tenant.toLocaleLowerCase()}`,
-      tenant: tenantId,
-    },
-  });
-
-  const navLinkDetail2 = await payload.create({
-    collection: 'detailPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      _status: 'published',
-      hero: {
-        colorMode: 'white',
-        lead: simpleRteConfig('Detail Page for nav link 2 lead'),
-        title: simpleRteConfig(`Detail Page for nav link 2 ${tenant.toUpperCase()}`),
-      },
-      ...seoData,
-      navigationTitle: `Detail Page for nav link 2 ${tenant.toUpperCase()}`,
-      parentPage: {
-        documentId: navLinkDetail1.id,
-        slug: 'detailPage',
-      },
-      slug: `detail-page-for-nav-link-2-${tenant.toLocaleLowerCase()}`,
-      tenant: tenantId,
-    },
-  });
-
-  const navLinkDetail3 = await payload.create({
-    collection: 'detailPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
-    data: {
-      _status: 'published',
-      hero: {
-        colorMode: 'white',
-        lead: simpleRteConfig('Detail Page for nav link 3 lead'),
-        title: simpleRteConfig(`Detail Page for nav link 3 ${tenant.toUpperCase()}`),
-      },
-      ...seoData,
-      navigationTitle: `Detail Page for nav link 3 ${tenant.toUpperCase()}`,
-      parentPage: {
-        documentId: navLinkDetail2.id,
-        slug: 'detailPage',
-      },
-      slug: `detail-page-for-nav-link-3-${tenant.toLocaleLowerCase()}`,
-      tenant: tenantId,
-    },
-  });
-
-  // add header data
+export const addPlaywrightHeaderData = async ({
+  payload,
+  tenant,
+  detail1,
+  detail2,
+  detail3,
+}: {
+  payload: BasePayload,
+  tenant: string;
+  detail1: string;
+  detail2: string;
+  detail3: string;
+}): Promise<void> => {
   await payload.create({
     collection: 'header',
     context: {
@@ -326,7 +120,7 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
           {
             description: simpleRteConfig(''),
             navItemLink: {
-              documentId: navLinkDetail1.id,
+              documentId: detail1,
               slug: 'detailPage',
             },
             navItemText: simpleRteConfig('Home'),
@@ -337,35 +131,35 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
             subNavItems: [
               {
                 navItemLink: {
-                  documentId: navLinkDetail2.id,
+                  documentId: detail2,
                   slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Übersicht'),
               },
               {
                 navItemLink: {
-                  documentId: navLinkDetail3.id,
+                  documentId: detail3,
                   slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Institute'),
               },
               {
                 navItemLink: {
-                  documentId: navLinkDetail1.id,
+                  documentId: detail1,
                   slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Editionen'),
               },
               {
                 navItemLink: {
-                  documentId: navLinkDetail2.id,
+                  documentId: detail2,
                   slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Reisebeiträge'),
               },
               {
                 navItemLink: {
-                  documentId: navLinkDetail3.id,
+                  documentId: detail3,
                   slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Early Career Award'),
@@ -378,7 +172,7 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
             subNavItems: [
               {
                 navItemLink: {
-                  documentId: navLinkDetail1.id,
+                  documentId: detail1,
                   slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Fachgesellschaften'),
@@ -391,35 +185,35 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
             subNavItems: [
               {
                 navItemLink: {
-                  documentId: navLinkDetail2.id,
+                  documentId: detail2,
                   slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Übersicht'),
               },
               {
                 navItemLink: {
-                  documentId: navLinkDetail3.id,
+                  documentId: detail3,
                   slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Magazin'),
               },
               {
                 navItemLink: {
-                  documentId: navLinkDetail1.id,
+                  documentId: detail3,
                   slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Publikationen'),
               },
               {
                 navItemLink: {
-                  documentId: navLinkDetail2.id,
+                  documentId: detail2,
                   slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Veranstaltungen'),
               },
               {
                 navItemLink: {
-                  documentId: navLinkDetail3.id,
+                  documentId: detail3,
                   slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('News'),
@@ -432,28 +226,28 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
             subNavItems: [
               {
                 navItemLink: {
-                  documentId: navLinkDetail1.id,
+                  documentId: detail1,
                   slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Die SAGW'),
               },
               {
                 navItemLink: {
-                  documentId: navLinkDetail2.id,
+                  documentId: detail2,
                   slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Team'),
               },
               {
                 navItemLink: {
-                  documentId: navLinkDetail3.id,
+                  documentId: detail3,
                   slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Kontakt'),
               },
               {
                 navItemLink: {
-                  documentId: navLinkDetail1.id,
+                  documentId: detail1,
                   slug: 'detailPage',
                 },
                 navItemText: simpleRteConfig('Offene Stellen'),
@@ -462,11 +256,20 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
           },
         ],
       },
-      tenant: tenantId,
+      tenant,
     },
   });
+};
 
-  // create error page
+export const addPlaywrightErrorPage = async ({
+  payload,
+  tenant,
+  tenantName,
+}: {
+  payload: BasePayload,
+  tenant: string;
+  tenantName: string;
+}): Promise<void> => {
   await payload.create({
     collection: 'errorPage',
     context: {
@@ -476,24 +279,251 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
       _status: 'published',
       error400: {
         description: simpleRteConfig('Error description'),
-        title: simpleRteConfig(`Not found title ${tenant.toUpperCase()}`),
+        title: simpleRteConfig(`Not found title ${tenantName.toUpperCase()}`),
       },
       error500: {
         description: simpleRteConfig('Error description'),
-        title: simpleRteConfig(`Not found title ${tenant.toUpperCase()}`),
+        title: simpleRteConfig(`Not found title ${tenantName.toUpperCase()}`),
       },
       homeButtonText: simpleRteConfig('Home Button Text'),
       ...seoData,
+      tenant,
+    },
+    locale: 'de',
+  });
+};
+
+export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenantProps): Promise<void> => {
+
+  const {
+    payload,
+    tenantId,
+    tenant,
+  } = props;
+
+  // ############
+  // Assets
+  // ############
+
+  // add image
+  const image = await payload.create({
+    collection: 'images',
+    data: {
+      alt: `${tenant.toUpperCase()} image`,
       tenant: tenantId,
     },
+    filePath: `src/seed/test-data/assets/${tenant}.png`,
+  });
+
+  // add video
+  await payload.create({
+    collection: 'videos',
+    context: {
+      skipCacheInvalidation: true,
+      skipGumletSync: true,
+    },
+    data: {
+      tenant: tenantId,
+      title: `video ${tenant}`,
+    },
+    filePath: `src/seed/test-data/assets/${tenant}.mp4`,
+  });
+
+  if (tenant !== 'sagw') {
+    // this way, we can test if sagw tenant can add a document with
+    // zenodo id 15126918. uniqueness should only be applied inside same
+    // tenant...
+    await payload.create({
+      collection: 'zenodoDocuments',
+      data: {
+        files: [
+          {
+            format: 'pdf',
+            id: 'someid',
+            link: 'https://foo.bar',
+            size: 0.26,
+          },
+        ],
+        publicationDate: '1919-05-01',
+        tenant: tenantId,
+        title: `Sample Zenodo Document ${tenant.toUpperCase()}`,
+        zenodoId: '15126918',
+      },
+    });
+  }
+
+  // ############
+  // Global Content
+  // ############
+
+  // add footer data
+  await addPlaywrightFooterData({
+    payload,
+    tenant: tenantId,
+    tenantName: tenant,
+  });
+
+  // add status message
+  await payload.create({
+    collection: 'statusMessage',
+    data: {
+      content: {
+        message: simpleRteConfig(`Eigentlich undenkbar, aber trotzdem passiert. Bitte entschuldigen Sie die Unannehmlichkeiten und versuchen Sie es später erneut. ${tenant.toUpperCase()}`),
+        optionalLink: {
+          includeLink: true,
+          link: {
+            internalLink: {
+              documentId: '12345',
+              slug: 'some-slug',
+            },
+            linkText: simpleRteConfig('Some action link'),
+          },
+        },
+        show: {
+          display: 'show',
+        },
+        showOnHomeOnly: false,
+        title: simpleRteConfig(`Das System ist aktuell nicht verfügbar ${tenant.toUpperCase()}`),
+        type: 'warn',
+      },
+      tenant: tenantId,
+    },
+  });
+
+  // add i18n data
+  await payload.create({
+    collection: 'i18nGlobals',
+    data: {
+      bibliographicReference: {
+        copyButtonText: simpleRteConfig('Copy button text'),
+        title: simpleRteConfig('Title'),
+      },
+      forms: {
+        dataPrivacyCheckbox: {
+          dataPrivacyCheckboxText: simpleRteConfig(`Data privacy checkbox ${tenant.toUpperCase()}`),
+          errorMessage: simpleRteConfig('Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen'),
+        },
+      },
+      generic: {
+        downloadTitle: simpleRteConfig('Download title'),
+        exportArticleButtonText: simpleRteConfig('Export article button text'),
+        linksTitle: simpleRteConfig('Links'),
+        time: simpleRteConfig('Uhr'),
+        writeEmailButtonText: simpleRteConfig('Write email button text'),
+      },
+      tenant: tenantId,
+    },
+  });
+
+  // ############
+  // Pages
+  // ############
+
+  // create home
+  const home = await payload.create({
+    collection: 'homePage',
+    data: {
+      _status: 'published',
+      content: [],
+      hero: {
+        animated: true,
+        lead: simpleRteConfig('Home Lead'),
+        sideTitle: simpleRteConfig('Home Side-Title'),
+        title: simpleRteConfig(`Home Title ${tenant.toUpperCase()}`),
+      },
+      meta: {
+        seo: {
+          description: `SEO Description ${tenant.toUpperCase()}`,
+          image: image.id,
+          index: true,
+          title: `SEO Title ${tenant.toUpperCase()}`,
+        },
+      },
+      navigationTitle: 'Home',
+      tenant: tenantId,
+    },
+  });
+
+  // add some detail pages to link to in header
+  const navLinkDetail1 = await payload.create({
+    collection: 'detailPage',
+    data: {
+      _status: 'published',
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Detail Page for nav link 1 lead'),
+        title: simpleRteConfig(`Detail Page for nav link 1 ${tenant.toUpperCase()}`),
+      },
+      ...seoData,
+      navigationTitle: `Detail Page for nav link 1 ${tenant.toUpperCase()}`,
+      parentPage: {
+        documentId: home.id,
+        slug: 'homePage',
+      },
+      slug: `detail-page-for-nav-link-1-${tenant.toLocaleLowerCase()}`,
+      tenant: tenantId,
+    },
+  });
+
+  const navLinkDetail2 = await payload.create({
+    collection: 'detailPage',
+    data: {
+      _status: 'published',
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Detail Page for nav link 2 lead'),
+        title: simpleRteConfig(`Detail Page for nav link 2 ${tenant.toUpperCase()}`),
+      },
+      ...seoData,
+      navigationTitle: `Detail Page for nav link 2 ${tenant.toUpperCase()}`,
+      parentPage: {
+        documentId: navLinkDetail1.id,
+        slug: 'detailPage',
+      },
+      slug: `detail-page-for-nav-link-2-${tenant.toLocaleLowerCase()}`,
+      tenant: tenantId,
+    },
+  });
+
+  const navLinkDetail3 = await payload.create({
+    collection: 'detailPage',
+    data: {
+      _status: 'published',
+      hero: {
+        colorMode: 'white',
+        lead: simpleRteConfig('Detail Page for nav link 3 lead'),
+        title: simpleRteConfig(`Detail Page for nav link 3 ${tenant.toUpperCase()}`),
+      },
+      ...seoData,
+      navigationTitle: `Detail Page for nav link 3 ${tenant.toUpperCase()}`,
+      parentPage: {
+        documentId: navLinkDetail2.id,
+        slug: 'detailPage',
+      },
+      slug: `detail-page-for-nav-link-3-${tenant.toLocaleLowerCase()}`,
+      tenant: tenantId,
+    },
+  });
+
+  // add header data
+  await addPlaywrightHeaderData({
+    detail1: navLinkDetail1.id,
+    detail2: navLinkDetail2.id,
+    detail3: navLinkDetail3.id,
+    payload,
+    tenant: tenantId,
+  });
+
+  // create error page
+  await addPlaywrightErrorPage({
+    payload,
+    tenant: tenantId,
+    tenantName: tenant,
   });
 
   // create impressum page
   await payload.create({
     collection: 'impressumPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       _status: 'published',
       content: [
@@ -514,9 +544,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
   // create data privacy page
   await payload.create({
     collection: 'dataPrivacyPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       _status: 'published',
       content: [
@@ -537,9 +564,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
   // create draft detail page
   await payload.create({
     collection: 'detailPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       _status: 'draft',
       hero: {

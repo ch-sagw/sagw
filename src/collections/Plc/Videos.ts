@@ -5,9 +5,8 @@ import {
   syncVideoWithGumlet,
 } from '@/hooks-payload/syncVideoWithGumlet';
 import {
-  hookInvalidateCacheOnReferencedCollectionChange,
-  hookInvalidateCacheOnReferencedCollectionDelete,
-} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 // TODO:
 // - discuss: subtitles
@@ -57,11 +56,11 @@ export const Videos: CollectionConfig = {
   ],
   hooks: {
     afterChange: [
-      hookInvalidateCacheOnReferencedCollectionChange,
+      hookInvalidateTenantCache,
       syncVideoWithGumlet,
     ],
     afterDelete: [
-      hookInvalidateCacheOnReferencedCollectionDelete,
+      hookInvalidateTenantCacheOnDelete,
       deleteVideoFromGumlet,
     ],
   },

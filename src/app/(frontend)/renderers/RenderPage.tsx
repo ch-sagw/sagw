@@ -23,6 +23,9 @@ import { SkipLinks } from '@/components/global/SkipLinks/SkipLinks';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { createPdfGenerationAuth } from '@/utilities/pdfGenerationSecurity';
 import { getThemeNameForTenant } from '../utilities/getThemeNameForTenant';
+import { Redirector } from '@/components/helpers/redirects';
+import { Tracking } from '@/components/helpers/tracking';
+import { PageMainViewTransition } from '@/components/PageMainViewTransition';
 
 export interface InterfacePreFetchedHomePageData {
   pageData: HomePage;
@@ -58,6 +61,7 @@ interface InterfaceRenderPageContentProps {
   themeName: string;
   isMagazineDetail?: boolean;
   skipStatusMessage?: boolean;
+  pageSlugs?: string[];
 }
 
 const getTenantThemeName = ({
@@ -129,40 +133,51 @@ export const renderPageContent = ({
   themeName,
   isMagazineDetail = false,
   skipStatusMessage = false,
+  pageSlugs,
 }: InterfaceRenderPageContentProps): React.JSX.Element => (
   <TenantProvider tenant={tenantId}>
+    <Tracking />
     <body className={`theme-${themeName}${isMagazineDetail
       ? ' print-magazine-detail'
       : ''}`}>
+      {pageSlugs &&
+        <Redirector
+          disableNotFound
+          url={pageSlugs.join('/')}
+          locale={locale}
+        />
+      }
       <SkipLinks />
       <RenderHeader
         colorMode={headerColorMode}
         tenant={tenantId}
         currentPageId={currentPageId}
       />
-      <main>
-        <div className={containerType === 'home'
-          ? 'home'
-          : 'detail-page'}>
-          {heroComponent}
-          {!skipStatusMessage && (
-            <RenderStatusMessage
-              tenant={tenantId}
-              isHome={isHome}
-              locale={locale}
-            />
-          )}
-          {showBlocks && blocks && (
-            <RenderBlocks
-              blocks={blocks}
-              tenantId={tenantId}
-              i18n={i18n}
-              projectId={projectId}
-              sourcePage={sourcePage}
-            />
-          )}
-        </div>
-      </main>
+      <PageMainViewTransition name='page-main'>
+        <main>
+          <div className={containerType === 'home'
+            ? 'home'
+            : 'detail-page'}>
+            {heroComponent}
+            {!skipStatusMessage && (
+              <RenderStatusMessage
+                tenant={tenantId}
+                isHome={isHome}
+                locale={locale}
+              />
+            )}
+            {showBlocks && blocks && (
+              <RenderBlocks
+                blocks={blocks}
+                tenantId={tenantId}
+                i18n={i18n}
+                projectId={projectId}
+                sourcePage={sourcePage}
+              />
+            )}
+          </div>
+        </main>
+      </PageMainViewTransition>
       <RenderFooter
         tenant={tenantId}
       />
@@ -276,7 +291,10 @@ export const RenderPage = async ({
   }
 
   if (!foundCollection) {
-    return <CMSConfigError message='Page data not found.' />;
+    return <Redirector
+      url={pageSlugs.join('/')}
+      locale={locale}
+    />;
   }
 
   // Get content blocks - some pages have content, others have blocks.content
@@ -329,6 +347,7 @@ export const RenderPage = async ({
     isHome,
     isMagazineDetail: collectionSlug === 'magazineDetailPage',
     locale,
+    pageSlugs,
     projectId,
     showBlocks: Boolean(contentBlocks),
     sourcePage: {

@@ -4,6 +4,9 @@ import { versions } from '@/field-templates/versions';
 import { rte1 } from '@/field-templates/rte';
 import { pageAccess } from '@/access/pages';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 export const ErrorPage: CollectionConfig = {
   access: pageAccess,
@@ -63,6 +66,8 @@ export const ErrorPage: CollectionConfig = {
     },
   ],
   hooks: {
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
     beforeChange: [hookPreventBulkPublishForTranslators],
   },
   labels: {

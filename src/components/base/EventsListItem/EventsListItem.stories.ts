@@ -28,8 +28,8 @@ export default meta;
 
 export const Full: StrictStory = {
   args: {
-    dateEnd: '2025-10-25T12:00:00.000Z',
-    dateStart: '2025-10-24T12:00:00.000Z',
+    dateEnd: '2025-10-15T12:00:00.000Z',
+    dateStart: '2025-10-14T12:00:00.000Z',
     language: 'Auf Deutsch',
     link: {
       href: 'https://foo.bar',
@@ -44,8 +44,8 @@ export const Full: StrictStory = {
 
 export const InternalLink: StrictStory = {
   args: {
-    dateEnd: '2025-10-25T12:00:00.000Z',
-    dateStart: '2025-10-24T12:00:00.000Z',
+    dateEnd: '2025-10-15T12:00:00.000Z',
+    dateStart: '2025-10-14T12:00:00.000Z',
     language: 'Auf Deutsch',
     link: {
       href: 'https://foo.bar',
@@ -60,8 +60,8 @@ export const InternalLink: StrictStory = {
 
 export const DateNotSameMonth: StrictStory = {
   args: {
-    dateEnd: '2025-11-25T12:00:00.000Z',
-    dateStart: '2025-10-24T12:00:00.000Z',
+    dateEnd: '2025-11-15T12:00:00.000Z',
+    dateStart: '2025-10-14T12:00:00.000Z',
     language: 'Auf Deutsch',
     link: {
       href: 'https://foo.bar',
@@ -76,8 +76,8 @@ export const DateNotSameMonth: StrictStory = {
 
 export const DateNotSameYear: StrictStory = {
   args: {
-    dateEnd: '2026-01-25T12:00:00.000Z',
-    dateStart: '2025-10-24T12:00:00.000Z',
+    dateEnd: '2026-01-15T12:00:00.000Z',
+    dateStart: '2025-10-14T12:00:00.000Z',
     language: 'Auf Deutsch',
     link: {
       href: 'https://foo.bar',
@@ -92,8 +92,8 @@ export const DateNotSameYear: StrictStory = {
 
 export const NoTag: StrictStory = {
   args: {
-    dateEnd: '2025-10-25T12:00:00.000Z',
-    dateStart: '2025-10-24T12:00:00.000Z',
+    dateEnd: '2025-10-15T12:00:00.000Z',
+    dateStart: '2025-10-14T12:00:00.000Z',
     language: 'Auf Deutsch',
     link: {
       href: 'https://foo.bar',
@@ -107,7 +107,7 @@ export const NoTag: StrictStory = {
 
 export const Minimal: StrictStory = {
   args: {
-    dateStart: '2025-10-24T12:00:00.000Z',
+    dateStart: '2025-10-14T12:00:00.000Z',
     link: {
       href: 'https://foo.bar',
       target: '_self' as const,
@@ -119,7 +119,7 @@ export const Minimal: StrictStory = {
 
 export const MinimalWithoutTag: StrictStory = {
   args: {
-    dateStart: '2025-10-24T12:00:00.000Z',
+    dateStart: '2025-10-14T12:00:00.000Z',
     link: {
       href: 'https://foo.bar',
       target: '_self' as const,

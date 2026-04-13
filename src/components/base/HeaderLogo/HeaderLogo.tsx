@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import styles from '@/components/base/HeaderLogo/HeaderLogo.module.scss';
 import { ColorMode } from '@/components/base/types/colorMode';
 
-import notsagw from '@/components/base/HeaderLogo/logos/not-sagw';
+import notSagw from '@/components/base/HeaderLogo/logos/not-sagw';
 import sago from '@/components/base/HeaderLogo/logos/sago';
 import sagw from '@/components/base/HeaderLogo/logos/sagw';
 import sgtk from '@/components/base/HeaderLogo/logos/sgtk';
@@ -10,8 +10,8 @@ import sslas from '@/components/base/HeaderLogo/logos/sslas';
 import Link from 'next/link';
 
 export const Logos = {
-  // notsagw will not be used in production
-  notsagw,
+  // not-sagw will not be used in production
+  'not-sagw': notSagw,
   sago,
   sagw,
   sgtk,

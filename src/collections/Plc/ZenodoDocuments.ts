@@ -1,9 +1,8 @@
 import type { CollectionConfig } from 'payload';
 import { assetsAccess } from '@/access/assets';
 import {
-  hookInvalidateCacheOnReferencedCollectionChange,
-  hookInvalidateCacheOnReferencedCollectionDelete,
-} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 export const ZenodoDocuments: CollectionConfig = {
   access: assetsAccess,
@@ -87,8 +86,8 @@ export const ZenodoDocuments: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [hookInvalidateCacheOnReferencedCollectionChange],
-    afterDelete: [hookInvalidateCacheOnReferencedCollectionDelete],
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
   },
   slug: 'zenodoDocuments',
 };

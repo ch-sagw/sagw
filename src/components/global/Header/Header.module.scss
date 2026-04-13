@@ -22,6 +22,11 @@
   @include mq($from: large) {
     overflow: hidden;
     padding-block: px-to-rem(var(--spacing-l));
+    transition-property: transform;
+
+    &.sticky {
+      transform: translateY(var(--meta-nav-height));
+    }
 
     &:before {
       position: absolute;
@@ -72,8 +77,8 @@
     &.expanded div[data-header] {
       margin-inline-end: px-to-rem(var(--grid-margin), true);
       padding-inline-end: px-to-rem(var(--grid-margin));
-      height: 100dvh;
-      max-height: 100dvh;
+      height: 100vh;
+      max-height: 100vh;
       overflow-y: scroll;
       overflow-x: hidden;
       scrollbar-gutter: stable;
@@ -84,13 +89,13 @@
       background-color: var(--background-inverted);
     }
 
-    // Needed for visual tests
-    &.dark:not(:has(.keyVisual)) {
-      background-color: var(--background-inverted);
-    }
-
     &.white {
       background-color: white;
+    }
+
+    // Needed for visual tests
+    &.dark:has(+ p) {
+      background-color: var(--background-inverted);
     }
   }
 
@@ -118,6 +123,7 @@
       grid-template-columns: repeat(12, 1fr);
       column-gap: px-to-rem(var(--grid-gutter));
       align-items: baseline;
+      margin-block-start: px-to-rem(var(--spacing-l));
     }
 
     .logoWrapperInner {
@@ -196,21 +202,6 @@
 
   .metanavWrapper {
     @include expandable-wrapper-visible;
-
-    display: grid;
-    will-change: transform, opacity, grid-template-rows;
-    transition-duration: var(--motion-speed-fast);
-    transition-property: transform, grid-template-rows, opacity;
-
-    &.metanavHidden {
-      @include expandable-wrapper;
-    }
-
-    &:not(.metanavHidden) {
-      @include mq($from: large) {
-        margin-block-end: px-to-rem(var(--spacing-l));
-      }
-    }
   }
 
   .metanav {

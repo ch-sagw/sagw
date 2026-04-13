@@ -21,8 +21,10 @@ import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 import { homeSlug } from '@/collections/constants';
-import { hookInvalidateCacheOnPageChange } from '@/hooks-payload/invalidateCacheOnPageChange';
 import { preview } from '@/utilities/previewUrl';
+import {
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 const homeBlocks: BlockSlug[] = [
   'textBlock',
@@ -126,8 +128,9 @@ export const HomePage: CollectionConfig = {
   hooks: {
     afterChange: [
       hookCascadeBreadcrumbUpdates,
-      hookInvalidateCacheOnPageChange,
+      hookInvalidateTenantCache,
     ],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
     afterRead: [
       async ({
         doc,

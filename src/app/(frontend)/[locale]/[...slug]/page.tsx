@@ -5,13 +5,16 @@ import { generateStaticParams } from '@/app/(frontend)/utilities/generateStaticP
 import { InterfaceOtherPagesProps } from '@/app/(frontend)/fetchers/otherPages';
 import { Metadata } from 'next';
 import { renderMeta } from '@/app/(frontend)/renderers/RenderMeta';
-import { RenderNotFoundPage } from '@/app/(frontend)/renderers/RenderNotFoundPage';
 import { getPageData } from '../../fetchers/pageData';
+import { runRedirectIfMatch } from '@/components/helpers/redirects';
+import { RenderNotFoundPage } from '@/app/(frontend)/renderers/RenderNotFoundPage';
 
 export { generateStaticParams };
 
-export const revalidate = 1;
-export const dynamic = 'force-dynamic';
+// export const revalidate = 1;
+// export const dynamic = 'force-dynamic';
+
+export const dynamic = 'force-static';
 
 export const generateMetadata = async ({
   params,
@@ -38,6 +41,11 @@ export default async function Page({
   });
 
   if (!pageData) {
+    await runRedirectIfMatch({
+      locale,
+      url: slug.join('/'),
+    });
+
     return (
       <RenderNotFoundPage
         locale={locale}

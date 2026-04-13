@@ -9,7 +9,7 @@ export interface InterfaceCookieConsent {
 export const consentUpdatedEventName = 'consentUpdated';
 export const openConsentOverlayEventName = 'openConsentOverlay';
 
-const CONSENT_COOKIE_NAME = 'cookie_consent';
+export const CONSENT_COOKIE_NAME = 'cookie_consent';
 
 // 12 months
 const CONSENT_DURATION = 12 * 30 * 24 * 60 * 60 * 1000;

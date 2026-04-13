@@ -12,6 +12,9 @@ const NEXT_PUBLIC_SERVER_URL = process.env.URL ||
   process.env.DEPLOY_URL ||
   'http://localhost:3000';
 
+const disableViewTransitions =
+  process.env.NEXT_PUBLIC_DISABLE_VIEW_TRANSITIONS === 'true';
+
 /**
  * CSP Headers
  * Gravatar is needed within Payload,
@@ -50,6 +53,32 @@ const NEXT_PUBLIC_SERVER_URL = process.env.URL ||
 const nextConfig = {
   devIndicators: false,
 
+  experimental: {
+    viewTransition: !disableViewTransitions,
+  },
+
+  images: {
+    remotePatterns: [
+      ...[NEXT_PUBLIC_SERVER_URL].map((item) => {
+        const url = new URL(item);
+
+        return {
+          hostname: url.hostname,
+          protocol: url.protocol.replace(':', ''),
+        };
+      }),
+    ],
+  },
+
+  /**
+   * @sparticuz/chromium ships brotli binaries under node_modules/.../bin.
+   * Next output tracing misses that tree by default, so Vercel Lambdas throw
+   * "The input directory .../chromium/bin does not exist".
+   */
+  outputFileTracingIncludes: {
+    '/api/magazine-pdf': ['./node_modules/@sparticuz/chromium/**/*'],
+  },
+
   /* headers() {
     return [
       {
@@ -63,18 +92,7 @@ const nextConfig = {
       },
     ];
   }, */
-  images: {
-    remotePatterns: [
-      ...[NEXT_PUBLIC_SERVER_URL].map((item) => {
-        const url = new URL(item);
 
-        return {
-          hostname: url.hostname,
-          protocol: url.protocol.replace(':', ''),
-        };
-      }),
-    ],
-  },
   reactStrictMode: true,
   sassOptions: {
     includePaths: [path.resolve(rootDirName, 'src/styles')],
@@ -83,6 +101,8 @@ const nextConfig = {
       'legacy-js-api',
     ],
   },
+
+  serverExternalPackages: ['@sparticuz/chromium'],
 };
 
 const configWithPayload = withPayload(nextConfig, {

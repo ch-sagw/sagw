@@ -109,7 +109,8 @@ export const Video = ({
     setPaused(false);
   };
 
-  const playButtonText = internalI18nA11y('playVideoText');
+  const playButtonText = internalI18nA11y('playVideoText')
+    .replace('$$title$$', video.title);
 
   const pausedClass = paused
     ? styles.paused

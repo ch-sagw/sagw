@@ -8,12 +8,14 @@ import {
 } from '@/collections/Pages/constants';
 import { urlFromBreadcrumb } from '@/utilities/urlFromBreadcrumb';
 import { fieldBreadcrumbFieldName } from '@/field-templates/breadcrumb';
-import { getLocaleCodes } from '@/i18n/payloadConfig';
+import { absoluteUrlFromPathname } from '@/utilities/getUrl';
+import { getTenantSlugForLocale } from '@/utilities/tenant';
 
-interface InterfaceGetPageUrlParams {
+export interface InterfaceGetPageUrlParams {
   payload: BasePayload;
   pageId: string;
   locale: Config['locale'];
+  absolute?: boolean;
 }
 
 const urlForSingletonPage = ({
@@ -44,19 +46,10 @@ const urlForSingletonPage = ({
     return undefined;
   }
 
-  // extract tenant slug string
-  let tenantSlug: string | null = null;
-
-  if (tenant && typeof tenant === 'object' && tenant.slug) {
-    if ((typeof tenant.slug === 'object') && (locale in tenant.slug)) {
-      tenantSlug = tenant.slug[locale];
-    } else if (typeof tenant.slug === 'string') {
-
-      tenantSlug = tenant.slug;
-    }
-
-    tenantSlug = tenantSlug || null;
-  }
+  const tenantSlug = getTenantSlugForLocale({
+    locale,
+    slug: tenant?.slug,
+  });
 
   // build the URL
   const url = urlFromBreadcrumb({
@@ -84,22 +77,9 @@ const generatePageUrl = async ({
     }
 
     const pageDocRecord = pageDoc as unknown as Record<string, unknown>;
-    const tenantSlugs: Partial<Record<Config['locale'], string | null>> = {};
     const {
       tenant,
     } = pageDocRecord;
-
-    // tenant slug - with fallback to german
-    if (tenant && typeof tenant === 'object' && 'slug' in tenant) {
-      const tenantSlug = tenant.slug;
-      const locales = getLocaleCodes();
-      const localizedSlug = tenantSlug as Partial<Record<Config['locale'], string>>;
-      const germanSlug = localizedSlug.de || null;
-
-      locales.forEach((loc) => {
-        tenantSlugs[loc] = localizedSlug[loc] || germanSlug;
-      });
-    }
 
     // gandle slug - normalize to Record<string, string>
     let slugRecord: Record<string, string>;
@@ -125,7 +105,12 @@ const generatePageUrl = async ({
         breadcrumb: (pageDocRecord[fieldBreadcrumbFieldName] ?? []) as InterfaceBreadcrumb,
         slug: slugRecord,
       },
-      tenant: tenantSlugs[locale] ?? tenantSlugs.de ?? null,
+      tenant: getTenantSlugForLocale({
+        locale,
+        slug: (tenant && typeof tenant === 'object' && 'slug' in tenant)
+          ? tenant.slug as string | Partial<Record<Config['locale'], string>>
+          : undefined,
+      }),
     });
 
     if (url === undefined) {
@@ -147,7 +132,10 @@ export const getPageUrl = async ({
   payload,
   pageId,
   locale,
+  absolute = true,
 }: InterfaceGetPageUrlParams): Promise<string> => {
+  let pathname: string;
+
   try {
     // try regular page collections first (sets and globals)
     const regularCollections = [
@@ -179,7 +167,11 @@ export const getPageUrl = async ({
     // find the first successful result
     for (const result of regularResults) {
       if (result.status === 'fulfilled' && result.value) {
-        return result.value;
+        pathname = result.value;
+
+        return absolute
+          ? absoluteUrlFromPathname(pathname)
+          : pathname;
       }
     }
 
@@ -214,15 +206,23 @@ export const getPageUrl = async ({
     // find the first successful result
     for (const result of singletonResults) {
       if (result.status === 'fulfilled' && result.value) {
-        return result.value;
+        pathname = result.value;
+
+        return absolute
+          ? absoluteUrlFromPathname(pathname)
+          : pathname;
       }
     }
 
     // Fallback
-    return getRootPathUrls()[locale] || '/de';
+    pathname = getRootPathUrls()[locale] || '/de';
   } catch (error) {
     console.error('Error getting page URL:', error);
 
-    return getRootPathUrls()[locale] || '/de';
+    pathname = getRootPathUrls()[locale] || '/de';
   }
+
+  return absolute
+    ? absoluteUrlFromPathname(pathname)
+    : pathname;
 };

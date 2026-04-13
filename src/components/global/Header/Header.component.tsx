@@ -142,65 +142,81 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     }
 
     const headerElement = headerRef.current;
-    const metanavElement = metanavRef.current;
 
     headerElement.removeAttribute('style');
 
     setInfoBlockContent(undefined);
 
-    setTimeout(() => {
+    const headerHeight = Math.round(headerElement.offsetHeight);
 
-      const headerHeight = Math.round(headerElement.offsetHeight);
-      const metaNavHeight = Math.round(metanavElement?.offsetHeight || 0);
+    if (headerElement && initialNavHeightRef.current === null) {
+      initialNavHeightRef.current = headerHeight;
+    }
 
-      if (headerElement && initialNavHeightRef.current === null) {
-        initialNavHeightRef.current = headerHeight;
-      }
+    // When we clone one of the subnavigation items, they lack some
+    // styling information. Cloning them with all possible inline stylings
+    // would be quite brutal. Without the styling, the measurements return
+    // wrong padding sizes for the ul. We therefore compensate the missing
+    // paddings of the cloned ul elements manually, which should be good
+    // enough. We compensate 16px (large) / 100px (ultra)
+    let paddingCompensation = 16;
 
-      if (metanavElement && initialMetaNavHeightRef.current === null) {
-        initialMetaNavHeightRef.current = metaNavHeight || 0;
-      }
+    if (breakpoint === 'ultra') {
+      paddingCompensation = 100;
+    }
 
-      // When we clone one of the subnavigation items, they lack some
-      // styling information. Cloning them with all possible inline stylings
-      // would be quite brutal. Without the styling, the measurements return
-      // wrong padding sizes for the ul. We therefore compensate the missing
-      // paddings of the cloned ul elements manually, which should be good
-      // enough. We compensate 16px (large) / 100px (ultra)
-      let paddingCompensation = 16;
+    const langOrNavMaxHeight = Math.round(Math.max(
+      navMaxHeight,
+      langNavMaxHeight,
+    ) + paddingCompensation);
 
-      if (breakpoint === 'ultra') {
-        paddingCompensation = 100;
-      }
+    if (initialLangOrNavMaxHeightRef.current === null) {
+      initialLangOrNavMaxHeightRef.current = langOrNavMaxHeight;
+    }
 
-      const langOrNavMaxHeight = Math.round(Math.max(navMaxHeight, langNavMaxHeight) + paddingCompensation);
+    let totalHeight = headerHeight + langOrNavMaxHeight;
 
-      if (initialLangOrNavMaxHeightRef.current === null) {
-        initialLangOrNavMaxHeightRef.current = langOrNavMaxHeight;
-      }
+    if (initialNavHeightRef.current) {
+      totalHeight = initialNavHeightRef.current + langOrNavMaxHeight;
+    }
 
-      let totalHeight = headerHeight + langOrNavMaxHeight;
-
-      if (initialNavHeightRef.current) {
-        totalHeight = initialNavHeightRef.current + langOrNavMaxHeight;
-      }
-
-      if (didScroll && initialMetaNavHeightRef.current) {
-        // This time it is some margin compensation for the scrolled state
-        // where no meta navigation is shown.
-        totalHeight -= initialMetaNavHeightRef.current + 32;
-      }
-
-      setTotalHeaderHeight(totalHeight);
-    }, 300);
+    setTotalHeaderHeight(totalHeight);
 
   }, [
     breakpoint,
-    didScroll,
     smallBreakpoint,
     navMaxHeight,
     langNavMaxHeight,
     isHovering,
+  ]);
+
+  const setMetaNavHeight = useCallback((): void => {
+    if (
+      !headerRef.current ||
+      !metanavRef.current ||
+      smallBreakpoint ||
+      isHovering
+    ) {
+      return;
+    }
+
+    const headerElement = headerRef.current;
+    const metanavElement = metanavRef.current;
+    const metaNavHeight = Math.round(metanavElement?.offsetHeight + 24);
+
+    if (didScroll) {
+      headerElement.style.setProperty(
+        '--meta-nav-height',
+        `-${metaNavHeight / fontSize}rem`,
+      );
+    } else {
+      headerElement.style.setProperty('--meta-nav-height', '0');
+    }
+  }, [
+    didScroll,
+    fontSize,
+    isHovering,
+    smallBreakpoint,
   ]);
 
   // --- Hooks
@@ -237,6 +253,7 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
       const newFontSize = Math.round(parseFloat(style.fontSize));
 
       setFontSize(newFontSize);
+      // calculateHeaderHeight();
     });
 
     observer.observe(body);
@@ -245,7 +262,10 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     return (): void => {
       observer.disconnect();
     };
-  }, []);
+  }, [
+    calculateHeaderHeight,
+    setMetaNavHeight,
+  ]);
 
   // reset navigation heights when breakpoint changes
   useEffect(() => {
@@ -269,16 +289,17 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
       setTotalHeaderHeight(0);
     } else {
       calculateHeaderHeight();
+      setMetaNavHeight();
     }
 
   }, [
-    fontSize,
-    navMaxHeight,
-    langNavMaxHeight,
-    props,
+    // fontSize,
+    // navMaxHeight,
+    // langNavMaxHeight,
+    // props,
     smallBreakpoint,
-    didScroll,
     calculateHeaderHeight,
+    setMetaNavHeight,
 
     // Add breakpoint to trigger recalculation on viewport changes
     breakpoint,
@@ -624,6 +645,16 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
   return (
     <header
       data-testid='header'
+      ref={headerRef}
+      className={`${styles.header} ${styles[renderColorMode()]} ${hydrated
+        ? ''
+        : styles.headerSSR}
+        ${(didScroll && !smallBreakpoint)
+      ? styles.sticky
+      : ''}
+        ${mobileMenuOpen
+      ? styles.expanded
+      : undefined}`}
       style={totalHeaderHeight && !smallBreakpoint
         ? {
           ['height' as any]: isHovering
@@ -632,13 +663,6 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
         }
         : {}
       }
-      ref={headerRef}
-      className={`${styles.header} ${styles[renderColorMode()]} ${hydrated
-        ? ''
-        : styles.headerSSR}
-        ${mobileMenuOpen
-      ? styles.expanded
-      : undefined}`}
     >
 
       {smallBreakpoint &&

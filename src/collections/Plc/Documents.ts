@@ -2,9 +2,8 @@ import type { CollectionConfig } from 'payload';
 import { rte2 } from '@/field-templates/rte';
 import { assetsAccess } from '@/access/assets';
 import {
-  hookInvalidateCacheOnReferencedCollectionChange,
-  hookInvalidateCacheOnReferencedCollectionDelete,
-} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 export const Documents: CollectionConfig = {
   access: assetsAccess,
@@ -44,8 +43,8 @@ export const Documents: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [hookInvalidateCacheOnReferencedCollectionChange],
-    afterDelete: [hookInvalidateCacheOnReferencedCollectionDelete],
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
   },
   slug: 'documents',
   upload: {

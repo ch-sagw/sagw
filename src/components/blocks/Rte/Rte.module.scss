@@ -2,6 +2,7 @@
 @use "../../../styles/mixins/mixins-layout" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/functions" as *;
 
 .rte {
   background-color: var(--background-color);
@@ -57,6 +58,16 @@
           grid-column: 5 / 11;
         }
       }
+    }
+  }
+
+  // Find last rte section element which is not
+  // followed by another rte or footnote section
+  // and add the normal section spacing instead
+  // of the textblock-bottom spacing.
+  &:not(:has(~ .rte), :has(~ section[class*="sectionFootnote"])) {
+    .text {
+      padding-block-end: px-to-rem(var(--section-bottom));
     }
   }
 }

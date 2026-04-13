@@ -2,9 +2,8 @@ import { CollectionConfig } from 'payload';
 import { rte1 } from '@/field-templates/rte';
 import { globalContentAccessGeneric } from '@/access/globalContent';
 import {
-  hookInvalidateCacheOnReferencedCollectionChange,
-  hookInvalidateCacheOnReferencedCollectionDelete,
-} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 export const Teams: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -30,8 +29,8 @@ export const Teams: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [hookInvalidateCacheOnReferencedCollectionChange],
-    afterDelete: [hookInvalidateCacheOnReferencedCollectionDelete],
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
   },
   slug: 'teams',
 };

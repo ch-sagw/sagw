@@ -34,7 +34,7 @@
     "linkTarget": "Link target",
     "logoLinkText": "Back to Homepage",
     "opensInNewWindow": "opens in new window",
-    "playVideoText": "Video mit dem Titel ((title)) laden und abspielen (EN).",
+    "playVideoText": "Video mit dem Titel «$$title$$» laden und abspielen (EN).",
     "socialLinks": {
       "facebook": "Follow us on Facebook",
       "instagram": "Follow us on Instagram",

@@ -34,7 +34,7 @@
     "linkTarget": "Il link",
     "logoLinkText": "Zurück zur Startseite (IT)",
     "opensInNewWindow": "si apre in una nuova finestra.",
-    "playVideoText": "Video mit dem Titel ((title)) laden und abspielen (IT).",
+    "playVideoText": "Video mit dem Titel «$$title$$» laden und abspielen (IT).",
     "socialLinks": {
       "facebook": "Seguici su Facebook",
       "instagram": "Seguici su Instagram",

@@ -1,6 +1,7 @@
 @use "../../../styles/utilities/functions" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/utilities" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
 
 .item {
   @include list-reset;
@@ -52,15 +53,27 @@
       flex-wrap: nowrap;
       flex-direction: column;
       align-items: center;
+      text-align: center;
 
       .largeDay {
         @include title-heading-3;
+
+        width: 100%;
+        margin-block-start: px-to-rem(5, true);
+        font-variant-numeric: lining-nums tabular-nums;
+        font-feature-settings: "ss01" 1, "ss02" 1, "ss06" 1, "ss08" 1, "tnum" 1;
+        font-size: px-to-rem(var(--font-size-3xl));
+        color: var(--icon-primary);
+
+        @include mq($from: large) {
+          margin-block: px-to-rem(6, true) px-to-rem(var(--spacing-2xs), true);
+          font-size: px-to-rem(calc(var(--font-size-3xl) + var(--spacing-xs)));
+        }
       }
 
       .largeMonthYear {
         @include label-text;
-
-        text-align: center;
+        @include font-smoothing;
       }
     }
 
@@ -79,7 +92,7 @@
         .textContentTitle {
           @include title-heading-4;
 
-          padding-block-end: px-to-rem(var(--inside-elements-m));
+          padding-block-end: px-to-rem(var(--spacing-m));
           color: var(--text-primary);
         }
 

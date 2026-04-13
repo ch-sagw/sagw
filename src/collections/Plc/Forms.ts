@@ -12,9 +12,8 @@ import { globalContentAccessGeneric } from '@/access/globalContent';
 import { fieldAccessAdminsOnly } from '@/access/fields/localizedFields';
 import { isSuperOrTenantAdmin } from '@/collections/Plc/Users/roles';
 import {
-  hookInvalidateCacheOnReferencedCollectionChange,
-  hookInvalidateCacheOnReferencedCollectionDelete,
-} from '@/hooks-payload/invalidateCacheOnReferencedCollectionChange';
+  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+} from '@/hooks-payload/invalidateTenantCache';
 
 export const Forms: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -289,8 +288,8 @@ export const Forms: CollectionConfig = {
 
   ],
   hooks: {
-    afterChange: [hookInvalidateCacheOnReferencedCollectionChange],
-    afterDelete: [hookInvalidateCacheOnReferencedCollectionDelete],
+    afterChange: [hookInvalidateTenantCache],
+    afterDelete: [hookInvalidateTenantCacheOnDelete],
   },
   slug: 'forms',
 };

@@ -38,6 +38,14 @@
   }
 }
 
+.logo.sago {
+  &.dark {
+    polygon {
+      fill: rgb(var(--white));
+    }
+  }
+}
+
 .logo.sslas {
   &.dark {
     &.text {

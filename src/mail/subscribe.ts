@@ -1,9 +1,13 @@
 /* eslint-disable max-len */
 /*
 API documentation: https://developers.brevo.com/reference/create-contact
+Unblock campaign email / blocklist: https://developers.brevo.com/reference/update-contact (emailBlacklisted)
+Unblock transactional (SMTP) blocklist: https://developers.brevo.com/reference/unblock-or-resubscribe-a-transactional-contact
 DOI workflow creation: https://help.brevo.com/hc/en-us/articles/27353832123026-Set-up-a-double-opt-in-process-for-a-sign-up-form-created-outside-of-Brevo
 Admin console: https://app.brevo.com/
 Also: create custom contact attribute for LANG: https://my.brevo.com/lists/add-attributes
+
+Also: for the workflow, a re-entry condition must be defined (if a user subscribes, never confirms, and then subscribes again): go to the workflow -> settings -> Neustartbedingungen. Add a condition "Kontakt aus der Liste gelöscht" and select the corresponding lists.
 
 If subscription throws an error, make sure that the IP is not blocked by brevo:
 https://app.brevo.com/security/authorised_ips
@@ -11,143 +15,277 @@ https://app.brevo.com/security/authorised_ips
 */
 /* eslint-enable max-len */
 
+// TODO:
+// - add better logging
+
 import 'server-only';
+import {
+  brevoEndpoints, encodedEmail,
+  requestHeaders,
+} from '@/mail/helpers';
 
-const brevoApiUrl = 'https://api.brevo.com/v3';
+const contactAttributesBody = ({
+  firstname,
+  lastname,
+  language,
+}: {
+  firstname: FormDataEntryValue | null;
+  lastname: FormDataEntryValue | null;
+  language: FormDataEntryValue | null;
+}): {
+  attributes: {
+    'FNAME': FormDataEntryValue | null;
+    'LANG': FormDataEntryValue | null;
+    'LNAME': FormDataEntryValue | null;
+  };
+} => ({
+  /* eslint-disable quote-props */
+  attributes: {
+    'FNAME': firstname,
+    'LANG': language,
+    'LNAME': lastname,
+  },
+  /* eslint-enable quote-props */
+});
 
-const brevoEndpoints = {
-  contacts: `${brevoApiUrl}/contacts`,
+const normalizeListIds = (listIds: unknown[] | undefined): number[] => {
+  if (!Array.isArray(listIds)) {
+    return [];
+  }
+
+  return listIds.map((id) => Number(id));
 };
-const requestHeaders = {
-  'Content-Type': 'application/json',
-  ...(process.env.BREVO_TOKEN && {
-    'api-key': process.env.BREVO_TOKEN,
-  }),
-};
 
-// ######################################################################
-// Check if user is already subscribed
-// ######################################################################
-
-interface InterfaceUserIsAlreadySubscribedProps {
-  email: FormDataEntryValue | null;
-  listId: number;
-  listIdTemp: number;
+interface InterfaceBrevoContactGetResponse {
+  emailBlacklisted?: boolean;
+  listIds?: unknown[];
 }
 
-type InterfaceUserIsAlreadySubscribedReturnValue =
-  'finalList' |
-  'tempList' |
-  'none' |
-  'error';
+// ######################################################################
+// Fetch contact (internal)
+// ######################################################################
 
-const userIsAlreadySubscribed = async ({
-  email,
-  listId,
-  listIdTemp,
-}: InterfaceUserIsAlreadySubscribedProps): Promise<InterfaceUserIsAlreadySubscribedReturnValue> => {
+type GetContactResult =
+  | { emailBlacklisted: boolean; listIds: number[]; status: 'found' }
+  | { status: 'not_found' }
+  | { status: 'error' };
+
+const getContact = async (email: FormDataEntryValue | null): Promise<GetContactResult> => {
   try {
-    const encodedEmail = encodeURIComponent(String(email));
-    const requestUrl = `${brevoEndpoints.contacts}/${encodedEmail}`;
+    const requestUrl = `${brevoEndpoints.contacts}/${encodedEmail(email)}`;
     const response = await fetch(requestUrl, {
       headers: requestHeaders,
       method: 'GET',
     });
 
+    if (response.status === 404) {
+      return {
+        status: 'not_found',
+      };
+    }
+
     if (response.status !== 200) {
-      return 'none';
+      return {
+        status: 'error',
+      };
     }
 
-    const data = await response.json();
-    const listIdsAsNumbers = data.listIds.map((id: unknown) => Number(id));
+    const data = (await response.json()) as InterfaceBrevoContactGetResponse;
 
-    if (listIdsAsNumbers.includes(Number(listIdTemp))) {
-      return 'tempList';
-    } else if (listIdsAsNumbers.includes(Number(listId))) {
-      return 'finalList';
-    }
-
-    return 'none';
+    return {
+      emailBlacklisted: data.emailBlacklisted === true,
+      listIds: normalizeListIds(data.listIds),
+      status: 'found',
+    };
   } catch {
-    return 'error';
+    return {
+      status: 'error',
+    };
   }
 };
 
-// ######################################################################
-// Delete existing user
-// ######################################################################
-const deleteUser = async ({
-  email,
-}: {
-  email: FormDataEntryValue | null;
-}): Promise<boolean> => {
+const unblockContactEmailCampaigns = async (email: FormDataEntryValue | null): Promise<boolean> => {
   try {
-    const encodedEmail = encodeURIComponent(String(email));
-    const requestUrl = `${brevoEndpoints.contacts}/${encodedEmail}`;
-    const response = await fetch(requestUrl, {
-      headers: requestHeaders,
-      method: 'DELETE',
-    });
+    const response = await fetch(
+      `${brevoEndpoints.contacts}/${encodedEmail(email)}`,
+      {
+        body: JSON.stringify({
+          emailBlacklisted: false,
+        }),
+        headers: requestHeaders,
+        method: 'PUT',
+      },
+    );
 
-    if (response.status === 204) {
-      return true;
-    }
-
-    return false;
+    return response.status === 204;
   } catch {
     return false;
   }
+};
 
+const unblockTransactionalContact = async (email: FormDataEntryValue | null): Promise<boolean> => {
+  try {
+    const response = await fetch(
+      `${brevoEndpoints.smtpBlockedContacts}/${encodedEmail(email)}`,
+      {
+        headers: requestHeaders,
+        method: 'DELETE',
+      },
+    );
+
+    return response.status === 204 || response.status === 404;
+  } catch {
+    return false;
+  }
 };
 
 // ######################################################################
-// Subscribe helper
+// Create or ensure contact exists
 // ######################################################################
 
-interface InterfaceSubscribeActionProps {
-  firstname: FormDataEntryValue | null;
-  lastname: FormDataEntryValue | null;
-  email: FormDataEntryValue | null;
-  language: FormDataEntryValue | null;
-  listIdTemp: number;
-}
+type CreateUserResult =
+  | { ok: true; listIds: number[] }
+  | { ok: false };
 
-type InterfaceSubscribeReturnValue =
-  'pendingVerification' |
-  'generalError';
-
-const subscribeAction = async ({
+const createUser = async ({
+  email,
   firstname,
   lastname,
-  email,
   language,
-  listIdTemp,
-}: InterfaceSubscribeActionProps): Promise<InterfaceSubscribeReturnValue> => {
+}: {
+  email: FormDataEntryValue | null;
+  firstname: FormDataEntryValue | null;
+  lastname: FormDataEntryValue | null;
+  language: FormDataEntryValue | null;
+}): Promise<CreateUserResult> => {
   try {
-    const requestUrl = `${brevoEndpoints.contacts}`;
-    const response = await fetch(requestUrl, {
+    const existing = await getContact(email);
+
+    // contact already exists
+    if (existing.status === 'found') {
+      if (existing.emailBlacklisted) {
+        const campaignOk = await unblockContactEmailCampaigns(email);
+
+        if (!campaignOk) {
+          return {
+            ok: false,
+          };
+        }
+
+        const transactionalOk = await unblockTransactionalContact(email);
+
+        if (!transactionalOk) {
+          return {
+            ok: false,
+          };
+        }
+      }
+
+      return {
+        listIds: existing.listIds,
+        ok: true,
+      };
+    }
+
+    // error getting contact info
+    if (existing.status === 'error') {
+      return {
+        ok: false,
+      };
+    }
+
+    // contact does not exists. create it.
+    const createResponse = await fetch(brevoEndpoints.contacts, {
       body: JSON.stringify({
-      /* eslint-disable quote-props */
-        attributes: {
-          'FNAME': firstname,
-          'LANG': language,
-          'LNAME': lastname,
-        },
         email,
-        listIds: [Number(listIdTemp)],
-      /* eslint-enable quote-props */
+        ...contactAttributesBody({
+          firstname,
+          language,
+          lastname,
+        }),
       }),
       headers: requestHeaders,
       method: 'POST',
     });
 
-    if (response.status === 201) {
-      return 'pendingVerification';
+    if (createResponse.status !== 201) {
+      return {
+        ok: false,
+      };
     }
 
-    return 'generalError';
+    return {
+      listIds: [],
+      ok: true,
+    };
+
   } catch {
-    return 'generalError';
+    return {
+      ok: false,
+    };
+  }
+};
+
+// ######################################################################
+// List membership
+// ######################################################################
+
+const checkUserInLists = (
+  contactListIds: number[],
+  targetListIds: number[],
+): number[] => {
+  const targets = new Set(targetListIds.map((id) => Number(id)));
+
+  return contactListIds
+    .map((id) => Number(id))
+    .filter((id) => targets.has(id));
+};
+
+const addUserToList = async ({
+  email,
+  listId,
+}: {
+  email: FormDataEntryValue | null;
+  listId: number;
+}): Promise<boolean> => {
+  try {
+    const requestUrl =
+      `${brevoEndpoints.contacts}/lists/${Number(listId)}/contacts/add`;
+    const response = await fetch(requestUrl, {
+      body: JSON.stringify({
+        emails: [String(email)],
+      }),
+      headers: requestHeaders,
+      method: 'POST',
+    });
+
+    return response.status === 201;
+  } catch {
+    return false;
+  }
+};
+
+const removeUserFromList = async ({
+  email,
+  listId,
+}: {
+  email: FormDataEntryValue | null;
+  listId: number;
+}): Promise<boolean> => {
+  try {
+    const requestUrl =
+      `${brevoEndpoints.contacts}/lists/${Number(listId)}/contacts/remove`;
+    const response = await fetch(requestUrl, {
+      body: JSON.stringify({
+        emails: [String(email)],
+      }),
+      headers: requestHeaders,
+      method: 'POST',
+    });
+
+    return response.status === 201;
+  } catch {
+    return false;
   }
 };
 
@@ -155,9 +293,18 @@ const subscribeAction = async ({
 // Subscribe user
 // ######################################################################
 
-interface InterfaceSubscribeProps extends InterfaceSubscribeActionProps {
+interface InterfaceSubscribeProps {
+  firstname: FormDataEntryValue | null;
+  lastname: FormDataEntryValue | null;
+  email: FormDataEntryValue | null;
+  language: FormDataEntryValue | null;
   listId: number;
+  listIdTemp: number;
 }
+
+type InterfaceSubscribeReturnValue =
+  'pendingVerification' |
+  'generalError';
 
 export const subscribe = async ({
   firstname,
@@ -167,47 +314,43 @@ export const subscribe = async ({
   listId,
   listIdTemp,
 }: InterfaceSubscribeProps): Promise<InterfaceSubscribeReturnValue> => {
-
   try {
-    const alreadySubscribed = await userIsAlreadySubscribed({
+    const userResult = await createUser({
       email,
-      listId,
-      listIdTemp,
+      firstname,
+      language,
+      lastname,
     });
 
-    if (alreadySubscribed === 'none') {
-      const subscribeResult = await subscribeAction({
-        email,
-        firstname,
-        language,
-        lastname,
-        listIdTemp,
-      });
-
-      return subscribeResult;
-    } else if (alreadySubscribed === 'finalList' || alreadySubscribed === 'tempList') {
-      const userDeleted = await deleteUser({
-        email,
-      });
-
-      if (!userDeleted) {
-        return 'generalError';
-      }
-
-      const subscribeResult = await subscribeAction({
-        email,
-        firstname,
-        language,
-        lastname,
-        listIdTemp,
-      });
-
-      return subscribeResult;
+    if (!userResult.ok) {
+      return 'generalError';
     }
 
-    return 'generalError';
+    const listsToRefresh = checkUserInLists(userResult.listIds, [
+      listId,
+      listIdTemp,
+    ]);
+
+    const removeResults = await Promise.all(listsToRefresh.map((id) => removeUserFromList({
+      email,
+      listId: id,
+    })));
+
+    if (removeResults.some((ok) => !ok)) {
+      return 'generalError';
+    }
+
+    const added = await addUserToList({
+      email,
+      listId: listIdTemp,
+    });
+
+    if (!added) {
+      return 'generalError';
+    }
+
+    return 'pendingVerification';
   } catch {
     return 'generalError';
   }
-
 };
