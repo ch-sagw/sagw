@@ -153,10 +153,7 @@ export const renderPageContent = ({
         tenant={tenantId}
         currentPageId={currentPageId}
       />
-      <PageMainViewTransition
-        name='page-main'
-        suppressInPlaceUpdates
-      >
+      <PageMainViewTransition name='page-main'>
         <main>
           <div className={containerType === 'home'
             ? 'home'

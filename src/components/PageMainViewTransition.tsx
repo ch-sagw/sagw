@@ -15,22 +15,8 @@ type Props = {
 export const PageMainViewTransition = ({
   children,
   name = 'page-main',
-  suppressInPlaceUpdates = false,
-}: Props): React.JSX.Element => {
-  const props: {
-    name: string;
-    update?: string;
-  } = {
-    name,
-  };
-
-  if (suppressInPlaceUpdates) {
-    props.update = 'none';
-  }
-
-  return (
-    <ViewTransition {...props}>
-      {children}
-    </ViewTransition>
-  );
-};
+}: Props): React.JSX.Element => (
+  <ViewTransition name={name}>
+    {children}
+  </ViewTransition>
+);
