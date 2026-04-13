@@ -109,10 +109,12 @@ export const GenericTeaser = ({
   const imageWidth = 400;
   let imageHeight = 300;
   let optimizeImage = true;
+  let titleLevel: 'h3' | 'h2' = 'h3';
 
   if (type === 'people') {
     imageVariant = 'portrait';
     imageHeight = 400;
+    titleLevel = 'h2';
   }
 
   if (type === 'network') {
@@ -165,7 +167,7 @@ export const GenericTeaser = ({
       }
 
       <SafeHtml
-        as='h3'
+        as={titleLevel}
         html={title}
         className={styles.title}
         data-testid='genericTeaserItemTitle'
