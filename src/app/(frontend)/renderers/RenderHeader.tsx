@@ -11,6 +11,7 @@ import {
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { CMSConfigError } from '../utilities/CMSConfigError';
 import { getTenantName } from '../utilities/getTenantName';
+import { getServerSideURL } from '@/utilities/getUrl';
 
 type InterfaceHeaderRendererProps = {
   colorMode: ColorMode;
@@ -29,6 +30,10 @@ export const RenderHeader = async ({
   const tenantName = await getTenantName({
     id: tenant,
   });
+
+  // get host origin
+  const origin = getServerSideURL()
+    .replace(/\/+$/u, '');
 
   // get header data
   const headerData = await payload.find({
@@ -61,10 +66,17 @@ export const RenderHeader = async ({
     return <CMSConfigError message='No metanav data in header data' />;
   }
 
+  // logo link
+  let logoLink = `${origin}/${locale}`;
+
+  if (tenantName.name !== 'sagw') {
+    logoLink = `${origin}/${locale}/${tenantName.name}`;
+  }
+
   const headerProps: InterfaceHeaderPropTypes = {
     colorMode,
     documentId: currentPageId,
-    logoLink: `/${locale}`,
+    logoLink,
     menuButton: {
       close: i18nMenu('close'),
       open: i18nMenu('open'),

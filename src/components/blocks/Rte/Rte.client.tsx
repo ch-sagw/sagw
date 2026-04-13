@@ -37,7 +37,7 @@ export const RteClient = ({
   });
 
   return (
-    <div className={classes({
+    <section className={classes({
       colorMode,
       stickyFirstTitle,
     })}
@@ -47,7 +47,7 @@ export const RteClient = ({
         className={styles.text}
         html={textHtml}
       />
-    </div>
+    </section>
   );
 };
 
