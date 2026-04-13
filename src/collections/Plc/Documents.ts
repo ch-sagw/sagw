@@ -5,16 +5,21 @@ import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
 
+// Build a download header that works with spaces and UTF-8 filenames.
 const encodeContentDispositionFilename = (filename: string): string => {
   const fallback = filename
+    // strip quotes and backslashes from the plain fallback filename.
     .replaceAll(/["\\]/gu, '')
+    // replace non-ASCII chars in the fallback with safe underscores.
     .replaceAll(/[^\x20-\x7E]/gu, '_');
   const encoded = encodeURIComponent(filename);
 
   return `attachment; filename="${fallback}"; filename*=UTF-8''${encoded}`;
 };
 
+// read the filename from the header payload/vercel-blob gives us.
 const filenameFromContentDisposition = (contentDisposition: string): string | null => {
+  // match the utf-8 form: filename*=UTF-8''my%20file.pdf
   const utf8Match = contentDisposition.match(/filename\*=UTF-8''(?<filename>[^;]+)/u);
 
   if (utf8Match?.groups?.filename) {
@@ -25,12 +30,14 @@ const filenameFromContentDisposition = (contentDisposition: string): string | nu
     }
   }
 
+  // match the quoted fallback form: filename="my file.pdf"
   const quotedMatch = contentDisposition.match(/filename="(?<filename>[^"]+)"/u);
 
   if (quotedMatch?.groups?.filename) {
     return quotedMatch.groups.filename;
   }
 
+  // match the unquoted fallback form up to the next semicolon.
   const plainMatch = contentDisposition.match(/filename=(?<filename>[^;]+)/u);
 
   return plainMatch?.groups?.filename?.trim() || null;
@@ -83,6 +90,7 @@ export const Documents: CollectionConfig = {
     modifyResponseHeaders: ({
       headers,
     }) => {
+      // force PDFs to download instead of opening inline in the browser.
       const contentDisposition = headers.get('Content-Disposition');
 
       if (!contentDisposition) {
@@ -99,6 +107,7 @@ export const Documents: CollectionConfig = {
         return headers;
       }
 
+      // Rebuild the header so browsers keep the original filename.
       headers.set('Content-Disposition', encodeContentDispositionFilename(filename));
 
       return headers;
