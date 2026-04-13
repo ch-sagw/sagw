@@ -32,16 +32,6 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
     previousDoc?.gumletAssetId
   ) {
     await deleteFromGumlet(previousDoc.gumletAssetId);
-    await req.payload.update({
-      collection: 'videos',
-      context: {
-        skipGumletSync: true,
-      },
-      data: {
-        gumletAssetId: null,
-      },
-      id: doc.id,
-    });
 
     return;
   } else if (wasDeleted) {
