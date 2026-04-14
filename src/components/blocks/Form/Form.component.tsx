@@ -4,7 +4,7 @@ import React, { Fragment } from 'react';
 import { cva } from 'cva';
 import { Form as InterfaceForm } from '@/payload-types';
 import {
-  hiddenFormDefinitionFieldName, hiddenPageUrl,
+  hiddenFormIdFieldName, hiddenPageUrl,
 } from '@/components/blocks/Form/Form.config';
 import { Notification } from '@/components/base/Notification/Notification';
 import { Section } from '@/components/base/Section/Section';
@@ -198,7 +198,7 @@ export const FormComponent = ({
             className={styles.form}
             noValidate
           >
-            <input type='hidden' name={hiddenFormDefinitionFieldName} value={JSON.stringify(form)} />
+            <input type='hidden' name={hiddenFormIdFieldName} value={form.id} />
             <input type='hidden' name={hiddenPageUrl} value={pathname
               ? pathname.toString()
               : ''

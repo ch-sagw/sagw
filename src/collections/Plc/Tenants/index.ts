@@ -1,6 +1,6 @@
 import { type CollectionConfig } from 'payload';
 import {
-  fieldsAccess, languageAccess, tenantsAccess,
+  fieldsAccess, languageAccess, tenantsCollectionAccess,
 } from '@/access/tenants';
 import { isSuperOrTenantAdmin } from '../Users/roles';
 import { hookTenantsAfterCreate } from '@/hooks-payload/tenantsAfterChange';
@@ -8,7 +8,7 @@ import { hookTenantsBeforeDelete } from '@/hooks-payload/tenantsBeforeDelete';
 import { validateTenantName } from '@/hooks-payload/validateTenantName';
 
 export const Tenants: CollectionConfig = {
-  access: tenantsAccess,
+  access: tenantsCollectionAccess,
   admin: {
     defaultColumns: [
       'name',

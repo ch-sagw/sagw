@@ -1,8 +1,15 @@
-import { PayloadRequest } from 'payload';
 import {
+  AccessArgs,
+  AccessResult,
+  PayloadRequest,
+} from 'payload';
+import {
+  getRequestedTenant,
   isMagazineEditor,
   isSuperAdmin, isTenantAdmin,
+  tenantRoles,
 } from '@/collections/Plc/Users/roles';
+import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
 
 interface InterfaceAccessParam {
   req: PayloadRequest;
@@ -21,11 +28,65 @@ const tenantFieldDeleteAccess = ({
   req,
 }: { req: PayloadRequest }): boolean => isSuperAdmin(req);
 
+const tenantCollectionReadAccess = ({
+  req,
+}: AccessArgs): AccessResult => {
+  if (!req.user) {
+    return false;
+  }
+
+  if (isSuperAdmin(req)) {
+    return true;
+  }
+
+  if (!isTenantAdmin(req)) {
+    return false;
+  }
+
+  return {
+    id: {
+      in: getUserTenantIDs(req.user, tenantRoles.admin),
+    },
+  };
+};
+
+const tenantCollectionUpdateAccess = ({
+  req,
+}: AccessArgs): AccessResult => {
+  if (!req.user) {
+    return false;
+  }
+
+  if (isSuperAdmin(req)) {
+    return true;
+  }
+
+  if (!isTenantAdmin(req)) {
+    return false;
+  }
+
+  const requestedTenant = getRequestedTenant(req);
+
+  if (!requestedTenant) {
+    return false;
+  }
+
+  return getUserTenantIDs(req.user, tenantRoles.admin)
+    .includes(requestedTenant);
+};
+
 export const tenantsAccess = {
   create: tenantFieldCreateAccess,
   delete: tenantFieldDeleteAccess,
   read: allAccess,
   update: allAccess,
+};
+
+export const tenantsCollectionAccess = {
+  create: tenantFieldDeleteAccess,
+  delete: tenantFieldDeleteAccess,
+  read: tenantCollectionReadAccess,
+  update: tenantCollectionUpdateAccess,
 };
 
 // Field access functions use InterfaceAccessParam

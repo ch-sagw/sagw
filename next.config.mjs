@@ -14,13 +14,14 @@ const NEXT_PUBLIC_SERVER_URL = process.env.URL ||
 
 const disableViewTransitions =
   process.env.NEXT_PUBLIC_DISABLE_VIEW_TRANSITIONS === 'true';
+const isProduction = process.env.ENV === 'prod';
 
 /**
  * CSP Headers
  * Gravatar is needed within Payload,
  * that's why it's in the list.
  */
-/* const ContentSecurityPolicy = `
+const ContentSecurityPolicy = `
   default-src 'self';
   script-src 'self' 'unsafe-inline' 'unsafe-eval';
   style-src 'self' 'unsafe-inline';
@@ -32,7 +33,7 @@ const disableViewTransitions =
   base-uri 'self';
   form-action 'self';
 `.replace(/\n/gu, ' ')
-  .trim(); */
+  .trim();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -40,6 +41,40 @@ const nextConfig = {
 
   experimental: {
     viewTransition: !disableViewTransitions,
+  },
+
+  headers() {
+    if (!isProduction) {
+      return [];
+    }
+
+    return [
+      {
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: ContentSecurityPolicy,
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=31536000; includeSubDomains; preload',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+        ],
+        source: '/(.*)',
+      },
+    ];
   },
 
   images: {
@@ -63,20 +98,6 @@ const nextConfig = {
   outputFileTracingIncludes: {
     '/api/magazine-pdf': ['./node_modules/@sparticuz/chromium/**/*'],
   },
-
-  /* headers() {
-    return [
-      {
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: ContentSecurityPolicy,
-          },
-        ],
-        source: '/(.*)',
-      },
-    ];
-  }, */
 
   reactStrictMode: true,
   sassOptions: {

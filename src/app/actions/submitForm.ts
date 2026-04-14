@@ -3,7 +3,7 @@
 import 'server-only';
 import { z } from 'zod';
 import {
-  hiddenFormDefinitionFieldName, hiddenPageUrl,
+  hiddenFormIdFieldName, hiddenPageUrl,
 } from '@/components/blocks/Form/Form.config';
 import { sendMail } from '@/mail/sendMail';
 import { subscribe } from '@/mail/subscribe';
@@ -11,6 +11,7 @@ import { Form as InterfaceForm } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { newsletterFieldNames } from '@/components/blocks/Form/Form.server';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 type SubmitFormResult =
   | {
@@ -21,6 +22,81 @@ type SubmitFormResult =
       error?: z.ZodFlattenedError<Record<string, unknown>>;
       values?: Record<string, unknown>;
     };
+
+type SubmissionField = {
+  blockType: 'checkboxBlock' | 'emailBlock' | 'radioBlock' | 'textBlockForm' | 'textareaBlock';
+  fieldError?: unknown;
+  name: string;
+  required?: boolean;
+};
+
+const getPageUrl = (value: FormDataEntryValue | null): string => {
+  if (typeof value !== 'string' || !value.startsWith('/')) {
+    return '/';
+  }
+
+  return value;
+};
+
+const getFieldErrorMessage = (field: SubmissionField, fallback: string): string => {
+  if (field.fieldError) {
+    return rteToHtml(field.fieldError as any) || fallback;
+  }
+
+  return fallback;
+};
+
+const getSubmissionFields = (form: InterfaceForm): SubmissionField[] => {
+  const fields: SubmissionField[] = (form.fields || []).map((field) => ({
+    blockType: field.blockType as SubmissionField['blockType'],
+    fieldError: 'fieldError' in field
+      ? field.fieldError
+      : undefined,
+    name: field.name,
+    required: field.required ?? undefined,
+  }));
+
+  if (form.isNewsletterForm === 'newsletter') {
+    fields.push(
+      {
+        blockType: 'textBlockForm',
+        fieldError: form.newsletterFields?.firstName.fieldError,
+        name: newsletterFieldNames.firstname,
+        required: true,
+      },
+      {
+        blockType: 'textBlockForm',
+        fieldError: form.newsletterFields?.lastName.fieldError,
+        name: newsletterFieldNames.lastname,
+        required: true,
+      },
+      {
+        blockType: 'emailBlock',
+        fieldError: form.newsletterFields?.email.fieldError,
+        name: newsletterFieldNames.email,
+        required: true,
+      },
+    );
+
+    if (form.newsletterFields?.includeLanguageSelection === 'yes') {
+      fields.push({
+        blockType: 'radioBlock',
+        name: newsletterFieldNames.language,
+        required: true,
+      });
+    }
+  }
+
+  if (form.showPrivacyCheckbox && form.id) {
+    fields.push({
+      blockType: 'checkboxBlock',
+      name: `checkbox-${form.id}`,
+      required: true,
+    });
+  }
+
+  return fields;
+};
 
 const generateMailContent = (formData: FormData, hiddenFormData: InterfaceForm, hiddenUrl: string): string => {
   let mailContent = '';
@@ -46,12 +122,36 @@ const generateMailContent = (formData: FormData, hiddenFormData: InterfaceForm, 
 };
 
 export const submitForm = async (prevState: any, formData: FormData): Promise<SubmitFormResult> => {
+  const formId = formData.get(hiddenFormIdFieldName);
+  const hiddenUrl = getPageUrl(formData.get(hiddenPageUrl));
 
-  const hiddenFormData: InterfaceForm = JSON.parse(formData.get(hiddenFormDefinitionFieldName) as string);
-  const hiddenUrl: string = formData.get(hiddenPageUrl) as string;
+  if (typeof formId !== 'string' || !formId) {
+    return {
+      success: false,
+    };
+  }
+
+  const payload = await getPayloadCached();
+
+  let authoritativeForm: InterfaceForm;
+
+  try {
+    authoritativeForm = await payload.findByID({
+      collection: 'forms',
+      depth: 0,
+      id: formId,
+    }) as InterfaceForm;
+  } catch {
+    return {
+      success: false,
+    };
+  }
+
   const {
     fields,
-  } = hiddenFormData;
+  } = {
+    fields: getSubmissionFields(authoritativeForm),
+  };
 
   const shape: Record<string, any> = {};
 
@@ -65,10 +165,10 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
     if (field.blockType === 'emailBlock') {
       if (field.required) {
         shape[field.name] = z
-          .email(rteToHtml(field.fieldError) || '');
+          .email(getFieldErrorMessage(field, 'Please provide a valid email address.'));
       } else {
         shape[field.name] = z
-          .email(rteToHtml(field.fieldError) || '')
+          .email(getFieldErrorMessage(field, 'Please provide a valid email address.'))
           .optional()
           .or(z.literal(''));
       }
@@ -76,7 +176,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       if (field.required) {
         shape[field.name] = z
           .string()
-          .min(1, rteToHtml(field.fieldError) || '');
+          .min(1, getFieldErrorMessage(field, 'This field is required.'));
       } else {
         shape[field.name] = z.string()
           .optional()
@@ -87,7 +187,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
         shape[field.name] = z
           .string()
           .refine((val) => val === 'on', {
-            message: rteToHtml(field.fieldError) || '',
+            message: getFieldErrorMessage(field, 'Please confirm this field.'),
           });
       } else {
         shape[field.name] = z.string()
@@ -97,7 +197,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       if (field.required) {
         shape[field.name] = z
           .string()
-          .min(1, rteToHtml(field.fieldError) || '');
+          .min(1, getFieldErrorMessage(field, 'This field is required.'));
       } else {
         shape[field.name] = z.string()
           .optional()
@@ -145,12 +245,12 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
   }
 
   // send mail or subscribe
-  if (hiddenFormData.isNewsletterForm === 'custom') {
+  if (authoritativeForm.isNewsletterForm === 'custom') {
     const mailResult = await sendMail({
-      content: generateMailContent(formData, hiddenFormData, hiddenUrl),
+      content: generateMailContent(formData, authoritativeForm, hiddenUrl),
       from: process.env.MAIL_SENDER_ADDRESS,
-      subject: hiddenFormData.mailSubject || '',
-      to: hiddenFormData.recipientMail || '',
+      subject: authoritativeForm.mailSubject || '',
+      to: authoritativeForm.recipientMail || '',
     });
 
     if (mailResult) {
@@ -159,7 +259,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       };
     }
   } else {
-    if (!hiddenFormData.newsletterFields?.newsletterListId || !hiddenFormData.newsletterFields?.newsletterTemporaryListId) {
+    if (!authoritativeForm.newsletterFields?.newsletterListId || !authoritativeForm.newsletterFields?.newsletterTemporaryListId) {
       return {
         success: false,
         values: data,
@@ -171,8 +271,8 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       firstname: formData.get(newsletterFieldNames.firstname),
       language: formData.get(newsletterFieldNames.language),
       lastname: formData.get(newsletterFieldNames.lastname),
-      listId: hiddenFormData.newsletterFields?.newsletterListId,
-      listIdTemp: hiddenFormData.newsletterFields?.newsletterTemporaryListId,
+      listId: authoritativeForm.newsletterFields?.newsletterListId,
+      listIdTemp: authoritativeForm.newsletterFields?.newsletterTemporaryListId,
     });
 
     if (subscribeResult === 'pendingVerification') {
