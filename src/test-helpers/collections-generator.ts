@@ -149,6 +149,67 @@ export const generateHomePage = async ({
   return homePage;
 };
 
+export const generateHomePageInAllLocales = async ({
+  tenant,
+}: {
+  tenant:string;
+}): Promise<HomePage> => {
+  const payload = await getPayloadCached();
+
+  const home = await generateHomePage({
+    locale: 'de',
+    sideTitle: 'Side',
+    tenant,
+    title: 'Home',
+  });
+
+  await payload.update({
+    collection: 'homePage',
+    data: {
+      hero: {
+        sideTitle: simpleRteConfig('side fr'),
+        title: simpleRteConfig('home fr'),
+      },
+      ...seoData,
+    },
+    id: home.id,
+    locale: 'fr',
+  });
+
+  await payload.update({
+    collection: 'homePage',
+    data: {
+      hero: {
+        sideTitle: simpleRteConfig('side it'),
+        title: simpleRteConfig('home it'),
+      },
+      ...seoData,
+    },
+    id: home.id,
+    locale: 'it',
+  });
+
+  await payload.update({
+    collection: 'homePage',
+    data: {
+      hero: {
+        sideTitle: simpleRteConfig('side en'),
+        title: simpleRteConfig('home en'),
+      },
+      ...seoData,
+    },
+    id: home.id,
+    locale: 'en',
+  });
+
+  const updatedHome = await payload.findByID({
+    collection: 'homePage',
+    id: home.id,
+  });
+
+  return updatedHome;
+};
+
 const getEnsuredParentPage = async ({
   locale,
   tenant,
@@ -257,10 +318,148 @@ export const generateOverviewPage = async (props: InterfacePageProps): Promise<O
   type: 'overviewPage',
 })) as OverviewPage;
 
+export const generateOverviewPageInAllLocales = async ({
+  tenant,
+  parentId,
+  parentCollection,
+  title,
+}: {
+  tenant:string;
+  parentId: string;
+  parentCollection: string;
+  title: string;
+}): Promise<OverviewPage> => {
+  const payload = await getPayloadCached();
+
+  const overview = await generateOverviewPage({
+    parentPage: {
+      documentId: parentId,
+      slug: parentCollection,
+    },
+    tenant,
+    title: `${title} de`,
+  });
+
+  await payload.update({
+    collection: 'overviewPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`${title} fr`),
+      },
+      navigationTitle: 'title',
+      ...seoData,
+    },
+    id: overview.id,
+    locale: 'fr',
+  });
+
+  await payload.update({
+    collection: 'overviewPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`${title} it`),
+      },
+      navigationTitle: 'title',
+      ...seoData,
+    },
+    id: overview.id,
+    locale: 'it',
+  });
+
+  await payload.update({
+    collection: 'overviewPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`${title} en`),
+      },
+      navigationTitle: 'title',
+      ...seoData,
+    },
+    id: overview.id,
+    locale: 'en',
+  });
+
+  const updatedOverview = await payload.findByID({
+    collection: 'overviewPage',
+    id: overview.id,
+  });
+
+  return updatedOverview;
+};
+
 export const generateDetailPage = async (props: InterfacePageProps): Promise<DetailPage> => (await generatePage({
   ...props,
   type: 'detailPage',
 })) as DetailPage;
+
+export const generateDetailPageInAllLocales = async ({
+  tenant,
+  parentId,
+  parentCollection,
+  title,
+}: {
+  tenant:string;
+  parentId: string;
+  parentCollection: string;
+  title: string;
+}): Promise<DetailPage> => {
+  const payload = await getPayloadCached();
+
+  const detail = await generateDetailPage({
+    parentPage: {
+      documentId: parentId,
+      slug: parentCollection,
+    },
+    tenant,
+    title: `${title} de`,
+  });
+
+  await payload.update({
+    collection: 'detailPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`${title} fr`),
+      },
+      navigationTitle: 'title',
+      ...seoData,
+    },
+    id: detail.id,
+    locale: 'fr',
+  });
+
+  await payload.update({
+    collection: 'detailPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`${title} it`),
+      },
+      navigationTitle: 'title',
+      ...seoData,
+    },
+    id: detail.id,
+    locale: 'it',
+  });
+
+  await payload.update({
+    collection: 'detailPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`${title} en`),
+      },
+      navigationTitle: 'title',
+      ...seoData,
+    },
+    id: detail.id,
+    locale: 'en',
+  });
+
+  const updatedDetail = await payload.findByID({
+    collection: 'detailPage',
+    id: detail.id,
+  });
+
+  return updatedDetail;
+};
 
 export const generateEventDetailPage = async (props: InterfaceEventPageProps): Promise<EventDetailPage> => {
   let tenant;
@@ -361,6 +560,75 @@ export const generateEventDetailPage = async (props: InterfaceEventPageProps): P
   });
 
   return document;
+};
+
+export const generateEventDetailPageInAllLocales = async ({
+  tenant,
+  parentId,
+  parentCollection,
+  title,
+}: {
+  tenant:string;
+  parentId: string;
+  parentCollection: string;
+  title: string;
+}): Promise<EventDetailPage> => {
+  const payload = await getPayloadCached();
+
+  const event = await generateEventDetailPage({
+    parentPage: {
+      documentId: parentId,
+      slug: parentCollection,
+    },
+    tenant,
+    title: `${title} de`,
+  });
+
+  await payload.update({
+    collection: 'eventDetailPage',
+    data: {
+      eventDetails: {
+        title: simpleRteConfig(`${title} fr`),
+      },
+      navigationTitle: 'title',
+      ...seoData,
+    },
+    id: event.id,
+    locale: 'fr',
+  });
+
+  await payload.update({
+    collection: 'eventDetailPage',
+    data: {
+      eventDetails: {
+        title: simpleRteConfig(`${title} it`),
+      },
+      navigationTitle: 'title',
+      ...seoData,
+    },
+    id: event.id,
+    locale: 'it',
+  });
+
+  await payload.update({
+    collection: 'eventDetailPage',
+    data: {
+      eventDetails: {
+        title: simpleRteConfig(`${title} en`),
+      },
+      navigationTitle: 'title',
+      ...seoData,
+    },
+    id: event.id,
+    locale: 'en',
+  });
+
+  const updatedEvent = await payload.findByID({
+    collection: 'eventDetailPage',
+    id: event.id,
+  });
+
+  return updatedEvent;
 };
 
 export const generateInstituteDetailPage = async (props: InterfacePageProps): Promise<InstituteDetailPage> => {
@@ -580,6 +848,78 @@ export const generateNewsDetailPage = async (props: InterfaceNewsPageProps): Pro
   });
 
   return document;
+};
+
+export const generateNewsDetailPageInAllLocales = async ({
+  tenant,
+  parentCollection,
+  parentId,
+  title,
+}: {
+  tenant:string;
+  parentId: string;
+  parentCollection: string;
+  title: string;
+}): Promise<NewsDetailPage> => {
+  const payload = await getPayloadCached();
+
+  const news = await generateNewsDetailPage({
+    parentPage: {
+      documentId: parentId,
+      slug: parentCollection,
+    },
+    tenant,
+    title: `${title} de`,
+  });
+
+  await payload.update({
+    collection: 'newsDetailPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`${title} fr`),
+      },
+      navigationTitle: 'title',
+      overviewPageProps: news.overviewPageProps,
+      ...seoData,
+    },
+    id: news.id,
+    locale: 'fr',
+  });
+
+  await payload.update({
+    collection: 'newsDetailPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`${title} it`),
+      },
+      navigationTitle: 'title',
+      overviewPageProps: news.overviewPageProps,
+      ...seoData,
+    },
+    id: news.id,
+    locale: 'it',
+  });
+
+  await payload.update({
+    collection: 'newsDetailPage',
+    data: {
+      hero: {
+        title: simpleRteConfig(`${title} en`),
+      },
+      navigationTitle: 'title',
+      overviewPageProps: news.overviewPageProps,
+      ...seoData,
+    },
+    id: news.id,
+    locale: 'en',
+  });
+
+  const updatedNews = await payload.findByID({
+    collection: 'newsDetailPage',
+    id: news.id,
+  });
+
+  return updatedNews;
 };
 
 export const generateProjectDetailPage = async (props: InterfaceProjectPageProps): Promise<ProjectDetailPage> => {
@@ -883,6 +1223,64 @@ export const generateDataPrivacyPage = async ({
   return dataPrivacyPage;
 };
 
+export const generateDataPrivacyPageInAllLocales = async ({
+  tenant,
+}: {
+  tenant:string;
+}): Promise<DataPrivacyPage> => {
+  const payload = await getPayloadCached();
+
+  const dataPrivacy = await generateDataPrivacyPage({
+    tenant,
+  });
+
+  await payload.update({
+    collection: 'dataPrivacyPage',
+    data: {
+      hero: {
+        title: simpleRteConfig('data privacy fr'),
+      },
+      ...seoData,
+      content: dataPrivacy.content,
+    },
+    id: dataPrivacy.id,
+    locale: 'fr',
+  });
+
+  await payload.update({
+    collection: 'dataPrivacyPage',
+    data: {
+      hero: {
+        title: simpleRteConfig('data privacy it'),
+      },
+      ...seoData,
+      content: dataPrivacy.content,
+    },
+    id: dataPrivacy.id,
+    locale: 'it',
+  });
+
+  await payload.update({
+    collection: 'dataPrivacyPage',
+    data: {
+      hero: {
+        title: simpleRteConfig('data privacy en'),
+      },
+      ...seoData,
+      content: dataPrivacy.content,
+    },
+    id: dataPrivacy.id,
+    locale: 'en',
+  });
+
+  const updatedDataPrivacy = await payload.findByID({
+    collection: 'dataPrivacyPage',
+    id: dataPrivacy.id,
+  });
+
+  return updatedDataPrivacy;
+};
+
 export const generateImpressumPage = async ({
   tenant,
 }: {
@@ -910,6 +1308,64 @@ export const generateImpressumPage = async ({
   });
 
   return impressumPage;
+};
+
+export const generateImpressumPageInAllLocales = async ({
+  tenant,
+}: {
+  tenant:string;
+}): Promise<ImpressumPage> => {
+  const payload = await getPayloadCached();
+
+  const impressum = await generateImpressumPage({
+    tenant,
+  });
+
+  await payload.update({
+    collection: 'impressumPage',
+    data: {
+      content: impressum.content,
+      hero: {
+        title: simpleRteConfig('impressum fr'),
+      },
+      ...seoData,
+    },
+    id: impressum.id,
+    locale: 'fr',
+  });
+
+  await payload.update({
+    collection: 'impressumPage',
+    data: {
+      content: impressum.content,
+      hero: {
+        title: simpleRteConfig('impressum it'),
+      },
+      ...seoData,
+    },
+    id: impressum.id,
+    locale: 'it',
+  });
+
+  await payload.update({
+    collection: 'impressumPage',
+    data: {
+      content: impressum.content,
+      hero: {
+        title: simpleRteConfig('impressum en'),
+      },
+      ...seoData,
+    },
+    id: impressum.id,
+    locale: 'en',
+  });
+
+  const updatedImpressum = await payload.findByID({
+    collection: 'impressumPage',
+    id: impressum.id,
+  });
+
+  return updatedImpressum;
 };
 
 export const generateHeaderData = async ({
