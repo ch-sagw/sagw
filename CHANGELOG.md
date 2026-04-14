@@ -1,5 +1,91 @@
 # Changelog
 
+## [0.41.0](https://github.com/ch-sagw/sagw/compare/v0.40.0...v0.41.0) (2026-04-14)
+
+
+### Chore
+
+* **deps-dev:** bump brace-expansion from 1.1.12 to 1.1.13 ([#947](https://github.com/ch-sagw/sagw/issues/947)) ([afa5a7b](https://github.com/ch-sagw/sagw/commit/afa5a7b2554c95c61589a4085b818ad3415a0516))
+* **deps-dev:** bump the development-dependencies group across 1 directory with 19 updates ([#1002](https://github.com/ch-sagw/sagw/issues/1002)) ([a64949c](https://github.com/ch-sagw/sagw/commit/a64949cafdd1d193ee51f2fad95a1a2869366458))
+* **deps-dev:** bump vite from 8.0.2 to 8.0.5 ([#987](https://github.com/ch-sagw/sagw/issues/987)) ([f0a1c50](https://github.com/ch-sagw/sagw/commit/f0a1c507403d8d2baf1f49bf464438d2b3268ec5))
+* **deps:** bump basic-ftp from 5.2.0 to 5.2.1 ([#990](https://github.com/ch-sagw/sagw/issues/990)) ([b3ff367](https://github.com/ch-sagw/sagw/commit/b3ff367c9d9aefce892a44cfa53a013bda2232c1))
+* **deps:** bump basic-ftp from 5.2.1 to 5.2.2 ([#1010](https://github.com/ch-sagw/sagw/issues/1010)) ([d579c2d](https://github.com/ch-sagw/sagw/commit/d579c2db3f9f015bd21b934959d5da4e88e27250))
+* **deps:** bump happy-dom from 20.8.8 to 20.8.9 ([#956](https://github.com/ch-sagw/sagw/issues/956)) ([34cddfd](https://github.com/ch-sagw/sagw/commit/34cddfd0b23dd081b464d7c6f2b4a5a06042a6e7))
+* **deps:** bump lodash from 4.17.23 to 4.18.1 ([#981](https://github.com/ch-sagw/sagw/issues/981)) ([ac01f25](https://github.com/ch-sagw/sagw/commit/ac01f25b5e66ea064375e616b4792393594b16bb))
+* **deps:** bump the production-dependencies group across 1 directory with 15 updates ([#979](https://github.com/ch-sagw/sagw/issues/979)) ([b7d1c4b](https://github.com/ch-sagw/sagw/commit/b7d1c4b7d5ac0f0efc5ceee5e70d4c0f7a770143))
+* **deps:** bump the production-dependencies group with 15 updates ([#1001](https://github.com/ch-sagw/sagw/issues/1001)) ([f97f993](https://github.com/ch-sagw/sagw/commit/f97f993471136c6de7853886bd8759da76ee757f))
+* disable admin route for sentry ([#996](https://github.com/ch-sagw/sagw/issues/996)) ([cbb9320](https://github.com/ch-sagw/sagw/commit/cbb9320158206b5c0d6f2e6a7cd041d280f04b68))
+
+
+### CI
+
+* archive artifacts before deployment ([2aefdb7](https://github.com/ch-sagw/sagw/commit/2aefdb781dc065f883337b89cc7de14a191d2c23))
+* archive artifacts before deployment ([e2114d4](https://github.com/ch-sagw/sagw/commit/e2114d4d672a426a95abd63450ffe7f8a9ef8a75))
+
+
+### Features
+
+* add redirects collection ([608f9f1](https://github.com/ch-sagw/sagw/commit/608f9f10233e5d2a52a8c0feebc1b9461e25ae99))
+* add robots.txt generator ([#1004](https://github.com/ch-sagw/sagw/issues/1004)) ([379d8a9](https://github.com/ch-sagw/sagw/commit/379d8a998d5c1c3452cf3e5b91cefd65e16c3c7b))
+* adding schema markup for breadcrumb list ([#986](https://github.com/ch-sagw/sagw/issues/986)) ([e3d1631](https://github.com/ch-sagw/sagw/commit/e3d1631144c4ab71e39206d1c1c0448a8a38245b))
+* enable cache on page level ([8734454](https://github.com/ch-sagw/sagw/commit/87344545bb542853b7152ca6c4b4ee3904cf64e7))
+* ensure keyvisual is only rendered sagw home ([8468290](https://github.com/ch-sagw/sagw/commit/846829038905c5d9e5390270e95862a6877be955))
+* ensure rendering of fg logo ([8468290](https://github.com/ch-sagw/sagw/commit/846829038905c5d9e5390270e95862a6877be955))
+* fixing html and bottom spacing of last rte-block ([8468290](https://github.com/ch-sagw/sagw/commit/846829038905c5d9e5390270e95862a6877be955))
+* fixing logo links, adding domain name ([8468290](https://github.com/ch-sagw/sagw/commit/846829038905c5d9e5390270e95862a6877be955))
+* implement redirects ([608f9f1](https://github.com/ch-sagw/sagw/commit/608f9f10233e5d2a52a8c0feebc1b9461e25ae99))
+* implement redirects security safe-guards ([608f9f1](https://github.com/ch-sagw/sagw/commit/608f9f10233e5d2a52a8c0feebc1b9461e25ae99))
+* implement sitemap generation ([bece220](https://github.com/ch-sagw/sagw/commit/bece220397ef49ecd7203091c42c3e87e6325cd9))
+* implement subtle view transitions ([#995](https://github.com/ch-sagw/sagw/issues/995)) ([ae09b81](https://github.com/ch-sagw/sagw/commit/ae09b810eb9b85f883e3f66b4716fef806f69cac))
+* implementation of reworked cache invalidation ([8734454](https://github.com/ch-sagw/sagw/commit/87344545bb542853b7152ca6c4b4ee3904cf64e7))
+* modifying display of date in event list entry ([8468290](https://github.com/ch-sagw/sagw/commit/846829038905c5d9e5390270e95862a6877be955))
+* modifying webfont to allow tnum font feature setting ([8468290](https://github.com/ch-sagw/sagw/commit/846829038905c5d9e5390270e95862a6877be955))
+* removing blue, cyan and sky from theming options ([#974](https://github.com/ch-sagw/sagw/issues/974)) ([a62b08c](https://github.com/ch-sagw/sagw/commit/a62b08c164aa893b611379b327e68068096f186c))
+* reworking desktop header animation ([8468290](https://github.com/ch-sagw/sagw/commit/846829038905c5d9e5390270e95862a6877be955))
+* seed default tenant data on creation, delete collections on tenant deletion ([0e41789](https://github.com/ch-sagw/sagw/commit/0e417892eeb25765e1de4f87d2599952caf9fc3e))
+* seed default tenant data on creation, delete collections on tenant deletion ([#975](https://github.com/ch-sagw/sagw/issues/975)) ([0e41789](https://github.com/ch-sagw/sagw/commit/0e417892eeb25765e1de4f87d2599952caf9fc3e))
+* using getServerSideURL instead of env var value ([8468290](https://github.com/ch-sagw/sagw/commit/846829038905c5d9e5390270e95862a6877be955))
+
+
+### Bug Fixes
+
+* add suffix on upload file names ([9d74f84](https://github.com/ch-sagw/sagw/commit/9d74f846a9ce536a2705c52d6b91f3eb038b1eae))
+* chore commit to trigger a test deployment ([8b4543a](https://github.com/ch-sagw/sagw/commit/8b4543ac30fea4c708aaed335ee23bc452218094))
+* fix issue for svg rendering in html converter ([39cb25c](https://github.com/ch-sagw/sagw/commit/39cb25c5fa2941786009fdcc68a229aa93dd474f))
+* make sure to return vercel injected host if available ([58e44ae](https://github.com/ch-sagw/sagw/commit/58e44ae6c7d261eb6190749db4bd73d249727778))
+* remove current cache invalidation implementation ([8734454](https://github.com/ch-sagw/sagw/commit/87344545bb542853b7152ca6c4b4ee3904cf64e7))
+* remove current cache invalidation implementation ([#991](https://github.com/ch-sagw/sagw/issues/991)) ([107f93a](https://github.com/ch-sagw/sagw/commit/107f93a2e8f0671b77f9263c1cc529e5477c8bb2))
+* render h2 for people teaser name ([8468290](https://github.com/ch-sagw/sagw/commit/846829038905c5d9e5390270e95862a6877be955))
+* render links including host ([58e44ae](https://github.com/ch-sagw/sagw/commit/58e44ae6c7d261eb6190749db4bd73d249727778))
+* render links including host ([#978](https://github.com/ch-sagw/sagw/issues/978)) ([58e44ae](https://github.com/ch-sagw/sagw/commit/58e44ae6c7d261eb6190749db4bd73d249727778))
+* set noindex on all non-prod pages ([#1007](https://github.com/ch-sagw/sagw/issues/1007)) ([311fb2c](https://github.com/ch-sagw/sagw/commit/311fb2cde53978b381d3557ba3273c2337d5c2ec))
+* try to fix export issue on vercel ([#972](https://github.com/ch-sagw/sagw/issues/972)) ([ce283d5](https://github.com/ch-sagw/sagw/commit/ce283d54e90be7a149f52e5a29fa44ee334fd4d4))
+* try to fix url host ([58e44ae](https://github.com/ch-sagw/sagw/commit/58e44ae6c7d261eb6190749db4bd73d249727778))
+* use &lt;a&gt; instead of &lt;Link&gt; for downloads ([47744c1](https://github.com/ch-sagw/sagw/commit/47744c107a4459453063097c46f3e7ce427105c8))
+* use content-disposition and proper quoting for filenames to get arround download issues ([47744c1](https://github.com/ch-sagw/sagw/commit/47744c107a4459453063097c46f3e7ce427105c8))
+* use force-static ([9a97784](https://github.com/ch-sagw/sagw/commit/9a97784b6c00bb775a22c83795640d1b5af76351))
+
+
+### Style
+
+* avoid large spacing below publications overview ([8468290](https://github.com/ch-sagw/sagw/commit/846829038905c5d9e5390270e95862a6877be955))
+* fixing dark version of sago logo ([8468290](https://github.com/ch-sagw/sagw/commit/846829038905c5d9e5390270e95862a6877be955))
+* fixing keyvisual placement in small viewport ([8468290](https://github.com/ch-sagw/sagw/commit/846829038905c5d9e5390270e95862a6877be955))
+* re-adding desired 404 error icon ([8468290](https://github.com/ch-sagw/sagw/commit/846829038905c5d9e5390270e95862a6877be955))
+
+
+### Test
+
+* add story with rte content ([39cb25c](https://github.com/ch-sagw/sagw/commit/39cb25c5fa2941786009fdcc68a229aa93dd474f))
+* add tests for fe rendering of external urls and email addresses ([39cb25c](https://github.com/ch-sagw/sagw/commit/39cb25c5fa2941786009fdcc68a229aa93dd474f))
+* add vrt for various backend rendered pages ([9d74f84](https://github.com/ch-sagw/sagw/commit/9d74f846a9ce536a2705c52d6b91f3eb038b1eae))
+* add vrt for various backend rendered pages ([#984](https://github.com/ch-sagw/sagw/issues/984)) ([9d74f84](https://github.com/ch-sagw/sagw/commit/9d74f846a9ce536a2705c52d6b91f3eb038b1eae))
+* make safeguard tests for sagw and non-sagw ([608f9f1](https://github.com/ch-sagw/sagw/commit/608f9f10233e5d2a52a8c0feebc1b9461e25ae99))
+* only log cache-invalidation for cache-invalidation-logs ([#998](https://github.com/ch-sagw/sagw/issues/998)) ([e9398b1](https://github.com/ch-sagw/sagw/commit/e9398b1bc2f09af4ccd5e37c817f68c22b627cde))
+* write tests for new cache implementation ([8734454](https://github.com/ch-sagw/sagw/commit/87344545bb542853b7152ca6c4b4ee3904cf64e7))
+* write tests for sitemap generation ([bece220](https://github.com/ch-sagw/sagw/commit/bece220397ef49ecd7203091c42c3e87e6325cd9))
+* write tests for static site generation ([bece220](https://github.com/ch-sagw/sagw/commit/bece220397ef49ecd7203091c42c3e87e6325cd9))
+
 ## [0.40.0](https://github.com/ch-sagw/sagw/compare/v0.39.0...v0.40.0) (2026-03-31)
 
 
