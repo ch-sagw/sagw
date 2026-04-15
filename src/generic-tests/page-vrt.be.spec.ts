@@ -453,6 +453,7 @@ const generateVideo = async ({
       skipCacheInvalidation: true,
     },
     data: {
+      duration: 24,
       tenant,
       title: 'video',
     },
