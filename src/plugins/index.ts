@@ -72,7 +72,6 @@ const plugins: Plugin[] = [
       },
       [Videos.slug]: {
         disablePayloadAccessControl: true,
-        generateFileURL: generateGumletFileURL,
       },
       [Documents.slug]: {
         disablePayloadAccessControl: true,
