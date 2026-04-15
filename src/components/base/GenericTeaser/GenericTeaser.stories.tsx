@@ -54,6 +54,7 @@ export const InstitutePNGLogo: StrictStory = {
     ],
     texts: ['Das Institut des Dicziunari Rumantsch Grischun mit Sitz in Chur ist Herausgeberin des grössten bündnerromanischen Wörterbuches. Es enthält den gesamten seit dem 16. Jahrhundert bis heute dokumentierten Wortschatz aller Idiome und Dialekte, eingeschlossen der gesprochenen Sprache.'],
     title: 'Dicziunari Rumantsch Grischun',
+    titleLevel: 2,
     type: 'institute',
   },
   render: customRender,

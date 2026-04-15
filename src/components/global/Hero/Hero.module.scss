@@ -141,6 +141,7 @@
 
       color: var(--color-title);
       margin-block-end: px-to-rem(var(--spacing-l));
+      text-wrap: balance;
 
       @include mq($from: large) {
         margin-block-end: px-to-rem(var(--spacing-2xl));
