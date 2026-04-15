@@ -24,6 +24,35 @@ const generateTitle: GenerateTitle = ({
   ? `${doc.adminTitle} | SAGW`
   : 'SAGW');
 
+// Since video/image collections have disablePayloadAccessControl set to
+// true, they would point to the vercel blob url. we rewrite the file url
+// so that they point to the gumlet url.
+const gumletHost = process.env.NEXT_PUBLIC_GUMLET_URL?.replace(/\/$/u, '');
+const generateGumletFileURL = ({
+  filename,
+  prefix,
+  url,
+}: {
+  filename?: null | string
+  prefix?: null | string
+  url?: null | string
+}): string => {
+  if (!gumletHost) {
+    return url || '';
+  }
+
+  const path = [
+    prefix,
+    filename,
+  ]
+    .filter(Boolean)
+    .join('/');
+
+  return path
+    ? `${gumletHost}/${path}`
+    : gumletHost;
+};
+
 type ExtendedPluginOptions = sentryPluginOptions & {
   debug?: boolean
   enabled?: boolean
@@ -39,9 +68,11 @@ const plugins: Plugin[] = [
     collections: {
       [Images.slug]: {
         disablePayloadAccessControl: true,
+        generateFileURL: generateGumletFileURL,
       },
       [Videos.slug]: {
         disablePayloadAccessControl: true,
+        generateFileURL: generateGumletFileURL,
       },
       [Documents.slug]: {
         disablePayloadAccessControl: true,
