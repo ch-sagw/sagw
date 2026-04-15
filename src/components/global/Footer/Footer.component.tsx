@@ -66,6 +66,7 @@ export const FooterComponent = ({
   structuredDataUrl,
 }: InterfaceFooterComponentPropTypes): React.JSX.Element => {
   const i18nA11y = useTranslations('a11y');
+  const i18nLandmarks = useTranslations('landmarks');
   const overlayDialogRef = useRef<HTMLDialogElement>(null);
   const [
     isOverlayOpen,
@@ -232,6 +233,7 @@ export const FooterComponent = ({
 
   return (
     <footer
+      aria-label={i18nLandmarks('footer')}
       className={footerClasses({
         fg: Boolean(fg),
       })}
