@@ -94,6 +94,7 @@ export const Breadcrumb = ({
         <ul
           aria-labelledby='breadcrumb-label'
           className={styles.content}
+          data-test-id='breadcrumb-list'
         >
 
           {items.map((item, index) => (

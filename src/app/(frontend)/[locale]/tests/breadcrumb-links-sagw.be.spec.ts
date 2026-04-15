@@ -252,47 +252,52 @@ test.describe('Breadcrumb links (sagw)', () => {
     await page.goto(`http://localhost:3000/de/o1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}/d6-${time}/d7-${time}`);
     await page.waitForLoadState('networkidle');
 
-    const linkHome = await page.getByRole('link', {
+    const breadcrumbList = page.locator('[data-test-id="breadcrumb-list"]');
+
+    await expect(breadcrumbList)
+      .toBeVisible();
+
+    const linkHome = await breadcrumbList.getByRole('link', {
       name: 'Home',
     })
       .getAttribute('href');
 
-    const link1 = await page.getByRole('link', {
+    const link1 = await breadcrumbList.getByRole('link', {
       name: '[test]link:o1',
     })
       .getAttribute('href');
 
-    const link2 = await page.getByRole('link', {
+    const link2 = await breadcrumbList.getByRole('link', {
       name: '[test]link:d1',
     })
       .getAttribute('href');
 
-    const link3 = await page.getByRole('link', {
+    const link3 = await breadcrumbList.getByRole('link', {
       name: '[test]link:d2',
     })
       .getAttribute('href');
 
-    const link4 = await page.getByRole('link', {
+    const link4 = await breadcrumbList.getByRole('link', {
       name: '[test]link:d3',
     })
       .getAttribute('href');
 
-    const link5 = await page.getByRole('link', {
+    const link5 = await breadcrumbList.getByRole('link', {
       name: '[test]link:d4',
     })
       .getAttribute('href');
 
-    const link6 = await page.getByRole('link', {
+    const link6 = await breadcrumbList.getByRole('link', {
       name: '[test]link:d5',
     })
       .getAttribute('href');
 
-    const link7 = await page.getByRole('link', {
+    const link7 = await breadcrumbList.getByRole('link', {
       name: '[test]link:d6',
     })
       .getAttribute('href');
 
-    const link8 = await page.getByRole('link', {
+    const link8 = await breadcrumbList.getByRole('link', {
       name: '[test]link:d7',
     });
 
@@ -329,47 +334,47 @@ test.describe('Breadcrumb links (sagw)', () => {
     await page.goto(`http://localhost:3000/it/o1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}/d7-it-${time}`);
     await page.waitForLoadState('networkidle');
 
-    const linkHomeIt = await page.getByRole('link', {
-      name: 'Home IT',
+    const linkHomeIt = await breadcrumbList.getByRole('link', {
+      name: 'Home',
     })
       .getAttribute('href');
 
-    const link1It = await page.getByRole('link', {
+    const link1It = await breadcrumbList.getByRole('link', {
       name: '[test]link:o1-it',
     })
       .getAttribute('href');
 
-    const link2It = await page.getByRole('link', {
+    const link2It = await breadcrumbList.getByRole('link', {
       name: '[test]link:d1-it',
     })
       .getAttribute('href');
 
-    const link3It = await page.getByRole('link', {
+    const link3It = await breadcrumbList.getByRole('link', {
       name: '[test]link:d2-it',
     })
       .getAttribute('href');
 
-    const link4It = await page.getByRole('link', {
+    const link4It = await breadcrumbList.getByRole('link', {
       name: '[test]link:d3-it',
     })
       .getAttribute('href');
 
-    const link5It = await page.getByRole('link', {
+    const link5It = await breadcrumbList.getByRole('link', {
       name: '[test]link:d4-it',
     })
       .getAttribute('href');
 
-    const link6It = await page.getByRole('link', {
+    const link6It = await breadcrumbList.getByRole('link', {
       name: '[test]link:d5-it',
     })
       .getAttribute('href');
 
-    const link7It = await page.getByRole('link', {
+    const link7It = await breadcrumbList.getByRole('link', {
       name: '[test]link:d6-it',
     })
       .getAttribute('href');
 
-    const link8It = await page.getByRole('link', {
+    const link8It = await breadcrumbList.getByRole('link', {
       name: '[test]link:d7-it',
     });
 
