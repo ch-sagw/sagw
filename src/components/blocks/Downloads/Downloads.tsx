@@ -95,11 +95,10 @@ export const Downloads = async (props: InterfaceDownloadsPropTypes): Promise<Rea
 
       const returnDocument: InterfaceDownloadLinkItemPropTypes = {
         date: documentItem.date || '',
-        downloadFilename: documentItem.filename || undefined,
         format: format.toUpperCase(),
         link: {
           href: documentItem.url || '',
-          target: '_self' as const,
+          target: '_blank' as const,
         },
         size: fileSizeText,
         title: rteToHtml(documentItem.title),
