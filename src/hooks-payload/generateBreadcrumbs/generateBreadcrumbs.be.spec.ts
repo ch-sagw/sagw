@@ -162,7 +162,7 @@ test.describe('breadcrumb-geneartion', () => {
       .toEqual(9);
 
     await expect(breadcrumb[0].namede)
-      .toStrictEqual('Home DE');
+      .toStrictEqual('Home');
 
     await expect(breadcrumb[1].namede)
       .toStrictEqual('Level 1 Navigation Title');
@@ -357,7 +357,7 @@ test.describe('breadcrumb-geneartion', () => {
       .toEqual(9);
 
     await expect(breadcrumb[0].namefr)
-      .toStrictEqual('Home FR');
+      .toStrictEqual('Page d\'accueil');
 
     await expect(breadcrumb[1].namefr)
       .toStrictEqual('Level 1 Navigation Title');
@@ -522,7 +522,7 @@ test.describe('breadcrumb-geneartion', () => {
     }
 
     await expect(level5b.breadcrumb[0].namede)
-      .toStrictEqual('Home DE');
+      .toStrictEqual('Home');
 
     await expect(level5b.breadcrumb[1].namede)
       .toStrictEqual('Level 2b Navigation Title');
@@ -534,7 +534,7 @@ test.describe('breadcrumb-geneartion', () => {
       .toStrictEqual('Level 4b Navigation Title');
 
     await expect(level5a.breadcrumb[0].namede)
-      .toStrictEqual('Home DE');
+      .toStrictEqual('Home');
 
     await expect(level5a.breadcrumb[1].namede)
       .toStrictEqual('Level 2b Navigation Title');
