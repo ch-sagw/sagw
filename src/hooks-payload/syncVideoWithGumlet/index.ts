@@ -3,11 +3,6 @@ import type {
   CollectionAfterDeleteHook,
 } from 'payload';
 
-import {
-  deleteFromGumlet,
-  uploadToGumletFromUrl,
-} from '@/utilities/gumlet';
-
 export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
   context,
   doc,
@@ -21,6 +16,11 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
   if (context?.skipGumletSync) {
     return;
   }
+
+  const {
+    deleteFromGumlet,
+    uploadToGumletFromUrl,
+  } = await import('@/utilities/gumlet');
 
   const hasNewFile = doc.filename && doc.filename !== previousDoc?.filename;
   const wasDeleted = !doc.filename && previousDoc?.filename;
@@ -85,6 +85,10 @@ export const deleteVideoFromGumlet: CollectionAfterDeleteHook = async ({
   if (!doc || context?.skipGumletSync) {
     return;
   }
+
+  const {
+    deleteFromGumlet,
+  } = await import('@/utilities/gumlet');
 
   if (doc.gumletAssetId) {
     try {

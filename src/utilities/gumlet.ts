@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import 'server-only';
 
 export interface InterfaceGumletAsset {
   id: string;
