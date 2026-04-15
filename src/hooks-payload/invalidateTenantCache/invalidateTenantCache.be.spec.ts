@@ -164,7 +164,6 @@ test('invalidates all tenant pages on content change (sagw)', {
   // 3 pages for 4 page types in 4 languages: 48
   // the random detail page in 4 languages: 4
   // impressum and privacy pages in 4 languages: 8
-  // home in 4 languages: 4
   // /${locale} route in 4 languages: 4
 
   const langs = [
@@ -190,9 +189,6 @@ test('invalidates all tenant pages on content change (sagw)', {
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/detail-${time}`))
       .toBe(true);
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/home`))
-      .toBe(true);
-
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}`))
       .toBe(true);
 
@@ -204,7 +200,7 @@ test('invalidates all tenant pages on content change (sagw)', {
   });
 
   expect(logCapture.logs)
-    .toHaveLength(68);
+    .toHaveLength(64);
 
 });
 
@@ -273,7 +269,6 @@ test('invalidates all tenant pages on content change (non-sagw)', {
   // 3 pages for 4 page types in 4 languages: 48
   // the random detail page in 4 languages: 4
   // impressum and privacy pages in 4 languages: 8
-  // home in 4 languages: 4
   // /${locale} route in 4 languages: 4
 
   const langs = [
@@ -303,9 +298,6 @@ test('invalidates all tenant pages on content change (non-sagw)', {
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/detail-${time}`))
       .toBe(true);
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/home`))
-      .toBe(true);
-
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}`))
       .toBe(true);
 
@@ -317,7 +309,7 @@ test('invalidates all tenant pages on content change (non-sagw)', {
   });
 
   expect(logCapture.logs)
-    .toHaveLength(68);
+    .toHaveLength(64);
 
 });
 
@@ -378,7 +370,6 @@ test('invalidates all tenant pages on page deletion (sagw)', {
   // we expect:
   // 3 pages for 4 page types in 4 languages: 48
   // impressum and privacy pages in 4 languages: 8
-  // home in 4 languages: 4
   // /${locale} route in 4 languages: 4
 
   const langs = [
@@ -401,9 +392,6 @@ test('invalidates all tenant pages on page deletion (sagw)', {
         .toBe(true);
     }
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/home`))
-      .toBe(true);
-
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}`))
       .toBe(true);
 
@@ -415,7 +403,7 @@ test('invalidates all tenant pages on page deletion (sagw)', {
   });
 
   expect(logCapture.logs)
-    .toHaveLength(64);
+    .toHaveLength(60);
 
 });
 
@@ -475,7 +463,6 @@ test('invalidates all tenant pages on page deletion (non-sagw)', {
   // we expect:
   // 3 pages for 4 page types in 4 languages: 48
   // impressum and privacy pages in 4 languages: 8
-  // home in 4 languages: 4
   // /${locale} route in 4 languages: 4
 
   const langs = [
@@ -502,9 +489,6 @@ test('invalidates all tenant pages on page deletion (non-sagw)', {
         .toBe(true);
     }
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/home`))
-      .toBe(true);
-
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}`))
       .toBe(true);
 
@@ -516,7 +500,7 @@ test('invalidates all tenant pages on page deletion (non-sagw)', {
   });
 
   expect(logCapture.logs)
-    .toHaveLength(64);
+    .toHaveLength(60);
 
 });
 
@@ -572,7 +556,6 @@ test('invalidates all tenant pages on page creation (sagw)', {
   // 3 pages for 4 page types in 4 languages: 48
   // the random detail page in 4 languages: 4
   // impressum and privacy pages in 4 languages: 8
-  // home in 4 languages: 4
   // /${locale} route in 4 languages: 4
 
   const langs = [
@@ -598,9 +581,6 @@ test('invalidates all tenant pages on page creation (sagw)', {
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/detail-${time}`))
       .toBe(true);
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/home`))
-      .toBe(true);
-
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}`))
       .toBe(true);
 
@@ -612,7 +592,7 @@ test('invalidates all tenant pages on page creation (sagw)', {
   });
 
   expect(logCapture.logs)
-    .toHaveLength(68);
+    .toHaveLength(64);
 
 });
 
@@ -667,7 +647,6 @@ test('invalidates all tenant pages on page creation (non-sagw)', {
   // 3 pages for 4 page types in 4 languages: 48
   // the random detail page in 4 languages: 4
   // impressum and privacy pages in 4 languages: 8
-  // home in 4 languages: 4
   // /${locale} route in 4 languages: 4
 
   const langs = [
@@ -697,9 +676,6 @@ test('invalidates all tenant pages on page creation (non-sagw)', {
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/detail-${time}`))
       .toBe(true);
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/home`))
-      .toBe(true);
-
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}`))
       .toBe(true);
 
@@ -711,7 +687,7 @@ test('invalidates all tenant pages on page creation (non-sagw)', {
   });
 
   expect(logCapture.logs)
-    .toHaveLength(68);
+    .toHaveLength(64);
 
 });
 
@@ -768,7 +744,6 @@ test('invalidates all tenant pages on non-autosave collection change (sagw)', {
   // we expect:
   // 3 pages for 4 page types in 4 languages: 48
   // impressum and privacy pages in 4 languages: 8
-  // home in 4 languages: 4
   // /${locale} route in 4 languages: 4
 
   const langs = [
@@ -791,9 +766,6 @@ test('invalidates all tenant pages on non-autosave collection change (sagw)', {
         .toBe(true);
     }
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/home`))
-      .toBe(true);
-
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}`))
       .toBe(true);
 
@@ -805,7 +777,7 @@ test('invalidates all tenant pages on non-autosave collection change (sagw)', {
   });
 
   expect(logCapture.logs)
-    .toHaveLength(64);
+    .toHaveLength(60);
 
 });
 
@@ -861,7 +833,6 @@ test('invalidates all tenant pages on non-autosave collection change (non-sagw)'
   // we expect:
   // 3 pages for 4 page types in 4 languages: 48
   // impressum and privacy pages in 4 languages: 8
-  // home in 4 languages: 4
   // /${locale} route in 4 languages: 4
 
   const langs = [
@@ -888,9 +859,6 @@ test('invalidates all tenant pages on non-autosave collection change (non-sagw)'
         .toBe(true);
     }
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/home`))
-      .toBe(true);
-
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}`))
       .toBe(true);
 
@@ -902,6 +870,6 @@ test('invalidates all tenant pages on non-autosave collection change (non-sagw)'
   });
 
   expect(logCapture.logs)
-    .toHaveLength(64);
+    .toHaveLength(60);
 
 });

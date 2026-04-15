@@ -3,6 +3,7 @@ import {
   setsSlugs, singletonSlugs,
 } from '@/collections/Pages/constants';
 import { deleteCollectionsData } from '@/utilities/deleteCollectionsData';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
 import {
   CollectionSlug, Payload,
 } from 'payload';
@@ -53,6 +54,30 @@ export const deleteOtherCollections = async (): Promise<void> => {
   await deleteCollectionsData({
     collectionSlugs: collectionsSlugs,
   });
+};
+
+// delete tenants except sagw
+export const deleteTenants = async (): Promise<void> => {
+  const payload = await getPayloadCached();
+
+  await payload.delete({
+    collection: 'tenants',
+    where: {
+      slug: {
+        /* eslint-disable @typescript-eslint/naming-convention */
+        not_equals: 'sagw',
+        /* eslint-enable @typescript-eslint/naming-convention */
+      },
+    },
+  });
+
+  // for await (const tenant of tenants.docs) {
+  //   await payload.delete({
+  //     collection: 'tenants',
+  //     id: tenant.id,
+  //     overrideAccess: true,
+  //   });
+  // }
 };
 
 // delete singleton pages

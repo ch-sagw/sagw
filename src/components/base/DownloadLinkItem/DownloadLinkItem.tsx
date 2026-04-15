@@ -111,7 +111,7 @@ export const DownloadLinkItem = ({
         href={link.href}
         target={link.target}
         className={styles.link}
-        prefetch={true}
+        prefetch={type !== 'download'}
       >
 
         <div className={styles.content}>

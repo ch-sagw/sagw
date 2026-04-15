@@ -43,6 +43,7 @@ export const Images: CollectionConfig = {
   },
   slug: 'images',
   upload: {
+    crop: false,
     focalPoint: true,
     mimeTypes: [
       'image/png',
