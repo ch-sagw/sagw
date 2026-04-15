@@ -49,6 +49,7 @@ export const GenericTeaserClient = ({
           image={item.image}
           key={item.id}
           title={item.titleHtml}
+          titleLevel={3}
           texts={[item.textHtml]}
           links={[item.link]}
           type='generic'

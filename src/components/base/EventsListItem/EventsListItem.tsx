@@ -109,7 +109,7 @@ export const EventsListItem = ({
             data-testid='eventListItemContent'
           >
             <SafeHtml
-              as='span'
+              as='h3'
               className={styles.textContentTitle}
               html={text}
               data-testid='eventListItemTitle'

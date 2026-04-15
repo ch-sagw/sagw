@@ -72,6 +72,7 @@ export const ProjectsTeaserClient = ({
           links={[item.link]}
           texts={[item.textHtml]}
           title={item.titleHtml}
+          titleLevel={3}
           type='generic'
         />
       ))}
