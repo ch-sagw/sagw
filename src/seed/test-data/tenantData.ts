@@ -43,7 +43,6 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   await payload.create({
     collection: 'videos',
     context: {
-      skipCacheInvalidation: true,
       skipGumletSync: true,
     },
     data: {

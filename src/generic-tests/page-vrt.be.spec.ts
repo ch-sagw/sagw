@@ -310,9 +310,6 @@ const generateTeam = async ({
   const payload = await getPayloadCached();
   const image = await payload.create({
     collection: 'images',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       alt: 'image',
       tenant,
@@ -327,9 +324,6 @@ const generateTeam = async ({
 
     return payload.create({
       collection: 'people',
-      context: {
-        skipCacheInvalidation: true,
-      },
       data: {
         firstname: simpleRteConfig(`Firstname ${index}`),
         function: simpleRteConfig('Some function'),
@@ -345,9 +339,6 @@ const generateTeam = async ({
   // create a team
   const team = await payload.create({
     collection: 'teams',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       name: simpleRteConfig('Team 1'),
       people: people.map((item) => item.id),
@@ -367,9 +358,6 @@ const generateDocument = async ({
 }): Promise<string> => {
   const document = await payload.create({
     collection: 'documents',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       date: '2025-10-30',
       tenant,
@@ -390,9 +378,6 @@ const generateZenodoDocument = async ({
 }): Promise<string> => {
   const zenodoDocument = await payload.create({
     collection: 'zenodoDocuments',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       files: [
         {
@@ -427,9 +412,6 @@ const generateImage = async ({
 }): Promise<string> => {
   const image = await payload.create({
     collection: 'images',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       alt: 'alt',
       tenant,
@@ -450,7 +432,7 @@ const generateVideo = async ({
   const video = await payload.create({
     collection: 'videos',
     context: {
-      skipCacheInvalidation: true,
+      skipGumletSync: true,
     },
     data: {
       duration: 24,
@@ -474,9 +456,6 @@ const generatePerson = async ({
 }): Promise<string> => {
   const person = await payload.create({
     collection: 'people',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       firstname: simpleRteConfig('Firstname'),
       function: simpleRteConfig('Some function'),

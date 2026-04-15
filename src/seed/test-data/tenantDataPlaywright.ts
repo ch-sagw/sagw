@@ -25,9 +25,6 @@ export const addPlaywrightFooterData = async ({
 }): Promise<void> => {
   await payload.create({
     collection: 'footer',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       contact: {
         address1: simpleRteConfig('Haus der Akademien'),
@@ -86,9 +83,6 @@ export const addPlaywrightHeaderData = async ({
 }): Promise<void> => {
   await payload.create({
     collection: 'header',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       metanavigation: {
         metaLinks: [
@@ -272,9 +266,6 @@ export const addPlaywrightErrorPage = async ({
 }): Promise<void> => {
   await payload.create({
     collection: 'errorPage',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       _status: 'published',
       error400: {
@@ -319,7 +310,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
   await payload.create({
     collection: 'videos',
     context: {
-      skipCacheInvalidation: true,
       skipGumletSync: true,
     },
     data: {
