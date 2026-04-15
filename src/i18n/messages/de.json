@@ -24,7 +24,10 @@
     }
   },
   "landmarks": {
-    "footerNavigation": "Navigation im Footerbereich",
+    "footer": "Footer",
+    "footerNavigation": "Navigation in der Footerbereich",
+    "header": "Header",
+    "main": "Inhaltsbereich",
     "mainNavigation": "Hauptnavigation"
   },
   "a11y": {
