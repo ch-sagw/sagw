@@ -33,10 +33,19 @@ const plugins: Plugin[] = [
   vercelBlobStorage({
     addRandomSuffix: true,
     clientUploads: true,
+    // public collections should link directly to Blob instead of the
+    // payload file endpoint, which applies collection read access and
+    // returns 403.
     collections: {
-      [Images.slug]: true,
-      [Videos.slug]: true,
-      [Documents.slug]: true,
+      [Images.slug]: {
+        disablePayloadAccessControl: true,
+      },
+      [Videos.slug]: {
+        disablePayloadAccessControl: true,
+      },
+      [Documents.slug]: {
+        disablePayloadAccessControl: true,
+      },
     },
     enabled: true,
     token: process.env.BLOB_READ_WRITE_TOKEN,
