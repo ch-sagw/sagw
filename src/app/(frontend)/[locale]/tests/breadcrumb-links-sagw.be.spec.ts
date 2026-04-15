@@ -253,7 +253,7 @@ test.describe('Breadcrumb links (sagw)', () => {
     await page.waitForLoadState('networkidle');
 
     const linkHome = await page.getByRole('link', {
-      name: 'Home DE',
+      name: 'Home',
     })
       .getAttribute('href');
 
