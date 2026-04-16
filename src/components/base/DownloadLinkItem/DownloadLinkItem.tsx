@@ -24,13 +24,11 @@ interface InterfaceDownloadItem extends InterfaceDownloadLinkItemBaseProps {
   format: string;
   size: string;
   date?: string;
-  downloadFilename?: string;
   text?: never;
 }
 
 interface InterfaceLinkItem extends InterfaceDownloadLinkItemBaseProps {
   type: 'link';
-  downloadFilename?: never;
   text?: string;
   format?: never;
   size?: never;
@@ -69,7 +67,6 @@ export const DownloadLinkItem = ({
   format,
   size,
   date,
-  downloadFilename,
 }: InterfaceDownloadLinkItemPropTypes): React.JSX.Element => {
   const locale = useLocale() as TypedLocale;
   const internalI18nA11y = useTranslations('a11y');
@@ -104,72 +101,53 @@ export const DownloadLinkItem = ({
       ${internalI18nA11y('linkTarget')} ${internalI18nA11y('opensInNewWindow')}`;
   }
 
-  const content = (
-    <>
-      <div className={styles.content}>
-
-        {/* title */}
-        <SafeHtml
-          as='span'
-          className={styles.title}
-          html={title}
-        />
-
-        {/* text */}
-        {type === 'link' && text &&
-          <SafeHtml
-            as='span'
-            className={styles.text}
-            html={text}
-          />
-        }
-
-        {type === 'download' &&
-          <SafeHtml
-            as='span'
-            className={styles.text}
-            html={downloadText}
-          />
-        }
-      </div>
-
-      {/* icon */}
-      <Icon
-        className={styles.icon}
-        name={iconName as keyof typeof Icon}
-      />
-    </>
-  );
-
   return (
     <li
       className={itemClasses()}
       data-testid='downloadLinkItem'
     >
-      {type === 'download'
-        ? (
-          <a
-            aria-label={ariaLabel}
-            href={link.href}
-            target={link.target}
-            className={styles.link}
-            download={downloadFilename || true}
-          >
-            {content}
-          </a>
-        )
-        : (
-          <Link
-            aria-label={ariaLabel}
-            href={link.href}
-            target={link.target}
-            className={styles.link}
-            prefetch={true}
-          >
-            {content}
-          </Link>
-        )
-      }
+      <Link
+        aria-label={ariaLabel}
+        href={link.href}
+        target={link.target}
+        className={styles.link}
+        prefetch={type !== 'download'}
+      >
+
+        <div className={styles.content}>
+
+          {/* title */}
+          <SafeHtml
+            as='span'
+            className={styles.title}
+            html={title}
+          />
+
+          {/* text */}
+          {type === 'link' && text &&
+            <SafeHtml
+              as='span'
+              className={styles.text}
+              html={text}
+            />
+          }
+
+          {type === 'download' &&
+            <SafeHtml
+              as='span'
+              className={styles.text}
+              html={downloadText}
+            />
+          }
+        </div>
+
+        {/* icon */}
+        <Icon
+          className={styles.icon}
+          name={iconName as keyof typeof Icon}
+        />
+
+      </Link>
     </li>
   );
 };
