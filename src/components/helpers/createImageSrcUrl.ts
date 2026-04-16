@@ -1,4 +1,5 @@
 import { InterfaceImagePropTypes } from '@/components/base/Image/Image';
+import { encodeURLPath } from '@/utilities/encodeURLPath';
 
 export const createImageSrcUrl = ({
   filename,
@@ -24,11 +25,11 @@ export const createImageSrcUrl = ({
   // can not work with the «url» property and have to
   // use a combination of host and filename.
   if (host && host.indexOf('localhost') !== -1) {
-    return `${host}/${filename}`;
+    return `${host}/${encodeURLPath(filename)}`;
   }
 
   // finally, if none of the special cases apply, we return
   // the combination of the host and the value from the «url»
   // property.
-  return host + url;
+  return host + encodeURLPath(url);
 };
