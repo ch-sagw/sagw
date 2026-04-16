@@ -11,7 +11,7 @@ The Blob Storages are connected to the Vercel Environments in this way:
 ## Vercel environments
 
 Prod:
-Production Environemnt. Deployed after release on github.
+Production Environment. Deployed after release on github.
 
 Test:
 Test/Staging Environment. Deployed on every change on master.
