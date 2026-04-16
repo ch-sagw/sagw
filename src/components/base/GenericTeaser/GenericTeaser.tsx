@@ -19,6 +19,7 @@ export interface InterfaceGenericTeaserLink {
 export type InterfaceBaseTeaserProps = {
   image?: ImageType | undefined;
   title: string;
+  titleLevel: 2 | 3;
   texts?: string[];
   links: InterfaceGenericTeaserLink[];
   type: 'institute' | 'network' | 'project' | 'magazine' | 'people' | 'generic';
@@ -91,12 +92,15 @@ const renderLink = ({
 
 export const GenericTeaser = ({
   title,
+  titleLevel,
   texts,
   links,
   image,
   type,
   className,
 }: InterfaceBaseTeaserProps): React.JSX.Element => {
+
+  const titleTag = `h${titleLevel}` as const;
 
   const teaserClasses = cva([
     styles.teaser,
@@ -109,12 +113,10 @@ export const GenericTeaser = ({
   const imageWidth = 400;
   let imageHeight = 300;
   let optimizeImage = true;
-  let titleLevel: 'h3' | 'h2' = 'h3';
 
   if (type === 'people') {
     imageVariant = 'portrait';
     imageHeight = 400;
-    titleLevel = 'h2';
   }
 
   if (type === 'network') {
@@ -167,7 +169,7 @@ export const GenericTeaser = ({
       }
 
       <SafeHtml
-        as={titleLevel}
+        as={titleTag}
         html={title}
         className={styles.title}
         data-testid='genericTeaserItemTitle'

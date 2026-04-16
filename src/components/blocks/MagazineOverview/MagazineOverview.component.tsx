@@ -30,6 +30,7 @@ export const MagazineOverviewComponent = ({
         image={image}
         key={item.id}
         title={rteToHtml(item.hero.title)}
+        titleLevel={2}
         texts={[rteToHtml(item.overviewPageProps.teaserText)]}
         links={[
           {

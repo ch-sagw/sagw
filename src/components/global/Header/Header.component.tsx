@@ -54,6 +54,7 @@ export type InterfaceHeaderComponentPropTypes = {
 export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React.JSX.Element => {
   const locale = useLocale();
   const langNavTranslations = useTranslations('langNav');
+  const i18nLandmarks = useTranslations('landmarks');
   const i18nA11y = useTranslations('a11y');
 
   // --- Refs
@@ -644,6 +645,7 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
 
   return (
     <header
+      aria-label={i18nLandmarks('header')}
       data-testid='header'
       ref={headerRef}
       className={`${styles.header} ${styles[renderColorMode()]} ${hydrated

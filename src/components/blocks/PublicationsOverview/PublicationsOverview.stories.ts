@@ -40,6 +40,7 @@ const publicationItem = {
   },
   tag: 'Magazin',
   title: 'Das Paradox von sozialer Integration und Ausschluss im Schweizer Bildungswesen. Beiträge der Soziologie',
+  titleLevel: '2',
 };
 
 const filterListItems = {

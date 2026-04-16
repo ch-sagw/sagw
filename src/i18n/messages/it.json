@@ -4,18 +4,18 @@
     "impressum": "impressum-it"
   },
   "navigation": {
-    "navigationTitle": "Home IT"
+    "navigationTitle": "Home"
   },
   "pagination": {
     "hiddenPaginationTitle": "Impaginazione"
   },
   "skipLinks": {
-    "sectionLabel": "Sprunglinks (IT)",
-    "skipToContent": "Zum Inhalt (IT)"
+    "sectionLabel": "Collegamenti rapidi",
+    "skipToContent": "Al contenuto"
   },
   "form": {
     "newsletter": {
-      "error": "Devi fare una selezione",
+      "error": "Seleziona una lingua",
       "label": "In quale lingua desideri iscriverti alla newsletter?",
       "languages": {
         "french": "Francese",
@@ -24,17 +24,19 @@
     }
   },
   "landmarks": {
-    "footerNavigation": "Navigation im Footerbereich (IT)",
-    "mainNavigation": "Hauptnavigation (IT)"
+    "footer": "Footer",
+    "footerNavigation": "Navigazione nell'area del Footer",
+    "header": "Header",
+    "mainNavigation": "Navigazione principale"
   },
   "a11y": {
     "breadcrumb": "Torna indietro nella struttura delle pagine",
     "closeDialog": "Chiudi finestra di dialogo",
-    "footerLogoLinkText": "Zur Startseite von SAGW (IT)",
+    "footerLogoLinkText": "Member of the Swiss Academy of Humanities and Social Sciences",
     "linkTarget": "Il link",
-    "logoLinkText": "Zurück zur Startseite (IT)",
+    "logoLinkText": "Alla home page",
     "opensInNewWindow": "si apre in una nuova finestra.",
-    "playVideoText": "Video mit dem Titel «$$title$$» laden und abspielen (IT).",
+    "playVideoText": "Carica e riproduci il video intitolato «$$title$$»",
     "socialLinks": {
       "facebook": "Seguici su Facebook",
       "instagram": "Seguici su Instagram",
@@ -43,8 +45,8 @@
     }
   },
   "consent": {
-    "buttonTextOpenCookieSettings": "Cookie-Einstellungen (IT)",
-    "messageVideo": "Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können. (IT)",
+    "buttonTextOpenCookieSettings": "Impostazioni dei cookie",
+    "messageVideo": "Per guardare il video, abilita i cookie relativi ai contenuti esterni nella finestra delle impostazioni dei cookie.",
     "titleExternalContent": "Ccontenuto esterno"
   },
   "menu": {
@@ -52,8 +54,8 @@
     "close": "Chiudere"
   },
   "publicationFilters": {
-    "publicationTopicsLabel": "Publikationsthemen (IT)",
-    "publicationTypesLabel": "Publikationstypen (IT)"
+    "publicationTopicsLabel": "Argomenti delle pubblicazioni",
+    "publicationTypesLabel": "Tipi di pubblicazione"
   },
   "langNav": {
     "de": "Deutsch",

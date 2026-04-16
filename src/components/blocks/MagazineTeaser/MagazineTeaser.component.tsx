@@ -63,6 +63,7 @@ export const MagazineTeaserComponent = ({
             image={image}
             key={item.id}
             title={rteToHtml(item.hero.title)}
+            titleLevel={3}
             texts={[rteToHtml(item.overviewPageProps.teaserText)]}
             type='magazine'
             links={[

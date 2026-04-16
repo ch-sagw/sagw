@@ -154,7 +154,9 @@ export const renderPageContent = ({
         currentPageId={currentPageId}
       />
       <PageMainViewTransition name='page-main'>
-        <main>
+        <main
+          aria-labelledby='content'
+        >
           <div className={containerType === 'home'
             ? 'home'
             : 'detail-page'}>
