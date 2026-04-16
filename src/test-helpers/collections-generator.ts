@@ -1527,6 +1527,9 @@ export const generateCollectionsExceptPages = async ({
 
   const video = await payload.create({
     collection: 'videos',
+    context: {
+      skipGumletSync: true,
+    },
     data: {
       tenant,
       title: `video ${isSagw
@@ -2126,9 +2129,6 @@ export const generateRegularForm = async (tenant: string): Promise<string> => {
   const payload = await getPayloadCached();
   const form = await payload.create({
     collection: 'forms',
-    context: {
-      skipCacheInvalidation: true,
-    },
     data: {
       colorMode: 'dark',
       fields: [
@@ -2272,6 +2272,9 @@ export const generateVideo = async (tenant: string): Promise<string> => {
   const payload = await getPayloadCached();
   const video = await payload.create({
     collection: 'videos',
+    context: {
+      skipGumletSync: true,
+    },
     data: {
       tenant,
       title: 'video',

@@ -42,6 +42,9 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
   // add video
   await payload.create({
     collection: 'videos',
+    context: {
+      skipGumletSync: true,
+    },
     data: {
       tenant: tenantId,
       title: `video ${tenant}`,
