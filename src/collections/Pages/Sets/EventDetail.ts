@@ -8,6 +8,7 @@ import {
 } from '@/blocks';
 import { fieldsLinkExternal } from '@/field-templates/links';
 import { versions } from '@/field-templates/versions';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 import {
   rte1, rte2,
 } from '@/field-templates/rte';
@@ -228,6 +229,7 @@ export const EventDetailPage: CollectionConfig = {
     plural: 'Event Detail Pages',
     singular: 'Event Detail Detail',
   },
+  lockDocuments,
   slug: 'eventDetailPage',
   versions,
 };

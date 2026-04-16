@@ -11,6 +11,7 @@ import {
   blocks, BlockSlug,
 } from '@/blocks';
 import { versions } from '@/field-templates/versions';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 import { hookCascadeBreadcrumbUpdates } from '@/hooks-payload/cascadeBreadcrumbUpdates';
 import { hookGenerateBreadcrumbs } from '@/hooks-payload/generateBreadcrumbs';
 import { fieldNavigationTitleFieldName } from '@/field-templates/navigationTitle';
@@ -237,6 +238,7 @@ export const HomePage: CollectionConfig = {
     plural: 'Home',
     singular: 'Home',
   },
+  lockDocuments,
   slug: 'homePage',
   versions,
 };

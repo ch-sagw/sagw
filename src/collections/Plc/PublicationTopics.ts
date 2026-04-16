@@ -4,6 +4,7 @@ import { globalContentAccessGeneric } from '@/access/globalContent';
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 export const PublicationTopics: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -46,5 +47,6 @@ export const PublicationTopics: CollectionConfig = {
     afterChange: [hookInvalidateTenantCache],
     afterDelete: [hookInvalidateTenantCacheOnDelete],
   },
+  lockDocuments,
   slug: 'publicationTopics',
 };

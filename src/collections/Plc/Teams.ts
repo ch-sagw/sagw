@@ -4,6 +4,7 @@ import { globalContentAccessGeneric } from '@/access/globalContent';
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 export const Teams: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -32,5 +33,6 @@ export const Teams: CollectionConfig = {
     afterChange: [hookInvalidateTenantCache],
     afterDelete: [hookInvalidateTenantCacheOnDelete],
   },
+  lockDocuments,
   slug: 'teams',
 };

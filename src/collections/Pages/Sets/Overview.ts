@@ -6,6 +6,7 @@ import {
   blocks, BlockSlug, OVERVIEW_BLOCK_TYPES,
 } from '@/blocks';
 import { versions } from '@/field-templates/versions';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 import {
   excludeBlocksFilterCumulative, excludeBlocksFilterSingle,
 } from '@/utilities/blockFilters';
@@ -130,6 +131,7 @@ export const OverviewPage: CollectionConfig = {
     plural: 'Overview Pages',
     singular: 'Overview Page',
   },
+  lockDocuments,
   slug: 'overviewPage',
   versions,
 };

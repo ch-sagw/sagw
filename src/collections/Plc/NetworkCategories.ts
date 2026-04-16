@@ -4,6 +4,7 @@ import { globalContentAccessGeneric } from '@/access/globalContent';
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 export const NetworkCategories: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -21,5 +22,6 @@ export const NetworkCategories: CollectionConfig = {
     afterChange: [hookInvalidateTenantCache],
     afterDelete: [hookInvalidateTenantCacheOnDelete],
   },
+  lockDocuments,
   slug: 'networkCategories',
 };

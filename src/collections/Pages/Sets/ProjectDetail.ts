@@ -6,6 +6,7 @@ import {
   blocks, BlockSlug,
 } from '@/blocks';
 import { versions } from '@/field-templates/versions';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 import {
   rte1, rte2,
 } from '@/field-templates/rte';
@@ -130,6 +131,7 @@ export const ProjectDetailPage: CollectionConfig = {
     plural: 'Project Detail Pages',
     singular: 'Project Detail Page',
   },
+  lockDocuments,
   slug: 'projectDetailPage',
   versions,
 };
