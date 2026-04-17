@@ -2125,7 +2125,7 @@ export const generateForm = async (tenant: string): Promise<string> => {
   return form.id;
 };
 
-export const generateRegularForm = async (tenant: string): Promise<string> => {
+export const generateRegularForm = async (tenant: string, omitTitle?: boolean): Promise<string> => {
   const payload = await getPayloadCached();
   const form = await payload.create({
     collection: 'forms',
@@ -2199,9 +2199,13 @@ export const generateRegularForm = async (tenant: string): Promise<string> => {
         text: simpleRteConfig('Submit text success'),
         title: simpleRteConfig('Submit title success'),
       },
-      subtitle: simpleRteConfig('Subtitle for contact Form'),
+      subtitle: omitTitle
+        ? undefined
+        : simpleRteConfig('Subtitle for contact Form'),
       tenant,
-      title: simpleRteConfig('Contact Form'),
+      title: omitTitle
+        ? undefined
+        : simpleRteConfig('Contact Form'),
     },
   });
 
