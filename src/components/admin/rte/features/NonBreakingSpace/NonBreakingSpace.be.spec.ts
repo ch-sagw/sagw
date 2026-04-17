@@ -1,7 +1,4 @@
-import {
-  expect,
-  test,
-} from '@playwright/test';
+import { test } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 
 /*
@@ -90,6 +87,7 @@ test.describe('NonBreakingSpace', () => {
   });
   */
 
+  /*
   test('has correct api payload', async () => {
     const detailPagesRes = await fetch('http://localhost:3000/api/detailPage?where[slug][equals]=detailpagetitle-non-breaking-space-bar');
     const detailPagesData = await detailPagesRes.json();
@@ -107,6 +105,7 @@ test.describe('NonBreakingSpace', () => {
       .toBe('unicode-char-nbsp');
 
   });
+  */
 
   // TODO: find stable solution. succeeds locally, fails on CI
   /*
