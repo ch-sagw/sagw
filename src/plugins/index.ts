@@ -17,6 +17,7 @@ import { tenantsCollections } from '@/collections';
 import * as Sentry from '@sentry/nextjs';
 import { tenantsAccess } from '@/access/tenants';
 import { userIsSuperAdmin } from '@/collections/Plc/Users/roles';
+import { encodeURLPath } from '@/utilities/encodeURLPath';
 
 const generateTitle: GenerateTitle = ({
   doc,
@@ -49,7 +50,7 @@ const generateGumletFileURL = ({
     .join('/');
 
   return path
-    ? `${gumletHost}/${path}`
+    ? `${gumletHost}/${encodeURLPath(path)}`
     : gumletHost;
 };
 

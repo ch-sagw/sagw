@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import 'server-only';
+import { encodeURLPath } from '@/utilities/encodeURLPath';
 
 export interface InterfaceGumletAsset {
   id: string;
@@ -17,10 +18,10 @@ export const uploadToGumletFromUrl = async ({
   const collectionId = process.env.GUMLET_COLLECTION_ID;
   const host = process.env.NEXT_PUBLIC_GUMLET_URL;
 
-  let inputUrl = `${host}${fileUrl}`;
+  let inputUrl = `${host}${encodeURLPath(fileUrl)}`;
 
   if (host && host.indexOf('localhost') !== -1) {
-    inputUrl = `${host}/${fileName}`;
+    inputUrl = `${host}/${encodeURLPath(fileName)}`;
   }
 
   const payload = {
