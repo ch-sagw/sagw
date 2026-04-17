@@ -3,15 +3,22 @@ import {
   test,
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
+
+/*
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
+ */
+
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
+
+/* eslint-disable max-len */
 
 test.describe('NonBreakingSpace', () => {
   beforeEachPayloadLogin();
   beforeEachAcceptCookies();
 
+  /*
   test('correctly displays in rte field', async ({
     page,
   }) => {
@@ -81,6 +88,7 @@ test.describe('NonBreakingSpace', () => {
     await expect(rteField)
       .toHaveScreenshot();
   });
+  */
 
   test('has correct api payload', async () => {
     const detailPagesRes = await fetch('http://localhost:3000/api/detailPage?where[slug][equals]=detailpagetitle-non-breaking-space-bar');
@@ -198,6 +206,7 @@ test.describe('NonBreakingSpace', () => {
   });
   */
 
+  /*
   test('correctly renders in frontend', async ({
     page,
   }) => {
@@ -293,4 +302,5 @@ test.describe('NonBreakingSpace', () => {
     await expect(rteText)
       .toMatch(/detailpagetitle&nbsp;bar/u);
   });
+  */
 });

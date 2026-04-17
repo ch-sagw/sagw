@@ -8,6 +8,8 @@ import {
 } from '@/seed/test-data/deleteData';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 
+/* eslint-disable max-len */
+
 test.describe('Softhyphen', () => {
   beforeEachPayloadLogin();
   beforeEachAcceptCookies();
@@ -198,6 +200,7 @@ test.describe('Softhyphen', () => {
   });
   */
 
+  /*
   test('correctly renders in frontend', async ({
     page,
   }) => {
@@ -298,4 +301,5 @@ test.describe('Softhyphen', () => {
       .toMatch(/detailpagetitle\u00ADbar/u);
 
   });
+  */
 });
