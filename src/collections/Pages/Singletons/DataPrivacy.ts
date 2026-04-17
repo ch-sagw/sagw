@@ -11,6 +11,7 @@ import {
   blocks, BlockSlug,
 } from '@/blocks';
 import { versions } from '@/field-templates/versions';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 import { pageAccess } from '@/access/pages';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { allBlocksButTranslator } from '@/access/blocks';
@@ -180,6 +181,7 @@ export const DataPrivacyPage: CollectionConfig = {
     plural: 'Data Privacy',
     singular: 'Data Privacy',
   },
+  lockDocuments,
   slug: 'dataPrivacyPage',
   versions,
 };

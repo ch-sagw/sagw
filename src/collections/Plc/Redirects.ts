@@ -2,6 +2,7 @@ import { CollectionConfig } from 'payload';
 import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent';
 import { validateRedirectGraph } from '@/hooks-payload/validateRedirectGraph';
 import { validateRedirectLocalePrefix } from '@/hooks-payload/validateRedirectLocalePrefix';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 export const Redirects: CollectionConfig = {
   access: globalContentAccessNoTranslatorNoEditor,
@@ -36,5 +37,6 @@ export const Redirects: CollectionConfig = {
       validateRedirectGraph,
     ],
   },
+  lockDocuments,
   slug: 'redirects',
 };

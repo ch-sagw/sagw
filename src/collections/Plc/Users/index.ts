@@ -8,6 +8,7 @@ import {
 import {
   usersAccess, usersFieldAccess, usersFieldAccessWithoutSelf,
 } from '@/access/users';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 const defaultTenantArrayField = tenantsArrayField({
   arrayFieldAccess: usersFieldAccessWithoutSelf,
@@ -80,5 +81,6 @@ export const Users: CollectionConfig = {
   hooks: {
     afterLogin: [setCookieBasedOnDomain],
   },
+  lockDocuments,
   slug: 'users',
 };

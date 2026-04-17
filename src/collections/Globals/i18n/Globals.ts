@@ -6,6 +6,7 @@ import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent'
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 export const I18nGlobals: CollectionConfig = {
   access: globalContentAccessNoTranslatorNoEditor,
@@ -105,5 +106,6 @@ export const I18nGlobals: CollectionConfig = {
     plural: 'Content Snippets',
     singular: 'Content Snippets',
   },
+  lockDocuments,
   slug: 'i18nGlobals',
 };
