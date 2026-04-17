@@ -126,9 +126,15 @@ test.describe('Softhyphen', () => {
 
     await addTextBlockButton.click();
 
-    const rteField = await page.locator('#field-content .blocks-field__row');
+    const rteField = await page.locator('#content-row-0 .blocks-field__row');
+
+    await (await rteField.elementHandle())?.waitForElementState('stable');
+
     const fieldToScreenshot = await rteField.locator('.LexicalEditorTheme__paragraph');
     const rteInputField = await rteField.locator('.rich-text-lexical .ContentEditable__root');
+
+    await (await rteInputField.elementHandle())?.waitForElementState('stable');
+
     const hyphenButton = await rteField.locator('.rich-text-lexical .toolbar-popup__button-softHyphenButton');
 
     await rteInputField.fill('detailpagetitle');
