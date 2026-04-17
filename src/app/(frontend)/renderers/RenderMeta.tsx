@@ -2,6 +2,7 @@
 
 import 'server-only';
 import { getTenantFromUrl } from '../utilities/getTenantFromUrl';
+import { getTenantName } from '../utilities/getTenantName';
 import { Metadata } from 'next';
 import {
   fetchHomePageData, InterfaceHomePageProps,
@@ -95,17 +96,29 @@ export const renderMeta = async ({
   // remove before go-live: https://github.com/ch-sagw/sagw/issues/782
   seoIndex = false;
 
+  const tenantName = await getTenantName({
+    id: tenantInfo.tenantId,
+  });
+
   return {
     description: meta.description,
     icons: {
-
-      // TODO; render proper icons
-      apple: '/apple-icon.png',
-      icon: '/icon.png',
-      other: {
-        rel: 'apple-touch-icon-precomposed',
-        url: '/apple-touch-icon-precomposed.png',
-      },
+      apple: [
+        {
+          sizes: '180x180',
+          url: `/favicons/${tenantName.name}/apple-touch-icon.png`,
+        },
+      ],
+      icon: [
+        {
+          sizes: '32x32',
+          url: `/favicons/${tenantName.name}/favicon.ico`,
+        },
+        {
+          type: 'image/svg+xml',
+          url: `/favicons/${tenantName.name}/favicon.svg`,
+        },
+      ],
     },
     keywords: meta?.keywords?.map((k: any) => k.keyword)
       .filter((k: any): k is string => Boolean(k)),
