@@ -12,6 +12,7 @@ import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent'
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 const navLinkDefaultFields: Field[] = [
   {
@@ -140,5 +141,6 @@ export const Header: CollectionConfig = {
     plural: 'Header',
     singular: 'Header',
   },
+  lockDocuments,
   slug: 'header',
 };

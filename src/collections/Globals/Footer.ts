@@ -11,6 +11,7 @@ import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent'
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 const fieldsSocialLink: Field[] = [
   {
@@ -174,5 +175,6 @@ export const Footer: CollectionConfig = {
     plural: 'Footer',
     singular: 'Footer',
   },
+  lockDocuments,
   slug: 'footer',
 };

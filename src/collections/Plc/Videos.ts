@@ -7,6 +7,7 @@ import {
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 // TODO:
 // - discuss: subtitles
@@ -64,6 +65,7 @@ export const Videos: CollectionConfig = {
       deleteVideoFromGumlet,
     ],
   },
+  lockDocuments,
   slug: 'videos',
   upload: {
     mimeTypes: [
