@@ -93,20 +93,25 @@ export const generateLinkUrls = async ({
 interface InterfaceGenerateLangNavUrlsParams {
   pageId: string;
   payload: Awaited<ReturnType<typeof getPayloadCached>>;
+  tenant: string;
 }
 
 // generate URL map for current page in all locales for langnav
 export const generateLangNavUrls = async ({
   pageId,
   payload,
+  tenant,
 }: InterfaceGenerateLangNavUrlsParams): Promise<Record<string, string>> => {
   const localeCodes = getLocaleCodes();
   const rootUrls = getRootPathUrls();
   const urlMap: Record<string, string> = {};
 
   await Promise.all(localeCodes.map(async (targetLocale) => {
+
+    const fallbackUrl = rootUrls[targetLocale] || `/${targetLocale}`;
+
     if (!pageId) {
-      urlMap[targetLocale] = rootUrls[targetLocale] || `/${targetLocale}`;
+      urlMap[targetLocale] = fallbackUrl;
 
       return;
     }
@@ -118,9 +123,13 @@ export const generateLangNavUrls = async ({
         payload,
       });
 
-      urlMap[targetLocale] = url || rootUrls[targetLocale] || `/${targetLocale}`;
+      const tenantFolder = tenant !== 'sagw' && url.indexOf(tenant) === -1
+        ? `/${tenant}`
+        : '';
+
+      urlMap[targetLocale] = `${url}${tenantFolder}` || rootUrls[targetLocale] || `/${targetLocale}`;
     } catch {
-      urlMap[targetLocale] = rootUrls[targetLocale] || `/${targetLocale}`;
+      urlMap[targetLocale] = fallbackUrl;
     }
   }));
 

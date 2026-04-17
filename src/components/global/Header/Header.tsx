@@ -48,6 +48,7 @@ export const Header = async (props: InterfaceHeaderPropTypes): Promise<React.JSX
   const localeUrls = await generateLangNavUrls({
     pageId: props.documentId || '',
     payload,
+    tenant: props.tenant,
   });
 
   return (
