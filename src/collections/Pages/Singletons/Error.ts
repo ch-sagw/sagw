@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload';
 import { fieldsTabMeta } from '@/field-templates/meta';
 import { versions } from '@/field-templates/versions';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 import { rte1 } from '@/field-templates/rte';
 import { pageAccess } from '@/access/pages';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
@@ -74,6 +75,7 @@ export const ErrorPage: CollectionConfig = {
     plural: 'Error Page',
     singular: 'Error Page',
   },
+  lockDocuments,
   slug: 'errorPage',
   versions,
 };

@@ -4,6 +4,7 @@ import { assetsAccess } from '@/access/assets';
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 export const Documents: CollectionConfig = {
   access: assetsAccess,
@@ -46,6 +47,7 @@ export const Documents: CollectionConfig = {
     afterChange: [hookInvalidateTenantCache],
     afterDelete: [hookInvalidateTenantCacheOnDelete],
   },
+  lockDocuments,
   slug: 'documents',
   upload: {
     mimeTypes: ['application/pdf'],

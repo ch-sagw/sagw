@@ -6,6 +6,7 @@ import { isSuperOrTenantAdmin } from '../Users/roles';
 import { hookTenantsAfterCreate } from '@/hooks-payload/tenantsAfterChange';
 import { hookTenantsBeforeDelete } from '@/hooks-payload/tenantsBeforeDelete';
 import { validateTenantName } from '@/hooks-payload/validateTenantName';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 export const Tenants: CollectionConfig = {
   access: tenantsAccess,
@@ -107,5 +108,6 @@ export const Tenants: CollectionConfig = {
     afterChange: [hookTenantsAfterCreate],
     beforeDelete: [hookTenantsBeforeDelete],
   },
+  lockDocuments,
   slug: 'tenants',
 };

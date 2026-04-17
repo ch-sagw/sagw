@@ -14,6 +14,7 @@ import { isSuperOrTenantAdmin } from '@/collections/Plc/Users/roles';
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 export const Forms: CollectionConfig = {
   access: globalContentAccessGeneric,
@@ -291,5 +292,6 @@ export const Forms: CollectionConfig = {
     afterChange: [hookInvalidateTenantCache],
     afterDelete: [hookInvalidateTenantCacheOnDelete],
   },
+  lockDocuments,
   slug: 'forms',
 };

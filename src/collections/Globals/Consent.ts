@@ -13,6 +13,7 @@ import { globalContentAccessNoTranslatorNoEditor } from '@/access/globalContent'
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 const overlaySection: Field[] = [
   rte1({
@@ -166,5 +167,6 @@ export const Consent: CollectionConfig = {
     plural: 'Consent',
     singular: 'Consent',
   },
+  lockDocuments,
   slug: 'consent',
 };

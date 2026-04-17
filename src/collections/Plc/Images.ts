@@ -3,6 +3,7 @@ import { assetsAccess } from '@/access/assets';
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 export const Images: CollectionConfig = {
   access: assetsAccess,
@@ -41,6 +42,7 @@ export const Images: CollectionConfig = {
     afterChange: [hookInvalidateTenantCache],
     afterDelete: [hookInvalidateTenantCacheOnDelete],
   },
+  lockDocuments,
   slug: 'images',
   upload: {
     crop: false,

@@ -6,6 +6,7 @@ import {
   blocks, BlockSlug,
 } from '@/blocks';
 import { versions } from '@/field-templates/versions';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
@@ -183,6 +184,7 @@ export const PublicationDetailPage: CollectionConfig = {
     plural: 'Publication Detail Pages',
     singular: 'Publication Detail',
   },
+  lockDocuments,
   slug: 'publicationDetailPage',
   versions,
 };

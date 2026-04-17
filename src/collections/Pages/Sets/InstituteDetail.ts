@@ -6,6 +6,7 @@ import {
   blocks, BlockSlug,
 } from '@/blocks';
 import { versions } from '@/field-templates/versions';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 import { rte2 } from '@/field-templates/rte';
 import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
@@ -110,6 +111,7 @@ export const InstituteDetailPage: CollectionConfig = {
     plural: 'Institute Detail Pages',
     singular: 'Institute Detail Page',
   },
+  lockDocuments,
   slug: 'instituteDetailPage',
   versions,
 };
