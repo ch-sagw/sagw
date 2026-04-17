@@ -4,7 +4,7 @@
     "impressum": "impressum-de"
   },
   "navigation": {
-    "navigationTitle": "Home DE"
+    "navigationTitle": "Home"
   },
   "pagination": {
     "hiddenPaginationTitle": "Paginierung"
@@ -24,7 +24,9 @@
     }
   },
   "landmarks": {
+    "footer": "Footer",
     "footerNavigation": "Navigation im Footerbereich",
+    "header": "Header",
     "mainNavigation": "Hauptnavigation"
   },
   "a11y": {

@@ -9,6 +9,26 @@ test('expect screenshot', async ({
 }) => {
   await navigate(page, 'components-blocks-video--video-centered');
 
+  await page.context()
+    .addCookies([
+      {
+        name: 'cookie_consent',
+        url: 'http://127.0.0.1:6006',
+        value: encodeURIComponent(JSON.stringify({
+          analytics: true,
+          consentGiven: true,
+          essential: true,
+          external: true,
+          timestamp: Date.now(),
+        })),
+      },
+    ]);
+
+  // ensure React picks it up if needed
+  await page.evaluate(() => {
+    window.dispatchEvent(new Event('consentUpdated'));
+  });
+
   const viewport = page.viewportSize();
 
   const img = page.locator('img');

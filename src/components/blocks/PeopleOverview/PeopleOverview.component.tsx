@@ -47,6 +47,7 @@ export const PeopleOverviewComponent = ({
         className={styles.item}
         key={item.id}
         title={item.fullName}
+        titleLevel={2}
         texts={[rteToHtml(item.function)]}
         links={links}
         type='people'

@@ -289,7 +289,7 @@ test.describe('Breadcrumb links (non-sagw)', () => {
     await page.waitForLoadState('networkidle');
 
     const linkHome = await page.getByRole('link', {
-      name: 'Home DE',
+      name: 'Home',
     })
       .getAttribute('href');
 
@@ -366,7 +366,7 @@ test.describe('Breadcrumb links (non-sagw)', () => {
     await page.waitForLoadState('networkidle');
 
     const linkHomeIt = await page.getByRole('link', {
-      name: 'Home IT',
+      name: 'Home',
     })
       .getAttribute('href');
 

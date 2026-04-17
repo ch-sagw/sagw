@@ -75,7 +75,7 @@ export const PublicationsListItem = ({
           }
 
           <SafeHtml
-            as='span'
+            as='h3'
             className={styles.textContentTitle}
             html={title}
             data-testid='publicationsListItemTitle'

@@ -16,6 +16,7 @@ export const EditionsOverview = ({
       className={styles.item}
       key={item.id}
       title={rteToHtml(item.title)}
+      titleLevel={2}
       texts={[rteToHtml(item.text)]}
       links={[
         {

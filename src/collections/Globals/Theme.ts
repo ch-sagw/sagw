@@ -7,6 +7,7 @@ import { globalContentAccessTheme } from '@/access/globalContent';
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 export const Theme: CollectionConfig = {
   access: globalContentAccessTheme,
@@ -39,5 +40,6 @@ export const Theme: CollectionConfig = {
     plural: 'Theme',
     singular: 'Theme',
   },
+  lockDocuments,
   slug: 'theme',
 };

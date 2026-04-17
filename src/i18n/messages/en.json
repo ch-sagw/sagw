@@ -4,18 +4,18 @@
     "impressum": "impressum-en"
   },
   "navigation": {
-    "navigationTitle": "Home EN"
+    "navigationTitle": "Home"
   },
   "pagination": {
     "hiddenPaginationTitle": "Pagination"
   },
   "skipLinks": {
-    "sectionLabel": "Sprunglinks (EN)",
-    "skipToContent": "Zum Inhalt (EN)"
+    "sectionLabel": "Skiplinks",
+    "skipToContent": "Skip to content"
   },
   "form": {
     "newsletter": {
-      "error": "You must make a selection",
+      "error": "Please select a language",
       "label": "In which language would you like to subscribe to the newsletter?",
       "languages": {
         "french": "French",
@@ -24,17 +24,19 @@
     }
   },
   "landmarks": {
-    "footerNavigation": "Navigation im Footerbereich (EN)",
-    "mainNavigation": "Hauptnavigation (EN)"
+    "footer": "Footer",
+    "footerNavigation": "Navigation in the footer area",
+    "header": "Header",
+    "mainNavigation": "Main navigation"
   },
   "a11y": {
     "breadcrumb": "Navigating back in the page structure",
     "closeDialog": "Close dialog",
-    "footerLogoLinkText": "Zur Startseite von SAGW (EN)",
+    "footerLogoLinkText": "Member of the Swiss Academy of Humanities and Social Sciences",
     "linkTarget": "Link target",
-    "logoLinkText": "Back to Homepage",
+    "logoLinkText": "Back to homepage",
     "opensInNewWindow": "opens in new window",
-    "playVideoText": "Video mit dem Titel «$$title$$» laden und abspielen (EN).",
+    "playVideoText": "Load and play the video titled «$$title$$»",
     "socialLinks": {
       "facebook": "Follow us on Facebook",
       "instagram": "Follow us on Instagram",
@@ -44,7 +46,7 @@
   },
   "consent": {
     "buttonTextOpenCookieSettings": "Cookie-Settings",
-    "messageVideo": "Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können. (EN)",
+    "messageVideo": "Please enable external content cookies in the cookie settings window to watch the video.",
     "titleExternalContent": "External content"
   },
   "menu": {
@@ -52,8 +54,8 @@
     "close": "Close"
   },
   "publicationFilters": {
-    "publicationTopicsLabel": "Publikationsthemen (EN)",
-    "publicationTypesLabel": "Publikationstypen (EN)"
+    "publicationTopicsLabel": "Publication topics",
+    "publicationTypesLabel": "Publication types"
   },
   "langNav": {
     "de": "Deutsch",

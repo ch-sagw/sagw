@@ -4,18 +4,18 @@
     "impressum": "impressum-fr"
   },
   "navigation": {
-    "navigationTitle": "Home FR"
+    "navigationTitle": "Page d'accueil"
   },
   "pagination": {
     "hiddenPaginationTitle": "Pagination"
   },
   "skipLinks": {
-    "sectionLabel": "Sprunglinks (FR)",
-    "skipToContent": "Zum Inhalt (FR)"
+    "sectionLabel": "Accèss rapide",
+    "skipToContent": "Vers le contenu"
   },
   "form": {
     "newsletter": {
-      "error": "Vous devez faire une sélection",
+      "error": "Veuillez sélectionner une langue",
       "label": "Dans quelle langue souhaitez-vous vous abonner à la newsletter ?",
       "languages": {
         "french": "Français",
@@ -24,17 +24,19 @@
     }
   },
   "landmarks": {
-    "footerNavigation": "Navigation im Footerbereich (FR)",
-    "mainNavigation": "Hauptnavigation (FR)"
+    "footer": "Footer",
+    "footerNavigation": "Navigation dans le Footer",
+    "header": "Header",
+    "mainNavigation": "Navigation principale"
   },
   "a11y": {
     "breadcrumb": "Revenir en arrière dans la structure du site",
     "closeDialog": "Fermer le dialogue",
-    "footerLogoLinkText": "Zur Startseite von SAGW (FR)",
+    "footerLogoLinkText": "Member of the Swiss Academy of Humanities and Social Sciences",
     "linkTarget": "La cible du lien",
-    "logoLinkText": "Zurück zur Startseite (FR)",
+    "logoLinkText": "A la page d'accueil",
     "opensInNewWindow": "s'ouvre dans une nouvelle fenêtre.",
-    "playVideoText": "Video mit dem Titel «$$title$$» laden und abspielen (FR).",
+    "playVideoText": "Charger et lire la vidéo intitulée «$$title$$»",
     "socialLinks": {
       "facebook": "Suivez-nous sur Facebook",
       "instagram": "Suivez-nous sur Instagram",
@@ -43,8 +45,8 @@
     }
   },
   "consent": {
-    "buttonTextOpenCookieSettings": "Cookie-Einstellungen (FR)",
-    "messageVideo": "Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können. (FR)",
+    "buttonTextOpenCookieSettings": "Paramètres des cookies",
+    "messageVideo": "Veuillez activer les cookies de contenu externe dans la fenêtre des paramètres des cookies pour visionner la vidéo.",
     "titleExternalContent": "Contenu externe"
   },
   "menu": {
@@ -52,8 +54,8 @@
     "close": "Fermer"
   },
   "publicationFilters": {
-    "publicationTopicsLabel": "Publikationsthemen (FR)",
-    "publicationTypesLabel": "Publikationstypen (FR)"
+    "publicationTopicsLabel": "Thèmes de publication",
+    "publicationTypesLabel": "Types de publications"
   },
   "langNav": {
     "de": "Deutsch",

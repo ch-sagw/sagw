@@ -3,6 +3,7 @@ import { assetsAccess } from '@/access/assets';
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
+import { lockDocuments } from '@/field-templates/lockDocuments';
 
 export const ZenodoDocuments: CollectionConfig = {
   access: assetsAccess,
@@ -89,5 +90,6 @@ export const ZenodoDocuments: CollectionConfig = {
     afterChange: [hookInvalidateTenantCache],
     afterDelete: [hookInvalidateTenantCacheOnDelete],
   },
+  lockDocuments,
   slug: 'zenodoDocuments',
 };

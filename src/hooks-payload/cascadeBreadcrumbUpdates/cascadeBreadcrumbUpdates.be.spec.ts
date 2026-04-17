@@ -679,13 +679,13 @@ test.describe('breadcrumb-cascade', () => {
       .toBe(3);
 
     await expect(level3Updated!.breadcrumb![0].namede)
-      .toStrictEqual('Home DE');
+      .toStrictEqual('Home');
 
     await expect(level3Updated!.breadcrumb![1].namede)
       .toStrictEqual('Level 1 Navigation Title');
 
     await expect(level4Updated!.breadcrumb![0].namede)
-      .toStrictEqual('Home DE');
+      .toStrictEqual('Home');
 
     await expect(level4Updated!.breadcrumb![1].namede)
       .toStrictEqual('Level 1 Navigation Title');

@@ -112,6 +112,7 @@ const NetworkTeaserContent = ({
         className={styles.item}
         key={item.id}
         title={rteToHtml(item.title)}
+        titleLevel={3}
         texts={[`${rteToHtml(items.foundingYearText)}: ${item.foundingYear}`]}
         image={image}
         links={[
