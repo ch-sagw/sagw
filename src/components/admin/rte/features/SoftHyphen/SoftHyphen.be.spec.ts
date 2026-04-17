@@ -254,6 +254,8 @@ test.describe('Softhyphen', () => {
 
     await addTextBlockButton.click();
 
+    await page.waitForLoadState('networkidle');
+
     const rteField2 = await page.locator('#field-content .blocks-field__row');
     const rteInputField2 = await rteField2.locator('.rich-text-lexical .ContentEditable__root');
     const hyphenButton2 = await rteField2.locator('.rich-text-lexical .toolbar-popup__button-softHyphenButton');
