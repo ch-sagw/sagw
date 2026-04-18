@@ -249,7 +249,8 @@ const buildSitemapVariant = ({
   };
 };
 
-const getTenantRouteParams = async ({
+// used by generateStaticParams routine
+export const getTenantRouteParams = async ({
   payload,
   tenant,
 }: {
@@ -341,7 +342,7 @@ const getTenantRouteParams = async ({
   return params;
 };
 
-// used by sitemap routine
+// used by generateStaticParams routine
 export const getTenantSitemapEntries = async ({
   payload,
   tenant,
