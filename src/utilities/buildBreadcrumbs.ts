@@ -1,7 +1,5 @@
 // Recursively build breadcrumbs by following the parent chain.
 // Returns breadcrumbs in root-to-leaf order with all locales.
-// Formerly lived as a beforeChange hook - now computed on the fly
-// at render, URL build, sitemap, and admin preview time.
 
 import type {
   BasePayload, CollectionSlug,
