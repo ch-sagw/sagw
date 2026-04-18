@@ -1,28 +1,12 @@
 import type { MetadataRoute } from 'next';
-import { getPayloadCached } from '@/utilities/getPayloadCached';
-import { getTenantSitemapEntries } from '@/utilities/getTenantRouteParams';
+import { generateStaticParams } from '@/app/(frontend)/utilities/generateStaticParams';
 
 export const dynamic = 'force-dynamic';
 
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
-  const payload = await getPayloadCached();
-  const tenants = await payload.find({
-    collection: 'tenants',
-    depth: 0,
-    limit: 0,
-    locale: 'all',
-    overrideAccess: true,
-    pagination: false,
+  const entries = await generateStaticParams({
+    mode: 'sitemap',
   });
-
-  if (tenants.docs.length === 0) {
-    return [];
-  }
-
-  const entries = (await Promise.all(tenants.docs.map((tenant) => getTenantSitemapEntries({
-    payload,
-    tenant,
-  })))).flat();
 
   return entries.map((entry) => ({
     alternates: entry.alternates,

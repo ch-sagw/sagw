@@ -1,8 +1,10 @@
 import 'server-only';
 import React from 'react';
+import { TypedLocale } from 'payload';
 import { RenderPage } from '@/app/(frontend)/renderers/RenderPage';
 import { getTenantFromUrl } from '@/app/(frontend)/utilities/getTenantFromUrl';
 import { CMSConfigError } from '../utilities/CMSConfigError';
+import { getLocaleCodes } from '@/i18n/payloadConfig';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import {
@@ -10,9 +12,18 @@ import {
 } from '@/app/(frontend)/fetchers/home';
 import { renderMeta } from '@/app/(frontend)/renderers/RenderMeta';
 
-// No build-time pre-rendering: pages are statically generated on first request
-// (ISR on-demand) and cached until CMS revalidation invalidates them.
-export const generateStaticParams = (): [] => [];
+// export const revalidate = 1;
+// export const dynamic = 'force-dynamic';
+
+export const dynamic = 'force-static';
+
+export const generateStaticParams = (): { locale: TypedLocale }[] => {
+  const locales = getLocaleCodes();
+
+  return locales.map((locale) => ({
+    locale,
+  }));
+};
 
 export const generateMetadata = async ({
   params,
