@@ -26,6 +26,7 @@ import { getThemeNameForTenant } from '../utilities/getThemeNameForTenant';
 import { Redirector } from '@/components/helpers/redirects';
 import { Tracking } from '@/components/helpers/tracking';
 import { PageMainViewTransition } from '@/components/PageMainViewTransition';
+import { buildBreadcrumbsForDoc } from '@/utilities/buildBreadcrumbs';
 
 export interface InterfacePreFetchedHomePageData {
   pageData: HomePage;
@@ -330,6 +331,11 @@ export const RenderPage = async ({
     })
     : null;
 
+  const breadcrumb = await buildBreadcrumbsForDoc({
+    doc: otherPageData,
+    payload,
+  });
+
   return renderPageContent({
     blocks: contentBlocks,
     containerType: 'detail',
@@ -341,6 +347,7 @@ export const RenderPage = async ({
         pdfGenerationExpiresAt={pdfGenerationAuth?.expiresAt.toString()}
         pdfGenerationToken={pdfGenerationAuth?.token}
         pageData={otherPageData}
+        breadcrumb={breadcrumb}
         i18nGeneric={i18nData.generic}
         locale={locale}
       />

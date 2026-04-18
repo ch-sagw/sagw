@@ -14,6 +14,7 @@ import {
   InterfaceHeroFieldNewsDetail,
   InterfaceI18NGeneric,
 } from '@/payload-types';
+import type { InterfaceBreadcrumb } from '@/utilities/buildBreadcrumbs';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { buildBreadcrumbItems } from '@/utilities/buildBreadcrumbItems';
 import { buildUrlFromPath } from '@/utilities/buildUrlFromPath';
@@ -45,6 +46,7 @@ type PageTypes =
 interface InterfaceRenderHero {
   foundCollection: CollectionSlug;
   pageData: PageTypes | null;
+  breadcrumb: InterfaceBreadcrumb;
   locale: TypedLocale;
   i18nGeneric: InterfaceI18NGeneric;
   pdfGenerationToken?: string;
@@ -54,6 +56,7 @@ interface InterfaceRenderHero {
 export const RenderHero = ({
   foundCollection,
   pageData,
+  breadcrumb: pageBreadcrumb,
   locale,
   i18nGeneric,
   pdfGenerationToken,
@@ -152,7 +155,7 @@ export const RenderHero = ({
 
   // build breadcrumb items
   let breadcrumbItems: InterfaceBreadcrumbItem[] = buildBreadcrumbItems({
-    breadcrumb: pageData.breadcrumb ?? [],
+    breadcrumb: pageBreadcrumb ?? [],
     locale,
     tenant: tenantSlug,
   });

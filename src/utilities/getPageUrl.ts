@@ -1,13 +1,13 @@
 import type { BasePayload } from 'payload';
-import type {
-  Config, InterfaceBreadcrumb,
-} from '@/payload-types';
+import type { Config } from '@/payload-types';
 import { getRootPathUrls } from '@/hooks-payload/shared/getRootPathUrls';
 import {
   globalCollectionsSlugs, setsSlugs, singletonSlugs,
 } from '@/collections/Pages/constants';
 import { urlFromBreadcrumb } from '@/utilities/urlFromBreadcrumb';
-import { fieldBreadcrumbFieldName } from '@/field-templates/breadcrumb';
+import {
+  buildBreadcrumbsForDoc, InterfaceBreadcrumb,
+} from '@/utilities/buildBreadcrumbs';
 import { absoluteUrlFromPathname } from '@/utilities/getUrl';
 import { getTenantSlugForLocale } from '@/utilities/tenant';
 
@@ -19,14 +19,15 @@ export interface InterfaceGetPageUrlParams {
 }
 
 const urlForSingletonPage = ({
+  breadcrumb,
   locale,
   pageDoc,
 }: {
+  breadcrumb: InterfaceBreadcrumb;
   locale: Config['locale'];
   pageDoc: any;
 }): string | undefined => {
   const pageDocRecord = pageDoc as unknown as Record<string, unknown>;
-  const breadcrumb = (pageDocRecord[fieldBreadcrumbFieldName] ?? []) as InterfaceBreadcrumb;
   const tenant = pageDocRecord.tenant as { slug?: Record<string, string> } | { slug?: string } | undefined;
   let slugRecord: Record<string, string>;
   const slugValue = pageDocRecord.slug;
@@ -65,9 +66,11 @@ const urlForSingletonPage = ({
 };
 
 const generatePageUrl = async ({
+  breadcrumb,
   locale,
   pageDoc,
 }: {
+  breadcrumb: InterfaceBreadcrumb;
   locale: Config['locale'];
   pageDoc?: unknown;
 }): Promise<string> => {
@@ -102,7 +105,7 @@ const generatePageUrl = async ({
     const url = await urlFromBreadcrumb({
       locale,
       page: {
-        breadcrumb: (pageDocRecord[fieldBreadcrumbFieldName] ?? []) as InterfaceBreadcrumb,
+        breadcrumb,
         slug: slugRecord,
       },
       tenant: getTenantSlugForLocale({
@@ -152,7 +155,13 @@ export const getPageUrl = async ({
         });
 
         if (pageDoc) {
+          const breadcrumb = await buildBreadcrumbsForDoc({
+            doc: pageDoc as unknown as Record<string, unknown>,
+            payload,
+          });
+
           return await generatePageUrl({
+            breadcrumb,
             locale,
             pageDoc,
           });
@@ -189,7 +198,12 @@ export const getPageUrl = async ({
         });
 
         if (pageDoc) {
+          const breadcrumb = await buildBreadcrumbsForDoc({
+            doc: pageDoc as unknown as Record<string, unknown>,
+            payload,
+          });
           const url = urlForSingletonPage({
+            breadcrumb,
             locale,
             pageDoc,
           });
