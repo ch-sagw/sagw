@@ -84,6 +84,7 @@ export const RenderHeader = async ({
     metanav: metanavData,
     navigation: navData,
     tenant: tenantName.name || 'sagw',
+    tenantSlug: tenantName.slug,
   };
 
   return (
