@@ -1,5 +1,52 @@
 # Changelog
 
+## [0.42.0](https://github.com/ch-sagw/sagw/compare/v0.41.0...v0.42.0) (2026-04-18)
+
+
+### Chore
+
+* revert encoding fixes ([b13f28f](https://github.com/ch-sagw/sagw/commit/b13f28f639305f6b08c8529203039f44a34ac559))
+* update payload ([#1045](https://github.com/ch-sagw/sagw/issues/1045)) ([0fd156e](https://github.com/ch-sagw/sagw/commit/0fd156eaf25a013cdf48d381edaa7f9b1ee8f25c))
+
+
+### CI
+
+* disable static builds for test and prod ([535e3c0](https://github.com/ch-sagw/sagw/commit/535e3c0792eca51f0039d62b46c9a3d908e810b3))
+* enable prebuilt again ([bbabfff](https://github.com/ch-sagw/sagw/commit/bbabfff25445fe2a2ff7d0a63ec2ac1f61c61872))
+
+
+### Documentation
+
+* fixing typo in .md file to trigger test deployment ([1b953d3](https://github.com/ch-sagw/sagw/commit/1b953d3c13fda3326ef6bde7a7650a0b9d6587f2))
+
+
+### Features
+
+* achieve labelling of main element by referencing h1 ([a8e76b0](https://github.com/ch-sagw/sagw/commit/a8e76b076c7a01d0aff788025aa50245d75da240))
+* adding additional i18n texts for landmark elements ([a8e76b0](https://github.com/ch-sagw/sagw/commit/a8e76b076c7a01d0aff788025aa50245d75da240))
+* adding aria-label for header and footer ([a8e76b0](https://github.com/ch-sagw/sagw/commit/a8e76b076c7a01d0aff788025aa50245d75da240))
+* adding favicons for all ported sites ([#1039](https://github.com/ch-sagw/sagw/issues/1039)) ([69a6c8b](https://github.com/ch-sagw/sagw/commit/69a6c8b1c743b02d7f61879d9c96413929bc0bb0))
+* adding interaction with gumlet service for video delivery ([72025ea](https://github.com/ch-sagw/sagw/commit/72025ea7893c59703124f07787f40f270ae27e6c))
+* modify heading level for teaser elements ([a8e76b0](https://github.com/ch-sagw/sagw/commit/a8e76b076c7a01d0aff788025aa50245d75da240))
+* removing cropping option from image edit interface ([#1023](https://github.com/ch-sagw/sagw/issues/1023)) ([f74252b](https://github.com/ch-sagw/sagw/commit/f74252be4877b766a5e4295ed6d988cad1fc7fa5))
+* rework breadcrumb to use on-the-fly generation ([a075f1a](https://github.com/ch-sagw/sagw/commit/a075f1ab517f5d826396a0b846a9f642f9da95ee))
+* rework breadcrumb to use on-the-fly generation ([#1048](https://github.com/ch-sagw/sagw/issues/1048)) ([a075f1a](https://github.com/ch-sagw/sagw/commit/a075f1ab517f5d826396a0b846a9f642f9da95ee))
+* working on i18n files ([a8e76b0](https://github.com/ch-sagw/sagw/commit/a8e76b076c7a01d0aff788025aa50245d75da240))
+
+
+### Bug Fixes
+
+* disable autosave, configure document lock ([#1036](https://github.com/ch-sagw/sagw/issues/1036)) ([a350b31](https://github.com/ch-sagw/sagw/commit/a350b31831c4edd5358415dfe8664ad0eb2c27d9))
+* properly encode image url ([535e3c0](https://github.com/ch-sagw/sagw/commit/535e3c0792eca51f0039d62b46c9a3d908e810b3))
+* rewrite image urls to gumlet url ([f6c4964](https://github.com/ch-sagw/sagw/commit/f6c4964b92ba2aec4dba833c2abd4cbf2e965439))
+* rewrite image/video urls to gumlet url ([#1030](https://github.com/ch-sagw/sagw/issues/1030)) ([f6c4964](https://github.com/ch-sagw/sagw/commit/f6c4964b92ba2aec4dba833c2abd4cbf2e965439))
+* try to disable payload access control ([b13f28f](https://github.com/ch-sagw/sagw/commit/b13f28f639305f6b08c8529203039f44a34ac559))
+
+
+### Test
+
+* consolidate breadcrumb tests ([a075f1a](https://github.com/ch-sagw/sagw/commit/a075f1ab517f5d826396a0b846a9f642f9da95ee))
+
 ## [0.41.0](https://github.com/ch-sagw/sagw/compare/v0.40.0...v0.41.0) (2026-04-14)
 
 
