@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.43.0](https://github.com/ch-sagw/sagw/compare/v0.42.0...v0.43.0) (2026-04-18)
+
+
+### Chore
+
+* remove staticParams generation ([9701d97](https://github.com/ch-sagw/sagw/commit/9701d97dc4ebe2e11f1f2bb31b26c18d34979dd6))
+* Revert "Ci/disable static prebuild and use isr ([#1049](https://github.com/ch-sagw/sagw/issues/1049))" ([ac191a6](https://github.com/ch-sagw/sagw/commit/ac191a68256c821f04331dcb4a4680bc8b366910))
+
+
+### Features
+
+* do not static render pages, opt in to isr ([9701d97](https://github.com/ch-sagw/sagw/commit/9701d97dc4ebe2e11f1f2bb31b26c18d34979dd6))
+
+
+### Bug Fixes
+
+* fake-commit to trigger test deployment ([8c61318](https://github.com/ch-sagw/sagw/commit/8c613180cb0656786d454e80af51c831a91b548d))
+
 ## [0.42.0](https://github.com/ch-sagw/sagw/compare/v0.41.0...v0.42.0) (2026-04-18)
 
 
