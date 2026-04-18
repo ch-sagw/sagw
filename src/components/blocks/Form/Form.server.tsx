@@ -1,38 +1,29 @@
 import 'server-only';
 import {
   type Config,
-  I18NGlobal, InterfaceEmailField, Form as InterfaceForm, InterfaceFormBlock,
-  InterfaceRadioField, InterfaceTextField,
+  I18NGlobal, Form as InterfaceForm, InterfaceFormBlock,
 } from '@/payload-types';
 import { FormClient } from '@/components/blocks/Form/Form.client';
 import { Fragment } from 'react';
-import { simpleRteConfig } from '@/utilities/simpleRteConfig';
-import {
-  getLocale, getTranslations,
-} from 'next-intl/server';
+import { getLocale } from 'next-intl/server';
 import { rte3ToHtml } from '@/utilities/rteToHtml.server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { getPageUrl } from '@/utilities/getPageUrl';
 import { rteToHtml } from '@/utilities/rteToHtml';
+import { buildFormFields } from '@/components/blocks/Form/buildFormFields';
 
 type InterfaceFormServerPropTypes = {
   globalI18n: I18NGlobal;
 } & InterfaceFormBlock;
 
-export const newsletterFieldNames = {
-  email: 'email',
-  firstname: 'firstname',
-  language: 'language',
-  lastname: 'lastname',
-};
+// re-exported for backwards compatibility
+export { newsletterFieldNames } from '@/components/blocks/Form/Form.config';
 
 export const FormServer = async ({
   form,
   globalI18n,
 }: InterfaceFormServerPropTypes): Promise<React.JSX.Element> => {
   const payload = await getPayloadCached();
-  const i18nForm = globalI18n.forms;
-  const internalI18nForm = await getTranslations('form');
 
   // --- Make sure form exists
 
@@ -78,90 +69,18 @@ export const FormServer = async ({
     return <Fragment></Fragment>;
   }
 
-  // --- Reformat Newsletter form fields
-
-  /*
-    in payload: custom form is build with form-block elements.
-    newsletter form is build with default payload fields, hence they have
-    a different data structure.
-
-    We manually add fields to the fields array here, so that we don't have
-    to adapt the form render logic.
-  */
-  if (renderForm.isNewsletterForm === 'newsletter') {
-    const firstnameField: InterfaceTextField = {
-      blockType: 'textBlockForm',
-      fieldError: renderForm.newsletterFields?.firstName.fieldError,
-      fieldWidth: 'half',
-      label: renderForm.newsletterFields?.firstName.label || simpleRteConfig(''),
-      name: newsletterFieldNames.firstname,
-      placeholder: renderForm.newsletterFields?.firstName.placeholder || '',
-      required: true,
-    };
-
-    const lastnameField: InterfaceTextField = {
-      blockType: 'textBlockForm',
-      fieldError: renderForm.newsletterFields?.lastName.fieldError,
-      fieldWidth: 'half',
-      label: renderForm.newsletterFields?.lastName.label || simpleRteConfig(''),
-      name: newsletterFieldNames.lastname,
-      placeholder: renderForm.newsletterFields?.lastName.placeholder || '',
-      required: true,
-    };
-
-    const emailField: InterfaceEmailField = {
-      blockType: 'emailBlock',
-      fieldError: renderForm.newsletterFields?.email.fieldError,
-      fieldWidth: 'full',
-      label: renderForm.newsletterFields?.email.label || simpleRteConfig(''),
-      name: newsletterFieldNames.email,
-      placeholder: renderForm.newsletterFields?.email.placeholder ||
-        '',
-      required: true,
-    };
-
-    renderForm.fields?.push(firstnameField);
-    renderForm.fields?.push(lastnameField);
-    renderForm.fields?.push(emailField);
-
-    // add language selection
-
-    if (renderForm.newsletterFields?.includeLanguageSelection === 'yes') {
-      const radioBlock: InterfaceRadioField = {
-        blockType: 'radioBlock',
-        fieldError: simpleRteConfig(internalI18nForm('newsletter.error')),
-        fieldWidth: 'full',
-        items: [
-          {
-            label: simpleRteConfig(internalI18nForm('newsletter.languages.german')),
-            value: 'de',
-          },
-          {
-            label: simpleRteConfig(internalI18nForm('newsletter.languages.french')),
-            value: 'fr',
-          },
-        ],
-        label: simpleRteConfig(internalI18nForm('newsletter.label')),
-        name: newsletterFieldNames.language,
-        required: true,
-      };
-
-      renderForm.fields?.push(radioBlock);
-    }
-  }
-
-  // --- Privacy Checkbox
-
-  if (renderForm.showPrivacyCheckbox) {
-    renderForm.fields?.push({
-      blockType: 'checkboxBlock',
-      fieldError: i18nForm.dataPrivacyCheckbox.errorMessage,
-      fieldWidth: 'full',
-      label: i18nForm.dataPrivacyCheckbox.dataPrivacyCheckboxText,
-      name: `checkbox-${renderForm.id}`,
-      required: true,
-    });
-  }
+  // --- expand the form's field list (inject newsletter inputs, privacy
+  // checkbox). The same helper is used by `submitForm` so render and
+  // validation stay in sync. We do not mutate the source form; we
+  // produce a new form object with the expanded fields.
+  const expandedFields = await buildFormFields({
+    form: renderForm,
+    globalI18n,
+  });
+  const expandedForm: InterfaceForm = {
+    ...renderForm,
+    fields: expandedFields,
+  };
 
   // --- prerender RTE content for client component
   const preRenderedLabels: Record<string, string> = {};
@@ -171,8 +90,8 @@ export const FormServer = async ({
   let submitErrorLinkHref: string | undefined;
   let submitErrorLinkText: string | undefined;
 
-  if (renderForm.fields) {
-    await Promise.all(renderForm.fields.map(async (field) => {
+  if (expandedForm.fields) {
+    await Promise.all(expandedForm.fields.map(async (field) => {
       if (field.blockType === 'checkboxBlock' && field.label) {
         const labelHtml = await rte3ToHtml({
           content: field.label,
@@ -212,33 +131,33 @@ export const FormServer = async ({
     }));
   }
 
-  if (renderForm.submitSuccess.optionalLink?.includeLink && renderForm.submitSuccess.optionalLink.link?.internalLink.documentId) {
+  if (expandedForm.submitSuccess.optionalLink?.includeLink && expandedForm.submitSuccess.optionalLink.link?.internalLink.documentId) {
     submitSuccessLinkHref = await getPageUrl({
       locale,
-      pageId: renderForm.submitSuccess.optionalLink.link.internalLink.documentId,
+      pageId: expandedForm.submitSuccess.optionalLink.link.internalLink.documentId,
       payload,
     });
 
-    if (renderForm.submitSuccess.optionalLink.link.linkText) {
-      submitSuccessLinkText = rteToHtml(renderForm.submitSuccess.optionalLink.link.linkText);
+    if (expandedForm.submitSuccess.optionalLink.link.linkText) {
+      submitSuccessLinkText = rteToHtml(expandedForm.submitSuccess.optionalLink.link.linkText);
     }
   }
 
-  if (renderForm.submitError.optionalLink?.includeLink && renderForm.submitError.optionalLink.link?.internalLink.documentId) {
+  if (expandedForm.submitError.optionalLink?.includeLink && expandedForm.submitError.optionalLink.link?.internalLink.documentId) {
     submitErrorLinkHref = await getPageUrl({
       locale,
-      pageId: renderForm.submitError.optionalLink.link.internalLink.documentId,
+      pageId: expandedForm.submitError.optionalLink.link.internalLink.documentId,
       payload,
     });
 
-    if (renderForm.submitError.optionalLink.link.linkText) {
-      submitErrorLinkText = rteToHtml(renderForm.submitError.optionalLink.link.linkText);
+    if (expandedForm.submitError.optionalLink.link.linkText) {
+      submitErrorLinkText = rteToHtml(expandedForm.submitError.optionalLink.link.linkText);
     }
   }
 
   return (
     <FormClient
-      form={renderForm}
+      form={expandedForm}
       preRenderedLabels={preRenderedLabels}
       preRenderedRadioLabels={preRenderedRadioLabels}
       submitSuccessLinkHref={submitSuccessLinkHref}
