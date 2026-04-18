@@ -12,8 +12,6 @@ import {
 } from '@/blocks';
 import { versions } from '@/field-templates/versions';
 import { lockDocuments } from '@/field-templates/lockDocuments';
-import { hookCascadeBreadcrumbUpdates } from '@/hooks-payload/cascadeBreadcrumbUpdates';
-import { hookGenerateBreadcrumbs } from '@/hooks-payload/generateBreadcrumbs';
 import { fieldNavigationTitleFieldName } from '@/field-templates/navigationTitle';
 import { pageAccess } from '@/access/pages';
 import { sagwOnlyBlocks } from '@/access/blocks';
@@ -127,10 +125,7 @@ export const HomePage: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [
-      hookCascadeBreadcrumbUpdates,
-      hookInvalidateTenantCache,
-    ],
+    afterChange: [hookInvalidateTenantCache],
     afterDelete: [hookInvalidateTenantCacheOnDelete],
     afterRead: [
       async ({
@@ -228,10 +223,7 @@ export const HomePage: CollectionConfig = {
         };
       },
     ],
-    beforeChange: [
-      hookPreventBulkPublishForTranslators,
-      hookGenerateBreadcrumbs,
-    ],
+    beforeChange: [hookPreventBulkPublishForTranslators],
     beforeValidate: [hookPreventBlockStructureChangesForTranslators()],
   },
   labels: {
