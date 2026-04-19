@@ -1,12 +1,9 @@
-import {
-  Config, InterfaceBreadcrumb,
-} from '@/payload-types';
+import type { Config } from '@/payload-types';
+import type { InterfaceBreadcrumb } from '@/utilities/buildBreadcrumbs';
 import { InterfaceBreadcrumbItem } from '@/components/base/Breadcrumb/Breadcrumb';
 import { getBreadcrumbPathSegments } from '@/utilities/getBreadcrumbPathSegments';
 import { buildUrlFromPath } from '@/utilities/buildUrlFromPath';
-import {
-  breadcrumbNameFieldsPrefix, breadcrumbSlugFieldsPrefix, homeSlug,
-} from '@/collections/constants';
+import { homeSlug } from '@/collections/constants';
 
 interface InterfaceBuildBreadcrumbItemsParams {
   breadcrumb: InterfaceBreadcrumb;
@@ -40,8 +37,7 @@ export const buildBreadcrumbItems = ({
   let shouldAddHomeLink = false;
 
   if (firstBreadcrumb && typeof firstBreadcrumb === 'object') {
-    const localeSlugField = `${breadcrumbSlugFieldsPrefix}${locale}` as keyof typeof firstBreadcrumb;
-    const firstSlug = firstBreadcrumb[localeSlugField];
+    const firstSlug = firstBreadcrumb.slug?.[locale];
 
     if (firstSlug === homeSlug) {
       startIndex = 1;
@@ -53,9 +49,8 @@ export const buildBreadcrumbItems = ({
 
   // add Home link at the beginning if needed
   if (shouldAddHomeLink) {
-    const localeNameField = `${breadcrumbNameFieldsPrefix}${locale}` as keyof typeof firstBreadcrumb;
     const homeName = firstBreadcrumb && typeof firstBreadcrumb === 'object'
-      ? firstBreadcrumb[localeNameField]
+      ? firstBreadcrumb.name?.[locale]
       : null;
 
     if (typeof homeName === 'string') {
@@ -83,10 +78,8 @@ export const buildBreadcrumbItems = ({
       return;
     }
 
-    const localeSlugField = `${breadcrumbSlugFieldsPrefix}${locale}` as keyof typeof item;
-    const localeNameField = `${breadcrumbNameFieldsPrefix}${locale}` as keyof typeof item;
-    const itemSlug = item[localeSlugField];
-    const text = item[localeNameField];
+    const itemSlug = item.slug?.[locale];
+    const text = item.name?.[locale];
 
     // only process items whose slug matches the current path segment
     if (

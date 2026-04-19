@@ -1,15 +1,19 @@
 import type { BasePayload } from 'payload';
-import type {
-  Config, InterfaceBreadcrumb,
-} from '@/payload-types';
+import type { Config } from '@/payload-types';
 import { getRootPathUrls } from '@/hooks-payload/shared/getRootPathUrls';
 import {
   globalCollectionsSlugs, setsSlugs, singletonSlugs,
 } from '@/collections/Pages/constants';
 import { urlFromBreadcrumb } from '@/utilities/urlFromBreadcrumb';
-import { fieldBreadcrumbFieldName } from '@/field-templates/breadcrumb';
+import {
+  buildBreadcrumbsForDoc, InterfaceBreadcrumb,
+} from '@/utilities/buildBreadcrumbs';
 import { absoluteUrlFromPathname } from '@/utilities/getUrl';
-import { getTenantSlugForLocale } from '@/utilities/tenant';
+import {
+  getTenantHomeUrl,
+  getTenantSlugForLocaleFromPageDoc,
+  getTenantSlugFromPageDoc,
+} from '@/utilities/tenant';
 
 export interface InterfaceGetPageUrlParams {
   payload: BasePayload;
@@ -18,56 +22,72 @@ export interface InterfaceGetPageUrlParams {
   absolute?: boolean;
 }
 
+// normalizes a pageDoc.slug value into a Record<locale, slug>.
+// returns null if no usable slug is present.
+const slugRecordFromPageDoc = ({
+  locale,
+  pageDocRecord,
+}: {
+  locale: Config['locale'];
+  pageDocRecord: Record<string, unknown>;
+}): Record<string, string> | null => {
+  const slugValue = pageDocRecord.slug;
+
+  if (!slugValue) {
+    return null;
+  }
+
+  if (typeof slugValue === 'string') {
+    return {
+      [locale]: slugValue,
+    };
+  }
+
+  if (typeof slugValue === 'object') {
+    return slugValue as Record<string, string>;
+  }
+
+  return null;
+};
+
 const urlForSingletonPage = ({
+  breadcrumb,
   locale,
   pageDoc,
 }: {
+  breadcrumb: InterfaceBreadcrumb;
   locale: Config['locale'];
   pageDoc: any;
 }): string | undefined => {
   const pageDocRecord = pageDoc as unknown as Record<string, unknown>;
-  const breadcrumb = (pageDocRecord[fieldBreadcrumbFieldName] ?? []) as InterfaceBreadcrumb;
-  const tenant = pageDocRecord.tenant as { slug?: Record<string, string> } | { slug?: string } | undefined;
-  let slugRecord: Record<string, string>;
-  const slugValue = pageDocRecord.slug;
-
-  if (!slugValue) {
-    return undefined;
-  }
-
-  if (typeof slugValue === 'string') {
-    // single locale slug, convert to record
-    slugRecord = {
-      [locale]: slugValue,
-    };
-  } else if (typeof slugValue === 'object' && slugValue !== null) {
-    slugRecord = slugValue as Record<string, string>;
-  } else {
-    return undefined;
-  }
-
-  const tenantSlug = getTenantSlugForLocale({
+  const slugRecord = slugRecordFromPageDoc({
     locale,
-    slug: tenant?.slug,
+    pageDocRecord,
   });
 
-  // build the URL
-  const url = urlFromBreadcrumb({
+  if (!slugRecord) {
+    return undefined;
+  }
+
+  return urlFromBreadcrumb({
     locale,
     page: {
       breadcrumb,
       slug: slugRecord,
     },
-    tenant: tenantSlug,
+    tenant: getTenantSlugForLocaleFromPageDoc({
+      locale,
+      pageDoc: pageDocRecord,
+    }),
   });
-
-  return url;
 };
 
 const generatePageUrl = async ({
+  breadcrumb,
   locale,
   pageDoc,
 }: {
+  breadcrumb: InterfaceBreadcrumb;
   locale: Config['locale'];
   pageDoc?: unknown;
 }): Promise<string> => {
@@ -77,44 +97,37 @@ const generatePageUrl = async ({
     }
 
     const pageDocRecord = pageDoc as unknown as Record<string, unknown>;
-    const {
-      tenant,
-    } = pageDocRecord;
 
-    // gandle slug - normalize to Record<string, string>
-    let slugRecord: Record<string, string>;
-    const slugValue = pageDocRecord.slug;
+    // if no translation exists for the target locale, fall back to the
+    // tenant's home in that locale
+    const tenantHomeFallback = getTenantHomeUrl({
+      locale,
+      tenantSlug: getTenantSlugFromPageDoc(pageDocRecord),
+    });
 
-    if (!slugValue) {
-      return getRootPathUrls()[locale] || `/${locale}`;
-    }
+    const slugRecord = slugRecordFromPageDoc({
+      locale,
+      pageDocRecord,
+    });
 
-    if (typeof slugValue === 'string') {
-      slugRecord = {
-        [locale]: slugValue,
-      };
-    } else if (typeof slugValue === 'object' && slugValue !== null) {
-      slugRecord = slugValue as Record<string, string>;
-    } else {
-      return getRootPathUrls()[locale] || `/${locale}`;
+    if (!slugRecord) {
+      return tenantHomeFallback;
     }
 
     const url = await urlFromBreadcrumb({
       locale,
       page: {
-        breadcrumb: (pageDocRecord[fieldBreadcrumbFieldName] ?? []) as InterfaceBreadcrumb,
+        breadcrumb,
         slug: slugRecord,
       },
-      tenant: getTenantSlugForLocale({
+      tenant: getTenantSlugForLocaleFromPageDoc({
         locale,
-        slug: (tenant && typeof tenant === 'object' && 'slug' in tenant)
-          ? tenant.slug as string | Partial<Record<Config['locale'], string>>
-          : undefined,
+        pageDoc: pageDocRecord,
       }),
     });
 
     if (url === undefined) {
-      return getRootPathUrls()[locale] || `/${locale}`;
+      return tenantHomeFallback;
     }
 
     return url;
@@ -152,7 +165,13 @@ export const getPageUrl = async ({
         });
 
         if (pageDoc) {
+          const breadcrumb = await buildBreadcrumbsForDoc({
+            doc: pageDoc as unknown as Record<string, unknown>,
+            payload,
+          });
+
           return await generatePageUrl({
+            breadcrumb,
             locale,
             pageDoc,
           });
@@ -189,12 +208,25 @@ export const getPageUrl = async ({
         });
 
         if (pageDoc) {
+          const breadcrumb = await buildBreadcrumbsForDoc({
+            doc: pageDoc as unknown as Record<string, unknown>,
+            payload,
+          });
           const url = urlForSingletonPage({
+            breadcrumb,
             locale,
             pageDoc,
           });
 
-          return url || null;
+          // return built URL, else tenant-home fallback for this pageDoc.
+          if (url) {
+            return url;
+          }
+
+          return getTenantHomeUrl({
+            locale,
+            tenantSlug: getTenantSlugFromPageDoc(pageDoc as unknown as Record<string, unknown>),
+          });
         }
 
         return null;
@@ -214,7 +246,7 @@ export const getPageUrl = async ({
       }
     }
 
-    // Fallback
+    // Fallback: no pageDoc found anywhere — sagw home as last resort.
     pathname = getRootPathUrls()[locale] || '/de';
   } catch (error) {
     console.error('Error getting page URL:', error);

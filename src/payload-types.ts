@@ -7,24 +7,6 @@
  */
 
 /**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceBreadcrumb".
- */
-export type InterfaceBreadcrumb =
-  | {
-      documentId: string;
-      namede?: string | null;
-      namefr?: string | null;
-      nameit?: string | null;
-      nameen?: string | null;
-      slugde?: string | null;
-      slugfr?: string | null;
-      slugit?: string | null;
-      slugen?: string | null;
-      id?: string | null;
-    }[]
-  | null;
-/**
  * Supported timezones in IANA format.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1617,7 +1599,6 @@ export interface MagazineDetailPage {
    */
   navigationTitle: string;
   parentPage: InterfaceInternalLinkValue;
-  breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
      * This text will be used as text for the teasers on the overview page.
@@ -1991,7 +1972,6 @@ export interface NewsDetailPage {
    */
   navigationTitle: string;
   parentPage: InterfaceInternalLinkValue;
-  breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
      * This text will be used as text for the teasers on the overview page.
@@ -2178,7 +2158,6 @@ export interface EventDetailPage {
    */
   navigationTitle: string;
   parentPage: InterfaceInternalLinkValue;
-  breadcrumb?: InterfaceBreadcrumb;
   eventDetails: {
     title: {
       root: {
@@ -2423,7 +2402,6 @@ export interface PublicationDetailPage {
    */
   navigationTitle: string;
   parentPage: InterfaceInternalLinkValue;
-  breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
      * This image will be used for the teasers on the overview page.
@@ -2584,7 +2562,6 @@ export interface ProjectDetailPage {
    */
   navigationTitle: string;
   parentPage: InterfaceInternalLinkValue;
-  breadcrumb?: InterfaceBreadcrumb;
   project: string | Project;
   overviewPageProps: {
     /**
@@ -2950,7 +2927,6 @@ export interface OverviewPage {
    */
   navigationTitle: string;
   parentPage: InterfaceInternalLinkValue;
-  breadcrumb?: InterfaceBreadcrumb;
   hero: InterfaceHeroField;
   content?:
     | (
@@ -3603,7 +3579,6 @@ export interface DetailPage {
    */
   navigationTitle: string;
   parentPage: InterfaceInternalLinkValue;
-  breadcrumb?: InterfaceBreadcrumb;
   hero: InterfaceHeroField;
   content?:
     | (
@@ -3743,7 +3718,6 @@ export interface NationalDictionaryDetailPage {
    */
   navigationTitle: string;
   parentPage: InterfaceInternalLinkValue;
-  breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
      * This image will be used for the teasers on the overview page.
@@ -3810,7 +3784,6 @@ export interface InstituteDetailPage {
    */
   navigationTitle: string;
   parentPage: InterfaceInternalLinkValue;
-  breadcrumb?: InterfaceBreadcrumb;
   overviewPageProps: {
     /**
      * This image will be used for the teasers on the overview page.
@@ -5495,7 +5468,6 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
-  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   overviewPageProps?:
     | T
     | {
@@ -5534,22 +5506,6 @@ export interface MagazineDetailPageSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "InterfaceBreadcrumb_select".
- */
-export interface InterfaceBreadcrumbSelect<T extends boolean = true> {
-  documentId?: T;
-  namede?: T;
-  namefr?: T;
-  nameit?: T;
-  nameen?: T;
-  slugde?: T;
-  slugfr?: T;
-  slugit?: T;
-  slugen?: T;
-  id?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5652,7 +5608,6 @@ export interface OverviewPageSelect<T extends boolean = true> {
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
-  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
@@ -5911,7 +5866,6 @@ export interface DetailPageSelect<T extends boolean = true> {
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
-  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   hero?: T | InterfaceHeroFieldSelect<T>;
   content?:
     | T
@@ -6020,7 +5974,6 @@ export interface EventDetailPageSelect<T extends boolean = true> {
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
-  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   eventDetails?:
     | T
     | {
@@ -6087,7 +6040,6 @@ export interface NewsDetailPageSelect<T extends boolean = true> {
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
-  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   overviewPageProps?:
     | T
     | {
@@ -6150,7 +6102,6 @@ export interface PublicationDetailPageSelect<T extends boolean = true> {
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
-  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   overviewPageProps?:
     | T
     | {
@@ -6219,7 +6170,6 @@ export interface NationalDictionaryDetailPageSelect<T extends boolean = true> {
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
-  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   overviewPageProps?:
     | T
     | {
@@ -6268,7 +6218,6 @@ export interface InstituteDetailPageSelect<T extends boolean = true> {
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
-  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   overviewPageProps?:
     | T
     | {
@@ -6317,7 +6266,6 @@ export interface ProjectDetailPageSelect<T extends boolean = true> {
   slug?: T;
   navigationTitle?: T;
   parentPage?: T | InterfaceInternalLinkValueSelect<T>;
-  breadcrumb?: T | InterfaceBreadcrumbSelect<T>;
   project?: T;
   overviewPageProps?:
     | T
