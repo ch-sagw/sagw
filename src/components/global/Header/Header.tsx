@@ -14,6 +14,7 @@ import {
   generateLangNavUrls, generateLinkUrls,
 } from '@/components/global/Header/generateUrls';
 import { PageMainViewTransition } from '@/components/PageMainViewTransition';
+import { TenantLocalizedValue } from '@/utilities/tenant';
 
 export type InterfaceHeaderPropTypesCms = {
   metanav: InterfaceHeaderMetaNavigation;
@@ -29,6 +30,7 @@ export type InterfaceHeaderPropTypes = {
   logoLink: string;
   documentId?: string;
   tenant: string;
+  tenantSlug?: TenantLocalizedValue;
 } & InterfaceHeaderPropTypesCms;
 
 export const Header = async (props: InterfaceHeaderPropTypes): Promise<React.JSX.Element> => {
@@ -48,6 +50,7 @@ export const Header = async (props: InterfaceHeaderPropTypes): Promise<React.JSX
   const localeUrls = await generateLangNavUrls({
     pageId: props.documentId || '',
     payload,
+    tenantSlug: props.tenantSlug,
   });
 
   return (

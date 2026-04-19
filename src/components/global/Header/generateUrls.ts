@@ -6,7 +6,9 @@ import { TypedLocale } from 'payload';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { getPageUrl } from '@/utilities/getPageUrl';
 import { getLocaleCodes } from '@/i18n/payloadConfig';
-import { getRootPathUrls } from '@/hooks-payload/shared/getRootPathUrls';
+import {
+  getTenantHomeUrl, TenantLocalizedValue,
+} from '@/utilities/tenant';
 
 interface InterfaceExtractLinkIdsParams {
   navigation: InterfaceHeaderNavigation;
@@ -93,20 +95,28 @@ export const generateLinkUrls = async ({
 interface InterfaceGenerateLangNavUrlsParams {
   pageId: string;
   payload: Awaited<ReturnType<typeof getPayloadCached>>;
+  tenantSlug?: TenantLocalizedValue;
 }
 
-// generate URL map for current page in all locales for langnav
+// generate URL map for current page in all locales for langnav.
+// when no translation exists for a locale, falls back to the
+// current tenant's home URL in that locale
 export const generateLangNavUrls = async ({
   pageId,
   payload,
+  tenantSlug,
 }: InterfaceGenerateLangNavUrlsParams): Promise<Record<string, string>> => {
   const localeCodes = getLocaleCodes();
-  const rootUrls = getRootPathUrls();
   const urlMap: Record<string, string> = {};
 
   await Promise.all(localeCodes.map(async (targetLocale) => {
+    const fallback = getTenantHomeUrl({
+      locale: targetLocale as TypedLocale,
+      tenantSlug,
+    });
+
     if (!pageId) {
-      urlMap[targetLocale] = rootUrls[targetLocale] || `/${targetLocale}`;
+      urlMap[targetLocale] = fallback;
 
       return;
     }
@@ -118,9 +128,9 @@ export const generateLangNavUrls = async ({
         payload,
       });
 
-      urlMap[targetLocale] = url || rootUrls[targetLocale] || `/${targetLocale}`;
+      urlMap[targetLocale] = url || fallback;
     } catch {
-      urlMap[targetLocale] = rootUrls[targetLocale] || `/${targetLocale}`;
+      urlMap[targetLocale] = fallback;
     }
   }));
 
