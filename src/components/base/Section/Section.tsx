@@ -31,6 +31,9 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
   additionalSubTitleClassName,
   additionalContentClassName,
 }, ref) => {
+  const trimmedTitle = title?.trim() ?? '';
+  const hasTitle = trimmedTitle.length > 0;
+
   const sectionClasses = cva([
     styles.section,
     className,
@@ -58,20 +61,20 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
 
   const sectionContent = (
     <>
-      {!additionalStickyContent && title && (
+      {!additionalStickyContent && hasTitle && (
         <SafeHtml
           as='h2'
           className={styles.title}
-          html={title}
+          html={trimmedTitle}
         />
       )}
 
-      {additionalStickyContent && title && (
+      {additionalStickyContent && hasTitle && (
         <div className={`${styles.additionalStickyContent} ${additionalContentClassName}`}>
           <SafeHtml
             as='h2'
             className={`${styles.title} ${titleClassName}`}
-            html={title}
+            html={trimmedTitle}
           />
           {additionalStickyContent}
         </div>
@@ -95,7 +98,7 @@ export const Section = forwardRef<HTMLElement, InterfaceSectionPropTypes>(({
       className={sectionClasses({
         colorMode,
         fullBleed,
-        title: title !== undefined,
+        title: hasTitle,
       })}
     >
       {fullBleed

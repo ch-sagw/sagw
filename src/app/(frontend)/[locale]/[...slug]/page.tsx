@@ -2,7 +2,6 @@ import 'server-only';
 import React from 'react';
 import { TypedLocale } from 'payload';
 import { RenderPage } from '@/app/(frontend)/renderers/RenderPage';
-import { generateStaticParams as getStaticParams } from '@/app/(frontend)/utilities/generateStaticParams';
 import { InterfaceOtherPagesProps } from '@/app/(frontend)/fetchers/otherPages';
 import { Metadata } from 'next';
 import { renderMeta } from '@/app/(frontend)/renderers/RenderMeta';
@@ -10,8 +9,10 @@ import { getPageData } from '../../fetchers/pageData';
 import { runRedirectIfMatch } from '@/components/helpers/redirects';
 import { RenderNotFoundPage } from '@/app/(frontend)/renderers/RenderNotFoundPage';
 
-export const generateStaticParams = async (): Promise<{ locale: TypedLocale; slug: string[] }[]> => (await getStaticParams())
-  .filter((param) => param.slug.length > 0);
+// Intentionally empty: we no longer pre-render the pages at build time
+// since it's too time-consuming and expensive. static pages are killed
+// anyway after a single change in payload.
+export const generateStaticParams = (): { locale: TypedLocale; slug: string[] }[] => [];
 
 // export const revalidate = 1;
 // export const dynamic = 'force-dynamic';
