@@ -340,6 +340,16 @@ export const subscribe = async ({
       return 'generalError';
     }
 
+    // Give Brevo's workflow engine time to observe the "removed from list"
+    // event before we re-add the contact. Without this gap the remove/add pair
+    // can be coalesced and the DOI workflow's re-entry condition does not
+    // fire, so no new confirmation email is sent on a repeat sign-up.
+    if (listsToRefresh.length > 0) {
+      await new Promise((resolve) => {
+        setTimeout(resolve, 5_000);
+      });
+    }
+
     const added = await addUserToList({
       email,
       listId: listIdTemp,
