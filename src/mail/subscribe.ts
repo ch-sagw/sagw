@@ -24,6 +24,56 @@ import {
   requestHeaders,
 } from '@/mail/helpers';
 
+// Retry helper for Brevo calls. Brevo's API occasionally answers with
+// transient 5xx / 429 responses or drops the TCP connection; without a
+// retry a single blip makes `subscribe` return `'generalError'` and the
+// user sees the error notification instead of the success notification.
+// We retry only on network errors, HTTP 429 and HTTP >= 500. All other
+// 4xx responses (real client errors) are returned as-is so the caller's
+// status-code checks continue to work.
+const sleep = (ms: number): Promise<void> => new Promise((resolve) => {
+  setTimeout(resolve, ms);
+});
+
+const retryBackoffsMs = [
+  0,
+  500,
+  1_500,
+];
+
+const fetchWithRetry = async (
+  url: string,
+  init: RequestInit,
+  attempt = 0,
+): Promise<Response> => {
+  const delayMs = retryBackoffsMs[attempt];
+
+  if (delayMs > 0) {
+    await sleep(delayMs);
+  }
+
+  const isLastAttempt = attempt >= retryBackoffsMs.length - 1;
+
+  try {
+    const response = await fetch(url, init);
+    const isRetryableStatus = response.status === 429 || response.status >= 500;
+
+    if (isRetryableStatus && !isLastAttempt) {
+      return fetchWithRetry(url, init, attempt + 1);
+    }
+
+    return response;
+  } catch (error) {
+    if (!isLastAttempt) {
+      return fetchWithRetry(url, init, attempt + 1);
+    }
+
+    throw error instanceof Error
+      ? error
+      : new Error('Brevo request failed after retries.');
+  }
+};
+
 const contactAttributesBody = ({
   firstname,
   lastname,
@@ -73,7 +123,7 @@ type GetContactResult =
 const getContact = async (email: FormDataEntryValue | null): Promise<GetContactResult> => {
   try {
     const requestUrl = `${brevoEndpoints.contacts}/${encodedEmail(email)}`;
-    const response = await fetch(requestUrl, {
+    const response = await fetchWithRetry(requestUrl, {
       headers: requestHeaders,
       method: 'GET',
     });
@@ -106,7 +156,7 @@ const getContact = async (email: FormDataEntryValue | null): Promise<GetContactR
 
 const unblockContactEmailCampaigns = async (email: FormDataEntryValue | null): Promise<boolean> => {
   try {
-    const response = await fetch(
+    const response = await fetchWithRetry(
       `${brevoEndpoints.contacts}/${encodedEmail(email)}`,
       {
         body: JSON.stringify({
@@ -125,7 +175,7 @@ const unblockContactEmailCampaigns = async (email: FormDataEntryValue | null): P
 
 const unblockTransactionalContact = async (email: FormDataEntryValue | null): Promise<boolean> => {
   try {
-    const response = await fetch(
+    const response = await fetchWithRetry(
       `${brevoEndpoints.smtpBlockedContacts}/${encodedEmail(email)}`,
       {
         headers: requestHeaders,
@@ -195,7 +245,7 @@ const createUser = async ({
     }
 
     // contact does not exists. create it.
-    const createResponse = await fetch(brevoEndpoints.contacts, {
+    const createResponse = await fetchWithRetry(brevoEndpoints.contacts, {
       body: JSON.stringify({
         email,
         ...contactAttributesBody({
@@ -251,7 +301,7 @@ const addUserToList = async ({
   try {
     const requestUrl =
       `${brevoEndpoints.contacts}/lists/${Number(listId)}/contacts/add`;
-    const response = await fetch(requestUrl, {
+    const response = await fetchWithRetry(requestUrl, {
       body: JSON.stringify({
         emails: [String(email)],
       }),
@@ -275,7 +325,7 @@ const removeUserFromList = async ({
   try {
     const requestUrl =
       `${brevoEndpoints.contacts}/lists/${Number(listId)}/contacts/remove`;
-    const response = await fetch(requestUrl, {
+    const response = await fetchWithRetry(requestUrl, {
       body: JSON.stringify({
         emails: [String(email)],
       }),
@@ -338,16 +388,6 @@ export const subscribe = async ({
 
     if (removeResults.some((ok) => !ok)) {
       return 'generalError';
-    }
-
-    // Give Brevo's workflow engine time to observe the "removed from list"
-    // event before we re-add the contact. Without this gap the remove/add pair
-    // can be coalesced and the DOI workflow's re-entry condition does not
-    // fire, so no new confirmation email is sent on a repeat sign-up.
-    if (listsToRefresh.length > 0) {
-      await new Promise((resolve) => {
-        setTimeout(resolve, 5_000);
-      });
     }
 
     const added = await addUserToList({
