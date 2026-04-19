@@ -97,6 +97,7 @@ interface InterfaceFetchDetailPagesProps {
   sort: Sort,
   payload?: BasePayload;
   projectId?: string,
+  publicationTopicId?: string,
 }
 
 export const fetchDetailPages = async ({
@@ -106,6 +107,7 @@ export const fetchDetailPages = async ({
   tenant,
   collection,
   projectId,
+  publicationTopicId,
   sort,
   depth = 1,
   payload: providedPayload,
@@ -124,6 +126,11 @@ export const fetchDetailPages = async ({
     ...(projectId && {
       'categorization.project': {
         equals: projectId,
+      },
+    }),
+    ...(publicationTopicId && {
+      'categorization.topic': {
+        equals: publicationTopicId,
       },
     }),
   };
@@ -352,6 +359,7 @@ interface InterfaceFetchPublicationPagesProps {
   limit?: number;
   payload?: BasePayload;
   projectId?: string;
+  publicationTopicId?: string
   sort?: Sort;
   excludePageId?: string;
   depth: number;
@@ -365,6 +373,7 @@ export const fetchPublicationPages = async ({
   payload,
   depth = 2,
   projectId,
+  publicationTopicId,
   sort = '-createdAt',
 }: InterfaceFetchPublicationPagesProps): Promise<PublicationDetailPage[]> => {
 
@@ -376,6 +385,7 @@ export const fetchPublicationPages = async ({
     limit,
     payload,
     projectId,
+    publicationTopicId,
     sort,
     tenant,
   });
