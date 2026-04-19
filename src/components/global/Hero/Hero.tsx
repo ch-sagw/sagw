@@ -43,8 +43,6 @@ export type InterfaceHeroPropTypes =
   } & InterfaceHeroField)
   | (BaseHeroProps & {
     exportArticleText?: InterfaceRte;
-    pdfGenerationToken?: string;
-    pdfGenerationExpiresAt?: string;
     type: 'magazineDetail';
   } & InterfaceHeroFieldMagazineDetail)
   | (BaseHeroProps & {
@@ -136,25 +134,43 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
   ] = React.useState(false);
 
   const handleExport = (): void => {
-    if (typeof window === 'undefined' || props.type !== 'magazineDetail') {
+    if (typeof window === 'undefined' || props.type !== 'magazineDetail' || isExporting) {
       return;
     }
-
-    if (!props.pdfGenerationToken || !props.pdfGenerationExpiresAt || isExporting) {
-      return;
-    }
-    const token = props.pdfGenerationToken;
-    const expiresAt = props.pdfGenerationExpiresAt;
 
     const downloadPdf = async (): Promise<void> => {
       setIsExporting(true);
 
       try {
+        // 1: request a fresh, short-lived token for the current path
+        const tokenUrl = new URL('/api/magazine-pdf/token', window.location.origin);
+
+        tokenUrl.searchParams.set('path', window.location.pathname);
+
+        const tokenResponse = await fetch(tokenUrl.toString(), {
+          cache: 'no-store',
+        });
+
+        if (!tokenResponse.ok) {
+          throw new Error(`Failed to obtain PDF token (${tokenResponse.status})`);
+        }
+
+        const {
+          token,
+          expiresAt,
+          path,
+        } = await tokenResponse.json() as {
+          token: string;
+          expiresAt: number;
+          path: string;
+        };
+
+        // 2: request the PDF itself using the just-issued token.
         const exportUrl = new URL('/api/magazine-pdf', window.location.origin);
 
-        exportUrl.searchParams.set('path', `${window.location.pathname}${window.location.search}`);
+        exportUrl.searchParams.set('path', path);
         exportUrl.searchParams.set('token', token);
-        exportUrl.searchParams.set('expiresAt', expiresAt);
+        exportUrl.searchParams.set('expiresAt', expiresAt.toString());
 
         const response = await fetch(exportUrl.toString());
 

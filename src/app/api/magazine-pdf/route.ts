@@ -6,6 +6,7 @@ import {
   isPdfGenerationEnabled,
   verifyPdfGenerationAuth,
 } from '@/utilities/pdfGenerationSecurity';
+import { sanitizePdfExportPath } from '@/utilities/sanitizePdfExportPath';
 
 export const runtime = 'nodejs';
 
@@ -22,36 +23,6 @@ const buildOrigin = (req: NextRequest): string | null => {
   }
 
   return `${proto}://${host}`;
-};
-
-const sanitizePath = (pathValue: string): string | null => {
-  // require a leading slash so the path is always relative to the current
-  // origin.
-  if (!pathValue.startsWith('/')) {
-    return null;
-  }
-
-  // Reject protocol-relative URLs like "//evil.com".
-  if (pathValue.startsWith('//')) {
-    return null;
-  }
-
-  // Normalize and validate path segments to prevent directory traversal.
-  // This forbids any ".." segments in the path portion.
-  const [urlWithoutOrigin] = pathValue.split('?');
-  const segments = urlWithoutOrigin.split('/');
-
-  if (segments.some((segment) => segment === '..')) {
-    return null;
-  }
-
-  // Optionally, reject control characters and whitespace that can
-  // confuse URL parsing.
-  if ((/[^\x20-\x7E]/u).test(pathValue)) {
-    return null;
-  }
-
-  return pathValue;
 };
 
 const escapeHtml = (value: string): string => value
@@ -136,7 +107,7 @@ export const GET = async (req: NextRequest): Promise<Response> => {
     });
   }
 
-  const sanitizedPath = sanitizePath(pathValue);
+  const sanitizedPath = sanitizePdfExportPath(pathValue);
 
   if (!sanitizedPath) {
     return new Response('Invalid `path` query parameter', {
@@ -153,16 +124,6 @@ export const GET = async (req: NextRequest): Promise<Response> => {
   }
 
   const targetUrl = new URL(sanitizedPath, origin);
-
-  // For security, only allow paths without a query string. This ensures that
-  // the server-side navigation cannot be used to introduce unauthorized
-  // parameters, and that the value checked by verifyPdfGenerationAuth fully
-  // describes the URL.
-  if (targetUrl.search && targetUrl.search !== '') {
-    return new Response('Query parameters are not allowed in `path`', {
-      status: 400,
-    });
-  }
 
   const expiresAt = Number.parseInt(expiresAtRaw, 10);
   const isAuthorized = verifyPdfGenerationAuth({
@@ -186,6 +147,9 @@ export const GET = async (req: NextRequest): Promise<Response> => {
     .toISOString()
     .split('T')[0] || '';
   let browser: Awaited<ReturnType<typeof puppeteer.launch>> | null = null;
+  // track the current step of the pipeline so a failure produces an error
+  // message that actually tells us what broke
+  let phase: 'launch' | 'goto' | 'pdf' = 'launch';
 
   try {
     const executablePath = await getExecutablePath();
@@ -230,12 +194,15 @@ export const GET = async (req: NextRequest): Promise<Response> => {
       value: consentValue,
     });
 
-    // Navigate only to the validated, same-origin URL derived from the
-    // sanitized path.
+    phase = 'goto';
+
+    // networkidle0 did not work /)
     await page.goto(targetUrl.toString(), {
-      waitUntil: 'networkidle0',
+      waitUntil: 'networkidle2',
     });
     await page.emulateMediaType('print');
+
+    phase = 'pdf';
 
     const pdf = await page.pdf({
       displayHeaderFooter: true,
@@ -269,7 +236,9 @@ export const GET = async (req: NextRequest): Promise<Response> => {
       ? error.message
       : 'Unknown error';
 
-    return new Response(`Failed to generate PDF: ${errorMessage}`, {
+    console.error(`[magazine-pdf] ${phase} failed for ${targetUrl.toString()}: ${errorMessage}`);
+
+    return new Response(`Failed to generate PDF (${phase}): ${errorMessage}`, {
       status: 500,
     });
   } finally {

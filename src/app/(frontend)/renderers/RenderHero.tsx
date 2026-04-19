@@ -50,8 +50,6 @@ interface InterfaceRenderHero {
   breadcrumb: InterfaceBreadcrumb;
   locale: TypedLocale;
   i18nGeneric: InterfaceI18NGeneric;
-  pdfGenerationToken?: string;
-  pdfGenerationExpiresAt?: string;
 }
 
 export const RenderHero = ({
@@ -60,8 +58,6 @@ export const RenderHero = ({
   breadcrumb: pageBreadcrumb,
   locale,
   i18nGeneric,
-  pdfGenerationToken,
-  pdfGenerationExpiresAt,
 }: InterfaceRenderHero): React.JSX.Element | undefined => {
   const i18nNavigation = useTranslations('navigation');
 
@@ -197,8 +193,6 @@ export const RenderHero = ({
         breadcrumb={breadcrumb}
         type='magazineDetail'
         exportArticleText={i18nGeneric.exportArticleButtonText}
-        pdfGenerationToken={pdfGenerationToken}
-        pdfGenerationExpiresAt={pdfGenerationExpiresAt}
       />
     );
   } else if (heroProps && heroType === 'generic') {
