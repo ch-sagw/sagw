@@ -209,6 +209,14 @@ export const waitForBrevoConfirmationLink = ({
         pathname: `/smtp/emails/${latestEmail.uuid}`,
       });
 
+      // Brevo's list endpoint (/smtp/emails) can return a 404 or
+      // 5xx errors. Treat both as retryable inside the polling loop
+      if (response.status === 404 || response.status >= 500) {
+        await sleep(pollIntervalMs);
+
+        return attempt();
+      }
+
       if (!response.ok) {
         throw new Error(`Brevo /smtp/emails/{uuid} failed with status ${response.status}.`);
       }
