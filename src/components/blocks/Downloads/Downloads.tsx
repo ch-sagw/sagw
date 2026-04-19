@@ -10,6 +10,8 @@ import { InterfaceRte } from '@/components/base/types/rte';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { DownloadsComponent } from '@/components/blocks/Downloads/Downloads.component';
+import { TypedLocale } from 'payload';
+import { getLocale } from 'next-intl/server';
 
 export type InterfaceDownloadsPropTypes = {
   title: InterfaceRte;
@@ -19,6 +21,7 @@ export type InterfaceDownloadsPropTypes = {
 export const Downloads = async (props: InterfaceDownloadsPropTypes): Promise<React.JSX.Element> => {
   const title = rteToHtml(props.title);
   const payload = await getPayloadCached();
+  const locale = (await getLocale()) as TypedLocale;
   let projectId;
 
   if (props.project) {
@@ -38,6 +41,7 @@ export const Downloads = async (props: InterfaceDownloadsPropTypes): Promise<Rea
   if (props.customOrAuto === 'auto' && projectId) {
     const projectDocuments = await payload.find({
       collection: 'documents',
+      locale,
       where: {
         project: {
           equals: projectId,
@@ -97,8 +101,8 @@ export const Downloads = async (props: InterfaceDownloadsPropTypes): Promise<Rea
         date: documentItem.date || '',
         format: format.toUpperCase(),
         link: {
-          href: documentItem.url || '',
-          target: '_blank' as const,
+          href: `/api/documents/${encodeURIComponent(documentItem.id)}/download?locale=${encodeURIComponent(locale)}`,
+          target: '_self' as const,
         },
         size: fileSizeText,
         title: rteToHtml(documentItem.title),

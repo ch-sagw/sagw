@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.44.0](https://github.com/ch-sagw/sagw/compare/v0.43.0...v0.44.0) (2026-04-19)
+
+
+### Features
+
+* implement dedicated document download route ([#1040](https://github.com/ch-sagw/sagw/issues/1040)) ([9af54f6](https://github.com/ch-sagw/sagw/commit/9af54f67d53a1b5ed9703dd666efca27825a1bba))
+
+
+### Bug Fixes
+
+* fix issue with empty title string ([c68a427](https://github.com/ch-sagw/sagw/commit/c68a42799e97620279c328e0afdd334ece75adb7))
+* security finding [#1](https://github.com/ch-sagw/sagw/issues/1) ([3a08972](https://github.com/ch-sagw/sagw/commit/3a08972da85f871da4c64cb672d40098e9ecf8f2))
+* security finding [#2](https://github.com/ch-sagw/sagw/issues/2) ([3a08972](https://github.com/ch-sagw/sagw/commit/3a08972da85f871da4c64cb672d40098e9ecf8f2))
+* security finding #A ([3a08972](https://github.com/ch-sagw/sagw/commit/3a08972da85f871da4c64cb672d40098e9ecf8f2))
+* security finding #B prevent user enumeration on forgot-password route ([3a08972](https://github.com/ch-sagw/sagw/commit/3a08972da85f871da4c64cb672d40098e9ecf8f2))
+* use proper tenant home fallback for undefined lang-pages ([#1054](https://github.com/ch-sagw/sagw/issues/1054)) ([d0d31c0](https://github.com/ch-sagw/sagw/commit/d0d31c07ed192615fd4aac3005d365c78ca76595))
+
+
+### Test
+
+* write tests for form with and without title as first page child ([c68a427](https://github.com/ch-sagw/sagw/commit/c68a42799e97620279c328e0afdd334ece75adb7))
+
 ## [0.43.0](https://github.com/ch-sagw/sagw/compare/v0.42.0...v0.43.0) (2026-04-18)
 
 

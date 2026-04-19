@@ -265,6 +265,13 @@ const addUserToList = async ({
   }
 };
 
+interface InterfaceBrevoListOpResponse {
+  contacts?: {
+    success?: unknown[];
+    failure?: unknown[];
+  };
+}
+
 const removeUserFromList = async ({
   email,
   listId,
@@ -283,7 +290,23 @@ const removeUserFromList = async ({
       method: 'POST',
     });
 
-    return response.status === 201;
+    // Brevo's remove endpoint returns 201 regardless of whether any
+    // emails were actually removed. The actual outcome is in the
+    // response body's `contacts.success` / `contacts.failure` arrays,
+    // so we have to parse it rather than trust the status code.
+    if (response.status !== 201) {
+      return false;
+    }
+
+    const body = (await response.json()) as InterfaceBrevoListOpResponse;
+    const successList = Array.isArray(body?.contacts?.success)
+      ? body.contacts.success.map((entry) => String(entry)
+        .toLowerCase())
+      : [];
+    const normalizedEmail = String(email)
+      .toLowerCase();
+
+    return successList.includes(normalizedEmail);
   } catch {
     return false;
   }
@@ -324,6 +347,19 @@ export const subscribe = async ({
 
     if (!userResult.ok) {
       return 'generalError';
+    }
+
+    // Contact is already on the DOI temp list (previously signed up
+    // but never confirmed). Do NOT attempt remove + add here: while
+    // Brevo's DOI workflow is in its "waiting for confirmation" state,
+    // it ignores external list removals (the remove call returns a
+    // success body but the contact stays on the list, and the
+    // subsequent add then fails with `400 Contact already in list`).
+    // Brevo's DOI workflow re-sends the confirmation email on its own
+    // when a pending contact re-submits, so returning
+    // `pendingVerification` here is the correct behaviour.
+    if (userResult.listIds.includes(Number(listIdTemp))) {
+      return 'pendingVerification';
     }
 
     const listsToRefresh = checkUserInLists(userResult.listIds, [

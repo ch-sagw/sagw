@@ -101,53 +101,70 @@ export const DownloadLinkItem = ({
       ${internalI18nA11y('linkTarget')} ${internalI18nA11y('opensInNewWindow')}`;
   }
 
+  const content = (
+    <>
+      <div className={styles.content}>
+
+        {/* title */}
+        <SafeHtml
+          as='span'
+          className={styles.title}
+          html={title}
+        />
+
+        {/* text */}
+        {type === 'link' && text &&
+          <SafeHtml
+            as='span'
+            className={styles.text}
+            html={text}
+          />
+        }
+
+        {type === 'download' &&
+          <SafeHtml
+            as='span'
+            className={styles.text}
+            html={downloadText}
+          />
+        }
+      </div>
+
+      {/* icon */}
+      <Icon
+        className={styles.icon}
+        name={iconName as keyof typeof Icon}
+      />
+    </>
+  );
+
   return (
     <li
       className={itemClasses()}
       data-testid='downloadLinkItem'
     >
-      <Link
-        aria-label={ariaLabel}
-        href={link.href}
-        target={link.target}
-        className={styles.link}
-        prefetch={type !== 'download'}
-      >
-
-        <div className={styles.content}>
-
-          {/* title */}
-          <SafeHtml
-            as='span'
-            className={styles.title}
-            html={title}
-          />
-
-          {/* text */}
-          {type === 'link' && text &&
-            <SafeHtml
-              as='span'
-              className={styles.text}
-              html={text}
-            />
-          }
-
-          {type === 'download' &&
-            <SafeHtml
-              as='span'
-              className={styles.text}
-              html={downloadText}
-            />
-          }
-        </div>
-
-        {/* icon */}
-        <Icon
-          className={styles.icon}
-          name={iconName as keyof typeof Icon}
-        />
-
-      </Link>
+      {type === 'download'
+        ? (
+          <a
+            aria-label={ariaLabel}
+            href={link.href}
+            target={link.target}
+            className={styles.link}
+          >
+            {content}
+          </a>
+        )
+        : (
+          <Link
+            aria-label={ariaLabel}
+            href={link.href}
+            target={link.target}
+            className={styles.link}
+            prefetch
+          >
+            {content}
+          </Link>
+        )}
     </li>
   );
 };
