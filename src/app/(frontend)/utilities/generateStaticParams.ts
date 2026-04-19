@@ -20,9 +20,7 @@ interface InterfaceGenerateStaticParams {
 
 // Generate static params for all dynamic routes
 const generateStaticParamsImpl = async (options?: InterfaceGenerateStaticParamsOptions): Promise<{ locale: TypedLocale; slug: string[] }[] | InterfaceTenantSitemapStaticParam[]> => {
-  // we don't want to run into issues with playwright where we create pages
-  // on the fly...
-  if (options?.mode !== 'sitemap' && !options?.ignoreEnvGuard && process.env.NODE_ENV !== 'production') {
+  if (options?.mode !== 'sitemap' && !options?.ignoreEnvGuard) {
     return [];
   }
 
