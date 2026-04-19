@@ -2,15 +2,19 @@
 
 import 'server-only';
 import { z } from 'zod';
+import { getLocale } from 'next-intl/server';
 import {
-  hiddenFormDefinitionFieldName, hiddenPageUrl,
+  hiddenFormIdFieldName, hiddenPageUrl, newsletterFieldNames,
 } from '@/components/blocks/Form/Form.config';
 import { sendMail } from '@/mail/sendMail';
 import { subscribe } from '@/mail/subscribe';
-import { Form as InterfaceForm } from '@/payload-types';
+import {
+  type Config, I18NGlobal, Form as InterfaceForm,
+} from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
-import { newsletterFieldNames } from '@/components/blocks/Form/Form.server';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { buildFormFields } from '@/components/blocks/Form/buildFormFields';
 
 type SubmitFormResult =
   | {
@@ -22,18 +26,45 @@ type SubmitFormResult =
       values?: Record<string, unknown>;
     };
 
-const generateMailContent = (formData: FormData, hiddenFormData: InterfaceForm, hiddenUrl: string): string => {
+// only accept same-origin, single-line, reasonably short paths. Any
+// client-supplied value that does not match is dropped. This prevents a
+// faked `pageUrl` input from injecting URLs into the notification email body.
+const sanitizePagePath = (raw: unknown): string => {
+  if (typeof raw !== 'string') {
+    return '';
+  }
+
+  if (raw.length === 0 || raw.length > 2000) {
+    return '';
+  }
+
+  if (!raw.startsWith('/') || raw.startsWith('//')) {
+    return '';
+  }
+
+  if ((/[\r\n]/u).test(raw)) {
+    return '';
+  }
+
+  return raw;
+};
+
+const generateMailContent = (
+  formData: FormData,
+  form: InterfaceForm,
+  fields: { name: string }[],
+  pagePath: string,
+): string => {
   let mailContent = '';
 
-  // add url
-  mailContent += `URL: ${hiddenUrl}<br><br><br>`;
+  if (pagePath) {
+    mailContent += `URL: ${pagePath}<br><br><br>`;
+  }
 
-  // add title and subtitle
-  mailContent += `${rte1ToPlaintext(hiddenFormData.title)}<br>`;
-  mailContent += `${rte1ToPlaintext(hiddenFormData.subtitle)}<br><br><br>`;
+  mailContent += `${rte1ToPlaintext(form.title)}<br>`;
+  mailContent += `${rte1ToPlaintext(form.subtitle)}<br><br><br>`;
 
-  // add field data
-  hiddenFormData.fields?.forEach((field) => {
+  fields.forEach((field) => {
     const {
       name,
     } = field;
@@ -46,20 +77,92 @@ const generateMailContent = (formData: FormData, hiddenFormData: InterfaceForm, 
 };
 
 export const submitForm = async (prevState: any, formData: FormData): Promise<SubmitFormResult> => {
+  // Read id + page path from the request. Everything else about the
+  // form (recipient, subject, fields, list ids) is re-fetched from
+  // payload and is not trusted from the client.
+  const formId = formData.get(hiddenFormIdFieldName);
+  const pagePath = sanitizePagePath(formData.get(hiddenPageUrl));
 
-  const hiddenFormData: InterfaceForm = JSON.parse(formData.get(hiddenFormDefinitionFieldName) as string);
-  const hiddenUrl: string = formData.get(hiddenPageUrl) as string;
-  const {
-    fields,
-  } = hiddenFormData;
+  if (typeof formId !== 'string' || formId.length === 0) {
+    return {
+      success: false,
+    };
+  }
 
-  const shape: Record<string, any> = {};
+  const locale = (await getLocale()) as Config['locale'];
+  const payload = await getPayloadCached();
 
-  if (!fields) {
+  let authoritativeForm: InterfaceForm | null;
+
+  try {
+    authoritativeForm = (await payload.findByID({
+      collection: 'forms',
+      depth: 0,
+      disableErrors: true,
+      id: formId,
+      locale,
+    })) as InterfaceForm | null;
+  } catch {
+    authoritativeForm = null;
+  }
+
+  if (!authoritativeForm) {
+    return {
+      success: false,
+    };
+  }
+
+  // Resolve the form's tenant so we can fetch the matching i18n globals.
+  // The privacy checkbox label + error message live on the tenant-scoped
+  // i18n globals document, not on the form itself.
+  const tenantId = typeof authoritativeForm.tenant === 'string'
+    ? authoritativeForm.tenant
+    : authoritativeForm.tenant?.id;
+
+  if (!tenantId) {
+    return {
+      success: false,
+    };
+  }
+
+  const globalI18nDocs = await payload.find({
+    collection: 'i18nGlobals',
+    depth: 0,
+    limit: 1,
+    locale,
+    where: {
+      tenant: {
+        equals: tenantId,
+      },
+    },
+  });
+
+  const globalI18n = globalI18nDocs.docs[0] as I18NGlobal | undefined;
+
+  if (!globalI18n) {
+    return {
+      success: false,
+    };
+  }
+
+  // build the authoritative field list (mirrors Form.server.tsx): for
+  // newsletter forms this injects firstname/lastname/email/(language),
+  // plus the privacy checkbox when enabled. Custom forms keep their
+  // stored fields[] and optionally add the privacy checkbox.
+  const fields = await buildFormFields({
+    form: authoritativeForm,
+    globalI18n,
+  });
+
+  if (fields.length === 0) {
     return {
       success: true,
     };
   }
+
+  // build the zod validation schema only from the authoritative field
+  // list. Any extra form fields posted by the client are ignored.
+  const shape: Record<string, any> = {};
 
   for (const field of fields) {
     if (field.blockType === 'emailBlock') {
@@ -145,12 +248,19 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
   }
 
   // send mail or subscribe
-  if (hiddenFormData.isNewsletterForm === 'custom') {
+  if (authoritativeForm.isNewsletterForm === 'custom') {
+    if (!authoritativeForm.recipientMail || !authoritativeForm.mailSubject) {
+      return {
+        success: false,
+        values: data,
+      };
+    }
+
     const mailResult = await sendMail({
-      content: generateMailContent(formData, hiddenFormData, hiddenUrl),
+      content: generateMailContent(formData, authoritativeForm, fields, pagePath),
       from: process.env.MAIL_SENDER_ADDRESS,
-      subject: hiddenFormData.mailSubject || '',
-      to: hiddenFormData.recipientMail || '',
+      subject: authoritativeForm.mailSubject,
+      to: authoritativeForm.recipientMail,
     });
 
     if (mailResult) {
@@ -159,7 +269,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       };
     }
   } else {
-    if (!hiddenFormData.newsletterFields?.newsletterListId || !hiddenFormData.newsletterFields?.newsletterTemporaryListId) {
+    if (!authoritativeForm.newsletterFields?.newsletterListId || !authoritativeForm.newsletterFields?.newsletterTemporaryListId) {
       return {
         success: false,
         values: data,
@@ -171,8 +281,8 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       firstname: formData.get(newsletterFieldNames.firstname),
       language: formData.get(newsletterFieldNames.language),
       lastname: formData.get(newsletterFieldNames.lastname),
-      listId: hiddenFormData.newsletterFields?.newsletterListId,
-      listIdTemp: hiddenFormData.newsletterFields?.newsletterTemporaryListId,
+      listId: authoritativeForm.newsletterFields.newsletterListId,
+      listIdTemp: authoritativeForm.newsletterFields.newsletterTemporaryListId,
     });
 
     if (subscribeResult === 'pendingVerification') {
