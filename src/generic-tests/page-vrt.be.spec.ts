@@ -470,6 +470,44 @@ const generatePerson = async ({
   return person.id;
 };
 
+const hideStatusMessage = async({
+  tenant,
+}: {
+  tenant: string;
+}): Promise<{
+  initialShow: string;
+  statusMessageId: string;
+}> => {
+  const payload = await getPayloadCached();
+  const statusMessage = await payload.find({
+    collection: 'statusMessage',
+    where: {
+      tenant: {
+        equals: tenant,
+      },
+    },
+  });
+
+  const statusMessageShow = statusMessage.docs[0].content.show.display;
+
+  await payload.update({
+    collection: 'statusMessage',
+    data: {
+      content: {
+        show: {
+          display: 'hide',
+        },
+      },
+    },
+    id: statusMessage.docs[0].id,
+  });
+
+  return {
+    initialShow: statusMessageShow,
+    statusMessageId: statusMessage.docs[0].id,
+  };
+};
+
 // ########################################################################
 // Helpers: Setup test pages
 // ########################################################################
@@ -1120,6 +1158,51 @@ const setupDetailPage = async ({
           blockType: 'footnoteBlock',
           text: sampleFootnoteContent,
           title: simpleRteConfig('Footnote'),
+        },
+      ],
+
+      // hero
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: detailPage.id,
+  });
+};
+
+const setupDetailPageContact = async ({
+  tenantId,
+  homeId,
+  noFormTitle,
+}: {
+  tenantId: string;
+  homeId: string;
+  noFormTitle: boolean;
+}): Promise<void> => {
+  const payload = await getPayloadCached();
+
+  const detailPage = await generateDetailPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Detail Page',
+  });
+
+  const sampleForm = await generateRegularForm(tenantId, noFormTitle);
+
+  // add content
+  await payload.update({
+    collection: 'detailPage',
+    data: {
+      content: [
+        // form
+        {
+          blockType: 'formBlock',
+          form: sampleForm,
         },
       ],
 
@@ -4152,5 +4235,189 @@ test.describe('error page', () => {
       .toHaveScreenshot({
         fullPage: true,
       });
+  });
+});
+
+test.describe('contact page', () => {
+  beforeEachAcceptCookies();
+
+  test('form without title / with status message', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    await setupDetailPageContact({
+      homeId: home,
+      noFormTitle: true,
+      tenantId: tenant,
+    });
+
+    await page.goto('http://localhost:3000/de/detail-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('form with title / with status message', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    await setupDetailPageContact({
+      homeId: home,
+      noFormTitle: false,
+      tenantId: tenant,
+    });
+
+    await page.goto('http://localhost:3000/de/detail-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('form without title / without status message', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    const statusMessageResult = await hideStatusMessage({
+      tenant,
+    });
+
+    await setupDetailPageContact({
+      homeId: home,
+      noFormTitle: true,
+      tenantId: tenant,
+    });
+
+    await page.goto('http://localhost:3000/de/detail-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+
+    const payload = await getPayloadCached();
+
+    await payload.update({
+      collection: 'statusMessage',
+      data: {
+        content: {
+          show: {
+            display: statusMessageResult.initialShow as any,
+          },
+        },
+      },
+      id: statusMessageResult.statusMessageId,
+    });
+  });
+
+  test('form with title / without status message', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    const statusMessageResult = await hideStatusMessage({
+      tenant,
+    });
+
+    await setupDetailPageContact({
+      homeId: home,
+      noFormTitle: false,
+      tenantId: tenant,
+    });
+
+    await page.goto('http://localhost:3000/de/detail-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+
+    const payload = await getPayloadCached();
+
+    await payload.update({
+      collection: 'statusMessage',
+      data: {
+        content: {
+          show: {
+            display: statusMessageResult.initialShow as any,
+          },
+        },
+      },
+      id: statusMessageResult.statusMessageId,
+    });
   });
 });

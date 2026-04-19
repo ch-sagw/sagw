@@ -1,6 +1,5 @@
-import type {
-  Config, InterfaceBreadcrumb,
-} from '@/payload-types';
+import type { Config } from '@/payload-types';
+import type { InterfaceBreadcrumb } from '@/utilities/buildBreadcrumbs';
 import { getBreadcrumbPathSegments } from './getBreadcrumbPathSegments';
 import { buildUrlFromPath } from './buildUrlFromPath';
 

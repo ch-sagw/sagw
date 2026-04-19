@@ -14,9 +14,11 @@ import {
   InterfaceHeroFieldNewsDetail,
   InterfaceI18NGeneric,
 } from '@/payload-types';
+import type { InterfaceBreadcrumb } from '@/utilities/buildBreadcrumbs';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { buildBreadcrumbItems } from '@/utilities/buildBreadcrumbItems';
 import { buildUrlFromPath } from '@/utilities/buildUrlFromPath';
+import { getTenantSlugForLocaleFromPageDoc } from '@/utilities/tenant';
 import {
   CollectionSlug, TypedLocale,
 } from 'payload';
@@ -45,6 +47,7 @@ type PageTypes =
 interface InterfaceRenderHero {
   foundCollection: CollectionSlug;
   pageData: PageTypes | null;
+  breadcrumb: InterfaceBreadcrumb;
   locale: TypedLocale;
   i18nGeneric: InterfaceI18NGeneric;
   pdfGenerationToken?: string;
@@ -54,6 +57,7 @@ interface InterfaceRenderHero {
 export const RenderHero = ({
   foundCollection,
   pageData,
+  breadcrumb: pageBreadcrumb,
   locale,
   i18nGeneric,
   pdfGenerationToken,
@@ -136,23 +140,14 @@ export const RenderHero = ({
   }
 
   // extract tenant slug from pageData
-  const pageDataRecord = pageData as unknown as Record<string, unknown>;
-  const tenant = pageDataRecord.tenant as { slug?: Record<string, string> } | { slug?: string } | undefined;
-  let tenantSlug: string | null = null;
-
-  if (tenant && typeof tenant === 'object' && tenant.slug) {
-    if (typeof tenant.slug === 'object' && locale in tenant.slug) {
-      tenantSlug = tenant.slug[locale];
-    } else if (typeof tenant.slug === 'string') {
-      tenantSlug = tenant.slug;
-    }
-
-    tenantSlug = tenantSlug || null;
-  }
+  const tenantSlug = getTenantSlugForLocaleFromPageDoc({
+    locale,
+    pageDoc: pageData as unknown as Record<string, unknown>,
+  });
 
   // build breadcrumb items
   let breadcrumbItems: InterfaceBreadcrumbItem[] = buildBreadcrumbItems({
-    breadcrumb: pageData.breadcrumb ?? [],
+    breadcrumb: pageBreadcrumb ?? [],
     locale,
     tenant: tenantSlug,
   });

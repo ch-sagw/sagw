@@ -203,4 +203,57 @@ test.describe('langnav', () => {
     await expect(pathnameFromLinkHref(itLink))
       .toStrictEqual(`/it/tenant-${time}-it/overview-it-${time}/magazine-detail-it-${time}`);
   });
+
+  // if a tenant's page does not have a published page in a certain language
+  // it must fallback to the tenant's home
+  test('generates proper langnav fallback if page does not exist (non-sagw)', async ({
+    page,
+  }) => {
+    await deleteSetsPages();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: false,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant,
+    });
+
+    const overviewPage = await generateOverviewPage({
+      navigationTitle: `overview ${time}`,
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `overview ${time}`,
+    });
+
+    await generateMagazineDetailPage({
+      navigationTitle: `magazine detail ${time}`,
+      parentPage: {
+        documentId: overviewPage.id,
+        slug: 'overviewPage',
+      },
+      tenant,
+      title: `magazine detail ${time}`,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/overview-${time}/magazine-detail-${time}`);
+    await page.waitForLoadState('networkidle');
+
+    const langnav = await page.getByTestId('langnav');
+
+    const itListItem = await langnav.getByTestId('it');
+    const itLinkItem = await itListItem.getByRole('link');
+    const itLink = await itLinkItem.getAttribute('href');
+
+    await expect(pathnameFromLinkHref(itLink))
+      .toStrictEqual(`/it/tenant-${time}-it`);
+  });
 });
