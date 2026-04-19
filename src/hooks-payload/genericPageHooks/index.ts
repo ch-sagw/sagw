@@ -1,8 +1,4 @@
 import { hookValidateParentCircularReference } from '@/hooks-payload/validateParentCircularReference';
-import { hookGenerateBreadcrumbs } from '@/hooks-payload/generateBreadcrumbs';
-import {
-  hookCascadeBreadcrumbUpdates, hookCascadeBreadcrumbUpdatesOnDelete,
-} from '@/hooks-payload/cascadeBreadcrumbUpdates';
 import { hookSlug } from '@/hooks-payload/slug';
 import { hookAdminTitle } from '@/hooks-payload/adminTitle';
 import {
@@ -25,14 +21,12 @@ interface InterfaceGenericPageHooks {
 export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): InterfaceGenericPageHooks => ({
   // 3.
   afterChange: [
-    hookCascadeBreadcrumbUpdates,
     hookInvalidateTenantCache,
     ...(additionalHooks?.afterChange ?? []),
   ],
 
   // 4.
   afterDelete: [
-    hookCascadeBreadcrumbUpdatesOnDelete,
     hookInvalidateTenantCacheOnDelete,
     ...(additionalHooks?.afterDelete ?? []),
   ],
@@ -40,7 +34,6 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
   // 2.
   beforeChange: [
     hookPreventBulkPublishForTranslators,
-    hookGenerateBreadcrumbs,
     ...(additionalHooks?.beforeChange ?? []),
   ],
 

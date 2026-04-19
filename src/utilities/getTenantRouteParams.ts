@@ -11,7 +11,9 @@ import {
 } from '@/collections/Pages/constants';
 import { homeSlug } from '@/collections/constants';
 import type { Config } from '@/payload-types';
-import { fieldBreadcrumbFieldName } from '@/field-templates/breadcrumb';
+import {
+  buildBreadcrumbsForDoc, InterfaceBreadcrumb,
+} from '@/utilities/buildBreadcrumbs';
 
 interface InterfaceTenantRouteTenant {
   id: string;
@@ -61,8 +63,11 @@ interface InterfaceTenantRoutePageDocument {
   } | null;
   slug?: string | Partial<Record<Config['locale'], string>> | null;
   updatedAt?: string | null;
-  [fieldBreadcrumbFieldName]?: unknown;
 }
+
+type PageWithBreadcrumb = InterfaceTenantRoutePageDocument & {
+  breadcrumb: InterfaceBreadcrumb;
+};
 
 const getEnabledLocales = (tenant: InterfaceTenantRouteTenant): TypedLocale[] => {
   const locales = getLocaleCodes();
@@ -82,14 +87,16 @@ const processPagesForParams = ({
 }: {
   isSagw: boolean;
   locale: TypedLocale;
-  pages: unknown[];
+  pages: PageWithBreadcrumb[];
   tenant: InterfaceTenantRouteTenant;
 }): InterfaceTenantRouteParam[] => {
   const pageParams: InterfaceTenantRouteParam[] = [];
 
   for (const page of pages) {
-    const pageRecord = page as Record<string, unknown>;
-    const breadcrumb = pageRecord[fieldBreadcrumbFieldName];
+    const pageRecord = page as unknown as Record<string, unknown>;
+    const {
+      breadcrumb,
+    } = page;
     const pageSlug = typeof pageRecord.slug === 'string'
       ? pageRecord.slug
       : (pageRecord.slug as Record<string, string> | undefined)?.[locale];
@@ -242,7 +249,7 @@ const buildSitemapVariant = ({
   };
 };
 
-// used by generateStaticParams routine
+// used by cache invalidation routine (via `getTenantRoutePaths`)
 export const getTenantRouteParams = async ({
   payload,
   tenant,
@@ -307,10 +314,22 @@ export const getTenantRouteParams = async ({
         }),
       });
 
+      const pagesWithBreadcrumbs = await Promise.all(pages.docs.map(async (page) => {
+        const breadcrumb = await buildBreadcrumbsForDoc({
+          doc: page as unknown as Record<string, unknown>,
+          payload,
+        });
+
+        return {
+          ...(page as unknown as InterfaceTenantRoutePageDocument),
+          breadcrumb,
+        } as PageWithBreadcrumb;
+      }));
+
       return processPagesForParams({
         isSagw,
         locale,
-        pages: pages.docs,
+        pages: pagesWithBreadcrumbs,
         tenant,
       });
     } catch {
@@ -323,7 +342,7 @@ export const getTenantRouteParams = async ({
   return params;
 };
 
-// used by generateStaticParams routine
+// used by sitemap generation
 export const getTenantSitemapEntries = async ({
   payload,
   tenant,
@@ -427,7 +446,19 @@ export const getTenantSitemapEntries = async ({
         }),
       });
 
-      return (pages.docs as InterfaceTenantRoutePageDocument[])
+      const pagesWithBreadcrumbs = await Promise.all((pages.docs as InterfaceTenantRoutePageDocument[]).map(async (page) => {
+        const breadcrumb = await buildBreadcrumbsForDoc({
+          doc: page as unknown as Record<string, unknown>,
+          payload,
+        });
+
+        return {
+          ...page,
+          breadcrumb,
+        } as PageWithBreadcrumb;
+      }));
+
+      return pagesWithBreadcrumbs
         .flatMap((page) => {
           const params = processPagesForParams({
             isSagw,

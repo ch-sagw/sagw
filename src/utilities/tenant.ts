@@ -1,6 +1,6 @@
 import type { Config } from '@/payload-types';
 
-type TenantLocalizedValue = string | Partial<Record<Config['locale'], string>> | null | undefined;
+export type TenantLocalizedValue = string | Partial<Record<Config['locale'], string>> | null | undefined;
 
 const getLocalizedTenantValue = ({
   locale,
@@ -42,4 +42,56 @@ export const getTenantSlugForLocale = ({
 }): string | null => getLocalizedTenantValue({
   locale,
   value: slug,
+});
+
+// returns the tenant's home URL for the given locale.
+export const getTenantHomeUrl = ({
+  locale,
+  tenantSlug,
+}: {
+  locale: Config['locale'];
+  tenantSlug?: TenantLocalizedValue;
+}): string => {
+  const slug = getTenantSlugForLocale({
+    locale,
+    slug: tenantSlug,
+  });
+
+  if (!slug || slug === 'sagw') {
+    return `/${locale}`;
+  }
+
+  return `/${locale}/${slug}`;
+};
+
+// extracts the localized tenant slug record from a pageDoc's tenant
+// relationship (populated with depth >= 1). returns undefined if the
+// tenant is not populated on the doc.
+export const getTenantSlugFromPageDoc = (pageDoc: Record<string, unknown> | null | undefined): TenantLocalizedValue => {
+  if (!pageDoc) {
+    return undefined;
+  }
+
+  const {
+    tenant,
+  } = pageDoc;
+
+  if (tenant && typeof tenant === 'object' && 'slug' in tenant) {
+    return tenant.slug as TenantLocalizedValue;
+  }
+
+  return undefined;
+};
+
+// convenience combining getTenantSlugFromPageDoc + getTenantSlugForLocale.
+// returns the tenant slug string for the target locale, or null.
+export const getTenantSlugForLocaleFromPageDoc = ({
+  locale,
+  pageDoc,
+}: {
+  locale: Config['locale'];
+  pageDoc: Record<string, unknown> | null | undefined;
+}): string | null => getTenantSlugForLocale({
+  locale,
+  slug: getTenantSlugFromPageDoc(pageDoc),
 });

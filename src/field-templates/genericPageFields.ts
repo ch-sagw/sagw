@@ -5,7 +5,6 @@ import slugify from 'slugify';
 import {
   fieldParentSelectorDetailPage, fieldParentSelectorOverviewPage,
 } from '@/field-templates/parentSelector';
-import { fieldBreadcrumb } from '@/field-templates/breadcrumb';
 import { fieldNavigationTitle } from '@/field-templates/navigationTitle';
 import { fieldLinkablePage } from '@/field-templates/linkablePage';
 import {
@@ -135,7 +134,6 @@ export const genericPageFields = (isOverview?: boolean): Field[] => ([
   isOverview
     ? fieldParentSelectorOverviewPage
     : fieldParentSelectorDetailPage,
-  fieldBreadcrumb,
   {
     admin: {
       components: {
