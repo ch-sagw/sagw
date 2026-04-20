@@ -1,5 +1,49 @@
 # Changelog
 
+## [0.45.0](https://github.com/ch-sagw/sagw/compare/v0.44.0...v0.45.0) (2026-04-20)
+
+
+### Chore
+
+* clean up work since static generation is no longer needed ([3da44c6](https://github.com/ch-sagw/sagw/commit/3da44c62d380f940697383ad138b9092a6a77f5d))
+* **deps-dev:** bump the development-dependencies group with 9 updates ([#1057](https://github.com/ch-sagw/sagw/issues/1057)) ([0afa80c](https://github.com/ch-sagw/sagw/commit/0afa80c78de93d975eb66f448b113c768fc02a9c))
+* **deps:** bump basic-ftp from 5.2.2 to 5.3.0 ([#1042](https://github.com/ch-sagw/sagw/issues/1042)) ([6582b15](https://github.com/ch-sagw/sagw/commit/6582b15eea2c9b02e0ab2537a61a63870351473c))
+* **deps:** bump follow-redirects from 1.15.11 to 1.16.0 ([#1019](https://github.com/ch-sagw/sagw/issues/1019)) ([46ae46b](https://github.com/ch-sagw/sagw/commit/46ae46b5157256fd248c06fc2c19c9da78a6e663))
+* **deps:** bump sanitize-html from 2.17.2 to 2.17.3 ([#1041](https://github.com/ch-sagw/sagw/issues/1041)) ([3155914](https://github.com/ch-sagw/sagw/commit/31559145b3965b2d68d2ba35c8f7079b2c7ae547))
+* **deps:** bump the production-dependencies group with 6 updates ([#1056](https://github.com/ch-sagw/sagw/issues/1056)) ([84479c9](https://github.com/ch-sagw/sagw/commit/84479c9889a3ed4467413360c84dc1e75ffaec57))
+
+
+### CI
+
+* do not statically generate pages ([3da44c6](https://github.com/ch-sagw/sagw/commit/3da44c62d380f940697383ad138b9092a6a77f5d))
+
+
+### Features
+
+* add and use sender-field in forms ([8f452ab](https://github.com/ch-sagw/sagw/commit/8f452ab1a341fdc6a7710ea096ce65566a857284))
+* generate fresh token on the fly, speed up pdf generation ([#1062](https://github.com/ch-sagw/sagw/issues/1062)) ([78b840d](https://github.com/ch-sagw/sagw/commit/78b840dbdfb1601e4f59ceae228de6d16f9078e7))
+
+
+### Bug Fixes
+
+* fix issue where stale data check failed due to missing read-access rights ([f4abd71](https://github.com/ch-sagw/sagw/commit/f4abd71e10053fb2eb1698f795a2346b5c9a53d1))
+* fix issue where stale data check failed due to missing read-access rights ([#1071](https://github.com/ch-sagw/sagw/issues/1071)) ([f4abd71](https://github.com/ch-sagw/sagw/commit/f4abd71e10053fb2eb1698f795a2346b5c9a53d1))
+* passing down page categorization to enable filtering of publication teasers ([#1064](https://github.com/ch-sagw/sagw/issues/1064)) ([0c49b4a](https://github.com/ch-sagw/sagw/commit/0c49b4a049ff79a95a2a16c37f4ca1dd00b7da87))
+* properly handle edge cases for users add/remove from list ([3da44c6](https://github.com/ch-sagw/sagw/commit/3da44c62d380f940697383ad138b9092a6a77f5d))
+* remove obsolete title and url fields on tenants collection ([41473e9](https://github.com/ch-sagw/sagw/commit/41473e91b6bcf0cf6d4fdae1b8ad83a6d5854617))
+
+
+### Style
+
+* removing stroke from error icon ([cf78f30](https://github.com/ch-sagw/sagw/commit/cf78f30752a92a5e9b11e5a311aec9b7c6f46b11))
+* removing stroke from error icon ([#1072](https://github.com/ch-sagw/sagw/issues/1072)) ([cf78f30](https://github.com/ch-sagw/sagw/commit/cf78f30752a92a5e9b11e5a311aec9b7c6f46b11))
+
+
+### Test
+
+* adding new error page reference screenshots ([cf78f30](https://github.com/ch-sagw/sagw/commit/cf78f30752a92a5e9b11e5a311aec9b7c6f46b11))
+* try to fix brevo e2e test ([3da44c6](https://github.com/ch-sagw/sagw/commit/3da44c62d380f940697383ad138b9092a6a77f5d))
+
 ## [0.44.0](https://github.com/ch-sagw/sagw/compare/v0.43.0...v0.44.0) (2026-04-19)
 
 
