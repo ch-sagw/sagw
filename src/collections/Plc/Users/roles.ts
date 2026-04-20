@@ -130,6 +130,27 @@ export const isTenantAdmin = (req: PayloadRequest): boolean => isUserRolelUser(r
 export const isMagazineEditor = (req: PayloadRequest): boolean => isUserRolelUser(req) && hasAccessOnRole(req, tenantRoles.editorMagazine);
 export const isTranslator = (req: PayloadRequest): boolean => isUserRolelUser(req) && hasAccessOnRole(req, tenantRoles.translator);
 
+// True when the session user has tenant-admin, magazine editor, or translator
+// on at least one tenant according to the JWT — without using
+// getRequestedTenant() / cookie context.
+// isTenantAdmin / isMagazineEditor / isTranslator require the current tenant
+// cookie to match; some admin internals (e.g. Payload's stale-document
+// findByID) run with minimal req context, so those checks fail and read access
+// incorrectly falls through to published-only. Use this as a read-access
+// fallback for editorial users.
+
+export const hasEditorialTenantAssignment = (req: PayloadRequest): boolean => {
+  if (!req.user || !isUserRolelUser(req)) {
+    return false;
+  }
+
+  if (!('tenants' in req.user) || !Array.isArray(req.user.tenants) || req.user.tenants.length === 0) {
+    return false;
+  }
+
+  return req.user.tenants.some((t) => Boolean(t.roles?.includes(tenantRoles.admin) || t.roles?.includes(tenantRoles.editorMagazine) || t.roles?.includes(tenantRoles.translator)));
+};
+
 // ########################################################################
 // display helpers
 // ########################################################################
