@@ -21,7 +21,6 @@ import { hasLocale } from 'next-intl';
 import { CMSConfigError } from '../utilities/CMSConfigError';
 import { SkipLinks } from '@/components/global/SkipLinks/SkipLinks';
 import { ColorMode } from '@/components/base/types/colorMode';
-import { createPdfGenerationAuth } from '@/utilities/pdfGenerationSecurity';
 import { getThemeNameForTenant } from '../utilities/getThemeNameForTenant';
 import { Redirector } from '@/components/helpers/redirects';
 import { Tracking } from '@/components/helpers/tracking';
@@ -324,13 +323,6 @@ export const RenderPage = async ({
   const themeName = await getTenantThemeName({
     pageData: otherPageData,
   });
-  const detailPathname = `/${locale}/${pageSlugs.join('/')}`;
-  const pdfGenerationAuth = collectionSlug === 'magazineDetailPage'
-    ? createPdfGenerationAuth({
-      path: detailPathname,
-    })
-    : null;
-
   const breadcrumb = await buildBreadcrumbsForDoc({
     doc: otherPageData,
     payload,
@@ -344,8 +336,6 @@ export const RenderPage = async ({
     heroComponent: (
       <RenderHero
         foundCollection={collectionSlug}
-        pdfGenerationExpiresAt={pdfGenerationAuth?.expiresAt.toString()}
-        pdfGenerationToken={pdfGenerationAuth?.token}
         pageData={otherPageData}
         breadcrumb={breadcrumb}
         i18nGeneric={i18nData.generic}
