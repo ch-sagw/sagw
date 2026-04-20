@@ -30,9 +30,13 @@ export const PublicationsTeaser = async (props: InterfacePublicationsTeaserPropT
     projectId,
   } = props;
 
-  const excludePageId = props.sourcePage?.collectionSlug === 'publicationDetailPage'
-    ? props.sourcePage.id
-    : undefined;
+  let excludePageId;
+  let publicationTopicId;
+
+  if (props.sourcePage?.collectionSlug === 'publicationDetailPage') {
+    excludePageId = props.sourcePage.id;
+    publicationTopicId = props.sourcePage.categorization?.topicId;
+  }
 
   const pages = await fetchPublicationPages({
     depth: 2,
@@ -40,6 +44,7 @@ export const PublicationsTeaser = async (props: InterfacePublicationsTeaserPropT
     limit: 4,
     locale,
     projectId,
+    publicationTopicId,
     sort: '-overviewPageProps.date',
     tenant,
   }) as PublicationDetailPage[];

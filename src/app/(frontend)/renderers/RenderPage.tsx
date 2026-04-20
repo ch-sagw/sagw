@@ -47,7 +47,14 @@ interface InterfacePageRendererProps {
 
 interface InterfaceRenderPageContentProps {
   blocks: any;
-  sourcePage: { collectionSlug: CollectionSlug; id: string };
+  sourcePage: {
+    categorization?: {
+      topicId?: string;
+      typeId?: string;
+    };
+    collectionSlug: CollectionSlug;
+    id: string;
+  };
   tenantId: string;
   isHome: boolean;
   locale: TypedLocale;
@@ -350,6 +357,10 @@ export const RenderPage = async ({
     projectId,
     showBlocks: Boolean(contentBlocks),
     sourcePage: {
+      categorization: {
+        topicId: otherPageData.categorization?.topic?.id,
+        typeId: otherPageData.categorization?.type?.id,
+      },
       collectionSlug,
       id: otherPageData.id,
     },
