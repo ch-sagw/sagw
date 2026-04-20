@@ -1,4 +1,5 @@
 import {
+  hasEditorialTenantAssignment,
   isMagazineEditor, isSagwTenant, isSuperAdmin, isTenantAdmin,
   isTranslator,
 } from '@/collections/Plc/Users/roles';
@@ -33,12 +34,20 @@ const accessSagwOnlyCreate = async ({
 // Read access
 // ########################################################################
 
-// -> all authenticated users can read.
-// -> non-authenticated users can only read published documents.
+// -> Editor users get full read so admin internals (stale-doc check,
+// draft findByID) match the edit view. This fixes an issue where a "stale data"
+// payload-pop up appeared after editing a draft-document (it misleadedly noted
+// another being editing the same document).
 const accessGenericRead = ({
   req,
 }: AccessArgs): AccessResult => {
-  if (isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req) || isTranslator(req)) {
+  if (
+    isSuperAdmin(req) ||
+    isTenantAdmin(req) ||
+    isMagazineEditor(req) ||
+    isTranslator(req) ||
+    hasEditorialTenantAssignment(req)
+  ) {
     return true;
   }
 
