@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload';
 import { ensureUniqueUsername } from '@/collections/Plc/Users/hooks/ensureUniqueUsername';
-import { setCookieBasedOnDomain } from '@/collections/Plc/Users/hooks/setCookieBasedOnDomain';
 import { tenantsArrayField } from '@payloadcms/plugin-multi-tenant/fields';
 import {
   tenantRoles, userRoles,
@@ -78,9 +77,6 @@ export const Users: CollectionConfig = {
       },
     },
   ],
-  hooks: {
-    afterLogin: [setCookieBasedOnDomain],
-  },
   lockDocuments,
   slug: 'users',
 };

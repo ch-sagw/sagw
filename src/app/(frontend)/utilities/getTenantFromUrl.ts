@@ -6,7 +6,6 @@ export interface InterfaceGetTenantFromUrlResult {
   tenantId: string;
   isSagw: boolean;
   tenantSlug: string | null;
-  url: string;
 }
 
 // extracts tenant information from URL segment.
@@ -35,7 +34,6 @@ export const getTenantFromUrl = async (
         isSagw: true,
         tenantId: sagwTenant.docs[0].id,
         tenantSlug: null,
-        url: sagwTenant.docs[0].url,
       };
     }
 
@@ -47,7 +45,6 @@ export const getTenantFromUrl = async (
       isSagw: true,
       tenantId: '',
       tenantSlug: null,
-      url: '',
     };
   }
 
@@ -73,7 +70,6 @@ export const getTenantFromUrl = async (
         isSagw: false,
         tenantId: tenant.id,
         tenantSlug: tenantSlugSegment,
-        url: tenant.url,
       };
     }
   }
@@ -96,7 +92,6 @@ export const getTenantFromUrl = async (
       isSagw: true,
       tenantId: sagwTenant.docs[0].id,
       tenantSlug: null,
-      url: sagwTenant.docs[0].url,
     };
   }
 
@@ -105,7 +100,6 @@ export const getTenantFromUrl = async (
     isSagw: true,
     tenantId: '',
     tenantSlug: null,
-    url: '',
   };
 };
 

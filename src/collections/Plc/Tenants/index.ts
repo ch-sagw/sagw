@@ -13,7 +13,6 @@ export const Tenants: CollectionConfig = {
   admin: {
     defaultColumns: [
       'name',
-      'url',
       'slug',
     ],
     group: 'Org',
@@ -37,13 +36,6 @@ export const Tenants: CollectionConfig = {
     },
     {
       access: fieldsAccess,
-      localized: true,
-      name: 'title',
-      required: true,
-      type: 'text',
-    },
-    {
-      access: fieldsAccess,
       admin: {
         description: 'Used for url paths, example: /tenant-slug/page-slug',
       },
@@ -52,17 +44,6 @@ export const Tenants: CollectionConfig = {
       name: 'slug',
       required: true,
       type: 'text',
-    },
-    {
-      access: fieldsAccess,
-      admin: {
-        description: 'The final root URL for the tenant, example: https://www.sagw.ch',
-      },
-      localized: false,
-      name: 'url',
-      required: true,
-      type: 'text',
-      unique: false,
     },
     {
       access: fieldsAccess,
