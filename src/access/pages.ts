@@ -1,12 +1,16 @@
 import {
+  getRequestedTenant,
   hasEditorialTenantAssignment,
   isMagazineEditor, isSagwTenant, isSuperAdmin, isTenantAdmin,
   isTranslator,
+  tenantRoles,
 } from '@/collections/Plc/Users/roles';
 import {
   AccessArgs,
   AccessResult,
 } from 'payload';
+import type { User } from '@/payload-types';
+import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
 
 // ########################################################################
 // Create access
@@ -72,7 +76,18 @@ const accessSagwOnlyRead = async ({
 
   const sagwTenant = await isSagwTenant(req);
 
-  return isTenantAdmin(req) && sagwTenant;
+  if (isTenantAdmin(req) && sagwTenant) {
+    return true;
+  }
+
+  // Same pattern as accessGenericRead / roles.ts: admin server functions (e.g.
+  // copy locale) may run without tenant cookie context; tenant-scoped checks
+  // above would fail even though the user is an editorial user.
+  if (!getRequestedTenant(req) && hasEditorialTenantAssignment(req)) {
+    return true;
+  }
+
+  return false;
 };
 
 // ########################################################################
@@ -120,6 +135,17 @@ const accessSagwOnlyUpdate = async ({
   if (isTranslator(req)) {
     // only allow saving drafts, but don't allow publishing a page
     if (req.data?._status === 'published') {
+      return false;
+    }
+
+    return true;
+  }
+
+  if (!getRequestedTenant(req) && hasEditorialTenantAssignment(req)) {
+    const translatorOnJwt =
+      getUserTenantIDs(req.user as User, tenantRoles.translator).length > 0;
+
+    if (translatorOnJwt && req.data?._status === 'published') {
       return false;
     }
 
