@@ -10,6 +10,7 @@ import {
 import { Image } from '@/payload-types';
 import { InterfaceOtherPagesProps } from '@/app/(frontend)/fetchers/otherPages';
 import { getPageData } from '../fetchers/pageData';
+import { getServerSideURL } from '@/utilities/getUrl';
 
 export const renderMeta = async ({
   params,
@@ -100,6 +101,13 @@ export const renderMeta = async ({
     id: tenantInfo.tenantId,
   });
 
+  const serverBase = getServerSideURL()
+    .replace(/\/+$/u, '');
+  const tenantMetadataRoot = tenantInfo.isSagw || !tenantInfo.tenantSlug
+    ? `${serverBase}/`
+    : `${serverBase}/${tenantInfo.tenantSlug}/`;
+  const metadataRootUrl = new URL(tenantMetadataRoot);
+
   return {
     description: meta.description,
     icons: {
@@ -122,9 +130,7 @@ export const renderMeta = async ({
     },
     keywords: meta?.keywords?.map((k: any) => k.keyword)
       .filter((k: any): k is string => Boolean(k)),
-    metadataBase: tenantInfo.url
-      ? new URL(tenantInfo.url)
-      : undefined,
+    metadataBase: metadataRootUrl,
     openGraph: {
       description: meta.description,
       images: seoImage?.url
@@ -139,9 +145,7 @@ export const renderMeta = async ({
       locale: `${locale}_${locale.toUpperCase()}`,
       title: meta.title,
       type: 'website',
-      url: tenantInfo.url
-        ? new URL(tenantInfo.url)
-        : undefined,
+      url: metadataRootUrl,
     },
     robots: {
       follow: seoIndex,

@@ -38,8 +38,6 @@ export const seedTenants = async (props: InterfaceSeedTenantsProps): Promise<Ten
           faviconName: `https://www.foo${index}.bar`,
           name: tenant.name,
           slug: tenant.slug,
-          title: tenant.name,
-          url: `https://www.foo${index}.bar`,
         },
       }));
     });

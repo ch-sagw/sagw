@@ -20,7 +20,6 @@ interface InterfaceTenantRouteTenant {
   languages?: Partial<Record<Config['locale'], boolean | null>> | null;
   name?: string | Partial<Record<Config['locale'], string>>;
   slug?: string | Partial<Record<Config['locale'], string>>;
-  url?: string | null;
 }
 
 interface InterfaceTenantRouteParam {

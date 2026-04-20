@@ -63,8 +63,6 @@ export const generateTenant = async ({
       faviconName: `favicon-${name}`,
       name,
       slug: name,
-      title: name,
-      url: `https://www.url-${name}.bar`,
     },
     draft: false,
     overrideAccess: true,
