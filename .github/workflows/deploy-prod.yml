@@ -132,7 +132,6 @@ jobs:
           USER_YVES_MAIL: ${{ secrets.USER_YVES_MAIL }}
           USER_YVES_PASS: ${{ secrets.USER_YVES_PASS }}
           ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
-          MAIL_SENDER_ADDRESS: ${{ secrets.MAIL_SENDER_ADDRESS }}
           RESEND_KEY: ${{ secrets.RESEND_KEY }}
           BREVO_TOKEN: ${{ secrets.BREVO_TOKEN }}
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true

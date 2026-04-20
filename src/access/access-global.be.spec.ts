@@ -805,6 +805,7 @@ test.describe('access-global', () => {
             isNewsletterForm: 'custom',
             mailSubject: 'Form submission on SAGW',
             recipientMail: 'delivered@resend.dev',
+            senderMail: 'sagw@sagw.ch',
             showPrivacyCheckbox: false,
             submitButtonLabel: 'Abschicken',
             submitError: {
@@ -859,6 +860,7 @@ test.describe('access-global', () => {
             isNewsletterForm: 'custom',
             mailSubject: 'Form submission on SAGW',
             recipientMail: 'delivered@resend.dev',
+            senderMail: 'sagw@sagw.ch',
             showPrivacyCheckbox: false,
             submitButtonLabel: 'Abschicken',
             submitError: {
@@ -3574,6 +3576,7 @@ test.describe('access-global', () => {
             isNewsletterForm: 'custom',
             mailSubject: 'Form submission on SAGW',
             recipientMail: 'foo@bar.com',
+            senderMail: 'sagw@sagw.ch',
             showPrivacyCheckbox: false,
             submitButtonLabel: 'Abschicken',
             submitError: {
@@ -3627,6 +3630,7 @@ test.describe('access-global', () => {
             isNewsletterForm: 'custom',
             mailSubject: 'Form submission on SAGW',
             recipientMail: 'foo@bar.com',
+            senderMail: 'sagw@sagw.ch',
             showPrivacyCheckbox: false,
             submitButtonLabel: 'Abschicken',
             submitError: {

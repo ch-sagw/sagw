@@ -184,6 +184,7 @@ const addInitialDataGerman = async ({
       isNewsletterForm: 'custom',
       mailSubject: 'Neue Nachricht via Kontaktformular',
       recipientMail: 'change-this@before-publishing.com',
+      senderMail: 'sagw@sagw.ch',
       showPrivacyCheckbox: true,
       submitButtonLabel: 'Nachricht senden',
       submitError: {
@@ -374,6 +375,7 @@ const addInitialDataFrench = async ({
       isNewsletterForm: 'custom',
       mailSubject: 'foo',
       recipientMail: 'change-this@before-publishing.com',
+      senderMail: 'sagw@sagw.ch',
       showPrivacyCheckbox: true,
       submitButtonLabel: 'foo',
       submitError: {
@@ -558,6 +560,7 @@ const addInitialDataItalian = async ({
       isNewsletterForm: 'custom',
       mailSubject: 'foo',
       recipientMail: 'change-this@before-publishing.com',
+      senderMail: 'sagw@sagw.ch',
       showPrivacyCheckbox: true,
       submitButtonLabel: 'foo',
       submitError: {
@@ -741,6 +744,7 @@ const addInitialDataEnglish = async ({
       isNewsletterForm: 'custom',
       mailSubject: 'foo',
       recipientMail: 'change-this@before-publishing.com',
+      senderMail: 'sagw@sagw.ch',
       showPrivacyCheckbox: true,
       submitButtonLabel: 'foo',
       submitError: {

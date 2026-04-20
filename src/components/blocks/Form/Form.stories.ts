@@ -170,6 +170,7 @@ const defaultFormConfig: FormProps = {
       newsletterTemporaryListId: 3,
     },
     recipientMail: 'foo@bar.baz',
+    senderMail: 'sagw@sagw.ch',
     showPrivacyCheckbox: true,
     submitButtonLabel: 'Submit button SAGW',
     submitError: {
