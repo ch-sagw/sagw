@@ -69,6 +69,10 @@ import { HomeTeaser } from '@/components/blocks/HomeTeaser/HomeTeaser';
 import { CollectionSlug } from 'payload';
 
 export interface InterfaceSourcePage {
+  categorization?: {
+    topicId?: string;
+    typeId?: string;
+  },
   collectionSlug: CollectionSlug;
   id: string;
 }
