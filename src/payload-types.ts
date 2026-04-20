@@ -440,6 +440,10 @@ export interface Form {
   } | null;
   submitButtonLabel: string;
   recipientMail?: string | null;
+  /**
+   * The address must end with '@sagw.ch'
+   */
+  senderMail?: string | null;
   mailSubject?: string | null;
   colorMode: 'white' | 'dark' | 'light';
   /**
@@ -6807,6 +6811,7 @@ export interface FormsSelect<T extends boolean = true> {
   subtitle?: T;
   submitButtonLabel?: T;
   recipientMail?: T;
+  senderMail?: T;
   mailSubject?: T;
   colorMode?: T;
   showPrivacyCheckbox?: T;

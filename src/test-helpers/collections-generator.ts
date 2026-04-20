@@ -1731,6 +1731,7 @@ export const generateCollectionsExceptPages = async ({
       isNewsletterForm: 'custom',
       mailSubject: 'Form submission on SAGW',
       recipientMail: 'delivered@resend.dev',
+      senderMail: 'sagw@sagw.ch',
       showPrivacyCheckbox: false,
       submitButtonLabel: 'Abschicken',
       submitError: {
@@ -2106,6 +2107,7 @@ export const generateForm = async (tenant: string): Promise<string> => {
       isNewsletterForm: 'custom',
       mailSubject: 'Form submission on SAGW',
       recipientMail: 'delivered@resend.dev',
+      senderMail: 'sagw@sagw.ch',
       showPrivacyCheckbox: false,
       submitButtonLabel: 'Abschicken',
       submitError: {
@@ -2189,6 +2191,7 @@ export const generateRegularForm = async (tenant: string, omitTitle?: boolean): 
       isNewsletterForm: 'custom',
       mailSubject: 'Form submission on SAGW',
       recipientMail: 'delivered@resend.dev',
+      senderMail: 'sagw@sagw.ch',
       showPrivacyCheckbox: false,
       submitButtonLabel: 'Abschicken',
       submitError: {

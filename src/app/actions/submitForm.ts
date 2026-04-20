@@ -240,16 +240,9 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
     };
   }
 
-  if (!process.env.MAIL_SENDER_ADDRESS) {
-    return {
-      success: false,
-      values: data,
-    };
-  }
-
   // send mail or subscribe
   if (authoritativeForm.isNewsletterForm === 'custom') {
-    if (!authoritativeForm.recipientMail || !authoritativeForm.mailSubject) {
+    if (!authoritativeForm.recipientMail || !authoritativeForm.mailSubject || !authoritativeForm.senderMail) {
       return {
         success: false,
         values: data,
@@ -258,7 +251,7 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
 
     const mailResult = await sendMail({
       content: generateMailContent(formData, authoritativeForm, fields, pagePath),
-      from: process.env.MAIL_SENDER_ADDRESS,
+      from: authoritativeForm.senderMail,
       subject: authoritativeForm.mailSubject,
       to: authoritativeForm.recipientMail,
     });

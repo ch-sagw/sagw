@@ -97,6 +97,38 @@ export const Forms: CollectionConfig = {
                   type: 'email',
                 },
 
+                // sender
+                {
+                  access: fieldAccessAdminsOnly,
+                  admin: {
+                    condition: (_, siblingData) => siblingData.isNewsletterForm === 'custom',
+                    description: 'The address must end with \'@sagw.ch\'',
+                  },
+                  label: 'Sender email address',
+                  localized: false,
+                  name: 'senderMail',
+                  required: true,
+                  type: 'email',
+                  validate: (value: unknown, {
+                    siblingData,
+                  }: { siblingData: Record<string, unknown> }): true | string => {
+                    if (siblingData?.isNewsletterForm !== 'custom') {
+                      return true;
+                    }
+
+                    if (typeof value !== 'string' || value.trim() === '') {
+                      return 'Sender email address is required.';
+                    }
+
+                    if (!value.toLowerCase()
+                      .endsWith('@sagw.ch')) {
+                      return 'The sender address must end with \'@sagw.ch\'.';
+                    }
+
+                    return true;
+                  },
+                },
+
                 // Mail subject
                 {
                   access: fieldAccessAdminsOnly,
