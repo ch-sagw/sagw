@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.45.3](https://github.com/ch-sagw/sagw/compare/v0.45.2...v0.45.3) (2026-04-21)
+
+
+### Chore
+
+* remove obsolete favicon field ([b2bca79](https://github.com/ch-sagw/sagw/commit/b2bca793ea07e19073d226604ebcadb06dc644ca))
+
 ## [0.45.2](https://github.com/ch-sagw/sagw/compare/v0.45.1...v0.45.2) (2026-04-21)
 
 
