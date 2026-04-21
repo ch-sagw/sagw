@@ -1,8 +1,7 @@
 /* eslint-disable prefer-destructuring */
 
 import 'server-only';
-import { getTenantFromUrl } from '../utilities/getTenantFromUrl';
-import { getTenantName } from '../utilities/getTenantName';
+import { getTenantFromUrl } from '@/app/(frontend)/utilities/getTenantFromUrl';
 import { Metadata } from 'next';
 import {
   fetchHomePageData, InterfaceHomePageProps,
@@ -11,12 +10,12 @@ import {
   Image, Tenant,
 } from '@/payload-types';
 import { InterfaceOtherPagesProps } from '@/app/(frontend)/fetchers/otherPages';
-import { getPageData } from '../fetchers/pageData';
+import { getPageData } from '@/app/(frontend)/fetchers/pageData';
 import { getServerSideURL } from '@/utilities/getUrl';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { getPageUrl } from '@/utilities/getPageUrl';
 import {
-  getTenantHomeUrl, TenantLocalizedValue,
+  getTenantById, getTenantHomeUrl,
 } from '@/utilities/tenant';
 import { getLocaleCodes } from '@/i18n/payloadConfig';
 import type { TypedLocale } from 'payload';
@@ -58,7 +57,7 @@ const buildPageAlternates = async ({
   const payload = await getPayloadCached();
 
   const enabledLocales = getEnabledLocalesForTenant(tenantDoc?.languages);
-  const tenantSlug = tenantDoc?.slug as TenantLocalizedValue | undefined;
+  const tenantSlug = tenantDoc?.slug;
 
   const resolvedPaths = await Promise.all(enabledLocales.map(async (altLocale) => {
     if (isHome) {
@@ -140,7 +139,7 @@ export const renderMeta = async ({
     // -------------------
 
     locale = (await params).locale;
-    tenantInfo = await getTenantFromUrl(undefined, locale);
+    tenantInfo = await getTenantFromUrl(undefined);
 
     if (!tenantInfo.tenantId) {
       return {
@@ -211,7 +210,7 @@ export const renderMeta = async ({
   // remove before go-live: https://github.com/ch-sagw/sagw/issues/782
   seoIndex = false;
 
-  const tenantName = await getTenantName({
+  const tenantName = await getTenantById({
     id: tenantInfo.tenantId,
   });
 
@@ -242,17 +241,17 @@ export const renderMeta = async ({
       apple: [
         {
           sizes: '180x180',
-          url: `/favicons/${tenantName.name}/apple-touch-icon.png`,
+          url: `/favicons/${tenantName.slug}/apple-touch-icon.png`,
         },
       ],
       icon: [
         {
           sizes: '32x32',
-          url: `/favicons/${tenantName.name}/favicon.ico`,
+          url: `/favicons/${tenantName.slug}/favicon.ico`,
         },
         {
           type: 'image/svg+xml',
-          url: `/favicons/${tenantName.name}/favicon.svg`,
+          url: `/favicons/${tenantName.slug}/favicon.svg`,
         },
       ],
     },

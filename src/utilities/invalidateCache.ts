@@ -29,8 +29,9 @@ export const invalidateCache = async ({
       tenant: {
         id: tenant.id,
         languages: tenant.languages,
-        name: tenant.name as string | Record<string, string> | undefined,
-        slug: tenant.slug as string | Record<string, string> | undefined,
+        slug: typeof tenant.slug === 'string'
+          ? tenant.slug
+          : undefined,
       },
     });
 

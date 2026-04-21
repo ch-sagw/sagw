@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.45.1](https://github.com/ch-sagw/sagw/compare/v0.45.0...v0.45.1) (2026-04-20)
+
+
+### Bug Fixes
+
+* fix lang-copy on institute detail and national dictionary detail pages ([0edc87e](https://github.com/ch-sagw/sagw/commit/0edc87e9e152469f6001d68cbdfbb8136af4d933))
+
+
+### Test
+
+* add tests for the failing collections ([7553572](https://github.com/ch-sagw/sagw/commit/7553572226395da49720d17e2817b456bf0c6d27))
+
 ## [0.45.0](https://github.com/ch-sagw/sagw/compare/v0.44.0...v0.45.0) (2026-04-20)
 
 

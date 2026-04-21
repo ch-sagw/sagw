@@ -23,7 +23,7 @@ export const getPageData = async ({
 
   // check if first segment is a tenant
   const [firstSegment] = slug;
-  let tenantInfo = await getTenantFromUrl(firstSegment, locale);
+  let tenantInfo = await getTenantFromUrl(firstSegment);
 
   // if first segment is a tenant (non-SAGW)
   if (!tenantInfo.isSagw && tenantInfo.tenantId) {
@@ -80,7 +80,7 @@ export const getPageData = async ({
   // -------------------------
 
   // all segments are page slugs
-  tenantInfo = await getTenantFromUrl(undefined, locale);
+  tenantInfo = await getTenantFromUrl(undefined);
 
   if (!tenantInfo) {
     return undefined;

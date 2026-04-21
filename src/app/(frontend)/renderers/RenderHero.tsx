@@ -18,7 +18,6 @@ import type { InterfaceBreadcrumb } from '@/utilities/buildBreadcrumbs';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { buildBreadcrumbItems } from '@/utilities/buildBreadcrumbItems';
 import { buildUrlFromPath } from '@/utilities/buildUrlFromPath';
-import { getTenantSlugForLocaleFromPageDoc } from '@/utilities/tenant';
 import {
   CollectionSlug, TypedLocale,
 } from 'payload';
@@ -136,10 +135,15 @@ export const RenderHero = ({
   }
 
   // extract tenant slug from pageData
-  const tenantSlug = getTenantSlugForLocaleFromPageDoc({
-    locale,
-    pageDoc: pageData as unknown as Record<string, unknown>,
-  });
+  let tenantSlug = null;
+
+  const {
+    tenant,
+  } = pageData;
+
+  if (tenant && typeof tenant === 'object' && 'slug' in tenant) {
+    tenantSlug = tenant.slug;
+  }
 
   // build breadcrumb items
   let breadcrumbItems: InterfaceBreadcrumbItem[] = buildBreadcrumbItems({

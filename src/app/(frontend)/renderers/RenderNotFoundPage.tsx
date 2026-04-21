@@ -27,7 +27,7 @@ export const RenderNotFoundPage = async ({
   const firstSegment = slugSegments.length > 0
     ? slugSegments[0]
     : undefined;
-  const tenantInfo = await getTenantFromUrl(firstSegment, locale);
+  const tenantInfo = await getTenantFromUrl(firstSegment);
 
   const payload = await getPayloadCached();
   const i18nDataDocs = await payload.find({

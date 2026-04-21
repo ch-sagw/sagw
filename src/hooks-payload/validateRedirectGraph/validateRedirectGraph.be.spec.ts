@@ -216,7 +216,7 @@ test.describe('Validate Redirects graph', () => {
     const payload = await getPayloadCached();
     const tenant = await getTenant();
     const t1 = await generateTenant({
-      name: `rt-graph-t1-${Date.now()}`,
+      slug: `rt-graph-t1-${Date.now()}`,
     });
 
     await expect(async () => {
@@ -253,7 +253,7 @@ test.describe('Validate Redirects graph (non-sagw)', () => {
   }, async () => {
     const payload = await getPayloadCached();
     const tenant = await generateTenant({
-      name: `rt-self-${Date.now()}`,
+      slug: `rt-self-${Date.now()}`,
     });
 
     await expect(async () => {
@@ -275,7 +275,7 @@ test.describe('Validate Redirects graph (non-sagw)', () => {
   }, async () => {
     const payload = await getPayloadCached();
     const tenant = await generateTenant({
-      name: `rt-dir-${Date.now()}`,
+      slug: `rt-dir-${Date.now()}`,
     });
 
     await payload.create({
@@ -306,7 +306,7 @@ test.describe('Validate Redirects graph (non-sagw)', () => {
   }, async () => {
     const payload = await getPayloadCached();
     const tenant = await generateTenant({
-      name: `rt-trans-${Date.now()}`,
+      slug: `rt-trans-${Date.now()}`,
     });
 
     await payload.create({
@@ -346,7 +346,7 @@ test.describe('Validate Redirects graph (non-sagw)', () => {
   }, async () => {
     const payload = await getPayloadCached();
     const tenant = await generateTenant({
-      name: `rt-upd-${Date.now()}`,
+      slug: `rt-upd-${Date.now()}`,
     });
 
     await payload.create({
@@ -395,7 +395,7 @@ test.describe('Validate Redirects graph (non-sagw)', () => {
   }, async () => {
     const payload = await getPayloadCached();
     const tenant = await generateTenant({
-      name: `rt-chain-${Date.now()}`,
+      slug: `rt-chain-${Date.now()}`,
     });
 
     await expect(async () => {
@@ -425,7 +425,7 @@ test.describe('Validate Redirects graph (non-sagw)', () => {
   }, async () => {
     const payload = await getPayloadCached();
     const tenant = await generateTenant({
-      name: `rt-dup-${Date.now()}`,
+      slug: `rt-dup-${Date.now()}`,
     });
 
     await payload.create({
@@ -456,10 +456,10 @@ test.describe('Validate Redirects graph (non-sagw)', () => {
   }, async () => {
     const payload = await getPayloadCached();
     const t1 = await generateTenant({
-      name: `rt-graph-t1-${Date.now()}`,
+      slug: `rt-graph-t1-${Date.now()}`,
     });
     const t2 = await generateTenant({
-      name: `rt-graph-t2-${Date.now()}`,
+      slug: `rt-graph-t2-${Date.now()}`,
     });
 
     await expect(async () => {

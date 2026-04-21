@@ -4,9 +4,6 @@ import type {
 import { getLocaleCodes } from '@/i18n/payloadConfig';
 import { getBreadcrumbPathSegments } from '@/utilities/getBreadcrumbPathSegments';
 import {
-  getTenantName, getTenantSlugForLocale,
-} from '@/utilities/tenant';
-import {
   setsSlugs, singletonSlugs,
 } from '@/collections/Pages/constants';
 import { homeSlug } from '@/collections/constants';
@@ -18,8 +15,7 @@ import {
 interface InterfaceTenantRouteTenant {
   id: string;
   languages?: Partial<Record<Config['locale'], boolean | null>> | null;
-  name?: string | Partial<Record<Config['locale'], string>>;
-  slug?: string | Partial<Record<Config['locale'], string>>;
+  slug?: string;
 }
 
 interface InterfaceTenantRouteParam {
@@ -117,17 +113,12 @@ const processPagesForParams = ({
           slug: fullSlug,
         });
       } else {
-        const localeTenantSlug = getTenantSlugForLocale({
-          locale,
-          slug: tenant.slug,
-        });
-
-        if (localeTenantSlug) {
+        if (tenant.slug) {
           pageParams.push({
             isHome: false,
             locale,
             slug: [
-              localeTenantSlug,
+              tenant.slug as string,
               ...fullSlug,
             ],
           });
@@ -258,10 +249,7 @@ export const getTenantRouteParams = async ({
 }): Promise<InterfaceTenantRouteParam[]> => {
   const params: InterfaceTenantRouteParam[] = [];
   const enabledLocales = getEnabledLocales(tenant);
-  const isSagw = getTenantName({
-    name: tenant.name,
-  })
-    ?.toLowerCase() === 'sagw';
+  const isSagw = tenant.slug === 'sagw';
 
   if (isSagw) {
     params.push(...enabledLocales.map((locale) => ({
@@ -271,12 +259,7 @@ export const getTenantRouteParams = async ({
     })));
   } else {
     params.push(...enabledLocales.flatMap((locale) => {
-      const tenantSlug = getTenantSlugForLocale({
-        locale,
-        slug: tenant.slug,
-      });
-
-      if (!tenantSlug) {
+      if (!tenant.slug) {
         return [];
       }
 
@@ -284,7 +267,7 @@ export const getTenantRouteParams = async ({
         {
           isHome: true,
           locale,
-          slug: [tenantSlug],
+          slug: [tenant.slug as string],
         },
       ];
     }));
@@ -355,10 +338,7 @@ export const getTenantSitemapEntries = async ({
     return [];
   }
 
-  const isSagw = getTenantName({
-    name: tenant.name,
-  })
-    ?.toLowerCase() === 'sagw';
+  const isSagw = tenant.slug === 'sagw';
   const entryMap = new Map<string, InterfaceGroupedSitemapEntry>();
 
   const homeEntries = await Promise.all(enabledLocales.map(async (locale) => {
@@ -386,19 +366,14 @@ export const getTenantSitemapEntries = async ({
         slug: [],
       }
       : ((): InterfaceTenantRouteParam | null => {
-        const tenantSlug = getTenantSlugForLocale({
-          locale,
-          slug: tenant.slug,
-        });
-
-        if (!tenantSlug) {
+        if (!tenant.slug) {
           return null;
         }
 
         return {
           isHome: true,
           locale,
-          slug: [tenantSlug],
+          slug: [tenant.slug as string],
         };
       })();
 

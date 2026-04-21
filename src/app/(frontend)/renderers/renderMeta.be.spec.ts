@@ -248,7 +248,7 @@ test.describe('render meta home', () => {
       locale: 'it',
     });
 
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}`);
     await page.waitForLoadState('networkidle');
 
     const metaDescription = await page.locator('meta[name="description"]');
@@ -286,7 +286,7 @@ test.describe('render meta home', () => {
       .getTime();
 
     const tenantDoc = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     await payload.update({
@@ -746,7 +746,7 @@ test.describe('render meta on other pages', () => {
       locale: 'en',
     });
 
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it/detail-it-${time}`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}/detail-it-${time}`);
     await page.waitForLoadState('networkidle');
 
     const metaDescription = await page.locator('meta[name="description"]');

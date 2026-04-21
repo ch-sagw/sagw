@@ -2,7 +2,7 @@ import { Tenant } from '@/payload-types';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 interface InterfaceGenerateTenantProps {
-  name: string;
+  slug: string;
   addDefaultTenantData?: boolean;
 }
 
@@ -14,7 +14,7 @@ export const getTenant = async (): Promise<string | null> => {
     collection: 'tenants',
     depth: 1,
     where: {
-      name: {
+      slug: {
         equals: 'sagw',
       },
     },
@@ -35,7 +35,7 @@ export const getTenantNonSagw = async (): Promise<string | null> => {
     collection: 'tenants',
     depth: 1,
     where: {
-      name: {
+      slug: {
         equals: 'not-sagw',
       },
     },
@@ -50,7 +50,7 @@ export const getTenantNonSagw = async (): Promise<string | null> => {
 
 export const generateTenant = async ({
   addDefaultTenantData,
-  name,
+  slug,
 }: InterfaceGenerateTenantProps): Promise<Tenant> => {
   const payload = await getPayloadCached();
 
@@ -60,42 +60,12 @@ export const generateTenant = async ({
       skipTenantInitialData: !addDefaultTenantData,
     },
     data: {
-      faviconName: `favicon-${name}`,
-      name,
-      slug: name,
+      faviconName: `favicon-${slug}`,
+      name: slug,
+      slug,
     },
     draft: false,
     overrideAccess: true,
-  });
-
-  await payload.update({
-    collection: 'tenants',
-    data: {
-      ...tenant,
-      slug: `${name}-fr`,
-    },
-    id: tenant.id,
-    locale: 'fr',
-  });
-
-  await payload.update({
-    collection: 'tenants',
-    data: {
-      ...tenant,
-      slug: `${name}-en`,
-    },
-    id: tenant.id,
-    locale: 'en',
-  });
-
-  await payload.update({
-    collection: 'tenants',
-    data: {
-      ...tenant,
-      slug: `${name}-it`,
-    },
-    id: tenant.id,
-    locale: 'it',
   });
 
   return tenant;
@@ -114,7 +84,7 @@ export const getTenantId = async ({
     tenant = (await getTenant()) || '';
   } else {
     const tenantObject = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     tenant = tenantObject.id;

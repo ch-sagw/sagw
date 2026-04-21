@@ -9,8 +9,8 @@ import {
   getLocale, getTranslations,
 } from 'next-intl/server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
-import { CMSConfigError } from '../utilities/CMSConfigError';
-import { getTenantName } from '../utilities/getTenantName';
+import { CMSConfigError } from '@/app/(frontend)/utilities/CMSConfigError';
+import { getTenantById } from '@/utilities/tenant';
 import { getServerSideURL } from '@/utilities/getUrl';
 
 type InterfaceHeaderRendererProps = {
@@ -27,7 +27,7 @@ export const RenderHeader = async ({
   const payload = await getPayloadCached();
   const locale = (await getLocale()) as TypedLocale;
   const i18nMenu = await getTranslations('menu');
-  const tenantName = await getTenantName({
+  const tenantName = await getTenantById({
     id: tenant,
   });
 
@@ -69,8 +69,8 @@ export const RenderHeader = async ({
   // logo link
   let logoLink = `${origin}/${locale}`;
 
-  if (tenantName.name !== 'sagw') {
-    logoLink = `${origin}/${locale}/${tenantName.name}`;
+  if (tenantName.slug !== 'sagw') {
+    logoLink = `${origin}/${locale}/${tenantName.slug}`;
   }
 
   const headerProps: InterfaceHeaderPropTypes = {
@@ -83,7 +83,7 @@ export const RenderHeader = async ({
     },
     metanav: metanavData,
     navigation: navData,
-    tenant: tenantName.name || 'sagw',
+    tenant: tenantName.slug || 'sagw',
     tenantSlug: tenantName.slug,
   };
 

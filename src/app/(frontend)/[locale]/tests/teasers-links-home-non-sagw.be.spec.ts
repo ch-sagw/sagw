@@ -55,7 +55,7 @@ test.describe('Teasers links (non-sagw)', () => {
       .getTime();
     const payload = await getPayloadCached();
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
     const home = await generateHomePage({
       locale: 'de',
@@ -639,7 +639,7 @@ test.describe('Teasers links (non-sagw)', () => {
     // #########################################
     // verify correct url rendering: it
     // #########################################
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}`);
     await page.waitForLoadState('networkidle');
 
     const eventsTeasersLinkIt = await page.getByRole('link', {
@@ -708,34 +708,34 @@ test.describe('Teasers links (non-sagw)', () => {
       .getAttribute('href');
 
     await expect(pathnameFromLinkHref(eventsTeasersLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-1-it-${time}/d1-it-${time}`);
     await expect(pathnameFromLinkHref(newsTeasersLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}`);
     await expect(pathnameFromLinkHref(magazineTeasersLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
     // await expect(publicationsTeasersLinkIt)
     //   .toBe(`/it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/
     // d3-it-${time}
     // /d4-it-${time}/d5-it-${time}/d6-it-${time}/d7-it-${time}/d8-${time}`);
     await expect(pathnameFromLinkHref(projectsTeasersLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
 
     await expect(pathnameFromLinkHref(newsLink1It))
-      .toStrictEqual(`/it/tenant-${time}-it/overview-page-1-it-${time}/n1-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/overview-page-1-it-${time}/n1-it-${time}`);
     await expect(pathnameFromLinkHref(newsLink2It))
-      .toStrictEqual(`/it/tenant-${time}-it/overview-page-1-it-${time}/n1-it-${time}/n2-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/overview-page-1-it-${time}/n1-it-${time}/n2-it-${time}`);
     await expect(pathnameFromLinkHref(eventLink1It))
-      .toStrictEqual(`/it/tenant-${time}-it/overview-page-1-it-${time}/e1-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/overview-page-1-it-${time}/e1-it-${time}`);
     await expect(pathnameFromLinkHref(eventLink2It))
-      .toStrictEqual(`/it/tenant-${time}-it/overview-page-1-it-${time}/e1-it-${time}/e2-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/overview-page-1-it-${time}/e1-it-${time}/e2-it-${time}`);
     await expect(pathnameFromLinkHref(magazineLink1It))
-      .toStrictEqual(`/it/tenant-${time}-it/overview-page-1-it-${time}/m1-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/overview-page-1-it-${time}/m1-it-${time}`);
     await expect(pathnameFromLinkHref(magazineLink2It))
-      .toStrictEqual(`/it/tenant-${time}-it/overview-page-1-it-${time}/m1-it-${time}/m2-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/overview-page-1-it-${time}/m1-it-${time}/m2-it-${time}`);
     await expect(pathnameFromLinkHref(projectLink1It))
-      .toStrictEqual(`/it/tenant-${time}-it/overview-page-1-it-${time}/p1-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/overview-page-1-it-${time}/p1-it-${time}`);
     await expect(pathnameFromLinkHref(projectLink2It))
-      .toStrictEqual(`/it/tenant-${time}-it/overview-page-1-it-${time}/p1-it-${time}/p2-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/overview-page-1-it-${time}/p1-it-${time}/p2-it-${time}`);
 
     // #########################################
     // cleanup

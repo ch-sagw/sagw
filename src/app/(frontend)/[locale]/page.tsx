@@ -43,7 +43,7 @@ export default async function HomePage({
     locale,
   } = await params;
 
-  const tenantInfo = await getTenantFromUrl(undefined, locale);
+  const tenantInfo = await getTenantFromUrl(undefined);
 
   if (!tenantInfo.tenantId) {
     return <CMSConfigError message='No tenant data.' />;

@@ -40,7 +40,7 @@ export const Tenants: CollectionConfig = {
         description: 'Used for url paths, example: /tenant-slug/page-slug',
       },
       index: true,
-      localized: true,
+      localized: false,
       name: 'slug',
       required: true,
       type: 'text',
