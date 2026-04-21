@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.45.2](https://github.com/ch-sagw/sagw/compare/v0.45.1...v0.45.2) (2026-04-21)
+
+
+### Chore
+
+* refactor tenant collection, don't localize slugs, clean up helpers ([#1086](https://github.com/ch-sagw/sagw/issues/1086)) ([2224f13](https://github.com/ch-sagw/sagw/commit/2224f1313586ba94d22bb9dcd0545970300fc34b))
+
 ## [0.45.1](https://github.com/ch-sagw/sagw/compare/v0.45.0...v0.45.1) (2026-04-20)
 
 
