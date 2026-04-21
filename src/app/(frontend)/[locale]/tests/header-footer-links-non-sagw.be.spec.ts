@@ -35,7 +35,7 @@ test.describe('Header/Footer links (non-sagw)', () => {
       .getTime();
     const payload = await getPayloadCached();
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
     const home = await generateHomePage({
       sideTitle: 'Side Title',
@@ -281,7 +281,7 @@ test.describe('Header/Footer links (non-sagw)', () => {
     // #########################################
     // verify correct url rendering: it
     // #########################################
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}`);
     await page.waitForLoadState('networkidle');
 
     const link1HeaderIt = await page.getByRole('link', {
@@ -329,24 +329,24 @@ test.describe('Header/Footer links (non-sagw)', () => {
       .getAttribute('href');
 
     await expect(pathnameFromLinkHref(link1HeaderIt))
-      .toStrictEqual(`/it/tenant-${time}-it`);
+      .toStrictEqual(`/it/tenant-${time}`);
     await expect(pathnameFromLinkHref(link1FooterIt))
-      .toStrictEqual(`/it/tenant-${time}-it`);
+      .toStrictEqual(`/it/tenant-${time}`);
 
     await expect(pathnameFromLinkHref(link2HeaderIt))
-      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/o1-it-${time}`);
     await expect(pathnameFromLinkHref(link2FooterIt))
-      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/o1-it-${time}`);
 
     await expect(pathnameFromLinkHref(link3HeaderIt))
-      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}/d1-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/o1-it-${time}/d1-it-${time}`);
     await expect(pathnameFromLinkHref(link3FooterIt))
-      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}/d1-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/o1-it-${time}/d1-it-${time}`);
 
     await expect(pathnameFromLinkHref(link4HeaderIt))
-      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}/d1-it-${time}/d2-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/o1-it-${time}/d1-it-${time}/d2-it-${time}`);
     await expect(pathnameFromLinkHref(link4FooterIt))
-      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}/d1-it-${time}/d2-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/o1-it-${time}/d1-it-${time}/d2-it-${time}`);
 
   });
 });

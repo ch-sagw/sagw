@@ -222,7 +222,7 @@ test('invalidates all tenant pages on content change (non-sagw)', {
   });
 
   const tenantNonSagw = await generateTenant({
-    name: `tenant-${time}`,
+    slug: `tenant-${time}`,
   });
 
   // generate sagw pages
@@ -279,32 +279,28 @@ test('invalidates all tenant pages on content change (non-sagw)', {
   ];
 
   langs.forEach((lang) => {
-    const tenantAppendix = lang === 'de'
-      ? ''
-      : `-${lang}`;
-
     for (let i = 0; i < 3; i++) {
 
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/detail-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/detail-${i + 1}`))
         .toBe(true);
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/overview-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/overview-${i + 1}`))
         .toBe(true);
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/event-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/event-${i + 1}`))
         .toBe(true);
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/news-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/news-${i + 1}`))
         .toBe(true);
     }
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/detail-${time}`))
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/detail-${time}`))
       .toBe(true);
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}`))
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}`))
       .toBe(true);
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/impressum-${lang}`))
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/impressum-${lang}`))
       .toBe(true);
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/data-privacy-${lang}`))
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/data-privacy-${lang}`))
       .toBe(true);
   });
 
@@ -425,7 +421,7 @@ test('invalidates all tenant pages on page deletion (non-sagw)', {
   });
 
   const tenantNonSagw = await generateTenant({
-    name: `tenant-${time}`,
+    slug: `tenant-${time}`,
   });
 
   // generate sagw pages
@@ -473,29 +469,25 @@ test('invalidates all tenant pages on page deletion (non-sagw)', {
   ];
 
   langs.forEach((lang) => {
-    const tenantAppendix = lang === 'de'
-      ? ''
-      : `-${lang}`;
-
     for (let i = 0; i < 3; i++) {
 
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/detail-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/detail-${i + 1}`))
         .toBe(true);
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/overview-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/overview-${i + 1}`))
         .toBe(true);
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/event-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/event-${i + 1}`))
         .toBe(true);
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/news-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/news-${i + 1}`))
         .toBe(true);
     }
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}`))
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}`))
       .toBe(true);
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/impressum-${lang}`))
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/impressum-${lang}`))
       .toBe(true);
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/data-privacy-${lang}`))
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/data-privacy-${lang}`))
       .toBe(true);
   });
 
@@ -613,7 +605,7 @@ test('invalidates all tenant pages on page creation (non-sagw)', {
   });
 
   const tenantNonSagw = await generateTenant({
-    name: `tenant-${time}`,
+    slug: `tenant-${time}`,
   });
 
   // generate sagw pages
@@ -657,32 +649,28 @@ test('invalidates all tenant pages on page creation (non-sagw)', {
   ];
 
   langs.forEach((lang) => {
-    const tenantAppendix = lang === 'de'
-      ? ''
-      : `-${lang}`;
-
     for (let i = 0; i < 3; i++) {
 
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/detail-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/detail-${i + 1}`))
         .toBe(true);
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/overview-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/overview-${i + 1}`))
         .toBe(true);
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/event-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/event-${i + 1}`))
         .toBe(true);
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/news-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/news-${i + 1}`))
         .toBe(true);
     }
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/detail-${time}`))
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/detail-${time}`))
       .toBe(true);
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}`))
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}`))
       .toBe(true);
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/impressum-${lang}`))
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/impressum-${lang}`))
       .toBe(true);
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/data-privacy-${lang}`))
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/data-privacy-${lang}`))
       .toBe(true);
   });
 
@@ -799,7 +787,7 @@ test('invalidates all tenant pages on non-autosave collection change (non-sagw)'
   });
 
   const tenantNonSagw = await generateTenant({
-    name: `tenant-${time}`,
+    slug: `tenant-${time}`,
   });
 
   // generate sagw pages
@@ -843,29 +831,25 @@ test('invalidates all tenant pages on non-autosave collection change (non-sagw)'
   ];
 
   langs.forEach((lang) => {
-    const tenantAppendix = lang === 'de'
-      ? ''
-      : `-${lang}`;
-
     for (let i = 0; i < 3; i++) {
 
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/detail-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/detail-${i + 1}`))
         .toBe(true);
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/overview-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/overview-${i + 1}`))
         .toBe(true);
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/event-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/event-${i + 1}`))
         .toBe(true);
-      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/news-${i + 1}`))
+      expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/news-${i + 1}`))
         .toBe(true);
     }
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}`))
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}`))
       .toBe(true);
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/impressum-${lang}`))
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/impressum-${lang}`))
       .toBe(true);
 
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}${tenantAppendix}/data-privacy-${lang}`))
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/data-privacy-${lang}`))
       .toBe(true);
   });
 

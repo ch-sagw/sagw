@@ -51,7 +51,7 @@ test.describe('Home links (non-sagw)', () => {
     const time = (new Date())
       .getTime();
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
     const home = await generateHomePage({
       navigationTitle: 'home',
@@ -519,7 +519,7 @@ test.describe('Home links (non-sagw)', () => {
     // #########################################
     // verify correct url rendering: it
     // #########################################
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}`);
     await page.waitForLoadState('networkidle');
 
     const heroLinkIt = await page.getByRole('link', {
@@ -558,20 +558,20 @@ test.describe('Home links (non-sagw)', () => {
       .getAttribute('href');
 
     await expect(pathnameFromLinkHref(formCheckboxLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-1-it-${time}/d1-it-${time}`);
     await expect(pathnameFromLinkHref(rteLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}`);
     await expect(pathnameFromLinkHref(heroLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
     await expect(pathnameFromLinkHref(homeTeaserLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}`);
     await expect(pathnameFromLinkHref(statusMessageLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
 
     await expect(pathnameFromLinkHref(dataPrivacyLinkIt))
-      .toBe(`/it/tenant-${time}-it/data-privacy-it`);
+      .toBe(`/it/tenant-${time}/data-privacy-it`);
     await expect(pathnameFromLinkHref(impressumLinkIt))
-      .toBe(`/it/tenant-${time}-it/impressum-it`);
+      .toBe(`/it/tenant-${time}/impressum-it`);
 
   });
 });

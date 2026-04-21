@@ -1,5 +1,4 @@
 import 'server-only';
-import { TypedLocale } from 'payload';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 
 export interface InterfaceGetTenantFromUrlResult {
@@ -10,10 +9,7 @@ export interface InterfaceGetTenantFromUrlResult {
 
 // extracts tenant information from URL segment.
 // falls back to sagw tenant of no tenant is found.
-export const getTenantFromUrl = async (
-  tenantSlugSegment: string | undefined,
-  locale: TypedLocale,
-): Promise<InterfaceGetTenantFromUrlResult> => {
+export const getTenantFromUrl = async (tenantSlugSegment: string | undefined): Promise<InterfaceGetTenantFromUrlResult> => {
   const payload = await getPayloadCached();
 
   // if no tenant segment provided, treat as SAGW
@@ -23,7 +19,7 @@ export const getTenantFromUrl = async (
       depth: 1,
       limit: 1,
       where: {
-        name: {
+        slug: {
           equals: 'sagw',
         },
       },
@@ -39,7 +35,7 @@ export const getTenantFromUrl = async (
 
     // fallback if SAGW tenant not found, should not happen!!
 
-    console.warn('getTenantFromUrl: did not find tenant with name', tenantSlugSegment);
+    console.warn('getTenantFromUrl: did not find tenant with slug', tenantSlugSegment);
 
     return {
       isSagw: true,
@@ -48,12 +44,11 @@ export const getTenantFromUrl = async (
     };
   }
 
-  // query tenants collection by slug for the given locale
+  // query tenants collection by slug (not localized)
   const tenants = await payload.find({
     collection: 'tenants',
     depth: 1,
     limit: 1,
-    locale,
     where: {
       slug: {
         equals: tenantSlugSegment,
@@ -65,7 +60,7 @@ export const getTenantFromUrl = async (
   if (tenants.docs && tenants.docs.length > 0) {
     const [tenant] = tenants.docs;
 
-    if (tenant.name !== 'sagw') {
+    if (tenant.slug !== 'sagw') {
       return {
         isSagw: false,
         tenantId: tenant.id,
@@ -81,7 +76,7 @@ export const getTenantFromUrl = async (
     depth: 1,
     limit: 1,
     where: {
-      name: {
+      slug: {
         equals: 'sagw',
       },
     },

@@ -53,7 +53,7 @@ test.describe('Overview page regular links (non-sagw)', () => {
     const time = (new Date())
       .getTime();
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
     const home = await generateHomePage({
       locale: 'de',
@@ -499,7 +499,7 @@ test.describe('Overview page regular links (non-sagw)', () => {
     // #########################################
     // verify correct url rendering: it
     // #########################################
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it/overview-page-it-${time}`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}/overview-page-it-${time}`);
     await page.waitForLoadState('networkidle');
 
     const statusMessageLinkIt = await page.getByRole('link', {
@@ -539,25 +539,25 @@ test.describe('Overview page regular links (non-sagw)', () => {
       .getAttribute('href');
 
     await expect(pathnameFromLinkHref(statusMessageLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-it-${time}/d1-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-it-${time}/d1-it-${time}`);
 
     await expect(pathnameFromLinkHref(checkboxLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-it-${time}/d1-it-${time}/d2-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-it-${time}/d1-it-${time}/d2-it-${time}`);
 
     await expect(pathnameFromLinkHref(rteLink1It))
-      .toBe(`/it/tenant-${time}-it/overview-page-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
 
     await expect(pathnameFromLinkHref(accordionLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}`);
 
     await expect(pathnameFromLinkHref(notificationLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
 
     await expect(pathnameFromLinkHref(dataPrivacyLinkIt))
-      .toBe(`/it/tenant-${time}-it/data-privacy-it`);
+      .toBe(`/it/tenant-${time}/data-privacy-it`);
 
     await expect(pathnameFromLinkHref(impressumLinkIt))
-      .toBe(`/it/tenant-${time}-it/impressum-it`);
+      .toBe(`/it/tenant-${time}/impressum-it`);
   });
 });
 
@@ -578,7 +578,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
     const time = (new Date())
       .getTime();
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
     const home = await generateHomePage({
       locale: 'de',
@@ -815,7 +815,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
 
     // it
 
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it/overview-page-it-${time}`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}/overview-page-it-${time}`);
     await page.waitForLoadState('networkidle');
 
     const eventLinkIt = await page.getByRole('link', {
@@ -824,7 +824,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
       .getAttribute('href');
 
     await expect(pathnameFromLinkHref(eventLinkIt))
-      .toStrictEqual(`/it/tenant-${time}-it/overview-page-it-${time}/event-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/overview-page-it-${time}/event-it-${time}`);
 
     // #########################################
     // Test news overview
@@ -859,7 +859,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
 
     // it
 
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it/overview-page-it-${time}`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}/overview-page-it-${time}`);
     await page.waitForLoadState('networkidle');
 
     const newsLinkIt = await page.getByRole('link', {
@@ -868,7 +868,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
       .getAttribute('href');
 
     await expect(pathnameFromLinkHref(newsLinkIt))
-      .toStrictEqual(`/it/tenant-${time}-it/overview-page-it-${time}/news-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/overview-page-it-${time}/news-it-${time}`);
 
     // #########################################
     // Test projects overview
@@ -902,7 +902,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
 
     // it
 
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it/overview-page-it-${time}`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}/overview-page-it-${time}`);
     await page.waitForLoadState('networkidle');
 
     const projectLinkIt = await page.getByRole('link', {
@@ -911,7 +911,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
       .getAttribute('href');
 
     await expect(pathnameFromLinkHref(projectLinkIt))
-      .toStrictEqual(`/it/tenant-${time}-it/overview-page-it-${time}/project-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/overview-page-it-${time}/project-it-${time}`);
 
     // #########################################
     // Test magazine overview
@@ -945,7 +945,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
 
     // it
 
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it/overview-page-it-${time}`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}/overview-page-it-${time}`);
     await page.waitForLoadState('networkidle');
 
     const magazineLinkIt = await page.getByRole('link', {
@@ -954,7 +954,7 @@ test.describe('Overview page overview-block links (non-sagw)', () => {
       .getAttribute('href');
 
     await expect(pathnameFromLinkHref(magazineLinkIt))
-      .toStrictEqual(`/it/tenant-${time}-it/overview-page-it-${time}/magazine-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/overview-page-it-${time}/magazine-it-${time}`);
 
     // #########################################
     // cleanup
@@ -1003,7 +1003,7 @@ test.describe('Overview page teasers links (non-sagw)', () => {
     const time = (new Date())
       .getTime();
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
     const home = await generateHomePage({
       locale: 'de',
@@ -1329,7 +1329,7 @@ test.describe('Overview page teasers links (non-sagw)', () => {
     // #########################################
     // verify correct url rendering: it
     // #########################################
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it/overview-page-it-${time}`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}/overview-page-it-${time}`);
     await page.waitForLoadState('networkidle');
 
     const genericLinkIt = await page.getByRole('link', {
@@ -1358,19 +1358,19 @@ test.describe('Overview page teasers links (non-sagw)', () => {
       .getAttribute('href');
 
     await expect(pathnameFromLinkHref(genericLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-it-${time}/d1-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-it-${time}/d1-it-${time}`);
 
     await expect(pathnameFromLinkHref(projectLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-it-${time}/project-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-it-${time}/project-it-${time}`);
 
     await expect(pathnameFromLinkHref(eventLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-it-${time}/event-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-it-${time}/event-it-${time}`);
 
     await expect(pathnameFromLinkHref(newsLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-it-${time}/news-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-it-${time}/news-it-${time}`);
 
     await expect(pathnameFromLinkHref(magazineLinkIt))
-      .toBe(`/it/tenant-${time}-it/overview-page-it-${time}/magazine-it-${time}`);
+      .toBe(`/it/tenant-${time}/overview-page-it-${time}/magazine-it-${time}`);
 
     // #########################################
     // cleanup

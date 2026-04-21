@@ -38,7 +38,7 @@ test.describe('Breadcrumb links (non-sagw)', () => {
     const time = (new Date())
       .getTime();
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
     const home = await generateHomePage({
       sideTitle: 'Side',
@@ -362,7 +362,7 @@ test.describe('Breadcrumb links (non-sagw)', () => {
     // #########################################
     // verify correct url rendering: it
     // #########################################
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it/o1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}/d7-it-${time}`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}/o1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}/d7-it-${time}`);
     await page.waitForLoadState('networkidle');
 
     const linkHomeIt = await page.getByRole('link', {
@@ -410,28 +410,28 @@ test.describe('Breadcrumb links (non-sagw)', () => {
     });
 
     await expect(pathnameFromLinkHref(linkHomeIt))
-      .toStrictEqual(`/it/tenant-${time}-it`);
+      .toStrictEqual(`/it/tenant-${time}`);
 
     await expect(pathnameFromLinkHref(link1It))
-      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/o1-it-${time}`);
 
     await expect(pathnameFromLinkHref(link2It))
-      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}/d1-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/o1-it-${time}/d1-it-${time}`);
 
     await expect(pathnameFromLinkHref(link3It))
-      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}/d1-it-${time}/d2-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/o1-it-${time}/d1-it-${time}/d2-it-${time}`);
 
     await expect(pathnameFromLinkHref(link4It))
-      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/o1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}`);
 
     await expect(pathnameFromLinkHref(link5It))
-      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/o1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}`);
 
     await expect(pathnameFromLinkHref(link6It))
-      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/o1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
 
     await expect(pathnameFromLinkHref(link7It))
-      .toStrictEqual(`/it/tenant-${time}-it/o1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/o1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}/d6-it-${time}`);
 
     await expect(link8It)
       .toHaveCount(0);

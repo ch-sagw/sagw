@@ -9,7 +9,6 @@ import {
 import { getTenantFromCookie } from '@payloadcms/plugin-multi-tenant/utilities';
 import { getCollectionIDType } from '@/utilities/getCollectionIdType';
 import { User } from '@/payload-types';
-import { getTenantName } from '@/utilities/tenant';
 
 export const userRoles = {
   admin: 'super-admin',
@@ -104,12 +103,7 @@ export const isSagwTenant = async (req: PayloadRequest): Promise<boolean> => {
       id: requestedTenantId,
     });
 
-    const tenantName = getTenantName({
-      name: requestedTenant.name,
-    })
-      ?.toLowerCase();
-
-    return tenantName === 'sagw';
+    return requestedTenant.slug === 'sagw';
   } catch {
     return false;
   }

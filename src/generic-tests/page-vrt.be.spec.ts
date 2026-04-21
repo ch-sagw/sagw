@@ -731,7 +731,7 @@ const setupSagwHomePageNonSagw = async (overrideTime?: number): Promise<void> =>
     .getTime();
 
   const tenant = await generateTenant({
-    name: `tenant-${time}`,
+    slug: `tenant-${time}`,
   });
 
   const home = await getHomeId({
@@ -2965,7 +2965,7 @@ test.describe('detail page', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -3030,7 +3030,7 @@ test.describe('magazine detail page', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -3095,7 +3095,7 @@ test.describe('event detail page', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -3160,7 +3160,7 @@ test.describe('news detail page', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -3225,7 +3225,7 @@ test.describe('publication detail page', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -3290,7 +3290,7 @@ test.describe('national dictionary detail page', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -3355,7 +3355,7 @@ test.describe('institute detail page', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -3420,7 +3420,7 @@ test.describe('project detail page', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -3485,7 +3485,7 @@ test.describe('overview page with teasers', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -3551,7 +3551,7 @@ test.describe('overview page with magazine overview', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -3617,7 +3617,7 @@ test.describe('overview page with publications overview', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -3683,7 +3683,7 @@ test.describe('overview page with events overview', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -3749,7 +3749,7 @@ test.describe('overview page with people overview', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -3815,7 +3815,7 @@ test.describe('overview page with news overview', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -3881,7 +3881,7 @@ test.describe('overview page with national dictionaries overview', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -3947,7 +3947,7 @@ test.describe('overview page with institutes overview', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -4013,7 +4013,7 @@ test.describe('overview page with projects overview', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -4079,7 +4079,7 @@ test.describe('overview page with editions overview', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     const home = await getHomeId({
@@ -4127,7 +4127,7 @@ test.describe('impressum page', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     await getHomeId({
@@ -4170,7 +4170,7 @@ test.describe('data privacy page', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     await getHomeId({
@@ -4212,7 +4212,7 @@ test.describe('error page', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     await getHomeId({

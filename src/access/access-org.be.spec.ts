@@ -620,7 +620,7 @@ test.describe('access-org', () => {
             user,
           },
           where: {
-            name: {
+            slug: {
               equals: 'testtenant',
             },
           },

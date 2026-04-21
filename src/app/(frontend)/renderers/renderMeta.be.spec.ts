@@ -216,7 +216,7 @@ test.describe('render meta home', () => {
       locale: 'it',
     });
 
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}`);
     await page.waitForLoadState('networkidle');
 
     const metaDescription = await page.locator('meta[name="description"]');
@@ -448,7 +448,7 @@ test.describe('render meta on other pages', () => {
       locale: 'it',
     });
 
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it/detail-${time}`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}/detail-${time}`);
     await page.waitForLoadState('networkidle');
 
     const metaDescription = await page.locator('meta[name="description"]');

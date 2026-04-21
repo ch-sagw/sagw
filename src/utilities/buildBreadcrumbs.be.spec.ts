@@ -45,7 +45,7 @@ test.describe('breadcrumb-generation (on the fly)', () => {
     });
 
     const tenant = await generateTenant({
-      name: `${(new Date())
+      slug: `${(new Date())
         .getTime()}-tenant-1`,
     });
 
@@ -209,7 +209,7 @@ test.describe('breadcrumb-generation (on the fly)', () => {
     });
 
     const tenant = await generateTenant({
-      name: `${(new Date())
+      slug: `${(new Date())
         .getTime()}-tenant-11`,
     });
 
@@ -385,7 +385,7 @@ test.describe('breadcrumb-generation (on the fly)', () => {
     });
 
     const tenant = await generateTenant({
-      name: `${(new Date())
+      slug: `${(new Date())
         .getTime()}-tenant-3`,
     });
 
@@ -521,7 +521,7 @@ test.describe('breadcrumb-generation (on the fly)', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `${time}-tenant-11`,
+      slug: `${time}-tenant-11`,
     });
 
     const home = await generateHomePage({
@@ -610,7 +610,7 @@ test.describe('breadcrumb-generation (on the fly)', () => {
     const newSlug = `new-slug-level2-${time}`;
 
     const tenant = await generateTenant({
-      name: `${time}-tenant-2`,
+      slug: `${time}-tenant-2`,
     });
 
     const home = await generateHomePage({
@@ -693,7 +693,7 @@ test.describe('breadcrumb-generation (on the fly)', () => {
     const newSlug = `new-slug-level2-${time}`;
 
     const tenant = await generateTenant({
-      name: `${time}-tenant-2`,
+      slug: `${time}-tenant-2`,
     });
 
     const home = await generateHomePage({
@@ -781,7 +781,7 @@ test.describe('breadcrumb-generation (on the fly)', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `${time}-tenant-2`,
+      slug: `${time}-tenant-2`,
     });
 
     const home = await generateHomePage({
@@ -922,7 +922,7 @@ test.describe('breadcrumb-generation (on the fly)', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `${time}-tenant-5`,
+      slug: `${time}-tenant-5`,
     });
 
     const home = await generateHomePage({
@@ -1001,7 +1001,7 @@ test.describe('breadcrumb-generation (on the fly)', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `${time}-tenant-6`,
+      slug: `${time}-tenant-6`,
     });
 
     const home = await generateHomePage({
@@ -1083,7 +1083,7 @@ test.describe('breadcrumb-generation (on the fly)', () => {
       .getTime();
 
     const tenant = await generateTenant({
-      name: `${time}-tenant-7`,
+      slug: `${time}-tenant-7`,
     });
 
     const home = await generateHomePage({

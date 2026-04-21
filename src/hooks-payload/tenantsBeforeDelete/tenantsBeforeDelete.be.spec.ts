@@ -22,7 +22,7 @@ test.describe('Before deleting tenant', () => {
       .getTime();
     const tenant = await generateTenant({
       addDefaultTenantData: true,
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     await payload.delete({
@@ -99,15 +99,15 @@ test.describe('Before deleting tenant', () => {
       .getTime();
     const tenant = await generateTenant({
       addDefaultTenantData: true,
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
     const tenant2 = await generateTenant({
       addDefaultTenantData: true,
-      name: `tenant2-${time}`,
+      slug: `tenant2-${time}`,
     });
     const tenant3 = await generateTenant({
       addDefaultTenantData: true,
-      name: `tenant3-${time}`,
+      slug: `tenant3-${time}`,
     });
 
     await payload.delete({
