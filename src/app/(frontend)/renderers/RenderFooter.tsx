@@ -7,8 +7,8 @@ import {
 import { preRenderConsentOverlayProps } from '@/components/global/ConsentOverlay/ConsentOverlay.server';
 import { getLocale } from 'next-intl/server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
-import { CMSConfigError } from '../utilities/CMSConfigError';
-import { getTenantName } from '../utilities/getTenantName';
+import { CMSConfigError } from '@/app/(frontend)/utilities/CMSConfigError';
+import { getTenantById } from '@/utilities/tenant';
 import { getServerSideURL } from '@/utilities/getUrl';
 
 type InterfaceFooterRendererProps = {
@@ -20,10 +20,10 @@ export const RenderFooter = async ({
 }: InterfaceFooterRendererProps): Promise<React.JSX.Element> => {
   const payload = await getPayloadCached();
   const locale = (await getLocale()) as TypedLocale;
-  const tenantName = await getTenantName({
+  const tenantObject = await getTenantById({
     id: tenant,
   });
-  const fg = tenantName.name !== 'sagw';
+  const fg = tenantObject.slug !== 'sagw';
 
   // get host origin
   const origin = getServerSideURL()

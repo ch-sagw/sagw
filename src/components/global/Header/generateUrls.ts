@@ -6,9 +6,7 @@ import { TypedLocale } from 'payload';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { getPageUrl } from '@/utilities/getPageUrl';
 import { getLocaleCodes } from '@/i18n/payloadConfig';
-import {
-  getTenantHomeUrl, TenantLocalizedValue,
-} from '@/utilities/tenant';
+import { getTenantHomeUrl } from '@/utilities/tenant';
 
 interface InterfaceExtractLinkIdsParams {
   navigation: InterfaceHeaderNavigation;
@@ -95,7 +93,7 @@ export const generateLinkUrls = async ({
 interface InterfaceGenerateLangNavUrlsParams {
   pageId: string;
   payload: Awaited<ReturnType<typeof getPayloadCached>>;
-  tenantSlug?: TenantLocalizedValue;
+  tenantSlug?: string;
 }
 
 // generate URL map for current page in all locales for langnav.

@@ -355,7 +355,7 @@ test.describe('Redirects', () => {
     const time = (new Date())
       .getTime();
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
     const home = await generateHomePage({
       sideTitle: 'Side',

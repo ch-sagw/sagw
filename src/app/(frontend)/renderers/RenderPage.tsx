@@ -80,7 +80,7 @@ const getTenantThemeName = ({
   let tenantId = '';
 
   if (pageData.tenant && typeof pageData.tenant === 'object') {
-    isSagw = pageData?.tenant?.name === 'sagw';
+    isSagw = pageData?.tenant?.slug === 'sagw';
     tenantId = pageData.tenant.id;
   }
 

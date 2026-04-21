@@ -111,13 +111,9 @@ const urlEntryForPage = ({
 }): string => {
   const alternateLinks = langs
     .map((lang) => {
-      const pathSuffix = lang === 'de'
-        ? ''
-        : `-${lang}`;
-
       const tenantPath = sagw
         ? ''
-        : `/tenant-${time}${pathSuffix}`;
+        : `/tenant-${time}`;
 
       const pathAppendix = paths
         ? paths.map((pathItem) => `/${pathItem}-${lang}`)
@@ -130,13 +126,9 @@ const urlEntryForPage = ({
 
   const entries = langs
     .map((lang2) => {
-      const pathSuffix = lang2 === 'de'
-        ? ''
-        : `-${lang2}`;
-
       const tenantPath = sagw
         ? ''
-        : `/tenant-${time}${pathSuffix}`;
+        : `/tenant-${time}`;
 
       const pathAppendix = paths
         ? paths.map((pathItem) => `/${pathItem}-${lang2}`)
@@ -174,7 +166,7 @@ test('generates sitemap for all pages', async ({
 
   const tenantNonSagw = await generateTenant({
     addDefaultTenantData: false,
-    name: `tenant-${time}`,
+    slug: `tenant-${time}`,
   });
 
   // generate sagw pages

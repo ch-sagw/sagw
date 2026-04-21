@@ -642,6 +642,13 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
   );
 
   // --- Render
+  const tempStickyStyles = (didScroll && !smallBreakpoint)
+    ? styles.sticky
+    : '';
+
+  const tempStickyExpanded = mobileMenuOpen
+    ? styles.expanded
+    : undefined;
 
   return (
     <header
@@ -651,12 +658,8 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
       className={`${styles.header} ${styles[renderColorMode()]} ${hydrated
         ? ''
         : styles.headerSSR}
-        ${(didScroll && !smallBreakpoint)
-      ? styles.sticky
-      : ''}
-        ${mobileMenuOpen
-      ? styles.expanded
-      : undefined}`}
+        ${tempStickyStyles}
+        ${tempStickyExpanded}`}
       style={totalHeaderHeight && !smallBreakpoint
         ? {
           ['height' as any]: isHovering

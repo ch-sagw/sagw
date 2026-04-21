@@ -11,7 +11,6 @@ import {
 import { absoluteUrlFromPathname } from '@/utilities/getUrl';
 import {
   getTenantHomeUrl,
-  getTenantSlugForLocaleFromPageDoc,
   getTenantSlugFromPageDoc,
 } from '@/utilities/tenant';
 
@@ -75,10 +74,7 @@ const urlForSingletonPage = ({
       breadcrumb,
       slug: slugRecord,
     },
-    tenant: getTenantSlugForLocaleFromPageDoc({
-      locale,
-      pageDoc: pageDocRecord,
-    }),
+    tenant: getTenantSlugFromPageDoc(pageDocRecord) || '',
   });
 };
 
@@ -120,10 +116,7 @@ const generatePageUrl = async ({
         breadcrumb,
         slug: slugRecord,
       },
-      tenant: getTenantSlugForLocaleFromPageDoc({
-        locale,
-        pageDoc: pageDocRecord,
-      }),
+      tenant: getTenantSlugFromPageDoc(pageDocRecord) || null,
     });
 
     if (url === undefined) {

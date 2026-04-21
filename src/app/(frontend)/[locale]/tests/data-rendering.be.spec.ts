@@ -27,7 +27,7 @@ test.describe('Data rendering (sagw)', () => {
     const time = (new Date())
       .getTime();
     const nonSagwTenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     try {
@@ -237,7 +237,7 @@ test.describe('Data rendering (sagw)', () => {
     await expect(detailHeroNonSagw)
       .toStrictEqual(`d1 ${time} tenant-${time}`);
 
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it/o1-it-${time}-tenant-${time}`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}/o1-it-${time}-tenant-${time}`);
     await page.waitForLoadState('networkidle');
     const overviewHeroItNonSagw = await page.getByRole('heading', {
       level: 1,
@@ -247,7 +247,7 @@ test.describe('Data rendering (sagw)', () => {
     await expect(overviewHeroItNonSagw)
       .toStrictEqual(`o1 it ${time} tenant-${time}`);
 
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it/o1-it-${time}-tenant-${time}/d1-it-${time}-tenant-${time}`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}/o1-it-${time}-tenant-${time}/d1-it-${time}-tenant-${time}`);
     await page.waitForLoadState('networkidle');
     const detailHeroItNonSagw = await page.getByRole('heading', {
       level: 1,

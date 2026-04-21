@@ -201,7 +201,7 @@ test.describe('langnav', () => {
     await expect(pathnameFromLinkHref(deLink))
       .toStrictEqual(`/de/tenant-${time}/overview-${time}/magazine-detail-${time}`);
     await expect(pathnameFromLinkHref(itLink))
-      .toStrictEqual(`/it/tenant-${time}-it/overview-it-${time}/magazine-detail-it-${time}`);
+      .toStrictEqual(`/it/tenant-${time}/overview-it-${time}/magazine-detail-it-${time}`);
   });
 
   // if a tenant's page does not have a published page in a certain language
@@ -254,6 +254,6 @@ test.describe('langnav', () => {
     const itLink = await itLinkItem.getAttribute('href');
 
     await expect(pathnameFromLinkHref(itLink))
-      .toStrictEqual(`/it/tenant-${time}-it`);
+      .toStrictEqual(`/it/tenant-${time}`);
   });
 });

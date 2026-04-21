@@ -30,7 +30,7 @@ test.describe('Legal links (non-sagw)', () => {
     const time = (new Date())
       .getTime();
     const tenant = await generateTenant({
-      name: `tenant-${time}`,
+      slug: `tenant-${time}`,
     });
 
     await generateHomePage({
@@ -117,7 +117,7 @@ test.describe('Legal links (non-sagw)', () => {
     // #########################################
     // verify correct url rendering: it
     // #########################################
-    await page.goto(`http://localhost:3000/it/tenant-${time}-it`);
+    await page.goto(`http://localhost:3000/it/tenant-${time}`);
     await page.waitForLoadState('networkidle');
 
     const linkDataPrivacyIt = await page.getByRole('link', {
@@ -131,10 +131,10 @@ test.describe('Legal links (non-sagw)', () => {
       .getAttribute('href');
 
     await expect(pathnameFromLinkHref(linkDataPrivacyIt))
-      .toStrictEqual(`/it/tenant-${time}-it/data-privacy-it`);
+      .toStrictEqual(`/it/tenant-${time}/data-privacy-it`);
 
     await expect(pathnameFromLinkHref(linkImpressumIt))
-      .toStrictEqual(`/it/tenant-${time}-it/impressum-it`);
+      .toStrictEqual(`/it/tenant-${time}/impressum-it`);
 
   });
 });
