@@ -52,13 +52,13 @@ export const seedTestData = async (payload: Payload): Promise<void> => {
     if (isPlaywright) {
       await addPlaywrightDataForTenant({
         payload,
-        tenant: tenantSagw[0].name,
+        tenant: tenantSagw[0].slug,
         tenantId: tenantSagw[0].id,
       });
     } else {
       await addDataForTenant({
         payload,
-        tenant: tenantSagw[0].name,
+        tenant: tenantSagw[0].slug,
         tenantId: tenantSagw[0].id,
       });
     }
@@ -69,13 +69,13 @@ export const seedTestData = async (payload: Payload): Promise<void> => {
     if (isPlaywright) {
       await addPlaywrightDataForTenant({
         payload,
-        tenant: tenantNotSagw[0].name,
+        tenant: tenantNotSagw[0].slug,
         tenantId: tenantNotSagw[0].id,
       });
     } else {
       await addDataForTenant({
         payload,
-        tenant: tenantNotSagw[0].name,
+        tenant: tenantNotSagw[0].slug,
         tenantId: tenantNotSagw[0].id,
       });
     }
