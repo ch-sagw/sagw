@@ -8,7 +8,9 @@ import { preRenderConsentOverlayProps } from '@/components/global/ConsentOverlay
 import { getLocale } from 'next-intl/server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { CMSConfigError } from '@/app/(frontend)/utilities/CMSConfigError';
-import { getTenantById } from '@/utilities/tenant';
+import {
+  getTenantById, getTenantHomeUrl,
+} from '@/utilities/tenant';
 import { getServerSideURL } from '@/utilities/getUrl';
 
 type InterfaceFooterRendererProps = {
@@ -158,12 +160,11 @@ export const RenderFooter = async ({
     metaNav: metanavData,
     navigation: navData,
     socialLinks: footerData.docs[0].socialLinks,
-
-    // TODO
-    structuredDataImage: 'https://www.sagw.ch/logo.svg',
-
-    // TODO
-    structuredDataUrl: 'https://www.sagw.ch',
+    structuredDataImage: `${getServerSideURL()}/favicons/${tenantObject.slug}/${tenantObject.slug}-logo.svg`,
+    structuredDataUrl: `${getServerSideURL()}${getTenantHomeUrl({
+      locale,
+      tenantSlug: tenantObject.slug,
+    })}`,
   };
 
   return (
