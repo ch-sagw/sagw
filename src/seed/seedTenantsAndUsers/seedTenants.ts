@@ -30,12 +30,11 @@ export const seedTenants = async (props: InterfaceSeedTenantsProps): Promise<Ten
 
     const tenantPromises: Promise<Tenant>[] = [];
 
-    props.tenants.forEach((tenant, index) => {
+    props.tenants.forEach((tenant) => {
       tenantPromises.push(props.payload.create({
         collection: 'tenants',
         context: skipTenantInitialDataContext,
         data: {
-          faviconName: `https://www.foo${index}.bar`,
           name: tenant.name,
           slug: tenant.slug,
         },

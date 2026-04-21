@@ -263,7 +263,6 @@ export interface Tenant {
    * Used for url paths, example: /tenant-slug/page-slug
    */
   slug: string;
-  faviconName: string;
   languages?: {
     de?: boolean | null;
     fr?: boolean | null;
@@ -6749,7 +6748,6 @@ export interface EventCategorySelect<T extends boolean = true> {
 export interface TenantsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
-  faviconName?: T;
   languages?:
     | T
     | {

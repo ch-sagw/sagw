@@ -60,7 +60,6 @@ export const generateTenant = async ({
       skipTenantInitialData: !addDefaultTenantData,
     },
     data: {
-      faviconName: `favicon-${slug}`,
       name: slug,
       slug,
     },

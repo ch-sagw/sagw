@@ -46,15 +46,6 @@ export const Tenants: CollectionConfig = {
       type: 'text',
     },
     {
-      access: fieldsAccess,
-      index: true,
-      localized: false,
-      name: 'faviconName',
-      required: true,
-      type: 'text',
-      unique: false,
-    },
-    {
       fields: [
         {
           access: languageAccess,
