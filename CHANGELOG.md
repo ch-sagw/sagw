@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.46.0](https://github.com/ch-sagw/sagw/compare/v0.45.3...v0.46.0) (2026-04-21)
+
+
+### Features
+
+* adding additional logo svgs for strctured data references ([e6b1666](https://github.com/ch-sagw/sagw/commit/e6b16664b08491bce42d537a5cbc8817ae3778d0))
+* render canonical and hreflang ([#1076](https://github.com/ch-sagw/sagw/issues/1076)) ([46e840e](https://github.com/ch-sagw/sagw/commit/46e840ea83d7c9778072a39bc3755074f4f40750))
+* translate initial tenant data ([#1081](https://github.com/ch-sagw/sagw/issues/1081)) ([134e826](https://github.com/ch-sagw/sagw/commit/134e826bbcf8777014a406fe6fc04247314c248e))
+
+
+### Bug Fixes
+
+* fix issue with lang-copy in header and footer ([69c10a3](https://github.com/ch-sagw/sagw/commit/69c10a381bb37477f388474e2c2c5ec41e9f0eef))
+* properly render structured data link with tenant ([e6b1666](https://github.com/ch-sagw/sagw/commit/e6b16664b08491bce42d537a5cbc8817ae3778d0))
+* properly render structured data link with tenant ([#1090](https://github.com/ch-sagw/sagw/issues/1090)) ([e6b1666](https://github.com/ch-sagw/sagw/commit/e6b16664b08491bce42d537a5cbc8817ae3778d0))
+
+
+### Test
+
+* add tests for lang-copy in header and footer ([69c10a3](https://github.com/ch-sagw/sagw/commit/69c10a381bb37477f388474e2c2c5ec41e9f0eef))
+
 ## [0.45.3](https://github.com/ch-sagw/sagw/compare/v0.45.2...v0.45.3) (2026-04-21)
 
 
