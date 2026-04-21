@@ -2,15 +2,128 @@
 
 import 'server-only';
 import { getTenantFromUrl } from '@/app/(frontend)/utilities/getTenantFromUrl';
-import { getTenantById } from '@/utilities/tenant';
 import { Metadata } from 'next';
 import {
   fetchHomePageData, InterfaceHomePageProps,
 } from '@/app/(frontend)/fetchers/home';
-import { Image } from '@/payload-types';
+import {
+  Image, Tenant,
+} from '@/payload-types';
 import { InterfaceOtherPagesProps } from '@/app/(frontend)/fetchers/otherPages';
 import { getPageData } from '@/app/(frontend)/fetchers/pageData';
 import { getServerSideURL } from '@/utilities/getUrl';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { getPageUrl } from '@/utilities/getPageUrl';
+import {
+  getTenantById, getTenantHomeUrl,
+} from '@/utilities/tenant';
+import { getLocaleCodes } from '@/i18n/payloadConfig';
+import type { TypedLocale } from 'payload';
+
+// mapping of payload locales to the hreflang values
+const HREFLANG_MAP: Record<TypedLocale, string> = {
+  de: 'x-default',
+  en: 'en-GB',
+  fr: 'fr-CH',
+  it: 'it-CH',
+};
+
+const getEnabledLocalesForTenant = (languages: Tenant['languages'] | null | undefined): TypedLocale[] => {
+  const locales = getLocaleCodes();
+
+  if (!languages) {
+    return locales;
+  }
+
+  return locales.filter((locale) => languages[locale as keyof typeof languages]);
+};
+
+const buildPageAlternates = async ({
+  currentLocale,
+  isHome,
+  pageId,
+  serverBase,
+  tenantDoc,
+}: {
+  currentLocale: TypedLocale;
+  isHome: boolean;
+  pageId?: string;
+  serverBase: string;
+  tenantDoc: Tenant | null | undefined;
+}): Promise<{
+  canonical?: string;
+  languages: Record<string, string>;
+}> => {
+  const payload = await getPayloadCached();
+
+  const enabledLocales = getEnabledLocalesForTenant(tenantDoc?.languages);
+  const tenantSlug = tenantDoc?.slug;
+
+  const resolvedPaths = await Promise.all(enabledLocales.map(async (altLocale) => {
+    if (isHome) {
+      return {
+        locale: altLocale,
+        pathname: getTenantHomeUrl({
+          locale: altLocale,
+          tenantSlug,
+        }),
+      };
+    }
+
+    if (!pageId) {
+      return {
+        locale: altLocale,
+        pathname: undefined,
+      };
+    }
+
+    try {
+      const pathname = await getPageUrl({
+        absolute: false,
+        locale: altLocale,
+        pageId,
+        payload,
+      });
+
+      return {
+        locale: altLocale,
+        pathname,
+      };
+    } catch {
+      return {
+        locale: altLocale,
+        pathname: undefined,
+      };
+    }
+  }));
+
+  const languages: Record<string, string> = {};
+  let canonical: string | undefined;
+
+  resolvedPaths.forEach(({
+    locale: altLocale, pathname,
+  }) => {
+    if (!pathname) {
+      return;
+    }
+
+    const absoluteUrl = new URL(pathname, `${serverBase}/`).href;
+    const hreflang = HREFLANG_MAP[altLocale];
+
+    if (hreflang) {
+      languages[hreflang] = absoluteUrl;
+    }
+
+    if (altLocale === currentLocale) {
+      canonical = absoluteUrl;
+    }
+  });
+
+  return {
+    canonical,
+    languages,
+  };
+};
 
 export const renderMeta = async ({
   params,
@@ -108,7 +221,21 @@ export const renderMeta = async ({
     : `${serverBase}/${tenantInfo.tenantSlug}/`;
   const metadataRootUrl = new URL(tenantMetadataRoot);
 
+  const {
+    canonical, languages: alternateLanguages,
+  } = await buildPageAlternates({
+    currentLocale: locale as TypedLocale,
+    isHome: Boolean(isHome),
+    pageId: pageData.id,
+    serverBase,
+    tenantDoc: tenantName as Tenant | null,
+  });
+
   return {
+    alternates: {
+      canonical,
+      languages: alternateLanguages,
+    },
     description: meta.description,
     icons: {
       apple: [
