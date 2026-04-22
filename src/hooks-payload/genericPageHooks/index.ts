@@ -1,5 +1,4 @@
 import { hookValidateParentCircularReference } from '@/hooks-payload/validateParentCircularReference';
-import { hookSlug } from '@/hooks-payload/slug';
 import { hookAdminTitle } from '@/hooks-payload/adminTitle';
 import {
   CollectionAfterChangeHook, CollectionAfterDeleteHook, CollectionBeforeChangeHook, CollectionBeforeDeleteHook, CollectionBeforeValidateHook,
@@ -43,7 +42,6 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
   // 1.
   beforeValidate: [
     hookAdminTitle,
-    hookSlug,
     hookValidateParentCircularReference,
     ...(additionalHooks?.beforeValidate ?? []),
     hookPreventBlockStructureChangesForTranslators(),
