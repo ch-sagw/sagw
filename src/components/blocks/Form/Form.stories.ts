@@ -207,6 +207,7 @@ const defaultFormConfig: FormProps = {
     title: simpleRteConfig('Form SAGW'),
     updatedAt: '2025-09-14T15:43:50.512Z',
   },
+  locale: 'de',
   pending: false,
   preRenderedLabels,
   preRenderedRadioLabels,

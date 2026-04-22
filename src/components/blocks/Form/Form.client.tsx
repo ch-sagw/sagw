@@ -3,6 +3,7 @@
 import React, {
   startTransition, useActionState, useRef, useState,
 } from 'react';
+import { useLocale } from 'next-intl';
 import { submitForm } from '@/app/actions/submitForm';
 import { Form as InterfaceForm } from '@/payload-types';
 import { FormComponent } from '@/components/blocks/Form/Form.component';
@@ -26,6 +27,7 @@ export const FormClient = ({
   submitErrorLinkHref,
   submitErrorLinkText,
 }: InterfaceFormClientPropTypes): React.JSX.Element => {
+  const locale = useLocale();
 
   // --- State
 
@@ -98,6 +100,7 @@ export const FormClient = ({
   return (
     <FormComponent
       form={form}
+      locale={locale}
       action={wrappedFormAction}
       firstErrorFieldName={firstErrorFieldName}
       pending={pending}
