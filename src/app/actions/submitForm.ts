@@ -2,10 +2,15 @@
 
 import 'server-only';
 import { z } from 'zod';
+import { hasLocale } from 'next-intl';
 import { getLocale } from 'next-intl/server';
 import {
-  hiddenFormIdFieldName, hiddenPageUrl, newsletterFieldNames,
+  hiddenFormIdFieldName,
+  hiddenFormLocaleFieldName,
+  hiddenPageUrl,
+  newsletterFieldNames,
 } from '@/components/blocks/Form/Form.config';
+import { routing } from '@/i18n/routing';
 import { sendMail } from '@/mail/sendMail';
 import { subscribe } from '@/mail/subscribe';
 import {
@@ -89,7 +94,12 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
     };
   }
 
-  const locale = (await getLocale()) as Config['locale'];
+  const localeFromForm = formData.get(hiddenFormLocaleFieldName);
+  const locale = (
+    typeof localeFromForm === 'string' && hasLocale(routing.locales, localeFromForm)
+      ? localeFromForm
+      : await getLocale()
+  ) as Config['locale'];
   const payload = await getPayloadCached();
 
   let authoritativeForm: InterfaceForm | null;

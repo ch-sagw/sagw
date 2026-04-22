@@ -4,7 +4,9 @@ import React, { Fragment } from 'react';
 import { cva } from 'cva';
 import { Form as InterfaceForm } from '@/payload-types';
 import {
-  hiddenFormIdFieldName, hiddenPageUrl,
+  hiddenFormIdFieldName,
+  hiddenFormLocaleFieldName,
+  hiddenPageUrl,
 } from '@/components/blocks/Form/Form.config';
 import { Notification } from '@/components/base/Notification/Notification';
 import { Section } from '@/components/base/Section/Section';
@@ -43,6 +45,7 @@ const fieldClasses = cva([styles.field], {
 
 type InterfaceFormClientPropTypes = {
   form: InterfaceForm;
+  locale: string;
   action: (payload: FormData) => void;
   firstErrorFieldName: string;
   pending: boolean;
@@ -67,6 +70,7 @@ type InterfaceFormClientPropTypes = {
 
 export const FormComponent = ({
   form,
+  locale,
   action,
   firstErrorFieldName,
   pending,
@@ -199,6 +203,7 @@ export const FormComponent = ({
             noValidate
           >
             <input type='hidden' name={hiddenFormIdFieldName} value={String(form.id)} />
+            <input type='hidden' name={hiddenFormLocaleFieldName} value={locale} />
             <input type='hidden' name={hiddenPageUrl} value={pathname
               ? pathname.toString()
               : ''
