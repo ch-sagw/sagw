@@ -40,6 +40,7 @@ export const ProjectsTeaser = async (props: InterfaceProjectsTeaserPropTypes): P
 
   if (optionalLink && optionalLink.includeLink && optionalLink.link?.internalLink && optionalLink.link?.linkText) {
     const href = await getPageUrl({
+      alternateLocaleForMissingPath: true,
       locale,
       pageId: optionalLink.link.internalLink.documentId,
       payload,
@@ -54,6 +55,7 @@ export const ProjectsTeaser = async (props: InterfaceProjectsTeaserPropTypes): P
   // Process all pages in parallel
   const items = await Promise.all(pages.map(async (item): Promise<InterfaceProjectsTeaserItem> => {
     const href = await getPageUrl({
+      alternateLocaleForMissingPath: true,
       locale,
       pageId: item.id,
       payload,

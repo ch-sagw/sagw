@@ -75,6 +75,7 @@ export const PublicationsTeaser = async (props: InterfacePublicationsTeaserPropT
 
       // TODO: we need reference tracking here
       href: await getPageUrl({
+        alternateLocaleForMissingPath: true,
         locale,
         pageId: props.optionalLink.link.internalLink.documentId,
         payload: await getPayloadCached(),

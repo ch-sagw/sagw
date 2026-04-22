@@ -21,6 +21,7 @@ export const prerenderPageLinks = async ({
 
     // TODO: we need reference tracking here
     url: await getPageUrl({
+      alternateLocaleForMissingPath: true,
       locale,
       pageId: page.id,
       payload,
