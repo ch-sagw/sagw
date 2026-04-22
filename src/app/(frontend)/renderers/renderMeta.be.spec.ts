@@ -1,5 +1,6 @@
 import {
   expect,
+  type Page,
   test,
 } from '@playwright/test';
 import {
@@ -33,6 +34,40 @@ const defaultMeta = (time: number, lang?: string): any => ({
     },
   },
 });
+
+const openGraphLocale = (locale: string): string => `${locale}_${locale.toUpperCase()}`;
+
+const expectOpenGraphAndTwitter = async (
+  page: Page,
+  {
+    canonicalHref,
+    description,
+    title,
+    pageLocale,
+  }: {
+    canonicalHref: string;
+    description: string;
+    pageLocale: string;
+    title: string;
+  },
+): Promise<void> => {
+  await expect(page.locator('meta[property="og:title"]'))
+    .toHaveAttribute('content', title);
+  await expect(page.locator('meta[property="og:description"]'))
+    .toHaveAttribute('content', description);
+  await expect(page.locator('meta[property="og:url"]'))
+    .toHaveAttribute('content', canonicalHref);
+  await expect(page.locator('meta[property="og:type"]'))
+    .toHaveAttribute('content', 'website');
+  await expect(page.locator('meta[property="og:locale"]'))
+    .toHaveAttribute('content', openGraphLocale(pageLocale));
+  await expect(page.locator('meta[name="twitter:card"]'))
+    .toHaveAttribute('content', 'summary');
+  await expect(page.locator('meta[name="twitter:title"]'))
+    .toHaveAttribute('content', title);
+  await expect(page.locator('meta[name="twitter:description"]'))
+    .toHaveAttribute('content', description);
+};
 
 test.describe('render meta home', () => {
   beforeEachAcceptCookies();
@@ -91,6 +126,13 @@ test.describe('render meta home', () => {
       .toHaveAttribute('href', 'http://localhost:3000/it');
     await expect(page.locator('link[rel="alternate"][hreflang="en-GB"]'))
       .toHaveAttribute('href', 'http://localhost:3000/en');
+
+    await expectOpenGraphAndTwitter(page, {
+      canonicalHref: 'http://localhost:3000/de',
+      description: `description ${time}`,
+      pageLocale: 'de',
+      title: `title ${time}`,
+    });
   });
 
   test('correctly renders meta italian (sagw)', async ({
@@ -156,6 +198,13 @@ test.describe('render meta home', () => {
       .toHaveAttribute('href', 'http://localhost:3000/it');
     await expect(page.locator('link[rel="alternate"][hreflang="en-GB"]'))
       .toHaveAttribute('href', 'http://localhost:3000/en');
+
+    await expectOpenGraphAndTwitter(page, {
+      canonicalHref: 'http://localhost:3000/it',
+      description: `description ${time}it`,
+      pageLocale: 'it',
+      title: `title ${time}it`,
+    });
   });
 
   test('correctly renders meta (non-sagw)', async ({
@@ -212,6 +261,13 @@ test.describe('render meta home', () => {
       .toHaveAttribute('href', `http://localhost:3000/it/tenant-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="en-GB"]'))
       .toHaveAttribute('href', `http://localhost:3000/en/tenant-${time}`);
+
+    await expectOpenGraphAndTwitter(page, {
+      canonicalHref: `http://localhost:3000/de/tenant-${time}`,
+      description: `description ${time}`,
+      pageLocale: 'de',
+      title: `title ${time}`,
+    });
   });
 
   test('correctly renders meta italian (non-sagw)', async ({
@@ -272,6 +328,13 @@ test.describe('render meta home', () => {
       .toHaveAttribute('href', `http://localhost:3000/it/tenant-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="en-GB"]'))
       .toHaveAttribute('href', `http://localhost:3000/en/tenant-${time}`);
+
+    await expectOpenGraphAndTwitter(page, {
+      canonicalHref: `http://localhost:3000/it/tenant-${time}`,
+      description: `description ${time}it`,
+      pageLocale: 'it',
+      title: `title ${time}it`,
+    });
   });
 
   test('only emits alternates for tenant-enabled locales', async ({
@@ -330,6 +393,13 @@ test.describe('render meta home', () => {
       .toHaveCount(0);
     await expect(page.locator('link[rel="alternate"][hreflang="en-GB"]'))
       .toHaveCount(0);
+
+    await expectOpenGraphAndTwitter(page, {
+      canonicalHref: `http://localhost:3000/de/tenant-${time}`,
+      description: `description ${time}`,
+      pageLocale: 'de',
+      title: `title ${time}`,
+    });
   });
 });
 
@@ -443,6 +513,13 @@ test.describe('render meta on other pages', () => {
       .toHaveAttribute('href', `http://localhost:3000/it/detail-it-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="en-GB"]'))
       .toHaveAttribute('href', `http://localhost:3000/en/detail-en-${time}`);
+
+    await expectOpenGraphAndTwitter(page, {
+      canonicalHref: `http://localhost:3000/de/detail-de-${time}`,
+      description: `description ${time}`,
+      pageLocale: 'de',
+      title: `title ${time}`,
+    });
   });
 
   test('correctly renders meta italian (sagw)', async ({
@@ -552,6 +629,13 @@ test.describe('render meta on other pages', () => {
       .toHaveAttribute('href', `http://localhost:3000/it/detail-it-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="en-GB"]'))
       .toHaveAttribute('href', `http://localhost:3000/en/detail-en-${time}`);
+
+    await expectOpenGraphAndTwitter(page, {
+      canonicalHref: `http://localhost:3000/it/detail-it-${time}`,
+      description: `description ${time}it`,
+      pageLocale: 'it',
+      title: `title ${time}it`,
+    });
   });
 
   test('correctly renders meta (non-sagw)', async ({
@@ -661,6 +745,13 @@ test.describe('render meta on other pages', () => {
       .toHaveAttribute('href', `http://localhost:3000/it/tenant-${time}/detail-it-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="en-GB"]'))
       .toHaveAttribute('href', `http://localhost:3000/en/tenant-${time}/detail-en-${time}`);
+
+    await expectOpenGraphAndTwitter(page, {
+      canonicalHref: `http://localhost:3000/de/tenant-${time}/detail-de-${time}`,
+      description: `description ${time}`,
+      pageLocale: 'de',
+      title: `title ${time}`,
+    });
   });
 
   test('correctly renders meta italian (non-sagw)', async ({
@@ -770,5 +861,12 @@ test.describe('render meta on other pages', () => {
       .toHaveAttribute('href', `http://localhost:3000/it/tenant-${time}/detail-it-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="en-GB"]'))
       .toHaveAttribute('href', `http://localhost:3000/en/tenant-${time}/detail-en-${time}`);
+
+    await expectOpenGraphAndTwitter(page, {
+      canonicalHref: `http://localhost:3000/it/tenant-${time}/detail-it-${time}`,
+      description: `description ${time}it`,
+      pageLocale: 'it',
+      title: `title ${time}it`,
+    });
   });
 });

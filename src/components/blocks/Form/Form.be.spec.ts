@@ -11,7 +11,9 @@ import {
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
-import { generateCollectionsExceptPages } from '@/test-helpers/collections-generator';
+import {
+  generateCollectionsExceptPages, generateHomePage,
+} from '@/test-helpers/collections-generator';
 import { deleteUser } from '@/mail/helpers';
 
 test.describe('Custom Form', () => {
@@ -372,6 +374,201 @@ test.describe('Custom Form', () => {
     await expect(notification)
       .toBeVisible();
   });
+
+  test('correctly submits form in other locale', async ({
+    page,
+  }) => {
+    const tenant = await getTenant();
+
+    await generateCollectionsExceptPages({
+      tenant: tenant || '',
+    });
+
+    const payload = await getPayloadCached();
+
+    try {
+      const home = await generateHomePage({
+        locale: 'de',
+        sideTitle: 'home side',
+        tenant: tenant || '',
+        title: 'home title',
+      });
+
+      const i18nGlobals = await payload.find({
+        collection: 'i18nGlobals',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      await payload.update({
+        collection: 'i18nGlobals',
+        data: {
+          ...i18nGlobals.docs[0],
+          forms: {
+            dataPrivacyCheckbox: {
+              dataPrivacyCheckboxText: simpleRteConfig('Data privacy checkbox SAGW'),
+              errorMessage: simpleRteConfig('Bitte akzeptieren sie die allgemeinen Geschäftsbedingungen'),
+            },
+          },
+        },
+        id: i18nGlobals.docs[0].id,
+        locale: 'it',
+      });
+
+      // add real content
+      const forms = await payload.find({
+        collection: 'forms',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      await payload.update({
+        collection: 'homePage',
+        data: home,
+        id: home.id,
+        locale: 'it',
+      });
+
+      await payload.update({
+        collection: 'forms',
+        data: {
+          colorMode: 'dark',
+          fields: [
+            {
+              blockType: 'textBlockForm',
+              fieldError: simpleRteConfig('Geben Sie Ihren Namen an.'),
+              fieldWidth: 'half',
+              label: simpleRteConfig('Name'),
+              name: 'name',
+              placeholder: 'Ihr Name',
+              required: true,
+            },
+            {
+              blockType: 'emailBlock',
+              fieldError: simpleRteConfig('Geben Sie ihre E-Mail-Adresse an.'),
+              fieldWidth: 'half',
+              label: simpleRteConfig('E-Mail'),
+              name: 'email',
+              placeholder: 'Ihre E-Mail Adresse',
+              required: true,
+            },
+            {
+              blockType: 'textareaBlock',
+              fieldError: simpleRteConfig('Geben Sie ihren Kommentar an.'),
+              fieldWidth: 'full',
+              label: simpleRteConfig('Kommentar'),
+              name: 'comment',
+              placeholder: 'Ihr Kommentar',
+              required: true,
+            },
+            {
+              blockType: 'checkboxBlock',
+              fieldError: simpleRteConfig('Bitte akzeptieren Sie die Hinweise zum Datenschutz.'),
+              fieldWidth: 'full',
+              label: simpleRteConfig('Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.'),
+              name: 'checkbox-custom',
+              required: true,
+            },
+            {
+              blockType: 'radioBlock',
+              fieldError: simpleRteConfig('Sie müssen eine Auswahl treffen'),
+              fieldWidth: 'full',
+              items: [
+                {
+                  label: simpleRteConfig('Deutsch'),
+                  value: 'deutsch',
+                },
+                {
+                  label: simpleRteConfig('Französisch'),
+                  value: 'french',
+                },
+              ],
+              label: simpleRteConfig('In welcher Sprache möchten Sie den Newsletter erhalten?'),
+              name: 'language-select',
+              required: true,
+            },
+          ],
+          isNewsletterForm: 'custom',
+          mailSubject: 'Form submission on SAGW',
+          recipientMail: 'delivered@resend.dev',
+          senderMail: 'sagw@sagw.ch',
+          showPrivacyCheckbox: false,
+          submitButtonLabel: 'Abschicken',
+          submitError: {
+            text: simpleRteConfig('Submit text error'),
+            title: simpleRteConfig('Submit title error'),
+          },
+          submitSuccess: {
+            text: simpleRteConfig('Submit text success'),
+            title: simpleRteConfig('Submit title success'),
+          },
+          subtitle: simpleRteConfig('Subtitle for contact Form'),
+          tenant,
+          title: simpleRteConfig('Contact'),
+        },
+        id: forms.docs[0].id,
+        locale: 'it',
+      });
+
+      await payload.update({
+        collection: 'homePage',
+        data: {
+          content: [
+            {
+              blockType: 'formBlock',
+              form: forms.docs[1],
+            },
+          ],
+        },
+        id: home.id,
+        locale: 'it',
+      });
+
+    } catch (e) {
+      console.log(e);
+
+      throw new Error(e instanceof Error
+        ? e.message
+        : String(e));
+    }
+
+    // go to home
+    await page.goto('http://localhost:3000/it');
+    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+
+    const form = await page.locator('form')
+      .first();
+    const submit = await form.locator('button');
+
+    const mailField = await form.getByLabel('e-mail');
+    const nameField = await form.getByLabel('name');
+    const textareaField = await form.getByLabel('kommentar');
+    const checkboxField = await form.getByText('Ich habe die Hinweise zum Datenschutz gelesen und akzeptiere sie.');
+    const radioField = await form.getByText('Deutsch');
+
+    await radioField.click();
+    await nameField.fill('name');
+    await mailField.fill('mail@foo.bar');
+    await textareaField.fill('textarea');
+    await checkboxField.click();
+
+    await submit.click();
+
+    // expect success message
+    const notification = page.getByText('Submit title success', {
+      exact: true,
+    });
+
+    await expect(notification)
+      .toBeVisible();
+  });
 });
 
 test.describe('Newsletter Form', () => {
@@ -515,7 +712,11 @@ test.describe('Newsletter Form', () => {
 
     await (await form.elementHandle())?.waitForElementState('stable');
 
-    await expect(mailError)
+    const mailError2 = await form.getByText('Bitte geben Sie die E-Mail Adresse an.', {
+      exact: true,
+    });
+
+    await expect(mailError2)
       .not.toBeVisible();
   });
 

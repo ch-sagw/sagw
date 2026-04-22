@@ -272,7 +272,7 @@ export const renderMeta = async ({
       locale: `${locale}_${locale.toUpperCase()}`,
       title: meta.title,
       type: 'website',
-      url: metadataRootUrl,
+      url: canonical ?? metadataRootUrl.href,
     },
     robots: {
       follow: seoIndex,
