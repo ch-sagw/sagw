@@ -49,7 +49,7 @@ export const singletonSlugs: InterfaceSlug[] = [
   },
 ];
 
-export const setsSlugs: InterfaceSlug[] = [
+export const setsSlugs = [
   {
     displayName: 'Magazine Detail Page',
     exportName: 'MagazineDetailPage',
@@ -131,7 +131,7 @@ export const setsSlugs: InterfaceSlug[] = [
     parentFolderName: 'Pages',
     slug: 'projectDetailPage',
   },
-];
+] satisfies InterfaceSlug[];
 
 export const globalCollectionsSlugs: InterfaceSlug[] = [
   {

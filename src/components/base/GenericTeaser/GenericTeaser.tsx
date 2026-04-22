@@ -211,8 +211,6 @@ export const GenericTeaser = ({
             className={styles.wrapper}
             target={target}
             prefetch={true}
-          // TODO
-          // aria-label
           >
             {wrapperContent}
           </Link>

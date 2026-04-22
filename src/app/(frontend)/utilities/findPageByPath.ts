@@ -1,23 +1,19 @@
 import 'server-only';
-import { TypedLocale } from 'payload';
+import {
+  CollectionSlug, TypedLocale,
+} from 'payload';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
-import { singletonSlugs } from '@/collections/Pages/constants';
+import {
+  setsSlugs, singletonSlugs,
+} from '@/collections/Pages/constants';
 
-// TODO: get from const
-// Define the DetailPage collections to search through
-const PAGE_COLLECTIONS = [
-  'detailPage',
-  'overviewPage',
-  'newsDetailPage',
-  'publicationDetailPage',
-  'projectDetailPage',
-  'eventDetailPage',
-  'instituteDetailPage',
-  'magazineDetailPage',
-  'nationalDictionaryDetailPage',
-  'impressumPage',
+// Set collections plus impressum and data-privacy
+// (singletons that participate in path lookup)
+const PAGE_COLLECTIONS: CollectionSlug[] = [
+  ...setsSlugs.map((setsSlug) => setsSlug.slug),
   'dataPrivacyPage',
-] as const;
+  'impressumPage',
+];
 
 type InterfaceFindPageByPathResult = {
   pageData: any;

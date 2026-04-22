@@ -76,10 +76,6 @@ export type InterfaceButtonPropTypes =
   | IconProps
   | TextProps;
 
-// TODOs
-// - Integrate tracking events or necessary data attributes
-// - Add support for loading state
-
 const buttonLinkContent = ({
   iconInlineStart,
   text,
