@@ -40,16 +40,22 @@ test.describe('Unique blocks', () => {
     await addOverviewButton.click();
 
     await page.locator('#content-row-0');
-    await page.getByText('Placeholder: all magazine entries will be displayed as overview here.');
+    const overviewBlockElem = await page.getByText('Placeholder: all magazine entries will be displayed as overview here.');
+
+    await (await overviewBlockElem.elementHandle())?.waitForElementState('stable');
 
     // try to add another overview
     await addContentButton.click();
 
-    const magazineOverview = await page.getByText('Magazine Overview (automatic)');
-    const publicationsOverview = await page.getByText('Publications Overview (automatic)');
-    const newsOverview = await page.getByText('News Overview (automatic)');
-    const nationalOverview = await page.getByText('National Dictionaries Overview (automatic)');
-    const institutesOverview = await page.getByText('Institutes Overview (automatic)');
+    const dialog = await page.locator('.drawer__content');
+
+    await (await dialog.elementHandle())?.waitForElementState('stable');
+
+    const magazineOverview = await dialog.getByText('Magazine Overview (automatic)');
+    const publicationsOverview = await dialog.getByText('Publications Overview (automatic)');
+    const newsOverview = await dialog.getByText('News Overview (automatic)');
+    const nationalOverview = await dialog.getByText('National Dictionaries Overview (automatic)');
+    const institutesOverview = await dialog.getByText('Institutes Overview (automatic)');
 
     await expect(magazineOverview).not.toBeVisible();
     await expect(publicationsOverview).not.toBeVisible();
