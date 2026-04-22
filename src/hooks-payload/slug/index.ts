@@ -1,5 +1,5 @@
 import {
-  CollectionBeforeValidateHook, type Field,
+  type Field, type FieldHook,
   ValidationError, Where,
 } from 'payload';
 import slugify from 'slugify';
@@ -44,35 +44,44 @@ const hasSlugField = (fields: Field[] | undefined): boolean => {
   return false;
 };
 
-export const hookSlug: CollectionBeforeValidateHook = async ({
-  data,
+// Slug field beforeChange: runs after the generateSlug checkbox field in
+// the same row (Payload traverses row fields in order).
+// Collection beforeValidate / collection beforeChange run before field
+// beforeChange, so uniqueness must run here—after
+// generateSlug populates slug from adminTitle.
+
+export const hookSlug: FieldHook = async ({
   collection,
-  req,
+  data: dataParam,
   operation,
   originalDoc,
+  req,
+  siblingData,
+  value,
 }) => {
+  if (!collection) {
+    return value;
+  }
+
   // Only enforce on create or update
-  if (![
-    'create',
-    'update',
-  ].includes(operation)) {
-    return data;
+  if (operation !== 'create' && operation !== 'update') {
+    return value;
   }
 
-  const dataParam = data;
+  const data = siblingData ?? dataParam;
 
-  if (!dataParam) {
-    return dataParam;
+  if (!data) {
+    return value;
   }
 
-  const tenant = dataParam.tenant || req.user?.tenants;
+  const tenant = data.tenant || req.user?.tenants;
 
   if (!tenant) {
-    return dataParam;
+    return value;
   }
 
-  if (!dataParam.slug) {
-    return dataParam;
+  if (!data.slug) {
+    return value;
   }
 
   // in case author changed the slug manually, slugify it
@@ -83,13 +92,13 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
     ü: 'ue',
   });
 
-  const desiredSlug = slugify(dataParam['slug'], {
+  const desiredSlug = slugify(data.slug, {
     lower: true,
     strict: true,
     trim: true,
   });
 
-  dataParam['slug'] = desiredSlug;
+  data.slug = desiredSlug;
 
   // get all page collection slugs
   const allPageCollectionSlugs = [
@@ -114,7 +123,7 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
       },
       {
         slug: {
-          equals: dataParam.slug,
+          equals: data.slug,
         },
       },
 
@@ -166,11 +175,11 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
       errors: [
         {
           label: 'slug',
-          message: `Slug "${dataParam.slug}" already exists in this tenant`,
+          message: `Slug "${data.slug}" already exists in this tenant`,
           path: 'slug',
         },
       ],
-      global: `Slug "${dataParam.slug}" already exists in this tenant`,
+      global: `Slug "${data.slug}" already exists in this tenant`,
     });
   }
 
@@ -187,7 +196,7 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
   });
 
   if (currentTenantDocs.docs.length !== 1) {
-    return dataParam;
+    return data.slug;
   }
 
   const tenantSlugs = currentTenantDocs.docs[0].slug;
@@ -204,7 +213,7 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
   const isSagw = tenantSlugsArray.some((s) => s.toLowerCase() === 'sagw');
 
   if (!isSagw) {
-    return dataParam;
+    return data.slug;
   }
 
   const allTenants = await req.payload.find({
@@ -222,7 +231,7 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
 
     const potenationConflictingTenantSlugs = slugValues(t.slug);
 
-    return potenationConflictingTenantSlugs.some((s) => s === dataParam.slug);
+    return potenationConflictingTenantSlugs.some((s) => s === data.slug);
   });
 
   if (conflictingTenant) {
@@ -230,13 +239,13 @@ export const hookSlug: CollectionBeforeValidateHook = async ({
       errors: [
         {
           label: 'slug',
-          message: `Slug "${dataParam.slug}" conflicts with another tenant's URL and cannot be used`,
+          message: `Slug "${data.slug}" conflicts with another tenant's URL and cannot be used`,
           path: 'slug',
         },
       ],
-      global: `Slug "${dataParam.slug}" conflicts with another tenant's URL and cannot be used`,
+      global: `Slug "${data.slug}" conflicts with another tenant's URL and cannot be used`,
     });
   }
 
-  return dataParam;
+  return data.slug;
 };
