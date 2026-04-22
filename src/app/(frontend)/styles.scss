@@ -4,10 +4,75 @@
   box-sizing: border-box;
 }
 
+// Anchor based flying focus
+*:focus {
+  anchor-name: --focus-anchor;
+}
+
+main *:target,
+main *:focus {
+  @include mq($to: medium) {
+    --scroll-margin-block-start: 96;
+  }
+
+  @include mq($from: medium, $to: large) {
+    --scroll-margin-block-start: 112;
+  }
+
+  @include mq($from: large) {
+    --scroll-margin-block-start: 180;
+  }
+
+  @include mq($from: ultra) {
+    --scroll-margin-block-start: 182;
+  }
+
+  scroll-margin-block: px-to-rem(calc(var(--scroll-margin-block-start) + var(--spacing-xl)));
+}
+
+@supports (position-anchor: --test) {
+  *:focus {
+    outline: none;
+  }
+}
+
 html {
   font-size: 100%;
   scrollbar-gutter: stable;
-  scroll-padding-block-start: px-to-rem(var(--hero-padding-block-start) + var(--spacing-xl));
+
+  --flying-focus-motion-speed: var(--motion-speed-very-fast);
+
+  @media (prefers-reduced-motion: reduce) {
+    --flying-focus-motion-speed: 0ms;
+  }
+
+  &:before {
+    content: "";
+    position: fixed;
+    position-anchor: --focus-anchor;
+    inset: anchor(inside);
+    margin: px-to-rem(var(--spacing-2xs), true);
+    display: block;
+    border-width: px-to-rem(var(--border-width-l));
+    border-style: solid;
+    border-color: var(--border-primary);
+    border-radius: px-to-rem(var(--spacing-2xs));
+    pointer-events: none;
+    z-index: 1000;
+    transition: inset var(--flying-focus-motion-speed) var(--motion-ease-in-out);
+    mix-blend-mode: revert-layer;
+    isolation: isolate;
+  }
+
+  &:has(header[class*="dark"]:not([class*="white"]):focus-within):before,
+  &:has(footer:focus-within):before,
+  &:has(section[class*="dark"]:focus-within):before {
+    border-color: var(--border-primary-inverted);
+  }
+}
+
+html:not(:focus-within):before {
+  opacity: 0;
 }
 
 html.no-js figure > div:first-child img {

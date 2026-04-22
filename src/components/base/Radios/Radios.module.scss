@@ -56,11 +56,13 @@
 
   .radio {
     display: flex;
+    position: relative;
     align-items: center;
 
     .input {
       appearance: none;
       position: absolute;
+      inset: 0;
       outline: none;
 
       &:focus-visible ~ .label {
