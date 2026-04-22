@@ -36,8 +36,6 @@ export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promi
 
   if (props.optionalLink?.includeLink && props.optionalLink.link?.linkText) {
     allLink = {
-
-      // TODO: we need reference tracking here
       href: await getPageUrl({
         locale,
         pageId: props.optionalLink.link.internalLink.documentId,

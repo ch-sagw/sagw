@@ -9,9 +9,6 @@ import {
 } from '@/hooks-payload/invalidateTenantCache';
 import { lockDocuments } from '@/field-templates/lockDocuments';
 
-// TODO:
-// - discuss: subtitles
-
 export const Videos: CollectionConfig = {
   access: assetsAccess,
   admin: {

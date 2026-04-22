@@ -25,23 +25,13 @@ import React from 'react';
 import { useTranslations } from 'next-intl';
 import { CMSConfigError } from '../utilities/CMSConfigError';
 import { homeSlug } from '@/collections/constants';
+import { setsSlugs } from '@/collections/Pages/constants';
 
-// TODO: refactor
-// - get PageTypes from autogeneratePagesIndex
-// - derive page types automatically
-// - find cleaner approach for heroProps definition
-
-// union type of all detail page data types
-type PageTypes =
-  | Config['collections']['detailPage']
-  | Config['collections']['overviewPage']
-  | Config['collections']['newsDetailPage']
-  | Config['collections']['publicationDetailPage']
-  | Config['collections']['projectDetailPage']
-  | Config['collections']['eventDetailPage']
-  | Config['collections']['instituteDetailPage']
-  | Config['collections']['magazineDetailPage']
-  | Config['collections']['nationalDictionaryDetailPage'];
+// union of Payload document types for all `setsSlugs` collections
+type SetsPageCollectionSlug = (typeof setsSlugs)[number]['slug'];
+type PageTypes = {
+  [K in SetsPageCollectionSlug]: Config['collections'][K];
+}[SetsPageCollectionSlug];
 
 interface InterfaceRenderHero {
   foundCollection: CollectionSlug;

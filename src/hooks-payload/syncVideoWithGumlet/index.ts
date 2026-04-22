@@ -55,14 +55,6 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
       fileUrl: doc.url,
     });
 
-    // Get duration from Gumlet
-    // const duration = await getGumletAssetDuration(gumletAsset.id);
-    // TODO processing takes quite some time. We could create a Webhook
-    // setup to await the "Video Asset Processed" event from Gumlet.
-    // Unsure whether it is worth... Seems a bit overengineered since
-    // we do not expect many videos. Better to add the video duration
-    // manually...
-
     // Update the document after the upload
     await req.payload.update({
       collection: 'videos',

@@ -1,23 +1,12 @@
 import 'server-only';
 import { TypedLocale } from 'payload';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
-import { singletonSlugs } from '@/collections/Pages/constants';
+import {
+  setsSlugs, singletonSlugs,
+} from '@/collections/Pages/constants';
 
-// TODO: get from const
 // Define the DetailPage collections to search through
-const PAGE_COLLECTIONS = [
-  'detailPage',
-  'overviewPage',
-  'newsDetailPage',
-  'publicationDetailPage',
-  'projectDetailPage',
-  'eventDetailPage',
-  'instituteDetailPage',
-  'magazineDetailPage',
-  'nationalDictionaryDetailPage',
-  'impressumPage',
-  'dataPrivacyPage',
-] as const;
+const PAGE_COLLECTIONS = setsSlugs.map((setsSlug) => setsSlug.slug);
 
 type InterfaceFindPageByPathResult = {
   pageData: any;
