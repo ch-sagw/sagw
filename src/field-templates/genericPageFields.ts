@@ -11,6 +11,7 @@ import {
   fieldAdminTitle, fieldAdminTitleFieldName,
 } from '@/field-templates/adminTitle';
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import { hookSlug } from '@/hooks-payload/slug';
 
 const slugifyWithUmlauts = (value: string): string => {
   slugify.extend({
@@ -119,6 +120,7 @@ export const genericPageFields = (isOverview?: boolean): Field[] => ([
           },
         },
         hooks: {
+          beforeChange: [hookSlug],
           beforeDuplicate: [duplicateSlugHook],
         },
         localized: true,
