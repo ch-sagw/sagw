@@ -515,7 +515,11 @@ test.describe('Newsletter Form', () => {
 
     await (await form.elementHandle())?.waitForElementState('stable');
 
-    await expect(mailError)
+    const mailError2 = await form.getByText('Bitte geben Sie die E-Mail Adresse an.', {
+      exact: true,
+    });
+
+    await expect(mailError2)
       .not.toBeVisible();
   });
 
