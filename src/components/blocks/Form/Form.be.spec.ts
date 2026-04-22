@@ -11,7 +11,9 @@ import {
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
-import { generateCollectionsExceptPages } from '@/test-helpers/collections-generator';
+import {
+  generateCollectionsExceptPages, generateHomePage,
+} from '@/test-helpers/collections-generator';
 import { deleteUser } from '@/mail/helpers';
 
 test.describe('Custom Form', () => {
@@ -377,26 +379,19 @@ test.describe('Custom Form', () => {
     page,
   }) => {
     const tenant = await getTenant();
-    const tenantNonSagw = await getTenantNonSagw();
 
     await generateCollectionsExceptPages({
       tenant: tenant || '',
     });
 
-    await generateCollectionsExceptPages({
-      tenant: tenantNonSagw || '',
-    });
-
     const payload = await getPayloadCached();
 
     try {
-      const home = await payload.find({
-        collection: 'homePage',
-        where: {
-          tenant: {
-            equals: tenant,
-          },
-        },
+      const home = await generateHomePage({
+        locale: 'de',
+        sideTitle: 'home side',
+        tenant: tenant || '',
+        title: 'home title',
       });
 
       const i18nGlobals = await payload.find({
@@ -420,18 +415,7 @@ test.describe('Custom Form', () => {
           },
         },
         id: i18nGlobals.docs[0].id,
-        locale: 'fr',
-      });
-
-      // empty homepage
-      await payload.update({
-        collection: 'homePage',
-        data: {
-          ...home.docs[0],
-          content: [],
-        },
-        id: home.docs[0].id,
-        locale: 'fr',
+        locale: 'it',
       });
 
       // add real content
@@ -442,6 +426,13 @@ test.describe('Custom Form', () => {
             equals: tenant,
           },
         },
+      });
+
+      await payload.update({
+        collection: 'homePage',
+        data: home,
+        id: home.id,
+        locale: 'it',
       });
 
       await payload.update({
@@ -522,7 +513,7 @@ test.describe('Custom Form', () => {
           title: simpleRteConfig('Contact'),
         },
         id: forms.docs[0].id,
-        locale: 'fr',
+        locale: 'it',
       });
 
       await payload.update({
@@ -535,8 +526,8 @@ test.describe('Custom Form', () => {
             },
           ],
         },
-        id: home.docs[0].id,
-        locale: 'fr',
+        id: home.id,
+        locale: 'it',
       });
 
     } catch (e) {
@@ -548,7 +539,7 @@ test.describe('Custom Form', () => {
     }
 
     // go to home
-    await page.goto('http://localhost:3000/fr');
+    await page.goto('http://localhost:3000/it');
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
