@@ -191,13 +191,27 @@ test('invalidates all tenant pages on content change (sagw)', {
 
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}`))
       .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/impressum-${lang}`))
-      .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/data-privacy-${lang}`))
-      .toBe(true);
   });
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /de/impressum'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /de/datenschutzerklaerung'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /fr/impressum'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /fr/declaration-de-protection-des-donnees'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /it/colophon'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /it/informativa-sulla-privacy'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /en/publishing-details'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /en/data-privacy'))
+    .toBe(true);
 
   expect(logCapture.logs)
     .toHaveLength(64);
