@@ -1,5 +1,42 @@
 # Changelog
 
+## [0.47.0](https://github.com/ch-sagw/sagw/compare/v0.46.0...v0.47.0) (2026-04-23)
+
+
+### Chore
+
+* fix some todos ([a8ae14d](https://github.com/ch-sagw/sagw/commit/a8ae14da15d35d7cc9cbd8ff6153553d3d894e0a))
+* fix some todos ([#1104](https://github.com/ch-sagw/sagw/issues/1104)) ([a8ae14d](https://github.com/ch-sagw/sagw/commit/a8ae14da15d35d7cc9cbd8ff6153553d3d894e0a))
+* remove obsolete slug checker ([732a274](https://github.com/ch-sagw/sagw/commit/732a2743d1439cf642254f052992b1f30d160ead))
+
+
+### Features
+
+* support for brevo to use french and german lists for subscription ([1f38255](https://github.com/ch-sagw/sagw/commit/1f38255580ee8f049acd8fed7e428ad401de322a))
+
+
+### Bug Fixes
+
+* ensure unique slug correctly after disabling auto-save ([732a274](https://github.com/ch-sagw/sagw/commit/732a2743d1439cf642254f052992b1f30d160ead))
+* fix form submission in other locales ([#1105](https://github.com/ch-sagw/sagw/issues/1105)) ([886bf61](https://github.com/ch-sagw/sagw/commit/886bf61ab307ae78bfbebd217e98089f2ab1e533))
+* fix lang-copy in global-content access rights ([#1110](https://github.com/ch-sagw/sagw/issues/1110)) ([5f1ab2c](https://github.com/ch-sagw/sagw/commit/5f1ab2c0ebf6be844a2135f9b0503a4adf493feb))
+* fix path lookup for impressum and data-privacy ([a8ae14d](https://github.com/ch-sagw/sagw/commit/a8ae14da15d35d7cc9cbd8ff6153553d3d894e0a))
+* make sure to respect "All" filter value correctly ([a666c6e](https://github.com/ch-sagw/sagw/commit/a666c6ee1157443967c215b64308b3f6cac1ecdd))
+* render proper canonical link for og ([2aadf84](https://github.com/ch-sagw/sagw/commit/2aadf843e9cb34aa4e54c8d8a6b430c705434e63))
+* use correct locale fallback for links in teasers ([bf07486](https://github.com/ch-sagw/sagw/commit/bf07486d0fb44c2b24aec9707d44776c5c115cab))
+
+
+### Test
+
+* add non-sagw test for publication teaser and filter ([a666c6e](https://github.com/ch-sagw/sagw/commit/a666c6ee1157443967c215b64308b3f6cac1ecdd))
+* add test for form submission in other locale ([2aadf84](https://github.com/ch-sagw/sagw/commit/2aadf843e9cb34aa4e54c8d8a6b430c705434e63))
+* add test for publication teaser rendering ([a666c6e](https://github.com/ch-sagw/sagw/commit/a666c6ee1157443967c215b64308b3f6cac1ecdd))
+* add tests for og properties ([2aadf84](https://github.com/ch-sagw/sagw/commit/2aadf843e9cb34aa4e54c8d8a6b430c705434e63))
+* add tests for publication filter ([a666c6e](https://github.com/ch-sagw/sagw/commit/a666c6ee1157443967c215b64308b3f6cac1ecdd))
+* add tests for teasers locale fallback ([bf07486](https://github.com/ch-sagw/sagw/commit/bf07486d0fb44c2b24aec9707d44776c5c115cab))
+* stabilize form test ([2aadf84](https://github.com/ch-sagw/sagw/commit/2aadf843e9cb34aa4e54c8d8a6b430c705434e63))
+* stabilize validate block ui test ([53a874c](https://github.com/ch-sagw/sagw/commit/53a874c521315555f019742f11c614627eed51d4))
+
 ## [0.46.0](https://github.com/ch-sagw/sagw/compare/v0.45.3...v0.46.0) (2026-04-21)
 
 
