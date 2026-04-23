@@ -4111,7 +4111,7 @@ test.describe('impressum page', () => {
   }) => {
     await regenerateAllGenericData();
 
-    await page.goto('http://localhost:3000/de/impressum-de');
+    await page.goto('http://localhost:3000/de/impressum');
     await page.waitForLoadState('networkidle');
 
     await expect(page)
@@ -4135,7 +4135,7 @@ test.describe('impressum page', () => {
       tenant: tenant.id,
     });
 
-    await page.goto(`http://localhost:3000/de/tenant-${time}/impressum-de`);
+    await page.goto(`http://localhost:3000/de/tenant-${time}/impressum`);
     await page.waitForLoadState('networkidle');
 
     await expect(page)
@@ -4153,7 +4153,7 @@ test.describe('data privacy page', () => {
   }) => {
     await regenerateAllGenericData();
 
-    await page.goto('http://localhost:3000/de/data-privacy-de');
+    await page.goto('http://localhost:3000/de/datenschutzerklaerung');
     await page.waitForLoadState('networkidle');
 
     await expect(page)
@@ -4178,7 +4178,7 @@ test.describe('data privacy page', () => {
       tenant: tenant.id,
     });
 
-    await page.goto(`http://localhost:3000/de/tenant-${time}/data-privacy-de`);
+    await page.goto(`http://localhost:3000/de/tenant-${time}/datenschutzerklaerung`);
     await page.waitForLoadState('networkidle');
 
     await expect(page)

@@ -1,7 +1,7 @@
 {
   "slugs": {
-    "dataPrivacy": "data-privacy-it",
-    "impressum": "impressum-it"
+    "dataPrivacy": "informativa-sulla-privacy",
+    "impressum": "colophon"
   },
   "navigation": {
     "navigationTitle": "Home"
@@ -16,7 +16,7 @@
   "form": {
     "newsletter": {
       "error": "Seleziona una lingua",
-      "label": "In quale lingua desideri iscriverti alla newsletter?",
+      "label": "In quale lingua desidera ricevere la nostra newsletter?",
       "languages": {
         "french": "Francese",
         "german": "Tedesco"

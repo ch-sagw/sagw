@@ -1,7 +1,7 @@
 {
   "slugs": {
-    "dataPrivacy": "data-privacy-en",
-    "impressum": "impressum-en"
+    "dataPrivacy": "data-privacy-policy",
+    "impressum": "publishing-details"
   },
   "navigation": {
     "navigationTitle": "Home"
@@ -16,7 +16,7 @@
   "form": {
     "newsletter": {
       "error": "Please select a language",
-      "label": "In which language would you like to subscribe to the newsletter?",
+      "label": "In which language would you like to receive our newsletter?",
       "languages": {
         "french": "French",
         "german": "German"
@@ -46,7 +46,7 @@
   },
   "consent": {
     "buttonTextOpenCookieSettings": "Cookie-Settings",
-    "messageVideo": "Please enable external content cookies in the cookie settings window to watch the video.",
+    "messageVideo": "To watch the video, please enable external content cookies in the Cookie Settings window.",
     "titleExternalContent": "External content"
   },
   "menu": {

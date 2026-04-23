@@ -1,7 +1,7 @@
 {
   "slugs": {
-    "dataPrivacy": "data-privacy-fr",
-    "impressum": "impressum-fr"
+    "dataPrivacy": "declaration-de-protection-des-donnees",
+    "impressum": "impressum"
   },
   "navigation": {
     "navigationTitle": "Page d'accueil"
@@ -15,7 +15,7 @@
   },
   "form": {
     "newsletter": {
-      "error": "Veuillez sélectionner une langue",
+      "error": "Vous faut faire un choix",
       "label": "Dans quelle langue souhaitez-vous vous abonner à la newsletter ?",
       "languages": {
         "french": "Français",
@@ -33,7 +33,7 @@
     "breadcrumb": "Revenir en arrière dans la structure du site",
     "closeDialog": "Fermer le dialogue",
     "footerLogoLinkText": "Member of the Swiss Academy of Humanities and Social Sciences",
-    "linkTarget": "La cible du lien",
+    "linkTarget": "Destination du lien",
     "logoLinkText": "A la page d'accueil",
     "opensInNewWindow": "s'ouvre dans une nouvelle fenêtre.",
     "playVideoText": "Charger et lire la vidéo intitulée «$$title$$»",
@@ -45,8 +45,8 @@
     }
   },
   "consent": {
-    "buttonTextOpenCookieSettings": "Paramètres des cookies",
-    "messageVideo": "Veuillez activer les cookies de contenu externe dans la fenêtre des paramètres des cookies pour visionner la vidéo.",
+    "buttonTextOpenCookieSettings": "Réglages des cookies",
+    "messageVideo": "Merci d'activer les cookies pour les « contenus externes » dans les réglages des cookies afin de pouvoir visionner la vidéo.",
     "titleExternalContent": "Contenu externe"
   },
   "menu": {
