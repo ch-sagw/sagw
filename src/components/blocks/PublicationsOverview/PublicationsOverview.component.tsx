@@ -90,23 +90,30 @@ const PublicationsOverviewContent = ({
     ],
   };
 
-  // Filter publications (raw data)
+  // Filter: apply topic and/or type when that filter is not the "All" value
+  // (not when unset on the other axis).
   const filteredPublicationItems = useMemo(() => {
-    if (selectedTopic && selectedTopic !== allValueTopics && !selectedType) {
-      return publicationItems.filter((item) => item.categorization?.topic === selectedTopic);
-    } else if (selectedType && selectedType !== allValueTypes && !selectedTopic) {
-      return publicationItems.filter((item) => item.categorization?.type === selectedType);
-    } else if (
-      selectedTopic &&
-      selectedType &&
-      selectedTopic !== allValueTopics &&
-      selectedType !== allValueTypes
-    ) {
-      return publicationItems.filter((item) => item.categorization?.topic === selectedTopic &&
-        item.categorization?.type === selectedType);
+    const topicIsSpecific =
+      selectedTopic !== null && selectedTopic !== undefined &&
+      selectedTopic !== allValueTopics;
+    const typeIsSpecific =
+      selectedType !== null && selectedType !== undefined &&
+      selectedType !== allValueTypes;
+
+    if (!topicIsSpecific && !typeIsSpecific) {
+      return publicationItems;
     }
 
-    return publicationItems;
+    return publicationItems.filter((item) => {
+      if (topicIsSpecific && item.categorization?.topic !== selectedTopic) {
+        return false;
+      }
+      if (typeIsSpecific && item.categorization?.type !== selectedType) {
+        return false;
+      }
+
+      return true;
+    });
   }, [
     publicationItems,
     selectedTopic,
