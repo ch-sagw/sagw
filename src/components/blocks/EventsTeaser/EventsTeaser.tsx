@@ -37,6 +37,7 @@ export const EventsTeaser = async (props: InterfaceEventsTeaserPropTypes): Promi
   if (props.optionalLink?.includeLink && props.optionalLink.link?.linkText) {
     allLink = {
       href: await getPageUrl({
+        alternateLocaleForMissingPath: true,
         locale,
         pageId: props.optionalLink.link.internalLink.documentId,
         payload: await getPayloadCached(),

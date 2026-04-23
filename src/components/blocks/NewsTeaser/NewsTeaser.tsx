@@ -42,6 +42,7 @@ export const NewsTeaser = async (props: InterfaceNewsTeaserPropTypes): Promise<R
   if (props.optionalLink?.includeLink && props.optionalLink.link?.linkText) {
     allLink = {
       href: await getPageUrl({
+        alternateLocaleForMissingPath: true,
         locale,
         pageId: props.optionalLink.link.internalLink.documentId,
         payload,

@@ -129,6 +129,7 @@ export const convertPayloadNewsPagesToFeItems = async (payloadPages: PaginatedDo
         locale: lang,
       }),
       link: await getPageUrl({
+        alternateLocaleForMissingPath: true,
         locale: lang,
         pageId: newsPage.id,
         payload,
@@ -171,6 +172,7 @@ export const convertPayloadEventPagesToFeItems = async ({
       link = eventPage.link?.externalLink || '';
     } else {
       link = await getPageUrl({
+        alternateLocaleForMissingPath: true,
         locale: lang,
         pageId: eventPage.id,
         payload,

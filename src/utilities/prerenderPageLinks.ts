@@ -19,6 +19,7 @@ export const prerenderPageLinks = async ({
   const pageUrls = await Promise.all(pages.map(async (page) => ({
     pageId: page.id,
     url: await getPageUrl({
+      alternateLocaleForMissingPath: true,
       locale,
       pageId: page.id,
       payload,

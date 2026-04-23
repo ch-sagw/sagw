@@ -56,6 +56,7 @@ export const MagazineTeaser = async (props: InterfaceMagazineTeaserPropTypes): P
 
   if (restProps.optionalLink?.includeLink && restProps.optionalLink.link?.internalLink?.documentId) {
     optionalLinkUrl = await getPageUrl({
+      alternateLocaleForMissingPath: true,
       locale,
       pageId: restProps.optionalLink.link.internalLink.documentId,
       payload,
