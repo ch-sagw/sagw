@@ -249,22 +249,53 @@ export const Forms: CollectionConfig = {
               },
               fields: [
                 {
-                  admin: {
-                    description: 'Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the temporary contact list.',
-                  },
-                  localized: false,
-                  name: 'newsletterTemporaryListId',
-                  required: true,
-                  type: 'number',
-                },
-                {
-                  admin: {
-                    description: 'Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the final contact list.',
-                  },
-                  localized: false,
-                  name: 'newsletterListId',
-                  required: true,
-                  type: 'number',
+                  fields: [
+                    {
+                      admin: {
+                        description: 'Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the temporary contact list (German).',
+                        width: '25%',
+                      },
+                      label: 'Newsletter Temporary List Id DE',
+                      localized: false,
+                      name: 'newsletterTemporaryListIdDe',
+                      required: true,
+                      type: 'number',
+                    },
+                    {
+                      admin: {
+                        description: 'Double-Opt-In: temporary Brevo list for French. Must match the id of the temporary contact list (French).',
+                        width: '25%',
+                      },
+                      label: 'Newsletter Temporary List Id FR',
+                      localized: false,
+                      name: 'newsletterTemporaryListIdFr',
+                      required: true,
+                      type: 'number',
+                    },
+                    {
+                      admin: {
+                        description: 'Double-Opt-In: after verification, the contact is moved to this final list (German). This value must match the id of the final contact list.',
+                        width: '25%',
+                      },
+                      label: 'Newsletter List Id DE',
+                      localized: false,
+                      name: 'newsletterListIdDe',
+                      required: true,
+                      type: 'number',
+                    },
+                    {
+                      admin: {
+                        description: 'Double-Opt-In: final Brevo list (French) after the user confirms. Must match the id of the final contact list (French).',
+                        width: '25%',
+                      },
+                      label: 'Newsletter List Id FR',
+                      localized: false,
+                      name: 'newsletterListIdFr',
+                      required: true,
+                      type: 'number',
+                    },
+                  ],
+                  type: 'row',
                 },
                 {
                   fields: emailBlock(true).fields,

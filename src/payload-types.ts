@@ -567,13 +567,21 @@ export interface Form {
     | null;
   newsletterFields?: {
     /**
-     * Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the temporary contact list.
+     * Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the temporary contact list (German).
      */
-    newsletterTemporaryListId: number;
+    newsletterTemporaryListIdDe: number;
     /**
-     * Double-Opt-In: first, users are assigned to a temporary contact list in brevo. Only after verifying the link in the e-mail, they are moved to the final contact list. This value must match the id of the final contact list.
+     * Double-Opt-In: temporary Brevo list for French. Must match the id of the temporary contact list (French).
      */
-    newsletterListId: number;
+    newsletterTemporaryListIdFr: number;
+    /**
+     * Double-Opt-In: after verification, the contact is moved to this final list (German). This value must match the id of the final contact list.
+     */
+    newsletterListIdDe: number;
+    /**
+     * Double-Opt-In: final Brevo list (French) after the user confirms. Must match the id of the final contact list (French).
+     */
+    newsletterListIdFr: number;
     email: {
       /**
        * Name of the field, visible for user
@@ -6852,8 +6860,10 @@ export interface FormsSelect<T extends boolean = true> {
   newsletterFields?:
     | T
     | {
-        newsletterTemporaryListId?: T;
-        newsletterListId?: T;
+        newsletterTemporaryListIdDe?: T;
+        newsletterTemporaryListIdFr?: T;
+        newsletterListIdDe?: T;
+        newsletterListIdFr?: T;
         email?:
           | T
           | {

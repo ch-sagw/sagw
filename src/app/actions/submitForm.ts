@@ -31,6 +31,30 @@ type SubmitFormResult =
       values?: Record<string, unknown>;
     };
 
+// Picks the German or French Brevo list pair. Page locale is used when
+// the form has no language radio (e.g. Italian users default to the DE list).
+const newsletterBrevoLanguage = ({
+  form,
+  formData,
+  pageLocale,
+}: {
+  form: InterfaceForm;
+  formData: FormData;
+  pageLocale: Config['locale'];
+}): 'de' | 'fr' => {
+  if (form.isNewsletterForm === 'newsletter' && form.newsletterFields?.includeLanguageSelection === 'yes') {
+    const raw = formData.get(newsletterFieldNames.language);
+
+    return raw === 'fr'
+      ? 'fr'
+      : 'de';
+  }
+
+  return pageLocale === 'fr'
+    ? 'fr'
+    : 'de';
+};
+
 // only accept same-origin, single-line, reasonably short paths. Any
 // client-supplied value that does not match is dropped. This prevents a
 // faked `pageUrl` input from injecting URLs into the notification email body.
@@ -156,9 +180,8 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
   }
 
   // build the authoritative field list (mirrors Form.server.tsx): for
-  // newsletter forms this injects firstname/lastname/email/(language),
-  // plus the privacy checkbox when enabled. Custom forms keep their
-  // stored fields[] and optionally add the privacy checkbox.
+  // newsletter: firstname, lastname, email, optional language radio; custom:
+  // stored fields[]; both may add the privacy checkbox.
   const fields = await buildFormFields({
     form: authoritativeForm,
     globalI18n,
@@ -272,20 +295,50 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       };
     }
   } else {
-    if (!authoritativeForm.newsletterFields?.newsletterListId || !authoritativeForm.newsletterFields?.newsletterTemporaryListId) {
+    const nf = authoritativeForm.newsletterFields;
+
+    if (!nf?.newsletterListIdDe ||
+      !nf?.newsletterListIdFr ||
+      !nf?.newsletterTemporaryListIdDe ||
+      !nf?.newsletterTemporaryListIdFr) {
+      console.error('[submitForm/newsletter] missing one or more Brevo list id fields — subscribe() will not run', {
+        formId: authoritativeForm.id,
+        hasNewsletterListIdDe: Boolean(nf?.newsletterListIdDe),
+        hasNewsletterListIdFr: Boolean(nf?.newsletterListIdFr),
+        hasNewsletterTemporaryListIdDe: Boolean(nf?.newsletterTemporaryListIdDe),
+        hasNewsletterTemporaryListIdFr: Boolean(nf?.newsletterTemporaryListIdFr),
+      });
+
       return {
         success: false,
         values: data,
       };
     }
 
+    const brLang = newsletterBrevoLanguage({
+      form: authoritativeForm,
+      formData,
+      pageLocale: locale,
+    });
+    const listId = brLang === 'fr'
+      ? nf.newsletterListIdFr
+      : nf.newsletterListIdDe;
+    const listIdTemp = brLang === 'fr'
+      ? nf.newsletterTemporaryListIdFr
+      : nf.newsletterTemporaryListIdDe;
+
     const subscribeResult = await subscribe({
+      allListIdsForForm: [
+        nf.newsletterListIdDe,
+        nf.newsletterListIdFr,
+        nf.newsletterTemporaryListIdDe,
+        nf.newsletterTemporaryListIdFr,
+      ],
       email: formData.get(newsletterFieldNames.email),
       firstname: formData.get(newsletterFieldNames.firstname),
-      language: formData.get(newsletterFieldNames.language),
       lastname: formData.get(newsletterFieldNames.lastname),
-      listId: authoritativeForm.newsletterFields.newsletterListId,
-      listIdTemp: authoritativeForm.newsletterFields.newsletterTemporaryListId,
+      listId,
+      listIdTemp,
     });
 
     if (subscribeResult === 'pendingVerification') {
@@ -293,6 +346,11 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
         success: true,
       };
     }
+
+    console.error('[submitForm/newsletter] subscribe returned error', {
+      formId: authoritativeForm.id,
+      result: subscribeResult,
+    });
 
     return {
       success: false,
