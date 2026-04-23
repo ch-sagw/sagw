@@ -1779,8 +1779,10 @@ export const generateCollectionsExceptPages = async ({
         },
 
         // must match list id's in brevo
-        newsletterListId: 12,
-        newsletterTemporaryListId: 11,
+        newsletterListIdDe: 12,
+        newsletterListIdFr: 17,
+        newsletterTemporaryListIdDe: 11,
+        newsletterTemporaryListIdFr: 16,
       },
       recipientMail: 'delivered@resend.dev',
       showPrivacyCheckbox: true,

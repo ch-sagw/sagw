@@ -204,8 +204,9 @@ test.describe('Correctly signs up for Newsletter', () => {
       const {
         newsletterFields,
       } = newsletterForm;
-      const listId = Number(newsletterFields?.newsletterListId);
-      const listIdTemp = Number(newsletterFields?.newsletterTemporaryListId);
+      // Default test locale is de; the form maps that to the DE Brevo lists.
+      const listId = Number(newsletterFields?.newsletterListIdDe);
+      const listIdTemp = Number(newsletterFields?.newsletterTemporaryListIdDe);
 
       if (!Number.isFinite(listId) || !Number.isFinite(listIdTemp)) {
         throw new Error('newsletter list IDs are missing in the generated form.');
@@ -266,8 +267,9 @@ test.describe('Correctly signs up for Newsletter', () => {
       const {
         newsletterFields,
       } = newsletterForm;
-      const listId = Number(newsletterFields?.newsletterListId);
-      const listIdTemp = Number(newsletterFields?.newsletterTemporaryListId);
+      // Default test locale is de; the form maps that to the DE Brevo lists.
+      const listId = Number(newsletterFields?.newsletterListIdDe);
+      const listIdTemp = Number(newsletterFields?.newsletterTemporaryListIdDe);
 
       if (!Number.isFinite(listId) || !Number.isFinite(listIdTemp)) {
         throw new Error('newsletter list IDs are missing in the generated form.');
