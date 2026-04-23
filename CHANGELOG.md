@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.47.1](https://github.com/ch-sagw/sagw/compare/v0.47.0...v0.47.1) (2026-04-23)
+
+
+### Bug Fixes
+
+* fake commit to trigger empty release ([59bad2d](https://github.com/ch-sagw/sagw/commit/59bad2daf3e53988c1059f1802d9736c5bc591ce))
+
 ## [0.47.0](https://github.com/ch-sagw/sagw/compare/v0.46.0...v0.47.0) (2026-04-23)
 
 
