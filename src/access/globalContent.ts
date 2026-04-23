@@ -11,20 +11,43 @@ import {
 import type { User } from '@/payload-types';
 import { getUserTenantIDs } from '@/utilities/getUserTenantIds';
 
-// -> sagw-admin, tenant-admin and magazine-editor
-const accessGenericNoTranslator = ({
-  req,
-}: AccessArgs): AccessResult => isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req);
-
-// Same roles as isTenantAdmin, but without requiring tenant
-// cookie / req.data.tenant.
-// Admin internals (e.g. copy locale) sometimes run with no tenant context.
+// Same roles as isTenantAdmin / isMagazineEditor, but without requiring tenant
+// cookie / req.data.tenant. Admin internals (e.g. copy locale) sometimes run
+// with no tenant context.
 const hasTenantAdminOnJwt = (req: AccessArgs['req']): boolean => {
   if (!req.user || !req.user.roles?.includes(userRoles.user)) {
     return false;
   }
 
   return getUserTenantIDs(req.user as User, tenantRoles.admin).length > 0;
+};
+
+const hasMagazineEditorOnJwt = (req: AccessArgs['req']): boolean => {
+  if (!req.user || !req.user.roles?.includes(userRoles.user)) {
+    return false;
+  }
+
+  return getUserTenantIDs(req.user as User, tenantRoles.editorMagazine).length > 0;
+};
+
+// -> sagw-admin, tenant-admin and magazine-editor
+// When tenant cookie / context is missing (e.g. Payload "copy from locale"
+// server actions), isTenantAdmin / isMagazineEditor fail; use JWT roles only.
+const accessGenericNoTranslator = ({
+  req,
+}: AccessArgs): AccessResult => {
+  if (isSuperAdmin(req) || isTenantAdmin(req) || isMagazineEditor(req)) {
+    return true;
+  }
+
+  if (
+    !getRequestedTenant(req) &&
+    (hasTenantAdminOnJwt(req) || hasMagazineEditorOnJwt(req))
+  ) {
+    return true;
+  }
+
+  return false;
 };
 
 // -> sagw-admin, tenant-admin
