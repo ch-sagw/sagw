@@ -19,6 +19,7 @@
 
   *:focus {
     anchor-name: --focus-anchor-consent-overlay;
+    outline: 0;
   }
 
   &:before {

@@ -24,6 +24,7 @@
 
   *:focus {
     anchor-name: --focus-anchor-consent-banner;
+    outline: 0;
   }
 
   &:before {

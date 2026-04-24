@@ -103,6 +103,8 @@ Förderung -> project teaser -> no padding
 
 // Magazine
 .teaser.magazine {
+  margin-block-end: unset;
+
   .image {
     aspect-ratio: 4/3;
   }

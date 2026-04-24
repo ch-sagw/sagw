@@ -5,7 +5,7 @@
 .breadcrumb {
   display: flex;
   column-gap: px-to-rem(var(--spacing-m));
-  margin-block: px-to-rem(var(--spacing-xs)) 0 0;
+  margin: px-to-rem(var(--spacing-xs)) 0 0;
 
   &.dark {
     --icon-color: var(--interaction-primary-inverted);
