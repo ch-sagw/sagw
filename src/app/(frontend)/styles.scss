@@ -19,7 +19,7 @@ main *:focus {
   }
 
   @include mq($from: ultra) {
-    --scroll-margin-block-start: 182;
+    --scroll-margin-block-start: 183;
   }
 
   scroll-margin-block: px-to-rem(calc(var(--scroll-margin-block-start) + var(--spacing-xl)));
