@@ -4,11 +4,6 @@
   box-sizing: border-box;
 }
 
-// Anchor based flying focus
-*:focus {
-  anchor-name: --focus-anchor;
-}
-
 main *:target,
 main *:focus {
   @include mq($to: medium) {
@@ -30,6 +25,11 @@ main *:focus {
   scroll-margin-block: px-to-rem(calc(var(--scroll-margin-block-start) + var(--spacing-xl)));
 }
 
+// Anchor based flying focus
+*:focus {
+  anchor-name: --focus-anchor;
+}
+
 @supports (position-anchor: --test) {
   *:focus {
     outline: none;
@@ -40,34 +40,30 @@ html {
   font-size: 100%;
   scrollbar-gutter: stable;
 
-  --flying-focus-motion-speed: var(--motion-speed-very-fast);
+  --flying-focus-border-color: #1e3241;
+  --flying-focus-border-color-inverted: #fff;
 
-  @media (prefers-reduced-motion: reduce) {
-    --flying-focus-motion-speed: 0ms;
+  &:has(body:not(.theme-sagw)) {
+    --flying-focus-border-color: #000;
   }
 
   &:before {
-    content: "";
-    position: fixed;
-    position-anchor: --focus-anchor;
-    inset: anchor(inside);
-    margin: px-to-rem(var(--spacing-2xs), true);
-    display: block;
-    border-width: px-to-rem(var(--border-width-l));
-    border-style: solid;
-    border-color: var(--border-primary);
-    border-radius: px-to-rem(var(--spacing-2xs));
-    pointer-events: none;
-    z-index: 1000;
-    transition: inset var(--flying-focus-motion-speed) var(--motion-ease-in-out);
-    mix-blend-mode: revert-layer;
-    isolation: isolate;
+    @include flying-focus;
   }
 
   &:has(header[class*="dark"]:not([class*="white"]):focus-within):before,
   &:has(footer:focus-within):before,
-  &:has(section[class*="dark"]:focus-within):before {
-    border-color: var(--border-primary-inverted);
+  &:has(section[class*="dark"]:focus-within):before,
+  &:has(div[class*="notification"][class*="dark"]:focus-within):before {
+    border-color: var(--flying-focus-border-color-inverted);
+  }
+
+  &:has(div[class*="notification"][class*="warn"]:focus-within):before {
+    border-color: #c2410c;
+  }
+
+  &:has(div[class*="notification"][class*="error"]:focus-within):before {
+    border-color: #b91c1c;
   }
 }
 

@@ -1,4 +1,5 @@
 @use "../../../styles/utilities/functions" as *;
+@use "../../../styles/mixins/mixins-layout" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 @use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/utilities/utilities" as *;
@@ -15,6 +16,22 @@
   align-items: flex-start;
   justify-content: center;
   z-index: 999;
+
+  *:focus {
+    anchor-name: --focus-anchor-consent-overlay;
+  }
+
+  &:before {
+    @include flying-focus;
+
+    --flying-focus-border-color: var(--border-primary);
+
+    position-anchor: --focus-anchor-consent-overlay;
+  }
+
+  &:not(:focus-within):before {
+    opacity: 0;
+  }
 
   &[open]:not(.closing) {
     display: flex;

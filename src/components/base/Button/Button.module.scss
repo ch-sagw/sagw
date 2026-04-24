@@ -232,7 +232,7 @@
       content: "";
       position: absolute;
       inset-inline: 0;
-      inset-block-end: px-to-rem(calc(var(--spacing-xs) + 2));
+      inset-block-end: px-to-rem(var(--spacing-xs));
       width: 100%;
       height: px-to-rem(var(--border-width-l));
       background: currentcolor;

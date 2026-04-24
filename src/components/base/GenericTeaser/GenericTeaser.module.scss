@@ -12,6 +12,7 @@ Förderung -> project teaser -> no padding
   @include list-reset;
 
   overflow-wrap: anywhere;
+  margin-block-end: px-to-rem(var(--spacing-m), true);
 
   // double specificity to overwrite button style
   &.teaser:not(.people):is(:hover) .linkText:after,
@@ -38,8 +39,8 @@ Förderung -> project teaser -> no padding
   .link {
     @include font-smoothing;
 
-    padding: px-to-rem(var(--spacing-2xs)) 0 px-to-rem(var(--spacing-xs));
-    margin: px-to-rem(var(--spacing-2xs), true) 0 px-to-rem(var(--spacing-xs));
+    padding: px-to-rem(var(--spacing-2xs)) 0 px-to-rem(var(--spacing-m));
+    margin: px-to-rem(var(--spacing-2xs), true) 0 0;
 
     .linkText {
       margin-block: calc(-1 * px-to-rem(var(--spacing-m)));
