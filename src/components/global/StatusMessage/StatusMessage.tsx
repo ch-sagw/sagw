@@ -1,8 +1,3 @@
-// TODO: we must invalidate static paths in following cases
-// 1. if display property is changed to: show, hide or date (will
-// be handled in general manner: if page changes -> invalidate static paths)
-// 2. if current date is later then configured toDate
-
 import 'server-only';
 import React, { Fragment } from 'react';
 import {

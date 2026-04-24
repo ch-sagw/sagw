@@ -128,9 +128,8 @@ export const convertPayloadNewsPagesToFeItems = async (payloadPages: PaginatedDo
         dateString: newsPage.hero.date,
         locale: lang,
       }),
-
-      // TODO: we need reference tracking here
       link: await getPageUrl({
+        alternateLocaleForMissingPath: true,
         locale: lang,
         pageId: newsPage.id,
         payload,
@@ -172,9 +171,8 @@ export const convertPayloadEventPagesToFeItems = async ({
     if (eventPage.showDetailPage === 'false') {
       link = eventPage.link?.externalLink || '';
     } else {
-
-      // TODO: we need reference tracking here
       link = await getPageUrl({
+        alternateLocaleForMissingPath: true,
         locale: lang,
         pageId: eventPage.id,
         payload,

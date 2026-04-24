@@ -191,13 +191,27 @@ test('invalidates all tenant pages on content change (sagw)', {
 
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}`))
       .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/impressum-${lang}`))
-      .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/data-privacy-${lang}`))
-      .toBe(true);
   });
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /de/impressum'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /de/datenschutzerklaerung'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /fr/impressum'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /fr/declaration-de-protection-des-donnees'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /it/colophon'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /it/informativa-sulla-privacy'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /en/publishing-details'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /en/data-privacy'))
+    .toBe(true);
 
   expect(logCapture.logs)
     .toHaveLength(64);
@@ -296,13 +310,27 @@ test('invalidates all tenant pages on content change (non-sagw)', {
 
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}`))
       .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/impressum-${lang}`))
-      .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/data-privacy-${lang}`))
-      .toBe(true);
   });
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/impressum`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/datenschutzerklaerung`))
+    .toBe(true);
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /fr/tenant-${time}/impressum`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /fr/tenant-${time}/declaration-de-protection-des-donnees`))
+    .toBe(true);
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/tenant-${time}/colophon`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/tenant-${time}/informativa-sulla-privacy`))
+    .toBe(true);
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /en/tenant-${time}/publishing-details`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /en/tenant-${time}/data-privacy`))
+    .toBe(true);
 
   expect(logCapture.logs)
     .toHaveLength(64);
@@ -390,13 +418,27 @@ test('invalidates all tenant pages on page deletion (sagw)', {
 
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}`))
       .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/impressum-${lang}`))
-      .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/data-privacy-${lang}`))
-      .toBe(true);
   });
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /de/impressum'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /de/datenschutzerklaerung'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /fr/impressum'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /fr/declaration-de-protection-des-donnees'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /it/colophon'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /it/informativa-sulla-privacy'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /en/publishing-details'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /en/data-privacy'))
+    .toBe(true);
 
   expect(logCapture.logs)
     .toHaveLength(60);
@@ -483,13 +525,27 @@ test('invalidates all tenant pages on page deletion (non-sagw)', {
 
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}`))
       .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/impressum-${lang}`))
-      .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/data-privacy-${lang}`))
-      .toBe(true);
   });
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/impressum`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/datenschutzerklaerung`))
+    .toBe(true);
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /fr/tenant-${time}/impressum`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /fr/tenant-${time}/declaration-de-protection-des-donnees`))
+    .toBe(true);
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/tenant-${time}/colophon`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/tenant-${time}/informativa-sulla-privacy`))
+    .toBe(true);
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /en/tenant-${time}/publishing-details`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /en/tenant-${time}/data-privacy`))
+    .toBe(true);
 
   expect(logCapture.logs)
     .toHaveLength(60);
@@ -575,13 +631,27 @@ test('invalidates all tenant pages on page creation (sagw)', {
 
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}`))
       .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/impressum-${lang}`))
-      .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/data-privacy-${lang}`))
-      .toBe(true);
   });
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /de/impressum'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /de/datenschutzerklaerung'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /fr/impressum'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /fr/declaration-de-protection-des-donnees'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /it/colophon'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /it/informativa-sulla-privacy'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /en/publishing-details'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /en/data-privacy'))
+    .toBe(true);
 
   expect(logCapture.logs)
     .toHaveLength(64);
@@ -666,13 +736,27 @@ test('invalidates all tenant pages on page creation (non-sagw)', {
 
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}`))
       .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/impressum-${lang}`))
-      .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/data-privacy-${lang}`))
-      .toBe(true);
   });
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/impressum`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/datenschutzerklaerung`))
+    .toBe(true);
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /fr/tenant-${time}/impressum`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /fr/tenant-${time}/declaration-de-protection-des-donnees`))
+    .toBe(true);
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/tenant-${time}/colophon`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/tenant-${time}/informativa-sulla-privacy`))
+    .toBe(true);
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /en/tenant-${time}/publishing-details`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /en/tenant-${time}/data-privacy`))
+    .toBe(true);
 
   expect(logCapture.logs)
     .toHaveLength(64);
@@ -756,13 +840,27 @@ test('invalidates all tenant pages on non-autosave collection change (sagw)', {
 
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}`))
       .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/impressum-${lang}`))
-      .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/data-privacy-${lang}`))
-      .toBe(true);
   });
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /de/impressum'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /de/datenschutzerklaerung'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /fr/impressum'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /fr/declaration-de-protection-des-donnees'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /it/colophon'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /it/informativa-sulla-privacy'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /en/publishing-details'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /en/data-privacy'))
+    .toBe(true);
 
   expect(logCapture.logs)
     .toHaveLength(60);
@@ -845,13 +943,27 @@ test('invalidates all tenant pages on non-autosave collection change (non-sagw)'
 
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}`))
       .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/impressum-${lang}`))
-      .toBe(true);
-
-    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/data-privacy-${lang}`))
-      .toBe(true);
   });
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/impressum`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/datenschutzerklaerung`))
+    .toBe(true);
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /fr/tenant-${time}/impressum`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /fr/tenant-${time}/declaration-de-protection-des-donnees`))
+    .toBe(true);
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/tenant-${time}/colophon`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/tenant-${time}/informativa-sulla-privacy`))
+    .toBe(true);
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /en/tenant-${time}/publishing-details`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /en/tenant-${time}/data-privacy`))
+    .toBe(true);
 
   expect(logCapture.logs)
     .toHaveLength(60);

@@ -293,8 +293,10 @@ test.describe('Overview page regular links (sagw)', () => {
               label: simpleRteConfig('Nachname'),
               placeholder: 'Ihr Nachname',
             },
-            newsletterListId: 2,
-            newsletterTemporaryListId: 3,
+            newsletterListIdDe: 2,
+            newsletterListIdFr: 4,
+            newsletterTemporaryListIdDe: 3,
+            newsletterTemporaryListIdFr: 5,
           },
           recipientMail: 'delivered@resend.dev',
           showPrivacyCheckbox: true,
@@ -460,10 +462,10 @@ test.describe('Overview page regular links (sagw)', () => {
       .toBe(`/de/overview-page-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}`);
 
     await expect(pathnameFromLinkHref(dataPrivacyLink))
-      .toBe('/de/data-privacy-de');
+      .toBe('/de/datenschutzerklaerung');
 
     await expect(pathnameFromLinkHref(impressumLink))
-      .toBe('/de/impressum-de');
+      .toBe('/de/impressum');
 
     // #########################################
     // verify correct url rendering: it
@@ -523,10 +525,10 @@ test.describe('Overview page regular links (sagw)', () => {
       .toBe(`/it/overview-page-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
 
     await expect(pathnameFromLinkHref(dataPrivacyLinkIt))
-      .toBe('/it/data-privacy-it');
+      .toBe('/it/informativa-sulla-privacy');
 
     await expect(pathnameFromLinkHref(impressumLinkIt))
-      .toBe('/it/impressum-it');
+      .toBe('/it/colophon');
   });
 });
 
@@ -1078,6 +1080,150 @@ test.describe('Overview page overview-block links (sagw)', () => {
       id: nationalDictionaryPage.id,
     });
   });
+
+  // 2 project pages. 1 has de & it, 1 has de only. on the french
+  // overview page in it, the second teaser should point to the german
+  // project page.
+  test('has correct locale fallback', {
+    tag: '@linking',
+  }, async ({
+    page,
+  }) => {
+    let projectPage1;
+    let projectPage2;
+    let overviewPage;
+    const payload = await getPayloadCached();
+    const tenant = await getTenant();
+    const tenantId = tenant
+      ? tenant
+      : '';
+    const time = (new Date())
+      .getTime();
+
+    try {
+
+      const home = await payload.find({
+        collection: 'homePage',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      overviewPage = await generateOverviewPage({
+        navigationTitle: 'Overview Page',
+        parentPage: {
+          documentId: home.docs[0].id,
+          slug: 'homePage',
+        },
+        title: `Overview Page ${time}`,
+      });
+
+      await payload.update({
+        collection: 'overviewPage',
+        data: {
+          hero: {
+            title: simpleRteConfig(`overview page it ${time}`),
+          },
+          ...seoData,
+          navigationTitle: 'Overview Page it',
+        },
+        id: overviewPage.id,
+        locale: 'it',
+      });
+
+      projectPage1 = await generateProjectDetailPage({
+        locale: 'de',
+        navigationTitle: `project ${time}`,
+        parentPage: {
+          documentId: overviewPage.id,
+          slug: 'overviewPage',
+        },
+        tenant: tenantId,
+        title: `project ${time}`,
+      });
+
+      projectPage2 = await generateProjectDetailPage({
+        locale: 'de',
+        navigationTitle: `project 2 ${time}`,
+        parentPage: {
+          documentId: overviewPage.id,
+          slug: 'overviewPage',
+        },
+        tenant: tenantId,
+        title: `project 2 ${time}`,
+      });
+
+      await payload.update({
+        collection: 'projectDetailPage',
+        data: {
+          hero: {
+            title: simpleRteConfig(`project it ${time}`),
+          },
+          ...seoData,
+          navigationTitle: 'nav title',
+          overviewPageProps: projectPage1.overviewPageProps,
+          project: projectPage1.project,
+        },
+        id: projectPage1.id,
+        locale: 'it',
+      });
+    } catch (e) {
+      throw new Error(e instanceof Error
+        ? e.message
+        : String(e));
+    }
+
+    // #########################################
+    // Test projects overview
+    // #########################################
+
+    await payload.update({
+      collection: 'overviewPage',
+      data: {
+        content: [
+          {
+            blockType: 'projectsOverviewBlock',
+          },
+        ],
+        hero: overviewPage.hero,
+      },
+      id: overviewPage.id,
+    });
+
+    await page.goto(`http://localhost:3000/it/overview-page-it-${time}`);
+    await page.waitForLoadState('networkidle');
+
+    const projectLinkIt1 = await page.getByRole('link', {
+      name: `project it ${time}`,
+    })
+      .getAttribute('href');
+
+    const projectLinkIt2 = await page.getByRole('link', {
+      name: `project 2 ${time}`,
+    })
+      .getAttribute('href');
+
+    await expect(pathnameFromLinkHref(projectLinkIt1))
+      .toStrictEqual(`/it/overview-page-it-${time}/project-it-${time}`);
+
+    await expect(pathnameFromLinkHref(projectLinkIt2))
+      .toStrictEqual(`/de/overview-page-${time}/project-2-${time}`);
+
+    // #########################################
+    // cleanup
+    // #########################################
+    await payload.delete({
+      collection: 'projectDetailPage',
+      id: projectPage1.id,
+    });
+
+    await payload.delete({
+      collection: 'projectDetailPage',
+      id: projectPage2.id,
+    });
+  });
 });
 
 test.describe('Overview page teasers links (sagw)', () => {
@@ -1467,5 +1613,145 @@ test.describe('Overview page teasers links (sagw)', () => {
       collection: 'newsDetailPage',
       id: newsPage.id,
     });
+  });
+
+  // 2 project pages. 1 has de & it, 1 has de only. on the french
+  // overview page in it, the second teaser should point to the german
+  // project page.
+  test('has correct locale fallback', {
+    tag: '@linking',
+  }, async ({
+    page,
+  }) => {
+    let projectPage1;
+    let projectPage2;
+    let overviewPage;
+    const payload = await getPayloadCached();
+    const tenant = await getTenant();
+    const tenantId = tenant
+      ? tenant
+      : '';
+    const time = (new Date())
+      .getTime();
+
+    try {
+
+      const home = await payload.find({
+        collection: 'homePage',
+        where: {
+          tenant: {
+            equals: tenant,
+          },
+        },
+      });
+
+      overviewPage = await generateOverviewPage({
+        navigationTitle: 'Overview Page',
+        parentPage: {
+          documentId: home.docs[0].id,
+          slug: 'homePage',
+        },
+        title: `Overview Page ${time}`,
+      });
+
+      await payload.update({
+        collection: 'overviewPage',
+        data: {
+          hero: {
+            title: simpleRteConfig(`overview page it ${time}`),
+          },
+          ...seoData,
+          navigationTitle: 'Overview Page it',
+        },
+        id: overviewPage.id,
+        locale: 'it',
+      });
+
+      projectPage1 = await generateProjectDetailPage({
+        locale: 'de',
+        navigationTitle: `project ${time}`,
+        parentPage: {
+          documentId: overviewPage.id,
+          slug: 'overviewPage',
+        },
+        tenant: tenantId,
+        title: `project ${time}`,
+      });
+
+      projectPage2 = await generateProjectDetailPage({
+        locale: 'de',
+        navigationTitle: `project 2 ${time}`,
+        parentPage: {
+          documentId: overviewPage.id,
+          slug: 'overviewPage',
+        },
+        tenant: tenantId,
+        title: `project 2 ${time}`,
+      });
+
+      await payload.update({
+        collection: 'projectDetailPage',
+        data: {
+          hero: {
+            title: simpleRteConfig(`project it ${time}`),
+          },
+          ...seoData,
+          navigationTitle: 'nav title',
+          overviewPageProps: projectPage1.overviewPageProps,
+          project: projectPage1.project,
+        },
+        id: projectPage1.id,
+        locale: 'it',
+      });
+
+      await payload.update({
+        collection: 'overviewPage',
+        data: {
+          content: [
+            {
+              alignment: 'vertical',
+              blockType: 'projectsTeasersBlock',
+              lead: simpleRteConfig('Lead'),
+              title: simpleRteConfig('Title'),
+            },
+          ],
+          hero: overviewPage.hero,
+          navigationTitle: 'nav title',
+        },
+        id: overviewPage.id,
+      });
+
+    } catch (e) {
+      throw new Error(e instanceof Error
+        ? e.message
+        : String(e));
+    }
+
+    await page.goto(`http://localhost:3000/it/overview-page-it-${time}`);
+    await page.waitForLoadState('networkidle');
+
+    const projectLinkIt = await page.getByRole('link', {
+      name: `project it ${time}`,
+    })
+      .getAttribute('href');
+    const projectLinkIt2 = await page.getByRole('link', {
+      name: `project 2 ${time}`,
+    })
+      .getAttribute('href');
+
+    await expect(pathnameFromLinkHref(projectLinkIt))
+      .toBe(`/it/overview-page-it-${time}/project-it-${time}`);
+    await expect(pathnameFromLinkHref(projectLinkIt2))
+      .toBe(`/de/overview-page-${time}/project-2-${time}`);
+
+    await payload.delete({
+      collection: 'projectDetailPage',
+      id: projectPage1.id,
+    });
+    await payload.delete({
+      collection: 'projectDetailPage',
+      id: projectPage2.id,
+    });
+
   });
 });

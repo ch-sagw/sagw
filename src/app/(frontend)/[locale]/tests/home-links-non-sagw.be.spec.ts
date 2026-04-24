@@ -345,8 +345,10 @@ test.describe('Home links (non-sagw)', () => {
               label: simpleRteConfig('Nachname'),
               placeholder: 'Ihr Nachname',
             },
-            newsletterListId: 2,
-            newsletterTemporaryListId: 3,
+            newsletterListIdDe: 2,
+            newsletterListIdFr: 4,
+            newsletterTemporaryListIdDe: 3,
+            newsletterTemporaryListIdFr: 5,
           },
           recipientMail: 'delivered@resend.dev',
           showPrivacyCheckbox: true,
@@ -512,9 +514,9 @@ test.describe('Home links (non-sagw)', () => {
       .toBe(`/de/tenant-${time}/overview-page-1-${time}/d1-${time}/d2-${time}/d3-${time}/d4-${time}/d5-${time}`);
 
     await expect(pathnameFromLinkHref(dataPrivacyLink))
-      .toBe(`/de/tenant-${time}/data-privacy-de`);
+      .toBe(`/de/tenant-${time}/datenschutzerklaerung`);
     await expect(pathnameFromLinkHref(impressumLink))
-      .toBe(`/de/tenant-${time}/impressum-de`);
+      .toBe(`/de/tenant-${time}/impressum`);
 
     // #########################################
     // verify correct url rendering: it
@@ -569,9 +571,9 @@ test.describe('Home links (non-sagw)', () => {
       .toBe(`/it/tenant-${time}/overview-page-1-it-${time}/d1-it-${time}/d2-it-${time}/d3-it-${time}/d4-it-${time}/d5-it-${time}`);
 
     await expect(pathnameFromLinkHref(dataPrivacyLinkIt))
-      .toBe(`/it/tenant-${time}/data-privacy-it`);
+      .toBe(`/it/tenant-${time}/informativa-sulla-privacy`);
     await expect(pathnameFromLinkHref(impressumLinkIt))
-      .toBe(`/it/tenant-${time}/impressum-it`);
+      .toBe(`/it/tenant-${time}/colophon`);
 
   });
 });

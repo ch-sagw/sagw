@@ -5,9 +5,8 @@ Unblock campaign email / blocklist: https://developers.brevo.com/reference/updat
 Unblock transactional (SMTP) blocklist: https://developers.brevo.com/reference/unblock-or-resubscribe-a-transactional-contact
 DOI workflow creation: https://help.brevo.com/hc/en-us/articles/27353832123026-Set-up-a-double-opt-in-process-for-a-sign-up-form-created-outside-of-Brevo
 Admin console: https://app.brevo.com/
-Also: create custom contact attribute for LANG: https://my.brevo.com/lists/add-attributes
 
-Also: for the workflow, a re-entry condition must be defined (if a user subscribes, never confirms, and then subscribes again): go to the workflow -> settings -> Neustartbedingungen. Add a condition "Kontakt aus der Liste gelöscht" and select the corresponding lists.
+Also: for the workflow, a re-entry condition must be defined (if a user subscribes, never confirms, and then subscribes again): go to the workflow -> settings -> Neustartbedingungen. Add a condition "Kontakt aus der Liste gelöscht" and select the corresponding lists. For DE+FR newsletter forms, include all four Brevo lists (both temp and both final) in that condition.
 
 If subscription throws an error, make sure that the IP is not blocked by brevo:
 https://app.brevo.com/security/authorised_ips
@@ -15,34 +14,62 @@ https://app.brevo.com/security/authorised_ips
 */
 /* eslint-enable max-len */
 
-// TODO:
-// - add better logging
-
 import 'server-only';
 import {
   brevoEndpoints, encodedEmail,
   requestHeaders,
 } from '@/mail/helpers';
 
+/** Error-path only (server terminal / host logs, not the browser). */
+const logSubscribe = (
+  where: string,
+  detail?: Record<string, unknown>,
+): void => {
+  console.error('[brevo/subscribe]', where, detail ?? {});
+};
+
+/** Redact email for logs (keeps first 2 chars of local part + domain). */
+const logEmail = (email: FormDataEntryValue | null): string => {
+  if (email === null) {
+    return '(null)';
+  }
+
+  const s = String(email)
+    .trim();
+
+  if (s.length === 0) {
+    return '(empty)';
+  }
+
+  const at = s.indexOf('@');
+
+  if (at < 1) {
+    return '(no-at)';
+  }
+
+  const local = s.slice(0, at);
+  const domain = s.slice(at + 1);
+
+  return `${local.length <= 2
+    ? `${local}*`
+    : `${local.slice(0, 2)}***`}@${domain}`;
+};
+
 const contactAttributesBody = ({
   firstname,
   lastname,
-  language,
 }: {
   firstname: FormDataEntryValue | null;
   lastname: FormDataEntryValue | null;
-  language: FormDataEntryValue | null;
 }): {
   attributes: {
     'FNAME': FormDataEntryValue | null;
-    'LANG': FormDataEntryValue | null;
     'LNAME': FormDataEntryValue | null;
   };
 } => ({
   /* eslint-disable quote-props */
   attributes: {
     'FNAME': firstname,
-    'LANG': language,
     'LNAME': lastname,
   },
   /* eslint-enable quote-props */
@@ -85,6 +112,21 @@ const getContact = async (email: FormDataEntryValue | null): Promise<GetContactR
     }
 
     if (response.status !== 200) {
+      let bodySnippet = '';
+
+      try {
+        bodySnippet = (await response.text())
+          .slice(0, 500);
+      } catch {
+
+        /* ignore */
+      }
+      logSubscribe('getContact: unexpected HTTP status', {
+        bodySnippet,
+        email: logEmail(email),
+        status: response.status,
+      });
+
       return {
         status: 'error',
       };
@@ -97,7 +139,14 @@ const getContact = async (email: FormDataEntryValue | null): Promise<GetContactR
       listIds: normalizeListIds(data.listIds),
       status: 'found',
     };
-  } catch {
+  } catch (err) {
+    logSubscribe('getContact: catch', {
+      email: logEmail(email),
+      error: err instanceof Error
+        ? err.message
+        : String(err),
+    });
+
     return {
       status: 'error',
     };
@@ -117,8 +166,24 @@ const unblockContactEmailCampaigns = async (email: FormDataEntryValue | null): P
       },
     );
 
-    return response.status === 204;
-  } catch {
+    if (response.status !== 204) {
+      logSubscribe('unblockContactEmailCampaigns: unexpected status', {
+        email: logEmail(email),
+        status: response.status,
+      });
+
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    logSubscribe('unblockContactEmailCampaigns: catch', {
+      email: logEmail(email),
+      error: err instanceof Error
+        ? err.message
+        : String(err),
+    });
+
     return false;
   }
 };
@@ -133,8 +198,23 @@ const unblockTransactionalContact = async (email: FormDataEntryValue | null): Pr
       },
     );
 
-    return response.status === 204 || response.status === 404;
-  } catch {
+    if (response.status === 204 || response.status === 404) {
+      return true;
+    }
+    logSubscribe('unblockTransactionalContact: unexpected status', {
+      email: logEmail(email),
+      status: response.status,
+    });
+
+    return false;
+  } catch (err) {
+    logSubscribe('unblockTransactionalContact: catch', {
+      email: logEmail(email),
+      error: err instanceof Error
+        ? err.message
+        : String(err),
+    });
+
     return false;
   }
 };
@@ -151,12 +231,10 @@ const createUser = async ({
   email,
   firstname,
   lastname,
-  language,
 }: {
   email: FormDataEntryValue | null;
   firstname: FormDataEntryValue | null;
   lastname: FormDataEntryValue | null;
-  language: FormDataEntryValue | null;
 }): Promise<CreateUserResult> => {
   try {
     const existing = await getContact(email);
@@ -167,6 +245,10 @@ const createUser = async ({
         const campaignOk = await unblockContactEmailCampaigns(email);
 
         if (!campaignOk) {
+          logSubscribe('createUser: unblockContactEmailCampaigns failed', {
+            email: logEmail(email),
+          });
+
           return {
             ok: false,
           };
@@ -175,6 +257,10 @@ const createUser = async ({
         const transactionalOk = await unblockTransactionalContact(email);
 
         if (!transactionalOk) {
+          logSubscribe('createUser: unblockTransactionalContact failed', {
+            email: logEmail(email),
+          });
+
           return {
             ok: false,
           };
@@ -189,6 +275,10 @@ const createUser = async ({
 
     // error getting contact info
     if (existing.status === 'error') {
+      logSubscribe('createUser: getContact returned error', {
+        email: logEmail(email),
+      });
+
       return {
         ok: false,
       };
@@ -200,7 +290,6 @@ const createUser = async ({
         email,
         ...contactAttributesBody({
           firstname,
-          language,
           lastname,
         }),
       }),
@@ -209,6 +298,21 @@ const createUser = async ({
     });
 
     if (createResponse.status !== 201) {
+      let bodySnippet = '';
+
+      try {
+        bodySnippet = (await createResponse.text())
+          .slice(0, 500);
+      } catch {
+
+        /* ignore */
+      }
+      logSubscribe('createUser: POST contact unexpected status', {
+        bodySnippet,
+        email: logEmail(email),
+        status: createResponse.status,
+      });
+
       return {
         ok: false,
       };
@@ -219,7 +323,14 @@ const createUser = async ({
       ok: true,
     };
 
-  } catch {
+  } catch (err) {
+    logSubscribe('createUser: catch', {
+      email: logEmail(email),
+      error: err instanceof Error
+        ? err.message
+        : String(err),
+    });
+
     return {
       ok: false,
     };
@@ -259,8 +370,36 @@ const addUserToList = async ({
       method: 'POST',
     });
 
-    return response.status === 201;
-  } catch {
+    if (response.status !== 201) {
+      let bodySnippet = '';
+
+      try {
+        bodySnippet = (await response.text())
+          .slice(0, 500);
+      } catch {
+
+        /* ignore */
+      }
+      logSubscribe('addUserToList: unexpected status', {
+        bodySnippet,
+        email: logEmail(email),
+        listId,
+        status: response.status,
+      });
+
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    logSubscribe('addUserToList: catch', {
+      email: logEmail(email),
+      error: err instanceof Error
+        ? err.message
+        : String(err),
+      listId,
+    });
+
     return false;
   }
 };
@@ -295,6 +434,12 @@ const removeUserFromList = async ({
     // response body's `contacts.success` / `contacts.failure` arrays,
     // so we have to parse it rather than trust the status code.
     if (response.status !== 201) {
+      logSubscribe('removeUserFromList: unexpected HTTP status', {
+        email: logEmail(email),
+        listId,
+        status: response.status,
+      });
+
       return false;
     }
 
@@ -306,8 +451,28 @@ const removeUserFromList = async ({
     const normalizedEmail = String(email)
       .toLowerCase();
 
-    return successList.includes(normalizedEmail);
-  } catch {
+    if (successList.includes(normalizedEmail)) {
+      return true;
+    }
+    logSubscribe('removeUserFromList: email not in contacts.success', {
+      email: logEmail(email),
+      failureSample: Array.isArray(body?.contacts?.failure)
+        ? body.contacts.failure.slice(0, 3)
+        : undefined,
+      listId,
+      successListSample: successList.slice(0, 5),
+    });
+
+    return false;
+  } catch (err) {
+    logSubscribe('removeUserFromList: catch', {
+      email: logEmail(email),
+      error: err instanceof Error
+        ? err.message
+        : String(err),
+      listId,
+    });
+
     return false;
   }
 };
@@ -320,9 +485,15 @@ interface InterfaceSubscribeProps {
   firstname: FormDataEntryValue | null;
   lastname: FormDataEntryValue | null;
   email: FormDataEntryValue | null;
-  language: FormDataEntryValue | null;
   listId: number;
   listIdTemp: number;
+
+  /**
+   * All Brevo list ids for this newsletter form (e.g. DE+FR final + temp).
+   * The contact is removed from any of these they are on before the DOI add,
+   * so a language change clears the other pair.
+   */
+  allListIdsForForm?: number[];
 }
 
 type InterfaceSubscribeReturnValue =
@@ -333,21 +504,34 @@ export const subscribe = async ({
   firstname,
   lastname,
   email,
-  language,
   listId,
   listIdTemp,
+  allListIdsForForm,
 }: InterfaceSubscribeProps): Promise<InterfaceSubscribeReturnValue> => {
   try {
     const userResult = await createUser({
       email,
       firstname,
-      language,
       lastname,
     });
 
     if (!userResult.ok) {
+      logSubscribe('subscribe: createUser failed (see earlier createUser logs)', {
+        allListIdsForForm,
+        email: logEmail(email),
+        listId,
+        listIdTemp,
+      });
+
       return 'generalError';
     }
+
+    const listIdsPurge: number[] = allListIdsForForm?.length
+      ? [...new Set(allListIdsForForm.map((id) => Number(id)))]
+      : [
+        Number(listId),
+        Number(listIdTemp),
+      ];
 
     // Contact is already on the DOI temp list (previously signed up
     // but never confirmed). Do NOT attempt remove + add here: while
@@ -362,10 +546,7 @@ export const subscribe = async ({
       return 'pendingVerification';
     }
 
-    const listsToRefresh = checkUserInLists(userResult.listIds, [
-      listId,
-      listIdTemp,
-    ]);
+    const listsToRefresh = checkUserInLists(userResult.listIds, listIdsPurge);
 
     const removeResults = await Promise.all(listsToRefresh.map((id) => removeUserFromList({
       email,
@@ -373,6 +554,15 @@ export const subscribe = async ({
     })));
 
     if (removeResults.some((ok) => !ok)) {
+      const failedListIds = listsToRefresh.filter((_, i) => !removeResults[i]);
+
+      logSubscribe('subscribe: removeUserFromList failed for at least one list', {
+        email: logEmail(email),
+        failedListIds,
+        listIdTemp,
+        listIdsPurge,
+      });
+
       return 'generalError';
     }
 
@@ -382,11 +572,26 @@ export const subscribe = async ({
     });
 
     if (!added) {
+      logSubscribe('subscribe: addUserToList failed (see addUserToList logs)', {
+        email: logEmail(email),
+        listIdTemp,
+      });
+
       return 'generalError';
     }
 
     return 'pendingVerification';
-  } catch {
+  } catch (err) {
+    logSubscribe('subscribe: catch', {
+      allListIdsForForm,
+      email: logEmail(email),
+      error: err instanceof Error
+        ? err.message
+        : String(err),
+      listId,
+      listIdTemp,
+    });
+
     return 'generalError';
   }
 };

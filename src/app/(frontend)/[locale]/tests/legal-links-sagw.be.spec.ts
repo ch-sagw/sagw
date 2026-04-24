@@ -62,10 +62,10 @@ test.describe('Legal links (sagw)', () => {
       .getAttribute('href');
 
     await expect(pathnameFromLinkHref(linkDataPrivacy))
-      .toStrictEqual('/de/data-privacy-de');
+      .toStrictEqual('/de/datenschutzerklaerung');
 
     await expect(pathnameFromLinkHref(linkImpressum))
-      .toStrictEqual('/de/impressum-de');
+      .toStrictEqual('/de/impressum');
 
     // #########################################
     // verify correct url rendering: it
@@ -84,10 +84,10 @@ test.describe('Legal links (sagw)', () => {
       .getAttribute('href');
 
     await expect(pathnameFromLinkHref(linkDataPrivacyIt))
-      .toStrictEqual('/it/data-privacy-it');
+      .toStrictEqual('/it/informativa-sulla-privacy');
 
     await expect(pathnameFromLinkHref(linkImpressumIt))
-      .toStrictEqual('/it/impressum-it');
+      .toStrictEqual('/it/colophon');
 
   });
 });

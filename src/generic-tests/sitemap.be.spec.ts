@@ -103,22 +103,38 @@ const urlEntryForPage = ({
   lastmod,
   sagw,
   paths,
+  pathsPerLocale,
 }: {
   time: number;
   lastmod: string;
   sagw: boolean;
   paths?: string[];
+  pathsPerLocale?: Partial<Record<(typeof langs)[number], string[]>>;
 }): string => {
+  const pathAppendixForLang = (lang: (typeof langs)[number]): string => {
+    if (pathsPerLocale) {
+      const segments = pathsPerLocale[lang];
+
+      return segments?.length
+        ? segments.map((segment) => `/${segment}`)
+          .join('')
+        : '';
+    }
+
+    if (paths) {
+      return paths.map((pathItem) => `/${pathItem}-${lang}`)
+        .join('');
+    }
+
+    return '';
+  };
+
   const alternateLinks = langs
     .map((lang) => {
       const tenantPath = sagw
         ? ''
         : `/tenant-${time}`;
-
-      const pathAppendix = paths
-        ? paths.map((pathItem) => `/${pathItem}-${lang}`)
-          .join('')
-        : '';
+      const pathAppendix = pathAppendixForLang(lang);
 
       return `<xhtml:link rel="alternate" hreflang="${lang}" href="https://www.sagw.ch/${lang}${tenantPath}${pathAppendix}" />`;
     })
@@ -129,11 +145,7 @@ const urlEntryForPage = ({
       const tenantPath = sagw
         ? ''
         : `/tenant-${time}`;
-
-      const pathAppendix = paths
-        ? paths.map((pathItem) => `/${pathItem}-${lang2}`)
-          .join('')
-        : '';
+      const pathAppendix = pathAppendixForLang(lang2);
 
       const entry = `<url>
 <loc>https://www.sagw.ch/${lang2}${tenantPath}${pathAppendix}</loc>
@@ -278,28 +290,48 @@ test('generates sitemap for all pages', async ({
 
   const impressumSagw = urlEntryForPage({
     lastmod: sagwPages.impressum.updatedAt,
-    paths: ['impressum'],
+    pathsPerLocale: {
+      de: ['impressum'],
+      en: ['publishing-details'],
+      fr: ['impressum'],
+      it: ['colophon'],
+    },
     sagw: true,
     time,
   });
 
   const impressumNonSagw = urlEntryForPage({
     lastmod: nonSagwPages.impressum.updatedAt,
-    paths: ['impressum'],
+    pathsPerLocale: {
+      de: ['impressum'],
+      en: ['publishing-details'],
+      fr: ['impressum'],
+      it: ['colophon'],
+    },
     sagw: false,
     time,
   });
 
   const dataPrivacySagw = urlEntryForPage({
     lastmod: sagwPages.dataPrivacy.updatedAt,
-    paths: ['data-privacy'],
+    pathsPerLocale: {
+      de: ['datenschutzerklaerung'],
+      en: ['data-privacy-policy'],
+      fr: ['declaration-de-protection-des-donnees'],
+      it: ['informativa-sulla-privacy'],
+    },
     sagw: true,
     time,
   });
 
   const dataPrivacyNonSagw = urlEntryForPage({
     lastmod: nonSagwPages.dataPrivacy.updatedAt,
-    paths: ['data-privacy'],
+    pathsPerLocale: {
+      de: ['datenschutzerklaerung'],
+      en: ['data-privacy-policy'],
+      fr: ['declaration-de-protection-des-donnees'],
+      it: ['informativa-sulla-privacy'],
+    },
     sagw: false,
     time,
   });

@@ -44,9 +44,6 @@ export const validateUniqueBlocksCumulative = ({
   });
 
   if (onlyAllowedOnceBlockCount.length > 1) {
-    // TODO: this is not working. Seems not possible to overwrite the
-    // payload error in this case? (block-level validation error message)
-
     return `Only 1 ${onlyAllowedOnceBlockCount[0].blockType} is allowed`;
   }
 
@@ -99,9 +96,6 @@ export const validateUniqueBlocksSingle = ({
   });
 
   if (nonUniqueBlockTypes.length > 0) {
-    // TODO: this is not working. Seems not possible to overwrite the
-    // payload error in this case? (block-level validation error message)
-
     return `Only 1 ${nonUniqueBlockTypes[0]} is allowed`;
   }
 

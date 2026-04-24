@@ -13,19 +13,24 @@ import { InterfaceOtherPagesProps } from '@/app/(frontend)/fetchers/otherPages';
 import { getPageData } from '@/app/(frontend)/fetchers/pageData';
 import { getServerSideURL } from '@/utilities/getUrl';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
-import { getPageUrl } from '@/utilities/getPageUrl';
+import {
+  getPageUrl, HREF_LANG_NO_EXACT_PATH,
+} from '@/utilities/getPageUrl';
 import {
   getTenantById, getTenantHomeUrl,
 } from '@/utilities/tenant';
 import { getLocaleCodes } from '@/i18n/payloadConfig';
 import type { TypedLocale } from 'payload';
 
-// mapping of payload locales to the hreflang values
-const HREFLANG_MAP: Record<TypedLocale, string> = {
-  de: 'x-default',
-  en: 'en-GB',
-  fr: 'fr-CH',
-  it: 'it-CH',
+// hreflang value(s) per locale; German gets x-default and explicit de-CH
+const HREFLANG_CODES: Record<TypedLocale, string[]> = {
+  de: [
+    'x-default',
+    'de-CH',
+  ],
+  en: ['en-GB'],
+  fr: ['fr-CH'],
+  it: ['it-CH'],
 };
 
 const getEnabledLocalesForTenant = (languages: Tenant['languages'] | null | undefined): TypedLocale[] => {
@@ -78,12 +83,16 @@ const buildPageAlternates = async ({
     }
 
     try {
-      const pathname = await getPageUrl({
+      const raw = await getPageUrl({
         absolute: false,
         locale: altLocale,
+        omitMissingPath: true,
         pageId,
         payload,
       });
+      const pathname = raw === HREF_LANG_NO_EXACT_PATH
+        ? undefined
+        : raw;
 
       return {
         locale: altLocale,
@@ -108,10 +117,9 @@ const buildPageAlternates = async ({
     }
 
     const absoluteUrl = new URL(pathname, `${serverBase}/`).href;
-    const hreflang = HREFLANG_MAP[altLocale];
 
-    if (hreflang) {
-      languages[hreflang] = absoluteUrl;
+    for (const code of HREFLANG_CODES[altLocale]) {
+      languages[code] = absoluteUrl;
     }
 
     if (altLocale === currentLocale) {
@@ -272,7 +280,7 @@ export const renderMeta = async ({
       locale: `${locale}_${locale.toUpperCase()}`,
       title: meta.title,
       type: 'website',
-      url: metadataRootUrl,
+      url: canonical ?? metadataRootUrl.href,
     },
     robots: {
       follow: seoIndex,
