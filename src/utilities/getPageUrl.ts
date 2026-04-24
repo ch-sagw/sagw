@@ -33,7 +33,14 @@ export interface InterfaceGetPageUrlParams {
   // in french, then the link of the second teaser points to the page in
   // german rather than to the home.
   alternateLocaleForMissingPath?: boolean;
+
+  // If set, do not use tenant home when the locale has no path; see
+  // HREF_LANG_NO_EXACT_PATH (for hreflang: treat as "omit alternate").
+  omitMissingPath?: boolean;
 }
+
+/** No exact URL in requested locale; used only with `omitMissingPath`. */
+export const HREF_LANG_NO_EXACT_PATH = '\uE000';
 
 // preferred order when resolving a path in another locale
 const localeCandidateOrder = (requested: Config['locale']): Config['locale'][] => {
@@ -134,11 +141,13 @@ const generatePageUrl = ({
   alternateLocaleForMissingPath,
   breadcrumb,
   locale,
+  omitMissingPath,
   pageDoc,
 }: {
   alternateLocaleForMissingPath: boolean;
   breadcrumb: InterfaceBreadcrumb;
   locale: Config['locale'];
+  omitMissingPath: boolean;
   pageDoc?: unknown;
 }): string => {
   try {
@@ -162,7 +171,9 @@ const generatePageUrl = ({
     });
 
     if (!slugRecord) {
-      return tenantHomeFallback;
+      return omitMissingPath
+        ? HREF_LANG_NO_EXACT_PATH
+        : tenantHomeFallback;
     }
 
     const tenant = getTenantSlugFromPageDoc(pageDocRecord) || null;
@@ -185,13 +196,17 @@ const generatePageUrl = ({
       }
     }
 
-    return tenantHomeFallback;
+    return omitMissingPath
+      ? HREF_LANG_NO_EXACT_PATH
+      : tenantHomeFallback;
   } catch (error) {
     if (error && typeof error === 'object' && 'status' in error && error.status !== 404) {
       console.error('Error generating page URL:', error);
     }
 
-    return getRootPathUrls()[locale] || `/${locale}`;
+    return omitMissingPath
+      ? HREF_LANG_NO_EXACT_PATH
+      : (getRootPathUrls()[locale] || `/${locale}`);
   }
 };
 
@@ -202,8 +217,13 @@ export const getPageUrl = async ({
   locale,
   absolute = true,
   alternateLocaleForMissingPath = false,
+  omitMissingPath = false,
 }: InterfaceGetPageUrlParams): Promise<string> => {
   let pathname: string;
+
+  const finish = (p: string): string => (p === HREF_LANG_NO_EXACT_PATH || !absolute
+    ? p
+    : absoluteUrlFromPathname(p));
 
   try {
     // try regular page collections first (sets and globals)
@@ -230,6 +250,7 @@ export const getPageUrl = async ({
             alternateLocaleForMissingPath,
             breadcrumb,
             locale,
+            omitMissingPath,
             pageDoc,
           });
         }
@@ -243,11 +264,7 @@ export const getPageUrl = async ({
     // find the first successful result
     for (const result of regularResults) {
       if (result.status === 'fulfilled' && result.value) {
-        pathname = result.value;
-
-        return absolute
-          ? absoluteUrlFromPathname(pathname)
-          : pathname;
+        return finish(result.value);
       }
     }
 
@@ -276,9 +293,12 @@ export const getPageUrl = async ({
             pageDoc,
           });
 
-          // return built URL, else tenant-home fallback for this pageDoc.
           if (url) {
             return url;
+          }
+
+          if (omitMissingPath) {
+            return HREF_LANG_NO_EXACT_PATH;
           }
 
           return getTenantHomeUrl({
@@ -296,23 +316,21 @@ export const getPageUrl = async ({
     // find the first successful result
     for (const result of singletonResults) {
       if (result.status === 'fulfilled' && result.value) {
-        pathname = result.value;
-
-        return absolute
-          ? absoluteUrlFromPathname(pathname)
-          : pathname;
+        return finish(result.value);
       }
     }
 
     // Fallback: no pageDoc found anywhere — sagw home as last resort.
-    pathname = getRootPathUrls()[locale] || '/de';
+    pathname = omitMissingPath
+      ? HREF_LANG_NO_EXACT_PATH
+      : (getRootPathUrls()[locale] || '/de');
   } catch (error) {
     console.error('Error getting page URL:', error);
 
-    pathname = getRootPathUrls()[locale] || '/de';
+    pathname = omitMissingPath
+      ? HREF_LANG_NO_EXACT_PATH
+      : (getRootPathUrls()[locale] || '/de');
   }
 
-  return absolute
-    ? absoluteUrlFromPathname(pathname)
-    : pathname;
+  return finish(pathname);
 };
