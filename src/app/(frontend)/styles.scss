@@ -8,6 +8,9 @@ html {
   font-size: 100%;
   scrollbar-gutter: stable;
   scroll-padding-block-start: px-to-rem(var(--hero-padding-block-start) + var(--spacing-xl));
+
+  // Match the canvas to the page when layers are composited (view transitions / opacity).
+  background-color: var(--background-page);
 }
 
 html.no-js figure > div:first-child img {
@@ -25,6 +28,35 @@ body {
     --page-view-transition-duration: 0.35s;
   }
 
+  // Opaque scrim: fading main/footer with opacity blends dark/light sections to muddy grey over
+  // the white body. Covering them with solid page color keeps the exit read as white, not grey.
+  html body:after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    background-color: var(--background-page);
+    opacity: 0;
+  }
+
+  html:not([data-nav-pending-exit]) body:after {
+    transition: none;
+  }
+
+  html[data-nav-pending-exit] body:after {
+    opacity: 1;
+    transition: opacity var(--page-view-transition-duration) ease-in-out;
+  }
+
+  [data-optimistic-nav-fade] {
+    transition: opacity var(--page-view-transition-duration) ease-in-out;
+  }
+
+  html[data-nav-pending-exit] [data-optimistic-nav-fade] {
+    opacity: 0;
+  }
+
   ::view-transition-group(root),
   ::view-transition-old(root),
   ::view-transition-new(root),
@@ -36,20 +68,6 @@ body {
 
   ::view-transition-group(page-header) {
     z-index: 2;
-  }
-
-  @keyframes page-main-leave {
-    from {
-      opacity: 1;
-
-      // transform: scale(1);
-    }
-
-    to {
-      opacity: 0;
-
-      // transform: scale(0.98);
-    }
   }
 
   @keyframes page-main-enter {
@@ -72,10 +90,10 @@ body {
     z-index: 1;
   }
 
+  // Leave is handled by html[data-nav-pending-exit] + [data-optimistic-nav-fade] so
+  // the fade starts on link click; avoid double-fading the old snapshot here.
   ::view-transition-old(page-main) {
-    animation: page-main-leave var(--page-view-transition-duration) ease-in-out both;
-
-    // transform-origin: top center;
+    animation: none;
   }
 
   ::view-transition-new(page-main) {
@@ -86,6 +104,14 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  [data-optimistic-nav-fade] {
+    transition: none;
+  }
+
+  html[data-nav-pending-exit] [data-optimistic-nav-fade] {
+    opacity: 1;
+  }
+
   ::view-transition-group(*),
   ::view-transition-old(*),
   ::view-transition-new(*) {
@@ -125,6 +151,10 @@ div:has(section[class*="light"]) + div:has(section[class*="light"]) {
 
 // Print styles
 @media print {
+  body:after {
+    display: none !important;
+  }
+
   body > *:not(main) {
     display: none;
   }

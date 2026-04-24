@@ -7,6 +7,7 @@ import {
   getMessages, setRequestLocale,
 } from 'next-intl/server';
 import { NoJsScript } from '@/components/helpers/noJsScript';
+import { NavigationOptimisticFadeProvider } from '@/app/(frontend)/providers/NavigationOptimisticFadeProvider';
 
 type InterfaceRootLayoutProps = {
   children: React.ReactNode
@@ -37,7 +38,9 @@ export default async function RootLayout({
     >
       <NoJsScript />
       <NextIntlClientProvider locale={locale} messages={messages}>
-        {children}
+        <NavigationOptimisticFadeProvider>
+          {children}
+        </NavigationOptimisticFadeProvider>
       </NextIntlClientProvider>
     </html >
   );

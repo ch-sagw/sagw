@@ -653,6 +653,7 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
   return (
     <header
       aria-label={i18nLandmarks('header')}
+      data-optimistic-nav-fade
       data-testid='header'
       ref={headerRef}
       className={`${styles.header} ${styles[renderColorMode()]} ${hydrated
