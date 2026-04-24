@@ -163,6 +163,7 @@ export const renderPageContent = ({
       <PageMainViewTransition name='page-main'>
         <main
           aria-labelledby='content'
+          data-optimistic-nav-fade
         >
           <div className={containerType === 'home'
             ? 'home'

@@ -539,9 +539,20 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     />
   );
 
+  const handleMainNavLevel2LinkClick = useCallback((): void => {
+    setIsHovering(false);
+    setHoveredSection(null);
+    setInfoBlockContent(undefined);
+
+    if (smallBreakpoint) {
+      setMobileMenuOpen(false);
+    }
+  }, [smallBreakpoint]);
+
   const navigationRender = (): React.JSX.Element => (
     <Navigation
       ref={navigationRef}
+      onLevel2LinkClick={handleMainNavLevel2LinkClick}
       sections={props.navigation.navItems.map((item, key) => {
         if (item.subNavItems && item.subNavItems.length > 0) {
 
@@ -653,7 +664,6 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
   return (
     <header
       aria-label={i18nLandmarks('header')}
-      data-optimistic-nav-fade
       data-testid='header'
       ref={headerRef}
       className={`${styles.header} ${styles[renderColorMode()]} ${hydrated

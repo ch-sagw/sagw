@@ -221,9 +221,10 @@ export const Button = forwardRef<HTMLButtonElement, InterfaceButtonPropTypes>((p
         })}
         data-testid='link'
         href={href}
+        onClick={onClick as React.MouseEventHandler<HTMLAnchorElement> | undefined}
+        prefetch={prefetch}
         target={target}
         tabIndex={tabindex}
-        prefetch={prefetch}
       >
         {buttonLinkContent({
           classNameLinkText,

@@ -30,6 +30,7 @@ type InterfaceNavigationItemWithItems = {
   className?: string;
   setExpanded: string | undefined;
   onExpand?: (key: string | undefined) => void;
+  onLevel2LinkClick?: () => void;
   colorMode: ColorMode;
   hoveredItemCallback?: (item: string | undefined) => void;
   onHeightChange?: (id: string, height: number) => void;
@@ -44,6 +45,7 @@ type InterfaceNavigationItemWithoutItems = {
   className?: string;
   setExpanded?: never;
   onExpand?: never;
+  onLevel2LinkClick?: never;
   colorMode: ColorMode;
   hoveredItemCallback?: (item: string | undefined) => void;
   onHeightChange?: never;
@@ -88,6 +90,7 @@ export const NavigationItem = ({
   className,
   setExpanded,
   onExpand,
+  onLevel2LinkClick,
   colorMode,
   hoveredItemCallback,
   onHeightChange,
@@ -103,6 +106,7 @@ export const NavigationItem = ({
 
   const {
     menuVisible,
+    closeMenu,
     toggleButtonAutofocus: toggleButtonAutofocusFromHover,
     onToggleClick: onToggleClickFromHover,
     onSimulateKeyDownForScreenReader,
@@ -350,6 +354,18 @@ export const NavigationItem = ({
                   element='link'
                   href={child.link}
                   className={styles.item}
+                  onClick={footer
+                    ? undefined
+                    : (): void => {
+                      if (smallBreakpoint) {
+                        onExpand?.(undefined);
+                      } else {
+                        closeMenu();
+                      }
+
+                      onLevel2LinkClick?.();
+                    }
+                  }
                   prefetch={true}
                 />
               </li>

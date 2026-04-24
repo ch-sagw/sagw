@@ -58,10 +58,7 @@ export const Header = async (props: InterfaceHeaderPropTypes): Promise<React.JSX
         linkUrls={linkUrls}
         localeUrls={localeUrls}
       />
-      <div
-        className={styles.headerBg}
-        data-optimistic-nav-fade
-      ></div>
+      <div className={styles.headerBg}></div>
     </PageMainViewTransition>
   );
 };

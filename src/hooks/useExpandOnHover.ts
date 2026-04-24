@@ -16,6 +16,7 @@ export interface InterfaceToggleMenuArgs {
 export interface InterfaceExpandableMenu {
   menuVisible: boolean;
   toggleButtonAutofocus: boolean;
+  closeMenu: () => void;
   onToggleClick: (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement> | React.PointerEvent<HTMLDivElement | HTMLButtonElement>) => void;
   onSimulateKeyDownForScreenReader: () => void;
   onMouseEnter: () => void;
@@ -118,7 +119,14 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
     onMouseLeave();
   };
 
+  const closeMenu = (): void => {
+    toggleMenu({
+      show: false,
+    });
+  };
+
   return {
+    closeMenu,
     handleBlur,
     menuVisible,
     onMouseEnter,

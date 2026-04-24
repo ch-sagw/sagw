@@ -24,6 +24,7 @@ export type InterfaceNavigationPropTypes = {
   hoveredItemCallback?: (item: InterfaceHoveredItemCallbackType) => void;
   navMaxHeightCallback?: (maxHeight: number) => void;
   onHoverItemWithoutChildren?: () => void;
+  onLevel2LinkClick?: () => void;
 };
 
 // --- Component
@@ -36,6 +37,7 @@ export const Navigation = forwardRef<HTMLElement, InterfaceNavigationPropTypes>(
   hoveredItemCallback,
   navMaxHeightCallback,
   onHoverItemWithoutChildren,
+  onLevel2LinkClick,
 }, ref) => {
 
   // --- State
@@ -127,11 +129,10 @@ export const Navigation = forwardRef<HTMLElement, InterfaceNavigationPropTypes>(
                   },
                   items: section.items as NonNullable<typeof section.items>,
                   onExpand: (expandKey: string | undefined): void => {
-                    if (expandKey !== undefined) {
-                      setItemsState(expandKey);
-                    }
+                    setItemsState(expandKey);
                   },
                   onHeightChange: handleHeightChange,
+                  onLevel2LinkClick,
                   setExpanded: itemsState === section.expandableId
                     ? itemsState
                     : undefined,
