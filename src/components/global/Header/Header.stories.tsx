@@ -10,7 +10,6 @@ import React, { Fragment } from 'react';
 import {
   defaultMetaNavItems, defaultNavItems,
 } from '@/components/global/Header/Header.sampleData';
-import { getLocaleCodes } from '@/i18n/payloadConfig';
 
 type HeaderProps = InterfaceHeaderComponentPropTypes;
 
@@ -54,9 +53,19 @@ const render = (args: Partial<InterfaceHeaderComponentPropTypes> & InterfaceHead
 
 );
 
+// Intentionally not importing `getLocaleCodes` from i18n/payloadConfig:
+// that module imports `payload` and would pull it into the Storybook
+// bundle, which breaks Vite + file-type.
+const allLocalesForStory: InterfaceHeaderComponentPropTypes['enabledLocales'] = [
+  'de',
+  'fr',
+  'it',
+  'en',
+];
+
 const defaultArgs: InterfaceHeaderComponentPropTypes = {
   colorMode: 'dark',
-  enabledLocales: getLocaleCodes(),
+  enabledLocales: allLocalesForStory,
   linkUrls: {},
   localeUrls: {
     de: '/de',
