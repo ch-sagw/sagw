@@ -1,13 +1,13 @@
 {
   "slugs": {
-    "dataPrivacy": "data-privacy-de",
-    "impressum": "impressum-de"
+    "dataPrivacy": "datenschutzerklaerung",
+    "impressum": "impressum"
   },
   "navigation": {
     "navigationTitle": "Home"
   },
   "pagination": {
-    "hiddenPaginationTitle": "Paginierung"
+    "hiddenPaginationTitle": "Seitennummerierung"
   },
   "skipLinks": {
     "sectionLabel": "Sprunglinks",
@@ -32,7 +32,7 @@
   "a11y": {
     "breadcrumb": "Zurücknavigieren in der Seitenstruktur",
     "closeDialog": "Dialog schliessen",
-    "footerLogoLinkText": "Zur Startseite von SAGW",
+    "footerLogoLinkText": "Zur Startseite der SAGW",
     "linkTarget": "Linkziel",
     "logoLinkText": "Zurück zur Startseite",
     "opensInNewWindow": "öffnet sich in einem neuen Fenster.",
@@ -46,7 +46,7 @@
   },
   "consent": {
     "buttonTextOpenCookieSettings": "Cookie-Einstellungen",
-    "messageVideo": "Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie Einstellungen um das Video ansehen zu können.",
+    "messageVideo": "Aktivieren Sie bitte die Cookies für «Externe Inhalte» in den Cookie-Einstellungen um das Video ansehen zu können.",
     "titleExternalContent": "Externer Inhalt"
   },
   "menu": {
@@ -55,7 +55,7 @@
   },
   "publicationFilters": {
     "publicationTopicsLabel": "Publikationsthemen",
-    "publicationTypesLabel": "Publikationstypen"
+    "publicationTypesLabel": "Publikationsarten"
   },
   "langNav": {
     "de": "Deutsch",
