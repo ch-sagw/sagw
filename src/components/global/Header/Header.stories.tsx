@@ -10,6 +10,7 @@ import React, { Fragment } from 'react';
 import {
   defaultMetaNavItems, defaultNavItems,
 } from '@/components/global/Header/Header.sampleData';
+import { getLocaleCodes } from '@/i18n/payloadConfig';
 
 type HeaderProps = InterfaceHeaderComponentPropTypes;
 
@@ -55,6 +56,7 @@ const render = (args: Partial<InterfaceHeaderComponentPropTypes> & InterfaceHead
 
 const defaultArgs: InterfaceHeaderComponentPropTypes = {
   colorMode: 'dark',
+  enabledLocales: getLocaleCodes(),
   linkUrls: {},
   localeUrls: {
     de: '/de',
