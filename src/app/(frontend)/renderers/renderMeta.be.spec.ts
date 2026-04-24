@@ -120,6 +120,8 @@ test.describe('render meta home', () => {
       .toHaveAttribute('href', 'http://localhost:3000/de');
     await expect(page.locator('link[rel="alternate"][hreflang="x-default"]'))
       .toHaveAttribute('href', 'http://localhost:3000/de');
+    await expect(page.locator('link[rel="alternate"][hreflang="de-CH"]'))
+      .toHaveAttribute('href', 'http://localhost:3000/de');
     await expect(page.locator('link[rel="alternate"][hreflang="fr-CH"]'))
       .toHaveAttribute('href', 'http://localhost:3000/fr');
     await expect(page.locator('link[rel="alternate"][hreflang="it-CH"]'))
@@ -192,6 +194,8 @@ test.describe('render meta home', () => {
       .toHaveAttribute('href', 'http://localhost:3000/it');
     await expect(page.locator('link[rel="alternate"][hreflang="x-default"]'))
       .toHaveAttribute('href', 'http://localhost:3000/de');
+    await expect(page.locator('link[rel="alternate"][hreflang="de-CH"]'))
+      .toHaveAttribute('href', 'http://localhost:3000/de');
     await expect(page.locator('link[rel="alternate"][hreflang="fr-CH"]'))
       .toHaveAttribute('href', 'http://localhost:3000/fr');
     await expect(page.locator('link[rel="alternate"][hreflang="it-CH"]'))
@@ -254,6 +258,8 @@ test.describe('render meta home', () => {
     await expect(page.locator('link[rel="canonical"]'))
       .toHaveAttribute('href', `http://localhost:3000/de/tenant-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="x-default"]'))
+      .toHaveAttribute('href', `http://localhost:3000/de/tenant-${time}`);
+    await expect(page.locator('link[rel="alternate"][hreflang="de-CH"]'))
       .toHaveAttribute('href', `http://localhost:3000/de/tenant-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="fr-CH"]'))
       .toHaveAttribute('href', `http://localhost:3000/fr/tenant-${time}`);
@@ -322,6 +328,8 @@ test.describe('render meta home', () => {
       .toHaveAttribute('href', `http://localhost:3000/it/tenant-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="x-default"]'))
       .toHaveAttribute('href', `http://localhost:3000/de/tenant-${time}`);
+    await expect(page.locator('link[rel="alternate"][hreflang="de-CH"]'))
+      .toHaveAttribute('href', `http://localhost:3000/de/tenant-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="fr-CH"]'))
       .toHaveAttribute('href', `http://localhost:3000/fr/tenant-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="it-CH"]'))
@@ -386,6 +394,8 @@ test.describe('render meta home', () => {
     await expect(page.locator('link[rel="canonical"]'))
       .toHaveAttribute('href', `http://localhost:3000/de/tenant-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="x-default"]'))
+      .toHaveAttribute('href', `http://localhost:3000/de/tenant-${time}`);
+    await expect(page.locator('link[rel="alternate"][hreflang="de-CH"]'))
       .toHaveAttribute('href', `http://localhost:3000/de/tenant-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="fr-CH"]'))
       .toHaveAttribute('href', `http://localhost:3000/fr/tenant-${time}`);
@@ -507,6 +517,8 @@ test.describe('render meta on other pages', () => {
       .toHaveAttribute('href', `http://localhost:3000/de/detail-de-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="x-default"]'))
       .toHaveAttribute('href', `http://localhost:3000/de/detail-de-${time}`);
+    await expect(page.locator('link[rel="alternate"][hreflang="de-CH"]'))
+      .toHaveAttribute('href', `http://localhost:3000/de/detail-de-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="fr-CH"]'))
       .toHaveAttribute('href', `http://localhost:3000/fr/detail-fr-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="it-CH"]'))
@@ -622,6 +634,8 @@ test.describe('render meta on other pages', () => {
     await expect(page.locator('link[rel="canonical"]'))
       .toHaveAttribute('href', `http://localhost:3000/it/detail-it-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="x-default"]'))
+      .toHaveAttribute('href', `http://localhost:3000/de/detail-de-${time}`);
+    await expect(page.locator('link[rel="alternate"][hreflang="de-CH"]'))
       .toHaveAttribute('href', `http://localhost:3000/de/detail-de-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="fr-CH"]'))
       .toHaveAttribute('href', `http://localhost:3000/fr/detail-fr-${time}`);
@@ -739,6 +753,8 @@ test.describe('render meta on other pages', () => {
       .toHaveAttribute('href', `http://localhost:3000/de/tenant-${time}/detail-de-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="x-default"]'))
       .toHaveAttribute('href', `http://localhost:3000/de/tenant-${time}/detail-de-${time}`);
+    await expect(page.locator('link[rel="alternate"][hreflang="de-CH"]'))
+      .toHaveAttribute('href', `http://localhost:3000/de/tenant-${time}/detail-de-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="fr-CH"]'))
       .toHaveAttribute('href', `http://localhost:3000/fr/tenant-${time}/detail-fr-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="it-CH"]'))
@@ -855,6 +871,8 @@ test.describe('render meta on other pages', () => {
       .toHaveAttribute('href', `http://localhost:3000/it/tenant-${time}/detail-it-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="x-default"]'))
       .toHaveAttribute('href', `http://localhost:3000/de/tenant-${time}/detail-de-${time}`);
+    await expect(page.locator('link[rel="alternate"][hreflang="de-CH"]'))
+      .toHaveAttribute('href', `http://localhost:3000/de/tenant-${time}/detail-de-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="fr-CH"]'))
       .toHaveAttribute('href', `http://localhost:3000/fr/tenant-${time}/detail-fr-${time}`);
     await expect(page.locator('link[rel="alternate"][hreflang="it-CH"]'))
@@ -868,5 +886,68 @@ test.describe('render meta on other pages', () => {
       pageLocale: 'it',
       title: `title ${time}it`,
     });
+  });
+
+  test('omits hreflang when that locale has no translated page', async ({
+    page,
+  }) => {
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    const detail = await generateDetailPage({
+      locale: 'de',
+      navigationTitle: 'navTitle',
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `mono-de-${time}`,
+    });
+
+    await payload.update({
+      collection: 'detailPage',
+      data: {
+        ...defaultMeta(time),
+        hero: detail.hero,
+        navigationTitle: detail.navigationTitle,
+        slug: `mono-de-${time}`,
+        tenant,
+      },
+      id: detail.id,
+      locale: 'de',
+    });
+
+    const href = `http://localhost:3000/de/mono-de-${time}`;
+
+    await page.goto(href);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page.locator('link[rel="canonical"]'))
+      .toHaveAttribute('href', href);
+    await expect(page.locator('link[rel="alternate"][hreflang="x-default"]'))
+      .toHaveAttribute('href', href);
+    await expect(page.locator('link[rel="alternate"][hreflang="de-CH"]'))
+      .toHaveAttribute('href', href);
+    await expect(page.locator('link[rel="alternate"][hreflang="fr-CH"]'))
+      .toHaveCount(0);
+    await expect(page.locator('link[rel="alternate"][hreflang="it-CH"]'))
+      .toHaveCount(0);
+    await expect(page.locator('link[rel="alternate"][hreflang="en-GB"]'))
+      .toHaveCount(0);
   });
 });
