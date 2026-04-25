@@ -3,10 +3,12 @@ import { getTenantRoutePaths } from '@/utilities/getTenantRouteParams';
 import { revalidatePath } from 'next/cache.js';
 
 export const invalidateCache = async ({
+  includeDrafts,
   logCacheInvalidation = false,
   payload,
   tenantId,
 }: {
+  includeDrafts?: boolean;
   logCacheInvalidation?: boolean;
   payload: BasePayload;
   tenantId?: string | null;
@@ -25,6 +27,7 @@ export const invalidateCache = async ({
     });
 
     const paths = await getTenantRoutePaths({
+      includeDrafts,
       payload,
       tenant: {
         id: tenant.id,

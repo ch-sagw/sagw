@@ -763,7 +763,7 @@ test('invalidates all tenant pages on page creation (non-sagw)', {
 
 });
 
-test('invalidates all tenant pages on non-autosave collection change (sagw)', {
+test('invalidates all tenant pages on non-drafts collection change (sagw)', {
   tag: '@cache',
 }, async () => {
   await deleteSetsPages();
@@ -800,6 +800,8 @@ test('invalidates all tenant pages on non-autosave collection change (sagw)', {
   // generate form
   const form = await generateForm(tenant);
 
+  console.log('###### before');
+
   logCapture.captureLogs();
 
   await payload.update({
@@ -812,6 +814,8 @@ test('invalidates all tenant pages on non-autosave collection change (sagw)', {
   });
 
   logCapture.detachLogs();
+
+  console.log('###### after');
 
   // we expect:
   // 3 pages for 4 page types in 4 languages: 48
@@ -867,7 +871,7 @@ test('invalidates all tenant pages on non-autosave collection change (sagw)', {
 
 });
 
-test('invalidates all tenant pages on non-autosave collection change (non-sagw)', {
+test('invalidates all tenant pages on non-drafts collection change (non-sagw)', {
   tag: '@cache',
 }, async () => {
   await deleteSetsPages();
@@ -967,5 +971,239 @@ test('invalidates all tenant pages on non-autosave collection change (non-sagw)'
 
   expect(logCapture.logs)
     .toHaveLength(60);
+
+});
+
+test('invalidates all tenant pages on unpublishing a page (sagw)', {
+  tag: '@cache',
+}, async () => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+  await deleteSingletonPages();
+
+  const payload = await getPayloadCached();
+
+  const logCapture = new LogCapture();
+  const time = (new Date())
+    .getTime();
+
+  const tenant = await getTenantId({
+    isSagw: true,
+    time,
+  });
+
+  const tenantNonSagw = await getTenantId({
+    isSagw: false,
+    time,
+  });
+
+  // generate sagw pages
+  const home = await generatePages({
+    amountPerPage: 1,
+    tenant,
+  });
+
+  // generate non-sagw pages
+  await generatePages({
+    amountPerPage: 1,
+    tenant: tenantNonSagw,
+  });
+
+  // generate random detail page
+  const detailPage = await generateDetailPage({
+    context: logCacheInvalidationContext,
+    parentPage: {
+      documentId: home,
+      slug: 'homePage',
+    },
+    tenant,
+    title: `detail ${time}`,
+  });
+
+  console.log('####### before');
+
+  logCapture.captureLogs();
+
+  await payload.update({
+    collection: 'detailPage',
+    context: logCacheInvalidationContext,
+    data: {
+      /* eslint-disable @typescript-eslint/naming-convention */
+      _status: 'draft',
+      /* eslint-enable @typescript-eslint/naming-convention */
+    },
+    id: detailPage.id,
+  });
+
+  logCapture.detachLogs();
+
+  console.log('####### after');
+
+  // we expect:
+  // 1 page for 4 page types in 4 languages: 16
+  // the random detail page in 4 languages: 4
+  // impressum and privacy pages in 4 languages: 8
+  // /${locale} route in 4 languages: 4
+
+  const langs = [
+    'de',
+    'fr',
+    'it',
+    'en',
+  ];
+
+  langs.forEach((lang) => {
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/detail-1`))
+      .toBe(true);
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/overview-1`))
+      .toBe(true);
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/event-1`))
+      .toBe(true);
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/news-1`))
+      .toBe(true);
+
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/detail-${time}`))
+      .toBe(true);
+
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}`))
+      .toBe(true);
+  });
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /de/impressum'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /de/datenschutzerklaerung'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /fr/impressum'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /fr/declaration-de-protection-des-donnees'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /it/colophon'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /it/informativa-sulla-privacy'))
+    .toBe(true);
+
+  expect(logCapture.hasLog('[CACHE] invalidating path: /en/publishing-details'))
+    .toBe(true);
+  expect(logCapture.hasLog('[CACHE] invalidating path: /en/data-privacy'))
+    .toBe(true);
+
+  expect(logCapture.logs)
+    .toHaveLength(32);
+
+});
+
+test('invalidates all tenant pages on unpublishing a page (non-sagw)', {
+  tag: '@cache',
+}, async () => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+  await deleteSingletonPages();
+
+  const payload = await getPayloadCached();
+  const logCapture = new LogCapture();
+  const time = (new Date())
+    .getTime();
+
+  const tenant = await getTenantId({
+    isSagw: true,
+    time,
+  });
+
+  const tenantNonSagw = await generateTenant({
+    slug: `tenant-${time}`,
+  });
+
+  // generate sagw pages
+  await generatePages({
+    amountPerPage: 1,
+    tenant,
+  });
+
+  // generate non-sagw pages
+  const homeNonSagw = await generatePages({
+    amountPerPage: 1,
+    tenant: tenantNonSagw.id,
+  });
+
+  // generate random detail page
+  const detailPage = await generateDetailPage({
+    context: logCacheInvalidationContext,
+    parentPage: {
+      documentId: homeNonSagw,
+      slug: 'homePage',
+    },
+    tenant: tenantNonSagw.id,
+    title: `detail ${time}`,
+  });
+
+  logCapture.captureLogs();
+
+  await payload.update({
+    collection: 'detailPage',
+    context: logCacheInvalidationContext,
+    data: {
+      /* eslint-disable @typescript-eslint/naming-convention */
+      _status: 'draft',
+      /* eslint-enable @typescript-eslint/naming-convention */
+    },
+    id: detailPage.id,
+  });
+
+  logCapture.detachLogs();
+
+  // we expect:
+  // 1 page for 4 page types in 4 languages: 16
+  // the random detail page in 4 languages: 4
+  // impressum and privacy pages in 4 languages: 8
+  // /${locale} route in 4 languages: 4
+
+  const langs = [
+    'de',
+    'fr',
+    'it',
+    'en',
+  ];
+
+  langs.forEach((lang) => {
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/detail-1`))
+      .toBe(true);
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/overview-1`))
+      .toBe(true);
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/event-1`))
+      .toBe(true);
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/news-1`))
+      .toBe(true);
+
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/detail-${time}`))
+      .toBe(true);
+
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}`))
+      .toBe(true);
+  });
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/impressum`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /de/tenant-${time}/datenschutzerklaerung`))
+    .toBe(true);
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /fr/tenant-${time}/impressum`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /fr/tenant-${time}/declaration-de-protection-des-donnees`))
+    .toBe(true);
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/tenant-${time}/colophon`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /it/tenant-${time}/informativa-sulla-privacy`))
+    .toBe(true);
+
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /en/tenant-${time}/publishing-details`))
+    .toBe(true);
+  expect(logCapture.hasLog(`[CACHE] invalidating path: /en/tenant-${time}/data-privacy`))
+    .toBe(true);
+
+  expect(logCapture.logs)
+    .toHaveLength(32);
 
 });

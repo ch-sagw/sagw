@@ -17,20 +17,26 @@ export const hookInvalidateTenantCache: CollectionAfterChangeHook = async ({
     ? previousDoc._status
     : undefined;
   const hasDraftStatus = currentStatus !== undefined || previousStatus !== undefined;
+  const isPublished = currentStatus === 'published';
+  const justUnpublished = previousStatus === 'published' && currentStatus !== 'published';
 
-  // Draft/autosave writes should not invalidate. Only invalidate once the
-  // document is actually in its published state.
-  if (hasDraftStatus && currentStatus !== 'published') {
-    return doc;
+  // Draft/versioned collections: only on publish or unpublish.
+  // No drafts collections: every save.
+  const shouldInvalidate =
+    !hasDraftStatus ||
+    isPublished ||
+    justUnpublished;
+
+  if (shouldInvalidate) {
+    await invalidateCache({
+      includeDrafts: justUnpublished,
+      logCacheInvalidation: context.logCacheInvalidation === true,
+      payload: req.payload,
+      tenantId: doc?.tenant
+        ? extractID(doc.tenant)
+        : null,
+    });
   }
-
-  await invalidateCache({
-    logCacheInvalidation: context.logCacheInvalidation === true,
-    payload: req.payload,
-    tenantId: doc?.tenant
-      ? extractID(doc.tenant)
-      : null,
-  });
 
   return doc;
 };

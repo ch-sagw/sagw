@@ -152,15 +152,17 @@ const getSitemapCanonicalAbsoluteUrl = (pathname: string): string => {
 
 const getTenantWhere = ({
   hasDrafts,
+  includeDrafts,
   tenantId,
 }: {
   hasDrafts: boolean;
+  includeDrafts?: boolean;
   tenantId: string;
 }): {
   and: Where[];
 } => ({
   and: [
-    ...(hasDrafts
+    ...(hasDrafts && !includeDrafts
       ? [
         {
           /* eslint-disable @typescript-eslint/naming-convention */
@@ -241,9 +243,11 @@ const buildSitemapVariant = ({
 
 // used by cache invalidation routine (via `getTenantRoutePaths`)
 export const getTenantRouteParams = async ({
+  includeDrafts,
   payload,
   tenant,
 }: {
+  includeDrafts?: boolean;
   payload: BasePayload;
   tenant: InterfaceTenantRouteTenant;
 }): Promise<InterfaceTenantRouteParam[]> => {
@@ -292,6 +296,7 @@ export const getTenantRouteParams = async ({
         pagination: false,
         where: getTenantWhere({
           hasDrafts,
+          includeDrafts,
           tenantId: tenant.id,
         }),
       });
@@ -487,13 +492,16 @@ export const getTenantSitemapEntries = async ({
 
 // used by cache invalidation routine
 export const getTenantRoutePaths = async ({
+  includeDrafts,
   payload,
   tenant,
 }: {
+  includeDrafts?: boolean;
   payload: BasePayload;
   tenant: InterfaceTenantRouteTenant;
 }): Promise<string[]> => {
   const params = await getTenantRouteParams({
+    includeDrafts,
     payload,
     tenant,
   });
