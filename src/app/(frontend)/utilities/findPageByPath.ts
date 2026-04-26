@@ -69,6 +69,13 @@ export const findPageByPath = async ({
                 equals: tenantId,
               },
             },
+            {
+              /* eslint-disable @typescript-eslint/naming-convention */
+              _status: {
+                equals: 'published',
+              },
+              /* eslint-enable @typescript-eslint/naming-convention */
+            },
           ],
         },
       });
@@ -100,9 +107,20 @@ export const findPageByPath = async ({
         limit: 1,
         locale,
         where: {
-          tenant: {
-            equals: tenantId,
-          },
+          and: [
+            {
+              tenant: {
+                equals: tenantId,
+              },
+            },
+            {
+              /* eslint-disable @typescript-eslint/naming-convention */
+              _status: {
+                equals: 'published',
+              },
+              /* eslint-enable @typescript-eslint/naming-convention */
+            },
+          ],
         },
       });
 

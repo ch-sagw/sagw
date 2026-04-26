@@ -27,9 +27,20 @@ export const fetchHomePageData = async ({
     limit: 1,
     locale,
     where: {
-      tenant: {
-        equals: tenantId,
-      },
+      and: [
+        {
+          tenant: {
+            equals: tenantId,
+          },
+        },
+        {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          _status: {
+            equals: 'published',
+          },
+          /* eslint-enable @typescript-eslint/naming-convention */
+        },
+      ],
     },
   });
 

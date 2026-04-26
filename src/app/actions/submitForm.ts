@@ -328,17 +328,14 @@ export const submitForm = async (prevState: any, formData: FormData): Promise<Su
       : nf.newsletterTemporaryListIdDe;
 
     const subscribeResult = await subscribe({
-      allListIdsForForm: [
-        nf.newsletterListIdDe,
-        nf.newsletterListIdFr,
-        nf.newsletterTemporaryListIdDe,
-        nf.newsletterTemporaryListIdFr,
-      ],
       email: formData.get(newsletterFieldNames.email),
       firstname: formData.get(newsletterFieldNames.firstname),
       lastname: formData.get(newsletterFieldNames.lastname),
       listId,
       listIdTemp,
+      peerTemporaryListId: brLang === 'fr'
+        ? nf.newsletterTemporaryListIdDe
+        : nf.newsletterTemporaryListIdFr,
     });
 
     if (subscribeResult === 'pendingVerification') {

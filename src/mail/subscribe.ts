@@ -489,11 +489,11 @@ interface InterfaceSubscribeProps {
   listIdTemp: number;
 
   /**
-   * All Brevo list ids for this newsletter form (e.g. DE+FR final + temp).
-   * The contact is removed from any of these they are on before the DOI add,
-   * so a language change clears the other pair.
+   * Other locale’s temp DOI list only. We purge `{listId, listIdTemp}` and this
+   * id so a pending opt-in elsewhere does not block signup. We do not purge the
+   * other final list — the same email may stay on both language finals.
    */
-  allListIdsForForm?: number[];
+  peerTemporaryListId: number;
 }
 
 type InterfaceSubscribeReturnValue =
@@ -506,7 +506,7 @@ export const subscribe = async ({
   email,
   listId,
   listIdTemp,
-  allListIdsForForm,
+  peerTemporaryListId,
 }: InterfaceSubscribeProps): Promise<InterfaceSubscribeReturnValue> => {
   try {
     const userResult = await createUser({
@@ -517,7 +517,6 @@ export const subscribe = async ({
 
     if (!userResult.ok) {
       logSubscribe('subscribe: createUser failed (see earlier createUser logs)', {
-        allListIdsForForm,
         email: logEmail(email),
         listId,
         listIdTemp,
@@ -526,12 +525,13 @@ export const subscribe = async ({
       return 'generalError';
     }
 
-    const listIdsPurge: number[] = allListIdsForForm?.length
-      ? [...new Set(allListIdsForForm.map((id) => Number(id)))]
-      : [
+    const listIdsPurge: number[] = [
+      ...new Set([
         Number(listId),
         Number(listIdTemp),
-      ];
+        Number(peerTemporaryListId),
+      ]),
+    ];
 
     // Contact is already on the DOI temp list (previously signed up
     // but never confirmed). Do NOT attempt remove + add here: while
@@ -583,7 +583,6 @@ export const subscribe = async ({
     return 'pendingVerification';
   } catch (err) {
     logSubscribe('subscribe: catch', {
-      allListIdsForForm,
       email: logEmail(email),
       error: err instanceof Error
         ? err.message
