@@ -147,3 +147,33 @@ test('Correctly hides info text for navItem', async ({
       .not.toBeVisible();
   }
 });
+
+test('Correctly shows lang menu if nav has only 1 level', async ({
+  page,
+}, workerInfo) => {
+  if (workerInfo.project.name === 'chromium-1100' || workerInfo.project.name === 'chromium-1600' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
+
+    await navigate(page, 'components-global-header--header-without-level-2');
+
+    const elem = await page.getByTestId('header');
+
+    const langNav = await elem.getByTestId('langnav')
+      .last();
+
+    await langNav.hover();
+
+    const langNavDe = await langNav.getByTestId('de');
+    const langNavFr = await langNav.getByTestId('fr');
+    const langNavEn = await langNav.getByTestId('en');
+    const langNavIt = await langNav.getByTestId('it');
+
+    await expect(langNavDe)
+      .toBeInViewport();
+    await expect(langNavFr)
+      .toBeInViewport();
+    await expect(langNavEn)
+      .toBeInViewport();
+    await expect(langNavIt)
+      .toBeInViewport();
+  }
+});

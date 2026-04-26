@@ -10,6 +10,8 @@ import React, { Fragment } from 'react';
 import {
   defaultMetaNavItems, defaultNavItems,
 } from '@/components/global/Header/Header.sampleData';
+import { InterfaceHeaderNavigation } from '@/payload-types';
+import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 type HeaderProps = InterfaceHeaderComponentPropTypes;
 
@@ -33,6 +35,55 @@ const meta: Meta<typeof HeaderComponent> = {
 };
 
 export default meta;
+
+const navItemsLevel1Only: InterfaceHeaderNavigation['navItems'] = [
+  {
+    description: simpleRteConfig(''),
+    id: '68d9683b1eed56c026882f30',
+    navItemLink: {
+      documentId: '1234',
+      slug: 'some-slug',
+    },
+    navItemText: simpleRteConfig('Home'),
+  },
+
+  {
+    description: simpleRteConfig('Förderung von langfristigen Forschungsinfrastrukturen'),
+    id: '68d9683b1eed56c026882f36',
+    navItemLink: {
+      documentId: '1234',
+      slug: 'some-slug',
+    },
+    navItemText: simpleRteConfig('Förderung'),
+  },
+  {
+    description: simpleRteConfig('Unsere 63 Fachgesellschaften unter einem Dach'),
+    id: '68d9683b1eed56c026882f38',
+    navItemLink: {
+      documentId: '1234',
+      slug: 'some-slug',
+    },
+    navItemText: simpleRteConfig('Netzwerk'),
+  },
+  {
+    description: simpleRteConfig('Vermittlung von Wissen zwischen Wissenschaft und Gesellschaft'),
+    id: '68d9683b1eed56c026882f3e',
+    navItemLink: {
+      documentId: '1234',
+      slug: 'some-slug',
+    },
+    navItemText: simpleRteConfig('Aktivitäten'),
+  },
+  {
+    description: simpleRteConfig('Alles Wissenswertes über die SAGW'),
+    id: '68d9683b1eed56c026882f43',
+    navItemLink: {
+      documentId: '1234',
+      slug: 'some-slug',
+    },
+    navItemText: simpleRteConfig('Über Uns'),
+  },
+];
 
 const render = (args: Partial<InterfaceHeaderComponentPropTypes> & InterfaceHeaderComponentPropTypes): React.JSX.Element => (
   <Fragment>
@@ -73,6 +124,10 @@ const defaultArgs: InterfaceHeaderComponentPropTypes = {
   },
   tenant: 'sagw',
 };
+
+const argsWithoutLevel2 = defaultArgs;
+
+argsWithoutLevel2.navigation.navItems = navItemsLevel1Only;
 
 export const HeaderDark: StrictStory = {
   args: defaultArgs,
@@ -137,6 +192,16 @@ export const HeaderSslasWhite: StrictStory = {
 export const HeaderWithoutMetanav: StrictStory = {
   args: {
     ...defaultArgs,
+    metanav: {
+      metaLinks: [],
+    },
+  },
+  render: (args) => render(args),
+};
+
+export const HeaderWithoutLevel2: StrictStory = {
+  args: {
+    ...argsWithoutLevel2,
     metanav: {
       metaLinks: [],
     },
