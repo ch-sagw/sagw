@@ -153,6 +153,15 @@ test('Correctly shows lang menu if nav has only 1 level', async ({
 }, workerInfo) => {
   if (workerInfo.project.name === 'chromium-1100' || workerInfo.project.name === 'chromium-1600' || workerInfo.project.name === 'firefox' || workerInfo.project.name === 'webkit') {
 
+    const viewport = page.viewportSize();
+
+    if (viewport) {
+      await page.setViewportSize({
+        height: 600,
+        width: viewport.width,
+      });
+    }
+
     await navigate(page, 'components-global-header--header-without-level-2');
 
     const elem = await page.getByTestId('header');
