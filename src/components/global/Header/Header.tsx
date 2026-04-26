@@ -1,6 +1,7 @@
 import 'server-only';
 import React from 'react';
 import {
+  type Config,
   InterfaceHeaderMetaNavigation,
   InterfaceHeaderNavigation,
 } from '@/payload-types';
@@ -21,6 +22,7 @@ export type InterfaceHeaderPropTypesCms = {
 
 export type InterfaceHeaderPropTypes = {
   colorMode: ColorMode;
+  enabledLocales: Config['locale'][];
   menuButton: {
     open: string,
     close: string,
@@ -46,6 +48,7 @@ export const Header = async (props: InterfaceHeaderPropTypes): Promise<React.JSX
   });
 
   const localeUrls = await generateLangNavUrls({
+    locales: props.enabledLocales,
     pageId: props.documentId || '',
     payload,
     tenantSlug: props.tenantSlug,

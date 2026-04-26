@@ -16,9 +16,12 @@ export const nonBreakingSpaceJSXConverter = {
 
 // sanitizer
 // allow: letters, numbers, punctuation, space, tabs, newlines,
-// dashes (en-dash, em-dash)
+// dashes (en-dash, em-dash), and some others ;) (œ, Œ, ğ, š, …)
 export const sanitizeHtmlHelper = (htmlText: string): string => {
-  let sanitizedHtmlText = validator.whitelist(htmlText, '\\x09\\x0A\\x0D\\x20-\\x7E\\u00A0-\\u00FF\\u2013-\\u2014\\u2019');
+  let sanitizedHtmlText = validator.whitelist(
+    htmlText,
+    '\\x09\\x0A\\x0D\\x20-\\x7E\\u00A0-\\u00FF\\u0100-\\u017F\\u2013-\\u2014\\u2019',
+  );
 
   sanitizedHtmlText = sanitizeHtml(sanitizedHtmlText, {
     allowedAttributes: {},
