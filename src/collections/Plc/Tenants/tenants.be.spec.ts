@@ -13,9 +13,11 @@ import {
 import {
   generateAllPageTypes, generateCollectionsExceptPages,
 } from '@/test-helpers/collections-generator';
+import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
 
 test.describe('Tenants only show content from users tenant', () => {
   beforeEachPayloadLogin();
+  beforeEachAcceptCookies();
 
   test.beforeEach(async () => {
 
@@ -219,7 +221,7 @@ test.describe('Tenants only show content from users tenant', () => {
       .not.toBeVisible();
   });
 
-  test('correctly filters available languages', async ({
+  test('correctly filters and renders available languages', async ({
     page,
   }) => {
     // disable french in tenant config, go to detail page and check
@@ -316,6 +318,35 @@ test.describe('Tenants only show content from users tenant', () => {
 
     await expect(frButton)
       .not.toBeVisible();
+
+    await page.goto('http://localhost:3000/de/tenant-language-test-news-detail-page');
+    await page.waitForLoadState('networkidle');
+
+    const feLangMenu = await page.getByTestId('langnav');
+
+    await feLangMenu.click();
+
+    const feDe = await feLangMenu.getByText('Deutsch', {
+      exact: true,
+    });
+    const feFr = await feLangMenu.getByText('Français', {
+      exact: true,
+    });
+    const feEn = await feLangMenu.getByText('English', {
+      exact: true,
+    });
+    const feIt = await feLangMenu.getByText('Italiano', {
+      exact: true,
+    });
+
+    await expect(feDe)
+      .toBeVisible();
+    await expect(feFr).not.toBeVisible();
+    await expect(feEn)
+      .toBeVisible();
+    await expect(feIt)
+      .toBeVisible();
+
   });
 
 });

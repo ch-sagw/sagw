@@ -53,8 +53,19 @@ const render = (args: Partial<InterfaceHeaderComponentPropTypes> & InterfaceHead
 
 );
 
+// Intentionally not importing `getLocaleCodes` from i18n/payloadConfig:
+// that module imports `payload` and would pull it into the Storybook
+// bundle, which breaks Vite + file-type.
+const allLocalesForStory: InterfaceHeaderComponentPropTypes['enabledLocales'] = [
+  'de',
+  'fr',
+  'it',
+  'en',
+];
+
 const defaultArgs: InterfaceHeaderComponentPropTypes = {
   colorMode: 'dark',
+  enabledLocales: allLocalesForStory,
   linkUrls: {},
   localeUrls: {
     de: '/de',

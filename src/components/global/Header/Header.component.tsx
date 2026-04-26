@@ -29,6 +29,7 @@ import {
 } from 'next-intl';
 
 import {
+  type Config,
   InterfaceHeaderMetaNavigation, InterfaceHeaderNavigation,
 } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
@@ -37,6 +38,7 @@ import { rteToHtml } from '@/utilities/rteToHtml';
 
 export type InterfaceHeaderComponentPropTypes = {
   colorMode: ColorMode;
+  enabledLocales: Config['locale'][];
   menuButton: {
     open: string,
     close: string,
@@ -494,41 +496,36 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     return <Fragment />;
   };
 
-  const langnavRender = (): React.JSX.Element => (
-    <Langnav
-      items={[
-        {
-          href: props.localeUrls.de,
-          shortText: 'De',
-          text: langNavTranslations('de'),
-          value: 'de',
-        },
-        {
-          href: props.localeUrls.fr,
-          shortText: 'Fr',
-          text: langNavTranslations('fr'),
-          value: 'fr',
-        },
-        {
-          href: props.localeUrls.it,
-          shortText: 'It',
-          text: langNavTranslations('it'),
-          value: 'it',
-        },
-        {
-          href: props.localeUrls.en,
-          shortText: 'En',
-          text: langNavTranslations('en'),
-          value: 'en',
-        },
-      ]}
-      currentLang={locale}
-      className={styles.langnav}
-      colorMode={renderColorMode()}
-      visibilityCallbackAction={handleLangNavHover}
-      onHeightChangeAction={handleLangHeightChange}
-    />
-  );
+  const langnavRender = (): React.JSX.Element => {
+    if (props.enabledLocales.length < 1) {
+      return <Fragment />;
+    }
+
+    const shortTextByLocale: Record<Config['locale'], string> = {
+      de: 'De',
+      en: 'En',
+      fr: 'Fr',
+      it: 'It',
+    };
+
+    const items = props.enabledLocales.map((code) => ({
+      href: props.localeUrls[code] || '',
+      shortText: shortTextByLocale[code],
+      text: langNavTranslations(code),
+      value: code,
+    }));
+
+    return (
+      <Langnav
+        items={items}
+        currentLang={locale}
+        className={styles.langnav}
+        colorMode={renderColorMode()}
+        visibilityCallbackAction={handleLangNavHover}
+        onHeightChangeAction={handleLangHeightChange}
+      />
+    );
+  };
 
   const navigationInfoBlockRender = (): React.JSX.Element => (
     <NavigationInfoBlock

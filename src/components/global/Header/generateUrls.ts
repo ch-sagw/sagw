@@ -1,4 +1,5 @@
 import {
+  type Config,
   InterfaceHeaderMetaNavigation,
   InterfaceHeaderNavigation,
 } from '@/payload-types';
@@ -94,17 +95,24 @@ interface InterfaceGenerateLangNavUrlsParams {
   pageId: string;
   payload: Awaited<ReturnType<typeof getPayloadCached>>;
   tenantSlug?: string;
+
+  // When set, only these locale URLs are computed (e.g. tenant-enabled
+  // languages). Defaults to all configured locales.
+  locales?: Config['locale'][];
 }
 
 // generate URL map for current page in all locales for langnav.
 // when no translation exists for a locale, falls back to the
 // current tenant's home URL in that locale
 export const generateLangNavUrls = async ({
+  locales,
   pageId,
   payload,
   tenantSlug,
 }: InterfaceGenerateLangNavUrlsParams): Promise<Record<string, string>> => {
-  const localeCodes = getLocaleCodes();
+  const localeCodes = locales?.length
+    ? locales
+    : getLocaleCodes();
   const urlMap: Record<string, string> = {};
 
   await Promise.all(localeCodes.map(async (targetLocale) => {

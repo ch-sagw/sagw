@@ -10,7 +10,9 @@ import {
 } from 'next-intl/server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { CMSConfigError } from '@/app/(frontend)/utilities/CMSConfigError';
-import { getTenantById } from '@/utilities/tenant';
+import {
+  getEnabledLocalesForTenant, getTenantById,
+} from '@/utilities/tenant';
 import { getServerSideURL } from '@/utilities/getUrl';
 
 type InterfaceHeaderRendererProps = {
@@ -30,6 +32,7 @@ export const RenderHeader = async ({
   const tenantName = await getTenantById({
     id: tenant,
   });
+  const enabledLocales = getEnabledLocalesForTenant(tenantName);
 
   // get host origin
   const origin = getServerSideURL()
@@ -76,6 +79,7 @@ export const RenderHeader = async ({
   const headerProps: InterfaceHeaderPropTypes = {
     colorMode,
     documentId: currentPageId,
+    enabledLocales,
     logoLink,
     menuButton: {
       close: i18nMenu('close'),
