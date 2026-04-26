@@ -125,7 +125,7 @@ const defaultArgs: InterfaceHeaderComponentPropTypes = {
   tenant: 'sagw',
 };
 
-const argsWithoutLevel2 = defaultArgs;
+const argsWithoutLevel2 = JSON.parse(JSON.stringify(defaultArgs));
 
 argsWithoutLevel2.navigation.navItems = navItemsLevel1Only;
 
