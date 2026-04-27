@@ -44,7 +44,7 @@ export default defineConfig({
   retries: 0,
   testDir: './src/',
   // testMatch: '**/*.be.spec.ts?(x)',
-  testMatch: '**/NonBreakingSpace.be.spec.ts',
+  testMatch: '**/SoftHyphen.be.spec.ts',
 
   // 4 minutes
   timeout: 240_000,
