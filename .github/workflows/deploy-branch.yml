@@ -93,3 +93,30 @@ jobs:
           name: blob-report-be-${{ matrix.shardIndex }}
           path: blob-report
           retention-days: 1
+  # Merge Reports Job
+  merge-reports:
+    if: ${{ failure() && !cancelled() }}
+    needs: [test-be]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - uses: actions/setup-node@v6
+      with:
+        node-version-file: '.nvmrc'
+        cache: 'npm'
+    - name: Install dependencies
+      run: npm ci
+    - name: Download blob reports
+      uses: actions/download-artifact@v4
+      with:
+        path: all-blob-reports
+        pattern: blob-report-*
+        merge-multiple: true
+    - name: Merge into HTML Report
+      run: npx playwright merge-reports --reporter html,json ./all-blob-reports
+    - name: Upload HTML report
+      uses: actions/upload-artifact@v4
+      with:
+        name: html-report--attempt-${{ github.run_attempt }}
+        path: playwright-report
+        retention-days: 14
