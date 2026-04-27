@@ -1,21 +1,24 @@
-import { test } from '@playwright/test';
+import {
+  expect, test,
+} from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 
-/*
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
- */
 
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
-
-/* eslint-disable max-len */
+import {
+  generateDetailPage, getHomeId,
+} from '@/test-helpers/collections-generator';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { getTenantId } from '@/test-helpers/tenant-generator';
+import { sampleRteWithNbsp } from '@/utilities/rteSampleContent';
 
 test.describe('NonBreakingSpace', () => {
   beforeEachPayloadLogin();
   beforeEachAcceptCookies();
 
-  /*
   test('correctly displays in rte field', async ({
     page,
   }) => {
@@ -85,9 +88,7 @@ test.describe('NonBreakingSpace', () => {
     await expect(rteField)
       .toHaveScreenshot();
   });
-  */
 
-  /*
   test('has correct api payload', async () => {
     const detailPagesRes = await fetch('http://localhost:3000/api/detailPage?where[slug][equals]=detailpagetitle-non-breaking-space-bar');
     const detailPagesData = await detailPagesRes.json();
@@ -105,22 +106,19 @@ test.describe('NonBreakingSpace', () => {
       .toBe('unicode-char-nbsp');
 
   });
-  */
 
   // TODO: find stable solution. succeeds locally, fails on CI
-  /*
+
   test('correctly displays in textblock', async ({
     page,
   }) => {
     await deleteSetsPages();
     await deleteOtherCollections();
 
-    await page.goto(
-    'http://localhost:3000/admin/collections/detailPage/create');
+    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
     await page.waitForLoadState('networkidle');
 
-    const heroField = await page.locator('#field-hero .
-    rich-text-lexical:first-of-type .ContentEditable__root')
+    const heroField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
       .nth(0);
 
     await heroField.fill('detailpagetitle');
@@ -138,12 +136,9 @@ test.describe('NonBreakingSpace', () => {
     await addTextBlockButton.click();
 
     const rteField = await page.locator('#content-row-0 .blocks-field__row');
-    const fieldToScreenshot = await rteField.locator('.
-    LexicalEditorTheme__paragraph');
-    const rteInputField = await rteField.locator('
-    .rich-text-lexical .ContentEditable__root');
-    const nbspButton = await rteField.locator('
-    .rich-text-lexical .toolbar-popup__button-nonBreakingSpaceButton');
+    const fieldToScreenshot = await rteField.locator('.LexicalEditorTheme__paragraph');
+    const rteInputField = await rteField.locator('.rich-text-lexical .ContentEditable__root');
+    const nbspButton = await rteField.locator('.rich-text-lexical .toolbar-popup__button-nonBreakingSpaceButton');
 
     await rteInputField.fill('detailpagetitle');
     await nbspButton.click();
@@ -186,8 +181,7 @@ test.describe('NonBreakingSpace', () => {
     await saveButton.click();
 
     // wait for confirmation toast and close it
-    const closeToast = await page.locator('
-    .payload-toast-container [data-close-button="true"]');
+    const closeToast = await page.locator('.payload-toast-container [data-close-button="true"]');
 
     await closeToast.click();
 
@@ -203,103 +197,64 @@ test.describe('NonBreakingSpace', () => {
     await expect(fieldToScreenshot)
       .toHaveScreenshot();
   });
-  */
 
-  /*
   test('correctly renders in frontend', async ({
     page,
   }) => {
     await deleteSetsPages();
     await deleteOtherCollections();
 
-    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    const detailPage = await generateDetailPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      title: `detail-${time}`,
+    });
+
+    await payload.update({
+      collection: 'detailPage',
+      data: {
+        content: [
+          {
+            blockType: 'textBlock',
+            text: sampleRteWithNbsp,
+          },
+        ],
+        hero: {
+          title: sampleRteWithNbsp,
+        },
+      },
+      id: detailPage.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/detail-${time}`);
     await page.waitForLoadState('networkidle');
 
-    const rteField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
-      .nth(0);
-    const nbspButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-nonBreakingSpaceButton');
-
-    await rteField.fill('detailpagetitle-non-breaking-space');
-    await nbspButton.click();
-    await rteField.pressSequentially('bar');
-
-    const saveButton = await page.getByRole('button', {
-      name: 'Publish changes',
-    });
-
-    const navigationTitle = await page.locator('#field-navigationTitle');
-    const parentPage = await page.locator('#field-parentPage');
-    const sidebar = await page.locator('.document-fields__sidebar-fields');
-
-    await navigationTitle.fill('nav title');
-    await parentPage.click();
-
-    const homePageParentPage = await sidebar.getByText('Home Page');
-
-    await homePageParentPage.click();
-
-    const metaTab = await page.getByText('Meta', {
-      exact: true,
-    });
-
-    const contentTab = await page.getByText('Content', {
-      exact: true,
-    });
-
-    await metaTab.click();
-
-    const metaTitle = await page.locator('#field-meta__seo__title');
-    const metaDescription = await page.locator('#field-meta__seo__description');
-
-    await metaTitle.fill('foo');
-    await metaDescription.fill('foo');
-
-    await contentTab.click();
-
-    await saveButton.click();
-
-    const addContentButton = await page.getByText('Add Content', {
-      exact: true,
-    });
-
-    await addContentButton.click();
-
-    const addTextBlockButton = await page.getByText('Richtext', {
-      exact: true,
-    });
-
-    await addTextBlockButton.click();
-
-    await page.waitForLoadState('networkidle');
-
-    const rteField2 = await page.locator('#field-content .blocks-field__row');
-    const rteInputField2 = await rteField2.locator('.rich-text-lexical .ContentEditable__root');
-    const nbspButton2 = await rteField2.locator('.rich-text-lexical .toolbar-popup__button-nonBreakingSpaceButton');
-
-    await rteInputField2.fill('detailpagetitle');
-    await nbspButton2.click();
-    await rteInputField2.pressSequentially('bar');
-
-    await saveButton.click();
-
-    // wait for confirmation toast and close it
-    const closeToast = await page.locator('.payload-toast-container [data-close-button="true"]')
-      .nth(0);
-
-    await closeToast.click();
-
-    await page.goto('http://localhost:3000/de/detailpagetitle-non-breaking-space-bar');
-    await page.waitForLoadState('networkidle');
-
-    const titleText = await page.getByText('detailpagetitle-non-breaking-space bar')
+    const titleText = await page.getByText('detailpage')
+      .nth(0)
       .innerHTML();
-    const rteText = await page.getByText('detailpagetitle bar')
+    const rteText = await page.getByText('detailpage')
+      .nth(1)
       .innerHTML();
 
     await expect(titleText)
-      .toMatch(/detailpagetitle-non-breaking-space&nbsp;bar/u);
+      .toMatch(/detailpage&nbsp;bar/u);
     await expect(rteText)
-      .toMatch(/detailpagetitle&nbsp;bar/u);
+      .toMatch(/detailpage&nbsp;bar/u);
   });
-  */
 });
