@@ -1,5 +1,45 @@
 # Changelog
 
+## [0.48.0](https://github.com/ch-sagw/sagw/compare/v0.47.1...v0.48.0) (2026-04-27)
+
+
+### Chore
+
+* add story without level-2 items, add test to cover edge case ([54a56e0](https://github.com/ch-sagw/sagw/commit/54a56e0678bdcdbd9c1df5227f97f1c8e4ac03ab))
+* **deps-dev:** bump the development-dependencies group across 1 directory with 7 updates ([#1138](https://github.com/ch-sagw/sagw/issues/1138)) ([7bd6888](https://github.com/ch-sagw/sagw/commit/7bd688835164feac737a5e4577d2cfd3793a0f83))
+* **deps:** bump the production-dependencies group with 13 updates ([#1137](https://github.com/ch-sagw/sagw/issues/1137)) ([4517344](https://github.com/ch-sagw/sagw/commit/4517344fc5d315d7dbe6b254d054afb55122c620))
+* remove obsolete env var ([20a87ed](https://github.com/ch-sagw/sagw/commit/20a87ed1c75b1f44c0f97b41df892049445ec57d))
+
+
+### Documentation
+
+* make note about blob token for test-env ([df09f80](https://github.com/ch-sagw/sagw/commit/df09f80195a6291fa36711bcf60b0f1810356ac7))
+
+
+### Features
+
+* finalize text in code ([#1114](https://github.com/ch-sagw/sagw/issues/1114)) ([12ad577](https://github.com/ch-sagw/sagw/commit/12ad577196bbe55b0b3708c72cd7b42fc4dfae1e))
+* reworking keyboard focus styling of elements ([991d4d5](https://github.com/ch-sagw/sagw/commit/991d4d524b3f38bff60d082cfc495e7b18bbc16a))
+
+
+### Bug Fixes
+
+* allow œ in rte ([#1130](https://github.com/ch-sagw/sagw/issues/1130)) ([960b5eb](https://github.com/ch-sagw/sagw/commit/960b5ebd8635b6c6946508f8a78028bdfcf8afaa))
+* do not purge final lists when temp lists are passed ([#1129](https://github.com/ch-sagw/sagw/issues/1129)) ([2f5582b](https://github.com/ch-sagw/sagw/commit/2f5582b15345315c672577d3e896d0dc4eadde92))
+* do not render href lang for non-localized pages, add default de hreflang ([2616fd1](https://github.com/ch-sagw/sagw/commit/2616fd17370cf7bc16b233f6d6071c43bbd61da4))
+* fix header-height to show lang-nav if nav has only 1 level ([54a56e0](https://github.com/ch-sagw/sagw/commit/54a56e0678bdcdbd9c1df5227f97f1c8e4ac03ab))
+* invalidate cache on unpublish ([d7ba11f](https://github.com/ch-sagw/sagw/commit/d7ba11f28c5f9f4721f39eceb97166105eb05ed8))
+* only render published pages ([a72ef01](https://github.com/ch-sagw/sagw/commit/a72ef01493c80235017910d49b66c362697c84be))
+* properly render configured tenant languages ([3c7f275](https://github.com/ch-sagw/sagw/commit/3c7f2759de152a1aed667ed872bf25e6e46daee0))
+
+
+### Test
+
+* add test for not rendering an unpublished page ([a72ef01](https://github.com/ch-sagw/sagw/commit/a72ef01493c80235017910d49b66c362697c84be))
+* add tests for lang-menu visibility when there are no nav-2 items ([54a56e0](https://github.com/ch-sagw/sagw/commit/54a56e0678bdcdbd9c1df5227f97f1c8e4ac03ab))
+* adopt meta tests ([2616fd1](https://github.com/ch-sagw/sagw/commit/2616fd17370cf7bc16b233f6d6071c43bbd61da4))
+* extend test to check for rendered lang-nav links ([3c7f275](https://github.com/ch-sagw/sagw/commit/3c7f2759de152a1aed667ed872bf25e6e46daee0))
+
 ## [0.47.1](https://github.com/ch-sagw/sagw/compare/v0.47.0...v0.47.1) (2026-04-23)
 
 
