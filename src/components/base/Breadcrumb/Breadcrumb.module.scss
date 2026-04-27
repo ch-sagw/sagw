@@ -5,7 +5,7 @@
 .breadcrumb {
   display: flex;
   column-gap: px-to-rem(var(--spacing-m));
-  margin-block: px-to-rem(var(--spacing-xs));
+  margin: px-to-rem(var(--spacing-xs)) 0 0;
 
   &.dark {
     --icon-color: var(--interaction-primary-inverted);
@@ -57,11 +57,10 @@
       display: flex;
       align-items: center;
       column-gap: px-to-rem(var(--spacing-s));
+      margin-block-start: px-to-rem(var(--spacing-xs), true);
 
       .link {
         padding-inline: 0;
-
-        --button-padding-block-inner-text: var(--spacing-xs);
       }
 
       .separatorIcon {

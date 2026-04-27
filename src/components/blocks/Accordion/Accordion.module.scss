@@ -129,13 +129,6 @@
             text-decoration-color: var(--border-color);
           }
         }
-
-        &:focus-visible {
-          @include focus-visible;
-
-          border-bottom: none;
-          outline-offset: px-to-rem(calc(-1 * var(--border-width-l) + var(--spacing-xs)));
-        }
       }
     }
 

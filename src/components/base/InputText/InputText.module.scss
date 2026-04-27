@@ -73,10 +73,6 @@
         }
       }
     }
-
-    &:focus-visible {
-      @include focus-visible;
-    }
   }
 
   &.text .input {
@@ -92,10 +88,6 @@
       height: auto;
       field-sizing: content;
     }
-  }
-
-  &.dark .input:focus-visible {
-    outline-color: var(--color-border);
   }
 
   .label {

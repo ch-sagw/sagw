@@ -21,6 +21,23 @@
   max-height: none;
   z-index: 998;
 
+  *:focus {
+    anchor-name: --focus-anchor-consent-banner;
+    outline: 0;
+  }
+
+  &:before {
+    @include flying-focus;
+
+    --flying-focus-border-color: var(--border-primary);
+
+    position-anchor: --focus-anchor-consent-banner;
+  }
+
+  &:not(:focus-within):before {
+    opacity: 0;
+  }
+
   &[open]:not(.closing) {
     display: block;
     animation: slide-up-fade-in var(--motion-speed-very-fast) var(--motion-ease-in-out);

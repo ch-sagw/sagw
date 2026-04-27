@@ -19,19 +19,20 @@
   }
 
   @include mq($from: ultra) {
-    --hero-padding-block-start-fallback: 182;
+    --hero-padding-block-start-fallback: 183;
   }
 
   position: relative;
   background-color: var(--color-background);
   padding: px-to-rem(var(--hero-big)) px-to-rem(var(--grid-margin));
-  padding-block-start: calc(px-to-rem(var(--hero-big)) + var(--hero-padding-block-start, px-to-rem(var(--hero-padding-block-start-fallback))));
+  padding-block-start: calc(px-to-rem(var(--hero-big)) + px-to-rem(var(--hero-padding-block-start-fallback)));
   overflow-x: hidden;
 
   @include mq($from: large) {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     column-gap: px-to-rem(var(--grid-gutter));
+    margin-block-start: px-to-rem(var(--hero-padding-block-start-fallback), true);
   }
 
   &.dark {

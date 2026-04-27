@@ -6,14 +6,14 @@
 .header {
   --margin-nav-bottom: 56;
 
-  position: fixed;
+  position: sticky;
   inset-block-start: 0;
   inset-inline-start: 0;
   width: 100%;
   padding: px-to-rem(var(--grid-margin));
   transition-duration: var(--motion-speed-fast);
   transition-timing-function: var(--motion-ease-out);
-  z-index: 999;
+  z-index: 2;
 
   @include reduced-motion {
     transition: none;

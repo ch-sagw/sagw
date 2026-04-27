@@ -9,10 +9,6 @@
 
   display: block;
   cursor: pointer;
-
-  &:focus-visible {
-    @include focus-visible;
-  }
 }
 
 .notification.notification {
