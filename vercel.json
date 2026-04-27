@@ -5,5 +5,197 @@
     "deploymentEnabled": {
       "main": false
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/svaw/:path*",
+      "destination": "https://temp.sagw.ch/svaw/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/fr/svaw/:path*",
+      "destination": "https://temp.sagw.ch/fr/svaw/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/kultur-theorie-semiotik/:path*",
+      "destination": "https://temp.sagw.ch/kultur-theorie-semiotik/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/en/kultur-theorie-semiotik/:path*",
+      "destination": "https://temp.sagw.ch/en/kultur-theorie-semiotik/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/fr/kultur-theorie-semiotik/:path*",
+      "destination": "https://temp.sagw.ch/fr/kultur-theorie-semiotik/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/sanas/:path*",
+      "destination": "https://temp.sagw.ch/sanas/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/sgavl/:path*",
+      "destination": "https://temp.sagw.ch/sgavl/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/fr/sgavl/:path*",
+      "destination": "https://temp.sagw.ch/fr/sgavl/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/sseh/:path*",
+      "destination": "https://temp.sagw.ch/sseh/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/sgss/:path*",
+      "destination": "https://temp.sagw.ch/sgss/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/ssg/:path*",
+      "destination": "https://temp.sagw.ch/ssg/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/en/ssg/:path*",
+      "destination": "https://temp.sagw.ch/en/ssg/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/fr/ssg/:path*",
+      "destination": "https://temp.sagw.ch/fr/ssg/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/collegium-romanicum/:path*",
+      "destination": "https://temp.sagw.ch/collegium-romanicum/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/fr/collegium-romanicum/:path*",
+      "destination": "https://temp.sagw.ch/fr/collegium-romanicum/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/it/collegium-romanicum/:path*",
+      "destination": "https://temp.sagw.ch/it/collegium-romanicum/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/sggf/:path*",
+      "destination": "https://temp.sagw.ch/sggf/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/sggf/en/:path*",
+      "destination": "https://temp.sagw.ch/sggf/en/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/sggf/fr/:path*",
+      "destination": "https://temp.sagw.ch/sggf/fr/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/sgmoik/:path*",
+      "destination": "https://temp.sagw.ch/sgmoik/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/en/sgmoik/:path*",
+      "destination": "https://temp.sagw.ch/en/sgmoik/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/fr/sgmoik/:path*",
+      "destination": "https://temp.sagw.ch/fr/sgmoik/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/africa/:path*",
+      "destination": "https://temp.sagw.ch/africa/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/en/africa/:path*",
+      "destination": "https://temp.sagw.ch/en/africa/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/fr/africa/:path*",
+      "destination": "https://temp.sagw.ch/fr/africa/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/judaistik/:path*",
+      "destination": "https://temp.sagw.ch/judaistik/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/seg/:path*",
+      "destination": "https://temp.sagw.ch/seg/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/seg/:path*",
+      "destination": "https://temp.sagw.ch/seg/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/en/seg/:path*",
+      "destination": "https://temp.sagw.ch/en/seg/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/fr/seg/:path*",
+      "destination": "https://temp.sagw.ch/fr/seg/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/sthg/:path*",
+      "destination": "https://temp.sagw.ch/sthg/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/fr/sthg/:path*",
+      "destination": "https://temp.sagw.ch/fr/sthg/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/asiengesellschaft/:path*",
+      "destination": "https://temp.sagw.ch/asiengesellschaft/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/fr/asiengesellschaft/:path*",
+      "destination": "https://temp.sagw.ch/fr/asiengesellschaft/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/philosophie/:path*",
+      "destination": "https://temp.sagw.ch/philosophie/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/fr/philosophie/:path*",
+      "destination": "https://temp.sagw.ch/fr/philosophie/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/it/philosophie/:path*",
+      "destination": "https://temp.sagw.ch/it/philosophie/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/sgb/:path*",
+      "destination": "https://temp.sagw.ch/sgb/:path*",
+      "permanent": false
+    }
+  ]
 }
