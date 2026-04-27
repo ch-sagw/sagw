@@ -15,17 +15,71 @@ permissions:
 on: pull_request
 jobs:
 
-  # Backend Test Job
-  test-be:
+  # Lint
+  lint:
     if: ${{ !startsWith(github.head_ref, 'release-please--branches--main') }}
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+
+  # Frontend Test Job
+  test-fe:
+    if: ${{ !startsWith(github.head_ref, 'release-please--branches--main') }}
+    needs: [lint]
     env:
       HOME: /root
     runs-on: blacksmith-4vcpu-ubuntu-2404
     strategy:
       fail-fast: false
       matrix:
-        shardIndex: [1]
-        shardTotal: [1]
+        shardIndex: [1, 2, 3, 4, 5, 6, 7, 8]
+        shardTotal: [8]
+    container:
+      # if the docker image is changed, also change it in deploy-prod.yml and in Dockerfile.testing
+      image: mcr.microsoft.com/playwright:v1.59.1-noble
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Test FE
+        run: npm run test:fe:native:shard
+        env:
+          SHARD_INDEX: ${{ matrix.shardIndex }}
+          SHARD_TOTAL: ${{ matrix.shardTotal }}
+      - name: Upload blob report
+        if: ${{ failure() && !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: blob-report-fe-${{ matrix.shardIndex }}
+          path: blob-report
+          retention-days: 1
+
+  # Backend Test Job
+  test-be:
+    if: ${{ !startsWith(github.head_ref, 'release-please--branches--main') }}
+    needs: [lint]
+    env:
+      HOME: /root
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+        shardTotal: [14]
     container:
       # if the docker image is changed, also change it in deploy-prod.yml and in Dockerfile.testing
       image: mcr.microsoft.com/playwright:v1.59.1-noble
@@ -93,3 +147,31 @@ jobs:
           name: blob-report-be-${{ matrix.shardIndex }}
           path: blob-report
           retention-days: 1
+
+  # Merge Reports Job
+  merge-reports:
+    if: ${{ failure() && !cancelled() }}
+    needs: [test-fe, test-be]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - uses: actions/setup-node@v6
+      with:
+        node-version-file: '.nvmrc'
+        cache: 'npm'
+    - name: Install dependencies
+      run: npm ci
+    - name: Download blob reports
+      uses: actions/download-artifact@v4
+      with:
+        path: all-blob-reports
+        pattern: blob-report-*
+        merge-multiple: true
+    - name: Merge into HTML Report
+      run: npx playwright merge-reports --reporter html,json ./all-blob-reports
+    - name: Upload HTML report
+      uses: actions/upload-artifact@v4
+      with:
+        name: html-report--attempt-${{ github.run_attempt }}
+        path: playwright-report
+        retention-days: 14
