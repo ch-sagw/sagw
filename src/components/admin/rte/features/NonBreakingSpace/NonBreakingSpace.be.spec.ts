@@ -107,8 +107,6 @@ test.describe('NonBreakingSpace', () => {
 
   });
 
-  // TODO: find stable solution. succeeds locally, fails on CI
-
   test('correctly displays in textblock', async ({
     page,
   }) => {

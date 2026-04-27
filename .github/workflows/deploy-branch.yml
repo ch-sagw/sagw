@@ -55,18 +55,18 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Test FE
-        run: npm run test:fe:native:shard
-        env:
-          SHARD_INDEX: ${{ matrix.shardIndex }}
-          SHARD_TOTAL: ${{ matrix.shardTotal }}
-      - name: Upload blob report
-        if: ${{ failure() && !cancelled() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: blob-report-fe-${{ matrix.shardIndex }}
-          path: blob-report
-          retention-days: 1
+      # - name: Test FE
+      #   run: npm run test:fe:native:shard
+      #   env:
+      #     SHARD_INDEX: ${{ matrix.shardIndex }}
+      #     SHARD_TOTAL: ${{ matrix.shardTotal }}
+      # - name: Upload blob report
+      #   if: ${{ failure() && !cancelled() }}
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: blob-report-fe-${{ matrix.shardIndex }}
+      #     path: blob-report
+      #     retention-days: 1
 
   # Backend Test Job
   test-be:

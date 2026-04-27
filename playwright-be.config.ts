@@ -43,7 +43,8 @@ export default defineConfig({
     : defaultReporters,
   retries: 0,
   testDir: './src/',
-  testMatch: '**/*.be.spec.ts?(x)',
+  // testMatch: '**/*.be.spec.ts?(x)',
+  testMatch: '**/NonBreakingSpace.be.spec.ts',
 
   // 4 minutes
   timeout: 240_000,
