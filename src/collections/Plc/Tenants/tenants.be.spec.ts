@@ -8,7 +8,7 @@ import {
 } from '@/seed/test-data/deleteData';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import {
-  getTenant, getTenantNonSagw,
+  getTenant, getTenantId, getTenantNonSagw,
 } from '@/test-helpers/tenant-generator';
 import {
   generateAllPageTypes, generateCollectionsExceptPages,
@@ -346,6 +346,29 @@ test.describe('Tenants only show content from users tenant', () => {
       .toBeVisible();
     await expect(feIt)
       .toBeVisible();
+
+    // reset tenant languages
+    // ensure french is enabled lang on tenant
+    const time = (new Date())
+      .getTime();
+    const payload = await getPayloadCached();
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    await payload.update({
+      collection: 'tenants',
+      data: {
+        languages: {
+          de: true,
+          en: true,
+          fr: true,
+          it: true,
+        },
+      },
+      id: tenant,
+    });
 
   });
 

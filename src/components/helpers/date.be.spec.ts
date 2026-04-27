@@ -449,9 +449,6 @@ test.describe('properly renders date range in english', () => {
   });
 });
 
-// TODO: find fix and enable again (failes on ci, passes locally)
-/* eslint-disable no-irregular-whitespace */
-/*
 test.describe('properly renders date range in french', () => {
   beforeEachAcceptCookies();
 
@@ -472,7 +469,7 @@ test.describe('properly renders date range in french', () => {
       tenant,
     });
 
-    const temp = await generateEventDetailPage({
+    await generateEventDetailPage({
       date: '2030-02-01T13:00:00.000Z',
       hideLanguage: true,
       hideLocation: true,
@@ -487,9 +484,6 @@ test.describe('properly renders date range in french', () => {
       title: `event-${time}`,
     });
 
-    console.log('######## tmp page');
-    console.log(temp);
-
     await page.goto(`http://localhost:3000/fr/event-${time}`);
     await page.waitForLoadState('networkidle');
 
@@ -497,7 +491,7 @@ test.describe('properly renders date range in french', () => {
       .textContent();
 
     await expect(eventDetails)
-      .toStrictEqual('01 février 2030 — 13:00');
+      .toStrictEqual('01 février 2030 — 15 h');
   });
 
   test('date range same day, month and year', async ({
@@ -540,7 +534,7 @@ test.describe('properly renders date range in french', () => {
       .textContent();
 
     await expect(eventDetails)
-      .toStrictEqual('01 février 2030 — 13:00');
+      .toStrictEqual('01 février 2030 — 15 h');
   });
 
   test('date range same month and year', async ({
@@ -583,7 +577,7 @@ test.describe('properly renders date range in french', () => {
       .textContent();
 
     await expect(eventDetails)
-      .toStrictEqual('01–02 mars 2030 — 13:00');
+      .toStrictEqual('01–02 mars 2030 — 15 h');
   });
 
   test('date range same year', async ({
@@ -626,7 +620,7 @@ test.describe('properly renders date range in french', () => {
       .textContent();
 
     await expect(eventDetails)
-      .toStrictEqual('01 février – 02 mars 2030 — 13:00');
+      .toStrictEqual('01 février – 02 mars 2030 — 15 h');
   });
 
   test('date range different years', async ({
@@ -669,11 +663,9 @@ test.describe('properly renders date range in french', () => {
       .textContent();
 
     await expect(eventDetails)
-      .toStrictEqual('01 janvier 2030 – 01 février 2031 — 13:00');
+      .toStrictEqual('01 janvier 2030 – 01 février 2031 — 15 h');
   });
 });
-*/
-/* eslint-enable no-irregular-whitespace */
 
 test.describe('properly renders date range in italian', () => {
   beforeEachAcceptCookies();
@@ -979,8 +971,6 @@ test.describe('properly renders single date in english', () => {
   });
 });
 
-// TODO: find fix and enable again (failes on ci, passes locally)
-/*
 test.describe('properly renders single date in french', () => {
   beforeEachAcceptCookies();
 
@@ -1023,7 +1013,6 @@ test.describe('properly renders single date in french', () => {
       .toStrictEqual('01 août 2030');
   });
 });
-*/
 
 test.describe('properly renders single date in italian', () => {
   beforeEachAcceptCookies();
