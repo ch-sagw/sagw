@@ -35,12 +35,6 @@
           }
         }
       }
-
-      &:focus-visible {
-        @include focus-visible;
-
-        outline-color: var(--border-secondary-inverted);
-      }
     }
   }
 }

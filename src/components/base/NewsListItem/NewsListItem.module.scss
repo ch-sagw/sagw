@@ -18,12 +18,6 @@
     gap: px-to-rem(var(--inside-elements-l));
     color: inherit;
 
-    &:focus-visible {
-      @include focus-visible;
-
-      outline-offset: px-to-rem(calc(var(--spacing-2xs) / 2));
-    }
-
     &:hover,
     &:focus {
       .itemIcon {

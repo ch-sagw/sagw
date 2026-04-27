@@ -19,12 +19,6 @@
     grid-auto-columns: min-content;
     text-decoration: none;
 
-    &:focus-visible {
-      @include focus-visible;
-
-      outline-offset: px-to-rem(calc(var(--spacing-2xs) / 2));
-    }
-
     &:hover,
     &:focus {
       .textAndIconWrapper .itemIcon {

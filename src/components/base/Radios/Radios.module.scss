@@ -64,13 +64,6 @@
       position: absolute;
       inset: 0;
       outline: none;
-
-      &:focus-visible ~ .label {
-        @include focus-visible;
-
-        outline-offset: px-to-rem(calc(var(--spacing-2xs) / 2));
-        outline-color: var(--label-color);
-      }
     }
 
     .label {

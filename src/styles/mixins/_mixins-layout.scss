@@ -93,25 +93,3 @@
     margin-top: px-to-rem(calc(-1 * var(--section-top)));
   }
 }
-
-@mixin flying-focus {
-  --flying-focus-motion-speed: var(--motion-speed-very-fast);
-
-  @media (prefers-reduced-motion: reduce) {
-    --flying-focus-motion-speed: 0ms;
-  }
-
-  content: "";
-  position: absolute;
-  position-anchor: --focus-anchor;
-  inset: anchor(inside);
-  margin: px-to-rem(var(--spacing-2xs), true);
-  display: block;
-  border-width: px-to-rem(var(--border-width-l));
-  border-style: solid;
-  border-color: var(--flying-focus-border-color);
-  border-radius: px-to-rem(var(--spacing-2xs));
-  pointer-events: none;
-  z-index: 1000;
-  transition: inset var(--flying-focus-motion-speed, --motion-speed-very-fast) var(--motion-ease-in-out);
-}

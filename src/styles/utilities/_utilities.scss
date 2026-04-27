@@ -35,6 +35,32 @@
   }
 }
 
+@mixin flying-focus {
+  --flying-focus-motion-speed: var(--motion-speed-very-fast);
+
+  @media (prefers-reduced-motion: reduce) {
+    --flying-focus-motion-speed: 0ms;
+  }
+
+  content: "";
+  position: absolute;
+  position-anchor: --focus-anchor;
+  inset: anchor(inside);
+  margin: px-to-rem(var(--spacing-2xs), true);
+  display: block;
+  pointer-events: none;
+  z-index: 1000;
+  transition: inset var(--flying-focus-motion-speed, --motion-speed-very-fast) var(--motion-ease-in-out);
+  outline: px-to-rem(var(--border-width-l)) solid var(--flying-focus-border-color);
+  outline-offset: px-to-rem(calc(-1 * var(--border-width-l)));
+
+  // TODO validate, if necessary
+
+  /* @include forced-colors {
+    outline-color: LinkText;
+  } */
+}
+
 // ##############################
 // Resets
 // ##############################
@@ -125,15 +151,6 @@
   @media (prefers-reduced-motion) {
     @content;
   }
-}
-
-@mixin focus-visible {
-  /* outline: px-to-rem(var(--border-width-l)) solid var(--border-primary);
-  outline-offset: px-to-rem(calc(-1 * var(--border-width-l)));
-
-  @include forced-colors {
-    outline-color: LinkText;
-  } */
 }
 
 // ##############################

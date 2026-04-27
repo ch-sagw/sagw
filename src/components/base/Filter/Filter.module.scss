@@ -95,8 +95,6 @@
 
     &:focus {
       & + label {
-        @include focus-visible;
-
         --label-background: var(--interaction-primary-hover);
         --label-color: var(--text-primary-inverted);
       }
