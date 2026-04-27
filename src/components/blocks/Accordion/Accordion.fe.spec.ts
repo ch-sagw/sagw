@@ -20,8 +20,6 @@ test('correctly opens accordion', async ({
   await expect(content)
     .toBeVisible();
 
-  // TODO: icon results in tiny pixel diff in github actions.
-  // find stable solution.
   await page.addStyleTag({
     content: `
     #component svg {
@@ -55,8 +53,6 @@ test('closes accordion on escape key', async ({
   await expect(content)
     .not.toBeVisible();
 
-  // TODO: icon results in tiny pixel diff in github actions.
-  // find stable solution.
   await page.addStyleTag({
     content: `
     #component svg {

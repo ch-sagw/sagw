@@ -1,11 +1,13 @@
-// TODO: temporary disabled since flaky
-
-/*
 import {
   expect,
   test,
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
+import { generateForm } from '@/test-helpers/collections-generator';
+import { getTenantId } from '@/test-helpers/tenant-generator';
 
 test.describe('forms', () => {
   beforeEachPayloadLogin();
@@ -13,105 +15,61 @@ test.describe('forms', () => {
   test('ensure unique label / name for all fields', async ({
     page,
   }) => {
-    // create a form
-    await page.goto('http://localhost:3000/admin/collections/forms/create');
-    await page.waitForSelector('#field-submitButtonLabel');
-    await page.waitForLoadState('domcontentloaded');
 
-    // fill global fields
-    const buttonLabel = await page.locator('#field-submitButtonLabel');
-    const recipientMail = await page.locator('#field-recipientMail');
-    const subject = await page.locator('#field-mailSubject');
+    await deleteSetsPages();
+    await deleteOtherCollections();
 
-    await buttonLabel.fill('button label');
-    await recipientMail.fill('foo@bar.com');
-    await subject.fill('subject');
+    const time = (new Date())
+      .getTime();
 
-    // add 2 fields
-    const addFieldButton = await page.getByText('Field hinzufügen', {
-      exact: true,
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+    const form = await generateForm(tenant);
+
+    await page.goto(`http://localhost:3000/admin/collections/forms/${form}`);
+    await page.waitForLoadState('networkidle');
+
+    const fieldsTab = await page.getByRole('button', {
+      name: 'fields',
     });
 
-    await addFieldButton.waitFor({
-      state: 'visible',
-    });
+    await fieldsTab.click();
 
-    await addFieldButton.click();
-
-    const textBlock = await page.getByText('Text', {
-      exact: true,
-    });
-
-    await textBlock.click();
-
-    await addFieldButton.waitFor({
-      state: 'visible',
+    const addFieldButton = await page.getByRole('button', {
+      name: 'Add Field',
     });
 
     await addFieldButton.click();
 
-    await textBlock.click();
-
-    // fill fields for success/error
-    const successBlock = await page.locator('#field-submitSuccess');
-    const errorBlock = await page.locator('#field-submitError');
-
-    const successTitle = await successBlock.locator('.rich-text-lexical')
-      .nth(0)
-      .locator('.ContentEditable__root');
-    const successText = await successBlock.locator('.rich-text-lexical')
-      .nth(1)
-      .locator('.ContentEditable__root');
-
-    const errorTitle = await errorBlock.locator('.rich-text-lexical')
-      .nth(0)
-      .locator('.ContentEditable__root');
-    const errorText = await errorBlock.locator('.rich-text-lexical')
-      .nth(1)
-      .locator('.ContentEditable__root');
-
-    await successTitle.fill('success title');
-    await successText.fill('success text');
-    await errorTitle.fill('error title');
-    await errorText.fill('error text');
-
-    // fill fields of block
-
-    const firstBlock = await page.locator('#fields-row-0');
-    const secondBlock = await page.locator('#fields-row-1');
-
-    await firstBlock.waitFor({
-      state: 'visible',
+    const dialog = await page.locator('dialog.payload__modal-item ');
+    const addTextfieldButton = dialog.getByRole('button', {
+      exact: true,
+      name: 'Text',
     });
-    await secondBlock.waitFor({
+
+    await addTextfieldButton.click();
+
+    const newRow = await page.locator('#fields-row-1');
+
+    await newRow.waitFor({
       state: 'visible',
     });
 
-    const label1 = await firstBlock.locator('.ContentEditable__root')
+    const label1 = await newRow.locator('.ContentEditable__root')
       .nth(0);
-    const placeholder1 = await firstBlock.getByLabel('Placeholder');
-    const error1 = await firstBlock.locator('.ContentEditable__root')
+    const placeholder1 = await newRow.getByLabel('Placeholder');
+    const error1 = await newRow.locator('.ContentEditable__root')
       .nth(1);
 
-    const label2 = await secondBlock.locator('.ContentEditable__root')
-      .nth(0);
-    const placeholder2 = await secondBlock.getByLabel('Placeholder');
-    const error2 = await secondBlock.locator('.ContentEditable__root')
-      .nth(1);
-
-    await label1.fill('label');
+    await label1.fill('name');
     await placeholder1.fill('placeholder');
     await error1.fill('error');
 
-    await label2.fill('label', {
-      force: true,
-    });
-    await placeholder2.fill('placeholder');
-    await error2.fill('error');
-
     // save
     const saveButton = await page.getByRole('button', {
-      name: 'Publish changes',
+      name: 'Save',
     });
 
     await saveButton.click();
@@ -127,7 +85,6 @@ test.describe('forms', () => {
     await expect(mainError)
       .toBeVisible();
     await expect(fieldError)
-      .toHaveText('Duplicate label "label" is not allowed.');
+      .toHaveText('Duplicate label "name" is not allowed.');
   });
 });
-*/

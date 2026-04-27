@@ -44,7 +44,7 @@ export default defineConfig({
   retries: 0,
   testDir: './src/',
   // testMatch: '**/*.be.spec.ts?(x)',
-  testMatch: '**/date.be.spec.ts',
+  testMatch: '**/formEnsureUniqueName.be.spec.ts',
 
   // 4 minutes
   timeout: 240_000,
