@@ -51,6 +51,7 @@
   pointer-events: none;
   z-index: 1000;
   transition: inset var(--flying-focus-motion-speed, --motion-speed-very-fast) var(--motion-ease-in-out);
+  border-radius: px-to-rem(var(--spacing-2xs));
   outline: px-to-rem(var(--border-width-l)) solid var(--flying-focus-border-color);
   outline-offset: px-to-rem(calc(-1 * var(--border-width-l)));
 
