@@ -8,6 +8,16 @@
   },
   "redirects": [
     {
+      "source": "/sagw/:path*",
+      "destination": "https://www.sagw.ch/",
+      "permanent": true
+    },
+    {
+      "source": "/fr/assh/:path*",
+      "destination": "https://www.sagw.ch/fr",
+      "permanent": true
+    },
+    {
       "source": "/svaw/:path*",
       "destination": "https://temp.sagw.ch/svaw/:path*",
       "permanent": false
