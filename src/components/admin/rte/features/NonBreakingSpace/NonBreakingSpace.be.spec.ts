@@ -133,6 +133,10 @@ test.describe('NonBreakingSpace', () => {
 
     await addTextBlockButton.click();
 
+    // add a second text block to make sure the previous has loaded
+    await addContentButton.click();
+    await addTextBlockButton.click();
+
     const rteField = await page.locator('#content-row-0 .blocks-field__row');
     const fieldToScreenshot = await rteField.locator('.LexicalEditorTheme__paragraph');
     const rteInputField = await rteField.locator('.rich-text-lexical .ContentEditable__root');
@@ -184,13 +188,13 @@ test.describe('NonBreakingSpace', () => {
     await closeToast.click();
 
     // add another block to make sure that previous has finished loading
-    await addContentButton.click();
+    // await addContentButton.click();
 
-    const addTextBlockButton2 = (await page.getByText('Richtext', {
-      exact: true,
-    })).nth(1);
+    // const addTextBlockButton2 = (await page.getByText('Richtext', {
+    //   exact: true,
+    // })).nth(1);
 
-    await addTextBlockButton2.click();
+    // await addTextBlockButton2.click();
 
     await expect(fieldToScreenshot)
       .toHaveScreenshot();
