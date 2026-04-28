@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.49.0](https://github.com/ch-sagw/sagw/compare/v0.48.1...v0.49.0) (2026-04-28)
+
+
+### Features
+
+* adding permanent re-directs for old sagw folders ([41281e7](https://github.com/ch-sagw/sagw/commit/41281e726b1aec4735ee9f2d22d45c3375e9ff87))
+* adding redirects to vercel.json ([41281e7](https://github.com/ch-sagw/sagw/commit/41281e726b1aec4735ee9f2d22d45c3375e9ff87))
+* adding redirects to vercel.json ([#1143](https://github.com/ch-sagw/sagw/issues/1143)) ([41281e7](https://github.com/ch-sagw/sagw/commit/41281e726b1aec4735ee9f2d22d45c3375e9ff87))
+
 ## [0.48.1](https://github.com/ch-sagw/sagw/compare/v0.48.0...v0.48.1) (2026-04-27)
 
 
