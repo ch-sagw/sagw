@@ -1,0 +1,9 @@
+@import "~@payloadcms/ui/scss";
+
+@layer payload-default {
+  .preview-btn-with-extra {
+    align-items: center;
+    display: inline-flex;
+    gap: calc(var(--base) * 0.5);
+  }
+}

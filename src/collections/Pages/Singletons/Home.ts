@@ -20,6 +20,7 @@ import { excludeBlocksFilterSingle } from '@/utilities/blockFilters';
 import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 import { homeSlug } from '@/collections/constants';
+import { pagePreviewEditComponents } from '@/field-templates/pagePreviewEditComponents';
 import { preview } from '@/utilities/previewUrl';
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
@@ -48,6 +49,9 @@ const uniqueBlocks: BlockSlug[] = [
 export const HomePage: CollectionConfig = {
   access: pageAccess,
   admin: {
+    components: {
+      edit: pagePreviewEditComponents,
+    },
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
     preview,

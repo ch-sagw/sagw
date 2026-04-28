@@ -14,6 +14,7 @@ import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccess } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
+import { pagePreviewEditComponents } from '@/field-templates/pagePreviewEditComponents';
 import { preview } from '@/utilities/previewUrl';
 
 const contentBlocks: BlockSlug[] = [
@@ -35,6 +36,9 @@ const uniqueBlocks: BlockSlug[] = [
 export const PublicationDetailPage: CollectionConfig = {
   access: pageAccess,
   admin: {
+    components: {
+      edit: pagePreviewEditComponents,
+    },
     defaultColumns: [
       'adminTitle',
       'slug',

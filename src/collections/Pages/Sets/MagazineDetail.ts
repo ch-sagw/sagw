@@ -14,6 +14,7 @@ import { genericPageHooks } from '@/hooks-payload/genericPageHooks';
 import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccessMagazineDetail } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
+import { pagePreviewEditComponents } from '@/field-templates/pagePreviewEditComponents';
 import { preview } from '@/utilities/previewUrl';
 
 const contentBlocks: BlockSlug[] = [
@@ -34,6 +35,9 @@ const uniqueBlocks: BlockSlug[] = [
 export const MagazineDetailPage: CollectionConfig = {
   access: pageAccessMagazineDetail,
   admin: {
+    components: {
+      edit: pagePreviewEditComponents,
+    },
     defaultColumns: [
       'adminTitle',
       'slug',

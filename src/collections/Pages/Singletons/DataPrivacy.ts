@@ -16,6 +16,7 @@ import { pageAccess } from '@/access/pages';
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
+import { pagePreviewEditComponents } from '@/field-templates/pagePreviewEditComponents';
 import { preview } from '@/utilities/previewUrl';
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
@@ -26,6 +27,9 @@ const contentBlocks: BlockSlug[] = ['textBlock'];
 export const DataPrivacyPage: CollectionConfig = {
   access: pageAccess,
   admin: {
+    components: {
+      edit: pagePreviewEditComponents,
+    },
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
     preview,
