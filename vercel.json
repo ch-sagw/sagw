@@ -18,6 +18,26 @@
       "permanent": true
     },
     {
+      "source": "/sago/:path*",
+      "destination": "https://www.sagw.ch/de/sago",
+      "permanent": true
+    },
+    {
+      "source": "/fr/sago/:path*",
+      "destination": "https://www.sagw.ch/fr/sago",
+      "permanent": true
+    },
+    {
+      "source": "/ru/sago/:path*",
+      "destination": "https://www.sagw.ch/de/sago",
+      "permanent": true
+    },
+    {
+      "source": "ssa-sag/about-us",
+      "destination": "https://www.sagw.ch/de/sslas",
+      "permanent": true
+    },
+    {
       "source": "/svaw/:path*",
       "destination": "https://temp.sagw.ch/svaw/:path*",
       "permanent": false
