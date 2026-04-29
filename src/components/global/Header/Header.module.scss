@@ -222,6 +222,9 @@
 
   .metanavWrapper {
     @include expandable-wrapper-visible;
+
+    position: relative;
+    z-index: 1;
   }
 
   .metanav {
