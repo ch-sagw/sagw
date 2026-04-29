@@ -21,6 +21,7 @@ type InterfaceFindPageByPathResult = {
 } | null;
 
 interface InterfaceFindPageByPathParams {
+  isDraftMode?: boolean;
   slugSegments: string[];
   tenantId: string;
   locale: TypedLocale;
@@ -32,6 +33,7 @@ interface InterfaceFindPageByPathParams {
 // returns page data and collection type for the given tenant.
 
 export const findPageByPath = async ({
+  isDraftMode,
   slugSegments,
   tenantId,
   locale,
@@ -55,6 +57,7 @@ export const findPageByPath = async ({
       const result = await payload.find({
         collection: collection as any,
         depth: depth || 1,
+        draft: isDraftMode,
         limit: 1,
         locale,
         where: {
@@ -69,13 +72,17 @@ export const findPageByPath = async ({
                 equals: tenantId,
               },
             },
-            {
-              /* eslint-disable @typescript-eslint/naming-convention */
-              _status: {
-                equals: 'published',
-              },
-              /* eslint-enable @typescript-eslint/naming-convention */
-            },
+            ...(isDraftMode
+              ? []
+              : [
+                {
+                  /* eslint-disable @typescript-eslint/naming-convention */
+                  _status: {
+                    equals: 'published',
+                  },
+                  /* eslint-enable @typescript-eslint/naming-convention */
+                },
+              ]),
           ],
         },
       });
@@ -104,6 +111,7 @@ export const findPageByPath = async ({
       const result = await payload.find({
         collection: collection as any,
         depth: 1,
+        draft: isDraftMode,
         limit: 1,
         locale,
         where: {
@@ -113,13 +121,17 @@ export const findPageByPath = async ({
                 equals: tenantId,
               },
             },
-            {
-              /* eslint-disable @typescript-eslint/naming-convention */
-              _status: {
-                equals: 'published',
-              },
-              /* eslint-enable @typescript-eslint/naming-convention */
-            },
+            ...(isDraftMode
+              ? []
+              : [
+                {
+                  /* eslint-disable @typescript-eslint/naming-convention */
+                  _status: {
+                    equals: 'published',
+                  },
+                  /* eslint-enable @typescript-eslint/naming-convention */
+                },
+              ]),
           ],
         },
       });

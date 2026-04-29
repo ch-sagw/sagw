@@ -19,7 +19,6 @@ test('throws validation error on malformed tenant name', async () => {
         skipTenantInitialData: true,
       },
       data: {
-        faviconName: `favicon-${time}`,
         name: `${time}-$a`,
         slug: `slug-${time}`,
       },

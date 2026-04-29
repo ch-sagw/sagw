@@ -9,9 +9,11 @@ import {
 import { TypedLocale } from 'payload';
 
 export const getPageData = async ({
+  isDraftMode,
   locale,
   slug,
 }: {
+  isDraftMode?: boolean;
   locale: TypedLocale;
   slug: string[];
 }): Promise<{
@@ -33,6 +35,7 @@ export const getPageData = async ({
     // ----------------
     if (slug.length === 1) {
       const homepageData = await fetchHomePageData({
+        isDraftMode,
         locale,
         tenantId: tenantInfo.tenantId,
       });
@@ -59,6 +62,7 @@ export const getPageData = async ({
 
     // Fetch page data
     const detailPageData = await fetchOtherPagesData({
+      isDraftMode,
       locale,
       slugSegments: pageSlugs,
       tenantId: tenantInfo.tenantId,
@@ -88,6 +92,7 @@ export const getPageData = async ({
 
   // Fetch page data
   const detailPageData = await fetchOtherPagesData({
+    isDraftMode,
     locale,
     slugSegments: slug,
     tenantId: tenantInfo.tenantId,

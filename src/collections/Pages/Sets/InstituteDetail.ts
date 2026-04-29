@@ -15,7 +15,8 @@ import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccessInstituteDetail } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
-import { preview } from '@/utilities/previewUrl';
+import { pagePreviewEditComponents } from '@/field-templates/pagePreviewEditComponents';
+import { preview as resolvePreviewUrl } from '@/utilities/previewUrl';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -25,12 +26,24 @@ const contentBlocks: BlockSlug[] = [
 
 const uniqueBlocks: BlockSlug[] = ['linksBlock'];
 
+const pageCollectionSlug = 'instituteDetailPage';
+
 export const InstituteDetailPage: CollectionConfig = {
   access: pageAccessInstituteDetail,
   admin: {
+    components: {
+      edit: pagePreviewEditComponents,
+    },
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
-    preview,
+    preview: (
+      doc,
+      options,
+    ) => resolvePreviewUrl(doc, {
+      ...options,
+      collection: pageCollectionSlug,
+      draft: true,
+    }),
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
@@ -112,6 +125,6 @@ export const InstituteDetailPage: CollectionConfig = {
     singular: 'Institute Detail Page',
   },
   lockDocuments,
-  slug: 'instituteDetailPage',
+  slug: pageCollectionSlug,
   versions,
 };

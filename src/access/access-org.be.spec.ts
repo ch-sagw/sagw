@@ -36,7 +36,6 @@ test.describe('access-org', () => {
             skipTenantInitialData: true,
           },
           data: {
-            faviconName: 'foo',
             name: `${(new Date())
               .getTime()
               .toString()}1`,
@@ -72,7 +71,6 @@ test.describe('access-org', () => {
             skipTenantInitialData: true,
           },
           data: {
-            faviconName: 'foo',
             name: `${(new Date())
               .getTime()
               .toString()}1`,
@@ -108,7 +106,6 @@ test.describe('access-org', () => {
             skipTenantInitialData: true,
           },
           data: {
-            faviconName: 'foo',
             name: `${(new Date())
               .getTime()
               .toString()}1`,
@@ -144,7 +141,6 @@ test.describe('access-org', () => {
             skipTenantInitialData: true,
           },
           data: {
-            faviconName: 'foo',
             name: `${(new Date())
               .getTime()
               .toString()}1`,
@@ -580,7 +576,6 @@ test.describe('access-org', () => {
             skipTenantInitialData: true,
           },
           data: {
-            faviconName: 'foo',
             name: 'testtenant',
             slug: 'testtenant',
           },
