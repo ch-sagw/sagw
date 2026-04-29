@@ -139,7 +139,7 @@ export const PreviewButtonWithExtra: React.FunctionComponent<
         )
         : null}
       <Button
-        aria-label='Preview published site in new tab'
+        aria-label='Open published site in new tab'
         buttonStyle='secondary'
         disabled={Boolean(isInitializing) || !canOpenPublished}
         icon={
@@ -149,10 +149,10 @@ export const PreviewButtonWithExtra: React.FunctionComponent<
         id='page-edit-open-published-site'
         onClick={openPublishedSite}
         size='small'
-        tooltip='Preview'
+        tooltip='Published'
         type='button'
       >
-        Preview
+        Published
       </Button>
     </div>
   );
