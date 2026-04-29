@@ -17,12 +17,14 @@ import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/
 import { allBlocksButTranslator } from '@/access/blocks';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 import { pagePreviewEditComponents } from '@/field-templates/pagePreviewEditComponents';
-import { preview } from '@/utilities/previewUrl';
+import { preview as resolvePreviewUrl } from '@/utilities/previewUrl';
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
 
 const contentBlocks: BlockSlug[] = ['textBlock'];
+
+const pageCollectionSlug = 'dataPrivacyPage';
 
 export const DataPrivacyPage: CollectionConfig = {
   access: pageAccess,
@@ -32,7 +34,14 @@ export const DataPrivacyPage: CollectionConfig = {
     },
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
-    preview,
+    preview: (
+      doc,
+      options,
+    ) => resolvePreviewUrl(doc, {
+      ...options,
+      collection: pageCollectionSlug,
+      draft: true,
+    }),
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
@@ -186,6 +195,6 @@ export const DataPrivacyPage: CollectionConfig = {
     singular: 'Data Privacy',
   },
   lockDocuments,
-  slug: 'dataPrivacyPage',
+  slug: pageCollectionSlug,
   versions,
 };

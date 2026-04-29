@@ -15,7 +15,7 @@ import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccessMagazineDetail } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { pagePreviewEditComponents } from '@/field-templates/pagePreviewEditComponents';
-import { preview } from '@/utilities/previewUrl';
+import { preview as resolvePreviewUrl } from '@/utilities/previewUrl';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -32,6 +32,8 @@ const uniqueBlocks: BlockSlug[] = [
   'linksBlock',
 ];
 
+const pageCollectionSlug = 'magazineDetailPage';
+
 export const MagazineDetailPage: CollectionConfig = {
   access: pageAccessMagazineDetail,
   admin: {
@@ -46,7 +48,14 @@ export const MagazineDetailPage: CollectionConfig = {
     ],
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
-    preview,
+    preview: (
+      doc,
+      options,
+    ) => resolvePreviewUrl(doc, {
+      ...options,
+      collection: pageCollectionSlug,
+      draft: true,
+    }),
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
@@ -119,6 +128,6 @@ export const MagazineDetailPage: CollectionConfig = {
     singular: 'Magazine Detail',
   },
   lockDocuments,
-  slug: 'magazineDetailPage',
+  slug: pageCollectionSlug,
   versions,
 };

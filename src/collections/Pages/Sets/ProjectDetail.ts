@@ -18,7 +18,7 @@ import { pageAccess } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 import { pagePreviewEditComponents } from '@/field-templates/pagePreviewEditComponents';
-import { preview } from '@/utilities/previewUrl';
+import { preview as resolvePreviewUrl } from '@/utilities/previewUrl';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -40,6 +40,8 @@ const uniqueBlocks: BlockSlug[] = [
   'publicationsTeasersBlock',
 ];
 
+const pageCollectionSlug = 'projectDetailPage';
+
 export const ProjectDetailPage: CollectionConfig = {
   access: pageAccess,
   admin: {
@@ -48,7 +50,14 @@ export const ProjectDetailPage: CollectionConfig = {
     },
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
-    preview,
+    preview: (
+      doc,
+      options,
+    ) => resolvePreviewUrl(doc, {
+      ...options,
+      collection: pageCollectionSlug,
+      draft: true,
+    }),
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
@@ -136,6 +145,6 @@ export const ProjectDetailPage: CollectionConfig = {
     singular: 'Project Detail Page',
   },
   lockDocuments,
-  slug: 'projectDetailPage',
+  slug: pageCollectionSlug,
   versions,
 };

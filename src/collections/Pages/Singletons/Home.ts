@@ -21,7 +21,7 @@ import { validateUniqueBlocksSingle } from '@/hooks-payload/validateUniqueBlocks
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 import { homeSlug } from '@/collections/constants';
 import { pagePreviewEditComponents } from '@/field-templates/pagePreviewEditComponents';
-import { preview } from '@/utilities/previewUrl';
+import { preview as resolvePreviewUrl } from '@/utilities/previewUrl';
 import {
   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
@@ -46,6 +46,8 @@ const uniqueBlocks: BlockSlug[] = [
   'publicationsTeasersBlock',
 ];
 
+const pageCollectionSlug = 'homePage';
+
 export const HomePage: CollectionConfig = {
   access: pageAccess,
   admin: {
@@ -54,7 +56,14 @@ export const HomePage: CollectionConfig = {
     },
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
-    preview,
+    preview: (
+      doc,
+      options,
+    ) => resolvePreviewUrl(doc, {
+      ...options,
+      collection: pageCollectionSlug,
+      draft: true,
+    }),
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
@@ -235,6 +244,6 @@ export const HomePage: CollectionConfig = {
     singular: 'Home',
   },
   lockDocuments,
-  slug: 'homePage',
+  slug: pageCollectionSlug,
   versions,
 };

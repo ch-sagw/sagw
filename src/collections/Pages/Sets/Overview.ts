@@ -16,7 +16,7 @@ import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccess } from '@/access/pages';
 import { sagwOnlyBlocks } from '@/access/blocks';
 import { pagePreviewEditComponents } from '@/field-templates/pagePreviewEditComponents';
-import { preview } from '@/utilities/previewUrl';
+import { preview as resolvePreviewUrl } from '@/utilities/previewUrl';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -50,6 +50,8 @@ const uniqueBlocks: BlockSlug[] = [
   'publicationsTeasersBlock',
 ];
 
+const pageCollectionSlug = 'overviewPage';
+
 export const OverviewPage: CollectionConfig = {
   access: pageAccess,
   admin: {
@@ -64,7 +66,14 @@ export const OverviewPage: CollectionConfig = {
     ],
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
-    preview,
+    preview: (
+      doc,
+      options,
+    ) => resolvePreviewUrl(doc, {
+      ...options,
+      collection: pageCollectionSlug,
+      draft: true,
+    }),
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
@@ -136,6 +145,6 @@ export const OverviewPage: CollectionConfig = {
     singular: 'Overview Page',
   },
   lockDocuments,
-  slug: 'overviewPage',
+  slug: pageCollectionSlug,
   versions,
 };
