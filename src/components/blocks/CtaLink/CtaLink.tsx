@@ -33,7 +33,9 @@ export const CtaLink = async (props: InterfaceCtaLinkPropTypes): Promise<React.J
     });
   } else if (props.linkType === 'mail' && props.linkMail) {
     linkText = rteToHtml(props.linkMail.linkText);
-    linkHref = props.linkMail.email;
+    const email = props.linkMail.email.trim();
+
+    linkHref = `mailto:${email}`;
   }
 
   return (
