@@ -64,6 +64,9 @@ interface InterfaceBuildBreadcrumbsParams {
   excludedDocumentIds?: Set<string>;
   parentRef: InterfaceInternalLinkValue | undefined | null | Record<string, never>;
   payload: BasePayload;
+
+  // Published path: parent `findByID` uses `draft: false`.
+  usePublishedParents?: boolean;
 }
 
 export const buildBreadcrumbs = async ({
@@ -71,6 +74,7 @@ export const buildBreadcrumbs = async ({
   excludedDocumentIds,
   parentRef,
   payload,
+  usePublishedParents,
 }: InterfaceBuildBreadcrumbsParams): Promise<InterfaceBreadcrumb> => {
   if (!parentRef || typeof parentRef !== 'object') {
     if (breadcrumbs && breadcrumbs.length > 0) {
@@ -108,6 +112,11 @@ export const buildBreadcrumbs = async ({
     const parentDoc = await payload.findByID({
       collection: parentRef.slug as CollectionSlug,
       depth: 0,
+      ...(usePublishedParents
+        ? {
+          draft: false,
+        }
+        : {}),
       id: parentRef.documentId,
       locale: 'all',
     }) as unknown as Record<string, unknown>;
@@ -182,6 +191,7 @@ export const buildBreadcrumbs = async ({
       excludedDocumentIds,
       parentRef: parentParentRef,
       payload,
+      usePublishedParents,
     });
 
     if (!ancestorBreadcrumbs || ancestorBreadcrumbs.length === 0) {
@@ -215,6 +225,7 @@ interface InterfaceBuildBreadcrumbsForDocParams {
   doc: Record<string, unknown> | null | undefined;
   excludedDocumentIds?: Set<string>;
   payload: BasePayload;
+  usePublishedParents?: boolean;
 }
 
 // Convenience helper: build breadcrumbs for a given page document by
@@ -223,6 +234,7 @@ export const buildBreadcrumbsForDoc = ({
   doc,
   excludedDocumentIds,
   payload,
+  usePublishedParents,
 }: InterfaceBuildBreadcrumbsForDocParams): Promise<InterfaceBreadcrumb> => {
   if (!doc) {
     return Promise.resolve([]);
@@ -238,5 +250,6 @@ export const buildBreadcrumbsForDoc = ({
     excludedDocumentIds,
     parentRef,
     payload,
+    usePublishedParents,
   });
 };

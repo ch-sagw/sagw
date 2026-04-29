@@ -70,6 +70,7 @@ export const preview = async (
       locale: locale as Config['locale'],
       pageId: id as string,
       payload,
+      usePublishedDocForPath: true,
     });
   }
 
