@@ -36,6 +36,10 @@
     &:has([class*="dark"]:not([class*="white"])):before {
       --flying-focus-border-color: var(--border-primary-inverted);
     }
+
+    &:not(:focus-within):before {
+      opacity: 0;
+    }
   }
 
   @include reduced-motion {
@@ -115,11 +119,11 @@
     &.white {
       background-color: white;
     }
+  }
 
-    // Needed for visual tests
-    &.dark:has(+ p) {
-      background-color: var(--background-inverted);
-    }
+  // Needed for visual tests
+  &.dark:has(+ p) {
+    background-color: var(--background-inverted);
   }
 
   &:not(.white) {
@@ -235,6 +239,8 @@
 
     @include mq($from: large) {
       margin-block-end: 0;
+      position: relative;
+      z-index: 2;
     }
   }
 
