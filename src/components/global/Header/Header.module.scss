@@ -13,7 +13,30 @@
   padding: px-to-rem(var(--grid-margin));
   transition-duration: var(--motion-speed-fast);
   transition-timing-function: var(--motion-ease-out);
-  z-index: 2;
+  z-index: 100;
+
+  // The supports query is needed to temporarily
+  // deactivate Flying Focus for Safari
+  // due to ugly repainting issue in navigation.
+  // Navigating by tabbing has to be manually
+  // activated in Safari anyways.
+  @supports not (font: -apple-system-body) {
+    *:focus-visible {
+      anchor-name: --focus-anchor-header;
+    }
+
+    &:before {
+      @include flying-focus;
+
+      --flying-focus-border-color: var(--border-primary);
+
+      position-anchor: --focus-anchor-header;
+    }
+
+    &:has([class*="dark"]:not([class*="white"])):before {
+      --flying-focus-border-color: var(--border-primary-inverted);
+    }
+  }
 
   @include reduced-motion {
     transition: none;
@@ -99,25 +122,6 @@
     }
   }
 
-  *:focus-visible {
-    anchor-name: --focus-anchor-header;
-  }
-
-  // Flying Focus
-  &:before {
-    @include flying-focus;
-
-    position-anchor: --focus-anchor-header;
-  }
-
-  &[class*="dark"]:not([class*="white"]):has(:focus-visible):before {
-    --flying-focus-border-color: var(--flying-focus-border-color-inverted);
-  }
-
-  &:not(:has(:focus-visible)):before {
-    opacity: 0;
-  }
-
   &:not(.white) {
     @include font-smoothing;
   }
@@ -135,7 +139,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    z-index: 1;
+    z-index: 2;
     position: relative;
 
     @include mq($from: large) {
@@ -222,9 +226,6 @@
 
   .metanavWrapper {
     @include expandable-wrapper-visible;
-
-    position: relative;
-    z-index: 1;
   }
 
   .metanav {

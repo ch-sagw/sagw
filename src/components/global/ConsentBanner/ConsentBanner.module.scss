@@ -34,10 +34,6 @@
     position-anchor: --focus-anchor-consent-banner;
   }
 
-  &:not(:has(:focus-visible)):before {
-    opacity: 0;
-  }
-
   &[open]:not(.closing) {
     display: block;
     animation: slide-up-fade-in var(--motion-speed-very-fast) var(--motion-ease-in-out);

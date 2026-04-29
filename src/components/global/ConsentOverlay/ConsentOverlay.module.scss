@@ -29,10 +29,6 @@
     position-anchor: --focus-anchor-consent-overlay;
   }
 
-  &:not(:has(:focus-visible)):before {
-    opacity: 0;
-  }
-
   &[open]:not(.closing) {
     display: flex;
     animation: fade-in-overlay var(--motion-speed-very-fast) var(--motion-ease-in-out);
