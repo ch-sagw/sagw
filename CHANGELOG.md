@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.50.0](https://github.com/ch-sagw/sagw/compare/v0.49.0...v0.50.0) (2026-04-29)
+
+
+### Features
+
+* adding adidtional 308 redirects ([#1148](https://github.com/ch-sagw/sagw/issues/1148)) ([3e53d17](https://github.com/ch-sagw/sagw/commit/3e53d178ada1ec2c48cd7c2000eaedf2ff9f89a8))
+* implement proper preview draft/published buttons ([#1152](https://github.com/ch-sagw/sagw/issues/1152)) ([15fa1b5](https://github.com/ch-sagw/sagw/commit/15fa1b5b8bc0de0f5f05b96937b5b2de7cab4a40))
+
+
+### Bug Fixes
+
+* properly prefix mail address with mailto ([#1149](https://github.com/ch-sagw/sagw/issues/1149)) ([e187684](https://github.com/ch-sagw/sagw/commit/e1876848c021c9aa37520b99086c84ff3c91c2a9))
+
+
+### Style
+
+* fixing flying focus color change ([#1151](https://github.com/ch-sagw/sagw/issues/1151)) ([b0ded96](https://github.com/ch-sagw/sagw/commit/b0ded9600e326b550519c03094be1a553849ab44))
+
 ## [0.49.0](https://github.com/ch-sagw/sagw/compare/v0.48.1...v0.49.0) (2026-04-28)
 
 
