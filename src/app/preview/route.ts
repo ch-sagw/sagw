@@ -1,3 +1,5 @@
+// Preview route (preview button in payload)
+
 import {
   getPayload, type PayloadRequest,
 } from 'payload';
