@@ -19,19 +19,19 @@ main *:focus {
   }
 
   @include mq($from: ultra) {
-    --scroll-margin-block-start: 183;
+    --scroll-margin-block-start: 182;
   }
 
-  scroll-margin-block: px-to-rem(calc(var(--scroll-margin-block-start) + var(--spacing-xl)));
+  scroll-margin-block: px-to-rem(calc(var(--scroll-margin-block-start) + 32));
 }
 
 // Anchor based flying focus
-*:focus {
+*:focus-visible {
   anchor-name: --focus-anchor;
 }
 
 @supports (position-anchor: --test) {
-  *:focus {
+  *:focus-visible {
     outline: none;
   }
 }
@@ -51,8 +51,8 @@ html {
     @include flying-focus;
   }
 
-  &:has(header[class*="dark"]:not([class*="white"]):focus-within):before,
   &:has(footer:focus-within):before,
+  &:has(div[class*="hero"][class*="dark"]:focus-within):before,
   &:has(section[class*="dark"]:focus-within):before,
   &:has(div[class*="notification"][class*="dark"]:focus-within):before {
     --flying-focus-border-color: var(--flying-focus-border-color-inverted);
@@ -65,10 +65,6 @@ html {
   &:has(div[class*="notification"][class*="error"]:focus-within):before {
     --flying-focus-border-color: #b91c1c;
   }
-}
-
-html:not(:focus-within):before {
-  opacity: 0;
 }
 
 html.no-js figure > div:first-child img {

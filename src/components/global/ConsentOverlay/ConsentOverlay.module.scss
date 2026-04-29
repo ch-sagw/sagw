@@ -16,7 +16,7 @@
   justify-content: center;
   z-index: 999;
 
-  *:focus {
+  *:focus-visible {
     anchor-name: --focus-anchor-consent-overlay;
     outline: 0;
   }
@@ -29,7 +29,7 @@
     position-anchor: --focus-anchor-consent-overlay;
   }
 
-  &:not(:focus-within):before {
+  &:not(:has(:focus-visible)):before {
     opacity: 0;
   }
 

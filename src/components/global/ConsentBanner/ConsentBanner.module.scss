@@ -21,7 +21,7 @@
   max-height: none;
   z-index: 998;
 
-  *:focus {
+  *:focus-visible {
     anchor-name: --focus-anchor-consent-banner;
     outline: 0;
   }
@@ -34,7 +34,7 @@
     position-anchor: --focus-anchor-consent-banner;
   }
 
-  &:not(:focus-within):before {
+  &:not(:has(:focus-visible)):before {
     opacity: 0;
   }
 

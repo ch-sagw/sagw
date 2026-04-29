@@ -6,7 +6,7 @@
 .header {
   --margin-nav-bottom: 56;
 
-  position: sticky;
+  position: fixed;
   inset-block-start: 0;
   inset-inline-start: 0;
   width: 100%;
@@ -28,7 +28,7 @@
       transform: translateY(var(--meta-nav-height));
     }
 
-    &:before {
+    &:after {
       position: absolute;
       content: "";
       inset: 0;
@@ -99,11 +99,30 @@
     }
   }
 
+  *:focus-visible {
+    anchor-name: --focus-anchor-header;
+  }
+
+  // Flying Focus
+  &:before {
+    @include flying-focus;
+
+    position-anchor: --focus-anchor-header;
+  }
+
+  &[class*="dark"]:not([class*="white"]):has(:focus-visible):before {
+    --flying-focus-border-color: var(--flying-focus-border-color-inverted);
+  }
+
+  &:not(:has(:focus-visible)):before {
+    opacity: 0;
+  }
+
   &:not(.white) {
     @include font-smoothing;
   }
 
-  &.white:before {
+  &.white:after {
     background: white;
     transition-duration: var(--motion-speed-very-fast);
     transition-timing-function: var(--motion-ease-in);
@@ -117,6 +136,7 @@
     align-items: center;
     justify-content: space-between;
     z-index: 1;
+    position: relative;
 
     @include mq($from: large) {
       display: grid;
