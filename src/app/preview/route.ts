@@ -1,29 +1,25 @@
-// Preview route (preview button in payload)
+// Preview route (preview button in Payload)
 
 import {
-  getPayload, type PayloadRequest,
+  getPayload,
+  type PayloadRequest,
 } from 'payload';
 
 import { draftMode } from 'next/headers';
 import { redirect } from 'next/navigation';
+import type { NextRequest } from 'next/server';
 
 import configPromise from '@payload-config';
 import { routing } from '@/i18n/routing';
 
-export const GET = async (req: {
-    cookies: {
-      get: (name: string) => {
-        value: string
-      }
-    }
-  } & Request): Promise<Response | undefined> => {
+export const GET = async (request: NextRequest): Promise<Response> => {
   const payload = await getPayload({
     config: configPromise,
   });
 
   const {
     searchParams,
-  } = new URL(req.url);
+  } = new URL(request.url);
 
   const path = searchParams.get('path');
   const previewSecret = searchParams.get('previewSecret');
@@ -54,8 +50,8 @@ export const GET = async (req: {
 
   try {
     user = await payload.auth({
-      headers: req.headers,
-      req: req as unknown as PayloadRequest,
+      headers: request.headers,
+      req: request as unknown as PayloadRequest,
     });
   } catch (error) {
     payload.logger.error(
