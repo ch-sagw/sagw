@@ -25,12 +25,9 @@ export const runtime = 'nodejs';
 
 export const dynamic = 'force-dynamic';
 
-/**
- * Canonical **published** URL for this document (`preview`, `draft: false`),
- * then clears Next Draft Mode and redirects. Admin “published site” button.
- *
- * `GET /open-published?collection=&id=&locale=`
- */
+// published URL for this document (preview, draft: false),
+// then clears Next Draft Mode and redirects:
+// `GET /open-published?collection=&id=&locale=`
 export const GET = async (request: NextRequest): Promise<Response> => {
   const payload = await getPayload({
     config: configPromise,
