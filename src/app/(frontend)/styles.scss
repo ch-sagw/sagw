@@ -55,15 +55,15 @@ html {
   &:has(footer:focus-within):before,
   &:has(section[class*="dark"]:focus-within):before,
   &:has(div[class*="notification"][class*="dark"]:focus-within):before {
-    border-color: var(--flying-focus-border-color-inverted);
+    --flying-focus-border-color: var(--flying-focus-border-color-inverted);
   }
 
   &:has(div[class*="notification"][class*="warn"]:focus-within):before {
-    border-color: #c2410c;
+    --flying-focus-border-color: #c2410c;
   }
 
   &:has(div[class*="notification"][class*="error"]:focus-within):before {
-    border-color: #b91c1c;
+    --flying-focus-border-color: #b91c1c;
   }
 }
 
