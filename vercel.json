@@ -36,7 +36,9 @@
       "source": "ssa-sag/about-us",
       "destination": "https://www.sagw.ch/de/sslas",
       "permanent": true
-    },
+    }
+  ],
+  "rewrites": [
     {
       "source": "/svaw/:path*",
       "destination": "https://temp.sagw.ch/svaw/:path*",
