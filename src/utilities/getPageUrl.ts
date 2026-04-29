@@ -41,6 +41,10 @@ export interface InterfaceGetPageUrlParams {
   // If set, do not use tenant home when the locale has no path; see
   // HREF_LANG_NO_EXACT_PATH (for hreflang: treat as "omit alternate").
   omitMissingPath?: boolean;
+
+  // When true, resolve paths from draft documents (draft-preview button).
+  // Mutually exclusive with `usePublishedDocForPath`.
+  useDraftDocForPath?: boolean;
 }
 
 /** No exact URL in requested locale; used only with `omitMissingPath`. */
@@ -223,8 +227,30 @@ export const getPageUrl = async ({
   alternateLocaleForMissingPath = false,
   omitMissingPath = false,
   usePublishedDocForPath = false,
+  useDraftDocForPath = false,
 }: InterfaceGetPageUrlParams): Promise<string> => {
+  if (
+    usePublishedDocForPath &&
+    useDraftDocForPath
+  ) {
+    throw new Error('usePublishedDocForPath and useDraftDocForPath cannot both be true');
+  }
+
   let pathname: string;
+
+  let findDraftOptions: {
+    draft: boolean;
+  } | Record<string, never> = {};
+
+  if (usePublishedDocForPath) {
+    findDraftOptions = {
+      draft: false,
+    };
+  } else if (useDraftDocForPath) {
+    findDraftOptions = {
+      draft: true,
+    };
+  }
 
   const finish = (p: string): string => (p === HREF_LANG_NO_EXACT_PATH || !absolute
     ? p
@@ -241,11 +267,7 @@ export const getPageUrl = async ({
         const pageDoc = await payload.findByID({
           collection: collectionConfig.slug,
           depth: 1,
-          ...(usePublishedDocForPath
-            ? {
-              draft: false,
-            }
-            : {}),
+          ...findDraftOptions,
           id: pageId,
           locale: 'all',
         });
@@ -288,11 +310,7 @@ export const getPageUrl = async ({
         const pageDoc = await payload.findByID({
           collection: collectionSlug,
           depth: 1,
-          ...(usePublishedDocForPath
-            ? {
-              draft: false,
-            }
-            : {}),
+          ...findDraftOptions,
           id: pageId,
           locale: 'all',
         });
