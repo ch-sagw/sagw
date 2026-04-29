@@ -2,9 +2,9 @@
 
 import {
   Button,
-  LinkIcon,
-  PreviewButton,
+  ExternalLinkIcon,
   useDocumentInfo,
+  useLivePreviewContext,
   useLocale,
 } from '@payloadcms/ui';
 
@@ -36,12 +36,19 @@ const openPublishedHref = ({
   return `/open-published?${params.toString()}`;
 };
 
-const PreviewButtonWithExtra = (props: PreviewButtonClientProps): React.ReactElement => {
+export const PreviewButtonWithExtra: React.FunctionComponent<
+  PreviewButtonClientProps
+> = () => {
+
   const {
     isInitializing,
     collectionSlug,
     id,
   } = useDocumentInfo();
+
+  const {
+    previewURL,
+  } = useLivePreviewContext();
 
   const localeState = useLocale();
 
@@ -112,20 +119,41 @@ const PreviewButtonWithExtra = (props: PreviewButtonClientProps): React.ReactEle
 
   return (
     <div className='preview-btn-with-extra'>
-      <PreviewButton {...props} />
+      {previewURL
+        ? (
+          <Button
+            buttonStyle='secondary'
+            el='anchor'
+            icon={
+              <ExternalLinkIcon />
+            }
+            iconPosition='left'
+            id='preview-button'
+            newTab
+            size='small'
+            tooltip='Draft'
+            url={previewURL}
+          >
+            Draft
+          </Button>
+        )
+        : null}
       <Button
-        aria-label='Open published site in new tab'
+        aria-label='Preview published site in new tab'
         buttonStyle='secondary'
         disabled={Boolean(isInitializing) || !canOpenPublished}
         icon={
-          <LinkIcon />
+          <ExternalLinkIcon />
         }
+        iconPosition='left'
         id='page-edit-open-published-site'
         onClick={openPublishedSite}
         size='small'
-        tooltip='Open published live site (Draft Mode exits, correct URL)'
+        tooltip='Preview'
         type='button'
-      />
+      >
+        Preview
+      </Button>
     </div>
   );
 };
