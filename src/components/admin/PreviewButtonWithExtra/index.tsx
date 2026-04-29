@@ -41,9 +41,11 @@ export const PreviewButtonWithExtra: React.FunctionComponent<
 > = () => {
 
   const {
+    hasPublishedDoc,
     isInitializing,
     collectionSlug,
     id,
+    unpublishedVersionCount,
   } = useDocumentInfo();
 
   const {
@@ -91,6 +93,17 @@ export const PreviewButtonWithExtra: React.FunctionComponent<
     id !== null &&
     localeCode);
 
+  const hasDraftToPreview =
+    !hasPublishedDoc ||
+    unpublishedVersionCount > 0;
+
+  const publishedDisabled = Boolean(isInitializing ||
+    !canOpenPublished ||
+    !hasPublishedDoc);
+
+  const draftDisabled = Boolean(isInitializing ||
+    !hasDraftToPreview);
+
   const openPublishedSite = useCallback(() => {
     if (
       !collectionSlug ||
@@ -123,6 +136,7 @@ export const PreviewButtonWithExtra: React.FunctionComponent<
         ? (
           <Button
             buttonStyle='secondary'
+            disabled={draftDisabled}
             el='anchor'
             icon={
               <ExternalLinkIcon />
@@ -131,7 +145,9 @@ export const PreviewButtonWithExtra: React.FunctionComponent<
             id='preview-button'
             newTab
             size='small'
-            tooltip='Draft'
+            tooltip={draftDisabled
+              ? 'No draft to preview'
+              : 'Draft'}
             url={previewURL}
           >
             Draft
@@ -141,7 +157,7 @@ export const PreviewButtonWithExtra: React.FunctionComponent<
       <Button
         aria-label='Open published site in new tab'
         buttonStyle='secondary'
-        disabled={Boolean(isInitializing) || !canOpenPublished}
+        disabled={publishedDisabled}
         icon={
           <ExternalLinkIcon />
         }
@@ -149,7 +165,9 @@ export const PreviewButtonWithExtra: React.FunctionComponent<
         id='page-edit-open-published-site'
         onClick={openPublishedSite}
         size='small'
-        tooltip='Published'
+        tooltip={publishedDisabled
+          ? 'Not published'
+          : 'Published'}
         type='button'
       >
         Published
