@@ -12,11 +12,13 @@ export type InterfaceOtherPagesProps = {
 }
 
 export const fetchOtherPagesData = async ({
+  isDraftMode,
   locale,
   slugSegments,
   tenantId,
   depth,
 }: {
+  isDraftMode?: boolean;
   locale: TypedLocale;
   slugSegments: string[];
   tenantId: string;
@@ -27,6 +29,7 @@ export const fetchOtherPagesData = async ({
 } | null> => {
   const pageResult = await findPageByPath({
     depth: depth || 2,
+    isDraftMode,
     locale,
     slugSegments,
     tenantId,

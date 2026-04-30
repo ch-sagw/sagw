@@ -8,14 +8,12 @@ import { renderMeta } from '@/app/(frontend)/renderers/RenderMeta';
 import { getPageData } from '../../fetchers/pageData';
 import { runRedirectIfMatch } from '@/components/helpers/redirects';
 import { RenderNotFoundPage } from '@/app/(frontend)/renderers/RenderNotFoundPage';
+import { draftMode } from 'next/headers';
 
 // Intentionally empty: we no longer pre-render the pages at build time
 // since it's too time-consuming and expensive. static pages are killed
 // anyway after a single change in payload.
 export const generateStaticParams = (): { locale: TypedLocale; slug: string[] }[] => [];
-
-// export const revalidate = 1;
-// export const dynamic = 'force-dynamic';
 
 export const dynamic = 'force-static';
 
@@ -38,7 +36,12 @@ export default async function Page({
     slug,
   } = await params;
 
+  const {
+    isEnabled: isDraftMode,
+  } = await draftMode();
+
   const pageData = await getPageData({
+    isDraftMode,
     locale,
     slug,
   });

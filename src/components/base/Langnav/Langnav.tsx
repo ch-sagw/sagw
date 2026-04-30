@@ -100,12 +100,19 @@ export const Langnav = ({
       return;
     }
 
-    const height = measureElementHeight(expandableRef.current);
+    const expandableElement = expandableRef.current;
+    const computedStyle = window.getComputedStyle(expandableElement);
+    const paddingBlock =
+      (parseFloat(computedStyle.paddingBlockStart) || 0) +
+      (parseFloat(computedStyle.paddingBlockEnd) || 0);
+
+    const height = measureElementHeight(expandableElement) + paddingBlock;
 
     onHeightChangeAction?.(height);
   }, [
     onHeightChangeAction,
     expandableRef,
+    breakpoint,
   ]);
 
   // --- Helpers

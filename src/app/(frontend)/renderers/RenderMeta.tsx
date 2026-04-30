@@ -3,6 +3,7 @@
 import 'server-only';
 import { getTenantFromUrl } from '@/app/(frontend)/utilities/getTenantFromUrl';
 import { Metadata } from 'next';
+import { draftMode } from 'next/headers';
 import {
   fetchHomePageData, InterfaceHomePageProps,
 } from '@/app/(frontend)/fetchers/home';
@@ -137,6 +138,10 @@ export const renderMeta = async ({
   params,
   isHome,
 }: InterfaceHomePageProps | InterfaceOtherPagesProps): Promise<Metadata> => {
+  const {
+    isEnabled: isDraftMode,
+  } = await draftMode();
+
   let pageData;
   let tenantInfo;
   let locale;
@@ -156,6 +161,7 @@ export const renderMeta = async ({
     }
 
     const homePageData = await fetchHomePageData({
+      isDraftMode,
       locale,
       tenantId: tenantInfo.tenantId,
     });
@@ -183,6 +189,7 @@ export const renderMeta = async ({
       : [];
 
     const pageDataRaw = await getPageData({
+      isDraftMode,
       locale,
       slug,
     });

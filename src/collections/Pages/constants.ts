@@ -133,6 +133,13 @@ export const setsSlugs = [
   },
 ] satisfies InterfaceSlug[];
 
+// Page collections that resolve to a site URL via `preview` (draft: false)
+export const pageCollectionSlugsWithSiteUrl = [
+  ...setsSlugs.map((s) => s.slug),
+  ...singletonSlugs.filter((s) => s.slug !== 'errorPage')
+    .map((s) => s.slug),
+] satisfies CollectionSlug[];
+
 export const globalCollectionsSlugs: InterfaceSlug[] = [
   {
     displayName: 'i18n Globals',

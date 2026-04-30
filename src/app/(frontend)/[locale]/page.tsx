@@ -11,9 +11,7 @@ import {
   fetchHomePageData, InterfaceHomePageProps,
 } from '@/app/(frontend)/fetchers/home';
 import { renderMeta } from '@/app/(frontend)/renderers/RenderMeta';
-
-// export const revalidate = 1;
-// export const dynamic = 'force-dynamic';
+import { draftMode } from 'next/headers';
 
 export const dynamic = 'force-static';
 
@@ -43,6 +41,10 @@ export default async function HomePage({
     locale,
   } = await params;
 
+  const {
+    isEnabled: isDraftMode,
+  } = await draftMode();
+
   const tenantInfo = await getTenantFromUrl(undefined);
 
   if (!tenantInfo.tenantId) {
@@ -50,6 +52,7 @@ export default async function HomePage({
   }
 
   const homePageData = await fetchHomePageData({
+    isDraftMode,
     locale,
     tenantId: tenantInfo.tenantId,
   });

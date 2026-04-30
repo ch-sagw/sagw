@@ -273,7 +273,6 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
   // reset navigation heights when breakpoint changes
   useEffect(() => {
     setNavMaxHeight(0);
-    setLangNavMaxHeight(0);
     setMobileMenuOpen(false);
 
     initialNavHeightRef.current = null;

@@ -137,6 +137,7 @@ jobs:
           ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
           RESEND_KEY: ${{ secrets.RESEND_KEY }}
           BREVO_TOKEN: ${{ secrets.BREVO_TOKEN }}
+          PREVIEW_SECRET: ${{ secrets.PREVIEW_SECRET }}
           NEXT_PUBLIC_ENABLE_AUTOLOGIN: true
           ENV: playwright
           NEXT_PUBLIC_TRACKING_SITE_ID: ${{ secrets.NEXT_PUBLIC_TRACKING_SITE_ID_PLAYWRIGHT }}

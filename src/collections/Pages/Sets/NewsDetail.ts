@@ -15,7 +15,8 @@ import { genericPageFields } from '@/field-templates/genericPageFields';
 import { pageAccess } from '@/access/pages';
 import { allBlocksButTranslator } from '@/access/blocks';
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
-import { preview } from '@/utilities/previewUrl';
+import { pagePreviewEditComponents } from '@/field-templates/pagePreviewEditComponents';
+import { preview as resolvePreviewUrl } from '@/utilities/previewUrl';
 
 const contentBlocks: BlockSlug[] = [
   'textBlock',
@@ -33,9 +34,14 @@ const uniqueBlocks: BlockSlug[] = [
   'newsTeasersBlock',
 ];
 
+const pageCollectionSlug = 'newsDetailPage';
+
 export const NewsDetailPage: CollectionConfig = {
   access: pageAccess,
   admin: {
+    components: {
+      edit: pagePreviewEditComponents,
+    },
     defaultColumns: [
       'adminTitle',
       'slug',
@@ -44,7 +50,14 @@ export const NewsDetailPage: CollectionConfig = {
     ],
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
-    preview,
+    preview: (
+      doc,
+      options,
+    ) => resolvePreviewUrl(doc, {
+      ...options,
+      collection: pageCollectionSlug,
+      draft: true,
+    }),
     useAsTitle: fieldAdminTitleFieldName,
   },
   fields: [
@@ -129,6 +142,6 @@ export const NewsDetailPage: CollectionConfig = {
     singular: 'News Detail',
   },
   lockDocuments,
-  slug: 'newsDetailPage',
+  slug: pageCollectionSlug,
   versions,
 };

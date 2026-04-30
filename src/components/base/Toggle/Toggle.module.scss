@@ -140,11 +140,5 @@
     &:checked:after {
       inset-inline-start: px-to-rem(calc(var(--checkbox-width) - var(--handle-dimensions) - var(--border-width)));
     }
-
-    &:focus-visible {
-      @include focus-visible;
-
-      outline-offset: px-to-rem(var(--spacing-2xs));
-    }
   }
 }

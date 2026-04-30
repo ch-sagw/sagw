@@ -11,9 +11,11 @@ export type InterfaceHomePageProps = {
 }
 
 export const fetchHomePageData = async ({
+  isDraftMode,
   locale,
   tenantId,
 }: {
+  isDraftMode?: boolean;
   locale: TypedLocale;
   tenantId: string;
 }): Promise<InterfacePreFetchedHomePageData | null> => {
@@ -24,6 +26,7 @@ export const fetchHomePageData = async ({
 
     // necessary to get image url in meta
     depth: 2,
+    draft: isDraftMode,
     limit: 1,
     locale,
     where: {
@@ -33,13 +36,17 @@ export const fetchHomePageData = async ({
             equals: tenantId,
           },
         },
-        {
-          /* eslint-disable @typescript-eslint/naming-convention */
-          _status: {
-            equals: 'published',
-          },
-          /* eslint-enable @typescript-eslint/naming-convention */
-        },
+        ...(isDraftMode
+          ? []
+          : [
+            {
+              /* eslint-disable @typescript-eslint/naming-convention */
+              _status: {
+                equals: 'published',
+              },
+              /* eslint-enable @typescript-eslint/naming-convention */
+            },
+          ]),
       ],
     },
   });

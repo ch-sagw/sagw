@@ -4,10 +4,71 @@
   box-sizing: border-box;
 }
 
+main *:target,
+main *:focus {
+  @include mq($to: medium) {
+    --scroll-margin-block-start: 96;
+  }
+
+  @include mq($from: medium, $to: large) {
+    --scroll-margin-block-start: 112;
+  }
+
+  @include mq($from: large) {
+    --scroll-margin-block-start: 180;
+  }
+
+  @include mq($from: ultra) {
+    --scroll-margin-block-start: 183;
+  }
+
+  scroll-margin-block: px-to-rem(calc(var(--scroll-margin-block-start) + var(--spacing-xl)));
+}
+
+// Anchor based flying focus
+*:focus {
+  anchor-name: --focus-anchor;
+}
+
+@supports (position-anchor: --test) {
+  *:focus {
+    outline: none;
+  }
+}
+
 html {
   font-size: 100%;
   scrollbar-gutter: stable;
-  scroll-padding-block-start: px-to-rem(var(--hero-padding-block-start) + var(--spacing-xl));
+
+  --flying-focus-border-color: #1e3241;
+  --flying-focus-border-color-inverted: #fff;
+
+  &:has(body:not(.theme-sagw)) {
+    --flying-focus-border-color: #000;
+  }
+
+  &:before {
+    @include flying-focus;
+  }
+
+  &:has(header[class*="dark"]:not([class*="white"]):focus-within):before,
+  &:has(footer:focus-within):before,
+  &:has(section[class*="dark"]:focus-within):before,
+  &:has(div[class*="notification"][class*="dark"]:focus-within):before {
+    --flying-focus-border-color: var(--flying-focus-border-color-inverted);
+  }
+
+  &:has(div[class*="notification"][class*="warn"]:focus-within):before {
+    --flying-focus-border-color: #c2410c;
+  }
+
+  &:has(div[class*="notification"][class*="error"]:focus-within):before {
+    --flying-focus-border-color: #b91c1c;
+  }
+}
+
+html:not(:focus-within):before {
+  opacity: 0;
 }
 
 html.no-js figure > div:first-child img {

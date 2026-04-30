@@ -23,6 +23,10 @@ export interface InterfaceGetPageUrlParams {
   locale: Config['locale'];
   absolute?: boolean;
 
+  // When true (e.g. published-site URL after draft edits), resolve path from
+  // published snapshots so breadcrumbs are not emptied by draft parents.
+  usePublishedDocForPath?: boolean;
+
   // If true, when the page has no valid URL path in `locale` (e.g. no slug
   // for that locale), try the default locale and other locales in order so
   // the link matches i18n field fallback, instead of the tenant home in
@@ -37,6 +41,10 @@ export interface InterfaceGetPageUrlParams {
   // If set, do not use tenant home when the locale has no path; see
   // HREF_LANG_NO_EXACT_PATH (for hreflang: treat as "omit alternate").
   omitMissingPath?: boolean;
+
+  // When true, resolve paths from draft documents (draft-preview button).
+  // Mutually exclusive with `usePublishedDocForPath`.
+  useDraftDocForPath?: boolean;
 }
 
 /** No exact URL in requested locale; used only with `omitMissingPath`. */
@@ -218,8 +226,31 @@ export const getPageUrl = async ({
   absolute = true,
   alternateLocaleForMissingPath = false,
   omitMissingPath = false,
+  usePublishedDocForPath = false,
+  useDraftDocForPath = false,
 }: InterfaceGetPageUrlParams): Promise<string> => {
+  if (
+    usePublishedDocForPath &&
+    useDraftDocForPath
+  ) {
+    throw new Error('usePublishedDocForPath and useDraftDocForPath cannot both be true');
+  }
+
   let pathname: string;
+
+  let findDraftOptions: {
+    draft: boolean;
+  } | Record<string, never> = {};
+
+  if (usePublishedDocForPath) {
+    findDraftOptions = {
+      draft: false,
+    };
+  } else if (useDraftDocForPath) {
+    findDraftOptions = {
+      draft: true,
+    };
+  }
 
   const finish = (p: string): string => (p === HREF_LANG_NO_EXACT_PATH || !absolute
     ? p
@@ -236,6 +267,7 @@ export const getPageUrl = async ({
         const pageDoc = await payload.findByID({
           collection: collectionConfig.slug,
           depth: 1,
+          ...findDraftOptions,
           id: pageId,
           locale: 'all',
         });
@@ -244,6 +276,7 @@ export const getPageUrl = async ({
           const breadcrumb = await buildBreadcrumbsForDoc({
             doc: pageDoc as unknown as Record<string, unknown>,
             payload,
+            usePublishedParents: usePublishedDocForPath,
           });
 
           return generatePageUrl({
@@ -277,6 +310,7 @@ export const getPageUrl = async ({
         const pageDoc = await payload.findByID({
           collection: collectionSlug,
           depth: 1,
+          ...findDraftOptions,
           id: pageId,
           locale: 'all',
         });
@@ -285,6 +319,7 @@ export const getPageUrl = async ({
           const breadcrumb = await buildBreadcrumbsForDoc({
             doc: pageDoc as unknown as Record<string, unknown>,
             payload,
+            usePublishedParents: usePublishedDocForPath,
           });
           const url = urlForSingletonPage({
             alternateLocaleForMissingPath,
