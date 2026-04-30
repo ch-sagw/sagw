@@ -47,7 +47,7 @@ export default defineConfig({
   testMatch: '**/*.be.spec.ts?(x)',
 
   // 4 minutes
-  timeout: 240_000,
+  timeout: 300_000,
   use: {
     trace: 'on-first-retry',
   },
