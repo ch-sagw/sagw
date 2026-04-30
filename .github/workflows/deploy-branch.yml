@@ -103,11 +103,18 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Debug shard + list BE tests
+      - name: Log BE test counts (total + this shard)
         run: |
-          echo "SHARD=$SHARD_INDEX/$SHARD_TOTAL"
+          set -euo pipefail
           npm run generate:pages:collections
-          npx playwright test -c playwright-be.config.ts --shard="$SHARD_INDEX/$SHARD_TOTAL" --list
+          echo "--- BE Playwright discovery (no shard) ---"
+          LIST_ALL="$(npx playwright test -c playwright-be.config.ts --list 2>/dev/null)"
+          TOTAL="$(printf '%s\n' "$LIST_ALL" | grep '›' | wc -l | tr -d ' ')"
+          echo "BE tests total (all shards): ${TOTAL}"
+          echo "--- BE Playwright discovery (this shard only) ---"
+          LIST_SHARD="$(npx playwright test -c playwright-be.config.ts --shard="$SHARD_INDEX/$SHARD_TOTAL" --list 2>/dev/null)"
+          SHARD_N="$(printf '%s\n' "$LIST_SHARD" | grep '›' | wc -l | tr -d ' ')"
+          echo "Shard ${SHARD_INDEX}/${SHARD_TOTAL} sees ${SHARD_N} test(s)"
         env:
           SHARD_INDEX: ${{ matrix.shardIndex }}
           SHARD_TOTAL: ${{ matrix.shardTotal }}
