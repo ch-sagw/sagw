@@ -1,16 +1,22 @@
-import { test } from '@playwright/test';
+import {
+  expect, test,
+} from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
-
-/* eslint-disable max-len */
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
+import { getPayloadCached } from '@/utilities/getPayloadCached';
+import { getTenantId } from '@/test-helpers/tenant-generator';
+import {
+  generateDetailPage, getHomeId,
+} from '@/test-helpers/collections-generator';
+import { sampleRteWithSofthyphen } from '@/utilities/rteSampleContent';
 
 test.describe('Softhyphen', () => {
   beforeEachPayloadLogin();
   beforeEachAcceptCookies();
 
-  // TODO: find stable solution. succeeds locally, fails on CI
-
-  /*
   test('correctly displays in hero field', async ({
     page,
   }) => {
@@ -98,21 +104,17 @@ test.describe('Softhyphen', () => {
       .toBe('unicode-char-shy');
 
   });
-  */
 
-  /*
   test('correctly displays in textblock', async ({
     page,
   }) => {
     await deleteSetsPages();
     await deleteOtherCollections();
 
-    await page.goto('
-    http://localhost:3000/admin/collections/detailPage/create');
+    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
     await page.waitForLoadState('networkidle');
 
-    const heroField = await page.locator('
-    #field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
+    const heroField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
       .nth(0);
 
     await heroField.fill('detailpagetitle');
@@ -129,13 +131,14 @@ test.describe('Softhyphen', () => {
 
     await addTextBlockButton.click();
 
+    // add a second text block to make sure the previous has loaded
+    await addContentButton.click();
+    await addTextBlockButton.click();
+
     const rteField = await page.locator('#content-row-0 .blocks-field__row');
-    const fieldToScreenshot = await rteField.locator('
-    .LexicalEditorTheme__paragraph');
-    const rteInputField = await rteField.locator('
-    .rich-text-lexical .ContentEditable__root');
-    const hyphenButton = await rteField.locator('
-    .rich-text-lexical .toolbar-popup__button-softHyphenButton');
+    const fieldToScreenshot = await rteField.locator('.LexicalEditorTheme__paragraph');
+    const rteInputField = await rteField.locator('.rich-text-lexical .ContentEditable__root');
+    const hyphenButton = await rteField.locator('.rich-text-lexical .toolbar-popup__button-softHyphenButton');
 
     await rteInputField.fill('detailpagetitle');
     await hyphenButton.click();
@@ -178,114 +181,62 @@ test.describe('Softhyphen', () => {
     await saveButton.click();
 
     // wait for confirmation toast and close it
-    const closeToast = await page.locator('
-    .payload-toast-container [data-close-button="true"]');
+    const closeToast = await page.locator('.payload-toast-container [data-close-button="true"]');
 
     await closeToast.click();
-
-    // add another block to make sure that previous has finished loading
-    await addContentButton.click();
-
-    const addTextBlockButton2 = (await page.getByText('Richtext', {
-      exact: true,
-    })).nth(1);
-
-    await addTextBlockButton2.click();
 
     await expect(fieldToScreenshot)
       .toHaveScreenshot();
   });
-  */
 
-  /*
   test('correctly renders in frontend', async ({
     page,
   }) => {
     await deleteSetsPages();
     await deleteOtherCollections();
 
-    await page.goto('http://localhost:3000/admin/collections/detailPage/create');
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    const detailPage = await generateDetailPage({
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      title: `detail-${time}`,
+    });
+
+    await payload.update({
+      collection: 'detailPage',
+      data: {
+        content: [
+          {
+            blockType: 'textBlock',
+            text: sampleRteWithSofthyphen,
+          },
+        ],
+        hero: {
+          title: sampleRteWithSofthyphen,
+        },
+      },
+      id: detailPage.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/detail-${time}`);
     await page.waitForLoadState('networkidle');
 
-    const rteField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
-      .nth(0);
-    const hyphenButton = await page.locator('#field-hero .rich-text-lexical:first-of-type .toolbar-popup__button-softHyphenButton');
-
-    await rteField.fill('detailpagetitle');
-    await hyphenButton.click();
-    await rteField.pressSequentially('bar');
-
-    const navigationTitle = await page.locator('#field-navigationTitle');
-    const parentPage = await page.locator('#field-parentPage');
-    const sidebar = await page.locator('.document-fields__sidebar-fields');
-
-    await navigationTitle.fill('nav title');
-    await parentPage.click();
-
-    const homePageParentPage = await sidebar.getByText('Home Page');
-
-    await homePageParentPage.click();
-
-    const metaTab = await page.getByText('Meta', {
-      exact: true,
-    });
-
-    const contentTab = await page.getByText('Content', {
-      exact: true,
-    });
-
-    await metaTab.click();
-
-    const metaTitle = await page.locator('#field-meta__seo__title');
-    const metaDescription = await page.locator('#field-meta__seo__description');
-
-    await metaTitle.fill('foo');
-    await metaDescription.fill('foo');
-
-    await contentTab.click();
-
-    // save
-    const saveButton = await page.getByRole('button', {
-      name: 'Publish changes',
-    });
-
-    await saveButton.click();
-
-    const addContentButton = await page.getByText('Add Content', {
-      exact: true,
-    });
-
-    await addContentButton.click();
-
-    const addTextBlockButton = await page.getByText('Richtext', {
-      exact: true,
-    });
-
-    await addTextBlockButton.click();
-
-    await page.waitForLoadState('networkidle');
-
-    const rteField2 = await page.locator('#field-content .blocks-field__row');
-    const rteInputField2 = await rteField2.locator('.rich-text-lexical .ContentEditable__root');
-    const hyphenButton2 = await rteField2.locator('.rich-text-lexical .toolbar-popup__button-softHyphenButton');
-
-    await rteInputField2.fill('detailpagetitle');
-    await hyphenButton2.click();
-    await rteInputField2.pressSequentially('bar');
-
-    // save
-    await saveButton.click();
-
-    // wait for confirmation toast and close it
-    const closeToast = await page.locator('.payload-toast-container [data-close-button="true"]')
-      .nth(0);
-
-    await closeToast.click();
-
-    await page.goto('http://localhost:3000/de/detailpagetitlebar');
-    await page.waitForLoadState('networkidle');
-
-    const texts = await page.getByText('detailpagetitlebar');
+    const texts = await page.getByText('detailpage');
 
     const titleText = await texts.nth(0)
       .textContent();
@@ -293,10 +244,10 @@ test.describe('Softhyphen', () => {
       .textContent();
 
     await expect(titleText)
-      .toMatch(/detailpagetitle\u00ADbar/u);
+      .toMatch(/detailpage\u00ADbar/u);
     await expect(rteText)
-      .toMatch(/detailpagetitle\u00ADbar/u);
+      .toMatch(/detailpage\u00ADbar/u);
 
   });
-  */
+
 });

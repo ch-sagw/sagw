@@ -3555,3 +3555,109 @@ export const sampleRteWithLink = ({
     version: 1,
   },
 });
+
+// Example with nbsp
+export const sampleRteWithNbsp: InterfaceRte = {
+  root: {
+
+    children: [
+
+      {
+
+        children: [
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'detailpage',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: ' ',
+            type: 'unicode-char-nbsp',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'bar',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: null,
+        format: '',
+        indent: 0,
+        textFormat: 0,
+        textStyle: '',
+        type: 'paragraph',
+        version: 1,
+      },
+    ],
+    direction: null,
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+};
+
+// Example with softhyphen
+export const sampleRteWithSofthyphen: InterfaceRte = {
+  root: {
+
+    children: [
+
+      {
+
+        children: [
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'detailpage',
+            type: 'text',
+            version: 1,
+          },
+
+          {
+            text: ' ',
+            type: 'unicode-char-shy',
+            version: 1,
+          },
+
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: 'bar',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: null,
+        format: '',
+        indent: 0,
+        textFormat: 0,
+        textStyle: '',
+        type: 'paragraph',
+        version: 1,
+      },
+    ],
+    direction: null,
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+};

@@ -5,31 +5,43 @@ import {
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 import {
   deleteOtherCollections, deleteSetsPages,
+  deleteTenants,
 } from '@/seed/test-data/deleteData';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import {
-  getTenant, getTenantNonSagw,
+  generateTenant,
+  getTenant,
 } from '@/test-helpers/tenant-generator';
 import {
   generateAllPageTypes, generateCollectionsExceptPages,
+  generateHomePage,
 } from '@/test-helpers/collections-generator';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
+import { Tenant } from '@/payload-types';
 
 test.describe('Tenants only show content from users tenant', () => {
   beforeEachPayloadLogin();
   beforeEachAcceptCookies();
 
+  const time = (new Date())
+    .getTime();
+  let tenant: string;
+  let tenantNonSagw: Tenant;
+
   test.beforeEach(async () => {
 
     // delete data
     await deleteSetsPages();
+    await deleteTenants();
+    await deleteOtherCollections();
 
     // add generic data
     const payload = await getPayloadCached();
-    const tenant = await getTenant();
-    const tenantNonSagw = await getTenantNonSagw();
-    const time = (new Date())
-      .getTime();
+
+    tenant = await getTenant() || '';
+    tenantNonSagw = await generateTenant({
+      slug: `tenant-${time}`,
+    });
 
     const home = await payload.find({
       collection: 'homePage',
@@ -40,13 +52,11 @@ test.describe('Tenants only show content from users tenant', () => {
       },
     });
 
-    const homeNonSagw = await payload.find({
-      collection: 'homePage',
-      where: {
-        tenant: {
-          equals: tenantNonSagw,
-        },
-      },
+    const homeNonSagw = await generateHomePage({
+      locale: 'de',
+      sideTitle: 'bar',
+      tenant: tenantNonSagw.id,
+      title: 'foo',
     });
 
     await generateAllPageTypes({
@@ -57,9 +67,9 @@ test.describe('Tenants only show content from users tenant', () => {
     });
 
     await generateAllPageTypes({
-      home: homeNonSagw.docs[0].id,
+      home: homeNonSagw.id,
       iterator: 2,
-      tenant: tenantNonSagw || '',
+      tenant: tenantNonSagw.id,
       time,
     });
 
@@ -72,7 +82,7 @@ test.describe('Tenants only show content from users tenant', () => {
 
     await generateCollectionsExceptPages({
       isSagw: false,
-      tenant: tenantNonSagw || '',
+      tenant: tenantNonSagw.id,
     });
 
   });
@@ -80,13 +90,7 @@ test.describe('Tenants only show content from users tenant', () => {
   test('images', async ({
     page,
   }) => {
-    const tenant = await getTenant();
-    const tenantNonSagw = await getTenantNonSagw();
     const payload = await getPayloadCached();
-    const time = (new Date())
-      .getTime();
-
-    await deleteOtherCollections();
 
     await payload.create({
       collection: 'images',
@@ -103,7 +107,7 @@ test.describe('Tenants only show content from users tenant', () => {
       collection: 'images',
       data: {
         alt: `image not-sagw ${time}`,
-        tenant: tenantNonSagw,
+        tenant: tenantNonSagw.id,
       },
       filePath: 'src/seed/test-data/assets/not-sagw.png',
       locale: 'de',
@@ -346,6 +350,23 @@ test.describe('Tenants only show content from users tenant', () => {
       .toBeVisible();
     await expect(feIt)
       .toBeVisible();
+
+    // reset tenant languages
+    // ensure french is enabled lang on tenant
+    const payload = await getPayloadCached();
+
+    await payload.update({
+      collection: 'tenants',
+      data: {
+        languages: {
+          de: true,
+          en: true,
+          fr: true,
+          it: true,
+        },
+      },
+      id: tenant,
+    });
 
   });
 
