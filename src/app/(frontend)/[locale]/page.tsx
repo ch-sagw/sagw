@@ -8,7 +8,7 @@ import { getLocaleCodes } from '@/i18n/payloadConfig';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import {
-  fetchHomePageData, InterfaceHomePageProps,
+  fetchHomePageData, HomePageRouteProps,
 } from '@/app/(frontend)/fetchers/home';
 import { renderMeta } from '@/app/(frontend)/renderers/RenderMeta';
 import { draftMode } from 'next/headers';
@@ -25,7 +25,7 @@ export const generateStaticParams = (): { locale: TypedLocale }[] => {
 
 export const generateMetadata = async ({
   params,
-}: InterfaceHomePageProps): Promise<Metadata> => {
+}: HomePageRouteProps): Promise<Metadata> => {
   const meta = await renderMeta({
     isHome: true,
     params,
@@ -36,7 +36,7 @@ export const generateMetadata = async ({
 
 export default async function HomePage({
   params,
-}: InterfaceHomePageProps): Promise<React.JSX.Element> {
+}: HomePageRouteProps): Promise<React.JSX.Element> {
   const {
     locale,
   } = await params;

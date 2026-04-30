@@ -3,12 +3,16 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { InterfacePreFetchedHomePageData } from '@/app/(frontend)/renderers/RenderPage';
 import { getPageUrl } from '@/utilities/getPageUrl';
 
-export type InterfaceHomePageProps = {
+/** Props Next passes into `[locale]/page` — no app-only fields. */
+export type HomePageRouteProps = {
   params: Promise<{
-    locale: TypedLocale
-  }>
+    locale: TypedLocale;
+  }>;
+};
+
+export type InterfaceHomePageProps = HomePageRouteProps & {
   isHome: boolean;
-}
+};
 
 export const fetchHomePageData = async ({
   isDraftMode,

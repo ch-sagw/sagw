@@ -3,13 +3,17 @@ import {
 } from 'payload';
 import { findPageByPath } from '@/app/(frontend)/utilities/findPageByPath';
 
-export type InterfaceOtherPagesProps = {
+/** Props Next passes into `[locale]/[...slug]/page` — no app-only fields. */
+export type OtherPagesRouteProps = {
   params: Promise<{
     locale: TypedLocale;
     slug: string[];
   }>;
+};
+
+export type InterfaceOtherPagesProps = OtherPagesRouteProps & {
   isHome: boolean;
-}
+};
 
 export const fetchOtherPagesData = async ({
   isDraftMode,

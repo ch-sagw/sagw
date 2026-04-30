@@ -2,7 +2,7 @@ import 'server-only';
 import React from 'react';
 import { TypedLocale } from 'payload';
 import { RenderPage } from '@/app/(frontend)/renderers/RenderPage';
-import { InterfaceOtherPagesProps } from '@/app/(frontend)/fetchers/otherPages';
+import { OtherPagesRouteProps } from '@/app/(frontend)/fetchers/otherPages';
 import { Metadata } from 'next';
 import { renderMeta } from '@/app/(frontend)/renderers/RenderMeta';
 import { getPageData } from '../../fetchers/pageData';
@@ -19,7 +19,7 @@ export const dynamic = 'force-static';
 
 export const generateMetadata = async ({
   params,
-}: InterfaceOtherPagesProps): Promise<Metadata> => {
+}: OtherPagesRouteProps): Promise<Metadata> => {
   const meta = await renderMeta({
     isHome: false,
     params,
@@ -30,7 +30,7 @@ export const generateMetadata = async ({
 
 export default async function Page({
   params,
-}: InterfaceOtherPagesProps): Promise<React.JSX.Element> {
+}: OtherPagesRouteProps): Promise<React.JSX.Element> {
   const {
     locale,
     slug,
