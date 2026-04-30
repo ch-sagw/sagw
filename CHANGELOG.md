@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.51.0](https://github.com/ch-sagw/sagw/compare/v0.50.0...v0.51.0) (2026-04-30)
+
+
+### Chore
+
+* add more meaningful fields in payload overviews ([#1167](https://github.com/ch-sagw/sagw/issues/1167)) ([63dcbeb](https://github.com/ch-sagw/sagw/commit/63dcbeb8a7f7202d53d0ea97e938861da10abf8d))
+
+
+### Features
+
+* adapting flying focus and header behaviour again ([97ff198](https://github.com/ch-sagw/sagw/commit/97ff198103d35ec22f7164ac18bdae74f2b93e52))
+* adding permanent redirect from root to /de ([#1165](https://github.com/ch-sagw/sagw/issues/1165)) ([37ffb18](https://github.com/ch-sagw/sagw/commit/37ffb184b0b5962a38d6bdcf9ce16e3e4ee110a8))
+
+
+### Bug Fixes
+
+* make sure tenants render correct preview url's ([e338130](https://github.com/ch-sagw/sagw/commit/e33813017e5c8a08ca5908a10c27d8cc04253f73))
+
+
+### Test
+
+* add test for correctly opening preview draft/published ([e338130](https://github.com/ch-sagw/sagw/commit/e33813017e5c8a08ca5908a10c27d8cc04253f73))
+
 ## [0.50.0](https://github.com/ch-sagw/sagw/compare/v0.49.0...v0.50.0) (2026-04-29)
 
 
