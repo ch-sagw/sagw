@@ -6,14 +6,41 @@
 .header {
   --margin-nav-bottom: 56;
 
-  position: sticky;
+  position: fixed;
   inset-block-start: 0;
   inset-inline-start: 0;
   width: 100%;
   padding: px-to-rem(var(--grid-margin));
   transition-duration: var(--motion-speed-fast);
   transition-timing-function: var(--motion-ease-out);
-  z-index: 2;
+  z-index: 100;
+
+  // The supports query is needed to temporarily
+  // deactivate Flying Focus for Safari
+  // due to ugly repainting issue in navigation.
+  // Navigating by tabbing has to be manually
+  // activated in Safari anyways.
+  @supports not (font: -apple-system-body) {
+    *:focus-visible {
+      anchor-name: --focus-anchor-header;
+    }
+
+    &:before {
+      @include flying-focus;
+
+      --flying-focus-border-color: var(--border-primary);
+
+      position-anchor: --focus-anchor-header;
+    }
+
+    &:has([class*="dark"]:not([class*="white"])):before {
+      --flying-focus-border-color: var(--border-primary-inverted);
+    }
+
+    &:not(:focus-within):before {
+      opacity: 0;
+    }
+  }
 
   @include reduced-motion {
     transition: none;
@@ -28,7 +55,7 @@
       transform: translateY(var(--meta-nav-height));
     }
 
-    &:before {
+    &:after {
       position: absolute;
       content: "";
       inset: 0;
@@ -92,18 +119,18 @@
     &.white {
       background-color: white;
     }
+  }
 
-    // Needed for visual tests
-    &.dark:has(+ p) {
-      background-color: var(--background-inverted);
-    }
+  // Needed for visual tests
+  &.dark:has(+ p) {
+    background-color: var(--background-inverted);
   }
 
   &:not(.white) {
     @include font-smoothing;
   }
 
-  &.white:before {
+  &.white:after {
     background: white;
     transition-duration: var(--motion-speed-very-fast);
     transition-timing-function: var(--motion-ease-in);
@@ -116,7 +143,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    z-index: 1;
+    z-index: 2;
+    position: relative;
 
     @include mq($from: large) {
       display: grid;
@@ -124,6 +152,10 @@
       column-gap: px-to-rem(var(--grid-gutter));
       align-items: baseline;
       margin-block-start: px-to-rem(var(--spacing-l));
+
+      &:first-child {
+        margin-block-start: 0;
+      }
     }
 
     .logoWrapperInner {
@@ -211,6 +243,8 @@
 
     @include mq($from: large) {
       margin-block-end: 0;
+      position: relative;
+      z-index: 2;
     }
   }
 

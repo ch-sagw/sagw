@@ -19,7 +19,7 @@
   }
 
   @include mq($from: ultra) {
-    --hero-padding-block-start-fallback: 183;
+    --hero-padding-block-start-fallback: 182;
   }
 
   position: relative;
@@ -32,7 +32,6 @@
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     column-gap: px-to-rem(var(--grid-gutter));
-    margin-block-start: px-to-rem(var(--hero-padding-block-start-fallback), true);
   }
 
   &.dark {
