@@ -218,12 +218,11 @@ export const renderMeta = async ({
     seoImage = meta.image as Image;
   }
 
+  seoIndex = false;
+
   if (meta.index && process.env.ENV === 'prod') {
     seoIndex = meta.index;
   }
-
-  // remove before go-live: https://github.com/ch-sagw/sagw/issues/782
-  seoIndex = false;
 
   const tenantName = await getTenantById({
     id: tenantInfo.tenantId,
