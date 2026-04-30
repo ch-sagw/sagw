@@ -1,11 +1,13 @@
-// TODO: temporary disabled since flaky
-
-/*
 import {
   expect,
   test,
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
+import {
+  deleteOtherCollections, deleteSetsPages,
+} from '@/seed/test-data/deleteData';
+import { getTenantId } from '@/test-helpers/tenant-generator';
+import { generateForm } from '@/test-helpers/collections-generator';
 
 test.describe('forms', () => {
   beforeEachPayloadLogin();
@@ -13,66 +15,52 @@ test.describe('forms', () => {
   test('correctly derives name from label', async ({
     page,
   }) => {
-    // create a form
-    await page.goto('http://localhost:3000/admin/collections/forms/create');
 
-    // fill global fields
-    const title = await page.locator('.ContentEditable__root')
-      .nth(0);
-    const buttonLabel = await page.locator('#field-submitButtonLabel');
-    const recipientMail = await page.locator('#field-recipientMail');
-    const subject = await page.locator('#field-mailSubject');
+    await deleteSetsPages();
+    await deleteOtherCollections();
 
-    const successBlock = await page.locator('#field-submitSuccess');
-    const errorBlock = await page.locator('#field-submitError');
+    const time = (new Date())
+      .getTime();
 
-    const successTitle = await successBlock.locator('.rich-text-lexical')
-      .nth(0)
-      .locator('.ContentEditable__root');
-    const successText = await successBlock.locator('.rich-text-lexical')
-      .nth(1)
-      .locator('.ContentEditable__root');
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+    const form = await generateForm(tenant);
 
-    const errorTitle = await errorBlock.locator('.rich-text-lexical')
-      .nth(0)
-      .locator('.ContentEditable__root');
-    const errorText = await errorBlock.locator('.rich-text-lexical')
-      .nth(1)
-      .locator('.ContentEditable__root');
+    await page.goto(`http://localhost:3000/admin/collections/forms/${form}`);
+    await page.waitForLoadState('networkidle');
 
-    await title.fill('title');
-    await buttonLabel.fill('button label');
-    await recipientMail.fill('foo@bar.com');
-    await subject.fill('subject');
-    await successTitle.fill('success title');
-    await successText.fill('success text');
-    await errorTitle.fill('error title');
-    await errorText.fill('error text');
+    const fieldsTab = await page.getByRole('button', {
+      name: 'fields',
+    });
 
-    // add block
+    await fieldsTab.click();
 
-    const addFieldButton = await page.getByText('Field hinzufügen', {
-      exact: true,
+    const addFieldButton = await page.getByRole('button', {
+      name: 'Add Field',
     });
 
     await addFieldButton.click();
 
-    const textBlock = await page.getByText('Text', {
+    const dialog = await page.locator('dialog.payload__modal-item ');
+    const addTextfieldButton = dialog.getByRole('button', {
       exact: true,
+      name: 'Text',
     });
 
-    await textBlock.click();
+    await addTextfieldButton.click();
 
-    const firstBlock = await page.locator('#fields-row-0');
+    const newRow = await page.locator('#fields-row-1');
 
-    await firstBlock.waitFor({
+    await newRow.waitFor({
       state: 'visible',
     });
 
-    const label1 = await firstBlock.locator('.ContentEditable__root')
+    const label1 = await newRow.locator('.ContentEditable__root')
       .nth(0);
-    const placeholder1 = await firstBlock.getByLabel('Placeholder');
-    const error1 = await firstBlock.locator('.ContentEditable__root')
+    const placeholder1 = await newRow.getByLabel('Placeholder');
+    const error1 = await newRow.locator('.ContentEditable__root')
       .nth(1);
 
     await label1.fill('$4_20-"^3asd-%&*"+');
@@ -81,21 +69,17 @@ test.describe('forms', () => {
 
     // save
     const saveButton = await page.getByRole('button', {
-      name: 'Publish changes',
+      name: 'Save',
     });
 
-    // expect specific name derived from label
     await saveButton.click();
-
     await page.waitForLoadState('networkidle', {
       timeout: 10000,
     });
 
-    const hiddenNameField = await firstBlock.locator('#field-fields__0__name');
+    const hiddenNameField = await newRow.locator('#field-fields__1__name');
 
     await expect(hiddenNameField)
-      .toHaveValue('4_20-3asd-');
-
+      .toHaveValue('4_20-3asd-amp');
   });
 });
-*/
