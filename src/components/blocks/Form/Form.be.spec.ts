@@ -155,18 +155,20 @@ test.describe('Custom Form', () => {
       .toBeVisible();
 
     // fill valid value
-    await mailField.fill('mail@foo.bar');
+    await mailField.click();
+    await mailField.clear();
+    await page.keyboard.type('mail@foo.bar');
+    await submit.click();
 
     // expect no error
     await submit.click();
 
     await (await form.elementHandle())?.waitForElementState('stable');
+    await (await mailField.elementHandle())?.waitForElementState('stable');
 
     const mailError2 = await form.getByText('Geben Sie ihre E-Mail-Adresse an.', {
       exact: true,
     });
-
-    await (await mailField.elementHandle())?.waitForElementState('stable');
 
     await expect(mailError2)
       .not.toBeVisible();
@@ -705,12 +707,16 @@ test.describe('Newsletter Form', () => {
       .toBeVisible();
 
     // fill valid value
-    await mailField.fill('mail@foo.bar');
+    await mailField.click();
+    await mailField.clear();
+    await page.keyboard.type('mail@foo.bar');
+    await submit.click();
 
     // expect no error
     await submit.click();
 
     await (await form.elementHandle())?.waitForElementState('stable');
+    await (await mailField.elementHandle())?.waitForElementState('stable');
 
     const mailError2 = await form.getByText('Bitte geben Sie die E-Mail Adresse an.', {
       exact: true,
