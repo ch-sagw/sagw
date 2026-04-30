@@ -103,10 +103,17 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Debug shard + list BE tests
+        run: |
+          echo "SHARD=$SHARD_INDEX/$SHARD_TOTAL"
+          npm run generate:pages:collections
+          npx playwright test -c playwright-be.config.ts --shard="$SHARD_INDEX/$SHARD_TOTAL" --list
+        env:
+          SHARD_INDEX: ${{ matrix.shardIndex }}
+          SHARD_TOTAL: ${{ matrix.shardTotal }}
       - name: Test BE
         run: npm run test:be:native:shard
         env:
-          DEBUG: pw:*
           SHARD_INDEX: ${{ matrix.shardIndex }}
           SHARD_TOTAL: ${{ matrix.shardTotal }}
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
