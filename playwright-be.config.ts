@@ -52,7 +52,7 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   webServer: {
-    command: 'next dev --webpack -H 0.0.0.0 -p 3000',
+    command: 'next build --webpack && next start -H 0.0.0.0 -p 3000',
     env: {
 
       // issue: in some tests, we import payload config promise. on each,
