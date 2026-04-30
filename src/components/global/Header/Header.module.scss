@@ -152,6 +152,10 @@
       column-gap: px-to-rem(var(--grid-gutter));
       align-items: baseline;
       margin-block-start: px-to-rem(var(--spacing-l));
+
+      &:first-child {
+        margin-block-start: 0;
+      }
     }
 
     .logoWrapperInner {
