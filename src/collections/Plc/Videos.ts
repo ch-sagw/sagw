@@ -12,6 +12,12 @@ import { lockDocuments } from '@/field-templates/lockDocuments';
 export const Videos: CollectionConfig = {
   access: assetsAccess,
   admin: {
+    defaultColumns: [
+      'filename',
+      'title',
+      'duration',
+      'updatedAt',
+    ],
     description: `
       Storing videos requires a lot of disk space, especially in backups.
       Please ensure that your video does not exceed 50 MB in size and 5 Mins in length.

@@ -44,6 +44,7 @@ export const PublicationDetailPage: CollectionConfig = {
     defaultColumns: [
       'adminTitle',
       'slug',
+      'overviewPageProps.date',
       'updatedAt',
       '_status',
     ],
