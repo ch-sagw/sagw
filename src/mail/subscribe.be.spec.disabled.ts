@@ -175,7 +175,7 @@ test.describe('Correctly signs up for Newsletter', () => {
 
     test.skip(!process.env.BREVO_TOKEN, 'BREVO_TOKEN is required for this test.');
     const brevoTimeoutMs = process.env.CI
-      ? 180_000
+      ? 300_000
       : 120_000;
 
     try {
@@ -251,7 +251,7 @@ test.describe('Correctly signs up for Newsletter', () => {
 
     test.skip(!process.env.BREVO_TOKEN, 'BREVO_TOKEN is required for this test.');
     const brevoTimeoutMs = process.env.CI
-      ? 180_000
+      ? 300_000
       : 120_000;
 
     try {
