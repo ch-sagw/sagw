@@ -9,7 +9,11 @@ import { lockDocuments } from '@/field-templates/lockDocuments';
 export const Teams: CollectionConfig = {
   access: globalContentAccessGeneric,
   admin: {
-    defaultColumns: ['name'],
+    defaultColumns: [
+      'name',
+      'people',
+      'updatedAt',
+    ],
     description: 'You can assign People to teams.',
     group: 'Global Content',
     hideAPIURL: process.env.ENV === 'prod',

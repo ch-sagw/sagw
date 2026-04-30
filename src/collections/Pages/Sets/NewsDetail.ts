@@ -45,6 +45,7 @@ export const NewsDetailPage: CollectionConfig = {
     defaultColumns: [
       'adminTitle',
       'slug',
+      'hero.date',
       'updatedAt',
       '_status',
     ],

@@ -9,7 +9,10 @@ import { lockDocuments } from '@/field-templates/lockDocuments';
 export const PublicationTypes: CollectionConfig = {
   access: globalContentAccessGeneric,
   admin: {
-    defaultColumns: ['publicationType'],
+    defaultColumns: [
+      'publicationType',
+      'updatedAt',
+    ],
     group: 'Global Content',
     hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: 'publicationType',

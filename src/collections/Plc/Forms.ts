@@ -19,6 +19,13 @@ import { lockDocuments } from '@/field-templates/lockDocuments';
 export const Forms: CollectionConfig = {
   access: globalContentAccessGeneric,
   admin: {
+    defaultColumns: [
+      'title',
+      'isNewsletterForm',
+      'recipientMail',
+      'fields',
+      'updatedAt',
+    ],
     group: 'Global Content',
     hidden: (req) => !isSuperOrTenantAdmin(req.user),
     hideAPIURL: process.env.ENV === 'prod',

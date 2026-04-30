@@ -43,6 +43,7 @@ export const MagazineDetailPage: CollectionConfig = {
     defaultColumns: [
       'adminTitle',
       'slug',
+      'hero.date',
       'updatedAt',
       '_status',
     ],

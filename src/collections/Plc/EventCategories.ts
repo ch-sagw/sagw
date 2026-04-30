@@ -9,7 +9,10 @@ import { lockDocuments } from '@/field-templates/lockDocuments';
 export const EventCategories: CollectionConfig = {
   access: globalContentAccessGeneric,
   admin: {
-    defaultColumns: ['eventCategory'],
+    defaultColumns: [
+      'eventCategory',
+      'updatedAt',
+    ],
     group: 'Global Content',
     hideAPIURL: process.env.ENV === 'prod',
     useAsTitle: 'eventCategory',

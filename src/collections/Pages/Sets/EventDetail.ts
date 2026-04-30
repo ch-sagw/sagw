@@ -95,6 +95,7 @@ export const EventDetailPage: CollectionConfig = {
     defaultColumns: [
       'adminTitle',
       'slug',
+      'eventDetails.date',
       'updatedAt',
       '_status',
     ],

@@ -9,6 +9,13 @@ import { lockDocuments } from '@/field-templates/lockDocuments';
 export const Documents: CollectionConfig = {
   access: assetsAccess,
   admin: {
+    defaultColumns: [
+      'filename',
+      'title',
+      'date',
+      'project',
+      'updatedAt',
+    ],
     description: 'Allowed formats: pdf',
     group: 'Assets',
     hideAPIURL: process.env.ENV === 'prod',

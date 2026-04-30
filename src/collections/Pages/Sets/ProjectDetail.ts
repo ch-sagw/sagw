@@ -48,6 +48,13 @@ export const ProjectDetailPage: CollectionConfig = {
     components: {
       edit: pagePreviewEditComponents,
     },
+    defaultColumns: [
+      'adminTitle',
+      'slug',
+      'project',
+      'updatedAt',
+      '_status',
+    ],
     group: 'Pages',
     hideAPIURL: process.env.ENV === 'prod',
     preview: (
