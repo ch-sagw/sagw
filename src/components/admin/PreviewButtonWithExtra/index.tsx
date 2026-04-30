@@ -131,7 +131,10 @@ export const PreviewButtonWithExtra: React.FunctionComponent<
   ]);
 
   return (
-    <div className='preview-btn-with-extra'>
+    <div
+      className='preview-btn-with-extra'
+      data-testid='preview-buttons'
+    >
       {previewURL
         ? (
           <Button

@@ -1,12 +1,55 @@
 import type { Config } from '@/payload-types';
 import type { GeneratePreviewURL } from 'payload';
 
-import { getPageUrl } from '@/utilities/getPageUrl';
+import {
+  getPageUrl,
+  HREF_LANG_NO_EXACT_PATH,
+} from '@/utilities/getPageUrl';
 import { getPayloadCached } from './getPayloadCached';
 
 export type PreviewURLOptions = Parameters<GeneratePreviewURL>[1] & {
   collection: string;
   draft?: boolean;
+};
+
+/** Strip locale prefix — `/preview` prepends `/[locale]` when redirecting. */
+const pathWithoutLocaleForPreviewRoute = ({
+  locale,
+  pathname,
+}: {
+  locale: Config['locale'];
+  pathname: string;
+}): string => {
+  if (pathname === HREF_LANG_NO_EXACT_PATH) {
+    return '/';
+  }
+
+  const normalized = pathname.startsWith('/')
+    ? pathname
+    : `/${pathname}`;
+
+  const prefix = `/${locale}`;
+
+  if (
+    normalized === prefix ||
+    normalized === `${prefix}/`
+  ) {
+    return '/';
+  }
+
+  if (
+    normalized.startsWith(`${prefix}/`)
+  ) {
+    const rest = normalized.slice(prefix.length);
+
+    if (rest === '') {
+      return '/';
+    }
+
+    return rest;
+  }
+
+  return normalized;
 };
 
 const previewSlugSegment = (
@@ -16,6 +59,7 @@ const previewSlugSegment = (
   if (typeof slugValue === 'string') {
     return slugValue;
   }
+
   if (
     slugValue !== null &&
     typeof slugValue === 'object' &&
@@ -31,7 +75,6 @@ const previewSlugSegment = (
   }
 
   return '';
-
 };
 
 export const preview = async (
@@ -49,17 +92,44 @@ export const preview = async (
   let pageUrl;
 
   if (draft) {
-    const slugSegment = previewSlugSegment(
-      slug,
-      locale,
-    );
+    const payload = await getPayloadCached();
+    const resolvedLocale = locale as Config['locale'];
+
+    let fullPath = await getPageUrl({
+      absolute: false,
+      locale: resolvedLocale,
+      pageId: id as string,
+      payload,
+      useDraftDocForPath: true,
+    });
+
+    if (fullPath === HREF_LANG_NO_EXACT_PATH) {
+      const slugSegment = previewSlugSegment(
+        slug,
+        locale,
+      );
+
+      fullPath = slugSegment
+        ? `/${resolvedLocale}/${slugSegment}`
+        : `/${resolvedLocale}`;
+    }
+
+    let pathRelative = pathWithoutLocaleForPreviewRoute({
+      locale: resolvedLocale,
+      pathname: fullPath,
+    });
+
+    if (
+      !pathRelative.startsWith('/')
+    ) {
+      pathRelative = `/${pathRelative}`;
+    }
 
     const encodedParams = new URLSearchParams({
       collection,
       locale: String(locale ?? ''),
-      path: `/${slugSegment}`,
+      path: pathRelative,
       previewSecret: process.env.PREVIEW_SECRET || '',
-      slug: slugSegment,
     });
 
     pageUrl = `/preview?${encodedParams.toString()}`;
