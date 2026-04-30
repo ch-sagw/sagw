@@ -71,6 +71,7 @@ jobs:
   # Backend Test Job
   test-be:
     if: ${{ !startsWith(github.head_ref, 'release-please--branches--main') }}
+    timeout-minutes: 25
     needs: [lint]
     env:
       HOME: /root
@@ -105,6 +106,7 @@ jobs:
       - name: Test BE
         run: npm run test:be:native:shard
         env:
+          DEBUG: pw:*
           SHARD_INDEX: ${{ matrix.shardIndex }}
           SHARD_TOTAL: ${{ matrix.shardTotal }}
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}

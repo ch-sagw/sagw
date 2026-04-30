@@ -70,6 +70,7 @@ jobs:
   # Backend Test Job
   test-be:
     if: ${{ !startsWith(github.head_ref, 'release-please--branches--main') }}
+    timeout-minutes: 25
     needs: [lint]
     env:
       HOME: /root
