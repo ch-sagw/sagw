@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.0.0](https://github.com/ch-sagw/sagw/compare/v0.51.0...v1.0.0) (2026-04-30)
+
+
+### Chore
+
+* release 1.0.0 ([a51df03](https://github.com/ch-sagw/sagw/commit/a51df039ed8fc4fbdddf3bdc987f681bbc8716e3))
+* release 1.0.0 ([f24e0a5](https://github.com/ch-sagw/sagw/commit/f24e0a5054c5b549fa59a4aee2c55c399866498e))
+
+
+### CI
+
+* set explicit job time out for be-job to not run jobs infinitely ([f24e0a5](https://github.com/ch-sagw/sagw/commit/f24e0a5054c5b549fa59a4aee2c55c399866498e))
+
+
+### Features
+
+* enable meta-index on prod ([f24e0a5](https://github.com/ch-sagw/sagw/commit/f24e0a5054c5b549fa59a4aee2c55c399866498e))
+* enable meta-index on prod ([0811f75](https://github.com/ch-sagw/sagw/commit/0811f7581737f89d6cd67f92f0612928fbbfd2d8))
+
+
+### Test
+
+* disable flaky subscribe test for prod release ([f24e0a5](https://github.com/ch-sagw/sagw/commit/f24e0a5054c5b549fa59a4aee2c55c399866498e))
+
 ## [0.51.0](https://github.com/ch-sagw/sagw/compare/v0.50.0...v0.51.0) (2026-04-30)
 
 
