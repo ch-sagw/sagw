@@ -74,16 +74,19 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: Sync
     console.log('[DEBUG]: uploadToGumletFromUrl after');
 
     // Update the document after the upload
-    await req.payload.update({
-      collection: 'videos',
-      context: {
-        skipGumletSync: true,
-      },
-      data: {
-        gumletAssetId: gumletAsset.id,
-      },
-      id: doc.id,
-    });
+    if (gumletAsset) {
+      await req.payload.update({
+        collection: 'videos',
+        context: {
+          skipGumletSync: true,
+        },
+        data: {
+          gumletAssetId: gumletAsset.id,
+        },
+        id: doc.id,
+      });
+    }
+
   }
 
   return doc;
