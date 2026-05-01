@@ -25,7 +25,7 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: Sync
   if (context?.skipGumletSync) {
     console.log('[DEBUG]: skipGumletSync -> return');
 
-    return doc;
+    return props;
   }
 
   const {
@@ -45,11 +45,11 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: Sync
     console.log('[DEBUG]: deleteFromGumlet');
     await deleteFromGumlet(previousDoc.gumletAssetId);
 
-    return doc;
+    return props;
   } else if (wasDeleted) {
     console.log('[DEBUG]: return');
 
-    return doc;
+    return props;
   }
 
   // Upload the video to Gumlet
@@ -86,7 +86,7 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: Sync
     });
   }
 
-  return doc;
+  return props;
 
 };
 
@@ -98,7 +98,7 @@ export const deleteVideoFromGumlet: CollectionAfterDeleteHook = async (props) =>
   } = props;
 
   if (!doc || context?.skipGumletSync) {
-    return doc;
+    return props;
   }
 
   const {
@@ -116,5 +116,5 @@ export const deleteVideoFromGumlet: CollectionAfterDeleteHook = async (props) =>
     }
   }
 
-  return doc;
+  return props;
 };
