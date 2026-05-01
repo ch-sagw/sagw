@@ -17,8 +17,6 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
     return;
   }
 
-  console.log(`doc ${JSON.stringify(doc)}`);
-
   const {
     deleteFromGumlet,
     uploadToGumletFromUrl,
