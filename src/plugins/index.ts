@@ -62,7 +62,7 @@ type ExtendedPluginOptions = sentryPluginOptions & {
 const plugins: Plugin[] = [
   vercelBlobStorage({
     addRandomSuffix: true,
-    clientUploads: false,
+    clientUploads: true,
 
     // public collections should link directly to Blob instead of the
     // payload file endpoint, which applies collection read access and

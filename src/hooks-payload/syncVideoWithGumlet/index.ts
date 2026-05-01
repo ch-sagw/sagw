@@ -24,12 +24,6 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: Sync
     return doc;
   }
 
-  if (doc.skip) {
-    doc.skip = false;
-
-    return doc;
-  }
-
   const {
     deleteFromGumlet,
     uploadToGumletFromUrl,

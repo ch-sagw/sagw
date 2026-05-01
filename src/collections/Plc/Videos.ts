@@ -51,11 +51,6 @@ export const Videos: CollectionConfig = {
               name: 'gumletAssetId',
               type: 'text',
             },
-            {
-              defaultValue: true,
-              name: 'skip',
-              type: 'checkbox',
-            },
           ],
           label: 'Video properties',
         },
