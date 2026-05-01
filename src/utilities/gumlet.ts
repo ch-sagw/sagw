@@ -21,7 +21,7 @@ export const uploadToGumletFromUrl = async ({
   let inputUrl = `${host}${encodeURLPath(fileUrl)}`;
 
   if (host && host.indexOf('localhost') !== -1) {
-    inputUrl = `${host}/${encodeURLPath(fileName)}`;
+    inputUrl = encodeURLPath(fileName);
   }
 
   const payload = {
