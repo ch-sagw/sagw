@@ -1,12 +1,12 @@
 import type { CollectionConfig } from 'payload';
 import { assetsAccess } from '@/access/assets';
-import {
-  deleteVideoFromGumlet,
-  syncVideoWithGumlet,
-} from '@/hooks-payload/syncVideoWithGumlet';
-import {
-  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
-} from '@/hooks-payload/invalidateTenantCache';
+// import {
+//   deleteVideoFromGumlet,
+//   syncVideoWithGumlet,
+// } from '@/hooks-payload/syncVideoWithGumlet';
+// import {
+//   hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+// } from '@/hooks-payload/invalidateTenantCache';
 import { lockDocuments } from '@/field-templates/lockDocuments';
 
 export const Videos: CollectionConfig = {
@@ -58,16 +58,16 @@ export const Videos: CollectionConfig = {
       type: 'tabs',
     },
   ],
-  hooks: {
-    afterChange: [
-      hookInvalidateTenantCache,
-      syncVideoWithGumlet,
-    ],
-    afterDelete: [
-      hookInvalidateTenantCacheOnDelete,
-      deleteVideoFromGumlet,
-    ],
-  },
+  // hooks: {
+  // afterChange: [
+  //   hookInvalidateTenantCache,
+  //   syncVideoWithGumlet,
+  // ],
+  // afterDelete: [
+  //   hookInvalidateTenantCacheOnDelete,
+  //   deleteVideoFromGumlet,
+  // ],
+  // },
   lockDocuments,
   slug: 'videos',
   upload: {
