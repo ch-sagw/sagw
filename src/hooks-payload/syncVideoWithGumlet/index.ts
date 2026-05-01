@@ -13,14 +13,18 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
   req,
 }: SyncVideoWithGumletArgs) => {
 
+  console.log('[DEBUG]: hook start. doc.id:', doc.id);
+  console.log('[DEBUG]: hook start. req:', req);
+  console.log('[DEBUG]: hook start. doc:', doc);
+
   // If gumletAssetId was added after upload or
   // when we run Playwright tests, we immediately
   // return
   if (context?.skipGumletSync) {
+    console.log('[DEBUG]: skipGumletSync -> return');
+
     return;
   }
-
-  console.log(`doc ${JSON.stringify(doc)}`);
 
   const {
     deleteFromGumlet,
@@ -36,17 +40,22 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
     wasDeleted &&
     previousDoc?.gumletAssetId
   ) {
+    console.log('[DEBUG]: deleteFromGumlet');
     await deleteFromGumlet(previousDoc.gumletAssetId);
 
     return;
   } else if (wasDeleted) {
+    console.log('[DEBUG]: return');
+
     return;
   }
 
   // Upload the video to Gumlet
   if (hasNewFile) {
+    console.log('[DEBUG]: hasNewFile');
 
     if (previousDoc?.gumletAssetId) {
+      console.log('[DEBUG]: deleteFromGumlet 2');
       await deleteFromGumlet(previousDoc.gumletAssetId);
     }
 
@@ -54,9 +63,13 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
       throw new Error('Video URL or filename missing');
     }
 
+    console.log('[DEBUG]: uploadToGumletFromUrl before');
+
     const gumletAsset = await uploadToGumletFromUrl({
       id: doc.id,
     });
+
+    console.log('[DEBUG]: uploadToGumletFromUrl after');
 
     // Update the document after the upload
     await req.payload.update({
