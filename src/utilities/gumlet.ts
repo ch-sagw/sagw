@@ -11,7 +11,7 @@ export const uploadToGumletFromUrl = async ({
 }: {
   url: string;
   title: string;
-}): Promise<InterfaceGumletAsset | void> => {
+}): Promise<InterfaceGumletAsset> => {
   try {
     const collectionId = process.env.GUMLET_COLLECTION_ID;
 
@@ -40,12 +40,11 @@ export const uploadToGumletFromUrl = async ({
 
     console.log('[DEBUG]: after fetch', res);
 
-    // if (!res.ok) {
-    //   const text = await res.text();
+    if (!res.ok) {
+      const text = await res.text();
 
-    //   // throw new Error(`Gumlet upload failed: ${res.status} — ${text}`);
-    //   console.log();
-    // }
+      throw new Error(`Gumlet upload failed: ${res.status} — ${text}`);
+    }
 
     const json = (await res.json()) as {
       asset_id: string;
@@ -57,13 +56,11 @@ export const uploadToGumletFromUrl = async ({
   } catch (error) {
     console.log('Unable to upload file to Gumlet', error);
 
-    // throw new Error(`Unable to upload file to Gumlet: ${error instanceof
-    // Error
-    //   ? error.message
-    //   : 'Unknown error'}`);
+    throw new Error(`Unable to upload file to Gumlet: ${error instanceof Error
+      ? error.message
+      : 'Unknown error'}`);
   }
 
-  return undefined;
 };
 
 export const deleteFromGumlet = async (assetId: string): Promise<void> => {
