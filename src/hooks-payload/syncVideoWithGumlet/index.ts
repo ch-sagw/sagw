@@ -50,11 +50,16 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
     }
 
     const gumletAsset = await uploadToGumletFromUrl({
-      fileName: doc.filename,
       fileTitle: doc.title,
+      url: doc.url,
     });
 
     // Update the document after the upload
+
+    console.log('[DEBUG]: hook -> payload update');
+    console.log(doc);
+    console.log(gumletAsset.id);
+
     await req.payload.update({
       collection: 'videos',
       context: {

@@ -1,32 +1,28 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import 'server-only';
-import { encodeURLPath } from '@/utilities/encodeURLPath';
 
 export interface InterfaceGumletAsset {
   id: string;
 }
 
 export const uploadToGumletFromUrl = async ({
-  fileName,
+  url,
   fileTitle,
 }: {
-  fileName: string;
+  url: string;
   fileTitle: string;
 }): Promise<InterfaceGumletAsset> => {
   const collectionId = process.env.GUMLET_COLLECTION_ID;
-  const host = process.env.BLOB_URL;
-
-  const inputUrl = `${host}/${encodeURLPath(fileName)}`;
 
   const payload = {
     collection_id: collectionId,
-    format: 'abr',
-    input: inputUrl,
+    format: 'ABR',
+    input: url,
     title: fileTitle,
   };
 
   try {
-    const res = await fetch(`${process.env.GUMLET_API_URL}`, {
+    const res = await fetch('https://api.gumlet.com/v1/video/assets', {
       body: JSON.stringify(payload),
       headers: {
         'Accept': 'application/json',
