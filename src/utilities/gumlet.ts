@@ -18,6 +18,15 @@ export const uploadToGumletFromUrl = async ({
 
   const inputUrl = `${host}/${encodeURLPath(fileName)}`;
 
+  console.log('[debug]: host ', host);
+  console.log('[debug]: inputUrl ', inputUrl);
+
+  if (process.env.BLOB_URL) {
+    console.log('[debug]: BLOB_URL is set');
+  } else {
+    console.log('[debug]: BLOB_URL is NOT set');
+  }
+
   const payload = {
     collection_id: collectionId,
     format: 'abr',
