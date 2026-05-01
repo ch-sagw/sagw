@@ -8,33 +8,33 @@
   },
   "redirects": [
     {
-      "source": "https://www.sagw.ch/",
-      "destination": "https://www.sagw.ch/de",
+      "source": "/",
+      "destination": "/de",
       "permanent": true
     },
     {
       "source": "/sagw/:path*",
-      "destination": "https://www.sagw.ch/de",
+      "destination": "/de",
       "permanent": true
     },
     {
       "source": "/fr/assh/:path*",
-      "destination": "https://www.sagw.ch/fr",
+      "destination": "/fr",
       "permanent": true
     },
     {
       "source": "/sago/:path*",
-      "destination": "https://www.sagw.ch/de/sago",
+      "destination": "/de/sago",
       "permanent": true
     },
     {
       "source": "/ru/sago/:path*",
-      "destination": "https://www.sagw.ch/de/sago",
+      "destination": "/de/sago",
       "permanent": true
     },
     {
       "source": "/ssa-sag/about-us",
-      "destination": "https://www.sagw.ch/de/sslas",
+      "destination": "/de/sslas",
       "permanent": true
     },
     {
