@@ -59,29 +59,34 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: Sync
 
     console.log('[DEBUG]: uploadToGumletFromUrl before');
 
-    const gumletAsset = await uploadToGumletFromUrl({
-      title: doc.title,
-      url: doc.url,
-    });
-
-    console.log('gumletAsset', gumletAsset);
-
-    console.log('[DEBUG]: uploadToGumletFromUrl after');
-
-    // Update the document after the upload
-    if (gumletAsset) {
-      console.log('[DEBUG]: gummletAsset:', gumletAsset);
-
-      await req.payload.update({
-        collection: 'videos',
-        context: {
-          skipGumletSync: true,
-        },
-        data: {
-          gumletAssetId: gumletAsset.id,
-        },
-        id: doc.id,
+    try {
+      const gumletAsset = await uploadToGumletFromUrl({
+        title: doc.title,
+        url: doc.url,
       });
+
+      console.log('gumletAsset', gumletAsset);
+
+      console.log('[DEBUG]: uploadToGumletFromUrl after');
+
+      // Update the document after the upload
+      if (gumletAsset) {
+        console.log('[DEBUG]: gummletAsset:', gumletAsset);
+        console.log('[DEBUG]: doc:', doc);
+
+        await req.payload.update({
+          collection: 'videos',
+          context: {
+            skipGumletSync: true,
+          },
+          data: {
+            gumletAssetId: gumletAsset.id,
+          },
+          id: doc.id,
+        });
+      }
+    } catch (err) {
+      throw new Error(`Error in syncVideoWithGumlet afterChange hook: ${err}`);
     }
 
   }
