@@ -8,7 +8,7 @@
   },
   "redirects": [
     {
-      "source": "/",
+      "source": "https://www.sagw.ch/",
       "destination": "https://www.sagw.ch/de",
       "permanent": true
     },
