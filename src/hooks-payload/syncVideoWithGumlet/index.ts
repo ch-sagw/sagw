@@ -6,14 +6,12 @@ import type {
 
 type SyncVideoWithGumletArgs = Parameters<CollectionAfterChangeHook<Video>>[0];
 
-export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: SyncVideoWithGumletArgs) => {
-
-  const {
-    context,
-    doc,
-    previousDoc,
-    req,
-  } = props;
+export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
+  context,
+  doc,
+  previousDoc,
+  req,
+}: SyncVideoWithGumletArgs) => {
 
   console.log('[DEBUG]: hook start. doc.id:', doc.id);
   console.log('[DEBUG]: hook start. req:', req);
@@ -25,7 +23,7 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: Sync
   if (context?.skipGumletSync) {
     console.log('[DEBUG]: skipGumletSync -> return');
 
-    return props;
+    return;
   }
 
   const {
@@ -45,11 +43,11 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: Sync
     console.log('[DEBUG]: deleteFromGumlet');
     await deleteFromGumlet(previousDoc.gumletAssetId);
 
-    return props;
+    return;
   } else if (wasDeleted) {
     console.log('[DEBUG]: return');
 
-    return props;
+    return;
   }
 
   // Upload the video to Gumlet
@@ -86,19 +84,14 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: Sync
     });
   }
 
-  return props;
-
 };
 
-export const deleteVideoFromGumlet: CollectionAfterDeleteHook = async (props) => {
-
-  const {
-    context,
-    doc,
-  } = props;
-
+export const deleteVideoFromGumlet: CollectionAfterDeleteHook = async ({
+  context,
+  doc,
+}) => {
   if (!doc || context?.skipGumletSync) {
-    return props;
+    return;
   }
 
   const {
@@ -115,6 +108,4 @@ export const deleteVideoFromGumlet: CollectionAfterDeleteHook = async (props) =>
       asset ${doc.gumletAssetId}:`, error);
     }
   }
-
-  return props;
 };
