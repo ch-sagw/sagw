@@ -28,7 +28,7 @@ export const uploadToGumletFromUrl = async ({
 
     console.log('[DEBUG]: before fetch with body', payload);
 
-    const res = await fetch('https://api.gumlet.com/v1/video/assets', {
+    const res = await fetch(`${process.env.GUMLET_API_URL}`, {
       body: JSON.stringify(payload),
       headers: {
         'Accept': 'application/json',
