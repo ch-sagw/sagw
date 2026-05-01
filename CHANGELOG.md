@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/ch-sagw/sagw/compare/v1.0.0...v1.0.1) (2026-05-01)
+
+
+### Bug Fixes
+
+* adding redirect fixes ([be667ae](https://github.com/ch-sagw/sagw/commit/be667aef2cf7ffc773cc4d3d80be551b8abf61b3))
+* removing path from gumlet upload url ([be667ae](https://github.com/ch-sagw/sagw/commit/be667aef2cf7ffc773cc4d3d80be551b8abf61b3))
+
 ## [1.0.0](https://github.com/ch-sagw/sagw/compare/v0.51.0...v1.0.0) (2026-04-30)
 
 
