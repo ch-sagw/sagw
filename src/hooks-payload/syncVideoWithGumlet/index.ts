@@ -1,14 +1,17 @@
+import { Video } from '@/payload-types';
 import type {
   CollectionAfterChangeHook,
   CollectionAfterDeleteHook,
 } from 'payload';
+
+type SyncVideoWithGumletArgs = Parameters<CollectionAfterChangeHook<Video>>[0];
 
 export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
   context,
   doc,
   previousDoc,
   req,
-}) => {
+}: SyncVideoWithGumletArgs) => {
 
   // If gumletAssetId was added after upload or
   // when we run Playwright tests, we immediately
@@ -52,8 +55,7 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
     }
 
     const gumletAsset = await uploadToGumletFromUrl({
-      fileTitle: doc.title,
-      fileUrl: doc.url,
+      id: doc.id,
     });
 
     // Update the document after the upload

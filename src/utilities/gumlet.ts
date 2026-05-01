@@ -1,24 +1,35 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import 'server-only';
+import { getPayloadCached } from './getPayloadCached';
 
 export interface InterfaceGumletAsset {
   id: string;
 }
 
 export const uploadToGumletFromUrl = async ({
-  fileTitle,
-  fileUrl,
+  id,
 }: {
-  fileTitle: string;
-  fileUrl: string;
+  id: string,
 }): Promise<InterfaceGumletAsset> => {
   const collectionId = process.env.GUMLET_COLLECTION_ID;
+  const payloadInstance = await getPayloadCached();
+
+  const freshDoc = await payloadInstance.findByID({
+    collection: 'videos',
+    id,
+  });
+
+  if (!freshDoc) {
+    throw new Error('Video not found.');
+  }
+
+  console.log('[debug]: fresh doc', freshDoc);
 
   const payload = {
     collection_id: collectionId,
     format: 'abr',
-    input: fileUrl,
-    title: fileTitle,
+    input: freshDoc.url,
+    title: freshDoc.title,
   };
 
   try {
