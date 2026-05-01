@@ -15,6 +15,8 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: Sync
     req,
   } = props;
 
+  console.log('[DEBUG]: hook start. doc.id:', doc.id);
+  console.log('[DEBUG]: hook start. req:', req);
   console.log('[DEBUG]: hook start. doc:', doc);
 
   // If gumletAssetId was added after upload or
@@ -66,16 +68,13 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: Sync
     console.log('[DEBUG]: uploadToGumletFromUrl before');
 
     const gumletAsset = await uploadToGumletFromUrl({
-      title: doc.title,
-      url: doc.url,
+      id: doc.id,
     });
 
     console.log('[DEBUG]: uploadToGumletFromUrl after');
 
     // Update the document after the upload
     if (gumletAsset) {
-      console.log('[DEBUG]: gummletAsset:', gumletAsset);
-
       await req.payload.update({
         collection: 'videos',
         context: {
