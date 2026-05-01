@@ -1,23 +1,36 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import 'server-only';
+import { encodeURLPath } from '@/utilities/encodeURLPath';
 
 export interface InterfaceGumletAsset {
   id: string;
 }
 
 export const uploadToGumletFromUrl = async ({
+  fileName,
   fileTitle,
-  fileUrl,
 }: {
+  fileName: string;
   fileTitle: string;
-  fileUrl: string;
 }): Promise<InterfaceGumletAsset> => {
   const collectionId = process.env.GUMLET_COLLECTION_ID;
+  const host = process.env.BLOB_URL;
+
+  const inputUrl = `${host}/${encodeURLPath(fileName)}`;
+
+  console.log('[debug]: host ', host);
+  console.log('[debug]: inputUrl ', inputUrl);
+
+  if (process.env.BLOB_URL) {
+    console.log('[debug]: BLOB_URL is set');
+  } else {
+    console.log('[debug]: BLOB_URL is NOT set');
+  }
 
   const payload = {
     collection_id: collectionId,
     format: 'abr',
-    input: fileUrl,
+    input: inputUrl,
     title: fileTitle,
   };
 
