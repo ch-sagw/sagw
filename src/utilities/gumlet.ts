@@ -14,6 +14,9 @@ export const uploadToGumletFromUrl = async ({
 }): Promise<InterfaceGumletAsset> => {
   const collectionId = process.env.GUMLET_COLLECTION_ID;
 
+  console.log('[DEBUG] uploadToGumletFromUrl, url', url);
+  console.log('[DEBUG] uploadToGumletFromUrl, fileTitle', fileTitle);
+
   const payload = {
     collection_id: collectionId,
     format: 'ABR',
@@ -31,6 +34,8 @@ export const uploadToGumletFromUrl = async ({
       },
       method: 'POST',
     });
+
+    console.log('[DEBUG] uploadToGumletFromUrl, fetch result', res);
 
     if (!res.ok) {
       const text = await res.text();

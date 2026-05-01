@@ -10,6 +10,8 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
   req,
 }) => {
 
+  console.log('[DEBUG] hook start');
+
   // If gumletAssetId was added after upload or
   // when we run Playwright tests, we immediately
   // return
@@ -24,6 +26,8 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
 
   const hasNewFile = doc.filename && doc.filename !== previousDoc?.filename;
   const wasDeleted = !doc.filename && previousDoc?.filename;
+
+  console.log('[DEBUG] hasNewFile', hasNewFile);
 
   // Remove the video from Gumlet as well, when it
   // is deleted in Payload.
@@ -49,10 +53,14 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
       throw new Error('Video URL or filename missing');
     }
 
+    console.log('[DEBUG] will upload to gumlet');
+
     const gumletAsset = await uploadToGumletFromUrl({
       fileTitle: doc.title,
       url: doc.url,
     });
+
+    console.log('[DEBUG] did upload to gumlet');
 
     // Update the document after the upload
 
