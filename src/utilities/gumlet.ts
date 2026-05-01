@@ -11,28 +11,28 @@ export const uploadToGumletFromUrl = async ({
 }: {
   id: string,
 }): Promise<InterfaceGumletAsset> => {
+  const collectionId = process.env.GUMLET_COLLECTION_ID;
+  const payloadInstance = await getPayloadCached();
+
+  const freshDoc = await payloadInstance.findByID({
+    collection: 'videos',
+    id,
+  });
+
+  if (!freshDoc) {
+    throw new Error('Video not found.');
+  }
+
+  console.log('[debug]: fresh doc', freshDoc);
+
+  const payload = {
+    collection_id: collectionId,
+    format: 'abr',
+    input: freshDoc.url,
+    title: freshDoc.title,
+  };
+
   try {
-    const collectionId = process.env.GUMLET_COLLECTION_ID;
-    const payloadInstance = await getPayloadCached();
-
-    const freshDoc = await payloadInstance.findByID({
-      collection: 'videos',
-      id,
-    });
-
-    console.log('[debug]: fresh doc', freshDoc);
-
-    if (!freshDoc) {
-      throw new Error('Video not found.');
-    }
-
-    const payload = {
-      collection_id: collectionId,
-      format: 'abr',
-      input: freshDoc.url,
-      title: freshDoc.title,
-    };
-
     const res = await fetch(`${process.env.GUMLET_API_URL}`, {
       body: JSON.stringify(payload),
       headers: {
