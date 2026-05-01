@@ -21,6 +21,8 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: Sync
   // when we run Playwright tests, we immediately
   // return
   if (context?.skipGumletSync) {
+    console.log('[DEBUG]: skipGumletSync -> return');
+
     return doc;
   }
 
@@ -38,10 +40,13 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: Sync
     wasDeleted &&
     previousDoc?.gumletAssetId
   ) {
+    console.log('[DEBUG]: deleteFromGumlet');
     await deleteFromGumlet(previousDoc.gumletAssetId);
 
     return doc;
   } else if (wasDeleted) {
+    console.log('[DEBUG]: return');
+
     return doc;
   }
 
@@ -50,6 +55,7 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: Sync
     console.log('[DEBUG]: hasNewFile');
 
     if (previousDoc?.gumletAssetId) {
+      console.log('[DEBUG]: deleteFromGumlet 2');
       await deleteFromGumlet(previousDoc.gumletAssetId);
     }
 
@@ -63,8 +69,6 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async (props: Sync
       title: doc.title,
       url: doc.url,
     });
-
-    console.log('gumletAsset', gumletAsset);
 
     console.log('[DEBUG]: uploadToGumletFromUrl after');
 
