@@ -9,20 +9,14 @@ export interface InterfaceGumletAsset {
 export const uploadToGumletFromUrl = async ({
   fileName,
   fileTitle,
-  fileUrl,
 }: {
   fileName: string;
   fileTitle: string;
-  fileUrl: string;
 }): Promise<InterfaceGumletAsset> => {
   const collectionId = process.env.GUMLET_COLLECTION_ID;
-  const host = process.env.NEXT_PUBLIC_GUMLET_URL;
+  const host = process.env.BLOB_URL;
 
-  let inputUrl = `${host}${encodeURLPath(fileUrl)}`;
-
-  if (host && host.indexOf('localhost') !== -1) {
-    inputUrl = encodeURLPath(fileName);
-  }
+  const inputUrl = `${host}/${encodeURLPath(fileName)}`;
 
   const payload = {
     collection_id: collectionId,
