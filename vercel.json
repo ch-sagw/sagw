@@ -28,17 +28,12 @@
       "permanent": true
     },
     {
-      "source": "/fr/sago/:path*",
-      "destination": "https://www.sagw.ch/fr/sago",
-      "permanent": true
-    },
-    {
       "source": "/ru/sago/:path*",
       "destination": "https://www.sagw.ch/de/sago",
       "permanent": true
     },
     {
-      "source": "ssa-sag/about-us",
+      "source": "/ssa-sag/about-us",
       "destination": "https://www.sagw.ch/de/sslas",
       "permanent": true
     },
@@ -170,11 +165,6 @@
     {
       "source": "/judaistik/:path*",
       "destination": "https://temp.sagw.ch/judaistik/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/seg/:path*",
-      "destination": "https://temp.sagw.ch/seg/:path*",
       "permanent": false
     },
     {
