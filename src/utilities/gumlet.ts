@@ -22,6 +22,8 @@ export const uploadToGumletFromUrl = async ({
       title,
     };
 
+    console.log('[DEBUG]: before fetch');
+
     const res = await fetch(`${process.env.GUMLET_API_URL}`, {
       body: JSON.stringify(payload),
       headers: {
@@ -31,6 +33,8 @@ export const uploadToGumletFromUrl = async ({
       },
       method: 'POST',
     });
+
+    console.log('[DEBUG]: after fetch', res);
 
     // if (!res.ok) {
     //   const text = await res.text();
