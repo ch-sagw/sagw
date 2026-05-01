@@ -15,10 +15,6 @@ export const uploadToGumletFromUrl = async ({
   try {
     const collectionId = process.env.GUMLET_COLLECTION_ID;
 
-    console.log('[DEBUG]: collectionId', collectionId);
-    console.log('[DEBUG]: url', url);
-    console.log('[DEBUG]: title', title);
-
     const payload = {
       collection_id: collectionId,
       format: 'abr',
