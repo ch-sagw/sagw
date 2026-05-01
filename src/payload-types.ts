@@ -3693,7 +3693,6 @@ export interface Video {
    */
   duration?: number | null;
   gumletAssetId?: string | null;
-  skip?: boolean | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -6607,7 +6606,6 @@ export interface VideosSelect<T extends boolean = true> {
   title?: T;
   duration?: T;
   gumletAssetId?: T;
-  skip?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
