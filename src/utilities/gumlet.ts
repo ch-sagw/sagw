@@ -22,7 +22,7 @@ export const uploadToGumletFromUrl = async ({
       title,
     };
 
-    console.log('[DEBUG]: before fetch with body', payload);
+    console.log('[DEBUG]: before fetch');
 
     const res = await fetch(`${process.env.GUMLET_API_URL}`, {
       body: JSON.stringify(payload),
