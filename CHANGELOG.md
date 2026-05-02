@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.3](https://github.com/ch-sagw/sagw/compare/v1.0.2...v1.0.3) (2026-05-02)
+
+
+### Chore
+
+* add more debugs ([49a435b](https://github.com/ch-sagw/sagw/commit/49a435bd3daeb9e7898b506caa375829b152425a))
+* clean-up after video issue debug ([baaabf7](https://github.com/ch-sagw/sagw/commit/baaabf7339f7bf9234952ac14a03c8c10d1504c7))
+
+
+### Bug Fixes
+
+* pass req object to payload update ([741e884](https://github.com/ch-sagw/sagw/commit/741e884f6424f52eab6c6347b93171e7b448418e))
+* try to skip cloud storage ([938e289](https://github.com/ch-sagw/sagw/commit/938e289fbb3177e92dda6ab0d98663c21ab4db84))
+
 ## [1.0.2](https://github.com/ch-sagw/sagw/compare/v1.0.1...v1.0.2) (2026-05-01)
 
 
