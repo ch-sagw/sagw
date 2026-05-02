@@ -74,6 +74,7 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
     const checkVideoDocs = await req.payload.findByID({
       collection: 'videos',
       id: doc.id,
+      req,
     });
 
     console.log('---->> [DEBUG: hook] checkVideoDocs', checkVideoDocs);
@@ -87,6 +88,7 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
         gumletAssetId: gumletAsset,
       },
       id: doc.id,
+      req,
     });
   }
 
