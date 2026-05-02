@@ -82,6 +82,7 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
     await req.payload.update({
       collection: 'videos',
       context: {
+        skipCloudStorage: true,
         skipGumletSync: true,
       },
       data: {
