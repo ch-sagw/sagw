@@ -9,12 +9,6 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
   previousDoc,
   req,
 }) => {
-
-  console.log('[DEBUG] --------------------------');
-  console.log('----------------------------------');
-
-  console.log('---->> [DEBUG: hook] hook');
-
   // If gumletAssetId was added after upload or
   // when we run Playwright tests, we immediately
   // return
@@ -29,8 +23,6 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
 
   const hasNewFile = doc.filename && doc.filename !== previousDoc?.filename;
   const wasDeleted = !doc.filename && previousDoc?.filename;
-
-  console.log('---->> [DEBUG: hook] hasNewFile', hasNewFile);
 
   // Remove the video from Gumlet as well, when it
   // is deleted in Payload.
@@ -56,28 +48,33 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
       throw new Error('Video URL or filename missing');
     }
 
-    console.log('---->> [DEBUG: hook] will upload to gumlet');
-
     const gumletAsset = await uploadToGumletFromUrl({
       fileTitle: doc.title,
       url: doc.url,
     });
 
-    console.log('---->> [DEBUG: hook] hook did upload to gumlet');
-
     // Update the document after the upload
 
-    console.log('---->> [DEBUG: hook] payload update');
-    console.log('---->> [DEBUG: hook] doc', doc);
-    console.log('---->> [DEBUG: hook] gumletAsset', gumletAsset);
+    // PASS REQ OBJECT:
+    // Payload's afterChange hook can still run within the same database
+    // transaction as the original create operation. When we call findByID
+    // without passing req, it runs outside that transaction — so it
+    // queries the database directly and the freshly created document isn't
+    // visible yet because the transaction hasn't committed. Note: not
+    // relevant locally since we don't have replica-set and therefore no
+    // transactions
 
-    const checkVideoDocs = await req.payload.findByID({
-      collection: 'videos',
-      id: doc.id,
-      req,
-    });
-
-    console.log('---->> [DEBUG: hook] checkVideoDocs', checkVideoDocs);
+    // PASS skipCloudStorage:
+    // When we added req to the update call, the same req
+    // object — including its req.file from the original create request —
+    // was shared into the nested update. The cloud storage plugin's
+    // afterChange hook runs for every update on videos, and it has logic
+    // that says: "if there's a file in the request and this is an update
+    // operation with a previousDoc that has a filename → delete the old
+    // blob file." Since our nested update matched all those conditions, it
+    // deleted the freshly-uploaded blob file. Then nothing was re-uploaded
+    // (client upload files are filtered from server-side re-upload),
+    // leaving a broken URL in the DB.
 
     await req.payload.update({
       collection: 'videos',

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import 'server-only';
 
+const gumletApiUrl = 'https://api.gumlet.com/v1/video/assets';
+
 export const uploadToGumletFromUrl = async ({
   url,
   fileTitle,
@@ -10,19 +12,14 @@ export const uploadToGumletFromUrl = async ({
 }): Promise<string> => {
   const collectionId = process.env.GUMLET_COLLECTION_ID;
 
-  console.log('---->> [DEBUG: uploadToGumletFromUrl] url', url);
-  console.log('---->> [DEBUG: uploadToGumletFromUrl] fileTitle', fileTitle);
-
-  const payload = {
-    collection_id: collectionId,
-    format: 'ABR',
-    input: url,
-    title: fileTitle,
-  };
-
   try {
-    const res = await fetch('https://api.gumlet.com/v1/video/assets', {
-      body: JSON.stringify(payload),
+    const res = await fetch(gumletApiUrl, {
+      body: JSON.stringify({
+        collection_id: collectionId,
+        format: 'ABR',
+        input: url,
+        title: fileTitle,
+      }),
       headers: {
         'Accept': 'application/json',
         'Authorization': `Bearer ${process.env.GUMLET_API_TOKEN}`,
@@ -30,8 +27,6 @@ export const uploadToGumletFromUrl = async ({
       },
       method: 'POST',
     });
-
-    console.log('---->> [DEBUG: uploadToGumletFromUrl] fetch result', res);
 
     if (!res.ok) {
       const text = await res.text();
@@ -42,8 +37,6 @@ export const uploadToGumletFromUrl = async ({
     const json = (await res.json()) as {
       asset_id: string;
     };
-
-    console.log('---->> [DEBUG: uploadToGumletFromUrl] asset id', json.asset_id);
 
     return json.asset_id;
 
@@ -56,7 +49,7 @@ export const uploadToGumletFromUrl = async ({
 
 export const deleteFromGumlet = async (assetId: string): Promise<void> => {
   try {
-    const res = await fetch(`${process.env.GUMLET_API_URL}/${assetId}`, {
+    const res = await fetch(`${gumletApiUrl}/${assetId}`, {
       headers: {
         'Accept': 'application/json',
         'Authorization': `Bearer ${process.env.GUMLET_API_TOKEN}`,
