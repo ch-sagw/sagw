@@ -10,7 +10,10 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
   req,
 }) => {
 
-  console.log('[DEBUG] hook start');
+  console.log('[DEBUG] --------------------------');
+  console.log('----------------------------------');
+
+  console.log('---->> [DEBUG: hook] hook');
 
   // If gumletAssetId was added after upload or
   // when we run Playwright tests, we immediately
@@ -27,7 +30,7 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
   const hasNewFile = doc.filename && doc.filename !== previousDoc?.filename;
   const wasDeleted = !doc.filename && previousDoc?.filename;
 
-  console.log('[DEBUG] hasNewFile', hasNewFile);
+  console.log('---->> [DEBUG: hook] hasNewFile', hasNewFile);
 
   // Remove the video from Gumlet as well, when it
   // is deleted in Payload.
@@ -53,20 +56,27 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
       throw new Error('Video URL or filename missing');
     }
 
-    console.log('[DEBUG] will upload to gumlet');
+    console.log('---->> [DEBUG: hook] will upload to gumlet');
 
     const gumletAsset = await uploadToGumletFromUrl({
       fileTitle: doc.title,
       url: doc.url,
     });
 
-    console.log('[DEBUG] did upload to gumlet');
+    console.log('---->> [DEBUG: hook] hook did upload to gumlet');
 
     // Update the document after the upload
 
-    console.log('[DEBUG]: hook -> payload update');
-    console.log(doc);
-    console.log(gumletAsset.id);
+    console.log('---->> [DEBUG: hook] payload update');
+    console.log('---->> [DEBUG: hook] doc', doc);
+    console.log('---->> [DEBUG: hook] gumletAsset', gumletAsset);
+
+    const checkVideoDocs = await req.payload.findByID({
+      collection: 'videos',
+      id: doc.id,
+    });
+
+    console.log('---->> [DEBUG: hook] checkVideoDocs', checkVideoDocs);
 
     await req.payload.update({
       collection: 'videos',
@@ -74,7 +84,7 @@ export const syncVideoWithGumlet: CollectionAfterChangeHook = async ({
         skipGumletSync: true,
       },
       data: {
-        gumletAssetId: gumletAsset.id,
+        gumletAssetId: gumletAsset,
       },
       id: doc.id,
     });

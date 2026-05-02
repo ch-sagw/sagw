@@ -1,21 +1,17 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import 'server-only';
 
-export interface InterfaceGumletAsset {
-  id: string;
-}
-
 export const uploadToGumletFromUrl = async ({
   url,
   fileTitle,
 }: {
   url: string;
   fileTitle: string;
-}): Promise<InterfaceGumletAsset> => {
+}): Promise<string> => {
   const collectionId = process.env.GUMLET_COLLECTION_ID;
 
-  console.log('[DEBUG] uploadToGumletFromUrl, url', url);
-  console.log('[DEBUG] uploadToGumletFromUrl, fileTitle', fileTitle);
+  console.log('---->> [DEBUG: uploadToGumletFromUrl] url', url);
+  console.log('---->> [DEBUG: uploadToGumletFromUrl] fileTitle', fileTitle);
 
   const payload = {
     collection_id: collectionId,
@@ -35,7 +31,7 @@ export const uploadToGumletFromUrl = async ({
       method: 'POST',
     });
 
-    console.log('[DEBUG] uploadToGumletFromUrl, fetch result', res);
+    console.log('---->> [DEBUG: uploadToGumletFromUrl] fetch result', res);
 
     if (!res.ok) {
       const text = await res.text();
@@ -47,9 +43,10 @@ export const uploadToGumletFromUrl = async ({
       asset_id: string;
     };
 
-    return {
-      id: json.asset_id,
-    };
+    console.log('---->> [DEBUG: uploadToGumletFromUrl] asset id', json.asset_id);
+
+    return json.asset_id;
+
   } catch (error) {
     throw new Error(`Unable to upload file to Gumlet: ${error instanceof Error
       ? error.message
