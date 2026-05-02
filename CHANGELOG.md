@@ -1,5 +1,45 @@
 # Changelog
 
+## [1.0.2](https://github.com/ch-sagw/sagw/compare/v1.0.1...v1.0.2) (2026-05-01)
+
+
+### Chore
+
+* add debug logs ([d0bf5be](https://github.com/ch-sagw/sagw/commit/d0bf5bedfc29a2c2489cbbd5739dcd23146840da))
+* add debug logs ([0b2f91a](https://github.com/ch-sagw/sagw/commit/0b2f91aeb9ad6c0a37e2e48560fbe7bab358a2a0))
+* add debug logs ([40e7ffb](https://github.com/ch-sagw/sagw/commit/40e7ffb9f5a666bca085b575114fb879c62b0aa8))
+* add more debugs ([8c6a7b9](https://github.com/ch-sagw/sagw/commit/8c6a7b97846e4356e6ddde46e21484e5d4f9d307))
+* add more logs ([7da36b2](https://github.com/ch-sagw/sagw/commit/7da36b2e76d0768f32b00131cbeb7aaff283a6b3))
+* adding debug log for video doc ([6cc5bee](https://github.com/ch-sagw/sagw/commit/6cc5beefb890afb4868ac0e200c974626bb2e370))
+* hardcode gumlet api url as test ([b896e59](https://github.com/ch-sagw/sagw/commit/b896e59577023c731f47f378b7b1280d9faaf494))
+* log fetch payload ([511fd1d](https://github.com/ch-sagw/sagw/commit/511fd1d46402a9752973fa52ca15a82c13c2d650))
+* re-adding throws to debug video upload ([6eec1b9](https://github.com/ch-sagw/sagw/commit/6eec1b92105db108a6ad22d20df83876af7e6c47))
+* revert payload refetch ([17f5cc5](https://github.com/ch-sagw/sagw/commit/17f5cc548e620e37571992c2dac579b8ced0e493))
+* temporary disable hooks on video collection ([333b8cb](https://github.com/ch-sagw/sagw/commit/333b8cb034c5e2609563bf76fd4cb23403279a52))
+
+
+### CI
+
+* proper redirect from root to /de ([df943a2](https://github.com/ch-sagw/sagw/commit/df943a2154e65e806ff914023b9a37acf4f346d6))
+* proper redirect from root to /de ([#1176](https://github.com/ch-sagw/sagw/issues/1176)) ([81744cc](https://github.com/ch-sagw/sagw/commit/81744cc5f9aa281e5b8f62992479d3a75c2d14f8))
+
+
+### Bug Fixes
+
+* add debugs ([b192aa4](https://github.com/ch-sagw/sagw/commit/b192aa47dded3ff444e1e8b49578acc69df7ad82))
+* do not return on errors ([fd542bb](https://github.com/ch-sagw/sagw/commit/fd542bbf54caa59d8053739ce8bd3facdb0a577b))
+* enable client uploads ([9953f8e](https://github.com/ch-sagw/sagw/commit/9953f8e23979d7ee1fd3e8ac52d983812450ac7e))
+* enable client uploads, add logs ([98eb158](https://github.com/ch-sagw/sagw/commit/98eb1586112af457a210b41034dee28756f5d647))
+* enable hooks again ([34799aa](https://github.com/ch-sagw/sagw/commit/34799aa7a1efdad26c2fa245c29469dcad8de95d))
+* fetch fresh doc before uploading to gumlet ([b75094c](https://github.com/ch-sagw/sagw/commit/b75094cd44f8e063c55dbb719a7de3b482f0e225))
+* fix type issue ([5b9883e](https://github.com/ch-sagw/sagw/commit/5b9883efe26910bd0dff66b1903a00008374ef8b))
+* replacing doc.fileUrl with doc.url ([fec2a5f](https://github.com/ch-sagw/sagw/commit/fec2a5fba380a66161f4cc494f126b620e4d81af))
+* replacing fileName with fileUrl in video upload ([1bdb140](https://github.com/ch-sagw/sagw/commit/1bdb14025e984bc7bbc698744f1b221e6207d627))
+* return doc instead of props ([29b0588](https://github.com/ch-sagw/sagw/commit/29b0588fe1ce8d5b906851e19a179b7b390ae522))
+* return props in hook ([7f963eb](https://github.com/ch-sagw/sagw/commit/7f963eb201a993fa032d9aff00b3c181c2bf215a))
+* skip gumlet upload on first run ([51db1ae](https://github.com/ch-sagw/sagw/commit/51db1ae5af827cc038f9299db4a4366e805a6886))
+* work with BLOB_URL instead of NEXT_PUBLIC_GUMLET_URL ([#1174](https://github.com/ch-sagw/sagw/issues/1174)) ([8b74a01](https://github.com/ch-sagw/sagw/commit/8b74a018337572d0bee73c3372c8f39ad8aadb63))
+
 ## [1.0.1](https://github.com/ch-sagw/sagw/compare/v1.0.0...v1.0.1) (2026-05-01)
 
 
