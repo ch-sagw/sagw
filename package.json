@@ -56,13 +56,13 @@
     "@payloadcms/plugin-seo": "^3.84.1",
     "@payloadcms/richtext-lexical": "^3.84.1",
     "@payloadcms/storage-vercel-blob": "^3.84.1",
-    "@sentry/nextjs": "^10.50.0",
-    "@sparticuz/chromium": "^147.0.2",
+    "@sentry/nextjs": "^10.51.0",
+    "@sparticuz/chromium": "^148.0.0",
     "cross-env": "^10.0.0",
     "fathom-client": "^3.7.2",
     "graphql": "^16.13.2",
     "next": "^16.2.4",
-    "next-intl": "^4.9.1",
+    "next-intl": "^4.11.0",
     "payload": "^3.84.1",
     "puppeteer-core": "^24.42.0",
     "react": "^19.2.5",
@@ -73,7 +73,7 @@
     "sharp": "0.34.5",
     "slugify": "^1.6.9",
     "validator": "^13.15.35",
-    "zod": "^4.3.6"
+    "zod": "^4.4.2"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.2",
