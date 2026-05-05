@@ -4,7 +4,7 @@ import {
 } from '@playwright/test';
 import { navigate } from '@/automated-testing/helpers';
 
-test('transistions to white on scroll', async ({
+test('transitions to white on scroll', async ({
   page,
 }, workerInfo) => {
   // webkit is flaky on this test, so exclude it
