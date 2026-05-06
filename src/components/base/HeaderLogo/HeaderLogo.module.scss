@@ -65,3 +65,13 @@
     }
   }
 }
+
+.multicolor-logo--sagw {
+  .white & {
+    .signet {
+      path {
+        fill: rgb(var(--black));
+      }
+    }
+  }
+}
