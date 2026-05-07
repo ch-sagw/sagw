@@ -10,65 +10,68 @@
   }
 }
 
-.logo.sagw {
-  path {
-    stroke: none;
-  }
-
-  &.dark {
+.logo.dark {
+  .monochrome-logo,
+  .multicolor-logo .text {
     path {
       fill: rgb(var(--white));
     }
-  }
 
-  &.white,
-  &.light {
-    path {
+    g[clip-path] path[stroke] {
+      fill: none;
+      stroke: rgb(var(--white));
+    }
+  }
+}
+
+.logo.light,
+.logo.white {
+  .monochrome-logo {
+    & > path {
       fill: rgb(var(--black));
     }
-  }
-}
 
-.logo.sslas,
-.logo.sago {
-  &.dark {
-    path {
-      fill: rgb(var(--white));
+    g[clip-path] path[stroke] {
+      fill: none;
     }
   }
 }
 
-.logo.sago {
-  &.dark {
-    polygon {
-      fill: rgb(var(--white));
-    }
-  }
+.monochrome-logo,
+.multicolor-logo {
+  background: none;
 }
 
-.logo.sslas {
-  &.dark {
-    &.text {
-      path {
+.multicolor-logo {
+  .dark & {
+    .signet,
+    .text {
+      path,
+      polygon {
         fill: rgb(var(--white));
       }
     }
-  }
 
-  &.white,
-  &.light {
-    &.text {
+    .signet-accent-color {
       path {
-        fill: rgb(var(--black));
+        opacity: 0.6;
+      }
+    }
+
+    .signet-text-inverted {
+      path {
+        fill: var(--background-inverted);
       }
     }
   }
 }
 
-.logo.sgtk {
-  &.dark {
-    polygon {
-      fill: rgb(var(--white));
+.multicolor-logo--sagw {
+  .white & {
+    .signet {
+      path {
+        fill: rgb(var(--black));
+      }
     }
   }
 }
