@@ -23,7 +23,7 @@ export type InterfaceHomeTeaserClientPropTypes = {
 export const HomeTeaserClient = ({
   teasers,
 }: InterfaceHomeTeaserClientPropTypes): React.JSX.Element => (
-  <div className={styles.teasers}>
+  <div className={styles.homeTeasers}>
     {teasers.map((teaser, index) => (
       <Section
         additionalContentClassName={styles.stickyContent}
@@ -34,7 +34,7 @@ export const HomeTeaserClient = ({
             className={styles.icon}
           />
         }
-        className={styles.teaser}
+        className={styles.homeTeaser}
         colorMode='white'
         key={index}
         subtitle={teaser.titleHtml}

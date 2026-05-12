@@ -258,10 +258,6 @@
       width: px-to-rem(400);
     }
   }
-
-  .metanavWrapper.metanavHidden ~ .infoBlock {
-    inset-block-start: var(--info-block-top, px-to-rem(155));
-  }
 }
 
 .headerSSR {

@@ -4,8 +4,8 @@
 @use "../../../styles/mixins/mixins-shared-styles" as *;
 @use "../../../styles/mixins/mixins-typo" as *;
 
-.teasers {
-  .teaser {
+.homeTeasers {
+  .homeTeaser {
     position: relative;
 
     &:not(:first-of-type):before {
