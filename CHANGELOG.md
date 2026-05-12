@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.1.0](https://github.com/ch-sagw/sagw/compare/v1.0.3...v1.1.0) (2026-05-10)
+
+
+### Chore
+
+* **deps-dev:** bump the development-dependencies group across 1 directory with 10 updates ([#1195](https://github.com/ch-sagw/sagw/issues/1195)) ([72bdb42](https://github.com/ch-sagw/sagw/commit/72bdb4289bc61f5f40dc327cc59aa72aa7f55713))
+* **deps-dev:** bump the development-dependencies group with 11 updates ([#1180](https://github.com/ch-sagw/sagw/issues/1180)) ([5a470c3](https://github.com/ch-sagw/sagw/commit/5a470c310cde4dae852282aa7ed456d2c8770646))
+* **deps:** bump the production-dependencies group with 4 updates ([#1179](https://github.com/ch-sagw/sagw/issues/1179)) ([6c19424](https://github.com/ch-sagw/sagw/commit/6c19424559a8c0a8cb0e721fad4602e9381c2757))
+* **deps:** bump the production-dependencies group with 9 updates ([#1194](https://github.com/ch-sagw/sagw/issues/1194)) ([5521083](https://github.com/ch-sagw/sagw/commit/5521083530bb746e19044d402f83ebb6493bdb6f))
+
+
+### Features
+
+* adding additional header logos for fg ([#1189](https://github.com/ch-sagw/sagw/issues/1189)) ([66e5031](https://github.com/ch-sagw/sagw/commit/66e5031155391f67452e1a936a5a35ecb69e8b85))
+
+
+### Style
+
+* fix delayed info-block display ([#1187](https://github.com/ch-sagw/sagw/issues/1187)) ([1dd18de](https://github.com/ch-sagw/sagw/commit/1dd18de7b7c66018fa48724e71e7f6a49834bb55))
+
 ## [1.0.3](https://github.com/ch-sagw/sagw/compare/v1.0.2...v1.0.3) (2026-05-02)
 
 
