@@ -38,7 +38,7 @@ export default async function RootLayout({
       <head>
         <link
           rel='preload'
-          href='/webfonts/HelveticaNowDisplay-Bold.woff2'
+          href='/webfonts/HelveticaNowDisplay-Bold-lf.woff2'
           as='font'
           type='font/woff2'
           crossOrigin='anonymous'
