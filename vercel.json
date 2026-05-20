@@ -44,6 +44,12 @@
     },
     {
       "source": "/fr/svaw/:path*",
+      "missing": [
+        {
+          "type": "query",
+          "key": "new"
+        }
+      ],
       "destination": "https://temp.sagw.ch/fr/svaw/:path*",
       "permanent": false
     },
@@ -74,6 +80,12 @@
     },
     {
       "source": "/fr/sgavl/:path*",
+      "missing": [
+        {
+          "type": "query",
+          "key": "new"
+        }
+      ],
       "destination": "https://temp.sagw.ch/fr/sgavl/:path*",
       "permanent": false
     },
@@ -94,11 +106,23 @@
     },
     {
       "source": "/en/ssg/:path*",
+      "missing": [
+        {
+          "type": "query",
+          "key": "new"
+        }
+      ],
       "destination": "https://temp.sagw.ch/en/ssg/:path*",
       "permanent": false
     },
     {
       "source": "/fr/ssg/:path*",
+      "missing": [
+        {
+          "type": "query",
+          "key": "new"
+        }
+      ],
       "destination": "https://temp.sagw.ch/fr/ssg/:path*",
       "permanent": false
     },
@@ -139,11 +163,23 @@
     },
     {
       "source": "/en/sgmoik/:path*",
+      "missing": [
+        {
+          "type": "query",
+          "key": "new"
+        }
+      ],
       "destination": "https://temp.sagw.ch/en/sgmoik/:path*",
       "permanent": false
     },
     {
       "source": "/fr/sgmoik/:path*",
+      "missing": [
+        {
+          "type": "query",
+          "key": "new"
+        }
+      ],
       "destination": "https://temp.sagw.ch/fr/sgmoik/:path*",
       "permanent": false
     },
@@ -174,11 +210,23 @@
     },
     {
       "source": "/en/seg/:path*",
+      "missing": [
+        {
+          "type": "query",
+          "key": "new"
+        }
+      ],
       "destination": "https://temp.sagw.ch/en/seg/:path*",
       "permanent": false
     },
     {
       "source": "/fr/seg/:path*",
+      "missing": [
+        {
+          "type": "query",
+          "key": "new"
+        }
+      ],
       "destination": "https://temp.sagw.ch/fr/seg/:path*",
       "permanent": false
     },
@@ -189,6 +237,12 @@
     },
     {
       "source": "/fr/sthg/:path*",
+      "missing": [
+        {
+          "type": "query",
+          "key": "new"
+        }
+      ],
       "destination": "https://temp.sagw.ch/fr/sthg/:path*",
       "permanent": false
     },
