@@ -1,4 +1,5 @@
 import { homeSlug } from '@/collections/constants';
+import { getServerSideURL } from '@/utilities/getUrl';
 
 // builds the URL prefix (locale + tenant).
 // format: /{locale}/{tenant?}/
@@ -36,6 +37,10 @@ export const buildUrlFromPath = ({
     tenant,
   });
 
+  // get host origin
+  const origin = getServerSideURL()
+    .replace(/\/+$/u, '');
+
   // "home" is a special case
   if (slug === homeSlug) {
     const basePath = urlPrefix;
@@ -50,6 +55,6 @@ export const buildUrlFromPath = ({
     ? `${path}/${slug}`
     : slug;
 
-  return `${urlPrefix}${pagePath}`;
+  return `${origin}${urlPrefix}${pagePath}`;
 };
 
