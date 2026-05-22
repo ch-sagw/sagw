@@ -272,10 +272,12 @@ export const FooterComponent = ({
           html={legalCopyrightText}
         />
 
-        <SocialLinks
-          {...socialLinkProps}
-          className={styles.socialLinks}
-        />
+        {socialLinkProps.items.length > 0 &&
+          <SocialLinks
+            {...socialLinkProps}
+            className={styles.socialLinks}
+          />
+        }
 
         <ConsentOverlayClient
           ref={overlayDialogRef}
