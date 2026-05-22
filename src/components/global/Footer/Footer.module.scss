@@ -106,7 +106,7 @@
 
     @include mq($from: large) {
       grid-template-columns: auto auto;
-      grid-template-rows: repeat(2, 1fr);
+      grid-template-rows: auto;
       align-items: unset;
     }
 
