@@ -225,6 +225,11 @@ export const fetchNewsTeaserPages = async ({
 }: InterfaceFetchNewsTeaserPagesProps): Promise<PaginatedDocs<NewsDetailPage>> => {
   const payload = providedPayload || await getPayloadCached();
   const queryRestraints: Where = {
+    /* eslint-disable @typescript-eslint/naming-convention */
+    _status: {
+    /* eslint-enable @typescript-eslint/naming-convention */
+      equals: 'published',
+    },
     tenant: {
       equals: tenant,
     },
@@ -282,6 +287,11 @@ export const fetchNewsOverviewPages = async ({
     pagination: false,
     sort: '-hero.date',
     where: {
+      /* eslint-disable @typescript-eslint/naming-convention */
+      _status: {
+      /* eslint-enable @typescript-eslint/naming-convention */
+        equals: 'published',
+      },
       tenant: {
         equals: tenant,
       },
