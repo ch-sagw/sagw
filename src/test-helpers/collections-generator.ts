@@ -821,7 +821,9 @@ export const generateNewsDetailPage = async (props: InterfaceNewsPageProps): Pro
   const document = await payload.create({
     collection: 'newsDetailPage',
     data: {
-      _status: 'published',
+      _status: props.draft
+        ? 'draft'
+        : 'published',
       hero: {
         colorMode: 'light',
         date: props.date

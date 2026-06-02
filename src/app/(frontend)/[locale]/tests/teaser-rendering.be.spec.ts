@@ -791,6 +791,176 @@ test.describe('Teaser rendering general (sagw)', () => {
       .toHaveText(`news 3 ${time}`);
   });
 
+  test('does not show unpublished news in teaser block', async ({
+    page,
+  }) => {
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await generateNewsDetailPage({
+      date: '2024-08-03T12:00:00.000Z',
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `published news 1 ${time}`,
+    });
+
+    // draft has the most recent date, so it would be the first teaser
+    // if unpublished pages were (incorrectly) included
+    await generateNewsDetailPage({
+      date: '2024-08-10T12:00:00.000Z',
+      draft: true,
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `unpublished news ${time}`,
+    });
+
+    await payload.create({
+      collection: 'overviewPage',
+      data: {
+        /* eslint-disable @typescript-eslint/naming-convention */
+        _status: 'published',
+        /* eslint-enable @typescript-eslint/naming-convention */
+        content: [
+          {
+            blockType: 'newsTeasersBlock',
+            colorMode: 'light',
+            title: simpleRteConfig('News'),
+          },
+        ],
+        hero: {
+          colorMode: 'light',
+          title: simpleRteConfig(`Project ${time}`),
+        },
+        ...seoData,
+        navigationTitle: 'Project',
+        parentPage: {
+          documentId: home,
+          slug: 'homePage',
+        },
+        slug: `overview-${time}`,
+        tenant,
+      },
+      draft: false,
+      locale: 'de',
+    });
+
+    await page.goto(`http://localhost:3000/de/overview-${time}`);
+    await page.waitForLoadState('networkidle');
+
+    const newsList = await page.locator(':text("News") + [data-testid="teaser-linklist"]');
+    const news = newsList.getByRole('listitem');
+
+    await expect(news)
+      .toHaveCount(1);
+
+    await expect(newsList.getByText(`published news 1 ${time}`))
+      .toBeVisible();
+    await expect(newsList.getByText(`unpublished news ${time}`))
+      .not.toBeVisible();
+  });
+
+  test('does not show unpublished news in overview block', async ({
+    page,
+  }) => {
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await generateNewsDetailPage({
+      date: '2024-08-02T12:00:00.000Z',
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `published overview news 1 ${time}`,
+    });
+
+    await generateNewsDetailPage({
+      date: '2024-08-03T12:00:00.000Z',
+      draft: true,
+      parentPage: {
+        documentId: home,
+        slug: 'homePage',
+      },
+      tenant,
+      title: `unpublished overview news ${time}`,
+    });
+
+    await payload.create({
+      collection: 'overviewPage',
+      data: {
+        /* eslint-disable @typescript-eslint/naming-convention */
+        _status: 'published',
+        /* eslint-enable @typescript-eslint/naming-convention */
+        content: [
+          {
+            blockType: 'newsOverviewBlock',
+            title: simpleRteConfig('News'),
+          },
+        ],
+        hero: {
+          colorMode: 'light',
+          title: simpleRteConfig(`Project ${time}`),
+        },
+        ...seoData,
+        navigationTitle: 'Project',
+        parentPage: {
+          documentId: home,
+          slug: 'homePage',
+        },
+        slug: `overview-${time}`,
+        tenant,
+      },
+      draft: false,
+      locale: 'de',
+    });
+
+    await page.goto(`http://localhost:3000/de/overview-${time}`);
+    await page.waitForLoadState('networkidle');
+
+    const newsItems = page.getByTestId('newsListItem');
+
+    await expect(newsItems)
+      .toHaveCount(1);
+
+    await expect(page.getByText(`published overview news 1 ${time}`))
+      .toBeVisible();
+    await expect(page.getByText(`unpublished overview news ${time}`))
+      .not.toBeVisible();
+  });
+
   test('correctly shows 4 latest magazine teasers', async ({
     page,
   }) => {
