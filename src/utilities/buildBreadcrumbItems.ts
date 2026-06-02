@@ -4,6 +4,7 @@ import { InterfaceBreadcrumbItem } from '@/components/base/Breadcrumb/Breadcrumb
 import { getBreadcrumbPathSegments } from '@/utilities/getBreadcrumbPathSegments';
 import { buildUrlFromPath } from '@/utilities/buildUrlFromPath';
 import { homeSlug } from '@/collections/constants';
+import { getServerSideURL } from '@/utilities/getUrl';
 
 interface InterfaceBuildBreadcrumbItemsParams {
   breadcrumb: InterfaceBreadcrumb;
@@ -20,6 +21,10 @@ export const buildBreadcrumbItems = ({
   if (!breadcrumb || !Array.isArray(breadcrumb) || breadcrumb.length === 0) {
     return [];
   }
+
+  // get host origin
+  const origin = getServerSideURL()
+    .replace(/\/+$/u, '');
 
   // get path segments using the same logic as urlFromBreadcrumb
   const pathSegments = getBreadcrumbPathSegments({
@@ -62,7 +67,7 @@ export const buildBreadcrumbItems = ({
       });
 
       breadcrumbItems.push({
-        link: homeUrl,
+        link: `${origin}${homeUrl}`,
         text: homeName,
       });
     }
@@ -100,7 +105,7 @@ export const buildBreadcrumbItems = ({
       });
 
       breadcrumbItems.push({
-        link: itemUrl,
+        link: `${origin}${itemUrl}`,
         text,
       });
 
