@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.1.1](https://github.com/ch-sagw/sagw/compare/v1.1.0...v1.1.1) (2026-06-02)
+
+
+### Bug Fixes
+
+* correcting storybook gumlet image urls ([acf4c9c](https://github.com/ch-sagw/sagw/commit/acf4c9ca322e4f22c2aba2a1b55595202c1681b4))
+* only fetch published docs in news teasers and overview blocks ([acf4c9c](https://github.com/ch-sagw/sagw/commit/acf4c9ca322e4f22c2aba2a1b55595202c1681b4))
+
+
+### Style
+
+* make home teaser classes more specific to fix indentation of text on grid ([1b3cfdd](https://github.com/ch-sagw/sagw/commit/1b3cfdd7022edaaa0ffd6eceda5521e658ba0114))
+* removing obsolete infoBlock position declaration ([1b3cfdd](https://github.com/ch-sagw/sagw/commit/1b3cfdd7022edaaa0ffd6eceda5521e658ba0114))
+
+
+### Test
+
+* add tests for checking that unpublished news are not rendered in teasers ([acf4c9c](https://github.com/ch-sagw/sagw/commit/acf4c9ca322e4f22c2aba2a1b55595202c1681b4))
+
 ## [1.1.0](https://github.com/ch-sagw/sagw/compare/v1.0.3...v1.1.0) (2026-05-10)
 
 
