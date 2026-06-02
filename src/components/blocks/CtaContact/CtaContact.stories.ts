@@ -42,7 +42,7 @@ const imageConfig: Image = {
   updatedAt: '2025-11-19T09:54:49.431Z',
   // The url value coming from Payload will not contain the hostname.
   // It is added here for Storybook only.
-  url: 'https://sagw-nu-localhost.gumlet.io/20071445109_e1a2b79633_6k.jpg',
+  url: 'https://sagw-localhost.gumlet.io/20071445109_e1a2b79633_6k.jpg',
   width: 5742,
 };
 
