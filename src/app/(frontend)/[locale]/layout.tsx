@@ -35,6 +35,22 @@ export default async function RootLayout({
       className='no-js'
       lang={locale}
     >
+      <head>
+        <link
+          rel='preload'
+          href='/webfonts/HelveticaNowDisplay-Bold-lf.woff2'
+          as='font'
+          type='font/woff2'
+          crossOrigin='anonymous'
+        />
+        <link
+          rel='preload'
+          href='/webfonts/HelveticaNowDisplay-Regular-lf.woff2'
+          as='font'
+          type='font/woff2'
+          crossOrigin='anonymous'
+        />
+      </head>
       <NoJsScript />
       <NextIntlClientProvider locale={locale} messages={messages}>
         {children}
