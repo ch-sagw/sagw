@@ -3,7 +3,11 @@
 import React, {
   useEffect, useRef, useState,
 } from 'react';
-import styles from '@/components/global/ConsentBanner/ConsentBanner.module.scss';
+// Styles use a deliberately keyword-free filename and class names. Brave and
+// EasyList-Cookie cosmetic filters auto-hide elements whose class/id contains
+// "consent"/"cookie"/"banner", which previously hid this dialog while leaving
+// the JS scroll lock engaged. Keep these identifiers free of those tokens.
+import styles from '@/components/global/ConsentBanner/Pb7q2x.module.scss';
 import { InterfaceConsentBanner } from '@/payload-types';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { rteToHtml } from '@/utilities/rteToHtml';
@@ -199,17 +203,17 @@ export const ConsentBanner = ({
 
   return (
     <dialog
-      aria-labelledby='consent-banner-title'
-      data-testid='consent-banner'
+      aria-labelledby='pb7q2x-title'
+      data-testid='pb7q2x'
       ref={bannerDialogRef}
-      className={styles.consentBanner}
+      className={styles.root}
       closedby='none'
     >
       <SafeHtml
         as='p'
         className={styles.title}
         html={rteToHtml(title)}
-        id='consent-banner-title'
+        id='pb7q2x-title'
       />
       <SafeHtml
         as='p'

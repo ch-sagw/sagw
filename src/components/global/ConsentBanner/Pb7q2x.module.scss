@@ -4,7 +4,11 @@
 @use "../../../styles/utilities/mediaqueries" as *;
 @use "../../../styles/utilities/utilities" as *;
 
-.consentBanner {
+// Class names here are intentionally obfuscated (no "consent"/"cookie"/"banner").
+// Brave and EasyList-Cookie cosmetic filters auto-hide elements whose
+// class/id matches those keywords, which would hide the dialog while leaving the
+// JS scroll lock active. Keep these names keyword-free.
+.root {
   --content-max-width: 1000;
 
   border: none;
@@ -22,7 +26,7 @@
   z-index: 998;
 
   *:focus-visible {
-    anchor-name: --focus-anchor-consent-banner;
+    anchor-name: --focus-anchor-pb7q2x;
     outline: 0;
   }
 
@@ -31,7 +35,7 @@
 
     --flying-focus-border-color: var(--border-primary);
 
-    position-anchor: --focus-anchor-consent-banner;
+    position-anchor: --focus-anchor-pb7q2x;
   }
 
   &[open]:not(.closing) {
