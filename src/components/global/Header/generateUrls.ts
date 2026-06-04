@@ -11,7 +11,7 @@ import { getTenantHomeUrl } from '@/utilities/tenant';
 
 interface InterfaceExtractLinkIdsParams {
   navigation: InterfaceHeaderNavigation;
-  metanav: InterfaceHeaderMetaNavigation;
+  metanav?: InterfaceHeaderMetaNavigation;
   options?: {
     includeMainNavItems?: boolean;
   };
@@ -42,7 +42,7 @@ export const extractLinkIds = ({
   });
 
   // metanav item (should be external. just in case)
-  metanav.metaLinks?.forEach((item) => {
+  metanav?.metaLinks?.forEach((item) => {
     if (item.linkType === 'internal' && item.linkInternal?.internalLink?.documentId) {
       linkIds.push(item.linkInternal.internalLink.documentId);
     }
@@ -53,7 +53,7 @@ export const extractLinkIds = ({
 
 interface InterfaceGenerateLinkUrlsParams {
   navigation: InterfaceHeaderNavigation;
-  metanav: InterfaceHeaderMetaNavigation;
+  metanav?: InterfaceHeaderMetaNavigation;
   locale: TypedLocale;
   payload: Awaited<ReturnType<typeof getPayloadCached>>;
   options?: {

@@ -65,10 +65,6 @@ export const RenderHeader = async ({
   // get metanav data
   const metanavData = headerData.docs[0].metanavigation;
 
-  if (!metanavData?.metaLinks || metanavData.metaLinks.length < 1) {
-    return <CMSConfigError message='No metanav data in header data' />;
-  }
-
   // logo link
   let logoLink = `${origin}/${locale}`;
 

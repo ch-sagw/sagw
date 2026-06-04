@@ -44,7 +44,7 @@ export type InterfaceHeaderComponentPropTypes = {
     close: string,
   };
   logoLink: string;
-  metanav: InterfaceHeaderMetaNavigation;
+  metanav?: InterfaceHeaderMetaNavigation;
   navigation: InterfaceHeaderNavigation;
   linkUrls: Record<string, string>;
   localeUrls: Record<string, string>;
@@ -449,7 +449,7 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
   };
 
   const metanavRender = (): React.JSX.Element => {
-    if (props.metanav.metaLinks && props.metanav.metaLinks?.length > 0) {
+    if (props.metanav?.metaLinks && props.metanav.metaLinks?.length > 0) {
       return (
         <div
           ref={metanavRef}
