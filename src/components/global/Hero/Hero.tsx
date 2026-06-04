@@ -72,10 +72,6 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
   const locale = useLocale();
   const heroClasses = cva([styles.hero], {
     variants: {
-      animated: {
-        false: undefined,
-        true: [styles.animated],
-      },
       colorMode: {
         dark: [styles.dark],
         light: [styles.light],
@@ -209,9 +205,6 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
 
   const rootClassName = [
     heroClasses({
-      animated: 'animated' in props
-        ? props.animated
-        : false,
       colorMode: heroColorMode,
       magazineDetail: props.type === 'magazineDetail',
       titleIndent: props.type === 'magazineDetail',

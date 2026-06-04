@@ -6,7 +6,6 @@ import {
 } from '@/field-templates/rte';
 import { fieldsColorMode } from '@/field-templates/colorMode';
 import { fieldsLinkInternalWithToggle } from '@/field-templates/links';
-import { fieldAccessHeroAnimation } from '@/access/fields/hero';
 import { fieldAccessNonLocalizableField } from '@/access/fields/localizedFields';
 
 const colorModeOverview = fieldsColorMode({
@@ -71,12 +70,6 @@ export const fieldsHeroHome: GroupField = {
     fieldsLinkInternalWithToggle({
       adminDescription: 'This is the text behind which the link is hidden.',
     }),
-    {
-      access: fieldAccessHeroAnimation,
-      defaultValue: true,
-      name: 'animated',
-      type: 'checkbox',
-    },
   ],
   interfaceName: 'InterfaceHeroFieldHome',
   ...generalProps,

@@ -702,7 +702,6 @@ const setupSagwHomePage = async (): Promise<void> => {
 
       // hero
       hero: {
-        animated: true,
         lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
         optionalLink: {
           includeLink: true,
@@ -862,7 +861,6 @@ const setupSagwHomePageNonSagw = async (overrideTime?: number): Promise<void> =>
 
       // hero
       hero: {
-        animated: true,
         lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
         optionalLink: {
           includeLink: true,

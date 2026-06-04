@@ -346,7 +346,6 @@ export interface InterfaceHeroFieldHome {
       internalLink: InterfaceInternalLinkValue;
     };
   };
-  animated?: boolean | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -5176,7 +5175,6 @@ export interface InterfaceHeroFieldHomeSelect<T extends boolean = true> {
               internalLink?: T | InterfaceInternalLinkValueSelect<T>;
             };
       };
-  animated?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
