@@ -478,6 +478,17 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
                 };
               }
 
+              if (item.linkType === 'mail') {
+                return {
+                  link: item.linkMail?.email
+                    ? `mailto:${item.linkMail.email}`
+                    : '',
+                  tabindex,
+                  target: '_self',
+                  text: rteToHtml(item.linkMail?.linkText),
+                };
+              }
+
               return {
                 link: item.linkExternal?.externalLink || '',
                 tabindex,
