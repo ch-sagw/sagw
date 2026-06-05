@@ -43,7 +43,7 @@ export type InterfaceFooterComponentPropTypes = {
   impressumUrl: string;
   legal: InterfaceFooterLegal;
   linkUrls: Record<string, string>;
-  metaNav: InterfaceHeaderMetaNavigation;
+  metaNav?: InterfaceHeaderMetaNavigation;
   navigation: InterfaceHeaderNavigation;
   socialLinks?: InterfaceFooterSocialLinks;
   structuredDataImage: string;
@@ -130,7 +130,7 @@ export const FooterComponent = ({
 
   const metanavProps: InterfaceMetanavPropTypes = {
     colorMode: 'dark',
-    items: metaNav.metaLinks
+    items: metaNav?.metaLinks
       ? metaNav.metaLinks?.map((item) => {
         if (item.linkExternal) {
           const navItem: InterfaceMetanavItem = {

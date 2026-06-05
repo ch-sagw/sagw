@@ -75,10 +75,6 @@ export const RenderFooter = async ({
   // get metanav data
   const metanavData = headerData.docs[0].metanavigation;
 
-  if (!metanavData?.metaLinks || metanavData.metaLinks.length < 1) {
-    return <CMSConfigError message='No metanav data in header data' />;
-  }
-
   // get footer contact data
   const footerContactData = footerData.docs[0].contact;
 

@@ -16,7 +16,7 @@ import {
 } from '@/components/global/Header/generateUrls';
 import { PageMainViewTransition } from '@/components/PageMainViewTransition';
 export type InterfaceHeaderPropTypesCms = {
-  metanav: InterfaceHeaderMetaNavigation;
+  metanav?: InterfaceHeaderMetaNavigation;
   navigation: InterfaceHeaderNavigation;
 }
 

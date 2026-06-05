@@ -19,7 +19,7 @@ export type InterfaceFooterPropTypes = {
   contact: InterfaceFooterContact;
   homeLink?: string;
   legal: InterfaceFooterLegal;
-  metaNav: InterfaceHeaderMetaNavigation;
+  metaNav?: InterfaceHeaderMetaNavigation;
   navigation: InterfaceHeaderNavigation;
   socialLinks?: InterfaceFooterSocialLinks;
   structuredDataImage: string;
