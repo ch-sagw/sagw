@@ -43,7 +43,7 @@ test.describe('Consent Overlay', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    const banner = await page.getByTestId('consent-banner');
+    const banner = await page.getByTestId('pb7q2x');
     const overlay = await page.getByTestId('consent-overlay');
     const overlayButton = await banner.getByText('Auswahl anpassen');
     const close = overlay.getByTestId('consent-overlay-close');
@@ -61,7 +61,7 @@ test.describe('Consent Overlay', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    const banner = await page.getByTestId('consent-banner');
+    const banner = await page.getByTestId('pb7q2x');
     const overlay = await page.getByTestId('consent-overlay');
     const overlayButton = await banner.getByText('Auswahl anpassen');
     const close = overlay.getByTestId('consent-overlay-close');
@@ -86,7 +86,7 @@ test.describe('Consent Overlay', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    const banner = await page.getByTestId('consent-banner');
+    const banner = await page.getByTestId('pb7q2x');
     const overlayButton = await banner.getByText('Auswahl anpassen');
 
     await overlayButton.click();
@@ -123,7 +123,7 @@ test.describe('Consent Overlay', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    const banner = await page.getByTestId('consent-banner');
+    const banner = await page.getByTestId('pb7q2x');
     const overlayButton = await banner.getByText('Auswahl anpassen');
 
     await overlayButton.click();
@@ -168,7 +168,7 @@ test.describe('Consent Overlay', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    const banner = await page.getByTestId('consent-banner');
+    const banner = await page.getByTestId('pb7q2x');
     const overlay = await page.getByTestId('consent-overlay');
     const overlayButton = await banner.getByText('Auswahl anpassen');
     const close = overlay.getByTestId('consent-overlay-close');
@@ -187,7 +187,7 @@ test.describe('Consent Overlay', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    const banner = await page.getByTestId('consent-banner');
+    const banner = await page.getByTestId('pb7q2x');
     const overlay = await page.getByTestId('consent-overlay');
     const acceptAll = await banner.getByText('Alle zulassen');
 

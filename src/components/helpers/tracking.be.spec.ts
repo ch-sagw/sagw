@@ -112,7 +112,7 @@ test.describe('Tracking', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    await expect(page.getByTestId('consent-banner'))
+    await expect(page.getByTestId('pb7q2x'))
       .toBeVisible();
 
     await sleep(10_000);
@@ -140,7 +140,7 @@ test.describe('Tracking', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    const banner = page.getByTestId('consent-banner');
+    const banner = page.getByTestId('pb7q2x');
 
     await banner.getByText('Alle ablehnen')
       .click();
@@ -172,7 +172,7 @@ test.describe('Tracking', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    const banner = page.getByTestId('consent-banner');
+    const banner = page.getByTestId('pb7q2x');
 
     await banner.getByText('Alle zulassen')
       .click();

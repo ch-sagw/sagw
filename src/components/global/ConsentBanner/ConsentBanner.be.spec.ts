@@ -44,7 +44,7 @@ test.describe('Consent Banner', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    const banner = await page.getByTestId('consent-banner');
+    const banner = await page.getByTestId('pb7q2x');
 
     await expect(banner)
       .toBeVisible();
@@ -67,7 +67,7 @@ test.describe('Consent Banner', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    const banner = await page.getByTestId('consent-banner');
+    const banner = await page.getByTestId('pb7q2x');
 
     await expect(banner)
       .not.toBeVisible();
@@ -81,7 +81,7 @@ test.describe('Consent Banner', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    const banner = await page.getByTestId('consent-banner');
+    const banner = await page.getByTestId('pb7q2x');
     const acceptAll = await banner.getByText('Alle zulassen');
 
     await acceptAll.click();
@@ -116,7 +116,7 @@ test.describe('Consent Banner', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    const banner = await page.getByTestId('consent-banner');
+    const banner = await page.getByTestId('pb7q2x');
     const acceptAll = await banner.getByText('Alle ablehnen');
 
     await acceptAll.click();
@@ -150,7 +150,7 @@ test.describe('Consent Banner', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    const banner = await page.getByTestId('consent-banner');
+    const banner = await page.getByTestId('pb7q2x');
     const link = banner.getByText('Datenschutzrichtlinien');
 
     await expect(link)
@@ -164,7 +164,7 @@ test.describe('Consent Banner', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    const banner = await page.getByTestId('consent-banner');
+    const banner = await page.getByTestId('pb7q2x');
     const link = banner.getByText('Datenschutzrichtlinien');
 
     await page.keyboard.press('Tab');
@@ -183,7 +183,7 @@ test.describe('Consent Banner', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForLoadState('domcontentloaded');
 
-    const banner = await page.getByTestId('consent-banner');
+    const banner = await page.getByTestId('pb7q2x');
     const overlay = await page.getByTestId('consent-overlay');
     const overlayButton = await banner.getByText('Auswahl anpassen');
 
