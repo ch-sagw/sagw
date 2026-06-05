@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.2.0](https://github.com/ch-sagw/sagw/compare/v1.1.1...v1.2.0) (2026-06-05)
+
+
+### Features
+
+* adding inital batch of favicons and apple touch icons for fg ([ef15954](https://github.com/ch-sagw/sagw/commit/ef15954735f0ef6f1c485ee3f1890145f2ed2a1a))
+* adding webfonts preload links ([728278d](https://github.com/ch-sagw/sagw/commit/728278d3b0dca62f9924d45a9cfeb0ceab7381a2))
+* adding webfonts preload links ([#1212](https://github.com/ch-sagw/sagw/issues/1212)) ([728278d](https://github.com/ch-sagw/sagw/commit/728278d3b0dca62f9924d45a9cfeb0ceab7381a2))
+
+
+### Bug Fixes
+
+* adding origin to buildBreadcrumbItems ([e4fed1c](https://github.com/ch-sagw/sagw/commit/e4fed1c227f1cd52b5f045e7d3b9c7a23aac2039))
+* correcting breadcrumb link urls ([#1213](https://github.com/ch-sagw/sagw/issues/1213)) ([e4fed1c](https://github.com/ch-sagw/sagw/commit/e4fed1c227f1cd52b5f045e7d3b9c7a23aac2039))
+* only render social links in footer if there are any ([2a9aa52](https://github.com/ch-sagw/sagw/commit/2a9aa52b65f17ce32ece48b80a0445983e8febbf))
+* remove consent/cookie tokens out of dom to prevent brave/EasyList from finding consent banner ([#1228](https://github.com/ch-sagw/sagw/issues/1228)) ([73cc66b](https://github.com/ch-sagw/sagw/commit/73cc66b648ebefcedb1e99f963592f3742562166))
+* remove hero animation checkbox ([#1229](https://github.com/ch-sagw/sagw/issues/1229)) ([e84e93a](https://github.com/ch-sagw/sagw/commit/e84e93a31eb48f051950306c2dfaeee219eecc66))
+* render founding year conditionally ([#1214](https://github.com/ch-sagw/sagw/issues/1214)) ([c7c1e18](https://github.com/ch-sagw/sagw/commit/c7c1e18d6920756f45465e635d493cb2278f7a5c))
+
+
+### Style
+
+* set grid-template-rows in footer meta section to auto from large upwards ([2a9aa52](https://github.com/ch-sagw/sagw/commit/2a9aa52b65f17ce32ece48b80a0445983e8febbf))
+
 ## [1.1.1](https://github.com/ch-sagw/sagw/compare/v1.1.0...v1.1.1) (2026-06-02)
 
 
