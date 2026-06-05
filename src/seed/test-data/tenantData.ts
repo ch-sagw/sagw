@@ -577,7 +577,6 @@ export const addDataForTenant = async (props: InterfaceAddDataForTenantProps): P
       _status: 'published',
       content: homeContent,
       hero: {
-        animated: true,
         lead: simpleRteConfig('Home Lead'),
         sideTitle: simpleRteConfig('Home Side-Title'),
         title: simpleRteConfig(`Home Title ${tenant.toUpperCase()}`),

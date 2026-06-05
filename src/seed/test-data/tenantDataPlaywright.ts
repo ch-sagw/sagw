@@ -416,7 +416,6 @@ export const addPlaywrightDataForTenant = async (props: InterfaceAddDataForTenan
       _status: 'published',
       content: [],
       hero: {
-        animated: true,
         lead: simpleRteConfig('Home Lead'),
         sideTitle: simpleRteConfig('Home Side-Title'),
         title: simpleRteConfig(`Home Title ${tenant.toUpperCase()}`),
