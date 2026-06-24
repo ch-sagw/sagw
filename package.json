@@ -68,7 +68,7 @@
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "resend": "^6.12.3",
-    "sanitize-html": "^2.17.3",
+    "sanitize-html": "^2.17.4",
     "server-only": "^0.0.1",
     "sharp": "0.34.5",
     "slugify": "^1.6.9",
