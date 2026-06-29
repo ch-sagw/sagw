@@ -306,6 +306,10 @@
       svg path {
         fill: var(--background-cta);
         stroke: none;
+
+        @include forced-colors {
+          fill: CanvasText;
+        }
       }
 
       @include mq($from: medium) {

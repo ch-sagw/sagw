@@ -53,6 +53,10 @@
 
     &.sticky {
       transform: translateY(var(--meta-nav-height));
+
+      @include forced-colors {
+        border-block-end: px-to-rem(var(--border-width-s)) solid CanvasText;
+      }
     }
 
     &:after {

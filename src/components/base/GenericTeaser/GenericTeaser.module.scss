@@ -48,6 +48,16 @@ Förderung -> project teaser -> no padding
 
     svg {
       color: var(--interaction-secondary);
+
+      @include forced-colors {
+        color: LinkText;
+      }
+    }
+
+    &:hover svg {
+      @include forced-colors {
+        color: CanvasText;
+      }
     }
   }
 

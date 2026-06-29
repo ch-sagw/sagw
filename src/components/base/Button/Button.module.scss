@@ -213,6 +213,10 @@
 
     &:hover {
       --button-color: var(--text-primary-inverted);
+
+      @include forced-colors {
+        --button-color: CanvasText;
+      }
     }
   }
 
@@ -268,6 +272,14 @@
           transform: scaleX(1);
           transition: none;
           opacity: 1;
+
+          @include forced-colors {
+            background: currentcolor;
+          }
+        }
+
+        @include forced-colors {
+          --button-color: CanvasText;
         }
       }
     }
@@ -277,6 +289,10 @@
   &.isActive {
     &.dark {
       --button-color: var(--text-primary-inverted);
+
+      @include forced-colors {
+        --button-color: CanvasText;
+      }
     }
   }
 }

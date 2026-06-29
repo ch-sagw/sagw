@@ -1,4 +1,6 @@
 @use "../../../styles/utilities/functions" as *;
+@use "../../../styles/utilities/mediaqueries" as *;
+@use "../../../styles/utilities/utilities" as *;
 
 .logo {
   display: block;
@@ -15,11 +17,19 @@
   .multicolor-logo .text {
     path {
       fill: rgb(var(--white));
+
+      @include forced-colors {
+        fill: CanvasText;
+      }
     }
 
     g[clip-path] path[stroke] {
       fill: none;
       stroke: rgb(var(--white));
+
+      @include forced-colors {
+        stroke: CanvasText;
+      }
     }
   }
 }
@@ -29,6 +39,10 @@
   .monochrome-logo {
     & > path {
       fill: rgb(var(--black));
+
+      @include forced-colors {
+        fill: CanvasText;
+      }
     }
 
     g[clip-path] path[stroke] {
@@ -40,6 +54,19 @@
 .monochrome-logo,
 .multicolor-logo {
   background: none;
+
+  @include forced-colors {
+    g[clip-path] path[stroke] {
+      stroke: CanvasText;
+    }
+
+    g[clip-path],
+    g[mask] {
+      path {
+        fill: CanvasText;
+      }
+    }
+  }
 }
 
 .multicolor-logo {
@@ -64,6 +91,33 @@
       }
     }
   }
+
+  @include forced-colors {
+    .dark &,
+    .light &,
+    .white & {
+      .signet-accent-color {
+        path {
+          opacity: 0.6;
+        }
+      }
+
+      mask,
+      .signet,
+      .text {
+        path,
+        polygon {
+          fill: CanvasText;
+        }
+      }
+
+      .signet-text-inverted {
+        path {
+          fill: canvas;
+        }
+      }
+    }
+  }
 }
 
 .multicolor-logo--sagw {
@@ -71,6 +125,17 @@
     .signet {
       path {
         fill: rgb(var(--black));
+      }
+    }
+  }
+
+  .light &,
+  .white & {
+    .signet {
+      path {
+        @include forced-colors {
+          fill: CanvasText;
+        }
       }
     }
   }

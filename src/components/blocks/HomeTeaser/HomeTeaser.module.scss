@@ -32,6 +32,10 @@
 
       path {
         stroke: unset;
+
+        @include forced-colors {
+          fill: CanvasText;
+        }
       }
 
       @include mq($from: large) {
@@ -77,6 +81,16 @@
 
       svg {
         color: var(--interaction-secondary);
+
+        @include forced-colors {
+          color: LinkText;
+        }
+      }
+
+      &:hover svg {
+        @include forced-colors {
+          color: CanvasText;
+        }
       }
     }
   }

@@ -140,8 +140,17 @@
   }
 
   .bottomLink {
-    color: var(--color-text);
+    --button-color: var(--color-text);
+
     margin-block-start: px-to-rem(var(--padding-block-large));
     margin-inline-start: px-to-rem(var(--spacing-l), true);
+
+    @include forced-colors {
+      --button-color: LinkText;
+
+      &:hover {
+        --button-color: CanvasText;
+      }
+    }
   }
 }
