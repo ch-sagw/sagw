@@ -38,6 +38,16 @@
       "permanent": true
     },
     {
+      "source": "/sgavl/:path*",
+      "destination": "/de/sgavl",
+      "permanent": true
+    },
+    {
+      "source": "/fr/sgavl/:path*",
+      "destination": "/fr/sgavl",
+      "permanent": true
+    },
+    {
       "source": "/svaw/:path*",
       "destination": "https://temp.sagw.ch/svaw/:path*",
       "permanent": false
@@ -65,16 +75,6 @@
     {
       "source": "/sanas/:path*",
       "destination": "https://temp.sagw.ch/sanas/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/sgavl/:path*",
-      "destination": "https://temp.sagw.ch/sgavl/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/fr/sgavl/:path*",
-      "destination": "https://temp.sagw.ch/fr/sgavl/:path*",
       "permanent": false
     },
     {
