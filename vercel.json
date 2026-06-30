@@ -43,7 +43,7 @@
       "permanent": true
     },
     {
-      "source": "/fr/sgavl/:path*",
+      "source": "/fr/sgavl/:path+",
       "destination": "/fr/sgavl",
       "permanent": true
     },
