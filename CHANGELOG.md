@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.2.0](https://github.com/ch-sagw/sagw/compare/v1.1.1...v1.2.0) (2026-06-30)
+
+
+### Chore
+
+* **deps-dev:** bump form-data from 4.0.5 to 4.0.6 ([#1236](https://github.com/ch-sagw/sagw/issues/1236)) ([2692c45](https://github.com/ch-sagw/sagw/commit/2692c45815b9e2220e8c44be189d3ef4b51a1b7c))
+* **deps:** bump sanitize-html from 2.17.3 to 2.17.4 ([#1202](https://github.com/ch-sagw/sagw/issues/1202)) ([6cc145e](https://github.com/ch-sagw/sagw/commit/6cc145e5697d0402f8ec5ec8cda811d5e0a624d6))
+* **deps:** bump ws from 8.20.0 to 8.21.0 ([#1220](https://github.com/ch-sagw/sagw/issues/1220)) ([e5f13e5](https://github.com/ch-sagw/sagw/commit/e5f13e5561b89851c1e96aafed8d8814438d9e19))
+
+
+### Features
+
+* adding improved hcm styling ([#1242](https://github.com/ch-sagw/sagw/issues/1242)) ([b23263a](https://github.com/ch-sagw/sagw/commit/b23263a9bb9e98ba8339d09003bf763f3edd977d))
+* adding inital batch of favicons and apple touch icons for fg ([ef15954](https://github.com/ch-sagw/sagw/commit/ef15954735f0ef6f1c485ee3f1890145f2ed2a1a))
+* adding permanent redirects for sgavl ([#1243](https://github.com/ch-sagw/sagw/issues/1243)) ([615b0ca](https://github.com/ch-sagw/sagw/commit/615b0ca63c300a89cc177b0d397e40e6cf63476b))
+* adding webfonts preload links ([728278d](https://github.com/ch-sagw/sagw/commit/728278d3b0dca62f9924d45a9cfeb0ceab7381a2))
+* adding webfonts preload links ([#1212](https://github.com/ch-sagw/sagw/issues/1212)) ([728278d](https://github.com/ch-sagw/sagw/commit/728278d3b0dca62f9924d45a9cfeb0ceab7381a2))
+* fixing redirect rule for fr/sgavl ([62afe77](https://github.com/ch-sagw/sagw/commit/62afe77c2b5b43ae10c6ab233e0c0b14a841bb0d))
+* removing redirect for /fr/sgavl entirely ([92576b6](https://github.com/ch-sagw/sagw/commit/92576b678d0659366fae0a61b7a1a7685fff677a))
+
+
+### Bug Fixes
+
+* adding origin to buildBreadcrumbItems ([e4fed1c](https://github.com/ch-sagw/sagw/commit/e4fed1c227f1cd52b5f045e7d3b9c7a23aac2039))
+* correcting breadcrumb link urls ([#1213](https://github.com/ch-sagw/sagw/issues/1213)) ([e4fed1c](https://github.com/ch-sagw/sagw/commit/e4fed1c227f1cd52b5f045e7d3b9c7a23aac2039))
+* only render social links in footer if there are any ([2a9aa52](https://github.com/ch-sagw/sagw/commit/2a9aa52b65f17ce32ece48b80a0445983e8febbf))
+* remove consent/cookie tokens out of dom to prevent brave/EasyList from finding consent banner ([#1228](https://github.com/ch-sagw/sagw/issues/1228)) ([73cc66b](https://github.com/ch-sagw/sagw/commit/73cc66b648ebefcedb1e99f963592f3742562166))
+* remove hero animation checkbox ([#1229](https://github.com/ch-sagw/sagw/issues/1229)) ([e84e93a](https://github.com/ch-sagw/sagw/commit/e84e93a31eb48f051950306c2dfaeee219eecc66))
+* render founding year conditionally ([#1214](https://github.com/ch-sagw/sagw/issues/1214)) ([c7c1e18](https://github.com/ch-sagw/sagw/commit/c7c1e18d6920756f45465e635d493cb2278f7a5c))
+
+
+### Style
+
+* set grid-template-rows in footer meta section to auto from large upwards ([2a9aa52](https://github.com/ch-sagw/sagw/commit/2a9aa52b65f17ce32ece48b80a0445983e8febbf))
+
 ## [1.1.1](https://github.com/ch-sagw/sagw/compare/v1.1.0...v1.1.1) (2026-06-02)
 
 
