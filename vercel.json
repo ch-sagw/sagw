@@ -43,11 +43,6 @@
       "permanent": true
     },
     {
-      "source": "/fr/sgavl/:path+",
-      "destination": "/fr/sgavl",
-      "permanent": true
-    },
-    {
       "source": "/svaw/:path*",
       "destination": "https://temp.sagw.ch/svaw/:path*",
       "permanent": false
