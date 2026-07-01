@@ -18,6 +18,9 @@ import {
   Person as SchemaPerson, WithContext,
 } from 'schema-dts';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
+import {
+  personDisplayNameHtml, personDisplayNamePlain,
+} from '@/utilities/personDisplayName';
 import { createImageSrcUrl } from '@/components/helpers/createImageSrcUrl';
 
 export type InterfaceCtaContactPropTypes = {
@@ -54,7 +57,7 @@ const structuredDataForPerson = (person: Person): WithContext<SchemaPerson> | un
     'email': person.mail,
     'image': `${imageSrc}?fm=auto&amp;mode=crop&amp;crop=focalpoint&amp;fp-x=0.5&amp;fp-y=0.5&amp;w=400&amp;h=400&amp;&amp;q=60`,
     'jobTitle': rte1ToPlaintext(person.function),
-    'name': person.fullName,
+    'name': personDisplayNamePlain(person) ?? person.fullName,
     'telephone': person.phone || undefined,
   };
 
@@ -127,7 +130,11 @@ export const CtaContact = ({
                   }
                 </div>
                 <div className={styles.personDetails}>
-                  <p className={styles.name}>{item.fullName}</p>
+                  <SafeHtml
+                    as='p'
+                    html={personDisplayNameHtml(item) ?? item.fullName ?? ''}
+                    className={styles.name}
+                  />
                   {item.function &&
                     <SafeHtml
                       as='p'

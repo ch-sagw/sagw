@@ -9,6 +9,7 @@ import {
   GenericTeaser, InterfaceGenericTeaserLink,
 } from '@/components/base/GenericTeaser/GenericTeaser';
 import { rteToHtml } from '@/utilities/rteToHtml';
+import { personDisplayNameHtml } from '@/utilities/personDisplayName';
 import { GenericOverview } from '@/components/base/GenericOverview/GenericOverview';
 
 export type InterfacePeopleOverviewComponentPropTypes = {
@@ -46,7 +47,7 @@ export const PeopleOverviewComponent = ({
       <GenericTeaser
         className={styles.item}
         key={item.id}
-        title={item.fullName}
+        title={personDisplayNameHtml(item) ?? item.fullName}
         titleLevel={2}
         texts={[rteToHtml(item.function)]}
         links={links}
