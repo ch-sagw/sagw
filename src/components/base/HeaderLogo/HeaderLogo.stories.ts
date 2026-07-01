@@ -809,12 +809,12 @@ export const LogoSthgLight: StrictStory = {
   },
 };
 
-export const LogoSvavDark: StrictStory = {
+export const LogoSvawDark: StrictStory = {
   args: {
     colorMode: 'dark',
     link: '/',
     linkText: 'Back to Homepage',
-    name: 'svav',
+    name: 'svaw',
   },
   globals: {
     backgrounds: {
@@ -823,12 +823,12 @@ export const LogoSvavDark: StrictStory = {
   },
 };
 
-export const LogoSvavLight: StrictStory = {
+export const LogoSvawLight: StrictStory = {
   args: {
     colorMode: 'light',
     link: '/',
     linkText: 'Back to Homepage',
-    name: 'svav',
+    name: 'svaw',
   },
   globals: {
     backgrounds: {
