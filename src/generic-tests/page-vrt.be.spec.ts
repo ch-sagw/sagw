@@ -304,8 +304,10 @@ const generateSamplePagesForTeasers = async ({
 // ########################################################################
 const generateTeam = async ({
   tenant,
+  withPrefix = false,
 }: {
-  tenant: string
+  tenant: string;
+  withPrefix?: boolean;
 }): Promise<string> => {
   const payload = await getPayloadCached();
   const image = await payload.create({
@@ -332,6 +334,9 @@ const generateTeam = async ({
         mail: 'foo@bar.com',
         phone: '031 123 45 67',
         tenant,
+        ...(withPrefix && {
+          prefix: simpleRteConfig('Dr.'),
+        }),
       },
     });
   }));
@@ -2618,6 +2623,7 @@ const setupOverviewWithPeopleOverview = async ({
 
   const team = await generateTeam({
     tenant: tenantId,
+    withPrefix: true,
   });
 
   // add content
