@@ -51,6 +51,7 @@ const people: Person[] = Array.from({
     lastname: simpleRteConfig(`Lastname ${index}`),
     mail: 'foo@bar.com',
     phone: '031 123 45 67',
+    prefix: simpleRteConfig('Dr.'),
     tenant: '1',
     updatedAt: '2025-10-20T12:50:57.693Z',
   });

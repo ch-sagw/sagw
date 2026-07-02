@@ -56,6 +56,7 @@ const defaultContact: Person = {
   lastname: simpleRteConfig('Zing'),
   mail: 'foo@bar.com',
   phone: '+41 (0)31 333 44 55',
+  prefix: simpleRteConfig('Dr.'),
   updatedAt: '',
 };
 
