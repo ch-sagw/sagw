@@ -21,6 +21,7 @@ import { preview as resolvePreviewUrl } from '@/utilities/previewUrl';
 const contentBlocks: BlockSlug[] = [
   'textBlock',
   'accordionBlock',
+  'downloadsBlock',
   'formBlock',
   'ctaContactBlock',
   'notificationBlock',

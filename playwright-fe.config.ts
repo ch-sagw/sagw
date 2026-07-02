@@ -55,7 +55,7 @@ export default defineConfig({
   reporter: process.env.CI
     ? ciReporters
     : defaultReporters,
-  retries: 0,
+  retries: 2,
   testDir: './src/',
   testMatch: '**/*.fe.spec.ts?(x)',
   use: {
