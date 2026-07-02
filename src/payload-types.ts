@@ -2936,6 +2936,7 @@ export interface OverviewPage {
   content?:
     | (
         | InterfaceTextBlock
+        | InterfaceDownloadsBlock
         | InterfaceAccordionBlock
         | InterfaceFormBlock
         | InterfaceCtaContactBlock
@@ -5617,6 +5618,7 @@ export interface OverviewPageSelect<T extends boolean = true> {
     | T
     | {
         textBlock?: T | InterfaceTextBlockSelect<T>;
+        downloadsBlock?: T | InterfaceDownloadsBlockSelect<T>;
         accordionBlock?: T | InterfaceAccordionBlockSelect<T>;
         formBlock?: T | InterfaceFormBlockSelect<T>;
         ctaContactBlock?: T | InterfaceCtaContactBlockSelect<T>;

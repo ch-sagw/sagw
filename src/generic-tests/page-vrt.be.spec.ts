@@ -2645,6 +2645,68 @@ const setupOverviewWithPeopleOverview = async ({
   });
 };
 
+const setupOverviewWithDownloads = async ({
+  tenantId,
+  homeId,
+}: {
+  tenantId: string;
+  homeId: string;
+}): Promise<void> => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+
+  const payload = await getPayloadCached();
+
+  const overviewPage = await generateOverviewPage({
+    navigationTitle: 'nav title',
+    parentPage: {
+      documentId: homeId,
+      slug: 'homePage',
+    },
+    tenant: tenantId,
+    title: 'Overview Page',
+  });
+
+  const document = await generateDocument({
+    payload,
+    tenant: tenantId,
+  });
+
+  const zenodoDocument = await generateZenodoDocument({
+    payload,
+    tenant: tenantId,
+  });
+
+  // add content
+  await payload.update({
+    collection: 'overviewPage',
+    data: {
+      content: [
+        {
+          blockType: 'downloadsBlock',
+          customOrAuto: 'custom',
+          downloads: [
+            {
+              relationTo: 'documents',
+              value: document,
+            },
+            {
+              relationTo: 'zenodoDocuments',
+              value: zenodoDocument,
+            },
+          ],
+          subtitle: simpleRteConfig('Dieser Artikel ist Teil von folgender Bulletin-Ausgabe'),
+        },
+      ],
+      hero: {
+        lead: simpleRteConfig('Die SAGW ist das grösste Netzwerk geistes- und sozialwissenschaftlicher Disziplinen in der Schweiz und eine Förderorganisation des Bundes.'),
+        title: simpleRteConfig('Für eine starke Wissenschaft und eine informierte Gesellschaft'),
+      },
+    },
+    id: overviewPage.id,
+  });
+};
+
 const setupOverviewWithNewsOverview = async ({
   tenantId,
   homeId,
@@ -3762,6 +3824,72 @@ test.describe('overview page with people overview', () => {
     });
 
     await setupOverviewWithPeopleOverview({
+      homeId: home,
+      tenantId: tenant.id,
+    });
+
+    await page.goto(`http://localhost:3000/de/tenant-${time}/overview-page`);
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+
+  });
+});
+
+test.describe('overview page with downloads', () => {
+  beforeEachAcceptCookies();
+
+  test('sagw', async ({
+    page,
+  }) => {
+    await regenerateAllGenericData();
+
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await getTenantId({
+      isSagw: true,
+      time,
+    });
+
+    const home = await getHomeId({
+      isSagw: true,
+      tenant,
+    });
+
+    await setupOverviewWithDownloads({
+      homeId: home,
+      tenantId: tenant || '',
+    });
+
+    await page.goto('http://localhost:3000/de/overview-page');
+    await page.waitForLoadState('networkidle');
+
+    await expect(page)
+      .toHaveScreenshot({
+        fullPage: true,
+      });
+  });
+
+  test('non-sagw', async ({
+    page,
+  }) => {
+    const time = (new Date())
+      .getTime();
+
+    const tenant = await generateTenant({
+      slug: `tenant-${time}`,
+    });
+
+    const home = await getHomeId({
+      isSagw: false,
+      tenant: tenant.id,
+    });
+
+    await setupOverviewWithDownloads({
       homeId: home,
       tenantId: tenant.id,
     });
