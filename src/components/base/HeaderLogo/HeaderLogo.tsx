@@ -31,7 +31,7 @@ import sseh from '@/components/base/HeaderLogo/logos/sseh';
 import ssg from '@/components/base/HeaderLogo/logos/ssg';
 import sslas from '@/components/base/HeaderLogo/logos/sslas';
 import sthg from '@/components/base/HeaderLogo/logos/sthg';
-import svav from '@/components/base/HeaderLogo/logos/svav';
+import svaw from '@/components/base/HeaderLogo/logos/svaw';
 
 import Link from 'next/link';
 
@@ -66,7 +66,7 @@ export const Logos = {
   ssg,
   sslas,
   sthg,
-  svav,
+  svaw,
 };
 
 export interface InterfaceHeaderLogoPropTypes {
