@@ -1,5 +1,34 @@
 # Changelog
 
+## [1.3.0](https://github.com/ch-sagw/sagw/compare/v1.2.0...v1.3.0) (2026-07-02)
+
+
+### CI
+
+* enable lint and tests on release-please branch ([#1251](https://github.com/ch-sagw/sagw/issues/1251)) ([0c207ce](https://github.com/ch-sagw/sagw/commit/0c207ce8aee797630f834de9b8fa2548826b0fca))
+* increase retries for better test stability ([0d0bce4](https://github.com/ch-sagw/sagw/commit/0d0bce4115dccd67560f56e0f92559f364660bba))
+
+
+### Features
+
+* allow download block in overview page ([2c18885](https://github.com/ch-sagw/sagw/commit/2c18885e0b5d534cdadb5d2643752a0f3c8d4b0b))
+* allow download block on overview page ([#1247](https://github.com/ch-sagw/sagw/issues/1247)) ([2c18885](https://github.com/ch-sagw/sagw/commit/2c18885e0b5d534cdadb5d2643752a0f3c8d4b0b))
+* integrate vercel bot protection ([#1249](https://github.com/ch-sagw/sagw/issues/1249)) ([e621432](https://github.com/ch-sagw/sagw/commit/e6214323d5fa17dddb14576dfbd0f1c0bbcf6518))
+
+
+### Bug Fixes
+
+* people title not rendered ([#1246](https://github.com/ch-sagw/sagw/issues/1246)) ([0d0bce4](https://github.com/ch-sagw/sagw/commit/0d0bce4115dccd67560f56e0f92559f364660bba))
+* renaming svav to svaw ([#1245](https://github.com/ch-sagw/sagw/issues/1245)) ([cdd266f](https://github.com/ch-sagw/sagw/commit/cdd266fb3e2710f6c67cffa5484859a9459a5de4))
+* render prefix properly ([0d0bce4](https://github.com/ch-sagw/sagw/commit/0d0bce4115dccd67560f56e0f92559f364660bba))
+
+
+### Test
+
+* add tests for download block on overview page ([2c18885](https://github.com/ch-sagw/sagw/commit/2c18885e0b5d534cdadb5d2643752a0f3c8d4b0b))
+* adopt be-tests for people prefix ([0d0bce4](https://github.com/ch-sagw/sagw/commit/0d0bce4115dccd67560f56e0f92559f364660bba))
+* update fe screenshots for people prefix ([0d0bce4](https://github.com/ch-sagw/sagw/commit/0d0bce4115dccd67560f56e0f92559f364660bba))
+
 ## [1.2.0](https://github.com/ch-sagw/sagw/compare/v1.1.1...v1.2.0) (2026-06-30)
 
 
