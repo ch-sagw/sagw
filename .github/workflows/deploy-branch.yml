@@ -17,7 +17,6 @@ jobs:
 
   # Lint
   lint:
-    if: ${{ !startsWith(github.head_ref, 'release-please--branches--main') }}
     runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
       - uses: actions/checkout@v6
@@ -32,7 +31,6 @@ jobs:
 
   # Frontend Test Job
   test-fe:
-    if: ${{ !startsWith(github.head_ref, 'release-please--branches--main') }}
     needs: [lint]
     env:
       HOME: /root
@@ -70,7 +68,6 @@ jobs:
 
   # Backend Test Job
   test-be:
-    if: ${{ !startsWith(github.head_ref, 'release-please--branches--main') }}
     timeout-minutes: 20
     needs: [lint]
     env:
