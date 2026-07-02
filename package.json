@@ -58,6 +58,7 @@
     "@payloadcms/storage-vercel-blob": "^3.84.1",
     "@sentry/nextjs": "^10.52.0",
     "@sparticuz/chromium": "^148.0.0",
+    "botid": "^1.5.11",
     "cross-env": "^10.0.0",
     "fathom-client": "^3.7.2",
     "graphql": "^16.14.0",

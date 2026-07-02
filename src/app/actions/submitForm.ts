@@ -1,6 +1,7 @@
 'use server';
 
 import 'server-only';
+import { checkBotId } from 'botid/server';
 import { z } from 'zod';
 import { hasLocale } from 'next-intl';
 import { getLocale } from 'next-intl/server';
@@ -106,6 +107,26 @@ const generateMailContent = (
 };
 
 export const submitForm = async (prevState: any, formData: FormData): Promise<SubmitFormResult> => {
+  // Bot protection via Vercel BotID. The client side is initialized in
+  // src/instrumentation-client.ts (initBotId), which attaches the
+  // classification headers to server action POSTs on frontend pages.
+  //
+  // BotID only performs real classification on Vercel deployments, so
+  // the check is skipped elsewhere (e.g. local `next start`, docker).
+  // During `next dev` — which is what the playwright e2e tests run
+  // against — checkBotId() always returns `isBot: false` anyway, so the
+  // form e2e tests keep working (see
+  // https://vercel.com/docs/botid/local-development-behavior).
+  if (process.env.VERCEL) {
+    const verification = await checkBotId();
+
+    if (verification.isBot) {
+      return {
+        success: false,
+      };
+    }
+  }
+
   // Read id + page path from the request. Everything else about the
   // form (recipient, subject, fields, list ids) is re-fetched from
   // payload and is not trusted from the client.

@@ -1,4 +1,5 @@
 import './.env/index.js';
+import { withBotId } from 'botid/next/config';
 import { withSentryConfig } from '@sentry/nextjs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
@@ -122,4 +123,7 @@ const configWithSentry = withSentryConfig(configWithPayload, {
 
 const withNextIntl = createNextIntlPlugin();
 
-export default withNextIntl(configWithSentry);
+// withBotId adds the proxy rewrites for the BotID challenge script, so
+// ad-blockers can't strip the bot classification (see
+// https://vercel.com/docs/botid/get-started).
+export default withBotId(withNextIntl(configWithSentry));

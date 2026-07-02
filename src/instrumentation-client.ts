@@ -1,6 +1,34 @@
 import * as Sentry from '@sentry/nextjs';
+import { initBotId } from 'botid/client/core';
 
 import { isAdminRoute } from '@/utilities/isAdminRoute';
+
+// Form submissions are Next.js server actions, which POST to the URL of
+// the page they are invoked from. Forms (form block, newsletter) can be
+// placed on any frontend page, so every locale-prefixed page path needs
+// BotID protection. The locale list mirrors src/i18n/payloadConfig.ts
+// (kept hardcoded here to avoid pulling payload code into the client
+// bundle). checkBotId() is then enforced server-side in
+// src/app/actions/submitForm.ts.
+const frontendLocales = [
+  'de',
+  'fr',
+  'it',
+  'en',
+];
+
+initBotId({
+  protect: frontendLocales.flatMap((locale) => [
+    {
+      method: 'POST',
+      path: `/${locale}`,
+    },
+    {
+      method: 'POST',
+      path: `/${locale}/*`,
+    },
+  ]),
+});
 
 if (process.env.NEXT_PUBLIC_SENTRY_DSN && process.env.NODE_ENV === 'production') {
   Sentry.init({
