@@ -4,6 +4,7 @@ import { ColorMode } from '@/components/base/types/colorMode';
 
 import codices from '@/components/base/HeaderLogo/logos/codices';
 import collrom from '@/components/base/HeaderLogo/logos/collrom';
+import mimos from '@/components/base/HeaderLogo/logos/mimos';
 import notSagw from '@/components/base/HeaderLogo/logos/not-sagw';
 import sag from '@/components/base/HeaderLogo/logos/sag';
 import sago from '@/components/base/HeaderLogo/logos/sago';
@@ -24,7 +25,6 @@ import sgks from '@/components/base/HeaderLogo/logos/sgks';
 import sgmoik from '@/components/base/HeaderLogo/logos/sgmoik';
 import sgr from '@/components/base/HeaderLogo/logos/sgr';
 import sgss from '@/components/base/HeaderLogo/logos/sgss';
-import sgtk from '@/components/base/HeaderLogo/logos/sgtk';
 import smg from '@/components/base/HeaderLogo/logos/smg';
 import spg from '@/components/base/HeaderLogo/logos/spg';
 import sseh from '@/components/base/HeaderLogo/logos/sseh';
@@ -38,6 +38,7 @@ import Link from 'next/link';
 export const Logos = {
   codices,
   collrom,
+  mimos,
   // not-sagw will not be used in production
   'not-sagw': notSagw,
   sag,
@@ -59,7 +60,6 @@ export const Logos = {
   sgmoik,
   sgr,
   sgss,
-  sgtk,
   smg,
   spg,
   sseh,
