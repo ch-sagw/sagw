@@ -613,12 +613,12 @@ export const LogoSgssLight: StrictStory = {
   },
 };
 
-export const LogoSgtkDark: StrictStory = {
+export const LogoMimosDark: StrictStory = {
   args: {
     colorMode: 'dark',
     link: '/',
     linkText: 'Back to Homepage',
-    name: 'sgtk',
+    name: 'mimos',
   },
   globals: {
     backgrounds: {
@@ -627,12 +627,12 @@ export const LogoSgtkDark: StrictStory = {
   },
 };
 
-export const LogoSgtkLight: StrictStory = {
+export const LogoMimosLight: StrictStory = {
   args: {
     colorMode: 'light',
     link: '/',
     linkText: 'Back to Homepage',
-    name: 'sgtk',
+    name: 'mimos',
   },
   globals: {
     backgrounds: {
