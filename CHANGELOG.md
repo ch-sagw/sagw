@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/ch-sagw/sagw/compare/v1.3.0...v1.3.1) (2026-07-08)
+
+
+### Bug Fixes
+
+* renaming sgtk to mimos ([#1253](https://github.com/ch-sagw/sagw/issues/1253)) ([9ff8223](https://github.com/ch-sagw/sagw/commit/9ff8223bfcbd7a8636872126d568f52b29505bf8))
+
 ## [1.3.0](https://github.com/ch-sagw/sagw/compare/v1.2.0...v1.3.0) (2026-07-02)
 
 
