@@ -33,7 +33,7 @@ export const MagazineTeaser = async (props: InterfaceMagazineTeaserPropTypes): P
     depth: 1,
     language: locale,
     limit: 4,
-    sort: 'createdAt',
+    sort: '-hero.date',
     tenant,
   }) as InterfaceMagazineDetailPageWithImage[];
 
