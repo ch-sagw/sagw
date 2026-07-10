@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.4.0](https://github.com/ch-sagw/sagw/compare/v1.3.1...v1.4.0) (2026-07-10)
+
+
+### Chore
+
+* remove obsolete fetch helper ([ce58bdc](https://github.com/ch-sagw/sagw/commit/ce58bdcf4a44bce92a6bb17c769335fb8b346dcc))
+
+
+### Features
+
+* add desired sort order for magazine overview ([ce58bdc](https://github.com/ch-sagw/sagw/commit/ce58bdcf4a44bce92a6bb17c769335fb8b346dcc))
+* add desired sort order for magazine teasers ([ce58bdc](https://github.com/ch-sagw/sagw/commit/ce58bdcf4a44bce92a6bb17c769335fb8b346dcc))
+
+
+### Test
+
+* update screenshots ([ce58bdc](https://github.com/ch-sagw/sagw/commit/ce58bdcf4a44bce92a6bb17c769335fb8b346dcc))
+
 ## [1.3.1](https://github.com/ch-sagw/sagw/compare/v1.3.0...v1.3.1) (2026-07-08)
 
 
