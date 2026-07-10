@@ -1,7 +1,6 @@
 import {
   Config,
   EventDetailPage,
-  MagazineDetailPage,
   NewsDetailPage,
   ProjectDetailPage,
   PublicationDetailPage,
@@ -297,36 +296,6 @@ export const fetchNewsOverviewPages = async ({
       },
     },
   });
-};
-
-// #########################################################################
-// Magazine Pages
-// #########################################################################
-
-interface InterfaceFetchMagazinePagesProps {
-  locale: TypedLocale;
-  tenant: string;
-  limit?: number;
-  payload?: BasePayload;
-}
-
-export const fetchMagazinePages = async ({
-  locale,
-  tenant,
-  limit = 0,
-  payload,
-}: InterfaceFetchMagazinePagesProps): Promise<MagazineDetailPage[]> => {
-  const results = await fetchDetailPages({
-    collection: 'magazineDetailPage',
-    depth: 1,
-    language: locale,
-    limit,
-    payload,
-    sort: '-hero.date',
-    tenant,
-  });
-
-  return results as MagazineDetailPage[];
 };
 
 // #########################################################################
