@@ -92,7 +92,9 @@
     }
 
     .breadcrumb {
-      margin-block-end: px-to-rem(var(--hero-small));
+      @include mq($to: large) {
+        margin-block-end: px-to-rem(var(--hero-small));
+      }
     }
 
     .sideTitle {
@@ -330,18 +332,18 @@
     }
 
     .rightColumn {
+      margin-block-end: px-to-rem(var(--spacing-2xl));
+
       @include mq($to: large) {
         display: flex;
         flex-direction: column;
         grid-column: unset;
-        margin-block-end: 0;
       }
 
       @include mq($from: large) {
         display: flex;
         flex-direction: column;
         grid-template-columns: unset;
-        margin-block-end: 0;
 
         > * {
           grid-column: unset;
