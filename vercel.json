@@ -43,14 +43,29 @@
       "permanent": true
     },
     {
-      "source": "/svaw/:path*",
-      "destination": "https://temp.sagw.ch/svaw/:path*",
-      "permanent": false
+      "source": "/asiengesellschaft/:path*",
+      "destination": "https://www.sagw.ch/de/sag/:path*",
+      "permanent": true
     },
     {
-      "source": "/fr/svaw/:path*",
-      "destination": "https://temp.sagw.ch/fr/svaw/:path*",
-      "permanent": false
+      "source": "/fr/asiengesellschaft/:path*",
+      "destination": "https://www.sagw.ch/fr/sag/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/sanas/:path*",
+      "destination": "https://www.sagw.ch/de/sanas/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/ssg/:path*",
+      "destination": "https://www.sagw.ch/de/ssg/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/svaw/:path*",
+      "destination": "https://www.sagw.ch/de/svaw/:path*",
+      "permanent": true
     },
     {
       "source": "/kultur-theorie-semiotik/:path*",
@@ -68,11 +83,6 @@
       "permanent": false
     },
     {
-      "source": "/sanas/:path*",
-      "destination": "https://temp.sagw.ch/sanas/:path*",
-      "permanent": false
-    },
-    {
       "source": "/sseh/:path*",
       "destination": "https://temp.sagw.ch/sseh/:path*",
       "permanent": false
@@ -80,21 +90,6 @@
     {
       "source": "/sgss/:path*",
       "destination": "https://temp.sagw.ch/sgss/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/ssg/:path*",
-      "destination": "https://temp.sagw.ch/ssg/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/en/ssg/:path*",
-      "destination": "https://temp.sagw.ch/en/ssg/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/fr/ssg/:path*",
-      "destination": "https://temp.sagw.ch/fr/ssg/:path*",
       "permanent": false
     },
     {
@@ -185,16 +180,6 @@
     {
       "source": "/fr/sthg/:path*",
       "destination": "https://temp.sagw.ch/fr/sthg/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/asiengesellschaft/:path*",
-      "destination": "https://temp.sagw.ch/asiengesellschaft/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/fr/asiengesellschaft/:path*",
-      "destination": "https://temp.sagw.ch/fr/asiengesellschaft/:path*",
       "permanent": false
     },
     {
