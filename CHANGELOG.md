@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/ch-sagw/sagw/compare/v1.5.0...v1.6.0) (2026-07-31)
+
+
+### Features
+
+* temporarily add additional env var in release-please.yml ([#1271](https://github.com/ch-sagw/sagw/issues/1271)) ([2ed309f](https://github.com/ch-sagw/sagw/commit/2ed309f1cd329ce257bea84c171a31f26dee0751))
+
 ## [1.5.0](https://github.com/ch-sagw/sagw/compare/v1.4.0...v1.5.0) (2026-07-31)
 
 
