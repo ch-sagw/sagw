@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.5.0](https://github.com/ch-sagw/sagw/compare/v1.4.0...v1.5.0) (2026-07-31)
+
+
+### Features
+
+* adding proper redirects for fg go-live end of july ([94c5773](https://github.com/ch-sagw/sagw/commit/94c57739935dcf3529dc23914036d7f95fd22dfe))
+* keeping origin logo references to avoid build issues before renaming ([4a7290a](https://github.com/ch-sagw/sagw/commit/4a7290aea625587633fbf940923154239dc84f36))
+* temporarily matching renamed fg logos ([4a7290a](https://github.com/ch-sagw/sagw/commit/4a7290aea625587633fbf940923154239dc84f36))
+* temporarily renaming some fg favicon folders ([4a7290a](https://github.com/ch-sagw/sagw/commit/4a7290aea625587633fbf940923154239dc84f36))
+
+
+### Bug Fixes
+
+* adjusting hero styling to improve spacing behaviour ([358a83b](https://github.com/ch-sagw/sagw/commit/358a83b9524938171567e5c996910b6325d2e697))
+* adjusting hero styling to improve spacing behaviour ([#1263](https://github.com/ch-sagw/sagw/issues/1263)) ([358a83b](https://github.com/ch-sagw/sagw/commit/358a83b9524938171567e5c996910b6325d2e697))
+
+
+### Test
+
+* temporarily disabling flaky visual be test rte to html ([#1268](https://github.com/ch-sagw/sagw/issues/1268)) ([9b625e1](https://github.com/ch-sagw/sagw/commit/9b625e1ba41b60299cd4c1d13da74d1ee9a409e8))
+
 ## [1.4.0](https://github.com/ch-sagw/sagw/compare/v1.3.1...v1.4.0) (2026-07-10)
 
 
