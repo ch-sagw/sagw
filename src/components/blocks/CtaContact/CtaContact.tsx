@@ -12,7 +12,8 @@ import {
   Image,
   InterfaceImagePropTypes,
 } from '@/components/base/Image/Image';
-import { Button } from '@/components/base/Button/Button';
+import { CtaContactButton } from '@/components/blocks/CtaContact/CtaContact.component';
+import { InterfaceResolveMailtoAction } from '@/components/helpers/writeEmail';
 import { Section } from '@/components/base/Section/Section';
 import {
   Person as SchemaPerson, WithContext,
@@ -25,6 +26,9 @@ import { createImageSrcUrl } from '@/components/helpers/createImageSrcUrl';
 
 export type InterfaceCtaContactPropTypes = {
   buttonText: InterfaceRte;
+  // Passed down from RenderBlocks so that this (story-reachable)
+  // component never imports the server action module itself.
+  resolveMailtoAction?: InterfaceResolveMailtoAction;
 } & InterfaceCtaContactBlock;
 
 const ctaClasses = cva([styles.ctaContactBlock], {
@@ -51,10 +55,11 @@ const structuredDataForPerson = (person: Person): WithContext<SchemaPerson> | un
     });
   }
 
+  // Intentionally no `email` property: addresses must not appear in the
+  // served markup (see resolveMailto server action).
   const data: WithContext<SchemaPerson> = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    'email': person.mail,
     'image': `${imageSrc}?fm=auto&amp;mode=crop&amp;crop=focalpoint&amp;fp-x=0.5&amp;fp-y=0.5&amp;w=400&amp;h=400&amp;&amp;q=60`,
     'jobTitle': rte1ToPlaintext(person.function),
     'name': personDisplayNamePlain(person) ?? person.fullName,
@@ -70,6 +75,7 @@ export const CtaContact = ({
   colorMode,
   contact,
   buttonText,
+  resolveMailtoAction,
 }: InterfaceCtaContactPropTypes): React.JSX.Element => {
   const typedContacts = contact.filter((item) => typeof item === 'object' && item !== null && 'mail' in item);
 
@@ -149,12 +155,11 @@ export const CtaContact = ({
                   }
                 </div>
               </div>
-              <Button
-                text={rteToHtml(buttonText)}
+              <CtaContactButton
+                buttonText={rteToHtml(buttonText)}
                 colorMode={colorMode}
-                element='link'
-                style='filled'
-                href={`mailto:${item.mail}`}
+                personId={item.id}
+                resolveMailtoAction={resolveMailtoAction}
                 className={styles.button}
               />
             </ChildElem>

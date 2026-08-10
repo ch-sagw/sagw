@@ -43,10 +43,11 @@ export const FullContact: StrictStory = {
     },
     city: 'Bern',
     countryCode: 'CH',
+    hasMail: true,
     imageUrl: 'https://sagw.ch/logo.svg',
-    mail: 'sagw@sagw.ch',
     phone: '+41 31 306 92 50',
     poBox: 'Postfach',
+    tenantId: '1',
     title: {
       plain: 'SAGW Schweizerische Akademie der Geistes- und Sozialwissenschaften',
       rte: 'SAGW Schweizerische Akademie der Geistes- und Sozialwissenschaften',

@@ -49,6 +49,9 @@
     "messageVideo": "To watch the video, please enable external content cookies in the Cookie Settings window.",
     "titleExternalContent": "External content"
   },
+  "contact": {
+    "writeEmail": "Send an e-mail"
+  },
   "menu": {
     "open": "Open",
     "close": "Close"

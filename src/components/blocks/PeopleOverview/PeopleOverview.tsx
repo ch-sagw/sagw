@@ -6,6 +6,7 @@ import {
 import React from 'react';
 import { fetchTeam } from '@/data/fetch';
 import { PeopleOverviewComponent } from '@/components/blocks/PeopleOverview/PeopleOverview.component';
+import { resolveMailto } from '@/app/actions/resolveMailto';
 import { getLocale } from 'next-intl/server';
 import { TypedLocale } from 'payload';
 
@@ -29,12 +30,23 @@ export const PeopleOverview = async (props: InterfacePeopleOverviewPropTypes): P
   // we're doing a fetch with depth 2, so we can
   // be sure we get the full objects back (including
   // image references), not just people id's.
-  const people = team.people as Person[];
+  //
+  // The mail address is stripped here so it never reaches the client
+  // (it would otherwise be part of the RSC payload); it is resolved on
+  // click via the resolveMailto server action.
+  const people = (team.people as Person[]).map(({
+    mail,
+    ...person
+  }) => ({
+    ...person,
+    hasMail: Boolean(mail),
+  }));
 
   return (
     <PeopleOverviewComponent
       team={team}
       people={people}
+      resolveMailtoAction={resolveMailto}
     />
   );
 };
