@@ -273,7 +273,7 @@ test.describe('Transliteration rendering (sagw)', () => {
     const payload = await getPayloadCached();
     const time = (new Date())
       .getTime();
-    const transliterationTitle = `translit ${time} Muḥammad ʿAlī aṣ-Ṣadīq ẓāhir ḳāḍī ṭūbā ʾamr`;
+    const transliterationTitle = `translit ${time} Muḥammad ʿAlī aṣ-Ṣadīq ẓāhir ḳāḍī ṭūbā ʾamr es̱er`;
 
     // detail page
     const detailPage = await generateDetailPage({
