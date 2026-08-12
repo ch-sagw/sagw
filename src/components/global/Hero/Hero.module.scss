@@ -5,6 +5,7 @@
 
 .hero {
   --hero-padding-block-start-fallback: 0;
+  --last-child-margin-block-end: 0;
 
   @include mq($to: medium) {
     --hero-padding-block-start-fallback: 96;
@@ -67,7 +68,9 @@
     --color-news-date: var(--text-secondary);
     --color-author-name: var(--text-primary);
     --color-author-date: var(--text-secondary);
+  }
 
+  &.white:has(+ section[class*="Rte-module"]) {
     padding-block-end: 0;
   }
 
@@ -145,6 +148,10 @@
 
       @include mq($from: large) {
         margin-block-end: px-to-rem(var(--spacing-2xl));
+
+        &:last-child {
+          margin-block-end: var(--last-child-margin-block-end, px-to-rem(var(--spacing-2xl)));
+        }
       }
     }
 
@@ -157,6 +164,7 @@
 
       @include mq($from: large) {
         grid-column: 1 / 7;
+        margin-block-end: var(--last-child-margin-block-end, calc(var(--spacing-2xl) / 16 * 1rem));
       }
 
       &:not(:last-child) {
