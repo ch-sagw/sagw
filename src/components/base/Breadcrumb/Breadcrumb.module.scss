@@ -7,8 +7,11 @@
   column-gap: px-to-rem(var(--spacing-m));
   margin: px-to-rem(var(--spacing-xs)) 0 0;
 
+  --divider-stroke-color: var(--icon-primary);
+
   &.dark {
     --icon-color: var(--interaction-primary-inverted);
+    --divider-stroke-color: var(--icon-secondary-inverted);
   }
 
   &.light {
@@ -68,7 +71,7 @@
         height: px-to-rem(var(--spacing-m));
 
         svg path {
-          stroke: var(--icon-color);
+          stroke: var(--divider-stroke-color);
         }
       }
     }

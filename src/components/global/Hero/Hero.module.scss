@@ -71,6 +71,7 @@
   }
 
   &.white:has(+ section[class*="Rte-module"]) {
+    overflow: visible;
     padding-block-end: 0;
   }
 
