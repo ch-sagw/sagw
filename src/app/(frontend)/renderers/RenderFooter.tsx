@@ -12,6 +12,8 @@ import {
   getTenantById, getTenantHomeUrl,
 } from '@/utilities/tenant';
 import { getServerSideURL } from '@/utilities/getUrl';
+import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
+import { resolveMailto } from '@/app/actions/resolveMailto';
 
 type InterfaceFooterRendererProps = {
   tenant: string;
@@ -75,8 +77,13 @@ export const RenderFooter = async ({
   // get metanav data
   const metanavData = headerData.docs[0].metanavigation;
 
-  // get footer contact data
-  const footerContactData = footerData.docs[0].contact;
+  // get footer contact data. The mail address is stripped here so it
+  // never reaches the client (it would otherwise be part of the RSC
+  // payload); it is resolved on click via the resolveMailto server action.
+  const {
+    mail: footerContactMail,
+    ...footerContactData
+  } = footerData.docs[0].contact;
 
   if (!footerContactData.title || !footerContactData.address1 || !footerContactData.countryCode || !footerContactData.zipCode || !footerContactData.city) {
     return <CMSConfigError message='Footer Contact data incomplete' />;
@@ -150,17 +157,20 @@ export const RenderFooter = async ({
     contact: footerContactData,
     dataPrivacyPageId: footerDataPrivacyPage.docs[0].id,
     fg,
+    hasMail: Boolean(rte1ToPlaintext(footerContactMail)),
     homeLink: `${origin}/${locale}`,
     impressumPageId: footerImpressumPage.docs[0].id,
     legal: footerLegalData,
     metaNav: metanavData,
     navigation: navData,
+    resolveMailtoAction: resolveMailto,
     socialLinks: footerData.docs[0].socialLinks,
     structuredDataImage: `${getServerSideURL()}/favicons/${tenantObject.slug}/${tenantObject.slug}-logo.svg`,
     structuredDataUrl: `${getServerSideURL()}${getTenantHomeUrl({
       locale,
       tenantSlug: tenantObject.slug,
     })}`,
+    tenantId: tenant,
   };
 
   return (

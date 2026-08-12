@@ -3,7 +3,7 @@
 import {
   Person, Team,
 } from '@/payload-types';
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '@/components/blocks/PeopleOverview/PeopleOverview.module.scss';
 import {
   GenericTeaser, InterfaceGenericTeaserLink,
@@ -11,15 +11,56 @@ import {
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { personDisplayNameHtml } from '@/utilities/personDisplayName';
 import { GenericOverview } from '@/components/base/GenericOverview/GenericOverview';
+import {
+  InterfaceResolveMailtoAction, openMailto,
+} from '@/components/helpers/writeEmail';
+import { useTranslations } from 'next-intl';
+
+// The mail address is stripped server-side (PeopleOverview.tsx) so it
+// never reaches the client; hasMail drives the "write email" button.
+export type InterfacePeopleOverviewPerson = Omit<Person, 'mail'> & {
+  hasMail?: boolean;
+};
 
 export type InterfacePeopleOverviewComponentPropTypes = {
   team: Team;
-  people: Person[];
+  people: InterfacePeopleOverviewPerson[];
+  // The resolveMailto server action, passed down from the server
+  // component. This module must not import the action itself, because
+  // it is rendered in Storybook where 'use server' modules cannot be
+  // bundled.
+  resolveMailtoAction?: InterfaceResolveMailtoAction;
 };
 
 export const PeopleOverviewComponent = ({
   people,
+  resolveMailtoAction,
 }: InterfacePeopleOverviewComponentPropTypes): React.JSX.Element => {
+  const internalI18nContact = useTranslations('contact');
+
+  // Id of the person whose email address is currently being resolved,
+  // used for the loading state of the respective "write email" button.
+  const [
+    loadingPersonId,
+    setLoadingPersonId,
+  ] = useState<string | null>(null);
+
+  const handleMailClick = async (personId: string): Promise<void> => {
+    setLoadingPersonId(personId);
+
+    try {
+      await openMailto({
+        action: resolveMailtoAction,
+        input: {
+          personId,
+          source: 'person',
+        },
+      });
+    } finally {
+      setLoadingPersonId(null);
+    }
+  };
+
   const allItems = people.map((item) => {
     if (!item.fullName) {
       return undefined;
@@ -35,10 +76,11 @@ export const PeopleOverviewComponent = ({
       });
     }
 
-    if (item.mail) {
+    if (item.hasMail) {
       links.push({
-        href: `mailto:${item.mail}`,
-        text: item.mail,
+        isLoading: loadingPersonId === item.id,
+        onClick: (): Promise<void> => handleMailClick(item.id),
+        text: internalI18nContact('writeEmail'),
         type: 'mail',
       });
     }

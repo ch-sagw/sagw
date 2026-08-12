@@ -1,9 +1,16 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import styles from '@/components/base/FooterContact/FooterContact.module.scss';
 import type {
   Organization, WithContext,
 } from 'schema-dts';
+import { useTranslations } from 'next-intl';
 import { SafeHtml } from '../SafeHtml/SafeHtml';
+import { Button } from '@/components/base/Button/Button';
+import {
+  InterfaceResolveMailtoAction, openMailto,
+} from '@/components/helpers/writeEmail';
 
 export type InterfaceFooterContactPropTypes = {
   title: {
@@ -25,7 +32,13 @@ export type InterfaceFooterContactPropTypes = {
   };
   poBox?: string;
   phone?: string;
-  mail?: string;
+  // The email address itself is intentionally never passed to (or
+  // rendered by) this component. It is resolved on click through the
+  // resolveMailto server action (passed down as a prop, so this
+  // component stays renderable in Storybook without bundling payload).
+  hasMail?: boolean;
+  resolveMailtoAction?: InterfaceResolveMailtoAction;
+  tenantId?: string;
   className?: string;
 };
 
@@ -40,7 +53,6 @@ const constructStructuredData = ({
   address2,
   poBox,
   phone,
-  mail,
 }: InterfaceFooterContactPropTypes): WithContext<Organization> => {
   let streetAddress = address1.plain;
 
@@ -62,7 +74,6 @@ const constructStructuredData = ({
       'postalCode': zip,
       streetAddress,
     },
-    'email': mail ?? undefined,
     'image': imageUrl,
     'name': title.plain,
     'telephone': phone || undefined,
@@ -82,9 +93,37 @@ export const FooterContact = (props: InterfaceFooterContactPropTypes): React.JSX
     address2,
     poBox,
     phone,
-    mail,
+    hasMail,
+    resolveMailtoAction,
+    tenantId,
     className,
   } = props;
+
+  const internalI18nContact = useTranslations('contact');
+  const [
+    isMailLoading,
+    setIsMailLoading,
+  ] = useState(false);
+
+  const handleMailClick = async (): Promise<void> => {
+    if (!tenantId) {
+      return;
+    }
+
+    setIsMailLoading(true);
+
+    try {
+      await openMailto({
+        action: resolveMailtoAction,
+        input: {
+          source: 'footer',
+          tenantId,
+        },
+      });
+    } finally {
+      setIsMailLoading(false);
+    }
+  };
 
   return (
     <div className={`${styles.footer} ${className}`}>
@@ -136,8 +175,16 @@ export const FooterContact = (props: InterfaceFooterContactPropTypes): React.JSX
             <a href={`tel:${phone}`}>{phone}</a>
           }
 
-          {mail &&
-            <a href={`mailto:${mail}`}>{mail}</a>
+          {hasMail && tenantId &&
+            <Button
+              className={styles.mailButton}
+              element='button'
+              colorMode='dark'
+              style='text'
+              text={internalI18nContact('writeEmail')}
+              isLoading={isMailLoading}
+              onClick={(): Promise<void> => handleMailClick()}
+            />
           }
         </p>
       </div>

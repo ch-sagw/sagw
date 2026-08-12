@@ -55,7 +55,6 @@ const contact = {
   address2: simpleRteConfig('Laupenstrasse 7'),
   city: simpleRteConfig('Bern'),
   countryCode: simpleRteConfig('CH'),
-  mail: simpleRteConfig('sagw@sagw.ch'),
   phone: simpleRteConfig('+41 31 306 92 50'),
   poBox: simpleRteConfig('Postfach'),
   title: simpleRteConfig('SAGW Schweizerische Akademie der Geistes- und Sozialwissenschaften'),
@@ -133,6 +132,7 @@ const defaultArgs: InterfaceFooterComponentPropTypes = {
   consentOverlay,
   contact,
   dataPrivacyUrl: '/datenschutz',
+  hasMail: true,
   impressumUrl: '/impressum',
   legal,
   linkUrls: {
@@ -146,6 +146,7 @@ const defaultArgs: InterfaceFooterComponentPropTypes = {
   socialLinks,
   structuredDataImage: 'www.sagw.ch/logo.svg',
   structuredDataUrl: 'https://www.sagw.ch',
+  tenantId: '1',
 };
 
 export const FooterSagw: StrictStory = {
@@ -159,6 +160,7 @@ export const FooterFg: StrictStory = {
     ...defaultArgs,
     contact: contactMinimal,
     fg: true,
+    hasMail: false,
     homeLink: '/de/',
   },
 };

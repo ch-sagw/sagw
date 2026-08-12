@@ -36,6 +36,27 @@
           @include link-text-underline;
         }
       }
+
+      // Same style as phone link
+      .mailButton {
+        @include body-text-s;
+
+        --button-padding-block-inner-text: 0;
+        --button-padding-inline: 0;
+
+        color: inherit;
+        letter-spacing: normal;
+        line-height: inherit;
+
+        span:after {
+          display: none;
+        }
+
+        &:focus span,
+        &:hover span {
+          @include link-text-underline;
+        }
+      }
     }
   }
 }
