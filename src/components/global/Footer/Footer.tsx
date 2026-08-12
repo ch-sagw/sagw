@@ -12,11 +12,17 @@ import { getLocale } from 'next-intl/server';
 import { TypedLocale } from 'payload';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { type InterfaceConsentOverlayClientPropTypes } from '@/components/global/ConsentOverlay/ConsentOverlay.client';
+import { type InterfaceResolveMailtoAction } from '@/components/helpers/writeEmail';
 import { generateLinkUrls } from '@/components/global/Header/generateUrls';
 import { getPageUrl } from '@/utilities/getPageUrl';
 
 export type InterfaceFooterPropTypes = {
-  contact: InterfaceFooterContact;
+  // mail is stripped before the data crosses the client boundary; see
+  // RenderFooter / FooterComponent.
+  contact: Omit<InterfaceFooterContact, 'mail'>;
+  hasMail?: boolean;
+  resolveMailtoAction?: InterfaceResolveMailtoAction;
+  tenantId: string;
   homeLink?: string;
   legal: InterfaceFooterLegal;
   metaNav?: InterfaceHeaderMetaNavigation;

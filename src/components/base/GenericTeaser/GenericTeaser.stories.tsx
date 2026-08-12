@@ -157,8 +157,8 @@ export const People: StrictStory = {
         type: 'phone',
       },
       {
-        href: 'mailto:lea.haller@sagw.ch',
-        text: 'lea.haller@sagw.ch',
+        onClick: (): void => undefined,
+        text: 'E-Mail schreiben',
         type: 'mail',
       },
     ],

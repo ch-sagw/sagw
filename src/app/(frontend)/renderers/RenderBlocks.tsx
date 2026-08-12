@@ -57,6 +57,7 @@ import { MagazineTeaser } from '@/components/blocks/MagazineTeaser/MagazineTease
 import { ProjectsTeaser } from '@/components/blocks/ProjectsTeaser/ProjectsTeaser';
 import { NetworkTeaser } from '@/components/blocks/NetworkTeaser/NetworkTeaser';
 import { CtaContact } from '@/components/blocks/CtaContact/CtaContact';
+import { resolveMailto } from '@/app/actions/resolveMailto';
 import { PeopleOverview } from '@/components/blocks/PeopleOverview/PeopleOverview';
 import { InstitutesOverview } from '@/components/blocks/InstitutesOverview/InstitutesOverview';
 import { MagazineOverview } from '@/components/blocks/MagazineOverview/MagazineOverview';
@@ -278,6 +279,7 @@ export const RenderBlocks = ({
                 <CtaContact
                   {...block}
                   buttonText={i18n.generic.writeEmailButtonText}
+                  resolveMailtoAction={resolveMailto}
                   key={key}
                 />
               );

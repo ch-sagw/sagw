@@ -17,10 +17,20 @@ export const nonBreakingSpaceJSXConverter = {
 // sanitizer
 // allow: letters, numbers, punctuation, space, tabs, newlines,
 // dashes (en-dash, em-dash), and some others ;) (œ, Œ, ğ, š, …)
+// also allows the extended Latin script blocks so IJMES transliteration
+// characters for Arabic/Persian/Turkish (ʾ ʿ ḥ ḍ ṣ ṭ ẓ ḳ, …) survive:
+// - \u0180-\u024F Latin Extended-B
+// - \u02B0-\u02FF Spacing Modifier Letters (ʾ, ʿ)
+// - \u0300-\u036F Combining Diacritical Marks (needed for characters
+//   without a precomposed code point, e.g. s̱ = s + U+0331)
+// - \u1E00-\u1EFF Latin Extended Additional (ḥ, ḍ, ṣ, ṭ, ẓ, ḳ, ẞ, …)
+// input is normalized to NFC first, so decomposed characters (base letter
+// + combining mark) compose into the allowed precomposed code points
+// where such a code point exists
 export const sanitizeHtmlHelper = (htmlText: string): string => {
   let sanitizedHtmlText = validator.whitelist(
-    htmlText,
-    '\\x09\\x0A\\x0D\\x20-\\x7E\\u00A0-\\u00FF\\u0100-\\u017F\\u2013-\\u2014\\u2019',
+    htmlText.normalize('NFC'),
+    '\\x09\\x0A\\x0D\\x20-\\x7E\\u00A0-\\u00FF\\u0100-\\u017F\\u0180-\\u024F\\u02B0-\\u02FF\\u0300-\\u036F\\u1E00-\\u1EFF\\u2013-\\u2014\\u2019',
   );
 
   sanitizedHtmlText = sanitizeHtml(sanitizedHtmlText, {

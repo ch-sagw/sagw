@@ -2,11 +2,11 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { PeopleOverviewComponent } from '@/components/blocks/PeopleOverview/PeopleOverview.component';
-import { defaultDecorator } from '@/storybook-helpers';
 import {
-  Person, Team,
-} from '@/payload-types';
+  InterfacePeopleOverviewPerson, PeopleOverviewComponent,
+} from '@/components/blocks/PeopleOverview/PeopleOverview.component';
+import { defaultDecorator } from '@/storybook-helpers';
+import { Team } from '@/payload-types';
 import { simpleRteConfig } from '@/utilities/simpleRteConfig';
 
 type PeopleOverviewProps = React.ComponentProps<typeof PeopleOverviewComponent>;
@@ -36,7 +36,7 @@ const meta: Meta<typeof PeopleOverviewComponent> = {
 
 export default meta;
 
-const people: Person[] = Array.from({
+const people: InterfacePeopleOverviewPerson[] = Array.from({
   length: 12,
 }, (_, i) => {
   const index = i + 1;
@@ -46,10 +46,10 @@ const people: Person[] = Array.from({
     firstname: simpleRteConfig(`Firstname ${index}`),
     fullName: `Firstname ${index} Lastname ${index}`,
     function: simpleRteConfig('Some function'),
+    hasMail: true,
     id: index.toString(),
     image: 'someimage',
     lastname: simpleRteConfig(`Lastname ${index}`),
-    mail: 'foo@bar.com',
     phone: '031 123 45 67',
     prefix: simpleRteConfig('Dr.'),
     tenant: '1',
