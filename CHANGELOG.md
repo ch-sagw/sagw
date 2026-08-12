@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.7.0](https://github.com/ch-sagw/sagw/compare/v1.6.0...v1.7.0) (2026-08-12)
+
+
+### Features
+
+* allow special transliteration characters on latin ([#1278](https://github.com/ch-sagw/sagw/issues/1278)) ([757afae](https://github.com/ch-sagw/sagw/commit/757afaeb4e0f1b3d8893a191141ec2b0f9d7a1f7))
+* obfuscate mail address by outsourcing getting value to server ([#1280](https://github.com/ch-sagw/sagw/issues/1280)) ([2f61eaf](https://github.com/ch-sagw/sagw/commit/2f61eaf9e6da8605530c9efcfd146e69192af689))
+
+
+### Bug Fixes
+
+* also allow decomposed character rendering ([#1281](https://github.com/ch-sagw/sagw/issues/1281)) ([bfdab86](https://github.com/ch-sagw/sagw/commit/bfdab860b3335570aa552c1fb7e8bbe19a846331))
+
 ## [1.6.0](https://github.com/ch-sagw/sagw/compare/v1.5.0...v1.6.0) (2026-07-31)
 
 
