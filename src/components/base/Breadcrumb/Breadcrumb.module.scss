@@ -66,6 +66,10 @@
       .separatorIcon {
         width: px-to-rem(var(--spacing-m));
         height: px-to-rem(var(--spacing-m));
+
+        svg path {
+          stroke: var(--icon-color);
+        }
       }
     }
   }
