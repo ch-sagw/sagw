@@ -71,7 +71,7 @@
     "resend": "^6.12.3",
     "sanitize-html": "^2.17.4",
     "server-only": "^0.0.1",
-    "sharp": "0.34.5",
+    "sharp": "0.35.3",
     "slugify": "^1.6.9",
     "validator": "^13.15.35",
     "zod": "^4.4.3"
