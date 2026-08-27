@@ -63,6 +63,17 @@
       "permanent": true
     },
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "bioethics.ch"
+        }
+      ],
+      "destination": "https://www.sagw.ch/de/sgbe",
+      "permanent": true
+    },
+    {
       "source": "/svaw/:path*",
       "destination": "https://www.sagw.ch/de/svaw/:path*",
       "permanent": true
