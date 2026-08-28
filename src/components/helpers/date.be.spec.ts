@@ -184,7 +184,7 @@ test.describe('properly renders date range in german', () => {
       .textContent();
 
     await expect(eventDetails)
-      .toStrictEqual('01. August – 02. September 2030 — 14.00 Uhr');
+      .toStrictEqual('01. August – 02. September 2030 — 14.00 Uhr');
   });
 
   test('date range different years', async ({
@@ -227,7 +227,7 @@ test.describe('properly renders date range in german', () => {
       .textContent();
 
     await expect(eventDetails)
-      .toStrictEqual('01. August 2030 – 01. Januar 2031 — 14.00 Uhr');
+      .toStrictEqual('01. August 2030 – 01. Januar 2031 — 14.00 Uhr');
   });
 });
 
@@ -359,7 +359,7 @@ test.describe('properly renders date range in english', () => {
       .textContent();
 
     await expect(eventDetails)
-      .toStrictEqual('March 01 – 02, 2030 — 3.00 PM');
+      .toStrictEqual('March 01 – 02, 2030 — 3.00 PM');
   });
 
   test('date range same year', async ({
@@ -402,7 +402,7 @@ test.describe('properly renders date range in english', () => {
       .textContent();
 
     await expect(eventDetails)
-      .toStrictEqual('February 01 – March 02, 2030 — 3.00 PM');
+      .toStrictEqual('February 01 – March 02, 2030 — 3.00 PM');
   });
 
   test('date range different years', async ({
@@ -445,7 +445,7 @@ test.describe('properly renders date range in english', () => {
       .textContent();
 
     await expect(eventDetails)
-      .toStrictEqual('January 01, 2030 – February 01, 2031 — 3.00 PM');
+      .toStrictEqual('January 01, 2030 – February 01, 2031 — 3.00 PM');
   });
 });
 
@@ -846,7 +846,7 @@ test.describe('properly renders date range in italian', () => {
       .textContent();
 
     await expect(eventDetails)
-      .toStrictEqual('01 febbraio – 02 marzo 2030 — 15:00');
+      .toStrictEqual('01 febbraio – 02 marzo 2030 — 15:00');
   });
 
   test('date range different years', async ({
@@ -889,7 +889,7 @@ test.describe('properly renders date range in italian', () => {
       .textContent();
 
     await expect(eventDetails)
-      .toStrictEqual('01 gennaio 2030 – 01 febbraio 2031 — 15:00');
+      .toStrictEqual('01 gennaio 2030 – 01 febbraio 2031 — 15:00');
   });
 });
 
