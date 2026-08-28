@@ -19,6 +19,83 @@
       "permanent": true
     },
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(www\\.)?assh\\.ch"
+        }
+      ],
+      "destination": "https://www.sagw.ch/fr",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(www\\.)?smg-ssm\\.ch"
+        }
+      ],
+      "destination": "https://www.sagw.ch/de/smg",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(www\\.)?sse-sga\\.ch"
+        }
+      ],
+      "destination": "https://www.sagw.ch/de/sga",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(www\\.)?sgbf\\.ch"
+        }
+      ],
+      "destination": "https://www.sagw.ch/de/sgbf",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(www\\.)?sgr-sssr\\.ch"
+        }
+      ],
+      "destination": "https://www.sagw.ch/de/sgr",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(www\\.)?mimos\\.ch"
+        }
+      ],
+      "destination": "https://www.sagw.ch/de/mimos",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(www\\.)?saute\\.ch"
+        }
+      ],
+      "destination": "https://www.sagw.ch/de/saute",
+      "permanent": true
+    },
+    {
       "source": "/",
       "destination": "/de",
       "permanent": true
@@ -71,72 +148,6 @@
     {
       "source": "/ssg/:path*",
       "destination": "https://www.sagw.ch/de/ssg/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "sse-sga.ch"
-        }
-      ],
-      "destination": "https://sagw.ch/de/sga",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "sgbf.ch"
-        }
-      ],
-      "destination": "https://www.sagw.ch/de/sgbf",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "bioethics.ch"
-        }
-      ],
-      "destination": "https://www.sagw.ch/de/sgbe",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "https://www.sgr-sssr.ch/"
-        }
-      ],
-      "destination": "https://www.sagw.ch/de/sgr",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "https://www.mimos.ch/"
-        }
-      ],
-      "destination": "https://www.sagw.ch/de/mimos",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "https://www.saute.ch/"
-        }
-      ],
-      "destination": "https://www.sagw.ch/de/saute",
       "permanent": true
     },
     {
