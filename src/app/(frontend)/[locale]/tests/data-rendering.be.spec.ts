@@ -5,6 +5,7 @@ import {
   test,
 } from '@playwright/test';
 import { beforeEachAcceptCookies } from '@/test-helpers/cookie-consent';
+import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import {
   generateTenant, getTenant,
@@ -256,5 +257,78 @@ test.describe('Data rendering (sagw)', () => {
 
     await expect(detailHeroItNonSagw)
       .toStrictEqual(`d1 it ${time} tenant-${time}`);
+  });
+});
+
+test.describe('Transliteration rendering (sagw)', () => {
+  beforeEachPayloadLogin();
+  beforeEachAcceptCookies();
+
+  // IJMES transliteration characters for Arabic/Persian/Turkish
+  // (ʿ ʾ ḥ ṣ ḍ ṭ ẓ ḳ ā ī) must survive the rte sanitizer and
+  // render in the frontend
+  test('editor-typed transliteration characters survive publishing', async ({
+    page,
+  }) => {
+    const payload = await getPayloadCached();
+    const time = (new Date())
+      .getTime();
+    const transliterationTitle = `translit ${time} Muḥammad ʿAlī aṣ-Ṣadīq ẓāhir ḳāḍī ṭūbā ʾamr es̱er`;
+
+    // detail page
+    const detailPage = await generateDetailPage({
+      navigationTitle: '[test]link:translit',
+      title: `translit ${time}`,
+    });
+
+    await page.goto(`http://localhost:3000/admin/collections/detailPage/${detailPage.id}?locale=de`);
+    await page.waitForLoadState('networkidle');
+
+    const rteField = await page.locator('#field-hero .rich-text-lexical:first-of-type .ContentEditable__root')
+      .nth(0);
+
+    // type in some transliteration characters
+    await rteField.click();
+    await page.keyboard.press('ControlOrMeta+a');
+    await page.keyboard.press('Backspace');
+    await rteField.pressSequentially(transliterationTitle);
+
+    await expect(rteField)
+      .toHaveText(transliterationTitle);
+
+    // publish
+    const saveButton = await page.getByRole('button', {
+      name: 'Publish changes',
+    });
+
+    await saveButton.click();
+
+    // wait for confirmation toast and close it
+    const closeToast = await page.locator('.payload-toast-container [data-close-button="true"]');
+
+    await closeToast.click();
+
+    // the slug re-generates from the changed title, so read it back
+    const updatedDetailPage = await payload.findByID({
+      collection: 'detailPage',
+      id: detailPage.id,
+      locale: 'de',
+    });
+
+    // the characters survived the sanitizer on save
+    await expect(updatedDetailPage.adminTitle)
+      .toStrictEqual(transliterationTitle);
+
+    // and render correctly in the frontend
+    await page.goto(`http://localhost:3000/de/${updatedDetailPage.slug}`);
+    await page.waitForLoadState('networkidle');
+
+    const detailHero = await page.getByRole('heading', {
+      level: 1,
+    })
+      .textContent();
+
+    await expect(detailHero)
+      .toStrictEqual(transliterationTitle);
   });
 });

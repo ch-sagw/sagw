@@ -49,6 +49,9 @@
     "messageVideo": "Per guardare il video, abilita i cookie relativi ai contenuti esterni nella finestra delle impostazioni dei cookie.",
     "titleExternalContent": "Ccontenuto esterno"
   },
+  "contact": {
+    "writeEmail": "Scrivi una e-mail"
+  },
   "menu": {
     "open": "Aprire",
     "close": "Chiudere"

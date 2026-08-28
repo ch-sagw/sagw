@@ -32,22 +32,29 @@ import {
 } from '../ConsentOverlay/ConsentOverlay.client';
 import { useScrollLock } from '@/hooks/useScrollLock';
 import { openConsentOverlayEventName } from '@/components/helpers/cookies';
+import { type InterfaceResolveMailtoAction } from '@/components/helpers/writeEmail';
 import { useTranslations } from 'next-intl';
 
 export type InterfaceFooterComponentPropTypes = {
   consentOverlay: Omit<InterfaceConsentOverlayClientPropTypes, 'onClose' | 'onConsentGiven'>;
-  contact: InterfaceFooterContact;
+  // mail is stripped server-side (RenderFooter) so the address never
+  // reaches the client. hasMail + tenantId drive the "write email"
+  // button, which resolves the address on click via a server action.
+  contact: Omit<InterfaceFooterContact, 'mail'>;
   dataPrivacyUrl: string;
   fg?: boolean;
+  hasMail?: boolean;
   homeLink?: string;
   impressumUrl: string;
   legal: InterfaceFooterLegal;
   linkUrls: Record<string, string>;
   metaNav?: InterfaceHeaderMetaNavigation;
   navigation: InterfaceHeaderNavigation;
+  resolveMailtoAction?: InterfaceResolveMailtoAction;
   socialLinks?: InterfaceFooterSocialLinks;
   structuredDataImage: string;
   structuredDataUrl: string;
+  tenantId: string;
 };
 
 export const FooterComponent = ({
@@ -55,15 +62,18 @@ export const FooterComponent = ({
   contact,
   dataPrivacyUrl,
   fg,
+  hasMail,
   legal,
   homeLink,
   impressumUrl,
   linkUrls,
   metaNav,
   navigation,
+  resolveMailtoAction,
   socialLinks,
   structuredDataImage,
   structuredDataUrl,
+  tenantId,
 }: InterfaceFooterComponentPropTypes): React.JSX.Element => {
   const i18nA11y = useTranslations('a11y');
   const i18nLandmarks = useTranslations('landmarks');
@@ -115,11 +125,12 @@ export const FooterComponent = ({
     },
     city: rte1ToPlaintext(contact.city),
     countryCode: rte1ToPlaintext(contact.countryCode),
+    hasMail,
     imageUrl: structuredDataImage,
-
-    mail: rte1ToPlaintext(contact.mail),
     phone: rte1ToPlaintext(contact.phone),
     poBox: rte1ToPlaintext(contact.poBox),
+    resolveMailtoAction,
+    tenantId,
     title: {
       plain: rte1ToPlaintext(contact.title),
       rte: rteToHtml(contact.title),

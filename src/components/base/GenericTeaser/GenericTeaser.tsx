@@ -12,7 +12,14 @@ import { ImageVariant } from '@/components/base/types/imageVariant';
 type InterfaceLinkType = 'internal' | 'external' | 'mail' | 'phone';
 export interface InterfaceGenericTeaserLink {
   text?: string;
-  href: string;
+  // Either a plain href link or a click handler (e.g. "write email"
+  // buttons, where the address is resolved via a server action instead
+  // of being rendered into the markup).
+  href?: string;
+  // Loading state while the click handler is pending (e.g. waiting for
+  // the server action to resolve the email address).
+  isLoading?: boolean;
+  onClick?: () => void;
   type?: InterfaceLinkType;
 }
 
@@ -36,7 +43,7 @@ const renderLink = ({
   wrapper: string;
 }): React.JSX.Element | undefined => {
 
-  if (!link.text || !link.href) {
+  if (!link.text || (!link.href && !link.onClick)) {
     return undefined;
   }
 
@@ -70,13 +77,33 @@ const renderLink = ({
     );
   }
 
+  if (link.onClick) {
+    return (
+      <Button
+        className={styles.link}
+        classNameLinkText={styles.linkText}
+        key={key}
+        element='button'
+        colorMode='light'
+        style='text'
+        text={link.text}
+        isLoading={link.isLoading}
+        onClick={link.onClick}
+        iconInlineStart={icon
+          ? icon as keyof typeof Icon
+          : undefined
+        }
+      />
+    );
+  }
+
   return (
     <Button
       className={styles.link}
       classNameLinkText={styles.linkText}
       key={key}
       element='link'
-      href={link.href}
+      href={link.href as string}
       colorMode='light'
       style='text'
       text={link.text}
@@ -137,7 +164,10 @@ export const GenericTeaser = ({
     optimizeImage = false;
   }
 
-  const shouldWrapInLink = links && links.length === 1;
+  // Only wrap the whole card in a link when the single link is an
+  // actual href link. onClick links (e.g. "write email") render their
+  // own button instead.
+  const shouldWrapInLink = links && links.length === 1 && Boolean(links[0].href);
   const link = shouldWrapInLink
     ? links[0]
     : null;

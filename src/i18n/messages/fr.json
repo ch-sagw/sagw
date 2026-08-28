@@ -49,6 +49,9 @@
     "messageVideo": "Merci d'activer les cookies pour les « contenus externes » dans les réglages des cookies afin de pouvoir visionner la vidéo.",
     "titleExternalContent": "Contenu externe"
   },
+  "contact": {
+    "writeEmail": "Écrire un e-mail"
+  },
   "menu": {
     "open": "Ouvrir",
     "close": "Fermer"

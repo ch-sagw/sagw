@@ -1,5 +1,44 @@
 # Changelog
 
+## [1.8.1](https://github.com/ch-sagw/sagw/compare/v1.8.0...v1.8.1) (2026-08-28)
+
+
+### Bug Fixes
+
+* fix bioethics redirect ([#1299](https://github.com/ch-sagw/sagw/issues/1299)) ([2a7fdd9](https://github.com/ch-sagw/sagw/commit/2a7fdd97fc6f75242f0afdb17211c43a2540ae27))
+
+## [1.8.0](https://github.com/ch-sagw/sagw/compare/v1.7.0...v1.8.0) (2026-08-27)
+
+
+### Features
+
+* add host based redirect for bioethics ([#1294](https://github.com/ch-sagw/sagw/issues/1294)) ([f50bed3](https://github.com/ch-sagw/sagw/commit/f50bed3f0df6780a014b10c3d9baadbf42b4d7bf))
+* adding new sthg svg markup ([#1287](https://github.com/ch-sagw/sagw/issues/1287)) ([0f947d6](https://github.com/ch-sagw/sagw/commit/0f947d661e7c566d67a350dcd1639cfbd77c66d5))
+
+
+### Style
+
+* adjusting hero styling ([0574e83](https://github.com/ch-sagw/sagw/commit/0574e83f8c6252dca06cad4dad9ee01e51daacd5))
+* fixing stroke color of breadcrumb divider icon ([0574e83](https://github.com/ch-sagw/sagw/commit/0574e83f8c6252dca06cad4dad9ee01e51daacd5))
+
+
+### Test
+
+* adding new reference screenshots ([0574e83](https://github.com/ch-sagw/sagw/commit/0574e83f8c6252dca06cad4dad9ee01e51daacd5))
+
+## [1.7.0](https://github.com/ch-sagw/sagw/compare/v1.6.0...v1.7.0) (2026-08-12)
+
+
+### Features
+
+* allow special transliteration characters on latin ([#1278](https://github.com/ch-sagw/sagw/issues/1278)) ([757afae](https://github.com/ch-sagw/sagw/commit/757afaeb4e0f1b3d8893a191141ec2b0f9d7a1f7))
+* obfuscate mail address by outsourcing getting value to server ([#1280](https://github.com/ch-sagw/sagw/issues/1280)) ([2f61eaf](https://github.com/ch-sagw/sagw/commit/2f61eaf9e6da8605530c9efcfd146e69192af689))
+
+
+### Bug Fixes
+
+* also allow decomposed character rendering ([#1281](https://github.com/ch-sagw/sagw/issues/1281)) ([bfdab86](https://github.com/ch-sagw/sagw/commit/bfdab860b3335570aa552c1fb7e8bbe19a846331))
+
 ## [1.6.0](https://github.com/ch-sagw/sagw/compare/v1.5.0...v1.6.0) (2026-07-31)
 
 
