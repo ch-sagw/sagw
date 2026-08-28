@@ -95,7 +95,7 @@
     "concurrently": "^10.0.5",
     "cva": "npm:class-variance-authority@^0.7.1",
     "dotenv": "^17.4.2",
-    "eslint": "^10.8.1",
+    "eslint": "^9.39.2",
     "eslint-config-next": "^16.3.1",
     "eslint-plugin-storybook": "^10.5.9",
     "husky": "^9.1.7",
@@ -109,7 +109,8 @@
     "stylelint-config-standard-scss": "^17.0.0",
     "ts-morph": "^28.0.0",
     "tsx": "^4.23.12",
-    "typescript": "^7.0.2",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.68.0",
     "vercel": "^59.1.4",
     "vite": "^8.2.2"
   },
