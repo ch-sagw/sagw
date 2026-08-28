@@ -10,3 +10,7 @@ updates:
       dependency-type: "production"
     development-dependencies:
       dependency-type: "development"
+  ignore:
+    # Payload 3.x requires graphql ^16; v17 breaks peer deps until Payload supports it
+    - dependency-name: "graphql"
+      update-types: ["version-update:semver-major"]
