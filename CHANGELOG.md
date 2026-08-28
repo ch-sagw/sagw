@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.1](https://github.com/ch-sagw/sagw/compare/v1.8.0...v1.8.1) (2026-08-28)
+
+
+### Bug Fixes
+
+* fix bioethics redirect ([#1299](https://github.com/ch-sagw/sagw/issues/1299)) ([2a7fdd9](https://github.com/ch-sagw/sagw/commit/2a7fdd97fc6f75242f0afdb17211c43a2540ae27))
+
 ## [1.8.0](https://github.com/ch-sagw/sagw/compare/v1.7.0...v1.8.0) (2026-08-27)
 
 
