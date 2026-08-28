@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.8.0](https://github.com/ch-sagw/sagw/compare/v1.7.0...v1.8.0) (2026-08-27)
+
+
+### Features
+
+* add host based redirect for bioethics ([#1294](https://github.com/ch-sagw/sagw/issues/1294)) ([f50bed3](https://github.com/ch-sagw/sagw/commit/f50bed3f0df6780a014b10c3d9baadbf42b4d7bf))
+* adding new sthg svg markup ([#1287](https://github.com/ch-sagw/sagw/issues/1287)) ([0f947d6](https://github.com/ch-sagw/sagw/commit/0f947d661e7c566d67a350dcd1639cfbd77c66d5))
+
+
+### Style
+
+* adjusting hero styling ([0574e83](https://github.com/ch-sagw/sagw/commit/0574e83f8c6252dca06cad4dad9ee01e51daacd5))
+* fixing stroke color of breadcrumb divider icon ([0574e83](https://github.com/ch-sagw/sagw/commit/0574e83f8c6252dca06cad4dad9ee01e51daacd5))
+
+
+### Test
+
+* adding new reference screenshots ([0574e83](https://github.com/ch-sagw/sagw/commit/0574e83f8c6252dca06cad4dad9ee01e51daacd5))
+
 ## [1.7.0](https://github.com/ch-sagw/sagw/compare/v1.6.0...v1.7.0) (2026-08-12)
 
 
