@@ -8,6 +8,17 @@
   },
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(www\\.)?bioethics\\.ch"
+        }
+      ],
+      "destination": "https://www.sagw.ch/de/sgbe",
+      "permanent": true
+    },
+    {
       "source": "/",
       "destination": "/de",
       "permanent": true
@@ -60,17 +71,6 @@
     {
       "source": "/ssg/:path*",
       "destination": "https://www.sagw.ch/de/ssg/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "bioethics.ch"
-        }
-      ],
-      "destination": "https://www.sagw.ch/de/sgbe",
       "permanent": true
     },
     {
