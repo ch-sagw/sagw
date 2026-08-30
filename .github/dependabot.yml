@@ -5,6 +5,16 @@ updates:
   schedule:
     interval: "weekly"
     day: "sunday"
+  ignore:
+    # typescript-eslint and ts-morph need the TypeScript 6 API. TS 7 has none.
+    - dependency-name: "typescript"
+      update-types: ["version-update:semver-major"]
+    # Payload 3.x requires graphql ^16; v17 breaks peer deps until Payload supports it
+    - dependency-name: "graphql"
+      update-types: ["version-update:semver-major"]
+    # eslint-plugin-react (via eslint-config-next) does not support ESLint 10 yet.
+    - dependency-name: "eslint"
+      update-types: ["version-update:semver-major"]
   groups:
     production-dependencies:
       dependency-type: "production"

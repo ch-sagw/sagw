@@ -1,5 +1,72 @@
 # Changelog
 
+## [1.8.1](https://github.com/ch-sagw/sagw/compare/v1.8.0...v1.8.1) (2026-08-28)
+
+
+### Bug Fixes
+
+* fix bioethics redirect ([#1299](https://github.com/ch-sagw/sagw/issues/1299)) ([2a7fdd9](https://github.com/ch-sagw/sagw/commit/2a7fdd97fc6f75242f0afdb17211c43a2540ae27))
+
+## [1.8.0](https://github.com/ch-sagw/sagw/compare/v1.7.0...v1.8.0) (2026-08-27)
+
+
+### Features
+
+* add host based redirect for bioethics ([#1294](https://github.com/ch-sagw/sagw/issues/1294)) ([f50bed3](https://github.com/ch-sagw/sagw/commit/f50bed3f0df6780a014b10c3d9baadbf42b4d7bf))
+* adding new sthg svg markup ([#1287](https://github.com/ch-sagw/sagw/issues/1287)) ([0f947d6](https://github.com/ch-sagw/sagw/commit/0f947d661e7c566d67a350dcd1639cfbd77c66d5))
+
+
+### Style
+
+* adjusting hero styling ([0574e83](https://github.com/ch-sagw/sagw/commit/0574e83f8c6252dca06cad4dad9ee01e51daacd5))
+* fixing stroke color of breadcrumb divider icon ([0574e83](https://github.com/ch-sagw/sagw/commit/0574e83f8c6252dca06cad4dad9ee01e51daacd5))
+
+
+### Test
+
+* adding new reference screenshots ([0574e83](https://github.com/ch-sagw/sagw/commit/0574e83f8c6252dca06cad4dad9ee01e51daacd5))
+
+## [1.7.0](https://github.com/ch-sagw/sagw/compare/v1.6.0...v1.7.0) (2026-08-12)
+
+
+### Features
+
+* allow special transliteration characters on latin ([#1278](https://github.com/ch-sagw/sagw/issues/1278)) ([757afae](https://github.com/ch-sagw/sagw/commit/757afaeb4e0f1b3d8893a191141ec2b0f9d7a1f7))
+* obfuscate mail address by outsourcing getting value to server ([#1280](https://github.com/ch-sagw/sagw/issues/1280)) ([2f61eaf](https://github.com/ch-sagw/sagw/commit/2f61eaf9e6da8605530c9efcfd146e69192af689))
+
+
+### Bug Fixes
+
+* also allow decomposed character rendering ([#1281](https://github.com/ch-sagw/sagw/issues/1281)) ([bfdab86](https://github.com/ch-sagw/sagw/commit/bfdab860b3335570aa552c1fb7e8bbe19a846331))
+
+## [1.6.0](https://github.com/ch-sagw/sagw/compare/v1.5.0...v1.6.0) (2026-07-31)
+
+
+### Features
+
+* temporarily add additional env var in release-please.yml ([#1271](https://github.com/ch-sagw/sagw/issues/1271)) ([2ed309f](https://github.com/ch-sagw/sagw/commit/2ed309f1cd329ce257bea84c171a31f26dee0751))
+
+## [1.5.0](https://github.com/ch-sagw/sagw/compare/v1.4.0...v1.5.0) (2026-07-31)
+
+
+### Features
+
+* adding proper redirects for fg go-live end of july ([94c5773](https://github.com/ch-sagw/sagw/commit/94c57739935dcf3529dc23914036d7f95fd22dfe))
+* keeping origin logo references to avoid build issues before renaming ([4a7290a](https://github.com/ch-sagw/sagw/commit/4a7290aea625587633fbf940923154239dc84f36))
+* temporarily matching renamed fg logos ([4a7290a](https://github.com/ch-sagw/sagw/commit/4a7290aea625587633fbf940923154239dc84f36))
+* temporarily renaming some fg favicon folders ([4a7290a](https://github.com/ch-sagw/sagw/commit/4a7290aea625587633fbf940923154239dc84f36))
+
+
+### Bug Fixes
+
+* adjusting hero styling to improve spacing behaviour ([358a83b](https://github.com/ch-sagw/sagw/commit/358a83b9524938171567e5c996910b6325d2e697))
+* adjusting hero styling to improve spacing behaviour ([#1263](https://github.com/ch-sagw/sagw/issues/1263)) ([358a83b](https://github.com/ch-sagw/sagw/commit/358a83b9524938171567e5c996910b6325d2e697))
+
+
+### Test
+
+* temporarily disabling flaky visual be test rte to html ([#1268](https://github.com/ch-sagw/sagw/issues/1268)) ([9b625e1](https://github.com/ch-sagw/sagw/commit/9b625e1ba41b60299cd4c1d13da74d1ee9a409e8))
+
 ## [1.4.0](https://github.com/ch-sagw/sagw/compare/v1.3.1...v1.4.0) (2026-07-10)
 
 

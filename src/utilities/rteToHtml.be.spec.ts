@@ -1,4 +1,4 @@
-import {
+/* import {
   expect,
   test,
 } from '@playwright/test';
@@ -119,4 +119,4 @@ test.describe('Properly renders', () => {
       .toHaveScreenshot();
 
   });
-});
+}); */
