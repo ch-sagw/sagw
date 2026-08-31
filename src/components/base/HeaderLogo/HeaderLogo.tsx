@@ -47,7 +47,6 @@ export const Logos = {
   sanas,
   saute,
   seg,
-  'seg-temp': seg,
   sga,
   sgas,
   sgavl,
@@ -59,7 +58,6 @@ export const Logos = {
   sgjf,
   sgks,
   sgmoik,
-  'sgmoik-temp': sgmoik,
   sgr,
   sgss,
   smg,
@@ -68,7 +66,6 @@ export const Logos = {
   ssg,
   sslas,
   sthg,
-  'sthg-temp': sthg,
   svaw,
 };
 
