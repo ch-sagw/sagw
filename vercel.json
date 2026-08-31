@@ -100,14 +100,9 @@
       "has": [
         {
           "type": "host",
-          "value": "(www\\.)?assh\\.ch"
+          "value": "(www\\.)?sagw\\.ch"
         }
       ],
-      "destination": "https://www.sagw.ch/fr",
-      "permanent": true
-    },
-    {
-      "source": "/",
       "destination": "/de",
       "permanent": true
     },
