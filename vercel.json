@@ -232,7 +232,7 @@
     },
     {
       "source": "/judaistik/:path*",
-      "destination": "https://www.sagw.ch/de/sgjf:path*",
+      "destination": "https://www.sagw.ch/de/sgjf/:path*",
       "permanent": true
     },
     {
