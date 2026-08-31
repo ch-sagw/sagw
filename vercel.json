@@ -97,6 +97,12 @@
     },
     {
       "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "(www\\.)?sagw\\.ch"
+        }
+      ],
       "destination": "/de",
       "permanent": true
     },
