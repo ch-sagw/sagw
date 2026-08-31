@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.9.0](https://github.com/ch-sagw/sagw/compare/v1.8.1...v1.9.0) (2026-08-31)
+
+
+### Chore
+
+* bump node to v24 ([#1305](https://github.com/ch-sagw/sagw/issues/1305)) ([d5568da](https://github.com/ch-sagw/sagw/commit/d5568da8ea4e0badd2eb6f2005f0a1af2bf22994))
+* **deps-dev:** bump brace-expansion from 1.1.13 to 1.1.18 ([#1304](https://github.com/ch-sagw/sagw/issues/1304)) ([5d3f6e8](https://github.com/ch-sagw/sagw/commit/5d3f6e81c797dd4c3f1e87a1080ee737165df034))
+* **deps-dev:** bump the development-dependencies group across 1 directory with 24 updates ([#1258](https://github.com/ch-sagw/sagw/issues/1258)) ([4b0b5ce](https://github.com/ch-sagw/sagw/commit/4b0b5cebd71a059f4a016ee91eb585f39fa13fe9))
+* **deps:** august maintenance updates 1 ([#1301](https://github.com/ch-sagw/sagw/issues/1301)) ([97bc2f1](https://github.com/ch-sagw/sagw/commit/97bc2f146e074d483dfec27b9bc5588dffd61834))
+* **deps:** bump the production-dependencies group across 1 directory with 19 updates ([#1303](https://github.com/ch-sagw/sagw/issues/1303)) ([e9110b3](https://github.com/ch-sagw/sagw/commit/e9110b3db759ff61d22fa29277e74b69e3fd7de5))
+* **deps:** bump the production-dependencies group with 2 updates ([#1306](https://github.com/ch-sagw/sagw/issues/1306)) ([73ae1f9](https://github.com/ch-sagw/sagw/commit/73ae1f9ac7b6f1f7c018468488413a6b7d0260c1))
+
+
+### Features
+
+* adding host based redirect for top level domains ([eed4b1c](https://github.com/ch-sagw/sagw/commit/eed4b1cb9af4b42d8a65fb3abf6ed4fb0d55dedd))
+* adding host based redirect for top level domains ([#1276](https://github.com/ch-sagw/sagw/issues/1276)) ([eed4b1c](https://github.com/ch-sagw/sagw/commit/eed4b1cb9af4b42d8a65fb3abf6ed4fb0d55dedd))
+* adding improved favicons ([d6fd728](https://github.com/ch-sagw/sagw/commit/d6fd728955c9069f76171399f3cd0b09f421723a))
+* changing temp redirects to new structure and make them permanent ([e0f5b2a](https://github.com/ch-sagw/sagw/commit/e0f5b2ab1fd8d6fd7f4920b25ffef586b4c5f3e7))
+* changing temp redirects to new structure and make them permanent ([#1309](https://github.com/ch-sagw/sagw/issues/1309)) ([e0f5b2a](https://github.com/ch-sagw/sagw/commit/e0f5b2ab1fd8d6fd7f4920b25ffef586b4c5f3e7))
+* removing temp from fg names ([#1308](https://github.com/ch-sagw/sagw/issues/1308)) ([af95dd0](https://github.com/ch-sagw/sagw/commit/af95dd0fe1587d196b256086a3de947e6ad975db))
+* replacing sgg logo files ([d6fd728](https://github.com/ch-sagw/sagw/commit/d6fd728955c9069f76171399f3cd0b09f421723a))
+
 ## [1.8.1](https://github.com/ch-sagw/sagw/compare/v1.8.0...v1.8.1) (2026-08-28)
 
 
