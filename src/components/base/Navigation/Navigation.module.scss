@@ -41,7 +41,7 @@
     column-gap: px-to-rem(calc(var(--grid-gutter) * 0.75));
 
     > li {
-      flex: 1 1 calc(25% - px-to-rem(calc(var(--grid-gutter) * 0.25)));
+      flex: 0 1 calc(25% - px-to-rem(calc(var(--grid-gutter) * 0.25)));
     }
   }
 }
