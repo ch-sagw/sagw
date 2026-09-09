@@ -62,7 +62,7 @@
       padding-block: px-to-rem(var(--inside-elements-l));
       inset-block-start: 100%;
       inset-inline-start: px-to-rem(var(--spacing-xs), true);
-      width: max-content;
+      width: var(--nav-item-list-width, max-content);
       min-width: 100%;
       overflow: visible;
     }

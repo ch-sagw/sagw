@@ -16,6 +16,8 @@
   @include mq($from: large) {
     padding-inline: px-to-rem(var(--spacing-xl));
     padding-block-end: px-to-rem(calc(var(--spacing-3xl) + var(--spacing-xs)));
+
+    --nav-item-list-width: 100%;
   }
 
   @include mq($from: wide) {
