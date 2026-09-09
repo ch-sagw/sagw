@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.10.0](https://github.com/ch-sagw/sagw/compare/v1.9.0...v1.10.0) (2026-09-09)
+
+
+### Features
+
+* adding additional redirect check ([#1310](https://github.com/ch-sagw/sagw/issues/1310)) ([8b3945b](https://github.com/ch-sagw/sagw/commit/8b3945bdd537db566fda736b56a136f2edb6a843))
+* only redirect root to de when the host is sagw ([8b3945b](https://github.com/ch-sagw/sagw/commit/8b3945bdd537db566fda736b56a136f2edb6a843))
+
+
+### Bug Fixes
+
+* send user agent in headers to zenodo api ([#1319](https://github.com/ch-sagw/sagw/issues/1319)) ([71c5f50](https://github.com/ch-sagw/sagw/commit/71c5f504be20e9ee946ea6eb4b3098ac9aee3514))
+
+
+### Style
+
+* fixing width of footer nav columns in large viewport ([#1311](https://github.com/ch-sagw/sagw/issues/1311)) ([41fa0d8](https://github.com/ch-sagw/sagw/commit/41fa0d8634402b133ba1eabc9ab964289e4b01c7))
+
 ## [1.9.0](https://github.com/ch-sagw/sagw/compare/v1.8.1...v1.9.0) (2026-08-31)
 
 
