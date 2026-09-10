@@ -96,27 +96,6 @@
       "permanent": true
     },
     {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "(www\\.)?sagw\\.ch"
-        }
-      ],
-      "destination": "/de",
-      "permanent": true
-    },
-    {
-      "source": "/sagw/:path*",
-      "destination": "/de",
-      "permanent": true
-    },
-    {
-      "source": "/fr/assh/:path*",
-      "destination": "/fr",
-      "permanent": true
-    },
-    {
       "source": "/sago/:path*",
       "destination": "/de/sago",
       "permanent": true
@@ -137,13 +116,13 @@
       "permanent": true
     },
     {
-      "source": "/asiengesellschaft/:path*",
-      "destination": "https://www.sagw.ch/de/sag/:path*",
+      "source": "/fr/asiengesellschaft/:path*",
+      "destination": "https://www.sagw.ch/fr/sag/:path*",
       "permanent": true
     },
     {
-      "source": "/fr/asiengesellschaft/:path*",
-      "destination": "https://www.sagw.ch/fr/sag/:path*",
+      "source": "/asiengesellschaft/:path*",
+      "destination": "https://www.sagw.ch/de/sag/:path*",
       "permanent": true
     },
     {
@@ -162,11 +141,6 @@
       "permanent": true
     },
     {
-      "source": "/kultur-theorie-semiotik/:path*",
-      "destination": "https://www.sagw.ch/de/sgks/:path*",
-      "permanent": true
-    },
-    {
       "source": "/en/kultur-theorie-semiotik/:path*",
       "destination": "https://www.sagw.ch/en/sgks/:path*",
       "permanent": true
@@ -174,6 +148,11 @@
     {
       "source": "/fr/kultur-theorie-semiotik/:path*",
       "destination": "https://www.sagw.ch/fr/sgks/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/kultur-theorie-semiotik/:path*",
+      "destination": "https://www.sagw.ch/de/sgks/:path*",
       "permanent": true
     },
     {
@@ -187,11 +166,6 @@
       "permanent": true
     },
     {
-      "source": "/collegium-romanicum/:path*",
-      "destination": "https://www.sagw.ch/de/collrom/:path*",
-      "permanent": true
-    },
-    {
       "source": "/fr/collegium-romanicum/:path*",
       "destination": "https://www.sagw.ch/fr/collrom/:path*",
       "permanent": true
@@ -202,8 +176,8 @@
       "permanent": true
     },
     {
-      "source": "/sggf/:path*",
-      "destination": "https://www.sagw.ch/de/sggf/:path*",
+      "source": "/collegium-romanicum/:path*",
+      "destination": "https://www.sagw.ch/de/collrom/:path*",
       "permanent": true
     },
     {
@@ -217,13 +191,13 @@
       "permanent": true
     },
     {
-      "source": "/sgmoik/:path*",
-      "destination": "https://www.sagw.ch/de/sgmoik/:path*",
+      "source": "/sggf/:path*",
+      "destination": "https://www.sagw.ch/de/sggf/:path*",
       "permanent": true
     },
     {
-      "source": "/africa/:path*",
-      "destination": "https://www.sagw.ch/de/sgas/:path*",
+      "source": "/sgmoik/:path*",
+      "destination": "https://www.sagw.ch/de/sgmoik/:path*",
       "permanent": true
     },
     {
@@ -234,6 +208,11 @@
     {
       "source": "/fr/africa/:path*",
       "destination": "https://www.sagw.ch/fr/sgas/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/africa/:path*",
+      "destination": "https://www.sagw.ch/de/sgas/:path*",
       "permanent": true
     },
     {
@@ -252,11 +231,6 @@
       "permanent": true
     },
     {
-      "source": "/philosophie/:path*",
-      "destination": "https://www.sagw.ch/de/spg/:path*",
-      "permanent": true
-    },
-    {
       "source": "/fr/philosophie/:path*",
       "destination": "https://www.sagw.ch/fr/spg/:path*",
       "permanent": true
@@ -267,8 +241,40 @@
       "permanent": true
     },
     {
+      "source": "/philosophie/:path*",
+      "destination": "https://www.sagw.ch/de/spg/:path*",
+      "permanent": true
+    },
+    {
       "source": "/sgb/:path*",
       "destination": "https://www.sagw.ch/de/sgb/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/fr/assh/:path*",
+      "destination": "/fr",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "(www\\.)?sagw\\.ch"
+        }
+      ],
+      "destination": "/de",
+      "permanent": true
+    },
+    {
+      "source": "/sagw/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(www\\.)?sagw\\.ch"
+        }
+      ],
+      "destination": "/de",
       "permanent": true
     }
   ]
