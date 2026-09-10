@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.10.1](https://github.com/ch-sagw/sagw/compare/v1.10.0...v1.10.1) (2026-09-10)
+
+
+### Bug Fixes
+
+* fix paths in host-based rules ([c01c9cd](https://github.com/ch-sagw/sagw/commit/c01c9cd34713bad676d35c8750e982bb16a7d91d))
+* fix paths in host-based rules ([#1320](https://github.com/ch-sagw/sagw/issues/1320)) ([c01c9cd](https://github.com/ch-sagw/sagw/commit/c01c9cd34713bad676d35c8750e982bb16a7d91d))
+
+
+### Test
+
+* temporarly disable zenodo tests ([a66352f](https://github.com/ch-sagw/sagw/commit/a66352fd68e265f99827ff1ee351a0afae08f698))
+
 ## [1.10.0](https://github.com/ch-sagw/sagw/compare/v1.9.0...v1.10.0) (2026-09-09)
 
 
