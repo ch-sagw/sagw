@@ -100,11 +100,13 @@ export const deleteVideoFromGumlet: CollectionAfterDeleteHook = async ({
     return;
   }
 
-  const {
-    deleteFromGumlet,
-  } = await import('@/utilities/gumlet');
-
   if (doc.gumletAssetId) {
+    // imported lazily: the gumlet utility is server-only and must not be
+    // loaded when there is nothing to delete (e.g. videos in tests)
+    const {
+      deleteFromGumlet,
+    } = await import('@/utilities/gumlet');
+
     try {
       await deleteFromGumlet(doc.gumletAssetId);
 
