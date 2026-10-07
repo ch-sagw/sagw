@@ -7,7 +7,9 @@ import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
-import { getTenantId } from '@/test-helpers/tenant-generator';
+import {
+  enableAllTenantLanguages, getTenantId,
+} from '@/test-helpers/tenant-generator';
 import {
   generateDetailPageInAllLocales, getHomeId,
 } from '@/test-helpers/collections-generator';
@@ -59,6 +61,11 @@ test.describe('Admin: delete language variant menu item', () => {
       isSagw: true,
       time,
     });
+
+    // the admin locale switcher only offers the languages enabled on the
+    // tenant; an earlier test may have disabled fr on the sagw tenant, in
+    // which case `?locale=fr` silently falls back to de.
+    await enableAllTenantLanguages(tenant);
 
     const home = await getHomeId({
       isSagw: true,

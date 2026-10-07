@@ -15,7 +15,7 @@ import {
   getHomeId,
 } from '@/test-helpers/collections-generator';
 import {
-  generateTenant, getTenantId,
+  enableAllTenantLanguages, generateTenant, getTenantId,
 } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { fetchDetailPages } from '@/data/fetch';
@@ -150,6 +150,10 @@ test.describe('deleteLocaleVariant', () => {
       isSagw: true,
       time,
     });
+
+    // the endpoint rejects locales disabled on the tenant; an earlier test
+    // may have disabled fr on the sagw tenant.
+    await enableAllTenantLanguages(tenant);
 
     const home = await getHomeId({
       isSagw: true,
@@ -434,6 +438,10 @@ test.describe('deleteLocaleVariant', () => {
       isSagw: true,
       time,
     });
+
+    // the endpoint rejects locales disabled on the tenant; an earlier test
+    // may have disabled fr on the sagw tenant.
+    await enableAllTenantLanguages(tenant);
 
     const home = await getHomeId({
       isSagw: true,
