@@ -27,6 +27,26 @@ export const getTenant = async (): Promise<string | null> => {
   return tenants.docs[0].id;
 };
 
+// re-enables all languages on a tenant. other tests (e.g. tenants.be.spec)
+// disable languages on the sagw tenant and do not restore them.
+export const enableAllTenantLanguages = async (tenantId: string): Promise<void> => {
+  const payload = await getPayloadCached();
+
+  await payload.update({
+    collection: 'tenants',
+    data: {
+      languages: {
+        de: true,
+        en: true,
+        fr: true,
+        it: true,
+      },
+    },
+    id: tenantId,
+    overrideAccess: true,
+  });
+};
+
 // get's non-sagw tenant
 export const getTenantNonSagw = async (): Promise<string | null> => {
   const payload = await getPayloadCached();
