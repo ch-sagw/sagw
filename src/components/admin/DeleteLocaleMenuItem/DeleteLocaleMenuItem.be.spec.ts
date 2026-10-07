@@ -47,6 +47,22 @@ const openDocControlsMenu = async (page: Page): Promise<void> => {
 test.describe('Admin: delete language variant menu item', () => {
   beforeEachPayloadLogin();
 
+  // Visiting the admin with `?locale=xx` persists xx as the user's admin
+  // locale preference, and every later admin visit without `?locale=` opens
+  // in that locale. Reset it so following tests start in the default locale.
+  test.afterEach(async () => {
+    const payload = await getPayloadCached();
+
+    await payload.delete({
+      collection: 'payload-preferences',
+      where: {
+        key: {
+          equals: 'locale',
+        },
+      },
+    });
+  });
+
   test('is hidden in the default locale, visible in fr, and deletes the fr variant on confirm', async ({
     page,
   }) => {
