@@ -1,5 +1,6 @@
 import {
   expect,
+  type Page,
   test,
 } from '@playwright/test';
 import { beforeEachPayloadLogin } from '@/test-helpers/payload-login';
@@ -18,6 +19,28 @@ const threeDotsSelector = '.popup.doc-controls__popup button.popup-button';
 // the popup content is portaled to document.body, so we use payload's
 // built-in delete entry to make sure the menu is open
 const builtInDeleteSelector = '#action-delete';
+
+// Opens the edit view 3-dot menu. On slow machines (CI, next dev) the page
+// reaches "networkidle" before react has hydrated; a click at that moment is
+// lost and the popup never opens. So we click until the menu is really open.
+const openDocControlsMenu = async (page: Page): Promise<void> => {
+  await page.waitForLoadState('networkidle');
+
+  await expect(async () => {
+    await page.locator(threeDotsSelector)
+      .click({
+        force: true,
+      });
+
+    await expect(page.locator(builtInDeleteSelector))
+      .toBeVisible({
+        timeout: 1_000,
+      });
+  })
+    .toPass({
+      timeout: 30_000,
+    });
+};
 
 test.describe('Admin: delete language variant menu item', () => {
   beforeEachPayloadLogin();
@@ -55,16 +78,9 @@ test.describe('Admin: delete language variant menu item', () => {
     // default locale (de): menu item must not be rendered
     // --------------------------------------------------------------
     await page.goto(`${editUrl}?locale=de`);
-    await page.waitForLoadState('networkidle');
+    await openDocControlsMenu(page);
 
-    await page.locator(threeDotsSelector)
-      .click({
-        force: true,
-      });
-
-    // the built-in delete entry exists, our locale entry does not
-    await expect(page.locator(builtInDeleteSelector))
-      .toBeVisible();
+    // the menu is open (built-in delete entry), our locale entry is not there
     await expect(page.locator(buttonSelector))
       .toHaveCount(0);
 
@@ -72,12 +88,7 @@ test.describe('Admin: delete language variant menu item', () => {
     // fr: menu item visible, confirm deletes the variant
     // --------------------------------------------------------------
     await page.goto(`${editUrl}?locale=fr`);
-    await page.waitForLoadState('networkidle');
-
-    await page.locator(threeDotsSelector)
-      .click({
-        force: true,
-      });
+    await openDocControlsMenu(page);
 
     const deleteLocaleButton = page.locator(buttonSelector);
 
@@ -129,13 +140,8 @@ test.describe('Admin: delete language variant menu item', () => {
     await expect(page.locator('#field-slug'))
       .toHaveValue('');
 
-    await page.locator(threeDotsSelector)
-      .click({
-        force: true,
-      });
+    await openDocControlsMenu(page);
 
-    await expect(page.locator(builtInDeleteSelector))
-      .toBeVisible();
     await expect(page.locator(buttonSelector))
       .toHaveCount(0);
 
@@ -143,12 +149,7 @@ test.describe('Admin: delete language variant menu item', () => {
     // it: still available for a locale that was not deleted
     // --------------------------------------------------------------
     await page.goto(`${editUrl}?locale=it`);
-    await page.waitForLoadState('networkidle');
-
-    await page.locator(threeDotsSelector)
-      .click({
-        force: true,
-      });
+    await openDocControlsMenu(page);
 
     await expect(page.locator(buttonSelector))
       .toBeVisible();
