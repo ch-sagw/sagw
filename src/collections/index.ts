@@ -18,6 +18,7 @@ import {
   globalCollectionsSlugs, singletonSlugs,
 } from '@/collections/Pages/constants';
 import { Teams } from './Plc/Teams';
+import { applyDeleteLocaleVariant } from '@/hooks-payload/deleteLocaleVariant/withDeleteLocaleVariant';
 
 import {
   CollectionConfig, CollectionSlug,
@@ -52,8 +53,10 @@ export const plcCollections: CollectionConfig[] = [
 // payload collections config
 export const collections = [
 
-  // Auto-generated pages index
-  ...autogeneratePagesIndex,
+  // Auto-generated pages index. Eligible page collections additionally get
+  // the "delete language variant" feature
+  // (see hooks-payload/deleteLocaleVariant).
+  ...applyDeleteLocaleVariant(autogeneratePagesIndex),
 
   // plc
   ...plcCollections,

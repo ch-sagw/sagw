@@ -16,6 +16,7 @@ import { Users } from '@/collections/Plc/Users';
 import { seedTestData } from '@/seed/test-data';
 import { seedTenantsAndUsers } from '@/seed/seedTenantsAndUsers/index';
 import { localizationConfig } from '@/i18n/payloadConfig';
+import { adminTranslations } from '@/i18n/adminTranslations';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -61,6 +62,7 @@ export default buildConfig({
       en,
       fr,
     },
+    translations: adminTranslations,
   },
   localization: localizationConfig,
   onInit: async (payload) => {
