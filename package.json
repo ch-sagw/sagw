@@ -116,5 +116,14 @@
   },
   "engines": {
     "node": "24.x"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.5.1": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.27.0": true,
+    "@sentry/cli@2.58.6": true,
+    "@swc/core@1.16.13": true,
+    "fsevents@2.3.3": true,
+    "unrs-resolver@1.11.1": true
   }
 }
