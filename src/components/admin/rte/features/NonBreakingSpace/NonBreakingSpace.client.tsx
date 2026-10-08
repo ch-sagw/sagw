@@ -11,6 +11,7 @@ import {
   COMMAND_PRIORITY_HIGH,
   LexicalEditor,
   PASTE_COMMAND,
+  PasteCommandType,
 } from 'lexical';
 import { NonBreakingSpaceNode } from '@/components/admin/rte/features/NonBreakingSpace/NonBreakingSpaceNode';
 import {
@@ -91,10 +92,10 @@ const getClipboardTextWithNbsp = (event: ClipboardEvent): string | null => {
 const NonBreakingSpacePastePlugin = (): null => {
   const [editor] = useLexicalComposerContext();
 
-  useEffect(() => editor.registerCommand<ClipboardEvent>(
+  useEffect(() => editor.registerCommand<PasteCommandType>(
     PASTE_COMMAND,
     (event) => {
-      if (!event) {
+      if (!(event instanceof ClipboardEvent)) {
         return false;
       }
 
