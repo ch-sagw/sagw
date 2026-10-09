@@ -1363,6 +1363,7 @@ export interface Image {
   id: string;
   tenant?: (string | null) | Tenant;
   alt: string;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1889,6 +1890,7 @@ export interface Document {
    * If the document belongs to a project, add the project.
    */
   project?: (string | null) | Project;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -3693,6 +3695,7 @@ export interface Video {
    */
   duration?: number | null;
   gumletAssetId?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -4881,6 +4884,7 @@ export interface User {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
   sessions?:
@@ -6585,6 +6589,7 @@ export interface ThemeSelect<T extends boolean = true> {
 export interface ImagesSelect<T extends boolean = true> {
   tenant?: T;
   alt?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -6606,6 +6611,7 @@ export interface VideosSelect<T extends boolean = true> {
   title?: T;
   duration?: T;
   gumletAssetId?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -6637,6 +6643,7 @@ export interface DocumentsSelect<T extends boolean = true> {
   title?: T;
   date?: T;
   project?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -6789,6 +6796,7 @@ export interface UsersSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
+  resetPasswordRequestedAt?: T;
   loginAttempts?: T;
   lockUntil?: T;
   sessions?:
