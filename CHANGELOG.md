@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.11.0](https://github.com/ch-sagw/sagw/compare/v1.10.1...v1.11.0) (2026-10-10)
+
+
+### Chore
+
+* **deps-dev:** bump the development-dependencies group across 1 directory with 7 updates ([#1343](https://github.com/ch-sagw/sagw/issues/1343)) ([92c5077](https://github.com/ch-sagw/sagw/commit/92c5077225960b530c4185df0b338853fddca103))
+* **deps:** bump fast-copy from 3.0.2 to 3.1.0 ([#1340](https://github.com/ch-sagw/sagw/issues/1340)) ([9b5f821](https://github.com/ch-sagw/sagw/commit/9b5f821f9cf380e2a577d0b0d5147b49cbc10bac))
+* **deps:** bump postcss-selector-parser from 7.1.5 to 7.1.6 ([#1341](https://github.com/ch-sagw/sagw/issues/1341)) ([e09aa2e](https://github.com/ch-sagw/sagw/commit/e09aa2e0dfed9af8355cf72354987739faa354ea))
+* **deps:** bump source-map-js from 1.2.1 to 1.2.2 ([#1344](https://github.com/ch-sagw/sagw/issues/1344)) ([8488936](https://github.com/ch-sagw/sagw/commit/84889365b271505d13a0f1a5c2080d418021c2b9))
+* **deps:** bump the production-dependencies group across 1 directory with 3 updates ([#1342](https://github.com/ch-sagw/sagw/issues/1342)) ([c8d80cb](https://github.com/ch-sagw/sagw/commit/c8d80cb30ac198cf43078d7928285c98b4454816))
+* update playwright ([dde63cf](https://github.com/ch-sagw/sagw/commit/dde63cf13249fde273f164808d49863c3534cdbc))
+
+
+### Documentation
+
+* mention automatic screenshots update ([dde63cf](https://github.com/ch-sagw/sagw/commit/dde63cf13249fde273f164808d49863c3534cdbc))
+
+
+### Features
+
+* merge all deps updates and fix issues ([dde63cf](https://github.com/ch-sagw/sagw/commit/dde63cf13249fde273f164808d49863c3534cdbc))
+
+
+### Test
+
+* increase max-old-space ([dde63cf](https://github.com/ch-sagw/sagw/commit/dde63cf13249fde273f164808d49863c3534cdbc))
+* update screenshots ([dde63cf](https://github.com/ch-sagw/sagw/commit/dde63cf13249fde273f164808d49863c3534cdbc))
+
 ## [1.10.1](https://github.com/ch-sagw/sagw/compare/v1.10.0...v1.10.1) (2026-09-10)
 
 
