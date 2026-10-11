@@ -62,7 +62,7 @@
     "cross-env": "^10.0.0",
     "fathom-client": "^3.7.2",
     "graphql": "^16.14.2",
-    "next": "^16.4.0",
+    "next": "~16.3.8",
     "next-intl": "^4.14.9",
     "payload": "^3.90.2",
     "puppeteer-core": "^25.12.0",
