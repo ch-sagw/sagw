@@ -120,6 +120,8 @@ npm run test:watch
 
 Playwright UI will then be available under the url http://localhost:8080/.
 
+To run the frontend tests and let Playwright overwrite all failing screenshots with new baselines, run `npm run test:fe -- -- --update-snapshots=changed` (the double `--` forwards the flag through npm and docker compose to Playwright).
+
 ### Lint
 
 The project is linting scss, ts, tsx, js, jsx and mjx files. Linting is automatically enforced as pre-commit hook via lint-staged and husky.

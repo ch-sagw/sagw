@@ -39,15 +39,22 @@ export const Checkbox = ({
     setCheckedState,
   ] = useState(checked);
 
+  const [
+    prevChecked,
+    setPrevChecked,
+  ] = useState(checked);
+
+  // sync internal state when the `checked` prop changes
+  if (checked !== prevChecked) {
+    setPrevChecked(checked);
+    setCheckedState(checked);
+  }
+
   useEffect(() => {
     if (autofocus && checkboxRef.current) {
       checkboxRef.current.focus();
     }
   }, [autofocus]);
-
-  useEffect(() => {
-    setCheckedState(checked);
-  }, [checked]);
 
   const classes = cva([
     styles.checkbox,
