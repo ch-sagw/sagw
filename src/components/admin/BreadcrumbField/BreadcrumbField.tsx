@@ -42,11 +42,24 @@ const BreadcrumbField = (): JSX.Element | null => {
   const parentPage = formData?.[fieldParentSelectorFieldName] as ParentPageRef;
   const parentKey = parentRefKey(parentPage);
 
+  // Fetched crumbs are stored together with the parent key they belong to.
+  // This way a stale result (or a cleared parent) is ignored without having
+  // to reset state in an effect.
   const [
-    crumbs,
-    setCrumbs,
-  ] = useState<BreadcrumbItem[]>([]);
+    fetched,
+    setFetched,
+  ] = useState<{ key: string; crumbs: BreadcrumbItem[] }>({
+    crumbs: [],
+    key: '',
+  });
   const abortRef = useRef<AbortController | null>(null);
+
+  const crumbs = useMemo(() => (fetched.key === parentKey
+    ? fetched.crumbs
+    : []), [
+    fetched,
+    parentKey,
+  ]);
 
   useEffect(() => {
     abortRef.current?.abort();
@@ -76,19 +89,28 @@ const BreadcrumbField = (): JSX.Element | null => {
         });
 
         if (!response.ok) {
-          setCrumbs([]);
+          setFetched({
+            crumbs: [],
+            key: parentKey,
+          });
 
           return;
         }
 
         const data = await response.json() as { breadcrumb?: BreadcrumbItem[] };
 
-        setCrumbs(Array.isArray(data.breadcrumb)
-          ? data.breadcrumb
-          : []);
+        setFetched({
+          crumbs: Array.isArray(data.breadcrumb)
+            ? data.breadcrumb
+            : [],
+          key: parentKey,
+        });
       } catch (error) {
         if ((error as Error).name !== 'AbortError') {
-          setCrumbs([]);
+          setFetched({
+            crumbs: [],
+            key: parentKey,
+          });
         }
       }
     };
@@ -102,15 +124,6 @@ const BreadcrumbField = (): JSX.Element | null => {
       controller.abort();
     };
     // parentKey changes with parentPage; safe single-source key.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [parentKey]);
-
-  // If the parent gets cleared, reset the preview without writing state in
-  // the effect body that fetches.
-  useEffect(() => {
-    if (!parentPage || typeof parentPage !== 'object' || !parentPage.slug || !parentPage.documentId) {
-      setCrumbs([]);
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [parentKey]);
 
