@@ -1,6 +1,6 @@
 import './.env/index.js';
 import { withBotId } from 'botid/next/config';
-import { withSentryConfig } from '@sentry/nextjs';
+import { withSentryConfig } from '@sentry/nextjs/config';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { withPayload } from '@payloadcms/next/withPayload';
@@ -112,12 +112,18 @@ const configWithPayload = withPayload(nextConfig, {
 
 const configWithSentry = withSentryConfig(configWithPayload, {
   authToken: process.env.SENTRY_AUTH_TOKEN,
-  automaticVercelMonitors: true,
-  disableLogger: true,
-  org: process.env.SENTRY_PROJECT,
-  project: process.env.SENTRY_ORG,
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
   silent: !process.env.CI,
   tunnelRoute: '/monitoring',
+  // Only applies to webpack builds; Turbopack builds rely on Next.js
+  // telemetry instead (see @sentry/nextjs v11 migration guide).
+  webpack: {
+    automaticVercelMonitors: true,
+    treeshake: {
+      removeDebugLogging: true,
+    },
+  },
   widenClientFileUpload: true,
 });
 
