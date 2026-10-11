@@ -1,6 +1,4 @@
-import React, {
-  useEffect, useState,
-} from 'react';
+import React, { useState } from 'react';
 import styles from '@/components/base/Toggle/Toggle.module.scss';
 import { SafeHtml } from '../SafeHtml/SafeHtml';
 
@@ -28,9 +26,16 @@ export const Toggle = ({
     setCheckedState,
   ] = useState(checked);
 
-  useEffect(() => {
+  const [
+    prevChecked,
+    setPrevChecked,
+  ] = useState(checked);
+
+  // sync internal state when the `checked` prop changes
+  if (checked !== prevChecked) {
+    setPrevChecked(checked);
     setCheckedState(checked);
-  }, [checked]);
+  }
 
   const onInputChange = (): void => {
     const newChecked = !checkedState;
