@@ -2,7 +2,7 @@
 'use client';
 
 import React, {
-  Fragment, useCallback, useEffect, useRef, useState,
+  Fragment, useCallback, useEffect, useRef, useState, useSyncExternalStore,
 } from 'react';
 import styles from '@/components/global/Header/Header.module.scss';
 import {
@@ -50,6 +50,11 @@ export type InterfaceHeaderComponentPropTypes = {
   localeUrls: Record<string, string>;
   tenant: string;
 }
+
+// --- Helpers
+
+// used by useSyncExternalStore for hydration detection; nothing to subscribe to
+const subscribeNoop = (): (() => void) => (): void => undefined;
 
 // --- Component
 
@@ -101,23 +106,16 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
   ] = useState(false);
 
   const [
-    didScroll,
-    setDidScroll,
-  ] = useState(false);
-
-  const [
     hoveredSection,
     setHoveredSection,
   ] = useState<'mainNav' | 'langNav' | null>(null);
 
-  const [
-    hydrated,
-    setHydrated,
-  ] = useState(false);
-
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
+  // false during SSR / hydration, true once rendered on the client
+  const hydrated = useSyncExternalStore(
+    subscribeNoop,
+    () => true,
+    () => false,
+  );
 
   const [
     fontSize,
@@ -138,6 +136,26 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
   const breakpoint = useBreakpoint();
   const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
   const scrollPosition = useWindowScroll();
+
+  // 0 would be too brutal
+  const didScroll = scrollPosition > 1;
+
+  // reset navigation heights when breakpoint changes
+  const [
+    prevBreakpoint,
+    setPrevBreakpoint,
+  ] = useState(breakpoint);
+
+  if (breakpoint !== prevBreakpoint) {
+    setPrevBreakpoint(breakpoint);
+    setNavMaxHeight(0);
+    setMobileMenuOpen(false);
+
+    if (smallBreakpoint) {
+      // no header height calculation in small breakpoints
+      setTotalHeaderHeight(0);
+    }
+  }
 
   const calculateHeaderHeight = useCallback((): void => {
     if (!headerRef.current || smallBreakpoint || isHovering) {
@@ -270,11 +288,9 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     setMetaNavHeight,
   ]);
 
-  // reset navigation heights when breakpoint changes
+  // reset cached measurements when breakpoint changes
+  // (the related state resets happen during render, see above)
   useEffect(() => {
-    setNavMaxHeight(0);
-    setMobileMenuOpen(false);
-
     initialNavHeightRef.current = null;
     initialMetaNavHeightRef.current = null;
     initialLangOrNavMaxHeightRef.current = null;
@@ -282,17 +298,12 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
 
   // set nav height
   useEffect(() => {
-    if (!headerRef.current) {
+    if (!headerRef.current || smallBreakpoint) {
       return;
     }
 
-    if (smallBreakpoint) {
-      // Reset heights when in small breakpoint
-      setTotalHeaderHeight(0);
-    } else {
-      calculateHeaderHeight();
-      setMetaNavHeight();
-    }
+    calculateHeaderHeight();
+    setMetaNavHeight();
 
   }, [
     // fontSize,
@@ -306,13 +317,6 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     // Add breakpoint to trigger recalculation on viewport changes
     breakpoint,
   ]);
-
-  // handle scroll
-  useEffect(() => {
-
-    // 0 would be too brutal
-    setDidScroll(scrollPosition > 1);
-  }, [scrollPosition]);
 
   // add mouse leave detection to reset hover state when mouse leaves header
   useEffect(() => {
