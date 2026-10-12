@@ -1,0 +1,158 @@
+.assets-cleanup-report {
+  margin-bottom: var(--base);
+  padding: var(--base);
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: var(--border-radius-m);
+  background-color: var(--theme-elevation-0);
+  font-size: 13px;
+
+  h2 {
+    margin: 0 0 calc(var(--base) / 2);
+  }
+
+  h3 {
+    margin: var(--base) 0 calc(var(--base) / 4);
+  }
+
+  h4 {
+    margin: calc(var(--base) / 2) 0 calc(var(--base) / 4);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: calc(var(--base) / 4) calc(var(--base) / 2);
+    border: 1px solid var(--theme-elevation-150);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background-color: var(--theme-elevation-50);
+  }
+
+  pre {
+    max-height: 30rem;
+    overflow: auto;
+    padding: calc(var(--base) / 2);
+    background-color: var(--theme-elevation-50);
+    font-size: 11px;
+  }
+
+  &__header {
+    display: flex;
+    gap: calc(var(--base) / 2);
+    margin-bottom: calc(var(--base) / 2);
+  }
+
+  &__badge {
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--border-radius-s);
+    background-color: var(--theme-elevation-200);
+    font-weight: bold;
+
+    &--prod {
+      background-color: rgb(117 0 0);
+      color: white;
+    }
+
+    &--test {
+      background-color: #007acc;
+      color: white;
+    }
+
+    &--delete {
+      background-color: var(--theme-error-500);
+      color: white;
+    }
+
+    &--report {
+      background-color: var(--theme-success-500);
+      color: white;
+    }
+
+    &--problem {
+      background-color: var(--theme-warning-500);
+    }
+  }
+
+  &__facts {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: calc(var(--base) / 4) var(--base);
+    margin: 0;
+
+    dt {
+      font-weight: bold;
+    }
+
+    dd {
+      margin: 0;
+    }
+  }
+
+  &__fuses {
+    margin: calc(var(--base) / 2) 0;
+    padding-left: var(--base);
+    color: var(--theme-error-500);
+  }
+
+  &__overrides {
+    margin: calc(var(--base) / 2) 0;
+    padding-left: var(--base);
+    color: var(--theme-warning-600);
+  }
+
+  &__problems {
+    margin: calc(var(--base) / 2) 0;
+    padding: calc(var(--base) / 2);
+    border-left: 4px solid var(--theme-error-500);
+    background-color: var(--theme-error-50);
+  }
+
+  &__tenant {
+    margin-top: var(--base);
+    padding-top: calc(var(--base) / 2);
+    border-top: 1px solid var(--theme-elevation-150);
+  }
+
+  &__table {
+    margin-top: calc(var(--base) / 2);
+  }
+
+  &__number {
+    width: 2rem;
+    text-align: right;
+    color: var(--theme-elevation-500);
+  }
+
+  &__inline-details {
+    margin-top: calc(var(--base) / 4);
+
+    summary {
+      cursor: pointer;
+      color: var(--theme-elevation-500);
+    }
+
+    p {
+      margin: calc(var(--base) / 4) 0 0;
+    }
+  }
+
+  &__muted {
+    color: var(--theme-elevation-500);
+    font-weight: normal;
+  }
+
+  &__raw {
+    margin-top: var(--base);
+
+    summary {
+      cursor: pointer;
+    }
+  }
+}

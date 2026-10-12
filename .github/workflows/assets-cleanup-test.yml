@@ -1,0 +1,41 @@
+# Goal: trigger the assets cleanup job on the test environment every night.
+# Vercel Env: test (custom environment)
+# Runs on: schedule (nightly) and manually via workflow_dispatch
+#
+# Background: Vercel Cron only runs on production deployments. The test
+# environment is a custom Vercel environment, therefore we trigger the
+# cron endpoint from here.
+#
+# Required GitHub configuration:
+# - repository secret TEST_ENV_URL (e.g. https://test.sagw.ch, no trailing slash)
+# - repository secret CRON_SECRET (same value as CRON_SECRET on Vercel, env test)
+
+name: Assets Cleanup (test)
+permissions:
+  contents: read
+on:
+  schedule:
+    # 02:00 UTC every night
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Trigger assets cleanup on test environment
+        env:
+          TEST_ENV_URL: ${{ secrets.TEST_ENV_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$TEST_ENV_URL" ] || [ -z "$CRON_SECRET" ]; then
+            echo "TEST_ENV_URL variable or CRON_SECRET secret is not configured."
+            exit 1
+          fi
+
+          response=$(curl --silent --show-error --fail-with-body \
+            --max-time 330 \
+            --header "Authorization: Bearer $CRON_SECRET" \
+            "$TEST_ENV_URL/api/cron/assets-cleanup")
+
+          echo "$response"

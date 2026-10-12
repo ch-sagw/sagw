@@ -11,7 +11,12 @@ For convenience, env-vars are split between base and local/test/prod.
 |`VERCEL_TOKEN`|Used by Github for Vercel CLI usage in workflows|Vercel (Account -> Tokens)|Github (as repository secret)|
 |`RELEASE_PLEASE_TOKEN`|Used by release-please on Github to create Branches, PR's, Tags, GH-Releases and comments.|Github personal access token|Github (as repository secret)|
 |`SENTRY_AUTH_TOKEN`|Used to authenticate Sentry in NextJS.|Sentry|Vercel & Local Dev|
-|`CRON_SECRET`|Passed in Request-Header to authenticate Cronjob-Requests.|Vercel|Vercel|
+|`CRON_SECRET`|Must be set (long random value) on Vercel prod and test. Vercel reads it and sends it as `Authorization: Bearer <value>` with every cron request; the cron route rejects requests without it (401). The GitHub Action `assets-cleanup-test` needs the test value as repository secret to trigger the assets cleanup on the test environment.|Vercel|Vercel & Github (as repository secret)|
+|`ASSETS_CLEANUP_MODE`|Safety switch of the assets cleanup job. Only when set to `delete`, unused assets are deleted on prod/test. Unset or any other value: report-only. See `docs/assets-cleanup.md`.|Custom|Vercel|
+|`ASSETS_CLEANUP_MAX_DELETE_PERCENT`|Optional override of the assets cleanup per-tenant percent fuse (default 25). Only for exceptional runs (e.g. initial cleanup), remove afterwards. See `docs/assets-cleanup.md`.|Custom|Vercel|
+|`ASSETS_CLEANUP_MAX_DELETE_ABSOLUTE`|Optional override of the assets cleanup per-tenant absolute fuse (default 50). Only for exceptional runs (e.g. initial cleanup), remove afterwards. See `docs/assets-cleanup.md`.|Custom|Vercel|
+|`SLACK_WEBHOOK_URL_ASSETS_DELETE`|Slack incoming webhook for the assets cleanup notifications, set per environment: prod uses its own channel, test and local share a second channel. Messages are prefixed with the environment (`[PROD]`, `[TEST]`, `[LOCAL]`). Never used by the automated tests.|Slack|Vercel (prod & test, different values) & Local Dev (optional)|
+|`TEST_ENV_URL`|Base URL of the test environment (no trailing slash). Used by the `assets-cleanup-test` workflow to trigger the nightly assets cleanup.|Custom|Github (as repository variable)|
 |`NEXT_PUBLIC_SENTRY_DSN`|DSN for Sentry.|Sentry|Vercel & Local Dev|
 |`SENTRY_PROJECT`|Sentry project name.|Sentry|Vercel & Local Dev|
 |`SENTRY_ORG`|Sentry organisation name.|Sentry|Vercel & Local Dev|

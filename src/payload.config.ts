@@ -17,6 +17,10 @@ import { seedTestData } from '@/seed/test-data';
 import { seedTenantsAndUsers } from '@/seed/seedTenantsAndUsers/index';
 import { localizationConfig } from '@/i18n/payloadConfig';
 import { adminTranslations } from '@/i18n/adminTranslations';
+import { assetsCleanupTask } from '@/jobs/assetsCleanup/task';
+import { buildJobsCollection } from '@/jobs/assetsCleanup/jobsCollection';
+import { isCronRequestAuthorized } from '@/jobs/assetsCleanup/cronAuth';
+import { userIsSuperAdmin } from '@/collections/Plc/Users/roles';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -63,6 +67,28 @@ export default buildConfig({
       fr,
     },
     translations: adminTranslations,
+  },
+  jobs: {
+    access: {
+      // jobs may be queued / run / cancelled by super admins (admin panel)
+      // or by cron requests carrying the CRON_SECRET
+      cancel: ({
+        req,
+      }) => userIsSuperAdmin(req.user as any),
+      queue: ({
+        req,
+      }) => userIsSuperAdmin(req.user as any) || isCronRequestAuthorized(req.headers),
+      run: ({
+        req,
+      }) => userIsSuperAdmin(req.user as any) || isCronRequestAuthorized(req.headers),
+    },
+
+    // keep every run, the report lives in the job output
+    deleteJobOnComplete: false,
+    jobsCollectionOverrides: ({
+      defaultJobsCollection,
+    }) => buildJobsCollection(defaultJobsCollection),
+    tasks: [assetsCleanupTask],
   },
   localization: localizationConfig,
   onInit: async (payload) => {
