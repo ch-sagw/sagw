@@ -138,10 +138,14 @@ export const DeleteLocaleMenuItem: React.FunctionComponent<EditMenuItemsClientPr
 
         if (errors && errors.length > 0) {
           errors.forEach((error) => {
-            toast.error(error.message || t('custom:deleteLocaleVariantError'));
+            toast.error(error.message || t('custom:deleteLocaleVariantError', {
+              language: localeLabel,
+            }));
           });
         } else {
-          toast.error(t('custom:deleteLocaleVariantError'));
+          toast.error(t('custom:deleteLocaleVariantError', {
+            language: localeLabel,
+          }));
         }
 
         return;
@@ -163,7 +167,9 @@ export const DeleteLocaleMenuItem: React.FunctionComponent<EditMenuItemsClientPr
         router.refresh();
       });
     } catch {
-      toast.error(t('custom:deleteLocaleVariantError'));
+      toast.error(t('custom:deleteLocaleVariantError', {
+        language: localeLabel,
+      }));
     }
   }, [
     adminRoute,
