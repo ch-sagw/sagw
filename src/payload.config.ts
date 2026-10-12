@@ -16,6 +16,7 @@ import { Users } from '@/collections/Plc/Users';
 import { seedTestData } from '@/seed/test-data';
 import { seedTenantsAndUsers } from '@/seed/seedTenantsAndUsers/index';
 import { localizationConfig } from '@/i18n/payloadConfig';
+import { adminTranslations } from '@/i18n/adminTranslations';
 import { assetsCleanupTask } from '@/jobs/assetsCleanup/task';
 import { buildJobsCollection } from '@/jobs/assetsCleanup/jobsCollection';
 import { isCronRequestAuthorized } from '@/jobs/assetsCleanup/cronAuth';
@@ -65,6 +66,7 @@ export default buildConfig({
       en,
       fr,
     },
+    translations: adminTranslations,
   },
   jobs: {
     access: {
