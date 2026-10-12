@@ -27,6 +27,7 @@ import { default as default_e098b89aab2f23b218008c67b9ad7ff0 } from '@/component
 import { default as default_ae6a5e27f241c19982999164b548dcfc } from '@/components/admin/ThemeSelector/ThemeSelector'
 import { default as default_3b17aecccec0d2a4f3fb751c5d8d694a } from '@/components/admin/ZenodoDocumentChooser/ZenodoDocumentChooser'
 import { WatchTenantCollection as WatchTenantCollection_1d0591e3cf4f332c83a86da13a0de59a } from '@payloadcms/plugin-multi-tenant/client'
+import { default as default_f15051c7ddeee3eb9c27bf4ced50ad34 } from '@/components/admin/AssetsCleanupJobReport'
 import { default as default_34253356f327048e5e1d0c8dd6259985 } from '@/components/admin/graphics/Icon'
 import { default as default_7290b7198794a8ea161f702320c1cd8a } from '@/components/admin/graphics/Logo'
 import { GlobalViewRedirect as GlobalViewRedirect_d6d5f193a167989e2ee7d14202901e62 } from '@payloadcms/plugin-multi-tenant/rsc'
@@ -68,6 +69,7 @@ export const importMap = {
   "@/components/admin/ThemeSelector/ThemeSelector#default": default_ae6a5e27f241c19982999164b548dcfc,
   "@/components/admin/ZenodoDocumentChooser/ZenodoDocumentChooser#default": default_3b17aecccec0d2a4f3fb751c5d8d694a,
   "@payloadcms/plugin-multi-tenant/client#WatchTenantCollection": WatchTenantCollection_1d0591e3cf4f332c83a86da13a0de59a,
+  "@/components/admin/AssetsCleanupJobReport#default": default_f15051c7ddeee3eb9c27bf4ced50ad34,
   "@/components/admin/graphics/Icon#default": default_34253356f327048e5e1d0c8dd6259985,
   "@/components/admin/graphics/Logo#default": default_7290b7198794a8ea161f702320c1cd8a,
   "@payloadcms/plugin-multi-tenant/rsc#GlobalViewRedirect": GlobalViewRedirect_d6d5f193a167989e2ee7d14202901e62,
