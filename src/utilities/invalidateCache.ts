@@ -2,19 +2,23 @@ import type { BasePayload } from 'payload';
 import { getTenantRoutePaths } from '@/utilities/getTenantRouteParams';
 import { revalidatePath } from 'next/cache.js';
 
-export const invalidateCache = async ({
+// Enumerates all frontend paths of a tenant from the current database state.
+//
+// Used by `invalidateCache` and by the "capture before" hooks: a path that
+// disappears with a mutation (page deleted, slug renamed, language variant
+// removed) is no longer enumerable afterwards, so it has to be collected
+// before the mutation and passed to `invalidateCache` as `additionalPaths`.
+export const getTenantRoutePathsByTenantId = async ({
   includeDrafts,
-  logCacheInvalidation = false,
   payload,
   tenantId,
 }: {
   includeDrafts?: boolean;
-  logCacheInvalidation?: boolean;
   payload: BasePayload;
   tenantId?: string | null;
-}): Promise<void> => {
+}): Promise<string[]> => {
   if (!payload || !tenantId) {
-    return;
+    return [];
   }
 
   try {
@@ -26,7 +30,7 @@ export const invalidateCache = async ({
       overrideAccess: true,
     });
 
-    const paths = await getTenantRoutePaths({
+    return await getTenantRoutePaths({
       includeDrafts,
       payload,
       tenant: {
@@ -37,6 +41,43 @@ export const invalidateCache = async ({
           : undefined,
       },
     });
+  } catch (error) {
+    console.error(`Error collecting route paths for tenant ${tenantId}:`, error);
+
+    return [];
+  }
+};
+
+export const invalidateCache = async ({
+  additionalPaths = [],
+  includeDrafts,
+  logCacheInvalidation = false,
+  payload,
+  tenantId,
+}: {
+  additionalPaths?: string[];
+  includeDrafts?: boolean;
+  logCacheInvalidation?: boolean;
+  payload: BasePayload;
+  tenantId?: string | null;
+}): Promise<void> => {
+  if (!payload || !tenantId) {
+    return;
+  }
+
+  try {
+    const currentPaths = await getTenantRoutePathsByTenantId({
+      includeDrafts,
+      payload,
+      tenantId,
+    });
+
+    const paths = [
+      ...new Set([
+        ...currentPaths,
+        ...additionalPaths,
+      ]),
+    ];
 
     for (const path of paths) {
       // IMPORTANT: tests rely on this exact log output when logging is enabled.

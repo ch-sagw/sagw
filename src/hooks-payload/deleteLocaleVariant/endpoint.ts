@@ -12,7 +12,9 @@ import {
 } from 'payload';
 import { deleteLocaleFromDocument } from '@/hooks-payload/deleteLocaleVariant/deleteLocaleFromDocument';
 import { deleteLocaleEndpointPath } from '@/hooks-payload/deleteLocaleVariant/constants';
-import { invalidateCache } from '@/utilities/invalidateCache';
+import {
+  getTenantRoutePathsByTenantId, invalidateCache,
+} from '@/utilities/invalidateCache';
 import { extractID } from '@/utilities/extractId';
 import type { Tenant } from '@/payload-types';
 
@@ -175,6 +177,15 @@ export const deleteLocaleEndpoint: Endpoint = {
       }
     }
 
+    // Collect the tenant's paths before the locale is stripped: the url of
+    // this page (and of its descendants) in the deleted locale is not
+    // enumerable anymore afterwards, but it is the one that must be purged.
+    const pathsBefore = await getTenantRoutePathsByTenantId({
+      includeDrafts: true,
+      payload: req.payload,
+      tenantId,
+    });
+
     const shouldCommit = await initTransaction(req);
 
     let result;
@@ -198,6 +209,7 @@ export const deleteLocaleEndpoint: Endpoint = {
 
     // Writes bypassed collection hooks, so invalidate the tenant cache here.
     await invalidateCache({
+      additionalPaths: pathsBefore,
       includeDrafts: true,
       logCacheInvalidation: req.context?.logCacheInvalidation === true,
       payload: req.payload,

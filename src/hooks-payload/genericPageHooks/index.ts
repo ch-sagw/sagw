@@ -6,7 +6,10 @@ import {
 import { hookPreventBlockStructureChangesForTranslators } from '@/hooks-payload/preventBlockStructureChangesForTranslators';
 import { hookPreventBulkPublishForTranslators } from '@/hooks-payload/preventBulkPublishForTranslators';
 import {
-  hookInvalidateTenantCache, hookInvalidateTenantCacheOnDelete,
+  hookCaptureTenantRoutePathsBeforeChange,
+  hookCaptureTenantRoutePathsBeforeDelete,
+  hookInvalidateTenantCache,
+  hookInvalidateTenantCacheOnDelete,
 } from '@/hooks-payload/invalidateTenantCache';
 
 interface InterfaceGenericPageHooks {
@@ -33,11 +36,15 @@ export const genericPageHooks = (additionalHooks?: InterfaceGenericPageHooks): I
   // 2.
   beforeChange: [
     hookPreventBulkPublishForTranslators,
+    hookCaptureTenantRoutePathsBeforeChange,
     ...(additionalHooks?.beforeChange ?? []),
   ],
 
   // 5.
-  beforeDelete: [...(additionalHooks?.beforeDelete ?? [])],
+  beforeDelete: [
+    hookCaptureTenantRoutePathsBeforeDelete,
+    ...(additionalHooks?.beforeDelete ?? []),
+  ],
 
   // 1.
   beforeValidate: [

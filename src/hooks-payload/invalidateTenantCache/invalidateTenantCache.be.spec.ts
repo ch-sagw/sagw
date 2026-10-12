@@ -393,6 +393,7 @@ test('invalidates all tenant pages on page deletion (sagw)', {
 
   // we expect:
   // 3 pages for 4 page types in 4 languages: 48
+  // the deleted detail page (captured before deletion) in 4 languages: 4
   // impressum and privacy pages in 4 languages: 8
   // /${locale} route in 4 languages: 4
 
@@ -415,6 +416,10 @@ test('invalidates all tenant pages on page deletion (sagw)', {
       expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/news-${i + 1}`))
         .toBe(true);
     }
+
+    // the deleted page's own url must be purged as well
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/detail-${time}`))
+      .toBe(true);
 
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}`))
       .toBe(true);
@@ -441,8 +446,76 @@ test('invalidates all tenant pages on page deletion (sagw)', {
     .toBe(true);
 
   expect(logCapture.logs)
-    .toHaveLength(60);
+    .toHaveLength(64);
 
+});
+
+test('invalidates the old url on slug rename (sagw)', {
+  tag: '@cache',
+}, async () => {
+  await deleteSetsPages();
+  await deleteOtherCollections();
+  await deleteSingletonPages();
+
+  const logCapture = new LogCapture();
+  const payload = await getPayloadCached();
+  const time = (new Date())
+    .getTime();
+
+  const tenant = await getTenantId({
+    isSagw: true,
+    time,
+  });
+
+  const home = await generatePages({
+    amountPerPage: 1,
+    tenant,
+  });
+
+  const detailPage = await generateDetailPage({
+    parentPage: {
+      documentId: home,
+      slug: 'homePage',
+    },
+    tenant,
+    title: `detail ${time}`,
+  });
+
+  logCapture.captureLogs();
+
+  await payload.update({
+    collection: 'detailPage',
+    context: logCacheInvalidationContext,
+    data: {
+      slug: `renamed-${time}`,
+    },
+    id: detailPage.id,
+  });
+
+  logCapture.detachLogs();
+
+  // the page only has a de slug, the other locales fall back to it. so the
+  // rename changes the url in all 4 languages: old paths (captured before
+  // the change) and new paths must both be invalidated.
+  [
+    'de',
+    'fr',
+    'it',
+    'en',
+  ].forEach((lang) => {
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/detail-${time}`))
+      .toBe(true);
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/renamed-${time}`))
+      .toBe(true);
+  });
+
+  // we expect:
+  // 1 page for 4 page types in 4 languages: 16
+  // the renamed detail page, old + new path, in 4 languages: 8
+  // impressum and privacy pages in 4 languages: 8
+  // /${locale} route in 4 languages: 4
+  expect(logCapture.logs)
+    .toHaveLength(36);
 });
 
 test('invalidates all tenant pages on page deletion (non-sagw)', {
@@ -500,6 +573,7 @@ test('invalidates all tenant pages on page deletion (non-sagw)', {
 
   // we expect:
   // 3 pages for 4 page types in 4 languages: 48
+  // the deleted detail page (captured before deletion) in 4 languages: 4
   // impressum and privacy pages in 4 languages: 8
   // /${locale} route in 4 languages: 4
 
@@ -522,6 +596,10 @@ test('invalidates all tenant pages on page deletion (non-sagw)', {
       expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/news-${i + 1}`))
         .toBe(true);
     }
+
+    // the deleted page's own url must be purged as well
+    expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}/detail-${time}`))
+      .toBe(true);
 
     expect(logCapture.hasLog(`[CACHE] invalidating path: /${lang}/tenant-${time}`))
       .toBe(true);
@@ -548,7 +626,7 @@ test('invalidates all tenant pages on page deletion (non-sagw)', {
     .toBe(true);
 
   expect(logCapture.logs)
-    .toHaveLength(60);
+    .toHaveLength(64);
 
 });
 
