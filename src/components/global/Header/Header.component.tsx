@@ -110,6 +110,11 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     setHoveredSection,
   ] = useState<'mainNav' | 'langNav' | null>(null);
 
+  const [
+    expandedDesktopNavItem,
+    setExpandedDesktopNavItem,
+  ] = useState<string | undefined>();
+
   // false during SSR / hydration, true once rendered on the client
   const hydrated = useSyncExternalStore(
     subscribeNoop,
@@ -350,6 +355,36 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     };
   }, [isHovering]);
 
+  useEffect(() => {
+    if (!isHovering) {
+      return (): void => undefined;
+    }
+
+    const handlePointerDown = (e: PointerEvent): void => {
+      if (e.pointerType === 'mouse') {
+        return;
+      }
+
+      const target = e.target as Node;
+      const header = headerRef.current;
+
+      if (header && header.contains(target)) {
+        return;
+      }
+
+      setIsHovering(false);
+      setHoveredSection(null);
+      setInfoBlockContent(undefined);
+      setExpandedDesktopNavItem(undefined);
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+
+    return (): void => {
+      document.removeEventListener('pointerdown', handlePointerDown);
+    };
+  }, [isHovering]);
+
   // --- Callbacks
 
   const handleHoveredItem = (item: InterfaceHoveredItemCallbackType): void => {
@@ -575,7 +610,10 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
                 text: rteToHtml(subnavItem.navItemText),
               };
             }),
-            setExpanded: undefined,
+            onExpand: (id: string | undefined): void => {
+              setExpandedDesktopNavItem(id);
+            },
+            setExpanded: expandedDesktopNavItem,
             text: rteToHtml(item.navItemText) || '',
           };
         }

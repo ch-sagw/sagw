@@ -1,9 +1,10 @@
 'use client';
 
 import {
-  RefObject, useState,
+  RefObject,
+  useCallback,
+  useState,
 } from 'react';
-import { useIsTouchDevice } from '@/hooks/useIsTouchDevice';
 import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
 
 // --- Interfaces
@@ -41,7 +42,7 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
 
   // --- Helpers
 
-  const toggleMenu = ({
+  const toggleMenu = useCallback(({
     show,
     autofocus,
   }: InterfaceToggleMenuArgs): void => {
@@ -52,11 +53,8 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
     } else {
       setToggleButtonAutofocus(false);
     }
-  };
-
+  }, []);
   // --- Hooks
-
-  const isTouchDevice = useIsTouchDevice();
 
   useKeyboardShortcut({
     condition: menuVisible,
@@ -71,43 +69,33 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
 
   // --- Event handlers
 
-  const onToggleClick = (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement> | React.PointerEvent<HTMLDivElement | HTMLButtonElement>): void => {
+  const onToggleClick = useCallback((e: React.MouseEvent<HTMLDivElement | HTMLButtonElement> | React.PointerEvent<HTMLDivElement | HTMLButtonElement>): void => {
     if ('pointerType' in e.nativeEvent) {
-      if (!isTouchDevice && e.nativeEvent.pointerType === 'mouse') {
+      if (e.nativeEvent.pointerType === 'mouse') {
         return;
       }
     }
 
-    toggleMenu({
-      show: !menuVisible,
-    });
-  };
+    setMenuVisible((prev) => !prev);
+  }, []);
 
-  const onMouseEnter = (): void => {
-    if (isTouchDevice) {
-      return;
-    }
-
+  const onMouseEnter = useCallback((): void => {
     toggleMenu({
       show: true,
     });
-  };
+  }, [toggleMenu]);
 
-  const onMouseLeave = (): void => {
-    if (isTouchDevice) {
-      return;
-    }
-
+  const onMouseLeave = useCallback((): void => {
     toggleMenu({
       show: false,
     });
-  };
+  }, [toggleMenu]);
 
-  const onSimulateKeyDownForScreenReader = (): void => {
+  const onSimulateKeyDownForScreenReader = useCallback((): void => {
     onMouseEnter();
-  };
+  }, [onMouseEnter]);
 
-  const handleBlur = (e: React.FocusEvent, rootRef: RefObject<HTMLDivElement | null>): void => {
+  const handleBlur = useCallback((e: React.FocusEvent, rootRef: RefObject<HTMLDivElement | null>): void => {
     const related = e.relatedTarget as Node | null;
 
     // if focus is still inside this menu, do nothing
@@ -116,7 +104,7 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
     }
 
     onMouseLeave();
-  };
+  }, [onMouseLeave]);
 
   return {
     handleBlur,

@@ -98,6 +98,7 @@ export const NavigationItem = ({
   const lastReported = useRef<string | undefined>(undefined);
   const expandableRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  const lastPointerType = useRef<string | null>(null);
 
   // --- Hooks
 
@@ -123,8 +124,44 @@ export const NavigationItem = ({
   const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
 
   // --- Effects
+  const menuVisibleRef = useRef(menuVisible);
 
   // report hovered item to parent
+  useEffect(() => {
+    setActiveElement(setExpanded);
+
+    if (!smallBreakpoint && expandableId !== undefined) {
+      if (setExpanded === expandableId) {
+        onMouseEnter();
+      } else if (menuVisibleRef.current) {
+        onMouseLeave();
+      }
+    }
+  }, [
+    setExpanded,
+    setActiveElement,
+    smallBreakpoint,
+    expandableId,
+    onMouseEnter,
+    onMouseLeave,
+  ]);
+
+  /**
+   * Syncs the local menuVisible state into a ref so that the
+   * setExpanded effect below can read the current value without
+   * including menuVisible in its dependency array (which would
+   * cause a loop: effect fires → calls onMouseLeave → menuVisible
+   * changes → effect fires again → ...).
+   */
+  useEffect(() => {
+    menuVisibleRef.current = menuVisible;
+  }, [menuVisible]);
+
+  /**
+   * Reports hover state changes to the parent Header component.
+   * Only fires when the reported value actually changes to avoid
+   * redundant parent re-renders.
+   */
   useEffect(() => {
     const nextValue = menuVisible
       ? expandableId
@@ -202,6 +239,34 @@ export const NavigationItem = ({
     <div
       data-testid='navigationItem'
       ref={rootRef}
+      onPointerDown={(e: React.PointerEvent): void => {
+        if (
+          e.pointerType === 'mouse' ||
+          smallBreakpoint ||
+          !items
+        ) {
+          lastPointerType.current = null;
+
+          return;
+        }
+
+        // Let taps inside the expanded sub-navigation pass through
+        if (expandableRef.current?.contains(e.target as Node)) {
+          return;
+        }
+
+        lastPointerType.current = e.pointerType;
+
+        if (menuVisible) {
+          onMouseLeave();
+          onExpand?.(undefined);
+
+          return;
+        }
+
+        onMouseEnter();
+        onExpand?.(expandableId);
+      }}
       onBlur={(evt) => {
         if (!smallBreakpoint) {
           handleBlur(evt, rootRef);
@@ -249,7 +314,15 @@ export const NavigationItem = ({
             onExpand?.(nextState);
           }
         }
-        : onToggleClickFromHover
+        : (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement> | React.PointerEvent<HTMLDivElement | HTMLButtonElement>): void => {
+          if (lastPointerType.current) {
+            lastPointerType.current = null;
+
+            return;
+          }
+
+          onToggleClickFromHover(e);
+        }
       )}
     >
       <div
