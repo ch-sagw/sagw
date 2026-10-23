@@ -4,7 +4,7 @@ import styles from '@/components/base/DownloadLinkItem/DownloadLinkItem.module.s
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { formatDateToReadableString } from '@/components/helpers/date';
 import { Icon } from '@/icons';
-import Link from 'next/link';
+import { TrackedLink } from '@/components/base/TrackedLink/TrackedLink';
 import {
   useLocale, useTranslations,
 } from 'next-intl';
@@ -17,6 +17,7 @@ interface InterfaceDownloadLinkItemBaseProps {
     href: string;
     target: '_self' | '_blank'
   },
+  trackingEvents?: string[];
 }
 
 interface InterfaceDownloadItem extends InterfaceDownloadLinkItemBaseProps {
@@ -67,6 +68,7 @@ export const DownloadLinkItem = ({
   format,
   size,
   date,
+  trackingEvents,
 }: InterfaceDownloadLinkItemPropTypes): React.JSX.Element => {
   const locale = useLocale() as TypedLocale;
   const internalI18nA11y = useTranslations('a11y');
@@ -145,25 +147,28 @@ export const DownloadLinkItem = ({
     >
       {type === 'download'
         ? (
-          <a
+          <TrackedLink
             aria-label={ariaLabel}
+            element='a'
             href={link.href}
             target={link.target}
             className={styles.link}
+            trackingEvents={trackingEvents}
           >
             {content}
-          </a>
+          </TrackedLink>
         )
         : (
-          <Link
+          <TrackedLink
             aria-label={ariaLabel}
             href={link.href}
             target={link.target}
             className={styles.link}
             prefetch
+            trackingEvents={trackingEvents}
           >
             {content}
-          </Link>
+          </TrackedLink>
         )}
     </li>
   );

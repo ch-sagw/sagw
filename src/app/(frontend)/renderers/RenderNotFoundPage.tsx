@@ -9,6 +9,7 @@ import { renderPageContent } from '@/app/(frontend)/renderers/RenderPage';
 import { CMSConfigError } from '@/app/(frontend)/utilities/CMSConfigError';
 import { getTenantFromUrl } from '@/app/(frontend)/utilities/getTenantFromUrl';
 import { getThemeNameForTenant } from '@/app/(frontend)/utilities/getThemeNameForTenant';
+import { resolveFathomSiteId } from '@/tracking/fathomSites';
 
 type InterfaceRenderNotFoundPageProps = {
   locale: TypedLocale;
@@ -78,6 +79,13 @@ export const RenderNotFoundPage = async ({
     ? `/${locale}`
     : `/${locale}/${tenantInfo.tenantSlug}`;
 
+  // getTenantFromUrl returns tenantSlug null for SAGW
+  const trackingSiteId = resolveFathomSiteId({
+    tenantSlug: tenantInfo.isSagw
+      ? 'sagw'
+      : tenantInfo.tenantSlug,
+  });
+
   return renderPageContent({
     blocks: null,
     containerType: 'detail',
@@ -102,5 +110,6 @@ export const RenderNotFoundPage = async ({
     },
     tenantId: tenantInfo.tenantId,
     themeName,
+    trackingSiteId,
   });
 };
