@@ -4,6 +4,8 @@ import {
 } from '@playwright/test';
 import { navigate } from '@/automated-testing/helpers';
 
+// --- Scroll interaction
+
 test('transitions to white on scroll', async ({
   page,
 }, workerInfo) => {
@@ -39,6 +41,8 @@ test('hides metanav on scroll', async ({
     await expect(metanavElem).not.toBeInViewport();
   }
 });
+
+// --- Mouse interaction
 
 test('opens menu', async ({
   page,
@@ -100,6 +104,8 @@ test('hides menu', async ({
     });
 });
 
+// --- Info Text
+
 test('Correctly shows info text for navItem', async ({
   page,
 }, workerInfo) => {
@@ -148,6 +154,8 @@ test('Correctly hides info text for navItem', async ({
   }
 });
 
+// --- LangNav dependency on the main menu
+
 test('Correctly shows lang menu if nav has only 1 level', async ({
   page,
 }, workerInfo) => {
@@ -185,4 +193,206 @@ test('Correctly shows lang menu if nav has only 1 level', async ({
     await expect(langNavIt)
       .toBeInViewport();
   }
+});
+
+// --- Desktop nav interaction: keyboard
+
+test.describe('desktop nav keyboard interaction', () => {
+  test.skip(({
+    viewport,
+  }) => (viewport?.width ?? 0) < 1024, 'desktop only');
+
+  test('Enter opens and closes a level-1 item', async ({
+    page,
+  }) => {
+    await navigate(page, 'components-global-header--header-dark');
+
+    const header = page.getByTestId('header');
+    const button = header.getByTestId('navigationItem')
+      .nth(1)
+      .getByTestId('button')
+      .first();
+
+    await button.focus();
+    await page.keyboard.press('Enter');
+
+    await expect(button)
+      .toHaveAttribute('aria-expanded', 'true');
+    await expect(header.getByTestId('infoblock'))
+      .toBeVisible();
+
+    await page.keyboard.press('Enter');
+
+    await expect(button)
+      .toHaveAttribute('aria-expanded', 'false');
+  });
+
+  test('Escape closes a level-1 item opened via keyboard', async ({
+    page,
+  }) => {
+    await navigate(page, 'components-global-header--header-dark');
+
+    const button = page.getByTestId('header')
+      .getByTestId('navigationItem')
+      .nth(1)
+      .getByTestId('button')
+      .first();
+
+    await button.focus();
+    await page.keyboard.press('Enter');
+
+    await expect(button)
+      .toHaveAttribute('aria-expanded', 'true');
+
+    await page.keyboard.press('Escape');
+
+    await expect(button)
+      .toHaveAttribute('aria-expanded', 'false');
+  });
+
+  test('mouse click on hovered item keeps it open', async ({
+    page,
+  }) => {
+    await navigate(page, 'components-global-header--header-dark');
+
+    const button = page.getByTestId('header')
+      .getByTestId('navigationItem')
+      .nth(1)
+      .getByTestId('button')
+      .first();
+
+    await button.hover();
+
+    await expect(button)
+      .toHaveAttribute('aria-expanded', 'true');
+
+    await button.click();
+
+    await expect(button)
+      .toHaveAttribute('aria-expanded', 'true');
+  });
+});
+
+// --- Desktop nav interaction: touch devices. Touch emulation is only verified
+// in chromium projects.
+
+test.describe('desktop nav touch interaction', () => {
+  test.skip(({
+    viewport, browserName,
+  }) => (viewport?.width ?? 0) < 1024 || browserName !== 'chromium', 'desktop chromium only');
+
+  test.use({
+    hasTouch: true,
+  });
+
+  test('hover still works when the device has touch capabilities', async ({
+    page,
+  }) => {
+    await navigate(page, 'components-global-header--header-dark');
+
+    const button = page.getByTestId('header')
+      .getByTestId('navigationItem')
+      .nth(1)
+      .getByTestId('button')
+      .first();
+
+    await button.hover();
+
+    await expect(button)
+      .toHaveAttribute('aria-expanded', 'true');
+  });
+
+  test('tap opens, tap again closes, tap on sibling switches', async ({
+    page,
+  }) => {
+    await navigate(page, 'components-global-header--header-dark');
+
+    const items = page.getByTestId('header')
+      .getByTestId('navigationItem');
+    const button1 = items.nth(1)
+      .getByTestId('button')
+      .first();
+    const button2 = items.last()
+      .getByTestId('button')
+      .first();
+
+    await button1.tap();
+
+    await expect(button1)
+      .toHaveAttribute('aria-expanded', 'true');
+
+    await button1.tap();
+
+    await expect(button1)
+      .toHaveAttribute('aria-expanded', 'false');
+
+    await button1.tap();
+
+    await expect(button1)
+      .toHaveAttribute('aria-expanded', 'true');
+
+    await button2.tap();
+
+    await expect(button2)
+      .toHaveAttribute('aria-expanded', 'true');
+    await expect(button1)
+      .toHaveAttribute('aria-expanded', 'false');
+  });
+
+  test('tap outside collapses the header', async ({
+    page,
+  }) => {
+    // The expanded header is taller than the default 300px test viewport;
+    // make room so that there is page area outside the header to tap on.
+    const viewport = page.viewportSize();
+
+    if (viewport) {
+      await page.setViewportSize({
+        height: 800,
+        width: viewport.width,
+      });
+    }
+
+    await navigate(page, 'components-global-header--header-dark');
+
+    const header = page.getByTestId('header');
+    const button = header.getByTestId('navigationItem')
+      .nth(1)
+      .getByTestId('button')
+      .first();
+
+    await button.tap();
+
+    await expect(button)
+      .toHaveAttribute('aria-expanded', 'true');
+
+    const headerBox = await header.boundingBox();
+
+    await page.touchscreen.tap(10, (headerBox?.y ?? 0) + (headerBox?.height ?? 0) + 40);
+
+    await expect(button)
+      .toHaveAttribute('aria-expanded', 'false');
+    await expect(header.getByTestId('infoblock'))
+      .not.toBeVisible();
+  });
+
+  test('langnav: tap opens, tap again closes', async ({
+    page,
+  }) => {
+    await navigate(page, 'components-global-header--header-dark');
+
+    const toggle = page.getByTestId('langnav')
+      .getByTestId('button')
+      .first();
+
+    await toggle.tap();
+
+    await expect(toggle)
+      .toHaveAttribute('aria-expanded', 'true');
+
+    await toggle.tap();
+
+    await expect(toggle)
+      .toHaveAttribute('aria-expanded', 'false');
+  });
 });

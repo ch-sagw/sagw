@@ -63,6 +63,7 @@ export const Langnav = ({
 
   const rootRef = useRef<HTMLDivElement>(null);
   const expandableRef = useRef<HTMLDivElement>(null);
+  const lastReportedVisibility = useRef<boolean | undefined>(undefined);
 
   // --- Hooks
 
@@ -85,8 +86,13 @@ export const Langnav = ({
 
   // --- Effects
 
+  // Report visibility changes to the parent. Only report when the value
+  // actually changed: the callback identity changes with parent state
+  // (e.g. Header's isHovering/isKeyboard) and re-reporting a stale
+  // "false" from there would reset state the parent just set.
   useEffect(() => {
-    if (visibilityCallbackAction) {
+    if (visibilityCallbackAction && lastReportedVisibility.current !== menuVisible) {
+      lastReportedVisibility.current = menuVisible;
       visibilityCallbackAction(menuVisible);
     }
   }, [
@@ -141,12 +147,23 @@ export const Langnav = ({
         className,
         styles[colorMode],
       ])()}
-      onMouseEnter={nonExpandableMenu
+      // Hover only for a real mouse. On touch, the toggle button's
+      // onClick opens/closes the menu; the compatibility mouse events
+      // emitted after a tap must not interfere.
+      onPointerEnter={nonExpandableMenu
         ? undefined
-        : onMouseEnter}
-      onMouseLeave={nonExpandableMenu
+        : (e: React.PointerEvent): void => {
+          if (e.pointerType === 'mouse') {
+            onMouseEnter();
+          }
+        }}
+      onPointerLeave={nonExpandableMenu
         ? undefined
-        : onMouseLeave}
+        : (e: React.PointerEvent): void => {
+          if (e.pointerType === 'mouse') {
+            onMouseLeave();
+          }
+        }}
     >
       {!nonExpandableMenu && (
         <Button

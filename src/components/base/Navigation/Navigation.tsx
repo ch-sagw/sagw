@@ -24,6 +24,15 @@ export type InterfaceNavigationPropTypes = {
   hoveredItemCallback?: (item: InterfaceHoveredItemCallbackType) => void;
   navMaxHeightCallback?: (maxHeight: number) => void;
   onHoverItemWithoutChildren?: () => void;
+
+  /**
+   * Optional controlled mode: the parent owns which item is expanded.
+   * When `onExpandedItemChange` is provided, `expandedItem` is used instead
+   * of the internal state and `undefined` is forwarded so the parent knows
+   * when no item is expanded anymore.
+   */
+  expandedItem?: string;
+  onExpandedItemChange?: (id: string | undefined) => void;
 };
 
 // --- Component
@@ -36,6 +45,8 @@ export const Navigation = forwardRef<HTMLElement, InterfaceNavigationPropTypes>(
   hoveredItemCallback,
   navMaxHeightCallback,
   onHoverItemWithoutChildren,
+  expandedItem,
+  onExpandedItemChange,
 }, ref) => {
 
   // --- State
@@ -44,6 +55,11 @@ export const Navigation = forwardRef<HTMLElement, InterfaceNavigationPropTypes>(
     itemsState,
     setItemsState,
   ] = useState<string | undefined>(undefined);
+
+  const isControlled = onExpandedItemChange !== undefined;
+  const currentExpanded = isControlled
+    ? expandedItem
+    : itemsState;
 
   const [
     heights,
@@ -127,13 +143,15 @@ export const Navigation = forwardRef<HTMLElement, InterfaceNavigationPropTypes>(
                   },
                   items: section.items as NonNullable<typeof section.items>,
                   onExpand: (expandKey: string | undefined): void => {
-                    if (expandKey !== undefined) {
+                    if (isControlled) {
+                      onExpandedItemChange(expandKey);
+                    } else if (expandKey !== undefined) {
                       setItemsState(expandKey);
                     }
                   },
                   onHeightChange: handleHeightChange,
-                  setExpanded: itemsState === section.expandableId
-                    ? itemsState
+                  setExpanded: currentExpanded === section.expandableId
+                    ? currentExpanded
                     : undefined,
                 }
                 : {

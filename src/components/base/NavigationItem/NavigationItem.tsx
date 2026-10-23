@@ -106,7 +106,6 @@ export const NavigationItem = ({
     menuVisible,
     toggleButtonAutofocus: toggleButtonAutofocusFromHover,
     onToggleClick: onToggleClickFromHover,
-    onSimulateKeyDownForScreenReader,
     onMouseEnter,
     onMouseLeave,
     handleBlur,
@@ -126,7 +125,23 @@ export const NavigationItem = ({
   // --- Effects
   const menuVisibleRef = useRef(menuVisible);
 
-  // report hovered item to parent
+  /**
+   * Syncs the local menuVisible state into a ref so that the
+   * setExpanded effect below can read the current value without
+   * including menuVisible in its dependency array (which would
+   * cause a loop: effect fires -> calls onMouseLeave -> menuVisible
+   * changes -> effect fires again -> ...).
+   */
+  useEffect(() => {
+    menuVisibleRef.current = menuVisible;
+  }, [menuVisible]);
+
+  /**
+   * React to changes of the setExpanded prop (controlled by the parent).
+   * Small breakpoints: sync the click-expand state.
+   * Large breakpoints (touch): open this item if it is the expanded one,
+   * close it if another item got expanded or everything was collapsed.
+   */
   useEffect(() => {
     setActiveElement(setExpanded);
 
@@ -147,17 +162,6 @@ export const NavigationItem = ({
   ]);
 
   /**
-   * Syncs the local menuVisible state into a ref so that the
-   * setExpanded effect below can read the current value without
-   * including menuVisible in its dependency array (which would
-   * cause a loop: effect fires → calls onMouseLeave → menuVisible
-   * changes → effect fires again → ...).
-   */
-  useEffect(() => {
-    menuVisibleRef.current = menuVisible;
-  }, [menuVisible]);
-
-  /**
    * Reports hover state changes to the parent Header component.
    * Only fires when the reported value actually changes to avoid
    * redundant parent re-renders.
@@ -176,14 +180,6 @@ export const NavigationItem = ({
     expandableId,
     hoveredItemCallback,
     lastReported,
-  ]);
-
-  // react to changes on setExpanded prop
-  useEffect(() => {
-    setActiveElement(setExpanded);
-  }, [
-    setExpanded,
-    setActiveElement,
   ]);
 
   // keep track of expanded heights
@@ -275,9 +271,17 @@ export const NavigationItem = ({
       className={menuClasses({
         footer,
       })}
-      onMouseEnter={smallBreakpoint
+      // Hover is driven by pointer events restricted to a real mouse.
+      // Touch interactions are handled in onPointerDown; the
+      // compatibility mouse events browsers emit after a tap (incl. a
+      // trailing mouseleave in Chromium) must not toggle the menu.
+      onPointerEnter={smallBreakpoint
         ? undefined
-        : (): void => {
+        : (e: React.PointerEvent): void => {
+          if (e.pointerType !== 'mouse') {
+            return;
+          }
+
           if (!footer) {
             if (items) {
               // Items with children use the expand on hover logic
@@ -288,9 +292,13 @@ export const NavigationItem = ({
             }
           }
         }}
-      onMouseLeave={smallBreakpoint
+      onPointerLeave={smallBreakpoint
         ? undefined
-        : (): void => {
+        : (e: React.PointerEvent): void => {
+          if (e.pointerType !== 'mouse') {
+            return;
+          }
+
           if (!footer) {
             if (items) {
               // Items with children use the expand on hover logic
@@ -358,9 +366,6 @@ export const NavigationItem = ({
               ? toggleButtonAutofocus
               : toggleButtonAutofocusFromHover
             }
-            onClick={() => {
-              onSimulateKeyDownForScreenReader();
-            }}
           />
         }
 

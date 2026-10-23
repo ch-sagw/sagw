@@ -18,7 +18,6 @@ export interface InterfaceExpandableMenu {
   menuVisible: boolean;
   toggleButtonAutofocus: boolean;
   onToggleClick: (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement> | React.PointerEvent<HTMLDivElement | HTMLButtonElement>) => void;
-  onSimulateKeyDownForScreenReader: () => void;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   handleBlur: (e: React.FocusEvent, rootRef: RefObject<HTMLDivElement | null>) => void;
@@ -69,11 +68,25 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
 
   // --- Event handlers
 
+  /**
+   * Toggles the menu on click, except for real mouse clicks, which are
+   * already covered by onMouseEnter/onMouseLeave.
+   *
+   * Thanks ChatGPT: Keyboard activations arrive as click events with
+   * `detail === 0`; in browsers where click is a PointerEvent they
+   * additionally report `pointerType === ''`. Touch and pen taps report
+   * their respective pointerType and must toggle.
+   */
   const onToggleClick = useCallback((e: React.MouseEvent<HTMLDivElement | HTMLButtonElement> | React.PointerEvent<HTMLDivElement | HTMLButtonElement>): void => {
-    if ('pointerType' in e.nativeEvent) {
-      if (e.nativeEvent.pointerType === 'mouse') {
-        return;
-      }
+    const native = e.nativeEvent;
+
+    const isMouseClick =
+      native.detail > 0 &&
+      'pointerType' in native &&
+      native.pointerType === 'mouse';
+
+    if (isMouseClick) {
+      return;
     }
 
     setMenuVisible((prev) => !prev);
@@ -91,10 +104,6 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
     });
   }, [toggleMenu]);
 
-  const onSimulateKeyDownForScreenReader = useCallback((): void => {
-    onMouseEnter();
-  }, [onMouseEnter]);
-
   const handleBlur = useCallback((e: React.FocusEvent, rootRef: RefObject<HTMLDivElement | null>): void => {
     const related = e.relatedTarget as Node | null;
 
@@ -111,7 +120,6 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
     menuVisible,
     onMouseEnter,
     onMouseLeave,
-    onSimulateKeyDownForScreenReader,
     onToggleClick,
     toggleButtonAutofocus,
   };
