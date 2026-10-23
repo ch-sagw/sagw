@@ -1,5 +1,6 @@
 import {
   expect,
+  type Locator,
   test,
 } from '@playwright/test';
 import { navigate } from '@/automated-testing/helpers';
@@ -195,6 +196,41 @@ test('Correctly shows lang menu if nav has only 1 level', async ({
   }
 });
 
+// --- Helpers for the expandable sub-navigations (NavigationItem, Langnav)
+//
+// At desktop widths the collapsed list is `position: absolute` with
+// `opacity: 0` and `inert`; the links keep their box and are not clipped
+// by their own container. Playwright's toBeVisible() ignores opacity and
+// toBeInViewport() only reflects clipping, so neither proves "hidden".
+// We therefore assert what actually hides/shows the list: the wrapper's
+// computed opacity, the inert attribute, and (when open) that the first
+// link really is on screen.
+
+const expandableWrapper = (container: Locator): Locator => container.locator('ul')
+  .first()
+  .locator('..');
+
+const expectSubnavOpen = async (container: Locator): Promise<void> => {
+  const wrapper = expandableWrapper(container);
+
+  await expect(wrapper)
+    .toHaveCSS('opacity', '1');
+  await expect(wrapper)
+    .not.toHaveAttribute('inert', '');
+  await expect(container.getByTestId('link')
+    .first())
+    .toBeInViewport();
+};
+
+const expectSubnavClosed = async (container: Locator): Promise<void> => {
+  const wrapper = expandableWrapper(container);
+
+  await expect(wrapper)
+    .toHaveCSS('opacity', '0');
+  await expect(wrapper)
+    .toHaveAttribute('inert', '');
+};
+
 // --- Desktop nav interaction: keyboard
 
 test.describe('desktop nav keyboard interaction', () => {
@@ -208,10 +244,17 @@ test.describe('desktop nav keyboard interaction', () => {
     await navigate(page, 'components-global-header--header-dark');
 
     const header = page.getByTestId('header');
-    const button = header.getByTestId('navigationItem')
-      .nth(1)
+    const items = header.getByTestId('navigationItem');
+    const item = items.nth(1);
+    const button = item.getByTestId('button')
+      .first();
+    const firstSubLink = item.getByRole('link')
+      .first();
+    const nextLevel1Button = items.nth(2)
       .getByTestId('button')
       .first();
+
+    await expectSubnavClosed(item);
 
     await button.focus();
     await page.keyboard.press('Enter');
@@ -220,11 +263,33 @@ test.describe('desktop nav keyboard interaction', () => {
       .toHaveAttribute('aria-expanded', 'true');
     await expect(header.getByTestId('infoblock'))
       .toBeVisible();
+    await expectSubnavOpen(item);
+
+    // open: Tab moves into the sub-navigation (not inert)
+    await page.keyboard.press('Tab');
+
+    await expect(firstSubLink)
+      .toBeFocused();
+
+    // focus stays inside the item, so moving back must not close it
+    await page.keyboard.press('Shift+Tab');
+
+    await expect(button)
+      .toBeFocused();
+    await expect(button)
+      .toHaveAttribute('aria-expanded', 'true');
 
     await page.keyboard.press('Enter');
 
     await expect(button)
       .toHaveAttribute('aria-expanded', 'false');
+    await expectSubnavClosed(item);
+
+    // closed: Tab skips the inert sub-navigation and lands on the next item
+    await page.keyboard.press('Tab');
+
+    await expect(nextLevel1Button)
+      .toBeFocused();
   });
 
   test('Escape closes a level-1 item opened via keyboard', async ({
@@ -309,34 +374,41 @@ test.describe('desktop nav touch interaction', () => {
 
     const items = page.getByTestId('header')
       .getByTestId('navigationItem');
-    const button1 = items.nth(1)
-      .getByTestId('button')
+    const item1 = items.nth(1);
+    const item2 = items.last();
+    const button1 = item1.getByTestId('button')
       .first();
-    const button2 = items.last()
-      .getByTestId('button')
+    const button2 = item2.getByTestId('button')
       .first();
+
+    await expectSubnavClosed(item1);
 
     await button1.tap();
 
     await expect(button1)
       .toHaveAttribute('aria-expanded', 'true');
+    await expectSubnavOpen(item1);
 
     await button1.tap();
 
     await expect(button1)
       .toHaveAttribute('aria-expanded', 'false');
+    await expectSubnavClosed(item1);
 
     await button1.tap();
 
     await expect(button1)
       .toHaveAttribute('aria-expanded', 'true');
+    await expectSubnavOpen(item1);
 
     await button2.tap();
 
     await expect(button2)
       .toHaveAttribute('aria-expanded', 'true');
+    await expectSubnavOpen(item2);
     await expect(button1)
       .toHaveAttribute('aria-expanded', 'false');
+    await expectSubnavClosed(item1);
   });
 
   test('tap outside collapses the header', async ({
@@ -356,15 +428,31 @@ test.describe('desktop nav touch interaction', () => {
     await navigate(page, 'components-global-header--header-dark');
 
     const header = page.getByTestId('header');
-    const button = header.getByTestId('navigationItem')
-      .nth(1)
-      .getByTestId('button')
+    const item = header.getByTestId('navigationItem')
+      .nth(1);
+    const button = item.getByTestId('button')
       .first();
+    const subLinks = item.getByTestId('link');
 
     await button.tap();
 
     await expect(button)
       .toHaveAttribute('aria-expanded', 'true');
+    await expectSubnavOpen(item);
+
+    // with enough viewport height, every sub-link must be fully on screen
+    // and not clipped by the header
+    const subLinkCount = await subLinks.count();
+
+    expect(subLinkCount)
+      .toBeGreaterThan(0);
+
+    await Promise.all(Array.from({
+      length: subLinkCount,
+    }, (_, i) => expect(subLinks.nth(i))
+      .toBeInViewport({
+        ratio: 1,
+      })));
 
     const headerBox = await header.boundingBox();
 
@@ -372,6 +460,7 @@ test.describe('desktop nav touch interaction', () => {
 
     await expect(button)
       .toHaveAttribute('aria-expanded', 'false');
+    await expectSubnavClosed(item);
     await expect(header.getByTestId('infoblock'))
       .not.toBeVisible();
   });
@@ -381,18 +470,22 @@ test.describe('desktop nav touch interaction', () => {
   }) => {
     await navigate(page, 'components-global-header--header-dark');
 
-    const toggle = page.getByTestId('langnav')
-      .getByTestId('button')
+    const langnav = page.getByTestId('langnav');
+    const toggle = langnav.getByTestId('button')
       .first();
+
+    await expectSubnavClosed(langnav);
 
     await toggle.tap();
 
     await expect(toggle)
       .toHaveAttribute('aria-expanded', 'true');
+    await expectSubnavOpen(langnav);
 
     await toggle.tap();
 
     await expect(toggle)
       .toHaveAttribute('aria-expanded', 'false');
+    await expectSubnavClosed(langnav);
   });
 });
