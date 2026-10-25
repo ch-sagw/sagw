@@ -376,14 +376,24 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
       const target = e.target as Node;
       const header = headerRef.current;
 
-      if (header && header.contains(target)) {
+      const parentElementIsButton = (target as Element).closest('button');
+      const parentLinkElement = (target as Element).closest('a') !== null;
+
+      // Closest Button of target
+      const parentButtonIsExpanded = parentElementIsButton?.getAttribute('aria-expanded') === 'true';
+
+      if (
+        header &&
+        header.contains(target) &&
+        (parentButtonIsExpanded || parentLinkElement)
+      ) {
         return;
       }
 
-      setIsHovering(false);
       setHoveredSection(null);
       setInfoBlockContent(undefined);
       setExpandedDesktopNavItem(undefined);
+      setIsHovering(false);
     };
 
     document.addEventListener('pointerdown', handlePointerDown);
@@ -455,8 +465,10 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
 
     // Clear info block when leaving lang-nav, but only if we're not in mainNav
     if (!visibility && hoveredSection !== 'mainNav') {
-      setInfoBlockContent(undefined);
+      setIsHovering(false);
       setHoveredSection(null);
+      setInfoBlockContent(undefined);
+      setExpandedDesktopNavItem(undefined);
     }
 
     // on keyboard navigation, hide the menu
@@ -778,4 +790,3 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     </header>
   );
 };
-
