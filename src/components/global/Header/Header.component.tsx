@@ -377,10 +377,9 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
       const header = headerRef.current;
 
       const parentElementIsButton = (target as Element).closest('button');
-      const parentLinkElement = (target as Element).closest('a') !== null;
-
-      // Closest Button of target
       const parentButtonIsExpanded = parentElementIsButton?.getAttribute('aria-expanded') === 'true';
+
+      const parentLinkElement = (target as Element).closest('a') !== null;
 
       if (
         header &&
