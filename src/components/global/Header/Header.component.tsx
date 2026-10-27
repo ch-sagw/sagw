@@ -110,6 +110,11 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     setHoveredSection,
   ] = useState<'mainNav' | 'langNav' | null>(null);
 
+  const [
+    expandedDesktopNavItem,
+    setExpandedDesktopNavItem,
+  ] = useState<string | undefined>();
+
   // false during SSR / hydration, true once rendered on the client
   const hydrated = useSyncExternalStore(
     subscribeNoop,
@@ -150,6 +155,7 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     setPrevBreakpoint(breakpoint);
     setNavMaxHeight(0);
     setMobileMenuOpen(false);
+    setExpandedDesktopNavItem(undefined);
 
     if (smallBreakpoint) {
       // no header height calculation in small breakpoints
@@ -254,6 +260,7 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     onKeyPressed: () => {
       setIsHovering(false);
       setInfoBlockContent(undefined);
+      setExpandedDesktopNavItem(undefined);
     },
   });
 
@@ -318,9 +325,15 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     breakpoint,
   ]);
 
-  // add mouse leave detection to reset hover state when mouse leaves header
+  // add mouse leave detection to reset hover state when mouse leaves header.
+  // Uses pointer events restricted to a real mouse so that compatibility
+  // mouse events emitted after touch taps don't collapse the header.
   useEffect(() => {
-    const handleMouseLeave = (): void => {
+    const handleMouseLeave = (e: PointerEvent): void => {
+      if (e.pointerType !== 'mouse') {
+        return;
+      }
+
       // Reset hover state when mouse leaves the header area
       if (isHovering) {
         setIsHovering(false);
@@ -333,20 +346,59 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     const navigationElement = navigationRef.current;
 
     if (headerElement) {
-      headerElement.addEventListener('mouseleave', handleMouseLeave);
+      headerElement.addEventListener('pointerleave', handleMouseLeave);
     }
 
     if (navigationElement) {
-      navigationElement.addEventListener('mouseleave', handleMouseLeave);
+      navigationElement.addEventListener('pointerleave', handleMouseLeave);
     }
 
     return (): void => {
       if (headerElement) {
-        headerElement.removeEventListener('mouseleave', handleMouseLeave);
+        headerElement.removeEventListener('pointerleave', handleMouseLeave);
       }
       if (navigationElement) {
-        navigationElement.removeEventListener('mouseleave', handleMouseLeave);
+        navigationElement.removeEventListener('pointerleave', handleMouseLeave);
       }
+    };
+  }, [isHovering]);
+
+  useEffect(() => {
+    if (!isHovering) {
+      return (): void => undefined;
+    }
+
+    const handlePointerDown = (e: PointerEvent): void => {
+      if (e.pointerType === 'mouse') {
+        return;
+      }
+
+      const target = e.target as Node;
+      const header = headerRef.current;
+
+      const parentElementIsButton = (target as Element).closest('button');
+      const parentButtonIsExpanded = parentElementIsButton?.getAttribute('aria-expanded') === 'true';
+
+      const parentLinkElement = (target as Element).closest('a') !== null;
+
+      if (
+        header &&
+        header.contains(target) &&
+        (parentButtonIsExpanded || parentLinkElement)
+      ) {
+        return;
+      }
+
+      setHoveredSection(null);
+      setInfoBlockContent(undefined);
+      setExpandedDesktopNavItem(undefined);
+      setIsHovering(false);
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+
+    return (): void => {
+      document.removeEventListener('pointerdown', handlePointerDown);
     };
   }, [isHovering]);
 
@@ -412,8 +464,10 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
 
     // Clear info block when leaving lang-nav, but only if we're not in mainNav
     if (!visibility && hoveredSection !== 'mainNav') {
-      setInfoBlockContent(undefined);
+      setIsHovering(false);
       setHoveredSection(null);
+      setInfoBlockContent(undefined);
+      setExpandedDesktopNavItem(undefined);
     }
 
     // on keyboard navigation, hide the menu
@@ -597,6 +651,8 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
       footer={false}
       className={styles.navigation}
       colorMode={renderColorMode()}
+      expandedItem={expandedDesktopNavItem}
+      onExpandedItemChange={setExpandedDesktopNavItem}
       hoveredItemCallback={handleHoveredItem}
       onHoverItemWithoutChildren={() => {
         // Collapse header when hovering over items without children
@@ -716,8 +772,10 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
 
           <div
             className={styles.logoWrapper}
-            onMouseLeave={() => {
-              setIsHovering(false);
+            onPointerLeave={(e: React.PointerEvent) => {
+              if (e.pointerType === 'mouse') {
+                setIsHovering(false);
+              }
             }}
           >
             {headerLogoRender()}
@@ -731,4 +789,3 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
     </header>
   );
 };
-

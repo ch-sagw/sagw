@@ -1,9 +1,10 @@
 'use client';
 
 import {
-  RefObject, useState,
+  RefObject,
+  useCallback,
+  useState,
 } from 'react';
-import { useIsTouchDevice } from '@/hooks/useIsTouchDevice';
 import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
 
 // --- Interfaces
@@ -17,7 +18,6 @@ export interface InterfaceExpandableMenu {
   menuVisible: boolean;
   toggleButtonAutofocus: boolean;
   onToggleClick: (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement> | React.PointerEvent<HTMLDivElement | HTMLButtonElement>) => void;
-  onSimulateKeyDownForScreenReader: () => void;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   handleBlur: (e: React.FocusEvent, rootRef: RefObject<HTMLDivElement | null>) => void;
@@ -41,7 +41,7 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
 
   // --- Helpers
 
-  const toggleMenu = ({
+  const toggleMenu = useCallback(({
     show,
     autofocus,
   }: InterfaceToggleMenuArgs): void => {
@@ -52,11 +52,8 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
     } else {
       setToggleButtonAutofocus(false);
     }
-  };
-
+  }, []);
   // --- Hooks
-
-  const isTouchDevice = useIsTouchDevice();
 
   useKeyboardShortcut({
     condition: menuVisible,
@@ -71,43 +68,43 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
 
   // --- Event handlers
 
-  const onToggleClick = (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement> | React.PointerEvent<HTMLDivElement | HTMLButtonElement>): void => {
-    if ('pointerType' in e.nativeEvent) {
-      if (!isTouchDevice && e.nativeEvent.pointerType === 'mouse') {
-        return;
-      }
-    }
+  /**
+   * Toggles the menu on click, except for real mouse clicks, which are
+   * already covered by onMouseEnter/onMouseLeave.
+   *
+   * Thanks ChatGPT: Keyboard activations arrive as click events with
+   * `detail === 0`; in browsers where click is a PointerEvent they
+   * additionally report `pointerType === ''`. Touch and pen taps report
+   * their respective pointerType and must toggle.
+   */
+  const onToggleClick = useCallback((e: React.MouseEvent<HTMLDivElement | HTMLButtonElement> | React.PointerEvent<HTMLDivElement | HTMLButtonElement>): void => {
+    const native = e.nativeEvent;
 
-    toggleMenu({
-      show: !menuVisible,
-    });
-  };
+    const isMouseClick =
+      native.detail > 0 &&
+      'pointerType' in native &&
+      native.pointerType === 'mouse';
 
-  const onMouseEnter = (): void => {
-    if (isTouchDevice) {
+    if (isMouseClick) {
       return;
     }
 
+    setMenuVisible((prev) => !prev);
+  }, []);
+
+  const onMouseEnter = useCallback((): void => {
     toggleMenu({
       show: true,
     });
-  };
+  }, [toggleMenu]);
 
-  const onMouseLeave = (): void => {
-    if (isTouchDevice) {
-      return;
-    }
-
+  const onMouseLeave = useCallback((): void => {
     toggleMenu({
       show: false,
     });
-  };
+  }, [toggleMenu]);
 
-  const onSimulateKeyDownForScreenReader = (): void => {
-    onMouseEnter();
-  };
-
-  const handleBlur = (e: React.FocusEvent, rootRef: RefObject<HTMLDivElement | null>): void => {
+  const handleBlur = useCallback((e: React.FocusEvent, rootRef: RefObject<HTMLDivElement | null>): void => {
     const related = e.relatedTarget as Node | null;
 
     // if focus is still inside this menu, do nothing
@@ -116,14 +113,13 @@ export const useExpandOnHover = (): InterfaceExpandableMenu => {
     }
 
     onMouseLeave();
-  };
+  }, [onMouseLeave]);
 
   return {
     handleBlur,
     menuVisible,
     onMouseEnter,
     onMouseLeave,
-    onSimulateKeyDownForScreenReader,
     onToggleClick,
     toggleButtonAutofocus,
   };

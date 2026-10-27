@@ -98,6 +98,7 @@ export const NavigationItem = ({
   const lastReported = useRef<string | undefined>(undefined);
   const expandableRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  const lastPointerType = useRef<string | null>(null);
 
   // --- Hooks
 
@@ -105,7 +106,6 @@ export const NavigationItem = ({
     menuVisible,
     toggleButtonAutofocus: toggleButtonAutofocusFromHover,
     onToggleClick: onToggleClickFromHover,
-    onSimulateKeyDownForScreenReader,
     onMouseEnter,
     onMouseLeave,
     handleBlur,
@@ -123,8 +123,49 @@ export const NavigationItem = ({
   const smallBreakpoint = breakpoint === 'zero' || breakpoint === 'small' || breakpoint === 'micro' || breakpoint === 'medium';
 
   // --- Effects
+  const menuVisibleRef = useRef(menuVisible);
 
-  // report hovered item to parent
+  /**
+   * Syncs the local menuVisible state into a ref so that the
+   * setExpanded effect below can read the current value without
+   * including menuVisible in its dependency array (which would
+   * cause a loop: effect fires -> calls onMouseLeave -> menuVisible
+   * changes -> effect fires again -> ...).
+   */
+  useEffect(() => {
+    menuVisibleRef.current = menuVisible;
+  }, [menuVisible]);
+
+  /**
+   * React to changes of the setExpanded prop (controlled by the parent).
+   * Small breakpoints: sync the click-expand state.
+   * Large breakpoints (touch): open this item if it is the expanded one,
+   * close it if another item got expanded or everything was collapsed.
+   */
+  useEffect(() => {
+    setActiveElement(setExpanded);
+
+    if (!smallBreakpoint && expandableId !== undefined) {
+      if (setExpanded === expandableId) {
+        onMouseEnter();
+      } else if (menuVisibleRef.current) {
+        onMouseLeave();
+      }
+    }
+  }, [
+    setExpanded,
+    setActiveElement,
+    smallBreakpoint,
+    expandableId,
+    onMouseEnter,
+    onMouseLeave,
+  ]);
+
+  /**
+   * Reports hover state changes to the parent Header component.
+   * Only fires when the reported value actually changes to avoid
+   * redundant parent re-renders.
+   */
   useEffect(() => {
     const nextValue = menuVisible
       ? expandableId
@@ -139,14 +180,6 @@ export const NavigationItem = ({
     expandableId,
     hoveredItemCallback,
     lastReported,
-  ]);
-
-  // react to changes on setExpanded prop
-  useEffect(() => {
-    setActiveElement(setExpanded);
-  }, [
-    setExpanded,
-    setActiveElement,
   ]);
 
   // keep track of expanded heights
@@ -202,6 +235,34 @@ export const NavigationItem = ({
     <div
       data-testid='navigationItem'
       ref={rootRef}
+      onPointerDown={(e: React.PointerEvent): void => {
+        if (
+          e.pointerType === 'mouse' ||
+          smallBreakpoint ||
+          !items
+        ) {
+          lastPointerType.current = null;
+
+          return;
+        }
+
+        // Let taps inside the expanded sub-navigation pass through
+        if (expandableRef.current?.contains(e.target as Node)) {
+          return;
+        }
+
+        lastPointerType.current = e.pointerType;
+
+        if (menuVisible) {
+          onMouseLeave();
+          onExpand?.(undefined);
+
+          return;
+        }
+
+        onMouseEnter();
+        onExpand?.(expandableId);
+      }}
       onBlur={(evt) => {
         if (!smallBreakpoint) {
           handleBlur(evt, rootRef);
@@ -210,9 +271,17 @@ export const NavigationItem = ({
       className={menuClasses({
         footer,
       })}
-      onMouseEnter={smallBreakpoint
+      // Hover is driven by pointer events restricted to a real mouse.
+      // Touch interactions are handled in onPointerDown; the
+      // compatibility mouse events browsers emit after a tap (incl. a
+      // trailing mouseleave in Chromium) must not toggle the menu.
+      onPointerEnter={smallBreakpoint
         ? undefined
-        : (): void => {
+        : (e: React.PointerEvent): void => {
+          if (e.pointerType !== 'mouse') {
+            return;
+          }
+
           if (!footer) {
             if (items) {
               // Items with children use the expand on hover logic
@@ -223,9 +292,13 @@ export const NavigationItem = ({
             }
           }
         }}
-      onMouseLeave={smallBreakpoint
+      onPointerLeave={smallBreakpoint
         ? undefined
-        : (): void => {
+        : (e: React.PointerEvent): void => {
+          if (e.pointerType !== 'mouse') {
+            return;
+          }
+
           if (!footer) {
             if (items) {
               // Items with children use the expand on hover logic
@@ -249,7 +322,15 @@ export const NavigationItem = ({
             onExpand?.(nextState);
           }
         }
-        : onToggleClickFromHover
+        : (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement> | React.PointerEvent<HTMLDivElement | HTMLButtonElement>): void => {
+          if (lastPointerType.current) {
+            lastPointerType.current = null;
+
+            return;
+          }
+
+          onToggleClickFromHover(e);
+        }
       )}
     >
       <div
@@ -285,9 +366,6 @@ export const NavigationItem = ({
               ? toggleButtonAutofocus
               : toggleButtonAutofocusFromHover
             }
-            onClick={() => {
-              onSimulateKeyDownForScreenReader();
-            }}
           />
         }
 
