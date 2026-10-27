@@ -57,7 +57,7 @@
     "@payloadcms/plugin-seo": "^3.90.2",
     "@payloadcms/richtext-lexical": "^3.90.2",
     "@payloadcms/storage-vercel-blob": "^3.90.2",
-    "@sentry/nextjs": "^11.5.0",
+    "@sentry/nextjs": "^11.6.0",
     "@sparticuz/chromium": "^153.0.0",
     "@vercel/blob": "^2.8.0",
     "botid": "^1.5.11",
