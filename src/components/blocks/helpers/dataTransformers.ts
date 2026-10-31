@@ -20,6 +20,9 @@ import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { PaginatedDocs } from 'payload';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
+import {
+  buildTrackingEvents, TRACKING_EVENTS,
+} from '@/components/helpers/tracking.constants';
 
 export const convertPayloadPublicationsPagesToFeItems = ({
   lang,
@@ -196,6 +199,8 @@ export const convertPayloadEventPagesToFeItems = async ({
       }
     }
 
+    const titleHtml = rteToHtml(eventPage.eventDetails.title);
+
     const returnEventPage: InterfaceEventsListItemPropTypes = {
       dateEnd: eventPage.eventDetails.multipleDays
         ? eventPage.eventDetails.dateEnd || eventPage.eventDetails.date
@@ -212,8 +217,12 @@ export const convertPayloadEventPagesToFeItems = async ({
       tag: category
         ? rteToHtml(category.eventCategory)
         : undefined,
-      text: rteToHtml(eventPage.eventDetails.title),
+      text: titleHtml,
       time: renderTimeString,
+      // Only events linking to an external page are tracked in Fathom.
+      trackingEvents: eventPage.showDetailPage === 'false'
+        ? buildTrackingEvents(TRACKING_EVENTS.externalEventLink, titleHtml)
+        : undefined,
     };
 
     return returnEventPage;

@@ -12,6 +12,9 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { DownloadsComponent } from '@/components/blocks/Downloads/Downloads.component';
 import { TypedLocale } from 'payload';
 import { getLocale } from 'next-intl/server';
+import {
+  buildTrackingEvents, TRACKING_EVENTS,
+} from '@/components/helpers/tracking.constants';
 
 export type InterfaceDownloadsPropTypes = {
   title: InterfaceRte;
@@ -97,6 +100,7 @@ export const Downloads = async (props: InterfaceDownloadsPropTypes): Promise<Rea
         format = formatSplit[formatSplit.length - 1];
       }
 
+      const documentTitle = rteToHtml(documentItem.title);
       const returnDocument: InterfaceDownloadLinkItemPropTypes = {
         date: documentItem.date || '',
         format: format.toUpperCase(),
@@ -105,7 +109,8 @@ export const Downloads = async (props: InterfaceDownloadsPropTypes): Promise<Rea
           target: '_self' as const,
         },
         size: fileSizeText,
-        title: rteToHtml(documentItem.title),
+        title: documentTitle,
+        trackingEvents: buildTrackingEvents(TRACKING_EVENTS.download, documentTitle),
         type: 'download' as const,
       };
 
@@ -138,6 +143,7 @@ export const Downloads = async (props: InterfaceDownloadsPropTypes): Promise<Rea
           },
           size: fileSizeText,
           title: documentTitle,
+          trackingEvents: buildTrackingEvents(TRACKING_EVENTS.download, documentTitle),
           type: 'download' as const,
         };
 

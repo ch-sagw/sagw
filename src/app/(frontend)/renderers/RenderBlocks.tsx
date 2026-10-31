@@ -182,6 +182,7 @@ export const RenderBlocks = ({
                 <Links
                   {...block}
                   title={i18n.generic.linksTitle}
+                  sourceCollectionSlug={sourcePage.collectionSlug}
                   key={key}
                 />
               );

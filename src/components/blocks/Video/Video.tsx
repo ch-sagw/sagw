@@ -29,6 +29,10 @@ import {
 import { TypedLocale } from 'payload';
 
 import { GumletPlayer } from '@gumlet/react-embed-player';
+import { useTrackEvent } from '@/components/helpers/useTrackEvent';
+import {
+  buildTrackingEvents, TRACKING_EVENTS,
+} from '@/components/helpers/tracking.constants';
 
 export type InterfaceVideoPropTypes = {
   duration?: number,
@@ -102,11 +106,26 @@ export const Video = ({
   const playerRef = useRef<any>(null);
   const videoContainer = useRef<HTMLDivElement>(null);
 
+  // Fathom: one "view" per mount, counted on the first play start,
+  // whichever comes first: our play overlay or the player's own controls.
+  const trackEvents = useTrackEvent();
+  const viewTracked = useRef(false);
+
+  const trackView = (): void => {
+    if (viewTracked.current) {
+      return;
+    }
+
+    viewTracked.current = true;
+    trackEvents(buildTrackingEvents(TRACKING_EVENTS.videoView, video.title));
+  };
+
   // Load video and remove paused state
   const loadVideo = (): void => {
     playerRef.current?.play();
 
     setPaused(false);
+    trackView();
   };
 
   const playButtonText = internalI18nA11y('playVideoText')
@@ -156,6 +175,7 @@ export const Video = ({
                 autoplay={false}
                 preload={false}
                 muted={true}
+                onPlay={trackView}
               />
             </div>
             <div

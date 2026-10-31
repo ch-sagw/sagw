@@ -28,6 +28,9 @@ For convenience, env-vars are split between base and local/test/prod.
 |`DATABASE_URI`|Connection string to the MongoDB.|OVH|Vercel & Local Dev|
 |`BLOB_READ_WRITE_TOKEN`|Read/write token (automatically provided by vercel).|Vercel|Vercel & Local Dev|
 |`PAYLOAD_SECRET`|Payload secret.|Custom|Vercel & Local Dev|
+|`NEXT_PUBLIC_TRACKING_SITE_ID`|Shared Fathom site id used as fallback for tenants without an entry in `src/tracking/fathomSites.ts`. Only read on **test**, **local** and **playwright**. On **prod** it is ignored: prod site ids come from the map only, unmapped tenants are not tracked. See `docs/tracking.md`.|Fathom (Site settings)|Vercel (test) & Local Dev & Playwright (Github secret `NEXT_PUBLIC_TRACKING_SITE_ID_PLAYWRIGHT`)|
+|`NEXT_PUBLIC_TRACKING_DISABLED`|Set to `true` to disable Fathom completely (local dev and Playwright). The tracking BE specs re-enable it per test with the cookie `fathom_playwright_e2e=1`. Unset on prod/test.|Custom|Local Dev & Playwright|
+|`FATHOM_API_KEY`|Read-only Fathom API key. Only used by `src/components/helpers/tracking.be.spec.ts` to verify pageviews and events against the real Fathom API. Tests are skipped when it is missing.|Fathom (Settings -> API)|Playwright (locally and as Github repository secret)|
 
 # !!NOTE!!: BLOB_READ_WRITE_TOKEN
 test is a custom environment. Since vercel blob can not be connected to custom environments, the key-rotation does not work. workaround: copy the key from BLOB_READ_WRITE_TOKEN (preview, development) and create a custom new token with that key and assign it to test only.
