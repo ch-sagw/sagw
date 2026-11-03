@@ -1,6 +1,10 @@
 import {
   deleteOtherCollections, deleteSetsPages,
 } from '@/seed/test-data/deleteData';
+import {
+  CONSENT_COOKIE_NAME, CONSENT_DURATION,
+} from '@/components/helpers/cookies';
+import { buildConsentCookieValue } from '@/test-helpers/cookie-consent';
 import { getTenant } from '@/test-helpers/tenant-generator';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import {
@@ -57,9 +61,9 @@ test.describe('Consent Banner', () => {
     await context.addCookies([
       {
         domain: 'localhost',
-        name: 'cookie_consent',
+        name: CONSENT_COOKIE_NAME,
         path: '/',
-        value: '{"analytics":true,"consentGiven":true,"essential":true,"external":true,"timestamp":1762095991926}',
+        value: buildConsentCookieValue(),
       },
     ]);
 
@@ -71,6 +75,32 @@ test.describe('Consent Banner', () => {
 
     await expect(banner)
       .not.toBeVisible();
+  });
+
+  test('shows banner again if the consent is older than the consent duration', async ({
+    context,
+    page,
+  }) => {
+    await context.addCookies([
+      {
+        domain: 'localhost',
+        name: CONSENT_COOKIE_NAME,
+        path: '/',
+        value: buildConsentCookieValue({
+          // one day past the expiry
+          timestamp: Date.now() - CONSENT_DURATION - (24 * 60 * 60 * 1000),
+        }),
+      },
+    ]);
+
+    await page.goto('http://localhost:3000/de');
+    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+
+    const banner = await page.getByTestId('pb7q2x');
+
+    await expect(banner)
+      .toBeVisible();
   });
 
   test('sets correct cookie values on "Accept All"', async ({
