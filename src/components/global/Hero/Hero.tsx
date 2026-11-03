@@ -27,6 +27,10 @@ import {
 import { KeyVisual } from '@/components/base/KeyVisual/KeyVisual';
 import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
 import { useLocale } from 'next-intl';
+import { useTrackEvent } from '@/components/helpers/useTrackEvent';
+import {
+  buildTrackingEvents, TRACKING_EVENTS,
+} from '@/components/helpers/tracking.constants';
 
 type BaseHeroProps = {
   breadcrumb?: InterfaceBreadcrumbPropTypes;
@@ -129,10 +133,18 @@ export const Hero = (props: InterfaceHeroPropTypes): React.JSX.Element => {
     setIsExporting,
   ] = React.useState(false);
 
+  const trackEvents = useTrackEvent();
+
   const handleExport = (): void => {
     if (typeof window === 'undefined' || props.type !== 'magazineDetail' || isExporting) {
       return;
     }
+
+    // Fathom: count the click
+    trackEvents(buildTrackingEvents(
+      TRACKING_EVENTS.magazineArticleExport,
+      rte1ToPlaintext(props.title),
+    ));
 
     const downloadPdf = async (): Promise<void> => {
       setIsExporting(true);

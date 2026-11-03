@@ -1,7 +1,7 @@
 import React from 'react';
 import { cva } from 'cva';
-import Link from 'next/link';
 import styles from '@/components/base/GenericTeaser/GenericTeaser.module.scss';
+import { TrackedLink } from '@/components/base/TrackedLink/TrackedLink';
 import { SafeHtml } from '../SafeHtml/SafeHtml';
 import { Button } from '../Button/Button';
 import { Icon } from '@/icons';
@@ -21,6 +21,7 @@ export interface InterfaceGenericTeaserLink {
   isLoading?: boolean;
   onClick?: () => void;
   type?: InterfaceLinkType;
+  trackingEvents?: string[];
 }
 
 export type InterfaceBaseTeaserProps = {
@@ -236,14 +237,15 @@ export const GenericTeaser = ({
     >
       {shouldWrapInLink && linkTarget
         ? (
-          <Link
+          <TrackedLink
             href={linkTarget}
             className={styles.wrapper}
             target={target}
             prefetch={true}
+            trackingEvents={link?.trackingEvents}
           >
             {wrapperContent}
-          </Link>
+          </TrackedLink>
         )
         : (
           <div

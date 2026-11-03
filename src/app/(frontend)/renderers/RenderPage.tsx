@@ -9,7 +9,7 @@ import { RenderHero } from '@/app/(frontend)/renderers/RenderHero';
 import { RenderStatusMessage } from '@/app/(frontend)/renderers/RenderStatusMessage';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
 import {
-  HomePage, I18NGlobal,
+  HomePage, I18NGlobal, Tenant,
 } from '@/payload-types';
 import { RenderHeader } from './RenderHeader';
 import { RenderFooter } from './RenderFooter';
@@ -23,9 +23,10 @@ import { SkipLinks } from '@/components/global/SkipLinks/SkipLinks';
 import { ColorMode } from '@/components/base/types/colorMode';
 import { getThemeNameForTenant } from '../utilities/getThemeNameForTenant';
 import { Redirector } from '@/components/helpers/redirects';
-import { Tracking } from '@/components/helpers/tracking';
+import { TrackingProvider } from '@/components/helpers/tracking';
 import { PageMainViewTransition } from '@/components/PageMainViewTransition';
 import { buildBreadcrumbsForDoc } from '@/utilities/buildBreadcrumbs';
+import { resolveFathomSiteId } from '@/tracking/fathomSites';
 
 export interface InterfacePreFetchedHomePageData {
   pageData: HomePage;
@@ -56,6 +57,7 @@ interface InterfaceRenderPageContentProps {
     id: string;
   };
   tenantId: string;
+  trackingSiteId: string | undefined;
   isHome: boolean;
   locale: TypedLocale;
   i18n: I18NGlobal;
@@ -90,14 +92,15 @@ const getTenantThemeName = ({
   });
 };
 
-// Helper to verify lang-config and to render error page
+// Helper to verify lang-config and to render error page.
+// Returns the full tenant document so callers do not need to fetch it again.
 const verifyLangConfig = async ({
   locale,
   tenant,
 }: {
   tenant: string;
   locale: TypedLocale;
-}): Promise<void> => {
+}): Promise<Tenant> => {
   const payload = await getPayloadCached();
   const fullTenant = await payload.findByID({
     collection: 'tenants',
@@ -122,12 +125,15 @@ const verifyLangConfig = async ({
   if (!hasLocale(availableLangauges, locale)) {
     notFound();
   }
+
+  return fullTenant;
 };
 
 export const renderPageContent = ({
   blocks,
   sourcePage,
   tenantId,
+  trackingSiteId,
   isHome,
   locale,
   i18n,
@@ -143,58 +149,59 @@ export const renderPageContent = ({
   pageSlugs,
 }: InterfaceRenderPageContentProps): React.JSX.Element => (
   <TenantProvider tenant={tenantId}>
-    <Tracking />
-    <body className={`theme-${themeName}${isMagazineDetail
-      ? ' print-magazine-detail'
-      : ''}`}>
-      {pageSlugs &&
-        <Redirector
-          disableNotFound
-          url={pageSlugs.join('/')}
-          locale={locale}
+    <TrackingProvider siteId={trackingSiteId}>
+      <body className={`theme-${themeName}${isMagazineDetail
+        ? ' print-magazine-detail'
+        : ''}`}>
+        {pageSlugs &&
+          <Redirector
+            disableNotFound
+            url={pageSlugs.join('/')}
+            locale={locale}
+          />
+        }
+        <SkipLinks />
+        <RenderHeader
+          colorMode={headerColorMode}
+          tenant={tenantId}
+          currentPageId={currentPageId}
         />
-      }
-      <SkipLinks />
-      <RenderHeader
-        colorMode={headerColorMode}
-        tenant={tenantId}
-        currentPageId={currentPageId}
-      />
-      <PageMainViewTransition name='page-main'>
-        <main
-          aria-labelledby='content'
-        >
-          <div className={containerType === 'home'
-            ? 'home'
-            : 'detail-page'}>
-            {heroComponent}
-            {!skipStatusMessage && (
-              <RenderStatusMessage
-                tenant={tenantId}
-                isHome={isHome}
-                locale={locale}
-              />
-            )}
-            {showBlocks && blocks && (
-              <RenderBlocks
-                blocks={blocks}
-                tenantId={tenantId}
-                i18n={i18n}
-                projectId={projectId}
-                sourcePage={sourcePage}
-              />
-            )}
-          </div>
-        </main>
-      </PageMainViewTransition>
-      <RenderFooter
-        tenant={tenantId}
-      />
+        <PageMainViewTransition name='page-main'>
+          <main
+            aria-labelledby='content'
+          >
+            <div className={containerType === 'home'
+              ? 'home'
+              : 'detail-page'}>
+              {heroComponent}
+              {!skipStatusMessage && (
+                <RenderStatusMessage
+                  tenant={tenantId}
+                  isHome={isHome}
+                  locale={locale}
+                />
+              )}
+              {showBlocks && blocks && (
+                <RenderBlocks
+                  blocks={blocks}
+                  tenantId={tenantId}
+                  i18n={i18n}
+                  projectId={projectId}
+                  sourcePage={sourcePage}
+                />
+              )}
+            </div>
+          </main>
+        </PageMainViewTransition>
+        <RenderFooter
+          tenant={tenantId}
+        />
 
-      <RenderConsentBanner
-        tenant={tenantId}
-      />
-    </body>
+        <RenderConsentBanner
+          tenant={tenantId}
+        />
+      </body>
+    </TrackingProvider>
   </TenantProvider>
 );
 
@@ -205,9 +212,13 @@ export const RenderPage = async ({
   pageSlugs,
   preFetchedData,
 }: InterfacePageRendererProps): Promise<React.JSX.Element> => {
-  await verifyLangConfig({
+  const tenant = await verifyLangConfig({
     locale,
     tenant: tenantId,
+  });
+
+  const trackingSiteId = resolveFathomSiteId({
+    tenantSlug: tenant.slug,
   });
 
   const payload = await getPayloadCached();
@@ -278,6 +289,7 @@ export const RenderPage = async ({
       },
       tenantId,
       themeName,
+      trackingSiteId,
     });
   }
 
@@ -366,6 +378,7 @@ export const RenderPage = async ({
     },
     tenantId,
     themeName,
+    trackingSiteId,
   });
 };
 

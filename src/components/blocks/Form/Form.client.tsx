@@ -1,15 +1,17 @@
 'use client';
 
 import React, {
-  startTransition, useActionState, useRef, useState,
+  startTransition, useActionState, useEffect, useRef, useState,
 } from 'react';
 import { useLocale } from 'next-intl';
 import { submitForm } from '@/app/actions/submitForm';
 import { Form as InterfaceForm } from '@/payload-types';
 import { FormComponent } from '@/components/blocks/Form/Form.component';
+import { useTrackEvent } from '@/components/helpers/useTrackEvent';
 
 type InterfaceFormClientPropTypes = {
   form: InterfaceForm;
+  trackingEvents?: string[];
   preRenderedLabels: Record<string, string>;
   preRenderedRadioLabels: Record<string, Record<string, string>>;
   submitSuccessLinkHref?: string;
@@ -20,6 +22,7 @@ type InterfaceFormClientPropTypes = {
 
 export const FormClient = ({
   form,
+  trackingEvents,
   preRenderedLabels,
   preRenderedRadioLabels,
   submitSuccessLinkHref,
@@ -94,6 +97,23 @@ export const FormClient = ({
   const submitSuccess = state?.success ?? false;
   const submitError = Boolean(state && !state.success && !state.error);
   const firstErrorFieldName = Object.keys(errors)[0] ?? '';
+
+  // Fathom: fire once on the first successful submission
+  const trackEvents = useTrackEvent();
+  const submissionTracked = useRef(false);
+
+  useEffect(() => {
+    if (!submitSuccess || submissionTracked.current) {
+      return;
+    }
+
+    submissionTracked.current = true;
+    trackEvents(trackingEvents);
+  }, [
+    submitSuccess,
+    trackEvents,
+    trackingEvents,
+  ]);
 
   // --- Render
 

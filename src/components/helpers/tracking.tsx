@@ -8,11 +8,12 @@ import {
   FATHOM_PLAYWRIGHT_E2E_COOKIE_VALUE,
 } from '@/components/helpers/tracking.constants';
 import {
-  load, trackPageview,
+  load, setSite, trackPageview,
 } from 'fathom-client';
-import {
+import React, {
+  createContext,
   JSX,
-  Suspense, useEffect, useRef, useState,
+  Suspense, useContext, useEffect, useMemo, useState,
 } from 'react';
 import {
   usePathname, useSearchParams,
@@ -52,15 +53,101 @@ const useTrackingGloballyAllowed = (): boolean => {
   return allowed;
 };
 
-const TrackPageView = (): null => {
+// --- Context
+
+interface InterfaceTrackingContext {
+
+  /** Fathom site id of the current tenant, `undefined` = tracking disabled */
+  siteId: string | undefined;
+
+  /**
+   * True when events / pageviews may be sent right now: tracking is not
+   * globally disabled, the visitor gave analytics consent and a site id
+   * exists. Consumers must not call fathom while this is false, because
+   * `fathom-client` queues calls made before the script is loaded and would
+   * flush them once consent is given later.
+   */
+  trackingAllowed: boolean;
+}
+
+const TrackingContext = createContext<InterfaceTrackingContext>({
+  siteId: undefined,
+  trackingAllowed: false,
+});
+
+export const useTracking = (): InterfaceTrackingContext => useContext(TrackingContext);
+
+// --- Fathom script + pageviews
+
+const FathomTracker = ({
+  siteId,
+  trackingAllowed,
+}: InterfaceTrackingContext): null => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  // Load the script once and switch the site id whenever the tenant changes
+  // (client side navigation between SAGW and another tenant). `load` is a
+  // no-op when the script already exists, `setSite` is queued by
+  // fathom-client until the script is ready.
+  useEffect(() => {
+    if (!trackingAllowed || !siteId) {
+      return undefined;
+    }
+
+    load(siteId, {
+      auto: false,
+    });
+
+    setSite(siteId);
+
+    return undefined;
+  }, [
+    siteId,
+    trackingAllowed,
+  ]);
+
+  // Pageviews. Runs after the effect above (declaration order), so the
+  // pageview is always attributed to the current tenant's site.
+  useEffect(() => {
+    if (!trackingAllowed || !siteId || !pathname) {
+      return undefined;
+    }
+
+    const query = searchParams?.toString();
+
+    trackPageview({
+      referrer: document.referrer,
+      url: query
+        ? `${pathname}?${query}`
+        : pathname,
+    });
+
+    return undefined;
+  }, [
+    pathname,
+    searchParams,
+    siteId,
+    trackingAllowed,
+  ]);
+
+  return null;
+};
+
+// --- Provider
+
+export const TrackingProvider = ({
+  siteId,
+  children,
+}: {
+  siteId: string | undefined;
+  children?: React.ReactNode;
+}): JSX.Element => {
   const trackingGloballyAllowed = useTrackingGloballyAllowed();
   const [
     analyticsAllowed,
     setAnalyticsAllowed,
   ] = useState(false);
-  const fathomLoaded = useRef(false);
 
   useEffect(() => {
     if (!trackingGloballyAllowed) {
@@ -79,47 +166,25 @@ const TrackPageView = (): null => {
     };
   }, [trackingGloballyAllowed]);
 
-  useEffect(() => {
-    if (!trackingGloballyAllowed || !analyticsAllowed || !process.env.NEXT_PUBLIC_TRACKING_SITE_ID ||
-      fathomLoaded.current) {
-      return undefined;
-    }
+  const trackingAllowed = trackingGloballyAllowed && analyticsAllowed && Boolean(siteId);
 
-    load(process.env.NEXT_PUBLIC_TRACKING_SITE_ID, {
-      auto: false,
-    });
-
-    fathomLoaded.current = true;
-
-    return undefined;
-  }, [
-    analyticsAllowed,
-    trackingGloballyAllowed,
+  const contextValue = useMemo<InterfaceTrackingContext>(() => ({
+    siteId,
+    trackingAllowed,
+  }), [
+    siteId,
+    trackingAllowed,
   ]);
 
-  useEffect(() => {
-    if (!trackingGloballyAllowed || !analyticsAllowed || !pathname) {
-      return undefined;
-    }
-
-    trackPageview({
-      referrer: document.referrer,
-      url: pathname + searchParams?.toString(),
-    });
-
-    return undefined;
-  }, [
-    analyticsAllowed,
-    pathname,
-    searchParams,
-    trackingGloballyAllowed,
-  ]);
-
-  return null;
+  return (
+    <TrackingContext value={contextValue}>
+      <Suspense fallback={null}>
+        <FathomTracker
+          siteId={siteId}
+          trackingAllowed={trackingAllowed}
+        />
+      </Suspense>
+      {children}
+    </TrackingContext>
+  );
 };
-
-export const Tracking = (): JSX.Element => (
-  <Suspense fallback={null}>
-    <TrackPageView />
-  </Suspense>
-);

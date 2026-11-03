@@ -17,6 +17,9 @@ import { Section } from '@/components/base/Section/Section';
 import { Pagination } from '@/components/base/Pagination/Pagination';
 import { usePagination } from '@/hooks/usePagination';
 import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
+import {
+  buildTrackingEvents, TRACKING_EVENTS,
+} from '@/components/helpers/tracking.constants';
 
 export type InterfaceNetworkTeaserPropTypes = {} & InterfaceNetworkTeasersBlock;
 
@@ -123,6 +126,7 @@ const NetworkTeaserContent = ({
           {
             href: item.externalLink,
             text: rteToHtml(items.linkText),
+            trackingEvents: buildTrackingEvents(TRACKING_EVENTS.networkLink, rteToHtml(item.title)),
             type: 'external',
           },
         ]}

@@ -11,6 +11,10 @@ import { getPayloadCached } from '@/utilities/getPayloadCached';
 import { getPageUrl } from '@/utilities/getPageUrl';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { buildFormFields } from '@/components/blocks/Form/buildFormFields';
+import { rte1ToPlaintext } from '@/utilities/rte1ToPlaintext';
+import {
+  buildTrackingEvents, TRACKING_EVENTS,
+} from '@/components/helpers/tracking.constants';
 
 type InterfaceFormServerPropTypes = {
   globalI18n: I18NGlobal;
@@ -155,9 +159,19 @@ export const FormServer = async ({
     }
   }
 
+  // --- Fathom events fired on successful submission. Forms are identified
+  // by their title; forms without a title fall back to type and id so they
+  // still get their own bucket in the dashboard.
+  const trackingLabel = rte1ToPlaintext(expandedForm.title) ||
+    `${expandedForm.isNewsletterForm === 'newsletter'
+      ? 'newsletter'
+      : 'custom'} ${expandedForm.id}`;
+  const trackingEvents = buildTrackingEvents(TRACKING_EVENTS.formSubmission, trackingLabel);
+
   return (
     <FormClient
       form={expandedForm}
+      trackingEvents={trackingEvents}
       preRenderedLabels={preRenderedLabels}
       preRenderedRadioLabels={preRenderedRadioLabels}
       submitSuccessLinkHref={submitSuccessLinkHref}

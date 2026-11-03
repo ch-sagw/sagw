@@ -3,7 +3,9 @@ import React from 'react';
 import { InterfaceLinksBlock } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { InterfaceRte } from '@/components/base/types/rte';
-import { TypedLocale } from 'payload';
+import {
+  CollectionSlug, TypedLocale,
+} from 'payload';
 import { getPageUrl } from '@/utilities/getPageUrl';
 import { getLocale } from 'next-intl/server';
 import { getPayloadCached } from '@/utilities/getPayloadCached';
@@ -11,9 +13,15 @@ import {
   type InterfaceLinksItem, LinksClient,
 } from './Links.client';
 import type { InterfaceDownloadLinkItemPropTypes } from '@/components/base/DownloadLinkItem/DownloadLinkItem';
+import { buildTrackingEvents } from '@/components/helpers/tracking.constants';
+import { getLinksBlockTrackingPrefix } from '@/components/blocks/Links/Links.tracking';
 
 export type InterfaceLinksPropTypes = {
   title: InterfaceRte;
+  // Collection of the page hosting this block. External links are tracked
+  // in Fathom only on institute and national dictionary detail pages
+  // (see Links.tracking.ts).
+  sourceCollectionSlug?: CollectionSlug;
 } & InterfaceLinksBlock;
 
 export const Links = async (props: InterfaceLinksPropTypes): Promise<React.JSX.Element> => {
@@ -21,17 +29,22 @@ export const Links = async (props: InterfaceLinksPropTypes): Promise<React.JSX.E
   const locale = (await getLocale()) as TypedLocale;
 
   const titleHtml = rteToHtml(props.title);
+  const trackingPrefix = getLinksBlockTrackingPrefix(props.sourceCollectionSlug);
 
   // Prepare link items
   const items = await Promise.all((props.links || []).map(async (link): Promise<InterfaceLinksItem | null> => {
     if (link.linkType === 'external' && link.linkExternal) {
+      const title = rteToHtml(link.linkExternal.externalLinkText);
       const returnLink: InterfaceDownloadLinkItemPropTypes = {
         link: {
           href: link.linkExternal.externalLink,
           target: '_blank' as const,
         },
         text: rteToHtml(link.linkExternal.description),
-        title: rteToHtml(link.linkExternal.externalLinkText),
+        title,
+        trackingEvents: trackingPrefix
+          ? buildTrackingEvents(trackingPrefix, title)
+          : undefined,
         type: 'link' as const,
       };
 

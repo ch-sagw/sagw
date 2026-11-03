@@ -166,6 +166,10 @@ For details, see [branching-releasing.md](docs/branching-releasing.md).
 
 For details, see [deployments.md](docs/deployments.md).
 
+## Tracking
+
+Fathom Analytics with one dashboard per tenant and custom events. For details, see [tracking.md](docs/tracking.md).
+
 ## Services
 
 To get an overview of all services involved, see [services.md](docs/services.md).

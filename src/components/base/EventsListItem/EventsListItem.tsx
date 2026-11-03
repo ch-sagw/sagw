@@ -6,7 +6,7 @@ import { formatDateToObject } from '@/components/helpers/date';
 import { Tag } from '@/components/base/Tag/Tag';
 import { SafeHtml } from '@/components/base/SafeHtml/SafeHtml';
 import { formatEventDetails } from '@/components/base/EventsListItem/helpers';
-import Link from 'next/link';
+import { TrackedLink } from '@/components/base/TrackedLink/TrackedLink';
 import {
   useLocale, useTranslations,
 } from 'next-intl';
@@ -25,6 +25,7 @@ export type InterfaceEventsListItemPropTypes = {
   tag?: string;
   time?: string;
   className?: string;
+  trackingEvents?: string[];
 };
 
 export const EventsListItem = ({
@@ -37,6 +38,7 @@ export const EventsListItem = ({
   tag,
   time,
   className,
+  trackingEvents,
 }: InterfaceEventsListItemPropTypes): React.JSX.Element => {
   const locale = useLocale() as TypedLocale;
   const internalI18nA11y = useTranslations('a11y');
@@ -74,12 +76,13 @@ export const EventsListItem = ({
       className={itemClasses()}
       data-testid='eventListItem'
     >
-      <Link
+      <TrackedLink
         prefetch={true}
         aria-label={ariaLabel}
         href={link.href}
         target={link.target}
         className={styles.link}
+        trackingEvents={trackingEvents}
       >
 
         {/* TAG */}
@@ -132,7 +135,7 @@ export const EventsListItem = ({
             className={styles.itemIcon}
           />
         </div>
-      </Link>
+      </TrackedLink>
     </li >
   );
 };

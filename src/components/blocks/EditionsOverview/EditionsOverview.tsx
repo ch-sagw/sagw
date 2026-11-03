@@ -5,6 +5,9 @@ import { InterfaceEditionsOverviewBlock } from '@/payload-types';
 import { rteToHtml } from '@/utilities/rteToHtml';
 import { GenericTeaser } from '@/components/base/GenericTeaser/GenericTeaser';
 import { GenericOverview } from '@/components/base/GenericOverview/GenericOverview';
+import {
+  buildTrackingEvents, TRACKING_EVENTS,
+} from '@/components/helpers/tracking.constants';
 
 export type InterfaceEditionsOverviewPropTypes = {} & InterfaceEditionsOverviewBlock;
 
@@ -22,6 +25,7 @@ export const EditionsOverview = ({
         {
           href: item.externalLink,
           text: rteToHtml(items.linkText),
+          trackingEvents: buildTrackingEvents(TRACKING_EVENTS.editionLink, rteToHtml(item.title)),
           type: 'external',
         },
       ]}
