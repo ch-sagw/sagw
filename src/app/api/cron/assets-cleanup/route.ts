@@ -17,7 +17,9 @@ import { sendSlackFailure } from '@/jobs/assetsCleanup/notify/slack';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-export const maxDuration = 300;
+// 800s is the maximum Vercel allows (Pro plan with Fluid Compute). keep in
+// sync with --max-time and timeout-minutes in assets-cleanup-test.yml.
+export const maxDuration = 800;
 
 export const GET = async (request: Request): Promise<Response> => {
   if (!isCronRequestAuthorized(request.headers)) {

@@ -21,7 +21,7 @@ on:
 jobs:
   trigger:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Trigger assets cleanup on test environment
         env:
@@ -34,7 +34,7 @@ jobs:
           fi
 
           response=$(curl --silent --show-error --fail-with-body \
-            --max-time 330 \
+            --max-time 830 \
             --header "Authorization: Bearer $CRON_SECRET" \
             "$TEST_ENV_URL/api/cron/assets-cleanup")
 
