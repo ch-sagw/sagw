@@ -38,6 +38,8 @@ import {
 } from '@/test-helpers/fathom-stub';
 import {
   buildTrackingEventName,
+  TRACKING_EVENT_MAX_LENGTH,
+  TRACKING_EVENT_MAX_LENGTH_URL,
   TRACKING_EVENTS,
 } from '@/components/helpers/tracking.constants';
 import { resolveFathomSiteId } from '@/tracking/fathomSites';
@@ -959,6 +961,83 @@ test.describe('Tracking events', () => {
 
       expect(names.filter((name) => name === TRACKING_EVENTS.videoView))
         .toHaveLength(1);
+    });
+  });
+
+  // ---------------------------------------------------------------------
+  // 404 pages (broken internal links)
+  // ---------------------------------------------------------------------
+
+  test.describe('404 pages', () => {
+    test('tracks a 404 reached from an internal link, with the missing url as label', {
+      tag: '@tracking',
+    }, async ({
+      page,
+    }) => {
+      const missingPath = `/de/tracking-missing-${time}?from=test`;
+
+      await page.goto(`${baseUrl}${missingPath}`, {
+        referer: `${baseUrl}/de`,
+      });
+      await waitForFathomStub(page);
+
+      await expectTrackedEvents(page, [
+        TRACKING_EVENTS.notFound,
+        buildTrackingEventName(TRACKING_EVENTS.notFound, missingPath, {
+          maxLength: TRACKING_EVENT_MAX_LENGTH_URL,
+        }),
+      ]);
+
+      // still a normal pageview for the tenant
+      await pollPageviewCount(page)
+        .toBeGreaterThanOrEqual(1);
+    });
+
+    test('keeps long urls up to the url max length', {
+      tag: '@tracking',
+    }, async ({
+      page,
+    }) => {
+      const missingPath = `/de/tracking-missing-${time}-${'x'.repeat(260)}`;
+
+      await page.goto(`${baseUrl}${missingPath}`, {
+        referer: `${baseUrl}/de`,
+      });
+      await waitForFathomStub(page);
+
+      await expectTrackedEvents(page, [TRACKING_EVENTS.notFound]);
+
+      const [itemEvent] = (await getTrackedEventNames(page)).filter((name) => name.startsWith(`${TRACKING_EVENTS.notFound}: `));
+
+      expect(itemEvent.length)
+        .toBe(TRACKING_EVENT_MAX_LENGTH_URL);
+      expect(itemEvent.length)
+        .toBeGreaterThan(TRACKING_EVENT_MAX_LENGTH);
+    });
+
+    test('does not track 404s from external referrers or direct hits', {
+      tag: '@tracking',
+    }, async ({
+      page,
+    }) => {
+      await page.goto(`${baseUrl}/de/tracking-missing-external-${time}`, {
+        referer: 'https://www.example.com/some-page',
+      });
+      await waitForFathomStub(page);
+      await expectNoEvents(page);
+
+      await page.goto(`${baseUrl}/de/tracking-missing-direct-${time}`);
+      await waitForFathomStub(page);
+      await expectNoEvents(page);
+    });
+
+    test('does not track existing pages', {
+      tag: '@tracking',
+    }, async ({
+      page,
+    }) => {
+      await gotoAndWaitForStub(page, `${baseUrl}/de`);
+      await expectNoEvents(page);
     });
   });
 });

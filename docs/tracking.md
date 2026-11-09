@@ -34,8 +34,9 @@ For every interaction two events are counted: a **total** per category (e.g. `Do
 | Click on a download in a downloads block (document or Zenodo file) | `Download` | `Download: Jahresbericht 2024` |
 | Successful form submission (custom forms and newsletter forms) | `Form submission` | `Form submission: Kontaktformular` |
 | Video started (first play per page view) | `Video view` | `Video view: <video title>` |
+| 404 page reached via a link on our own website | `Page not found` | `Page not found: /de/alte-seite?x=1` |
 
-The per item label is the title the visitor sees (network item title, edition title, link text, event title, article title, document title, form title, video title). Formatting, special characters and emojis are removed, long labels are cut at 100 characters.
+The per item label is the title the visitor sees (network item title, edition title, link text, event title, article title, document title, form title, video title). Formatting, special characters and emojis are removed, long labels are cut at 100 characters (URLs of 404 pages at 255).
 
 ### External link clicks in detail
 
@@ -60,6 +61,14 @@ Every click on an item in a downloads block counts as one download, regardless o
 ### Video views
 
 One view is counted when the visitor starts a video (via our play button or the player controls), once per page view. Pausing and resuming does not count again.
+
+### 404 pages (broken links)
+
+Every 404 page is a normal pageview under its original URL, so it already shows up in the "Pages" list of the dashboard. On top of that, an event `Page not found: <path and query of the missing url>` is counted, but **only when the visitor came from a page of the same website** (the browser's referrer is our own domain). That is the case that editors can fix: a broken link somewhere in our own content, in a links block as well as in rich text.
+
+Not counted: direct hits (typed URL, bookmark), visitors coming from other websites or search engines, and scanners/bots. They would only flood the event list with URLs nobody linked to.
+
+The event tells you *which* URL is missing, not *which page* contains the broken link.
 
 ### Adding a new tenant
 
@@ -127,11 +136,12 @@ TRACKING_EVENTS = {
   magazineArticleExport: 'Magazine article export',
   nationalDictionaryLink: 'National dictionary link',
   networkLink: 'Network link',
+  notFound: 'Page not found',
   videoView: 'Video view',
 }
 ```
 
-- `buildTrackingEventName(prefix, label)` → `prefix` or `prefix: label`. The label is cleaned with `toTrackingLabel` (HTML tags and entities removed, emojis/control chars removed, whitespace collapsed) and the result is capped at `TRACKING_EVENT_MAX_LENGTH` (100) characters. No ellipsis is added (Fathom asks to avoid special characters).
+- `buildTrackingEventName(prefix, label)` → `prefix` or `prefix: label`. The label is cleaned with `toTrackingLabel` (HTML tags and entities removed, emojis/control chars removed, whitespace collapsed) and the result is capped at `TRACKING_EVENT_MAX_LENGTH` (100) characters, or at `options.maxLength` (`TRACKING_EVENT_MAX_LENGTH_URL` = 255, Fathom's limit, used for URL labels). No ellipsis is added (Fathom asks to avoid special characters).
 - `buildTrackingEvents(prefix, label)` → `[prefix, 'prefix: label']` (only `[prefix]` if the label is empty). This is what every instrumented component passes around.
 - **Never rename an existing prefix.** Fathom aggregates by name; a rename starts a new event and the history is split.
 
@@ -147,6 +157,7 @@ TRACKING_EVENTS = {
 | downloads | `blocks/Downloads/Downloads.tsx` | documents and every Zenodo file get `trackingEvents` → `DownloadLinkItem` |
 | forms | `blocks/Form/Form.server.tsx` builds the label, `Form.client.tsx` fires once when `submitSuccess` becomes true | |
 | video | `blocks/Video/Video.tsx` | `trackView()` on our overlay click and on the player's `onPlay`, guarded by a ref (once per mount) |
+| 404 | `helpers/TrackNotFound.tsx`, rendered by `renderPageContent` when `isNotFound` is set (`RenderNotFoundPage`) | fires once per render in an effect, waits for consent (also when given on the 404 page itself), only if `document.referrer` has the same origin (`isInternalReferrer`); label = `location.pathname + search`, max length 255 |
 
 To instrument something new: build the names with `buildTrackingEvents(TRACKING_EVENTS.x, label)` and either render a `TrackedLink` with `trackingEvents`, or call the function returned by `useTrackEvent()` in a client component. Add the new prefix to `TRACKING_EVENTS` and to the tables in this document.
 
@@ -165,8 +176,8 @@ See also [env-vars.md](/docs/env-vars.md).
 | Spec | What |
 |-|-|
 | `src/tracking/fathomSites.be.spec.ts` | Pure: resolution rules per environment, prod map sanity (non-empty, unique, lower case slugs), `sagw` not in the playwright map. |
-| `src/components/helpers/trackingEventName.be.spec.ts` | Pure: `toTrackingLabel`, `buildTrackingEventName`, `buildTrackingEvents`, uniqueness of `TRACKING_EVENTS`. |
-| `src/components/helpers/tracking-events.be.spec.ts` | Browser, **stubbed Fathom**: per-tenant site ID (sagw vs. not-sagw), no script before consent / after decline, and one positive (and where relevant one negative) case for every requirement 1–7. |
+| `src/components/helpers/trackingEventName.be.spec.ts` | Pure: `toTrackingLabel`, `buildTrackingEventName` (incl. url max length), `buildTrackingEvents`, `isInternalReferrer`, uniqueness of `TRACKING_EVENTS`. |
+| `src/components/helpers/tracking-events.be.spec.ts` | Browser, **stubbed Fathom**: per-tenant site ID (sagw vs. not-sagw), no script before consent / after decline, one positive (and where relevant one negative) case for every requirement 1–7, and 404 tracking (internal referrer → event with full url; external referrer / direct hit / existing page → nothing). |
 | `src/components/helpers/tracking.be.spec.ts` | Browser, **real Fathom API** (skipped without `FATHOM_API_KEY`): pageviews are only recorded after consent, and a `Download` event arrives in Fathom. |
 
 The stub (`src/test-helpers/fathom-stub.ts`) intercepts `cdn.usefathom.com/script.js` and records every `load`, `setSite`, `trackPageview` and `trackEvent` call in `window.__fathomCalls`. `preventLinkNavigation` keeps external links and downloads from leaving the page. `setupTrackingPage(page)` installs the stub, the navigation guard and the consent cookies in one call; `expectTrackedEvents(page, names)` polls for the expected event names.

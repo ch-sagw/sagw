@@ -11,8 +11,12 @@ import {
   buildTrackingEvents,
   toTrackingLabel,
   TRACKING_EVENT_MAX_LENGTH,
+  TRACKING_EVENT_MAX_LENGTH_URL,
   TRACKING_EVENTS,
 } from '@/components/helpers/tracking.constants';
+import {
+  buildNotFoundLabel, isInternalReferrer,
+} from '@/components/helpers/notFoundTracking';
 
 test.describe('toTrackingLabel', () => {
   test('strips html tags and decodes entities', {
@@ -78,6 +82,22 @@ test.describe('buildTrackingEventName', () => {
       .not.toContain('…');
   });
 
+  test('accepts a custom max length for url labels', {
+    tag: '@tracking',
+  }, () => {
+    const url = `/de/${'x'.repeat(300)}`;
+    const name = buildTrackingEventName(TRACKING_EVENTS.notFound, url, {
+      maxLength: TRACKING_EVENT_MAX_LENGTH_URL,
+    });
+
+    expect(name.length)
+      .toBe(TRACKING_EVENT_MAX_LENGTH_URL);
+    expect(name.startsWith('Page not found: /de/'))
+      .toBe(true);
+    expect(TRACKING_EVENT_MAX_LENGTH_URL)
+      .toBeGreaterThan(TRACKING_EVENT_MAX_LENGTH);
+  });
+
   test('does not end with whitespace after capping', {
     tag: '@tracking',
   }, () => {
@@ -115,6 +135,35 @@ test.describe('buildTrackingEvents', {
   }, () => {
     expect(buildTrackingEvents(TRACKING_EVENTS.editionLink, ''))
       .toEqual(['Edition link']);
+  });
+});
+
+test.describe('404 tracking helpers', () => {
+  const origin = 'https://www.sagw.ch';
+
+  test('isInternalReferrer accepts only same-origin referrers', {
+    tag: '@tracking',
+  }, () => {
+    expect(isInternalReferrer(`${origin}/de/some-page`, origin))
+      .toBe(true);
+    expect(isInternalReferrer('https://www.example.com/', origin))
+      .toBe(false);
+    expect(isInternalReferrer('https://sagw.ch/de', origin))
+      .toBe(false);
+    expect(isInternalReferrer('', origin))
+      .toBe(false);
+    expect(isInternalReferrer('not a url', origin))
+      .toBe(false);
+  });
+
+  test('buildNotFoundLabel keeps path and query string', {
+    tag: '@tracking',
+  }, () => {
+    expect(buildNotFoundLabel({
+      pathname: '/de/alte-seite',
+      search: '?utm_source=newsletter',
+    }))
+      .toBe('/de/alte-seite?utm_source=newsletter');
   });
 });
 
