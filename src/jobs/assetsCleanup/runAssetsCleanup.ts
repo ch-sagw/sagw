@@ -94,7 +94,12 @@ const executeRun = async ({
   const startedAt = new Date();
   const cutoff = getCutoff(startedAt, config.minAgeDays);
 
-  payload.logger.info(`[assetsCleanup] start (env=${config.env}, mode=${config.mode}, minAgeDays=${config.minAgeDays})`);
+  // deletions are only started while the time budget lasts. everything
+  // after that is deferred to the next run.
+  const deadline = startedAt.getTime() + config.timeBudgetMs;
+  let exhaustedAfterMs: number | null = null;
+
+  payload.logger.info(`[assetsCleanup] start (env=${config.env}, mode=${config.mode}, minAgeDays=${config.minAgeDays}, timeBudget=${Math.round(config.timeBudgetMs / 1000)}s)`);
 
   // 1. scan all content
   const scan = await scanReferences({
@@ -174,14 +179,27 @@ const executeRun = async ({
 
     if (deletionPerformed) {
       for await (const candidate of evaluation.candidates) {
-        const result = await deleteCandidate({
-          candidate,
-          config,
-          payload,
-        });
+        if (exhaustedAfterMs === null && Date.now() > deadline) {
+          exhaustedAfterMs = Date.now() - startedAt.getTime();
+          payload.logger.warn(`[assetsCleanup] time budget of ${Math.round(config.timeBudgetMs / 1000)}s used up. Remaining candidates are deferred to the next run.`);
+        }
 
-        payload.logger.info(`[assetsCleanup] ${result.state}: ${candidate.collection}/${candidate.id} (${candidate.filename}) – ${result.message}`);
-        deletions.push(result);
+        if (exhaustedAfterMs === null) {
+          const result = await deleteCandidate({
+            candidate,
+            config,
+            payload,
+          });
+
+          payload.logger.info(`[assetsCleanup] ${result.state}: ${candidate.collection}/${candidate.id} (${candidate.filename}) – ${result.message}`);
+          deletions.push(result);
+        } else {
+          deletions.push({
+            candidate,
+            message: 'Time budget of this run used up. Not touched, will be deleted in the next run.',
+            state: 'deferred',
+          });
+        }
       }
     }
 
@@ -207,6 +225,7 @@ const executeRun = async ({
       blobWarnings: accumulator.blobWarnings + counts.blobWarnings,
       candidates: accumulator.candidates + tenant.candidates.length,
       candidatesBytes: accumulator.candidatesBytes + sumBytes(tenant.candidates),
+      deferred: accumulator.deferred + counts.deferred,
       deleted: accumulator.deleted + counts.deleted,
       deletedBytes: accumulator.deletedBytes + sumDeletedBytes(tenant.deletions),
       failed: accumulator.failed + counts.failed,
@@ -218,6 +237,7 @@ const executeRun = async ({
     blobWarnings: 0,
     candidates: 0,
     candidatesBytes: 0,
+    deferred: 0,
     deleted: 0,
     deletedBytes: 0,
     failed: 0,
@@ -252,6 +272,10 @@ const executeRun = async ({
     },
     startedAt: startedAt.toISOString(),
     tenants: tenantReports,
+    timeBudget: {
+      budgetMs: config.timeBudgetMs,
+      exhaustedAfterMs,
+    },
     totals,
     unassignedAssets: unassigned,
   };
