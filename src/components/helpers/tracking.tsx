@@ -3,6 +3,7 @@
 import {
   consentUpdatedEventName, getCookieConsent,
 } from '@/components/helpers/cookies';
+import { recordVisitedPathname } from '@/components/helpers/notFoundTracking';
 import {
   FATHOM_PLAYWRIGHT_E2E_COOKIE_NAME,
   FATHOM_PLAYWRIGHT_E2E_COOKIE_VALUE,
@@ -148,6 +149,14 @@ export const TrackingProvider = ({
     analyticsAllowed,
     setAnalyticsAllowed,
   ] = useState(false);
+  const pathname = usePathname();
+
+  // in-app navigation history for the 404 tracking, independent of consent
+  useEffect(() => {
+    if (pathname) {
+      recordVisitedPathname(pathname);
+    }
+  }, [pathname]);
 
   useEffect(() => {
     if (!trackingGloballyAllowed) {

@@ -84,6 +84,25 @@ const getSagwHomeId = async (tenant: string): Promise<string> => {
 const pollSetSiteIds = (page: Page): ReturnType<typeof expect.poll<string[]>> => expect.poll(() => getSetSiteIds(page));
 const pollPageviewCount = (page: Page): ReturnType<typeof expect.poll<number>> => expect.poll(() => getPageviewCount(page));
 const getTrackedSiteIds = async (page: Page): Promise<(string | undefined)[]> => (await getTrackedEvents(page)).map((event) => event.siteId);
+
+interface InterfaceSoftNavWindow {
+  next: {
+    router: {
+      push: (href: string) => void;
+    };
+  };
+  softNavMarker?: boolean;
+}
+
+// client side navigation, like a click on a next/link
+const softNavigate = async (page: Page, path: string): Promise<void> => {
+  await page.evaluate((href) => {
+    (window as unknown as InterfaceSoftNavWindow).next.router.push(href);
+  }, path);
+
+  await page.waitForURL(`**${path}`);
+};
+
 const expectNoEvents = async (page: Page): Promise<void> => {
   // give a potential (wrong) event time to arrive
   await sleep(1500);
@@ -1038,6 +1057,38 @@ test.describe('Tracking events', () => {
     }) => {
       await gotoAndWaitForStub(page, `${baseUrl}/de`);
       await expectNoEvents(page);
+    });
+
+    test('tracks 404s reached by client side navigation after a direct entry, each missing url once', {
+      tag: '@tracking',
+    }, async ({
+      page,
+    }) => {
+      const firstPath = `/de/tracking-missing-soft-a-${time}`;
+      const secondPath = `/de/tracking-missing-soft-b-${time}`;
+
+      // direct entry: no referrer
+      await gotoAndWaitForStub(page, `${baseUrl}/de`);
+      await page.evaluate(() => {
+        (window as unknown as InterfaceSoftNavWindow).softNavMarker = true;
+      });
+
+      await softNavigate(page, firstPath);
+      await expectTrackedEvents(page, [buildTrackingEventName(TRACKING_EVENTS.notFound, firstPath)]);
+
+      await softNavigate(page, secondPath);
+      await expectTrackedEvents(page, [buildTrackingEventName(TRACKING_EVENTS.notFound, secondPath)]);
+
+      const names = await getTrackedEventNames(page);
+
+      expect(names.filter((name) => name === TRACKING_EVENTS.notFound))
+        .toHaveLength(2);
+
+      // still the same document: it really was client side navigation
+      expect(await page.evaluate(() => (window as unknown as InterfaceSoftNavWindow).softNavMarker))
+        .toBe(true);
+      expect(await page.evaluate(() => document.referrer))
+        .toBe('');
     });
   });
 });
