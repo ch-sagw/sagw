@@ -9,6 +9,7 @@ import type {
   InterfaceTenantReport,
 } from '@/jobs/assetsCleanup/types';
 import {
+  buildTimeBudgetText,
   collectReportProblems,
   countDeletions,
   formatBytes,
@@ -275,7 +276,7 @@ const ReportView = ({
         <dd>
           {report.totals.assets} assets, {withSize(report.totals.candidates, report.totals.candidatesBytes, 'candidates')},
           {' '}{withSize(report.totals.deleted, report.totals.deletedBytes, 'deleted')},
-          {' '}{report.totals.failed} failed, {report.totals.skipped} skipped, {report.totals.keptFresh} in safety window
+          {' '}{report.totals.failed} failed, {report.totals.skipped} skipped, {report.totals.deferred || 0} deferred, {report.totals.keptFresh} in safety window
         </dd>
         <dt>Mode</dt>
         <dd>{report.modeReason}</dd>
@@ -285,6 +286,14 @@ const ReportView = ({
         ? (
           <ul className='assets-cleanup-report__overrides'>
             {report.fuseOverrides.map((override) => <li key={override}>Safety limit loosened: {override}</li>)}
+          </ul>
+        )
+        : null}
+
+      {buildTimeBudgetText(report)
+        ? (
+          <ul className='assets-cleanup-report__overrides'>
+            <li>Run was cut short: {buildTimeBudgetText(report)}</li>
           </ul>
         )
         : null}

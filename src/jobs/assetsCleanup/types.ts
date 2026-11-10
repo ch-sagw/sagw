@@ -68,7 +68,7 @@ export interface InterfaceAssetKept extends InterfaceAssetSnapshot {
 // Deletion
 // ########################################################################
 
-export type DeletionState = 'blobNotVerified' | 'blobStillPresent' | 'deleted' | 'failed' | 'skipped';
+export type DeletionState = 'blobNotVerified' | 'blobStillPresent' | 'deferred' | 'deleted' | 'failed' | 'skipped';
 
 export interface InterfaceDeletionResult {
   candidate: InterfaceAssetCandidate;
@@ -117,6 +117,9 @@ interface InterfaceAssetsCleanupTotals {
 
   // sum of the file sizes of all candidates
   candidatesBytes: number;
+
+  // candidates not processed because the time budget was used up
+  deferred: number;
   deleted: number;
 
   // sum of the file sizes of the actually deleted assets
@@ -153,6 +156,12 @@ export interface InterfaceAssetsCleanupReport {
   };
   startedAt: string;
   tenants: InterfaceTenantReport[];
+  timeBudget: {
+    budgetMs: number;
+
+    // set when the budget ran out: how long after the start it happened
+    exhaustedAfterMs: number | null;
+  };
   totals: InterfaceAssetsCleanupTotals;
 
   // assets without a tenant are never deleted, but listed

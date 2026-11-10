@@ -41,6 +41,13 @@ export const assetsCleanupDefaults = {
   // the percent fuse only makes sense with a minimum amount of candidates.
   // otherwise a tenant with 4 assets and 2 unused ones could never be cleaned.
   percentFuseMinCandidates: 10,
+
+  // Time budget for deletions, measured from the start of the run. Once it
+  // is used up, no further deletion is started: the remaining candidates
+  // are "deferred" to the next run and the report is still produced. Must
+  // leave enough room below the function limit (route maxDuration 800s)
+  // for the last deletion, mails and slack.
+  timeBudgetMs: 600_000,
 } as const;
 
 export interface InterfaceAssetsCleanupOptions {
@@ -63,6 +70,9 @@ export interface InterfaceAssetsCleanupOptions {
   // Safety fuses
   maxDeletePercent?: number | null;
   maxDeleteAbsolute?: number | null;
+
+  // Time budget for deletions in ms (deployed envs: can only be shortened)
+  timeBudgetMs?: number | null;
 }
 
 export interface InterfaceAssetsCleanupConfig {
@@ -81,6 +91,7 @@ export interface InterfaceAssetsCleanupConfig {
   serverUrl: string;
   slackWebhookUrl: string | undefined;
   tenantIds: string[] | undefined;
+  timeBudgetMs: number;
 }
 
 const resolveAssetsCleanupEnv = (): AssetsCleanupEnv => {
@@ -285,6 +296,18 @@ export const resolveAssetsCleanupConfig = (options?: InterfaceAssetsCleanupOptio
     requested: options?.maxDeletePercent,
   });
 
+  const requestedBudget = options?.timeBudgetMs;
+  const hasValidBudget = typeof requestedBudget === 'number' && Number.isFinite(requestedBudget) && requestedBudget > 0;
+  const isDeployedEnv = env === 'prod' || env === 'test' || env === 'unknown';
+  const defaultBudget: number = assetsCleanupDefaults.timeBudgetMs;
+  let timeBudgetMs = defaultBudget;
+
+  if (hasValidBudget) {
+    timeBudgetMs = isDeployedEnv
+      ? Math.min(defaultBudget, requestedBudget)
+      : requestedBudget;
+  }
+
   return {
     blobToken: process.env.BLOB_READ_WRITE_TOKEN || undefined,
     env,
@@ -304,5 +327,6 @@ export const resolveAssetsCleanupConfig = (options?: InterfaceAssetsCleanupOptio
     serverUrl: (process.env.NEXT_PUBLIC_SERVER_URL || '').replace(/\/$/u, ''),
     slackWebhookUrl,
     tenantIds,
+    timeBudgetMs,
   };
 };

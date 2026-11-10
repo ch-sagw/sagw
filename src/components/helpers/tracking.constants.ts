@@ -20,6 +20,7 @@ export const TRACKING_EVENTS = {
   magazineArticleExport: 'Magazine article export',
   nationalDictionaryLink: 'National dictionary link',
   networkLink: 'Network link',
+  notFound: 'Page not found',
   videoView: 'Video view',
 } as const;
 
@@ -28,6 +29,14 @@ export type TrackingEventPrefix = typeof TRACKING_EVENTS[keyof typeof TRACKING_E
 const TRACKING_EVENT_SEPARATOR = ': ';
 
 export const TRACKING_EVENT_MAX_LENGTH = 100;
+
+// Fathom accepts event names up to 255 characters. Used for URL labels
+// (404 tracking), where cutting at 100 would hide the interesting part.
+export const TRACKING_EVENT_MAX_LENGTH_URL = 255;
+
+export interface InterfaceTrackingEventOptions {
+  maxLength?: number;
+}
 
 // Emoji / pictographs / control chars. Fathom asks to avoid special
 // characters and emojis in event names.
@@ -69,9 +78,15 @@ export const toTrackingLabel = (raw: string | null | undefined): string => {
 /**
  * Builds a Fathom event name from a category prefix and an optional label.
  * Returns `prefix` when the label is empty, otherwise `prefix: label`,
- * capped at `TRACKING_EVENT_MAX_LENGTH` characters.
+ * capped at `maxLength` (default `TRACKING_EVENT_MAX_LENGTH`) characters.
  */
-export const buildTrackingEventName = (prefix: TrackingEventPrefix, label?: string | null): string => {
+export const buildTrackingEventName = (
+  prefix: TrackingEventPrefix,
+  label?: string | null,
+  {
+    maxLength = TRACKING_EVENT_MAX_LENGTH,
+  }: InterfaceTrackingEventOptions = {},
+): string => {
   const cleanLabel = toTrackingLabel(label);
 
   if (!cleanLabel) {
@@ -80,11 +95,11 @@ export const buildTrackingEventName = (prefix: TrackingEventPrefix, label?: stri
 
   const name = `${prefix}${TRACKING_EVENT_SEPARATOR}${cleanLabel}`;
 
-  if (name.length <= TRACKING_EVENT_MAX_LENGTH) {
+  if (name.length <= maxLength) {
     return name;
   }
 
-  return name.slice(0, TRACKING_EVENT_MAX_LENGTH)
+  return name.slice(0, maxLength)
     .trimEnd();
 };
 
@@ -92,8 +107,12 @@ export const buildTrackingEventName = (prefix: TrackingEventPrefix, label?: stri
  * The pair of events fired for one interaction: the category total and the
  * per-item event. When the label is empty only the category is returned.
  */
-export const buildTrackingEvents = (prefix: TrackingEventPrefix, label?: string | null): string[] => {
-  const itemEvent = buildTrackingEventName(prefix, label);
+export const buildTrackingEvents = (
+  prefix: TrackingEventPrefix,
+  label?: string | null,
+  options?: InterfaceTrackingEventOptions,
+): string[] => {
+  const itemEvent = buildTrackingEventName(prefix, label, options);
 
   if (itemEvent === prefix) {
     return [prefix];

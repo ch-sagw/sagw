@@ -60,11 +60,13 @@ export const getModeLabel = (report: InterfaceAssetsCleanupReport): string => (r
 
 export const countDeletions = (deletions: InterfaceDeletionResult[]): {
   blobWarnings: number;
+  deferred: number;
   deleted: number;
   failed: number;
   skipped: number;
 } => ({
   blobWarnings: deletions.filter((deletion) => deletion.state === 'blobStillPresent' || deletion.state === 'blobNotVerified').length,
+  deferred: deletions.filter((deletion) => deletion.state === 'deferred').length,
   deleted: deletions.filter((deletion) => deletion.state === 'deleted' || deletion.state === 'blobStillPresent' || deletion.state === 'blobNotVerified').length,
   failed: deletions.filter((deletion) => deletion.state === 'failed').length,
   skipped: deletions.filter((deletion) => deletion.state === 'skipped').length,
@@ -84,6 +86,19 @@ export const withSize = (count: number, bytes: number, label: string): string =>
 // numbered rows: "1", "2", ...
 export const rowNumber = (index: number): string => String(index + 1);
 
+// "Time budget of 600s used up after 612s: 140 candidates were deferred to
+// the next run." (only when it actually happened)
+export const buildTimeBudgetText = (report: InterfaceAssetsCleanupReport): string | null => {
+  // reports persisted before the time budget existed have no such field
+  const timeBudget = report.timeBudget as InterfaceAssetsCleanupReport['timeBudget'] | undefined;
+
+  if (!timeBudget || timeBudget.exhaustedAfterMs === null) {
+    return null;
+  }
+
+  return `Time budget of ${Math.round(timeBudget.budgetMs / 1000)}s used up after ${Math.round(timeBudget.exhaustedAfterMs / 1000)}s: ${report.totals.deferred} candidate(s) were not touched and are deferred to the next run.`;
+};
+
 export const buildSummaryText = (report: InterfaceAssetsCleanupReport): string => {
   const lines: string[] = [];
 
@@ -96,6 +111,12 @@ export const buildSummaryText = (report: InterfaceAssetsCleanupReport): string =
     lines.push(`:warning: Fuse limits overridden: ${report.fuseOverrides.join(' ')}`);
   }
 
+  const timeBudgetText = buildTimeBudgetText(report);
+
+  if (timeBudgetText) {
+    lines.push(`:hourglass: ${timeBudgetText}`);
+  }
+
   if (report.globalFuses.length > 0) {
     lines.push(`Deletion blocked: ${report.globalFuses.join(' | ')}`);
   }
@@ -105,8 +126,11 @@ export const buildSummaryText = (report: InterfaceAssetsCleanupReport): string =
     const tenantFuses = tenant.fuses.length > 0
       ? ` - blocked: ${tenant.fuses.join(' | ')}`
       : '';
+    const deferred = counts.deferred > 0
+      ? `, ${counts.deferred} deferred`
+      : '';
 
-    lines.push(`- ${tenant.tenantName}: ${tenant.assets.total} assets, ${withSize(tenant.candidates.length, sumBytes(tenant.candidates), 'candidates')}, ${withSize(counts.deleted, sumDeletedBytes(tenant.deletions), 'deleted')}, ${counts.failed} failed${tenantFuses}`);
+    lines.push(`- ${tenant.tenantName}: ${tenant.assets.total} assets, ${withSize(tenant.candidates.length, sumBytes(tenant.candidates), 'candidates')}, ${withSize(counts.deleted, sumDeletedBytes(tenant.deletions), 'deleted')}, ${counts.failed} failed${deferred}${tenantFuses}`);
   });
 
   if (report.unassignedAssets.length > 0) {
@@ -260,7 +284,15 @@ const renderFuseOverrides = (report: InterfaceAssetsCleanupReport): string => (r
   ? `<p style="color:#a60;"><strong>Safety limits were loosened for this run:</strong> ${escapeHtml(report.fuseOverrides.join(' '))}</p>`
   : '');
 
-const renderIntro = (report: InterfaceAssetsCleanupReport): string => `${renderFuseOverrides(report)}<p><strong>Mode:</strong> ${getModeLabel(report)}<br/>
+const renderTimeBudget = (report: InterfaceAssetsCleanupReport): string => {
+  const text = buildTimeBudgetText(report);
+
+  return text
+    ? `<p style="color:#a60;"><strong>Run was cut short:</strong> ${escapeHtml(text)} Deferred assets are marked as such in the tables below.</p>`
+    : '';
+};
+
+const renderIntro = (report: InterfaceAssetsCleanupReport): string => `${renderFuseOverrides(report)}${renderTimeBudget(report)}<p><strong>Mode:</strong> ${getModeLabel(report)}<br/>
     <strong>Run:</strong> ${escapeHtml(formatDate(report.startedAt))}<br/>
     <strong>Safety window:</strong> assets are only deleted when they were uploaded and last changed more than ${report.minAgeDays} day(s) ago (before ${escapeHtml(formatDate(report.cutoff))}).</p>
   <h3>What counts as "used"?</h3>
@@ -288,8 +320,11 @@ const renderTenantSection = (report: InterfaceAssetsCleanupReport, tenant: Inter
   }
 
   if (tenant.candidates.length > 0) {
+    const deferredTitle = counts.deferred > 0
+      ? `, ${counts.deferred} deferred to the next run`
+      : '';
     const title = tenant.deletionPerformed
-      ? `Deleted assets (${counts.deleted} of ${tenant.candidates.length} candidates, ${formatBytes(sumDeletedBytes(tenant.deletions))})`
+      ? `Deleted assets (${counts.deleted} of ${tenant.candidates.length} candidates, ${formatBytes(sumDeletedBytes(tenant.deletions))}${deferredTitle})`
       : `Unused assets which would be deleted (${withSize(tenant.candidates.length, sumBytes(tenant.candidates), 'candidates')})`;
 
     parts.push(`<h3>${title}</h3>`);

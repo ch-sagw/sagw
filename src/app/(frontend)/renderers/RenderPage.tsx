@@ -24,6 +24,7 @@ import { ColorMode } from '@/components/base/types/colorMode';
 import { getThemeNameForTenant } from '../utilities/getThemeNameForTenant';
 import { Redirector } from '@/components/helpers/redirects';
 import { TrackingProvider } from '@/components/helpers/tracking';
+import { TrackNotFound } from '@/components/helpers/TrackNotFound';
 import { PageMainViewTransition } from '@/components/PageMainViewTransition';
 import { buildBreadcrumbsForDoc } from '@/utilities/buildBreadcrumbs';
 import { resolveFathomSiteId } from '@/tracking/fathomSites';
@@ -71,6 +72,7 @@ interface InterfaceRenderPageContentProps {
   isMagazineDetail?: boolean;
   skipStatusMessage?: boolean;
   pageSlugs?: string[];
+  isNotFound?: boolean;
 }
 
 const getTenantThemeName = ({
@@ -147,6 +149,7 @@ export const renderPageContent = ({
   isMagazineDetail = false,
   skipStatusMessage = false,
   pageSlugs,
+  isNotFound = false,
 }: InterfaceRenderPageContentProps): React.JSX.Element => (
   <TenantProvider tenant={tenantId}>
     <TrackingProvider siteId={trackingSiteId}>
@@ -160,6 +163,7 @@ export const renderPageContent = ({
             locale={locale}
           />
         }
+        {isNotFound && <TrackNotFound />}
         <SkipLinks />
         <RenderHeader
           colorMode={headerColorMode}

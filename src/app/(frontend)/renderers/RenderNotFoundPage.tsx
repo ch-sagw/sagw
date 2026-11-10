@@ -101,6 +101,7 @@ export const RenderNotFoundPage = async ({
     ),
     i18n: i18nData,
     isHome: false,
+    isNotFound: true,
     locale,
     showBlocks: false,
     skipStatusMessage: true,

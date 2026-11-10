@@ -43,6 +43,7 @@ import {
   buildSlackFailureText,
   buildSlackText,
   buildSummaryText,
+  buildTimeBudgetText,
   collectReportProblems,
 } from '@/jobs/assetsCleanup/report';
 import {
@@ -64,6 +65,7 @@ const dayMs = 24 * 60 * 60 * 1000;
 const runDelete = async (options?: {
   maxDeletePercent?: number;
   tenantIds?: string[];
+  timeBudgetMs?: number;
 }): Promise<InterfaceAssetsCleanupReport> => {
   const payload = await getPayloadCached();
 
@@ -73,6 +75,7 @@ const runDelete = async (options?: {
       mode: 'delete',
       notify: false,
       tenantIds: options?.tenantIds,
+      timeBudgetMs: options?.timeBudgetMs,
     },
     payload,
   });
@@ -822,7 +825,40 @@ test.describe('assets cleanup job', () => {
     expect(fusedReport.tenants.map((tenant) => tenant.tenantId))
       .toEqual([fuseTenant.id]);
 
-    // explicit limit
+    // time budget used up (1ms, i.e. before the first deletion starts):
+    // nothing is touched, every candidate is deferred, report is complete
+    const deferredReport = await runDelete({
+      maxDeletePercent: 100,
+      tenantIds: [fuseTenant.id],
+      timeBudgetMs: 1,
+    });
+    const deferredTenant = findTenantReport(deferredReport, fuseTenant.id);
+
+    expect(deferredTenant.deletionPerformed)
+      .toBe(true);
+    expect(deferredTenant.deletions.map((deletion) => deletion.state))
+      .toEqual(Array<string>(10)
+        .fill('deferred'));
+    expect(deferredReport.totals.deferred)
+      .toBe(10);
+    expect(deferredReport.totals.deleted)
+      .toBe(0);
+    expect(deferredReport.timeBudget.budgetMs)
+      .toBe(1);
+    expect(deferredReport.timeBudget.exhaustedAfterMs)
+      .not
+      .toBeNull();
+    expect(buildTimeBudgetText(deferredReport))
+      .toContain('10 candidate(s)');
+    expect(buildSummaryText(deferredReport))
+      .toContain('deferred to the next run');
+
+    for await (const id of images) {
+      expect(await assetExists('images', id))
+        .toBe(true);
+    }
+
+    // explicit limit, default time budget
     const report = await runDelete({
       maxDeletePercent: 100,
       tenantIds: [fuseTenant.id],
@@ -833,6 +869,10 @@ test.describe('assets cleanup job', () => {
       .toEqual([]);
     expect(tenantReport.deletionPerformed)
       .toBe(true);
+    expect(report.timeBudget.exhaustedAfterMs)
+      .toBeNull();
+    expect(buildTimeBudgetText(report))
+      .toBeNull();
 
     for await (const id of images) {
       expect(await assetExists('images', id))
@@ -999,8 +1039,18 @@ test.describe('assets cleanup job', () => {
     const originalEnv = process.env.ENV;
     const originalMode = process.env.ASSETS_CLEANUP_MODE;
 
+    // the developer's .env may contain fuse overrides: start from defaults
+    const originalOverrides = Object.values(fuseOverrideEnvVars)
+      .map((name) => [
+        name,
+        process.env[name],
+      ] as const);
+
     process.env.ENV = 'prod';
     delete process.env.ASSETS_CLEANUP_MODE;
+    originalOverrides.forEach(([name]) => {
+      delete process.env[name];
+    });
 
     const prodConfig = resolveAssetsCleanupConfig({
       maxDeletePercent: 100,
@@ -1040,6 +1090,18 @@ test.describe('assets cleanup job', () => {
       .toContain(fuseOverrideEnvVars.maxDeletePercent);
     expect(resolveAssetsCleanupConfig(null).fuseOverrides)
       .toEqual([]);
+
+    // time budget: deployed envs can only shorten it
+    expect(resolveAssetsCleanupConfig(null).timeBudgetMs)
+      .toBe(assetsCleanupDefaults.timeBudgetMs);
+    expect(resolveAssetsCleanupConfig({
+      timeBudgetMs: assetsCleanupDefaults.timeBudgetMs * 10,
+    }).timeBudgetMs)
+      .toBe(assetsCleanupDefaults.timeBudgetMs);
+    expect(resolveAssetsCleanupConfig({
+      timeBudgetMs: 1000,
+    }).timeBudgetMs)
+      .toBe(1000);
 
     process.env.ASSETS_CLEANUP_MODE = 'delete';
 
@@ -1131,6 +1193,17 @@ test.describe('assets cleanup job', () => {
     } else {
       process.env.ASSETS_CLEANUP_MODE = originalMode;
     }
+
+    originalOverrides.forEach(([
+      name,
+      value,
+    ]) => {
+      if (value === undefined) {
+        delete process.env[name];
+      } else {
+        process.env[name] = value;
+      }
+    });
   });
 
   test('slack text marks problems and failures clearly', async () => {

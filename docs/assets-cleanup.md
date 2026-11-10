@@ -50,6 +50,10 @@ The job refuses to delete anything at all if something looks wrong, for example:
 
 In these cases the mail report says why nothing was deleted. Either reduce the amount by deleting obviously unused assets manually in the admin panel, or – for a large backlog like the very first cleanup – let a developer temporarily raise the limits (see [Initial cleanup on production](#initial-cleanup-on-production)). Loosened limits are highlighted in every report.
 
+## Time budget
+
+A run may only spend a limited time deleting (10 minutes by default; the function on Vercel is killed after 13 minutes). When the budget is used up, the remaining candidates are **not touched** and marked as *deferred* – the next run picks them up. The report, the mails and the Slack message are still produced and clearly say "Run was cut short", with the number of deferred assets. This mainly matters while a backlog is being worked off: each run deletes as much as it can, and the backlog shrinks run by run.
+
 ## Report-only mode
 
 The job can run in **report-only mode**: it scans everything and lists what *would* be deleted, but touches nothing. This is the default on production and test until the setting `ASSETS_CLEANUP_MODE=delete` is enabled by a developer.
@@ -79,7 +83,7 @@ If something went wrong, the Slack message makes it obvious:
    - document belongs to a project used by an auto downloads block
    - the asset has no filename (kept – unclear state)
 5. **Fuses.** Global (scan errors, invariant violation, zero docs, report mode) and per tenant (more than `maxDeletePercent` when at least 10 candidates, more than `maxDeleteAbsolute`). Any fuse -> nothing is deleted for that scope.
-6. **Deletion.** Per candidate: re-read `updatedAt` (skip if changed or gone) -> `payload.delete` (the Vercel Blob storage plugin removes the blob in its `afterDelete`) -> verify with `@vercel/blob` `head()` that the blob is gone (`deleted`, `blobStillPresent`, or `blobNotVerified` when no `BLOB_READ_WRITE_TOKEN` is available).
+6. **Deletion.** Sequential, while the time budget lasts (`timeBudgetMs`, default 600s measured from the start of the run; the route's `maxDuration` is 800s). Once it is used up, every remaining candidate gets the deletion state `deferred` and is left alone; the report marks the run as cut short (`report.timeBudget`). Per candidate: re-read `updatedAt` (skip if changed or gone) -> `payload.delete` (the Vercel Blob storage plugin removes the blob in its `afterDelete`) -> verify with `@vercel/blob` `head()` that the blob is gone (`deleted`, `blobStillPresent`, or `blobNotVerified` when no `BLOB_READ_WRITE_TOKEN` is available).
 7. **Report & notify.** Report is stored as task output in `payload-jobs` (visible for super admins under *System -> Jobs*), mailed and posted to Slack. `collectReportProblems()` in `report.ts` decides whether the Slack message is a plain summary or marked *WITH PROBLEMS* (scan errors, invariant violations, failed deletions, blobs still present, failed mails).
 8. **Crashes.** If the run throws, `runAssetsCleanup` posts a *FAILED* message with reason and stack to Slack (`sendSlackFailure`) and rethrows, so the job is marked as errored. The cron route does the same for errors outside the job (payload init, queueing). Nothing is sent to Sentry on purpose.
 
@@ -139,7 +143,7 @@ Production will start with a backlog: many tenants will have far more than 25% u
 
 Task inputs (`maxDeletePercent`, `maxDeleteAbsolute`) cannot loosen the limits on deployed environments – env variables are the only way, on purpose: they need Vercel access, are visible in the project settings and are picked up by every report.
 
-Every run is stored as a job in `payload-jobs` (admin panel: *System -> Jobs*, super admins only) with the full report as task output. There is no job runner polling the queue: jobs are queued and executed immediately by the route / cli via `payload.jobs.runByID`. Task inputs (`mode`, `minAgeDays`, `tenantIds`, `notify`, `maxDeletePercent`, `maxDeleteAbsolute`) can be passed programmatically through `queueAndRunAssetsCleanup`; on deployed environments they cannot weaken the safety settings.
+Every run is stored as a job in `payload-jobs` (admin panel: *System -> Jobs*, super admins only) with the full report as task output. There is no job runner polling the queue: jobs are queued and executed immediately by the route / cli via `payload.jobs.runByID`. Task inputs (`mode`, `minAgeDays`, `tenantIds`, `notify`, `maxDeletePercent`, `maxDeleteAbsolute`, `timeBudgetMs`) can be passed programmatically through `queueAndRunAssetsCleanup`; on deployed environments they cannot weaken the safety settings.
 
 ## Tests
 
