@@ -3,10 +3,11 @@
 import {
   useEffect, useRef,
 } from 'react';
+import { usePathname } from 'next/navigation';
 import { useTrackEvent } from '@/components/helpers/useTrackEvent';
 import { useTracking } from '@/components/helpers/tracking';
 import {
-  buildNotFoundLabel, isInternalReferrer,
+  buildNotFoundLabel, cameFromInAppPage, isInternalReferrer,
 } from '@/components/helpers/notFoundTracking';
 import {
   buildTrackingEvents,
@@ -24,25 +25,31 @@ export const TrackNotFound = (): null => {
     siteId,
     trackingAllowed,
   } = useTracking();
-  const tracked = useRef(false);
+  const pathname = usePathname();
+  const trackedPathname = useRef<string | null>(null);
 
   useEffect(() => {
     // wait until consent is given (possibly on this very page) and latch
-    // only once the event has really been sent
-    if (tracked.current || !trackingAllowed || !siteId) {
+    // only once the event has really been sent, once per missing url
+    if (!trackingAllowed || !siteId || !pathname || trackedPathname.current === pathname) {
       return;
     }
 
-    if (!isInternalReferrer(document.referrer, window.location.origin)) {
+    // only 404s reached from one of our own pages: client side navigation
+    // or a full page load with a same-origin referrer
+    const isInternal = cameFromInAppPage(pathname) ||
+      isInternalReferrer(document.referrer, window.location.origin);
+
+    if (!isInternal) {
       return;
     }
 
-    tracked.current = true;
+    trackedPathname.current = pathname;
 
     trackEvents(buildTrackingEvents(
       TRACKING_EVENTS.notFound,
       buildNotFoundLabel({
-        pathname: window.location.pathname,
+        pathname,
         search: window.location.search,
       }),
       {
@@ -50,6 +57,7 @@ export const TrackNotFound = (): null => {
       },
     ));
   }, [
+    pathname,
     siteId,
     trackEvents,
     trackingAllowed,

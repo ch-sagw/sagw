@@ -15,7 +15,10 @@ import {
   TRACKING_EVENTS,
 } from '@/components/helpers/tracking.constants';
 import {
-  buildNotFoundLabel, isInternalReferrer,
+  buildNotFoundLabel,
+  cameFromInAppPage,
+  isInternalReferrer,
+  recordVisitedPathname,
 } from '@/components/helpers/notFoundTracking';
 
 test.describe('toTrackingLabel', () => {
@@ -154,6 +157,24 @@ test.describe('404 tracking helpers', () => {
       .toBe(false);
     expect(isInternalReferrer('not a url', origin))
       .toBe(false);
+  });
+
+  test('cameFromInAppPage is true only after another page was shown', {
+    tag: '@tracking',
+  }, () => {
+    // direct hit on a 404
+    expect(cameFromInAppPage('/de/missing'))
+      .toBe(false);
+    recordVisitedPathname('/de/missing');
+    expect(cameFromInAppPage('/de/missing'))
+      .toBe(false);
+
+    // client side navigation to the next 404
+    expect(cameFromInAppPage('/de/missing-2'))
+      .toBe(true);
+    recordVisitedPathname('/de/missing-2');
+    expect(cameFromInAppPage('/de/missing-2'))
+      .toBe(true);
   });
 
   test('buildNotFoundLabel keeps path and query string', {

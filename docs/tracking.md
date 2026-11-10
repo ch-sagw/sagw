@@ -64,7 +64,7 @@ One view is counted when the visitor starts a video (via our play button or the 
 
 ### 404 pages (broken links)
 
-Every 404 page is a normal pageview under its original URL, so it already shows up in the "Pages" list of the dashboard. On top of that, an event `Page not found: <path and query of the missing url>` is counted, but **only when the visitor came from a page of the same website** (the browser's referrer is our own domain). That is the case that editors can fix: a broken link somewhere in our own content, in a links block as well as in rich text.
+Every 404 page is a normal pageview under its original URL, so it already shows up in the "Pages" list of the dashboard. On top of that, an event `Page not found: <path and query of the missing url>` is counted, but **only when the visitor came from a page of the same website** (a click on one of our own links, with or without a full page load). That is the case that editors can fix: a broken link somewhere in our own content, in a links block as well as in rich text.
 
 Not counted: direct hits (typed URL, bookmark), visitors coming from other websites or search engines, and scanners/bots. They would only flood the event list with URLs nobody linked to.
 
@@ -157,7 +157,7 @@ TRACKING_EVENTS = {
 | downloads | `blocks/Downloads/Downloads.tsx` | documents and every Zenodo file get `trackingEvents` → `DownloadLinkItem` |
 | forms | `blocks/Form/Form.server.tsx` builds the label, `Form.client.tsx` fires once when `submitSuccess` becomes true | |
 | video | `blocks/Video/Video.tsx` | `trackView()` on our overlay click and on the player's `onPlay`, guarded by a ref (once per mount) |
-| 404 | `helpers/TrackNotFound.tsx`, rendered by `renderPageContent` when `isNotFound` is set (`RenderNotFoundPage`) | fires once per render in an effect, waits for consent (also when given on the 404 page itself), only if `document.referrer` has the same origin (`isInternalReferrer`); label = `location.pathname + search`, max length 255 |
+| 404 | `helpers/TrackNotFound.tsx`, rendered by `renderPageContent` when `isNotFound` is set (`RenderNotFoundPage`) | fires once per missing url in an effect, waits for consent (also when given on the 404 page itself), only if another page of the site was shown before in this document (`cameFromInAppPage`, client side navigation) or `document.referrer` has the same origin (`isInternalReferrer`); label = `location.pathname + search`, max length 255 |
 
 To instrument something new: build the names with `buildTrackingEvents(TRACKING_EVENTS.x, label)` and either render a `TrackedLink` with `trackingEvents`, or call the function returned by `useTrackEvent()` in a client component. Add the new prefix to `TRACKING_EVENTS` and to the tables in this document.
 
