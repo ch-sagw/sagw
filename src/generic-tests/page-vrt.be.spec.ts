@@ -19,6 +19,7 @@ import {
   generateOverviewPage,
   generateProjectDetailPage,
   generatePublicationDetailPage,
+  generatePublicationTopicsAndTypes,
   generateRegularForm, getHomeId,
   regenerateAllGenericData,
 } from '@/test-helpers/collections-generator';
@@ -2524,6 +2525,10 @@ const setupOverviewWithPublicationsOverview = async ({
     title: 'Overview Page',
   });
 
+  await generatePublicationTopicsAndTypes({
+    tenant: tenantId,
+  });
+
   await generatePublicationPages({
     amount: 21,
     home: homeId,
@@ -2537,7 +2542,7 @@ const setupOverviewWithPublicationsOverview = async ({
       content: [
         {
           blockType: 'publicationsOverviewBlock',
-          filterTitleAllPublications: simpleRteConfig('Alle Arten'),
+          filterTitleAllPublications: simpleRteConfig('Alle Publikationstypen'),
           filterTitleAllTopics: simpleRteConfig('Alle Themen'),
           title: simpleRteConfig('Publications'),
 
