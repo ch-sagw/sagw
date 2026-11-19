@@ -67,10 +67,6 @@ const readAccess = ({
   return isSuperAdmin(req);
 };
 
-const readAccessWithoutSelf = ({
-  req,
-}: InterfaceAccessArgs): boolean => isSuperAdmin(req);
-
 // General User Access
 
 export const usersAccess = {
@@ -80,13 +76,16 @@ export const usersAccess = {
   update: updateAccess,
 };
 
-export const usersAccessWithoutSelf = {
-  create: createAccess,
-  delete: deleteAccess,
-  read: readAccessWithoutSelf,
-  update: updateAccessWithoutSelf,
-};
-
 // Field Access - same functions, compatible types
 export const usersFieldAccess = usersAccess;
-export const usersFieldAccessWithoutSelf = usersAccessWithoutSelf;
+
+// Field Access for roles and tenant assignments: users can read their own
+// values, only super-admins can change them.
+// The admin panel hands the user to the multi-tenant plugin with field read
+// access applied. If users can not read their own tenants, the plugin finds
+// no tenant for them and redirects the singleton pages to the dashboard.
+export const usersFieldAccessReadSelf = {
+  create: createAccess,
+  read: readAccess,
+  update: updateAccessWithoutSelf,
+};
