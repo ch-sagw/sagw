@@ -126,7 +126,7 @@
 
         @include hover-style {
           &:not(:focus-visible) .buttonText {
-            text-decoration-color: var(--border-color);
+            text-decoration-color: currentcolor;
           }
         }
       }
