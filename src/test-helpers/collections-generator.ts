@@ -1823,6 +1823,51 @@ export const generateCollectionsExceptPages = async ({
 };
 
 // #########################################
+// generate collections for publication
+// topics and types
+// #########################################
+interface InterfaceGeneratePublicationTopicsAndTypes {
+  publicationTopic: PublicationTopic;
+  publicationType: PublicationType;
+}
+
+export const generatePublicationTopicsAndTypes = async ({
+  tenant,
+  isSagw = true,
+}: {
+  tenant: string;
+  isSagw?: boolean;
+  addRedirects?: boolean,
+}): Promise<InterfaceGeneratePublicationTopicsAndTypes> => {
+  const payload = await getPayloadCached();
+
+  const publicationTopic = await payload.create({
+    collection: 'publicationTopics',
+    data: {
+      publicationTopic: simpleRteConfig(`Publication Topic ${isSagw
+        ? 'sagw'
+        : 'non-sagw'}`),
+      tenant,
+    },
+  });
+
+  const publicationType = await payload.create({
+    collection: 'publicationTypes',
+    data: {
+      publicationType: simpleRteConfig(`Publication Type ${isSagw
+        ? 'sagw'
+        : 'non-sagw'}`),
+      tenant,
+    },
+  });
+
+  return {
+    publicationTopic,
+    publicationType,
+  };
+};
+
+// #########################################
 // generate a page of all types
 // #########################################
 
