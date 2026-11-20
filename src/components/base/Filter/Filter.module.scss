@@ -150,6 +150,10 @@
     &:before {
       transition: background-color var(--animation-duration) var(--motion-ease-in);
     }
+
+    option {
+      color: black;
+    }
   }
 
   &:after,
