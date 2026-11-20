@@ -20,6 +20,12 @@ export const Images: CollectionConfig = {
     hideAPIURL: process.env.ENV === 'prod',
   },
   defaultPopulate: {
+    // files uploaded in the admin are stored in a folder named after
+    // _objectKey. the storage plugin needs it to build the url. without
+    // it, populated images get a url without the folder (404).
+    /* eslint-disable @typescript-eslint/naming-convention */
+    _objectKey: true,
+    /* eslint-enable @typescript-eslint/naming-convention */
     alt: true,
     filename: true,
     focalX: true,

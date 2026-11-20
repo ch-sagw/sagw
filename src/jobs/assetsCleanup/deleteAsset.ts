@@ -16,7 +16,9 @@ import type { InterfaceAssetsCleanupConfig } from '@/jobs/assetsCleanup/config';
 // 3. payload.delete: runs all hooks (cache invalidation, gumlet, storage
 //    plugin which removes the blob)
 // 4. verify that the blob is gone (only possible with a blob token). a
-//    leftover blob is reported as warning.
+//    leftover blob is reported as warning. the blob is looked up at its
+//    storage path (<_objectKey>/<filename> for files uploaded in the admin,
+//    <filename> for all others).
 // ########################################################################
 
 const errorMessage = (error: unknown): string => (error instanceof Error
@@ -44,10 +46,10 @@ const readCurrentUpdatedAt = async (payload: Payload, candidate: InterfaceAssetC
 
 const verifyBlobDeleted = async ({
   blobToken,
-  filename,
+  storagePath,
 }: {
   blobToken: string | undefined;
-  filename: string;
+  storagePath: string;
 }): Promise<{
   message: string;
   state: 'blobNotVerified' | 'blobStillPresent' | 'deleted';
@@ -60,7 +62,7 @@ const verifyBlobDeleted = async ({
   }
 
   try {
-    await head(filename, {
+    await head(storagePath, {
       token: blobToken,
     });
 
@@ -161,7 +163,7 @@ export const deleteCandidate = async ({
 
   const verification = await verifyBlobDeleted({
     blobToken: config.blobToken,
-    filename: candidate.filename,
+    storagePath: candidate.storagePath,
   });
 
   return {
