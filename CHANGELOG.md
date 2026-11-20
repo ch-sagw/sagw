@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.12.0](https://github.com/ch-sagw/sagw/compare/v1.11.0...v1.12.0) (2026-11-20)
+
+
+### Features
+
+* manually update payload, fix user access rules ([638b838](https://github.com/ch-sagw/sagw/commit/638b8383127baad2b876156d30edb16abf8a1e03))
+* update node and all dependencies ([638b838](https://github.com/ch-sagw/sagw/commit/638b8383127baad2b876156d30edb16abf8a1e03))
+* update node and all dependencies ([#1379](https://github.com/ch-sagw/sagw/issues/1379)) ([638b838](https://github.com/ch-sagw/sagw/commit/638b8383127baad2b876156d30edb16abf8a1e03))
+
+
+### Bug Fixes
+
+* adhere to new blog file structure with folders ([#1384](https://github.com/ch-sagw/sagw/issues/1384)) ([86d20e5](https://github.com/ch-sagw/sagw/commit/86d20e556b4f247df319788bfa75078aae9a33c2))
+
+
+### Test
+
+* disable obsolete rule ([638b838](https://github.com/ch-sagw/sagw/commit/638b8383127baad2b876156d30edb16abf8a1e03))
+* regenerate screenshots ([638b838](https://github.com/ch-sagw/sagw/commit/638b8383127baad2b876156d30edb16abf8a1e03))
+* update be-screenshots ([638b838](https://github.com/ch-sagw/sagw/commit/638b8383127baad2b876156d30edb16abf8a1e03))
+
 ## [1.11.0](https://github.com/ch-sagw/sagw/compare/v1.10.1...v1.11.0) (2026-11-10)
 
 
