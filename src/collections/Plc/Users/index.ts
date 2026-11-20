@@ -5,15 +5,15 @@ import {
   tenantRoles, userRoles,
 } from '@/collections/Plc/Users/roles';
 import {
-  usersAccess, usersFieldAccess, usersFieldAccessWithoutSelf,
+  usersAccess, usersFieldAccess, usersFieldAccessReadSelf,
 } from '@/access/users';
 import { lockDocuments } from '@/field-templates/lockDocuments';
 
 const defaultTenantArrayField = tenantsArrayField({
-  arrayFieldAccess: usersFieldAccessWithoutSelf,
+  arrayFieldAccess: usersFieldAccessReadSelf,
   rowFields: [
     {
-      access: usersFieldAccessWithoutSelf,
+      access: usersFieldAccessReadSelf,
       defaultValue: [tenantRoles.admin],
       hasMany: true,
       name: 'roles',
@@ -26,7 +26,7 @@ const defaultTenantArrayField = tenantsArrayField({
       type: 'select',
     },
   ],
-  tenantFieldAccess: usersFieldAccessWithoutSelf,
+  tenantFieldAccess: usersFieldAccessReadSelf,
   tenantsArrayFieldName: 'tenants',
   tenantsArrayTenantFieldName: 'tenant',
   tenantsCollectionSlug: 'tenants',
@@ -48,7 +48,7 @@ export const Users: CollectionConfig = {
       type: 'text',
     },
     {
-      access: usersFieldAccessWithoutSelf,
+      access: usersFieldAccessReadSelf,
       admin: {
         position: 'sidebar',
       },

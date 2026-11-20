@@ -11,6 +11,8 @@
     "selector-pseudo-element-colon-notation": "single",
     "@stylistic/block-closing-brace-newline-after": null,
     "@stylistic/max-line-length": null,
+    "@stylistic/scss/block-closing-brace-newline-after": null,
+    "@stylistic/scss/max-line-length": null,
     "no-duplicate-selectors": null,
     "selector-pseudo-class-no-unknown": [
       true,
