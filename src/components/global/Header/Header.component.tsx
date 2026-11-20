@@ -565,7 +565,9 @@ export const HeaderComponent = (props: InterfaceHeaderComponentPropTypes): React
   };
 
   const langnavRender = (): React.JSX.Element => {
-    if (props.enabledLocales.length < 1) {
+    // Hide language navigation when there
+    // are not at least two enabled locales
+    if (props.enabledLocales.length < 2) {
       return <Fragment />;
     }
 
