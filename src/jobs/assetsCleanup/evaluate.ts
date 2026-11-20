@@ -88,6 +88,29 @@ const toDateString = (value: unknown): string => {
   return '';
 };
 
+// Path of the file in the blob storage, built the same way as the storage
+// plugin does it: <prefix>/<_objectKey>/<filename>. Both prefix and
+// _objectKey are optional: files uploaded in the admin (client uploads)
+// have an _objectKey, all other files are stored on top level.
+const buildStoragePath = (doc: Record<string, unknown>, filename: string): string => {
+  if (filename.length < 1) {
+    return '';
+  }
+
+  const folders = [
+    doc.prefix,
+    doc._objectKey,
+  ]
+    .filter((segment): segment is string => typeof segment === 'string')
+    .map((segment) => segment.replace(/^\/+|\/+$/gu, ''))
+    .filter((segment) => segment.length > 0);
+
+  return [
+    ...folders,
+    filename,
+  ].join('/');
+};
+
 const toSnapshot = (raw: unknown, collection: AssetCollectionSlug): InterfaceAssetSnapshot | null => {
   const doc: unknown = JSON.parse(JSON.stringify(raw));
 
@@ -111,12 +134,14 @@ const toSnapshot = (raw: unknown, collection: AssetCollectionSlug): InterfaceAss
     label = firstLocalizedRte(doc.title);
   }
 
+  const filename = typeof doc.filename === 'string'
+    ? doc.filename
+    : '';
+
   return {
     collection,
     createdAt: toDateString(doc.createdAt),
-    filename: typeof doc.filename === 'string'
-      ? doc.filename
-      : '',
+    filename,
     filesize: typeof doc.filesize === 'number'
       ? doc.filesize
       : null,
@@ -126,6 +151,7 @@ const toSnapshot = (raw: unknown, collection: AssetCollectionSlug): InterfaceAss
       ? doc.mimeType
       : null,
     project: toIdString(doc.project),
+    storagePath: buildStoragePath(doc, filename),
     tenant: toIdString(doc.tenant),
     updatedAt: toDateString(doc.updatedAt),
   };

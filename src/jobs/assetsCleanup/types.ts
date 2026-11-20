@@ -52,6 +52,11 @@ export interface InterfaceAssetSnapshot {
   label: string;
   mimeType: string | null;
   project: string | null;
+
+  // where the file lives in the blob storage. files uploaded in the admin
+  // are stored in their own folder (<_objectKey>/<filename>), older files
+  // and files created via local api directly on top level (<filename>).
+  storagePath: string;
   tenant: string | null;
   updatedAt: string;
 }

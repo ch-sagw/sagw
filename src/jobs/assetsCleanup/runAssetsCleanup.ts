@@ -191,7 +191,7 @@ const executeRun = async ({
             payload,
           });
 
-          payload.logger.info(`[assetsCleanup] ${result.state}: ${candidate.collection}/${candidate.id} (${candidate.filename}) – ${result.message}`);
+          payload.logger.info(`[assetsCleanup] ${result.state}: ${candidate.collection}/${candidate.id} (${candidate.storagePath}) – ${result.message}`);
           deletions.push(result);
         } else {
           deletions.push({

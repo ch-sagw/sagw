@@ -99,14 +99,17 @@ const AssetRows = ({
         ? asset.adminUrl
         : '';
 
+      // reports of older runs have no storagePath
+      const file = asset.storagePath || asset.filename;
+
       return (
         <tr key={`${asset.collection}-${asset.id}`}>
           <td className='assets-cleanup-report__number'>{rowNumber(index)}</td>
           <td>{asset.collection}</td>
           <td>
             {adminUrl
-              ? <a href={adminUrl}>{asset.filename}</a>
-              : asset.filename}
+              ? <a href={adminUrl}>{file}</a>
+              : file}
           </td>
           <td>{asset.label}</td>
           <td>{formatBytes(asset.filesize)}</td>

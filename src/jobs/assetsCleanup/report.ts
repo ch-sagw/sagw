@@ -161,7 +161,7 @@ export const collectReportProblems = (report: InterfaceAssetsCleanupReport): str
     tenant.deletions
       .filter((deletion) => deletion.state === 'failed' || deletion.state === 'blobStillPresent')
       .forEach((deletion) => {
-        problems.push(`${tenant.tenantName}: ${deletion.candidate.collection}/${deletion.candidate.id} (${deletion.candidate.filename}) – ${deletion.message}`);
+        problems.push(`${tenant.tenantName}: ${deletion.candidate.collection}/${deletion.candidate.id} (${deletion.candidate.storagePath}) – ${deletion.message}`);
       });
   });
 
@@ -240,14 +240,14 @@ const renderAssetRows = (assets: InterfaceAssetSnapshot[], extra?: (asset: Inter
     const adminUrl = 'adminUrl' in asset && typeof asset.adminUrl === 'string'
       ? asset.adminUrl
       : '';
-    const filenameCell = adminUrl
-      ? `<a href="${escapeHtml(adminUrl)}">${escapeHtml(asset.filename)}</a>`
-      : escapeHtml(asset.filename);
+    const fileCell = adminUrl
+      ? `<a href="${escapeHtml(adminUrl)}">${escapeHtml(asset.storagePath)}</a>`
+      : escapeHtml(asset.storagePath);
 
     return `<tr>
       <td align="right">${rowNumber(index)}</td>
       <td>${escapeHtml(asset.collection)}</td>
-      <td>${filenameCell}</td>
+      <td>${fileCell}</td>
       <td>${escapeHtml(asset.label)}</td>
       <td>${formatBytes(asset.filesize)}</td>
       <td>${formatDate(asset.createdAt)}</td>

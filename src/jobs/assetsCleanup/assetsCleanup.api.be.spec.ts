@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
+import { randomUUID } from 'node:crypto';
 import {
   expect,
   test,
 } from '@playwright/test';
+import {
+  BlobNotFoundError, copy, del, head,
+} from '@vercel/blob';
 import {
   generateDetailPage,
   generateDocument,
@@ -118,6 +122,54 @@ const getAssetFilename = async (collection: AssetCollectionSlug, id: string): Pr
   });
 
   return doc.filename || '';
+};
+
+const blobExists = async (storagePath: string): Promise<boolean> => {
+  try {
+    await head(storagePath, {
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    });
+
+    return true;
+  } catch (error) {
+    if (error instanceof BlobNotFoundError) {
+      return false;
+    }
+
+    throw error;
+  }
+};
+
+// Files uploaded in the admin (client uploads) are stored in their own
+// folder: <_objectKey>/<filename>. Assets created via local api are stored
+// on top level. This moves the blob of such an asset into a folder and
+// sets the _objectKey on the document, so it looks like an admin upload.
+const moveAssetToFolder = async (collection: AssetCollectionSlug, id: string): Promise<string> => {
+  const payload = await getPayloadCached();
+  const token = process.env.BLOB_READ_WRITE_TOKEN;
+  const filename = await getAssetFilename(collection, id);
+  const objectKey = randomUUID();
+  const storagePath = `${objectKey}/${filename}`;
+
+  await copy(filename, storagePath, {
+    access: 'public',
+    token,
+  });
+  await del(filename, {
+    token,
+  });
+
+  await payload.db.collections[collection].updateOne({
+    _id: id,
+  }, {
+    $set: {
+      _objectKey: objectKey,
+    },
+  }, {
+    timestamps: false,
+  });
+
+  return storagePath;
 };
 
 // required localized fields when a page is updated in a non-default locale
@@ -977,6 +1029,110 @@ test.describe('assets cleanup job', () => {
       .toContain(deleted.state);
     expect(await assetExists('images', imageUnusedOld))
       .toBe(false);
+  });
+
+  test('assets stored in a folder are deleted and verified at their storage path', async () => {
+    // the blob storage is accessed directly
+    test.skip(!process.env.BLOB_READ_WRITE_TOKEN, 'needs BLOB_READ_WRITE_TOKEN');
+    test.setTimeout(120_000);
+
+    await deleteSetsPages();
+    await deleteOtherCollections();
+
+    const payload = await getPayloadCached();
+    const tenant = await getTenantId({
+      isSagw: true,
+      time: (new Date())
+        .getTime(),
+    });
+    const imageInFolder = await generateImage(tenant);
+    const imageLeftover = await generateImage(tenant);
+    const pathInFolder = await moveAssetToFolder('images', imageInFolder);
+    const pathLeftover = await moveAssetToFolder('images', imageLeftover);
+
+    await backdateAsset('images', imageInFolder, 3);
+    await backdateAsset('images', imageLeftover, 3);
+
+    expect(await blobExists(pathInFolder))
+      .toBe(true);
+    expect(await blobExists(pathLeftover))
+      .toBe(true);
+
+    // get real candidates (report mode, nothing deleted yet)
+    const report = await runAssetsCleanup({
+      options: {
+        mode: 'report',
+        notify: false,
+      },
+      payload,
+    });
+    const {
+      candidates,
+    } = findTenantReport(report, tenant);
+    const candidateInFolder = candidates.find((candidate) => candidate.id === imageInFolder);
+    const candidateLeftover = candidates.find((candidate) => candidate.id === imageLeftover);
+
+    if (!candidateInFolder || !candidateLeftover) {
+      throw new Error('images in folders must be candidates');
+    }
+
+    // the report knows the folder
+    expect(candidateInFolder.storagePath)
+      .toBe(pathInFolder);
+    expect(candidateLeftover.storagePath)
+      .toBe(pathLeftover);
+
+    const deleteConfig = {
+      ...resolveAssetsCleanupConfig({
+        mode: 'report',
+      }),
+      mode: 'delete' as const,
+    };
+
+    // 1. document and blob (inside its folder) are deleted
+    const deleted = await deleteCandidate({
+      candidate: candidateInFolder,
+      config: deleteConfig,
+      payload,
+    });
+
+    expect(deleted.state)
+      .toBe('deleted');
+    expect(await assetExists('images', imageInFolder))
+      .toBe(false);
+    expect(await blobExists(pathInFolder))
+      .toBe(false);
+
+    // 2. a blob which stays behind in its folder must be reported.
+    // without the _objectKey the storage plugin looks for the file on top
+    // level and does not remove the blob in the folder.
+    await payload.db.collections.images.updateOne({
+      _id: imageLeftover,
+    }, {
+      $unset: {
+        _objectKey: '',
+      },
+    }, {
+      timestamps: false,
+    });
+
+    const leftover = await deleteCandidate({
+      candidate: candidateLeftover,
+      config: deleteConfig,
+      payload,
+    });
+
+    expect(leftover.state)
+      .toBe('blobStillPresent');
+    expect(await assetExists('images', imageLeftover))
+      .toBe(false);
+    expect(await blobExists(pathLeftover))
+      .toBe(true);
+
+    // clean up the blob we left behind on purpose
+    await del(pathLeftover, {
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    });
   });
 
   test('scan invariant: schema ids must be known to the generic collector', async () => {
